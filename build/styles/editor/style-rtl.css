@@ -69,12 +69,6 @@
  * Focus styles.
  */
 /**
- * Standard focus rings for the WordPress Design System.
- *
- * Apply `outset-ring__focus` inside the relevant pseudo-class at the call site,
- * e.g. `&:focus { @include outset-ring__focus(); }`.
- */
-/**
  * Applies editor left position to the selector passed as argument
  */
 /**
@@ -193,12 +187,6 @@
  * Focus styles.
  */
 /**
- * Standard focus rings for the WordPress Design System.
- *
- * Apply `outset-ring__focus` inside the relevant pseudo-class at the call site,
- * e.g. `&:focus { @include outset-ring__focus(); }`.
- */
-/**
  * Applies editor left position to the selector passed as argument
  */
 /**
@@ -294,7 +282,12 @@
 }
 
 @media (min-width: 782px) {
-  body.js.is-fullscreen-mode #adminmenumain {
+  body.js.is-fullscreen-mode {
+    margin-top: -32px;
+    height: calc(100% + 32px);
+  }
+  body.js.is-fullscreen-mode #adminmenumain,
+  body.js.is-fullscreen-mode #wpadminbar {
     display: none;
   }
   body.js.is-fullscreen-mode #wpcontent,
@@ -330,7 +323,7 @@ html.interface-interface-skeleton__html-container {
     top: 32px;
   }
   .is-fullscreen-mode .interface-interface-skeleton {
-    top: var(--wp-admin--admin-bar--height, 0);
+    top: 0;
   }
 }
 .interface-interface-skeleton__editor {
@@ -512,7 +505,7 @@ body.is-fullscreen-mode .interface-interface-skeleton {
     top: 32px;
   }
   .is-fullscreen-mode .is-entity-save-view-open .interface-interface-skeleton__actions:focus, .is-fullscreen-mode .is-entity-save-view-open .interface-interface-skeleton__actions:focus-within {
-    top: var(--wp-admin--admin-bar--height, 0);
+    top: 0;
   }
 }
 .interface-pinned-items {
@@ -610,12 +603,6 @@ body.is-fullscreen-mode .interface-interface-skeleton {
  */
 /**
  * Focus styles.
- */
-/**
- * Standard focus rings for the WordPress Design System.
- *
- * Apply `outset-ring__focus` inside the relevant pseudo-class at the call site,
- * e.g. `&:focus { @include outset-ring__focus(); }`.
  */
 /**
  * Applies editor left position to the selector passed as argument
@@ -1289,14 +1276,6 @@ button.font-library__upload-area {
   height: 100%;
 }
 
-.global-styles-ui-color-palette__tablist-container {
-  border-bottom: 1px solid #ddd;
-}
-
-.global-styles-ui-color-palette__tablist {
-  margin-bottom: -1px;
-}
-
 .global-styles-ui-sidebar__navigator-screen .single-column {
   grid-column: span 1;
 }
@@ -1392,12 +1371,6 @@ button.font-library__upload-area {
  */
 /**
  * Focus styles.
- */
-/**
- * Standard focus rings for the WordPress Design System.
- *
- * Apply `outset-ring__focus` inside the relevant pseudo-class at the call site,
- * e.g. `&:focus { @include outset-ring__focus(); }`.
  */
 /**
  * Applies editor left position to the selector passed as argument
@@ -4205,12 +4178,6 @@ div.dataviews-view-list {
  * Focus styles.
  */
 /**
- * Standard focus rings for the WordPress Design System.
- *
- * Apply `outset-ring__focus` inside the relevant pseudo-class at the call site,
- * e.g. `&:focus { @include outset-ring__focus(); }`.
- */
-/**
  * Applies editor left position to the selector passed as argument
  */
 /**
@@ -5116,12 +5083,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
  * Focus styles.
  */
 /**
- * Standard focus rings for the WordPress Design System.
- *
- * Apply `outset-ring__focus` inside the relevant pseudo-class at the call site,
- * e.g. `&:focus { @include outset-ring__focus(); }`.
- */
-/**
  * Applies editor left position to the selector passed as argument
  */
 /**
@@ -5253,7 +5214,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 
 @media (min-width: 600px) {
   .media-editor .media-editor__panel {
-    padding: 24px 0 0 24px;
+    padding: 16px 0 0 24px;
   }
 }
 .media-editor .components-panel__header.media-editor__sidebar-header {
@@ -5942,11 +5903,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   font-size: 12px;
 }
 
-mark.wp-note {
-  border-radius: 1px;
-  transition: background-color 0.1s ease-in-out;
-}
-
 .editor-avatar {
   position: relative;
   display: inline-flex;
@@ -6397,6 +6353,11 @@ mark.wp-note {
   margin: 0 auto;
   max-width: 70%;
 }
+@media (min-width: 782px) {
+  .editor-document-bar.has-shortcut .editor-document-bar__title {
+    padding-right: 24px;
+  }
+}
 .editor-document-bar__title h1 {
   display: flex;
   align-items: center;
@@ -6421,6 +6382,17 @@ mark.wp-note {
 @media screen and (max-width: 600px) {
   .editor-document-bar__post-type-label {
     display: none;
+  }
+}
+
+.editor-document-bar__shortcut {
+  color: #2f2f2f;
+  min-width: 24px;
+  display: none;
+}
+@media (min-width: 782px) {
+  .editor-document-bar__shortcut {
+    display: initial;
   }
 }
 
@@ -6813,14 +6785,14 @@ mark.wp-note {
   background: #fff;
   display: grid;
   grid-auto-flow: row;
-  grid-template: auto/32px minmax(0, max-content) minmax(min-content, 1fr) 64px;
+  grid-template: auto/64px minmax(0, max-content) minmax(min-content, 1fr) 64px;
 }
 .editor-header:has(> .editor-header__center) {
-  grid-template: auto/32px min-content 1fr min-content 64px;
+  grid-template: auto/64px min-content 1fr min-content 64px;
 }
 @media (min-width: 782px) {
   .editor-header:has(> .editor-header__center) {
-    grid-template: auto/32px minmax(min-content, 2fr) 2.5fr minmax(min-content, 2fr) 64px;
+    grid-template: auto/64px minmax(min-content, 2fr) 2.5fr minmax(min-content, 2fr) 64px;
   }
 }
 @media (min-width: 480px) {
@@ -6837,10 +6809,6 @@ mark.wp-note {
   .editor-header {
     flex-wrap: nowrap;
   }
-}
-
-.editor-header__back-button {
-  padding-right: 8px;
 }
 
 .editor-header__toolbar {
@@ -7738,7 +7706,7 @@ mark.wp-note {
 }
 @media (min-width: 782px) {
   body.is-fullscreen-mode .editor-post-publish-panel {
-    top: var(--wp-admin--admin-bar--height, 0);
+    top: 0;
   }
   [role=region]:focus .editor-post-publish-panel {
     transform: translateX(0%);

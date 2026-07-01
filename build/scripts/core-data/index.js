@@ -3273,16 +3273,6 @@ var wp;
       plural: "icons",
       key: "name",
       supportsPagination: false
-    },
-    {
-      label: (0, import_i18n.__)("Icon Collections"),
-      name: "iconCollection",
-      kind: "root",
-      baseURL: "/wp/v2/icon-collections",
-      baseURLParams: { context: "view" },
-      plural: "iconCollections",
-      key: "slug",
-      supportsPagination: false
     }
   ];
   var deprecatedEntities = {
@@ -5917,10 +5907,6 @@ var wp;
     dispatch3({ type: "SET_COLLABORATION_SUPPORTED", supported });
     if (!supported && hasSyncManager()) {
       getSyncManager().unloadAll();
-      dispatch3.__unstableNotifySyncUndoManagerChange({
-        hasUndo: false,
-        hasRedo: false
-      });
     }
   };
   function receiveViewConfig(kind, name, config) {
@@ -6290,8 +6276,7 @@ var wp;
             blocks: recordWithTransients.blocks
           });
         }
-        const syncManager2 = select4?.isCollaborationSupported?.() === false ? void 0 : getSyncManager();
-        void syncManager2?.load(
+        void getSyncManager()?.load(
           entityConfig.syncConfig,
           objectType,
           objectId,

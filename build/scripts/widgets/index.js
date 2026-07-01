@@ -1001,7 +1001,9 @@ var wp;
     {
       block: "core/html",
       widget: "custom_html",
-      transformBlock: ({ content }) => (0, import_blocks2.createBlock)("core/html", {}, [], [content])
+      transform: ({ content }) => ({
+        content
+      })
     },
     {
       block: "core/archives",
@@ -1144,7 +1146,7 @@ var wp;
         };
       }
     }
-  ].map(({ block, widget, transform, transformBlock }) => {
+  ].map(({ block, widget, transform }) => {
     return {
       type: "block",
       blocks: [block],
@@ -1152,7 +1154,7 @@ var wp;
         return idBase === widget && !!instance?.raw;
       },
       transform: ({ instance }) => {
-        const transformedBlock = transformBlock ? transformBlock(instance.raw) : (0, import_blocks2.createBlock)(
+        const transformedBlock = (0, import_blocks2.createBlock)(
           block,
           transform ? transform(instance.raw) : void 0
         );

@@ -1201,13 +1201,13 @@ var clsx_default = clsx;
 var import_element75 = __toESM(require_element(), 1);
 var import_compose13 = __toESM(require_compose(), 1);
 
-// node_modules/@base-ui/utils/safeReact.mjs
+// node_modules/@base-ui/utils/esm/safeReact.js
 var React2 = __toESM(require_react(), 1);
 var SafeReact = {
   ...React2
 };
 
-// node_modules/@base-ui/utils/useRefWithInit.mjs
+// node_modules/@base-ui/utils/esm/useRefWithInit.js
 var React3 = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init2, initArg) {
@@ -1218,7 +1218,7 @@ function useRefWithInit(init2, initArg) {
   return ref;
 }
 
-// node_modules/@base-ui/utils/useStableCallback.mjs
+// node_modules/@base-ui/utils/esm/useStableCallback.js
 var useInsertionEffect = SafeReact.useInsertionEffect;
 var useSafeInsertionEffect = (
   // React 17 doesn't have useInsertionEffect.
@@ -1251,13 +1251,13 @@ function assertNotCalled() {
   }
 }
 
-// node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
+// node_modules/@base-ui/utils/esm/useIsoLayoutEffect.js
 var React4 = __toESM(require_react(), 1);
 var noop = () => {
 };
 var useIsoLayoutEffect = typeof document !== "undefined" ? React4.useLayoutEffect : noop;
 
-// node_modules/@base-ui/utils/warn.mjs
+// node_modules/@base-ui/utils/esm/warn.js
 var set;
 if (true) {
   set = /* @__PURE__ */ new Set();
@@ -1272,7 +1272,7 @@ function warn(...messages) {
   }
 }
 
-// node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
+// node_modules/@base-ui/react/esm/internals/direction-context/DirectionContext.js
 var React5 = __toESM(require_react(), 1);
 var DirectionContext = /* @__PURE__ */ React5.createContext(void 0);
 if (true) DirectionContext.displayName = "DirectionContext";
@@ -1281,10 +1281,10 @@ function useDirection() {
   return context?.direction ?? "ltr";
 }
 
-// node_modules/@base-ui/react/internals/useRenderElement.mjs
+// node_modules/@base-ui/react/esm/internals/useRenderElement.js
 var React8 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/useMergedRefs.mjs
+// node_modules/@base-ui/utils/esm/useMergedRefs.js
 function useMergedRefs(a2, b2, c2, d2) {
   const forkRef = useRefWithInit(createForkRef).current;
   if (didChange(forkRef, a2, b2, c2, d2)) {
@@ -1373,17 +1373,17 @@ function update(forkRef, refs) {
   };
 }
 
-// node_modules/@base-ui/utils/getReactElementRef.mjs
+// node_modules/@base-ui/utils/esm/getReactElementRef.js
 var React7 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/reactVersion.mjs
+// node_modules/@base-ui/utils/esm/reactVersion.js
 var React6 = __toESM(require_react(), 1);
 var majorVersion = parseInt(React6.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
-// node_modules/@base-ui/utils/getReactElementRef.mjs
+// node_modules/@base-ui/utils/esm/getReactElementRef.js
 function getReactElementRef(element) {
   if (!/* @__PURE__ */ React7.isValidElement(element)) {
     return null;
@@ -1393,7 +1393,7 @@ function getReactElementRef(element) {
   return (isReactVersionAtLeast(19) ? propsWithRef?.ref : reactElement.ref) ?? null;
 }
 
-// node_modules/@base-ui/utils/mergeObjects.mjs
+// node_modules/@base-ui/utils/esm/mergeObjects.js
 function mergeObjects(a2, b2) {
   if (a2 && !b2) {
     return a2;
@@ -1410,13 +1410,13 @@ function mergeObjects(a2, b2) {
   return void 0;
 }
 
-// node_modules/@base-ui/utils/empty.mjs
+// node_modules/@base-ui/utils/esm/empty.js
 function NOOP() {
 }
 var EMPTY_ARRAY = Object.freeze([]);
 var EMPTY_OBJECT = Object.freeze({});
 
-// node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
+// node_modules/@base-ui/react/esm/internals/getStateAttributesProps.js
 function getStateAttributesProps(state, customMapping) {
   const props = {};
   for (const key in state) {
@@ -1437,17 +1437,17 @@ function getStateAttributesProps(state, customMapping) {
   return props;
 }
 
-// node_modules/@base-ui/react/utils/resolveClassName.mjs
+// node_modules/@base-ui/react/esm/utils/resolveClassName.js
 function resolveClassName(className, state) {
   return typeof className === "function" ? className(state) : className;
 }
 
-// node_modules/@base-ui/react/utils/resolveStyle.mjs
+// node_modules/@base-ui/react/esm/utils/resolveStyle.js
 function resolveStyle(style, state) {
   return typeof style === "function" ? style(state) : style;
 }
 
-// node_modules/@base-ui/react/merge-props/mergeProps.mjs
+// node_modules/@base-ui/react/esm/merge-props/mergeProps.js
 var EMPTY_PROPS = {};
 function mergeProps(a2, b2, c2, d2, e2) {
   if (!c2 && !d2 && !e2 && !a2) {
@@ -1602,7 +1602,7 @@ function isSyntheticEvent(event) {
   return event != null && typeof event === "object" && "nativeEvent" in event;
 }
 
-// node_modules/@base-ui/react/internals/useRenderElement.mjs
+// node_modules/@base-ui/react/esm/internals/useRenderElement.js
 var import_react = __toESM(require_react(), 1);
 function useRenderElement(element, componentProps, params = {}) {
   const renderProp = componentProps.render;
@@ -1720,35 +1720,7 @@ function renderTag(Tag, props) {
   return /* @__PURE__ */ React8.createElement(Tag, props);
 }
 
-// node_modules/@base-ui/utils/useId.mjs
-var React9 = __toESM(require_react(), 1);
-var globalId = 0;
-function useGlobalId(idOverride, prefix = "mui") {
-  const [defaultId, setDefaultId] = React9.useState(idOverride);
-  const id = idOverride || defaultId;
-  React9.useEffect(() => {
-    if (defaultId == null) {
-      globalId += 1;
-      setDefaultId(`${prefix}-${globalId}`);
-    }
-  }, [defaultId, prefix]);
-  return id;
-}
-var maybeReactUseId = SafeReact.useId;
-function useId(idOverride, prefix) {
-  if (maybeReactUseId !== void 0) {
-    const reactId = maybeReactUseId();
-    return idOverride ?? (prefix ? `${prefix}-${reactId}` : reactId);
-  }
-  return useGlobalId(idOverride, prefix);
-}
-
-// node_modules/@base-ui/react/internals/useBaseUiId.mjs
-function useBaseUiId(idOverride) {
-  return useId(idOverride, "base-ui");
-}
-
-// node_modules/@base-ui/react/internals/reason-parts.mjs
+// node_modules/@base-ui/react/esm/internals/reason-parts.js
 var reason_parts_exports = {};
 __export(reason_parts_exports, {
   cancelOpen: () => cancelOpen,
@@ -1823,7 +1795,7 @@ var imperativeAction = "imperative-action";
 var swipe = "swipe";
 var windowResize = "window-resize";
 
-// node_modules/@base-ui/react/internals/createBaseUIEventDetails.mjs
+// node_modules/@base-ui/react/esm/internals/createBaseUIEventDetails.js
 function createChangeEventDetails(reason, event, trigger, customProperties) {
   let canceled = false;
   let allowPropagation = false;
@@ -1849,17 +1821,45 @@ function createChangeEventDetails(reason, event, trigger, customProperties) {
   return details;
 }
 
-// node_modules/@base-ui/react/internals/useTransitionStatus.mjs
+// node_modules/@base-ui/utils/esm/useId.js
+var React9 = __toESM(require_react(), 1);
+var globalId = 0;
+function useGlobalId(idOverride, prefix = "mui") {
+  const [defaultId, setDefaultId] = React9.useState(idOverride);
+  const id = idOverride || defaultId;
+  React9.useEffect(() => {
+    if (defaultId == null) {
+      globalId += 1;
+      setDefaultId(`${prefix}-${globalId}`);
+    }
+  }, [defaultId, prefix]);
+  return id;
+}
+var maybeReactUseId = SafeReact.useId;
+function useId(idOverride, prefix) {
+  if (maybeReactUseId !== void 0) {
+    const reactId = maybeReactUseId();
+    return idOverride ?? (prefix ? `${prefix}-${reactId}` : reactId);
+  }
+  return useGlobalId(idOverride, prefix);
+}
+
+// node_modules/@base-ui/react/esm/internals/useBaseUiId.js
+function useBaseUiId(idOverride) {
+  return useId(idOverride, "base-ui");
+}
+
+// node_modules/@base-ui/react/esm/internals/useTransitionStatus.js
 var React11 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/useOnMount.mjs
+// node_modules/@base-ui/utils/esm/useOnMount.js
 var React10 = __toESM(require_react(), 1);
 var EMPTY = [];
 function useOnMount(fn) {
   React10.useEffect(fn, EMPTY);
 }
 
-// node_modules/@base-ui/utils/useAnimationFrame.mjs
+// node_modules/@base-ui/utils/esm/useAnimationFrame.js
 var EMPTY2 = null;
 var LAST_RAF = globalThis.requestAnimationFrame;
 var Scheduler = class {
@@ -1947,7 +1947,7 @@ function useAnimationFrame() {
   return timeout;
 }
 
-// node_modules/@base-ui/react/internals/useTransitionStatus.mjs
+// node_modules/@base-ui/react/esm/internals/useTransitionStatus.js
 function useTransitionStatus(open, enableIdleState = false, deferEndingState = false) {
   const [transitionStatus, setTransitionStatus] = React11.useState(open && enableIdleState ? "idle" : void 0);
   const [mounted, setMounted] = React11.useState(open);
@@ -2004,7 +2004,7 @@ function useTransitionStatus(open, enableIdleState = false, deferEndingState = f
   };
 }
 
-// node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
+// node_modules/@base-ui/react/esm/internals/stateAttributesMapping.js
 var TransitionStatusDataAttributes = /* @__PURE__ */ (function(TransitionStatusDataAttributes2) {
   TransitionStatusDataAttributes2["startingStyle"] = "data-starting-style";
   TransitionStatusDataAttributes2["endingStyle"] = "data-ending-style";
@@ -2184,293 +2184,70 @@ function getFrameElement(win) {
   return win.parent && Object.getPrototypeOf(win.parent) ? win.frameElement : null;
 }
 
-// node_modules/@base-ui/utils/addEventListener.mjs
-function addEventListener(target, type, listener, options) {
-  target.addEventListener(type, listener, options);
-  return () => {
-    target.removeEventListener(type, listener, options);
-  };
-}
-
-// node_modules/@base-ui/utils/useValueAsRef.mjs
-function useValueAsRef(value) {
-  const latest = useRefWithInit(createLatestRef, value).current;
-  latest.next = value;
-  useIsoLayoutEffect(latest.effect);
-  return latest;
-}
-function createLatestRef(value) {
-  const latest = {
-    current: value,
-    next: value,
-    effect: () => {
-      latest.current = latest.next;
-    }
-  };
-  return latest;
-}
-
-// node_modules/@base-ui/utils/owner.mjs
-function ownerDocument(node) {
-  return node?.ownerDocument || document;
-}
-
-// node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-var React12 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-var ReactDOM = __toESM(require_react_dom(), 1);
-
-// node_modules/@base-ui/react/utils/resolveRef.mjs
-function resolveRef(maybeRef) {
-  if (maybeRef == null) {
-    return maybeRef;
-  }
-  return "current" in maybeRef ? maybeRef.current : maybeRef;
-}
-
-// node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, treatAbortedAsFinished = true) {
-  const frame = useAnimationFrame();
-  return useStableCallback((fnToExecute, signal = null) => {
-    frame.cancel();
-    const element = resolveRef(elementOrRef);
-    if (element == null) {
-      return;
-    }
-    const resolvedElement = element;
-    const done = () => {
-      ReactDOM.flushSync(fnToExecute);
-    };
-    if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
-      fnToExecute();
-      return;
-    }
-    function exec() {
-      Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
-        if (!signal?.aborted) {
-          done();
-        }
-      }).catch(() => {
-        if (treatAbortedAsFinished) {
-          if (!signal?.aborted) {
-            done();
-          }
-          return;
-        }
-        const currentAnimations = resolvedElement.getAnimations();
-        if (!signal?.aborted && currentAnimations.length > 0 && currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
-          exec();
-        }
-      });
-    }
-    if (waitForStartingStyleRemoved) {
-      const startingStyleAttribute = TransitionStatusDataAttributes.startingStyle;
-      if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-        frame.request(exec);
-        return;
-      }
-      const attributeObserver = new MutationObserver(() => {
-        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-          attributeObserver.disconnect();
-          exec();
-        }
-      });
-      attributeObserver.observe(resolvedElement, {
-        attributes: true,
-        attributeFilter: [startingStyleAttribute]
-      });
-      signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
-        once: true
-      });
-      return;
-    }
-    frame.request(exec);
-  });
-}
-
-// node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-function useOpenChangeComplete(parameters) {
-  const {
-    enabled = true,
-    open,
-    ref,
-    onComplete: onCompleteParam
-  } = parameters;
-  const onComplete = useStableCallback(onCompleteParam);
-  const runOnceAnimationsFinish = useAnimationsFinished(ref, open, false);
-  React12.useEffect(() => {
-    if (!enabled) {
-      return void 0;
-    }
-    const abortController = new AbortController();
-    runOnceAnimationsFinish(onComplete, abortController.signal);
-    return () => {
-      abortController.abort();
-    };
-  }, [enabled, open, onComplete, runOnceAnimationsFinish]);
-}
-
-// node_modules/@base-ui/utils/useOnFirstRender.mjs
-var React13 = __toESM(require_react(), 1);
-function useOnFirstRender(fn) {
-  const ref = React13.useRef(true);
-  if (ref.current) {
-    ref.current = false;
-    fn();
-  }
-}
-
-// node_modules/@base-ui/utils/platform/parts.mjs
-var parts_exports = {};
-__export(parts_exports, {
-  engine: () => engine_exports,
-  env: () => env_exports,
-  os: () => os_exports,
-  screenReader: () => screen_reader_exports
-});
-
-// node_modules/@base-ui/utils/platform/os.mjs
-var os_exports = {};
-__export(os_exports, {
-  android: () => android,
-  apple: () => apple,
-  ios: () => ios,
-  linux: () => linux,
-  mac: () => mac,
-  windows: () => windows
-});
-
-// node_modules/@base-ui/utils/platform/shared.mjs
-function readRawData() {
-  if (typeof navigator === "undefined") {
+// node_modules/@base-ui/utils/esm/detectBrowser.js
+var hasNavigator = typeof navigator !== "undefined";
+var nav = getNavigatorData();
+var platform = getPlatform();
+var userAgent = getUserAgent();
+var isWebKit2 = typeof CSS === "undefined" || !CSS.supports ? false : CSS.supports("-webkit-backdrop-filter:none");
+var isIOS = (
+  // iPads can claim to be MacIntel
+  nav.platform === "MacIntel" && nav.maxTouchPoints > 1 ? true : /iP(hone|ad|od)|iOS/.test(nav.platform)
+);
+var isFirefox = hasNavigator && /firefox/i.test(userAgent);
+var isSafari = hasNavigator && /apple/i.test(navigator.vendor);
+var isEdge = hasNavigator && /Edg/i.test(userAgent);
+var isAndroid = hasNavigator && /android/i.test(platform) || /android/i.test(userAgent);
+var isMac = hasNavigator && platform.toLowerCase().startsWith("mac") && !navigator.maxTouchPoints;
+var isJSDOM = userAgent.includes("jsdom/");
+function getNavigatorData() {
+  if (!hasNavigator) {
     return {
-      userAgent: "",
       platform: "",
-      maxTouchPoints: 0
+      maxTouchPoints: -1
     };
   }
-  if (true) {
-    const uaData = navigator.userAgentData;
-    if (uaData && Array.isArray(uaData.brands)) {
-      return {
-        userAgent: uaData.brands.map(({
-          brand,
-          version: version2
-        }) => `${brand}/${version2}`).join(" "),
-        platform: uaData.platform ?? navigator.platform ?? "",
-        maxTouchPoints: navigator.maxTouchPoints ?? 0
-      };
-    }
+  const uaData = navigator.userAgentData;
+  if (uaData?.platform) {
+    return {
+      platform: uaData.platform,
+      maxTouchPoints: navigator.maxTouchPoints
+    };
   }
   return {
-    userAgent: navigator.userAgent,
     platform: navigator.platform ?? "",
-    maxTouchPoints: navigator.maxTouchPoints ?? 0
+    maxTouchPoints: navigator.maxTouchPoints ?? -1
   };
 }
-var {
-  userAgent,
-  platform,
-  maxTouchPoints
-} = readRawData();
-var lowerUserAgent = userAgent.toLowerCase();
-var lowerPlatform = platform.toLowerCase();
-
-// node_modules/@base-ui/utils/platform/os.mjs
-var ios = /^i(os$|p)/.test(lowerPlatform) || lowerPlatform === "macintel" && maxTouchPoints > 1;
-var ANDROID_STRING = "android";
-var android = lowerPlatform === ANDROID_STRING || lowerUserAgent.includes(ANDROID_STRING);
-var mac = !ios && lowerPlatform.startsWith("mac");
-var windows = lowerPlatform.startsWith("win");
-var linux = !android && /^(linux|chrome os)/.test(lowerPlatform);
-var apple = mac || ios;
-
-// node_modules/@base-ui/utils/platform/engine.mjs
-var engine_exports = {};
-__export(engine_exports, {
-  blink: () => blink,
-  gecko: () => gecko,
-  webkit: () => webkit
-});
-var webkit = typeof CSS !== "undefined" && !!CSS.supports?.("-webkit-backdrop-filter:none");
-var gecko = !webkit && lowerUserAgent.includes("firefox");
-var blink = !webkit && lowerUserAgent.includes("chrom");
-
-// node_modules/@base-ui/utils/platform/screen-reader.mjs
-var screen_reader_exports = {};
-__export(screen_reader_exports, {
-  voiceOver: () => voiceOver
-});
-var voiceOver = apple;
-
-// node_modules/@base-ui/utils/platform/env.mjs
-var env_exports = {};
-__export(env_exports, {
-  jsdom: () => jsdom
-});
-var jsdom = /jsdom|happydom/.test(lowerUserAgent);
-
-// node_modules/@base-ui/utils/useTimeout.mjs
-var EMPTY3 = 0;
-var Timeout = class _Timeout {
-  static create() {
-    return new _Timeout();
+function getUserAgent() {
+  if (!hasNavigator) {
+    return "";
   }
-  currentId = EMPTY3;
-  /**
-   * Executes `fn` after `delay`, clearing any previously scheduled call.
-   */
-  start(delay, fn) {
-    this.clear();
-    this.currentId = setTimeout(() => {
-      this.currentId = EMPTY3;
-      fn();
-    }, delay);
+  const uaData = navigator.userAgentData;
+  if (uaData && Array.isArray(uaData.brands)) {
+    return uaData.brands.map(({
+      brand,
+      version: version2
+    }) => `${brand}/${version2}`).join(" ");
   }
-  isStarted() {
-    return this.currentId !== EMPTY3;
+  return navigator.userAgent;
+}
+function getPlatform() {
+  if (!hasNavigator) {
+    return "";
   }
-  clear = () => {
-    if (this.currentId !== EMPTY3) {
-      clearTimeout(this.currentId);
-      this.currentId = EMPTY3;
-    }
-  };
-  disposeEffect = () => {
-    return this.clear;
-  };
-};
-function useTimeout() {
-  const timeout = useRefWithInit(Timeout.create).current;
-  useOnMount(timeout.disposeEffect);
-  return timeout;
+  const uaData = navigator.userAgentData;
+  if (uaData?.platform) {
+    return uaData.platform;
+  }
+  return navigator.platform ?? "";
 }
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
-var React14 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/react/floating-ui-react/utils/event.mjs
-function isReactEvent(event) {
-  return "nativeEvent" in event;
-}
-function isMouseLikePointerType(pointerType, strict) {
-  const values = ["mouse", "pen"];
-  if (!strict) {
-    values.push("", void 0);
-  }
-  return values.includes(pointerType);
-}
-function isClickLikeEvent(event) {
-  const type = event.type;
-  return type === "click" || type === "mousedown" || type === "keydown" || type === "keyup";
-}
-
-// node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/constants.js
 var FOCUSABLE_ATTRIBUTE = "data-base-ui-focusable";
 var TYPEABLE_SELECTOR = "input:not([type='hidden']):not([disabled]),[contenteditable]:not([contenteditable='false']),textarea:not([disabled])";
 
-// node_modules/@base-ui/react/internals/shadowDom.mjs
+// node_modules/@base-ui/react/esm/internals/shadowDom.js
 function activeElement(doc) {
   let element = doc.activeElement;
   while (element?.shadowRoot?.activeElement != null) {
@@ -2504,7 +2281,7 @@ function getTarget(event) {
   return event.target;
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/element.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/element.js
 function isTargetInsideEnabledTrigger(target, triggerElements) {
   if (!isElement(target)) {
     return false;
@@ -2540,7 +2317,7 @@ function isInteractiveElement(element) {
   return element?.closest(`button,a[href],[role="button"],select,[tabindex]:not([tabindex="-1"]),${TYPEABLE_SELECTOR}`) != null;
 }
 function matchesFocusVisible(element) {
-  if (!element || parts_exports.env.jsdom) {
+  if (!element || isJSDOM) {
     return true;
   }
   try {
@@ -2550,263 +2327,27 @@ function matchesFocusVisible(element) {
   }
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverShared.mjs
-function resolveValue(value, pointerType) {
-  if (pointerType != null && !isMouseLikePointerType(pointerType)) {
-    return 0;
-  }
-  if (typeof value === "function") {
-    return value();
-  }
-  return value;
-}
-function getDelay(value, prop, pointerType) {
-  const result = resolveValue(value, pointerType);
-  if (typeof result === "number") {
-    return result;
-  }
-  return result?.[prop];
-}
-function getRestMs(value) {
-  if (typeof value === "function") {
-    return value();
-  }
-  return value;
-}
-function isClickLikeOpenEvent(openEventType, interactedInside) {
-  return interactedInside || openEventType === "click" || openEventType === "mousedown";
-}
-function isHoverOpenEvent(openEventType) {
-  return openEventType?.includes("mouse") && openEventType !== "mousedown";
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/nodes.js
+function getNodeChildren(nodes, id, onlyOpenChildren = true) {
+  const directChildren = nodes.filter((node) => node.parentId === id);
+  return directChildren.flatMap((child) => [...!onlyOpenChildren || child.context?.open ? [child] : [], ...getNodeChildren(nodes, child.id, onlyOpenChildren)]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
-var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-var FloatingDelayGroupContext = /* @__PURE__ */ React14.createContext({
-  hasProvider: false,
-  timeoutMs: 0,
-  delayRef: {
-    current: 0
-  },
-  initialDelayRef: {
-    current: 0
-  },
-  timeout: new Timeout(),
-  currentIdRef: {
-    current: null
-  },
-  currentContextRef: {
-    current: null
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/event.js
+function isReactEvent(event) {
+  return "nativeEvent" in event;
+}
+function isMouseLikePointerType(pointerType, strict) {
+  const values = ["mouse", "pen"];
+  if (!strict) {
+    values.push("", void 0);
   }
-});
-if (true) FloatingDelayGroupContext.displayName = "FloatingDelayGroupContext";
-function resetDelayRef(delayRef, initialDelayRef) {
-  delayRef.current = initialDelayRef.current;
+  return values.includes(pointerType);
 }
-function FloatingDelayGroup(props) {
-  const {
-    children,
-    delay,
-    timeoutMs = 0
-  } = props;
-  const delayRef = React14.useRef(delay);
-  const initialDelayRef = React14.useRef(delay);
-  const currentIdRef = React14.useRef(null);
-  const currentContextRef = React14.useRef(null);
-  const timeout = useTimeout();
-  useIsoLayoutEffect(() => {
-    initialDelayRef.current = delay;
-    if (!currentIdRef.current) {
-      delayRef.current = delay;
-      return;
-    }
-    delayRef.current = {
-      open: getDelay(delayRef.current, "open"),
-      close: getDelay(delay, "close")
-    };
-  }, [delay, currentIdRef, delayRef, initialDelayRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FloatingDelayGroupContext.Provider, {
-    value: React14.useMemo(() => ({
-      hasProvider: true,
-      delayRef,
-      initialDelayRef,
-      currentIdRef,
-      timeoutMs,
-      currentContextRef,
-      timeout
-    }), [timeoutMs, timeout]),
-    children
-  });
+function isClickLikeEvent(event) {
+  const type = event.type;
+  return type === "click" || type === "mousedown" || type === "keydown" || type === "keyup";
 }
-function useDelayGroup(context, options = {
-  open: false
-}) {
-  const {
-    open
-  } = options;
-  const store = "rootStore" in context ? context.rootStore : context;
-  const floatingId = store.useState("floatingId");
-  const groupContext = React14.useContext(FloatingDelayGroupContext);
-  const {
-    currentIdRef,
-    delayRef,
-    timeoutMs,
-    initialDelayRef,
-    currentContextRef,
-    hasProvider,
-    timeout
-  } = groupContext;
-  const [isInstantPhase, setIsInstantPhase] = React14.useState(false);
-  const openRef = React14.useRef(open);
-  const isUnmountedRef = React14.useRef(false);
-  useIsoLayoutEffect(() => {
-    openRef.current = open;
-  }, [open]);
-  useIsoLayoutEffect(() => {
-    return () => {
-      isUnmountedRef.current = true;
-    };
-  }, []);
-  useIsoLayoutEffect(() => {
-    function unset() {
-      if (!isUnmountedRef.current) {
-        setIsInstantPhase(false);
-      }
-      currentContextRef.current?.setIsInstantPhase(false);
-      currentIdRef.current = null;
-      currentContextRef.current = null;
-      delayRef.current = initialDelayRef.current;
-      timeout.clear();
-    }
-    if (!currentIdRef.current) {
-      return void 0;
-    }
-    if (!open && currentIdRef.current === floatingId) {
-      setIsInstantPhase(false);
-      if (timeoutMs) {
-        const closingId = floatingId;
-        timeout.start(timeoutMs, () => {
-          if (store.select("open") || currentIdRef.current && currentIdRef.current !== closingId) {
-            return;
-          }
-          unset();
-        });
-        return () => {
-          if (openRef.current || currentIdRef.current !== closingId) {
-            timeout.clear();
-          }
-        };
-      }
-      unset();
-    }
-    return void 0;
-  }, [open, floatingId, currentIdRef, delayRef, timeoutMs, initialDelayRef, currentContextRef, timeout, store]);
-  useIsoLayoutEffect(() => {
-    if (!open) {
-      return;
-    }
-    const prevContext = currentContextRef.current;
-    const prevId = currentIdRef.current;
-    timeout.clear();
-    currentContextRef.current = {
-      onOpenChange: store.setOpen,
-      setIsInstantPhase
-    };
-    currentIdRef.current = floatingId;
-    delayRef.current = {
-      open: 0,
-      close: getDelay(initialDelayRef.current, "close")
-    };
-    if (prevId !== null && prevId !== floatingId) {
-      setIsInstantPhase(true);
-      prevContext?.setIsInstantPhase(true);
-      prevContext?.onOpenChange(false, createChangeEventDetails(reason_parts_exports.none));
-    } else {
-      setIsInstantPhase(false);
-      prevContext?.setIsInstantPhase(false);
-    }
-  }, [open, floatingId, store, currentIdRef, delayRef, initialDelayRef, currentContextRef, timeout]);
-  useIsoLayoutEffect(() => {
-    return () => {
-      if (currentIdRef.current === floatingId) {
-        currentContextRef.current = null;
-        if (!openRef.current) {
-          return;
-        }
-        currentIdRef.current = null;
-        resetDelayRef(delayRef, initialDelayRef);
-        timeout.clear();
-      }
-    };
-  }, [currentContextRef, currentIdRef, delayRef, floatingId, initialDelayRef, timeout]);
-  return React14.useMemo(() => ({
-    hasProvider,
-    delayRef,
-    isInstantPhase
-  }), [hasProvider, delayRef, isInstantPhase]);
-}
-
-// node_modules/@base-ui/utils/mergeCleanups.mjs
-function mergeCleanups(...cleanups) {
-  return () => {
-    for (let i2 = 0; i2 < cleanups.length; i2 += 1) {
-      const cleanup = cleanups[i2];
-      if (cleanup) {
-        cleanup();
-      }
-    }
-  };
-}
-
-// node_modules/@base-ui/react/utils/FocusGuard.mjs
-var React15 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/utils/visuallyHidden.mjs
-var visuallyHiddenBase = {
-  clipPath: "inset(50%)",
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  border: 0,
-  padding: 0,
-  width: 1,
-  height: 1,
-  margin: -1
-};
-var visuallyHidden = {
-  ...visuallyHiddenBase,
-  position: "fixed",
-  top: 0,
-  left: 0
-};
-var visuallyHiddenInput = {
-  ...visuallyHiddenBase,
-  position: "absolute"
-};
-
-// node_modules/@base-ui/react/utils/FocusGuard.mjs
-var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-var FocusGuard = /* @__PURE__ */ React15.forwardRef(function FocusGuard2(props, ref) {
-  const [role, setRole] = React15.useState();
-  useIsoLayoutEffect(() => {
-    if (parts_exports.screenReader.voiceOver && parts_exports.engine.webkit) {
-      setRole("button");
-    }
-  }, []);
-  const restProps = {
-    tabIndex: 0,
-    // Role is only for VoiceOver
-    role
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", {
-    ...props,
-    ref,
-    style: visuallyHidden,
-    "aria-hidden": role ? void 0 : true,
-    ...restProps,
-    "data-base-ui-focus-guard": ""
-  });
-});
-if (true) FocusGuard.displayName = "FocusGuard";
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs
 var sides = ["top", "right", "bottom", "left"];
@@ -2937,7 +2478,7 @@ function rectToClientRect(rect) {
   };
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/composite.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/composite.js
 function isHiddenByStyles(styles) {
   return styles.visibility === "hidden" || styles.visibility === "collapse";
 }
@@ -2951,7 +2492,12 @@ function isElementVisible(element, styles = element ? getComputedStyle2(element)
   return styles.display !== "none" && styles.display !== "contents";
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/tabbable.mjs
+// node_modules/@base-ui/utils/esm/owner.js
+function ownerDocument(node) {
+  return node?.ownerDocument || document;
+}
+
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/tabbable.js
 var CANDIDATE_SELECTOR = 'a[href],button,input,select,textarea,summary,details,iframe,object,embed,[tabindex],[contenteditable]:not([contenteditable="false"]),audio[controls],video[controls]';
 function getParentElement(element) {
   const assignedSlot = element.assignedSlot;
@@ -3119,22 +2665,408 @@ function enableFocusInside(container) {
   });
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/nodes.mjs
-function getNodeChildren(nodes, id, onlyOpenChildren = true) {
-  const directChildren = nodes.filter((node) => node.parentId === id);
-  return directChildren.flatMap((child) => [...!onlyOpenChildren || child.context?.open ? [child] : [], ...getNodeChildren(nodes, child.id, onlyOpenChildren)]);
+// node_modules/@base-ui/utils/esm/addEventListener.js
+function addEventListener(target, type, listener, options) {
+  target.addEventListener(type, listener, options);
+  return () => {
+    target.removeEventListener(type, listener, options);
+  };
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/createAttribute.mjs
+// node_modules/@base-ui/utils/esm/useValueAsRef.js
+function useValueAsRef(value) {
+  const latest = useRefWithInit(createLatestRef, value).current;
+  latest.next = value;
+  useIsoLayoutEffect(latest.effect);
+  return latest;
+}
+function createLatestRef(value) {
+  const latest = {
+    current: value,
+    next: value,
+    effect: () => {
+      latest.current = latest.next;
+    }
+  };
+  return latest;
+}
+
+// node_modules/@base-ui/react/esm/internals/useOpenChangeComplete.js
+var React12 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/react/esm/internals/useAnimationsFinished.js
+var ReactDOM = __toESM(require_react_dom(), 1);
+
+// node_modules/@base-ui/react/esm/utils/resolveRef.js
+function resolveRef(maybeRef) {
+  if (maybeRef == null) {
+    return maybeRef;
+  }
+  return "current" in maybeRef ? maybeRef.current : maybeRef;
+}
+
+// node_modules/@base-ui/react/esm/internals/useAnimationsFinished.js
+function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, treatAbortedAsFinished = true) {
+  const frame = useAnimationFrame();
+  return useStableCallback((fnToExecute, signal = null) => {
+    frame.cancel();
+    const element = resolveRef(elementOrRef);
+    if (element == null) {
+      return;
+    }
+    const resolvedElement = element;
+    const done = () => {
+      ReactDOM.flushSync(fnToExecute);
+    };
+    if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
+      fnToExecute();
+      return;
+    }
+    function exec() {
+      Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
+        if (!signal?.aborted) {
+          done();
+        }
+      }).catch(() => {
+        if (treatAbortedAsFinished) {
+          if (!signal?.aborted) {
+            done();
+          }
+          return;
+        }
+        const currentAnimations = resolvedElement.getAnimations();
+        if (!signal?.aborted && currentAnimations.length > 0 && currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
+          exec();
+        }
+      });
+    }
+    if (waitForStartingStyleRemoved) {
+      const startingStyleAttribute = TransitionStatusDataAttributes.startingStyle;
+      if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+        frame.request(exec);
+        return;
+      }
+      const attributeObserver = new MutationObserver(() => {
+        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+          attributeObserver.disconnect();
+          exec();
+        }
+      });
+      attributeObserver.observe(resolvedElement, {
+        attributes: true,
+        attributeFilter: [startingStyleAttribute]
+      });
+      signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
+        once: true
+      });
+      return;
+    }
+    frame.request(exec);
+  });
+}
+
+// node_modules/@base-ui/react/esm/internals/useOpenChangeComplete.js
+function useOpenChangeComplete(parameters) {
+  const {
+    enabled = true,
+    open,
+    ref,
+    onComplete: onCompleteParam
+  } = parameters;
+  const onComplete = useStableCallback(onCompleteParam);
+  const runOnceAnimationsFinish = useAnimationsFinished(ref, open, false);
+  React12.useEffect(() => {
+    if (!enabled) {
+      return void 0;
+    }
+    const abortController = new AbortController();
+    runOnceAnimationsFinish(onComplete, abortController.signal);
+    return () => {
+      abortController.abort();
+    };
+  }, [enabled, open, onComplete, runOnceAnimationsFinish]);
+}
+
+// node_modules/@base-ui/utils/esm/useOnFirstRender.js
+var React13 = __toESM(require_react(), 1);
+function useOnFirstRender(fn) {
+  const ref = React13.useRef(true);
+  if (ref.current) {
+    ref.current = false;
+    fn();
+  }
+}
+
+// node_modules/@base-ui/utils/esm/useTimeout.js
+var EMPTY3 = 0;
+var Timeout = class _Timeout {
+  static create() {
+    return new _Timeout();
+  }
+  currentId = EMPTY3;
+  /**
+   * Executes `fn` after `delay`, clearing any previously scheduled call.
+   */
+  start(delay, fn) {
+    this.clear();
+    this.currentId = setTimeout(() => {
+      this.currentId = EMPTY3;
+      fn();
+    }, delay);
+  }
+  isStarted() {
+    return this.currentId !== EMPTY3;
+  }
+  clear = () => {
+    if (this.currentId !== EMPTY3) {
+      clearTimeout(this.currentId);
+      this.currentId = EMPTY3;
+    }
+  };
+  disposeEffect = () => {
+    return this.clear;
+  };
+};
+function useTimeout() {
+  const timeout = useRefWithInit(Timeout.create).current;
+  useOnMount(timeout.disposeEffect);
+  return timeout;
+}
+
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingDelayGroup.js
+var React14 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverShared.js
+function resolveValue(value, pointerType) {
+  if (pointerType != null && !isMouseLikePointerType(pointerType)) {
+    return 0;
+  }
+  if (typeof value === "function") {
+    return value();
+  }
+  return value;
+}
+function getDelay(value, prop, pointerType) {
+  const result = resolveValue(value, pointerType);
+  if (typeof result === "number") {
+    return result;
+  }
+  return result?.[prop];
+}
+function getRestMs(value) {
+  if (typeof value === "function") {
+    return value();
+  }
+  return value;
+}
+function isClickLikeOpenEvent(openEventType, interactedInside) {
+  return interactedInside || openEventType === "click" || openEventType === "mousedown";
+}
+function isHoverOpenEvent(openEventType) {
+  return openEventType?.includes("mouse") && openEventType !== "mousedown";
+}
+
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingDelayGroup.js
+var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+var FloatingDelayGroupContext = /* @__PURE__ */ React14.createContext({
+  hasProvider: false,
+  timeoutMs: 0,
+  delayRef: {
+    current: 0
+  },
+  initialDelayRef: {
+    current: 0
+  },
+  timeout: new Timeout(),
+  currentIdRef: {
+    current: null
+  },
+  currentContextRef: {
+    current: null
+  }
+});
+if (true) FloatingDelayGroupContext.displayName = "FloatingDelayGroupContext";
+function FloatingDelayGroup(props) {
+  const {
+    children,
+    delay,
+    timeoutMs = 0
+  } = props;
+  const delayRef = React14.useRef(delay);
+  const initialDelayRef = React14.useRef(delay);
+  const currentIdRef = React14.useRef(null);
+  const currentContextRef = React14.useRef(null);
+  const timeout = useTimeout();
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FloatingDelayGroupContext.Provider, {
+    value: React14.useMemo(() => ({
+      hasProvider: true,
+      delayRef,
+      initialDelayRef,
+      currentIdRef,
+      timeoutMs,
+      currentContextRef,
+      timeout
+    }), [timeoutMs, timeout]),
+    children
+  });
+}
+function useDelayGroup(context, options = {
+  open: false
+}) {
+  const {
+    open
+  } = options;
+  const store = "rootStore" in context ? context.rootStore : context;
+  const floatingId = store.useState("floatingId");
+  const groupContext = React14.useContext(FloatingDelayGroupContext);
+  const {
+    currentIdRef,
+    delayRef,
+    timeoutMs,
+    initialDelayRef,
+    currentContextRef,
+    hasProvider,
+    timeout
+  } = groupContext;
+  const [isInstantPhase, setIsInstantPhase] = React14.useState(false);
+  useIsoLayoutEffect(() => {
+    function unset() {
+      setIsInstantPhase(false);
+      currentContextRef.current?.setIsInstantPhase(false);
+      currentIdRef.current = null;
+      currentContextRef.current = null;
+      delayRef.current = initialDelayRef.current;
+    }
+    if (!currentIdRef.current) {
+      return void 0;
+    }
+    if (!open && currentIdRef.current === floatingId) {
+      setIsInstantPhase(false);
+      if (timeoutMs) {
+        const closingId = floatingId;
+        timeout.start(timeoutMs, () => {
+          if (store.select("open") || currentIdRef.current && currentIdRef.current !== closingId) {
+            return;
+          }
+          unset();
+        });
+        return () => {
+          timeout.clear();
+        };
+      }
+      unset();
+    }
+    return void 0;
+  }, [open, floatingId, currentIdRef, delayRef, timeoutMs, initialDelayRef, currentContextRef, timeout, store]);
+  useIsoLayoutEffect(() => {
+    if (!open) {
+      return;
+    }
+    const prevContext = currentContextRef.current;
+    const prevId = currentIdRef.current;
+    timeout.clear();
+    currentContextRef.current = {
+      onOpenChange: store.setOpen,
+      setIsInstantPhase
+    };
+    currentIdRef.current = floatingId;
+    delayRef.current = {
+      open: 0,
+      close: getDelay(initialDelayRef.current, "close")
+    };
+    if (prevId !== null && prevId !== floatingId) {
+      setIsInstantPhase(true);
+      prevContext?.setIsInstantPhase(true);
+      prevContext?.onOpenChange(false, createChangeEventDetails(reason_parts_exports.none));
+    } else {
+      setIsInstantPhase(false);
+      prevContext?.setIsInstantPhase(false);
+    }
+  }, [open, floatingId, store, currentIdRef, delayRef, initialDelayRef, currentContextRef, timeout]);
+  useIsoLayoutEffect(() => {
+    return () => {
+      currentContextRef.current = null;
+    };
+  }, [currentContextRef]);
+  return React14.useMemo(() => ({
+    hasProvider,
+    delayRef,
+    isInstantPhase
+  }), [hasProvider, delayRef, isInstantPhase]);
+}
+
+// node_modules/@base-ui/utils/esm/mergeCleanups.js
+function mergeCleanups(...cleanups) {
+  return () => {
+    for (let i2 = 0; i2 < cleanups.length; i2 += 1) {
+      const cleanup = cleanups[i2];
+      if (cleanup) {
+        cleanup();
+      }
+    }
+  };
+}
+
+// node_modules/@base-ui/react/esm/utils/FocusGuard.js
+var React15 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/utils/esm/visuallyHidden.js
+var visuallyHiddenBase = {
+  clipPath: "inset(50%)",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  border: 0,
+  padding: 0,
+  width: 1,
+  height: 1,
+  margin: -1
+};
+var visuallyHidden = {
+  ...visuallyHiddenBase,
+  position: "fixed",
+  top: 0,
+  left: 0
+};
+var visuallyHiddenInput = {
+  ...visuallyHiddenBase,
+  position: "absolute"
+};
+
+// node_modules/@base-ui/react/esm/utils/FocusGuard.js
+var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+var FocusGuard = /* @__PURE__ */ React15.forwardRef(function FocusGuard2(props, ref) {
+  const [role, setRole] = React15.useState();
+  useIsoLayoutEffect(() => {
+    if (isSafari) {
+      setRole("button");
+    }
+  }, []);
+  const restProps = {
+    tabIndex: 0,
+    // Role is only for VoiceOver
+    role
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", {
+    ...props,
+    ref,
+    style: visuallyHidden,
+    "aria-hidden": role ? void 0 : true,
+    ...restProps,
+    "data-base-ui-focus-guard": ""
+  });
+});
+if (true) FocusGuard.displayName = "FocusGuard";
+
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/createAttribute.js
 function createAttribute(name) {
   return `data-base-ui-${name}`;
 }
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingPortal.js
 var React16 = __toESM(require_react(), 1);
 var ReactDOM2 = __toESM(require_react_dom(), 1);
 
-// node_modules/@base-ui/react/internals/constants.mjs
+// node_modules/@base-ui/react/esm/internals/constants.js
 var DISABLED_TRANSITIONS_STYLE = {
   style: {
     transition: "none"
@@ -3154,7 +3086,7 @@ var ownerVisuallyHidden = {
   left: 0
 };
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingPortal.js
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
 var PortalContext = /* @__PURE__ */ React16.createContext(null);
 if (true) PortalContext.displayName = "PortalContext";
@@ -3265,8 +3197,8 @@ var FloatingPortal = /* @__PURE__ */ React16.forwardRef(function FloatingPortal2
     }
     return mergeCleanups(addEventListener(portalNode, "focusin", onFocus, true), addEventListener(portalNode, "focusout", onFocus, true));
   }, [portalNode, modal]);
-  useIsoLayoutEffect(() => {
-    if (!portalNode || open !== true || !focusInsideDisabledRef.current) {
+  React16.useEffect(() => {
+    if (!portalNode || open !== false) {
       return;
     }
     enableFocusInside(portalNode);
@@ -3319,10 +3251,10 @@ var FloatingPortal = /* @__PURE__ */ React16.forwardRef(function FloatingPortal2
 });
 if (true) FloatingPortal.displayName = "FloatingPortal";
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingTree.js
 var React17 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/floating-ui-react/utils/createEventEmitter.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/createEventEmitter.js
 function createEventEmitter() {
   const map = /* @__PURE__ */ new Map();
   return {
@@ -3341,7 +3273,7 @@ function createEventEmitter() {
   };
 }
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingTree.js
 var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
 var FloatingNodeContext = /* @__PURE__ */ React17.createContext(null);
 if (true) FloatingNodeContext.displayName = "FloatingNodeContext";
@@ -3353,7 +3285,7 @@ var useFloatingTree = (externalTree) => {
   return externalTree ?? contextTree;
 };
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useClientPoint.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useClientPoint.js
 var React18 = __toESM(require_react(), 1);
 function createVirtualElement(domElement, data) {
   let offsetX = null;
@@ -3510,8 +3442,12 @@ function useClientPoint(context, props = {}) {
   } : {}, [enabled, reference]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useDismiss.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useDismiss.js
 var React19 = __toESM(require_react(), 1);
+var bubbleHandlerKeys = {
+  intentional: "onClick",
+  sloppy: "onPointerDown"
+};
 function alwaysFalse() {
   return false;
 }
@@ -3528,6 +3464,7 @@ function useDismiss(context, props = {}) {
     outsidePress: outsidePressProp = true,
     outsidePressEvent = "sloppy",
     referencePress = alwaysFalse,
+    referencePressEvent = "sloppy",
     bubbles,
     externalTree
   } = props;
@@ -3636,7 +3573,7 @@ function useDismiss(context, props = {}) {
       compositionTimeout.start(
         // 0ms or 1ms don't work in Safari. 5ms appears to consistently work.
         // Only apply to WebKit for the test to remain 0ms.
-        parts_exports.engine.webkit ? 5 : 0,
+        isWebKit() ? 5 : 0,
         () => {
           isComposingRef.current = false;
         }
@@ -3873,9 +3810,11 @@ function useDismiss(context, props = {}) {
   React19.useEffect(clearInsideReactTree, [outsidePress2, clearInsideReactTree]);
   const reference = React19.useMemo(() => ({
     onKeyDown: closeOnEscapeKeyDown,
-    onPointerDown: closeOnReferencePress,
-    onClick: closeOnReferencePress
-  }), [closeOnEscapeKeyDown, closeOnReferencePress]);
+    [bubbleHandlerKeys[referencePressEvent]]: closeOnReferencePress,
+    ...referencePressEvent !== "intentional" && {
+      onClick: closeOnReferencePress
+    }
+  }), [closeOnEscapeKeyDown, closeOnReferencePress, referencePressEvent]);
   const floating = React19.useMemo(() => ({
     onKeyDown: closeOnEscapeKeyDown,
     // `onMouseDown` may be blocked if `event.preventDefault()` is called in
@@ -3903,7 +3842,7 @@ function useDismiss(context, props = {}) {
   } : {}, [enabled, reference, floating]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFloating.js
 var React26 = __toESM(require_react(), 1);
 
 // node_modules/@floating-ui/core/dist/floating-ui.core.mjs
@@ -5175,7 +5114,7 @@ var computePosition2 = (reference, floating, options) => {
   });
 };
 
-// node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
+// node_modules/@base-ui/react/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
 var React20 = __toESM(require_react(), 1);
 var import_react2 = __toESM(require_react(), 1);
 var ReactDOM3 = __toESM(require_react_dom(), 1);
@@ -5447,14 +5386,13 @@ var hide3 = (options, deps) => {
   };
 };
 
-// node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
+// node_modules/@base-ui/react/esm/utils/popups/popupStoreUtils.js
 var React25 = __toESM(require_react(), 1);
-var ReactDOM4 = __toESM(require_react_dom(), 1);
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useSyncedFloatingRootContext.js
 var React24 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/store/createSelector.mjs
+// node_modules/@base-ui/utils/esm/store/createSelector.js
 var createSelector = (a2, b2, c2, d2, e2, f2, ...other) => {
   if (other.length > 0) {
     throw new Error(true ? "Unsupported number of selectors" : formatErrorMessage_default(1));
@@ -5506,12 +5444,12 @@ var createSelector = (a2, b2, c2, d2, e2, f2, ...other) => {
   return selector2;
 };
 
-// node_modules/@base-ui/utils/store/useStore.mjs
+// node_modules/@base-ui/utils/esm/store/useStore.js
 var React22 = __toESM(require_react(), 1);
 var import_shim = __toESM(require_shim(), 1);
 var import_with_selector = __toESM(require_with_selector(), 1);
 
-// node_modules/@base-ui/utils/fastHooks.mjs
+// node_modules/@base-ui/utils/esm/fastHooks.js
 var React21 = __toESM(require_react(), 1);
 var hooks = [];
 var currentInstance = void 0;
@@ -5552,7 +5490,7 @@ function createInstance() {
   };
 }
 
-// node_modules/@base-ui/utils/store/useStore.mjs
+// node_modules/@base-ui/utils/esm/store/useStore.js
 var canUseRawUseSyncExternalStore = isReactVersionAtLeast(19);
 var useStoreImplementation = canUseRawUseSyncExternalStore ? useStoreFast : useStoreLegacy;
 function useStore(store, selector2, a1, a2, a3) {
@@ -5574,9 +5512,10 @@ register({
         for (let i2 = 0; i2 < instance.syncHooks.length; i2 += 1) {
           const hook = instance.syncHooks[i2];
           const value = hook.selector(hook.store.state, hook.a1, hook.a2, hook.a3);
-          if (!Object.is(hook.value, value)) {
+          if (hook.didChange || !Object.is(hook.value, value)) {
             didChange2 = true;
             hook.value = value;
+            hook.didChange = false;
           }
         }
         if (didChange2) {
@@ -5625,7 +5564,8 @@ function useStoreFast(store, selector2, a1, a2, a3) {
       a1,
       a2,
       a3,
-      value: selector2(store.getSnapshot(), a1, a2, a3)
+      value: selector2(store.getSnapshot(), a1, a2, a3),
+      didChange: false
     };
     instance.syncHooks.push(hook);
   } else {
@@ -5639,7 +5579,7 @@ function useStoreFast(store, selector2, a1, a2, a3) {
       hook.a1 = a1;
       hook.a2 = a2;
       hook.a3 = a3;
-      hook.value = selector2(store.getSnapshot(), a1, a2, a3);
+      hook.didChange = true;
     }
   }
   return hook.value;
@@ -5648,7 +5588,7 @@ function useStoreLegacy(store, selector2, a1, a2, a3) {
   return (0, import_with_selector.useSyncExternalStoreWithSelector)(store.subscribe, store.getSnapshot, store.getSnapshot, (state) => selector2(state, a1, a2, a3));
 }
 
-// node_modules/@base-ui/utils/store/Store.mjs
+// node_modules/@base-ui/utils/esm/store/Store.js
 var Store = class {
   /**
    * The current state of the store.
@@ -5745,7 +5685,7 @@ var Store = class {
   }
 };
 
-// node_modules/@base-ui/utils/store/ReactStore.mjs
+// node_modules/@base-ui/utils/esm/store/ReactStore.js
 var React23 = __toESM(require_react(), 1);
 var ReactStore = class extends Store {
   /**
@@ -5916,7 +5856,7 @@ var ReactStore = class extends Store {
   }
 };
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingRootStore.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingRootStore.js
 var selectors = {
   open: createSelector((state) => state.open),
   transitionStatus: createSelector((state) => state.transitionStatus),
@@ -5989,7 +5929,7 @@ var FloatingRootStore = class extends ReactStore {
   };
 };
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useSyncedFloatingRootContext.js
 function useSyncedFloatingRootContext(options) {
   const {
     popupStore,
@@ -6040,7 +5980,7 @@ function useSyncedFloatingRootContext(options) {
   return store;
 }
 
-// node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
+// node_modules/@base-ui/react/esm/utils/popups/popupStoreUtils.js
 var FOCUSABLE_POPUP_PROPS = {
   tabIndex: -1,
   [FOCUSABLE_ATTRIBUTE]: ""
@@ -6099,69 +6039,12 @@ function useTriggerRegistration(id, store) {
     }
   }, [store, id]);
 }
-function setPopupOpenState(state, open, trigger, preventUnmountOnClose = false) {
-  if (open) {
-    state.preventUnmountingOnClose = false;
-  } else if (preventUnmountOnClose) {
-    state.preventUnmountingOnClose = true;
-  }
+function setOpenTriggerState(state, open, trigger) {
   const triggerId = trigger?.id ?? null;
   if (triggerId || open) {
     state.activeTriggerId = triggerId;
     state.activeTriggerElement = trigger ?? null;
   }
-}
-function attachPreventUnmountOnClose(eventDetails) {
-  let preventUnmountOnClose = false;
-  eventDetails.preventUnmountOnClose = () => {
-    preventUnmountOnClose = true;
-  };
-  return () => preventUnmountOnClose;
-}
-function applyPopupOpenChange(store, nextOpen, eventDetails, options = {}) {
-  const reason = eventDetails.reason;
-  const isHover = reason === reason_parts_exports.triggerHover;
-  const isFocusOpen = nextOpen && reason === reason_parts_exports.triggerFocus;
-  const isDismissClose = !nextOpen && (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.escapeKey);
-  const shouldPreventUnmountOnClose = attachPreventUnmountOnClose(eventDetails);
-  store.context.onOpenChange?.(nextOpen, eventDetails);
-  if (eventDetails.isCanceled) {
-    return;
-  }
-  options.onBeforeDispatch?.();
-  store.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
-  const changeState = () => {
-    const updatedState = {
-      ...options.extraState,
-      open: nextOpen
-    };
-    if (isFocusOpen) {
-      updatedState.instantType = "focus";
-    } else if (isDismissClose) {
-      updatedState.instantType = "dismiss";
-    } else if (isHover) {
-      updatedState.instantType = void 0;
-    }
-    setPopupOpenState(updatedState, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
-    store.update(updatedState);
-  };
-  if (isHover) {
-    ReactDOM4.flushSync(changeState);
-  } else {
-    changeState();
-  }
-}
-function useInitialOpenSync(store, openProp, defaultOpen, defaultTriggerId) {
-  useOnFirstRender(() => {
-    if (openProp === void 0 && store.state.open === false && defaultOpen) {
-      store.state = {
-        ...store.state,
-        open: true,
-        activeTriggerId: defaultTriggerId,
-        preventUnmountingOnClose: false
-      };
-    }
-  });
 }
 function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpdates) {
   const isMountedByThisTrigger = store.useState("isMountedByTrigger", triggerId);
@@ -6201,10 +6084,7 @@ function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpda
     isMountedByThisTrigger
   };
 }
-function useImplicitActiveTrigger(store, options = {}) {
-  const {
-    closeOnActiveTriggerUnmount = false
-  } = options;
+function useImplicitActiveTrigger(store) {
   const open = store.useState("open");
   const reactiveTriggerCount = store.useState("triggerCount");
   useIsoLayoutEffect(() => {
@@ -6219,17 +6099,7 @@ function useImplicitActiveTrigger(store, options = {}) {
     if (store.state.triggerCount !== triggerCount) {
       stateUpdates.triggerCount = triggerCount;
     }
-    const activeTriggerId = store.select("activeTriggerId");
-    let lostActiveTriggerId = null;
-    if (activeTriggerId) {
-      const activeTriggerElement = store.context.triggerElements.getById(activeTriggerId);
-      if (!activeTriggerElement) {
-        lostActiveTriggerId = activeTriggerId;
-      } else if (activeTriggerElement !== store.state.activeTriggerElement) {
-        stateUpdates.activeTriggerElement = activeTriggerElement;
-      }
-    }
-    if (!lostActiveTriggerId && !activeTriggerId && triggerCount === 1) {
+    if (!store.select("activeTriggerId") && triggerCount === 1) {
       const iteratorResult = store.context.triggerElements.entries().next();
       if (!iteratorResult.done) {
         const [implicitTriggerId, implicitTriggerElement] = iteratorResult.value;
@@ -6237,26 +6107,10 @@ function useImplicitActiveTrigger(store, options = {}) {
         stateUpdates.activeTriggerElement = implicitTriggerElement;
       }
     }
-    if (stateUpdates.triggerCount !== void 0 || stateUpdates.activeTriggerId !== void 0 || stateUpdates.activeTriggerElement !== void 0) {
+    if (stateUpdates.triggerCount !== void 0 || stateUpdates.activeTriggerId !== void 0) {
       store.update(stateUpdates);
     }
-    if (lostActiveTriggerId) {
-      if (closeOnActiveTriggerUnmount) {
-        queueMicrotask(() => {
-          if (store.select("open") && store.select("activeTriggerId") === lostActiveTriggerId && !store.context.triggerElements.getById(lostActiveTriggerId)) {
-            const eventDetails = createChangeEventDetails(reason_parts_exports.none);
-            store.setOpen(false, eventDetails);
-            if (!eventDetails.isCanceled) {
-              store.update({
-                activeTriggerId: null,
-                activeTriggerElement: null
-              });
-            }
-          }
-        });
-      }
-    }
-  }, [open, store, reactiveTriggerCount, closeOnActiveTriggerUnmount]);
+  }, [open, store, reactiveTriggerCount]);
 }
 function useOpenStateTransitions(open, store, onUnmount) {
   const {
@@ -6264,12 +6118,9 @@ function useOpenStateTransitions(open, store, onUnmount) {
     setMounted,
     transitionStatus
   } = useTransitionStatus(open);
-  const preventUnmountingOnClose = store.useState("preventUnmountingOnClose");
-  const syncedPreventUnmountingOnClose = open ? false : preventUnmountingOnClose;
   store.useSyncedValues({
     mounted,
-    transitionStatus,
-    preventUnmountingOnClose: syncedPreventUnmountingOnClose
+    transitionStatus
   });
   const forceUnmount = useStableCallback(() => {
     setMounted(false);
@@ -6282,8 +6133,9 @@ function useOpenStateTransitions(open, store, onUnmount) {
     onUnmount?.();
     store.context.onOpenChangeComplete?.(false);
   });
+  const preventUnmountingOnClose = store.useState("preventUnmountingOnClose");
   useOpenChangeComplete({
-    enabled: mounted && !open && !syncedPreventUnmountingOnClose,
+    enabled: mounted && !open && !preventUnmountingOnClose,
     open,
     ref: store.context.popupRef,
     onComplete() {
@@ -6308,7 +6160,7 @@ function usePopupInteractionProps(store, statePart) {
   }, [store]);
 }
 
-// node_modules/@base-ui/react/utils/popups/popupTriggerMap.mjs
+// node_modules/@base-ui/react/esm/utils/popups/popupTriggerMap.js
 var PopupTriggerMap = class {
   constructor() {
     this.elementsSet = /* @__PURE__ */ new Set();
@@ -6388,7 +6240,7 @@ var PopupTriggerMap = class {
   }
 };
 
-// node_modules/@base-ui/react/floating-ui-react/utils/getEmptyRootContext.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/getEmptyRootContext.js
 function getEmptyRootContext() {
   return new FloatingRootStore({
     open: false,
@@ -6403,7 +6255,7 @@ function getEmptyRootContext() {
   });
 }
 
-// node_modules/@base-ui/react/utils/popups/store.mjs
+// node_modules/@base-ui/react/esm/utils/popups/store.js
 function createInitialPopupStoreState() {
   return {
     open: false,
@@ -6486,7 +6338,7 @@ var popupStoreSelectors = {
   positionerElement: createSelector((state) => state.positionerElement)
 };
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useFloatingRootContext.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFloatingRootContext.js
 function useFloatingRootContext(options) {
   const {
     open = false,
@@ -6531,7 +6383,7 @@ function useFloatingRootContext(options) {
   return store;
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFloating.js
 function useFloating2(options = {}) {
   const {
     nodeId,
@@ -6637,9 +6489,9 @@ function useFloating2(options = {}) {
   }), [position, refs, elements, context, store]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useFocus.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFocus.js
 var React27 = __toESM(require_react(), 1);
-var isMacSafari = parts_exports.os.mac && parts_exports.engine.webkit;
+var isMacSafari = isMac && isSafari;
 function useFocus(context, props = {}) {
   const {
     enabled = true,
@@ -6765,10 +6617,10 @@ function useFocus(context, props = {}) {
   } : {}, [enabled, reference]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverFloatingInteraction.js
 var React28 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverInteractionSharedState.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverInteractionSharedState.js
 var HoverInteraction = class _HoverInteraction {
   constructor() {
     this.pointerType = void 0;
@@ -6842,7 +6694,7 @@ function useHoverInteractionSharedState(store) {
   return data.hoverInteractionState;
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverFloatingInteraction.js
 function useHoverFloatingInteraction(context, parameters = {}) {
   const {
     enabled = true,
@@ -6959,7 +6811,7 @@ function useHoverFloatingInteraction(context, parameters = {}) {
         return;
       }
       clearPointerEvents();
-      if (isHoverOpen() && !isClickLikeOpenEvent2()) {
+      if (!isClickLikeOpenEvent2()) {
         closeWithDelay(event);
       }
     }
@@ -6977,12 +6829,12 @@ function useHoverFloatingInteraction(context, parameters = {}) {
     return mergeCleanups(floating && addEventListener(floating, "mouseenter", onFloatingMouseEnter), floating && addEventListener(floating, "mouseleave", onFloatingMouseLeave), floating && addEventListener(floating, "pointerdown", handleInteractInside, true), () => {
       tree?.events.off("floating.closed", onNodeClosed);
     });
-  }, [enabled, floatingElement, store, dataRef, closeDelayProp, nodeIdProp, isHoverOpen, isClickLikeOpenEvent2, clearPointerEvents, instance, tree, parentId, childClosedTimeout]);
+  }, [enabled, floatingElement, store, dataRef, closeDelayProp, nodeIdProp, isClickLikeOpenEvent2, clearPointerEvents, instance, tree, parentId, childClosedTimeout]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverReferenceInteraction.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverReferenceInteraction.js
 var React29 = __toESM(require_react(), 1);
-var ReactDOM5 = __toESM(require_react_dom(), 1);
+var ReactDOM4 = __toESM(require_react_dom(), 1);
 var EMPTY_REF = {
   current: null
 };
@@ -7240,7 +7092,7 @@ function useHoverReferenceInteraction(context, props = {}) {
           }
         }
         if (instance.pointerType === "touch") {
-          ReactDOM5.flushSync(() => {
+          ReactDOM4.flushSync(() => {
             handleMouseMove();
           });
         } else if (isOverInactive && currentOpen) {
@@ -7254,7 +7106,7 @@ function useHoverReferenceInteraction(context, props = {}) {
   }, [enabled, instance, isClickLikeOpenEvent2, isOverInactiveTrigger, mouseOnly, store, restMsRef, checkShouldOpen]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/safePolygon.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/safePolygon.js
 var CURSOR_SPEED_THRESHOLD = 0.1;
 var CURSOR_SPEED_THRESHOLD_SQUARED = CURSOR_SPEED_THRESHOLD * CURSOR_SPEED_THRESHOLD;
 var POLYGON_BUFFER = 0.5;
@@ -7470,7 +7322,7 @@ function safePolygon(options = {}) {
   return fn;
 }
 
-// node_modules/@base-ui/react/utils/popupStateMapping.mjs
+// node_modules/@base-ui/react/esm/utils/popupStateMapping.js
 var CommonPopupDataAttributes = (function(CommonPopupDataAttributes2) {
   CommonPopupDataAttributes2["open"] = "data-open";
   CommonPopupDataAttributes2["closed"] = "data-closed";
@@ -7525,7 +7377,7 @@ var popupStateMapping = {
   }
 };
 
-// node_modules/@base-ui/utils/inertValue.mjs
+// node_modules/@base-ui/utils/esm/inertValue.js
 function inertValue(value) {
   if (isReactVersionAtLeast(19)) {
     return value;
@@ -7533,10 +7385,10 @@ function inertValue(value) {
   return value ? "true" : void 0;
 }
 
-// node_modules/@base-ui/react/utils/useAnchorPositioning.mjs
+// node_modules/@base-ui/react/esm/utils/useAnchorPositioning.js
 var React30 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/floating-ui-react/middleware/arrow.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/middleware/arrow.js
 var baseArrow = (options) => ({
   name: "arrow",
   options,
@@ -7605,8 +7457,7 @@ var arrow4 = (options, deps) => ({
   options: [options, deps]
 });
 
-// node_modules/@base-ui/react/utils/hideMiddleware.mjs
-var nativeHideFn = hide3().fn;
+// node_modules/@base-ui/react/esm/utils/hideMiddleware.js
 var hide4 = {
   name: "hide",
   async fn(state) {
@@ -7617,7 +7468,7 @@ var hide4 = {
       y: y2
     } = state.rects.reference;
     const anchorHidden = width === 0 && height === 0 && x2 === 0 && y2 === 0;
-    const nativeHideResult = await nativeHideFn(state);
+    const nativeHideResult = await hide3().fn(state);
     return {
       data: {
         referenceHidden: nativeHideResult.data?.referenceHidden || anchorHidden
@@ -7626,7 +7477,7 @@ var hide4 = {
   }
 };
 
-// node_modules/@base-ui/react/utils/adaptiveOriginMiddleware.mjs
+// node_modules/@base-ui/react/esm/utils/adaptiveOriginMiddleware.js
 var DEFAULT_SIDES = {
   sideX: "left",
   sideY: "top"
@@ -7698,7 +7549,7 @@ var adaptiveOrigin = {
   }
 };
 
-// node_modules/@base-ui/react/utils/useAnchorPositioning.mjs
+// node_modules/@base-ui/react/esm/utils/useAnchorPositioning.js
 function getLogicalSide(sideParam, renderedSide, isRtl) {
   const isLogicalSideParam = sideParam === "inline-start" || sideParam === "inline-end";
   const logicalRight = isRtl ? "inline-start" : "inline-end";
@@ -8024,8 +7875,8 @@ function useAnchorPositioning(params) {
     }
   }, [mounted, refs, anchorDep, anchorValueRef]);
   React30.useEffect(() => {
-    if (keepMounted && mounted && elements.reference && elements.floating) {
-      return autoUpdate(elements.reference, elements.floating, update2, autoUpdateOptions);
+    if (keepMounted && mounted && elements.domReference && elements.floating) {
+      return autoUpdate(elements.domReference, elements.floating, update2, autoUpdateOptions);
     }
     return void 0;
   }, [keepMounted, mounted, elements, update2, autoUpdateOptions]);
@@ -8063,12 +7914,12 @@ function isRef(param) {
   return param != null && "current" in param;
 }
 
-// node_modules/@base-ui/react/utils/getDisabledMountTransitionStyles.mjs
+// node_modules/@base-ui/react/esm/utils/getDisabledMountTransitionStyles.js
 function getDisabledMountTransitionStyles(transitionStatus) {
   return transitionStatus === "starting" ? DISABLED_TRANSITIONS_STYLE : EMPTY_OBJECT;
 }
 
-// node_modules/@base-ui/react/utils/usePositioner.mjs
+// node_modules/@base-ui/react/esm/utils/usePositioner.js
 function usePositioner(componentProps, state, {
   styles,
   transitionStatus,
@@ -8095,11 +7946,11 @@ function usePositioner(componentProps, state, {
   });
 }
 
-// node_modules/@base-ui/react/utils/usePopupViewport.mjs
+// node_modules/@base-ui/react/esm/utils/usePopupViewport.js
 var React33 = __toESM(require_react(), 1);
-var ReactDOM6 = __toESM(require_react_dom(), 1);
+var ReactDOM5 = __toESM(require_react_dom(), 1);
 
-// node_modules/@base-ui/utils/usePreviousValue.mjs
+// node_modules/@base-ui/utils/esm/usePreviousValue.js
 var React31 = __toESM(require_react(), 1);
 function usePreviousValue(value) {
   const [state, setState] = React31.useState({
@@ -8115,10 +7966,10 @@ function usePreviousValue(value) {
   return state.previous;
 }
 
-// node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
+// node_modules/@base-ui/react/esm/utils/usePopupAutoResize.js
 var React32 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/utils/getCssDimensions.mjs
+// node_modules/@base-ui/react/esm/utils/getCssDimensions.js
 function getCssDimensions2(element) {
   const css = getComputedStyle2(element);
   let width = parseFloat(css.width) || 0;
@@ -8137,13 +7988,15 @@ function getCssDimensions2(element) {
   };
 }
 
-// node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
+// node_modules/@base-ui/react/esm/utils/usePopupAutoResize.js
+var DEFAULT_ENABLED = () => true;
 function usePopupAutoResize(parameters) {
   const {
     popupElement,
     positionerElement,
     content,
     mounted,
+    enabled = DEFAULT_ENABLED,
     onMeasureLayout: onMeasureLayoutParam,
     onMeasureLayoutComplete: onMeasureLayoutCompleteParam,
     side,
@@ -8152,6 +8005,7 @@ function usePopupAutoResize(parameters) {
   const runOnceAnimationsFinish = useAnimationsFinished(popupElement, true, false);
   const animationFrame = useAnimationFrame();
   const committedDimensionsRef = React32.useRef(null);
+  const liveDimensionsRef = React32.useRef(null);
   const isInitialRenderRef = React32.useRef(true);
   const restoreAnchoringStylesRef = React32.useRef(NOOP);
   const onMeasureLayout = useStableCallback(onMeasureLayoutParam);
@@ -8173,16 +8027,27 @@ function usePopupAutoResize(parameters) {
     } : EMPTY_OBJECT;
   }, [side, direction]);
   useIsoLayoutEffect(() => {
-    if (!mounted) {
+    if (!mounted || !enabled() || typeof ResizeObserver !== "function") {
       restoreAnchoringStylesRef.current = NOOP;
       isInitialRenderRef.current = true;
       committedDimensionsRef.current = null;
+      liveDimensionsRef.current = null;
       return void 0;
     }
     if (!popupElement || !positionerElement) {
       return void 0;
     }
     restoreAnchoringStylesRef.current = applyElementStyles(popupElement, anchoringStyles);
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (entry) {
+        liveDimensionsRef.current = {
+          width: Math.ceil(entry.borderBoxSize[0].inlineSize),
+          height: Math.ceil(entry.borderBoxSize[0].blockSize)
+        };
+      }
+    });
+    observer.observe(popupElement);
     setPopupCssSize(popupElement, "auto");
     const restorePopupPosition = overrideElementStyle(popupElement, "position", "static");
     const restorePopupTransform = overrideElementStyle(popupElement, "transform", "none");
@@ -8210,14 +8075,27 @@ function usePopupAutoResize(parameters) {
       onMeasureLayoutComplete?.(null, dimensions);
       isInitialRenderRef.current = false;
       return () => {
+        observer.disconnect();
         restoreAnchoringStylesRef.current();
         restoreAnchoringStylesRef.current = NOOP;
       };
     }
+    setPopupCssSize(popupElement, "auto");
     setPositionerCssSize(positionerElement, "max-content");
-    const previousDimensions = committedDimensionsRef.current;
+    const previousDimensions = committedDimensionsRef.current ?? liveDimensionsRef.current;
     const newDimensions = getCssDimensions2(popupElement);
     committedDimensionsRef.current = newDimensions;
+    if (!previousDimensions) {
+      setPositionerCssSize(positionerElement, newDimensions);
+      restoreMeasurementOverridesIncludingScale();
+      onMeasureLayoutComplete?.(null, newDimensions);
+      return () => {
+        observer.disconnect();
+        animationFrame.cancel();
+        restoreAnchoringStylesRef.current();
+        restoreAnchoringStylesRef.current = NOOP;
+      };
+    }
     setPopupCssSize(popupElement, previousDimensions);
     restoreMeasurementOverridesIncludingScale();
     onMeasureLayoutComplete?.(previousDimensions, newDimensions);
@@ -8231,12 +8109,13 @@ function usePopupAutoResize(parameters) {
       }, abortController.signal);
     });
     return () => {
+      observer.disconnect();
       abortController.abort();
       animationFrame.cancel();
       restoreAnchoringStylesRef.current();
       restoreAnchoringStylesRef.current = NOOP;
     };
-  }, [content, popupElement, positionerElement, runOnceAnimationsFinish, animationFrame, mounted, onMeasureLayout, onMeasureLayoutComplete, anchoringStyles]);
+  }, [content, popupElement, positionerElement, runOnceAnimationsFinish, animationFrame, enabled, mounted, onMeasureLayout, onMeasureLayoutComplete, anchoringStyles]);
 }
 function overrideElementStyle(element, property, value) {
   const originalValue = element.style.getPropertyValue(property);
@@ -8267,7 +8146,7 @@ function setPositionerCssSize(positionerElement, size4) {
   positionerElement.style.setProperty("--positioner-height", height);
 }
 
-// node_modules/@base-ui/react/utils/usePopupViewport.mjs
+// node_modules/@base-ui/react/esm/utils/usePopupViewport.js
 var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
 function usePopupViewport(parameters) {
   const {
@@ -8316,18 +8195,13 @@ function usePopupViewport(parameters) {
   });
   const lastHandledTriggerRef = React33.useRef(null);
   useIsoLayoutEffect(() => {
-    if (!open || !mounted) {
-      lastHandledTriggerRef.current = null;
-    }
-  }, [open, mounted]);
-  useIsoLayoutEffect(() => {
     if (activeTrigger && previousActiveTrigger && activeTrigger !== previousActiveTrigger && lastHandledTriggerRef.current !== activeTrigger && capturedNodeRef.current) {
       setPreviousContentNode(capturedNodeRef.current);
       setShowStartingStyleAttribute(true);
       const offset4 = calculateRelativePosition(previousActiveTrigger, activeTrigger);
       setNewTriggerOffset(offset4);
       cleanupFrame.request(() => {
-        ReactDOM6.flushSync(() => {
+        ReactDOM5.flushSync(() => {
           setShowStartingStyleAttribute(false);
         });
         onAnimationsFinished(() => {
@@ -8460,9 +8334,9 @@ function usePopupContentKey(activeTriggerId, payload) {
   return `${activeTriggerId ?? "current"}-${contentKey}`;
 }
 
-// node_modules/@base-ui/react/utils/FloatingPortalLite.mjs
+// node_modules/@base-ui/react/esm/utils/FloatingPortalLite.js
 var React34 = __toESM(require_react(), 1);
-var ReactDOM7 = __toESM(require_react_dom(), 1);
+var ReactDOM6 = __toESM(require_react_dom(), 1);
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
 var FloatingPortalLite = /* @__PURE__ */ React34.forwardRef(function FloatingPortalLite2(componentProps, forwardedRef) {
   const {
@@ -8486,12 +8360,12 @@ var FloatingPortalLite = /* @__PURE__ */ React34.forwardRef(function FloatingPor
     return null;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(React34.Fragment, {
-    children: [portalSubtree, portalNode && /* @__PURE__ */ ReactDOM7.createPortal(children, portalNode)]
+    children: [portalSubtree, portalNode && /* @__PURE__ */ ReactDOM6.createPortal(children, portalNode)]
   });
 });
 if (true) FloatingPortalLite.displayName = "FloatingPortalLite";
 
-// node_modules/@base-ui/react/tooltip/index.parts.mjs
+// node_modules/@base-ui/react/esm/tooltip/index.parts.js
 var index_parts_exports = {};
 __export(index_parts_exports, {
   Arrow: () => TooltipArrow,
@@ -8506,10 +8380,10 @@ __export(index_parts_exports, {
   createHandle: () => createTooltipHandle
 });
 
-// node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
+// node_modules/@base-ui/react/esm/tooltip/root/TooltipRoot.js
 var React37 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/tooltip/root/TooltipRootContext.mjs
+// node_modules/@base-ui/react/esm/tooltip/root/TooltipRootContext.js
 var React35 = __toESM(require_react(), 1);
 var TooltipRootContext = /* @__PURE__ */ React35.createContext(void 0);
 if (true) TooltipRootContext.displayName = "TooltipRootContext";
@@ -8521,8 +8395,9 @@ function useTooltipRootContext(optional) {
   return context;
 }
 
-// node_modules/@base-ui/react/tooltip/store/TooltipStore.mjs
+// node_modules/@base-ui/react/esm/tooltip/store/TooltipStore.js
 var React36 = __toESM(require_react(), 1);
+var ReactDOM7 = __toESM(require_react_dom(), 1);
 var selectors2 = {
   ...popupStoreSelectors,
   disabled: createSelector((state) => state.disabled),
@@ -8551,11 +8426,38 @@ var TooltipStore = class _TooltipStore extends ReactStore {
     }, selectors2);
   }
   setOpen = (nextOpen, eventDetails) => {
-    applyPopupOpenChange(this, nextOpen, eventDetails, {
-      extraState: {
-        openChangeReason: eventDetails.reason
+    const reason = eventDetails.reason;
+    const isHover = reason === reason_parts_exports.triggerHover;
+    const isFocusOpen = nextOpen && reason === reason_parts_exports.triggerFocus;
+    const isDismissClose = !nextOpen && (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.escapeKey);
+    eventDetails.preventUnmountOnClose = () => {
+      this.set("preventUnmountingOnClose", true);
+    };
+    this.context.onOpenChange?.(nextOpen, eventDetails);
+    if (eventDetails.isCanceled) {
+      return;
+    }
+    this.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
+    const changeState = () => {
+      const updatedState = {
+        open: nextOpen,
+        openChangeReason: reason
+      };
+      if (isFocusOpen) {
+        updatedState.instantType = "focus";
+      } else if (isDismissClose) {
+        updatedState.instantType = "dismiss";
+      } else if (reason === reason_parts_exports.triggerHover) {
+        updatedState.instantType = void 0;
       }
-    });
+      setOpenTriggerState(updatedState, nextOpen, eventDetails.trigger);
+      this.update(updatedState);
+    };
+    if (isHover) {
+      ReactDOM7.flushSync(changeState);
+    } else {
+      changeState();
+    }
   };
   // Used by trigger clicks to clear a delayed hover open without reporting a public open-state change.
   cancelPendingOpen(event) {
@@ -8581,7 +8483,7 @@ function createInitialState() {
   };
 }
 
-// node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
+// node_modules/@base-ui/react/esm/tooltip/root/TooltipRoot.js
 var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const {
@@ -8604,7 +8506,14 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
     activeTriggerId: defaultTriggerIdProp,
     triggerIdProp
   });
-  useInitialOpenSync(store, openProp, defaultOpen, defaultTriggerIdProp);
+  useOnFirstRender(() => {
+    if (openProp === void 0 && store.state.open === false && defaultOpen === true) {
+      store.update({
+        open: true,
+        activeTriggerId: defaultTriggerIdProp
+      });
+    }
+  });
   store.useControlledProp("openProp", openProp);
   store.useControlledProp("triggerIdProp", triggerIdProp);
   store.useContextCallback("onOpenChange", onOpenChange);
@@ -8619,9 +8528,7 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
     disableHoverablePopup
   });
   store.useSyncedValue("disabled", disabled2);
-  useImplicitActiveTrigger(store, {
-    closeOnActiveTriggerUnmount: true
-  });
+  useImplicitActiveTrigger(store);
   const {
     forceUnmount,
     transitionStatus
@@ -8698,10 +8605,10 @@ function TooltipInteractions({
   return null;
 }
 
-// node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
+// node_modules/@base-ui/react/esm/tooltip/trigger/TooltipTrigger.js
 var React39 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/tooltip/provider/TooltipProviderContext.mjs
+// node_modules/@base-ui/react/esm/tooltip/provider/TooltipProviderContext.js
 var React38 = __toESM(require_react(), 1);
 var TooltipProviderContext = /* @__PURE__ */ React38.createContext(void 0);
 if (true) TooltipProviderContext.displayName = "TooltipProviderContext";
@@ -8709,17 +8616,17 @@ function useTooltipProviderContext() {
   return React38.useContext(TooltipProviderContext);
 }
 
-// node_modules/@base-ui/react/tooltip/trigger/TooltipTriggerDataAttributes.mjs
+// node_modules/@base-ui/react/esm/tooltip/trigger/TooltipTriggerDataAttributes.js
 var TooltipTriggerDataAttributes = (function(TooltipTriggerDataAttributes2) {
   TooltipTriggerDataAttributes2[TooltipTriggerDataAttributes2["popupOpen"] = CommonTriggerDataAttributes.popupOpen] = "popupOpen";
   TooltipTriggerDataAttributes2["triggerDisabled"] = "data-trigger-disabled";
   return TooltipTriggerDataAttributes2;
 })({});
 
-// node_modules/@base-ui/react/tooltip/utils/constants.mjs
+// node_modules/@base-ui/react/esm/tooltip/utils/constants.js
 var OPEN_DELAY = 600;
 
-// node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
+// node_modules/@base-ui/react/esm/tooltip/trigger/TooltipTrigger.js
 var TOOLTIP_TRIGGER_IDENTIFIER = "data-base-ui-tooltip-trigger";
 function getTargetElement(event) {
   if ("composedPath" in event) {
@@ -8936,10 +8843,10 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
 });
 if (true) TooltipTrigger.displayName = "TooltipTrigger";
 
-// node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
+// node_modules/@base-ui/react/esm/tooltip/portal/TooltipPortal.js
 var React41 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/tooltip/portal/TooltipPortalContext.mjs
+// node_modules/@base-ui/react/esm/tooltip/portal/TooltipPortalContext.js
 var React40 = __toESM(require_react(), 1);
 var TooltipPortalContext = /* @__PURE__ */ React40.createContext(void 0);
 if (true) TooltipPortalContext.displayName = "TooltipPortalContext";
@@ -8951,7 +8858,7 @@ function useTooltipPortalContext() {
   return value;
 }
 
-// node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
+// node_modules/@base-ui/react/esm/tooltip/portal/TooltipPortal.js
 var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
 var TooltipPortal = /* @__PURE__ */ React41.forwardRef(function TooltipPortal2(props, forwardedRef) {
   const {
@@ -8974,10 +8881,10 @@ var TooltipPortal = /* @__PURE__ */ React41.forwardRef(function TooltipPortal2(p
 });
 if (true) TooltipPortal.displayName = "TooltipPortal";
 
-// node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
+// node_modules/@base-ui/react/esm/tooltip/positioner/TooltipPositioner.js
 var React43 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/tooltip/positioner/TooltipPositionerContext.mjs
+// node_modules/@base-ui/react/esm/tooltip/positioner/TooltipPositionerContext.js
 var React42 = __toESM(require_react(), 1);
 var TooltipPositionerContext = /* @__PURE__ */ React42.createContext(void 0);
 if (true) TooltipPositionerContext.displayName = "TooltipPositionerContext";
@@ -8989,7 +8896,7 @@ function useTooltipPositionerContext() {
   return context;
 }
 
-// node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
+// node_modules/@base-ui/react/esm/tooltip/positioner/TooltipPositioner.js
 var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
 var TooltipPositioner = /* @__PURE__ */ React43.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
   const {
@@ -9060,7 +8967,7 @@ var TooltipPositioner = /* @__PURE__ */ React43.forwardRef(function TooltipPosit
 });
 if (true) TooltipPositioner.displayName = "TooltipPositioner";
 
-// node_modules/@base-ui/react/tooltip/popup/TooltipPopup.mjs
+// node_modules/@base-ui/react/esm/tooltip/popup/TooltipPopup.js
 var React44 = __toESM(require_react(), 1);
 var stateAttributesMapping = {
   ...popupStateMapping,
@@ -9116,7 +9023,7 @@ var TooltipPopup = /* @__PURE__ */ React44.forwardRef(function TooltipPopup2(com
 });
 if (true) TooltipPopup.displayName = "TooltipPopup";
 
-// node_modules/@base-ui/react/tooltip/arrow/TooltipArrow.mjs
+// node_modules/@base-ui/react/esm/tooltip/arrow/TooltipArrow.js
 var React45 = __toESM(require_react(), 1);
 var TooltipArrow = /* @__PURE__ */ React45.forwardRef(function TooltipArrow2(componentProps, forwardedRef) {
   const {
@@ -9155,7 +9062,7 @@ var TooltipArrow = /* @__PURE__ */ React45.forwardRef(function TooltipArrow2(com
 });
 if (true) TooltipArrow.displayName = "TooltipArrow";
 
-// node_modules/@base-ui/react/tooltip/provider/TooltipProvider.mjs
+// node_modules/@base-ui/react/esm/tooltip/provider/TooltipProvider.js
 var React46 = __toESM(require_react(), 1);
 var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
 var TooltipProvider = function TooltipProvider2(props) {
@@ -9183,17 +9090,17 @@ var TooltipProvider = function TooltipProvider2(props) {
 };
 if (true) TooltipProvider.displayName = "TooltipProvider";
 
-// node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
+// node_modules/@base-ui/react/esm/tooltip/viewport/TooltipViewport.js
 var React47 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/tooltip/viewport/TooltipViewportCssVars.mjs
+// node_modules/@base-ui/react/esm/tooltip/viewport/TooltipViewportCssVars.js
 var TooltipViewportCssVars = /* @__PURE__ */ (function(TooltipViewportCssVars2) {
   TooltipViewportCssVars2["popupWidth"] = "--popup-width";
   TooltipViewportCssVars2["popupHeight"] = "--popup-height";
   return TooltipViewportCssVars2;
 })({});
 
-// node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
+// node_modules/@base-ui/react/esm/tooltip/viewport/TooltipViewport.js
 var stateAttributesMapping2 = {
   activationDirection: (value) => value ? {
     "data-activation-direction": value
@@ -9235,7 +9142,7 @@ var TooltipViewport = /* @__PURE__ */ React47.forwardRef(function TooltipViewpor
 });
 if (true) TooltipViewport.displayName = "TooltipViewport";
 
-// node_modules/@base-ui/react/tooltip/store/TooltipHandle.mjs
+// node_modules/@base-ui/react/esm/tooltip/store/TooltipHandle.js
 var TooltipHandle = class {
   /**
    * Internal store holding the tooltip state.
@@ -9276,7 +9183,7 @@ function createTooltipHandle() {
   return new TooltipHandle();
 }
 
-// node_modules/@base-ui/react/use-render/useRender.mjs
+// node_modules/@base-ui/react/esm/use-render/useRender.js
 function useRender(params) {
   return useRenderElement(params.defaultTagName ?? "div", params, params);
 }
@@ -14707,6 +14614,7 @@ function DensityPicker() {
   return /* @__PURE__ */ (0, import_jsx_runtime61.jsxs)(
     import_components17.__experimentalToggleGroupControl,
     {
+      size: "__unstable-large",
       label: (0, import_i18n20.__)("Density"),
       value: view.layout?.density || "balanced",
       onChange: (value) => {
@@ -14802,6 +14710,7 @@ function PreviewSizePicker() {
   return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
     import_components18.RangeControl,
     {
+      __next40pxDefaultSize: true,
       showTooltip: false,
       label: (0, import_i18n21.__)("Preview size"),
       value: previewSizeToUse,
@@ -15069,10 +14978,10 @@ function isApple() {
   if (!canUseDOM) return false;
   return /mac|iphone|ipad|ipod/i.test(navigator.platform);
 }
-function isSafari() {
+function isSafari2() {
   return canUseDOM && isApple() && /apple/i.test(navigator.vendor);
 }
-function isFirefox() {
+function isFirefox2() {
   return canUseDOM && /firefox\//i.test(navigator.userAgent);
 }
 function isPortalEvent(event) {
@@ -15616,7 +15525,7 @@ function createStoreContext(providers = [], scopedProviders = []) {
 var import_react9 = __toESM(require_react(), 1);
 var TagName = "div";
 var accessibleWhenDisabledSymbol = /* @__PURE__ */ Symbol("accessibleWhenDisabled");
-var isSafariBrowser = isSafari();
+var isSafariBrowser = isSafari2();
 var alwaysFocusVisibleInputTypes = [
   "text",
   "search",
@@ -15936,7 +15845,7 @@ var useCommand = createHook(function useCommand2({ clickOnEnter = true, clickOnS
           event.preventDefault();
           const { view, ...eventInit } = event;
           const click = () => fireClickEvent(element, eventInit);
-          if (isFirefox()) queueBeforeEvent(element, "keyup", click);
+          if (isFirefox2()) queueBeforeEvent(element, "keyup", click);
           else queueMicrotask(click);
         }
       } else if (isSpace) {
@@ -16589,7 +16498,7 @@ var useCompositeItem = createHook(function useCompositeItem2({ store, rowId: row
     if (!isSelfTarget(event)) return;
     if (isEditableElement(event.currentTarget)) return;
     if (!baseElement2?.isConnected) return;
-    if (isSafari() && event.currentTarget.hasAttribute("data-autofocus")) event.currentTarget.scrollIntoView({
+    if (isSafari2() && event.currentTarget.hasAttribute("data-autofocus")) event.currentTarget.scrollIntoView({
       block: "nearest",
       inline: "nearest"
     });
@@ -18267,7 +18176,7 @@ var TagContextProvider = ctx7.ContextProvider;
 var TagScopedContextProvider = ctx7.ScopedContextProvider;
 
 // node_modules/@ariakit/components/dist/combobox/combobox-store.js
-var isTouchSafari = isSafari() && isTouchDevice();
+var isTouchSafari = isSafari2() && isTouchDevice();
 function createComboboxStore({ tag, ...props } = {}) {
   const store = mergeStore(props.store, pick2(tag, ["value", "rtl"]));
   throwOnConflictingProps(props, store);
@@ -21898,6 +21807,7 @@ function SortDirectionControl() {
     import_components27.__experimentalToggleGroupControl,
     {
       className: "dataviews-view-config__sort-direction",
+      __next40pxDefaultSize: true,
       isBlock: true,
       label: (0, import_i18n31.__)("Order"),
       value,
@@ -21941,6 +21851,7 @@ function ItemsPerPageControl() {
   return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
     import_components27.__experimentalToggleGroupControl,
     {
+      __next40pxDefaultSize: true,
       isBlock: true,
       label: (0, import_i18n31.__)("Items per page"),
       value: view.perPage || 10,
@@ -23685,6 +23596,7 @@ function ToggleGroup({
       required: !!field.isValid?.required,
       markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
+      __next40pxDefaultSize: true,
       isBlock: true,
       label: field.label,
       help: selectedOption?.description || field.description,

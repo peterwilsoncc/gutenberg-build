@@ -19,6 +19,13 @@ function gutenberg_render_block_core_icon( $attributes ) {
 		return;
 	}
 
+	$registry = WP_Icons_Registry::get_instance();
+	$icon     = $registry->get_registered_icon( $attributes['icon'] );
+
+	if ( is_null( $icon ) ) {
+		return;
+	}
+
 	// Text color and background color.
 	$color_styles = array();
 
@@ -79,54 +86,54 @@ function gutenberg_render_block_core_icon( $attributes ) {
 		),
 	);
 
-	$svg = wp_get_icon(
-		$attributes['icon'],
-		array(
-			// Width is applied via the dimensions block support styles below.
-			'size'  => null,
-			'class' => $styles['classnames'] ?? '',
-			'label' => $attributes['ariaLabel'] ?? '',
-		)
-	);
+	$processor = new WP_HTML_Tag_Processor( $icon['content'] );
+	$processor->next_tag( 'svg' );
 
-	if ( '' === $svg ) {
-		return;
+	if ( ! empty( $styles['css'] ) ) {
+		$processor->set_attribute( 'style', $styles['css'] );
+	}
+	if ( ! empty( $styles['classnames'] ) ) {
+		$processor->add_class( $styles['classnames'] );
 	}
 
-	$processor = new WP_HTML_Tag_Processor( $svg );
-	if ( $processor->next_tag( 'svg' ) ) {
-		if ( ! empty( $styles['css'] ) ) {
-			$processor->set_attribute( 'style', $styles['css'] );
-		}
+	// Apply flip classes to the SVG.
+	$flip_horizontal = $attributes['flipHorizontal'] ?? false;
+	$flip_vertical   = $attributes['flipVertical'] ?? false;
 
-		// Apply flip classes to the SVG.
-		$flip_horizontal = $attributes['flipHorizontal'] ?? false;
-		$flip_vertical   = $attributes['flipVertical'] ?? false;
-
-		if ( $flip_horizontal ) {
-			$processor->add_class( 'is-flip-horizontal' );
-		}
-		if ( $flip_vertical ) {
-			$processor->add_class( 'is-flip-vertical' );
-		}
-
-		$rotation = isset( $attributes['rotation'] ) ? (int) $attributes['rotation'] : 0;
-
-		if ( $rotation ) {
-			$current_style = $processor->get_attribute( 'style' ) ?? '';
-			$rotation_css  = 'rotate: ' . $rotation . 'deg;';
-			if ( $current_style ) {
-				$processor->set_attribute( 'style', $current_style . ' ' . $rotation_css );
-			} else {
-				$processor->set_attribute( 'style', $rotation_css );
-			}
-		}
-
-		$svg = $processor->get_updated_html();
+	if ( $flip_horizontal ) {
+		$processor->add_class( 'is-flip-horizontal' );
+	}
+	if ( $flip_vertical ) {
+		$processor->add_class( 'is-flip-vertical' );
 	}
 
-	$wrapper_attributes = get_block_wrapper_attributes();
-	return sprintf( '<div %s>%s</div>', $wrapper_attributes, $svg );
+	$rotation = isset( $attributes['rotation'] ) ? (int) $attributes['rotation'] : 0;
+
+	if ( $rotation ) {
+		$current_style = $processor->get_attribute( 'style' ) ?? '';
+		$rotation_css  = 'rotate: ' . $rotation . 'deg;';
+		if ( $current_style ) {
+			$processor->set_attribute( 'style', $current_style . ' ' . $rotation_css );
+		} else {
+			$processor->set_attribute( 'style', $rotation_css );
+		}
+	}
+
+	$aria_label = ! empty( $attributes['ariaLabel'] ) ? $attributes['ariaLabel'] : '';
+
+	if ( ! $aria_label ) {
+		// Icon is decorative, hide it from screen readers.
+		$processor->set_attribute( 'aria-hidden', 'true' );
+		$processor->set_attribute( 'focusable', 'false' );
+	} else {
+		$processor->set_attribute( 'role', 'img' );
+		$processor->set_attribute( 'aria-label', $aria_label );
+	}
+
+	// Return the updated SVG markup.
+	$svg        = $processor->get_updated_html();
+	$attributes = get_block_wrapper_attributes();
+	return sprintf( '<div %s>%s</div>', $attributes, $svg );
 }
 
 

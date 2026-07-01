@@ -3199,9 +3199,8 @@ var wp;
 
   // packages/blocks/build-module/api/factory.mjs
   var import_hooks2 = __toESM(require_hooks(), 1);
-  var import_warning3 = __toESM(require_warning(), 1);
   var getBlockTypeWithTransformMetadata = (blockType, transform) => transform.variationName ? { ...blockType, variationName: transform.variationName } : blockType;
-  function createBlock(name, attributes = {}, innerBlocks = [], innerContent) {
+  function createBlock(name, attributes = {}, innerBlocks = []) {
     if (!isBlockRegistered(name)) {
       return createBlock("core/missing", {
         originalName: name,
@@ -3214,23 +3213,13 @@ var wp;
       attributes
     );
     const clientId = v4_default();
-    const block = {
+    return {
       clientId,
       name,
       isValid: true,
       attributes: sanitizedAttributes,
       innerBlocks
     };
-    if (innerContent) {
-      if (name === "core/html") {
-        block.innerContent = innerContent;
-      } else {
-        (0, import_warning3.default)(
-          `The innerContent argument passed to createBlock for the "${name}" block was ignored. Only the Custom HTML block stores static inner content.`
-        );
-      }
-    }
-    return block;
   }
   function createBlocksFromInnerBlocksTemplate(innerBlocksOrTemplate = []) {
     return innerBlocksOrTemplate.map((innerBlock) => {
@@ -3498,8 +3487,7 @@ var wp;
     example.attributes,
     (example.innerBlocks ?? []).map(
       (innerBlock) => getBlockFromExample(innerBlock.name, innerBlock)
-    ),
-    example.innerContent
+    )
   );
 
   // packages/blocks/build-module/api/parser/index.mjs
@@ -3654,26 +3642,7 @@ var wp;
   function serializeAttributes(attributes) {
     return JSON.stringify(attributes).replaceAll("\\\\", "\\u005c").replaceAll("--", "\\u002d\\u002d").replaceAll("<", "\\u003c").replaceAll(">", "\\u003e").replaceAll("&", "\\u0026").replaceAll('\\"', "\\u0022");
   }
-  function serializeInnerContent(innerContent, innerBlocks) {
-    let childIndex = 0;
-    const parts = innerContent.map((item) => {
-      if (item !== null) {
-        return item;
-      }
-      const innerBlock = innerBlocks[childIndex++];
-      return innerBlock ? serializeBlock(innerBlock, { isInnerBlocks: true }) : "";
-    });
-    for (; childIndex < innerBlocks.length; childIndex++) {
-      parts.push(
-        serializeBlock(innerBlocks[childIndex], { isInnerBlocks: true })
-      );
-    }
-    return parts.join("").trim();
-  }
   function getBlockInnerHTML(block) {
-    if (block.innerContent && block.name === "core/html") {
-      return serializeInnerContent(block.innerContent, block.innerBlocks);
-    }
     let saveContent = block.originalContent ?? "";
     if (block.isValid || block.innerBlocks.length) {
       try {
@@ -5746,14 +5715,6 @@ var wp;
       parsedInnerBlocks
     );
     parsedBlock.originalContent = normalizedBlock.innerHTML;
-    if (blockType.name === "core/html") {
-      parsedBlock.innerContent = normalizedBlock.innerContent ?? [
-        normalizedBlock.innerHTML
-      ];
-      parsedBlock.isValid = true;
-      parsedBlock.validationIssues = [];
-      return parsedBlock;
-    }
     const validatedBlock = applyBlockValidation(parsedBlock, blockType);
     const { validationIssues } = validatedBlock;
     const updatedBlock = applyBlockDeprecatedVersions(
@@ -5826,9 +5787,7 @@ var wp;
         return createBlock(
           // Should not be hardcoded.
           "core/html",
-          {},
-          [],
-          [node.outerHTML]
+          getBlockAttributes("core/html", node.outerHTML)
         );
       }
       const { transform, blockName } = rawTransform;

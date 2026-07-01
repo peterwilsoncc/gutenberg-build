@@ -985,10 +985,10 @@ var import_compose13 = __toESM(require_compose(), 1);
 // packages/ui/build-module/badge/badge.mjs
 var import_element11 = __toESM(require_element(), 1);
 
-// node_modules/@base-ui/utils/useControlled.mjs
+// node_modules/@base-ui/utils/esm/useControlled.js
 var React = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/error.mjs
+// node_modules/@base-ui/utils/esm/error.js
 var set;
 if (true) {
   set = /* @__PURE__ */ new Set();
@@ -1003,7 +1003,7 @@ function error(...messages) {
   }
 }
 
-// node_modules/@base-ui/utils/useControlled.mjs
+// node_modules/@base-ui/utils/esm/useControlled.js
 function useControlled({
   controlled,
   default: defaultProp,
@@ -1064,13 +1064,13 @@ function serializeToDevModeString(input) {
   }
 }
 
-// node_modules/@base-ui/utils/safeReact.mjs
+// node_modules/@base-ui/utils/esm/safeReact.js
 var React2 = __toESM(require_react(), 1);
 var SafeReact = {
   ...React2
 };
 
-// node_modules/@base-ui/utils/useRefWithInit.mjs
+// node_modules/@base-ui/utils/esm/useRefWithInit.js
 var React3 = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init2, initArg) {
@@ -1081,7 +1081,7 @@ function useRefWithInit(init2, initArg) {
   return ref;
 }
 
-// node_modules/@base-ui/utils/useStableCallback.mjs
+// node_modules/@base-ui/utils/esm/useStableCallback.js
 var useInsertionEffect = SafeReact.useInsertionEffect;
 var useSafeInsertionEffect = (
   // React 17 doesn't have useInsertionEffect.
@@ -1114,13 +1114,13 @@ function assertNotCalled() {
   }
 }
 
-// node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
+// node_modules/@base-ui/utils/esm/useIsoLayoutEffect.js
 var React4 = __toESM(require_react(), 1);
 var noop = () => {
 };
 var useIsoLayoutEffect = typeof document !== "undefined" ? React4.useLayoutEffect : noop;
 
-// node_modules/@base-ui/utils/warn.mjs
+// node_modules/@base-ui/utils/esm/warn.js
 var set2;
 if (true) {
   set2 = /* @__PURE__ */ new Set();
@@ -1135,7 +1135,7 @@ function warn(...messages) {
   }
 }
 
-// node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
+// node_modules/@base-ui/react/esm/internals/direction-context/DirectionContext.js
 var React5 = __toESM(require_react(), 1);
 var DirectionContext = /* @__PURE__ */ React5.createContext(void 0);
 if (true) DirectionContext.displayName = "DirectionContext";
@@ -1144,10 +1144,10 @@ function useDirection() {
   return context?.direction ?? "ltr";
 }
 
-// node_modules/@base-ui/react/internals/useRenderElement.mjs
+// node_modules/@base-ui/react/esm/internals/useRenderElement.js
 var React8 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/useMergedRefs.mjs
+// node_modules/@base-ui/utils/esm/useMergedRefs.js
 function useMergedRefs(a2, b2, c2, d2) {
   const forkRef = useRefWithInit(createForkRef).current;
   if (didChange(forkRef, a2, b2, c2, d2)) {
@@ -1236,17 +1236,17 @@ function update(forkRef, refs) {
   };
 }
 
-// node_modules/@base-ui/utils/getReactElementRef.mjs
+// node_modules/@base-ui/utils/esm/getReactElementRef.js
 var React7 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/reactVersion.mjs
+// node_modules/@base-ui/utils/esm/reactVersion.js
 var React6 = __toESM(require_react(), 1);
 var majorVersion = parseInt(React6.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
-// node_modules/@base-ui/utils/getReactElementRef.mjs
+// node_modules/@base-ui/utils/esm/getReactElementRef.js
 function getReactElementRef(element) {
   if (!/* @__PURE__ */ React7.isValidElement(element)) {
     return null;
@@ -1256,7 +1256,7 @@ function getReactElementRef(element) {
   return (isReactVersionAtLeast(19) ? propsWithRef?.ref : reactElement.ref) ?? null;
 }
 
-// node_modules/@base-ui/utils/mergeObjects.mjs
+// node_modules/@base-ui/utils/esm/mergeObjects.js
 function mergeObjects(a2, b2) {
   if (a2 && !b2) {
     return a2;
@@ -1273,13 +1273,13 @@ function mergeObjects(a2, b2) {
   return void 0;
 }
 
-// node_modules/@base-ui/utils/empty.mjs
+// node_modules/@base-ui/utils/esm/empty.js
 function NOOP() {
 }
 var EMPTY_ARRAY = Object.freeze([]);
 var EMPTY_OBJECT = Object.freeze({});
 
-// node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
+// node_modules/@base-ui/react/esm/internals/getStateAttributesProps.js
 function getStateAttributesProps(state, customMapping) {
   const props = {};
   for (const key in state) {
@@ -1300,17 +1300,17 @@ function getStateAttributesProps(state, customMapping) {
   return props;
 }
 
-// node_modules/@base-ui/react/utils/resolveClassName.mjs
+// node_modules/@base-ui/react/esm/utils/resolveClassName.js
 function resolveClassName(className, state) {
   return typeof className === "function" ? className(state) : className;
 }
 
-// node_modules/@base-ui/react/utils/resolveStyle.mjs
+// node_modules/@base-ui/react/esm/utils/resolveStyle.js
 function resolveStyle(style, state) {
   return typeof style === "function" ? style(state) : style;
 }
 
-// node_modules/@base-ui/react/merge-props/mergeProps.mjs
+// node_modules/@base-ui/react/esm/merge-props/mergeProps.js
 var EMPTY_PROPS = {};
 function mergeProps(a2, b2, c2, d2, e2) {
   if (!c2 && !d2 && !e2 && !a2) {
@@ -1465,7 +1465,7 @@ function isSyntheticEvent(event) {
   return event != null && typeof event === "object" && "nativeEvent" in event;
 }
 
-// node_modules/@base-ui/react/internals/useRenderElement.mjs
+// node_modules/@base-ui/react/esm/internals/useRenderElement.js
 var import_react = __toESM(require_react(), 1);
 function useRenderElement(element, componentProps, params = {}) {
   const renderProp = componentProps.render;
@@ -1583,38 +1583,7 @@ function renderTag(Tag, props) {
   return /* @__PURE__ */ React8.createElement(Tag, props);
 }
 
-// node_modules/@base-ui/utils/useId.mjs
-var React9 = __toESM(require_react(), 1);
-var globalId = 0;
-function useGlobalId(idOverride, prefix = "mui") {
-  const [defaultId, setDefaultId] = React9.useState(idOverride);
-  const id = idOverride || defaultId;
-  React9.useEffect(() => {
-    if (defaultId == null) {
-      globalId += 1;
-      setDefaultId(`${prefix}-${globalId}`);
-    }
-  }, [defaultId, prefix]);
-  return id;
-}
-var maybeReactUseId = SafeReact.useId;
-function useId(idOverride, prefix) {
-  if (maybeReactUseId !== void 0) {
-    const reactId = maybeReactUseId();
-    return idOverride ?? (prefix ? `${prefix}-${reactId}` : reactId);
-  }
-  return useGlobalId(idOverride, prefix);
-}
-
-// node_modules/@base-ui/react/internals/useBaseUiId.mjs
-function useBaseUiId(idOverride) {
-  return useId(idOverride, "base-ui");
-}
-
-// node_modules/@base-ui/react/collapsible/root/useCollapsibleRoot.mjs
-var React12 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/react/internals/reason-parts.mjs
+// node_modules/@base-ui/react/esm/internals/reason-parts.js
 var reason_parts_exports = {};
 __export(reason_parts_exports, {
   cancelOpen: () => cancelOpen,
@@ -1689,7 +1658,7 @@ var imperativeAction = "imperative-action";
 var swipe = "swipe";
 var windowResize = "window-resize";
 
-// node_modules/@base-ui/react/internals/createBaseUIEventDetails.mjs
+// node_modules/@base-ui/react/esm/internals/createBaseUIEventDetails.js
 function createChangeEventDetails(reason, event, trigger, customProperties) {
   let canceled = false;
   let allowPropagation = false;
@@ -1715,17 +1684,48 @@ function createChangeEventDetails(reason, event, trigger, customProperties) {
   return details;
 }
 
-// node_modules/@base-ui/react/internals/useTransitionStatus.mjs
+// node_modules/@base-ui/utils/esm/useId.js
+var React9 = __toESM(require_react(), 1);
+var globalId = 0;
+function useGlobalId(idOverride, prefix = "mui") {
+  const [defaultId, setDefaultId] = React9.useState(idOverride);
+  const id = idOverride || defaultId;
+  React9.useEffect(() => {
+    if (defaultId == null) {
+      globalId += 1;
+      setDefaultId(`${prefix}-${globalId}`);
+    }
+  }, [defaultId, prefix]);
+  return id;
+}
+var maybeReactUseId = SafeReact.useId;
+function useId(idOverride, prefix) {
+  if (maybeReactUseId !== void 0) {
+    const reactId = maybeReactUseId();
+    return idOverride ?? (prefix ? `${prefix}-${reactId}` : reactId);
+  }
+  return useGlobalId(idOverride, prefix);
+}
+
+// node_modules/@base-ui/react/esm/internals/useBaseUiId.js
+function useBaseUiId(idOverride) {
+  return useId(idOverride, "base-ui");
+}
+
+// node_modules/@base-ui/react/esm/collapsible/root/useCollapsibleRoot.js
+var React12 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/react/esm/internals/useTransitionStatus.js
 var React11 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/useOnMount.mjs
+// node_modules/@base-ui/utils/esm/useOnMount.js
 var React10 = __toESM(require_react(), 1);
 var EMPTY = [];
 function useOnMount(fn) {
   React10.useEffect(fn, EMPTY);
 }
 
-// node_modules/@base-ui/utils/useAnimationFrame.mjs
+// node_modules/@base-ui/utils/esm/useAnimationFrame.js
 var EMPTY2 = null;
 var LAST_RAF = globalThis.requestAnimationFrame;
 var Scheduler = class {
@@ -1813,7 +1813,7 @@ function useAnimationFrame() {
   return timeout;
 }
 
-// node_modules/@base-ui/react/internals/useTransitionStatus.mjs
+// node_modules/@base-ui/react/esm/internals/useTransitionStatus.js
 function useTransitionStatus(open, enableIdleState = false, deferEndingState = false) {
   const [transitionStatus, setTransitionStatus] = React11.useState(open && enableIdleState ? "idle" : void 0);
   const [mounted, setMounted] = React11.useState(open);
@@ -1870,7 +1870,7 @@ function useTransitionStatus(open, enableIdleState = false, deferEndingState = f
   };
 }
 
-// node_modules/@base-ui/react/collapsible/root/useCollapsibleRoot.mjs
+// node_modules/@base-ui/react/esm/collapsible/root/useCollapsibleRoot.js
 function useCollapsibleRoot(parameters) {
   const {
     open: openParam,
@@ -1914,7 +1914,7 @@ function useCollapsibleRoot(parameters) {
   }), [disabled2, handleTrigger, mounted, open, panelId, setMounted, setOpen, setPanelIdState, transitionStatus]);
 }
 
-// node_modules/@base-ui/react/collapsible/root/CollapsibleRootContext.mjs
+// node_modules/@base-ui/react/esm/collapsible/root/CollapsibleRootContext.js
 var React13 = __toESM(require_react(), 1);
 var CollapsibleRootContext = /* @__PURE__ */ React13.createContext(void 0);
 if (true) CollapsibleRootContext.displayName = "CollapsibleRootContext";
@@ -1926,7 +1926,7 @@ function useCollapsibleRootContext() {
   return context;
 }
 
-// node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
+// node_modules/@base-ui/react/esm/internals/stateAttributesMapping.js
 var TransitionStatusDataAttributes = /* @__PURE__ */ (function(TransitionStatusDataAttributes2) {
   TransitionStatusDataAttributes2["startingStyle"] = "data-starting-style";
   TransitionStatusDataAttributes2["endingStyle"] = "data-ending-style";
@@ -1950,7 +1950,7 @@ var transitionStatusMapping = {
   }
 };
 
-// node_modules/@base-ui/react/collapsible/panel/CollapsiblePanelDataAttributes.mjs
+// node_modules/@base-ui/react/esm/collapsible/panel/CollapsiblePanelDataAttributes.js
 var CollapsiblePanelDataAttributes = (function(CollapsiblePanelDataAttributes2) {
   CollapsiblePanelDataAttributes2["open"] = "data-open";
   CollapsiblePanelDataAttributes2["closed"] = "data-closed";
@@ -1959,13 +1959,13 @@ var CollapsiblePanelDataAttributes = (function(CollapsiblePanelDataAttributes2) 
   return CollapsiblePanelDataAttributes2;
 })({});
 
-// node_modules/@base-ui/react/collapsible/trigger/CollapsibleTriggerDataAttributes.mjs
+// node_modules/@base-ui/react/esm/collapsible/trigger/CollapsibleTriggerDataAttributes.js
 var CollapsibleTriggerDataAttributes = /* @__PURE__ */ (function(CollapsibleTriggerDataAttributes2) {
   CollapsibleTriggerDataAttributes2["panelOpen"] = "data-panel-open";
   return CollapsibleTriggerDataAttributes2;
 })({});
 
-// node_modules/@base-ui/react/utils/collapsibleOpenStateMapping.mjs
+// node_modules/@base-ui/react/esm/utils/collapsibleOpenStateMapping.js
 var PANEL_OPEN_HOOK = {
   [CollapsiblePanelDataAttributes.open]: ""
 };
@@ -1991,7 +1991,7 @@ var collapsibleOpenStateMapping = {
   }
 };
 
-// node_modules/@base-ui/react/internals/use-button/useButton.mjs
+// node_modules/@base-ui/react/esm/internals/use-button/useButton.js
 var React16 = __toESM(require_react(), 1);
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
@@ -2150,7 +2150,7 @@ function getFrameElement(win) {
   return win.parent && Object.getPrototypeOf(win.parent) ? win.frameElement : null;
 }
 
-// node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
+// node_modules/@base-ui/react/esm/internals/composite/root/CompositeRootContext.js
 var React14 = __toESM(require_react(), 1);
 var CompositeRootContext = /* @__PURE__ */ React14.createContext(void 0);
 if (true) CompositeRootContext.displayName = "CompositeRootContext";
@@ -2162,7 +2162,7 @@ function useCompositeRootContext(optional = false) {
   return context;
 }
 
-// node_modules/@base-ui/react/utils/useFocusableWhenDisabled.mjs
+// node_modules/@base-ui/react/esm/utils/useFocusableWhenDisabled.js
 var React15 = __toESM(require_react(), 1);
 function useFocusableWhenDisabled(parameters) {
   const {
@@ -2202,7 +2202,7 @@ function useFocusableWhenDisabled(parameters) {
   };
 }
 
-// node_modules/@base-ui/react/internals/use-button/useButton.mjs
+// node_modules/@base-ui/react/esm/internals/use-button/useButton.js
 function useButton(parameters = {}) {
   const {
     disabled: disabled2 = false,
@@ -2361,596 +2361,70 @@ function isValidLinkElement(elem) {
   return Boolean(elem?.tagName === "A" && elem?.href);
 }
 
-// node_modules/@base-ui/react/collapsible/panel/useCollapsiblePanel.mjs
-var React18 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/utils/addEventListener.mjs
-function addEventListener(target, type, listener, options) {
-  target.addEventListener(type, listener, options);
-  return () => {
-    target.removeEventListener(type, listener, options);
-  };
-}
-
-// node_modules/@base-ui/utils/useValueAsRef.mjs
-function useValueAsRef(value) {
-  const latest = useRefWithInit(createLatestRef, value).current;
-  latest.next = value;
-  useIsoLayoutEffect(latest.effect);
-  return latest;
-}
-function createLatestRef(value) {
-  const latest = {
-    current: value,
-    next: value,
-    effect: () => {
-      latest.current = latest.next;
-    }
-  };
-  return latest;
-}
-
-// node_modules/@base-ui/utils/owner.mjs
-function ownerDocument(node) {
-  return node?.ownerDocument || document;
-}
-
-// node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-var React17 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-var ReactDOM = __toESM(require_react_dom(), 1);
-
-// node_modules/@base-ui/react/utils/resolveRef.mjs
-function resolveRef(maybeRef) {
-  if (maybeRef == null) {
-    return maybeRef;
-  }
-  return "current" in maybeRef ? maybeRef.current : maybeRef;
-}
-
-// node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, treatAbortedAsFinished = true) {
-  const frame = useAnimationFrame();
-  return useStableCallback((fnToExecute, signal = null) => {
-    frame.cancel();
-    const element = resolveRef(elementOrRef);
-    if (element == null) {
-      return;
-    }
-    const resolvedElement = element;
-    const done = () => {
-      ReactDOM.flushSync(fnToExecute);
-    };
-    if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
-      fnToExecute();
-      return;
-    }
-    function exec() {
-      Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
-        if (!signal?.aborted) {
-          done();
-        }
-      }).catch(() => {
-        if (treatAbortedAsFinished) {
-          if (!signal?.aborted) {
-            done();
-          }
-          return;
-        }
-        const currentAnimations = resolvedElement.getAnimations();
-        if (!signal?.aborted && currentAnimations.length > 0 && currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
-          exec();
-        }
-      });
-    }
-    if (waitForStartingStyleRemoved) {
-      const startingStyleAttribute = TransitionStatusDataAttributes.startingStyle;
-      if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-        frame.request(exec);
-        return;
-      }
-      const attributeObserver = new MutationObserver(() => {
-        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-          attributeObserver.disconnect();
-          exec();
-        }
-      });
-      attributeObserver.observe(resolvedElement, {
-        attributes: true,
-        attributeFilter: [startingStyleAttribute]
-      });
-      signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
-        once: true
-      });
-      return;
-    }
-    frame.request(exec);
-  });
-}
-
-// node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-function useOpenChangeComplete(parameters) {
-  const {
-    enabled = true,
-    open,
-    ref,
-    onComplete: onCompleteParam
-  } = parameters;
-  const onComplete = useStableCallback(onCompleteParam);
-  const runOnceAnimationsFinish = useAnimationsFinished(ref, open, false);
-  React17.useEffect(() => {
-    if (!enabled) {
-      return void 0;
-    }
-    const abortController = new AbortController();
-    runOnceAnimationsFinish(onComplete, abortController.signal);
-    return () => {
-      abortController.abort();
-    };
-  }, [enabled, open, onComplete, runOnceAnimationsFinish]);
-}
-
-// node_modules/@base-ui/react/collapsible/panel/useCollapsiblePanel.mjs
-var EMPTY_DIMENSIONS = {
-  height: void 0,
-  width: void 0
-};
-function useCollapsiblePanel(parameters) {
-  const {
-    externalRef,
-    hiddenUntilFound,
-    id: idParam,
-    keepMounted,
-    mounted,
-    onOpenChange,
-    open,
-    setMounted,
-    setOpen,
-    transitionStatus
-  } = parameters;
-  const panelRef = React18.useRef(null);
-  const animationTypeRef = React18.useRef(null);
-  const [dimensions, setDimensionsUnwrapped] = React18.useState(EMPTY_DIMENSIONS);
-  const lastMeasuredDimensionsRef = React18.useRef(EMPTY_DIMENSIONS);
-  const shouldSkipNextOpenRef = React18.useRef(false);
-  const shouldPreventMountAnimationRef = React18.useRef(open);
-  const shouldPreventActivityResumeAnimationRef = React18.useRef(false);
-  const [forcePanelIdle, setForcePanelIdle] = React18.useState(false);
-  const pendingTemporaryStyleRestoreRef = React18.useRef(null);
-  const mergedPanelRef = useMergedRefs(externalRef, panelRef);
-  const latestStateRef = useValueAsRef({
-    mounted,
-    open
-  });
-  const runOnceCloseAnimationsFinish = useAnimationsFinished(panelRef, false, false);
-  const hidden = !open && !mounted;
-  const panelTransitionStatus = forcePanelIdle ? "idle" : transitionStatus;
-  const shouldPreventOpenAnimation = open && // These 2 refs are safe to read in render, they are only written from committed
-  // layout/effect paths and gate one-shot motion suppression for the next open
-  // lifecycle. They intentionally expose the last committed motion snapshot.
-  (shouldPreventMountAnimationRef.current || shouldPreventActivityResumeAnimationRef.current);
-  const renderedDimensions = !open && mounted && // These 2 refs are also safe to read in render, both hold the last committed
-  // animation mode and measurement. This fallback only restores a previously
-  // measured pixel size after the live dimensions state has been reset back to `auto`.
-  animationTypeRef.current === "css-animation" && dimensions.height === void 0 && dimensions.width === void 0 ? lastMeasuredDimensionsRef.current : dimensions;
-  const shouldPersistHiddenTransitionStyles = hiddenUntilFound && hidden && animationTypeRef.current !== "css-animation";
-  const setDimensions = useStableCallback((nextDimensions, shouldCacheMeasurement = true) => {
-    if (shouldCacheMeasurement) {
-      lastMeasuredDimensionsRef.current = nextDimensions;
-    }
-    setDimensionsUnwrapped(nextDimensions);
-  });
-  const restorePendingTemporaryStyle = useStableCallback(() => {
-    pendingTemporaryStyleRestoreRef.current?.();
-    pendingTemporaryStyleRestoreRef.current = null;
-  });
-  const setPendingTemporaryStyleRestore = useStableCallback((restore) => {
-    restorePendingTemporaryStyle();
-    pendingTemporaryStyleRestoreRef.current = () => {
-      pendingTemporaryStyleRestoreRef.current = null;
-      restore();
-    };
-  });
-  const markActivityResumeAnimationSuppressed = useStableCallback(() => {
-    if (open && mounted && animationTypeRef.current === "css-animation") {
-      shouldPreventActivityResumeAnimationRef.current = true;
-    }
-  });
-  useIsoLayoutEffect(() => {
-    if (!forcePanelIdle || transitionStatus === "starting") {
-      return;
-    }
-    setForcePanelIdle(false);
-  }, [forcePanelIdle, transitionStatus]);
-  React18.useEffect(() => {
-    return () => {
-      markActivityResumeAnimationSuppressed();
-      restorePendingTemporaryStyle();
-    };
-  }, [markActivityResumeAnimationSuppressed, restorePendingTemporaryStyle]);
-  useIsoLayoutEffect(() => {
-    const panel = panelRef.current;
-    if (!panel) {
-      return void 0;
-    }
-    if (!open && pendingTemporaryStyleRestoreRef.current) {
-      restorePendingTemporaryStyle();
-    }
-    const animationType = getAnimationType(panel, shouldPreventOpenAnimation);
-    animationTypeRef.current = animationType;
-    if (open && transitionStatus === "idle" && shouldPreventMountAnimationRef.current && animationType === "css-animation") {
-      lastMeasuredDimensionsRef.current = getDimensions(panel);
-      return void 0;
-    }
-    if (open && transitionStatus === "starting") {
-      const skipNextOpen = shouldSkipNextOpenRef.current;
-      shouldSkipNextOpenRef.current = false;
-      if (animationType === "none") {
-        setDimensions(getDimensions(panel));
-        setForcePanelIdle(true);
-        return void 0;
-      }
-      if (animationType === "css-transition") {
-        const restoreLayoutStyles = resetLayoutStyles(panel);
-        setDimensions(getDimensions(panel));
-        if (!skipNextOpen) {
-          return restoreLayoutStyles;
-        }
-        const restoreTransitionDuration = setTemporaryStyle(panel, "transition-duration", "0s");
-        setPendingTemporaryStyleRestore(restoreTransitionDuration);
-        setForcePanelIdle(true);
-        return restoreLayoutStyles;
-      }
-      if (animationType === "css-animation") {
-        setDimensions(getDimensions(panel));
-        if (!skipNextOpen) {
-          const restoreAnimationName2 = setTemporaryStyle(panel, "animation-name", "none");
-          restoreAnimationName2();
-          return void 0;
-        }
-        const restoreAnimationName = setTemporaryStyle(panel, "animation-name", "none");
-        const restoreAnimationDuration = setTemporaryStyle(panel, "animation-duration", "0s");
-        restoreAnimationName();
-        setPendingTemporaryStyleRestore(restoreAnimationDuration);
-        setForcePanelIdle(true);
-        return void 0;
-      }
-    }
-    if (!open && mounted && (transitionStatus === "idle" || transitionStatus === "starting")) {
-      shouldPreventMountAnimationRef.current = false;
-      shouldPreventActivityResumeAnimationRef.current = false;
-      if (animationType === "none") {
-        setDimensions(EMPTY_DIMENSIONS, false);
-        setMounted(false);
-        return void 0;
-      }
-      setDimensions(getDimensions(panel));
-      return void 0;
-    }
-    if (transitionStatus !== "ending") {
-      return void 0;
-    }
-    if (animationType === "none") {
-      setMounted(false);
-      return void 0;
-    }
-    const nextDimensions = getDimensions(panel);
-    const hasMeasuredSize = (nextDimensions.height ?? 0) > 0 || (nextDimensions.width ?? 0) > 0;
-    if (!hasMeasuredSize) {
-      setMounted(false);
-      return void 0;
-    }
-    setDimensions(nextDimensions);
-    if (animationType === "css-animation") {
-      const restoreAnimationName = setTemporaryStyle(panel, "animation-name", "none");
-      restoreAnimationName();
-    }
-    return void 0;
-  }, [mounted, open, restorePendingTemporaryStyle, setDimensions, setMounted, setPendingTemporaryStyleRestore, shouldPreventOpenAnimation, transitionStatus]);
-  useOpenChangeComplete({
-    enabled: open && mounted && panelTransitionStatus === "idle",
-    open: true,
-    ref: panelRef,
-    onComplete() {
-      if (!open) {
-        return;
-      }
-      setDimensions(EMPTY_DIMENSIONS, false);
-    }
-  });
-  React18.useEffect(() => {
-    if (open || !mounted || panelTransitionStatus !== "ending") {
-      return void 0;
-    }
-    const panel = panelRef.current;
-    if (!panel) {
-      return void 0;
-    }
-    const abortController = new AbortController();
-    let endingStyleFrame = -1;
-    function handleComplete() {
-      if (latestStateRef.current.open) {
-        return;
-      }
-      setMounted(false);
-      setDimensions(EMPTY_DIMENSIONS, false);
-    }
-    endingStyleFrame = AnimationFrame.request(() => {
-      if (!abortController.signal.aborted) {
-        runOnceCloseAnimationsFinish(handleComplete, abortController.signal);
-      }
-    });
-    return () => {
-      AnimationFrame.cancel(endingStyleFrame);
-      abortController.abort();
-    };
-  }, [latestStateRef, mounted, open, panelTransitionStatus, runOnceCloseAnimationsFinish, setDimensions, setMounted]);
-  useIsoLayoutEffect(() => {
-    const panel = panelRef.current;
-    if (!panel || !hiddenUntilFound || !hidden) {
-      return;
-    }
-    panel.setAttribute("hidden", "until-found");
-  }, [hidden, hiddenUntilFound]);
-  React18.useEffect(function registerBeforeMatchListener() {
-    const panel = panelRef.current;
-    if (!panel) {
-      return void 0;
-    }
-    function handleBeforeMatch(event) {
-      const eventDetails = createChangeEventDetails(reason_parts_exports.none, event);
-      onOpenChange(true, eventDetails);
-      if (eventDetails.isCanceled) {
-        return;
-      }
-      shouldSkipNextOpenRef.current = true;
-      setOpen(true);
-    }
-    return addEventListener(panel, "beforematch", handleBeforeMatch);
-  }, [onOpenChange, setOpen]);
-  const shouldRender = keepMounted || hiddenUntilFound || mounted || open;
-  return {
-    height: renderedDimensions.height,
-    props: {
-      ...shouldPersistHiddenTransitionStyles ? {
-        [CollapsiblePanelDataAttributes.startingStyle]: ""
-      } : void 0,
-      hidden,
-      id: idParam
-    },
-    ref: mergedPanelRef,
-    shouldPreventOpenAnimation,
-    shouldRender,
-    transitionStatus: panelTransitionStatus,
-    width: renderedDimensions.width
-  };
-}
-function getDimensions(element) {
-  return {
-    height: element.scrollHeight,
-    width: element.scrollWidth
-  };
-}
-function getAnimationType(element, hasSuppressedMountAnimation = false) {
-  const panelStyles = getWindow(element).getComputedStyle(element);
-  const hasAnimation = (panelStyles.animationName.split(",").map((name) => name.trim()).some((name) => name !== "" && name !== "none") || hasSuppressedMountAnimation) && hasNonZeroDuration(panelStyles.animationDuration);
-  const hasTransition = hasNonZeroDuration(panelStyles.transitionDuration);
-  if (hasAnimation && hasTransition) {
-    if (true) {
-      warn("CSS transitions and CSS animations both detected on Collapsible or Accordion panel.", "Only one of either animation type should be used.");
-    }
-    return "css-transition";
-  }
-  if (hasTransition) {
-    return "css-transition";
-  }
-  if (hasAnimation) {
-    return "css-animation";
-  }
-  return "none";
-}
-function hasNonZeroDuration(value) {
-  return value.split(",").map((part) => part.trim()).some((part) => part !== "" && Number.parseFloat(part) > 0);
-}
-function setTemporaryStyle(element, property, value) {
-  const previousValue = element.style.getPropertyValue(property);
-  const previousPriority = element.style.getPropertyPriority(property);
-  element.style.setProperty(property, value);
-  return () => {
-    if (previousValue === "") {
-      element.style.removeProperty(property);
-      return;
-    }
-    element.style.setProperty(property, previousValue, previousPriority);
-  };
-}
-function resetLayoutStyles(element) {
-  const originalLayoutStyles = {
-    "justify-content": element.style.justifyContent,
-    "align-items": element.style.alignItems,
-    "align-content": element.style.alignContent,
-    "justify-items": element.style.justifyItems
-  };
-  Object.keys(originalLayoutStyles).forEach((key) => {
-    element.style.setProperty(key, "initial", "important");
-  });
-  function restoreLayoutStyles() {
-    Object.entries(originalLayoutStyles).forEach(([key, value]) => {
-      if (value === "") {
-        element.style.removeProperty(key);
-        return;
-      }
-      element.style.setProperty(key, value);
-    });
-  }
-  const frame = AnimationFrame.request(restoreLayoutStyles);
-  return () => {
-    AnimationFrame.cancel(frame);
-    restoreLayoutStyles();
-  };
-}
-
-// node_modules/@base-ui/utils/useOnFirstRender.mjs
-var React19 = __toESM(require_react(), 1);
-function useOnFirstRender(fn) {
-  const ref = React19.useRef(true);
-  if (ref.current) {
-    ref.current = false;
-    fn();
-  }
-}
-
-// node_modules/@base-ui/utils/platform/parts.mjs
-var parts_exports = {};
-__export(parts_exports, {
-  engine: () => engine_exports,
-  env: () => env_exports,
-  os: () => os_exports,
-  screenReader: () => screen_reader_exports
-});
-
-// node_modules/@base-ui/utils/platform/os.mjs
-var os_exports = {};
-__export(os_exports, {
-  android: () => android,
-  apple: () => apple,
-  ios: () => ios,
-  linux: () => linux,
-  mac: () => mac,
-  windows: () => windows
-});
-
-// node_modules/@base-ui/utils/platform/shared.mjs
-function readRawData() {
-  if (typeof navigator === "undefined") {
+// node_modules/@base-ui/utils/esm/detectBrowser.js
+var hasNavigator = typeof navigator !== "undefined";
+var nav = getNavigatorData();
+var platform = getPlatform();
+var userAgent = getUserAgent();
+var isWebKit2 = typeof CSS === "undefined" || !CSS.supports ? false : CSS.supports("-webkit-backdrop-filter:none");
+var isIOS = (
+  // iPads can claim to be MacIntel
+  nav.platform === "MacIntel" && nav.maxTouchPoints > 1 ? true : /iP(hone|ad|od)|iOS/.test(nav.platform)
+);
+var isFirefox = hasNavigator && /firefox/i.test(userAgent);
+var isSafari = hasNavigator && /apple/i.test(navigator.vendor);
+var isEdge = hasNavigator && /Edg/i.test(userAgent);
+var isAndroid = hasNavigator && /android/i.test(platform) || /android/i.test(userAgent);
+var isMac = hasNavigator && platform.toLowerCase().startsWith("mac") && !navigator.maxTouchPoints;
+var isJSDOM = userAgent.includes("jsdom/");
+function getNavigatorData() {
+  if (!hasNavigator) {
     return {
-      userAgent: "",
       platform: "",
-      maxTouchPoints: 0
+      maxTouchPoints: -1
     };
   }
-  if (true) {
-    const uaData = navigator.userAgentData;
-    if (uaData && Array.isArray(uaData.brands)) {
-      return {
-        userAgent: uaData.brands.map(({
-          brand,
-          version: version2
-        }) => `${brand}/${version2}`).join(" "),
-        platform: uaData.platform ?? navigator.platform ?? "",
-        maxTouchPoints: navigator.maxTouchPoints ?? 0
-      };
-    }
+  const uaData = navigator.userAgentData;
+  if (uaData?.platform) {
+    return {
+      platform: uaData.platform,
+      maxTouchPoints: navigator.maxTouchPoints
+    };
   }
   return {
-    userAgent: navigator.userAgent,
     platform: navigator.platform ?? "",
-    maxTouchPoints: navigator.maxTouchPoints ?? 0
+    maxTouchPoints: navigator.maxTouchPoints ?? -1
   };
 }
-var {
-  userAgent,
-  platform,
-  maxTouchPoints
-} = readRawData();
-var lowerUserAgent = userAgent.toLowerCase();
-var lowerPlatform = platform.toLowerCase();
-
-// node_modules/@base-ui/utils/platform/os.mjs
-var ios = /^i(os$|p)/.test(lowerPlatform) || lowerPlatform === "macintel" && maxTouchPoints > 1;
-var ANDROID_STRING = "android";
-var android = lowerPlatform === ANDROID_STRING || lowerUserAgent.includes(ANDROID_STRING);
-var mac = !ios && lowerPlatform.startsWith("mac");
-var windows = lowerPlatform.startsWith("win");
-var linux = !android && /^(linux|chrome os)/.test(lowerPlatform);
-var apple = mac || ios;
-
-// node_modules/@base-ui/utils/platform/engine.mjs
-var engine_exports = {};
-__export(engine_exports, {
-  blink: () => blink,
-  gecko: () => gecko,
-  webkit: () => webkit
-});
-var webkit = typeof CSS !== "undefined" && !!CSS.supports?.("-webkit-backdrop-filter:none");
-var gecko = !webkit && lowerUserAgent.includes("firefox");
-var blink = !webkit && lowerUserAgent.includes("chrom");
-
-// node_modules/@base-ui/utils/platform/screen-reader.mjs
-var screen_reader_exports = {};
-__export(screen_reader_exports, {
-  voiceOver: () => voiceOver
-});
-var voiceOver = apple;
-
-// node_modules/@base-ui/utils/platform/env.mjs
-var env_exports = {};
-__export(env_exports, {
-  jsdom: () => jsdom
-});
-var jsdom = /jsdom|happydom/.test(lowerUserAgent);
-
-// node_modules/@base-ui/utils/useTimeout.mjs
-var EMPTY3 = 0;
-var Timeout = class _Timeout {
-  static create() {
-    return new _Timeout();
+function getUserAgent() {
+  if (!hasNavigator) {
+    return "";
   }
-  currentId = EMPTY3;
-  /**
-   * Executes `fn` after `delay`, clearing any previously scheduled call.
-   */
-  start(delay, fn) {
-    this.clear();
-    this.currentId = setTimeout(() => {
-      this.currentId = EMPTY3;
-      fn();
-    }, delay);
+  const uaData = navigator.userAgentData;
+  if (uaData && Array.isArray(uaData.brands)) {
+    return uaData.brands.map(({
+      brand,
+      version: version2
+    }) => `${brand}/${version2}`).join(" ");
   }
-  isStarted() {
-    return this.currentId !== EMPTY3;
+  return navigator.userAgent;
+}
+function getPlatform() {
+  if (!hasNavigator) {
+    return "";
   }
-  clear = () => {
-    if (this.currentId !== EMPTY3) {
-      clearTimeout(this.currentId);
-      this.currentId = EMPTY3;
-    }
-  };
-  disposeEffect = () => {
-    return this.clear;
-  };
-};
-function useTimeout() {
-  const timeout = useRefWithInit(Timeout.create).current;
-  useOnMount(timeout.disposeEffect);
-  return timeout;
+  const uaData = navigator.userAgentData;
+  if (uaData?.platform) {
+    return uaData.platform;
+  }
+  return navigator.platform ?? "";
 }
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
-var React20 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/react/floating-ui-react/utils/event.mjs
-function isReactEvent(event) {
-  return "nativeEvent" in event;
-}
-function isMouseLikePointerType(pointerType, strict) {
-  const values = ["mouse", "pen"];
-  if (!strict) {
-    values.push("", void 0);
-  }
-  return values.includes(pointerType);
-}
-function isClickLikeEvent(event) {
-  const type = event.type;
-  return type === "click" || type === "mousedown" || type === "keydown" || type === "keyup";
-}
-
-// node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/constants.js
 var FOCUSABLE_ATTRIBUTE = "data-base-ui-focusable";
 var TYPEABLE_SELECTOR = "input:not([type='hidden']):not([disabled]),[contenteditable]:not([contenteditable='false']),textarea:not([disabled])";
 
-// node_modules/@base-ui/react/internals/shadowDom.mjs
+// node_modules/@base-ui/react/esm/internals/shadowDom.js
 function activeElement(doc) {
   let element = doc.activeElement;
   while (element?.shadowRoot?.activeElement != null) {
@@ -2984,7 +2458,7 @@ function getTarget(event) {
   return event.target;
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/element.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/element.js
 function isTargetInsideEnabledTrigger(target, triggerElements) {
   if (!isElement(target)) {
     return false;
@@ -3020,7 +2494,7 @@ function isInteractiveElement(element) {
   return element?.closest(`button,a[href],[role="button"],select,[tabindex]:not([tabindex="-1"]),${TYPEABLE_SELECTOR}`) != null;
 }
 function matchesFocusVisible(element) {
-  if (!element || parts_exports.env.jsdom) {
+  if (!element || isJSDOM) {
     return true;
   }
   try {
@@ -3030,263 +2504,27 @@ function matchesFocusVisible(element) {
   }
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverShared.mjs
-function resolveValue(value, pointerType) {
-  if (pointerType != null && !isMouseLikePointerType(pointerType)) {
-    return 0;
-  }
-  if (typeof value === "function") {
-    return value();
-  }
-  return value;
-}
-function getDelay(value, prop, pointerType) {
-  const result = resolveValue(value, pointerType);
-  if (typeof result === "number") {
-    return result;
-  }
-  return result?.[prop];
-}
-function getRestMs(value) {
-  if (typeof value === "function") {
-    return value();
-  }
-  return value;
-}
-function isClickLikeOpenEvent(openEventType, interactedInside) {
-  return interactedInside || openEventType === "click" || openEventType === "mousedown";
-}
-function isHoverOpenEvent(openEventType) {
-  return openEventType?.includes("mouse") && openEventType !== "mousedown";
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/nodes.js
+function getNodeChildren(nodes, id, onlyOpenChildren = true) {
+  const directChildren = nodes.filter((node) => node.parentId === id);
+  return directChildren.flatMap((child) => [...!onlyOpenChildren || child.context?.open ? [child] : [], ...getNodeChildren(nodes, child.id, onlyOpenChildren)]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
-var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-var FloatingDelayGroupContext = /* @__PURE__ */ React20.createContext({
-  hasProvider: false,
-  timeoutMs: 0,
-  delayRef: {
-    current: 0
-  },
-  initialDelayRef: {
-    current: 0
-  },
-  timeout: new Timeout(),
-  currentIdRef: {
-    current: null
-  },
-  currentContextRef: {
-    current: null
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/event.js
+function isReactEvent(event) {
+  return "nativeEvent" in event;
+}
+function isMouseLikePointerType(pointerType, strict) {
+  const values = ["mouse", "pen"];
+  if (!strict) {
+    values.push("", void 0);
   }
-});
-if (true) FloatingDelayGroupContext.displayName = "FloatingDelayGroupContext";
-function resetDelayRef(delayRef, initialDelayRef) {
-  delayRef.current = initialDelayRef.current;
+  return values.includes(pointerType);
 }
-function FloatingDelayGroup(props) {
-  const {
-    children,
-    delay,
-    timeoutMs = 0
-  } = props;
-  const delayRef = React20.useRef(delay);
-  const initialDelayRef = React20.useRef(delay);
-  const currentIdRef = React20.useRef(null);
-  const currentContextRef = React20.useRef(null);
-  const timeout = useTimeout();
-  useIsoLayoutEffect(() => {
-    initialDelayRef.current = delay;
-    if (!currentIdRef.current) {
-      delayRef.current = delay;
-      return;
-    }
-    delayRef.current = {
-      open: getDelay(delayRef.current, "open"),
-      close: getDelay(delay, "close")
-    };
-  }, [delay, currentIdRef, delayRef, initialDelayRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FloatingDelayGroupContext.Provider, {
-    value: React20.useMemo(() => ({
-      hasProvider: true,
-      delayRef,
-      initialDelayRef,
-      currentIdRef,
-      timeoutMs,
-      currentContextRef,
-      timeout
-    }), [timeoutMs, timeout]),
-    children
-  });
+function isClickLikeEvent(event) {
+  const type = event.type;
+  return type === "click" || type === "mousedown" || type === "keydown" || type === "keyup";
 }
-function useDelayGroup(context, options = {
-  open: false
-}) {
-  const {
-    open
-  } = options;
-  const store = "rootStore" in context ? context.rootStore : context;
-  const floatingId = store.useState("floatingId");
-  const groupContext = React20.useContext(FloatingDelayGroupContext);
-  const {
-    currentIdRef,
-    delayRef,
-    timeoutMs,
-    initialDelayRef,
-    currentContextRef,
-    hasProvider,
-    timeout
-  } = groupContext;
-  const [isInstantPhase, setIsInstantPhase] = React20.useState(false);
-  const openRef = React20.useRef(open);
-  const isUnmountedRef = React20.useRef(false);
-  useIsoLayoutEffect(() => {
-    openRef.current = open;
-  }, [open]);
-  useIsoLayoutEffect(() => {
-    return () => {
-      isUnmountedRef.current = true;
-    };
-  }, []);
-  useIsoLayoutEffect(() => {
-    function unset() {
-      if (!isUnmountedRef.current) {
-        setIsInstantPhase(false);
-      }
-      currentContextRef.current?.setIsInstantPhase(false);
-      currentIdRef.current = null;
-      currentContextRef.current = null;
-      delayRef.current = initialDelayRef.current;
-      timeout.clear();
-    }
-    if (!currentIdRef.current) {
-      return void 0;
-    }
-    if (!open && currentIdRef.current === floatingId) {
-      setIsInstantPhase(false);
-      if (timeoutMs) {
-        const closingId = floatingId;
-        timeout.start(timeoutMs, () => {
-          if (store.select("open") || currentIdRef.current && currentIdRef.current !== closingId) {
-            return;
-          }
-          unset();
-        });
-        return () => {
-          if (openRef.current || currentIdRef.current !== closingId) {
-            timeout.clear();
-          }
-        };
-      }
-      unset();
-    }
-    return void 0;
-  }, [open, floatingId, currentIdRef, delayRef, timeoutMs, initialDelayRef, currentContextRef, timeout, store]);
-  useIsoLayoutEffect(() => {
-    if (!open) {
-      return;
-    }
-    const prevContext = currentContextRef.current;
-    const prevId = currentIdRef.current;
-    timeout.clear();
-    currentContextRef.current = {
-      onOpenChange: store.setOpen,
-      setIsInstantPhase
-    };
-    currentIdRef.current = floatingId;
-    delayRef.current = {
-      open: 0,
-      close: getDelay(initialDelayRef.current, "close")
-    };
-    if (prevId !== null && prevId !== floatingId) {
-      setIsInstantPhase(true);
-      prevContext?.setIsInstantPhase(true);
-      prevContext?.onOpenChange(false, createChangeEventDetails(reason_parts_exports.none));
-    } else {
-      setIsInstantPhase(false);
-      prevContext?.setIsInstantPhase(false);
-    }
-  }, [open, floatingId, store, currentIdRef, delayRef, initialDelayRef, currentContextRef, timeout]);
-  useIsoLayoutEffect(() => {
-    return () => {
-      if (currentIdRef.current === floatingId) {
-        currentContextRef.current = null;
-        if (!openRef.current) {
-          return;
-        }
-        currentIdRef.current = null;
-        resetDelayRef(delayRef, initialDelayRef);
-        timeout.clear();
-      }
-    };
-  }, [currentContextRef, currentIdRef, delayRef, floatingId, initialDelayRef, timeout]);
-  return React20.useMemo(() => ({
-    hasProvider,
-    delayRef,
-    isInstantPhase
-  }), [hasProvider, delayRef, isInstantPhase]);
-}
-
-// node_modules/@base-ui/utils/mergeCleanups.mjs
-function mergeCleanups(...cleanups) {
-  return () => {
-    for (let i2 = 0; i2 < cleanups.length; i2 += 1) {
-      const cleanup = cleanups[i2];
-      if (cleanup) {
-        cleanup();
-      }
-    }
-  };
-}
-
-// node_modules/@base-ui/react/utils/FocusGuard.mjs
-var React21 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/utils/visuallyHidden.mjs
-var visuallyHiddenBase = {
-  clipPath: "inset(50%)",
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  border: 0,
-  padding: 0,
-  width: 1,
-  height: 1,
-  margin: -1
-};
-var visuallyHidden = {
-  ...visuallyHiddenBase,
-  position: "fixed",
-  top: 0,
-  left: 0
-};
-var visuallyHiddenInput = {
-  ...visuallyHiddenBase,
-  position: "absolute"
-};
-
-// node_modules/@base-ui/react/utils/FocusGuard.mjs
-var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-var FocusGuard = /* @__PURE__ */ React21.forwardRef(function FocusGuard2(props, ref) {
-  const [role, setRole] = React21.useState();
-  useIsoLayoutEffect(() => {
-    if (parts_exports.screenReader.voiceOver && parts_exports.engine.webkit) {
-      setRole("button");
-    }
-  }, []);
-  const restProps = {
-    tabIndex: 0,
-    // Role is only for VoiceOver
-    role
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", {
-    ...props,
-    ref,
-    style: visuallyHidden,
-    "aria-hidden": role ? void 0 : true,
-    ...restProps,
-    "data-base-ui-focus-guard": ""
-  });
-});
-if (true) FocusGuard.displayName = "FocusGuard";
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs
 var sides = ["top", "right", "bottom", "left"];
@@ -3417,7 +2655,7 @@ function rectToClientRect(rect) {
   };
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/composite.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/composite.js
 function isHiddenByStyles(styles) {
   return styles.visibility === "hidden" || styles.visibility === "collapse";
 }
@@ -3431,7 +2669,12 @@ function isElementVisible(element, styles = element ? getComputedStyle2(element)
   return styles.display !== "none" && styles.display !== "contents";
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/tabbable.mjs
+// node_modules/@base-ui/utils/esm/owner.js
+function ownerDocument(node) {
+  return node?.ownerDocument || document;
+}
+
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/tabbable.js
 var CANDIDATE_SELECTOR = 'a[href],button,input,select,textarea,summary,details,iframe,object,embed,[tabindex],[contenteditable]:not([contenteditable="false"]),audio[controls],video[controls]';
 function getParentElement(element) {
   const assignedSlot = element.assignedSlot;
@@ -3599,22 +2842,709 @@ function enableFocusInside(container) {
   });
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/nodes.mjs
-function getNodeChildren(nodes, id, onlyOpenChildren = true) {
-  const directChildren = nodes.filter((node) => node.parentId === id);
-  return directChildren.flatMap((child) => [...!onlyOpenChildren || child.context?.open ? [child] : [], ...getNodeChildren(nodes, child.id, onlyOpenChildren)]);
+// node_modules/@base-ui/react/esm/collapsible/panel/useCollapsiblePanel.js
+var React18 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/utils/esm/addEventListener.js
+function addEventListener(target, type, listener, options) {
+  target.addEventListener(type, listener, options);
+  return () => {
+    target.removeEventListener(type, listener, options);
+  };
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/createAttribute.mjs
+// node_modules/@base-ui/utils/esm/useValueAsRef.js
+function useValueAsRef(value) {
+  const latest = useRefWithInit(createLatestRef, value).current;
+  latest.next = value;
+  useIsoLayoutEffect(latest.effect);
+  return latest;
+}
+function createLatestRef(value) {
+  const latest = {
+    current: value,
+    next: value,
+    effect: () => {
+      latest.current = latest.next;
+    }
+  };
+  return latest;
+}
+
+// node_modules/@base-ui/react/esm/internals/useOpenChangeComplete.js
+var React17 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/react/esm/internals/useAnimationsFinished.js
+var ReactDOM = __toESM(require_react_dom(), 1);
+
+// node_modules/@base-ui/react/esm/utils/resolveRef.js
+function resolveRef(maybeRef) {
+  if (maybeRef == null) {
+    return maybeRef;
+  }
+  return "current" in maybeRef ? maybeRef.current : maybeRef;
+}
+
+// node_modules/@base-ui/react/esm/internals/useAnimationsFinished.js
+function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, treatAbortedAsFinished = true) {
+  const frame = useAnimationFrame();
+  return useStableCallback((fnToExecute, signal = null) => {
+    frame.cancel();
+    const element = resolveRef(elementOrRef);
+    if (element == null) {
+      return;
+    }
+    const resolvedElement = element;
+    const done = () => {
+      ReactDOM.flushSync(fnToExecute);
+    };
+    if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
+      fnToExecute();
+      return;
+    }
+    function exec() {
+      Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
+        if (!signal?.aborted) {
+          done();
+        }
+      }).catch(() => {
+        if (treatAbortedAsFinished) {
+          if (!signal?.aborted) {
+            done();
+          }
+          return;
+        }
+        const currentAnimations = resolvedElement.getAnimations();
+        if (!signal?.aborted && currentAnimations.length > 0 && currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
+          exec();
+        }
+      });
+    }
+    if (waitForStartingStyleRemoved) {
+      const startingStyleAttribute = TransitionStatusDataAttributes.startingStyle;
+      if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+        frame.request(exec);
+        return;
+      }
+      const attributeObserver = new MutationObserver(() => {
+        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+          attributeObserver.disconnect();
+          exec();
+        }
+      });
+      attributeObserver.observe(resolvedElement, {
+        attributes: true,
+        attributeFilter: [startingStyleAttribute]
+      });
+      signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
+        once: true
+      });
+      return;
+    }
+    frame.request(exec);
+  });
+}
+
+// node_modules/@base-ui/react/esm/internals/useOpenChangeComplete.js
+function useOpenChangeComplete(parameters) {
+  const {
+    enabled = true,
+    open,
+    ref,
+    onComplete: onCompleteParam
+  } = parameters;
+  const onComplete = useStableCallback(onCompleteParam);
+  const runOnceAnimationsFinish = useAnimationsFinished(ref, open, false);
+  React17.useEffect(() => {
+    if (!enabled) {
+      return void 0;
+    }
+    const abortController = new AbortController();
+    runOnceAnimationsFinish(onComplete, abortController.signal);
+    return () => {
+      abortController.abort();
+    };
+  }, [enabled, open, onComplete, runOnceAnimationsFinish]);
+}
+
+// node_modules/@base-ui/react/esm/collapsible/panel/useCollapsiblePanel.js
+var EMPTY_DIMENSIONS = {
+  height: void 0,
+  width: void 0
+};
+function useCollapsiblePanel(parameters) {
+  const {
+    externalRef,
+    hiddenUntilFound,
+    id: idParam,
+    keepMounted,
+    mounted,
+    onOpenChange,
+    open,
+    setMounted,
+    setOpen,
+    transitionStatus
+  } = parameters;
+  const panelRef = React18.useRef(null);
+  const animationTypeRef = React18.useRef(null);
+  const [dimensions, setDimensionsUnwrapped] = React18.useState(EMPTY_DIMENSIONS);
+  const lastMeasuredDimensionsRef = React18.useRef(EMPTY_DIMENSIONS);
+  const shouldSkipNextOpenRef = React18.useRef(false);
+  const shouldPreventMountAnimationRef = React18.useRef(open);
+  const shouldPreventActivityResumeAnimationRef = React18.useRef(false);
+  const [forcePanelIdle, setForcePanelIdle] = React18.useState(false);
+  const pendingTemporaryStyleRestoreRef = React18.useRef(null);
+  const mergedPanelRef = useMergedRefs(externalRef, panelRef);
+  const latestStateRef = useValueAsRef({
+    mounted,
+    open
+  });
+  const runOnceCloseAnimationsFinish = useAnimationsFinished(panelRef, false, false);
+  const hidden = !open && !mounted;
+  const panelTransitionStatus = forcePanelIdle ? "idle" : transitionStatus;
+  const shouldPreventOpenAnimation = open && // These 2 refs are safe to read in render, they are only written from committed
+  // layout/effect paths and gate one-shot motion suppression for the next open
+  // lifecycle. They intentionally expose the last committed motion snapshot.
+  (shouldPreventMountAnimationRef.current || shouldPreventActivityResumeAnimationRef.current);
+  const renderedDimensions = !open && mounted && // These 2 refs are also safe to read in render, both hold the last committed
+  // animation mode and measurement. This fallback only restores a previously
+  // measured pixel size after the live dimensions state has been reset back to `auto`.
+  animationTypeRef.current === "css-animation" && dimensions.height === void 0 && dimensions.width === void 0 ? lastMeasuredDimensionsRef.current : dimensions;
+  const shouldPersistHiddenTransitionStyles = hiddenUntilFound && hidden && animationTypeRef.current !== "css-animation";
+  const setDimensions = useStableCallback((nextDimensions, shouldCacheMeasurement = true) => {
+    if (shouldCacheMeasurement) {
+      lastMeasuredDimensionsRef.current = nextDimensions;
+    }
+    setDimensionsUnwrapped(nextDimensions);
+  });
+  const restorePendingTemporaryStyle = useStableCallback(() => {
+    pendingTemporaryStyleRestoreRef.current?.();
+    pendingTemporaryStyleRestoreRef.current = null;
+  });
+  const setPendingTemporaryStyleRestore = useStableCallback((restore) => {
+    restorePendingTemporaryStyle();
+    pendingTemporaryStyleRestoreRef.current = () => {
+      pendingTemporaryStyleRestoreRef.current = null;
+      restore();
+    };
+  });
+  const markActivityResumeAnimationSuppressed = useStableCallback(() => {
+    if (open && mounted && animationTypeRef.current === "css-animation") {
+      shouldPreventActivityResumeAnimationRef.current = true;
+    }
+  });
+  useIsoLayoutEffect(() => {
+    if (!forcePanelIdle || transitionStatus === "starting") {
+      return;
+    }
+    setForcePanelIdle(false);
+  }, [forcePanelIdle, transitionStatus]);
+  React18.useEffect(() => {
+    return () => {
+      markActivityResumeAnimationSuppressed();
+      restorePendingTemporaryStyle();
+    };
+  }, [markActivityResumeAnimationSuppressed, restorePendingTemporaryStyle]);
+  useIsoLayoutEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) {
+      return void 0;
+    }
+    if (!open && pendingTemporaryStyleRestoreRef.current) {
+      restorePendingTemporaryStyle();
+    }
+    const animationType = getAnimationType(panel, shouldPreventOpenAnimation);
+    animationTypeRef.current = animationType;
+    if (open && transitionStatus === "idle" && shouldPreventMountAnimationRef.current && animationType === "css-animation") {
+      lastMeasuredDimensionsRef.current = getDimensions(panel);
+      return void 0;
+    }
+    if (open && transitionStatus === "starting") {
+      const skipNextOpen = shouldSkipNextOpenRef.current;
+      shouldSkipNextOpenRef.current = false;
+      if (animationType === "none") {
+        setDimensions(getDimensions(panel));
+        setForcePanelIdle(true);
+        return void 0;
+      }
+      if (animationType === "css-transition") {
+        const restoreLayoutStyles = resetLayoutStyles(panel);
+        setDimensions(getDimensions(panel));
+        if (!skipNextOpen) {
+          return restoreLayoutStyles;
+        }
+        const restoreTransitionDuration = setTemporaryStyle(panel, "transition-duration", "0s");
+        setPendingTemporaryStyleRestore(restoreTransitionDuration);
+        setForcePanelIdle(true);
+        return restoreLayoutStyles;
+      }
+      if (animationType === "css-animation") {
+        setDimensions(getDimensions(panel));
+        if (!skipNextOpen) {
+          const restoreAnimationName2 = setTemporaryStyle(panel, "animation-name", "none");
+          restoreAnimationName2();
+          return void 0;
+        }
+        const restoreAnimationName = setTemporaryStyle(panel, "animation-name", "none");
+        const restoreAnimationDuration = setTemporaryStyle(panel, "animation-duration", "0s");
+        restoreAnimationName();
+        setPendingTemporaryStyleRestore(restoreAnimationDuration);
+        setForcePanelIdle(true);
+        return void 0;
+      }
+    }
+    if (!open && mounted && (transitionStatus === "idle" || transitionStatus === "starting")) {
+      if (animationType === "none") {
+        setDimensions(EMPTY_DIMENSIONS, false);
+        setMounted(false);
+        return void 0;
+      }
+      if (animationType === "css-animation") {
+        shouldPreventMountAnimationRef.current = false;
+        shouldPreventActivityResumeAnimationRef.current = false;
+      }
+      setDimensions(getDimensions(panel));
+      return void 0;
+    }
+    if (transitionStatus !== "ending") {
+      return void 0;
+    }
+    if (animationType === "none") {
+      setMounted(false);
+      return void 0;
+    }
+    const nextDimensions = getDimensions(panel);
+    const hasMeasuredSize = (nextDimensions.height ?? 0) > 0 || (nextDimensions.width ?? 0) > 0;
+    if (!hasMeasuredSize) {
+      setMounted(false);
+      return void 0;
+    }
+    setDimensions(nextDimensions);
+    if (animationType === "css-animation") {
+      const restoreAnimationName = setTemporaryStyle(panel, "animation-name", "none");
+      restoreAnimationName();
+    }
+    return void 0;
+  }, [mounted, open, restorePendingTemporaryStyle, setDimensions, setMounted, setPendingTemporaryStyleRestore, shouldPreventOpenAnimation, transitionStatus]);
+  useOpenChangeComplete({
+    enabled: open && mounted && panelTransitionStatus === "idle",
+    open: true,
+    ref: panelRef,
+    onComplete() {
+      if (!open) {
+        return;
+      }
+      setDimensions(EMPTY_DIMENSIONS, false);
+    }
+  });
+  React18.useEffect(() => {
+    if (open || !mounted || panelTransitionStatus !== "ending") {
+      return void 0;
+    }
+    const panel = panelRef.current;
+    if (!panel) {
+      return void 0;
+    }
+    const abortController = new AbortController();
+    let endingStyleFrame = -1;
+    function handleComplete() {
+      if (latestStateRef.current.open) {
+        return;
+      }
+      setMounted(false);
+      setDimensions(EMPTY_DIMENSIONS, false);
+    }
+    endingStyleFrame = AnimationFrame.request(() => {
+      if (!abortController.signal.aborted) {
+        runOnceCloseAnimationsFinish(handleComplete, abortController.signal);
+      }
+    });
+    return () => {
+      AnimationFrame.cancel(endingStyleFrame);
+      abortController.abort();
+    };
+  }, [latestStateRef, mounted, open, panelTransitionStatus, runOnceCloseAnimationsFinish, setDimensions, setMounted]);
+  useIsoLayoutEffect(() => {
+    const panel = panelRef.current;
+    if (!panel || !hiddenUntilFound || !hidden) {
+      return;
+    }
+    panel.setAttribute("hidden", "until-found");
+  }, [hidden, hiddenUntilFound]);
+  React18.useEffect(function registerBeforeMatchListener() {
+    const panel = panelRef.current;
+    if (!panel) {
+      return void 0;
+    }
+    function handleBeforeMatch(event) {
+      shouldSkipNextOpenRef.current = true;
+      setOpen(true);
+      onOpenChange(true, createChangeEventDetails(reason_parts_exports.none, event));
+    }
+    return addEventListener(panel, "beforematch", handleBeforeMatch);
+  }, [onOpenChange, setOpen]);
+  const shouldRender = keepMounted || hiddenUntilFound || mounted || open;
+  return {
+    height: renderedDimensions.height,
+    props: {
+      ...shouldPersistHiddenTransitionStyles ? {
+        [CollapsiblePanelDataAttributes.startingStyle]: ""
+      } : void 0,
+      hidden,
+      id: idParam
+    },
+    ref: mergedPanelRef,
+    shouldPreventOpenAnimation,
+    shouldRender,
+    transitionStatus: panelTransitionStatus,
+    width: renderedDimensions.width
+  };
+}
+function getDimensions(element) {
+  return {
+    height: element.scrollHeight,
+    width: element.scrollWidth
+  };
+}
+function getAnimationType(element, hasSuppressedMountAnimation = false) {
+  const panelStyles = getWindow(element).getComputedStyle(element);
+  const hasAnimation = (panelStyles.animationName.split(",").map((name) => name.trim()).some((name) => name !== "" && name !== "none") || hasSuppressedMountAnimation) && hasNonZeroDuration(panelStyles.animationDuration);
+  const hasTransition = hasNonZeroDuration(panelStyles.transitionDuration);
+  if (hasAnimation && hasTransition) {
+    if (true) {
+      warn("CSS transitions and CSS animations both detected on Collapsible or Accordion panel.", "Only one of either animation type should be used.");
+    }
+    return "css-transition";
+  }
+  if (hasTransition) {
+    return "css-transition";
+  }
+  if (hasAnimation) {
+    return "css-animation";
+  }
+  return "none";
+}
+function hasNonZeroDuration(value) {
+  return value.split(",").map((part) => part.trim()).some((part) => part !== "" && Number.parseFloat(part) > 0);
+}
+function setTemporaryStyle(element, property, value) {
+  const previousValue = element.style.getPropertyValue(property);
+  const previousPriority = element.style.getPropertyPriority(property);
+  element.style.setProperty(property, value);
+  return () => {
+    if (previousValue === "") {
+      element.style.removeProperty(property);
+      return;
+    }
+    element.style.setProperty(property, previousValue, previousPriority);
+  };
+}
+function resetLayoutStyles(element) {
+  const originalLayoutStyles = {
+    "justify-content": element.style.justifyContent,
+    "align-items": element.style.alignItems,
+    "align-content": element.style.alignContent,
+    "justify-items": element.style.justifyItems
+  };
+  Object.keys(originalLayoutStyles).forEach((key) => {
+    element.style.setProperty(key, "initial", "important");
+  });
+  function restoreLayoutStyles() {
+    Object.entries(originalLayoutStyles).forEach(([key, value]) => {
+      if (value === "") {
+        element.style.removeProperty(key);
+        return;
+      }
+      element.style.setProperty(key, value);
+    });
+  }
+  const frame = AnimationFrame.request(restoreLayoutStyles);
+  return () => {
+    AnimationFrame.cancel(frame);
+    restoreLayoutStyles();
+  };
+}
+
+// node_modules/@base-ui/utils/esm/useOnFirstRender.js
+var React19 = __toESM(require_react(), 1);
+function useOnFirstRender(fn) {
+  const ref = React19.useRef(true);
+  if (ref.current) {
+    ref.current = false;
+    fn();
+  }
+}
+
+// node_modules/@base-ui/utils/esm/useTimeout.js
+var EMPTY3 = 0;
+var Timeout = class _Timeout {
+  static create() {
+    return new _Timeout();
+  }
+  currentId = EMPTY3;
+  /**
+   * Executes `fn` after `delay`, clearing any previously scheduled call.
+   */
+  start(delay, fn) {
+    this.clear();
+    this.currentId = setTimeout(() => {
+      this.currentId = EMPTY3;
+      fn();
+    }, delay);
+  }
+  isStarted() {
+    return this.currentId !== EMPTY3;
+  }
+  clear = () => {
+    if (this.currentId !== EMPTY3) {
+      clearTimeout(this.currentId);
+      this.currentId = EMPTY3;
+    }
+  };
+  disposeEffect = () => {
+    return this.clear;
+  };
+};
+function useTimeout() {
+  const timeout = useRefWithInit(Timeout.create).current;
+  useOnMount(timeout.disposeEffect);
+  return timeout;
+}
+
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingDelayGroup.js
+var React20 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverShared.js
+function resolveValue(value, pointerType) {
+  if (pointerType != null && !isMouseLikePointerType(pointerType)) {
+    return 0;
+  }
+  if (typeof value === "function") {
+    return value();
+  }
+  return value;
+}
+function getDelay(value, prop, pointerType) {
+  const result = resolveValue(value, pointerType);
+  if (typeof result === "number") {
+    return result;
+  }
+  return result?.[prop];
+}
+function getRestMs(value) {
+  if (typeof value === "function") {
+    return value();
+  }
+  return value;
+}
+function isClickLikeOpenEvent(openEventType, interactedInside) {
+  return interactedInside || openEventType === "click" || openEventType === "mousedown";
+}
+function isHoverOpenEvent(openEventType) {
+  return openEventType?.includes("mouse") && openEventType !== "mousedown";
+}
+
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingDelayGroup.js
+var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+var FloatingDelayGroupContext = /* @__PURE__ */ React20.createContext({
+  hasProvider: false,
+  timeoutMs: 0,
+  delayRef: {
+    current: 0
+  },
+  initialDelayRef: {
+    current: 0
+  },
+  timeout: new Timeout(),
+  currentIdRef: {
+    current: null
+  },
+  currentContextRef: {
+    current: null
+  }
+});
+if (true) FloatingDelayGroupContext.displayName = "FloatingDelayGroupContext";
+function FloatingDelayGroup(props) {
+  const {
+    children,
+    delay,
+    timeoutMs = 0
+  } = props;
+  const delayRef = React20.useRef(delay);
+  const initialDelayRef = React20.useRef(delay);
+  const currentIdRef = React20.useRef(null);
+  const currentContextRef = React20.useRef(null);
+  const timeout = useTimeout();
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FloatingDelayGroupContext.Provider, {
+    value: React20.useMemo(() => ({
+      hasProvider: true,
+      delayRef,
+      initialDelayRef,
+      currentIdRef,
+      timeoutMs,
+      currentContextRef,
+      timeout
+    }), [timeoutMs, timeout]),
+    children
+  });
+}
+function useDelayGroup(context, options = {
+  open: false
+}) {
+  const {
+    open
+  } = options;
+  const store = "rootStore" in context ? context.rootStore : context;
+  const floatingId = store.useState("floatingId");
+  const groupContext = React20.useContext(FloatingDelayGroupContext);
+  const {
+    currentIdRef,
+    delayRef,
+    timeoutMs,
+    initialDelayRef,
+    currentContextRef,
+    hasProvider,
+    timeout
+  } = groupContext;
+  const [isInstantPhase, setIsInstantPhase] = React20.useState(false);
+  useIsoLayoutEffect(() => {
+    function unset() {
+      setIsInstantPhase(false);
+      currentContextRef.current?.setIsInstantPhase(false);
+      currentIdRef.current = null;
+      currentContextRef.current = null;
+      delayRef.current = initialDelayRef.current;
+    }
+    if (!currentIdRef.current) {
+      return void 0;
+    }
+    if (!open && currentIdRef.current === floatingId) {
+      setIsInstantPhase(false);
+      if (timeoutMs) {
+        const closingId = floatingId;
+        timeout.start(timeoutMs, () => {
+          if (store.select("open") || currentIdRef.current && currentIdRef.current !== closingId) {
+            return;
+          }
+          unset();
+        });
+        return () => {
+          timeout.clear();
+        };
+      }
+      unset();
+    }
+    return void 0;
+  }, [open, floatingId, currentIdRef, delayRef, timeoutMs, initialDelayRef, currentContextRef, timeout, store]);
+  useIsoLayoutEffect(() => {
+    if (!open) {
+      return;
+    }
+    const prevContext = currentContextRef.current;
+    const prevId = currentIdRef.current;
+    timeout.clear();
+    currentContextRef.current = {
+      onOpenChange: store.setOpen,
+      setIsInstantPhase
+    };
+    currentIdRef.current = floatingId;
+    delayRef.current = {
+      open: 0,
+      close: getDelay(initialDelayRef.current, "close")
+    };
+    if (prevId !== null && prevId !== floatingId) {
+      setIsInstantPhase(true);
+      prevContext?.setIsInstantPhase(true);
+      prevContext?.onOpenChange(false, createChangeEventDetails(reason_parts_exports.none));
+    } else {
+      setIsInstantPhase(false);
+      prevContext?.setIsInstantPhase(false);
+    }
+  }, [open, floatingId, store, currentIdRef, delayRef, initialDelayRef, currentContextRef, timeout]);
+  useIsoLayoutEffect(() => {
+    return () => {
+      currentContextRef.current = null;
+    };
+  }, [currentContextRef]);
+  return React20.useMemo(() => ({
+    hasProvider,
+    delayRef,
+    isInstantPhase
+  }), [hasProvider, delayRef, isInstantPhase]);
+}
+
+// node_modules/@base-ui/utils/esm/mergeCleanups.js
+function mergeCleanups(...cleanups) {
+  return () => {
+    for (let i2 = 0; i2 < cleanups.length; i2 += 1) {
+      const cleanup = cleanups[i2];
+      if (cleanup) {
+        cleanup();
+      }
+    }
+  };
+}
+
+// node_modules/@base-ui/react/esm/utils/FocusGuard.js
+var React21 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/utils/esm/visuallyHidden.js
+var visuallyHiddenBase = {
+  clipPath: "inset(50%)",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  border: 0,
+  padding: 0,
+  width: 1,
+  height: 1,
+  margin: -1
+};
+var visuallyHidden = {
+  ...visuallyHiddenBase,
+  position: "fixed",
+  top: 0,
+  left: 0
+};
+var visuallyHiddenInput = {
+  ...visuallyHiddenBase,
+  position: "absolute"
+};
+
+// node_modules/@base-ui/react/esm/utils/FocusGuard.js
+var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+var FocusGuard = /* @__PURE__ */ React21.forwardRef(function FocusGuard2(props, ref) {
+  const [role, setRole] = React21.useState();
+  useIsoLayoutEffect(() => {
+    if (isSafari) {
+      setRole("button");
+    }
+  }, []);
+  const restProps = {
+    tabIndex: 0,
+    // Role is only for VoiceOver
+    role
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", {
+    ...props,
+    ref,
+    style: visuallyHidden,
+    "aria-hidden": role ? void 0 : true,
+    ...restProps,
+    "data-base-ui-focus-guard": ""
+  });
+});
+if (true) FocusGuard.displayName = "FocusGuard";
+
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/createAttribute.js
 function createAttribute(name) {
   return `data-base-ui-${name}`;
 }
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingPortal.js
 var React22 = __toESM(require_react(), 1);
 var ReactDOM2 = __toESM(require_react_dom(), 1);
 
-// node_modules/@base-ui/react/internals/constants.mjs
+// node_modules/@base-ui/react/esm/internals/constants.js
 var DISABLED_TRANSITIONS_STYLE = {
   style: {
     transition: "none"
@@ -3634,7 +3564,7 @@ var ownerVisuallyHidden = {
   left: 0
 };
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingPortal.js
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
 var PortalContext = /* @__PURE__ */ React22.createContext(null);
 if (true) PortalContext.displayName = "PortalContext";
@@ -3745,8 +3675,8 @@ var FloatingPortal = /* @__PURE__ */ React22.forwardRef(function FloatingPortal2
     }
     return mergeCleanups(addEventListener(portalNode, "focusin", onFocus, true), addEventListener(portalNode, "focusout", onFocus, true));
   }, [portalNode, modal]);
-  useIsoLayoutEffect(() => {
-    if (!portalNode || open !== true || !focusInsideDisabledRef.current) {
+  React22.useEffect(() => {
+    if (!portalNode || open !== false) {
       return;
     }
     enableFocusInside(portalNode);
@@ -3799,10 +3729,10 @@ var FloatingPortal = /* @__PURE__ */ React22.forwardRef(function FloatingPortal2
 });
 if (true) FloatingPortal.displayName = "FloatingPortal";
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingTree.js
 var React23 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/floating-ui-react/utils/createEventEmitter.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/createEventEmitter.js
 function createEventEmitter() {
   const map = /* @__PURE__ */ new Map();
   return {
@@ -3821,7 +3751,7 @@ function createEventEmitter() {
   };
 }
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingTree.js
 var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
 var FloatingNodeContext = /* @__PURE__ */ React23.createContext(null);
 if (true) FloatingNodeContext.displayName = "FloatingNodeContext";
@@ -3833,7 +3763,7 @@ var useFloatingTree = (externalTree) => {
   return externalTree ?? contextTree;
 };
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useClientPoint.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useClientPoint.js
 var React24 = __toESM(require_react(), 1);
 function createVirtualElement(domElement, data) {
   let offsetX = null;
@@ -3990,8 +3920,12 @@ function useClientPoint(context, props = {}) {
   } : {}, [enabled, reference]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useDismiss.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useDismiss.js
 var React25 = __toESM(require_react(), 1);
+var bubbleHandlerKeys = {
+  intentional: "onClick",
+  sloppy: "onPointerDown"
+};
 function alwaysFalse() {
   return false;
 }
@@ -4008,6 +3942,7 @@ function useDismiss(context, props = {}) {
     outsidePress: outsidePressProp = true,
     outsidePressEvent = "sloppy",
     referencePress = alwaysFalse,
+    referencePressEvent = "sloppy",
     bubbles,
     externalTree
   } = props;
@@ -4116,7 +4051,7 @@ function useDismiss(context, props = {}) {
       compositionTimeout.start(
         // 0ms or 1ms don't work in Safari. 5ms appears to consistently work.
         // Only apply to WebKit for the test to remain 0ms.
-        parts_exports.engine.webkit ? 5 : 0,
+        isWebKit() ? 5 : 0,
         () => {
           isComposingRef.current = false;
         }
@@ -4353,9 +4288,11 @@ function useDismiss(context, props = {}) {
   React25.useEffect(clearInsideReactTree, [outsidePress2, clearInsideReactTree]);
   const reference = React25.useMemo(() => ({
     onKeyDown: closeOnEscapeKeyDown,
-    onPointerDown: closeOnReferencePress,
-    onClick: closeOnReferencePress
-  }), [closeOnEscapeKeyDown, closeOnReferencePress]);
+    [bubbleHandlerKeys[referencePressEvent]]: closeOnReferencePress,
+    ...referencePressEvent !== "intentional" && {
+      onClick: closeOnReferencePress
+    }
+  }), [closeOnEscapeKeyDown, closeOnReferencePress, referencePressEvent]);
   const floating = React25.useMemo(() => ({
     onKeyDown: closeOnEscapeKeyDown,
     // `onMouseDown` may be blocked if `event.preventDefault()` is called in
@@ -4383,7 +4320,7 @@ function useDismiss(context, props = {}) {
   } : {}, [enabled, reference, floating]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFloating.js
 var React32 = __toESM(require_react(), 1);
 
 // node_modules/@floating-ui/core/dist/floating-ui.core.mjs
@@ -5655,7 +5592,7 @@ var computePosition2 = (reference, floating, options) => {
   });
 };
 
-// node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
+// node_modules/@base-ui/react/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
 var React26 = __toESM(require_react(), 1);
 var import_react2 = __toESM(require_react(), 1);
 var ReactDOM3 = __toESM(require_react_dom(), 1);
@@ -5927,14 +5864,13 @@ var hide3 = (options, deps) => {
   };
 };
 
-// node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
+// node_modules/@base-ui/react/esm/utils/popups/popupStoreUtils.js
 var React31 = __toESM(require_react(), 1);
-var ReactDOM4 = __toESM(require_react_dom(), 1);
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useSyncedFloatingRootContext.js
 var React30 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/store/createSelector.mjs
+// node_modules/@base-ui/utils/esm/store/createSelector.js
 var createSelector = (a2, b2, c2, d2, e2, f2, ...other) => {
   if (other.length > 0) {
     throw new Error(true ? "Unsupported number of selectors" : formatErrorMessage_default(1));
@@ -5986,12 +5922,12 @@ var createSelector = (a2, b2, c2, d2, e2, f2, ...other) => {
   return selector2;
 };
 
-// node_modules/@base-ui/utils/store/useStore.mjs
+// node_modules/@base-ui/utils/esm/store/useStore.js
 var React28 = __toESM(require_react(), 1);
 var import_shim = __toESM(require_shim(), 1);
 var import_with_selector = __toESM(require_with_selector(), 1);
 
-// node_modules/@base-ui/utils/fastHooks.mjs
+// node_modules/@base-ui/utils/esm/fastHooks.js
 var React27 = __toESM(require_react(), 1);
 var hooks = [];
 var currentInstance = void 0;
@@ -6032,7 +5968,7 @@ function createInstance() {
   };
 }
 
-// node_modules/@base-ui/utils/store/useStore.mjs
+// node_modules/@base-ui/utils/esm/store/useStore.js
 var canUseRawUseSyncExternalStore = isReactVersionAtLeast(19);
 var useStoreImplementation = canUseRawUseSyncExternalStore ? useStoreFast : useStoreLegacy;
 function useStore(store, selector2, a1, a2, a3) {
@@ -6054,9 +5990,10 @@ register({
         for (let i2 = 0; i2 < instance.syncHooks.length; i2 += 1) {
           const hook = instance.syncHooks[i2];
           const value = hook.selector(hook.store.state, hook.a1, hook.a2, hook.a3);
-          if (!Object.is(hook.value, value)) {
+          if (hook.didChange || !Object.is(hook.value, value)) {
             didChange2 = true;
             hook.value = value;
+            hook.didChange = false;
           }
         }
         if (didChange2) {
@@ -6105,7 +6042,8 @@ function useStoreFast(store, selector2, a1, a2, a3) {
       a1,
       a2,
       a3,
-      value: selector2(store.getSnapshot(), a1, a2, a3)
+      value: selector2(store.getSnapshot(), a1, a2, a3),
+      didChange: false
     };
     instance.syncHooks.push(hook);
   } else {
@@ -6119,7 +6057,7 @@ function useStoreFast(store, selector2, a1, a2, a3) {
       hook.a1 = a1;
       hook.a2 = a2;
       hook.a3 = a3;
-      hook.value = selector2(store.getSnapshot(), a1, a2, a3);
+      hook.didChange = true;
     }
   }
   return hook.value;
@@ -6128,7 +6066,7 @@ function useStoreLegacy(store, selector2, a1, a2, a3) {
   return (0, import_with_selector.useSyncExternalStoreWithSelector)(store.subscribe, store.getSnapshot, store.getSnapshot, (state) => selector2(state, a1, a2, a3));
 }
 
-// node_modules/@base-ui/utils/store/Store.mjs
+// node_modules/@base-ui/utils/esm/store/Store.js
 var Store = class {
   /**
    * The current state of the store.
@@ -6225,7 +6163,7 @@ var Store = class {
   }
 };
 
-// node_modules/@base-ui/utils/store/ReactStore.mjs
+// node_modules/@base-ui/utils/esm/store/ReactStore.js
 var React29 = __toESM(require_react(), 1);
 var ReactStore = class extends Store {
   /**
@@ -6396,7 +6334,7 @@ var ReactStore = class extends Store {
   }
 };
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingRootStore.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingRootStore.js
 var selectors = {
   open: createSelector((state) => state.open),
   transitionStatus: createSelector((state) => state.transitionStatus),
@@ -6469,7 +6407,7 @@ var FloatingRootStore = class extends ReactStore {
   };
 };
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useSyncedFloatingRootContext.js
 function useSyncedFloatingRootContext(options) {
   const {
     popupStore,
@@ -6520,7 +6458,7 @@ function useSyncedFloatingRootContext(options) {
   return store;
 }
 
-// node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
+// node_modules/@base-ui/react/esm/utils/popups/popupStoreUtils.js
 var FOCUSABLE_POPUP_PROPS = {
   tabIndex: -1,
   [FOCUSABLE_ATTRIBUTE]: ""
@@ -6579,69 +6517,12 @@ function useTriggerRegistration(id, store) {
     }
   }, [store, id]);
 }
-function setPopupOpenState(state, open, trigger, preventUnmountOnClose = false) {
-  if (open) {
-    state.preventUnmountingOnClose = false;
-  } else if (preventUnmountOnClose) {
-    state.preventUnmountingOnClose = true;
-  }
+function setOpenTriggerState(state, open, trigger) {
   const triggerId = trigger?.id ?? null;
   if (triggerId || open) {
     state.activeTriggerId = triggerId;
     state.activeTriggerElement = trigger ?? null;
   }
-}
-function attachPreventUnmountOnClose(eventDetails) {
-  let preventUnmountOnClose = false;
-  eventDetails.preventUnmountOnClose = () => {
-    preventUnmountOnClose = true;
-  };
-  return () => preventUnmountOnClose;
-}
-function applyPopupOpenChange(store, nextOpen, eventDetails, options = {}) {
-  const reason = eventDetails.reason;
-  const isHover = reason === reason_parts_exports.triggerHover;
-  const isFocusOpen = nextOpen && reason === reason_parts_exports.triggerFocus;
-  const isDismissClose = !nextOpen && (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.escapeKey);
-  const shouldPreventUnmountOnClose = attachPreventUnmountOnClose(eventDetails);
-  store.context.onOpenChange?.(nextOpen, eventDetails);
-  if (eventDetails.isCanceled) {
-    return;
-  }
-  options.onBeforeDispatch?.();
-  store.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
-  const changeState = () => {
-    const updatedState = {
-      ...options.extraState,
-      open: nextOpen
-    };
-    if (isFocusOpen) {
-      updatedState.instantType = "focus";
-    } else if (isDismissClose) {
-      updatedState.instantType = "dismiss";
-    } else if (isHover) {
-      updatedState.instantType = void 0;
-    }
-    setPopupOpenState(updatedState, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
-    store.update(updatedState);
-  };
-  if (isHover) {
-    ReactDOM4.flushSync(changeState);
-  } else {
-    changeState();
-  }
-}
-function useInitialOpenSync(store, openProp, defaultOpen, defaultTriggerId) {
-  useOnFirstRender(() => {
-    if (openProp === void 0 && store.state.open === false && defaultOpen) {
-      store.state = {
-        ...store.state,
-        open: true,
-        activeTriggerId: defaultTriggerId,
-        preventUnmountingOnClose: false
-      };
-    }
-  });
 }
 function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpdates) {
   const isMountedByThisTrigger = store.useState("isMountedByTrigger", triggerId);
@@ -6681,10 +6562,7 @@ function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpda
     isMountedByThisTrigger
   };
 }
-function useImplicitActiveTrigger(store, options = {}) {
-  const {
-    closeOnActiveTriggerUnmount = false
-  } = options;
+function useImplicitActiveTrigger(store) {
   const open = store.useState("open");
   const reactiveTriggerCount = store.useState("triggerCount");
   useIsoLayoutEffect(() => {
@@ -6699,17 +6577,7 @@ function useImplicitActiveTrigger(store, options = {}) {
     if (store.state.triggerCount !== triggerCount) {
       stateUpdates.triggerCount = triggerCount;
     }
-    const activeTriggerId = store.select("activeTriggerId");
-    let lostActiveTriggerId = null;
-    if (activeTriggerId) {
-      const activeTriggerElement = store.context.triggerElements.getById(activeTriggerId);
-      if (!activeTriggerElement) {
-        lostActiveTriggerId = activeTriggerId;
-      } else if (activeTriggerElement !== store.state.activeTriggerElement) {
-        stateUpdates.activeTriggerElement = activeTriggerElement;
-      }
-    }
-    if (!lostActiveTriggerId && !activeTriggerId && triggerCount === 1) {
+    if (!store.select("activeTriggerId") && triggerCount === 1) {
       const iteratorResult = store.context.triggerElements.entries().next();
       if (!iteratorResult.done) {
         const [implicitTriggerId, implicitTriggerElement] = iteratorResult.value;
@@ -6717,26 +6585,10 @@ function useImplicitActiveTrigger(store, options = {}) {
         stateUpdates.activeTriggerElement = implicitTriggerElement;
       }
     }
-    if (stateUpdates.triggerCount !== void 0 || stateUpdates.activeTriggerId !== void 0 || stateUpdates.activeTriggerElement !== void 0) {
+    if (stateUpdates.triggerCount !== void 0 || stateUpdates.activeTriggerId !== void 0) {
       store.update(stateUpdates);
     }
-    if (lostActiveTriggerId) {
-      if (closeOnActiveTriggerUnmount) {
-        queueMicrotask(() => {
-          if (store.select("open") && store.select("activeTriggerId") === lostActiveTriggerId && !store.context.triggerElements.getById(lostActiveTriggerId)) {
-            const eventDetails = createChangeEventDetails(reason_parts_exports.none);
-            store.setOpen(false, eventDetails);
-            if (!eventDetails.isCanceled) {
-              store.update({
-                activeTriggerId: null,
-                activeTriggerElement: null
-              });
-            }
-          }
-        });
-      }
-    }
-  }, [open, store, reactiveTriggerCount, closeOnActiveTriggerUnmount]);
+  }, [open, store, reactiveTriggerCount]);
 }
 function useOpenStateTransitions(open, store, onUnmount) {
   const {
@@ -6744,12 +6596,9 @@ function useOpenStateTransitions(open, store, onUnmount) {
     setMounted,
     transitionStatus
   } = useTransitionStatus(open);
-  const preventUnmountingOnClose = store.useState("preventUnmountingOnClose");
-  const syncedPreventUnmountingOnClose = open ? false : preventUnmountingOnClose;
   store.useSyncedValues({
     mounted,
-    transitionStatus,
-    preventUnmountingOnClose: syncedPreventUnmountingOnClose
+    transitionStatus
   });
   const forceUnmount = useStableCallback(() => {
     setMounted(false);
@@ -6762,8 +6611,9 @@ function useOpenStateTransitions(open, store, onUnmount) {
     onUnmount?.();
     store.context.onOpenChangeComplete?.(false);
   });
+  const preventUnmountingOnClose = store.useState("preventUnmountingOnClose");
   useOpenChangeComplete({
-    enabled: mounted && !open && !syncedPreventUnmountingOnClose,
+    enabled: mounted && !open && !preventUnmountingOnClose,
     open,
     ref: store.context.popupRef,
     onComplete() {
@@ -6788,7 +6638,7 @@ function usePopupInteractionProps(store, statePart) {
   }, [store]);
 }
 
-// node_modules/@base-ui/react/utils/popups/popupTriggerMap.mjs
+// node_modules/@base-ui/react/esm/utils/popups/popupTriggerMap.js
 var PopupTriggerMap = class {
   constructor() {
     this.elementsSet = /* @__PURE__ */ new Set();
@@ -6868,7 +6718,7 @@ var PopupTriggerMap = class {
   }
 };
 
-// node_modules/@base-ui/react/floating-ui-react/utils/getEmptyRootContext.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/getEmptyRootContext.js
 function getEmptyRootContext() {
   return new FloatingRootStore({
     open: false,
@@ -6883,7 +6733,7 @@ function getEmptyRootContext() {
   });
 }
 
-// node_modules/@base-ui/react/utils/popups/store.mjs
+// node_modules/@base-ui/react/esm/utils/popups/store.js
 function createInitialPopupStoreState() {
   return {
     open: false,
@@ -6966,7 +6816,7 @@ var popupStoreSelectors = {
   positionerElement: createSelector((state) => state.positionerElement)
 };
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useFloatingRootContext.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFloatingRootContext.js
 function useFloatingRootContext(options) {
   const {
     open = false,
@@ -7011,7 +6861,7 @@ function useFloatingRootContext(options) {
   return store;
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFloating.js
 function useFloating2(options = {}) {
   const {
     nodeId,
@@ -7117,9 +6967,9 @@ function useFloating2(options = {}) {
   }), [position, refs, elements, context, store]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useFocus.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFocus.js
 var React33 = __toESM(require_react(), 1);
-var isMacSafari = parts_exports.os.mac && parts_exports.engine.webkit;
+var isMacSafari = isMac && isSafari;
 function useFocus(context, props = {}) {
   const {
     enabled = true,
@@ -7245,10 +7095,10 @@ function useFocus(context, props = {}) {
   } : {}, [enabled, reference]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverFloatingInteraction.js
 var React34 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverInteractionSharedState.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverInteractionSharedState.js
 var HoverInteraction = class _HoverInteraction {
   constructor() {
     this.pointerType = void 0;
@@ -7322,7 +7172,7 @@ function useHoverInteractionSharedState(store) {
   return data.hoverInteractionState;
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverFloatingInteraction.js
 function useHoverFloatingInteraction(context, parameters = {}) {
   const {
     enabled = true,
@@ -7439,7 +7289,7 @@ function useHoverFloatingInteraction(context, parameters = {}) {
         return;
       }
       clearPointerEvents();
-      if (isHoverOpen() && !isClickLikeOpenEvent2()) {
+      if (!isClickLikeOpenEvent2()) {
         closeWithDelay(event);
       }
     }
@@ -7457,12 +7307,12 @@ function useHoverFloatingInteraction(context, parameters = {}) {
     return mergeCleanups(floating && addEventListener(floating, "mouseenter", onFloatingMouseEnter), floating && addEventListener(floating, "mouseleave", onFloatingMouseLeave), floating && addEventListener(floating, "pointerdown", handleInteractInside, true), () => {
       tree?.events.off("floating.closed", onNodeClosed);
     });
-  }, [enabled, floatingElement, store, dataRef, closeDelayProp, nodeIdProp, isHoverOpen, isClickLikeOpenEvent2, clearPointerEvents, instance, tree, parentId, childClosedTimeout]);
+  }, [enabled, floatingElement, store, dataRef, closeDelayProp, nodeIdProp, isClickLikeOpenEvent2, clearPointerEvents, instance, tree, parentId, childClosedTimeout]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverReferenceInteraction.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverReferenceInteraction.js
 var React35 = __toESM(require_react(), 1);
-var ReactDOM5 = __toESM(require_react_dom(), 1);
+var ReactDOM4 = __toESM(require_react_dom(), 1);
 var EMPTY_REF = {
   current: null
 };
@@ -7720,7 +7570,7 @@ function useHoverReferenceInteraction(context, props = {}) {
           }
         }
         if (instance.pointerType === "touch") {
-          ReactDOM5.flushSync(() => {
+          ReactDOM4.flushSync(() => {
             handleMouseMove();
           });
         } else if (isOverInactive && currentOpen) {
@@ -7734,7 +7584,7 @@ function useHoverReferenceInteraction(context, props = {}) {
   }, [enabled, instance, isClickLikeOpenEvent2, isOverInactiveTrigger, mouseOnly, store, restMsRef, checkShouldOpen]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/safePolygon.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/safePolygon.js
 var CURSOR_SPEED_THRESHOLD = 0.1;
 var CURSOR_SPEED_THRESHOLD_SQUARED = CURSOR_SPEED_THRESHOLD * CURSOR_SPEED_THRESHOLD;
 var POLYGON_BUFFER = 0.5;
@@ -7950,7 +7800,7 @@ function safePolygon(options = {}) {
   return fn;
 }
 
-// node_modules/@base-ui/react/utils/popupStateMapping.mjs
+// node_modules/@base-ui/react/esm/utils/popupStateMapping.js
 var CommonPopupDataAttributes = (function(CommonPopupDataAttributes2) {
   CommonPopupDataAttributes2["open"] = "data-open";
   CommonPopupDataAttributes2["closed"] = "data-closed";
@@ -8005,7 +7855,7 @@ var popupStateMapping = {
   }
 };
 
-// node_modules/@base-ui/utils/inertValue.mjs
+// node_modules/@base-ui/utils/esm/inertValue.js
 function inertValue(value) {
   if (isReactVersionAtLeast(19)) {
     return value;
@@ -8013,10 +7863,10 @@ function inertValue(value) {
   return value ? "true" : void 0;
 }
 
-// node_modules/@base-ui/react/utils/useAnchorPositioning.mjs
+// node_modules/@base-ui/react/esm/utils/useAnchorPositioning.js
 var React36 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/floating-ui-react/middleware/arrow.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/middleware/arrow.js
 var baseArrow = (options) => ({
   name: "arrow",
   options,
@@ -8085,8 +7935,7 @@ var arrow4 = (options, deps) => ({
   options: [options, deps]
 });
 
-// node_modules/@base-ui/react/utils/hideMiddleware.mjs
-var nativeHideFn = hide3().fn;
+// node_modules/@base-ui/react/esm/utils/hideMiddleware.js
 var hide4 = {
   name: "hide",
   async fn(state) {
@@ -8097,7 +7946,7 @@ var hide4 = {
       y: y2
     } = state.rects.reference;
     const anchorHidden = width === 0 && height === 0 && x2 === 0 && y2 === 0;
-    const nativeHideResult = await nativeHideFn(state);
+    const nativeHideResult = await hide3().fn(state);
     return {
       data: {
         referenceHidden: nativeHideResult.data?.referenceHidden || anchorHidden
@@ -8106,7 +7955,7 @@ var hide4 = {
   }
 };
 
-// node_modules/@base-ui/react/utils/adaptiveOriginMiddleware.mjs
+// node_modules/@base-ui/react/esm/utils/adaptiveOriginMiddleware.js
 var DEFAULT_SIDES = {
   sideX: "left",
   sideY: "top"
@@ -8178,7 +8027,7 @@ var adaptiveOrigin = {
   }
 };
 
-// node_modules/@base-ui/react/utils/useAnchorPositioning.mjs
+// node_modules/@base-ui/react/esm/utils/useAnchorPositioning.js
 function getLogicalSide(sideParam, renderedSide, isRtl) {
   const isLogicalSideParam = sideParam === "inline-start" || sideParam === "inline-end";
   const logicalRight = isRtl ? "inline-start" : "inline-end";
@@ -8504,8 +8353,8 @@ function useAnchorPositioning(params) {
     }
   }, [mounted, refs, anchorDep, anchorValueRef]);
   React36.useEffect(() => {
-    if (keepMounted && mounted && elements.reference && elements.floating) {
-      return autoUpdate(elements.reference, elements.floating, update2, autoUpdateOptions);
+    if (keepMounted && mounted && elements.domReference && elements.floating) {
+      return autoUpdate(elements.domReference, elements.floating, update2, autoUpdateOptions);
     }
     return void 0;
   }, [keepMounted, mounted, elements, update2, autoUpdateOptions]);
@@ -8543,12 +8392,12 @@ function isRef(param) {
   return param != null && "current" in param;
 }
 
-// node_modules/@base-ui/react/utils/getDisabledMountTransitionStyles.mjs
+// node_modules/@base-ui/react/esm/utils/getDisabledMountTransitionStyles.js
 function getDisabledMountTransitionStyles(transitionStatus) {
   return transitionStatus === "starting" ? DISABLED_TRANSITIONS_STYLE : EMPTY_OBJECT;
 }
 
-// node_modules/@base-ui/react/utils/usePositioner.mjs
+// node_modules/@base-ui/react/esm/utils/usePositioner.js
 function usePositioner(componentProps, state, {
   styles,
   transitionStatus,
@@ -8575,7 +8424,7 @@ function usePositioner(componentProps, state, {
   });
 }
 
-// node_modules/@base-ui/react/button/Button.mjs
+// node_modules/@base-ui/react/esm/button/Button.js
 var React37 = __toESM(require_react(), 1);
 var Button = /* @__PURE__ */ React37.forwardRef(function Button2(componentProps, forwardedRef) {
   const {
@@ -8606,7 +8455,7 @@ var Button = /* @__PURE__ */ React37.forwardRef(function Button2(componentProps,
 });
 if (true) Button.displayName = "Button";
 
-// node_modules/@base-ui/react/collapsible/index.parts.mjs
+// node_modules/@base-ui/react/esm/collapsible/index.parts.js
 var index_parts_exports = {};
 __export(index_parts_exports, {
   Panel: () => CollapsiblePanel,
@@ -8614,16 +8463,16 @@ __export(index_parts_exports, {
   Trigger: () => CollapsibleTrigger
 });
 
-// node_modules/@base-ui/react/collapsible/root/CollapsibleRoot.mjs
+// node_modules/@base-ui/react/esm/collapsible/root/CollapsibleRoot.js
 var React38 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/collapsible/root/stateAttributesMapping.mjs
+// node_modules/@base-ui/react/esm/collapsible/root/stateAttributesMapping.js
 var collapsibleStateAttributesMapping = {
   ...collapsibleOpenStateMapping,
   ...transitionStatusMapping
 };
 
-// node_modules/@base-ui/react/collapsible/root/CollapsibleRoot.mjs
+// node_modules/@base-ui/react/esm/collapsible/root/CollapsibleRoot.js
 var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
 var CollapsibleRoot = /* @__PURE__ */ React38.forwardRef(function CollapsibleRoot2(componentProps, forwardedRef) {
   const {
@@ -8666,7 +8515,7 @@ var CollapsibleRoot = /* @__PURE__ */ React38.forwardRef(function CollapsibleRoo
 });
 if (true) CollapsibleRoot.displayName = "CollapsibleRoot";
 
-// node_modules/@base-ui/react/collapsible/trigger/CollapsibleTrigger.mjs
+// node_modules/@base-ui/react/esm/collapsible/trigger/CollapsibleTrigger.js
 var React39 = __toESM(require_react(), 1);
 var stateAttributesMapping = {
   ...triggerOpenStateMapping,
@@ -8683,6 +8532,7 @@ var CollapsibleTrigger = /* @__PURE__ */ React39.forwardRef(function Collapsible
   const {
     className,
     disabled: disabled2 = contextDisabled,
+    id,
     render: render4,
     nativeButton = true,
     style,
@@ -8710,17 +8560,17 @@ var CollapsibleTrigger = /* @__PURE__ */ React39.forwardRef(function Collapsible
 });
 if (true) CollapsibleTrigger.displayName = "CollapsibleTrigger";
 
-// node_modules/@base-ui/react/collapsible/panel/CollapsiblePanel.mjs
+// node_modules/@base-ui/react/esm/collapsible/panel/CollapsiblePanel.js
 var React40 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/collapsible/panel/CollapsiblePanelCssVars.mjs
+// node_modules/@base-ui/react/esm/collapsible/panel/CollapsiblePanelCssVars.js
 var CollapsiblePanelCssVars = /* @__PURE__ */ (function(CollapsiblePanelCssVars2) {
   CollapsiblePanelCssVars2["collapsiblePanelHeight"] = "--collapsible-panel-height";
   CollapsiblePanelCssVars2["collapsiblePanelWidth"] = "--collapsible-panel-width";
   return CollapsiblePanelCssVars2;
 })({});
 
-// node_modules/@base-ui/react/collapsible/panel/CollapsiblePanel.mjs
+// node_modules/@base-ui/react/esm/collapsible/panel/CollapsiblePanel.js
 var CollapsiblePanel = /* @__PURE__ */ React40.forwardRef(function CollapsiblePanel2(componentProps, forwardedRef) {
   const {
     className,
@@ -8820,11 +8670,11 @@ var CollapsiblePanel = /* @__PURE__ */ React40.forwardRef(function CollapsiblePa
 });
 if (true) CollapsiblePanel.displayName = "CollapsiblePanel";
 
-// node_modules/@base-ui/react/utils/usePopupViewport.mjs
+// node_modules/@base-ui/react/esm/utils/usePopupViewport.js
 var React43 = __toESM(require_react(), 1);
-var ReactDOM6 = __toESM(require_react_dom(), 1);
+var ReactDOM5 = __toESM(require_react_dom(), 1);
 
-// node_modules/@base-ui/utils/usePreviousValue.mjs
+// node_modules/@base-ui/utils/esm/usePreviousValue.js
 var React41 = __toESM(require_react(), 1);
 function usePreviousValue(value) {
   const [state, setState] = React41.useState({
@@ -8840,10 +8690,10 @@ function usePreviousValue(value) {
   return state.previous;
 }
 
-// node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
+// node_modules/@base-ui/react/esm/utils/usePopupAutoResize.js
 var React42 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/utils/getCssDimensions.mjs
+// node_modules/@base-ui/react/esm/utils/getCssDimensions.js
 function getCssDimensions2(element) {
   const css = getComputedStyle2(element);
   let width = parseFloat(css.width) || 0;
@@ -8862,13 +8712,15 @@ function getCssDimensions2(element) {
   };
 }
 
-// node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
+// node_modules/@base-ui/react/esm/utils/usePopupAutoResize.js
+var DEFAULT_ENABLED = () => true;
 function usePopupAutoResize(parameters) {
   const {
     popupElement,
     positionerElement,
     content,
     mounted,
+    enabled = DEFAULT_ENABLED,
     onMeasureLayout: onMeasureLayoutParam,
     onMeasureLayoutComplete: onMeasureLayoutCompleteParam,
     side,
@@ -8877,6 +8729,7 @@ function usePopupAutoResize(parameters) {
   const runOnceAnimationsFinish = useAnimationsFinished(popupElement, true, false);
   const animationFrame = useAnimationFrame();
   const committedDimensionsRef = React42.useRef(null);
+  const liveDimensionsRef = React42.useRef(null);
   const isInitialRenderRef = React42.useRef(true);
   const restoreAnchoringStylesRef = React42.useRef(NOOP);
   const onMeasureLayout = useStableCallback(onMeasureLayoutParam);
@@ -8898,16 +8751,27 @@ function usePopupAutoResize(parameters) {
     } : EMPTY_OBJECT;
   }, [side, direction]);
   useIsoLayoutEffect(() => {
-    if (!mounted) {
+    if (!mounted || !enabled() || typeof ResizeObserver !== "function") {
       restoreAnchoringStylesRef.current = NOOP;
       isInitialRenderRef.current = true;
       committedDimensionsRef.current = null;
+      liveDimensionsRef.current = null;
       return void 0;
     }
     if (!popupElement || !positionerElement) {
       return void 0;
     }
     restoreAnchoringStylesRef.current = applyElementStyles(popupElement, anchoringStyles);
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (entry) {
+        liveDimensionsRef.current = {
+          width: Math.ceil(entry.borderBoxSize[0].inlineSize),
+          height: Math.ceil(entry.borderBoxSize[0].blockSize)
+        };
+      }
+    });
+    observer.observe(popupElement);
     setPopupCssSize(popupElement, "auto");
     const restorePopupPosition = overrideElementStyle(popupElement, "position", "static");
     const restorePopupTransform = overrideElementStyle(popupElement, "transform", "none");
@@ -8935,14 +8799,27 @@ function usePopupAutoResize(parameters) {
       onMeasureLayoutComplete?.(null, dimensions);
       isInitialRenderRef.current = false;
       return () => {
+        observer.disconnect();
         restoreAnchoringStylesRef.current();
         restoreAnchoringStylesRef.current = NOOP;
       };
     }
+    setPopupCssSize(popupElement, "auto");
     setPositionerCssSize(positionerElement, "max-content");
-    const previousDimensions = committedDimensionsRef.current;
+    const previousDimensions = committedDimensionsRef.current ?? liveDimensionsRef.current;
     const newDimensions = getCssDimensions2(popupElement);
     committedDimensionsRef.current = newDimensions;
+    if (!previousDimensions) {
+      setPositionerCssSize(positionerElement, newDimensions);
+      restoreMeasurementOverridesIncludingScale();
+      onMeasureLayoutComplete?.(null, newDimensions);
+      return () => {
+        observer.disconnect();
+        animationFrame.cancel();
+        restoreAnchoringStylesRef.current();
+        restoreAnchoringStylesRef.current = NOOP;
+      };
+    }
     setPopupCssSize(popupElement, previousDimensions);
     restoreMeasurementOverridesIncludingScale();
     onMeasureLayoutComplete?.(previousDimensions, newDimensions);
@@ -8956,12 +8833,13 @@ function usePopupAutoResize(parameters) {
       }, abortController.signal);
     });
     return () => {
+      observer.disconnect();
       abortController.abort();
       animationFrame.cancel();
       restoreAnchoringStylesRef.current();
       restoreAnchoringStylesRef.current = NOOP;
     };
-  }, [content, popupElement, positionerElement, runOnceAnimationsFinish, animationFrame, mounted, onMeasureLayout, onMeasureLayoutComplete, anchoringStyles]);
+  }, [content, popupElement, positionerElement, runOnceAnimationsFinish, animationFrame, enabled, mounted, onMeasureLayout, onMeasureLayoutComplete, anchoringStyles]);
 }
 function overrideElementStyle(element, property, value) {
   const originalValue = element.style.getPropertyValue(property);
@@ -8992,7 +8870,7 @@ function setPositionerCssSize(positionerElement, size4) {
   positionerElement.style.setProperty("--positioner-height", height);
 }
 
-// node_modules/@base-ui/react/utils/usePopupViewport.mjs
+// node_modules/@base-ui/react/esm/utils/usePopupViewport.js
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
 function usePopupViewport(parameters) {
   const {
@@ -9041,18 +8919,13 @@ function usePopupViewport(parameters) {
   });
   const lastHandledTriggerRef = React43.useRef(null);
   useIsoLayoutEffect(() => {
-    if (!open || !mounted) {
-      lastHandledTriggerRef.current = null;
-    }
-  }, [open, mounted]);
-  useIsoLayoutEffect(() => {
     if (activeTrigger && previousActiveTrigger && activeTrigger !== previousActiveTrigger && lastHandledTriggerRef.current !== activeTrigger && capturedNodeRef.current) {
       setPreviousContentNode(capturedNodeRef.current);
       setShowStartingStyleAttribute(true);
       const offset4 = calculateRelativePosition(previousActiveTrigger, activeTrigger);
       setNewTriggerOffset(offset4);
       cleanupFrame.request(() => {
-        ReactDOM6.flushSync(() => {
+        ReactDOM5.flushSync(() => {
           setShowStartingStyleAttribute(false);
         });
         onAnimationsFinished(() => {
@@ -9185,9 +9058,9 @@ function usePopupContentKey(activeTriggerId, payload) {
   return `${activeTriggerId ?? "current"}-${contentKey}`;
 }
 
-// node_modules/@base-ui/react/utils/FloatingPortalLite.mjs
+// node_modules/@base-ui/react/esm/utils/FloatingPortalLite.js
 var React44 = __toESM(require_react(), 1);
-var ReactDOM7 = __toESM(require_react_dom(), 1);
+var ReactDOM6 = __toESM(require_react_dom(), 1);
 var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 var FloatingPortalLite = /* @__PURE__ */ React44.forwardRef(function FloatingPortalLite2(componentProps, forwardedRef) {
   const {
@@ -9211,12 +9084,12 @@ var FloatingPortalLite = /* @__PURE__ */ React44.forwardRef(function FloatingPor
     return null;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(React44.Fragment, {
-    children: [portalSubtree, portalNode && /* @__PURE__ */ ReactDOM7.createPortal(children, portalNode)]
+    children: [portalSubtree, portalNode && /* @__PURE__ */ ReactDOM6.createPortal(children, portalNode)]
   });
 });
 if (true) FloatingPortalLite.displayName = "FloatingPortalLite";
 
-// node_modules/@base-ui/react/tooltip/index.parts.mjs
+// node_modules/@base-ui/react/esm/tooltip/index.parts.js
 var index_parts_exports2 = {};
 __export(index_parts_exports2, {
   Arrow: () => TooltipArrow,
@@ -9231,10 +9104,10 @@ __export(index_parts_exports2, {
   createHandle: () => createTooltipHandle
 });
 
-// node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
+// node_modules/@base-ui/react/esm/tooltip/root/TooltipRoot.js
 var React47 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/tooltip/root/TooltipRootContext.mjs
+// node_modules/@base-ui/react/esm/tooltip/root/TooltipRootContext.js
 var React45 = __toESM(require_react(), 1);
 var TooltipRootContext = /* @__PURE__ */ React45.createContext(void 0);
 if (true) TooltipRootContext.displayName = "TooltipRootContext";
@@ -9246,8 +9119,9 @@ function useTooltipRootContext(optional) {
   return context;
 }
 
-// node_modules/@base-ui/react/tooltip/store/TooltipStore.mjs
+// node_modules/@base-ui/react/esm/tooltip/store/TooltipStore.js
 var React46 = __toESM(require_react(), 1);
+var ReactDOM7 = __toESM(require_react_dom(), 1);
 var selectors2 = {
   ...popupStoreSelectors,
   disabled: createSelector((state) => state.disabled),
@@ -9276,11 +9150,38 @@ var TooltipStore = class _TooltipStore extends ReactStore {
     }, selectors2);
   }
   setOpen = (nextOpen, eventDetails) => {
-    applyPopupOpenChange(this, nextOpen, eventDetails, {
-      extraState: {
-        openChangeReason: eventDetails.reason
+    const reason = eventDetails.reason;
+    const isHover = reason === reason_parts_exports.triggerHover;
+    const isFocusOpen = nextOpen && reason === reason_parts_exports.triggerFocus;
+    const isDismissClose = !nextOpen && (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.escapeKey);
+    eventDetails.preventUnmountOnClose = () => {
+      this.set("preventUnmountingOnClose", true);
+    };
+    this.context.onOpenChange?.(nextOpen, eventDetails);
+    if (eventDetails.isCanceled) {
+      return;
+    }
+    this.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
+    const changeState = () => {
+      const updatedState = {
+        open: nextOpen,
+        openChangeReason: reason
+      };
+      if (isFocusOpen) {
+        updatedState.instantType = "focus";
+      } else if (isDismissClose) {
+        updatedState.instantType = "dismiss";
+      } else if (reason === reason_parts_exports.triggerHover) {
+        updatedState.instantType = void 0;
       }
-    });
+      setOpenTriggerState(updatedState, nextOpen, eventDetails.trigger);
+      this.update(updatedState);
+    };
+    if (isHover) {
+      ReactDOM7.flushSync(changeState);
+    } else {
+      changeState();
+    }
   };
   // Used by trigger clicks to clear a delayed hover open without reporting a public open-state change.
   cancelPendingOpen(event) {
@@ -9306,7 +9207,7 @@ function createInitialState() {
   };
 }
 
-// node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
+// node_modules/@base-ui/react/esm/tooltip/root/TooltipRoot.js
 var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
 var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const {
@@ -9329,7 +9230,14 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
     activeTriggerId: defaultTriggerIdProp,
     triggerIdProp
   });
-  useInitialOpenSync(store, openProp, defaultOpen, defaultTriggerIdProp);
+  useOnFirstRender(() => {
+    if (openProp === void 0 && store.state.open === false && defaultOpen === true) {
+      store.update({
+        open: true,
+        activeTriggerId: defaultTriggerIdProp
+      });
+    }
+  });
   store.useControlledProp("openProp", openProp);
   store.useControlledProp("triggerIdProp", triggerIdProp);
   store.useContextCallback("onOpenChange", onOpenChange);
@@ -9344,9 +9252,7 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
     disableHoverablePopup
   });
   store.useSyncedValue("disabled", disabled2);
-  useImplicitActiveTrigger(store, {
-    closeOnActiveTriggerUnmount: true
-  });
+  useImplicitActiveTrigger(store);
   const {
     forceUnmount,
     transitionStatus
@@ -9423,10 +9329,10 @@ function TooltipInteractions({
   return null;
 }
 
-// node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
+// node_modules/@base-ui/react/esm/tooltip/trigger/TooltipTrigger.js
 var React49 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/tooltip/provider/TooltipProviderContext.mjs
+// node_modules/@base-ui/react/esm/tooltip/provider/TooltipProviderContext.js
 var React48 = __toESM(require_react(), 1);
 var TooltipProviderContext = /* @__PURE__ */ React48.createContext(void 0);
 if (true) TooltipProviderContext.displayName = "TooltipProviderContext";
@@ -9434,17 +9340,17 @@ function useTooltipProviderContext() {
   return React48.useContext(TooltipProviderContext);
 }
 
-// node_modules/@base-ui/react/tooltip/trigger/TooltipTriggerDataAttributes.mjs
+// node_modules/@base-ui/react/esm/tooltip/trigger/TooltipTriggerDataAttributes.js
 var TooltipTriggerDataAttributes = (function(TooltipTriggerDataAttributes2) {
   TooltipTriggerDataAttributes2[TooltipTriggerDataAttributes2["popupOpen"] = CommonTriggerDataAttributes.popupOpen] = "popupOpen";
   TooltipTriggerDataAttributes2["triggerDisabled"] = "data-trigger-disabled";
   return TooltipTriggerDataAttributes2;
 })({});
 
-// node_modules/@base-ui/react/tooltip/utils/constants.mjs
+// node_modules/@base-ui/react/esm/tooltip/utils/constants.js
 var OPEN_DELAY = 600;
 
-// node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
+// node_modules/@base-ui/react/esm/tooltip/trigger/TooltipTrigger.js
 var TOOLTIP_TRIGGER_IDENTIFIER = "data-base-ui-tooltip-trigger";
 function getTargetElement(event) {
   if ("composedPath" in event) {
@@ -9661,10 +9567,10 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
 });
 if (true) TooltipTrigger.displayName = "TooltipTrigger";
 
-// node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
+// node_modules/@base-ui/react/esm/tooltip/portal/TooltipPortal.js
 var React51 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/tooltip/portal/TooltipPortalContext.mjs
+// node_modules/@base-ui/react/esm/tooltip/portal/TooltipPortalContext.js
 var React50 = __toESM(require_react(), 1);
 var TooltipPortalContext = /* @__PURE__ */ React50.createContext(void 0);
 if (true) TooltipPortalContext.displayName = "TooltipPortalContext";
@@ -9676,7 +9582,7 @@ function useTooltipPortalContext() {
   return value;
 }
 
-// node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
+// node_modules/@base-ui/react/esm/tooltip/portal/TooltipPortal.js
 var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
 var TooltipPortal = /* @__PURE__ */ React51.forwardRef(function TooltipPortal2(props, forwardedRef) {
   const {
@@ -9699,10 +9605,10 @@ var TooltipPortal = /* @__PURE__ */ React51.forwardRef(function TooltipPortal2(p
 });
 if (true) TooltipPortal.displayName = "TooltipPortal";
 
-// node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
+// node_modules/@base-ui/react/esm/tooltip/positioner/TooltipPositioner.js
 var React53 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/tooltip/positioner/TooltipPositionerContext.mjs
+// node_modules/@base-ui/react/esm/tooltip/positioner/TooltipPositionerContext.js
 var React52 = __toESM(require_react(), 1);
 var TooltipPositionerContext = /* @__PURE__ */ React52.createContext(void 0);
 if (true) TooltipPositionerContext.displayName = "TooltipPositionerContext";
@@ -9714,7 +9620,7 @@ function useTooltipPositionerContext() {
   return context;
 }
 
-// node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
+// node_modules/@base-ui/react/esm/tooltip/positioner/TooltipPositioner.js
 var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
 var TooltipPositioner = /* @__PURE__ */ React53.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
   const {
@@ -9785,7 +9691,7 @@ var TooltipPositioner = /* @__PURE__ */ React53.forwardRef(function TooltipPosit
 });
 if (true) TooltipPositioner.displayName = "TooltipPositioner";
 
-// node_modules/@base-ui/react/tooltip/popup/TooltipPopup.mjs
+// node_modules/@base-ui/react/esm/tooltip/popup/TooltipPopup.js
 var React54 = __toESM(require_react(), 1);
 var stateAttributesMapping2 = {
   ...popupStateMapping,
@@ -9841,7 +9747,7 @@ var TooltipPopup = /* @__PURE__ */ React54.forwardRef(function TooltipPopup2(com
 });
 if (true) TooltipPopup.displayName = "TooltipPopup";
 
-// node_modules/@base-ui/react/tooltip/arrow/TooltipArrow.mjs
+// node_modules/@base-ui/react/esm/tooltip/arrow/TooltipArrow.js
 var React55 = __toESM(require_react(), 1);
 var TooltipArrow = /* @__PURE__ */ React55.forwardRef(function TooltipArrow2(componentProps, forwardedRef) {
   const {
@@ -9880,7 +9786,7 @@ var TooltipArrow = /* @__PURE__ */ React55.forwardRef(function TooltipArrow2(com
 });
 if (true) TooltipArrow.displayName = "TooltipArrow";
 
-// node_modules/@base-ui/react/tooltip/provider/TooltipProvider.mjs
+// node_modules/@base-ui/react/esm/tooltip/provider/TooltipProvider.js
 var React56 = __toESM(require_react(), 1);
 var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
 var TooltipProvider = function TooltipProvider2(props) {
@@ -9908,17 +9814,17 @@ var TooltipProvider = function TooltipProvider2(props) {
 };
 if (true) TooltipProvider.displayName = "TooltipProvider";
 
-// node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
+// node_modules/@base-ui/react/esm/tooltip/viewport/TooltipViewport.js
 var React57 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/tooltip/viewport/TooltipViewportCssVars.mjs
+// node_modules/@base-ui/react/esm/tooltip/viewport/TooltipViewportCssVars.js
 var TooltipViewportCssVars = /* @__PURE__ */ (function(TooltipViewportCssVars2) {
   TooltipViewportCssVars2["popupWidth"] = "--popup-width";
   TooltipViewportCssVars2["popupHeight"] = "--popup-height";
   return TooltipViewportCssVars2;
 })({});
 
-// node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
+// node_modules/@base-ui/react/esm/tooltip/viewport/TooltipViewport.js
 var stateAttributesMapping3 = {
   activationDirection: (value) => value ? {
     "data-activation-direction": value
@@ -9960,7 +9866,7 @@ var TooltipViewport = /* @__PURE__ */ React57.forwardRef(function TooltipViewpor
 });
 if (true) TooltipViewport.displayName = "TooltipViewport";
 
-// node_modules/@base-ui/react/tooltip/store/TooltipHandle.mjs
+// node_modules/@base-ui/react/esm/tooltip/store/TooltipHandle.js
 var TooltipHandle = class {
   /**
    * Internal store holding the tooltip state.
@@ -10001,7 +9907,7 @@ function createTooltipHandle() {
   return new TooltipHandle();
 }
 
-// node_modules/@base-ui/react/use-render/useRender.mjs
+// node_modules/@base-ui/react/esm/use-render/useRender.js
 function useRender(params) {
   return useRenderElement(params.defaultTagName ?? "div", params, params);
 }
@@ -10302,7 +10208,7 @@ function registerStyle3(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle3("ed71fae0df", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-medium,499);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:before{aspect-ratio:1;border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid;border-block-end-color:transparent;border-block-start-color:var(--wp-ui-button-foreground-color);border-inline-end-color:var(--wp-ui-button-foreground-color);border-inline-start-color:transparent;border-radius:50%;box-sizing:border-box;content:"";display:block;height:var(--wp-ui-button-font-size);inset-inline-start:50%;opacity:0;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%);@media not (prefers-reduced-motion){transition:opacity .1s ease-out}@media (forced-colors:active){border-block-end-style:none;border-bottom-color:ButtonText;border-inline-start-style:none;border-left-color:ButtonText;border-right-color:ButtonText;border-top-color:ButtonText}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-block:0;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._9f6fc6553aeb36fe__icon{margin:var(--wp-ui-button-icon-margin)}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.ad0619a3217c6a5b__is-minimal[aria-pressed=true],&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._914b42f315c0e580__is-loading:not(.abbb272e2ce49bd6__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}*{opacity:0}&:before{opacity:1;transition-delay:.05s;@media not (prefers-reduced-motion){animation:_5a1d53da6f830c8d__loading-animation 1s linear infinite}}}}@keyframes _5a1d53da6f830c8d__loading-animation{0%{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}}');
+  registerStyle3("4c317b0736", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-medium,499);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:padding-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:before{aspect-ratio:1;border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid;border-block-end-color:transparent;border-block-start-color:var(--wp-ui-button-foreground-color);border-inline-end-color:var(--wp-ui-button-foreground-color);border-inline-start-color:transparent;border-radius:50%;box-sizing:border-box;content:"";display:block;height:var(--wp-ui-button-font-size);inset-inline-start:50%;opacity:0;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%);@media not (prefers-reduced-motion){transition:opacity .1s ease-out}@media (forced-colors:active){border-block-end-style:none;border-bottom-color:ButtonText;border-inline-start-style:none;border-left-color:ButtonText;border-right-color:ButtonText;border-top-color:ButtonText}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-block:0;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._9f6fc6553aeb36fe__icon{margin:var(--wp-ui-button-icon-margin)}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.ad0619a3217c6a5b__is-minimal[aria-pressed=true],&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._914b42f315c0e580__is-loading:not(.abbb272e2ce49bd6__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}*{opacity:0}&:before{opacity:1;transition-delay:.05s;@media not (prefers-reduced-motion){animation:_5a1d53da6f830c8d__loading-animation 1s linear infinite}}}}@keyframes _5a1d53da6f830c8d__loading-animation{0%{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}}');
 }
 var style_default3 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "icon": "_9f6fc6553aeb36fe__icon", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "loading-animation": "_5a1d53da6f830c8d__loading-animation" };
 if (typeof process === "undefined" || true) {
@@ -10463,7 +10369,7 @@ function registerStyle4(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle4("ed71fae0df", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-medium,499);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:before{aspect-ratio:1;border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid;border-block-end-color:transparent;border-block-start-color:var(--wp-ui-button-foreground-color);border-inline-end-color:var(--wp-ui-button-foreground-color);border-inline-start-color:transparent;border-radius:50%;box-sizing:border-box;content:"";display:block;height:var(--wp-ui-button-font-size);inset-inline-start:50%;opacity:0;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%);@media not (prefers-reduced-motion){transition:opacity .1s ease-out}@media (forced-colors:active){border-block-end-style:none;border-bottom-color:ButtonText;border-inline-start-style:none;border-left-color:ButtonText;border-right-color:ButtonText;border-top-color:ButtonText}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-block:0;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._9f6fc6553aeb36fe__icon{margin:var(--wp-ui-button-icon-margin)}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.ad0619a3217c6a5b__is-minimal[aria-pressed=true],&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._914b42f315c0e580__is-loading:not(.abbb272e2ce49bd6__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}*{opacity:0}&:before{opacity:1;transition-delay:.05s;@media not (prefers-reduced-motion){animation:_5a1d53da6f830c8d__loading-animation 1s linear infinite}}}}@keyframes _5a1d53da6f830c8d__loading-animation{0%{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}}');
+  registerStyle4("4c317b0736", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-medium,499);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:padding-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:before{aspect-ratio:1;border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid;border-block-end-color:transparent;border-block-start-color:var(--wp-ui-button-foreground-color);border-inline-end-color:var(--wp-ui-button-foreground-color);border-inline-start-color:transparent;border-radius:50%;box-sizing:border-box;content:"";display:block;height:var(--wp-ui-button-font-size);inset-inline-start:50%;opacity:0;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%);@media not (prefers-reduced-motion){transition:opacity .1s ease-out}@media (forced-colors:active){border-block-end-style:none;border-bottom-color:ButtonText;border-inline-start-style:none;border-left-color:ButtonText;border-right-color:ButtonText;border-top-color:ButtonText}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-block:0;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._9f6fc6553aeb36fe__icon{margin:var(--wp-ui-button-icon-margin)}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.ad0619a3217c6a5b__is-minimal[aria-pressed=true],&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._914b42f315c0e580__is-loading:not(.abbb272e2ce49bd6__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}*{opacity:0}&:before{opacity:1;transition-delay:.05s;@media not (prefers-reduced-motion){animation:_5a1d53da6f830c8d__loading-animation 1s linear infinite}}}}@keyframes _5a1d53da6f830c8d__loading-animation{0%{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}}');
 }
 var style_default4 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "icon": "_9f6fc6553aeb36fe__icon", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "loading-animation": "_5a1d53da6f830c8d__loading-animation" };
 var ButtonIcon = (0, import_element14.forwardRef)(
@@ -11213,9 +11119,9 @@ function registerStyle9(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle9("78199613cf", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
+  registerStyle9("ee46794e90", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._165c4572592944b2__overflowVisible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
 }
-var style_default9 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
+var style_default9 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflowVisible": "_165c4572592944b2__overflowVisible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
 if (typeof process === "undefined" || true) {
   registerStyle9("d390e935a7", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-medium,499));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
 }
@@ -11393,9 +11299,9 @@ function registerStyle10(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle10("78199613cf", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
+  registerStyle10("ee46794e90", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._165c4572592944b2__overflowVisible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
 }
-var style_default10 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
+var style_default10 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflowVisible": "_165c4572592944b2__overflowVisible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
 var Content2 = (0, import_element27.forwardRef)(
   function CollapsibleCardContent({ className, render: render4, children, hiddenUntilFound = true, ...restProps }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
@@ -11404,7 +11310,7 @@ var Content2 = (0, import_element27.forwardRef)(
         ref,
         className: (state) => clsx_default(
           style_default10.content,
-          state.open && state.transitionStatus === "idle" && style_default10["overflow-visible"],
+          state.open && state.transitionStatus === "idle" && style_default10.overflowVisible,
           className
         ),
         hiddenUntilFound,
@@ -12075,7 +11981,7 @@ var IconButton = (0, import_element34.forwardRef)(
     ...restProps
   }, ref) {
     const classes = clsx_default(style_default14["icon-button"], className);
-    return /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)(Root4, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Provider, { delay: 0, children: /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)(Root4, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
         Trigger2,
         {
@@ -12093,7 +11999,14 @@ var IconButton = (0, import_element34.forwardRef)(
             }
           ),
           className: classes,
-          children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Icon, { icon, size: 24, className: style_default14.icon })
+          children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
+            Icon,
+            {
+              icon,
+              size: 24,
+              className: style_default14.icon
+            }
+          )
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)(Popup, { positioner, children: [
@@ -12103,7 +12016,7 @@ var IconButton = (0, import_element34.forwardRef)(
           /* @__PURE__ */ (0, import_jsx_runtime60.jsx)("span", { "aria-hidden": "true", children: shortcut.displayShortcut })
         ] })
       ] })
-    ] });
+    ] }) });
   }
 );
 
@@ -17519,6 +17432,7 @@ function DensityPicker() {
   return /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(
     import_components17.__experimentalToggleGroupControl,
     {
+      size: "__unstable-large",
       label: (0, import_i18n22.__)("Density"),
       value: view.layout?.density || "balanced",
       onChange: (value) => {
@@ -17614,6 +17528,7 @@ function PreviewSizePicker() {
   return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
     import_components18.RangeControl,
     {
+      __next40pxDefaultSize: true,
       showTooltip: false,
       label: (0, import_i18n23.__)("Preview size"),
       value: previewSizeToUse,
@@ -17881,10 +17796,10 @@ function isApple() {
   if (!canUseDOM) return false;
   return /mac|iphone|ipad|ipod/i.test(navigator.platform);
 }
-function isSafari() {
+function isSafari2() {
   return canUseDOM && isApple() && /apple/i.test(navigator.vendor);
 }
-function isFirefox() {
+function isFirefox2() {
   return canUseDOM && /firefox\//i.test(navigator.userAgent);
 }
 function isPortalEvent(event) {
@@ -18428,7 +18343,7 @@ function createStoreContext(providers = [], scopedProviders = []) {
 var import_react18 = __toESM(require_react(), 1);
 var TagName = "div";
 var accessibleWhenDisabledSymbol = /* @__PURE__ */ Symbol("accessibleWhenDisabled");
-var isSafariBrowser = isSafari();
+var isSafariBrowser = isSafari2();
 var alwaysFocusVisibleInputTypes = [
   "text",
   "search",
@@ -18748,7 +18663,7 @@ var useCommand = createHook(function useCommand2({ clickOnEnter = true, clickOnS
           event.preventDefault();
           const { view, ...eventInit } = event;
           const click = () => fireClickEvent(element, eventInit);
-          if (isFirefox()) queueBeforeEvent(element, "keyup", click);
+          if (isFirefox2()) queueBeforeEvent(element, "keyup", click);
           else queueMicrotask(click);
         }
       } else if (isSpace) {
@@ -19401,7 +19316,7 @@ var useCompositeItem = createHook(function useCompositeItem2({ store, rowId: row
     if (!isSelfTarget(event)) return;
     if (isEditableElement(event.currentTarget)) return;
     if (!baseElement2?.isConnected) return;
-    if (isSafari() && event.currentTarget.hasAttribute("data-autofocus")) event.currentTarget.scrollIntoView({
+    if (isSafari2() && event.currentTarget.hasAttribute("data-autofocus")) event.currentTarget.scrollIntoView({
       block: "nearest",
       inline: "nearest"
     });
@@ -21079,7 +20994,7 @@ var TagContextProvider = ctx7.ContextProvider;
 var TagScopedContextProvider = ctx7.ScopedContextProvider;
 
 // node_modules/@ariakit/components/dist/combobox/combobox-store.js
-var isTouchSafari = isSafari() && isTouchDevice();
+var isTouchSafari = isSafari2() && isTouchDevice();
 function createComboboxStore({ tag, ...props } = {}) {
   const store = mergeStore(props.store, pick2(tag, ["value", "rtl"]));
   throwOnConflictingProps(props, store);
@@ -24710,6 +24625,7 @@ function SortDirectionControl() {
     import_components27.__experimentalToggleGroupControl,
     {
       className: "dataviews-view-config__sort-direction",
+      __next40pxDefaultSize: true,
       isBlock: true,
       label: (0, import_i18n33.__)("Order"),
       value,
@@ -24753,6 +24669,7 @@ function ItemsPerPageControl() {
   return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
     import_components27.__experimentalToggleGroupControl,
     {
+      __next40pxDefaultSize: true,
       isBlock: true,
       label: (0, import_i18n33.__)("Items per page"),
       value: view.perPage || 10,
@@ -26497,6 +26414,7 @@ function ToggleGroup({
       required: !!field.isValid?.required,
       markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
+      __next40pxDefaultSize: true,
       isBlock: true,
       label: field.label,
       help: selectedOption?.description || field.description,

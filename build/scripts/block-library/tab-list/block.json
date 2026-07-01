@@ -16,9 +16,8 @@
 			"selector": "button",
 			"query": {
 				"label": {
-					"type": "rich-text",
-					"source": "rich-text",
-					"role": "content"
+					"type": "string",
+					"source": "html"
 				}
 			},
 			"default": []

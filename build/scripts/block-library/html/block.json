@@ -10,7 +10,8 @@
 	"attributes": {
 		"content": {
 			"type": "string",
-			"role": "local"
+			"source": "raw",
+			"role": "content"
 		}
 	},
 	"supports": {
@@ -20,7 +21,6 @@
 		"interactivity": {
 			"clientNavigation": true
 		},
-		"listView": true,
 		"customCSS": false,
 		"visibility": false
 	},

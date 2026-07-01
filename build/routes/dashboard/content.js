@@ -72,7 +72,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       function useSyncExternalStore$2(subscribe2, getSnapshot) {
-        didWarnOld18Alpha || void 0 === React101.startTransition || (didWarnOld18Alpha = true, console.error(
+        didWarnOld18Alpha || void 0 === React99.startTransition || (didWarnOld18Alpha = true, console.error(
           "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
         ));
         var value = getSnapshot();
@@ -94,7 +94,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot]
         );
-        useEffect67(
+        useEffect66(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -120,8 +120,8 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React101 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState75 = React101.useState, useEffect67 = React101.useEffect, useLayoutEffect12 = React101.useLayoutEffect, useDebugValue2 = React101.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-      exports.useSyncExternalStore = void 0 !== React101.useSyncExternalStore ? React101.useSyncExternalStore : shim;
+      var React99 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState75 = React99.useState, useEffect66 = React99.useEffect, useLayoutEffect12 = React99.useLayoutEffect, useDebugValue2 = React99.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      exports.useSyncExternalStore = void 0 !== React99.useSyncExternalStore ? React99.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
   }
@@ -148,14 +148,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React101 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef83 = React101.useRef, useEffect67 = React101.useEffect, useMemo78 = React101.useMemo, useDebugValue2 = React101.useDebugValue;
+      var React99 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef82 = React99.useRef, useEffect66 = React99.useEffect, useMemo77 = React99.useMemo, useDebugValue2 = React99.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
-        var instRef = useRef83(null);
+        var instRef = useRef82(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo78(
+        instRef = useMemo77(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -191,7 +191,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector2, isEqual]
         );
         var value = useSyncExternalStore3(subscribe2, instRef[0], instRef[1]);
-        useEffect67(
+        useEffect66(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -990,10 +990,10 @@ var clsx_default = clsx;
 // packages/ui/build-module/badge/badge.mjs
 var import_element13 = __toESM(require_element(), 1);
 
-// node_modules/@base-ui/utils/useControlled.mjs
+// node_modules/@base-ui/utils/esm/useControlled.js
 var React = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/error.mjs
+// node_modules/@base-ui/utils/esm/error.js
 var set;
 if (true) {
   set = /* @__PURE__ */ new Set();
@@ -1008,7 +1008,7 @@ function error(...messages) {
   }
 }
 
-// node_modules/@base-ui/utils/useControlled.mjs
+// node_modules/@base-ui/utils/esm/useControlled.js
 function useControlled({
   controlled,
   default: defaultProp,
@@ -1069,13 +1069,13 @@ function serializeToDevModeString(input) {
   }
 }
 
-// node_modules/@base-ui/utils/safeReact.mjs
+// node_modules/@base-ui/utils/esm/safeReact.js
 var React2 = __toESM(require_react(), 1);
 var SafeReact = {
   ...React2
 };
 
-// node_modules/@base-ui/utils/useRefWithInit.mjs
+// node_modules/@base-ui/utils/esm/useRefWithInit.js
 var React3 = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init2, initArg) {
@@ -1086,7 +1086,7 @@ function useRefWithInit(init2, initArg) {
   return ref;
 }
 
-// node_modules/@base-ui/utils/useStableCallback.mjs
+// node_modules/@base-ui/utils/esm/useStableCallback.js
 var useInsertionEffect = SafeReact.useInsertionEffect;
 var useSafeInsertionEffect = (
   // React 17 doesn't have useInsertionEffect.
@@ -1119,13 +1119,13 @@ function assertNotCalled() {
   }
 }
 
-// node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
+// node_modules/@base-ui/utils/esm/useIsoLayoutEffect.js
 var React4 = __toESM(require_react(), 1);
 var noop = () => {
 };
 var useIsoLayoutEffect = typeof document !== "undefined" ? React4.useLayoutEffect : noop;
 
-// node_modules/@base-ui/utils/warn.mjs
+// node_modules/@base-ui/utils/esm/warn.js
 var set2;
 if (true) {
   set2 = /* @__PURE__ */ new Set();
@@ -1140,7 +1140,7 @@ function warn(...messages) {
   }
 }
 
-// node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
+// node_modules/@base-ui/react/esm/internals/direction-context/DirectionContext.js
 var React5 = __toESM(require_react(), 1);
 var DirectionContext = /* @__PURE__ */ React5.createContext(void 0);
 if (true) DirectionContext.displayName = "DirectionContext";
@@ -1149,10 +1149,10 @@ function useDirection() {
   return context?.direction ?? "ltr";
 }
 
-// node_modules/@base-ui/react/internals/useRenderElement.mjs
+// node_modules/@base-ui/react/esm/internals/useRenderElement.js
 var React8 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/useMergedRefs.mjs
+// node_modules/@base-ui/utils/esm/useMergedRefs.js
 function useMergedRefs(a2, b2, c2, d2) {
   const forkRef = useRefWithInit(createForkRef).current;
   if (didChange(forkRef, a2, b2, c2, d2)) {
@@ -1241,17 +1241,17 @@ function update(forkRef, refs) {
   };
 }
 
-// node_modules/@base-ui/utils/getReactElementRef.mjs
+// node_modules/@base-ui/utils/esm/getReactElementRef.js
 var React7 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/reactVersion.mjs
+// node_modules/@base-ui/utils/esm/reactVersion.js
 var React6 = __toESM(require_react(), 1);
 var majorVersion = parseInt(React6.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
-// node_modules/@base-ui/utils/getReactElementRef.mjs
+// node_modules/@base-ui/utils/esm/getReactElementRef.js
 function getReactElementRef(element) {
   if (!/* @__PURE__ */ React7.isValidElement(element)) {
     return null;
@@ -1261,7 +1261,7 @@ function getReactElementRef(element) {
   return (isReactVersionAtLeast(19) ? propsWithRef?.ref : reactElement.ref) ?? null;
 }
 
-// node_modules/@base-ui/utils/mergeObjects.mjs
+// node_modules/@base-ui/utils/esm/mergeObjects.js
 function mergeObjects(a2, b2) {
   if (a2 && !b2) {
     return a2;
@@ -1278,13 +1278,13 @@ function mergeObjects(a2, b2) {
   return void 0;
 }
 
-// node_modules/@base-ui/utils/empty.mjs
+// node_modules/@base-ui/utils/esm/empty.js
 function NOOP() {
 }
 var EMPTY_ARRAY = Object.freeze([]);
 var EMPTY_OBJECT = Object.freeze({});
 
-// node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
+// node_modules/@base-ui/react/esm/internals/getStateAttributesProps.js
 function getStateAttributesProps(state, customMapping) {
   const props = {};
   for (const key2 in state) {
@@ -1305,17 +1305,17 @@ function getStateAttributesProps(state, customMapping) {
   return props;
 }
 
-// node_modules/@base-ui/react/utils/resolveClassName.mjs
+// node_modules/@base-ui/react/esm/utils/resolveClassName.js
 function resolveClassName(className, state) {
   return typeof className === "function" ? className(state) : className;
 }
 
-// node_modules/@base-ui/react/utils/resolveStyle.mjs
+// node_modules/@base-ui/react/esm/utils/resolveStyle.js
 function resolveStyle(style, state) {
   return typeof style === "function" ? style(state) : style;
 }
 
-// node_modules/@base-ui/react/merge-props/mergeProps.mjs
+// node_modules/@base-ui/react/esm/merge-props/mergeProps.js
 var EMPTY_PROPS = {};
 function mergeProps(a2, b2, c2, d2, e2) {
   if (!c2 && !d2 && !e2 && !a2) {
@@ -1470,7 +1470,7 @@ function isSyntheticEvent(event) {
   return event != null && typeof event === "object" && "nativeEvent" in event;
 }
 
-// node_modules/@base-ui/react/internals/useRenderElement.mjs
+// node_modules/@base-ui/react/esm/internals/useRenderElement.js
 var import_react = __toESM(require_react(), 1);
 function useRenderElement(element, componentProps, params = {}) {
   const renderProp = componentProps.render;
@@ -1588,38 +1588,7 @@ function renderTag(Tag, props) {
   return /* @__PURE__ */ React8.createElement(Tag, props);
 }
 
-// node_modules/@base-ui/utils/useId.mjs
-var React9 = __toESM(require_react(), 1);
-var globalId = 0;
-function useGlobalId(idOverride, prefix = "mui") {
-  const [defaultId, setDefaultId] = React9.useState(idOverride);
-  const id = idOverride || defaultId;
-  React9.useEffect(() => {
-    if (defaultId == null) {
-      globalId += 1;
-      setDefaultId(`${prefix}-${globalId}`);
-    }
-  }, [defaultId, prefix]);
-  return id;
-}
-var maybeReactUseId = SafeReact.useId;
-function useId(idOverride, prefix) {
-  if (maybeReactUseId !== void 0) {
-    const reactId = maybeReactUseId();
-    return idOverride ?? (prefix ? `${prefix}-${reactId}` : reactId);
-  }
-  return useGlobalId(idOverride, prefix);
-}
-
-// node_modules/@base-ui/react/internals/useBaseUiId.mjs
-function useBaseUiId(idOverride) {
-  return useId(idOverride, "base-ui");
-}
-
-// node_modules/@base-ui/react/collapsible/root/useCollapsibleRoot.mjs
-var React12 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/react/internals/reason-parts.mjs
+// node_modules/@base-ui/react/esm/internals/reason-parts.js
 var reason_parts_exports = {};
 __export(reason_parts_exports, {
   cancelOpen: () => cancelOpen,
@@ -1694,7 +1663,7 @@ var imperativeAction = "imperative-action";
 var swipe = "swipe";
 var windowResize = "window-resize";
 
-// node_modules/@base-ui/react/internals/createBaseUIEventDetails.mjs
+// node_modules/@base-ui/react/esm/internals/createBaseUIEventDetails.js
 function createChangeEventDetails(reason, event, trigger, customProperties) {
   let canceled = false;
   let allowPropagation = false;
@@ -1720,17 +1689,48 @@ function createChangeEventDetails(reason, event, trigger, customProperties) {
   return details;
 }
 
-// node_modules/@base-ui/react/internals/useTransitionStatus.mjs
+// node_modules/@base-ui/utils/esm/useId.js
+var React9 = __toESM(require_react(), 1);
+var globalId = 0;
+function useGlobalId(idOverride, prefix = "mui") {
+  const [defaultId, setDefaultId] = React9.useState(idOverride);
+  const id = idOverride || defaultId;
+  React9.useEffect(() => {
+    if (defaultId == null) {
+      globalId += 1;
+      setDefaultId(`${prefix}-${globalId}`);
+    }
+  }, [defaultId, prefix]);
+  return id;
+}
+var maybeReactUseId = SafeReact.useId;
+function useId(idOverride, prefix) {
+  if (maybeReactUseId !== void 0) {
+    const reactId = maybeReactUseId();
+    return idOverride ?? (prefix ? `${prefix}-${reactId}` : reactId);
+  }
+  return useGlobalId(idOverride, prefix);
+}
+
+// node_modules/@base-ui/react/esm/internals/useBaseUiId.js
+function useBaseUiId(idOverride) {
+  return useId(idOverride, "base-ui");
+}
+
+// node_modules/@base-ui/react/esm/collapsible/root/useCollapsibleRoot.js
+var React12 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/react/esm/internals/useTransitionStatus.js
 var React11 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/useOnMount.mjs
+// node_modules/@base-ui/utils/esm/useOnMount.js
 var React10 = __toESM(require_react(), 1);
 var EMPTY = [];
 function useOnMount(fn) {
   React10.useEffect(fn, EMPTY);
 }
 
-// node_modules/@base-ui/utils/useAnimationFrame.mjs
+// node_modules/@base-ui/utils/esm/useAnimationFrame.js
 var EMPTY2 = null;
 var LAST_RAF = globalThis.requestAnimationFrame;
 var Scheduler = class {
@@ -1818,7 +1818,7 @@ function useAnimationFrame() {
   return timeout;
 }
 
-// node_modules/@base-ui/react/internals/useTransitionStatus.mjs
+// node_modules/@base-ui/react/esm/internals/useTransitionStatus.js
 function useTransitionStatus(open, enableIdleState = false, deferEndingState = false) {
   const [transitionStatus, setTransitionStatus] = React11.useState(open && enableIdleState ? "idle" : void 0);
   const [mounted, setMounted] = React11.useState(open);
@@ -1875,7 +1875,7 @@ function useTransitionStatus(open, enableIdleState = false, deferEndingState = f
   };
 }
 
-// node_modules/@base-ui/react/collapsible/root/useCollapsibleRoot.mjs
+// node_modules/@base-ui/react/esm/collapsible/root/useCollapsibleRoot.js
 function useCollapsibleRoot(parameters) {
   const {
     open: openParam,
@@ -1919,7 +1919,7 @@ function useCollapsibleRoot(parameters) {
   }), [disabled2, handleTrigger, mounted, open, panelId, setMounted, setOpen, setPanelIdState, transitionStatus]);
 }
 
-// node_modules/@base-ui/react/collapsible/root/CollapsibleRootContext.mjs
+// node_modules/@base-ui/react/esm/collapsible/root/CollapsibleRootContext.js
 var React13 = __toESM(require_react(), 1);
 var CollapsibleRootContext = /* @__PURE__ */ React13.createContext(void 0);
 if (true) CollapsibleRootContext.displayName = "CollapsibleRootContext";
@@ -1931,7 +1931,7 @@ function useCollapsibleRootContext() {
   return context;
 }
 
-// node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
+// node_modules/@base-ui/react/esm/internals/stateAttributesMapping.js
 var TransitionStatusDataAttributes = /* @__PURE__ */ (function(TransitionStatusDataAttributes2) {
   TransitionStatusDataAttributes2["startingStyle"] = "data-starting-style";
   TransitionStatusDataAttributes2["endingStyle"] = "data-ending-style";
@@ -1955,7 +1955,7 @@ var transitionStatusMapping = {
   }
 };
 
-// node_modules/@base-ui/react/collapsible/panel/CollapsiblePanelDataAttributes.mjs
+// node_modules/@base-ui/react/esm/collapsible/panel/CollapsiblePanelDataAttributes.js
 var CollapsiblePanelDataAttributes = (function(CollapsiblePanelDataAttributes2) {
   CollapsiblePanelDataAttributes2["open"] = "data-open";
   CollapsiblePanelDataAttributes2["closed"] = "data-closed";
@@ -1964,13 +1964,13 @@ var CollapsiblePanelDataAttributes = (function(CollapsiblePanelDataAttributes2) 
   return CollapsiblePanelDataAttributes2;
 })({});
 
-// node_modules/@base-ui/react/collapsible/trigger/CollapsibleTriggerDataAttributes.mjs
+// node_modules/@base-ui/react/esm/collapsible/trigger/CollapsibleTriggerDataAttributes.js
 var CollapsibleTriggerDataAttributes = /* @__PURE__ */ (function(CollapsibleTriggerDataAttributes2) {
   CollapsibleTriggerDataAttributes2["panelOpen"] = "data-panel-open";
   return CollapsibleTriggerDataAttributes2;
 })({});
 
-// node_modules/@base-ui/react/utils/collapsibleOpenStateMapping.mjs
+// node_modules/@base-ui/react/esm/utils/collapsibleOpenStateMapping.js
 var PANEL_OPEN_HOOK = {
   [CollapsiblePanelDataAttributes.open]: ""
 };
@@ -1996,7 +1996,7 @@ var collapsibleOpenStateMapping = {
   }
 };
 
-// node_modules/@base-ui/react/internals/use-button/useButton.mjs
+// node_modules/@base-ui/react/esm/internals/use-button/useButton.js
 var React16 = __toESM(require_react(), 1);
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
@@ -2155,7 +2155,7 @@ function getFrameElement(win) {
   return win.parent && Object.getPrototypeOf(win.parent) ? win.frameElement : null;
 }
 
-// node_modules/@base-ui/react/internals/composite/root/CompositeRootContext.mjs
+// node_modules/@base-ui/react/esm/internals/composite/root/CompositeRootContext.js
 var React14 = __toESM(require_react(), 1);
 var CompositeRootContext = /* @__PURE__ */ React14.createContext(void 0);
 if (true) CompositeRootContext.displayName = "CompositeRootContext";
@@ -2167,7 +2167,7 @@ function useCompositeRootContext(optional = false) {
   return context;
 }
 
-// node_modules/@base-ui/react/utils/useFocusableWhenDisabled.mjs
+// node_modules/@base-ui/react/esm/utils/useFocusableWhenDisabled.js
 var React15 = __toESM(require_react(), 1);
 function useFocusableWhenDisabled(parameters) {
   const {
@@ -2207,7 +2207,7 @@ function useFocusableWhenDisabled(parameters) {
   };
 }
 
-// node_modules/@base-ui/react/internals/use-button/useButton.mjs
+// node_modules/@base-ui/react/esm/internals/use-button/useButton.js
 function useButton(parameters = {}) {
   const {
     disabled: disabled2 = false,
@@ -2366,836 +2366,70 @@ function isValidLinkElement(elem) {
   return Boolean(elem?.tagName === "A" && elem?.href);
 }
 
-// node_modules/@base-ui/react/collapsible/panel/useCollapsiblePanel.mjs
-var React18 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/utils/addEventListener.mjs
-function addEventListener(target, type, listener, options) {
-  target.addEventListener(type, listener, options);
-  return () => {
-    target.removeEventListener(type, listener, options);
-  };
-}
-
-// node_modules/@base-ui/utils/useValueAsRef.mjs
-function useValueAsRef(value) {
-  const latest = useRefWithInit(createLatestRef, value).current;
-  latest.next = value;
-  useIsoLayoutEffect(latest.effect);
-  return latest;
-}
-function createLatestRef(value) {
-  const latest = {
-    current: value,
-    next: value,
-    effect: () => {
-      latest.current = latest.next;
-    }
-  };
-  return latest;
-}
-
-// node_modules/@base-ui/utils/owner.mjs
-function ownerDocument(node) {
-  return node?.ownerDocument || document;
-}
-
-// node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-var React17 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-var ReactDOM = __toESM(require_react_dom(), 1);
-
-// node_modules/@base-ui/react/utils/resolveRef.mjs
-function resolveRef(maybeRef) {
-  if (maybeRef == null) {
-    return maybeRef;
-  }
-  return "current" in maybeRef ? maybeRef.current : maybeRef;
-}
-
-// node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
-function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, treatAbortedAsFinished = true) {
-  const frame = useAnimationFrame();
-  return useStableCallback((fnToExecute, signal = null) => {
-    frame.cancel();
-    const element = resolveRef(elementOrRef);
-    if (element == null) {
-      return;
-    }
-    const resolvedElement = element;
-    const done = () => {
-      ReactDOM.flushSync(fnToExecute);
-    };
-    if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
-      fnToExecute();
-      return;
-    }
-    function exec() {
-      Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
-        if (!signal?.aborted) {
-          done();
-        }
-      }).catch(() => {
-        if (treatAbortedAsFinished) {
-          if (!signal?.aborted) {
-            done();
-          }
-          return;
-        }
-        const currentAnimations = resolvedElement.getAnimations();
-        if (!signal?.aborted && currentAnimations.length > 0 && currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
-          exec();
-        }
-      });
-    }
-    if (waitForStartingStyleRemoved) {
-      const startingStyleAttribute = TransitionStatusDataAttributes.startingStyle;
-      if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-        frame.request(exec);
-        return;
-      }
-      const attributeObserver = new MutationObserver(() => {
-        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-          attributeObserver.disconnect();
-          exec();
-        }
-      });
-      attributeObserver.observe(resolvedElement, {
-        attributes: true,
-        attributeFilter: [startingStyleAttribute]
-      });
-      signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
-        once: true
-      });
-      return;
-    }
-    frame.request(exec);
-  });
-}
-
-// node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
-function useOpenChangeComplete(parameters) {
-  const {
-    enabled = true,
-    open,
-    ref,
-    onComplete: onCompleteParam
-  } = parameters;
-  const onComplete = useStableCallback(onCompleteParam);
-  const runOnceAnimationsFinish = useAnimationsFinished(ref, open, false);
-  React17.useEffect(() => {
-    if (!enabled) {
-      return void 0;
-    }
-    const abortController = new AbortController();
-    runOnceAnimationsFinish(onComplete, abortController.signal);
-    return () => {
-      abortController.abort();
-    };
-  }, [enabled, open, onComplete, runOnceAnimationsFinish]);
-}
-
-// node_modules/@base-ui/react/collapsible/panel/useCollapsiblePanel.mjs
-var EMPTY_DIMENSIONS = {
-  height: void 0,
-  width: void 0
-};
-function useCollapsiblePanel(parameters) {
-  const {
-    externalRef,
-    hiddenUntilFound,
-    id: idParam,
-    keepMounted,
-    mounted,
-    onOpenChange,
-    open,
-    setMounted,
-    setOpen,
-    transitionStatus
-  } = parameters;
-  const panelRef = React18.useRef(null);
-  const animationTypeRef = React18.useRef(null);
-  const [dimensions, setDimensionsUnwrapped] = React18.useState(EMPTY_DIMENSIONS);
-  const lastMeasuredDimensionsRef = React18.useRef(EMPTY_DIMENSIONS);
-  const shouldSkipNextOpenRef = React18.useRef(false);
-  const shouldPreventMountAnimationRef = React18.useRef(open);
-  const shouldPreventActivityResumeAnimationRef = React18.useRef(false);
-  const [forcePanelIdle, setForcePanelIdle] = React18.useState(false);
-  const pendingTemporaryStyleRestoreRef = React18.useRef(null);
-  const mergedPanelRef = useMergedRefs(externalRef, panelRef);
-  const latestStateRef = useValueAsRef({
-    mounted,
-    open
-  });
-  const runOnceCloseAnimationsFinish = useAnimationsFinished(panelRef, false, false);
-  const hidden = !open && !mounted;
-  const panelTransitionStatus = forcePanelIdle ? "idle" : transitionStatus;
-  const shouldPreventOpenAnimation = open && // These 2 refs are safe to read in render, they are only written from committed
-  // layout/effect paths and gate one-shot motion suppression for the next open
-  // lifecycle. They intentionally expose the last committed motion snapshot.
-  (shouldPreventMountAnimationRef.current || shouldPreventActivityResumeAnimationRef.current);
-  const renderedDimensions = !open && mounted && // These 2 refs are also safe to read in render, both hold the last committed
-  // animation mode and measurement. This fallback only restores a previously
-  // measured pixel size after the live dimensions state has been reset back to `auto`.
-  animationTypeRef.current === "css-animation" && dimensions.height === void 0 && dimensions.width === void 0 ? lastMeasuredDimensionsRef.current : dimensions;
-  const shouldPersistHiddenTransitionStyles = hiddenUntilFound && hidden && animationTypeRef.current !== "css-animation";
-  const setDimensions = useStableCallback((nextDimensions, shouldCacheMeasurement = true) => {
-    if (shouldCacheMeasurement) {
-      lastMeasuredDimensionsRef.current = nextDimensions;
-    }
-    setDimensionsUnwrapped(nextDimensions);
-  });
-  const restorePendingTemporaryStyle = useStableCallback(() => {
-    pendingTemporaryStyleRestoreRef.current?.();
-    pendingTemporaryStyleRestoreRef.current = null;
-  });
-  const setPendingTemporaryStyleRestore = useStableCallback((restore) => {
-    restorePendingTemporaryStyle();
-    pendingTemporaryStyleRestoreRef.current = () => {
-      pendingTemporaryStyleRestoreRef.current = null;
-      restore();
-    };
-  });
-  const markActivityResumeAnimationSuppressed = useStableCallback(() => {
-    if (open && mounted && animationTypeRef.current === "css-animation") {
-      shouldPreventActivityResumeAnimationRef.current = true;
-    }
-  });
-  useIsoLayoutEffect(() => {
-    if (!forcePanelIdle || transitionStatus === "starting") {
-      return;
-    }
-    setForcePanelIdle(false);
-  }, [forcePanelIdle, transitionStatus]);
-  React18.useEffect(() => {
-    return () => {
-      markActivityResumeAnimationSuppressed();
-      restorePendingTemporaryStyle();
-    };
-  }, [markActivityResumeAnimationSuppressed, restorePendingTemporaryStyle]);
-  useIsoLayoutEffect(() => {
-    const panel = panelRef.current;
-    if (!panel) {
-      return void 0;
-    }
-    if (!open && pendingTemporaryStyleRestoreRef.current) {
-      restorePendingTemporaryStyle();
-    }
-    const animationType = getAnimationType(panel, shouldPreventOpenAnimation);
-    animationTypeRef.current = animationType;
-    if (open && transitionStatus === "idle" && shouldPreventMountAnimationRef.current && animationType === "css-animation") {
-      lastMeasuredDimensionsRef.current = getDimensions(panel);
-      return void 0;
-    }
-    if (open && transitionStatus === "starting") {
-      const skipNextOpen = shouldSkipNextOpenRef.current;
-      shouldSkipNextOpenRef.current = false;
-      if (animationType === "none") {
-        setDimensions(getDimensions(panel));
-        setForcePanelIdle(true);
-        return void 0;
-      }
-      if (animationType === "css-transition") {
-        const restoreLayoutStyles = resetLayoutStyles(panel);
-        setDimensions(getDimensions(panel));
-        if (!skipNextOpen) {
-          return restoreLayoutStyles;
-        }
-        const restoreTransitionDuration = setTemporaryStyle(panel, "transition-duration", "0s");
-        setPendingTemporaryStyleRestore(restoreTransitionDuration);
-        setForcePanelIdle(true);
-        return restoreLayoutStyles;
-      }
-      if (animationType === "css-animation") {
-        setDimensions(getDimensions(panel));
-        if (!skipNextOpen) {
-          const restoreAnimationName2 = setTemporaryStyle(panel, "animation-name", "none");
-          restoreAnimationName2();
-          return void 0;
-        }
-        const restoreAnimationName = setTemporaryStyle(panel, "animation-name", "none");
-        const restoreAnimationDuration = setTemporaryStyle(panel, "animation-duration", "0s");
-        restoreAnimationName();
-        setPendingTemporaryStyleRestore(restoreAnimationDuration);
-        setForcePanelIdle(true);
-        return void 0;
-      }
-    }
-    if (!open && mounted && (transitionStatus === "idle" || transitionStatus === "starting")) {
-      shouldPreventMountAnimationRef.current = false;
-      shouldPreventActivityResumeAnimationRef.current = false;
-      if (animationType === "none") {
-        setDimensions(EMPTY_DIMENSIONS, false);
-        setMounted(false);
-        return void 0;
-      }
-      setDimensions(getDimensions(panel));
-      return void 0;
-    }
-    if (transitionStatus !== "ending") {
-      return void 0;
-    }
-    if (animationType === "none") {
-      setMounted(false);
-      return void 0;
-    }
-    const nextDimensions = getDimensions(panel);
-    const hasMeasuredSize = (nextDimensions.height ?? 0) > 0 || (nextDimensions.width ?? 0) > 0;
-    if (!hasMeasuredSize) {
-      setMounted(false);
-      return void 0;
-    }
-    setDimensions(nextDimensions);
-    if (animationType === "css-animation") {
-      const restoreAnimationName = setTemporaryStyle(panel, "animation-name", "none");
-      restoreAnimationName();
-    }
-    return void 0;
-  }, [mounted, open, restorePendingTemporaryStyle, setDimensions, setMounted, setPendingTemporaryStyleRestore, shouldPreventOpenAnimation, transitionStatus]);
-  useOpenChangeComplete({
-    enabled: open && mounted && panelTransitionStatus === "idle",
-    open: true,
-    ref: panelRef,
-    onComplete() {
-      if (!open) {
-        return;
-      }
-      setDimensions(EMPTY_DIMENSIONS, false);
-    }
-  });
-  React18.useEffect(() => {
-    if (open || !mounted || panelTransitionStatus !== "ending") {
-      return void 0;
-    }
-    const panel = panelRef.current;
-    if (!panel) {
-      return void 0;
-    }
-    const abortController = new AbortController();
-    let endingStyleFrame = -1;
-    function handleComplete() {
-      if (latestStateRef.current.open) {
-        return;
-      }
-      setMounted(false);
-      setDimensions(EMPTY_DIMENSIONS, false);
-    }
-    endingStyleFrame = AnimationFrame.request(() => {
-      if (!abortController.signal.aborted) {
-        runOnceCloseAnimationsFinish(handleComplete, abortController.signal);
-      }
-    });
-    return () => {
-      AnimationFrame.cancel(endingStyleFrame);
-      abortController.abort();
-    };
-  }, [latestStateRef, mounted, open, panelTransitionStatus, runOnceCloseAnimationsFinish, setDimensions, setMounted]);
-  useIsoLayoutEffect(() => {
-    const panel = panelRef.current;
-    if (!panel || !hiddenUntilFound || !hidden) {
-      return;
-    }
-    panel.setAttribute("hidden", "until-found");
-  }, [hidden, hiddenUntilFound]);
-  React18.useEffect(function registerBeforeMatchListener() {
-    const panel = panelRef.current;
-    if (!panel) {
-      return void 0;
-    }
-    function handleBeforeMatch(event) {
-      const eventDetails = createChangeEventDetails(reason_parts_exports.none, event);
-      onOpenChange(true, eventDetails);
-      if (eventDetails.isCanceled) {
-        return;
-      }
-      shouldSkipNextOpenRef.current = true;
-      setOpen(true);
-    }
-    return addEventListener(panel, "beforematch", handleBeforeMatch);
-  }, [onOpenChange, setOpen]);
-  const shouldRender = keepMounted || hiddenUntilFound || mounted || open;
-  return {
-    height: renderedDimensions.height,
-    props: {
-      ...shouldPersistHiddenTransitionStyles ? {
-        [CollapsiblePanelDataAttributes.startingStyle]: ""
-      } : void 0,
-      hidden,
-      id: idParam
-    },
-    ref: mergedPanelRef,
-    shouldPreventOpenAnimation,
-    shouldRender,
-    transitionStatus: panelTransitionStatus,
-    width: renderedDimensions.width
-  };
-}
-function getDimensions(element) {
-  return {
-    height: element.scrollHeight,
-    width: element.scrollWidth
-  };
-}
-function getAnimationType(element, hasSuppressedMountAnimation = false) {
-  const panelStyles = getWindow(element).getComputedStyle(element);
-  const hasAnimation = (panelStyles.animationName.split(",").map((name) => name.trim()).some((name) => name !== "" && name !== "none") || hasSuppressedMountAnimation) && hasNonZeroDuration(panelStyles.animationDuration);
-  const hasTransition = hasNonZeroDuration(panelStyles.transitionDuration);
-  if (hasAnimation && hasTransition) {
-    if (true) {
-      warn("CSS transitions and CSS animations both detected on Collapsible or Accordion panel.", "Only one of either animation type should be used.");
-    }
-    return "css-transition";
-  }
-  if (hasTransition) {
-    return "css-transition";
-  }
-  if (hasAnimation) {
-    return "css-animation";
-  }
-  return "none";
-}
-function hasNonZeroDuration(value) {
-  return value.split(",").map((part) => part.trim()).some((part) => part !== "" && Number.parseFloat(part) > 0);
-}
-function setTemporaryStyle(element, property, value) {
-  const previousValue = element.style.getPropertyValue(property);
-  const previousPriority = element.style.getPropertyPriority(property);
-  element.style.setProperty(property, value);
-  return () => {
-    if (previousValue === "") {
-      element.style.removeProperty(property);
-      return;
-    }
-    element.style.setProperty(property, previousValue, previousPriority);
-  };
-}
-function resetLayoutStyles(element) {
-  const originalLayoutStyles = {
-    "justify-content": element.style.justifyContent,
-    "align-items": element.style.alignItems,
-    "align-content": element.style.alignContent,
-    "justify-items": element.style.justifyItems
-  };
-  Object.keys(originalLayoutStyles).forEach((key2) => {
-    element.style.setProperty(key2, "initial", "important");
-  });
-  function restoreLayoutStyles() {
-    Object.entries(originalLayoutStyles).forEach(([key2, value]) => {
-      if (value === "") {
-        element.style.removeProperty(key2);
-        return;
-      }
-      element.style.setProperty(key2, value);
-    });
-  }
-  const frame = AnimationFrame.request(restoreLayoutStyles);
-  return () => {
-    AnimationFrame.cancel(frame);
-    restoreLayoutStyles();
-  };
-}
-
-// node_modules/@base-ui/react/alert-dialog/index.parts.mjs
-var index_parts_exports = {};
-__export(index_parts_exports, {
-  Backdrop: () => DialogBackdrop,
-  Close: () => DialogClose,
-  Description: () => DialogDescription,
-  Handle: () => AlertDialogHandle,
-  Popup: () => DialogPopup,
-  Portal: () => DialogPortal,
-  Root: () => AlertDialogRoot,
-  Title: () => DialogTitle,
-  Trigger: () => AlertDialogTrigger,
-  Viewport: () => DialogViewport,
-  createHandle: () => createAlertDialogHandle
-});
-
-// node_modules/@base-ui/react/dialog/root/useRenderDialogRoot.mjs
-var React41 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/utils/useOnFirstRender.mjs
-var React19 = __toESM(require_react(), 1);
-function useOnFirstRender(fn) {
-  const ref = React19.useRef(true);
-  if (ref.current) {
-    ref.current = false;
-    fn();
-  }
-}
-
-// node_modules/@base-ui/react/dialog/root/useDialogRoot.mjs
-var React38 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/utils/platform/parts.mjs
-var parts_exports = {};
-__export(parts_exports, {
-  engine: () => engine_exports,
-  env: () => env_exports,
-  os: () => os_exports,
-  screenReader: () => screen_reader_exports
-});
-
-// node_modules/@base-ui/utils/platform/os.mjs
-var os_exports = {};
-__export(os_exports, {
-  android: () => android,
-  apple: () => apple,
-  ios: () => ios,
-  linux: () => linux,
-  mac: () => mac,
-  windows: () => windows
-});
-
-// node_modules/@base-ui/utils/platform/shared.mjs
-function readRawData() {
-  if (typeof navigator === "undefined") {
+// node_modules/@base-ui/utils/esm/detectBrowser.js
+var hasNavigator = typeof navigator !== "undefined";
+var nav = getNavigatorData();
+var platform = getPlatform();
+var userAgent = getUserAgent();
+var isWebKit2 = typeof CSS === "undefined" || !CSS.supports ? false : CSS.supports("-webkit-backdrop-filter:none");
+var isIOS = (
+  // iPads can claim to be MacIntel
+  nav.platform === "MacIntel" && nav.maxTouchPoints > 1 ? true : /iP(hone|ad|od)|iOS/.test(nav.platform)
+);
+var isFirefox = hasNavigator && /firefox/i.test(userAgent);
+var isSafari = hasNavigator && /apple/i.test(navigator.vendor);
+var isEdge = hasNavigator && /Edg/i.test(userAgent);
+var isAndroid = hasNavigator && /android/i.test(platform) || /android/i.test(userAgent);
+var isMac = hasNavigator && platform.toLowerCase().startsWith("mac") && !navigator.maxTouchPoints;
+var isJSDOM = userAgent.includes("jsdom/");
+function getNavigatorData() {
+  if (!hasNavigator) {
     return {
-      userAgent: "",
       platform: "",
-      maxTouchPoints: 0
+      maxTouchPoints: -1
     };
   }
-  if (true) {
-    const uaData = navigator.userAgentData;
-    if (uaData && Array.isArray(uaData.brands)) {
-      return {
-        userAgent: uaData.brands.map(({
-          brand,
-          version: version2
-        }) => `${brand}/${version2}`).join(" "),
-        platform: uaData.platform ?? navigator.platform ?? "",
-        maxTouchPoints: navigator.maxTouchPoints ?? 0
-      };
-    }
+  const uaData = navigator.userAgentData;
+  if (uaData?.platform) {
+    return {
+      platform: uaData.platform,
+      maxTouchPoints: navigator.maxTouchPoints
+    };
   }
   return {
-    userAgent: navigator.userAgent,
     platform: navigator.platform ?? "",
-    maxTouchPoints: navigator.maxTouchPoints ?? 0
+    maxTouchPoints: navigator.maxTouchPoints ?? -1
   };
 }
-var {
-  userAgent,
-  platform,
-  maxTouchPoints
-} = readRawData();
-var lowerUserAgent = userAgent.toLowerCase();
-var lowerPlatform = platform.toLowerCase();
-
-// node_modules/@base-ui/utils/platform/os.mjs
-var ios = /^i(os$|p)/.test(lowerPlatform) || lowerPlatform === "macintel" && maxTouchPoints > 1;
-var ANDROID_STRING = "android";
-var android = lowerPlatform === ANDROID_STRING || lowerUserAgent.includes(ANDROID_STRING);
-var mac = !ios && lowerPlatform.startsWith("mac");
-var windows = lowerPlatform.startsWith("win");
-var linux = !android && /^(linux|chrome os)/.test(lowerPlatform);
-var apple = mac || ios;
-
-// node_modules/@base-ui/utils/platform/engine.mjs
-var engine_exports = {};
-__export(engine_exports, {
-  blink: () => blink,
-  gecko: () => gecko,
-  webkit: () => webkit
-});
-var webkit = typeof CSS !== "undefined" && !!CSS.supports?.("-webkit-backdrop-filter:none");
-var gecko = !webkit && lowerUserAgent.includes("firefox");
-var blink = !webkit && lowerUserAgent.includes("chrom");
-
-// node_modules/@base-ui/utils/platform/screen-reader.mjs
-var screen_reader_exports = {};
-__export(screen_reader_exports, {
-  voiceOver: () => voiceOver
-});
-var voiceOver = apple;
-
-// node_modules/@base-ui/utils/platform/env.mjs
-var env_exports = {};
-__export(env_exports, {
-  jsdom: () => jsdom
-});
-var jsdom = /jsdom|happydom/.test(lowerUserAgent);
-
-// node_modules/@base-ui/utils/useTimeout.mjs
-var EMPTY3 = 0;
-var Timeout = class _Timeout {
-  static create() {
-    return new _Timeout();
+function getUserAgent() {
+  if (!hasNavigator) {
+    return "";
   }
-  currentId = EMPTY3;
-  /**
-   * Executes `fn` after `delay`, clearing any previously scheduled call.
-   */
-  start(delay, fn) {
-    this.clear();
-    this.currentId = setTimeout(() => {
-      this.currentId = EMPTY3;
-      fn();
-    }, delay);
+  const uaData = navigator.userAgentData;
+  if (uaData && Array.isArray(uaData.brands)) {
+    return uaData.brands.map(({
+      brand,
+      version: version2
+    }) => `${brand}/${version2}`).join(" ");
   }
-  isStarted() {
-    return this.currentId !== EMPTY3;
+  return navigator.userAgent;
+}
+function getPlatform() {
+  if (!hasNavigator) {
+    return "";
   }
-  clear = () => {
-    if (this.currentId !== EMPTY3) {
-      clearTimeout(this.currentId);
-      this.currentId = EMPTY3;
-    }
-  };
-  disposeEffect = () => {
-    return this.clear;
-  };
-};
-function useTimeout() {
-  const timeout = useRefWithInit(Timeout.create).current;
-  useOnMount(timeout.disposeEffect);
-  return timeout;
+  const uaData = navigator.userAgentData;
+  if (uaData?.platform) {
+    return uaData.platform;
+  }
+  return navigator.platform ?? "";
 }
 
-// node_modules/@base-ui/utils/useScrollLock.mjs
-var originalHtmlStyles = {};
-var originalBodyStyles = {};
-var originalHtmlScrollBehavior = "";
-function hasInsetScrollbars(referenceElement) {
-  if (typeof document === "undefined") {
-    return false;
-  }
-  const doc = ownerDocument(referenceElement);
-  const win = getWindow(doc);
-  return win.innerWidth - doc.documentElement.clientWidth > 0;
-}
-function supportsStableScrollbarGutter(referenceElement) {
-  const supported = typeof CSS !== "undefined" && CSS.supports && CSS.supports("scrollbar-gutter", "stable");
-  if (!supported || typeof document === "undefined") {
-    return false;
-  }
-  const doc = ownerDocument(referenceElement);
-  const html = doc.documentElement;
-  const body = doc.body;
-  const scrollContainer = isOverflowElement(html) ? html : body;
-  const originalScrollContainerOverflowY = scrollContainer.style.overflowY;
-  const originalHtmlStyleGutter = html.style.scrollbarGutter;
-  html.style.scrollbarGutter = "stable";
-  scrollContainer.style.overflowY = "scroll";
-  const before = scrollContainer.offsetWidth;
-  scrollContainer.style.overflowY = "hidden";
-  const after = scrollContainer.offsetWidth;
-  scrollContainer.style.overflowY = originalScrollContainerOverflowY;
-  html.style.scrollbarGutter = originalHtmlStyleGutter;
-  return before === after;
-}
-function preventScrollOverlayScrollbars(referenceElement) {
-  const doc = ownerDocument(referenceElement);
-  const html = doc.documentElement;
-  const body = doc.body;
-  const elementToLock = isOverflowElement(html) ? html : body;
-  const originalElementToLockStyles = {
-    overflowY: elementToLock.style.overflowY,
-    overflowX: elementToLock.style.overflowX
-  };
-  Object.assign(elementToLock.style, {
-    overflowY: "hidden",
-    overflowX: "hidden"
-  });
-  return () => {
-    Object.assign(elementToLock.style, originalElementToLockStyles);
-  };
-}
-function preventScrollInsetScrollbars(referenceElement) {
-  const doc = ownerDocument(referenceElement);
-  const html = doc.documentElement;
-  const body = doc.body;
-  const win = getWindow(html);
-  let scrollTop = 0;
-  let scrollLeft = 0;
-  let updateGutterOnly = false;
-  const resizeFrame = AnimationFrame.create();
-  if (parts_exports.engine.webkit && (win.visualViewport?.scale ?? 1) !== 1) {
-    return () => {
-    };
-  }
-  function lockScroll() {
-    const htmlStyles = win.getComputedStyle(html);
-    const bodyStyles = win.getComputedStyle(body);
-    const htmlScrollbarGutterValue = htmlStyles.scrollbarGutter || "";
-    const hasBothEdges = htmlScrollbarGutterValue.includes("both-edges");
-    const scrollbarGutterValue = hasBothEdges ? "stable both-edges" : "stable";
-    scrollTop = html.scrollTop;
-    scrollLeft = html.scrollLeft;
-    originalHtmlStyles = {
-      scrollbarGutter: html.style.scrollbarGutter,
-      overflowY: html.style.overflowY,
-      overflowX: html.style.overflowX
-    };
-    originalHtmlScrollBehavior = html.style.scrollBehavior;
-    originalBodyStyles = {
-      position: body.style.position,
-      height: body.style.height,
-      width: body.style.width,
-      boxSizing: body.style.boxSizing,
-      overflowY: body.style.overflowY,
-      overflowX: body.style.overflowX,
-      scrollBehavior: body.style.scrollBehavior
-    };
-    const isScrollableY = html.scrollHeight > html.clientHeight;
-    const isScrollableX = html.scrollWidth > html.clientWidth;
-    const hasConstantOverflowY = htmlStyles.overflowY === "scroll" || bodyStyles.overflowY === "scroll";
-    const hasConstantOverflowX = htmlStyles.overflowX === "scroll" || bodyStyles.overflowX === "scroll";
-    const scrollbarWidth = Math.max(0, win.innerWidth - body.clientWidth);
-    const scrollbarHeight = Math.max(0, win.innerHeight - body.clientHeight);
-    const marginY = parseFloat(bodyStyles.marginTop) + parseFloat(bodyStyles.marginBottom);
-    const marginX = parseFloat(bodyStyles.marginLeft) + parseFloat(bodyStyles.marginRight);
-    const elementToLock = isOverflowElement(html) ? html : body;
-    updateGutterOnly = supportsStableScrollbarGutter(referenceElement);
-    if (updateGutterOnly) {
-      html.style.scrollbarGutter = scrollbarGutterValue;
-      elementToLock.style.overflowY = "hidden";
-      elementToLock.style.overflowX = "hidden";
-      return;
-    }
-    Object.assign(html.style, {
-      scrollbarGutter: scrollbarGutterValue,
-      overflowY: "hidden",
-      overflowX: "hidden"
-    });
-    if (isScrollableY || hasConstantOverflowY) {
-      html.style.overflowY = "scroll";
-    }
-    if (isScrollableX || hasConstantOverflowX) {
-      html.style.overflowX = "scroll";
-    }
-    Object.assign(body.style, {
-      position: "relative",
-      height: marginY || scrollbarHeight ? `calc(100dvh - ${marginY + scrollbarHeight}px)` : "100dvh",
-      width: marginX || scrollbarWidth ? `calc(100vw - ${marginX + scrollbarWidth}px)` : "100vw",
-      boxSizing: "border-box",
-      overflow: "hidden",
-      scrollBehavior: "unset"
-    });
-    body.scrollTop = scrollTop;
-    body.scrollLeft = scrollLeft;
-    html.setAttribute("data-base-ui-scroll-locked", "");
-    html.style.scrollBehavior = "unset";
-  }
-  function cleanup() {
-    Object.assign(html.style, originalHtmlStyles);
-    Object.assign(body.style, originalBodyStyles);
-    if (!updateGutterOnly) {
-      html.scrollTop = scrollTop;
-      html.scrollLeft = scrollLeft;
-      html.removeAttribute("data-base-ui-scroll-locked");
-      html.style.scrollBehavior = originalHtmlScrollBehavior;
-    }
-  }
-  function handleResize() {
-    cleanup();
-    resizeFrame.request(lockScroll);
-  }
-  lockScroll();
-  const unsubscribeResize = addEventListener(win, "resize", handleResize);
-  return () => {
-    resizeFrame.cancel();
-    cleanup();
-    if (typeof win.removeEventListener === "function") {
-      unsubscribeResize();
-    }
-  };
-}
-var ScrollLocker = class {
-  lockCount = 0;
-  restore = null;
-  timeoutLock = Timeout.create();
-  timeoutUnlock = Timeout.create();
-  acquire(referenceElement) {
-    this.lockCount += 1;
-    if (this.lockCount === 1 && this.restore === null) {
-      this.timeoutLock.start(0, () => this.lock(referenceElement));
-    }
-    return this.release;
-  }
-  release = () => {
-    this.lockCount -= 1;
-    if (this.lockCount === 0 && this.restore) {
-      this.timeoutUnlock.start(0, this.unlock);
-    }
-  };
-  unlock = () => {
-    if (this.lockCount === 0 && this.restore) {
-      this.restore?.();
-      this.restore = null;
-    }
-  };
-  lock(referenceElement) {
-    if (this.lockCount === 0 || this.restore !== null) {
-      return;
-    }
-    const doc = ownerDocument(referenceElement);
-    const html = doc.documentElement;
-    const htmlOverflowY = getWindow(html).getComputedStyle(html).overflowY;
-    if (htmlOverflowY === "hidden" || htmlOverflowY === "clip") {
-      this.restore = NOOP;
-      return;
-    }
-    const hasOverlayScrollbars = parts_exports.os.ios || !hasInsetScrollbars(referenceElement);
-    this.restore = hasOverlayScrollbars ? preventScrollOverlayScrollbars(referenceElement) : preventScrollInsetScrollbars(referenceElement);
-  }
-};
-var SCROLL_LOCKER = new ScrollLocker();
-function useScrollLock(enabled = true, referenceElement = null) {
-  useIsoLayoutEffect(() => {
-    if (!enabled) {
-      return void 0;
-    }
-    return SCROLL_LOCKER.acquire(referenceElement);
-  }, [enabled, referenceElement]);
-}
-
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
-var React20 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/react/floating-ui-react/utils/event.mjs
-function stopEvent(event) {
-  event.preventDefault();
-  event.stopPropagation();
-}
-function isReactEvent(event) {
-  return "nativeEvent" in event;
-}
-function isVirtualClick(event) {
-  if (event.pointerType === "" && event.isTrusted) {
-    return true;
-  }
-  if (parts_exports.os.android && event.pointerType) {
-    return event.type === "click" && event.buttons === 1;
-  }
-  return event.detail === 0 && !event.pointerType;
-}
-function isVirtualPointerEvent(event) {
-  if (parts_exports.env.jsdom) {
-    return false;
-  }
-  return !parts_exports.os.android && event.width === 0 && event.height === 0 || parts_exports.os.android && event.width === 1 && event.height === 1 && event.pressure === 0 && event.detail === 0 && event.pointerType === "mouse" || // iOS VoiceOver returns 0.333• for width/height.
-  event.width < 1 && event.height < 1 && event.pressure === 0 && event.detail === 0 && event.pointerType === "touch";
-}
-function isMouseLikePointerType(pointerType, strict) {
-  const values = ["mouse", "pen"];
-  if (!strict) {
-    values.push("", void 0);
-  }
-  return values.includes(pointerType);
-}
-function isClickLikeEvent(event) {
-  const type = event.type;
-  return type === "click" || type === "mousedown" || type === "keydown" || type === "keyup";
-}
-
-// node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/constants.js
 var FOCUSABLE_ATTRIBUTE = "data-base-ui-focusable";
 var TYPEABLE_SELECTOR = "input:not([type='hidden']):not([disabled]),[contenteditable]:not([contenteditable='false']),textarea:not([disabled])";
 
-// node_modules/@base-ui/react/internals/shadowDom.mjs
+// node_modules/@base-ui/react/esm/internals/shadowDom.js
 function activeElement(doc) {
   let element = doc.activeElement;
   while (element?.shadowRoot?.activeElement != null) {
@@ -3229,7 +2463,7 @@ function getTarget(event) {
   return event.target;
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/element.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/element.js
 function isTargetInsideEnabledTrigger(target, triggerElements) {
   if (!isElement(target)) {
     return false;
@@ -3271,7 +2505,7 @@ function isTypeableCombobox(element) {
   return element.getAttribute("role") === "combobox" && isTypeableElement(element);
 }
 function matchesFocusVisible(element) {
-  if (!element || parts_exports.env.jsdom) {
+  if (!element || isJSDOM) {
     return true;
   }
   try {
@@ -3287,266 +2521,59 @@ function getFloatingFocusElement(floatingElement) {
   return floatingElement.hasAttribute(FOCUSABLE_ATTRIBUTE) ? floatingElement : floatingElement.querySelector(`[${FOCUSABLE_ATTRIBUTE}]`) || floatingElement;
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverShared.mjs
-function resolveValue(value, pointerType) {
-  if (pointerType != null && !isMouseLikePointerType(pointerType)) {
-    return 0;
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/nodes.js
+function getNodeChildren(nodes, id, onlyOpenChildren = true) {
+  const directChildren = nodes.filter((node) => node.parentId === id);
+  return directChildren.flatMap((child) => [...!onlyOpenChildren || child.context?.open ? [child] : [], ...getNodeChildren(nodes, child.id, onlyOpenChildren)]);
+}
+function getNodeAncestors(nodes, id) {
+  let allAncestors = [];
+  let currentParentId = nodes.find((node) => node.id === id)?.parentId;
+  while (currentParentId) {
+    const currentNode = nodes.find((node) => node.id === currentParentId);
+    currentParentId = currentNode?.parentId;
+    if (currentNode) {
+      allAncestors = allAncestors.concat(currentNode);
+    }
   }
-  if (typeof value === "function") {
-    return value();
+  return allAncestors;
+}
+
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/event.js
+function stopEvent(event) {
+  event.preventDefault();
+  event.stopPropagation();
+}
+function isReactEvent(event) {
+  return "nativeEvent" in event;
+}
+function isVirtualClick(event) {
+  if (event.pointerType === "" && event.isTrusted) {
+    return true;
   }
-  return value;
-}
-function getDelay(value, prop, pointerType) {
-  const result = resolveValue(value, pointerType);
-  if (typeof result === "number") {
-    return result;
+  if (isAndroid && event.pointerType) {
+    return event.type === "click" && event.buttons === 1;
   }
-  return result?.[prop];
+  return event.detail === 0 && !event.pointerType;
 }
-function getRestMs(value) {
-  if (typeof value === "function") {
-    return value();
+function isVirtualPointerEvent(event) {
+  if (isJSDOM) {
+    return false;
   }
-  return value;
+  return !isAndroid && event.width === 0 && event.height === 0 || isAndroid && event.width === 1 && event.height === 1 && event.pressure === 0 && event.detail === 0 && event.pointerType === "mouse" || // iOS VoiceOver returns 0.333• for width/height.
+  event.width < 1 && event.height < 1 && event.pressure === 0 && event.detail === 0 && event.pointerType === "touch";
 }
-function isClickLikeOpenEvent(openEventType, interactedInside) {
-  return interactedInside || openEventType === "click" || openEventType === "mousedown";
-}
-function isHoverOpenEvent(openEventType) {
-  return openEventType?.includes("mouse") && openEventType !== "mousedown";
-}
-
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
-var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-var FloatingDelayGroupContext = /* @__PURE__ */ React20.createContext({
-  hasProvider: false,
-  timeoutMs: 0,
-  delayRef: {
-    current: 0
-  },
-  initialDelayRef: {
-    current: 0
-  },
-  timeout: new Timeout(),
-  currentIdRef: {
-    current: null
-  },
-  currentContextRef: {
-    current: null
+function isMouseLikePointerType(pointerType, strict) {
+  const values = ["mouse", "pen"];
+  if (!strict) {
+    values.push("", void 0);
   }
-});
-if (true) FloatingDelayGroupContext.displayName = "FloatingDelayGroupContext";
-function resetDelayRef(delayRef, initialDelayRef) {
-  delayRef.current = initialDelayRef.current;
+  return values.includes(pointerType);
 }
-function FloatingDelayGroup(props) {
-  const {
-    children,
-    delay,
-    timeoutMs = 0
-  } = props;
-  const delayRef = React20.useRef(delay);
-  const initialDelayRef = React20.useRef(delay);
-  const currentIdRef = React20.useRef(null);
-  const currentContextRef = React20.useRef(null);
-  const timeout = useTimeout();
-  useIsoLayoutEffect(() => {
-    initialDelayRef.current = delay;
-    if (!currentIdRef.current) {
-      delayRef.current = delay;
-      return;
-    }
-    delayRef.current = {
-      open: getDelay(delayRef.current, "open"),
-      close: getDelay(delay, "close")
-    };
-  }, [delay, currentIdRef, delayRef, initialDelayRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FloatingDelayGroupContext.Provider, {
-    value: React20.useMemo(() => ({
-      hasProvider: true,
-      delayRef,
-      initialDelayRef,
-      currentIdRef,
-      timeoutMs,
-      currentContextRef,
-      timeout
-    }), [timeoutMs, timeout]),
-    children
-  });
+function isClickLikeEvent(event) {
+  const type = event.type;
+  return type === "click" || type === "mousedown" || type === "keydown" || type === "keyup";
 }
-function useDelayGroup(context, options = {
-  open: false
-}) {
-  const {
-    open
-  } = options;
-  const store = "rootStore" in context ? context.rootStore : context;
-  const floatingId = store.useState("floatingId");
-  const groupContext = React20.useContext(FloatingDelayGroupContext);
-  const {
-    currentIdRef,
-    delayRef,
-    timeoutMs,
-    initialDelayRef,
-    currentContextRef,
-    hasProvider,
-    timeout
-  } = groupContext;
-  const [isInstantPhase, setIsInstantPhase] = React20.useState(false);
-  const openRef = React20.useRef(open);
-  const isUnmountedRef = React20.useRef(false);
-  useIsoLayoutEffect(() => {
-    openRef.current = open;
-  }, [open]);
-  useIsoLayoutEffect(() => {
-    return () => {
-      isUnmountedRef.current = true;
-    };
-  }, []);
-  useIsoLayoutEffect(() => {
-    function unset() {
-      if (!isUnmountedRef.current) {
-        setIsInstantPhase(false);
-      }
-      currentContextRef.current?.setIsInstantPhase(false);
-      currentIdRef.current = null;
-      currentContextRef.current = null;
-      delayRef.current = initialDelayRef.current;
-      timeout.clear();
-    }
-    if (!currentIdRef.current) {
-      return void 0;
-    }
-    if (!open && currentIdRef.current === floatingId) {
-      setIsInstantPhase(false);
-      if (timeoutMs) {
-        const closingId = floatingId;
-        timeout.start(timeoutMs, () => {
-          if (store.select("open") || currentIdRef.current && currentIdRef.current !== closingId) {
-            return;
-          }
-          unset();
-        });
-        return () => {
-          if (openRef.current || currentIdRef.current !== closingId) {
-            timeout.clear();
-          }
-        };
-      }
-      unset();
-    }
-    return void 0;
-  }, [open, floatingId, currentIdRef, delayRef, timeoutMs, initialDelayRef, currentContextRef, timeout, store]);
-  useIsoLayoutEffect(() => {
-    if (!open) {
-      return;
-    }
-    const prevContext = currentContextRef.current;
-    const prevId = currentIdRef.current;
-    timeout.clear();
-    currentContextRef.current = {
-      onOpenChange: store.setOpen,
-      setIsInstantPhase
-    };
-    currentIdRef.current = floatingId;
-    delayRef.current = {
-      open: 0,
-      close: getDelay(initialDelayRef.current, "close")
-    };
-    if (prevId !== null && prevId !== floatingId) {
-      setIsInstantPhase(true);
-      prevContext?.setIsInstantPhase(true);
-      prevContext?.onOpenChange(false, createChangeEventDetails(reason_parts_exports.none));
-    } else {
-      setIsInstantPhase(false);
-      prevContext?.setIsInstantPhase(false);
-    }
-  }, [open, floatingId, store, currentIdRef, delayRef, initialDelayRef, currentContextRef, timeout]);
-  useIsoLayoutEffect(() => {
-    return () => {
-      if (currentIdRef.current === floatingId) {
-        currentContextRef.current = null;
-        if (!openRef.current) {
-          return;
-        }
-        currentIdRef.current = null;
-        resetDelayRef(delayRef, initialDelayRef);
-        timeout.clear();
-      }
-    };
-  }, [currentContextRef, currentIdRef, delayRef, floatingId, initialDelayRef, timeout]);
-  return React20.useMemo(() => ({
-    hasProvider,
-    delayRef,
-    isInstantPhase
-  }), [hasProvider, delayRef, isInstantPhase]);
-}
-
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
-var React24 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/utils/mergeCleanups.mjs
-function mergeCleanups(...cleanups) {
-  return () => {
-    for (let i2 = 0; i2 < cleanups.length; i2 += 1) {
-      const cleanup = cleanups[i2];
-      if (cleanup) {
-        cleanup();
-      }
-    }
-  };
-}
-
-// node_modules/@base-ui/react/utils/FocusGuard.mjs
-var React21 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/utils/visuallyHidden.mjs
-var visuallyHiddenBase = {
-  clipPath: "inset(50%)",
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  border: 0,
-  padding: 0,
-  width: 1,
-  height: 1,
-  margin: -1
-};
-var visuallyHidden = {
-  ...visuallyHiddenBase,
-  position: "fixed",
-  top: 0,
-  left: 0
-};
-var visuallyHiddenInput = {
-  ...visuallyHiddenBase,
-  position: "absolute"
-};
-
-// node_modules/@base-ui/react/utils/FocusGuard.mjs
-var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-var FocusGuard = /* @__PURE__ */ React21.forwardRef(function FocusGuard2(props, ref) {
-  const [role, setRole] = React21.useState();
-  useIsoLayoutEffect(() => {
-    if (parts_exports.screenReader.voiceOver && parts_exports.engine.webkit) {
-      setRole("button");
-    }
-  }, []);
-  const restProps = {
-    tabIndex: 0,
-    // Role is only for VoiceOver
-    role
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", {
-    ...props,
-    ref,
-    style: visuallyHidden,
-    "aria-hidden": role ? void 0 : true,
-    ...restProps,
-    "data-base-ui-focus-guard": ""
-  });
-});
-if (true) FocusGuard.displayName = "FocusGuard";
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs
 var sides = ["top", "right", "bottom", "left"];
@@ -3677,7 +2704,7 @@ function rectToClientRect(rect) {
   };
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/composite.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/composite.js
 function isHiddenByStyles(styles) {
   return styles.visibility === "hidden" || styles.visibility === "collapse";
 }
@@ -3691,7 +2718,12 @@ function isElementVisible(element, styles = element ? getComputedStyle2(element)
   return styles.display !== "none" && styles.display !== "contents";
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/tabbable.mjs
+// node_modules/@base-ui/utils/esm/owner.js
+function ownerDocument(node) {
+  return node?.ownerDocument || document;
+}
+
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/tabbable.js
 var CANDIDATE_SELECTOR = 'a[href],button,input,select,textarea,summary,details,iframe,object,embed,[tabindex],[contenteditable]:not([contenteditable="false"]),audio[controls],video[controls]';
 function getParentElement(element) {
   const assignedSlot = element.assignedSlot;
@@ -3862,30 +2894,940 @@ function enableFocusInside(container) {
   });
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/nodes.mjs
-function getNodeChildren(nodes, id, onlyOpenChildren = true) {
-  const directChildren = nodes.filter((node) => node.parentId === id);
-  return directChildren.flatMap((child) => [...!onlyOpenChildren || child.context?.open ? [child] : [], ...getNodeChildren(nodes, child.id, onlyOpenChildren)]);
-}
-function getNodeAncestors(nodes, id) {
-  let allAncestors = [];
-  let currentParentId = nodes.find((node) => node.id === id)?.parentId;
-  while (currentParentId) {
-    const currentNode = nodes.find((node) => node.id === currentParentId);
-    currentParentId = currentNode?.parentId;
-    if (currentNode) {
-      allAncestors = allAncestors.concat(currentNode);
-    }
-  }
-  return allAncestors;
+// node_modules/@base-ui/react/esm/internals/composite/composite.js
+var ARROW_UP = "ArrowUp";
+var ARROW_DOWN = "ArrowDown";
+var ARROW_LEFT = "ArrowLeft";
+var ARROW_RIGHT = "ArrowRight";
+var HOME = "Home";
+var END = "End";
+var HORIZONTAL_KEYS = /* @__PURE__ */ new Set([ARROW_LEFT, ARROW_RIGHT]);
+var VERTICAL_KEYS = /* @__PURE__ */ new Set([ARROW_UP, ARROW_DOWN]);
+var ARROW_KEYS = /* @__PURE__ */ new Set([...HORIZONTAL_KEYS, ...VERTICAL_KEYS]);
+var COMPOSITE_KEYS = /* @__PURE__ */ new Set([...ARROW_KEYS, HOME, END]);
+
+// node_modules/@base-ui/react/esm/collapsible/panel/useCollapsiblePanel.js
+var React18 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/utils/esm/addEventListener.js
+function addEventListener(target, type, listener, options) {
+  target.addEventListener(type, listener, options);
+  return () => {
+    target.removeEventListener(type, listener, options);
+  };
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/createAttribute.mjs
+// node_modules/@base-ui/utils/esm/useValueAsRef.js
+function useValueAsRef(value) {
+  const latest = useRefWithInit(createLatestRef, value).current;
+  latest.next = value;
+  useIsoLayoutEffect(latest.effect);
+  return latest;
+}
+function createLatestRef(value) {
+  const latest = {
+    current: value,
+    next: value,
+    effect: () => {
+      latest.current = latest.next;
+    }
+  };
+  return latest;
+}
+
+// node_modules/@base-ui/react/esm/internals/useOpenChangeComplete.js
+var React17 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/react/esm/internals/useAnimationsFinished.js
+var ReactDOM = __toESM(require_react_dom(), 1);
+
+// node_modules/@base-ui/react/esm/utils/resolveRef.js
+function resolveRef(maybeRef) {
+  if (maybeRef == null) {
+    return maybeRef;
+  }
+  return "current" in maybeRef ? maybeRef.current : maybeRef;
+}
+
+// node_modules/@base-ui/react/esm/internals/useAnimationsFinished.js
+function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, treatAbortedAsFinished = true) {
+  const frame = useAnimationFrame();
+  return useStableCallback((fnToExecute, signal = null) => {
+    frame.cancel();
+    const element = resolveRef(elementOrRef);
+    if (element == null) {
+      return;
+    }
+    const resolvedElement = element;
+    const done = () => {
+      ReactDOM.flushSync(fnToExecute);
+    };
+    if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
+      fnToExecute();
+      return;
+    }
+    function exec() {
+      Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
+        if (!signal?.aborted) {
+          done();
+        }
+      }).catch(() => {
+        if (treatAbortedAsFinished) {
+          if (!signal?.aborted) {
+            done();
+          }
+          return;
+        }
+        const currentAnimations = resolvedElement.getAnimations();
+        if (!signal?.aborted && currentAnimations.length > 0 && currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
+          exec();
+        }
+      });
+    }
+    if (waitForStartingStyleRemoved) {
+      const startingStyleAttribute = TransitionStatusDataAttributes.startingStyle;
+      if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+        frame.request(exec);
+        return;
+      }
+      const attributeObserver = new MutationObserver(() => {
+        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+          attributeObserver.disconnect();
+          exec();
+        }
+      });
+      attributeObserver.observe(resolvedElement, {
+        attributes: true,
+        attributeFilter: [startingStyleAttribute]
+      });
+      signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
+        once: true
+      });
+      return;
+    }
+    frame.request(exec);
+  });
+}
+
+// node_modules/@base-ui/react/esm/internals/useOpenChangeComplete.js
+function useOpenChangeComplete(parameters) {
+  const {
+    enabled = true,
+    open,
+    ref,
+    onComplete: onCompleteParam
+  } = parameters;
+  const onComplete = useStableCallback(onCompleteParam);
+  const runOnceAnimationsFinish = useAnimationsFinished(ref, open, false);
+  React17.useEffect(() => {
+    if (!enabled) {
+      return void 0;
+    }
+    const abortController = new AbortController();
+    runOnceAnimationsFinish(onComplete, abortController.signal);
+    return () => {
+      abortController.abort();
+    };
+  }, [enabled, open, onComplete, runOnceAnimationsFinish]);
+}
+
+// node_modules/@base-ui/react/esm/collapsible/panel/useCollapsiblePanel.js
+var EMPTY_DIMENSIONS = {
+  height: void 0,
+  width: void 0
+};
+function useCollapsiblePanel(parameters) {
+  const {
+    externalRef,
+    hiddenUntilFound,
+    id: idParam,
+    keepMounted,
+    mounted,
+    onOpenChange,
+    open,
+    setMounted,
+    setOpen,
+    transitionStatus
+  } = parameters;
+  const panelRef = React18.useRef(null);
+  const animationTypeRef = React18.useRef(null);
+  const [dimensions, setDimensionsUnwrapped] = React18.useState(EMPTY_DIMENSIONS);
+  const lastMeasuredDimensionsRef = React18.useRef(EMPTY_DIMENSIONS);
+  const shouldSkipNextOpenRef = React18.useRef(false);
+  const shouldPreventMountAnimationRef = React18.useRef(open);
+  const shouldPreventActivityResumeAnimationRef = React18.useRef(false);
+  const [forcePanelIdle, setForcePanelIdle] = React18.useState(false);
+  const pendingTemporaryStyleRestoreRef = React18.useRef(null);
+  const mergedPanelRef = useMergedRefs(externalRef, panelRef);
+  const latestStateRef = useValueAsRef({
+    mounted,
+    open
+  });
+  const runOnceCloseAnimationsFinish = useAnimationsFinished(panelRef, false, false);
+  const hidden = !open && !mounted;
+  const panelTransitionStatus = forcePanelIdle ? "idle" : transitionStatus;
+  const shouldPreventOpenAnimation = open && // These 2 refs are safe to read in render, they are only written from committed
+  // layout/effect paths and gate one-shot motion suppression for the next open
+  // lifecycle. They intentionally expose the last committed motion snapshot.
+  (shouldPreventMountAnimationRef.current || shouldPreventActivityResumeAnimationRef.current);
+  const renderedDimensions = !open && mounted && // These 2 refs are also safe to read in render, both hold the last committed
+  // animation mode and measurement. This fallback only restores a previously
+  // measured pixel size after the live dimensions state has been reset back to `auto`.
+  animationTypeRef.current === "css-animation" && dimensions.height === void 0 && dimensions.width === void 0 ? lastMeasuredDimensionsRef.current : dimensions;
+  const shouldPersistHiddenTransitionStyles = hiddenUntilFound && hidden && animationTypeRef.current !== "css-animation";
+  const setDimensions = useStableCallback((nextDimensions, shouldCacheMeasurement = true) => {
+    if (shouldCacheMeasurement) {
+      lastMeasuredDimensionsRef.current = nextDimensions;
+    }
+    setDimensionsUnwrapped(nextDimensions);
+  });
+  const restorePendingTemporaryStyle = useStableCallback(() => {
+    pendingTemporaryStyleRestoreRef.current?.();
+    pendingTemporaryStyleRestoreRef.current = null;
+  });
+  const setPendingTemporaryStyleRestore = useStableCallback((restore) => {
+    restorePendingTemporaryStyle();
+    pendingTemporaryStyleRestoreRef.current = () => {
+      pendingTemporaryStyleRestoreRef.current = null;
+      restore();
+    };
+  });
+  const markActivityResumeAnimationSuppressed = useStableCallback(() => {
+    if (open && mounted && animationTypeRef.current === "css-animation") {
+      shouldPreventActivityResumeAnimationRef.current = true;
+    }
+  });
+  useIsoLayoutEffect(() => {
+    if (!forcePanelIdle || transitionStatus === "starting") {
+      return;
+    }
+    setForcePanelIdle(false);
+  }, [forcePanelIdle, transitionStatus]);
+  React18.useEffect(() => {
+    return () => {
+      markActivityResumeAnimationSuppressed();
+      restorePendingTemporaryStyle();
+    };
+  }, [markActivityResumeAnimationSuppressed, restorePendingTemporaryStyle]);
+  useIsoLayoutEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) {
+      return void 0;
+    }
+    if (!open && pendingTemporaryStyleRestoreRef.current) {
+      restorePendingTemporaryStyle();
+    }
+    const animationType = getAnimationType(panel, shouldPreventOpenAnimation);
+    animationTypeRef.current = animationType;
+    if (open && transitionStatus === "idle" && shouldPreventMountAnimationRef.current && animationType === "css-animation") {
+      lastMeasuredDimensionsRef.current = getDimensions(panel);
+      return void 0;
+    }
+    if (open && transitionStatus === "starting") {
+      const skipNextOpen = shouldSkipNextOpenRef.current;
+      shouldSkipNextOpenRef.current = false;
+      if (animationType === "none") {
+        setDimensions(getDimensions(panel));
+        setForcePanelIdle(true);
+        return void 0;
+      }
+      if (animationType === "css-transition") {
+        const restoreLayoutStyles = resetLayoutStyles(panel);
+        setDimensions(getDimensions(panel));
+        if (!skipNextOpen) {
+          return restoreLayoutStyles;
+        }
+        const restoreTransitionDuration = setTemporaryStyle(panel, "transition-duration", "0s");
+        setPendingTemporaryStyleRestore(restoreTransitionDuration);
+        setForcePanelIdle(true);
+        return restoreLayoutStyles;
+      }
+      if (animationType === "css-animation") {
+        setDimensions(getDimensions(panel));
+        if (!skipNextOpen) {
+          const restoreAnimationName2 = setTemporaryStyle(panel, "animation-name", "none");
+          restoreAnimationName2();
+          return void 0;
+        }
+        const restoreAnimationName = setTemporaryStyle(panel, "animation-name", "none");
+        const restoreAnimationDuration = setTemporaryStyle(panel, "animation-duration", "0s");
+        restoreAnimationName();
+        setPendingTemporaryStyleRestore(restoreAnimationDuration);
+        setForcePanelIdle(true);
+        return void 0;
+      }
+    }
+    if (!open && mounted && (transitionStatus === "idle" || transitionStatus === "starting")) {
+      if (animationType === "none") {
+        setDimensions(EMPTY_DIMENSIONS, false);
+        setMounted(false);
+        return void 0;
+      }
+      if (animationType === "css-animation") {
+        shouldPreventMountAnimationRef.current = false;
+        shouldPreventActivityResumeAnimationRef.current = false;
+      }
+      setDimensions(getDimensions(panel));
+      return void 0;
+    }
+    if (transitionStatus !== "ending") {
+      return void 0;
+    }
+    if (animationType === "none") {
+      setMounted(false);
+      return void 0;
+    }
+    const nextDimensions = getDimensions(panel);
+    const hasMeasuredSize = (nextDimensions.height ?? 0) > 0 || (nextDimensions.width ?? 0) > 0;
+    if (!hasMeasuredSize) {
+      setMounted(false);
+      return void 0;
+    }
+    setDimensions(nextDimensions);
+    if (animationType === "css-animation") {
+      const restoreAnimationName = setTemporaryStyle(panel, "animation-name", "none");
+      restoreAnimationName();
+    }
+    return void 0;
+  }, [mounted, open, restorePendingTemporaryStyle, setDimensions, setMounted, setPendingTemporaryStyleRestore, shouldPreventOpenAnimation, transitionStatus]);
+  useOpenChangeComplete({
+    enabled: open && mounted && panelTransitionStatus === "idle",
+    open: true,
+    ref: panelRef,
+    onComplete() {
+      if (!open) {
+        return;
+      }
+      setDimensions(EMPTY_DIMENSIONS, false);
+    }
+  });
+  React18.useEffect(() => {
+    if (open || !mounted || panelTransitionStatus !== "ending") {
+      return void 0;
+    }
+    const panel = panelRef.current;
+    if (!panel) {
+      return void 0;
+    }
+    const abortController = new AbortController();
+    let endingStyleFrame = -1;
+    function handleComplete() {
+      if (latestStateRef.current.open) {
+        return;
+      }
+      setMounted(false);
+      setDimensions(EMPTY_DIMENSIONS, false);
+    }
+    endingStyleFrame = AnimationFrame.request(() => {
+      if (!abortController.signal.aborted) {
+        runOnceCloseAnimationsFinish(handleComplete, abortController.signal);
+      }
+    });
+    return () => {
+      AnimationFrame.cancel(endingStyleFrame);
+      abortController.abort();
+    };
+  }, [latestStateRef, mounted, open, panelTransitionStatus, runOnceCloseAnimationsFinish, setDimensions, setMounted]);
+  useIsoLayoutEffect(() => {
+    const panel = panelRef.current;
+    if (!panel || !hiddenUntilFound || !hidden) {
+      return;
+    }
+    panel.setAttribute("hidden", "until-found");
+  }, [hidden, hiddenUntilFound]);
+  React18.useEffect(function registerBeforeMatchListener() {
+    const panel = panelRef.current;
+    if (!panel) {
+      return void 0;
+    }
+    function handleBeforeMatch(event) {
+      shouldSkipNextOpenRef.current = true;
+      setOpen(true);
+      onOpenChange(true, createChangeEventDetails(reason_parts_exports.none, event));
+    }
+    return addEventListener(panel, "beforematch", handleBeforeMatch);
+  }, [onOpenChange, setOpen]);
+  const shouldRender = keepMounted || hiddenUntilFound || mounted || open;
+  return {
+    height: renderedDimensions.height,
+    props: {
+      ...shouldPersistHiddenTransitionStyles ? {
+        [CollapsiblePanelDataAttributes.startingStyle]: ""
+      } : void 0,
+      hidden,
+      id: idParam
+    },
+    ref: mergedPanelRef,
+    shouldPreventOpenAnimation,
+    shouldRender,
+    transitionStatus: panelTransitionStatus,
+    width: renderedDimensions.width
+  };
+}
+function getDimensions(element) {
+  return {
+    height: element.scrollHeight,
+    width: element.scrollWidth
+  };
+}
+function getAnimationType(element, hasSuppressedMountAnimation = false) {
+  const panelStyles = getWindow(element).getComputedStyle(element);
+  const hasAnimation = (panelStyles.animationName.split(",").map((name) => name.trim()).some((name) => name !== "" && name !== "none") || hasSuppressedMountAnimation) && hasNonZeroDuration(panelStyles.animationDuration);
+  const hasTransition = hasNonZeroDuration(panelStyles.transitionDuration);
+  if (hasAnimation && hasTransition) {
+    if (true) {
+      warn("CSS transitions and CSS animations both detected on Collapsible or Accordion panel.", "Only one of either animation type should be used.");
+    }
+    return "css-transition";
+  }
+  if (hasTransition) {
+    return "css-transition";
+  }
+  if (hasAnimation) {
+    return "css-animation";
+  }
+  return "none";
+}
+function hasNonZeroDuration(value) {
+  return value.split(",").map((part) => part.trim()).some((part) => part !== "" && Number.parseFloat(part) > 0);
+}
+function setTemporaryStyle(element, property, value) {
+  const previousValue = element.style.getPropertyValue(property);
+  const previousPriority = element.style.getPropertyPriority(property);
+  element.style.setProperty(property, value);
+  return () => {
+    if (previousValue === "") {
+      element.style.removeProperty(property);
+      return;
+    }
+    element.style.setProperty(property, previousValue, previousPriority);
+  };
+}
+function resetLayoutStyles(element) {
+  const originalLayoutStyles = {
+    "justify-content": element.style.justifyContent,
+    "align-items": element.style.alignItems,
+    "align-content": element.style.alignContent,
+    "justify-items": element.style.justifyItems
+  };
+  Object.keys(originalLayoutStyles).forEach((key2) => {
+    element.style.setProperty(key2, "initial", "important");
+  });
+  function restoreLayoutStyles() {
+    Object.entries(originalLayoutStyles).forEach(([key2, value]) => {
+      if (value === "") {
+        element.style.removeProperty(key2);
+        return;
+      }
+      element.style.setProperty(key2, value);
+    });
+  }
+  const frame = AnimationFrame.request(restoreLayoutStyles);
+  return () => {
+    AnimationFrame.cancel(frame);
+    restoreLayoutStyles();
+  };
+}
+
+// node_modules/@base-ui/react/esm/alert-dialog/index.parts.js
+var index_parts_exports = {};
+__export(index_parts_exports, {
+  Backdrop: () => DialogBackdrop,
+  Close: () => DialogClose,
+  Description: () => DialogDescription,
+  Handle: () => AlertDialogHandle,
+  Popup: () => DialogPopup,
+  Portal: () => DialogPortal,
+  Root: () => AlertDialogRoot,
+  Title: () => DialogTitle,
+  Trigger: () => AlertDialogTrigger,
+  Viewport: () => DialogViewport,
+  createHandle: () => createAlertDialogHandle
+});
+
+// node_modules/@base-ui/react/esm/dialog/root/useRenderDialogRoot.js
+var React41 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/utils/esm/useOnFirstRender.js
+var React19 = __toESM(require_react(), 1);
+function useOnFirstRender(fn) {
+  const ref = React19.useRef(true);
+  if (ref.current) {
+    ref.current = false;
+    fn();
+  }
+}
+
+// node_modules/@base-ui/react/esm/dialog/root/useDialogRoot.js
+var React38 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/utils/esm/useTimeout.js
+var EMPTY3 = 0;
+var Timeout = class _Timeout {
+  static create() {
+    return new _Timeout();
+  }
+  currentId = EMPTY3;
+  /**
+   * Executes `fn` after `delay`, clearing any previously scheduled call.
+   */
+  start(delay, fn) {
+    this.clear();
+    this.currentId = setTimeout(() => {
+      this.currentId = EMPTY3;
+      fn();
+    }, delay);
+  }
+  isStarted() {
+    return this.currentId !== EMPTY3;
+  }
+  clear = () => {
+    if (this.currentId !== EMPTY3) {
+      clearTimeout(this.currentId);
+      this.currentId = EMPTY3;
+    }
+  };
+  disposeEffect = () => {
+    return this.clear;
+  };
+};
+function useTimeout() {
+  const timeout = useRefWithInit(Timeout.create).current;
+  useOnMount(timeout.disposeEffect);
+  return timeout;
+}
+
+// node_modules/@base-ui/utils/esm/useScrollLock.js
+var originalHtmlStyles = {};
+var originalBodyStyles = {};
+var originalHtmlScrollBehavior = "";
+function hasInsetScrollbars(referenceElement) {
+  if (typeof document === "undefined") {
+    return false;
+  }
+  const doc = ownerDocument(referenceElement);
+  const win = getWindow(doc);
+  return win.innerWidth - doc.documentElement.clientWidth > 0;
+}
+function supportsStableScrollbarGutter(referenceElement) {
+  const supported = typeof CSS !== "undefined" && CSS.supports && CSS.supports("scrollbar-gutter", "stable");
+  if (!supported || typeof document === "undefined") {
+    return false;
+  }
+  const doc = ownerDocument(referenceElement);
+  const html = doc.documentElement;
+  const body = doc.body;
+  const scrollContainer = isOverflowElement(html) ? html : body;
+  const originalScrollContainerOverflowY = scrollContainer.style.overflowY;
+  const originalHtmlStyleGutter = html.style.scrollbarGutter;
+  html.style.scrollbarGutter = "stable";
+  scrollContainer.style.overflowY = "scroll";
+  const before = scrollContainer.offsetWidth;
+  scrollContainer.style.overflowY = "hidden";
+  const after = scrollContainer.offsetWidth;
+  scrollContainer.style.overflowY = originalScrollContainerOverflowY;
+  html.style.scrollbarGutter = originalHtmlStyleGutter;
+  return before === after;
+}
+function preventScrollOverlayScrollbars(referenceElement) {
+  const doc = ownerDocument(referenceElement);
+  const html = doc.documentElement;
+  const body = doc.body;
+  const elementToLock = isOverflowElement(html) ? html : body;
+  const originalElementToLockStyles = {
+    overflowY: elementToLock.style.overflowY,
+    overflowX: elementToLock.style.overflowX
+  };
+  Object.assign(elementToLock.style, {
+    overflowY: "hidden",
+    overflowX: "hidden"
+  });
+  return () => {
+    Object.assign(elementToLock.style, originalElementToLockStyles);
+  };
+}
+function preventScrollInsetScrollbars(referenceElement) {
+  const doc = ownerDocument(referenceElement);
+  const html = doc.documentElement;
+  const body = doc.body;
+  const win = getWindow(html);
+  let scrollTop = 0;
+  let scrollLeft = 0;
+  let updateGutterOnly = false;
+  const resizeFrame = AnimationFrame.create();
+  if (isWebKit2 && (win.visualViewport?.scale ?? 1) !== 1) {
+    return () => {
+    };
+  }
+  function lockScroll() {
+    const htmlStyles = win.getComputedStyle(html);
+    const bodyStyles = win.getComputedStyle(body);
+    const htmlScrollbarGutterValue = htmlStyles.scrollbarGutter || "";
+    const hasBothEdges = htmlScrollbarGutterValue.includes("both-edges");
+    const scrollbarGutterValue = hasBothEdges ? "stable both-edges" : "stable";
+    scrollTop = html.scrollTop;
+    scrollLeft = html.scrollLeft;
+    originalHtmlStyles = {
+      scrollbarGutter: html.style.scrollbarGutter,
+      overflowY: html.style.overflowY,
+      overflowX: html.style.overflowX
+    };
+    originalHtmlScrollBehavior = html.style.scrollBehavior;
+    originalBodyStyles = {
+      position: body.style.position,
+      height: body.style.height,
+      width: body.style.width,
+      boxSizing: body.style.boxSizing,
+      overflowY: body.style.overflowY,
+      overflowX: body.style.overflowX,
+      scrollBehavior: body.style.scrollBehavior
+    };
+    const isScrollableY = html.scrollHeight > html.clientHeight;
+    const isScrollableX = html.scrollWidth > html.clientWidth;
+    const hasConstantOverflowY = htmlStyles.overflowY === "scroll" || bodyStyles.overflowY === "scroll";
+    const hasConstantOverflowX = htmlStyles.overflowX === "scroll" || bodyStyles.overflowX === "scroll";
+    const scrollbarWidth = Math.max(0, win.innerWidth - body.clientWidth);
+    const scrollbarHeight = Math.max(0, win.innerHeight - body.clientHeight);
+    const marginY = parseFloat(bodyStyles.marginTop) + parseFloat(bodyStyles.marginBottom);
+    const marginX = parseFloat(bodyStyles.marginLeft) + parseFloat(bodyStyles.marginRight);
+    const elementToLock = isOverflowElement(html) ? html : body;
+    updateGutterOnly = supportsStableScrollbarGutter(referenceElement);
+    if (updateGutterOnly) {
+      html.style.scrollbarGutter = scrollbarGutterValue;
+      elementToLock.style.overflowY = "hidden";
+      elementToLock.style.overflowX = "hidden";
+      return;
+    }
+    Object.assign(html.style, {
+      scrollbarGutter: scrollbarGutterValue,
+      overflowY: "hidden",
+      overflowX: "hidden"
+    });
+    if (isScrollableY || hasConstantOverflowY) {
+      html.style.overflowY = "scroll";
+    }
+    if (isScrollableX || hasConstantOverflowX) {
+      html.style.overflowX = "scroll";
+    }
+    Object.assign(body.style, {
+      position: "relative",
+      height: marginY || scrollbarHeight ? `calc(100dvh - ${marginY + scrollbarHeight}px)` : "100dvh",
+      width: marginX || scrollbarWidth ? `calc(100vw - ${marginX + scrollbarWidth}px)` : "100vw",
+      boxSizing: "border-box",
+      overflow: "hidden",
+      scrollBehavior: "unset"
+    });
+    body.scrollTop = scrollTop;
+    body.scrollLeft = scrollLeft;
+    html.setAttribute("data-base-ui-scroll-locked", "");
+    html.style.scrollBehavior = "unset";
+  }
+  function cleanup() {
+    Object.assign(html.style, originalHtmlStyles);
+    Object.assign(body.style, originalBodyStyles);
+    if (!updateGutterOnly) {
+      html.scrollTop = scrollTop;
+      html.scrollLeft = scrollLeft;
+      html.removeAttribute("data-base-ui-scroll-locked");
+      html.style.scrollBehavior = originalHtmlScrollBehavior;
+    }
+  }
+  function handleResize() {
+    cleanup();
+    resizeFrame.request(lockScroll);
+  }
+  lockScroll();
+  const unsubscribeResize = addEventListener(win, "resize", handleResize);
+  return () => {
+    resizeFrame.cancel();
+    cleanup();
+    if (typeof win.removeEventListener === "function") {
+      unsubscribeResize();
+    }
+  };
+}
+var ScrollLocker = class {
+  lockCount = 0;
+  restore = null;
+  timeoutLock = Timeout.create();
+  timeoutUnlock = Timeout.create();
+  acquire(referenceElement) {
+    this.lockCount += 1;
+    if (this.lockCount === 1 && this.restore === null) {
+      this.timeoutLock.start(0, () => this.lock(referenceElement));
+    }
+    return this.release;
+  }
+  release = () => {
+    this.lockCount -= 1;
+    if (this.lockCount === 0 && this.restore) {
+      this.timeoutUnlock.start(0, this.unlock);
+    }
+  };
+  unlock = () => {
+    if (this.lockCount === 0 && this.restore) {
+      this.restore?.();
+      this.restore = null;
+    }
+  };
+  lock(referenceElement) {
+    if (this.lockCount === 0 || this.restore !== null) {
+      return;
+    }
+    const doc = ownerDocument(referenceElement);
+    const html = doc.documentElement;
+    const htmlOverflowY = getWindow(html).getComputedStyle(html).overflowY;
+    if (htmlOverflowY === "hidden" || htmlOverflowY === "clip") {
+      this.restore = NOOP;
+      return;
+    }
+    const hasOverlayScrollbars = isIOS || !hasInsetScrollbars(referenceElement);
+    this.restore = hasOverlayScrollbars ? preventScrollOverlayScrollbars(referenceElement) : preventScrollInsetScrollbars(referenceElement);
+  }
+};
+var SCROLL_LOCKER = new ScrollLocker();
+function useScrollLock(enabled = true, referenceElement = null) {
+  useIsoLayoutEffect(() => {
+    if (!enabled) {
+      return void 0;
+    }
+    return SCROLL_LOCKER.acquire(referenceElement);
+  }, [enabled, referenceElement]);
+}
+
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingDelayGroup.js
+var React20 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverShared.js
+function resolveValue(value, pointerType) {
+  if (pointerType != null && !isMouseLikePointerType(pointerType)) {
+    return 0;
+  }
+  if (typeof value === "function") {
+    return value();
+  }
+  return value;
+}
+function getDelay(value, prop, pointerType) {
+  const result = resolveValue(value, pointerType);
+  if (typeof result === "number") {
+    return result;
+  }
+  return result?.[prop];
+}
+function getRestMs(value) {
+  if (typeof value === "function") {
+    return value();
+  }
+  return value;
+}
+function isClickLikeOpenEvent(openEventType, interactedInside) {
+  return interactedInside || openEventType === "click" || openEventType === "mousedown";
+}
+function isHoverOpenEvent(openEventType) {
+  return openEventType?.includes("mouse") && openEventType !== "mousedown";
+}
+
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingDelayGroup.js
+var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+var FloatingDelayGroupContext = /* @__PURE__ */ React20.createContext({
+  hasProvider: false,
+  timeoutMs: 0,
+  delayRef: {
+    current: 0
+  },
+  initialDelayRef: {
+    current: 0
+  },
+  timeout: new Timeout(),
+  currentIdRef: {
+    current: null
+  },
+  currentContextRef: {
+    current: null
+  }
+});
+if (true) FloatingDelayGroupContext.displayName = "FloatingDelayGroupContext";
+function FloatingDelayGroup(props) {
+  const {
+    children,
+    delay,
+    timeoutMs = 0
+  } = props;
+  const delayRef = React20.useRef(delay);
+  const initialDelayRef = React20.useRef(delay);
+  const currentIdRef = React20.useRef(null);
+  const currentContextRef = React20.useRef(null);
+  const timeout = useTimeout();
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FloatingDelayGroupContext.Provider, {
+    value: React20.useMemo(() => ({
+      hasProvider: true,
+      delayRef,
+      initialDelayRef,
+      currentIdRef,
+      timeoutMs,
+      currentContextRef,
+      timeout
+    }), [timeoutMs, timeout]),
+    children
+  });
+}
+function useDelayGroup(context, options = {
+  open: false
+}) {
+  const {
+    open
+  } = options;
+  const store = "rootStore" in context ? context.rootStore : context;
+  const floatingId = store.useState("floatingId");
+  const groupContext = React20.useContext(FloatingDelayGroupContext);
+  const {
+    currentIdRef,
+    delayRef,
+    timeoutMs,
+    initialDelayRef,
+    currentContextRef,
+    hasProvider,
+    timeout
+  } = groupContext;
+  const [isInstantPhase, setIsInstantPhase] = React20.useState(false);
+  useIsoLayoutEffect(() => {
+    function unset() {
+      setIsInstantPhase(false);
+      currentContextRef.current?.setIsInstantPhase(false);
+      currentIdRef.current = null;
+      currentContextRef.current = null;
+      delayRef.current = initialDelayRef.current;
+    }
+    if (!currentIdRef.current) {
+      return void 0;
+    }
+    if (!open && currentIdRef.current === floatingId) {
+      setIsInstantPhase(false);
+      if (timeoutMs) {
+        const closingId = floatingId;
+        timeout.start(timeoutMs, () => {
+          if (store.select("open") || currentIdRef.current && currentIdRef.current !== closingId) {
+            return;
+          }
+          unset();
+        });
+        return () => {
+          timeout.clear();
+        };
+      }
+      unset();
+    }
+    return void 0;
+  }, [open, floatingId, currentIdRef, delayRef, timeoutMs, initialDelayRef, currentContextRef, timeout, store]);
+  useIsoLayoutEffect(() => {
+    if (!open) {
+      return;
+    }
+    const prevContext = currentContextRef.current;
+    const prevId = currentIdRef.current;
+    timeout.clear();
+    currentContextRef.current = {
+      onOpenChange: store.setOpen,
+      setIsInstantPhase
+    };
+    currentIdRef.current = floatingId;
+    delayRef.current = {
+      open: 0,
+      close: getDelay(initialDelayRef.current, "close")
+    };
+    if (prevId !== null && prevId !== floatingId) {
+      setIsInstantPhase(true);
+      prevContext?.setIsInstantPhase(true);
+      prevContext?.onOpenChange(false, createChangeEventDetails(reason_parts_exports.none));
+    } else {
+      setIsInstantPhase(false);
+      prevContext?.setIsInstantPhase(false);
+    }
+  }, [open, floatingId, store, currentIdRef, delayRef, initialDelayRef, currentContextRef, timeout]);
+  useIsoLayoutEffect(() => {
+    return () => {
+      currentContextRef.current = null;
+    };
+  }, [currentContextRef]);
+  return React20.useMemo(() => ({
+    hasProvider,
+    delayRef,
+    isInstantPhase
+  }), [hasProvider, delayRef, isInstantPhase]);
+}
+
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingFocusManager.js
+var React24 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/utils/esm/mergeCleanups.js
+function mergeCleanups(...cleanups) {
+  return () => {
+    for (let i2 = 0; i2 < cleanups.length; i2 += 1) {
+      const cleanup = cleanups[i2];
+      if (cleanup) {
+        cleanup();
+      }
+    }
+  };
+}
+
+// node_modules/@base-ui/react/esm/utils/FocusGuard.js
+var React21 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/utils/esm/visuallyHidden.js
+var visuallyHiddenBase = {
+  clipPath: "inset(50%)",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  border: 0,
+  padding: 0,
+  width: 1,
+  height: 1,
+  margin: -1
+};
+var visuallyHidden = {
+  ...visuallyHiddenBase,
+  position: "fixed",
+  top: 0,
+  left: 0
+};
+var visuallyHiddenInput = {
+  ...visuallyHiddenBase,
+  position: "absolute"
+};
+
+// node_modules/@base-ui/react/esm/utils/FocusGuard.js
+var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+var FocusGuard = /* @__PURE__ */ React21.forwardRef(function FocusGuard2(props, ref) {
+  const [role, setRole] = React21.useState();
+  useIsoLayoutEffect(() => {
+    if (isSafari) {
+      setRole("button");
+    }
+  }, []);
+  const restProps = {
+    tabIndex: 0,
+    // Role is only for VoiceOver
+    role
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", {
+    ...props,
+    ref,
+    style: visuallyHidden,
+    "aria-hidden": role ? void 0 : true,
+    ...restProps,
+    "data-base-ui-focus-guard": ""
+  });
+});
+if (true) FocusGuard.displayName = "FocusGuard";
+
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/createAttribute.js
 function createAttribute(name) {
   return `data-base-ui-${name}`;
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/enqueueFocus.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/enqueueFocus.js
 var rafId = 0;
 function enqueueFocus(el, options = {}) {
   const {
@@ -3916,7 +3858,7 @@ function enqueueFocus(el, options = {}) {
   };
 }
 
-// node_modules/@base-ui/react/floating-ui-react/utils/markOthers.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/markOthers.js
 var counters = {
   inert: /* @__PURE__ */ new WeakMap(),
   "aria-hidden": /* @__PURE__ */ new WeakMap()
@@ -3979,18 +3921,16 @@ var collectOutsideElements = (root, keepElements, stopElements) => {
   return outside;
 };
 function applyAttributeToOthers(uncorrectedAvoidElements, body, ariaHidden, inert, {
-  mark = true
+  mark = true,
+  markerIgnoreElements = []
 }) {
-  let controlAttribute = null;
-  if (inert) {
-    controlAttribute = "inert";
-  } else if (ariaHidden) {
-    controlAttribute = "aria-hidden";
-  }
+  const controlAttribute = inert ? "inert" : ariaHidden ? "aria-hidden" : null;
   let counterMap = null;
   let uncontrolledElementsSet = null;
   const avoidElements = correctElements(body, uncorrectedAvoidElements);
-  const markerTargets = mark ? collectOutsideElements(body, buildKeepSet(avoidElements), new Set(avoidElements)) : [];
+  const markerIgnoreTargets = mark ? correctElements(body, markerIgnoreElements) : [];
+  const markerIgnoreSet = new Set(markerIgnoreTargets);
+  const markerTargets = mark ? collectOutsideElements(body, buildKeepSet(avoidElements), new Set(avoidElements)).filter((target) => !markerIgnoreSet.has(target)) : [];
   const hiddenElements = [];
   const markedElements = [];
   if (controlAttribute) {
@@ -4063,19 +4003,21 @@ function markOthers(avoidElements, options = {}) {
   const {
     ariaHidden = false,
     inert = false,
-    mark = true
+    mark = true,
+    markerIgnoreElements = []
   } = options;
   const body = ownerDocument(avoidElements[0]).body;
   return applyAttributeToOthers(avoidElements, body, ariaHidden, inert, {
-    mark
+    mark,
+    markerIgnoreElements
   });
 }
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingPortal.js
 var React22 = __toESM(require_react(), 1);
 var ReactDOM2 = __toESM(require_react_dom(), 1);
 
-// node_modules/@base-ui/react/internals/constants.mjs
+// node_modules/@base-ui/react/esm/internals/constants.js
 var DISABLED_TRANSITIONS_STYLE = {
   style: {
     transition: "none"
@@ -4096,7 +4038,7 @@ var ownerVisuallyHidden = {
   left: 0
 };
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingPortal.js
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
 var PortalContext = /* @__PURE__ */ React22.createContext(null);
 if (true) PortalContext.displayName = "PortalContext";
@@ -4207,8 +4149,8 @@ var FloatingPortal = /* @__PURE__ */ React22.forwardRef(function FloatingPortal2
     }
     return mergeCleanups(addEventListener(portalNode, "focusin", onFocus, true), addEventListener(portalNode, "focusout", onFocus, true));
   }, [portalNode, modal]);
-  useIsoLayoutEffect(() => {
-    if (!portalNode || open !== true || !focusInsideDisabledRef.current) {
+  React22.useEffect(() => {
+    if (!portalNode || open !== false) {
       return;
     }
     enableFocusInside(portalNode);
@@ -4261,10 +4203,10 @@ var FloatingPortal = /* @__PURE__ */ React22.forwardRef(function FloatingPortal2
 });
 if (true) FloatingPortal.displayName = "FloatingPortal";
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingTree.js
 var React23 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/floating-ui-react/utils/createEventEmitter.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/createEventEmitter.js
 function createEventEmitter() {
   const map = /* @__PURE__ */ new Map();
   return {
@@ -4283,7 +4225,7 @@ function createEventEmitter() {
   };
 }
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingTree.js
 var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
 var FloatingNodeContext = /* @__PURE__ */ React23.createContext(null);
 if (true) FloatingNodeContext.displayName = "FloatingNodeContext";
@@ -4295,7 +4237,7 @@ var useFloatingTree = (externalTree) => {
   return externalTree ?? contextTree;
 };
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingFocusManager.js
 var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
 function getEventType(event, lastInteractionType) {
   const win = getWindow(getTarget(event));
@@ -4345,11 +4287,11 @@ function getFirstTabbableElement(container) {
   }
   return tabbable(container)[0] || container;
 }
-function handleTabIndex(floatingFocusElement) {
+function handleTabIndex(floatingFocusElement, orderRef) {
   if (floatingFocusElement.hasAttribute("tabindex") && !floatingFocusElement.hasAttribute("data-tabindex")) {
     return;
   }
-  if (!floatingFocusElement.getAttribute("role")?.includes("dialog")) {
+  if (!orderRef.current.includes("floating") && !floatingFocusElement.getAttribute("role")?.includes("dialog")) {
     return;
   }
   const focusableElements = focusable(floatingFocusElement);
@@ -4358,10 +4300,9 @@ function handleTabIndex(floatingFocusElement) {
     return isTabbable(element) || element.hasAttribute("data-tabindex") && !dataTabIndex.startsWith("-");
   });
   const tabIndex = floatingFocusElement.getAttribute("tabindex");
-  if (tabbableContent.length === 0) {
+  if (orderRef.current.includes("floating") || tabbableContent.length === 0) {
     if (tabIndex !== "0") {
       floatingFocusElement.setAttribute("tabindex", "0");
-      floatingFocusElement.setAttribute("data-tabindex", "0");
     }
   } else if (tabIndex !== "-1" || floatingFocusElement.hasAttribute("data-tabindex") && floatingFocusElement.getAttribute("data-tabindex") !== "-1") {
     floatingFocusElement.setAttribute("tabindex", "-1");
@@ -4396,10 +4337,10 @@ function FloatingFocusManager(props) {
   const getNodeId = useStableCallback(() => dataRef.current.floatingContext?.nodeId);
   const ignoreInitialFocus = initialFocus === false;
   const isUntrappedTypeableCombobox = isTypeableCombobox(domReference) && ignoreInitialFocus;
+  const orderRef = React24.useRef(["content"]);
   const initialFocusRef = useValueAsRef(initialFocus);
   const returnFocusRef = useValueAsRef(returnFocus);
   const openInteractionTypeRef = useValueAsRef(openInteractionType);
-  const openRef = useValueAsRef(open);
   const tree = useFloatingTree(externalTree);
   const portalContext = usePortalContext();
   const preventReturnFocusRef = React24.useRef(false);
@@ -4451,24 +4392,13 @@ function FloatingFocusManager(props) {
       lastInteractionTypeRef.current = event.pointerType || "keyboard";
       if (target?.closest(`[${CLICK_TRIGGER_IDENTIFIER}]`)) {
         isPointerDownRef.current = true;
-        pointerDownTimeout.start(0, () => {
-          isPointerDownRef.current = false;
-        });
       }
     }
     function onKeyDown() {
       lastInteractionTypeRef.current = "keyboard";
     }
-    return mergeCleanups(
-      addEventListener(doc, "pointerdown", onPointerDown, true),
-      addEventListener(doc, "pointerup", clearPointerDownOutside, true),
-      addEventListener(doc, "pointercancel", clearPointerDownOutside, true),
-      addEventListener(doc, "keydown", onKeyDown, true),
-      // Avoid a stale `true` leaking into the next open (e.g. keep-mounted popups)
-      // if the popup dismissed between pointerdown and pointerup.
-      clearPointerDownOutside
-    );
-  }, [disabled2, floating, domReference, floatingFocusElement, open, portalContext, pointerDownTimeout, getResolvedInsideElements]);
+    return mergeCleanups(addEventListener(doc, "pointerdown", onPointerDown, true), addEventListener(doc, "pointerup", clearPointerDownOutside, true), addEventListener(doc, "pointercancel", clearPointerDownOutside, true), addEventListener(doc, "keydown", onKeyDown, true));
+  }, [disabled2, floating, domReference, floatingFocusElement, open, portalContext, getResolvedInsideElements]);
   React24.useEffect(() => {
     if (disabled2 || !closeOnFocusOut) {
       return void 0;
@@ -4490,9 +4420,6 @@ function FloatingFocusManager(props) {
       const relatedTarget = event.relatedTarget;
       const currentTarget = event.currentTarget;
       const target = getTarget(event);
-      if (modal && relatedTarget == null && target != null && contains(floating, target)) {
-        addPreviouslyFocusedElement(target);
-      }
       queueMicrotask(() => {
         const nodeId = getNodeId();
         const triggers = store.context.triggerElements;
@@ -4500,7 +4427,7 @@ function FloatingFocusManager(props) {
         const isRelatedFocusGuard = relatedTarget?.hasAttribute(createAttribute("focus-guard")) && [beforeGuardRef.current, afterGuardRef.current, portalContext?.beforeInsideRef.current, portalContext?.afterInsideRef.current, portalContext?.beforeOutsideRef.current, portalContext?.afterOutsideRef.current, resolveRef(previousFocusableElement), resolveRef(nextFocusableElement)].includes(relatedTarget);
         const movedToUnrelatedNode = !(contains(domReference, relatedTarget) || contains(floating, relatedTarget) || contains(relatedTarget, floating) || contains(portalContext?.portalNode, relatedTarget) || insideElements.some((element) => element === relatedTarget || contains(element, relatedTarget)) || relatedTarget != null && triggers.hasElement(relatedTarget) || triggers.hasMatchingElement((trigger) => contains(trigger, relatedTarget)) || isRelatedFocusGuard || tree && (getNodeChildren(tree.nodesRef.current, nodeId).find((node) => contains(node.context?.elements.floating, relatedTarget) || contains(node.context?.elements.domReference, relatedTarget)) || getNodeAncestors(tree.nodesRef.current, nodeId).find((node) => [node.context?.elements.floating, getFloatingFocusElement(node.context?.elements.floating)].includes(relatedTarget) || node.context?.elements.domReference === relatedTarget)));
         if (currentTarget === domReference && floatingFocusElement) {
-          handleTabIndex(floatingFocusElement);
+          handleTabIndex(floatingFocusElement, orderRef);
         }
         if (restoreFocus && currentTarget !== domReference && !isElementVisible(target) && activeElement(doc) === doc.body) {
           if (isHTMLElement(floatingFocusElement)) {
@@ -4550,7 +4477,7 @@ function FloatingFocusManager(props) {
       return void 0;
     }
     return mergeCleanups(domReferenceElement && addEventListener(domReferenceElement, "focusout", handleFocusOutside), domReferenceElement && addEventListener(domReferenceElement, "pointerdown", handlePointerDown), floating && addEventListener(floating, "focusin", handleFocusIn), floating && addEventListener(floating, "focusout", handleFocusOutside), floating && portalContext && addEventListener(floating, "focusout", markInsideReactTree, true));
-  }, [disabled2, domReference, floating, floatingFocusElement, modal, tree, portalContext, store, closeOnFocusOut, restoreFocus, getTabbableContent, isUntrappedTypeableCombobox, getNodeId, dataRef, blurTimeout, pointerDownTimeout, restoreFocusFrame, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
+  }, [disabled2, domReference, floating, floatingFocusElement, modal, tree, portalContext, store, closeOnFocusOut, restoreFocus, getTabbableContent, isUntrappedTypeableCombobox, getNodeId, orderRef, dataRef, blurTimeout, pointerDownTimeout, restoreFocusFrame, nextFocusableElement, previousFocusableElement, getResolvedInsideElements]);
   React24.useEffect(() => {
     if (disabled2 || !floating || !open) {
       return void 0;
@@ -4605,9 +4532,6 @@ function FloatingFocusManager(props) {
       enqueueFocus(elToFocus, {
         preventScroll: elToFocus === floatingFocusElement,
         shouldFocus() {
-          if (!openRef.current) {
-            return false;
-          }
           if (hadFocusInside) {
             return true;
           }
@@ -4617,15 +4541,14 @@ function FloatingFocusManager(props) {
         }
       });
     });
-  }, [disabled2, open, floatingFocusElement, getTabbableContent, initialFocusRef, openInteractionTypeRef, openRef]);
+  }, [disabled2, open, floatingFocusElement, getTabbableContent, initialFocusRef, openInteractionTypeRef]);
   useIsoLayoutEffect(() => {
     if (disabled2 || !floatingFocusElement) {
       return void 0;
     }
     const doc = ownerDocument(floatingFocusElement);
-    const elementFocusedBeforeOpen = activeElement(doc);
-    const preferPreviousFocus = openInteractionTypeRef.current == null;
-    addPreviouslyFocusedElement(elementFocusedBeforeOpen);
+    const previouslyFocusedElement = activeElement(doc);
+    addPreviouslyFocusedElement(previouslyFocusedElement);
     function onOpenChangeLocal(details) {
       if (!details.open) {
         closeTypeRef.current = getEventType(details.nativeEvent, lastInteractionTypeRef.current);
@@ -4665,16 +4588,14 @@ function FloatingFocusManager(props) {
       if (resolvedReturnFocusValue === null) {
         resolvedReturnFocusValue = true;
       }
-      const referenceReturnElement = domReference?.isConnected ? domReference : null;
-      const previousReturnElement = elementFocusedBeforeOpen?.isConnected && getNodeName(elementFocusedBeforeOpen) !== "body" ? elementFocusedBeforeOpen : null;
-      let defaultReturnElement = preferPreviousFocus ? previousReturnElement || referenceReturnElement : referenceReturnElement || previousReturnElement;
-      if (!defaultReturnElement) {
-        defaultReturnElement = getPreviouslyFocusedElement() || null;
-      }
       if (typeof resolvedReturnFocusValue === "boolean") {
-        return defaultReturnElement;
+        if (domReference?.isConnected) {
+          return domReference;
+        }
+        return getPreviouslyFocusedElement() || null;
       }
-      return resolveRef(resolvedReturnFocusValue) || defaultReturnElement || null;
+      const fallback = domReference?.isConnected ? domReference : getPreviouslyFocusedElement();
+      return resolveRef(resolvedReturnFocusValue) || fallback || null;
     }
     return () => {
       events2.off("openchange", onOpenChangeLocal);
@@ -4697,9 +4618,9 @@ function FloatingFocusManager(props) {
         preventReturnFocusRef.current = false;
       });
     };
-  }, [disabled2, floating, floatingFocusElement, returnFocusRef, openInteractionTypeRef, events2, tree, domReference, getNodeId, getResolvedInsideElements]);
+  }, [disabled2, floating, floatingFocusElement, returnFocusRef, events2, tree, domReference, getNodeId, getResolvedInsideElements]);
   useIsoLayoutEffect(() => {
-    if (!parts_exports.engine.webkit || open || !floating) {
+    if (!isWebKit2 || open || !floating) {
       return;
     }
     const activeEl = activeElement(ownerDocument(floating));
@@ -4729,11 +4650,11 @@ function FloatingFocusManager(props) {
     if (disabled2 || !floatingFocusElement) {
       return void 0;
     }
-    handleTabIndex(floatingFocusElement);
+    handleTabIndex(floatingFocusElement, orderRef);
     return () => {
       queueMicrotask(clearDisconnectedPreviouslyFocusedElements);
     };
-  }, [disabled2, floatingFocusElement]);
+  }, [disabled2, floatingFocusElement, orderRef]);
   const shouldRenderGuards = !disabled2 && (modal ? !isUntrappedTypeableCombobox : true) && (isInsidePortal || modal);
   return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(React24.Fragment, {
     children: [shouldRenderGuards && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(FocusGuard, {
@@ -4775,7 +4696,7 @@ function FloatingFocusManager(props) {
   });
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useClick.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useClick.js
 var React25 = __toESM(require_react(), 1);
 function useClick(context, props = {}) {
   const {
@@ -4868,7 +4789,7 @@ function useClick(context, props = {}) {
   } : EMPTY_OBJECT, [enabled, reference]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useClientPoint.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useClientPoint.js
 var React26 = __toESM(require_react(), 1);
 function createVirtualElement(domElement, data) {
   let offsetX = null;
@@ -5025,8 +4946,12 @@ function useClientPoint(context, props = {}) {
   } : {}, [enabled, reference]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useDismiss.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useDismiss.js
 var React27 = __toESM(require_react(), 1);
+var bubbleHandlerKeys = {
+  intentional: "onClick",
+  sloppy: "onPointerDown"
+};
 function alwaysFalse() {
   return false;
 }
@@ -5043,6 +4968,7 @@ function useDismiss(context, props = {}) {
     outsidePress: outsidePressProp = true,
     outsidePressEvent = "sloppy",
     referencePress = alwaysFalse,
+    referencePressEvent = "sloppy",
     bubbles,
     externalTree
   } = props;
@@ -5151,7 +5077,7 @@ function useDismiss(context, props = {}) {
       compositionTimeout.start(
         // 0ms or 1ms don't work in Safari. 5ms appears to consistently work.
         // Only apply to WebKit for the test to remain 0ms.
-        parts_exports.engine.webkit ? 5 : 0,
+        isWebKit() ? 5 : 0,
         () => {
           isComposingRef.current = false;
         }
@@ -5388,9 +5314,11 @@ function useDismiss(context, props = {}) {
   React27.useEffect(clearInsideReactTree, [outsidePress2, clearInsideReactTree]);
   const reference = React27.useMemo(() => ({
     onKeyDown: closeOnEscapeKeyDown,
-    onPointerDown: closeOnReferencePress,
-    onClick: closeOnReferencePress
-  }), [closeOnEscapeKeyDown, closeOnReferencePress]);
+    [bubbleHandlerKeys[referencePressEvent]]: closeOnReferencePress,
+    ...referencePressEvent !== "intentional" && {
+      onClick: closeOnReferencePress
+    }
+  }), [closeOnEscapeKeyDown, closeOnReferencePress, referencePressEvent]);
   const floating = React27.useMemo(() => ({
     onKeyDown: closeOnEscapeKeyDown,
     // `onMouseDown` may be blocked if `event.preventDefault()` is called in
@@ -5418,7 +5346,7 @@ function useDismiss(context, props = {}) {
   } : {}, [enabled, reference, floating]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFloating.js
 var React34 = __toESM(require_react(), 1);
 
 // node_modules/@floating-ui/core/dist/floating-ui.core.mjs
@@ -6690,7 +6618,7 @@ var computePosition2 = (reference, floating, options) => {
   });
 };
 
-// node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
+// node_modules/@base-ui/react/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
 var React28 = __toESM(require_react(), 1);
 var import_react2 = __toESM(require_react(), 1);
 var ReactDOM3 = __toESM(require_react_dom(), 1);
@@ -6962,14 +6890,13 @@ var hide3 = (options, deps) => {
   };
 };
 
-// node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
+// node_modules/@base-ui/react/esm/utils/popups/popupStoreUtils.js
 var React33 = __toESM(require_react(), 1);
-var ReactDOM4 = __toESM(require_react_dom(), 1);
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useSyncedFloatingRootContext.js
 var React32 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/store/createSelector.mjs
+// node_modules/@base-ui/utils/esm/store/createSelector.js
 var createSelector = (a2, b2, c2, d2, e2, f2, ...other) => {
   if (other.length > 0) {
     throw new Error(true ? "Unsupported number of selectors" : formatErrorMessage_default(1));
@@ -7021,12 +6948,12 @@ var createSelector = (a2, b2, c2, d2, e2, f2, ...other) => {
   return selector2;
 };
 
-// node_modules/@base-ui/utils/store/useStore.mjs
+// node_modules/@base-ui/utils/esm/store/useStore.js
 var React30 = __toESM(require_react(), 1);
 var import_shim = __toESM(require_shim(), 1);
 var import_with_selector = __toESM(require_with_selector(), 1);
 
-// node_modules/@base-ui/utils/fastHooks.mjs
+// node_modules/@base-ui/utils/esm/fastHooks.js
 var React29 = __toESM(require_react(), 1);
 var hooks = [];
 var currentInstance = void 0;
@@ -7067,7 +6994,7 @@ function createInstance() {
   };
 }
 
-// node_modules/@base-ui/utils/store/useStore.mjs
+// node_modules/@base-ui/utils/esm/store/useStore.js
 var canUseRawUseSyncExternalStore = isReactVersionAtLeast(19);
 var useStoreImplementation = canUseRawUseSyncExternalStore ? useStoreFast : useStoreLegacy;
 function useStore(store, selector2, a1, a2, a3) {
@@ -7089,9 +7016,10 @@ register({
         for (let i2 = 0; i2 < instance.syncHooks.length; i2 += 1) {
           const hook = instance.syncHooks[i2];
           const value = hook.selector(hook.store.state, hook.a1, hook.a2, hook.a3);
-          if (!Object.is(hook.value, value)) {
+          if (hook.didChange || !Object.is(hook.value, value)) {
             didChange2 = true;
             hook.value = value;
+            hook.didChange = false;
           }
         }
         if (didChange2) {
@@ -7140,7 +7068,8 @@ function useStoreFast(store, selector2, a1, a2, a3) {
       a1,
       a2,
       a3,
-      value: selector2(store.getSnapshot(), a1, a2, a3)
+      value: selector2(store.getSnapshot(), a1, a2, a3),
+      didChange: false
     };
     instance.syncHooks.push(hook);
   } else {
@@ -7154,7 +7083,7 @@ function useStoreFast(store, selector2, a1, a2, a3) {
       hook.a1 = a1;
       hook.a2 = a2;
       hook.a3 = a3;
-      hook.value = selector2(store.getSnapshot(), a1, a2, a3);
+      hook.didChange = true;
     }
   }
   return hook.value;
@@ -7163,7 +7092,7 @@ function useStoreLegacy(store, selector2, a1, a2, a3) {
   return (0, import_with_selector.useSyncExternalStoreWithSelector)(store.subscribe, store.getSnapshot, store.getSnapshot, (state) => selector2(state, a1, a2, a3));
 }
 
-// node_modules/@base-ui/utils/store/Store.mjs
+// node_modules/@base-ui/utils/esm/store/Store.js
 var Store = class {
   /**
    * The current state of the store.
@@ -7260,7 +7189,7 @@ var Store = class {
   }
 };
 
-// node_modules/@base-ui/utils/store/ReactStore.mjs
+// node_modules/@base-ui/utils/esm/store/ReactStore.js
 var React31 = __toESM(require_react(), 1);
 var ReactStore = class extends Store {
   /**
@@ -7431,7 +7360,7 @@ var ReactStore = class extends Store {
   }
 };
 
-// node_modules/@base-ui/react/floating-ui-react/components/FloatingRootStore.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingRootStore.js
 var selectors = {
   open: createSelector((state) => state.open),
   transitionStatus: createSelector((state) => state.transitionStatus),
@@ -7504,7 +7433,7 @@ var FloatingRootStore = class extends ReactStore {
   };
 };
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useSyncedFloatingRootContext.js
 function useSyncedFloatingRootContext(options) {
   const {
     popupStore,
@@ -7555,14 +7484,11 @@ function useSyncedFloatingRootContext(options) {
   return store;
 }
 
-// node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
+// node_modules/@base-ui/react/esm/utils/popups/popupStoreUtils.js
 var FOCUSABLE_POPUP_PROPS = {
   tabIndex: -1,
   [FOCUSABLE_ATTRIBUTE]: ""
 };
-function createDefaultInitialFocus(popupRef) {
-  return (interactionType) => interactionType === "touch" ? popupRef.current : true;
-}
 function usePopupStore(externalStore, createStore2, treatPopupAsFloatingElement = false) {
   const floatingId = useId();
   const nested = useFloatingParentNodeId() != null;
@@ -7617,69 +7543,12 @@ function useTriggerRegistration(id, store) {
     }
   }, [store, id]);
 }
-function setPopupOpenState(state, open, trigger, preventUnmountOnClose = false) {
-  if (open) {
-    state.preventUnmountingOnClose = false;
-  } else if (preventUnmountOnClose) {
-    state.preventUnmountingOnClose = true;
-  }
+function setOpenTriggerState(state, open, trigger) {
   const triggerId = trigger?.id ?? null;
   if (triggerId || open) {
     state.activeTriggerId = triggerId;
     state.activeTriggerElement = trigger ?? null;
   }
-}
-function attachPreventUnmountOnClose(eventDetails) {
-  let preventUnmountOnClose = false;
-  eventDetails.preventUnmountOnClose = () => {
-    preventUnmountOnClose = true;
-  };
-  return () => preventUnmountOnClose;
-}
-function applyPopupOpenChange(store, nextOpen, eventDetails, options = {}) {
-  const reason = eventDetails.reason;
-  const isHover = reason === reason_parts_exports.triggerHover;
-  const isFocusOpen = nextOpen && reason === reason_parts_exports.triggerFocus;
-  const isDismissClose = !nextOpen && (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.escapeKey);
-  const shouldPreventUnmountOnClose = attachPreventUnmountOnClose(eventDetails);
-  store.context.onOpenChange?.(nextOpen, eventDetails);
-  if (eventDetails.isCanceled) {
-    return;
-  }
-  options.onBeforeDispatch?.();
-  store.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
-  const changeState = () => {
-    const updatedState = {
-      ...options.extraState,
-      open: nextOpen
-    };
-    if (isFocusOpen) {
-      updatedState.instantType = "focus";
-    } else if (isDismissClose) {
-      updatedState.instantType = "dismiss";
-    } else if (isHover) {
-      updatedState.instantType = void 0;
-    }
-    setPopupOpenState(updatedState, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
-    store.update(updatedState);
-  };
-  if (isHover) {
-    ReactDOM4.flushSync(changeState);
-  } else {
-    changeState();
-  }
-}
-function useInitialOpenSync(store, openProp, defaultOpen, defaultTriggerId) {
-  useOnFirstRender(() => {
-    if (openProp === void 0 && store.state.open === false && defaultOpen) {
-      store.state = {
-        ...store.state,
-        open: true,
-        activeTriggerId: defaultTriggerId,
-        preventUnmountingOnClose: false
-      };
-    }
-  });
 }
 function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpdates) {
   const isMountedByThisTrigger = store.useState("isMountedByTrigger", triggerId);
@@ -7719,10 +7588,7 @@ function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpda
     isMountedByThisTrigger
   };
 }
-function useImplicitActiveTrigger(store, options = {}) {
-  const {
-    closeOnActiveTriggerUnmount = false
-  } = options;
+function useImplicitActiveTrigger(store) {
   const open = store.useState("open");
   const reactiveTriggerCount = store.useState("triggerCount");
   useIsoLayoutEffect(() => {
@@ -7737,17 +7603,7 @@ function useImplicitActiveTrigger(store, options = {}) {
     if (store.state.triggerCount !== triggerCount) {
       stateUpdates.triggerCount = triggerCount;
     }
-    const activeTriggerId = store.select("activeTriggerId");
-    let lostActiveTriggerId = null;
-    if (activeTriggerId) {
-      const activeTriggerElement = store.context.triggerElements.getById(activeTriggerId);
-      if (!activeTriggerElement) {
-        lostActiveTriggerId = activeTriggerId;
-      } else if (activeTriggerElement !== store.state.activeTriggerElement) {
-        stateUpdates.activeTriggerElement = activeTriggerElement;
-      }
-    }
-    if (!lostActiveTriggerId && !activeTriggerId && triggerCount === 1) {
+    if (!store.select("activeTriggerId") && triggerCount === 1) {
       const iteratorResult = store.context.triggerElements.entries().next();
       if (!iteratorResult.done) {
         const [implicitTriggerId, implicitTriggerElement] = iteratorResult.value;
@@ -7755,26 +7611,10 @@ function useImplicitActiveTrigger(store, options = {}) {
         stateUpdates.activeTriggerElement = implicitTriggerElement;
       }
     }
-    if (stateUpdates.triggerCount !== void 0 || stateUpdates.activeTriggerId !== void 0 || stateUpdates.activeTriggerElement !== void 0) {
+    if (stateUpdates.triggerCount !== void 0 || stateUpdates.activeTriggerId !== void 0) {
       store.update(stateUpdates);
     }
-    if (lostActiveTriggerId) {
-      if (closeOnActiveTriggerUnmount) {
-        queueMicrotask(() => {
-          if (store.select("open") && store.select("activeTriggerId") === lostActiveTriggerId && !store.context.triggerElements.getById(lostActiveTriggerId)) {
-            const eventDetails = createChangeEventDetails(reason_parts_exports.none);
-            store.setOpen(false, eventDetails);
-            if (!eventDetails.isCanceled) {
-              store.update({
-                activeTriggerId: null,
-                activeTriggerElement: null
-              });
-            }
-          }
-        });
-      }
-    }
-  }, [open, store, reactiveTriggerCount, closeOnActiveTriggerUnmount]);
+  }, [open, store, reactiveTriggerCount]);
 }
 function useOpenStateTransitions(open, store, onUnmount) {
   const {
@@ -7782,12 +7622,9 @@ function useOpenStateTransitions(open, store, onUnmount) {
     setMounted,
     transitionStatus
   } = useTransitionStatus(open);
-  const preventUnmountingOnClose = store.useState("preventUnmountingOnClose");
-  const syncedPreventUnmountingOnClose = open ? false : preventUnmountingOnClose;
   store.useSyncedValues({
     mounted,
-    transitionStatus,
-    preventUnmountingOnClose: syncedPreventUnmountingOnClose
+    transitionStatus
   });
   const forceUnmount = useStableCallback(() => {
     setMounted(false);
@@ -7800,8 +7637,9 @@ function useOpenStateTransitions(open, store, onUnmount) {
     onUnmount?.();
     store.context.onOpenChangeComplete?.(false);
   });
+  const preventUnmountingOnClose = store.useState("preventUnmountingOnClose");
   useOpenChangeComplete({
-    enabled: mounted && !open && !syncedPreventUnmountingOnClose,
+    enabled: mounted && !open && !preventUnmountingOnClose,
     open,
     ref: store.context.popupRef,
     onComplete() {
@@ -7838,7 +7676,7 @@ function usePopupRootSync(store, open) {
   }, [store]);
 }
 
-// node_modules/@base-ui/react/utils/popups/popupTriggerMap.mjs
+// node_modules/@base-ui/react/esm/utils/popups/popupTriggerMap.js
 var PopupTriggerMap = class {
   constructor() {
     this.elementsSet = /* @__PURE__ */ new Set();
@@ -7918,7 +7756,7 @@ var PopupTriggerMap = class {
   }
 };
 
-// node_modules/@base-ui/react/floating-ui-react/utils/getEmptyRootContext.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/utils/getEmptyRootContext.js
 function getEmptyRootContext() {
   return new FloatingRootStore({
     open: false,
@@ -7933,7 +7771,7 @@ function getEmptyRootContext() {
   });
 }
 
-// node_modules/@base-ui/react/utils/popups/store.mjs
+// node_modules/@base-ui/react/esm/utils/popups/store.js
 function createInitialPopupStoreState() {
   return {
     open: false,
@@ -8016,7 +7854,7 @@ var popupStoreSelectors = {
   positionerElement: createSelector((state) => state.positionerElement)
 };
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useFloatingRootContext.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFloatingRootContext.js
 function useFloatingRootContext(options) {
   const {
     open = false,
@@ -8061,7 +7899,7 @@ function useFloatingRootContext(options) {
   return store;
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFloating.js
 function useFloating2(options = {}) {
   const {
     nodeId,
@@ -8167,9 +8005,9 @@ function useFloating2(options = {}) {
   }), [position, refs, elements, context, store]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useFocus.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFocus.js
 var React35 = __toESM(require_react(), 1);
-var isMacSafari = parts_exports.os.mac && parts_exports.engine.webkit;
+var isMacSafari = isMac && isSafari;
 function useFocus(context, props = {}) {
   const {
     enabled = true,
@@ -8295,10 +8133,10 @@ function useFocus(context, props = {}) {
   } : {}, [enabled, reference]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverFloatingInteraction.js
 var React36 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverInteractionSharedState.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverInteractionSharedState.js
 var HoverInteraction = class _HoverInteraction {
   constructor() {
     this.pointerType = void 0;
@@ -8372,7 +8210,7 @@ function useHoverInteractionSharedState(store) {
   return data.hoverInteractionState;
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverFloatingInteraction.js
 function useHoverFloatingInteraction(context, parameters = {}) {
   const {
     enabled = true,
@@ -8489,7 +8327,7 @@ function useHoverFloatingInteraction(context, parameters = {}) {
         return;
       }
       clearPointerEvents();
-      if (isHoverOpen() && !isClickLikeOpenEvent2()) {
+      if (!isClickLikeOpenEvent2()) {
         closeWithDelay(event);
       }
     }
@@ -8507,12 +8345,12 @@ function useHoverFloatingInteraction(context, parameters = {}) {
     return mergeCleanups(floating && addEventListener(floating, "mouseenter", onFloatingMouseEnter), floating && addEventListener(floating, "mouseleave", onFloatingMouseLeave), floating && addEventListener(floating, "pointerdown", handleInteractInside, true), () => {
       tree?.events.off("floating.closed", onNodeClosed);
     });
-  }, [enabled, floatingElement, store, dataRef, closeDelayProp, nodeIdProp, isHoverOpen, isClickLikeOpenEvent2, clearPointerEvents, instance, tree, parentId, childClosedTimeout]);
+  }, [enabled, floatingElement, store, dataRef, closeDelayProp, nodeIdProp, isClickLikeOpenEvent2, clearPointerEvents, instance, tree, parentId, childClosedTimeout]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverReferenceInteraction.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverReferenceInteraction.js
 var React37 = __toESM(require_react(), 1);
-var ReactDOM5 = __toESM(require_react_dom(), 1);
+var ReactDOM4 = __toESM(require_react_dom(), 1);
 var EMPTY_REF = {
   current: null
 };
@@ -8770,7 +8608,7 @@ function useHoverReferenceInteraction(context, props = {}) {
           }
         }
         if (instance.pointerType === "touch") {
-          ReactDOM5.flushSync(() => {
+          ReactDOM4.flushSync(() => {
             handleMouseMove();
           });
         } else if (isOverInactive && currentOpen) {
@@ -8784,7 +8622,7 @@ function useHoverReferenceInteraction(context, props = {}) {
   }, [enabled, instance, isClickLikeOpenEvent2, isOverInactiveTrigger, mouseOnly, store, restMsRef, checkShouldOpen]);
 }
 
-// node_modules/@base-ui/react/floating-ui-react/safePolygon.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/safePolygon.js
 var CURSOR_SPEED_THRESHOLD = 0.1;
 var CURSOR_SPEED_THRESHOLD_SQUARED = CURSOR_SPEED_THRESHOLD * CURSOR_SPEED_THRESHOLD;
 var POLYGON_BUFFER = 0.5;
@@ -9000,11 +8838,13 @@ function safePolygon(options = {}) {
   return fn;
 }
 
-// node_modules/@base-ui/react/dialog/root/useDialogRoot.mjs
+// node_modules/@base-ui/react/esm/dialog/root/useDialogRoot.js
 function useDialogRoot(params) {
   const {
     store,
-    actionsRef
+    parentContext,
+    actionsRef,
+    isDrawer
   } = params;
   const open = store.useState("open");
   usePopupRootSync(store, open);
@@ -9019,12 +8859,19 @@ function useDialogRoot(params) {
     unmount: forceUnmount,
     close: handleImperativeClose
   }), [forceUnmount, handleImperativeClose]);
+  return {
+    parentContext,
+    isDrawer
+  };
 }
 function DialogInteractions({
   store,
-  parentContext,
-  isDrawer
+  dialogRoot
 }) {
+  const {
+    parentContext,
+    isDrawer
+  } = dialogRoot;
   const open = store.useState("open");
   const disablePointerDismissal = store.useState("disablePointerDismissal");
   const modal = store.useState("modal");
@@ -9055,8 +8902,9 @@ function DialogInteractions({
       }
       const target = getTarget(event);
       if (isTopmost && !disablePointerDismissal) {
+        const eventTarget = target;
         if (modal) {
-          return store.context.internalBackdropRef.current || store.context.backdropRef.current ? store.context.internalBackdropRef.current === target || store.context.backdropRef.current === target || contains(target, popupElement) && !target?.hasAttribute("data-base-ui-portal") : true;
+          return store.context.internalBackdropRef.current || store.context.backdropRef.current ? store.context.internalBackdropRef.current === eventTarget || store.context.backdropRef.current === eventTarget || contains(eventTarget, popupElement) && !eventTarget?.hasAttribute("data-base-ui-portal") : true;
         }
         return true;
       }
@@ -9088,7 +8936,7 @@ function DialogInteractions({
   }, [isDrawer, open, ownNestedOpenDialogs, ownNestedOpenDrawers, parentContext]);
   const activeTriggerProps = dismiss.reference ?? EMPTY_OBJECT;
   const inactiveTriggerProps = dismiss.trigger ?? EMPTY_OBJECT;
-  const popupProps = dismiss.floating ?? EMPTY_OBJECT;
+  const popupProps = React38.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, dismiss.floating), [dismiss.floating]);
   usePopupInteractionProps(store, {
     activeTriggerProps,
     inactiveTriggerProps,
@@ -9099,7 +8947,7 @@ function DialogInteractions({
   return null;
 }
 
-// node_modules/@base-ui/react/dialog/root/DialogRootContext.mjs
+// node_modules/@base-ui/react/esm/dialog/root/DialogRootContext.js
 var React39 = __toESM(require_react(), 1);
 var IsDrawerContext = /* @__PURE__ */ React39.createContext(false);
 if (true) IsDrawerContext.displayName = "IsDrawerContext";
@@ -9113,7 +8961,7 @@ function useDialogRootContext(optional) {
   return dialogRootContext;
 }
 
-// node_modules/@base-ui/react/dialog/store/DialogStore.mjs
+// node_modules/@base-ui/react/esm/dialog/store/DialogStore.js
 var React40 = __toESM(require_react(), 1);
 var selectors2 = {
   ...popupStoreSelectors,
@@ -9160,7 +9008,7 @@ var DialogStore = class _DialogStore extends ReactStore {
     const updatedState = {
       open: nextOpen
     };
-    setPopupOpenState(updatedState, nextOpen, eventDetails.trigger);
+    setOpenTriggerState(updatedState, nextOpen, eventDetails.trigger);
     this.update(updatedState);
   };
   static useStore(externalStore, initialState) {
@@ -9186,7 +9034,7 @@ function createInitialState(initialState = {}) {
   };
 }
 
-// node_modules/@base-ui/react/dialog/root/useRenderDialogRoot.mjs
+// node_modules/@base-ui/react/esm/dialog/root/useRenderDialogRoot.js
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
 function useRenderDialogRoot(props, mode = "dialog") {
   const {
@@ -9244,9 +9092,11 @@ function useRenderDialogRoot(props, mode = "dialog") {
   const open = store.useState("open");
   const mounted = store.useState("mounted");
   const payload = store.useState("payload");
-  useDialogRoot({
+  const dialogRoot = useDialogRoot({
     store,
-    actionsRef
+    actionsRef,
+    parentContext: parentDialogRootContext?.store.context,
+    isDrawer
   });
   const shouldRenderInteractions = open || mounted;
   const contextValue = React41.useMemo(() => ({
@@ -9258,8 +9108,7 @@ function useRenderDialogRoot(props, mode = "dialog") {
       value: contextValue,
       children: [shouldRenderInteractions && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(DialogInteractions, {
         store,
-        parentContext: parentDialogRootContext?.store.context,
-        isDrawer
+        dialogRoot
       }), typeof children === "function" ? children({
         payload
       }) : children]
@@ -9267,15 +9116,15 @@ function useRenderDialogRoot(props, mode = "dialog") {
   });
 }
 
-// node_modules/@base-ui/react/alert-dialog/root/AlertDialogRoot.mjs
+// node_modules/@base-ui/react/esm/alert-dialog/root/AlertDialogRoot.js
 function AlertDialogRoot(props) {
   return useRenderDialogRoot(props, "alert-dialog");
 }
 
-// node_modules/@base-ui/react/dialog/backdrop/DialogBackdrop.mjs
+// node_modules/@base-ui/react/esm/dialog/backdrop/DialogBackdrop.js
 var React42 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/utils/popupStateMapping.mjs
+// node_modules/@base-ui/react/esm/utils/popupStateMapping.js
 var CommonPopupDataAttributes = (function(CommonPopupDataAttributes2) {
   CommonPopupDataAttributes2["open"] = "data-open";
   CommonPopupDataAttributes2["closed"] = "data-closed";
@@ -9330,7 +9179,7 @@ var popupStateMapping = {
   }
 };
 
-// node_modules/@base-ui/react/dialog/backdrop/DialogBackdrop.mjs
+// node_modules/@base-ui/react/esm/dialog/backdrop/DialogBackdrop.js
 var stateAttributesMapping = {
   ...popupStateMapping,
   ...transitionStatusMapping
@@ -9371,7 +9220,7 @@ var DialogBackdrop = /* @__PURE__ */ React42.forwardRef(function DialogBackdrop2
 });
 if (true) DialogBackdrop.displayName = "DialogBackdrop";
 
-// node_modules/@base-ui/react/dialog/close/DialogClose.mjs
+// node_modules/@base-ui/react/esm/dialog/close/DialogClose.js
 var React43 = __toESM(require_react(), 1);
 var DialogClose = /* @__PURE__ */ React43.forwardRef(function DialogClose2(componentProps, forwardedRef) {
   const {
@@ -9411,7 +9260,7 @@ var DialogClose = /* @__PURE__ */ React43.forwardRef(function DialogClose2(compo
 });
 if (true) DialogClose.displayName = "DialogClose";
 
-// node_modules/@base-ui/react/dialog/description/DialogDescription.mjs
+// node_modules/@base-ui/react/esm/dialog/description/DialogDescription.js
 var React44 = __toESM(require_react(), 1);
 var DialogDescription = /* @__PURE__ */ React44.forwardRef(function DialogDescription2(componentProps, forwardedRef) {
   const {
@@ -9435,16 +9284,16 @@ var DialogDescription = /* @__PURE__ */ React44.forwardRef(function DialogDescri
 });
 if (true) DialogDescription.displayName = "DialogDescription";
 
-// node_modules/@base-ui/react/dialog/popup/DialogPopup.mjs
+// node_modules/@base-ui/react/esm/dialog/popup/DialogPopup.js
 var React46 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/dialog/popup/DialogPopupCssVars.mjs
+// node_modules/@base-ui/react/esm/dialog/popup/DialogPopupCssVars.js
 var DialogPopupCssVars = /* @__PURE__ */ (function(DialogPopupCssVars2) {
   DialogPopupCssVars2["nestedDialogs"] = "--nested-dialogs";
   return DialogPopupCssVars2;
 })({});
 
-// node_modules/@base-ui/react/dialog/popup/DialogPopupDataAttributes.mjs
+// node_modules/@base-ui/react/esm/dialog/popup/DialogPopupDataAttributes.js
 var DialogPopupDataAttributes = (function(DialogPopupDataAttributes2) {
   DialogPopupDataAttributes2[DialogPopupDataAttributes2["open"] = CommonPopupDataAttributes.open] = "open";
   DialogPopupDataAttributes2[DialogPopupDataAttributes2["closed"] = CommonPopupDataAttributes.closed] = "closed";
@@ -9455,7 +9304,7 @@ var DialogPopupDataAttributes = (function(DialogPopupDataAttributes2) {
   return DialogPopupDataAttributes2;
 })({});
 
-// node_modules/@base-ui/react/dialog/portal/DialogPortalContext.mjs
+// node_modules/@base-ui/react/esm/dialog/portal/DialogPortalContext.js
 var React45 = __toESM(require_react(), 1);
 var DialogPortalContext = /* @__PURE__ */ React45.createContext(void 0);
 if (true) DialogPortalContext.displayName = "DialogPortalContext";
@@ -9467,19 +9316,7 @@ function useDialogPortalContext() {
   return value;
 }
 
-// node_modules/@base-ui/react/internals/composite/composite.mjs
-var ARROW_UP = "ArrowUp";
-var ARROW_DOWN = "ArrowDown";
-var ARROW_LEFT = "ArrowLeft";
-var ARROW_RIGHT = "ArrowRight";
-var HOME = "Home";
-var END = "End";
-var HORIZONTAL_KEYS = /* @__PURE__ */ new Set([ARROW_LEFT, ARROW_RIGHT]);
-var VERTICAL_KEYS = /* @__PURE__ */ new Set([ARROW_UP, ARROW_DOWN]);
-var ARROW_KEYS = /* @__PURE__ */ new Set([...HORIZONTAL_KEYS, ...VERTICAL_KEYS]);
-var COMPOSITE_KEYS = /* @__PURE__ */ new Set([...ARROW_KEYS, HOME, END]);
-
-// node_modules/@base-ui/react/dialog/popup/DialogPopup.mjs
+// node_modules/@base-ui/react/esm/dialog/popup/DialogPopup.js
 var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 var stateAttributesMapping2 = {
   ...popupStateMapping,
@@ -9527,7 +9364,13 @@ var DialogPopup = /* @__PURE__ */ React46.forwardRef(function DialogPopup2(compo
       }
     }
   });
-  const resolvedInitialFocus = initialFocus === void 0 ? createDefaultInitialFocus(store.context.popupRef) : initialFocus;
+  function defaultInitialFocus(interactionType) {
+    if (interactionType === "touch") {
+      return store.context.popupRef.current;
+    }
+    return true;
+  }
+  const resolvedInitialFocus = initialFocus === void 0 ? defaultInitialFocus : initialFocus;
   const nestedDialogOpen = nestedOpenDialogCount > 0;
   const setPopupElement = store.useStateSetter("popupElement");
   const state = {
@@ -9571,10 +9414,10 @@ var DialogPopup = /* @__PURE__ */ React46.forwardRef(function DialogPopup2(compo
 });
 if (true) DialogPopup.displayName = "DialogPopup";
 
-// node_modules/@base-ui/react/dialog/portal/DialogPortal.mjs
+// node_modules/@base-ui/react/esm/dialog/portal/DialogPortal.js
 var React48 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/inertValue.mjs
+// node_modules/@base-ui/utils/esm/inertValue.js
 function inertValue(value) {
   if (isReactVersionAtLeast(19)) {
     return value;
@@ -9582,7 +9425,7 @@ function inertValue(value) {
   return value ? "true" : void 0;
 }
 
-// node_modules/@base-ui/react/utils/InternalBackdrop.mjs
+// node_modules/@base-ui/react/esm/utils/InternalBackdrop.js
 var React47 = __toESM(require_react(), 1);
 var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
 var InternalBackdrop = /* @__PURE__ */ React47.forwardRef(function InternalBackdrop2(props, ref) {
@@ -9611,7 +9454,7 @@ var InternalBackdrop = /* @__PURE__ */ React47.forwardRef(function InternalBackd
 });
 if (true) InternalBackdrop.displayName = "InternalBackdrop";
 
-// node_modules/@base-ui/react/dialog/portal/DialogPortal.mjs
+// node_modules/@base-ui/react/esm/dialog/portal/DialogPortal.js
 var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
 var DialogPortal = /* @__PURE__ */ React48.forwardRef(function DialogPortal2(props, forwardedRef) {
   const {
@@ -9642,7 +9485,7 @@ var DialogPortal = /* @__PURE__ */ React48.forwardRef(function DialogPortal2(pro
 });
 if (true) DialogPortal.displayName = "DialogPortal";
 
-// node_modules/@base-ui/react/dialog/title/DialogTitle.mjs
+// node_modules/@base-ui/react/esm/dialog/title/DialogTitle.js
 var React49 = __toESM(require_react(), 1);
 var DialogTitle = /* @__PURE__ */ React49.forwardRef(function DialogTitle2(componentProps, forwardedRef) {
   const {
@@ -9666,13 +9509,13 @@ var DialogTitle = /* @__PURE__ */ React49.forwardRef(function DialogTitle2(compo
 });
 if (true) DialogTitle.displayName = "DialogTitle";
 
-// node_modules/@base-ui/react/dialog/trigger/DialogTrigger.mjs
+// node_modules/@base-ui/react/esm/dialog/trigger/DialogTrigger.js
 var React52 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
+// node_modules/@base-ui/react/esm/utils/useOpenInteractionType.js
 var React51 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/useEnhancedClickHandler.mjs
+// node_modules/@base-ui/utils/esm/useEnhancedClickHandler.js
 var React50 = __toESM(require_react(), 1);
 function useEnhancedClickHandler(handler) {
   const lastClickInteractionTypeRef = React50.useRef("");
@@ -9701,7 +9544,7 @@ function useEnhancedClickHandler(handler) {
   };
 }
 
-// node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
+// node_modules/@base-ui/react/esm/utils/useOpenInteractionType.js
 function useOpenMethodTriggerProps(open, setOpenMethod) {
   const handleTriggerClick = useStableCallback((_, interactionType) => {
     const isOpen = typeof open === "function" ? open() : open;
@@ -9709,7 +9552,7 @@ function useOpenMethodTriggerProps(open, setOpenMethod) {
       setOpenMethod(interactionType || // On iOS Safari, the hitslop around touch targets means tapping outside an element's
       // bounds does not fire `pointerdown` but does fire `mousedown`. The `interactionType`
       // will be "" in that case.
-      (parts_exports.os.ios ? "touch" : ""));
+      (isIOS ? "touch" : ""));
     }
   });
   const {
@@ -9722,7 +9565,7 @@ function useOpenMethodTriggerProps(open, setOpenMethod) {
   }), [onClick, onPointerDown]);
 }
 
-// node_modules/@base-ui/react/dialog/trigger/DialogTrigger.mjs
+// node_modules/@base-ui/react/esm/dialog/trigger/DialogTrigger.js
 var DialogTrigger = /* @__PURE__ */ React52.forwardRef(function DialogTrigger2(componentProps, forwardedRef) {
   const {
     render: render4,
@@ -9784,13 +9627,13 @@ var DialogTrigger = /* @__PURE__ */ React52.forwardRef(function DialogTrigger2(c
 });
 if (true) DialogTrigger.displayName = "DialogTrigger";
 
-// node_modules/@base-ui/react/alert-dialog/trigger/AlertDialogTrigger.mjs
+// node_modules/@base-ui/react/esm/alert-dialog/trigger/AlertDialogTrigger.js
 var AlertDialogTrigger = DialogTrigger;
 
-// node_modules/@base-ui/react/dialog/viewport/DialogViewport.mjs
+// node_modules/@base-ui/react/esm/dialog/viewport/DialogViewport.js
 var React53 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/dialog/viewport/DialogViewportDataAttributes.mjs
+// node_modules/@base-ui/react/esm/dialog/viewport/DialogViewportDataAttributes.js
 var DialogViewportDataAttributes = (function(DialogViewportDataAttributes2) {
   DialogViewportDataAttributes2[DialogViewportDataAttributes2["open"] = CommonPopupDataAttributes.open] = "open";
   DialogViewportDataAttributes2[DialogViewportDataAttributes2["closed"] = CommonPopupDataAttributes.closed] = "closed";
@@ -9801,7 +9644,7 @@ var DialogViewportDataAttributes = (function(DialogViewportDataAttributes2) {
   return DialogViewportDataAttributes2;
 })({});
 
-// node_modules/@base-ui/react/dialog/viewport/DialogViewport.mjs
+// node_modules/@base-ui/react/esm/dialog/viewport/DialogViewport.js
 var stateAttributesMapping3 = {
   ...popupStateMapping,
   ...transitionStatusMapping,
@@ -9859,7 +9702,7 @@ var DialogViewport = /* @__PURE__ */ React53.forwardRef(function DialogViewport2
 });
 if (true) DialogViewport.displayName = "DialogViewport";
 
-// node_modules/@base-ui/react/dialog/store/DialogHandle.mjs
+// node_modules/@base-ui/react/esm/dialog/store/DialogHandle.js
 var DialogHandle = class {
   /**
    * Internal store holding the dialog state.
@@ -9912,7 +9755,7 @@ function createDialogHandle() {
   return new DialogHandle();
 }
 
-// node_modules/@base-ui/react/alert-dialog/handle.mjs
+// node_modules/@base-ui/react/esm/alert-dialog/handle.js
 var alertDialogState = {
   modal: true,
   disablePointerDismissal: true,
@@ -9931,10 +9774,10 @@ function createAlertDialogHandle() {
   return new AlertDialogHandle();
 }
 
-// node_modules/@base-ui/react/utils/useAnchorPositioning.mjs
+// node_modules/@base-ui/react/esm/utils/useAnchorPositioning.js
 var React54 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/floating-ui-react/middleware/arrow.mjs
+// node_modules/@base-ui/react/esm/floating-ui-react/middleware/arrow.js
 var baseArrow = (options) => ({
   name: "arrow",
   options,
@@ -10003,8 +9846,7 @@ var arrow4 = (options, deps) => ({
   options: [options, deps]
 });
 
-// node_modules/@base-ui/react/utils/hideMiddleware.mjs
-var nativeHideFn = hide3().fn;
+// node_modules/@base-ui/react/esm/utils/hideMiddleware.js
 var hide4 = {
   name: "hide",
   async fn(state) {
@@ -10015,7 +9857,7 @@ var hide4 = {
       y: y2
     } = state.rects.reference;
     const anchorHidden = width === 0 && height === 0 && x2 === 0 && y2 === 0;
-    const nativeHideResult = await nativeHideFn(state);
+    const nativeHideResult = await hide3().fn(state);
     return {
       data: {
         referenceHidden: nativeHideResult.data?.referenceHidden || anchorHidden
@@ -10024,7 +9866,7 @@ var hide4 = {
   }
 };
 
-// node_modules/@base-ui/react/utils/adaptiveOriginMiddleware.mjs
+// node_modules/@base-ui/react/esm/utils/adaptiveOriginMiddleware.js
 var DEFAULT_SIDES = {
   sideX: "left",
   sideY: "top"
@@ -10096,7 +9938,7 @@ var adaptiveOrigin = {
   }
 };
 
-// node_modules/@base-ui/react/utils/useAnchorPositioning.mjs
+// node_modules/@base-ui/react/esm/utils/useAnchorPositioning.js
 function getLogicalSide(sideParam, renderedSide, isRtl) {
   const isLogicalSideParam = sideParam === "inline-start" || sideParam === "inline-end";
   const logicalRight = isRtl ? "inline-start" : "inline-end";
@@ -10422,8 +10264,8 @@ function useAnchorPositioning(params) {
     }
   }, [mounted, refs, anchorDep, anchorValueRef]);
   React54.useEffect(() => {
-    if (keepMounted && mounted && elements.reference && elements.floating) {
-      return autoUpdate(elements.reference, elements.floating, update2, autoUpdateOptions);
+    if (keepMounted && mounted && elements.domReference && elements.floating) {
+      return autoUpdate(elements.domReference, elements.floating, update2, autoUpdateOptions);
     }
     return void 0;
   }, [keepMounted, mounted, elements, update2, autoUpdateOptions]);
@@ -10461,12 +10303,12 @@ function isRef(param) {
   return param != null && "current" in param;
 }
 
-// node_modules/@base-ui/react/utils/getDisabledMountTransitionStyles.mjs
+// node_modules/@base-ui/react/esm/utils/getDisabledMountTransitionStyles.js
 function getDisabledMountTransitionStyles(transitionStatus) {
   return transitionStatus === "starting" ? DISABLED_TRANSITIONS_STYLE : EMPTY_OBJECT;
 }
 
-// node_modules/@base-ui/react/utils/usePositioner.mjs
+// node_modules/@base-ui/react/esm/utils/usePositioner.js
 function usePositioner(componentProps, state, {
   styles,
   transitionStatus,
@@ -10493,7 +10335,7 @@ function usePositioner(componentProps, state, {
   });
 }
 
-// node_modules/@base-ui/react/button/Button.mjs
+// node_modules/@base-ui/react/esm/button/Button.js
 var React55 = __toESM(require_react(), 1);
 var Button = /* @__PURE__ */ React55.forwardRef(function Button2(componentProps, forwardedRef) {
   const {
@@ -10524,7 +10366,7 @@ var Button = /* @__PURE__ */ React55.forwardRef(function Button2(componentProps,
 });
 if (true) Button.displayName = "Button";
 
-// node_modules/@base-ui/react/collapsible/index.parts.mjs
+// node_modules/@base-ui/react/esm/collapsible/index.parts.js
 var index_parts_exports2 = {};
 __export(index_parts_exports2, {
   Panel: () => CollapsiblePanel,
@@ -10532,16 +10374,16 @@ __export(index_parts_exports2, {
   Trigger: () => CollapsibleTrigger
 });
 
-// node_modules/@base-ui/react/collapsible/root/CollapsibleRoot.mjs
+// node_modules/@base-ui/react/esm/collapsible/root/CollapsibleRoot.js
 var React56 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/collapsible/root/stateAttributesMapping.mjs
+// node_modules/@base-ui/react/esm/collapsible/root/stateAttributesMapping.js
 var collapsibleStateAttributesMapping = {
   ...collapsibleOpenStateMapping,
   ...transitionStatusMapping
 };
 
-// node_modules/@base-ui/react/collapsible/root/CollapsibleRoot.mjs
+// node_modules/@base-ui/react/esm/collapsible/root/CollapsibleRoot.js
 var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
 var CollapsibleRoot = /* @__PURE__ */ React56.forwardRef(function CollapsibleRoot2(componentProps, forwardedRef) {
   const {
@@ -10584,7 +10426,7 @@ var CollapsibleRoot = /* @__PURE__ */ React56.forwardRef(function CollapsibleRoo
 });
 if (true) CollapsibleRoot.displayName = "CollapsibleRoot";
 
-// node_modules/@base-ui/react/collapsible/trigger/CollapsibleTrigger.mjs
+// node_modules/@base-ui/react/esm/collapsible/trigger/CollapsibleTrigger.js
 var React57 = __toESM(require_react(), 1);
 var stateAttributesMapping4 = {
   ...triggerOpenStateMapping,
@@ -10601,6 +10443,7 @@ var CollapsibleTrigger = /* @__PURE__ */ React57.forwardRef(function Collapsible
   const {
     className,
     disabled: disabled2 = contextDisabled,
+    id,
     render: render4,
     nativeButton = true,
     style,
@@ -10628,17 +10471,17 @@ var CollapsibleTrigger = /* @__PURE__ */ React57.forwardRef(function Collapsible
 });
 if (true) CollapsibleTrigger.displayName = "CollapsibleTrigger";
 
-// node_modules/@base-ui/react/collapsible/panel/CollapsiblePanel.mjs
+// node_modules/@base-ui/react/esm/collapsible/panel/CollapsiblePanel.js
 var React58 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/collapsible/panel/CollapsiblePanelCssVars.mjs
+// node_modules/@base-ui/react/esm/collapsible/panel/CollapsiblePanelCssVars.js
 var CollapsiblePanelCssVars = /* @__PURE__ */ (function(CollapsiblePanelCssVars2) {
   CollapsiblePanelCssVars2["collapsiblePanelHeight"] = "--collapsible-panel-height";
   CollapsiblePanelCssVars2["collapsiblePanelWidth"] = "--collapsible-panel-width";
   return CollapsiblePanelCssVars2;
 })({});
 
-// node_modules/@base-ui/react/collapsible/panel/CollapsiblePanel.mjs
+// node_modules/@base-ui/react/esm/collapsible/panel/CollapsiblePanel.js
 var CollapsiblePanel = /* @__PURE__ */ React58.forwardRef(function CollapsiblePanel2(componentProps, forwardedRef) {
   const {
     className,
@@ -10738,11 +10581,11 @@ var CollapsiblePanel = /* @__PURE__ */ React58.forwardRef(function CollapsiblePa
 });
 if (true) CollapsiblePanel.displayName = "CollapsiblePanel";
 
-// node_modules/@base-ui/react/utils/usePopupViewport.mjs
+// node_modules/@base-ui/react/esm/utils/usePopupViewport.js
 var React61 = __toESM(require_react(), 1);
-var ReactDOM6 = __toESM(require_react_dom(), 1);
+var ReactDOM5 = __toESM(require_react_dom(), 1);
 
-// node_modules/@base-ui/utils/usePreviousValue.mjs
+// node_modules/@base-ui/utils/esm/usePreviousValue.js
 var React59 = __toESM(require_react(), 1);
 function usePreviousValue(value) {
   const [state, setState] = React59.useState({
@@ -10758,10 +10601,10 @@ function usePreviousValue(value) {
   return state.previous;
 }
 
-// node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
+// node_modules/@base-ui/react/esm/utils/usePopupAutoResize.js
 var React60 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/utils/getCssDimensions.mjs
+// node_modules/@base-ui/react/esm/utils/getCssDimensions.js
 function getCssDimensions2(element) {
   const css = getComputedStyle2(element);
   let width = parseFloat(css.width) || 0;
@@ -10780,13 +10623,15 @@ function getCssDimensions2(element) {
   };
 }
 
-// node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
+// node_modules/@base-ui/react/esm/utils/usePopupAutoResize.js
+var DEFAULT_ENABLED = () => true;
 function usePopupAutoResize(parameters) {
   const {
     popupElement,
     positionerElement,
     content,
     mounted,
+    enabled = DEFAULT_ENABLED,
     onMeasureLayout: onMeasureLayoutParam,
     onMeasureLayoutComplete: onMeasureLayoutCompleteParam,
     side,
@@ -10795,6 +10640,7 @@ function usePopupAutoResize(parameters) {
   const runOnceAnimationsFinish = useAnimationsFinished(popupElement, true, false);
   const animationFrame = useAnimationFrame();
   const committedDimensionsRef = React60.useRef(null);
+  const liveDimensionsRef = React60.useRef(null);
   const isInitialRenderRef = React60.useRef(true);
   const restoreAnchoringStylesRef = React60.useRef(NOOP);
   const onMeasureLayout = useStableCallback(onMeasureLayoutParam);
@@ -10816,16 +10662,27 @@ function usePopupAutoResize(parameters) {
     } : EMPTY_OBJECT;
   }, [side, direction]);
   useIsoLayoutEffect(() => {
-    if (!mounted) {
+    if (!mounted || !enabled() || typeof ResizeObserver !== "function") {
       restoreAnchoringStylesRef.current = NOOP;
       isInitialRenderRef.current = true;
       committedDimensionsRef.current = null;
+      liveDimensionsRef.current = null;
       return void 0;
     }
     if (!popupElement || !positionerElement) {
       return void 0;
     }
     restoreAnchoringStylesRef.current = applyElementStyles(popupElement, anchoringStyles);
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (entry) {
+        liveDimensionsRef.current = {
+          width: Math.ceil(entry.borderBoxSize[0].inlineSize),
+          height: Math.ceil(entry.borderBoxSize[0].blockSize)
+        };
+      }
+    });
+    observer.observe(popupElement);
     setPopupCssSize(popupElement, "auto");
     const restorePopupPosition = overrideElementStyle(popupElement, "position", "static");
     const restorePopupTransform = overrideElementStyle(popupElement, "transform", "none");
@@ -10853,14 +10710,27 @@ function usePopupAutoResize(parameters) {
       onMeasureLayoutComplete?.(null, dimensions);
       isInitialRenderRef.current = false;
       return () => {
+        observer.disconnect();
         restoreAnchoringStylesRef.current();
         restoreAnchoringStylesRef.current = NOOP;
       };
     }
+    setPopupCssSize(popupElement, "auto");
     setPositionerCssSize(positionerElement, "max-content");
-    const previousDimensions = committedDimensionsRef.current;
+    const previousDimensions = committedDimensionsRef.current ?? liveDimensionsRef.current;
     const newDimensions = getCssDimensions2(popupElement);
     committedDimensionsRef.current = newDimensions;
+    if (!previousDimensions) {
+      setPositionerCssSize(positionerElement, newDimensions);
+      restoreMeasurementOverridesIncludingScale();
+      onMeasureLayoutComplete?.(null, newDimensions);
+      return () => {
+        observer.disconnect();
+        animationFrame.cancel();
+        restoreAnchoringStylesRef.current();
+        restoreAnchoringStylesRef.current = NOOP;
+      };
+    }
     setPopupCssSize(popupElement, previousDimensions);
     restoreMeasurementOverridesIncludingScale();
     onMeasureLayoutComplete?.(previousDimensions, newDimensions);
@@ -10874,12 +10744,13 @@ function usePopupAutoResize(parameters) {
       }, abortController.signal);
     });
     return () => {
+      observer.disconnect();
       abortController.abort();
       animationFrame.cancel();
       restoreAnchoringStylesRef.current();
       restoreAnchoringStylesRef.current = NOOP;
     };
-  }, [content, popupElement, positionerElement, runOnceAnimationsFinish, animationFrame, mounted, onMeasureLayout, onMeasureLayoutComplete, anchoringStyles]);
+  }, [content, popupElement, positionerElement, runOnceAnimationsFinish, animationFrame, enabled, mounted, onMeasureLayout, onMeasureLayoutComplete, anchoringStyles]);
 }
 function overrideElementStyle(element, property, value) {
   const originalValue = element.style.getPropertyValue(property);
@@ -10910,7 +10781,7 @@ function setPositionerCssSize(positionerElement, size4) {
   positionerElement.style.setProperty("--positioner-height", height);
 }
 
-// node_modules/@base-ui/react/utils/usePopupViewport.mjs
+// node_modules/@base-ui/react/esm/utils/usePopupViewport.js
 var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
 function usePopupViewport(parameters) {
   const {
@@ -10959,18 +10830,13 @@ function usePopupViewport(parameters) {
   });
   const lastHandledTriggerRef = React61.useRef(null);
   useIsoLayoutEffect(() => {
-    if (!open || !mounted) {
-      lastHandledTriggerRef.current = null;
-    }
-  }, [open, mounted]);
-  useIsoLayoutEffect(() => {
     if (activeTrigger && previousActiveTrigger && activeTrigger !== previousActiveTrigger && lastHandledTriggerRef.current !== activeTrigger && capturedNodeRef.current) {
       setPreviousContentNode(capturedNodeRef.current);
       setShowStartingStyleAttribute(true);
       const offset4 = calculateRelativePosition(previousActiveTrigger, activeTrigger);
       setNewTriggerOffset(offset4);
       cleanupFrame.request(() => {
-        ReactDOM6.flushSync(() => {
+        ReactDOM5.flushSync(() => {
           setShowStartingStyleAttribute(false);
         });
         onAnimationsFinished(() => {
@@ -11103,7 +10969,7 @@ function usePopupContentKey(activeTriggerId, payload) {
   return `${activeTriggerId ?? "current"}-${contentKey}`;
 }
 
-// node_modules/@base-ui/react/dialog/index.parts.mjs
+// node_modules/@base-ui/react/esm/dialog/index.parts.js
 var index_parts_exports3 = {};
 __export(index_parts_exports3, {
   Backdrop: () => DialogBackdrop,
@@ -11119,14 +10985,14 @@ __export(index_parts_exports3, {
   createHandle: () => createDialogHandle
 });
 
-// node_modules/@base-ui/react/dialog/root/DialogRoot.mjs
+// node_modules/@base-ui/react/esm/dialog/root/DialogRoot.js
 var React62 = __toESM(require_react(), 1);
 function DialogRoot(props) {
   const mode = React62.useContext(IsDrawerContext) ? "drawer" : "dialog";
   return useRenderDialogRoot(props, mode);
 }
 
-// node_modules/@base-ui/react/drawer/index.parts.mjs
+// node_modules/@base-ui/react/esm/drawer/index.parts.js
 var index_parts_exports4 = {};
 __export(index_parts_exports4, {
   Backdrop: () => DrawerBackdrop,
@@ -11144,14 +11010,13 @@ __export(index_parts_exports4, {
   Title: () => DrawerTitle,
   Trigger: () => DrawerTrigger,
   Viewport: () => DrawerViewport,
-  VirtualKeyboardProvider: () => DrawerVirtualKeyboardProvider,
   createHandle: () => createDialogHandle
 });
 
-// node_modules/@base-ui/react/drawer/backdrop/DrawerBackdrop.mjs
+// node_modules/@base-ui/react/esm/drawer/backdrop/DrawerBackdrop.js
 var React63 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/drawer/popup/DrawerPopupCssVars.mjs
+// node_modules/@base-ui/react/esm/drawer/popup/DrawerPopupCssVars.js
 var DrawerPopupCssVars = /* @__PURE__ */ (function(DrawerPopupCssVars2) {
   DrawerPopupCssVars2["nestedDrawers"] = "--nested-drawers";
   DrawerPopupCssVars2["height"] = "--drawer-height";
@@ -11163,13 +11028,13 @@ var DrawerPopupCssVars = /* @__PURE__ */ (function(DrawerPopupCssVars2) {
   return DrawerPopupCssVars2;
 })({});
 
-// node_modules/@base-ui/react/drawer/backdrop/DrawerBackdropCssVars.mjs
+// node_modules/@base-ui/react/esm/drawer/backdrop/DrawerBackdropCssVars.js
 var DrawerBackdropCssVars = /* @__PURE__ */ (function(DrawerBackdropCssVars2) {
   DrawerBackdropCssVars2["swipeProgress"] = "--drawer-swipe-progress";
   return DrawerBackdropCssVars2;
 })({});
 
-// node_modules/@base-ui/react/drawer/backdrop/DrawerBackdrop.mjs
+// node_modules/@base-ui/react/esm/drawer/backdrop/DrawerBackdrop.js
 var stateAttributesMapping5 = {
   ...popupStateMapping,
   ...transitionStatusMapping
@@ -11213,16 +11078,16 @@ var DrawerBackdrop = /* @__PURE__ */ React63.forwardRef(function DrawerBackdrop2
 });
 if (true) DrawerBackdrop.displayName = "DrawerBackdrop";
 
-// node_modules/@base-ui/react/drawer/close/DrawerClose.mjs
+// node_modules/@base-ui/react/esm/drawer/close/DrawerClose.js
 var DrawerClose = DialogClose;
 
-// node_modules/@base-ui/react/drawer/content/DrawerContent.mjs
+// node_modules/@base-ui/react/esm/drawer/content/DrawerContent.js
 var React64 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/drawer/content/DrawerContentDataAttributes.mjs
+// node_modules/@base-ui/react/esm/drawer/content/DrawerContentDataAttributes.js
 var DRAWER_CONTENT_ATTRIBUTE = "data-drawer-content";
 
-// node_modules/@base-ui/react/drawer/content/DrawerContent.mjs
+// node_modules/@base-ui/react/esm/drawer/content/DrawerContent.js
 var DrawerContent = /* @__PURE__ */ React64.forwardRef(function DrawerContent2(componentProps, forwardedRef) {
   const {
     render: render4,
@@ -11240,13 +11105,13 @@ var DrawerContent = /* @__PURE__ */ React64.forwardRef(function DrawerContent2(c
 });
 if (true) DrawerContent.displayName = "DrawerContent";
 
-// node_modules/@base-ui/react/drawer/description/DrawerDescription.mjs
+// node_modules/@base-ui/react/esm/drawer/description/DrawerDescription.js
 var DrawerDescription = DialogDescription;
 
-// node_modules/@base-ui/react/drawer/indent/DrawerIndent.mjs
+// node_modules/@base-ui/react/esm/drawer/indent/DrawerIndent.js
 var React66 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/drawer/provider/DrawerProviderContext.mjs
+// node_modules/@base-ui/react/esm/drawer/provider/DrawerProviderContext.js
 var React65 = __toESM(require_react(), 1);
 var DrawerProviderContext = /* @__PURE__ */ React65.createContext(void 0);
 if (true) DrawerProviderContext.displayName = "DrawerProviderContext";
@@ -11258,7 +11123,7 @@ function useDrawerProviderContext(optional) {
   return context;
 }
 
-// node_modules/@base-ui/react/drawer/indent/DrawerIndent.mjs
+// node_modules/@base-ui/react/esm/drawer/indent/DrawerIndent.js
 var stateAttributesMapping6 = {
   active(value) {
     if (value) {
@@ -11327,7 +11192,7 @@ var DrawerIndent = /* @__PURE__ */ React66.forwardRef(function DrawerIndent2(com
 });
 if (true) DrawerIndent.displayName = "DrawerIndent";
 
-// node_modules/@base-ui/react/drawer/indent-background/DrawerIndentBackground.mjs
+// node_modules/@base-ui/react/esm/drawer/indent-background/DrawerIndentBackground.js
 var React67 = __toESM(require_react(), 1);
 var stateAttributesMapping7 = {
   active(value) {
@@ -11362,10 +11227,10 @@ var DrawerIndentBackground = /* @__PURE__ */ React67.forwardRef(function DrawerI
 });
 if (true) DrawerIndentBackground.displayName = "DrawerIndentBackground";
 
-// node_modules/@base-ui/react/drawer/popup/DrawerPopup.mjs
+// node_modules/@base-ui/react/esm/drawer/popup/DrawerPopup.js
 var React71 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/drawer/popup/DrawerPopupDataAttributes.mjs
+// node_modules/@base-ui/react/esm/drawer/popup/DrawerPopupDataAttributes.js
 var DrawerPopupDataAttributes = (function(DrawerPopupDataAttributes2) {
   DrawerPopupDataAttributes2[DrawerPopupDataAttributes2["open"] = CommonPopupDataAttributes.open] = "open";
   DrawerPopupDataAttributes2[DrawerPopupDataAttributes2["closed"] = CommonPopupDataAttributes.closed] = "closed";
@@ -11380,7 +11245,7 @@ var DrawerPopupDataAttributes = (function(DrawerPopupDataAttributes2) {
   return DrawerPopupDataAttributes2;
 })({});
 
-// node_modules/@base-ui/react/drawer/root/DrawerRootContext.mjs
+// node_modules/@base-ui/react/esm/drawer/root/DrawerRootContext.js
 var React68 = __toESM(require_react(), 1);
 var DrawerRootContext = /* @__PURE__ */ React68.createContext(void 0);
 if (true) DrawerRootContext.displayName = "DrawerRootContext";
@@ -11392,22 +11257,15 @@ function useDrawerRootContext(optional) {
   return drawerRootContext;
 }
 
-// node_modules/@base-ui/react/drawer/root/useDrawerSnapPoints.mjs
+// node_modules/@base-ui/react/esm/drawer/root/useDrawerSnapPoints.js
 var React69 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/internals/clamp.mjs
+// node_modules/@base-ui/react/esm/internals/clamp.js
 function clamp2(val, min2 = Number.MIN_SAFE_INTEGER, max2 = Number.MAX_SAFE_INTEGER) {
   return Math.max(min2, Math.min(val, max2));
 }
 
-// node_modules/@base-ui/react/drawer/root/useDrawerSnapPoints.mjs
-function getSnapPointSwipeMovement(baseOffset, movementValue) {
-  const nextOffset = baseOffset + movementValue;
-  if (nextOffset >= 0) {
-    return movementValue;
-  }
-  return -Math.sqrt(-nextOffset) - baseOffset;
-}
+// node_modules/@base-ui/react/esm/drawer/root/useDrawerSnapPoints.js
 function resolveSnapPointValue(snapPoint, viewportHeight, rootFontSize) {
   if (!Number.isFinite(viewportHeight) || viewportHeight <= 0) {
     return null;
@@ -11549,7 +11407,7 @@ function useDrawerSnapPoints() {
   };
 }
 
-// node_modules/@base-ui/react/drawer/viewport/DrawerViewportContext.mjs
+// node_modules/@base-ui/react/esm/drawer/viewport/DrawerViewportContext.js
 var React70 = __toESM(require_react(), 1);
 var DrawerViewportContext = /* @__PURE__ */ React70.createContext(null);
 if (true) DrawerViewportContext.displayName = "DrawerViewportContext";
@@ -11561,7 +11419,7 @@ function useDrawerViewportContext(optional) {
   return context;
 }
 
-// node_modules/@base-ui/react/drawer/popup/DrawerPopup.mjs
+// node_modules/@base-ui/react/esm/drawer/popup/DrawerPopup.js
 var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
 var drawerSwipeVarsRegistered = false;
 function removeCSSVariableInheritance() {
@@ -11644,7 +11502,6 @@ var DrawerPopup = /* @__PURE__ */ React71.forwardRef(function DrawerPopup2(compo
   const {
     store
   } = useDialogRootContext();
-  const popupRef = store.context.popupRef;
   const {
     swipeDirection,
     frontmostHeight,
@@ -11693,7 +11550,7 @@ var DrawerPopup = /* @__PURE__ */ React71.forwardRef(function DrawerPopup2(compo
     }, [swipe2]);
   }
   const measureHeight = useStableCallback(() => {
-    const popupElement = popupRef.current;
+    const popupElement = store.context.popupRef.current;
     if (!popupElement) {
       return;
     }
@@ -11723,7 +11580,7 @@ var DrawerPopup = /* @__PURE__ */ React71.forwardRef(function DrawerPopup2(compo
       onPopupHeightChange(0);
       return void 0;
     }
-    const popupElement = popupRef.current;
+    const popupElement = store.context.popupRef.current;
     if (!popupElement) {
       return void 0;
     }
@@ -11737,30 +11594,31 @@ var DrawerPopup = /* @__PURE__ */ React71.forwardRef(function DrawerPopup2(compo
     return () => {
       resizeObserver.disconnect();
     };
-  }, [measureHeight, mounted, nestedDrawerOpen, onPopupHeightChange, popupRef]);
+  }, [measureHeight, mounted, nestedDrawerOpen, onPopupHeightChange, store.context.popupRef]);
   useIsoLayoutEffect(() => {
+    const popupRef = store.context.popupRef;
     const syncNestedSwipeProgress = () => {
-      const popupElement2 = popupRef.current;
-      if (!popupElement2) {
+      const popupElement = popupRef.current;
+      if (!popupElement) {
         return;
       }
       const progress = nestedSwipeProgressStore.getSnapshot();
       if (progress > 0) {
-        popupElement2.style.setProperty(DrawerBackdropCssVars.swipeProgress, `${progress}`);
+        popupElement.style.setProperty(DrawerBackdropCssVars.swipeProgress, `${progress}`);
       } else {
-        popupElement2.style.setProperty(DrawerBackdropCssVars.swipeProgress, "0");
+        popupElement.style.setProperty(DrawerBackdropCssVars.swipeProgress, "0");
       }
     };
     syncNestedSwipeProgress();
     const unsubscribe = nestedSwipeProgressStore.subscribe(syncNestedSwipeProgress);
-    const popupElement = popupRef.current;
     return () => {
       unsubscribe();
+      const popupElement = popupRef.current;
       if (popupElement) {
         popupElement.style.setProperty(DrawerBackdropCssVars.swipeProgress, "0");
       }
     };
-  }, [nestedSwipeProgressStore, popupRef]);
+  }, [nestedSwipeProgressStore, store.context.popupRef]);
   React71.useEffect(() => {
     if (!open) {
       return void 0;
@@ -11782,14 +11640,14 @@ var DrawerPopup = /* @__PURE__ */ React71.forwardRef(function DrawerPopup2(compo
   }, [notifyParentHasNestedDrawer, open, transitionStatus]);
   useOpenChangeComplete({
     open,
-    ref: popupRef,
+    ref: store.context.popupRef,
     onComplete() {
       if (open) {
         store.context.onOpenChangeComplete?.(true);
       }
     }
   });
-  const resolvedInitialFocus = initialFocus === void 0 ? popupRef : initialFocus;
+  const resolvedInitialFocus = initialFocus === void 0 ? store.context.popupRef : initialFocus;
   const setPopupElement = store.useStateSetter("popupElement");
   const state = {
     open,
@@ -11815,11 +11673,16 @@ var DrawerPopup = /* @__PURE__ */ React71.forwardRef(function DrawerPopup2(compo
   if (shouldApplySnapPoints && swipeDirection === "down") {
     const baseOffset = activeSnapPointOffset ?? 0;
     const movementValue = Number.parseFloat(String(dragStyles[DrawerPopupCssVars.swipeMovementY] ?? 0));
-    if (swiping && Number.isFinite(movementValue)) {
+    const nextOffset = Number.isFinite(movementValue) ? baseOffset + movementValue : baseOffset;
+    const shouldDamp = nextOffset < 0;
+    if (swiping && shouldDamp && Number.isFinite(movementValue)) {
+      const overshoot = Math.abs(nextOffset);
+      const dampedOffset = -Math.sqrt(overshoot);
+      const dampedMovement = dampedOffset - baseOffset;
       dragStyles = {
         ...dragStyles,
         transform: void 0,
-        [DrawerPopupCssVars.swipeMovementY]: `${getSnapPointSwipeMovement(baseOffset, movementValue)}px`
+        [DrawerPopupCssVars.swipeMovementY]: `${dampedMovement}px`
       };
     } else {
       dragStyles = {
@@ -11852,7 +11715,7 @@ var DrawerPopup = /* @__PURE__ */ React71.forwardRef(function DrawerPopup2(compo
         [DrawerPopupCssVars.swipeStrength]: typeof swipeStrength === "number" && Number.isFinite(swipeStrength) && swipeStrength > 0 ? `${swipeStrength}` : "1"
       }
     }, elementProps],
-    ref: [forwardedRef, popupRef, setPopupElement],
+    ref: [forwardedRef, store.context.popupRef, setPopupElement],
     stateAttributesMapping: stateAttributesMapping8
   });
   return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(FloatingFocusManager, {
@@ -11869,10 +11732,10 @@ var DrawerPopup = /* @__PURE__ */ React71.forwardRef(function DrawerPopup2(compo
 });
 if (true) DrawerPopup.displayName = "DrawerPopup";
 
-// node_modules/@base-ui/react/drawer/portal/DrawerPortal.mjs
+// node_modules/@base-ui/react/esm/drawer/portal/DrawerPortal.js
 var DrawerPortal = DialogPortal;
 
-// node_modules/@base-ui/react/drawer/provider/DrawerProvider.mjs
+// node_modules/@base-ui/react/esm/drawer/provider/DrawerProvider.js
 var React72 = __toESM(require_react(), 1);
 var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
 function DrawerProvider(props) {
@@ -11958,7 +11821,7 @@ function createVisualStateStore() {
   };
 }
 
-// node_modules/@base-ui/react/drawer/root/DrawerRoot.mjs
+// node_modules/@base-ui/react/esm/drawer/root/DrawerRoot.js
 var React73 = __toESM(require_react(), 1);
 var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
 var _DrawerProviderReport;
@@ -12153,7 +12016,7 @@ function DrawerProviderReporter() {
     providerContext?.setDrawerOpen(drawerId, open);
   }, [drawerId, open, providerContext]);
   React73.useEffect(() => {
-    if (!open || !isTopmost || !parts_exports.os.android) {
+    if (!open || !isTopmost || !isAndroid) {
       return void 0;
     }
     const win = getWindow(popupElement);
@@ -12177,57 +12040,51 @@ function DrawerProviderReporter() {
   return null;
 }
 
-// node_modules/@base-ui/react/drawer/swipe-area/DrawerSwipeArea.mjs
+// node_modules/@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.js
 var React75 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/utils/useSwipeDismiss.mjs
+// node_modules/@base-ui/react/esm/utils/useSwipeDismiss.js
 var React74 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/utils/scrollable.mjs
-function isScrollable(element, axis, allowOverflowIntent = false) {
+// node_modules/@base-ui/react/esm/utils/scrollable.js
+function isScrollable(element, axis) {
   const style = getComputedStyle2(element);
   if (axis === "vertical") {
     const overflowY = style.overflowY;
-    if (overflowY !== "auto" && overflowY !== "scroll") {
-      return false;
-    }
-    return allowOverflowIntent ? element.clientHeight > 0 : element.scrollHeight > element.clientHeight;
+    return (overflowY === "auto" || overflowY === "scroll") && element.scrollHeight > element.clientHeight;
   }
   const overflowX = style.overflowX;
-  if (overflowX !== "auto" && overflowX !== "scroll") {
-    return false;
-  }
-  return allowOverflowIntent ? element.clientWidth > 0 : element.scrollWidth > element.clientWidth;
+  return (overflowX === "auto" || overflowX === "scroll") && element.scrollWidth > element.clientWidth;
 }
 function hasScrollableAncestor(target, root, axes) {
   let node = target;
-  while (isHTMLElement(node) && node !== root && !isLastTraversableNode(node)) {
+  while (node && node !== root) {
     for (const axis of axes) {
       if (isScrollable(node, axis)) {
         return true;
       }
     }
-    node = getParentNode(node);
+    node = node.parentElement;
   }
   return false;
 }
-function findScrollableTouchTarget(target, root, axis = "vertical", allowOverflowIntent = false) {
+function findScrollableTouchTarget(target, root, axis = "vertical") {
   let node = isHTMLElement(target) ? target : null;
-  while (isHTMLElement(node) && node !== root && !isLastTraversableNode(node)) {
-    if (isScrollable(node, axis, allowOverflowIntent)) {
+  while (node && node !== root) {
+    if (isScrollable(node, axis)) {
       return node;
     }
-    node = getParentNode(node);
+    node = node.parentElement;
   }
-  return isScrollable(root, axis, allowOverflowIntent) ? root : null;
+  return isScrollable(root, axis) ? root : null;
 }
 
-// node_modules/@base-ui/react/utils/getElementAtPoint.mjs
+// node_modules/@base-ui/react/esm/utils/getElementAtPoint.js
 function getElementAtPoint(doc, x2, y2) {
   return typeof doc?.elementFromPoint === "function" ? doc.elementFromPoint(x2, y2) : null;
 }
 
-// node_modules/@base-ui/react/utils/useSwipeDismiss.mjs
+// node_modules/@base-ui/react/esm/utils/useSwipeDismiss.js
 var DEFAULT_SWIPE_THRESHOLD = 40;
 var REVERSE_CANCEL_THRESHOLD = 10;
 var MIN_DRAG_THRESHOLD = 1;
@@ -12278,9 +12135,6 @@ function getElementTransform(element) {
 }
 function getValidTimeStamp(timeStamp) {
   return Number.isFinite(timeStamp) && timeStamp > 0 ? timeStamp : null;
-}
-function getDragTransform(dragOffset, scale) {
-  return `translate3d(${dragOffset.x}px,${dragOffset.y}px,0) scale(${scale})`;
 }
 function hasPrimaryMouseButton(buttons) {
   return buttons % 2 === 1;
@@ -12338,7 +12192,18 @@ function useSwipeDismiss(options) {
   }, [hasHorizontal, hasVertical]);
   const [currentSwipeDirection, setCurrentSwipeDirection] = React74.useState(void 0);
   const [isSwiping, setIsSwiping] = React74.useState(false);
+  const [isRealSwipe, setIsRealSwipe] = React74.useState(false);
   const [dragDismissed, setDragDismissed] = React74.useState(false);
+  const [dragOffset, setDragOffset] = React74.useState({
+    x: 0,
+    y: 0
+  });
+  const [initialTransform, setInitialTransform] = React74.useState({
+    x: 0,
+    y: 0,
+    scale: 1
+  });
+  const [lockedDirection, setLockedDirection] = React74.useState(null);
   const dragStartPosRef = React74.useRef({
     x: 0,
     y: 0
@@ -12360,7 +12225,6 @@ function useSwipeDismiss(options) {
     x: 0,
     y: 0
   });
-  const lockedDirectionRef = React74.useRef(null);
   const isFirstPointerMoveRef = React74.useRef(false);
   const pendingSwipeRef = React74.useRef(false);
   const pendingSwipeStartPosRef = React74.useRef(null);
@@ -12380,7 +12244,6 @@ function useSwipeDismiss(options) {
   });
   const lastProgressDetailsRef = React74.useRef(null);
   const isSwipingRef = React74.useRef(false);
-  const dragStyleSnapshotRef = React74.useRef(null);
   const setSwiping = useStableCallback((nextSwiping) => {
     if (isSwipingRef.current === nextSwiping) {
       return;
@@ -12426,35 +12289,6 @@ function useSwipeDismiss(options) {
     }
     onProgress?.(nextProgress, details);
   });
-  const syncDragStyles = useStableCallback((swiping) => {
-    const element = elementRef.current;
-    if (!trackDrag || !element) {
-      if (!swiping) {
-        dragStyleSnapshotRef.current = null;
-      }
-      return;
-    }
-    const style = element.style;
-    const dragStyleSnapshot = dragStyleSnapshotRef.current;
-    if (swiping) {
-      if (!dragStyleSnapshot) {
-        dragStyleSnapshotRef.current = [style.transition, style.transform];
-      }
-      style.transition = "none";
-    } else if (dragStyleSnapshot) {
-      [style.transition, style.transform] = dragStyleSnapshot;
-      dragStyleSnapshotRef.current = null;
-    }
-    const dragOffset = dragOffsetRef.current;
-    const initialTransform = initialTransformRef.current;
-    const deltaX = dragOffset.x - initialTransform.x;
-    const deltaY = dragOffset.y - initialTransform.y;
-    if (swiping) {
-      style.transform = getDragTransform(dragOffset, initialTransform.scale);
-    }
-    style.setProperty(movementCssVars.x, `${deltaX}px`);
-    style.setProperty(movementCssVars.y, `${deltaY}px`);
-  });
   function recordDragSample(offset4, timeStamp) {
     if (timeStamp === null) {
       return;
@@ -12476,7 +12310,18 @@ function useSwipeDismiss(options) {
   const reset = React74.useCallback(() => {
     setCurrentSwipeDirection(void 0);
     setSwiping(false);
+    setIsRealSwipe(false);
     setDragDismissed(false);
+    setDragOffset({
+      x: 0,
+      y: 0
+    });
+    setInitialTransform({
+      x: 0,
+      y: 0,
+      scale: 1
+    });
+    setLockedDirection(null);
     updateSwipeProgress(0);
     swipeThresholdRef.current = swipeThresholdDefault;
     dragStartPosRef.current = {
@@ -12499,7 +12344,6 @@ function useSwipeDismiss(options) {
       x: 0,
       y: 0
     };
-    lockedDirectionRef.current = null;
     isFirstPointerMoveRef.current = false;
     lastMovePosRef.current = null;
     pendingSwipeRef.current = false;
@@ -12517,8 +12361,7 @@ function useSwipeDismiss(options) {
       y: 0
     };
     lastProgressDetailsRef.current = null;
-    syncDragStyles(false);
-  }, [setSwiping, swipeThresholdDefault, syncDragStyles, updateSwipeProgress]);
+  }, [setSwiping, swipeThresholdDefault, updateSwipeProgress]);
   React74.useEffect(() => {
     if (typeof swipeThresholdProp !== "function") {
       swipeThresholdRef.current = swipeThresholdDefault;
@@ -12600,6 +12443,11 @@ function useSwipeDismiss(options) {
         x: transform.x,
         y: transform.y
       };
+      setInitialTransform(transform);
+      setDragOffset({
+        x: transform.x,
+        y: transform.y
+      });
       recordDragSample({
         x: transform.x,
         y: transform.y
@@ -12610,10 +12458,10 @@ function useSwipeDismiss(options) {
     }
     onSwipeStart?.(event.nativeEvent);
     setSwiping(true);
-    lockedDirectionRef.current = null;
+    setIsRealSwipe(false);
+    setLockedDirection(null);
     isFirstPointerMoveRef.current = true;
     updateSwipeProgress(0);
-    syncDragStyles(true);
     return true;
   }
   function resetPendingSwipeState() {
@@ -12631,15 +12479,19 @@ function useSwipeDismiss(options) {
       return;
     }
     setSwiping(false);
-    lockedDirectionRef.current = null;
-    const resolvedInitialTransform = initialTransformRef.current;
+    setIsRealSwipe(false);
+    setLockedDirection(null);
+    const resolvedInitialTransform = trackDrag ? initialTransform : initialTransformRef.current;
     dragOffsetRef.current = {
       x: resolvedInitialTransform.x,
       y: resolvedInitialTransform.y
     };
+    setDragOffset({
+      x: resolvedInitialTransform.x,
+      y: resolvedInitialTransform.y
+    });
     setCurrentSwipeDirection(void 0);
     sawPrimaryButtonsOnMoveRef.current = false;
-    syncDragStyles(false);
     const element = elementRef.current;
     if (element) {
       safelyChangePointerCapture(element, event.pointerId, "releasePointerCapture");
@@ -12767,12 +12619,17 @@ function useSwipeDismiss(options) {
     const deltaY = clientY - dragStartPosRef.current.y;
     const cancelDeltaY = clientY - swipeCancelBaselineRef.current.y;
     const cancelDeltaX = clientX - swipeCancelBaselineRef.current.x;
-    let lockedDirection = lockedDirectionRef.current;
-    if (lockedDirection === null && hasHorizontal && hasVertical) {
+    if (!isRealSwipe) {
       const movementDistance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
       if (movementDistance >= MIN_DRAG_THRESHOLD) {
-        lockedDirection = Math.abs(deltaX) > Math.abs(deltaY) ? "horizontal" : "vertical";
-        lockedDirectionRef.current = lockedDirection;
+        setIsRealSwipe(true);
+        if (lockedDirection === null) {
+          if (hasHorizontal && hasVertical) {
+            const absX = Math.abs(deltaX);
+            const absY = Math.abs(deltaY);
+            setLockedDirection(absX > absY ? "horizontal" : "vertical");
+          }
+        }
       }
     }
     let candidate;
@@ -12836,7 +12693,12 @@ function useSwipeDismiss(options) {
       x: newOffsetX,
       y: newOffsetY
     };
-    syncDragStyles(true);
+    if (trackDrag) {
+      setDragOffset({
+        x: newOffsetX,
+        y: newOffsetY
+      });
+    }
     recordDragSample({
       x: newOffsetX,
       y: newOffsetY
@@ -12878,163 +12740,20 @@ function useSwipeDismiss(options) {
       direction: swipeDirectionDetails
     });
   }
-  const handleEnd = useStableCallback((event) => {
-    if (!enabled) {
-      return;
-    }
-    const resolvedDragOffset = dragOffsetRef.current;
-    const resolvedInitialTransform = initialTransformRef.current;
-    const releaseDeltaX = resolvedDragOffset.x - resolvedInitialTransform.x;
-    const releaseDeltaY = resolvedDragOffset.y - resolvedInitialTransform.y;
-    const progressDetails = {
-      deltaX: releaseDeltaX,
-      deltaY: releaseDeltaY,
-      direction: intendedSwipeDirectionRef.current
-    };
-    if (!isSwipingRef.current) {
-      resetPendingSwipeState();
-      updateSwipeProgress(0, progressDetails);
-      return;
-    }
-    setSwiping(false);
-    lockedDirectionRef.current = null;
-    resetPendingSwipeState();
-    sawPrimaryButtonsOnMoveRef.current = false;
-    const element = elementRef.current;
-    if (element) {
-      if (!("touches" in event)) {
-        safelyChangePointerCapture(element, event.pointerId, "releasePointerCapture");
-      }
-    }
-    const deltaX = releaseDeltaX;
-    const deltaY = releaseDeltaY;
-    const startTime = swipeStartTimeRef.current;
-    const endTime = getValidTimeStamp(event.timeStamp);
-    const durationMs = startTime !== null && endTime !== null && endTime > startTime ? endTime - startTime : 0;
-    const velocityDurationMs = durationMs > 0 ? Math.max(durationMs, MIN_VELOCITY_DURATION_MS) : 0;
-    const velocityX = velocityDurationMs > 0 ? deltaX / velocityDurationMs : 0;
-    const velocityY = velocityDurationMs > 0 ? deltaY / velocityDurationMs : 0;
-    let releaseVelocityX = lastDragVelocityRef.current.x;
-    let releaseVelocityY = lastDragVelocityRef.current.y;
-    const lastSample = lastDragSampleRef.current;
-    if (lastSample && endTime !== null && endTime >= lastSample.time) {
-      const ageMs = endTime - lastSample.time;
-      if (ageMs <= MAX_RELEASE_VELOCITY_AGE_MS) {
-        const sampleDurationMs = Math.max(ageMs, MIN_RELEASE_VELOCITY_DURATION_MS);
-        const deltaFromLastSampleX = resolvedDragOffset.x - lastSample.x;
-        const deltaFromLastSampleY = resolvedDragOffset.y - lastSample.y;
-        const sampleVelocityX = deltaFromLastSampleX / sampleDurationMs;
-        const sampleVelocityY = deltaFromLastSampleY / sampleDurationMs;
-        if (sampleVelocityX !== 0) {
-          releaseVelocityX = sampleVelocityX;
-        }
-        if (sampleVelocityY !== 0) {
-          releaseVelocityY = sampleVelocityY;
-        }
-      } else {
-        releaseVelocityX = 0;
-        releaseVelocityY = 0;
-      }
-    }
-    const releaseDecision = onRelease?.({
-      event: event.nativeEvent,
-      direction: intendedSwipeDirectionRef.current,
-      deltaX,
-      deltaY,
-      velocityX,
-      velocityY,
-      releaseVelocityX,
-      releaseVelocityY
-    });
-    const hasReleaseDecision = typeof releaseDecision === "boolean";
-    if (cancelledSwipeRef.current && !hasReleaseDecision) {
-      dragOffsetRef.current = {
-        x: resolvedInitialTransform.x,
-        y: resolvedInitialTransform.y
-      };
-      setCurrentSwipeDirection(void 0);
-      syncDragStyles(false);
-      updateSwipeProgress(0, progressDetails);
-      return;
-    }
-    let shouldClose = false;
-    let dismissDirection;
-    if (hasReleaseDecision) {
-      shouldClose = releaseDecision;
-      dismissDirection = intendedSwipeDirectionRef.current ?? primaryDirection;
-    } else {
-      for (const direction of directions2) {
-        switch (direction) {
-          case "right":
-            if (deltaX > swipeThresholdRef.current) {
-              shouldClose = true;
-              dismissDirection = "right";
-            }
-            break;
-          case "left":
-            if (deltaX < -swipeThresholdRef.current) {
-              shouldClose = true;
-              dismissDirection = "left";
-            }
-            break;
-          case "down":
-            if (deltaY > swipeThresholdRef.current) {
-              shouldClose = true;
-              dismissDirection = "down";
-            }
-            break;
-          case "up":
-            if (deltaY < -swipeThresholdRef.current) {
-              shouldClose = true;
-              dismissDirection = "up";
-            }
-            break;
-          default:
-            break;
-        }
-        if (shouldClose) {
-          break;
-        }
-      }
-    }
-    if (shouldClose && dismissDirection) {
-      setCurrentSwipeDirection(dismissDirection);
-      setDragDismissed(true);
-      syncDragStyles(false);
-      onDismiss?.(event.nativeEvent, {
-        direction: dismissDirection
-      });
-    } else {
-      dragOffsetRef.current = {
-        x: resolvedInitialTransform.x,
-        y: resolvedInitialTransform.y
-      };
-      setCurrentSwipeDirection(void 0);
-      syncDragStyles(false);
-      updateSwipeProgress(0, progressDetails);
-    }
-  });
   const handleMove = useStableCallback((event) => {
     const currentPos = getPrimaryPointerPosition(event);
     if (!currentPos) {
       return;
     }
-    let endAfterMove = false;
     if (!("touches" in event)) {
       const hasPrimaryButton = hasPrimaryMouseButton(event.buttons);
       if (hasPrimaryButton) {
         sawPrimaryButtonsOnMoveRef.current = true;
       }
-      if (event.buttons !== 0 && !hasPrimaryButton) {
+      const lostPrimaryButtonDuringSwipe = event.buttons === 0 && sawPrimaryButtonsOnMoveRef.current;
+      if (event.buttons !== 0 && !hasPrimaryButton || lostPrimaryButtonDuringSwipe) {
         cancelSwipeInteraction(event);
         return;
-      }
-      if (event.buttons === 0 && sawPrimaryButtonsOnMoveRef.current) {
-        if (!isSwipingRef.current) {
-          handleEnd(event);
-          return;
-        }
-        endAfterMove = true;
       }
     }
     if (!isSwiping && pendingSwipeRef.current) {
@@ -13097,39 +12816,169 @@ function useSwipeDismiss(options) {
     };
     lastMovePosRef.current = currentPos;
     handleMoveCore(event, currentPos, movement);
-    if (endAfterMove && !("touches" in event)) {
-      handleEnd(event);
+  });
+  const handleEnd = useStableCallback((event) => {
+    if (!enabled) {
+      return;
+    }
+    const resolvedDragOffset = dragOffsetRef.current;
+    const resolvedInitialTransform = initialTransformRef.current;
+    const releaseDeltaX = resolvedDragOffset.x - resolvedInitialTransform.x;
+    const releaseDeltaY = resolvedDragOffset.y - resolvedInitialTransform.y;
+    const progressDetails = {
+      deltaX: releaseDeltaX,
+      deltaY: releaseDeltaY,
+      direction: currentSwipeDirection ?? intendedSwipeDirectionRef.current
+    };
+    if (!isSwipingRef.current) {
+      resetPendingSwipeState();
+      updateSwipeProgress(0, progressDetails);
+      return;
+    }
+    setSwiping(false);
+    setIsRealSwipe(false);
+    setLockedDirection(null);
+    resetPendingSwipeState();
+    sawPrimaryButtonsOnMoveRef.current = false;
+    const element = elementRef.current;
+    if (element) {
+      if (!("touches" in event)) {
+        safelyChangePointerCapture(element, event.pointerId, "releasePointerCapture");
+      }
+    }
+    const deltaX = releaseDeltaX;
+    const deltaY = releaseDeltaY;
+    const startTime = swipeStartTimeRef.current;
+    const endTime = getValidTimeStamp(event.timeStamp);
+    const durationMs = startTime !== null && endTime !== null && endTime > startTime ? endTime - startTime : 0;
+    const velocityDurationMs = durationMs > 0 ? Math.max(durationMs, MIN_VELOCITY_DURATION_MS) : 0;
+    const velocityX = velocityDurationMs > 0 ? deltaX / velocityDurationMs : 0;
+    const velocityY = velocityDurationMs > 0 ? deltaY / velocityDurationMs : 0;
+    let releaseVelocityX = lastDragVelocityRef.current.x;
+    let releaseVelocityY = lastDragVelocityRef.current.y;
+    const lastSample = lastDragSampleRef.current;
+    if (lastSample && endTime !== null && endTime >= lastSample.time) {
+      const ageMs = endTime - lastSample.time;
+      if (ageMs <= MAX_RELEASE_VELOCITY_AGE_MS) {
+        const sampleDurationMs = Math.max(ageMs, MIN_RELEASE_VELOCITY_DURATION_MS);
+        const deltaFromLastSampleX = resolvedDragOffset.x - lastSample.x;
+        const deltaFromLastSampleY = resolvedDragOffset.y - lastSample.y;
+        const sampleVelocityX = deltaFromLastSampleX / sampleDurationMs;
+        const sampleVelocityY = deltaFromLastSampleY / sampleDurationMs;
+        if (sampleVelocityX !== 0) {
+          releaseVelocityX = sampleVelocityX;
+        }
+        if (sampleVelocityY !== 0) {
+          releaseVelocityY = sampleVelocityY;
+        }
+      } else {
+        releaseVelocityX = 0;
+        releaseVelocityY = 0;
+      }
+    }
+    const releaseDecision = onRelease?.({
+      event: event.nativeEvent,
+      direction: currentSwipeDirection ?? intendedSwipeDirectionRef.current,
+      deltaX,
+      deltaY,
+      velocityX,
+      velocityY,
+      releaseVelocityX,
+      releaseVelocityY
+    });
+    const hasReleaseDecision = typeof releaseDecision === "boolean";
+    if (cancelledSwipeRef.current && !hasReleaseDecision) {
+      dragOffsetRef.current = {
+        x: resolvedInitialTransform.x,
+        y: resolvedInitialTransform.y
+      };
+      setDragOffset({
+        x: resolvedInitialTransform.x,
+        y: resolvedInitialTransform.y
+      });
+      setCurrentSwipeDirection(void 0);
+      updateSwipeProgress(0, progressDetails);
+      return;
+    }
+    let shouldClose = false;
+    let dismissDirection;
+    if (hasReleaseDecision) {
+      shouldClose = releaseDecision;
+      dismissDirection = currentSwipeDirection ?? intendedSwipeDirectionRef.current ?? primaryDirection;
+    } else {
+      for (const direction of directions2) {
+        switch (direction) {
+          case "right":
+            if (deltaX > swipeThresholdRef.current) {
+              shouldClose = true;
+              dismissDirection = "right";
+            }
+            break;
+          case "left":
+            if (deltaX < -swipeThresholdRef.current) {
+              shouldClose = true;
+              dismissDirection = "left";
+            }
+            break;
+          case "down":
+            if (deltaY > swipeThresholdRef.current) {
+              shouldClose = true;
+              dismissDirection = "down";
+            }
+            break;
+          case "up":
+            if (deltaY < -swipeThresholdRef.current) {
+              shouldClose = true;
+              dismissDirection = "up";
+            }
+            break;
+          default:
+            break;
+        }
+        if (shouldClose) {
+          break;
+        }
+      }
+    }
+    if (shouldClose && dismissDirection) {
+      setCurrentSwipeDirection(dismissDirection);
+      setDragDismissed(true);
+      onDismiss?.(event.nativeEvent, {
+        direction: dismissDirection
+      });
+    } else {
+      dragOffsetRef.current = {
+        x: resolvedInitialTransform.x,
+        y: resolvedInitialTransform.y
+      };
+      setDragOffset({
+        x: resolvedInitialTransform.x,
+        y: resolvedInitialTransform.y
+      });
+      setCurrentSwipeDirection(void 0);
+      updateSwipeProgress(0, progressDetails);
     }
   });
-  const moveNative = useStableCallback((nativeEvent, currentTarget) => {
-    handleMove({
-      touches: nativeEvent.touches,
-      currentTarget,
-      nativeEvent,
-      defaultPrevented: nativeEvent.defaultPrevented,
-      timeStamp: nativeEvent.timeStamp
-    });
-  });
   const getDragStyles = React74.useCallback(() => {
-    const dragOffset = dragOffsetRef.current;
-    const initialTransform = initialTransformRef.current;
-    const deltaX = dragOffset.x - initialTransform.x;
-    const deltaY = dragOffset.y - initialTransform.y;
-    if (!isSwiping && deltaX === 0 && deltaY === 0 && !dragDismissed) {
+    const resolvedDragOffset = trackDrag ? dragOffset : dragOffsetRef.current;
+    const resolvedInitialTransform = trackDrag ? initialTransform : initialTransformRef.current;
+    if (!isSwiping && resolvedDragOffset.x === resolvedInitialTransform.x && resolvedDragOffset.y === resolvedInitialTransform.y && !dragDismissed) {
       return {
         [movementCssVars.x]: "0px",
         [movementCssVars.y]: "0px"
       };
     }
+    const deltaX = resolvedDragOffset.x - resolvedInitialTransform.x;
+    const deltaY = resolvedDragOffset.y - resolvedInitialTransform.y;
     return {
       transition: isSwiping ? "none" : void 0,
       // While swiping, freeze the element at its current visual transform so it doesn't snap to the
       // end position.
-      transform: isSwiping ? getDragTransform(dragOffset, initialTransform.scale) : void 0,
+      transform: isSwiping ? `translateX(${resolvedDragOffset.x}px) translateY(${resolvedDragOffset.y}px) scale(${resolvedInitialTransform.scale})` : void 0,
       [movementCssVars.x]: `${deltaX}px`,
       [movementCssVars.y]: `${deltaY}px`
     };
-  }, [dragDismissed, isSwiping, movementCssVars]);
+  }, [dragDismissed, dragOffset, initialTransform, isSwiping, movementCssVars, trackDrag]);
   const getPointerProps = React74.useCallback(() => {
     if (!enabled) {
       return {};
@@ -13158,13 +13007,12 @@ function useSwipeDismiss(options) {
     dragDismissed,
     getPointerProps,
     getTouchProps,
-    moveNative,
     getDragStyles,
     reset
   };
 }
 
-// node_modules/@base-ui/react/drawer/swipe-area/DrawerSwipeAreaDataAttributes.mjs
+// node_modules/@base-ui/react/esm/drawer/swipe-area/DrawerSwipeAreaDataAttributes.js
 var DrawerSwipeAreaDataAttributes = (function(DrawerSwipeAreaDataAttributes2) {
   DrawerSwipeAreaDataAttributes2[DrawerSwipeAreaDataAttributes2["open"] = CommonPopupDataAttributes.open] = "open";
   DrawerSwipeAreaDataAttributes2[DrawerSwipeAreaDataAttributes2["closed"] = CommonPopupDataAttributes.closed] = "closed";
@@ -13174,7 +13022,7 @@ var DrawerSwipeAreaDataAttributes = (function(DrawerSwipeAreaDataAttributes2) {
   return DrawerSwipeAreaDataAttributes2;
 })({});
 
-// node_modules/@base-ui/react/drawer/swipe-area/DrawerSwipeArea.mjs
+// node_modules/@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.js
 var DEFAULT_SWIPE_OPEN_RATIO = 0.5;
 var MIN_SWIPE_START_DISTANCE = 1;
 var VELOCITY_THRESHOLD = 0.1;
@@ -13534,25 +13382,15 @@ var DrawerSwipeArea = /* @__PURE__ */ React75.forwardRef(function DrawerSwipeAre
 });
 if (true) DrawerSwipeArea.displayName = "DrawerSwipeArea";
 
-// node_modules/@base-ui/react/drawer/title/DrawerTitle.mjs
+// node_modules/@base-ui/react/esm/drawer/title/DrawerTitle.js
 var DrawerTitle = DialogTitle;
 
-// node_modules/@base-ui/react/drawer/trigger/DrawerTrigger.mjs
+// node_modules/@base-ui/react/esm/drawer/trigger/DrawerTrigger.js
 var DrawerTrigger = DialogTrigger;
 
-// node_modules/@base-ui/react/drawer/viewport/DrawerViewport.mjs
-var React77 = __toESM(require_react(), 1);
-var ReactDOM7 = __toESM(require_react_dom(), 1);
-
-// node_modules/@base-ui/react/drawer/virtual-keyboard-provider/DrawerVirtualKeyboardContext.mjs
+// node_modules/@base-ui/react/esm/drawer/viewport/DrawerViewport.js
 var React76 = __toESM(require_react(), 1);
-var DrawerVirtualKeyboardContext = /* @__PURE__ */ React76.createContext(void 0);
-if (true) DrawerVirtualKeyboardContext.displayName = "DrawerVirtualKeyboardContext";
-function useDrawerVirtualKeyboardContext() {
-  return React76.useContext(DrawerVirtualKeyboardContext);
-}
-
-// node_modules/@base-ui/react/drawer/viewport/DrawerViewport.mjs
+var ReactDOM6 = __toESM(require_react_dom(), 1);
 var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
 var MIN_SWIPE_THRESHOLD = 10;
 var FAST_SWIPE_VELOCITY = 0.5;
@@ -13566,7 +13404,7 @@ var MAX_SWIPE_RELEASE_DURATION_MS = 360;
 var MIN_SWIPE_RELEASE_SCALAR = 0.1;
 var MAX_SWIPE_RELEASE_SCALAR = 1;
 var DRAWER_CONTENT_SELECTOR = `[${DRAWER_CONTENT_ATTRIBUTE}]`;
-var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2(props, forwardedRef) {
+var DrawerViewport = /* @__PURE__ */ React76.forwardRef(function DrawerViewport2(props, forwardedRef) {
   const {
     render: render4,
     className,
@@ -13577,8 +13415,6 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
   const {
     store
   } = useDialogRootContext();
-  const popupRef = store.context.popupRef;
-  const backdropRef = store.context.backdropRef;
   const {
     swipeDirection,
     notifyParentSwipingChange,
@@ -13606,18 +13442,16 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
   const scrollAxis = swipeDirection === "left" || swipeDirection === "right" ? "horizontal" : "vertical";
   const isVerticalScrollAxis = scrollAxis === "vertical";
   const crossScrollAxis = isVerticalScrollAxis ? "horizontal" : "vertical";
-  const [swipeRelease, setSwipeRelease] = React77.useState(null);
-  const pendingSwipeCloseSnapPointRef = React77.useRef(void 0);
-  const resetSwipeRef = React77.useRef(null);
+  const [swipeRelease, setSwipeRelease] = React76.useState(null);
+  const pendingSwipeCloseSnapPointRef = React76.useRef(void 0);
+  const resetSwipeRef = React76.useRef(null);
   const controlledDismissFrame = useAnimationFrame();
-  const swipingRef = React77.useRef(false);
-  const nestedSwipeActiveRef = React77.useRef(false);
-  const lastPointerTypeRef = React77.useRef("");
-  const ignoreNextTouchStartFromPenRef = React77.useRef(false);
-  const ignoreTouchSwipeRef = React77.useRef(false);
-  const touchScrollStateRef = React77.useRef(null);
-  const virtualKeyboard = useDrawerVirtualKeyboardContext();
-  const snapPointRange = React77.useMemo(() => {
+  const nestedSwipeActiveRef = React76.useRef(false);
+  const lastPointerTypeRef = React76.useRef("");
+  const ignoreNextTouchStartFromPenRef = React76.useRef(false);
+  const ignoreTouchSwipeRef = React76.useRef(false);
+  const touchScrollStateRef = React76.useRef(null);
+  const snapPointRange = React76.useMemo(() => {
     if (!snapPoints || snapPoints.length < 2) {
       return null;
     }
@@ -13647,24 +13481,24 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
       range
     };
   }, [resolvedSnapPoints, snapPoints, swipeDirection]);
-  const snapPointProgress = React77.useMemo(() => {
+  const snapPointProgress = React76.useMemo(() => {
     if (!snapPointRange || activeSnapPointOffset === null) {
       return null;
     }
     return clamp2((activeSnapPointOffset - snapPointRange.minOffset) / snapPointRange.range, 0, 1);
   }, [activeSnapPointOffset, snapPointRange]);
-  const swipeDirections = React77.useMemo(() => {
+  const swipeDirections = React76.useMemo(() => {
     if (snapPoints && snapPoints.length > 0 && (swipeDirection === "down" || swipeDirection === "up")) {
       return swipeDirection === "down" ? ["down", "up"] : ["up", "down"];
     }
     return [swipeDirection];
   }, [snapPoints, swipeDirection]);
   const setSwipeDismissed = useStableCallback((dismissed) => {
-    setSwipeDismissedElements(popupRef.current, backdropRef.current, dismissed);
+    setSwipeDismissedElements(store.context.popupRef.current, store.context.backdropRef.current, dismissed);
   });
   const clearSwipeRelease = useStableCallback(() => {
     setSwipeDismissed(false);
-    popupRef.current?.removeAttribute(TransitionStatusDataAttributes.endingStyle);
+    store.context.popupRef.current?.removeAttribute(TransitionStatusDataAttributes.endingStyle);
     setSwipeRelease(null);
   });
   const finishNestedSwipe = useStableCallback(() => {
@@ -13692,7 +13526,7 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
       swipeProgress,
       frontmostHeight: swipeProgress > 0 ? frontmostHeight : 0
     });
-    const backdropElement = backdropRef.current;
+    const backdropElement = store.context.backdropRef.current;
     if (!backdropElement) {
       return;
     }
@@ -13787,7 +13621,7 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
       if ("touches" in event || "pointerType" in event && event.pointerType === "touch") {
         return;
       }
-      const popupElement = popupRef.current;
+      const popupElement = store.context.popupRef.current;
       if (!popupElement) {
         return;
       }
@@ -13804,7 +13638,6 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
       selection.removeAllRanges();
     },
     onSwipingChange(swiping) {
-      swipingRef.current = swiping;
       setBackdropSwipingAttribute(store.context.backdropRef.current, swiping);
       if (!swiping && !notifyParentSwipeProgressChange) {
         finishNestedSwipe();
@@ -13838,16 +13671,9 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
     },
     onProgress(progress, details) {
       updateNestedSwipeActive(details);
-      const hasSnapPoints = Boolean(snapPoints && snapPoints.length > 0);
-      if (swipingRef.current && swipeDirection === "down" && hasSnapPoints && details && Number.isFinite(details.deltaY)) {
-        const popupElement = store.context.popupRef.current;
-        if (popupElement) {
-          popupElement.style.removeProperty("transform");
-          popupElement.style.setProperty(DrawerPopupCssVars.swipeMovementY, `${getSnapPointSwipeMovement(activeSnapPointOffset ?? 0, details.deltaY)}px`);
-        }
-      }
       const currentDirection = details?.direction ?? swipe2.swipeDirection;
       const isDismissSwipe = currentDirection === void 0 || currentDirection === swipeDirection;
+      const hasSnapPoints = Boolean(snapPoints && snapPoints.length > 0);
       const isVerticalSwipe = swipeDirection === "down" || swipeDirection === "up";
       const shouldTrackProgress = hasSnapPoints && isVerticalSwipe || !hasSnapPoints || swipeDirection === "left" || swipeDirection === "right" || isDismissSwipe;
       let resolvedProgress = progress;
@@ -13898,7 +13724,7 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
         setSwipeDismissed(true);
         popupElement.style.removeProperty("transition");
         popupElement.setAttribute(TransitionStatusDataAttributes.endingStyle, "");
-        ReactDOM7.flushSync(() => {
+        ReactDOM6.flushSync(() => {
           setSwipeRelease(resolveSwipeRelease({
             direction: resolvedDirection,
             ...swipeReleasePayload
@@ -14090,12 +13916,9 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
   });
   const swipePointerProps = swipe2.getPointerProps();
   const swipeTouchProps = swipe2.getTouchProps();
-  const {
-    moveNative: moveSwipeNative,
-    reset: resetSwipe
-  } = swipe2;
+  const resetSwipe = swipe2.reset;
   resetSwipeRef.current = resetSwipe;
-  React77.useEffect(() => {
+  React76.useEffect(() => {
     const rootElement = viewportElement ?? popupElementState;
     if (!rootElement) {
       return void 0;
@@ -14104,7 +13927,6 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
     const doc = ownerDocument(resolvedRootElement);
     const win = getWindow(doc);
     function handleNativeTouchMove(event) {
-      virtualKeyboard?.onTouchMove(event);
       if (ignoreTouchSwipeRef.current) {
         return;
       }
@@ -14137,8 +13959,6 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
         if (event.cancelable) {
           event.preventDefault();
         }
-        event.stopPropagation();
-        moveSwipeNative(event, resolvedRootElement);
         updateTouchScrollPosition(touchState, touch);
         return;
       }
@@ -14147,7 +13967,6 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
         if (event.cancelable) {
           event.preventDefault();
         }
-        event.stopPropagation();
         updateTouchScrollPosition(touchState, touch);
         return;
       }
@@ -14167,18 +13986,14 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
           event.preventDefault();
         }
       }
-      if (touchState.allowSwipe === true) {
-        event.stopPropagation();
-        moveSwipeNative(event, resolvedRootElement);
-      }
       updateTouchScrollPosition(touchState, touch);
     }
     return addEventListener(doc, "touchmove", handleNativeTouchMove, {
       passive: false,
       capture: true
     });
-  }, [mounted, nestedDrawerOpen, open, popupElementState, isVerticalScrollAxis, scrollAxis, swipeDirection, moveSwipeNative, viewportElement, virtualKeyboard]);
-  React77.useEffect(() => {
+  }, [mounted, nestedDrawerOpen, open, popupElementState, isVerticalScrollAxis, scrollAxis, swipeDirection, viewportElement]);
+  React76.useEffect(() => {
     if (!snapPointRange || swipe2.swiping) {
       return;
     }
@@ -14189,7 +14004,7 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
       notifyParent: false
     });
   }, [applySwipeProgress, frontmostHeight, nested, notifyParentSwipeProgressChange, open, snapPointProgress, snapPointRange, swipe2.swiping, store, visualStateStore]);
-  React77.useEffect(() => {
+  React76.useEffect(() => {
     if (!notifyParentSwipeProgressChange) {
       return void 0;
     }
@@ -14200,28 +14015,23 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
       notifyParentSwipeProgressChange(0);
     };
   }, [notifyParentSwipeProgressChange, open]);
-  React77.useEffect(() => {
+  React76.useEffect(() => {
     if (open) {
       resetSwipe();
       clearSwipeRelease();
     }
   }, [clearSwipeRelease, open, resetSwipe]);
-  React77.useEffect(() => {
-    const backdropElement = backdropRef.current;
+  React76.useEffect(() => {
     return () => {
       visualStateStore?.set({
         swipeProgress: 0,
         frontmostHeight: 0
       });
-      setBackdropSwipingAttribute(backdropElement, false);
-      const currentBackdrop = backdropRef.current;
-      if (currentBackdrop !== backdropElement) {
-        setBackdropSwipingAttribute(currentBackdrop, false);
-      }
+      setBackdropSwipingAttribute(store.context.backdropRef.current, false);
       finishNestedSwipe();
     };
-  }, [backdropRef, finishNestedSwipe, visualStateStore]);
-  const swipeProviderValue = React77.useMemo(() => ({
+  }, [finishNestedSwipe, store, visualStateStore]);
+  const swipeProviderValue = React76.useMemo(() => ({
     swiping: swipe2.swiping,
     getDragStyles: swipe2.getDragStyles,
     swipeStrength: swipeRelease ?? null,
@@ -14303,17 +14113,16 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
         }
         const doc = ownerDocument(event.currentTarget);
         const elementAtPoint = getElementAtPoint(doc, touch.clientX, touch.clientY);
+        ignoreTouchSwipeRef.current = isSwipeIgnoredTarget(elementAtPoint);
+        if (ignoreTouchSwipeRef.current) {
+          touchScrollStateRef.current = null;
+          return;
+        }
         const rootElement = viewportElement ?? popupElementState;
         const eventTarget = getTarget(event.nativeEvent);
         const target = isElement(eventTarget) ? eventTarget : null;
         if (rootElement && target && !contains(rootElement, target)) {
           ignoreTouchSwipeRef.current = true;
-          touchScrollStateRef.current = null;
-          return;
-        }
-        virtualKeyboard?.onTouchStart(event);
-        ignoreTouchSwipeRef.current = isSwipeIgnoredTarget(elementAtPoint);
-        if (ignoreTouchSwipeRef.current) {
           touchScrollStateRef.current = null;
           return;
         }
@@ -14340,13 +14149,27 @@ var DrawerViewport = /* @__PURE__ */ React77.forwardRef(function DrawerViewport2
         };
         swipeTouchProps.onTouchStart?.(event);
       },
+      onTouchMove(event) {
+        if (ignoreTouchSwipeRef.current) {
+          return;
+        }
+        if (isReactTouchEventOnRangeInput(event)) {
+          return;
+        }
+        const touchState = touchScrollStateRef.current;
+        if (touchState?.preserveNativeCrossAxisScroll) {
+          return;
+        }
+        if (touchState?.allowSwipe === false || touchState?.scrollTarget != null && !touchState.allowSwipe) {
+          return;
+        }
+        swipeTouchProps.onTouchMove?.(event);
+      },
       onTouchEnd(event) {
-        virtualKeyboard?.onTouchEnd(event);
         resetTouchTrackingState();
         swipeTouchProps.onTouchEnd?.(event);
       },
       onTouchCancel(event) {
-        virtualKeyboard?.onTouchCancel();
         resetTouchTrackingState();
         swipeTouchProps.onTouchCancel?.(event);
       },
@@ -14515,439 +14338,42 @@ function shouldDismissFromStartEdge(direction, axis) {
   return null;
 }
 
-// node_modules/@base-ui/react/drawer/virtual-keyboard-provider/DrawerVirtualKeyboardProvider.mjs
-var React78 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/react/drawer/viewport/DrawerViewportCssVars.mjs
-var DrawerViewportCssVars = /* @__PURE__ */ (function(DrawerViewportCssVars2) {
-  DrawerViewportCssVars2["keyboardInset"] = "--drawer-keyboard-inset";
-  return DrawerViewportCssVars2;
-})({});
-
-// node_modules/@base-ui/react/drawer/virtual-keyboard-provider/DrawerVirtualKeyboardProvider.mjs
-var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
-var KEYBOARD_RESIZE_THRESHOLD = 60;
-var KEYBOARD_VISIBILITY_MARGIN = 16;
-var KEYBOARD_SCROLL_SLACK = 48;
-var INPUT_TAP_MOVE_THRESHOLD = 10;
-var INPUT_TAP_HIT_SLOP = 16;
-var KEYBOARD_INPUT_TYPES = /* @__PURE__ */ new Set(["email", "number", "password", "search", "tel", "text", "url"]);
-var KEYBOARD_TAP_BLOCKED = /* @__PURE__ */ Symbol("KeyboardTapBlocked");
-function DrawerVirtualKeyboardProvider(props) {
-  const {
-    children
-  } = props;
-  const {
-    store
-  } = useDialogRootContext();
-  const open = store.useState("open");
-  const mounted = store.useState("mounted");
-  const nestedOpenDialogCount = store.useState("nestedOpenDialogCount");
-  const viewportElement = store.useState("viewportElement");
-  const rootElement = viewportElement;
-  const nestedDrawerOpen = nestedOpenDialogCount > 0;
-  const pendingKeyboardFocusMovedRef = React78.useRef(false);
-  const keyboardTouchStartRef = React78.useRef(null);
-  const focusedKeyboardTargetRef = React78.useRef(null);
-  const keyboardScrollAdjustmentRef = React78.useRef(null);
-  const keyboardFocusFrame = useAnimationFrame();
-  const restoreKeyboardScrollAdjustment = useStableCallback(() => {
-    const adjustment = keyboardScrollAdjustmentRef.current;
-    if (!adjustment) {
-      return;
-    }
-    adjustment.element.style.overflowAnchor = adjustment.overflowAnchor;
-    adjustment.element.style.paddingBottom = adjustment.paddingBottom;
-    adjustment.element.style.scrollPaddingBottom = adjustment.scrollPaddingBottom;
-    keyboardScrollAdjustmentRef.current = null;
-  });
-  const setKeyboardScrollSlack = useStableCallback((element, slack) => {
-    const roundedSlack = Math.max(0, Math.ceil(slack));
-    let adjustment = keyboardScrollAdjustmentRef.current;
-    if (adjustment && !adjustment.element.isConnected) {
-      restoreKeyboardScrollAdjustment();
-      adjustment = null;
-    }
-    if (roundedSlack === 0) {
-      restoreKeyboardScrollAdjustment();
-      return;
-    }
-    if (adjustment && adjustment.element !== element) {
-      restoreKeyboardScrollAdjustment();
-      adjustment = null;
-    }
-    if (!adjustment) {
-      const styles = getComputedStyle2(element);
-      adjustment = {
-        element,
-        overflowAnchor: element.style.overflowAnchor,
-        paddingBottom: element.style.paddingBottom,
-        scrollPaddingBottom: element.style.scrollPaddingBottom,
-        computedPaddingBottom: Number.parseFloat(styles.paddingBottom) || 0,
-        computedScrollPaddingBottom: Number.parseFloat(styles.scrollPaddingBottom) || 0
-      };
-      keyboardScrollAdjustmentRef.current = adjustment;
-    }
-    element.style.overflowAnchor = "none";
-    element.style.paddingBottom = `${adjustment.computedPaddingBottom + roundedSlack}px`;
-    element.style.scrollPaddingBottom = `${adjustment.computedScrollPaddingBottom + KEYBOARD_VISIBILITY_MARGIN}px`;
-  });
-  const animateKeyboardScroll = useStableCallback((element, scrollTop) => {
-    const win = getWindow(element);
-    const behavior = win.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? "auto" : "smooth";
-    element.scrollTo({
-      top: scrollTop,
-      behavior
-    });
-  });
-  const resetTouchTrackingState = useStableCallback(() => {
-    pendingKeyboardFocusMovedRef.current = false;
-    keyboardTouchStartRef.current = null;
-  });
-  React78.useEffect(() => {
-    if (!mounted || !open) {
-      focusedKeyboardTargetRef.current = null;
-      restoreKeyboardScrollAdjustment();
-      keyboardFocusFrame.cancel();
-      return void 0;
-    }
-    if (!rootElement) {
-      restoreKeyboardScrollAdjustment();
-      return void 0;
-    }
-    const doc = ownerDocument(rootElement);
-    const win = getWindow(rootElement);
-    const visualViewport = win.visualViewport;
-    const setDrawerKeyboardInset = (inset) => {
-      rootElement.style.setProperty(DrawerViewportCssVars.keyboardInset, `${Math.max(0, Math.ceil(inset))}px`);
-    };
-    const resetDrawerKeyboardInset = () => {
-      setDrawerKeyboardInset(0);
-    };
-    const clearFocusedKeyboardTarget = () => {
-      focusedKeyboardTargetRef.current = null;
-      resetDrawerKeyboardInset();
-      restoreKeyboardScrollAdjustment();
-      keyboardFocusFrame.cancel();
-    };
-    const alignFocusedKeyboardTarget = () => {
-      const target = focusedKeyboardTargetRef.current;
-      if (nestedDrawerOpen || !target || !contains(rootElement, target)) {
-        resetDrawerKeyboardInset();
-        restoreKeyboardScrollAdjustment();
-        return;
-      }
-      const keyboardViewport = getKeyboardVisualViewport(win);
-      if (!keyboardViewport) {
-        resetDrawerKeyboardInset();
-        restoreKeyboardScrollAdjustment();
-        return;
-      }
-      setDrawerKeyboardInset(getDrawerKeyboardInset(win, keyboardViewport));
-      const scrollTarget = findKeyboardScrollTarget(target, rootElement);
-      if (!scrollTarget) {
-        restoreKeyboardScrollAdjustment();
-        return;
-      }
-      if (!scrollTarget.isConnected || !contains(rootElement, scrollTarget)) {
-        resetDrawerKeyboardInset();
-        restoreKeyboardScrollAdjustment();
-        return;
-      }
-      const scrollTargetRect = scrollTarget.getBoundingClientRect();
-      const clippedBottom = Math.min(scrollTargetRect.bottom, keyboardViewport.bottom);
-      const overlap = Math.max(0, scrollTargetRect.bottom - keyboardViewport.bottom);
-      setKeyboardScrollSlack(scrollTarget, overlap > 0 ? overlap + KEYBOARD_SCROLL_SLACK : 0);
-      const maxScrollTop = Math.max(0, scrollTarget.scrollHeight - scrollTarget.clientHeight);
-      if (maxScrollTop <= 0) {
-        return;
-      }
-      const clippedTop = Math.max(scrollTargetRect.top, keyboardViewport.top);
-      const visibleTop = clippedTop + KEYBOARD_VISIBILITY_MARGIN;
-      const visibleBottom = clippedBottom - KEYBOARD_VISIBILITY_MARGIN;
-      if (visibleBottom <= visibleTop) {
-        return;
-      }
-      const targetRect = target.getBoundingClientRect();
-      const targetCenter = (targetRect.top + targetRect.bottom) / 2;
-      const visibleCenter = (visibleTop + visibleBottom) / 2;
-      const nextScrollTop = scrollTarget.scrollTop + targetCenter - visibleCenter;
-      animateKeyboardScroll(scrollTarget, clamp2(nextScrollTop, 0, maxScrollTop));
-    };
-    const scheduleKeyboardFocusAlignment = () => {
-      keyboardFocusFrame.request(alignFocusedKeyboardTarget);
-    };
-    const captureFocusedKeyboardTarget = (eventTarget) => {
-      if (nestedDrawerOpen) {
-        return false;
-      }
-      const target = resolveKeyboardInputTarget(eventTarget);
-      if (!target || !contains(rootElement, target)) {
-        return false;
-      }
-      focusedKeyboardTargetRef.current = target;
-      return true;
-    };
-    const handleFocusIn = (event) => {
-      if (captureFocusedKeyboardTarget(getTarget(event))) {
-        scheduleKeyboardFocusAlignment();
-      }
-    };
-    const handleFocusOut = (event) => {
-      if (captureFocusedKeyboardTarget(event.relatedTarget)) {
-        scheduleKeyboardFocusAlignment();
-        return;
-      }
-      clearFocusedKeyboardTarget();
-    };
-    const handleViewportUpdate = () => {
-      if (focusedKeyboardTargetRef.current || captureFocusedKeyboardTarget(activeElement(doc))) {
-        scheduleKeyboardFocusAlignment();
-      }
-    };
-    const cleanupListeners = [];
-    if (visualViewport) {
-      cleanupListeners.push(addEventListener(visualViewport, "resize", handleViewportUpdate), addEventListener(visualViewport, "scroll", handleViewportUpdate));
-    }
-    cleanupListeners.push(addEventListener(doc, "focusin", handleFocusIn, true), addEventListener(doc, "focusout", handleFocusOut, true));
-    if (captureFocusedKeyboardTarget(activeElement(doc))) {
-      scheduleKeyboardFocusAlignment();
-    }
-    return () => {
-      cleanupListeners.forEach((cleanup) => cleanup());
-      clearFocusedKeyboardTarget();
-      rootElement.style.removeProperty(DrawerViewportCssVars.keyboardInset);
-    };
-  }, [animateKeyboardScroll, keyboardFocusFrame, mounted, nestedDrawerOpen, open, restoreKeyboardScrollAdjustment, rootElement, setKeyboardScrollSlack]);
-  const onTouchStart = useStableCallback((event) => {
-    if (!open || !mounted || nestedDrawerOpen) {
-      resetTouchTrackingState();
-      return;
-    }
-    const touch = event.touches[0];
-    if (!touch) {
-      return;
-    }
-    pendingKeyboardFocusMovedRef.current = false;
-    keyboardTouchStartRef.current = {
-      x: touch.clientX,
-      y: touch.clientY
-    };
-  });
-  const onTouchMove = useStableCallback((event) => {
-    const touch = event.touches[0];
-    const touchStart = keyboardTouchStartRef.current;
-    if (!touch || !touchStart || pendingKeyboardFocusMovedRef.current) {
-      return;
-    }
-    if (Math.abs(touch.clientX - touchStart.x) > INPUT_TAP_MOVE_THRESHOLD || Math.abs(touch.clientY - touchStart.y) > INPUT_TAP_MOVE_THRESHOLD) {
-      pendingKeyboardFocusMovedRef.current = true;
-    }
-  });
-  const onTouchEnd = useStableCallback((event) => {
-    if (!open || !mounted || nestedDrawerOpen || !rootElement || !keyboardTouchStartRef.current || pendingKeyboardFocusMovedRef.current) {
-      resetTouchTrackingState();
-      return;
-    }
-    const touch = event.changedTouches[0] ?? event.touches[0];
-    const doc = ownerDocument(event.currentTarget);
-    const nativeEventTarget = getTarget(event.nativeEvent);
-    const pointTarget = touch ? resolveKeyboardTouchTargetFromPoint(doc, touch.clientX, touch.clientY) : null;
-    if (pointTarget === KEYBOARD_TAP_BLOCKED) {
-      resetTouchTrackingState();
-      return;
-    }
-    const keyboardTarget = touch && (pointTarget ?? resolveKeyboardTouchTarget(nativeEventTarget));
-    if (keyboardTarget && (!contains(rootElement, keyboardTarget.focusTarget) || !contains(rootElement, keyboardTarget.clickTarget))) {
-      resetTouchTrackingState();
-      return;
-    }
-    if (keyboardTarget) {
-      const {
-        clickTarget: keyboardClickTarget,
-        focusTarget: keyboardFocusTarget
-      } = keyboardTarget;
-      const win = getWindow(keyboardFocusTarget);
-      if (win.visualViewport && win.visualViewport.scale !== 1) {
-        resetTouchTrackingState();
-        return;
-      }
-      if (activeElement(ownerDocument(keyboardFocusTarget)) === keyboardFocusTarget && isKeyboardVisualViewportOpen(win)) {
-        resetTouchTrackingState();
-        return;
-      }
-      event.preventDefault();
-      focusKeyboardInputWithoutPageScroll(keyboardFocusTarget);
-      dispatchKeyboardClick(keyboardClickTarget, touch);
-      resetTouchTrackingState();
-      return;
-    }
-    resetTouchTrackingState();
-  });
-  const contextValue = React78.useMemo(() => ({
-    onTouchStart,
-    onTouchMove,
-    onTouchEnd,
-    onTouchCancel: resetTouchTrackingState
-  }), [onTouchEnd, onTouchMove, onTouchStart, resetTouchTrackingState]);
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DrawerVirtualKeyboardContext.Provider, {
-    value: contextValue,
-    children
-  });
-}
-function isKeyboardInputElement(element) {
-  if (element.isContentEditable) {
-    return true;
-  }
-  const win = getWindow(element);
-  if (element instanceof win.HTMLTextAreaElement || element instanceof win.HTMLInputElement && KEYBOARD_INPUT_TYPES.has(element.type)) {
-    return !element.matches(":disabled");
-  }
-  return false;
-}
-function resolveKeyboardInputTarget(target) {
-  if (!isHTMLElement(target)) {
-    return null;
-  }
-  if (isKeyboardInputElement(target)) {
-    return target.isContentEditable ? getContentEditableHost(target) : target;
-  }
-  const label = target.closest("label");
-  const control = label?.control ?? null;
-  return isHTMLElement(control) && isKeyboardInputElement(control) ? control : null;
-}
-function resolveKeyboardTouchTarget(target) {
-  const focusTarget = resolveKeyboardInputTarget(target);
-  if (!focusTarget) {
-    return null;
-  }
-  return {
-    focusTarget,
-    clickTarget: isHTMLElement(target) ? target : focusTarget
-  };
-}
-function getContentEditableHost(element) {
-  let host = element;
-  while (host.parentElement?.isContentEditable) {
-    host = host.parentElement;
-  }
-  return host;
-}
-function resolveKeyboardTouchTargetFromPoint(doc, clientX, clientY) {
-  const exactTarget = getElementAtPoint(doc, clientX, clientY);
-  const exactKeyboardTarget = resolveKeyboardInputTarget(exactTarget);
-  if (exactKeyboardTarget) {
-    return {
-      focusTarget: exactKeyboardTarget,
-      clickTarget: isHTMLElement(exactTarget) ? exactTarget : exactKeyboardTarget
-    };
-  }
-  if (isInteractiveElement(exactTarget) || exactTarget?.closest("label") != null) {
-    return KEYBOARD_TAP_BLOCKED;
-  }
-  for (const [offsetX, offsetY] of [[0, INPUT_TAP_HIT_SLOP], [0, -INPUT_TAP_HIT_SLOP], [INPUT_TAP_HIT_SLOP, 0], [-INPUT_TAP_HIT_SLOP, 0]]) {
-    const keyboardTarget = resolveKeyboardInputTarget(getElementAtPoint(doc, clientX + offsetX, clientY + offsetY));
-    if (keyboardTarget) {
-      return {
-        focusTarget: keyboardTarget,
-        clickTarget: keyboardTarget
-      };
-    }
-  }
-  return null;
-}
-function dispatchKeyboardClick(target, touch) {
-  const win = getWindow(target);
-  const ClickEvent = win.PointerEvent ?? win.MouseEvent;
-  target.dispatchEvent(new ClickEvent("click", {
-    bubbles: true,
-    cancelable: true,
-    clientX: touch.clientX,
-    clientY: touch.clientY,
-    detail: 1,
-    view: win
-  }));
-}
-function focusKeyboardInputWithoutPageScroll(target) {
-  const wasFocused = activeElement(ownerDocument(target)) === target;
-  const previousOpacity = target.style.opacity;
-  const previousTransform = target.style.transform;
-  const previousTransition = target.style.transition;
-  target.style.transition = "none";
-  target.style.opacity = "0";
-  target.style.transform = "translateY(-2000px)";
-  try {
-    if (wasFocused) {
-      target.blur();
-    }
-    target.focus({
-      preventScroll: true
-    });
-  } finally {
-    target.style.opacity = previousOpacity;
-    target.style.transform = previousTransform;
-    target.style.transition = previousTransition;
-  }
-}
-function findKeyboardScrollTarget(target, root) {
-  const scrollStart = getParentNode(target);
-  return findScrollableTouchTarget(scrollStart, root, "vertical") ?? findScrollableTouchTarget(scrollStart, root, "vertical", true);
-}
-function getKeyboardVisualViewport(win) {
-  const visualViewport = win.visualViewport;
-  if (!visualViewport || visualViewport.scale !== 1) {
-    return null;
-  }
-  const reducedHeight = win.innerHeight - visualViewport.height;
-  if (reducedHeight <= KEYBOARD_RESIZE_THRESHOLD) {
-    return null;
-  }
-  const top = Math.max(0, visualViewport.offsetTop);
-  return {
-    top,
-    bottom: Math.min(win.innerHeight, top + visualViewport.height)
-  };
-}
-function getDrawerKeyboardInset(win, keyboardViewport) {
-  return Math.max(0, win.innerHeight - keyboardViewport.bottom);
-}
-function isKeyboardVisualViewportOpen(win) {
-  return !win.visualViewport || getKeyboardVisualViewport(win) != null;
-}
-
-// node_modules/@base-ui/react/fieldset/root/FieldsetRootContext.mjs
-var React79 = __toESM(require_react(), 1);
-var FieldsetRootContext = /* @__PURE__ */ React79.createContext(void 0);
+// node_modules/@base-ui/react/esm/fieldset/root/FieldsetRootContext.js
+var React77 = __toESM(require_react(), 1);
+var FieldsetRootContext = /* @__PURE__ */ React77.createContext({
+  legendId: void 0,
+  setLegendId: () => {
+  },
+  disabled: void 0
+});
 if (true) FieldsetRootContext.displayName = "FieldsetRootContext";
 function useFieldsetRootContext(optional = false) {
-  const context = React79.useContext(FieldsetRootContext);
+  const context = React77.useContext(FieldsetRootContext);
   if (!context && !optional) {
     throw new Error(true ? "Base UI: FieldsetRootContext is missing. Fieldset parts must be placed within <Fieldset.Root>." : formatErrorMessage_default(86));
   }
   return context;
 }
 
-// node_modules/@base-ui/react/fieldset/index.parts.mjs
+// node_modules/@base-ui/react/esm/fieldset/index.parts.js
 var index_parts_exports5 = {};
 __export(index_parts_exports5, {
   Legend: () => FieldsetLegend,
   Root: () => FieldsetRoot
 });
 
-// node_modules/@base-ui/react/fieldset/root/FieldsetRoot.mjs
-var React80 = __toESM(require_react(), 1);
-var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
-var FieldsetRoot = /* @__PURE__ */ React80.forwardRef(function FieldsetRoot2(componentProps, forwardedRef) {
+// node_modules/@base-ui/react/esm/fieldset/root/FieldsetRoot.js
+var React78 = __toESM(require_react(), 1);
+var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+var FieldsetRoot = /* @__PURE__ */ React78.forwardRef(function FieldsetRoot2(componentProps, forwardedRef) {
   const {
     render: render4,
     className,
     style,
-    disabled: disabledProp = false,
+    disabled: disabled2 = false,
     ...elementProps
   } = componentProps;
-  const [legendId, setLegendId] = React80.useState(void 0);
-  const parentDisabled = useFieldsetRootContext(true)?.disabled;
-  const disabled2 = parentDisabled || disabledProp;
+  const [legendId, setLegendId] = React78.useState(void 0);
   const state = {
     disabled: disabled2
   };
@@ -14955,25 +14381,24 @@ var FieldsetRoot = /* @__PURE__ */ React80.forwardRef(function FieldsetRoot2(com
     ref: forwardedRef,
     state,
     props: [{
-      "aria-labelledby": legendId,
-      disabled: disabled2
+      "aria-labelledby": legendId
     }, elementProps]
   });
-  const contextValue = React80.useMemo(() => ({
+  const contextValue = React78.useMemo(() => ({
     legendId,
     setLegendId,
     disabled: disabled2
   }), [legendId, setLegendId, disabled2]);
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(FieldsetRootContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(FieldsetRootContext.Provider, {
     value: contextValue,
     children: element
   });
 });
 if (true) FieldsetRoot.displayName = "FieldsetRoot";
 
-// node_modules/@base-ui/react/fieldset/legend/FieldsetLegend.mjs
-var React81 = __toESM(require_react(), 1);
-var FieldsetLegend = /* @__PURE__ */ React81.forwardRef(function FieldsetLegend2(componentProps, forwardedRef) {
+// node_modules/@base-ui/react/esm/fieldset/legend/FieldsetLegend.js
+var React79 = __toESM(require_react(), 1);
+var FieldsetLegend = /* @__PURE__ */ React79.forwardRef(function FieldsetLegend2(componentProps, forwardedRef) {
   const {
     render: render4,
     className,
@@ -15006,11 +14431,11 @@ var FieldsetLegend = /* @__PURE__ */ React81.forwardRef(function FieldsetLegend2
 });
 if (true) FieldsetLegend.displayName = "FieldsetLegend";
 
-// node_modules/@base-ui/react/utils/FloatingPortalLite.mjs
-var React82 = __toESM(require_react(), 1);
-var ReactDOM8 = __toESM(require_react_dom(), 1);
-var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
-var FloatingPortalLite = /* @__PURE__ */ React82.forwardRef(function FloatingPortalLite2(componentProps, forwardedRef) {
+// node_modules/@base-ui/react/esm/utils/FloatingPortalLite.js
+var React80 = __toESM(require_react(), 1);
+var ReactDOM7 = __toESM(require_react_dom(), 1);
+var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+var FloatingPortalLite = /* @__PURE__ */ React80.forwardRef(function FloatingPortalLite2(componentProps, forwardedRef) {
   const {
     children,
     container,
@@ -15031,13 +14456,13 @@ var FloatingPortalLite = /* @__PURE__ */ React82.forwardRef(function FloatingPor
   if (!portalSubtree && !portalNode) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(React82.Fragment, {
-    children: [portalSubtree, portalNode && /* @__PURE__ */ ReactDOM8.createPortal(children, portalNode)]
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(React80.Fragment, {
+    children: [portalSubtree, portalNode && /* @__PURE__ */ ReactDOM7.createPortal(children, portalNode)]
   });
 });
 if (true) FloatingPortalLite.displayName = "FloatingPortalLite";
 
-// node_modules/@base-ui/react/tooltip/index.parts.mjs
+// node_modules/@base-ui/react/esm/tooltip/index.parts.js
 var index_parts_exports6 = {};
 __export(index_parts_exports6, {
   Arrow: () => TooltipArrow,
@@ -15052,23 +14477,24 @@ __export(index_parts_exports6, {
   createHandle: () => createTooltipHandle
 });
 
-// node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
-var React85 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/react/tooltip/root/TooltipRootContext.mjs
+// node_modules/@base-ui/react/esm/tooltip/root/TooltipRoot.js
 var React83 = __toESM(require_react(), 1);
-var TooltipRootContext = /* @__PURE__ */ React83.createContext(void 0);
+
+// node_modules/@base-ui/react/esm/tooltip/root/TooltipRootContext.js
+var React81 = __toESM(require_react(), 1);
+var TooltipRootContext = /* @__PURE__ */ React81.createContext(void 0);
 if (true) TooltipRootContext.displayName = "TooltipRootContext";
 function useTooltipRootContext(optional) {
-  const context = React83.useContext(TooltipRootContext);
+  const context = React81.useContext(TooltipRootContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: TooltipRootContext is missing. Tooltip parts must be placed within <Tooltip.Root>." : formatErrorMessage_default(72));
   }
   return context;
 }
 
-// node_modules/@base-ui/react/tooltip/store/TooltipStore.mjs
-var React84 = __toESM(require_react(), 1);
+// node_modules/@base-ui/react/esm/tooltip/store/TooltipStore.js
+var React82 = __toESM(require_react(), 1);
+var ReactDOM8 = __toESM(require_react_dom(), 1);
 var selectors3 = {
   ...popupStoreSelectors,
   disabled: createSelector((state) => state.disabled),
@@ -15090,18 +14516,45 @@ var TooltipStore = class _TooltipStore extends ReactStore {
     };
     state.floatingRootContext = createPopupFloatingRootContext(triggerElements, floatingId, nested);
     super(state, {
-      popupRef: /* @__PURE__ */ React84.createRef(),
+      popupRef: /* @__PURE__ */ React82.createRef(),
       onOpenChange: void 0,
       onOpenChangeComplete: void 0,
       triggerElements
     }, selectors3);
   }
   setOpen = (nextOpen, eventDetails) => {
-    applyPopupOpenChange(this, nextOpen, eventDetails, {
-      extraState: {
-        openChangeReason: eventDetails.reason
+    const reason = eventDetails.reason;
+    const isHover = reason === reason_parts_exports.triggerHover;
+    const isFocusOpen = nextOpen && reason === reason_parts_exports.triggerFocus;
+    const isDismissClose = !nextOpen && (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.escapeKey);
+    eventDetails.preventUnmountOnClose = () => {
+      this.set("preventUnmountingOnClose", true);
+    };
+    this.context.onOpenChange?.(nextOpen, eventDetails);
+    if (eventDetails.isCanceled) {
+      return;
+    }
+    this.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
+    const changeState = () => {
+      const updatedState = {
+        open: nextOpen,
+        openChangeReason: reason
+      };
+      if (isFocusOpen) {
+        updatedState.instantType = "focus";
+      } else if (isDismissClose) {
+        updatedState.instantType = "dismiss";
+      } else if (reason === reason_parts_exports.triggerHover) {
+        updatedState.instantType = void 0;
       }
-    });
+      setOpenTriggerState(updatedState, nextOpen, eventDetails.trigger);
+      this.update(updatedState);
+    };
+    if (isHover) {
+      ReactDOM8.flushSync(changeState);
+    } else {
+      changeState();
+    }
   };
   // Used by trigger clicks to clear a delayed hover open without reporting a public open-state change.
   cancelPendingOpen(event) {
@@ -15127,8 +14580,8 @@ function createInitialState2() {
   };
 }
 
-// node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
-var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+// node_modules/@base-ui/react/esm/tooltip/root/TooltipRoot.js
+var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
 var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const {
     disabled: disabled2 = false,
@@ -15150,7 +14603,14 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
     activeTriggerId: defaultTriggerIdProp,
     triggerIdProp
   });
-  useInitialOpenSync(store, openProp, defaultOpen, defaultTriggerIdProp);
+  useOnFirstRender(() => {
+    if (openProp === void 0 && store.state.open === false && defaultOpen === true) {
+      store.update({
+        open: true,
+        activeTriggerId: defaultTriggerIdProp
+      });
+    }
+  });
   store.useControlledProp("openProp", openProp);
   store.useControlledProp("triggerIdProp", triggerIdProp);
   store.useContextCallback("onOpenChange", onOpenChange);
@@ -15165,9 +14625,7 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
     disableHoverablePopup
   });
   store.useSyncedValue("disabled", disabled2);
-  useImplicitActiveTrigger(store, {
-    closeOnActiveTriggerUnmount: true
-  });
+  useImplicitActiveTrigger(store);
   const {
     forceUnmount,
     transitionStatus
@@ -15175,7 +14633,7 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const isInstantPhase = store.useState("isInstantPhase");
   const instantType = store.useState("instantType");
   const lastOpenChangeReason = store.useState("lastOpenChangeReason");
-  const previousInstantTypeRef = React85.useRef(null);
+  const previousInstantTypeRef = React83.useRef(null);
   useIsoLayoutEffect(() => {
     if (openState && disabled2) {
       store.setOpen(false, createChangeEventDetails(reason_parts_exports.disabled));
@@ -15199,17 +14657,17 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
       }
     }
   }, [store, activeTriggerId, open]);
-  const handleImperativeClose = React85.useCallback(() => {
+  const handleImperativeClose = React83.useCallback(() => {
     store.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction));
   }, [store]);
-  React85.useImperativeHandle(actionsRef, () => ({
+  React83.useImperativeHandle(actionsRef, () => ({
     unmount: forceUnmount,
     close: handleImperativeClose
   }), [forceUnmount, handleImperativeClose]);
   const shouldRenderInteractions = open || mounted || !disabled2 && trackCursorAxis !== "none";
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(TooltipRootContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(TooltipRootContext.Provider, {
     value: store,
-    children: [shouldRenderInteractions && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(TooltipInteractions, {
+    children: [shouldRenderInteractions && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(TooltipInteractions, {
       store,
       disabled: disabled2,
       trackCursorAxis
@@ -15233,9 +14691,9 @@ function TooltipInteractions({
     enabled: !disabled2 && trackCursorAxis !== "none",
     axis: trackCursorAxis === "none" ? void 0 : trackCursorAxis
   });
-  const activeTriggerProps = React85.useMemo(() => mergeProps(clientPoint.reference, dismiss.reference), [clientPoint.reference, dismiss.reference]);
-  const inactiveTriggerProps = React85.useMemo(() => mergeProps(clientPoint.trigger, dismiss.trigger), [clientPoint.trigger, dismiss.trigger]);
-  const popupProps = React85.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, clientPoint.floating, dismiss.floating), [clientPoint.floating, dismiss.floating]);
+  const activeTriggerProps = React83.useMemo(() => mergeProps(clientPoint.reference, dismiss.reference), [clientPoint.reference, dismiss.reference]);
+  const inactiveTriggerProps = React83.useMemo(() => mergeProps(clientPoint.trigger, dismiss.trigger), [clientPoint.trigger, dismiss.trigger]);
+  const popupProps = React83.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, clientPoint.floating, dismiss.floating), [clientPoint.floating, dismiss.floating]);
   usePopupInteractionProps(store, {
     activeTriggerProps,
     inactiveTriggerProps,
@@ -15244,28 +14702,28 @@ function TooltipInteractions({
   return null;
 }
 
-// node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
-var React87 = __toESM(require_react(), 1);
+// node_modules/@base-ui/react/esm/tooltip/trigger/TooltipTrigger.js
+var React85 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/tooltip/provider/TooltipProviderContext.mjs
-var React86 = __toESM(require_react(), 1);
-var TooltipProviderContext = /* @__PURE__ */ React86.createContext(void 0);
+// node_modules/@base-ui/react/esm/tooltip/provider/TooltipProviderContext.js
+var React84 = __toESM(require_react(), 1);
+var TooltipProviderContext = /* @__PURE__ */ React84.createContext(void 0);
 if (true) TooltipProviderContext.displayName = "TooltipProviderContext";
 function useTooltipProviderContext() {
-  return React86.useContext(TooltipProviderContext);
+  return React84.useContext(TooltipProviderContext);
 }
 
-// node_modules/@base-ui/react/tooltip/trigger/TooltipTriggerDataAttributes.mjs
+// node_modules/@base-ui/react/esm/tooltip/trigger/TooltipTriggerDataAttributes.js
 var TooltipTriggerDataAttributes = (function(TooltipTriggerDataAttributes2) {
   TooltipTriggerDataAttributes2[TooltipTriggerDataAttributes2["popupOpen"] = CommonTriggerDataAttributes.popupOpen] = "popupOpen";
   TooltipTriggerDataAttributes2["triggerDisabled"] = "data-trigger-disabled";
   return TooltipTriggerDataAttributes2;
 })({});
 
-// node_modules/@base-ui/react/tooltip/utils/constants.mjs
+// node_modules/@base-ui/react/esm/tooltip/utils/constants.js
 var OPEN_DELAY = 600;
 
-// node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
+// node_modules/@base-ui/react/esm/tooltip/trigger/TooltipTrigger.js
 var TOOLTIP_TRIGGER_IDENTIFIER = "data-base-ui-tooltip-trigger";
 function getTargetElement(event) {
   if ("composedPath" in event) {
@@ -15322,7 +14780,7 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
   const isTriggerActive = store.useState("isTriggerActive", thisTriggerId);
   const isOpenedByThisTrigger = store.useState("isOpenedByTrigger", thisTriggerId);
   const floatingRootContext = store.useState("floatingRootContext");
-  const triggerElementRef = React87.useRef(null);
+  const triggerElementRef = React85.useRef(null);
   const delayWithDefault = delay ?? OPEN_DELAY;
   const closeDelayWithDefault = closeDelay ?? 0;
   const {
@@ -15348,9 +14806,9 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
   const disabledRef = useValueAsRef(disabled2);
   const trackCursorAxis = store.useState("trackCursorAxis");
   const disableHoverablePopup = store.useState("disableHoverablePopup");
-  const isNestedTriggerHoveredRef = React87.useRef(false);
+  const isNestedTriggerHoveredRef = React85.useRef(false);
   const nestedTriggerOpenTimeout = useTimeout();
-  const pointerTypeRef = React87.useRef(void 0);
+  const pointerTypeRef = React85.useRef(void 0);
   function getOpenDelay() {
     const providerDelay = providerContext?.delay;
     const groupOpenValue = typeof delayRef.current === "object" ? delayRef.current.open : void 0;
@@ -15482,24 +14940,24 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
 });
 if (true) TooltipTrigger.displayName = "TooltipTrigger";
 
-// node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
-var React89 = __toESM(require_react(), 1);
+// node_modules/@base-ui/react/esm/tooltip/portal/TooltipPortal.js
+var React87 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/tooltip/portal/TooltipPortalContext.mjs
-var React88 = __toESM(require_react(), 1);
-var TooltipPortalContext = /* @__PURE__ */ React88.createContext(void 0);
+// node_modules/@base-ui/react/esm/tooltip/portal/TooltipPortalContext.js
+var React86 = __toESM(require_react(), 1);
+var TooltipPortalContext = /* @__PURE__ */ React86.createContext(void 0);
 if (true) TooltipPortalContext.displayName = "TooltipPortalContext";
 function useTooltipPortalContext() {
-  const value = React88.useContext(TooltipPortalContext);
+  const value = React86.useContext(TooltipPortalContext);
   if (value === void 0) {
     throw new Error(true ? "Base UI: <Tooltip.Portal> is missing." : formatErrorMessage_default(70));
   }
   return value;
 }
 
-// node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
-var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
-var TooltipPortal = /* @__PURE__ */ React89.forwardRef(function TooltipPortal2(props, forwardedRef) {
+// node_modules/@base-ui/react/esm/tooltip/portal/TooltipPortal.js
+var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+var TooltipPortal = /* @__PURE__ */ React87.forwardRef(function TooltipPortal2(props, forwardedRef) {
   const {
     keepMounted = false,
     ...portalProps
@@ -15510,9 +14968,9 @@ var TooltipPortal = /* @__PURE__ */ React89.forwardRef(function TooltipPortal2(p
   if (!shouldRender) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(TooltipPortalContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(TooltipPortalContext.Provider, {
     value: keepMounted,
-    children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(FloatingPortalLite, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(FloatingPortalLite, {
       ref: forwardedRef,
       ...portalProps
     })
@@ -15520,24 +14978,24 @@ var TooltipPortal = /* @__PURE__ */ React89.forwardRef(function TooltipPortal2(p
 });
 if (true) TooltipPortal.displayName = "TooltipPortal";
 
-// node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
-var React91 = __toESM(require_react(), 1);
+// node_modules/@base-ui/react/esm/tooltip/positioner/TooltipPositioner.js
+var React89 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/tooltip/positioner/TooltipPositionerContext.mjs
-var React90 = __toESM(require_react(), 1);
-var TooltipPositionerContext = /* @__PURE__ */ React90.createContext(void 0);
+// node_modules/@base-ui/react/esm/tooltip/positioner/TooltipPositionerContext.js
+var React88 = __toESM(require_react(), 1);
+var TooltipPositionerContext = /* @__PURE__ */ React88.createContext(void 0);
 if (true) TooltipPositionerContext.displayName = "TooltipPositionerContext";
 function useTooltipPositionerContext() {
-  const context = React90.useContext(TooltipPositionerContext);
+  const context = React88.useContext(TooltipPositionerContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: TooltipPositionerContext is missing. TooltipPositioner parts must be placed within <Tooltip.Positioner>." : formatErrorMessage_default(71));
   }
   return context;
 }
 
-// node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
-var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
-var TooltipPositioner = /* @__PURE__ */ React91.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
+// node_modules/@base-ui/react/esm/tooltip/positioner/TooltipPositioner.js
+var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+var TooltipPositioner = /* @__PURE__ */ React89.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
   const {
     render: render4,
     className,
@@ -15584,7 +15042,7 @@ var TooltipPositioner = /* @__PURE__ */ React91.forwardRef(function TooltipPosit
     collisionAvoidance,
     adaptiveOrigin: hasViewport ? adaptiveOrigin : void 0
   });
-  const state = React91.useMemo(() => ({
+  const state = React89.useMemo(() => ({
     open,
     side: positioning.side,
     align: positioning.align,
@@ -15599,20 +15057,20 @@ var TooltipPositioner = /* @__PURE__ */ React91.forwardRef(function TooltipPosit
     hidden: !mounted,
     inert: !open || trackCursorAxis === "both" || disableHoverablePopup
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(TooltipPositionerContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(TooltipPositionerContext.Provider, {
     value: positioning,
     children: element
   });
 });
 if (true) TooltipPositioner.displayName = "TooltipPositioner";
 
-// node_modules/@base-ui/react/tooltip/popup/TooltipPopup.mjs
-var React92 = __toESM(require_react(), 1);
+// node_modules/@base-ui/react/esm/tooltip/popup/TooltipPopup.js
+var React90 = __toESM(require_react(), 1);
 var stateAttributesMapping10 = {
   ...popupStateMapping,
   ...transitionStatusMapping
 };
-var TooltipPopup = /* @__PURE__ */ React92.forwardRef(function TooltipPopup2(componentProps, forwardedRef) {
+var TooltipPopup = /* @__PURE__ */ React90.forwardRef(function TooltipPopup2(componentProps, forwardedRef) {
   const {
     render: render4,
     className,
@@ -15662,9 +15120,9 @@ var TooltipPopup = /* @__PURE__ */ React92.forwardRef(function TooltipPopup2(com
 });
 if (true) TooltipPopup.displayName = "TooltipPopup";
 
-// node_modules/@base-ui/react/tooltip/arrow/TooltipArrow.mjs
-var React93 = __toESM(require_react(), 1);
-var TooltipArrow = /* @__PURE__ */ React93.forwardRef(function TooltipArrow2(componentProps, forwardedRef) {
+// node_modules/@base-ui/react/esm/tooltip/arrow/TooltipArrow.js
+var React91 = __toESM(require_react(), 1);
+var TooltipArrow = /* @__PURE__ */ React91.forwardRef(function TooltipArrow2(componentProps, forwardedRef) {
   const {
     render: render4,
     className,
@@ -15701,26 +15159,26 @@ var TooltipArrow = /* @__PURE__ */ React93.forwardRef(function TooltipArrow2(com
 });
 if (true) TooltipArrow.displayName = "TooltipArrow";
 
-// node_modules/@base-ui/react/tooltip/provider/TooltipProvider.mjs
-var React94 = __toESM(require_react(), 1);
-var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+// node_modules/@base-ui/react/esm/tooltip/provider/TooltipProvider.js
+var React92 = __toESM(require_react(), 1);
+var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
 var TooltipProvider = function TooltipProvider2(props) {
   const {
     delay,
     closeDelay,
     timeout = 400
   } = props;
-  const contextValue = React94.useMemo(() => ({
+  const contextValue = React92.useMemo(() => ({
     delay,
     closeDelay
   }), [delay, closeDelay]);
-  const delayValue = React94.useMemo(() => ({
+  const delayValue = React92.useMemo(() => ({
     open: delay,
     close: closeDelay
   }), [delay, closeDelay]);
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(TooltipProviderContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(TooltipProviderContext.Provider, {
     value: contextValue,
-    children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(FloatingDelayGroup, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(FloatingDelayGroup, {
       delay: delayValue,
       timeoutMs: timeout,
       children: props.children
@@ -15729,23 +15187,23 @@ var TooltipProvider = function TooltipProvider2(props) {
 };
 if (true) TooltipProvider.displayName = "TooltipProvider";
 
-// node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
-var React95 = __toESM(require_react(), 1);
+// node_modules/@base-ui/react/esm/tooltip/viewport/TooltipViewport.js
+var React93 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/tooltip/viewport/TooltipViewportCssVars.mjs
+// node_modules/@base-ui/react/esm/tooltip/viewport/TooltipViewportCssVars.js
 var TooltipViewportCssVars = /* @__PURE__ */ (function(TooltipViewportCssVars2) {
   TooltipViewportCssVars2["popupWidth"] = "--popup-width";
   TooltipViewportCssVars2["popupHeight"] = "--popup-height";
   return TooltipViewportCssVars2;
 })({});
 
-// node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
+// node_modules/@base-ui/react/esm/tooltip/viewport/TooltipViewport.js
 var stateAttributesMapping11 = {
   activationDirection: (value) => value ? {
     "data-activation-direction": value
   } : null
 };
-var TooltipViewport = /* @__PURE__ */ React95.forwardRef(function TooltipViewport2(componentProps, forwardedRef) {
+var TooltipViewport = /* @__PURE__ */ React93.forwardRef(function TooltipViewport2(componentProps, forwardedRef) {
   const {
     render: render4,
     className,
@@ -15781,7 +15239,7 @@ var TooltipViewport = /* @__PURE__ */ React95.forwardRef(function TooltipViewpor
 });
 if (true) TooltipViewport.displayName = "TooltipViewport";
 
-// node_modules/@base-ui/react/tooltip/store/TooltipHandle.mjs
+// node_modules/@base-ui/react/esm/tooltip/store/TooltipHandle.js
 var TooltipHandle = class {
   /**
    * Internal store holding the tooltip state.
@@ -15822,7 +15280,7 @@ function createTooltipHandle() {
   return new TooltipHandle();
 }
 
-// node_modules/@base-ui/react/use-render/useRender.mjs
+// node_modules/@base-ui/react/esm/use-render/useRender.js
 function useRender(params) {
   return useRenderElement(params.defaultTagName ?? "div", params, params);
 }
@@ -15936,7 +15394,7 @@ var Text = (0, import_element12.forwardRef)(function Text2({ variant = "body-md"
 });
 
 // packages/ui/build-module/badge/badge.mjs
-var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE2 = "data-wp-hash";
 function getRuntime2() {
   const globalScope = globalThis;
@@ -16022,7 +15480,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default2 = { "badge": "_96e6251aad1a6136__badge", "is-high-intent": "_99f7158cb520f750__is-high-intent", "is-medium-intent": "c20ebef2365bc8b7__is-medium-intent", "is-low-intent": "_365e1626c6202e52__is-low-intent", "is-stable-intent": "_33f8198127ddf4ef__is-stable-intent", "is-informational-intent": "_04c1aca8fc449412__is-informational-intent", "is-draft-intent": "_90726e69d495ec19__is-draft-intent", "is-none-intent": "_898f4a544993bd39__is-none-intent" };
 var Badge = (0, import_element13.forwardRef)(function Badge2({ intent = "none", className, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
     Text,
     {
       ref,
@@ -16040,7 +15498,7 @@ var Badge = (0, import_element13.forwardRef)(function Badge2({ intent = "none", 
 // packages/ui/build-module/button/button.mjs
 var import_element14 = __toESM(require_element(), 1);
 var import_i18n = __toESM(require_i18n(), 1);
-var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
 import { speak } from "@wordpress/a11y";
 var STYLE_HASH_ATTRIBUTE3 = "data-wp-hash";
 function getRuntime3() {
@@ -16123,7 +15581,7 @@ function registerStyle3(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle3("ed71fae0df", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-medium,499);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:before{aspect-ratio:1;border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid;border-block-end-color:transparent;border-block-start-color:var(--wp-ui-button-foreground-color);border-inline-end-color:var(--wp-ui-button-foreground-color);border-inline-start-color:transparent;border-radius:50%;box-sizing:border-box;content:"";display:block;height:var(--wp-ui-button-font-size);inset-inline-start:50%;opacity:0;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%);@media not (prefers-reduced-motion){transition:opacity .1s ease-out}@media (forced-colors:active){border-block-end-style:none;border-bottom-color:ButtonText;border-inline-start-style:none;border-left-color:ButtonText;border-right-color:ButtonText;border-top-color:ButtonText}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-block:0;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._9f6fc6553aeb36fe__icon{margin:var(--wp-ui-button-icon-margin)}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.ad0619a3217c6a5b__is-minimal[aria-pressed=true],&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._914b42f315c0e580__is-loading:not(.abbb272e2ce49bd6__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}*{opacity:0}&:before{opacity:1;transition-delay:.05s;@media not (prefers-reduced-motion){animation:_5a1d53da6f830c8d__loading-animation 1s linear infinite}}}}@keyframes _5a1d53da6f830c8d__loading-animation{0%{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}}');
+  registerStyle3("4c317b0736", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-medium,499);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:padding-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:before{aspect-ratio:1;border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid;border-block-end-color:transparent;border-block-start-color:var(--wp-ui-button-foreground-color);border-inline-end-color:var(--wp-ui-button-foreground-color);border-inline-start-color:transparent;border-radius:50%;box-sizing:border-box;content:"";display:block;height:var(--wp-ui-button-font-size);inset-inline-start:50%;opacity:0;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%);@media not (prefers-reduced-motion){transition:opacity .1s ease-out}@media (forced-colors:active){border-block-end-style:none;border-bottom-color:ButtonText;border-inline-start-style:none;border-left-color:ButtonText;border-right-color:ButtonText;border-top-color:ButtonText}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-block:0;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._9f6fc6553aeb36fe__icon{margin:var(--wp-ui-button-icon-margin)}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.ad0619a3217c6a5b__is-minimal[aria-pressed=true],&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._914b42f315c0e580__is-loading:not(.abbb272e2ce49bd6__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}*{opacity:0}&:before{opacity:1;transition-delay:.05s;@media not (prefers-reduced-motion){animation:_5a1d53da6f830c8d__loading-animation 1s linear infinite}}}}@keyframes _5a1d53da6f830c8d__loading-animation{0%{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}}');
 }
 var style_default3 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "icon": "_9f6fc6553aeb36fe__icon", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "loading-animation": "_5a1d53da6f830c8d__loading-animation" };
 if (typeof process === "undefined" || true) {
@@ -16167,7 +15625,7 @@ var Button3 = (0, import_element14.forwardRef)(
         speak(loadingAnnouncement);
       }
     }, [loading, loadingAnnouncement]);
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
       Button,
       {
         ref,
@@ -16187,9 +15645,9 @@ var import_element16 = __toESM(require_element(), 1);
 // packages/ui/build-module/icon/icon.mjs
 var import_element15 = __toESM(require_element(), 1);
 var import_primitives = __toESM(require_primitives(), 1);
-var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
 var Icon = (0, import_element15.forwardRef)(function Icon2({ icon, size: size4 = 24, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
     import_primitives.SVG,
     {
       ref,
@@ -16202,7 +15660,7 @@ var Icon = (0, import_element15.forwardRef)(function Icon2({ icon, size: size4 =
 });
 
 // packages/ui/build-module/button/icon.mjs
-var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE4 = "data-wp-hash";
 function getRuntime4() {
   const globalScope = globalThis;
@@ -16284,12 +15742,12 @@ function registerStyle4(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle4("ed71fae0df", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-medium,499);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:before{aspect-ratio:1;border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid;border-block-end-color:transparent;border-block-start-color:var(--wp-ui-button-foreground-color);border-inline-end-color:var(--wp-ui-button-foreground-color);border-inline-start-color:transparent;border-radius:50%;box-sizing:border-box;content:"";display:block;height:var(--wp-ui-button-font-size);inset-inline-start:50%;opacity:0;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%);@media not (prefers-reduced-motion){transition:opacity .1s ease-out}@media (forced-colors:active){border-block-end-style:none;border-bottom-color:ButtonText;border-inline-start-style:none;border-left-color:ButtonText;border-right-color:ButtonText;border-top-color:ButtonText}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-block:0;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._9f6fc6553aeb36fe__icon{margin:var(--wp-ui-button-icon-margin)}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.ad0619a3217c6a5b__is-minimal[aria-pressed=true],&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._914b42f315c0e580__is-loading:not(.abbb272e2ce49bd6__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}*{opacity:0}&:before{opacity:1;transition-delay:.05s;@media not (prefers-reduced-motion){animation:_5a1d53da6f830c8d__loading-animation 1s linear infinite}}}}@keyframes _5a1d53da6f830c8d__loading-animation{0%{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}}');
+  registerStyle4("4c317b0736", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-medium,499);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:padding-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:before{aspect-ratio:1;border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid;border-block-end-color:transparent;border-block-start-color:var(--wp-ui-button-foreground-color);border-inline-end-color:var(--wp-ui-button-foreground-color);border-inline-start-color:transparent;border-radius:50%;box-sizing:border-box;content:"";display:block;height:var(--wp-ui-button-font-size);inset-inline-start:50%;opacity:0;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%);@media not (prefers-reduced-motion){transition:opacity .1s ease-out}@media (forced-colors:active){border-block-end-style:none;border-bottom-color:ButtonText;border-inline-start-style:none;border-left-color:ButtonText;border-right-color:ButtonText;border-top-color:ButtonText}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-block:0;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._9f6fc6553aeb36fe__icon{margin:var(--wp-ui-button-icon-margin)}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.ad0619a3217c6a5b__is-minimal[aria-pressed=true],&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._914b42f315c0e580__is-loading:not(.abbb272e2ce49bd6__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}*{opacity:0}&:before{opacity:1;transition-delay:.05s;@media not (prefers-reduced-motion){animation:_5a1d53da6f830c8d__loading-animation 1s linear infinite}}}}@keyframes _5a1d53da6f830c8d__loading-animation{0%{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}}');
 }
 var style_default4 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "icon": "_9f6fc6553aeb36fe__icon", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "loading-animation": "_5a1d53da6f830c8d__loading-animation" };
 var ButtonIcon = (0, import_element16.forwardRef)(
   function ButtonIcon2({ className, icon, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
       Icon,
       {
         ref,
@@ -16722,11 +16180,11 @@ var FullBleed = (0, import_element20.forwardRef)(
 
 // packages/ui/build-module/card/title.mjs
 var import_element21 = __toESM(require_element(), 1);
-var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
-var DEFAULT_TAG = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", {});
+var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+var DEFAULT_TAG = /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", {});
 var Title = (0, import_element21.forwardRef)(
   function CardTitle({ render: render4 = DEFAULT_TAG, children, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
       Text,
       {
         ref,
@@ -16741,28 +16199,28 @@ var Title = (0, import_element21.forwardRef)(
 
 // packages/ui/build-module/collapsible/panel.mjs
 var import_element22 = __toESM(require_element(), 1);
-var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
 var Panel = (0, import_element22.forwardRef)(
   function CollapsiblePanel3(props, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(index_parts_exports2.Panel, { ref: forwardedRef, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(index_parts_exports2.Panel, { ref: forwardedRef, ...props });
   }
 );
 
 // packages/ui/build-module/collapsible/root.mjs
 var import_element23 = __toESM(require_element(), 1);
-var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
 var Root2 = (0, import_element23.forwardRef)(
   function CollapsibleRoot3(props, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(index_parts_exports2.Root, { ref: forwardedRef, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(index_parts_exports2.Root, { ref: forwardedRef, ...props });
   }
 );
 
 // packages/ui/build-module/collapsible/trigger.mjs
 var import_element24 = __toESM(require_element(), 1);
-var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
 var Trigger = (0, import_element24.forwardRef)(
   function CollapsibleTrigger3(props, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(index_parts_exports2.Trigger, { ref: forwardedRef, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(index_parts_exports2.Trigger, { ref: forwardedRef, ...props });
   }
 );
 
@@ -16777,14 +16235,14 @@ __export(collapsible_card_exports, {
 
 // packages/ui/build-module/collapsible-card/root.mjs
 var import_element25 = __toESM(require_element(), 1);
-var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
 var Root3 = (0, import_element25.forwardRef)(
   function CollapsibleCardRoot({ render: render4, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
       Root2,
       {
         ref,
-        render: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Root, { render: render4 }),
+        render: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(Root, { render: render4 }),
         ...restProps
       }
     );
@@ -16796,183 +16254,183 @@ var import_element27 = __toESM(require_element(), 1);
 
 // packages/icons/build-module/library/arrow-down.mjs
 var import_primitives2 = __toESM(require_primitives(), 1);
-var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
-var arrow_down_default = /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives2.Path, { d: "m16.5 13.5-3.7 3.7V4h-1.5v13.2l-3.8-3.7-1 1 5.5 5.6 5.5-5.6z" }) });
+var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+var arrow_down_default = /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives2.Path, { d: "m16.5 13.5-3.7 3.7V4h-1.5v13.2l-3.8-3.7-1 1 5.5 5.6 5.5-5.6z" }) });
 
 // packages/icons/build-module/library/arrow-left.mjs
 var import_primitives3 = __toESM(require_primitives(), 1);
-var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
-var arrow_left_default = /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives3.Path, { d: "M20 11.2H6.8l3.7-3.7-1-1L3.9 12l5.6 5.5 1-1-3.7-3.7H20z" }) });
+var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+var arrow_left_default = /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives3.Path, { d: "M20 11.2H6.8l3.7-3.7-1-1L3.9 12l5.6 5.5 1-1-3.7-3.7H20z" }) });
 
 // packages/icons/build-module/library/arrow-right.mjs
 var import_primitives4 = __toESM(require_primitives(), 1);
-var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
-var arrow_right_default = /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives4.Path, { d: "m14.5 6.5-1 1 3.7 3.7H4v1.6h13.2l-3.7 3.7 1 1 5.6-5.5z" }) });
+var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
+var arrow_right_default = /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives4.Path, { d: "m14.5 6.5-1 1 3.7 3.7H4v1.6h13.2l-3.7 3.7 1 1 5.6-5.5z" }) });
 
 // packages/icons/build-module/library/arrow-up.mjs
 var import_primitives5 = __toESM(require_primitives(), 1);
-var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
-var arrow_up_default = /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives5.Path, { d: "M12 3.9 6.5 9.5l1 1 3.8-3.7V20h1.5V6.8l3.7 3.7 1-1z" }) });
+var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+var arrow_up_default = /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives5.Path, { d: "M12 3.9 6.5 9.5l1 1 3.8-3.7V20h1.5V6.8l3.7 3.7 1-1z" }) });
 
 // packages/icons/build-module/library/block-table.mjs
 var import_primitives6 = __toESM(require_primitives(), 1);
-var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
-var block_table_default = /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives6.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v3.5h-15V5c0-.3.2-.5.5-.5zm8 5.5h6.5v3.5H13V10zm-1.5 3.5h-7V10h7v3.5zm-7 5.5v-4h7v4.5H5c-.3 0-.5-.2-.5-.5zm14.5.5h-6V15h6.5v4c0 .3-.2.5-.5.5z" }) });
+var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+var block_table_default = /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives6.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v3.5h-15V5c0-.3.2-.5.5-.5zm8 5.5h6.5v3.5H13V10zm-1.5 3.5h-7V10h7v3.5zm-7 5.5v-4h7v4.5H5c-.3 0-.5-.2-.5-.5zm14.5.5h-6V15h6.5v4c0 .3-.2.5-.5.5z" }) });
 
 // packages/icons/build-module/library/category.mjs
 var import_primitives7 = __toESM(require_primitives(), 1);
-var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
-var category_default = /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives7.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M6 5.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5V6a.5.5 0 01.5-.5zM4 6a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm11-.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5V6a.5.5 0 01.5-.5zM13 6a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2h-3a2 2 0 01-2-2V6zm5 8.5h-3a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5zM15 13a2 2 0 00-2 2v3a2 2 0 002 2h3a2 2 0 002-2v-3a2 2 0 00-2-2h-3zm-9 1.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5zM4 15a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2v-3z" }) });
+var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
+var category_default = /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives7.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M6 5.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5V6a.5.5 0 01.5-.5zM4 6a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm11-.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5V6a.5.5 0 01.5-.5zM13 6a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2h-3a2 2 0 01-2-2V6zm5 8.5h-3a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5zM15 13a2 2 0 00-2 2v3a2 2 0 002 2h3a2 2 0 002-2v-3a2 2 0 00-2-2h-3zm-9 1.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5zM4 15a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2v-3z" }) });
 
 // packages/icons/build-module/library/caution.mjs
 var import_primitives8 = __toESM(require_primitives(), 1);
-var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
-var caution_default = /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives8.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm-.75 12v-1.5h1.5V16h-1.5Zm0-8v5h1.5V8h-1.5Z" }) });
+var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+var caution_default = /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives8.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm-.75 12v-1.5h1.5V16h-1.5Zm0-8v5h1.5V8h-1.5Z" }) });
 
 // packages/icons/build-module/library/check.mjs
 var import_primitives9 = __toESM(require_primitives(), 1);
-var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
-var check_default = /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives9.Path, { d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z" }) });
+var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
+var check_default = /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives9.Path, { d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z" }) });
 
 // packages/icons/build-module/library/chevron-down.mjs
 var import_primitives10 = __toESM(require_primitives(), 1);
-var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
-var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives10.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
+var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
+var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives10.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
 
 // packages/icons/build-module/library/close-small.mjs
 var import_primitives11 = __toESM(require_primitives(), 1);
-var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
-var close_small_default = /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives11.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives11.Path, { d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z" }) });
+var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+var close_small_default = /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives11.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives11.Path, { d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z" }) });
 
 // packages/icons/build-module/library/close.mjs
 var import_primitives12 = __toESM(require_primitives(), 1);
-var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
-var close_default = /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives12.Path, { d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z" }) });
+var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+var close_default = /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives12.Path, { d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z" }) });
 
 // packages/icons/build-module/library/cog.mjs
 var import_primitives13 = __toESM(require_primitives(), 1);
-var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
-var cog_default = /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives13.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M10.289 4.836A1 1 0 0111.275 4h1.306a1 1 0 01.987.836l.244 1.466c.787.26 1.503.679 2.108 1.218l1.393-.522a1 1 0 011.216.437l.653 1.13a1 1 0 01-.23 1.273l-1.148.944a6.025 6.025 0 010 2.435l1.149.946a1 1 0 01.23 1.272l-.653 1.13a1 1 0 01-1.216.437l-1.394-.522c-.605.54-1.32.958-2.108 1.218l-.244 1.466a1 1 0 01-.987.836h-1.306a1 1 0 01-.986-.836l-.244-1.466a5.995 5.995 0 01-2.108-1.218l-1.394.522a1 1 0 01-1.217-.436l-.653-1.131a1 1 0 01.23-1.272l1.149-.946a6.026 6.026 0 010-2.435l-1.148-.944a1 1 0 01-.23-1.272l.653-1.131a1 1 0 011.217-.437l1.393.522a5.994 5.994 0 012.108-1.218l.244-1.466zM14.929 12a3 3 0 11-6 0 3 3 0 016 0z" }) });
+var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
+var cog_default = /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives13.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M10.289 4.836A1 1 0 0111.275 4h1.306a1 1 0 01.987.836l.244 1.466c.787.26 1.503.679 2.108 1.218l1.393-.522a1 1 0 011.216.437l.653 1.13a1 1 0 01-.23 1.273l-1.148.944a6.025 6.025 0 010 2.435l1.149.946a1 1 0 01.23 1.272l-.653 1.13a1 1 0 01-1.216.437l-1.394-.522c-.605.54-1.32.958-2.108 1.218l-.244 1.466a1 1 0 01-.987.836h-1.306a1 1 0 01-.986-.836l-.244-1.466a5.995 5.995 0 01-2.108-1.218l-1.394.522a1 1 0 01-1.217-.436l-.653-1.131a1 1 0 01.23-1.272l1.149-.946a6.026 6.026 0 010-2.435l-1.148-.944a1 1 0 01-.23-1.272l.653-1.131a1 1 0 011.217-.437l1.393.522a5.994 5.994 0 012.108-1.218l.244-1.466zM14.929 12a3 3 0 11-6 0 3 3 0 016 0z" }) });
 
 // packages/icons/build-module/library/columns.mjs
 var import_primitives14 = __toESM(require_primitives(), 1);
-var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
-var columns_default = /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives14.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M15 7.5h-5v10h5v-10Zm1.5 0v10H19a.5.5 0 0 0 .5-.5V8a.5.5 0 0 0-.5-.5h-2.5ZM6 7.5h2.5v10H6a.5.5 0 0 1-.5-.5V8a.5.5 0 0 1 .5-.5ZM6 6h13a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" }) });
+var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
+var columns_default = /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives14.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M15 7.5h-5v10h5v-10Zm1.5 0v10H19a.5.5 0 0 0 .5-.5V8a.5.5 0 0 0-.5-.5h-2.5ZM6 7.5h2.5v10H6a.5.5 0 0 1-.5-.5V8a.5.5 0 0 1 .5-.5ZM6 6h13a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" }) });
 
 // packages/icons/build-module/library/envelope.mjs
 var import_primitives15 = __toESM(require_primitives(), 1);
-var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
-var envelope_default = /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives15.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives15.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M3 7c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Zm2-.5h14c.3 0 .5.2.5.5v1L12 13.5 4.5 7.9V7c0-.3.2-.5.5-.5Zm-.5 3.3V17c0 .3.2.5.5.5h14c.3 0 .5-.2.5-.5V9.8L12 15.4 4.5 9.8Z" }) });
+var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
+var envelope_default = /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives15.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives15.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M3 7c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Zm2-.5h14c.3 0 .5.2.5.5v1L12 13.5 4.5 7.9V7c0-.3.2-.5.5-.5Zm-.5 3.3V17c0 .3.2.5.5.5h14c.3 0 .5-.2.5-.5V9.8L12 15.4 4.5 9.8Z" }) });
 
 // packages/icons/build-module/library/error.mjs
 var import_primitives16 = __toESM(require_primitives(), 1);
-var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
-var error_default = /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives16.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives16.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12.218 5.377a.25.25 0 0 0-.436 0l-7.29 12.96a.25.25 0 0 0 .218.373h14.58a.25.25 0 0 0 .218-.372l-7.29-12.96Zm-1.743-.735c.669-1.19 2.381-1.19 3.05 0l7.29 12.96a1.75 1.75 0 0 1-1.525 2.608H4.71a1.75 1.75 0 0 1-1.525-2.608l7.29-12.96ZM12.75 17.46h-1.5v-1.5h1.5v1.5Zm-1.5-3h1.5v-5h-1.5v5Z" }) });
+var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
+var error_default = /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives16.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives16.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12.218 5.377a.25.25 0 0 0-.436 0l-7.29 12.96a.25.25 0 0 0 .218.373h14.58a.25.25 0 0 0 .218-.372l-7.29-12.96Zm-1.743-.735c.669-1.19 2.381-1.19 3.05 0l7.29 12.96a1.75 1.75 0 0 1-1.525 2.608H4.71a1.75 1.75 0 0 1-1.525-2.608l7.29-12.96ZM12.75 17.46h-1.5v-1.5h1.5v1.5Zm-1.5-3h1.5v-5h-1.5v5Z" }) });
 
 // packages/icons/build-module/library/format-list-bullets-rtl.mjs
 var import_primitives17 = __toESM(require_primitives(), 1);
-var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
-var format_list_bullets_rtl_default = /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives17.Path, { d: "M4 8.8h8.9V7.2H4v1.6zm0 7h8.9v-1.5H4v1.5zM18 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" }) });
+var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
+var format_list_bullets_rtl_default = /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives17.Path, { d: "M4 8.8h8.9V7.2H4v1.6zm0 7h8.9v-1.5H4v1.5zM18 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" }) });
 
 // packages/icons/build-module/library/format-list-bullets.mjs
 var import_primitives18 = __toESM(require_primitives(), 1);
-var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
-var format_list_bullets_default = /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives18.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives18.Path, { d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM6 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" }) });
+var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
+var format_list_bullets_default = /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives18.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives18.Path, { d: "M11.1 15.8H20v-1.5h-8.9v1.5zm0-8.6v1.5H20V7.2h-8.9zM6 13c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" }) });
 
 // packages/icons/build-module/library/funnel.mjs
 var import_primitives19 = __toESM(require_primitives(), 1);
-var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
-var funnel_default = /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives19.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives19.Path, { d: "M10 17.5H14V16H10V17.5ZM6 6V7.5H18V6H6ZM8 12.5H16V11H8V12.5Z" }) });
+var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
+var funnel_default = /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives19.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives19.Path, { d: "M10 17.5H14V16H10V17.5ZM6 6V7.5H18V6H6ZM8 12.5H16V11H8V12.5Z" }) });
 
 // packages/icons/build-module/library/grid.mjs
 var import_primitives20 = __toESM(require_primitives(), 1);
-var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
-var grid_default = /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_primitives20.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_primitives20.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "m3 5c0-1.10457.89543-2 2-2h13.5c1.1046 0 2 .89543 2 2v13.5c0 1.1046-.8954 2-2 2h-13.5c-1.10457 0-2-.8954-2-2zm2-.5h6v6.5h-6.5v-6c0-.27614.22386-.5.5-.5zm-.5 8v6c0 .2761.22386.5.5.5h6v-6.5zm8 0v6.5h6c.2761 0 .5-.2239.5-.5v-6zm0-8v6.5h6.5v-6c0-.27614-.2239-.5-.5-.5z" }) });
+var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
+var grid_default = /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives20.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives20.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "m3 5c0-1.10457.89543-2 2-2h13.5c1.1046 0 2 .89543 2 2v13.5c0 1.1046-.8954 2-2 2h-13.5c-1.10457 0-2-.8954-2-2zm2-.5h6v6.5h-6.5v-6c0-.27614.22386-.5.5-.5zm-.5 8v6c0 .2761.22386.5.5.5h6v-6.5zm8 0v6.5h6c.2761 0 .5-.2239.5-.5v-6zm0-8v6.5h6.5v-6c0-.27614-.2239-.5-.5-.5z" }) });
 
 // packages/icons/build-module/library/home.mjs
 var import_primitives21 = __toESM(require_primitives(), 1);
-var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
-var home_default = /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_primitives21.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_primitives21.Path, { d: "M12 4L4 7.9V20h16V7.9L12 4zm6.5 14.5H14V13h-4v5.5H5.5V8.8L12 5.7l6.5 3.1v9.7z" }) });
+var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
+var home_default = /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_primitives21.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_primitives21.Path, { d: "M12 4L4 7.9V20h16V7.9L12 4zm6.5 14.5H14V13h-4v5.5H5.5V8.8L12 5.7l6.5 3.1v9.7z" }) });
 
 // packages/icons/build-module/library/info.mjs
 var import_primitives22 = __toESM(require_primitives(), 1);
-var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
-var info_default = /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_primitives22.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_primitives22.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm.75 4v1.5h-1.5V8h1.5Zm0 8v-5h-1.5v5h1.5Z" }) });
+var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
+var info_default = /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_primitives22.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_primitives22.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm.75 4v1.5h-1.5V8h1.5Zm0 8v-5h-1.5v5h1.5Z" }) });
 
 // packages/icons/build-module/library/layout.mjs
 var import_primitives23 = __toESM(require_primitives(), 1);
-var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
-var layout_default = /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_primitives23.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_primitives23.Path, { d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" }) });
+var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
+var layout_default = /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_primitives23.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_primitives23.Path, { d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" }) });
 
 // packages/icons/build-module/library/link.mjs
 var import_primitives24 = __toESM(require_primitives(), 1);
-var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
-var link_default = /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_primitives24.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_primitives24.Path, { d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z" }) });
+var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
+var link_default = /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_primitives24.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_primitives24.Path, { d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z" }) });
 
 // packages/icons/build-module/library/mobile.mjs
 var import_primitives25 = __toESM(require_primitives(), 1);
-var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
-var mobile_default = /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives25.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives25.Path, { d: "M15 4H9c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h6c.3 0 .5.2.5.5v12zm-4.5-.5h2V16h-2v1.5z" }) });
+var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
+var mobile_default = /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_primitives25.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_primitives25.Path, { d: "M15 4H9c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h6c.3 0 .5.2.5.5v12zm-4.5-.5h2V16h-2v1.5z" }) });
 
 // packages/icons/build-module/library/more-vertical.mjs
 var import_primitives26 = __toESM(require_primitives(), 1);
-var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
-var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives26.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives26.Path, { d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z" }) });
+var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
+var more_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives26.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(import_primitives26.Path, { d: "M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z" }) });
 
 // packages/icons/build-module/library/next.mjs
 var import_primitives27 = __toESM(require_primitives(), 1);
-var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
-var next_default = /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives27.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives27.Path, { d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z" }) });
+var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
+var next_default = /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives27.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(import_primitives27.Path, { d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z" }) });
 
 // packages/icons/build-module/library/pencil.mjs
 var import_primitives28 = __toESM(require_primitives(), 1);
-var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
-var pencil_default = /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives28.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives28.Path, { d: "m19 7-3-3-8.5 8.5-1 4 4-1L19 7Zm-7 11.5H5V20h7v-1.5Z" }) });
+var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
+var pencil_default = /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives28.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(import_primitives28.Path, { d: "m19 7-3-3-8.5 8.5-1 4 4-1L19 7Zm-7 11.5H5V20h7v-1.5Z" }) });
 
 // packages/icons/build-module/library/plugins.mjs
 var import_primitives29 = __toESM(require_primitives(), 1);
-var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
-var plugins_default = /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives29.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives29.Path, { d: "M10.5 4v4h3V4H15v4h1.5a1 1 0 011 1v4l-3 4v2a1 1 0 01-1 1h-3a1 1 0 01-1-1v-2l-3-4V9a1 1 0 011-1H9V4h1.5zm.5 12.5v2h2v-2l3-4v-3H8v3l3 4z" }) });
+var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
+var plugins_default = /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives29.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(import_primitives29.Path, { d: "M10.5 4v4h3V4H15v4h1.5a1 1 0 011 1v4l-3 4v2a1 1 0 01-1 1h-3a1 1 0 01-1-1v-2l-3-4V9a1 1 0 011-1H9V4h1.5zm.5 12.5v2h2v-2l3-4v-3H8v3l3 4z" }) });
 
 // packages/icons/build-module/library/plus.mjs
 var import_primitives30 = __toESM(require_primitives(), 1);
-var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
-var plus_default = /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_primitives30.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_primitives30.Path, { d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z" }) });
+var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
+var plus_default = /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives30.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(import_primitives30.Path, { d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z" }) });
 
 // packages/icons/build-module/library/previous.mjs
 var import_primitives31 = __toESM(require_primitives(), 1);
-var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
-var previous_default = /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_primitives31.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_primitives31.Path, { d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z" }) });
+var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
+var previous_default = /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_primitives31.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(import_primitives31.Path, { d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z" }) });
 
 // packages/icons/build-module/library/published.mjs
 var import_primitives32 = __toESM(require_primitives(), 1);
-var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
-var published_default = /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_primitives32.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_primitives32.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm11.53-1.47-1.06-1.06L11 12.94l-1.47-1.47-1.06 1.06L11 15.06l4.53-4.53Z" }) });
+var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
+var published_default = /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_primitives32.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_primitives32.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm11.53-1.47-1.06-1.06L11 12.94l-1.47-1.47-1.06 1.06L11 15.06l4.53-4.53Z" }) });
 
 // packages/icons/build-module/library/scheduled.mjs
 var import_primitives33 = __toESM(require_primitives(), 1);
-var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
-var scheduled_default = /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives33.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives33.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm9 1V8h-1.5v3.5h-2V13H13Z" }) });
+var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
+var scheduled_default = /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_primitives33.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(import_primitives33.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm9 1V8h-1.5v3.5h-2V13H13Z" }) });
 
 // packages/icons/build-module/library/search.mjs
 var import_primitives34 = __toESM(require_primitives(), 1);
-var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
-var search_default = /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives34.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives34.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
+var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
+var search_default = /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives34.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_primitives34.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
 
 // packages/icons/build-module/library/seen.mjs
 var import_primitives35 = __toESM(require_primitives(), 1);
-var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
-var seen_default = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives35.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives35.Path, { d: "M3.99961 13C4.67043 13.3354 4.6703 13.3357 4.67017 13.3359L4.67298 13.3305C4.67621 13.3242 4.68184 13.3135 4.68988 13.2985C4.70595 13.2686 4.7316 13.2218 4.76695 13.1608C4.8377 13.0385 4.94692 12.8592 5.09541 12.6419C5.39312 12.2062 5.84436 11.624 6.45435 11.0431C7.67308 9.88241 9.49719 8.75 11.9996 8.75C14.502 8.75 16.3261 9.88241 17.5449 11.0431C18.1549 11.624 18.6061 12.2062 18.9038 12.6419C19.0523 12.8592 19.1615 13.0385 19.2323 13.1608C19.2676 13.2218 19.2933 13.2686 19.3093 13.2985C19.3174 13.3135 19.323 13.3242 19.3262 13.3305L19.3291 13.3359C19.3289 13.3357 19.3288 13.3354 19.9996 13C20.6704 12.6646 20.6703 12.6643 20.6701 12.664L20.6697 12.6632L20.6688 12.6614L20.6662 12.6563L20.6583 12.6408C20.6517 12.6282 20.6427 12.6108 20.631 12.5892C20.6078 12.5459 20.5744 12.4852 20.5306 12.4096C20.4432 12.2584 20.3141 12.0471 20.1423 11.7956C19.7994 11.2938 19.2819 10.626 18.5794 9.9569C17.1731 8.61759 14.9972 7.25 11.9996 7.25C9.00203 7.25 6.82614 8.61759 5.41987 9.9569C4.71736 10.626 4.19984 11.2938 3.85694 11.7956C3.68511 12.0471 3.55605 12.2584 3.4686 12.4096C3.42484 12.4852 3.39142 12.5459 3.36818 12.5892C3.35656 12.6108 3.34748 12.6282 3.34092 12.6408L3.33297 12.6563L3.33041 12.6614L3.32948 12.6632L3.32911 12.664C3.32894 12.6643 3.32879 12.6646 3.99961 13ZM11.9996 16C13.9326 16 15.4996 14.433 15.4996 12.5C15.4996 10.567 13.9326 9 11.9996 9C10.0666 9 8.49961 10.567 8.49961 12.5C8.49961 14.433 10.0666 16 11.9996 16Z" }) });
+var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
+var seen_default = /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives35.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(import_primitives35.Path, { d: "M3.99961 13C4.67043 13.3354 4.6703 13.3357 4.67017 13.3359L4.67298 13.3305C4.67621 13.3242 4.68184 13.3135 4.68988 13.2985C4.70595 13.2686 4.7316 13.2218 4.76695 13.1608C4.8377 13.0385 4.94692 12.8592 5.09541 12.6419C5.39312 12.2062 5.84436 11.624 6.45435 11.0431C7.67308 9.88241 9.49719 8.75 11.9996 8.75C14.502 8.75 16.3261 9.88241 17.5449 11.0431C18.1549 11.624 18.6061 12.2062 18.9038 12.6419C19.0523 12.8592 19.1615 13.0385 19.2323 13.1608C19.2676 13.2218 19.2933 13.2686 19.3093 13.2985C19.3174 13.3135 19.323 13.3242 19.3262 13.3305L19.3291 13.3359C19.3289 13.3357 19.3288 13.3354 19.9996 13C20.6704 12.6646 20.6703 12.6643 20.6701 12.664L20.6697 12.6632L20.6688 12.6614L20.6662 12.6563L20.6583 12.6408C20.6517 12.6282 20.6427 12.6108 20.631 12.5892C20.6078 12.5459 20.5744 12.4852 20.5306 12.4096C20.4432 12.2584 20.3141 12.0471 20.1423 11.7956C19.7994 11.2938 19.2819 10.626 18.5794 9.9569C17.1731 8.61759 14.9972 7.25 11.9996 7.25C9.00203 7.25 6.82614 8.61759 5.41987 9.9569C4.71736 10.626 4.19984 11.2938 3.85694 11.7956C3.68511 12.0471 3.55605 12.2584 3.4686 12.4096C3.42484 12.4852 3.39142 12.5459 3.36818 12.5892C3.35656 12.6108 3.34748 12.6282 3.34092 12.6408L3.33297 12.6563L3.33041 12.6614L3.32948 12.6632L3.32911 12.664C3.32894 12.6643 3.32879 12.6646 3.99961 13ZM11.9996 16C13.9326 16 15.4996 14.433 15.4996 12.5C15.4996 10.567 13.9326 9 11.9996 9C10.0666 9 8.49961 10.567 8.49961 12.5C8.49961 14.433 10.0666 16 11.9996 16Z" }) });
 
 // packages/icons/build-module/library/trash.mjs
 var import_primitives36 = __toESM(require_primitives(), 1);
-var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
-var trash_default = /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives36.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives36.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12 5.5A2.25 2.25 0 0 0 9.878 7h4.244A2.251 2.251 0 0 0 12 5.5ZM12 4a3.751 3.751 0 0 0-3.675 3H5v1.5h1.27l.818 8.997a2.75 2.75 0 0 0 2.739 2.501h4.347a2.75 2.75 0 0 0 2.738-2.5L17.73 8.5H19V7h-3.325A3.751 3.751 0 0 0 12 4Zm4.224 4.5H7.776l.806 8.861a1.25 1.25 0 0 0 1.245 1.137h4.347a1.25 1.25 0 0 0 1.245-1.137l.805-8.861Z" }) });
+var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
+var trash_default = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives36.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_primitives36.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12 5.5A2.25 2.25 0 0 0 9.878 7h4.244A2.251 2.251 0 0 0 12 5.5ZM12 4a3.751 3.751 0 0 0-3.675 3H5v1.5h1.27l.818 8.997a2.75 2.75 0 0 0 2.739 2.501h4.347a2.75 2.75 0 0 0 2.738-2.5L17.73 8.5H19V7h-3.325A3.751 3.751 0 0 0 12 4Zm4.224 4.5H7.776l.806 8.861a1.25 1.25 0 0 0 1.245 1.137h4.347a1.25 1.25 0 0 0 1.245-1.137l.805-8.861Z" }) });
 
 // packages/icons/build-module/library/unseen.mjs
 var import_primitives37 = __toESM(require_primitives(), 1);
-var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
-var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives37.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(import_primitives37.Path, { d: "M20.7 12.7s0-.1-.1-.2c0-.2-.2-.4-.4-.6-.3-.5-.9-1.2-1.6-1.8-.7-.6-1.5-1.3-2.6-1.8l-.6 1.4c.9.4 1.6 1 2.1 1.5.6.6 1.1 1.2 1.4 1.6.1.2.3.4.3.5v.1l.7-.3.7-.3Zm-5.2-9.3-1.8 4c-.5-.1-1.1-.2-1.7-.2-3 0-5.2 1.4-6.6 2.7-.7.7-1.2 1.3-1.6 1.8-.2.3-.3.5-.4.6 0 0 0 .1-.1.2s0 0 .7.3l.7.3V13c0-.1.2-.3.3-.5.3-.4.7-1 1.4-1.6 1.2-1.2 3-2.3 5.5-2.3H13v.3c-.4 0-.8-.1-1.1-.1-1.9 0-3.5 1.6-3.5 3.5s.6 2.3 1.6 2.9l-2 4.4.9.4 7.6-16.2-.9-.4Zm-3 12.6c1.7-.2 3-1.7 3-3.5s-.2-1.4-.6-1.9L12.4 16Z" }) });
+var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
+var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives37.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(import_primitives37.Path, { d: "M20.7 12.7s0-.1-.1-.2c0-.2-.2-.4-.4-.6-.3-.5-.9-1.2-1.6-1.8-.7-.6-1.5-1.3-2.6-1.8l-.6 1.4c.9.4 1.6 1 2.1 1.5.6.6 1.1 1.2 1.4 1.6.1.2.3.4.3.5v.1l.7-.3.7-.3Zm-5.2-9.3-1.8 4c-.5-.1-1.1-.2-1.7-.2-3 0-5.2 1.4-6.6 2.7-.7.7-1.2 1.3-1.6 1.8-.2.3-.3.5-.4.6 0 0 0 .1-.1.2s0 0 .7.3l.7.3V13c0-.1.2-.3.3-.5.3-.4.7-1 1.4-1.6 1.2-1.2 3-2.3 5.5-2.3H13v.3c-.4 0-.8-.1-1.1-.1-1.9 0-3.5 1.6-3.5 3.5s.6 2.3 1.6 2.9l-2 4.4.9.4 7.6-16.2-.9-.4Zm-3 12.6c1.7-.2 3-1.7 3-3.5s-.2-1.4-.6-1.9L12.4 16Z" }) });
 
 // packages/ui/build-module/collapsible-card/context.mjs
 var import_element26 = __toESM(require_element(), 1);
@@ -16982,7 +16440,7 @@ var HeaderDescriptionIdContext = (0, import_element26.createContext)({
 });
 
 // packages/ui/build-module/collapsible-card/header.mjs
-var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE9 = "data-wp-hash";
 function getRuntime9() {
   const globalScope = globalThis;
@@ -17064,9 +16522,9 @@ function registerStyle9(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle9("78199613cf", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
+  registerStyle9("ee46794e90", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._165c4572592944b2__overflowVisible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
 }
-var style_default9 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
+var style_default9 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflowVisible": "_165c4572592944b2__overflowVisible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
 if (typeof process === "undefined" || true) {
   registerStyle9("d390e935a7", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-medium,499));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
 }
@@ -17092,22 +16550,22 @@ var Header2 = (0, import_element27.forwardRef)(
           style_default9["heading-wrapper"],
           className
         ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(HeaderDescriptionIdContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(HeaderDescriptionIdContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime67.jsxs)(
           Trigger,
           {
             className: style_default9.header,
-            render: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(Header, {}),
+            render: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(Header, {}),
             nativeButton: false,
             "aria-describedby": descriptionId,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime68.jsx)("div", { className: style_default9["header-content"], children }),
-              /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("div", { className: style_default9["header-content"], children }),
+              /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
                 "div",
                 {
                   className: clsx_default(
                     style_default9["header-trigger-positioner"]
                   ),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+                  children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
                     "div",
                     {
                       className: clsx_default(
@@ -17118,7 +16576,7 @@ var Header2 = (0, import_element27.forwardRef)(
                         // emulate it being the button.
                         focus_default2["outset-ring--focus-parent-visible"]
                       ),
-                      children: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
                         Icon,
                         {
                           icon: chevron_down_default,
@@ -17139,7 +16597,7 @@ var Header2 = (0, import_element27.forwardRef)(
 
 // packages/ui/build-module/collapsible-card/header-description.mjs
 var import_element28 = __toESM(require_element(), 1);
-var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
 var HeaderDescription = (0, import_element28.forwardRef)(function CollapsibleCardHeaderDescription({ children, className, ...restProps }, ref) {
   const descriptionId = (0, import_element28.useId)();
   const { setDescriptionId } = (0, import_element28.useContext)(HeaderDescriptionIdContext);
@@ -17147,7 +16605,7 @@ var HeaderDescription = (0, import_element28.forwardRef)(function CollapsibleCar
     setDescriptionId(descriptionId);
     return () => setDescriptionId(void 0);
   }, [descriptionId, setDescriptionId]);
-  return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
     "div",
     {
       ref,
@@ -17162,7 +16620,7 @@ var HeaderDescription = (0, import_element28.forwardRef)(function CollapsibleCar
 
 // packages/ui/build-module/collapsible-card/content.mjs
 var import_element29 = __toESM(require_element(), 1);
-var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE10 = "data-wp-hash";
 function getRuntime10() {
   const globalScope = globalThis;
@@ -17244,23 +16702,23 @@ function registerStyle10(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle10("78199613cf", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
+  registerStyle10("ee46794e90", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._165c4572592944b2__overflowVisible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
 }
-var style_default10 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
+var style_default10 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflowVisible": "_165c4572592944b2__overflowVisible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
 var Content2 = (0, import_element29.forwardRef)(
   function CollapsibleCardContent({ className, render: render4, children, hiddenUntilFound = true, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
       Panel,
       {
         ref,
         className: (state) => clsx_default(
           style_default10.content,
-          state.open && state.transitionStatus === "idle" && style_default10["overflow-visible"],
+          state.open && state.transitionStatus === "idle" && style_default10.overflowVisible,
           className
         ),
         hiddenUntilFound,
         ...restProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
           Content,
           {
             className: style_default10["content-inner"],
@@ -17298,7 +16756,7 @@ var AlertDialogContext = (0, import_element30.createContext)({
 });
 
 // packages/ui/build-module/alert-dialog/root.mjs
-var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
 function isThenable(value) {
   return value !== null && value !== void 0 && typeof value.then === "function";
 }
@@ -17404,7 +16862,7 @@ function Root4({
     }),
     [phase, showSpinner, errorMessage, confirm]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
     index_parts_exports.Root,
     {
       open: effectiveOpen,
@@ -17412,17 +16870,17 @@ function Root4({
       onOpenChange: handleOpenChange,
       onOpenChangeComplete: handleOpenChangeComplete,
       actionsRef,
-      children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(AlertDialogContext.Provider, { value: contextValue, children })
+      children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(AlertDialogContext.Provider, { value: contextValue, children })
     }
   );
 }
 
 // packages/ui/build-module/alert-dialog/trigger.mjs
 var import_element32 = __toESM(require_element(), 1);
-var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
 var Trigger2 = (0, import_element32.forwardRef)(
   function AlertDialogTrigger2(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(index_parts_exports.Trigger, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(index_parts_exports.Trigger, { ref, ...props });
   }
 );
 
@@ -18040,15 +17498,15 @@ var Stack = (0, import_element36.forwardRef)(function Stack2({ direction, gap, a
 
 // packages/ui/build-module/alert-dialog/portal.mjs
 var import_element37 = __toESM(require_element(), 1);
-var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
 var Portal = (0, import_element37.forwardRef)(
   function AlertDialogPortal(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(index_parts_exports.Portal, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(index_parts_exports.Portal, { ref, ...props });
   }
 );
 
 // packages/ui/build-module/alert-dialog/popup.mjs
-var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
 function getRuntime12() {
   const globalScope = globalThis;
@@ -18172,17 +17630,17 @@ var Popup = (0, import_element38.forwardRef)(
     const mergedRef = (0, import_compose2.useMergeRefs)([ref, popupRef]);
     const confirmClassName = intent === "irreversible" ? style_default22["irreversible-action"] : void 0;
     const buttonsDisabled = phase !== "idle" || void 0;
-    const headerElement = /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("div", { className: overlay_chrome_default.header, children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+    const headerElement = /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("div", { className: overlay_chrome_default.header, children: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
       Text,
       {
         variant: "heading-xl",
-        render: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(index_parts_exports.Title, {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(index_parts_exports.Title, {}),
         className: overlay_chrome_default.title,
         children: title
       }
     ) });
-    const footerElement = /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)("div", { className: style_default22["footer-column"], children: [
-      /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
+    const footerElement = /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("div", { className: style_default22["footer-column"], children: [
+      /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(
         Stack,
         {
           direction: "row",
@@ -18190,15 +17648,15 @@ var Popup = (0, import_element38.forwardRef)(
           justify: "flex-end",
           align: "center",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
               index_parts_exports.Close,
               {
-                render: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(Button4, { variant: "minimal" }),
+                render: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Button4, { variant: "minimal" }),
                 disabled: buttonsDisabled,
                 children: cancelButtonText
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
               Button4,
               {
                 className: confirmClassName,
@@ -18211,7 +17669,7 @@ var Popup = (0, import_element38.forwardRef)(
           ]
         }
       ),
-      errorMessage && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+      errorMessage && /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
         Text,
         {
           variant: "body-sm",
@@ -18220,9 +17678,9 @@ var Popup = (0, import_element38.forwardRef)(
         }
       )
     ] });
-    const portalChildren = /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(import_jsx_runtime74.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(index_parts_exports.Backdrop, { className: style_default12.backdrop }),
-      /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(ThemeProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
+    const portalChildren = /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(import_jsx_runtime73.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(index_parts_exports.Backdrop, { className: style_default12.backdrop }),
+      /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(ThemeProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(
         index_parts_exports.Popup,
         {
           ref: mergedRef,
@@ -18237,7 +17695,7 @@ var Popup = (0, import_element38.forwardRef)(
           "data-wp-ui-overlay-modal": "",
           children: [
             stickyHeader && headerElement,
-            /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(
               "div",
               {
                 ref: scrollStateRef,
@@ -18248,11 +17706,11 @@ var Popup = (0, import_element38.forwardRef)(
                 onScroll,
                 children: [
                   !stickyHeader && headerElement,
-                  description && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+                  description && /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
                     Text,
                     {
                       variant: "body-md",
-                      render: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(index_parts_exports.Description, {}),
+                      render: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(index_parts_exports.Description, {}),
                       children: description
                     }
                   ),
@@ -18266,7 +17724,7 @@ var Popup = (0, import_element38.forwardRef)(
         }
       ) })
     ] });
-    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(Portal, {}), portalChildren);
+    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Portal, {}), portalChildren);
   }
 );
 
@@ -18288,15 +17746,15 @@ __export(dialog_exports, {
 
 // packages/ui/build-module/dialog/action.mjs
 var import_element39 = __toESM(require_element(), 1);
-var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
 var Action = (0, import_element39.forwardRef)(
   function DialogAction({ render: render4, disabled: disabled2, loading, ...props }, ref) {
     const resolvedDisabled = disabled2 ?? loading;
-    return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
       index_parts_exports3.Close,
       {
         ref,
-        render: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(Button4, { render: render4, loading }),
+        render: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(Button4, { render: render4, loading }),
         disabled: resolvedDisabled,
         ...props
       }
@@ -18465,10 +17923,10 @@ function getWpCompatOverlaySlot() {
 }
 
 // packages/ui/build-module/tooltip/portal.mjs
-var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
 var Portal2 = (0, import_element40.forwardRef)(
   function TooltipPortal3({ container, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
       index_parts_exports6.Portal,
       {
         container: container ?? getWpCompatOverlaySlot(),
@@ -18481,7 +17939,7 @@ var Portal2 = (0, import_element40.forwardRef)(
 
 // packages/ui/build-module/tooltip/positioner.mjs
 var import_element41 = __toESM(require_element(), 1);
-var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE14 = "data-wp-hash";
 function getRuntime14() {
   const globalScope = globalThis;
@@ -18572,7 +18030,7 @@ if (typeof process === "undefined" || true) {
 var style_default13 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
 var Positioner = (0, import_element41.forwardRef)(
   function TooltipPositioner3({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
       index_parts_exports6.Positioner,
       {
         ref,
@@ -18591,7 +18049,7 @@ var Positioner = (0, import_element41.forwardRef)(
 );
 
 // packages/ui/build-module/tooltip/popup.mjs
-var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
 function getRuntime15() {
   const globalScope = globalThis;
@@ -18678,7 +18136,7 @@ if (typeof process === "undefined" || true) {
 var style_default14 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
 var POPUP_COLOR = { background: "#1e1e1e" };
 var Popup2 = (0, import_element42.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
     index_parts_exports6.Popup,
     {
       ref,
@@ -18689,35 +18147,35 @@ var Popup2 = (0, import_element42.forwardRef)(function TooltipPopup3({ portal, p
   ) });
   const positionedPopup = renderSlotWithChildren(
     positioner,
-    /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(Positioner, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(Positioner, {}),
     popupContent
   );
-  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(Portal2, {}), positionedPopup);
+  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(Portal2, {}), positionedPopup);
 });
 
 // packages/ui/build-module/tooltip/trigger.mjs
 var import_element43 = __toESM(require_element(), 1);
-var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
 var Trigger3 = (0, import_element43.forwardRef)(
   function TooltipTrigger3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(index_parts_exports6.Trigger, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(index_parts_exports6.Trigger, { ref, ...props });
   }
 );
 
 // packages/ui/build-module/tooltip/root.mjs
-var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
 function Root5(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(index_parts_exports6.Root, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(index_parts_exports6.Root, { ...props });
 }
 
 // packages/ui/build-module/tooltip/provider.mjs
-var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
 function Provider({ ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(index_parts_exports6.Provider, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(index_parts_exports6.Provider, { ...props });
 }
 
 // packages/ui/build-module/icon-button/icon-button.mjs
-var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
 function getRuntime16() {
   const globalScope = globalThis;
@@ -18817,13 +18275,13 @@ var IconButton = (0, import_element44.forwardRef)(
     ...restProps
   }, ref) {
     const classes = clsx_default(style_default15["icon-button"], className);
-    return /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(Root5, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(Provider, { delay: 0, children: /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(Root5, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
         Trigger3,
         {
           ref,
           disabled: disabled2 && !focusableWhenDisabled,
-          render: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
             Button4,
             {
               ...restProps,
@@ -18835,29 +18293,36 @@ var IconButton = (0, import_element44.forwardRef)(
             }
           ),
           className: classes,
-          children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(Icon, { icon, size: 24, className: style_default15.icon })
+          children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+            Icon,
+            {
+              icon,
+              size: 24,
+              className: style_default15.icon
+            }
+          )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(Popup2, { positioner, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(Popup2, { positioner, children: [
         label,
-        shortcut && /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(import_jsx_runtime82.Fragment, { children: [
+        shortcut && /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(import_jsx_runtime81.Fragment, { children: [
           " ",
-          /* @__PURE__ */ (0, import_jsx_runtime82.jsx)("span", { "aria-hidden": "true", children: shortcut.displayShortcut })
+          /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("span", { "aria-hidden": "true", children: shortcut.displayShortcut })
         ] })
       ] })
-    ] });
+    ] }) });
   }
 );
 
 // packages/ui/build-module/dialog/close-icon.mjs
-var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
 var CloseIcon = (0, import_element45.forwardRef)(
   function DialogCloseIcon({ icon, label, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
       index_parts_exports3.Close,
       {
         ref,
-        render: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
           IconButton,
           {
             variant: "minimal",
@@ -18988,7 +18453,7 @@ var Content3 = (0, import_element46.forwardRef)(
 
 // packages/ui/build-module/dialog/description.mjs
 var import_element47 = __toESM(require_element(), 1);
-var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
 function getRuntime18() {
   const globalScope = globalThis;
@@ -19075,12 +18540,12 @@ if (typeof process === "undefined" || true) {
 var style_default17 = { "backdrop": "_074affe4c56b4f2f__backdrop", "popup": "_8acaa98861620d4d__popup", "is-small": "_7acfa67ebf092988__is-small", "is-medium": "_1eeeed880cb5769d__is-medium", "is-large": "_99f900b2267e22d0__is-large", "is-stretch": "b49f7ff9c06fe387__is-stretch", "is-full": "dcd4c2f5036cbf1a__is-full", "header": "_76fb3b28fcbd45fc__header f1c50237c4787636__header", "footer": "_00eeb4f220cddae3__footer _579f95efdec92a66__footer", "title": "f636832002af749e__title _5371cc08aad82574__title", "content": "_101038da9af7162f__content _766d9011d37ce2d9__content", "description": "d9d6da914ef0a77c__description" };
 var Description = (0, import_element47.forwardRef)(
   function DialogDescription3({ children, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
       Text,
       {
         ref,
         variant: "body-md",
-        render: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(index_parts_exports3.Description, { ...props }),
+        render: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(index_parts_exports3.Description, { ...props }),
         className: style_default17.description,
         children
       }
@@ -19290,14 +18755,14 @@ var import_compose4 = __toESM(require_compose(), 1);
 
 // packages/ui/build-module/utils/create-overlay-modal-context.mjs
 var import_element50 = __toESM(require_element(), 1);
-var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
 function createOverlayModalContext(initialValue) {
   const OverlayModalContext = (0, import_element50.createContext)(initialValue);
   function OverlayModalProvider({
     modal,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(OverlayModalContext.Provider, { value: modal, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(OverlayModalContext.Provider, { value: modal, children });
   }
   function useOverlayModal() {
     return (0, import_element50.useContext)(OverlayModalContext);
@@ -19343,7 +18808,7 @@ function useScheduleValidation(validate) {
 }
 
 // packages/ui/build-module/utils/create-overlay-title-validation.mjs
-var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 var VALIDATION_ENABLED = true;
 function createOverlayTitleValidation(componentName) {
   const componentNameLowerCase = componentName.toLowerCase();
@@ -19391,12 +18856,12 @@ function createOverlayTitleValidation(componentName) {
     (0, import_element52.useEffect)(() => {
       scheduleValidation();
     }, [scheduleValidation]);
-    return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(OverlayValidationContext.Provider, { value: contextValue, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(OverlayValidationContext.Provider, { value: contextValue, children });
   }
   function ValidationProviderProd({
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_jsx_runtime86.Fragment, { children });
+    return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(import_jsx_runtime85.Fragment, { children });
   }
   const ValidationProvider = VALIDATION_ENABLED ? ValidationProviderDev : ValidationProviderProd;
   return {
@@ -19415,15 +18880,15 @@ var DialogValidationProvider = dialogTitleValidation.ValidationProvider;
 
 // packages/ui/build-module/dialog/portal.mjs
 var import_element53 = __toESM(require_element(), 1);
-var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
 var Portal3 = (0, import_element53.forwardRef)(
   function DialogPortal3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(index_parts_exports3.Portal, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(index_parts_exports3.Portal, { ref, ...props });
   }
 );
 
 // packages/ui/build-module/dialog/popup.mjs
-var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE21 = "data-wp-hash";
 function getRuntime21() {
   const globalScope = globalThis;
@@ -19524,15 +18989,15 @@ var Popup3 = (0, import_element54.forwardRef)(function DialogPopup3({
   });
   const mergedRef = (0, import_compose4.useMergeRefs)([ref, popupRef]);
   const modal = useDialogModal();
-  const portalChildren = /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_jsx_runtime88.Fragment, { children: [
-    modal === true && /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+  const portalChildren = /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(import_jsx_runtime87.Fragment, { children: [
+    modal === true && /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
       index_parts_exports3.Backdrop,
       {
         className: style_default20.backdrop,
         "data-testid": "dialog-backdrop"
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(ThemeProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(ThemeProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
       index_parts_exports3.Popup,
       {
         ref: mergedRef,
@@ -19545,23 +19010,23 @@ var Popup3 = (0, import_element54.forwardRef)(function DialogPopup3({
         finalFocus,
         ...props,
         "data-wp-ui-overlay-modal": modal === true ? "" : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(DialogValidationProvider, { children })
+        children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(DialogValidationProvider, { children })
       }
     ) })
   ] });
-  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(Portal3, {}), portalChildren);
+  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(Portal3, {}), portalChildren);
 });
 
 // packages/ui/build-module/dialog/root.mjs
-var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
 function Root6({ modal = true, children, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(index_parts_exports3.Root, { modal, ...props, children: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(DialogModalProvider, { modal, children }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(index_parts_exports3.Root, { modal, ...props, children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(DialogModalProvider, { modal, children }) });
 }
 
 // packages/ui/build-module/dialog/title.mjs
 var import_compose5 = __toESM(require_compose(), 1);
 var import_element55 = __toESM(require_element(), 1);
-var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
 function getRuntime22() {
   const globalScope = globalThis;
@@ -19657,12 +19122,12 @@ var Title2 = (0, import_element55.forwardRef)(
       }
       return void 0;
     }, [validationContext]);
-    return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
       Text,
       {
         ref: mergedRef,
         variant: "heading-xl",
-        render: /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(index_parts_exports3.Title, { ...props }),
+        render: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(index_parts_exports3.Title, { ...props }),
         className: style_default21.title,
         children
       }
@@ -19672,10 +19137,10 @@ var Title2 = (0, import_element55.forwardRef)(
 
 // packages/ui/build-module/dialog/trigger.mjs
 var import_element56 = __toESM(require_element(), 1);
-var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
 var Trigger4 = (0, import_element56.forwardRef)(
   function DialogTrigger3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(index_parts_exports3.Trigger, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(index_parts_exports3.Trigger, { ref, ...props });
   }
 );
 
@@ -19697,15 +19162,15 @@ __export(drawer_exports, {
 
 // packages/ui/build-module/drawer/action.mjs
 var import_element57 = __toESM(require_element(), 1);
-var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 var Action2 = (0, import_element57.forwardRef)(
   function DrawerAction({ render: render4, disabled: disabled2, loading, ...props }, ref) {
     const resolvedDisabled = disabled2 ?? loading;
-    return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
       index_parts_exports4.Close,
       {
         ref,
-        render: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(Button4, { render: render4, loading }),
+        render: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(Button4, { render: render4, loading }),
         disabled: resolvedDisabled,
         ...props
       }
@@ -19716,14 +19181,14 @@ var Action2 = (0, import_element57.forwardRef)(
 // packages/ui/build-module/drawer/close-icon.mjs
 var import_element58 = __toESM(require_element(), 1);
 var import_i18n4 = __toESM(require_i18n(), 1);
-var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
 var CloseIcon2 = (0, import_element58.forwardRef)(
   function DrawerCloseIcon({ icon, label, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
       index_parts_exports4.Close,
       {
         ref,
-        render: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
           IconButton,
           {
             variant: "minimal",
@@ -19743,7 +19208,7 @@ var CloseIcon2 = (0, import_element58.forwardRef)(
 // packages/ui/build-module/drawer/content.mjs
 var import_element59 = __toESM(require_element(), 1);
 var import_compose6 = __toESM(require_compose(), 1);
-var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
 function getRuntime23() {
   const globalScope = globalThis;
@@ -19853,7 +19318,7 @@ var Content4 = (0, import_element59.forwardRef)(
         // text selection. It must sit *inside* the scroll
         // container so the popup's edge padding gutter falls
         // outside the marker and stays mouse-draggable.
-        children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(index_parts_exports4.Content, { children })
+        children: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(index_parts_exports4.Content, { children })
       })
     });
     return element;
@@ -19862,15 +19327,15 @@ var Content4 = (0, import_element59.forwardRef)(
 
 // packages/ui/build-module/drawer/description.mjs
 var import_element60 = __toESM(require_element(), 1);
-var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
 var Description2 = (0, import_element60.forwardRef)(
   function DrawerDescription2({ children, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
       Text,
       {
         ref,
         variant: "body-md",
-        render: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(index_parts_exports4.Description, { ...props }),
+        render: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(index_parts_exports4.Description, { ...props }),
         children
       }
     );
@@ -20087,15 +19552,15 @@ var DrawerValidationProvider = drawerTitleValidation.ValidationProvider;
 
 // packages/ui/build-module/drawer/portal.mjs
 var import_element63 = __toESM(require_element(), 1);
-var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
 var Portal4 = (0, import_element63.forwardRef)(
   function DrawerPortal2(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(index_parts_exports4.Portal, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(index_parts_exports4.Portal, { ref, ...props });
   }
 );
 
 // packages/ui/build-module/drawer/popup.mjs
-var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE26 = "data-wp-hash";
 function getRuntime26() {
   const globalScope = globalThis;
@@ -20188,15 +19653,15 @@ var Popup4 = (0, import_element64.forwardRef)(function DrawerPopup3({ className,
   });
   const mergedRef = (0, import_compose7.useMergeRefs)([ref, popupRef]);
   const modal = useDrawerModal();
-  const portalChildren = /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_jsx_runtime97.Fragment, { children: [
-    modal === true && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+  const portalChildren = /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(import_jsx_runtime96.Fragment, { children: [
+    modal === true && /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
       index_parts_exports4.Backdrop,
       {
         className: style_default26.backdrop,
         "data-testid": "drawer-backdrop"
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(index_parts_exports4.Viewport, { className: style_default26.viewport, children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(ThemeProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(index_parts_exports4.Viewport, { className: style_default26.viewport, children: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(ThemeProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
       index_parts_exports4.Popup,
       {
         ref: mergedRef,
@@ -20213,28 +19678,28 @@ var Popup4 = (0, import_element64.forwardRef)(function DrawerPopup3({ className,
         finalFocus,
         ...props,
         "data-wp-ui-overlay-modal": modal === true ? "" : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(DrawerValidationProvider, { children })
+        children: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(DrawerValidationProvider, { children })
       }
     ) }) })
   ] });
-  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Portal4, {}), portalChildren);
+  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(Portal4, {}), portalChildren);
 });
 
 // packages/ui/build-module/drawer/root.mjs
-var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 function Root7({
   modal = true,
   swipeDirection = "left",
   children,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
     index_parts_exports4.Root,
     {
       modal,
       swipeDirection,
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(DrawerModalProvider, { modal, children })
+      children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(DrawerModalProvider, { modal, children })
     }
   );
 }
@@ -20242,7 +19707,7 @@ function Root7({
 // packages/ui/build-module/drawer/title.mjs
 var import_compose8 = __toESM(require_compose(), 1);
 var import_element65 = __toESM(require_element(), 1);
-var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE27 = "data-wp-hash";
 function getRuntime27() {
   const globalScope = globalThis;
@@ -20338,12 +19803,12 @@ var Title3 = (0, import_element65.forwardRef)(
       }
       return void 0;
     }, [validationContext]);
-    return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
       Text,
       {
         ref: mergedRef,
         variant: "heading-xl",
-        render: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(index_parts_exports4.Title, { ...props }),
+        render: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(index_parts_exports4.Title, { ...props }),
         className: style_default27.title,
         children
       }
@@ -20353,10 +19818,10 @@ var Title3 = (0, import_element65.forwardRef)(
 
 // packages/ui/build-module/drawer/trigger.mjs
 var import_element66 = __toESM(require_element(), 1);
-var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
 var Trigger5 = (0, import_element66.forwardRef)(
   function DrawerTrigger2(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(index_parts_exports4.Trigger, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(index_parts_exports4.Trigger, { ref, ...props });
   }
 );
 
@@ -20571,7 +20036,7 @@ var Visual = (0, import_element68.forwardRef)(
 
 // packages/ui/build-module/empty-state/icon.mjs
 var import_element69 = __toESM(require_element(), 1);
-var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE30 = "data-wp-hash";
 function getRuntime30() {
   const globalScope = globalThis;
@@ -20658,13 +20123,13 @@ if (typeof process === "undefined" || true) {
 var style_default30 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
 var Icon3 = (0, import_element69.forwardRef)(
   function EmptyStateIcon({ icon, className, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
       Visual,
       {
         ref,
         className: clsx_default(style_default30.icon, className),
         ...restProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(Icon, { icon })
+        children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(Icon, { icon })
       }
     );
   }
@@ -20672,7 +20137,7 @@ var Icon3 = (0, import_element69.forwardRef)(
 
 // packages/ui/build-module/empty-state/title.mjs
 var import_element70 = __toESM(require_element(), 1);
-var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE31 = "data-wp-hash";
 function getRuntime31() {
   const globalScope = globalThis;
@@ -20757,10 +20222,10 @@ if (typeof process === "undefined" || true) {
   registerStyle31("7b60a246cc", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}}');
 }
 var style_default31 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var DEFAULT_TAG2 = /* @__PURE__ */ (0, import_jsx_runtime102.jsx)("h2", {});
+var DEFAULT_TAG2 = /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("h2", {});
 var Title4 = (0, import_element70.forwardRef)(
   function EmptyStateTitle({ render: render4 = DEFAULT_TAG2, className, children, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
       Text,
       {
         ref,
@@ -20776,7 +20241,7 @@ var Title4 = (0, import_element70.forwardRef)(
 
 // packages/ui/build-module/empty-state/description.mjs
 var import_element71 = __toESM(require_element(), 1);
-var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE32 = "data-wp-hash";
 function getRuntime32() {
   const globalScope = globalThis;
@@ -20861,9 +20326,9 @@ if (typeof process === "undefined" || true) {
   registerStyle32("7b60a246cc", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a23e08e65c8e62e5__root{text-wrap:balance;align-items:center;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}._01303b3680eaa216__visual{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}._58c8e351db225608__icon{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}.b8b96f70820333a1__title{margin:0}._70f1dd22bad55b18__description{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0}._89ac025fd8e2bc52__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}}');
 }
 var style_default32 = { "root": "a23e08e65c8e62e5__root", "visual": "_01303b3680eaa216__visual", "icon": "_58c8e351db225608__icon", "title": "b8b96f70820333a1__title", "description": "_70f1dd22bad55b18__description", "actions": "_89ac025fd8e2bc52__actions" };
-var DEFAULT_TAG3 = /* @__PURE__ */ (0, import_jsx_runtime103.jsx)("p", {});
+var DEFAULT_TAG3 = /* @__PURE__ */ (0, import_jsx_runtime102.jsx)("p", {});
 var Description3 = (0, import_element71.forwardRef)(function EmptyStateDescription({ render: render4 = DEFAULT_TAG3, className, children, ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
     Text,
     {
       ref,
@@ -21102,7 +20567,7 @@ var FieldsetContext = (0, import_element74.createContext)({
 var useFieldsetContext = () => (0, import_element74.useContext)(FieldsetContext);
 
 // packages/ui/build-module/form/primitives/fieldset/root.mjs
-var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE35 = "data-wp-hash";
 function getRuntime35() {
   const globalScope = globalThis;
@@ -21196,7 +20661,7 @@ var FieldsetRoot3 = (0, import_element75.forwardRef)(function FieldsetRoot22({ c
     }),
     []
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(FieldsetContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(FieldsetContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
     index_parts_exports5.Root,
     {
       ref,
@@ -21210,7 +20675,7 @@ var FieldsetRoot3 = (0, import_element75.forwardRef)(function FieldsetRoot22({ c
 
 // packages/ui/build-module/form/primitives/fieldset/legend.mjs
 var import_element76 = __toESM(require_element(), 1);
-var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE36 = "data-wp-hash";
 function getRuntime36() {
   const globalScope = globalThis;
@@ -21297,7 +20762,7 @@ if (typeof process === "undefined" || true) {
 var field_default = { "label": "_2d5ad850b2f90964__label", "is-plain": "_17c4214649230bea__is-plain", "description": "_08a3750500e0233f__description" };
 var FieldsetLegend3 = (0, import_element76.forwardRef)(
   function FieldsetLegend22({ className, hideFromVision, ...restProps }, ref) {
-    const legend = /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+    const legend = /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
       index_parts_exports5.Legend,
       {
         ref,
@@ -21306,7 +20771,7 @@ var FieldsetLegend3 = (0, import_element76.forwardRef)(
       }
     );
     if (hideFromVision) {
-      return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(VisuallyHidden, { render: legend });
+      return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(VisuallyHidden, { render: legend });
     }
     return legend;
   }
@@ -21432,7 +20897,7 @@ var FieldsetDescription = (0, import_element77.forwardRef)(function FieldsetDesc
 // packages/ui/build-module/form/primitives/fieldset/details.mjs
 var import_element78 = __toESM(require_element(), 1);
 var import_i18n5 = __toESM(require_i18n(), 1);
-var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE38 = "data-wp-hash";
 function getRuntime38() {
   const globalScope = globalThis;
@@ -21524,9 +20989,9 @@ var FieldsetDetails = (0, import_element78.forwardRef)(function FieldsetDetails2
     registerDescriptionId(id);
     return unregisterDescriptionId;
   }, [registerDescriptionId, unregisterDescriptionId, id]);
-  return /* @__PURE__ */ (0, import_jsx_runtime106.jsxs)(import_jsx_runtime106.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(VisuallyHidden, { id, children: (0, import_i18n5.__)("More details follow.") }),
-    /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime105.jsxs)(import_jsx_runtime105.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(VisuallyHidden, { id, children: (0, import_i18n5.__)("More details follow.") }),
+    /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
       "div",
       {
         ref,
@@ -21540,7 +21005,7 @@ var FieldsetDetails = (0, import_element78.forwardRef)(function FieldsetDetails2
 // packages/ui/build-module/link/link.mjs
 var import_element79 = __toESM(require_element(), 1);
 var import_i18n6 = __toESM(require_i18n(), 1);
-var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE39 = "data-wp-hash";
 function getRuntime39() {
   const globalScope = globalThis;
@@ -21661,9 +21126,9 @@ var Link = (0, import_element79.forwardRef)(function Link2({
         className
       ),
       target: openInNewTab ? "_blank" : void 0,
-      children: /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(import_jsx_runtime107.Fragment, { children: [
+      children: /* @__PURE__ */ (0, import_jsx_runtime106.jsxs)(import_jsx_runtime106.Fragment, { children: [
         children,
-        openInNewTab && /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+        openInNewTab && /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
           "span",
           {
             className: style_default36["link-icon"],
@@ -21695,7 +21160,7 @@ __export(notice_exports, {
 // packages/ui/build-module/notice/root.mjs
 var import_element80 = __toESM(require_element(), 1);
 import { speak as speak3 } from "@wordpress/a11y";
-var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE40 = "data-wp-hash";
 function getRuntime40() {
   const globalScope = globalThis;
@@ -21838,9 +21303,9 @@ var Root9 = (0, import_element80.forwardRef)(function Notice({
     props: mergeProps(
       {
         className: mergedClassName,
-        children: /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)(import_jsx_runtime108.Fragment, { children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(import_jsx_runtime107.Fragment, { children: [
           children,
-          iconElement && /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
+          iconElement && /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
             Icon,
             {
               className: style_default37.icon,
@@ -21857,7 +21322,7 @@ var Root9 = (0, import_element80.forwardRef)(function Notice({
 
 // packages/ui/build-module/notice/title.mjs
 var import_element81 = __toESM(require_element(), 1);
-var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE41 = "data-wp-hash";
 function getRuntime41() {
   const globalScope = globalThis;
@@ -21944,7 +21409,7 @@ if (typeof process === "undefined" || true) {
 var style_default38 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
 var Title5 = (0, import_element81.forwardRef)(
   function NoticeTitle({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
       Text,
       {
         ref,
@@ -21958,7 +21423,7 @@ var Title5 = (0, import_element81.forwardRef)(
 
 // packages/ui/build-module/notice/description.mjs
 var import_element82 = __toESM(require_element(), 1);
-var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE42 = "data-wp-hash";
 function getRuntime42() {
   const globalScope = globalThis;
@@ -22045,7 +21510,7 @@ if (typeof process === "undefined" || true) {
 var style_default39 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
 var Description4 = (0, import_element82.forwardRef)(
   function NoticeDescription({ className, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
       Text,
       {
         ref,
@@ -22163,7 +21628,7 @@ var Actions2 = (0, import_element83.forwardRef)(
 // packages/ui/build-module/notice/close-icon.mjs
 var import_element84 = __toESM(require_element(), 1);
 var import_i18n7 = __toESM(require_i18n(), 1);
-var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE44 = "data-wp-hash";
 function getRuntime44() {
   const globalScope = globalThis;
@@ -22250,7 +21715,7 @@ if (typeof process === "undefined" || true) {
 var style_default41 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
 var CloseIcon3 = (0, import_element84.forwardRef)(
   function NoticeCloseIcon({ className, icon = close_small_default, label = (0, import_i18n7.__)("Dismiss"), ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
       IconButton,
       {
         ...props,
@@ -22268,7 +21733,7 @@ var CloseIcon3 = (0, import_element84.forwardRef)(
 
 // packages/ui/build-module/notice/action-button.mjs
 var import_element85 = __toESM(require_element(), 1);
-var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE45 = "data-wp-hash";
 function getRuntime45() {
   const globalScope = globalThis;
@@ -22356,7 +21821,7 @@ var style_default42 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570
 var ActionButton = (0, import_element85.forwardRef)(
   function NoticeActionButton({ className, loading, loadingAnnouncement, variant, ...props }, ref) {
     const loadingProps = loading !== void 0 ? { loading, loadingAnnouncement: loadingAnnouncement ?? "" } : {};
-    return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
       Button4,
       {
         ...props,
@@ -22377,7 +21842,7 @@ var ActionButton = (0, import_element85.forwardRef)(
 
 // packages/ui/build-module/notice/action-link.mjs
 var import_element86 = __toESM(require_element(), 1);
-var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE46 = "data-wp-hash";
 function getRuntime46() {
   const globalScope = globalThis;
@@ -22464,14 +21929,14 @@ if (typeof process === "undefined" || true) {
 var style_default43 = { "notice": "_4145abab73d17514__notice", "icon": "d0a25570cb528528__icon", "title": "b5397fb9d05389e3__title", "description": "_1904b570a89bb815__description", "actions": "_0a1270dcdd79c031__actions", "action-button": "_983740ab855c4e09__action-button", "action-link": "d329e7416d368d31__action-link", "close-icon": "_487e6a5c1375f7dc__close-icon", "is-info": "_531c140826094795__is-info", "is-warning": "ae2e1004697cce95__is-warning", "is-success": "_2e614a76af494837__is-success", "is-error": "af00331ae17a0065__is-error", "is-action-button-outline": "_8ddb8fb33fbf3d38__is-action-button-outline", "is-action-button-minimal": "_77bbde495a8a0af3__is-action-button-minimal" };
 var ActionLink = (0, import_element86.forwardRef)(
   function NoticeActionLink({ className, render: render4, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
       Text,
       {
         ref,
         className: clsx_default(style_default43["action-link"], className),
         ...props,
         variant: "body-md",
-        render: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(Link, { tone: "neutral", variant: "default", render: render4 })
+        render: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(Link, { tone: "neutral", variant: "default", render: render4 })
       }
     );
   }
@@ -22479,10 +21944,10 @@ var ActionLink = (0, import_element86.forwardRef)(
 
 // packages/admin-ui/build-module/navigable-region/index.mjs
 var import_element87 = __toESM(require_element(), 1);
-var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
 var NavigableRegion = (0, import_element87.forwardRef)(
   ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
       Tag,
       {
         ref,
@@ -22504,7 +21969,7 @@ var import_components = __toESM(require_components(), 1);
 var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components.createSlotFill)("SidebarToggle");
 
 // packages/admin-ui/build-module/page/header.mjs
-var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE47 = "data-wp-hash";
 function getRuntime47() {
   const globalScope = globalThis;
@@ -22600,8 +22065,8 @@ function Header5({
   showSidebarToggle = true
 }) {
   const HeadingTag = `h${headingLevel}`;
-  return /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)(Stack, { direction: "column", className: style_default44.header, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(Stack, { direction: "column", className: style_default44.header, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(
       Stack,
       {
         className: style_default44["header-content"],
@@ -22609,15 +22074,15 @@ function Header5({
         gap: "sm",
         justify: "space-between",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
-            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
+            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
               SidebarToggleSlot,
               {
                 bubblesVirtually: true,
                 className: style_default44["sidebar-toggle-slot"]
               }
             ),
-            visual && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+            visual && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
               "div",
               {
                 className: style_default44["header-visual"],
@@ -22625,11 +22090,11 @@ function Header5({
                 children: visual
               }
             ),
-            title && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+            title && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
               Text,
               {
                 className: style_default44["header-title"],
-                render: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(HeadingTag, {}),
+                render: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(HeadingTag, {}),
                 variant: "heading-lg",
                 children: title
               }
@@ -22637,7 +22102,7 @@ function Header5({
             breadcrumbs,
             badges
           ] }),
-          actions && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+          actions && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
             Stack,
             {
               align: "center",
@@ -22650,10 +22115,10 @@ function Header5({
         ]
       }
     ),
-    subTitle && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+    subTitle && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
       Text,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("p", {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("p", {}),
         variant: "body-md",
         className: style_default44["header-subtitle"],
         children: subTitle
@@ -22663,7 +22128,7 @@ function Header5({
 }
 
 // packages/admin-ui/build-module/page/index.mjs
-var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE48 = "data-wp-hash";
 function getRuntime48() {
   const globalScope = globalThis;
@@ -22764,8 +22229,8 @@ function Page({
 }) {
   const classes = clsx_default(style_default45.page, className);
   const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
-  return /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
-    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
+    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
       Header5,
       {
         headingLevel,
@@ -22778,7 +22243,7 @@ function Page({
         showSidebarToggle
       }
     ),
-    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
       "div",
       {
         className: clsx_default(
@@ -22796,8 +22261,8 @@ var page_default = Page;
 // routes/dashboard/stage.tsx
 var import_core_data = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
-var import_element186 = __toESM(require_element());
-var import_i18n71 = __toESM(require_i18n());
+var import_element184 = __toESM(require_element());
+var import_i18n70 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_viewport2 = __toESM(require_viewport());
 
@@ -22950,7 +22415,7 @@ function normalizeGridSettings(settings, defaultRowHeight) {
 }
 
 // packages/widget-dashboard/build-module/context/dashboard-context.mjs
-var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
 function resolveGridSettings(settings) {
   const normalized = normalizeGridSettings(settings, DEFAULT_ROW_HEIGHT);
   return {
@@ -23133,12 +22598,12 @@ function WidgetDashboardProvider({
       resolveWidgetModule
     ]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(Context.Provider, { value, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(Context.Provider, { value, children });
 }
 
 // packages/widget-dashboard/build-module/context/ui-context.mjs
 var import_element89 = __toESM(require_element(), 1);
-var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
 var Context2 = (0, import_element89.createContext)(null);
 function useDashboardUIContext() {
   const ctx8 = (0, import_element89.useContext)(Context2);
@@ -23154,6 +22619,8 @@ function WidgetDashboardUIProvider({ children }) {
   const [layoutSettingsOpen, setLayoutSettingsOpen] = (0, import_element89.useState)(false);
   const [resetDialogOpen, setResetDialogOpen] = (0, import_element89.useState)(false);
   const [settingsWidgetUuid, setSettingsWidgetUuid] = (0, import_element89.useState)(null);
+  const [settingsDrawerSide, setSettingsDrawerSide] = (0, import_element89.useState)("right");
+  const [settingsDrawerInset, setSettingsDrawerInset] = (0, import_element89.useState)(0);
   const value = (0, import_element89.useMemo)(
     () => ({
       inserterOpen,
@@ -23163,16 +22630,22 @@ function WidgetDashboardUIProvider({ children }) {
       resetDialogOpen,
       setResetDialogOpen,
       settingsWidgetUuid,
-      setSettingsWidgetUuid
+      setSettingsWidgetUuid,
+      settingsDrawerSide,
+      setSettingsDrawerSide,
+      settingsDrawerInset,
+      setSettingsDrawerInset
     }),
     [
       inserterOpen,
       layoutSettingsOpen,
       resetDialogOpen,
-      settingsWidgetUuid
+      settingsWidgetUuid,
+      settingsDrawerSide,
+      settingsDrawerInset
     ]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Context2.Provider, { value, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(Context2.Provider, { value, children });
 }
 
 // packages/widget-dashboard/build-module/components/actions/actions.mjs
@@ -23193,49 +22666,49 @@ var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptIn
 );
 
 // packages/widget-dashboard/build-module/components/actions-menu/actions-menu.mjs
-var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
 var { Menu } = unlock2(import_components2.privateApis);
 function ActionsMenuEntry({ item }) {
   const showDisabledTooltip = item.disabled && item.disabledTooltip;
-  const menuItem = /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+  const menuItem = /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
     Menu.Item,
     {
       disabled: item.disabled,
       onClick: item.onClick,
-      render: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(Button4, { variant: "minimal", tone: "neutral" }),
+      render: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Button4, { variant: "minimal", tone: "neutral" }),
       children: item.label
     }
   );
   if (!showDisabledTooltip) {
     return menuItem;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(tooltip_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(tooltip_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
       tooltip_exports.Trigger,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
           Menu.Item,
           {
             disabled: item.disabled,
             onClick: item.onClick,
-            render: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(Button4, { variant: "minimal", tone: "neutral" })
+            render: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Button4, { variant: "minimal", tone: "neutral" })
           }
         ),
         children: item.label
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(tooltip_exports.Popup, { positioner: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(tooltip_exports.Positioner, { side: "bottom" }), children: item.disabledTooltip })
+    /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(tooltip_exports.Popup, { positioner: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(tooltip_exports.Positioner, { side: "bottom" }), children: item.disabledTooltip })
   ] });
 }
 function ActionsMenu({ items }) {
   if (items.length === 0) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(Menu, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(Menu, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
       Menu.TriggerButton,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
           IconButton,
           {
             icon: more_vertical_default,
@@ -23247,12 +22720,12 @@ function ActionsMenu({ items }) {
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(Menu.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(tooltip_exports.Provider, { delay: 0, children: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(Menu.Group, { children: items.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(ActionsMenuEntry, { item }, index2)) }) }) })
+    /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Menu.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(tooltip_exports.Provider, { delay: 0, children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Menu.Group, { children: items.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(ActionsMenuEntry, { item }, index2)) }) }) })
   ] });
 }
 
 // packages/widget-dashboard/build-module/components/actions/actions.mjs
-var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE49 = "data-wp-hash";
 function getRuntime49() {
   const globalScope = globalThis;
@@ -23395,15 +22868,15 @@ function Actions3() {
   if (!onEditChange) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(Stack, { direction: "row", gap: "sm", children: [
-    isEditActionsMounted ? /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(Stack, { direction: "row", gap: "sm", children: [
+    isEditActionsMounted ? /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(
       Stack,
       {
         direction: "row",
         gap: "sm",
         className: isExitingEditActions ? actions_default.editActionsExit : actions_default.editActionsEnter,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(
             Button4,
             {
               variant: "minimal",
@@ -23411,12 +22884,12 @@ function Actions3() {
               size: "compact",
               onClick: insert,
               children: [
-                !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(Button4.Icon, { icon: plus_default }),
+                !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(Button4.Icon, { icon: plus_default }),
                 (0, import_i18n9.__)("Add widget")
               ]
             }
           ),
-          canEditGridSettings && /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
+          canEditGridSettings && /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(
             Button4,
             {
               variant: "minimal",
@@ -23424,19 +22897,19 @@ function Actions3() {
               size: "compact",
               onClick: openLayoutSettings,
               children: [
-                !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(Button4.Icon, { icon: layout_default }),
+                !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(Button4.Icon, { icon: layout_default }),
                 (0, import_i18n9.__)("Layout settings")
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
             "div",
             {
               className: actions_default.editActionsDivider,
               "aria-hidden": "true"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
             Button4,
             {
               variant: "minimal",
@@ -23446,7 +22919,7 @@ function Actions3() {
               children: (0, import_i18n9.__)("Cancel")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
             Button4,
             {
               variant: "solid",
@@ -23459,7 +22932,7 @@ function Actions3() {
           )
         ]
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+    ) : /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
       Button4,
       {
         variant: "minimal",
@@ -23469,7 +22942,7 @@ function Actions3() {
         children: (0, import_i18n9.__)("Customize")
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(ActionsMenu, { items: menuItems })
+    /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(ActionsMenu, { items: menuItems })
   ] });
 }
 
@@ -23741,7 +23214,7 @@ var import_keycodes = __toESM(require_keycodes(), 1);
 // packages/dataviews/build-module/components/dataviews-selection-checkbox/index.mjs
 var import_components3 = __toESM(require_components(), 1);
 var import_i18n12 = __toESM(require_i18n(), 1);
-var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
 function DataViewsSelectionCheckbox({
   selection,
   onChangeSelection,
@@ -23755,7 +23228,7 @@ function DataViewsSelectionCheckbox({
   const isInSelectionArray = selection.includes(id);
   const checked = !disabled2 && isInSelectionArray;
   const selectionLabel = titleField?.getValue?.({ item }) || (0, import_i18n12.__)("(no title)");
-  return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
     import_components3.CheckboxControl,
     {
       className: "dataviews-selection-checkbox",
@@ -23790,7 +23263,7 @@ var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptIn
 );
 
 // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
-var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu2, kebabCase } = unlock3(import_components4.privateApis);
 function ButtonTrigger({
   action,
@@ -23799,7 +23272,7 @@ function ButtonTrigger({
   variant
 }) {
   const label = typeof action.label === "string" ? action.label : action.label(items);
-  return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
     import_components4.Button,
     {
       disabled: !!action.disabled,
@@ -23817,7 +23290,7 @@ function MenuItemTrigger({
   items
 }) {
   const label = typeof action.label === "string" ? action.label : action.label(items);
-  return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(Menu2.Item, { disabled: action.disabled, onClick, children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(Menu2.ItemLabel, { children: label }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(Menu2.Item, { disabled: action.disabled, onClick, children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(Menu2.ItemLabel, { children: label }) });
 }
 function ActionModal({
   action,
@@ -23826,7 +23299,7 @@ function ActionModal({
 }) {
   const label = typeof action.label === "string" ? action.label : action.label(items);
   const modalHeader = typeof action.modalHeader === "function" ? action.modalHeader(items) : action.modalHeader;
-  return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
     import_components4.Modal,
     {
       title: modalHeader || label,
@@ -23837,7 +23310,7 @@ function ActionModal({
       overlayClassName: `dataviews-action-modal dataviews-action-modal__${kebabCase(
         action.id
       )}`,
-      children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(action.RenderModal, { items, closeModal })
+      children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(action.RenderModal, { items, closeModal })
     }
   );
 }
@@ -23859,7 +23332,7 @@ function ActionsMenuGroup({
       }
     );
   }, [actions]);
-  const renderActionGroup = (actionList) => actionList.map((action) => /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+  const renderActionGroup = (actionList) => actionList.map((action) => /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
     MenuItemTrigger,
     {
       action,
@@ -23874,7 +23347,7 @@ function ActionsMenuGroup({
     },
     action.id
   ));
-  return /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(Menu2.Group, { children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(Menu2.Group, { children: [
     renderActionGroup(primaryActions),
     renderActionGroup(regularActions)
   ] });
@@ -23899,7 +23372,7 @@ function ItemActions({
   }, [actions, item]);
   const isMobileViewport = (0, import_compose9.useViewportMatch)("medium", "<");
   if (isCompact) {
-    return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
       CompactItemActions,
       {
         item,
@@ -23909,7 +23382,7 @@ function ItemActions({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(
     Stack,
     {
       direction: "row",
@@ -23920,7 +23393,7 @@ function ItemActions({
         width: "auto"
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
           PrimaryActions,
           {
             item,
@@ -23930,7 +23403,7 @@ function ItemActions({
         ),
         (primaryActions.length < eligibleActions.length || // Since we hide primary actions on mobile, we need to show the menu
         // there if there are any actions at all.
-        isMobileViewport) && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+        isMobileViewport) && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
           CompactItemActions,
           {
             item,
@@ -23951,12 +23424,12 @@ function CompactItemActions({
   const [activeModalAction, setActiveModalAction] = (0, import_element94.useState)(
     null
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_jsx_runtime122.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(Menu2, { placement: "bottom-end", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(import_jsx_runtime121.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(Menu2, { placement: "bottom-end", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
         Menu2.TriggerButton,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
             import_components4.Button,
             {
               size: isSmall ? "small" : "compact",
@@ -23969,7 +23442,7 @@ function CompactItemActions({
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(Menu2.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(Menu2.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
         ActionsMenuGroup,
         {
           actions,
@@ -23979,7 +23452,7 @@ function CompactItemActions({
         }
       ) })
     ] }),
-    !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+    !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
       ActionModal,
       {
         action: activeModalAction,
@@ -24003,8 +23476,8 @@ function PrimaryActions({
   if (!Array.isArray(actions) || actions.length === 0) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_jsx_runtime122.Fragment, { children: [
-    actions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(import_jsx_runtime121.Fragment, { children: [
+    actions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
       ButtonTrigger,
       {
         action,
@@ -24020,7 +23493,7 @@ function PrimaryActions({
       },
       action.id
     )),
-    !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+    !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
       ActionModal,
       {
         action: activeModalAction,
@@ -24064,7 +23537,7 @@ function getFooterMessage(selectionCount, itemsCount, totalItems, onlyTotalCount
 }
 
 // packages/dataviews/build-module/components/dataviews-bulk-actions/index.mjs
-var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
 function useHasAPossibleBulkAction(actions, item) {
   return (0, import_element95.useMemo)(() => {
     return actions.some((action) => {
@@ -24102,7 +23575,7 @@ function BulkSelectionCheckbox({
   const hasSelection = selection.length > 0;
   const areAllSelected = selectedItems.length === selectableItems.length;
   if (disableSelectAll) {
-    return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
       import_components5.CheckboxControl,
       {
         className: "dataviews-view-table-selection-checkbox",
@@ -24115,7 +23588,7 @@ function BulkSelectionCheckbox({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
     import_components5.CheckboxControl,
     {
       className: "dataviews-view-table-selection-checkbox",
@@ -24153,11 +23626,11 @@ function getHideableFields(view, fields3) {
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
-var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu3 } = unlock3(import_components6.privateApis);
 function WithMenuSeparators({ children }) {
-  return import_element96.Children.toArray(children).filter(Boolean).map((child, i2) => /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)(import_element96.Fragment, { children: [
-    i2 > 0 && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.Separator, {}),
+  return import_element96.Children.toArray(children).filter(Boolean).map((child, i2) => /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(import_element96.Fragment, { children: [
+    i2 > 0 && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.Separator, {}),
     child
   ] }, i2));
 }
@@ -24197,11 +23670,11 @@ var _HeaderMenu = (0, import_element96.forwardRef)(function HeaderMenu({
   );
   const canInsert = (canInsertLeft || canInsertRight) && !!hiddenFields.length;
   const isRtl = (0, import_i18n16.isRTL)();
-  return /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)(Menu3, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(Menu3, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(
       Menu3.TriggerButton,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
           import_components6.Button,
           {
             size: "compact",
@@ -24212,16 +23685,16 @@ var _HeaderMenu = (0, import_element96.forwardRef)(function HeaderMenu({
         ),
         children: [
           header,
-          view.sort && isSorted && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("span", { "aria-hidden": "true", children: sortArrows[view.sort.direction] })
+          view.sort && isSorted && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("span", { "aria-hidden": "true", children: sortArrows[view.sort.direction] })
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.Popover, { style: { minWidth: "240px" }, children: /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)(WithMenuSeparators, { children: [
-      isSortable && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.Group, { children: SORTING_DIRECTIONS.map(
+    /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.Popover, { style: { minWidth: "240px" }, children: /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(WithMenuSeparators, { children: [
+      isSortable && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.Group, { children: SORTING_DIRECTIONS.map(
         (direction) => {
           const isChecked = view.sort && isSorted && view.sort.direction === direction;
           const value = `${fieldId}-${direction}`;
-          return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
             Menu3.RadioItem,
             {
               name: "view-table-sorting",
@@ -24237,16 +23710,16 @@ var _HeaderMenu = (0, import_element96.forwardRef)(function HeaderMenu({
                   showLevels: false
                 });
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.ItemLabel, { children: sortLabels[direction] })
+              children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.ItemLabel, { children: sortLabels[direction] })
             },
             value
           );
         }
       ) }),
-      canAddFilter && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.Group, { children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
+      canAddFilter && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.Group, { children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
         Menu3.Item,
         {
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components6.Icon, { icon: funnel_default }),
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_components6.Icon, { icon: funnel_default }),
           onClick: () => {
             setOpenedFilter(fieldId);
             setIsShowingFilter(true);
@@ -24263,14 +23736,14 @@ var _HeaderMenu = (0, import_element96.forwardRef)(function HeaderMenu({
               ]
             });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.ItemLabel, { children: (0, import_i18n16.__)("Add filter") })
+          children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.ItemLabel, { children: (0, import_i18n16.__)("Add filter") })
         }
       ) }),
-      (canMove || isHidable || canInsert) && field && /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)(Menu3.Group, { children: [
-        canMove && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
+      (canMove || isHidable || canInsert) && field && /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(Menu3.Group, { children: [
+        canMove && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
           Menu3.Item,
           {
-            prefix: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components6.Icon, { icon: arrow_left_default }),
+            prefix: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_components6.Icon, { icon: arrow_left_default }),
             disabled: isRtl ? index2 >= visibleFieldIds.length - 1 : index2 < 1,
             onClick: () => {
               const targetIndex = isRtl ? index2 + 1 : index2 - 1;
@@ -24288,13 +23761,13 @@ var _HeaderMenu = (0, import_element96.forwardRef)(function HeaderMenu({
                 fields: newFields
               });
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.ItemLabel, { children: (0, import_i18n16.__)("Move left") })
+            children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.ItemLabel, { children: (0, import_i18n16.__)("Move left") })
           }
         ),
-        canMove && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
+        canMove && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
           Menu3.Item,
           {
-            prefix: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components6.Icon, { icon: arrow_right_default }),
+            prefix: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_components6.Icon, { icon: arrow_right_default }),
             disabled: isRtl ? index2 < 1 : index2 >= visibleFieldIds.length - 1,
             onClick: () => {
               const targetIndex = isRtl ? index2 - 1 : index2 + 1;
@@ -24312,14 +23785,14 @@ var _HeaderMenu = (0, import_element96.forwardRef)(function HeaderMenu({
                 fields: newFields
               });
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.ItemLabel, { children: (0, import_i18n16.__)("Move right") })
+            children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.ItemLabel, { children: (0, import_i18n16.__)("Move right") })
           }
         ),
-        canInsertLeft && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)(Menu3, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.ItemLabel, { children: (0, import_i18n16.__)("Insert left") }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.Popover, { children: hiddenFields.map((hiddenField) => {
+        canInsertLeft && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(Menu3, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.ItemLabel, { children: (0, import_i18n16.__)("Insert left") }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.Popover, { children: hiddenFields.map((hiddenField) => {
             const insertIndex = isRtl ? index2 + 1 : index2;
-            return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
               Menu3.Item,
               {
                 onClick: () => {
@@ -24337,17 +23810,17 @@ var _HeaderMenu = (0, import_element96.forwardRef)(function HeaderMenu({
                     ]
                   });
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.ItemLabel, { children: hiddenField.label })
+                children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.ItemLabel, { children: hiddenField.label })
               },
               hiddenField.id
             );
           }) })
         ] }),
-        canInsertRight && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)(Menu3, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.ItemLabel, { children: (0, import_i18n16.__)("Insert right") }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.Popover, { children: hiddenFields.map((hiddenField) => {
+        canInsertRight && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(Menu3, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.SubmenuTriggerItem, { children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.ItemLabel, { children: (0, import_i18n16.__)("Insert right") }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.Popover, { children: hiddenFields.map((hiddenField) => {
             const insertIndex = isRtl ? index2 : index2 + 1;
-            return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
               Menu3.Item,
               {
                 onClick: () => {
@@ -24365,16 +23838,16 @@ var _HeaderMenu = (0, import_element96.forwardRef)(function HeaderMenu({
                     ]
                   });
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.ItemLabel, { children: hiddenField.label })
+                children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.ItemLabel, { children: hiddenField.label })
               },
               hiddenField.id
             );
           }) })
         ] }),
-        isHidable && field && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
+        isHidable && field && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
           Menu3.Item,
           {
-            prefix: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components6.Icon, { icon: unseen_default }),
+            prefix: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_components6.Icon, { icon: unseen_default }),
             onClick: () => {
               onHide(field);
               onChangeView({
@@ -24384,7 +23857,7 @@ var _HeaderMenu = (0, import_element96.forwardRef)(function HeaderMenu({
                 )
               });
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Menu3.ItemLabel, { children: (0, import_i18n16.__)("Hide column") })
+            children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Menu3.ItemLabel, { children: (0, import_i18n16.__)("Hide column") })
           }
         )
       ] })
@@ -24396,7 +23869,7 @@ var column_header_menu_default = ColumnHeaderMenu;
 
 // packages/dataviews/build-module/components/dataviews-layouts/utils/item-click-wrapper.mjs
 var import_element97 = __toESM(require_element(), 1);
-var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
 function getClickableItemProps({
   item,
   isItemClickable: isItemClickable2,
@@ -24432,7 +23905,7 @@ function ItemClickWrapper({
   ...extraProps
 }) {
   if (!isItemClickable2(item)) {
-    return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)("div", { className, ...extraProps, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("div", { className, ...extraProps, children });
   }
   if (renderItemLink) {
     const renderedElement = renderItemLink({
@@ -24464,11 +23937,11 @@ function ItemClickWrapper({
     onClickItem,
     className
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)("div", { ...clickProps, ...extraProps, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("div", { ...clickProps, ...extraProps, children });
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/table/column-primary.mjs
-var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
 function ColumnPrimary({
   item,
   level,
@@ -24479,8 +23952,8 @@ function ColumnPrimary({
   renderItemLink,
   isItemClickable: isItemClickable2
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(Stack, { direction: "row", gap: "md", align: "flex-start", justify: "flex-start", children: [
-    mediaField && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)(Stack, { direction: "row", gap: "md", align: "flex-start", justify: "flex-start", children: [
+    mediaField && /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
       ItemClickWrapper,
       {
         item,
@@ -24489,7 +23962,7 @@ function ColumnPrimary({
         renderItemLink,
         className: "dataviews-view-table__cell-content-wrapper dataviews-column-primary__media",
         "aria-label": isItemClickable2(item) && (!!onClickItem || !!renderItemLink) && !!titleField ? titleField.getValue?.({ item }) : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
           mediaField.render,
           {
             item,
@@ -24499,14 +23972,14 @@ function ColumnPrimary({
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)(
       Stack,
       {
         direction: "column",
         align: "flex-start",
         className: "dataviews-view-table__primary-column-content",
         children: [
-          titleField && /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(
+          titleField && /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)(
             ItemClickWrapper,
             {
               item,
@@ -24515,15 +23988,15 @@ function ColumnPrimary({
               renderItemLink,
               className: "dataviews-view-table__cell-content-wrapper dataviews-title-field",
               children: [
-                level !== void 0 && level > 0 && /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)("span", { className: "dataviews-view-table__level", children: [
+                level !== void 0 && level > 0 && /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)("span", { className: "dataviews-view-table__level", children: [
                   Array(level).fill("\u2014").join(" "),
                   "\xA0"
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(titleField.render, { item, field: titleField })
+                /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(titleField.render, { item, field: titleField })
               ]
             }
           ),
-          descriptionField && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+          descriptionField && /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
             descriptionField.render,
             {
               item,
@@ -24596,15 +24069,15 @@ function getDataByGroup(data, groupByField) {
 var import_components7 = __toESM(require_components(), 1);
 var import_i18n18 = __toESM(require_i18n(), 1);
 var import_element99 = __toESM(require_element(), 1);
-var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
 function FieldItem({
   field,
   isVisible: isVisible2,
   onToggleVisibility
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(import_components7.__experimentalItem, { onClick: field.enableHiding ? onToggleVisibility : void 0, children: /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(Stack, { direction: "row", gap: "sm", justify: "flex-start", align: "center", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("div", { style: { height: 24, width: 24 }, children: isVisible2 && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(import_components7.Icon, { icon: check_default }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("span", { className: "dataviews-view-config__label", children: field.label })
+  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components7.__experimentalItem, { onClick: field.enableHiding ? onToggleVisibility : void 0, children: /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(Stack, { direction: "row", gap: "sm", justify: "flex-start", align: "center", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { style: { height: 24, width: 24 }, children: isVisible2 && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components7.Icon, { icon: check_default }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("span", { className: "dataviews-view-config__label", children: field.label })
   ] }) });
 }
 function isDefined(item) {
@@ -24649,18 +24122,18 @@ function PropertiesSection({
   );
   const totalVisibleFields = visibleLockedFields.length + visibleRegularFieldsCount;
   const isSingleVisibleLockedField = totalVisibleFields === 1 && visibleLockedFields.length === 1;
-  return /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(Stack, { direction: "column", className: "dataviews-field-control", children: [
-    showLabel && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(import_components7.BaseControl.VisualLabel, { children: (0, import_i18n18.__)("Properties") }),
-    /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(Stack, { direction: "column", className: "dataviews-field-control", children: [
+    showLabel && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components7.BaseControl.VisualLabel, { children: (0, import_i18n18.__)("Properties") }),
+    /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
       Stack,
       {
         direction: "column",
         className: "dataviews-view-config__properties",
-        children: /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(import_components7.__experimentalItemGroup, { isBordered: true, isSeparated: true, size: "medium", children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(import_components7.__experimentalItemGroup, { isBordered: true, isSeparated: true, size: "medium", children: [
           lockedFields.map(({ field, isVisibleFlag }) => {
             const isVisible2 = view[isVisibleFlag] ?? true;
             const fieldToRender = isSingleVisibleLockedField && isVisible2 ? { ...field, enableHiding: false } : field;
-            return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
               FieldItem,
               {
                 field: fieldToRender,
@@ -24678,7 +24151,7 @@ function PropertiesSection({
           regularFields.map((field) => {
             const isVisible2 = visibleFieldIds.includes(field.id);
             const fieldToRender = totalVisibleFields === 1 && isVisible2 ? { ...field, enableHiding: false } : field;
-            return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
               FieldItem,
               {
                 field: fieldToRender,
@@ -24721,7 +24194,7 @@ function useDelayedLoading(isLoading, options = { delay: 400 }) {
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/table/index.mjs
-var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
 function getEffectiveAlign(explicitAlign, fieldType) {
   if (explicitAlign) {
     return explicitAlign;
@@ -24745,7 +24218,7 @@ function TableColumnField({
     "dataviews-view-table__cell-align-end": align === "end",
     "dataviews-view-table__cell-align-center": align === "center"
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("div", { className, children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(field.render, { item, field }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("div", { className, children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(field.render, { item, field }) });
 }
 function TableRow({
   hasBulkActions,
@@ -24779,7 +24252,7 @@ function TableRow({
   const isTouchDeviceRef = (0, import_element101.useRef)(false);
   const columns = view.fields ?? [];
   const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
-  return /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(
     "tr",
     {
       className: clsx_default("dataviews-view-table__row", {
@@ -24810,7 +24283,7 @@ function TableRow({
         }
       },
       children: [
-        hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("td", { className: "dataviews-view-table__checkbox-column", children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("div", { className: "dataviews-view-table__cell-content-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+        hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("td", { className: "dataviews-view-table__checkbox-column", children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("div", { className: "dataviews-view-table__cell-content-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
           DataViewsSelectionCheckbox,
           {
             item,
@@ -24821,7 +24294,7 @@ function TableRow({
             disabled: !hasPossibleBulkAction
           }
         ) }) }),
-        hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+        hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
           column_primary_default,
           {
             item,
@@ -24838,7 +24311,7 @@ function TableRow({
           const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
           const field = fields3.find((f2) => f2.id === column);
           const effectiveAlign = getEffectiveAlign(align, field?.type);
-          return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
             "td",
             {
               style: {
@@ -24846,7 +24319,7 @@ function TableRow({
                 maxWidth,
                 minWidth
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
                 TableColumnField,
                 {
                   fields: fields3,
@@ -24864,7 +24337,7 @@ function TableRow({
         // table row. This allows us to add a click handler to the row
         // itself (to toggle row selection) without erroneously
         // intercepting click events from ItemActions.
-        /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
           "td",
           {
             className: clsx_default("dataviews-view-table__actions-column", {
@@ -24872,7 +24345,7 @@ function TableRow({
               "dataviews-view-table__actions-column--stuck": isActionsColumnSticky
             }),
             onClick: (e2) => e2.stopPropagation(),
-            children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(ItemActions, { item, actions })
+            children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(ItemActions, { item, actions })
           }
         )
       ]
@@ -24969,7 +24442,7 @@ function ViewTable({
   const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   const isRtl = (0, import_i18n19.isRTL)();
   if (!hasData) {
-    return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
       "div",
       {
         className: clsx_default("dataviews-no-results", {
@@ -24980,8 +24453,8 @@ function ViewTable({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(import_jsx_runtime128.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(import_jsx_runtime127.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(
       "table",
       {
         className: clsx_default("dataviews-view-table", className, {
@@ -24996,10 +24469,10 @@ function ViewTable({
         role: isInfiniteScroll ? "feed" : void 0,
         inert: !isInfiniteScroll && isLoading ? "true" : void 0,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)("colgroup", { children: [
-            hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("col", { className: "dataviews-view-table__col-checkbox" }),
-            hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("col", { className: "dataviews-view-table__col-first-data" }),
-            columns.map((column, index2) => /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)("colgroup", { children: [
+            hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("col", { className: "dataviews-view-table__col-checkbox" }),
+            hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("col", { className: "dataviews-view-table__col-first-data" }),
+            columns.map((column, index2) => /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
               "col",
               {
                 className: clsx_default(
@@ -25011,32 +24484,32 @@ function ViewTable({
               },
               `col-${column}`
             )),
-            !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("col", { className: "dataviews-view-table__col-actions" })
+            !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("col", { className: "dataviews-view-table__col-actions" })
           ] }),
-          contextMenuAnchor && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+          contextMenuAnchor && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
             import_components8.Popover,
             {
               anchor: contextMenuAnchor,
               onClose: () => setContextMenuAnchor(null),
               placement: "bottom-start",
-              children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(PropertiesSection, { showLabel: false })
+              children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(PropertiesSection, { showLabel: false })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
             "thead",
             {
               className: clsx_default({
                 "dataviews-view-table__thead--stuck": isVerticallyScrolled
               }),
               onContextMenu: handleHeaderContextMenu,
-              children: /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)("tr", { className: "dataviews-view-table__row", children: [
-                hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)("tr", { className: "dataviews-view-table__row", children: [
+                hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
                   "th",
                   {
                     className: "dataviews-view-table__checkbox-column",
                     scope: "col",
                     onContextMenu: handleHeaderContextMenu,
-                    children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+                    children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
                       BulkSelectionCheckbox,
                       {
                         selection,
@@ -25048,7 +24521,7 @@ function ViewTable({
                     )
                   }
                 ),
-                hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("th", { scope: "col", children: titleField && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+                hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("th", { scope: "col", children: titleField && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
                   column_header_menu_default,
                   {
                     ref: headerMenuRef(
@@ -25076,7 +24549,7 @@ function ViewTable({
                     field?.type
                   );
                   const canInsertOrMove = view.layout?.enableMoving ?? true;
-                  return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
                     "th",
                     {
                       style: {
@@ -25087,7 +24560,7 @@ function ViewTable({
                       },
                       "aria-sort": view.sort?.direction && view.sort?.field === column ? sortValues[view.sort.direction] : void 0,
                       scope: "col",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
                         column_header_menu_default,
                         {
                           ref: headerMenuRef(column, index2),
@@ -25106,7 +24579,7 @@ function ViewTable({
                     column
                   );
                 }),
-                !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+                !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
                   "th",
                   {
                     className: clsx_default(
@@ -25116,15 +24589,15 @@ function ViewTable({
                         "dataviews-view-table__actions-column--stuck": !isHorizontalScrollEnd
                       }
                     ),
-                    children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("span", { className: "dataviews-view-table-header", children: (0, import_i18n19.__)("Actions") })
+                    children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("span", { className: "dataviews-view-table-header", children: (0, import_i18n19.__)("Actions") })
                   }
                 )
               ] })
             }
           ),
           hasData && groupField && dataByGroup ? Array.from(dataByGroup.entries()).map(
-            ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)("tbody", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("tr", { className: "dataviews-view-table__group-header-row", children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+            ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)("tbody", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("tr", { className: "dataviews-view-table__group-header-row", children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
                 "td",
                 {
                   colSpan: columns.length + (hasPrimaryColumn ? 1 : 0) + (hasBulkActions ? 1 : 0) + (actions?.length ? 1 : 0),
@@ -25137,7 +24610,7 @@ function ViewTable({
                   )
                 }
               ) }),
-              groupItems.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+              groupItems.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
                 TableRow,
                 {
                   item,
@@ -25161,7 +24634,7 @@ function ViewTable({
                 getItemId2(item)
               ))
             ] }, `group-${groupName}`)
-          ) : /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("tbody", { children: hasData && data.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+          ) : /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("tbody", { children: hasData && data.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
             TableRow,
             {
               item,
@@ -25188,7 +24661,7 @@ function ViewTable({
         ]
       }
     ),
-    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("div", { className: "dataviews-loading", id: tableNoticeId, children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(import_components8.Spinner, {}) }) })
+    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("div", { className: "dataviews-loading", id: tableNoticeId, children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(import_components8.Spinner, {}) }) })
   ] });
 }
 var table_default = ViewTable;
@@ -25208,7 +24681,7 @@ var import_element105 = __toESM(require_element(), 1);
 var import_components9 = __toESM(require_components(), 1);
 var import_i18n20 = __toESM(require_i18n(), 1);
 var import_element102 = __toESM(require_element(), 1);
-var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
 var imageSizes = [
   {
     value: 120,
@@ -25255,9 +24728,9 @@ function useGridColumns() {
 
 // packages/dataviews/build-module/components/dataviews-layouts/utils/grid-items.mjs
 var import_element103 = __toESM(require_element(), 1);
-var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
 var GridItems = (0, import_element103.forwardRef)(({ className, previewSize, ...props }, ref) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
     "div",
     {
       ref,
@@ -25292,7 +24765,7 @@ function usePlaceholdersNeeded(data, isInfiniteScroll, gridColumns) {
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
-var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
 var { Badge: WCBadge } = unlock3(import_components10.privateApis);
 function chunk(array, size4) {
   const chunks = [];
@@ -25345,9 +24818,9 @@ var GridItem = (0, import_element105.forwardRef)(
     useIntersectionObserver(elementRef, posinset);
     const instanceId = (0, import_compose11.useInstanceId)(GridItem2);
     const isSelected2 = selection.includes(id);
-    const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
+    const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
     const rendersMediaField = showMedia && mediaField?.render;
-    const renderedMediaField = rendersMediaField ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+    const renderedMediaField = rendersMediaField ? /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
       mediaField.render,
       {
         item,
@@ -25355,7 +24828,7 @@ var GridItem = (0, import_element105.forwardRef)(
         config
       }
     ) : mediaPlaceholder;
-    const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(titleField.render, { item, field: titleField }) : null;
+    const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(titleField.render, { item, field: titleField }) : null;
     let mediaA11yProps;
     let titleA11yProps;
     if (isItemClickable2(item) && onClickItem) {
@@ -25372,7 +24845,7 @@ var GridItem = (0, import_element105.forwardRef)(
         };
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
       Stack,
       {
         direction: "column",
@@ -25404,7 +24877,7 @@ var GridItem = (0, import_element105.forwardRef)(
           }
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
             ItemClickWrapper,
             {
               item,
@@ -25418,7 +24891,7 @@ var GridItem = (0, import_element105.forwardRef)(
               children: renderedMediaField
             }
           ),
-          hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+          hasBulkActions && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
             DataViewsSelectionCheckbox,
             {
               item,
@@ -25429,7 +24902,7 @@ var GridItem = (0, import_element105.forwardRef)(
               disabled: !hasBulkAction
             }
           ),
-          !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "dataviews-view-grid__media-actions", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+          !!actions?.length && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("div", { className: "dataviews-view-grid__media-actions", children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
             ItemActions,
             {
               item,
@@ -25437,7 +24910,7 @@ var GridItem = (0, import_element105.forwardRef)(
               isCompact: true
             }
           ) }),
-          showTitle && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "dataviews-view-grid__title-actions", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+          showTitle && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("div", { className: "dataviews-view-grid__title-actions", children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
             ItemClickWrapper,
             {
               item,
@@ -25453,15 +24926,15 @@ var GridItem = (0, import_element105.forwardRef)(
               children: renderedTitleField
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(Stack, { direction: "column", gap: "xs", children: [
-            showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(Stack, { direction: "column", gap: "xs", children: [
+            showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
               descriptionField.render,
               {
                 item,
                 field: descriptionField
               }
             ),
-            !!badgeFields?.length && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+            !!badgeFields?.length && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
               Stack,
               {
                 direction: "row",
@@ -25471,11 +24944,11 @@ var GridItem = (0, import_element105.forwardRef)(
                 align: "top",
                 justify: "flex-start",
                 children: badgeFields.map((field) => {
-                  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
                     WCBadge,
                     {
                       className: "dataviews-view-grid__field-value",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
                         field.render,
                         {
                           item,
@@ -25488,14 +24961,14 @@ var GridItem = (0, import_element105.forwardRef)(
                 })
               }
             ),
-            !!regularFields?.length && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+            !!regularFields?.length && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
               Stack,
               {
                 direction: "column",
                 className: "dataviews-view-grid__fields",
                 gap: "xs",
                 children: regularFields.map((field) => {
-                  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
                     import_components10.Flex,
                     {
                       className: "dataviews-view-grid__field",
@@ -25504,22 +24977,22 @@ var GridItem = (0, import_element105.forwardRef)(
                       expanded: true,
                       style: { height: "auto" },
                       direction: "row",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_jsx_runtime131.Fragment, { children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(tooltip_exports.Root, { children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(import_jsx_runtime130.Fragment, { children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(tooltip_exports.Root, { children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
                             tooltip_exports.Trigger,
                             {
-                              render: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components10.FlexItem, { className: "dataviews-view-grid__field-name", children: field.header })
+                              render: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components10.FlexItem, { className: "dataviews-view-grid__field-name", children: field.header })
                             }
                           ),
-                          /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(tooltip_exports.Popup, { children: field.label })
+                          /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(tooltip_exports.Popup, { children: field.label })
                         ] }),
-                        /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                        /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
                           import_components10.FlexItem,
                           {
                             className: "dataviews-view-grid__field-value",
                             style: { maxHeight: "none" },
-                            children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                            children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
                               field.render,
                               {
                                 item,
@@ -25589,13 +25062,13 @@ function CompositeGrid({
     isInfiniteScroll,
     gridColumns
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_jsx_runtime131.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(import_jsx_runtime130.Fragment, {
     // Render infinite scroll layout (no rows, feed semantics)
     children: [
-      isInfiniteScroll && /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
+      isInfiniteScroll && /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
         import_components10.Composite,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
             GridItems,
             {
               className: clsx_default(
@@ -25618,10 +25091,10 @@ function CompositeGrid({
           inert,
           children: [
             Array.from({ length: placeholdersNeeded }).map(
-              (_, index2) => /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+              (_, index2) => /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
                 import_components10.Composite.Item,
                 {
-                  render: (props) => /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                  render: (props) => /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
                     Stack,
                     {
                       ...props,
@@ -25639,10 +25112,10 @@ function CompositeGrid({
             data.map((item) => {
               const itemId = getItemId2(item);
               const stablePosition = item.position;
-              return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+              return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
                 import_components10.Composite.Item,
                 {
-                  render: (props) => /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                  render: (props) => /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
                     GridItem,
                     {
                       ...props,
@@ -25678,7 +25151,7 @@ function CompositeGrid({
         }
       ),
       // Render standard grid layout (with rows, grid semantics)
-      !isInfiniteScroll && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+      !isInfiniteScroll && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
         import_components10.Composite,
         {
           role: "grid",
@@ -25692,10 +25165,10 @@ function CompositeGrid({
           "aria-rowcount": totalRows,
           ref: resizeObserverRef,
           inert,
-          children: chunk(data, gridColumns).map((row, i2) => /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+          children: chunk(data, gridColumns).map((row, i2) => /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
             import_components10.Composite.Row,
             {
-              render: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+              render: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
                 "div",
                 {
                   role: "row",
@@ -25713,10 +25186,10 @@ function CompositeGrid({
               ),
               children: row.map((item) => {
                 const itemId = getItemId2(item);
-                return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
                   import_components10.Composite.Item,
                   {
-                    render: (props) => /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                    render: (props) => /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
                       GridItem,
                       {
                         ...props,
@@ -25756,7 +25229,7 @@ function CompositeGrid({
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/index.mjs
-var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
 function ViewGrid({
   actions,
   data,
@@ -25778,7 +25251,7 @@ function ViewGrid({
   const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
   const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   if (!hasData) {
-    return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
       "div",
       {
         className: clsx_default("dataviews-no-results", {
@@ -25804,23 +25277,23 @@ function ViewGrid({
     getItemId: getItemId2,
     actions
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(import_jsx_runtime132.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_jsx_runtime131.Fragment, {
     // Render multiple groups.
     children: [
-      hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(Stack, { direction: "column", gap: "lg", children: Array.from(dataByGroup.entries()).map(
-        ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
+      hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(Stack, { direction: "column", gap: "lg", children: Array.from(dataByGroup.entries()).map(
+        ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
           Stack,
           {
             direction: "column",
             gap: "sm",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("h3", { className: "dataviews-view-grid__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n22.sprintf)(
+              /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("h3", { className: "dataviews-view-grid__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n22.sprintf)(
                 // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
                 (0, import_i18n22.__)("%1$s: %2$s"),
                 groupField.label,
                 groupName
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
                 CompositeGrid,
                 {
                   ...gridProps,
@@ -25834,7 +25307,7 @@ function ViewGrid({
         )
       ) }),
       // Render a single grid with all data.
-      !dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+      !dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
         CompositeGrid,
         {
           ...gridProps,
@@ -25842,7 +25315,7 @@ function ViewGrid({
           isInfiniteScroll: !!isInfiniteScroll
         }
       ),
-      isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components11.Spinner, {}) })
+      isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components11.Spinner, {}) })
     ]
   });
 }
@@ -25854,7 +25327,7 @@ var import_components12 = __toESM(require_components(), 1);
 var import_element106 = __toESM(require_element(), 1);
 var import_i18n23 = __toESM(require_i18n(), 1);
 var import_data4 = __toESM(require_data(), 1);
-var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu4 } = unlock3(import_components12.privateApis);
 function generateItemWrapperCompositeId(idPrefix) {
   return `${idPrefix}-item-wrapper`;
@@ -25877,11 +25350,11 @@ function PrimaryActionGridCell({
     primaryAction.id
   );
   const label = typeof primaryAction.label === "string" ? primaryAction.label : primaryAction.label([item]);
-  return "RenderModal" in primaryAction ? /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+  return "RenderModal" in primaryAction ? /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
     import_components12.Composite.Item,
     {
       id: compositeItemId,
-      render: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+      render: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
         import_components12.Button,
         {
           disabled: !!primaryAction.disabled,
@@ -25891,7 +25364,7 @@ function PrimaryActionGridCell({
           onClick: () => setIsModalOpen(true)
         }
       ),
-      children: isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+      children: isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
         ActionModal,
         {
           action: primaryAction,
@@ -25900,11 +25373,11 @@ function PrimaryActionGridCell({
         }
       )
     }
-  ) }, primaryAction.id) : /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+  ) }, primaryAction.id) : /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
     import_components12.Composite.Item,
     {
       id: compositeItemId,
-      render: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+      render: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
         import_components12.Button,
         {
           disabled: !!primaryAction.disabled,
@@ -25974,7 +25447,7 @@ function ListItem({
     };
   }, [actions, item]);
   const hasOnlyOnePrimaryAction = primaryAction && actions.length === 1;
-  const renderedMediaField = showMedia && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", { className: "dataviews-view-list__media-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+  const renderedMediaField = showMedia && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { className: "dataviews-view-list__media-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
     mediaField.render,
     {
       item,
@@ -25982,17 +25455,17 @@ function ListItem({
       config: { sizes: "52px" }
     }
   ) }) : null;
-  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(titleField.render, { item, field: titleField }) : null;
+  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(titleField.render, { item, field: titleField }) : null;
   const renderDescription = showDescription && descriptionField?.render;
   const hasOnlyMediaAndTitle = !!renderedMediaField && !renderDescription && !otherFields.length;
-  const usedActions = eligibleActions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
+  const usedActions = eligibleActions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
     Stack,
     {
       direction: "row",
       gap: "md",
       className: "dataviews-view-list__item-actions",
       children: [
-        primaryAction && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+        primaryAction && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
           PrimaryActionGridCell,
           {
             idPrefix,
@@ -26000,18 +25473,18 @@ function ListItem({
             item
           }
         ),
-        !hasOnlyOnePrimaryAction && /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("div", { role: "gridcell", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(Menu4, { placement: "bottom-end", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+        !hasOnlyOnePrimaryAction && /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)("div", { role: "gridcell", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(Menu4, { placement: "bottom-end", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
               Menu4.TriggerButton,
               {
-                render: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                render: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
                   import_components12.Composite.Item,
                   {
                     id: generateDropdownTriggerCompositeId(
                       idPrefix
                     ),
-                    render: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                    render: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
                       import_components12.Button,
                       {
                         size: "small",
@@ -26026,7 +25499,7 @@ function ListItem({
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(Menu4.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(Menu4.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
               ActionsMenuGroup,
               {
                 actions: eligibleActions,
@@ -26036,7 +25509,7 @@ function ListItem({
               }
             ) })
           ] }),
-          !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+          !!activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
             ActionModal,
             {
               action: activeModalAction,
@@ -26048,13 +25521,13 @@ function ListItem({
       ]
     }
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
     import_components12.Composite.Row,
     {
       ref: itemRef,
       render: (
         /* aria-posinset breaks Composite.Row if passed to it directly. */
-        /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
           "div",
           {
             "aria-posinset": posinset,
@@ -26069,13 +25542,13 @@ function ListItem({
       }),
       onMouseEnter: handleHover,
       onMouseLeave: handleHover,
-      children: /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
         Stack,
         {
           direction: "row",
           className: "dataviews-view-list__item-wrapper",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { role: "gridcell", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
               import_components12.Composite.Item,
               {
                 id: generateItemWrapperCompositeId(idPrefix),
@@ -26086,7 +25559,7 @@ function ListItem({
                 onClick: () => onSelect(item)
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -26096,15 +25569,15 @@ function ListItem({
                 style: { flex: 1, minWidth: 0 },
                 children: [
                   renderedMediaField,
-                  /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
+                  /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
                     Stack,
                     {
                       direction: "column",
                       gap: "xs",
                       className: "dataviews-view-list__field-wrapper",
                       children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(Stack, { direction: "row", align: "center", children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                        /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(Stack, { direction: "row", align: "center", children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
                             "div",
                             {
                               className: "dataviews-title-field dataviews-view-list__title-field",
@@ -26114,32 +25587,32 @@ function ListItem({
                           ),
                           usedActions
                         ] }),
-                        renderDescription && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", { className: "dataviews-view-list__field", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                        renderDescription && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { className: "dataviews-view-list__field", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
                           descriptionField.render,
                           {
                             item,
                             field: descriptionField
                           }
                         ) }),
-                        /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                        /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
                           "div",
                           {
                             className: "dataviews-view-list__fields",
                             id: descriptionId,
-                            children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
+                            children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
                               "div",
                               {
                                 className: "dataviews-view-list__field",
                                 children: [
-                                  /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                                  /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
                                     VisuallyHidden,
                                     {
                                       className: "dataviews-view-list__field-label",
-                                      render: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", {}),
+                                      render: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", {}),
                                       children: field.label
                                     }
                                   ),
-                                  /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { className: "dataviews-view-list__field-value", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                                  /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { className: "dataviews-view-list__field-value", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
                                     field.render,
                                     {
                                       item,
@@ -26275,7 +25748,7 @@ function ViewList(props) {
   const dataByGroup = hasData && groupField ? getDataByGroup(data, groupField) : null;
   const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   if (!hasData) {
-    return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
       "div",
       {
         className: clsx_default("dataviews-no-results", {
@@ -26286,30 +25759,30 @@ function ViewList(props) {
     );
   }
   if (hasData && groupField && dataByGroup) {
-    return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
       import_components12.Composite,
       {
         ref: compositeRef,
         id: `${baseId}`,
-        render: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", {}),
         className: "dataviews-view-list__group",
         role: "grid",
         activeId: activeCompositeId,
         setActiveId: setActiveCompositeId,
-        children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
           Stack,
           {
             direction: "column",
             gap: "lg",
             className: clsx_default("dataviews-view-list", className),
             children: Array.from(dataByGroup.entries()).map(
-              ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
+              ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
                 Stack,
                 {
                   direction: "column",
                   gap: "sm",
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("h3", { className: "dataviews-view-list__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n23.sprintf)(
+                    /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("h3", { className: "dataviews-view-list__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n23.sprintf)(
                       // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
                       (0, import_i18n23.__)("%1$s: %2$s"),
                       groupField.label,
@@ -26317,7 +25790,7 @@ function ViewList(props) {
                     ) }),
                     groupItems.map((item) => {
                       const id = generateCompositeItemIdPrefix(item);
-                      return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                      return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
                         ListItem,
                         {
                           view,
@@ -26345,13 +25818,13 @@ function ViewList(props) {
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(import_jsx_runtime133.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(import_jsx_runtime132.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
       import_components12.Composite,
       {
         ref: compositeRef,
         id: baseId,
-        render: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", {}),
         className: clsx_default("dataviews-view-list", className, {
           [`has-${view.layout?.density}-density`]: view.layout?.density && ["compact", "comfortable"].includes(
             view.layout.density
@@ -26364,7 +25837,7 @@ function ViewList(props) {
         inert: !isInfiniteScroll && !!isLoading ? "true" : void 0,
         children: data.map((item, index2) => {
           const id = generateCompositeItemIdPrefix(item);
-          return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
             ListItem,
             {
               view,
@@ -26385,7 +25858,7 @@ function ViewList(props) {
         })
       }
     ),
-    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_components12.Spinner, {}) })
+    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components12.Spinner, {}) })
   ] });
 }
 
@@ -26395,7 +25868,7 @@ var import_components13 = __toESM(require_components(), 1);
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-group.mjs
 var import_i18n24 = __toESM(require_i18n(), 1);
 var import_element107 = __toESM(require_element(), 1);
-var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
 function ActivityGroup({
   groupName,
   groupData,
@@ -26407,7 +25880,7 @@ function ActivityGroup({
     // translators: %s: The label of the field e.g. "Status".
     (0, import_i18n24.sprintf)((0, import_i18n24.__)("%s: <groupName />"), groupField.label).trim(),
     {
-      groupName: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
+      groupName: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
         groupField.render,
         {
           item: groupData[0],
@@ -26415,14 +25888,14 @@ function ActivityGroup({
         }
       )
     }
-  ) : /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(groupField.render, { item: groupData[0], field: groupField });
-  return /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(
+  ) : /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(groupField.render, { item: groupData[0], field: groupField });
+  return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
     Stack,
     {
       direction: "column",
       className: "dataviews-view-activity__group",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("h3", { className: "dataviews-view-activity__group-header", children: groupHeader }),
+        /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("h3", { className: "dataviews-view-activity__group-header", children: groupHeader }),
         children
       ]
     },
@@ -26434,7 +25907,7 @@ function ActivityGroup({
 var import_element108 = __toESM(require_element(), 1);
 var import_data5 = __toESM(require_data(), 1);
 var import_compose13 = __toESM(require_compose(), 1);
-var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
 function ActivityItem(props) {
   const {
     view,
@@ -26472,7 +25945,7 @@ function ActivityItem(props) {
   }, [actions, item]);
   const isMobileViewport = (0, import_compose13.useViewportMatch)("medium", "<");
   const density = view.layout?.density ?? "balanced";
-  const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+  const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
     mediaField.render,
     {
       item,
@@ -26482,14 +25955,14 @@ function ActivityItem(props) {
       }
     }
   ) : null;
-  const renderedMediaField = /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("div", { className: "dataviews-view-activity__item-type-icon", children: mediaContent || /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+  const renderedMediaField = /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { className: "dataviews-view-activity__item-type-icon", children: mediaContent || /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
     "span",
     {
       className: "dataviews-view-activity__item-bullet",
       "aria-hidden": "true"
     }
   ) });
-  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(titleField.render, { item, field: titleField }) : null;
+  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(titleField.render, { item, field: titleField }) : null;
   const verticalGap = (0, import_element108.useMemo)(() => {
     switch (density) {
       case "comfortable":
@@ -26498,7 +25971,7 @@ function ActivityItem(props) {
         return "sm";
     }
   }, [density]);
-  return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
     "div",
     {
       ref: itemRef,
@@ -26511,8 +25984,8 @@ function ActivityItem(props) {
         density === "balanced" && "is-balanced",
         density === "comfortable" && "is-comfortable"
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)(Stack, { direction: "row", gap: "lg", justify: "start", align: "flex-start", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(Stack, { direction: "row", gap: "lg", justify: "start", align: "flex-start", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
           Stack,
           {
             direction: "column",
@@ -26522,7 +25995,7 @@ function ActivityItem(props) {
             children: renderedMediaField
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(
           Stack,
           {
             direction: "column",
@@ -26530,7 +26003,7 @@ function ActivityItem(props) {
             align: "flex-start",
             className: "dataviews-view-activity__item-content",
             children: [
-              renderedTitleField && /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+              renderedTitleField && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
                 ItemClickWrapper,
                 {
                   item,
@@ -26541,27 +26014,27 @@ function ActivityItem(props) {
                   children: renderedTitleField
                 }
               ),
-              showDescription && descriptionField && /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("div", { className: "dataviews-view-activity__item-description", children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+              showDescription && descriptionField && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { className: "dataviews-view-activity__item-description", children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
                 descriptionField.render,
                 {
                   item,
                   field: descriptionField
                 }
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("div", { className: "dataviews-view-activity__item-fields", children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { className: "dataviews-view-activity__item-fields", children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(
                 "div",
                 {
                   className: "dataviews-view-activity__item-field",
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
                       VisuallyHidden,
                       {
                         className: "dataviews-view-activity__item-field-label",
-                        render: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("span", {}),
+                        render: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("span", {}),
                         children: field.label
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("span", { className: "dataviews-view-activity__item-field-value", children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("span", { className: "dataviews-view-activity__item-field-value", children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
                       field.render,
                       {
                         item,
@@ -26572,7 +26045,7 @@ function ActivityItem(props) {
                 },
                 field.id
               )) }),
-              !!primaryActions?.length && /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+              !!primaryActions?.length && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
                 PrimaryActions,
                 {
                   item,
@@ -26587,7 +26060,7 @@ function ActivityItem(props) {
         (primaryActions.length < eligibleActions.length || // Since we hide primary actions on mobile, we need to show the menu
         // there if there are any actions at all.
         isMobileViewport && // At the same time, only show the menu if there are actions to show.
-        eligibleActions.length > 0) && /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("div", { className: "dataviews-view-activity__item-actions", children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+        eligibleActions.length > 0) && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { className: "dataviews-view-activity__item-actions", children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
           ItemActions,
           {
             item,
@@ -26632,7 +26105,7 @@ function ActivityItems(props) {
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/activity/index.mjs
-var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
 function ViewActivity(props) {
   const { empty, data, fields: fields3, isLoading, view, className } = props;
   const isDelayedLoading = useDelayedLoading(!!isLoading);
@@ -26641,7 +26114,7 @@ function ViewActivity(props) {
   const dataByGroup = hasData && groupField ? getDataByGroup(data, groupField) : null;
   const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   if (!hasData) {
-    return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
       "div",
       {
         className: clsx_default("dataviews-no-results", {
@@ -26657,7 +26130,7 @@ function ViewActivity(props) {
   });
   const groupedEntries = dataByGroup ? Array.from(dataByGroup.entries()) : [];
   if (hasData && groupField && dataByGroup) {
-    return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
       Stack,
       {
         direction: "column",
@@ -26665,14 +26138,14 @@ function ViewActivity(props) {
         className: wrapperClassName,
         inert: isInert2 ? "true" : void 0,
         children: groupedEntries.map(
-          ([groupName, groupData]) => /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+          ([groupName, groupData]) => /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
             ActivityGroup,
             {
               groupName,
               groupData,
               groupField,
               showLabel: view.groupBy?.showLabel !== false,
-              children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
                 ActivityItems,
                 {
                   ...props,
@@ -26686,17 +26159,17 @@ function ViewActivity(props) {
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)(import_jsx_runtime136.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)(import_jsx_runtime135.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
       "div",
       {
         className: wrapperClassName,
         role: view.infiniteScrollEnabled ? "feed" : void 0,
         inert: isInert2 ? "true" : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(ActivityItems, { ...props })
+        children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(ActivityItems, { ...props })
       }
     ),
-    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(import_components13.Spinner, {}) })
+    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_components13.Spinner, {}) })
   ] });
 }
 
@@ -26716,7 +26189,7 @@ var import_i18n26 = __toESM(require_i18n(), 1);
 var import_components14 = __toESM(require_components(), 1);
 var import_element109 = __toESM(require_element(), 1);
 var import_i18n25 = __toESM(require_i18n(), 1);
-var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
 function DataViewsPagination() {
   const {
     view,
@@ -26742,7 +26215,7 @@ function DataViewsPagination() {
       };
     }
   );
-  return !!totalItems && totalPages !== 1 && /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(
+  return !!totalItems && totalPages !== 1 && /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)(
     Stack,
     {
       direction: "row",
@@ -26751,7 +26224,7 @@ function DataViewsPagination() {
       align: "center",
       gap: "xl",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
           Stack,
           {
             direction: "row",
@@ -26770,9 +26243,9 @@ function DataViewsPagination() {
                 totalPages
               ),
               {
-                div: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("div", { "aria-hidden": true }),
+                div: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("div", { "aria-hidden": true }),
                 // @ts-expect-error — Tag injected via sprintf argument, not visible in format string.
-                CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+                CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
                   import_components14.SelectControl,
                   {
                     "aria-label": (0, import_i18n25.__)("Current page"),
@@ -26792,8 +26265,8 @@ function DataViewsPagination() {
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(Stack, { direction: "row", gap: "xs", align: "center", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)(Stack, { direction: "row", gap: "xs", align: "center", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
             import_components14.Button,
             {
               onClick: () => onChangeView({
@@ -26809,7 +26282,7 @@ function DataViewsPagination() {
               tooltipPosition: "top"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
             import_components14.Button,
             {
               onClick: () => onChangeView({ ...view, page: currentPage + 1 }),
@@ -26830,7 +26303,7 @@ function DataViewsPagination() {
 var dataviews_pagination_default = (0, import_element109.memo)(DataViewsPagination);
 
 // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
-var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
 var EMPTY_ARRAY2 = [];
 function useIsMultiselectPicker(actions) {
   return (0, import_element110.useMemo)(() => {
@@ -26848,7 +26321,7 @@ function BulkSelectionCheckbox2({
   const hasSelection = selection.length > 0;
   const areAllSelected = selectedItems.length === data.length;
   if (disableSelectAll) {
-    return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
       import_components15.CheckboxControl,
       {
         className: "dataviews-view-table-selection-checkbox",
@@ -26861,7 +26334,7 @@ function BulkSelectionCheckbox2({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
     import_components15.CheckboxControl,
     {
       className: "dataviews-view-table-selection-checkbox",
@@ -26897,7 +26370,7 @@ function ActionButtons({
   const [actionInProgress, setActionInProgress] = (0, import_element110.useState)(
     null
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(Stack, { direction: "row", gap: "xs", children: actions.map((action) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(Stack, { direction: "row", gap: "xs", children: actions.map((action) => {
     if (!("callback" in action)) {
       return null;
     }
@@ -26905,7 +26378,7 @@ function ActionButtons({
     const _label = typeof label === "string" ? label : label(items);
     const variant = isPrimary ? "primary" : "tertiary";
     const isInProgress = id === actionInProgress;
-    return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
       import_components15.Button,
       {
         accessibleWhenDisabled: true,
@@ -26951,7 +26424,7 @@ function PickerBulkSelectionInfo() {
     paginationInfo.totalItems,
     !!view.infiniteScrollEnabled
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(
     Stack,
     {
       direction: "row",
@@ -26959,7 +26432,7 @@ function PickerBulkSelectionInfo() {
       gap: "md",
       align: "center",
       children: [
-        isMultiselect && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+        isMultiselect && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
           BulkSelectionCheckbox2,
           {
             selection,
@@ -26970,7 +26443,7 @@ function PickerBulkSelectionInfo() {
             disableSelectAll: !!view.infiniteScrollEnabled
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("span", { className: "dataviews-bulk-actions-footer__item-count", children: message2 })
+        /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("span", { className: "dataviews-bulk-actions-footer__item-count", children: message2 })
       ]
     }
   );
@@ -26989,7 +26462,7 @@ function PickerActions() {
   if (!actions.length) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("div", { className: "dataviews-picker-footer__actions", children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("div", { className: "dataviews-picker-footer__actions", children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
     ActionButtons,
     {
       actions,
@@ -26999,9 +26472,9 @@ function PickerActions() {
   ) });
 }
 function DataViewsPickerBulkActionToolbar() {
-  return /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(Stack, { direction: "row", gap: "md", align: "center", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(PickerBulkSelectionInfo, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(PickerActions, {})
+  return /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(Stack, { direction: "row", gap: "md", align: "center", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(PickerBulkSelectionInfo, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(PickerActions, {})
   ] });
 }
 function DataViewsPickerFooter() {
@@ -27014,7 +26487,7 @@ function DataViewsPickerFooter() {
   if (!actions.length && !hasPagination) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(
     Stack,
     {
       direction: "row",
@@ -27023,16 +26496,16 @@ function DataViewsPickerFooter() {
       className: "dataviews-footer",
       gap: "sm",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(PickerBulkSelectionInfo, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(dataviews_pagination_default, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(PickerActions, {})
+        /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(PickerBulkSelectionInfo, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(dataviews_pagination_default, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(PickerActions, {})
       ]
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
-var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
 var { Badge: WCBadge2 } = unlock3(import_components16.privateApis);
 function GridItem3({
   view,
@@ -27055,7 +26528,7 @@ function GridItem3({
   const elementRef = (0, import_element111.useRef)(null);
   const isSelected2 = selection.includes(id);
   useIntersectionObserver(elementRef, posinset);
-  const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+  const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
     mediaField.render,
     {
       item,
@@ -27063,13 +26536,13 @@ function GridItem3({
       config
     }
   ) : null;
-  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(titleField.render, { item, field: titleField }) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
+  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(titleField.render, { item, field: titleField }) : null;
+  return /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(
     import_components16.Composite.Item,
     {
       ref: elementRef,
       "aria-label": titleField ? titleField.getValue({ item }) || (0, import_i18n27.__)("(no title)") : void 0,
-      render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(Stack, { direction: "column", children, ...props }),
+      render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(Stack, { direction: "column", children, ...props }),
       role: "option",
       "aria-posinset": posinset,
       "aria-setsize": setsize,
@@ -27088,8 +26561,8 @@ function GridItem3({
         }
       },
       children: [
-        showMedia && renderedMediaField && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("div", { className: "dataviews-view-picker-grid__media", children: renderedMediaField }),
-        showMedia && renderedMediaField && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+        showMedia && renderedMediaField && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("div", { className: "dataviews-view-picker-grid__media", children: renderedMediaField }),
+        showMedia && renderedMediaField && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
           DataViewsSelectionCheckbox,
           {
             item,
@@ -27102,24 +26575,24 @@ function GridItem3({
             tabIndex: -1
           }
         ),
-        showTitle && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+        showTitle && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
           Stack,
           {
             direction: "row",
             justify: "space-between",
             className: "dataviews-view-picker-grid__title-actions",
-            children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("div", { className: "dataviews-view-picker-grid__title-field dataviews-title-field", children: renderedTitleField })
+            children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("div", { className: "dataviews-view-picker-grid__title-field dataviews-title-field", children: renderedTitleField })
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(Stack, { direction: "column", gap: "xs", children: [
-          showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(Stack, { direction: "column", gap: "xs", children: [
+          showDescription && descriptionField?.render && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
             descriptionField.render,
             {
               item,
               field: descriptionField
             }
           ),
-          !!badgeFields?.length && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+          !!badgeFields?.length && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
             Stack,
             {
               direction: "row",
@@ -27129,11 +26602,11 @@ function GridItem3({
               align: "top",
               justify: "flex-start",
               children: badgeFields.map((field) => {
-                return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+                return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
                   WCBadge2,
                   {
                     className: "dataviews-view-picker-grid__field-value",
-                    children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+                    children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
                       field.render,
                       {
                         item,
@@ -27146,14 +26619,14 @@ function GridItem3({
               })
             }
           ),
-          !!regularFields?.length && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+          !!regularFields?.length && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
             Stack,
             {
               direction: "column",
               className: "dataviews-view-picker-grid__fields",
               gap: "xs",
               children: regularFields.map((field) => {
-                return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+                return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
                   import_components16.Flex,
                   {
                     className: "dataviews-view-picker-grid__field",
@@ -27162,14 +26635,14 @@ function GridItem3({
                     expanded: true,
                     style: { height: "auto" },
                     direction: "row",
-                    children: /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(import_jsx_runtime139.Fragment, { children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_components16.FlexItem, { className: "dataviews-view-picker-grid__field-name", children: field.header }),
-                      /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+                    children: /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(import_jsx_runtime138.Fragment, { children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_components16.FlexItem, { className: "dataviews-view-picker-grid__field-name", children: field.header }),
+                      /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
                         import_components16.FlexItem,
                         {
                           className: "dataviews-view-picker-grid__field-value",
                           style: { maxHeight: "none" },
-                          children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+                          children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
                             field.render,
                             {
                               item,
@@ -27201,7 +26674,7 @@ function GridGroup({
     GridGroup,
     "dataviews-view-picker-grid-group__header"
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(
     Stack,
     {
       direction: "column",
@@ -27209,7 +26682,7 @@ function GridGroup({
       role: "group",
       "aria-labelledby": headerId,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
           "h3",
           {
             className: "dataviews-view-picker-grid-group__header",
@@ -27279,10 +26752,10 @@ function ViewPickerGrid({
     isInfiniteScroll,
     gridColumns
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(import_jsx_runtime139.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(import_jsx_runtime138.Fragment, {
     // Render multiple groups.
     children: [
-      hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+      hasData && groupField && dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
         import_components16.Composite,
         {
           virtualFocus: true,
@@ -27299,7 +26772,7 @@ function ViewPickerGrid({
             }
           ),
           "aria-label": itemListLabel,
-          render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+          render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
             Stack,
             {
               direction: "column",
@@ -27309,13 +26782,13 @@ function ViewPickerGrid({
             }
           ),
           children: Array.from(dataByGroup.entries()).map(
-            ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+            ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
               GridGroup,
               {
                 groupName,
                 groupField,
                 showLabel: view.groupBy?.showLabel !== false,
-                children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
                   GridItems,
                   {
                     previewSize: usedPreviewSize,
@@ -27326,7 +26799,7 @@ function ViewPickerGrid({
                     ref: resizeObserverRef,
                     children: groupItems.map((item) => {
                       const posInSet = item.position ?? (currentPage - 1) * perPage + data.indexOf(item) + 1;
-                      return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+                      return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
                         GridItem3,
                         {
                           view,
@@ -27358,10 +26831,10 @@ function ViewPickerGrid({
         }
       ),
       // Render a single grid with all data.
-      hasData && !dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
+      hasData && !dataByGroup && /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(
         import_components16.Composite,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
             GridItems,
             {
               className: clsx_default(
@@ -27386,10 +26859,10 @@ function ViewPickerGrid({
           "aria-label": itemListLabel,
           children: [
             Array.from({ length: placeholdersNeeded }).map(
-              (_, index2) => /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+              (_, index2) => /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
                 import_components16.Composite.Item,
                 {
-                  render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+                  render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
                     Stack,
                     {
                       direction: "column",
@@ -27407,7 +26880,7 @@ function ViewPickerGrid({
             ),
             data.map((item) => {
               const posinset = item.position;
-              return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+              return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
                 GridItem3,
                 {
                   view,
@@ -27434,17 +26907,17 @@ function ViewPickerGrid({
         }
       ),
       // Render empty state.
-      !hasData && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+      !hasData && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
         "div",
         {
           className: clsx_default({
             "dataviews-loading": isLoading,
             "dataviews-no-results": !isLoading
           }),
-          children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_components16.Spinner, {}) }) : empty
+          children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_components16.Spinner, {}) }) : empty
         }
       ),
-      hasData && isLoading && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_components16.Spinner, {}) })
+      hasData && isLoading && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_components16.Spinner, {}) })
     ]
   });
 }
@@ -27454,7 +26927,7 @@ var picker_grid_default = ViewPickerGrid;
 var import_i18n28 = __toESM(require_i18n(), 1);
 var import_components17 = __toESM(require_components(), 1);
 var import_element112 = __toESM(require_element(), 1);
-var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
 function TableColumnField2({
   item,
   fields: fields3,
@@ -27469,7 +26942,7 @@ function TableColumnField2({
     "dataviews-view-table__cell-align-end": align === "end",
     "dataviews-view-table__cell-align-center": align === "center"
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("div", { className, children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(field.render, { item, field }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("div", { className, children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(field.render, { item, field }) });
 }
 function TableRow2({
   item,
@@ -27504,11 +26977,11 @@ function TableRow2({
   };
   const columns = view.fields ?? [];
   const hasPrimaryColumn = titleField && showTitle || mediaField && showMedia || descriptionField && showDescription;
-  return /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
     import_components17.Composite.Item,
     {
       ref: elementRef,
-      render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+      render: ({ children, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
         "tr",
         {
           className: clsx_default("dataviews-view-table__row", {
@@ -27544,12 +27017,12 @@ function TableRow2({
         }
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
           "td",
           {
             className: "dataviews-view-table__checkbox-column",
             role: "presentation",
-            children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("div", { className: "dataviews-view-table__cell-content-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("div", { className: "dataviews-view-table__cell-content-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
               DataViewsSelectionCheckbox,
               {
                 item,
@@ -27564,11 +27037,11 @@ function TableRow2({
             ) })
           }
         ),
-        hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+        hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
           "td",
           {
             role: "presentation",
-            children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
               column_primary_default,
               {
                 item,
@@ -27582,7 +27055,7 @@ function TableRow2({
         ),
         columns.map((column) => {
           const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
-          return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
             "td",
             {
               style: {
@@ -27591,7 +27064,7 @@ function TableRow2({
                 minWidth
               },
               role: "presentation",
-              children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                 TableColumnField2,
                 {
                   fields: fields3,
@@ -27666,8 +27139,8 @@ function ViewPickerTable({
       headerMenuRefs.current.delete(column);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(import_jsx_runtime140.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(import_jsx_runtime139.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
       "table",
       {
         className: clsx_default(
@@ -27684,13 +27157,13 @@ function ViewPickerTable({
         "aria-describedby": tableNoticeId,
         role: isInfiniteScroll ? "feed" : "listbox",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("thead", { role: "presentation", children: /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("thead", { role: "presentation", children: /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
             "tr",
             {
               className: "dataviews-view-table__row",
               role: "presentation",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("th", { className: "dataviews-view-table__checkbox-column", children: isMultiselect && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("th", { className: "dataviews-view-table__checkbox-column", children: isMultiselect && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                   BulkSelectionCheckbox,
                   {
                     selection,
@@ -27701,7 +27174,7 @@ function ViewPickerTable({
                     disableSelectAll: isInfiniteScroll
                   }
                 ) }),
-                hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("th", { children: titleField && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+                hasPrimaryColumn && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("th", { children: titleField && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                   column_header_menu_default,
                   {
                     ref: headerMenuRef(
@@ -27719,7 +27192,7 @@ function ViewPickerTable({
                 ) }),
                 columns.map((column, index2) => {
                   const { width, maxWidth, minWidth, align } = view.layout?.styles?.[column] ?? {};
-                  return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                     "th",
                     {
                       style: {
@@ -27730,7 +27203,7 @@ function ViewPickerTable({
                       },
                       "aria-sort": view.sort?.direction && view.sort?.field === column ? sortValues[view.sort.direction] : void 0,
                       scope: "col",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                         column_header_menu_default,
                         {
                           ref: headerMenuRef(column, index2),
@@ -27751,19 +27224,19 @@ function ViewPickerTable({
             }
           ) }),
           hasData && groupField && dataByGroup ? Array.from(dataByGroup.entries()).map(
-            ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
+            ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
               import_components17.Composite,
               {
                 virtualFocus: true,
                 orientation: "vertical",
-                render: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("tbody", { role: "group" }),
+                render: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("tbody", { role: "group" }),
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                     "tr",
                     {
                       className: "dataviews-view-table__group-header-row",
                       role: "presentation",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                         "td",
                         {
                           colSpan: columns.length + (hasPrimaryColumn ? 1 : 0) + 1,
@@ -27779,7 +27252,7 @@ function ViewPickerTable({
                       )
                     }
                   ),
-                  groupItems.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+                  groupItems.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                     TableRow2,
                     {
                       item,
@@ -27800,16 +27273,16 @@ function ViewPickerTable({
               },
               `group-${groupName}`
             )
-          ) : /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+          ) : /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
             import_components17.Composite,
             {
-              render: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("tbody", { role: "presentation" }),
+              render: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("tbody", { role: "presentation" }),
               virtualFocus: true,
               orientation: "vertical",
               children: hasData && data.map((item, index2) => {
                 const itemId = getItemId2(item);
                 const posinset = item.position;
-                return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+                return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                   TableRow2,
                   {
                     item,
@@ -27833,7 +27306,7 @@ function ViewPickerTable({
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
       "div",
       {
         className: clsx_default({
@@ -27842,8 +27315,8 @@ function ViewPickerTable({
         }),
         id: tableNoticeId,
         children: [
-          !hasData && (isLoading ? /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_components17.Spinner, {}) }) : empty),
-          hasData && isLoading && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_components17.Spinner, {}) })
+          !hasData && (isLoading ? /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_components17.Spinner, {}) }) : empty),
+          hasData && isLoading && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_components17.Spinner, {}) })
         ]
       }
     )
@@ -27856,7 +27329,7 @@ var import_components18 = __toESM(require_components(), 1);
 var import_element113 = __toESM(require_element(), 1);
 var import_compose15 = __toESM(require_compose(), 1);
 var import_i18n29 = __toESM(require_i18n(), 1);
-var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
 function isDefined4(item) {
   return !!item;
 }
@@ -27880,7 +27353,7 @@ function PickerActivityItem({
   const id = getItemId2(item);
   const isSelected2 = selection.includes(id);
   const density = view.layout?.density ?? "balanced";
-  const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+  const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
     mediaField.render,
     {
       item,
@@ -27890,15 +27363,15 @@ function PickerActivityItem({
       }
     }
   ) : null;
-  const renderedMediaField = /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "dataviews-view-picker-activity__item-type-icon", children: mediaContent || /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+  const renderedMediaField = /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("div", { className: "dataviews-view-picker-activity__item-type-icon", children: mediaContent || /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
     "span",
     {
       className: "dataviews-view-picker-activity__item-bullet",
       "aria-hidden": "true"
     }
   ) });
-  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(titleField.render, { item, field: titleField }) : null;
-  const renderedDescriptionField = showDescription && descriptionField?.render ? /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(descriptionField.render, { item, field: descriptionField }) : null;
+  const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(titleField.render, { item, field: titleField }) : null;
+  const renderedDescriptionField = showDescription && descriptionField?.render ? /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(descriptionField.render, { item, field: descriptionField }) : null;
   const verticalGap = (0, import_element113.useMemo)(() => {
     switch (density) {
       case "comfortable":
@@ -27907,7 +27380,7 @@ function PickerActivityItem({
         return "sm";
     }
   }, [density]);
-  return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
     import_components18.Composite.Item,
     {
       ref: elementRef,
@@ -27933,9 +27406,9 @@ function PickerActivityItem({
           onChangeSelection(newSelection);
         }
       },
-      render: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", {}),
-      children: /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(Stack, { direction: "row", gap: "lg", justify: "start", align: "flex-start", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+      render: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("div", {}),
+      children: /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(Stack, { direction: "row", gap: "lg", justify: "start", align: "flex-start", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
           Stack,
           {
             direction: "column",
@@ -27945,7 +27418,7 @@ function PickerActivityItem({
             children: renderedMediaField
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
           Stack,
           {
             direction: "column",
@@ -27953,22 +27426,22 @@ function PickerActivityItem({
             align: "flex-start",
             className: "dataviews-view-picker-activity__item-content",
             children: [
-              renderedTitleField && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "dataviews-view-picker-activity__item-title", children: renderedTitleField }),
-              renderedDescriptionField && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "dataviews-view-picker-activity__item-description", children: renderedDescriptionField }),
-              /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "dataviews-view-picker-activity__item-fields", children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(
+              renderedTitleField && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("div", { className: "dataviews-view-picker-activity__item-title", children: renderedTitleField }),
+              renderedDescriptionField && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("div", { className: "dataviews-view-picker-activity__item-description", children: renderedDescriptionField }),
+              /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("div", { className: "dataviews-view-picker-activity__item-fields", children: otherFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
                 "div",
                 {
                   className: "dataviews-view-picker-activity__item-field",
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
                       VisuallyHidden,
                       {
-                        render: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("span", {}),
+                        render: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("span", {}),
                         className: "dataviews-view-picker-activity__item-field-label",
                         children: field.label
                       }
                     ),
-                    /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("span", { className: "dataviews-view-picker-activity__item-field-value", children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+                    /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("span", { className: "dataviews-view-picker-activity__item-field-value", children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
                       field.render,
                       {
                         item,
@@ -27996,7 +27469,7 @@ function PickerActivityGroup({
     PickerActivityGroup,
     "dataviews-view-picker-activity-group__header"
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
     Stack,
     {
       direction: "column",
@@ -28004,7 +27477,7 @@ function PickerActivityGroup({
       "aria-labelledby": headerId,
       className: "dataviews-view-picker-activity-group",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
           "h3",
           {
             className: "dataviews-view-picker-activity-group__header",
@@ -28052,7 +27525,7 @@ function ViewPickerActivity({
   const setsize = isInfiniteScroll ? paginationInfo?.totalItems : void 0;
   const hasData = !!data?.length;
   const isGrouped = !!(groupField && dataByGroup);
-  const renderItem = (item) => /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+  const renderItem = (item) => /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
     PickerActivityItem,
     {
       view,
@@ -28071,19 +27544,19 @@ function ViewPickerActivity({
     getItemId2(item)
   );
   if (!hasData) {
-    return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
       "div",
       {
         className: clsx_default({
           "dataviews-loading": isLoading,
           "dataviews-no-results": !isLoading
         }),
-        children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_components18.Spinner, {}) }) : empty
+        children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_components18.Spinner, {}) }) : empty
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(import_jsx_runtime141.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(import_jsx_runtime140.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
       import_components18.Composite,
       {
         virtualFocus: true,
@@ -28092,13 +27565,13 @@ function ViewPickerActivity({
         "aria-multiselectable": isMultiselect,
         "aria-label": itemListLabel,
         "aria-busy": isLoading,
-        render: isGrouped ? /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(Stack, { direction: "column", gap: "sm" }) : void 0,
+        render: isGrouped ? /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(Stack, { direction: "column", gap: "sm" }) : void 0,
         className: clsx_default(
           "dataviews-view-picker-activity",
           className
         ),
         children: isGrouped && dataByGroup ? Array.from(dataByGroup.entries()).map(
-          ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+          ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
             PickerActivityGroup,
             {
               groupName,
@@ -28111,7 +27584,7 @@ function ViewPickerActivity({
         ) : data.map(renderItem)
       }
     ),
-    isLoading && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_components18.Spinner, {}) })
+    isLoading && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_components18.Spinner, {}) })
   ] });
 }
 
@@ -28119,13 +27592,14 @@ function ViewPickerActivity({
 var import_components19 = __toESM(require_components(), 1);
 var import_i18n30 = __toESM(require_i18n(), 1);
 var import_element114 = __toESM(require_element(), 1);
-var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
 function DensityPicker() {
   const context = (0, import_element114.useContext)(dataviews_context_default);
   const view = context.view;
-  return /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(
     import_components19.__experimentalToggleGroupControl,
     {
+      size: "__unstable-large",
       label: (0, import_i18n30.__)("Density"),
       value: view.layout?.density || "balanced",
       onChange: (value) => {
@@ -28139,7 +27613,7 @@ function DensityPicker() {
       },
       isBlock: true,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
           import_components19.__experimentalToggleGroupControlOption,
           {
             value: "comfortable",
@@ -28150,7 +27624,7 @@ function DensityPicker() {
           },
           "comfortable"
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
           import_components19.__experimentalToggleGroupControlOption,
           {
             value: "balanced",
@@ -28158,7 +27632,7 @@ function DensityPicker() {
           },
           "balanced"
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
           import_components19.__experimentalToggleGroupControlOption,
           {
             value: "compact",
@@ -28175,7 +27649,7 @@ function DensityPicker() {
 var import_components20 = __toESM(require_components(), 1);
 var import_i18n31 = __toESM(require_i18n(), 1);
 var import_element115 = __toESM(require_element(), 1);
-var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
 var imageSizes2 = [
   {
     value: 120,
@@ -28218,9 +27692,10 @@ function PreviewSizePicker() {
       value: index2
     };
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
     import_components20.RangeControl,
     {
+      __next40pxDefaultSize: true,
       showTooltip: false,
       label: (0, import_i18n31.__)("Preview size"),
       value: previewSizeToUse,
@@ -28243,11 +27718,11 @@ function PreviewSizePicker() {
 }
 
 // packages/dataviews/build-module/components/dataviews-layouts/utils/grid-config-options.mjs
-var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
 function GridConfigOptions() {
-  return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(import_jsx_runtime144.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(DensityPicker, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(PreviewSizePicker, {})
+  return /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)(import_jsx_runtime143.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(DensityPicker, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(PreviewSizePicker, {})
   ] });
 }
 
@@ -28488,10 +27963,10 @@ function isApple() {
   if (!canUseDOM) return false;
   return /mac|iphone|ipad|ipod/i.test(navigator.platform);
 }
-function isSafari() {
+function isSafari2() {
   return canUseDOM && isApple() && /apple/i.test(navigator.vendor);
 }
-function isFirefox() {
+function isFirefox2() {
   return canUseDOM && /firefox\//i.test(navigator.userAgent);
 }
 function isPortalEvent(event) {
@@ -28729,9 +28204,9 @@ function createUndoManager({ limit = 100 } = {}) {
 }
 
 // node_modules/@ariakit/react-utils/dist/index.js
-var React96 = __toESM(require_react(), 1);
+var React94 = __toESM(require_react(), 1);
 var import_react26 = __toESM(require_react(), 1);
-var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
 function setRef(ref, value) {
   if (typeof ref === "function") ref(value);
   else if (ref) ref.current = value;
@@ -28783,7 +28258,7 @@ function mergeProps2(base, overrides) {
   }
   return props;
 }
-var _React = { ...React96 };
+var _React = { ...React94 };
 var useReactId = _React.useId;
 var useReactDeferredValue = _React.useDeferredValue;
 var useReactInsertionEffect = _React.useInsertionEffect;
@@ -28957,7 +28432,7 @@ function resetMouseMoving() {
   mouseMoving = false;
 }
 function forwardRef102(render4) {
-  const Role = React96.forwardRef((props, ref) => render4({
+  const Role = React94.forwardRef((props, ref) => render4({
     ...props,
     ref
   }));
@@ -28965,20 +28440,20 @@ function forwardRef102(render4) {
   return Role;
 }
 function memo3(Component2, propsAreEqual) {
-  return React96.memo(Component2, propsAreEqual);
+  return React94.memo(Component2, propsAreEqual);
 }
 function createElement3(Type, props) {
   const { wrapElement, render: render4, ...rest } = props;
   const mergedRef = useMergeRefs8(props.ref, getRefProperty(render4));
   let element;
-  if (React96.isValidElement(render4)) {
+  if (React94.isValidElement(render4)) {
     const renderProps = {
       ...render4.props,
       ref: mergedRef
     };
-    element = React96.cloneElement(render4, mergeProps2(rest, renderProps));
+    element = React94.cloneElement(render4, mergeProps2(rest, renderProps));
   } else if (render4) element = render4(rest);
-  else element = /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(Type, { ...rest });
+  else element = /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(Type, { ...rest });
   if (wrapElement) return wrapElement(element);
   return element;
 }
@@ -28990,40 +28465,40 @@ function createHook(useProps) {
   return useRole;
 }
 function createStoreContext(providers = [], scopedProviders = []) {
-  const context = React96.createContext(void 0);
-  const scopedContext = React96.createContext(void 0);
-  const useContext63 = () => React96.useContext(context);
+  const context = React94.createContext(void 0);
+  const scopedContext = React94.createContext(void 0);
+  const useContext62 = () => React94.useContext(context);
   const useScopedContext = (onlyScoped = false) => {
-    const scoped = React96.useContext(scopedContext);
-    const store = useContext63();
+    const scoped = React94.useContext(scopedContext);
+    const store = useContext62();
     if (onlyScoped) return scoped;
     return scoped || store;
   };
   const useProviderContext = () => {
-    const scoped = React96.useContext(scopedContext);
-    const store = useContext63();
+    const scoped = React94.useContext(scopedContext);
+    const store = useContext62();
     if (scoped && scoped === store) return;
     return store;
   };
   const ContextProvider = (props) => {
-    return providers.reduceRight((children, Provider2) => /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(Provider2, {
+    return providers.reduceRight((children, Provider2) => /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(Provider2, {
       ...props,
       children
-    }), /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(context.Provider, { ...props }));
+    }), /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(context.Provider, { ...props }));
   };
   const ScopedContextProvider = (props) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(ContextProvider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(ContextProvider, {
       ...props,
-      children: scopedProviders.reduceRight((children, Provider2) => /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(Provider2, {
+      children: scopedProviders.reduceRight((children, Provider2) => /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(Provider2, {
         ...props,
         children
-      }), /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(scopedContext.Provider, { ...props }))
+      }), /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(scopedContext.Provider, { ...props }))
     });
   };
   return {
     context,
     scopedContext,
-    useContext: useContext63,
+    useContext: useContext62,
     useScopedContext,
     useProviderContext,
     ContextProvider,
@@ -29035,7 +28510,7 @@ function createStoreContext(providers = [], scopedProviders = []) {
 var import_react27 = __toESM(require_react(), 1);
 var TagName = "div";
 var accessibleWhenDisabledSymbol = /* @__PURE__ */ Symbol("accessibleWhenDisabled");
-var isSafariBrowser = isSafari();
+var isSafariBrowser = isSafari2();
 var alwaysFocusVisibleInputTypes = [
   "text",
   "search",
@@ -29355,7 +28830,7 @@ var useCommand = createHook(function useCommand2({ clickOnEnter = true, clickOnS
           event.preventDefault();
           const { view, ...eventInit } = event;
           const click = () => fireClickEvent(element, eventInit);
-          if (isFirefox()) queueBeforeEvent(element, "keyup", click);
+          if (isFirefox2()) queueBeforeEvent(element, "keyup", click);
           else queueMicrotask(click);
         }
       } else if (isSpace) {
@@ -29504,7 +28979,7 @@ function isItem(store, element, exclude) {
 
 // node_modules/@ariakit/react-components/dist/composite/composite-item.js
 var import_react31 = __toESM(require_react(), 1);
-var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
 
 // node_modules/@ariakit/store/dist/index.js
 function getInternal(store, key2) {
@@ -29786,12 +29261,12 @@ If there's a particular need for this, please submit a feature request at https:
 }
 
 // node_modules/@ariakit/react-store/dist/index.js
-var React97 = __toESM(require_react(), 1);
+var React95 = __toESM(require_react(), 1);
 var import_shim2 = __toESM(require_shim(), 1);
 var noopSubscribe = () => () => {
 };
 function useStoreState(store, keyOrSelector = identity) {
-  const storeSubscribe = React97.useCallback((callback) => {
+  const storeSubscribe = React95.useCallback((callback) => {
     if (!store) return noopSubscribe();
     return subscribe(store, null, callback);
   }, [store]);
@@ -29808,8 +29283,8 @@ function useStoreState(store, keyOrSelector = identity) {
   return (0, import_shim2.useSyncExternalStore)(storeSubscribe, getSnapshot, getSnapshot);
 }
 function useStoreStateObject(store, object) {
-  const objRef = React97.useRef({});
-  const storeSubscribe = React97.useCallback((callback) => {
+  const objRef = React95.useRef({});
+  const storeSubscribe = React95.useCallback((callback) => {
     if (!store) return noopSubscribe();
     return subscribe(store, null, callback);
   }, [store]);
@@ -29866,10 +29341,10 @@ function useStoreProps(store, props, key2, setKey) {
   });
 }
 function useStore2(createStore2, props) {
-  const [store, setStore] = React97.useState(() => createStore2(props));
+  const [store, setStore] = React95.useState(() => createStore2(props));
   useSafeLayoutEffect(() => init(store), [store]);
-  const useState75 = React97.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
-  return [React97.useMemo(() => ({
+  const useState75 = React95.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+  return [React95.useMemo(() => ({
     ...store,
     useState: useState75
   }), [store, useState75]), useEvent(() => {
@@ -30008,7 +29483,7 @@ var useCompositeItem = createHook(function useCompositeItem2({ store, rowId: row
     if (!isSelfTarget(event)) return;
     if (isEditableElement(event.currentTarget)) return;
     if (!baseElement2?.isConnected) return;
-    if (isSafari() && event.currentTarget.hasAttribute("data-autofocus")) event.currentTarget.scrollIntoView({
+    if (isSafari2() && event.currentTarget.hasAttribute("data-autofocus")) event.currentTarget.scrollIntoView({
       block: "nearest",
       inline: "nearest"
     });
@@ -30092,7 +29567,7 @@ var useCompositeItem = createHook(function useCompositeItem2({ store, rowId: row
     id,
     baseElement
   }), [id, baseElement]);
-  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(CompositeItemContext.Provider, {
+  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(CompositeItemContext.Provider, {
     value: providerValue,
     children: element
   }), [providerValue]);
@@ -30125,7 +29600,7 @@ var CompositeItem = memo3(forwardRef102(function CompositeItem2(props) {
 
 // node_modules/@ariakit/react-components/dist/composite/composite.js
 var import_react32 = __toESM(require_react(), 1);
-var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
 var TagName5 = "div";
 function isGrid(items) {
   return items.some((item) => !!item.rowId);
@@ -30331,7 +29806,7 @@ var useComposite = createHook(function useComposite2({ store, composite = true, 
       }
     }
   });
-  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(CompositeScopedContextProvider, {
+  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(CompositeScopedContextProvider, {
     value: store,
     children: element
   }), [store]);
@@ -30382,7 +29857,7 @@ var DialogDescriptionContext = (0, import_react33.createContext)(void 0);
 
 // node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
 var import_react34 = __toESM(require_react(), 1);
-var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
 var import_react_dom4 = __toESM(require_react_dom(), 1);
 var TagName6 = "div";
 function afterTimeout(timeoutMs, cb) {
@@ -30485,7 +29960,7 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
     open,
     transition
   ]);
-  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(DialogScopedContextProvider, {
+  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(DialogScopedContextProvider, {
     value: store,
     children: element
   }), [store]);
@@ -30516,7 +29991,7 @@ var DisclosureContentImpl = forwardRef102(function DisclosureContentImpl2(props)
 var DisclosureContent = forwardRef102(function DisclosureContent2({ unmountOnHide, ...props }) {
   const context = useDisclosureProviderContext();
   if (useStoreState(props.store || context, (state) => !unmountOnHide || state?.mounted) === false) return null;
-  return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(DisclosureContentImpl, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(DisclosureContentImpl, { ...props });
 });
 
 // node_modules/@ariakit/components/dist/disclosure/disclosure-store.js
@@ -31403,7 +30878,7 @@ var Combobox = forwardRef102(function Combobox2(props) {
 
 // node_modules/@ariakit/react-components/dist/combobox/combobox-item.js
 var import_react38 = __toESM(require_react(), 1);
-var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
 var TagName10 = "div";
 function isSelected(storeValue, itemValue) {
   if (itemValue == null) return;
@@ -31480,9 +30955,9 @@ var useComboboxItem = createHook(function useComboboxItem2({ store, value, hideO
     "aria-selected": selected,
     ...props
   };
-  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(ComboboxItemValueContext.Provider, {
+  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(ComboboxItemValueContext.Provider, {
     value,
-    children: /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(ComboboxItemCheckedContext.Provider, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(ComboboxItemCheckedContext.Provider, {
       value: selected ?? false,
       children: element
     })
@@ -31519,7 +30994,7 @@ var ComboboxItem = memo3(forwardRef102(function ComboboxItem2(props) {
 
 // node_modules/@ariakit/react-components/dist/combobox/combobox-item-value.js
 var import_react39 = __toESM(require_react(), 1);
-var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
 var TagName11 = "span";
 function normalizeValue(value) {
   return normalizeString(value).toLowerCase();
@@ -31550,7 +31025,7 @@ function splitValue(itemValue, userValue) {
   if (!userValue) return itemValue;
   const userValues = toArray(userValue).filter(Boolean).map(normalizeValue);
   const parts = [];
-  const span = (value, autocomplete = false) => /* @__PURE__ */ (0, import_jsx_runtime150.jsx)("span", {
+  const span = (value, autocomplete = false) => /* @__PURE__ */ (0, import_jsx_runtime149.jsx)("span", {
     "data-autocomplete-value": autocomplete ? "" : void 0,
     "data-user-value": autocomplete ? void 0 : "",
     children: value
@@ -31610,7 +31085,7 @@ var ComboboxLabel = memo3(forwardRef102(function ComboboxLabel2(props) {
 
 // node_modules/@ariakit/react-components/dist/combobox/combobox-list.js
 var import_react40 = __toESM(require_react(), 1);
-var import_jsx_runtime151 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
 var TagName13 = "div";
 var useComboboxList = createHook(function useComboboxList2({ store, alwaysVisible, ...props }) {
   const scopedContext = useComboboxScopedContext(true);
@@ -31653,9 +31128,9 @@ var useComboboxList = createHook(function useComboboxList2({ store, alwaysVisibl
     "aria-multiselectable": ariaMultiSelectable,
     ...props
   };
-  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(ComboboxScopedContextProvider, {
+  props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(ComboboxScopedContextProvider, {
     value: store,
-    children: /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(ComboboxListRoleContext.Provider, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(ComboboxListRoleContext.Provider, {
       value: role,
       children: element
     })
@@ -31686,7 +31161,7 @@ var TagContextProvider = ctx7.ContextProvider;
 var TagScopedContextProvider = ctx7.ScopedContextProvider;
 
 // node_modules/@ariakit/components/dist/combobox/combobox-store.js
-var isTouchSafari = isSafari() && isTouchDevice();
+var isTouchSafari = isSafari2() && isTouchDevice();
 function createComboboxStore({ tag, ...props } = {}) {
   const store = mergeStore(props.store, pick2(tag, ["value", "rtl"]));
   throwOnConflictingProps(props, store);
@@ -31785,9 +31260,9 @@ function useComboboxStore(props = {}) {
 }
 
 // node_modules/@ariakit/react-components/dist/combobox/combobox-provider.js
-var import_jsx_runtime152 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime151 = __toESM(require_jsx_runtime(), 1);
 function ComboboxProvider(props = {}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(ComboboxContextProvider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(ComboboxContextProvider, {
     value: useComboboxStore(props),
     children: props.children
   });
@@ -31857,7 +31332,7 @@ function useElements({
 }
 
 // packages/dataviews/build-module/components/dataviews-filters/search-widget.mjs
-var import_jsx_runtime153 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime152 = __toESM(require_jsx_runtime(), 1);
 function normalizeSearchInput(input = "") {
   return (0, import_remove_accents.default)(input.trim().toLowerCase());
 }
@@ -31874,19 +31349,19 @@ function generateFilterElementCompositeItemId(prefix, filterElementValue) {
   return `${prefix}-${filterElementValue}`;
 }
 var MultiSelectionOption = ({ selected }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
     "span",
     {
       className: clsx_default(
         "dataviews-filters__search-widget-listitem-multi-selection",
         { "is-selected": selected }
       ),
-      children: selected && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(import_components21.Icon, { icon: check_default })
+      children: selected && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(import_components21.Icon, { icon: check_default })
     }
   );
 };
 var SingleSelectionOption = ({ selected }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
     "span",
     {
       className: clsx_default(
@@ -31911,7 +31386,7 @@ function ListBox({ view, filter, onChangeView }) {
     (f2) => f2.field === filter.field
   );
   const currentValue = getCurrentValue(filter, currentFilter);
-  return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
     import_components21.Composite,
     {
       virtualFocus: true,
@@ -31935,18 +31410,18 @@ function ListBox({ view, filter, onChangeView }) {
           );
         }
       },
-      render: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(import_components21.Composite.Typeahead, {}),
-      children: filter.elements.map((element) => /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(
+      render: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(import_components21.Composite.Typeahead, {}),
+      children: filter.elements.map((element) => /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(
         import_components21.Composite.Hover,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
             import_components21.Composite.Item,
             {
               id: generateFilterElementCompositeItemId(
                 baseId,
                 element.value
               ),
-              render: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+              render: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
                 "div",
                 {
                   "aria-label": element.label,
@@ -31993,19 +31468,19 @@ function ListBox({ view, filter, onChangeView }) {
             }
           ),
           children: [
-            filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+            filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
               SingleSelectionOption,
               {
                 selected: currentValue === element.value
               }
             ),
-            !filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+            !filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
               MultiSelectionOption,
               {
                 selected: currentValue.includes(element.value)
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
               "span",
               {
                 className: "dataviews-filters__search-widget-listitem-value",
@@ -32033,7 +31508,7 @@ function ComboboxList22({ view, filter, onChangeView }) {
       (item) => normalizeSearchInput(item.label).includes(normalizedSearch)
     );
   }, [filter.elements, deferredSearchValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(
     ComboboxProvider,
     {
       selectedValue: currentValue,
@@ -32065,9 +31540,9 @@ function ComboboxList22({ view, filter, onChangeView }) {
       },
       setValue: setSearchValue,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)("div", { className: "dataviews-filters__search-widget-filter-combobox__wrapper", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(ComboboxLabel, {}), children: (0, import_i18n33.__)("Search items") }),
-          /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)("div", { className: "dataviews-filters__search-widget-filter-combobox__wrapper", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(ComboboxLabel, {}), children: (0, import_i18n33.__)("Search items") }),
+          /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
             Combobox,
             {
               autoSelect: "always",
@@ -32075,16 +31550,16 @@ function ComboboxList22({ view, filter, onChangeView }) {
               className: "dataviews-filters__search-widget-filter-combobox__input"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("div", { className: "dataviews-filters__search-widget-filter-combobox__icon", children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(import_components21.Icon, { icon: search_default }) })
+          /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("div", { className: "dataviews-filters__search-widget-filter-combobox__icon", children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(import_components21.Icon, { icon: search_default }) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(
           ComboboxList,
           {
             className: "dataviews-filters__search-widget-filter-combobox-list",
             alwaysVisible: true,
             children: [
               matches2.map((element) => {
-                return /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(
+                return /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(
                   ComboboxItem,
                   {
                     resetValueOnSelect: false,
@@ -32094,13 +31569,13 @@ function ComboboxList22({ view, filter, onChangeView }) {
                     setValueOnClick: false,
                     focusOnHover: true,
                     children: [
-                      filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+                      filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
                         SingleSelectionOption,
                         {
                           selected: currentValue === element.value
                         }
                       ),
-                      !filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+                      !filter.singleSelection && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
                         MultiSelectionOption,
                         {
                           selected: currentValue.includes(
@@ -32108,20 +31583,20 @@ function ComboboxList22({ view, filter, onChangeView }) {
                           )
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(
+                      /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(
                         "span",
                         {
                           className: "dataviews-filters__search-widget-listitem-value",
                           title: element.label,
                           children: [
-                            /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+                            /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
                               ComboboxItemValue,
                               {
                                 className: "dataviews-filters__search-widget-filter-combobox-item-value",
                                 value: element.label
                               }
                             ),
-                            !!element.description && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { className: "dataviews-filters__search-widget-listitem-description", children: element.description })
+                            !!element.description && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("span", { className: "dataviews-filters__search-widget-listitem-description", children: element.description })
                           ]
                         }
                       )
@@ -32130,7 +31605,7 @@ function ComboboxList22({ view, filter, onChangeView }) {
                   element.value
                 );
               }),
-              !matches2.length && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("p", { children: (0, import_i18n33.__)("No results found") })
+              !matches2.length && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("p", { children: (0, import_i18n33.__)("No results found") })
             ]
           }
         )
@@ -32144,13 +31619,13 @@ function SearchWidget(props) {
     getElements: props.filter.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("div", { className: "dataviews-filters__search-widget-no-elements", children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(import_components21.Spinner, {}) });
+    return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("div", { className: "dataviews-filters__search-widget-no-elements", children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(import_components21.Spinner, {}) });
   }
   if (elements.length === 0) {
-    return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("div", { className: "dataviews-filters__search-widget-no-elements", children: (0, import_i18n33.__)("No elements found") });
+    return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("div", { className: "dataviews-filters__search-widget-no-elements", children: (0, import_i18n33.__)("No elements found") });
   }
   const Widget = elements.length > 10 ? ComboboxList22 : ListBox;
-  return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(Widget, { ...props, filter: { ...props.filter, elements } });
+  return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(Widget, { ...props, filter: { ...props.filter, elements } });
 }
 
 // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
@@ -32158,7 +31633,7 @@ var import_es62 = __toESM(require_es6(), 1);
 var import_compose17 = __toESM(require_compose(), 1);
 var import_element118 = __toESM(require_element(), 1);
 var import_components22 = __toESM(require_components(), 1);
-var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime153 = __toESM(require_jsx_runtime(), 1);
 function InputWidget({
   filter,
   view,
@@ -32226,13 +31701,13 @@ function InputWidget({
   if (!field || !field.Edit || !currentFilter) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
     import_components22.Flex,
     {
       className: "dataviews-filters__user-input-widget",
       gap: 2.5,
       direction: "column",
-      children: /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
         field.Edit,
         {
           hideLabelFromVision: true,
@@ -33889,10 +33364,10 @@ function subYears(date, amount, options) {
 var import_i18n34 = __toESM(require_i18n(), 1);
 var import_element119 = __toESM(require_element(), 1);
 var import_date = __toESM(require_date(), 1);
-var import_jsx_runtime155 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
 var filterTextWrappers = {
-  Name: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
-  Value: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
+  Name: /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
+  Value: /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
 };
 function getRelativeDate(value, unit) {
   switch (unit) {
@@ -34428,7 +33903,7 @@ var isSingleSelectionOperator = (name) => OPERATORS.filter((op) => op.selection 
 var isRegisteredOperator = (name) => OPERATORS.some((op) => op.name === name);
 
 // packages/dataviews/build-module/components/dataviews-filters/filter.mjs
-var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime155 = __toESM(require_jsx_runtime(), 1);
 var ENTER = "Enter";
 var SPACE = " ";
 var FilterText = ({
@@ -34462,7 +33937,7 @@ function OperatorSelector({
     (_filter) => _filter.field === filter.field
   );
   const value = currentFilter?.operator || filter.operators[0];
-  return operatorOptions.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime156.jsxs)(
+  return operatorOptions.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)(
     Stack,
     {
       direction: "row",
@@ -34471,8 +33946,8 @@ function OperatorSelector({
       className: "dataviews-filters__summary-operators-container",
       align: "center",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(import_components23.FlexItem, { className: "dataviews-filters__summary-operators-filter-name", children: filter.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(import_components23.FlexItem, { className: "dataviews-filters__summary-operators-filter-name", children: filter.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
           import_components23.SelectControl,
           {
             className: "dataviews-filters__summary-operators-filter-select",
@@ -34599,7 +34074,7 @@ function Filter({
   const hasValues = !isLocked && filterInView?.value !== void 0;
   const canResetOrRemove = !isLocked && (!isPrimary || hasValues);
   const resetOrRemoveLabel = isPrimary ? (0, import_i18n35.__)("Reset") : (0, import_i18n35.__)("Remove");
-  return /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
     import_components23.Dropdown,
     {
       defaultOpen: openedFilter === filter.field,
@@ -34608,12 +34083,12 @@ function Filter({
       onClose: () => {
         toggleRef.current?.focus();
       },
-      renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime156.jsxs)("div", { className: "dataviews-filters__summary-chip-container", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime156.jsxs)(tooltip_exports.Root, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
+      renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)("div", { className: "dataviews-filters__summary-chip-container", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)(tooltip_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
             tooltip_exports.Trigger,
             {
-              render: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
+              render: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
                 "div",
                 {
                   className: clsx_default(
@@ -34643,7 +34118,7 @@ function Filter({
                   "aria-pressed": isOpen,
                   "aria-expanded": isOpen,
                   ref: toggleRef,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
+                  children: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
                     FilterText,
                     {
                       activeElements,
@@ -34655,17 +34130,17 @@ function Filter({
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(tooltip_exports.Popup, { children: (0, import_i18n35.sprintf)(
+          /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(tooltip_exports.Popup, { children: (0, import_i18n35.sprintf)(
             /* translators: 1: Filter name. */
             (0, import_i18n35.__)("Filter by: %1$s"),
             filter.name.toLowerCase()
           ) })
         ] }),
-        canResetOrRemove && /* @__PURE__ */ (0, import_jsx_runtime156.jsxs)(tooltip_exports.Root, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
+        canResetOrRemove && /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)(tooltip_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
             tooltip_exports.Trigger,
             {
-              render: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
+              render: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
                 "button",
                 {
                   className: clsx_default(
@@ -34687,18 +34162,18 @@ function Filter({
                       toggleRef.current?.focus();
                     }
                   },
-                  children: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(import_components23.Icon, { icon: close_small_default })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(import_components23.Icon, { icon: close_small_default })
                 }
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(tooltip_exports.Popup, { children: resetOrRemoveLabel })
+          /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(tooltip_exports.Popup, { children: resetOrRemoveLabel })
         ] })
       ] }),
       renderContent: () => {
-        return /* @__PURE__ */ (0, import_jsx_runtime156.jsxs)(Stack, { direction: "column", justify: "flex-start", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(OperatorSelector, { ...commonProps }),
-          commonProps.filter.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)(Stack, { direction: "column", justify: "flex-start", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(OperatorSelector, { ...commonProps }),
+          commonProps.filter.hasElements ? /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
             SearchWidget,
             {
               ...commonProps,
@@ -34707,7 +34182,7 @@ function Filter({
                 elements
               }
             }
-          ) : /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(InputWidget, { ...commonProps, fields: fields3 })
+          ) : /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(InputWidget, { ...commonProps, fields: fields3 })
         ] });
       }
     }
@@ -34718,7 +34193,7 @@ function Filter({
 var import_components24 = __toESM(require_components(), 1);
 var import_i18n36 = __toESM(require_i18n(), 1);
 var import_element121 = __toESM(require_element(), 1);
-var import_jsx_runtime157 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu5 } = unlock3(import_components24.privateApis);
 function AddFilterMenu({
   filters,
@@ -34728,10 +34203,10 @@ function AddFilterMenu({
   triggerProps
 }) {
   const inactiveFilters = filters.filter((filter) => !filter.isVisible);
-  return /* @__PURE__ */ (0, import_jsx_runtime157.jsxs)(Menu5, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(Menu5.TriggerButton, { ...triggerProps }),
-    /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(Menu5.Popover, { children: inactiveFilters.map((filter) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime156.jsxs)(Menu5, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(Menu5.TriggerButton, { ...triggerProps }),
+    /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(Menu5.Popover, { children: inactiveFilters.map((filter) => {
+      return /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
         Menu5.Item,
         {
           onClick: () => {
@@ -34749,7 +34224,7 @@ function AddFilterMenu({
               ]
             });
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(Menu5.ItemLabel, { children: filter.name })
+          children: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(Menu5.ItemLabel, { children: filter.name })
         },
         filter.field
       );
@@ -34761,11 +34236,11 @@ function AddFilter({ filters, view, onChangeView, setOpenedFilter }, ref) {
     return null;
   }
   const inactiveFilters = filters.filter((filter) => !filter.isVisible);
-  return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
     AddFilterMenu,
     {
       triggerProps: {
-        render: /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
           import_components24.Button,
           {
             accessibleWhenDisabled: true,
@@ -34787,7 +34262,7 @@ var add_filter_default = (0, import_element121.forwardRef)(AddFilter);
 // packages/dataviews/build-module/components/dataviews-filters/reset-filters.mjs
 var import_components25 = __toESM(require_components(), 1);
 var import_i18n37 = __toESM(require_i18n(), 1);
-var import_jsx_runtime158 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime157 = __toESM(require_jsx_runtime(), 1);
 function ResetFilter({
   filters,
   view,
@@ -34799,7 +34274,7 @@ function ResetFilter({
   const isDisabled = !view.search && !view.filters?.some(
     (_filter) => !_filter.isLocked && (_filter.value !== void 0 || !isPrimary(_filter.field))
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
     import_components25.Button,
     {
       disabled: isDisabled,
@@ -34872,12 +34347,12 @@ function useFilters(fields3, view) {
 var use_filters_default = useFilters;
 
 // packages/dataviews/build-module/components/dataviews-filters/filters.mjs
-var import_jsx_runtime159 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime158 = __toESM(require_jsx_runtime(), 1);
 function Filters({ className }) {
   const { fields: fields3, view, onChangeView, openedFilter, setOpenedFilter } = (0, import_element123.useContext)(dataviews_context_default);
   const addFilterRef = (0, import_element123.useRef)(null);
   const filters = use_filters_default(fields3, view);
-  const addFilter = /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+  const addFilter = /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
     add_filter_default,
     {
       filters,
@@ -34894,7 +34369,7 @@ function Filters({ className }) {
   }
   const filterComponents = [
     ...visibleFilters.map((filter) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
         Filter,
         {
           filter,
@@ -34910,7 +34385,7 @@ function Filters({ className }) {
     addFilter
   ];
   filterComponents.push(
-    /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
       ResetFilter,
       {
         filters,
@@ -34920,7 +34395,7 @@ function Filters({ className }) {
       "reset-filters"
     )
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
     Stack,
     {
       direction: "row",
@@ -34939,7 +34414,7 @@ var filters_default = (0, import_element123.memo)(Filters);
 var import_element124 = __toESM(require_element(), 1);
 var import_components26 = __toESM(require_components(), 1);
 var import_i18n38 = __toESM(require_i18n(), 1);
-var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime159 = __toESM(require_jsx_runtime(), 1);
 function FiltersToggle() {
   const {
     filters,
@@ -34980,7 +34455,7 @@ function FiltersToggle() {
   const hasPrimaryOrLockedFilters = filters.some(
     (filter) => filter.isPrimary || filter.isLocked
   );
-  const buttonComponent = /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(
+  const buttonComponent = /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
     import_components26.Button,
     {
       ref: buttonRef,
@@ -34992,7 +34467,7 @@ function FiltersToggle() {
       ...hasVisibleFilters ? toggleFiltersButtonProps : addFilterButtonProps
     }
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("div", { className: "dataviews-filters__container-visibility-toggle", children: !hasVisibleFilters ? /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("div", { className: "dataviews-filters__container-visibility-toggle", children: !hasVisibleFilters ? /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
     AddFilterMenu,
     {
       filters,
@@ -35001,7 +34476,7 @@ function FiltersToggle() {
       setOpenedFilter,
       triggerProps: { render: buttonComponent }
     }
-  ) : /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(
+  ) : /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
     FilterVisibilityToggle,
     {
       buttonRef,
@@ -35021,22 +34496,22 @@ function FilterVisibilityToggle({
     },
     [buttonRef]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime160.jsxs)(import_jsx_runtime160.Fragment, { children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime159.jsxs)(import_jsx_runtime159.Fragment, { children: [
     children,
-    !!filtersCount && /* @__PURE__ */ (0, import_jsx_runtime160.jsx)("span", { className: "dataviews-filters-toggle__count", children: filtersCount })
+    !!filtersCount && /* @__PURE__ */ (0, import_jsx_runtime159.jsx)("span", { className: "dataviews-filters-toggle__count", children: filtersCount })
   ] });
 }
 var toggle_default = FiltersToggle;
 
 // packages/dataviews/build-module/components/dataviews-filters/filters-toggled.mjs
 var import_element125 = __toESM(require_element(), 1);
-var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime160 = __toESM(require_jsx_runtime(), 1);
 function FiltersToggled(props) {
   const { isShowingFilter } = (0, import_element125.useContext)(dataviews_context_default);
   if (!isShowingFilter) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(filters_default, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime160.jsx)(filters_default, { ...props });
 }
 var filters_toggled_default = FiltersToggled;
 
@@ -35044,7 +34519,7 @@ var filters_toggled_default = FiltersToggled;
 var import_element126 = __toESM(require_element(), 1);
 var import_components27 = __toESM(require_components(), 1);
 var import_i18n39 = __toESM(require_i18n(), 1);
-var import_jsx_runtime162 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
 function DataViewsLayout({ className }) {
   const {
     actions = [],
@@ -35064,7 +34539,7 @@ function DataViewsLayout({ className }) {
     renderItemLink,
     defaultLayouts,
     containerRef,
-    empty = /* @__PURE__ */ (0, import_jsx_runtime162.jsx)("p", { children: (0, import_i18n39.__)("No results") })
+    empty = /* @__PURE__ */ (0, import_jsx_runtime161.jsx)("p", { children: (0, import_i18n39.__)("No results") })
   } = (0, import_element126.useContext)(dataviews_context_default);
   const isDelayedInitialLoading = useDelayedLoading(!hasInitiallyLoaded, {
     delay: 200
@@ -35073,12 +34548,12 @@ function DataViewsLayout({ className }) {
     if (!isDelayedInitialLoading) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)("div", { className: "dataviews-loading", children: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(import_components27.Spinner, {}) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime161.jsx)("div", { className: "dataviews-loading", children: /* @__PURE__ */ (0, import_jsx_runtime161.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(import_components27.Spinner, {}) }) });
   }
   const ViewComponent = VIEW_LAYOUTS.find(
     (v2) => v2.type === view.type && defaultLayouts[v2.type]
   )?.component;
-  return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)("div", { className: "dataviews-layout__container", ref: containerRef, children: /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime161.jsx)("div", { className: "dataviews-layout__container", ref: containerRef, children: /* @__PURE__ */ (0, import_jsx_runtime161.jsx)(
     ViewComponent,
     {
       className,
@@ -35106,7 +34581,7 @@ var import_i18n40 = __toESM(require_i18n(), 1);
 var import_element127 = __toESM(require_element(), 1);
 var import_components28 = __toESM(require_components(), 1);
 var import_compose18 = __toESM(require_compose(), 1);
-var import_jsx_runtime163 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime162 = __toESM(require_jsx_runtime(), 1);
 var DataViewsSearch = (0, import_element127.memo)(function Search({ label }) {
   const { view, onChangeView } = (0, import_element127.useContext)(dataviews_context_default);
   const [search, setSearch, debouncedSearch] = (0, import_compose18.useDebouncedInput)(
@@ -35134,7 +34609,7 @@ var DataViewsSearch = (0, import_element127.memo)(function Search({ label }) {
     }
   }, [debouncedSearch]);
   const searchLabel = label || (0, import_i18n40.__)("Search");
-  return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
     import_components28.SearchControl,
     {
       className: "dataviews-search",
@@ -35154,7 +34629,7 @@ var import_i18n41 = __toESM(require_i18n(), 1);
 var import_element128 = __toESM(require_element(), 1);
 var import_warning = __toESM(require_warning(), 1);
 var import_compose19 = __toESM(require_compose(), 1);
-var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime163 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu6 } = unlock3(import_components29.privateApis);
 var DATAVIEWS_CONFIG_POPOVER_PROPS = {
   className: "dataviews-config__popover",
@@ -35168,11 +34643,11 @@ function ViewTypeMenu() {
     return null;
   }
   const activeView = VIEW_LAYOUTS.find((v2) => view.type === v2.type);
-  return /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(Menu6, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(Menu6, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
       Menu6.TriggerButton,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+        render: /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
           import_components29.Button,
           {
             size: "compact",
@@ -35182,14 +34657,14 @@ function ViewTypeMenu() {
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(Menu6.Popover, { children: availableLayouts.map((layout) => {
+    /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(Menu6.Popover, { children: availableLayouts.map((layout) => {
       const config = VIEW_LAYOUTS.find(
         (v2) => v2.type === layout
       );
       if (!config) {
         return null;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
         Menu6.RadioItem,
         {
           value: layout,
@@ -35217,7 +34692,7 @@ function ViewTypeMenu() {
             }
             (0, import_warning.default)("Invalid dataview");
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(Menu6.ItemLabel, { children: config.label })
+          children: /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(Menu6.ItemLabel, { children: config.label })
         },
         layout
       );
@@ -35237,7 +34712,7 @@ function SortFieldControl() {
       };
     });
   }, [fields3]);
-  return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
     import_components29.SelectControl,
     {
       __next40pxDefaultSize: true,
@@ -35269,10 +34744,11 @@ function SortDirectionControl() {
   if (!value && view.sort?.field) {
     value = "desc";
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
     import_components29.__experimentalToggleGroupControl,
     {
       className: "dataviews-view-config__sort-direction",
+      __next40pxDefaultSize: true,
       isBlock: true,
       label: (0, import_i18n41.__)("Order"),
       value,
@@ -35294,7 +34770,7 @@ function SortDirectionControl() {
         (0, import_warning.default)("Invalid direction");
       },
       children: SORTING_DIRECTIONS.map((direction) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
           import_components29.__experimentalToggleGroupControlOptionIcon,
           {
             value: direction,
@@ -35313,9 +34789,10 @@ function ItemsPerPageControl() {
   if (!config || !config.perPageSizes || config.perPageSizes.length < 2 || config.perPageSizes.length > 6 || infiniteScrollEnabled) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
     import_components29.__experimentalToggleGroupControl,
     {
+      __next40pxDefaultSize: true,
       isBlock: true,
       label: (0, import_i18n41.__)("Items per page"),
       value: view.perPage || 10,
@@ -35329,7 +34806,7 @@ function ItemsPerPageControl() {
         });
       },
       children: config.perPageSizes.map((value) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
           import_components29.__experimentalToggleGroupControlOption,
           {
             value,
@@ -35347,7 +34824,7 @@ function ResetViewButton() {
     return null;
   }
   const isDisabled = onReset === false;
-  return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
     import_components29.Button,
     {
       variant: "tertiary",
@@ -35374,7 +34851,7 @@ function DataviewsViewConfigDropdown() {
     (layout) => layout.type === view.type
   );
   const isModified = typeof onReset === "function";
-  return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
     import_components29.Dropdown,
     {
       expandOnMobile: true,
@@ -35383,8 +34860,8 @@ function DataviewsViewConfigDropdown() {
         id: popoverId
       },
       renderToggle: ({ onToggle, isOpen }) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)("div", { className: "dataviews-view-config__toggle-wrapper", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)("div", { className: "dataviews-view-config__toggle-wrapper", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
             import_components29.Button,
             {
               size: "compact",
@@ -35398,22 +34875,22 @@ function DataviewsViewConfigDropdown() {
               "aria-controls": popoverId
             }
           ),
-          isModified && /* @__PURE__ */ (0, import_jsx_runtime164.jsx)("span", { className: "dataviews-view-config__modified-indicator" })
+          isModified && /* @__PURE__ */ (0, import_jsx_runtime163.jsx)("span", { className: "dataviews-view-config__modified-indicator" })
         ] });
       },
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
         import_components29.__experimentalDropdownContentWrapper,
         {
           paddingSize: "medium",
           className: "dataviews-config__popover-content-wrapper",
-          children: /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(
             Stack,
             {
               direction: "column",
               className: "dataviews-view-config",
               gap: "xl",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(
+                /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(
                   Stack,
                   {
                     direction: "row",
@@ -35421,7 +34898,7 @@ function DataviewsViewConfigDropdown() {
                     align: "center",
                     className: "dataviews-view-config__header",
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
+                      /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
                         import_components29.__experimentalHeading,
                         {
                           level: 2,
@@ -35429,26 +34906,26 @@ function DataviewsViewConfigDropdown() {
                           children: (0, import_i18n41.__)("Appearance")
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(ResetViewButton, {})
+                      /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(ResetViewButton, {})
                     ]
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(
+                /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(
                     Stack,
                     {
                       direction: "row",
                       gap: "sm",
                       className: "dataviews-view-config__sort-controls",
                       children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(SortFieldControl, {}),
-                        /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(SortDirectionControl, {})
+                        /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(SortFieldControl, {}),
+                        /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(SortDirectionControl, {})
                       ]
                     }
                   ),
-                  !!activeLayout?.viewConfigOptions && /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(activeLayout.viewConfigOptions, {}),
-                  /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(ItemsPerPageControl, {}),
-                  /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(PropertiesSection, {})
+                  !!activeLayout?.viewConfigOptions && /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(activeLayout.viewConfigOptions, {}),
+                  /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(ItemsPerPageControl, {}),
+                  /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(PropertiesSection, {})
                 ] })
               ]
             }
@@ -35459,9 +34936,9 @@ function DataviewsViewConfigDropdown() {
   );
 }
 function _DataViewsViewConfig() {
-  return /* @__PURE__ */ (0, import_jsx_runtime164.jsxs)(import_jsx_runtime164.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(ViewTypeMenu, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(DataviewsViewConfigDropdown, {})
+  return /* @__PURE__ */ (0, import_jsx_runtime163.jsxs)(import_jsx_runtime163.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(ViewTypeMenu, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(DataviewsViewConfigDropdown, {})
   ] });
 }
 var DataViewsViewConfig = (0, import_element128.memo)(_DataViewsViewConfig);
@@ -35495,7 +34972,7 @@ function getCustomValidity(isValid2, validity) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-var import_jsx_runtime165 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedCheckboxControl } = unlock3(import_components30.privateApis);
 function Checkbox({
   field,
@@ -35512,7 +34989,7 @@ function Checkbox({
       setValue({ item: data, value: !getValue({ item: data }) })
     );
   }, [data, getValue, onChange, setValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(
     ValidatedCheckboxControl,
     {
       required: !!field.isValid?.required,
@@ -35531,7 +35008,7 @@ function Checkbox({
 // packages/dataviews/build-module/components/dataform-controls/combobox.mjs
 var import_components31 = __toESM(require_components(), 1);
 var import_element130 = __toESM(require_element(), 1);
-var import_jsx_runtime166 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime165 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedComboboxControl } = unlock3(import_components31.privateApis);
 function Combobox3({
   data,
@@ -35551,9 +35028,9 @@ function Combobox3({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(import_components31.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(import_components31.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime165.jsx)(
     ValidatedComboboxControl,
     {
       required: !!field.isValid?.required,
@@ -35581,7 +35058,7 @@ var import_date3 = __toESM(require_date(), 1);
 var import_components32 = __toESM(require_components(), 1);
 var import_element131 = __toESM(require_element(), 1);
 var import_i18n42 = __toESM(require_i18n(), 1);
-var import_jsx_runtime167 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime166 = __toESM(require_jsx_runtime(), 1);
 var TIME_UNITS_OPTIONS = {
   [OPERATOR_IN_THE_PAST]: [
     { value: "days", label: (0, import_i18n42.__)("Days") },
@@ -35627,7 +35104,7 @@ function RelativeDateControl({
     ),
     [onChange, setValue, data, relValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
     import_components32.BaseControl,
     {
       id,
@@ -35635,8 +35112,8 @@ function RelativeDateControl({
       label,
       hideLabelFromVision,
       help: description,
-      children: /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(Stack, { direction: "row", gap: "sm", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime166.jsxs)(Stack, { direction: "row", gap: "sm", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
           import_components32.__experimentalNumberControl,
           {
             __next40pxDefaultSize: true,
@@ -35649,7 +35126,7 @@ function RelativeDateControl({
             disabled: disabled2
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime166.jsx)(
           import_components32.SelectControl,
           {
             className: "dataviews-controls__relative-date-unit",
@@ -35702,7 +35179,7 @@ function parseDateTime(dateTimeString) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
-var import_jsx_runtime168 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime167 = __toESM(require_jsx_runtime(), 1);
 var { DateCalendar, ValidatedInputControl } = unlock3(import_components33.privateApis);
 var formatDateTime = (value) => {
   if (!value) {
@@ -35803,15 +35280,15 @@ function CalendarDateTimeControl({
   } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
     displayLabel = `${label} (${(0, import_i18n43.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
     import_components33.BaseControl,
     {
       id,
       label: displayLabel,
       help: description,
       hideLabelFromVision,
-      children: /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime167.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
           ValidatedInputControl,
           {
             ref: inputControlRef,
@@ -35828,7 +35305,7 @@ function CalendarDateTimeControl({
             max: maxConstraint ? formatDateTime(maxConstraint) : void 0
           }
         ),
-        !compact && /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+        !compact && /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
           DateCalendar,
           {
             style: { width: "100%" },
@@ -35856,7 +35333,7 @@ function DateTime({
   config
 }) {
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
       RelativeDateControl,
       {
         className: "dataviews-controls__datetime",
@@ -35868,7 +35345,7 @@ function DateTime({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
     CalendarDateTimeControl,
     {
       data,
@@ -35887,7 +35364,7 @@ var import_components34 = __toESM(require_components(), 1);
 var import_element134 = __toESM(require_element(), 1);
 var import_i18n44 = __toESM(require_i18n(), 1);
 var import_date4 = __toESM(require_date(), 1);
-var import_jsx_runtime169 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime168 = __toESM(require_jsx_runtime(), 1);
 var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock3(import_components34.privateApis);
 var DATE_PRESETS = [
   {
@@ -36045,9 +35522,9 @@ function ValidatedDateControl({
       setIsTouched(true);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)("div", { onBlur, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)("div", { onBlur, children: [
     children,
-    /* @__PURE__ */ (0, import_jsx_runtime169.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime168.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(
       "p",
       {
         className: clsx_default(
@@ -36055,7 +35532,7 @@ function ValidatedDateControl({
           customValidity.type === "invalid" ? "is-invalid" : void 0
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
             import_components34.Icon,
             {
               className: "components-validated-control__indicator-icon",
@@ -36148,7 +35625,7 @@ function CalendarDateControl({
   } else if (!isValid2?.required && markWhenOptional) {
     displayLabel = `${label} (${(0, import_i18n44.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
     ValidatedDateControl,
     {
       field,
@@ -36156,7 +35633,7 @@ function CalendarDateControl({
       inputRefs: validityTargetRef,
       isTouched,
       setIsTouched,
-      children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
         import_components34.BaseControl,
         {
           id,
@@ -36164,8 +35641,8 @@ function CalendarDateControl({
           label: displayLabel,
           help: description,
           hideLabelFromVision,
-          children: /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -36175,7 +35652,7 @@ function CalendarDateControl({
                 children: [
                   DATE_PRESETS.map((preset) => {
                     const isSelected2 = selectedPresetId === preset.id;
-                    return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+                    return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
                       import_components34.Button,
                       {
                         className: "dataviews-controls__date-preset",
@@ -36190,7 +35667,7 @@ function CalendarDateControl({
                       preset.id
                     );
                   }),
-                  /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
                     import_components34.Button,
                     {
                       className: "dataviews-controls__date-preset",
@@ -36205,7 +35682,7 @@ function CalendarDateControl({
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
               import_components34.__experimentalInputControl,
               {
                 __next40pxDefaultSize: true,
@@ -36221,7 +35698,7 @@ function CalendarDateControl({
                 max: maxConstraint
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
               DateCalendar2,
               {
                 style: { width: "100%" },
@@ -36354,7 +35831,7 @@ function CalendarDateRangeControl({
   } else if (!field.isValid?.required && markWhenOptional) {
     displayLabel = `${label} (${(0, import_i18n44.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
     ValidatedDateControl,
     {
       field,
@@ -36362,7 +35839,7 @@ function CalendarDateRangeControl({
       inputRefs: [fromInputRef, toInputRef],
       isTouched,
       setIsTouched,
-      children: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
         import_components34.BaseControl,
         {
           id,
@@ -36370,8 +35847,8 @@ function CalendarDateRangeControl({
           label: displayLabel,
           help: description,
           hideLabelFromVision,
-          children: /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -36381,7 +35858,7 @@ function CalendarDateRangeControl({
                 children: [
                   DATE_RANGE_PRESETS.map((preset) => {
                     const isSelected2 = selectedPresetId === preset.id;
-                    return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+                    return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
                       import_components34.Button,
                       {
                         className: "dataviews-controls__date-preset",
@@ -36396,7 +35873,7 @@ function CalendarDateRangeControl({
                       preset.id
                     );
                   }),
-                  /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
                     import_components34.Button,
                     {
                       className: "dataviews-controls__date-preset",
@@ -36411,7 +35888,7 @@ function CalendarDateRangeControl({
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime168.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -36419,7 +35896,7 @@ function CalendarDateRangeControl({
                 justify: "space-between",
                 className: "dataviews-controls__date-range-inputs",
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
                     import_components34.__experimentalInputControl,
                     {
                       __next40pxDefaultSize: true,
@@ -36435,7 +35912,7 @@ function CalendarDateRangeControl({
                       max: maxConstraint
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
                     import_components34.__experimentalInputControl,
                     {
                       __next40pxDefaultSize: true,
@@ -36454,7 +35931,7 @@ function CalendarDateRangeControl({
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
               DateRangeCalendar,
               {
                 style: { width: "100%" },
@@ -36483,7 +35960,7 @@ function DateControl({
   validity
 }) {
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
       RelativeDateControl,
       {
         className: "dataviews-controls__date",
@@ -36496,7 +35973,7 @@ function DateControl({
     );
   }
   if (operator === OPERATOR_BETWEEN) {
-    return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
       CalendarDateRangeControl,
       {
         data,
@@ -36508,7 +35985,7 @@ function DateControl({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime168.jsx)(
     CalendarDateControl,
     {
       data,
@@ -36524,7 +36001,7 @@ function DateControl({
 // packages/dataviews/build-module/components/dataform-controls/select.mjs
 var import_components35 = __toESM(require_components(), 1);
 var import_element135 = __toESM(require_element(), 1);
-var import_jsx_runtime170 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime169 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedSelectControl } = unlock3(import_components35.privateApis);
 function Select({
   data,
@@ -36547,9 +36024,9 @@ function Select({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(import_components35.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(import_components35.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
     ValidatedSelectControl,
     {
       required: !!field.isValid?.required,
@@ -36569,7 +36046,7 @@ function Select({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/adaptive-select.mjs
-var import_jsx_runtime171 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime170 = __toESM(require_jsx_runtime(), 1);
 var ELEMENTS_THRESHOLD = 10;
 function AdaptiveSelect(props) {
   const { field } = props;
@@ -36578,9 +36055,9 @@ function AdaptiveSelect(props) {
     getElements: field.getElements
   });
   if (elements.length >= ELEMENTS_THRESHOLD) {
-    return /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(Combobox3, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(Combobox3, { ...props });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(Select, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime170.jsx)(Select, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/email.mjs
@@ -36589,7 +36066,7 @@ var import_components37 = __toESM(require_components(), 1);
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.mjs
 var import_components36 = __toESM(require_components(), 1);
 var import_element136 = __toESM(require_element(), 1);
-var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime171 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedInputControl: ValidatedInputControl2 } = unlock3(import_components36.privateApis);
 function ValidatedText({
   data,
@@ -36614,7 +36091,7 @@ function ValidatedText({
     ),
     [data, setValue, onChange]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(
     ValidatedInputControl2,
     {
       required: !!isValid2.required,
@@ -36639,8 +36116,36 @@ function ValidatedText({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/email.mjs
-var import_jsx_runtime173 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
 function Email({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision,
+  markWhenOptional,
+  validity
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(
+    ValidatedText,
+    {
+      ...{
+        data,
+        field,
+        onChange,
+        hideLabelFromVision,
+        markWhenOptional,
+        validity,
+        type: "email",
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(import_components37.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(import_components37.Icon, { icon: envelope_default }) })
+      }
+    }
+  );
+}
+
+// packages/dataviews/build-module/components/dataform-controls/telephone.mjs
+var import_components38 = __toESM(require_components(), 1);
+var import_jsx_runtime173 = __toESM(require_jsx_runtime(), 1);
+function Telephone({
   data,
   field,
   onChange,
@@ -36658,17 +36163,17 @@ function Email({
         hideLabelFromVision,
         markWhenOptional,
         validity,
-        type: "email",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(import_components37.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(import_components37.Icon, { icon: envelope_default }) })
+        type: "tel",
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(import_components38.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(import_components38.Icon, { icon: mobile_default }) })
       }
     }
   );
 }
 
-// packages/dataviews/build-module/components/dataform-controls/telephone.mjs
-var import_components38 = __toESM(require_components(), 1);
+// packages/dataviews/build-module/components/dataform-controls/url.mjs
+var import_components39 = __toESM(require_components(), 1);
 var import_jsx_runtime174 = __toESM(require_jsx_runtime(), 1);
-function Telephone({
+function Url({
   data,
   field,
   onChange,
@@ -36686,36 +36191,8 @@ function Telephone({
         hideLabelFromVision,
         markWhenOptional,
         validity,
-        type: "tel",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(import_components38.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(import_components38.Icon, { icon: mobile_default }) })
-      }
-    }
-  );
-}
-
-// packages/dataviews/build-module/components/dataform-controls/url.mjs
-var import_components39 = __toESM(require_components(), 1);
-var import_jsx_runtime175 = __toESM(require_jsx_runtime(), 1);
-function Url({
-  data,
-  field,
-  onChange,
-  hideLabelFromVision,
-  markWhenOptional,
-  validity
-}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
-    ValidatedText,
-    {
-      ...{
-        data,
-        field,
-        onChange,
-        hideLabelFromVision,
-        markWhenOptional,
-        validity,
         type: "url",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(import_components39.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(import_components39.Icon, { icon: link_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(import_components39.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime174.jsx)(import_components39.Icon, { icon: link_default }) })
       }
     }
   );
@@ -36725,7 +36202,7 @@ function Url({
 var import_components40 = __toESM(require_components(), 1);
 var import_element137 = __toESM(require_element(), 1);
 var import_i18n45 = __toESM(require_i18n(), 1);
-var import_jsx_runtime176 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime175 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedNumberControl } = unlock3(import_components40.privateApis);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
@@ -36749,12 +36226,12 @@ function BetweenControls({
     (newValue) => onChange([min2, toNumberOrEmpty(newValue)]),
     [onChange, min2]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
     import_components40.BaseControl,
     {
       help: (0, import_i18n45.__)("The max. value must be greater than the min. value."),
-      children: /* @__PURE__ */ (0, import_jsx_runtime176.jsxs)(import_components40.Flex, { direction: "row", gap: 4, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime175.jsxs)(import_components40.Flex, { direction: "row", gap: 4, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
           import_components40.__experimentalNumberControl,
           {
             label: (0, import_i18n45.__)("Min."),
@@ -36766,7 +36243,7 @@ function BetweenControls({
             step
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
           import_components40.__experimentalNumberControl,
           {
             label: (0, import_i18n45.__)("Max."),
@@ -36828,7 +36305,7 @@ function ValidatedNumber({
     )) {
       valueBetween = value;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
       BetweenControls,
       {
         value: valueBetween,
@@ -36838,7 +36315,7 @@ function ValidatedNumber({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
     ValidatedNumberControl,
     {
       required: !!isValid2.required,
@@ -36859,21 +36336,21 @@ function ValidatedNumber({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/integer.mjs
-var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime176 = __toESM(require_jsx_runtime(), 1);
 function Integer(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(ValidatedNumber, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(ValidatedNumber, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/number.mjs
-var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
 function Number2(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(ValidatedNumber, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(ValidatedNumber, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/radio.mjs
 var import_components41 = __toESM(require_components(), 1);
 var import_element138 = __toESM(require_element(), 1);
-var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedRadioControl } = unlock3(import_components41.privateApis);
 function Radio({
   data,
@@ -36895,9 +36372,9 @@ function Radio({
     [data, onChange, setValue]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(import_components41.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_components41.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
     ValidatedRadioControl,
     {
       required: !!field.isValid?.required,
@@ -36916,7 +36393,7 @@ function Radio({
 
 // packages/dataviews/build-module/components/dataform-controls/text.mjs
 var import_element139 = __toESM(require_element(), 1);
-var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
 function Text3({
   data,
   field,
@@ -36927,7 +36404,7 @@ function Text3({
   validity
 }) {
   const { prefix, suffix } = config || {};
-  return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
     ValidatedText,
     {
       ...{
@@ -36947,7 +36424,7 @@ function Text3({
 // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
 var import_components42 = __toESM(require_components(), 1);
 var import_element140 = __toESM(require_element(), 1);
-var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedToggleControl } = unlock3(import_components42.privateApis);
 function Toggle({
   field,
@@ -36964,7 +36441,7 @@ function Toggle({
       setValue({ item: data, value: !getValue({ item: data }) })
     );
   }, [onChange, setValue, data, getValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
     ValidatedToggleControl,
     {
       required: !!isValid2.required,
@@ -36983,7 +36460,7 @@ function Toggle({
 // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
 var import_components43 = __toESM(require_components(), 1);
 var import_element141 = __toESM(require_element(), 1);
-var import_jsx_runtime182 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedTextareaControl } = unlock3(import_components43.privateApis);
 function Textarea({
   data,
@@ -37002,7 +36479,7 @@ function Textarea({
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)(
     ValidatedTextareaControl,
     {
       required: !!isValid2.required,
@@ -37026,7 +36503,7 @@ function Textarea({
 // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
 var import_components44 = __toESM(require_components(), 1);
 var import_element142 = __toESM(require_element(), 1);
-var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime182 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedToggleGroupControl } = unlock3(import_components44.privateApis);
 function ToggleGroup({
   data,
@@ -37048,25 +36525,26 @@ function ToggleGroup({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(import_components44.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(import_components44.Spinner, {});
   }
   if (elements.length === 0) {
     return null;
   }
   const selectedOption = elements.find((el) => el.value === value);
-  return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
     ValidatedToggleGroupControl,
     {
       required: !!field.isValid?.required,
       markWhenOptional,
       customValidity: getCustomValidity(isValid2, validity),
+      __next40pxDefaultSize: true,
       isBlock: true,
       label: field.label,
       help: selectedOption?.description || field.description,
       onChange: onChangeControl,
       value,
       hideLabelFromVision,
-      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(
+      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(
         import_components44.__experimentalToggleGroupControlOption,
         {
           label: el.label,
@@ -37082,7 +36560,7 @@ function ToggleGroup({
 // packages/dataviews/build-module/components/dataform-controls/array.mjs
 var import_components45 = __toESM(require_components(), 1);
 var import_element143 = __toESM(require_element(), 1);
-var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedFormTokenField } = unlock3(import_components45.privateApis);
 function ArrayControl({
   data,
@@ -37121,9 +36599,9 @@ function ArrayControl({
     [onChange, setValue, data]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(import_components45.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(import_components45.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(
     ValidatedFormTokenField,
     {
       required: !!isValid2?.required,
@@ -37162,9 +36640,9 @@ function ArrayControl({
           const element = elements.find(
             (el) => el.value === item
           );
-          return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)("span", { children: element?.label || item });
+          return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)("span", { children: element?.label || item });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)("span", { children: item });
+        return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)("span", { children: item });
       }
     }
   );
@@ -37332,7 +36810,7 @@ var w = function(r3) {
 var import_components46 = __toESM(require_components(), 1);
 var import_element144 = __toESM(require_element(), 1);
 var import_i18n46 = __toESM(require_i18n(), 1);
-var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedInputControl: ValidatedInputControl3 } = unlock3(import_components46.privateApis);
 var ColorPickerDropdown = ({
   color,
@@ -37340,12 +36818,12 @@ var ColorPickerDropdown = ({
   disabled: disabled2
 }) => {
   const validColor = color && w(color).isValid() ? color : "#ffffff";
-  return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(
     import_components46.Dropdown,
     {
       className: "dataviews-controls__color-picker-dropdown",
       popoverProps: { resize: false },
-      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
+      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(
         import_components46.Button,
         {
           onClick: onToggle,
@@ -37353,10 +36831,10 @@ var ColorPickerDropdown = ({
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
-          icon: () => /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(import_components46.ColorIndicator, { colorValue: validColor })
+          icon: () => /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(import_components46.ColorIndicator, { colorValue: validColor })
         }
       ),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(import_components46.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(import_components46.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(
         import_components46.ColorPicker,
         {
           color: validColor,
@@ -37390,7 +36868,7 @@ function Color({
     },
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(
     ValidatedInputControl3,
     {
       required: !!field.isValid?.required,
@@ -37404,7 +36882,7 @@ function Color({
       hideLabelFromVision,
       type: "text",
       disabled: disabled2,
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(import_components46.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(import_components46.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(
         ColorPickerDropdown,
         {
           color: value,
@@ -37420,7 +36898,7 @@ function Color({
 var import_components47 = __toESM(require_components(), 1);
 var import_element145 = __toESM(require_element(), 1);
 var import_i18n47 = __toESM(require_i18n(), 1);
-var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
   field,
@@ -37434,7 +36912,7 @@ function Password({
   const toggleVisibility = (0, import_element145.useCallback)(() => {
     setIsVisible((prev) => !prev);
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
     ValidatedText,
     {
       ...{
@@ -37445,7 +36923,7 @@ function Password({
         markWhenOptional,
         validity,
         type: isVisible2 ? "text" : "password",
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(import_components47.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(import_components47.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
           import_components47.Button,
           {
             icon: isVisible2 ? unseen_default : seen_default,
@@ -37467,7 +36945,7 @@ function hasElements(field) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/index.mjs
-var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
 var FORM_CONTROLS = {
   adaptiveSelect: AdaptiveSelect,
   array: ArrayControl,
@@ -37499,7 +36977,7 @@ function createConfiguredControl(config) {
     return null;
   }
   return function ConfiguredControl(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(BaseControlType, { ...props, config: controlConfig });
+    return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(BaseControlType, { ...props, config: controlConfig });
   };
 }
 function getControl(field, fallback) {
@@ -37597,13 +37075,13 @@ function RenderFromElements({
 }
 
 // packages/dataviews/build-module/field-types/utils/render-default.mjs
-var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
 function render({
   item,
   field
 }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(RenderFromElements, { item, field });
   }
   return field.getValueFormatted({ item, field });
 }
@@ -38320,17 +37798,17 @@ var telephone_default = {
 
 // packages/dataviews/build-module/field-types/color.mjs
 var import_i18n53 = __toESM(require_i18n(), 1);
-var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime188 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(RenderFromElements, { item, field });
   }
   const value = get_value_formatted_default_default({ item, field });
   if (!value || !w(value).isValid()) {
     return value;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime188.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(
       "div",
       {
         style: {
@@ -38343,7 +37821,7 @@ function render3({ item, field }) {
         }
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime189.jsx)("span", { children: value })
+    /* @__PURE__ */ (0, import_jsx_runtime188.jsx)("span", { children: value })
   ] });
 }
 function isValidCustom6(item, field) {
@@ -38952,7 +38430,7 @@ function useInfiniteScroll({
 // packages/dataviews/build-module/dataviews-picker/index.mjs
 var import_element148 = __toESM(require_element(), 1);
 var import_compose21 = __toESM(require_compose(), 1);
-var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
 var isItemClickable = () => false;
 var dataViewsPickerLayouts = VIEW_LAYOUTS.filter(
   (viewLayout) => viewLayout.isPicker
@@ -38969,8 +38447,8 @@ function DefaultUI({
 }) {
   const { view } = (0, import_element148.useContext)(dataviews_context_default);
   const isInfiniteScroll = view.infiniteScrollEnabled;
-  return /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(import_jsx_runtime190.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)(import_jsx_runtime189.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)(
       Stack,
       {
         direction: "row",
@@ -38981,7 +38459,7 @@ function DefaultUI({
         }),
         gap: "xs",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime190.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime189.jsxs)(
             Stack,
             {
               direction: "row",
@@ -38989,18 +38467,18 @@ function DefaultUI({
               justify: "start",
               className: "dataviews__search",
               children: [
-                search && /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(dataviews_search_default, { label: searchLabel }),
-                /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(toggle_default, {})
+                search && /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(dataviews_search_default, { label: searchLabel }),
+                /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(toggle_default, {})
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(dataviews_view_config_default, {}) })
+          /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(dataviews_view_config_default, {}) })
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
-    /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(DataViewsLayout, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(DataViewsPickerFooter, {})
+    /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
+    /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(DataViewsLayout, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(DataViewsPickerFooter, {})
   ] });
 }
 function DataViewsPicker({
@@ -39087,7 +38565,7 @@ function DataViewsPicker({
   if (!defaultLayouts[view.type]) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(
     dataviews_context_default.Provider,
     {
       value: {
@@ -39118,7 +38596,7 @@ function DataViewsPicker({
         hasInitiallyLoaded: true,
         intersectionObserver
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime190.jsx)("div", { className: "dataviews-picker-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(DefaultUI, { search, searchLabel }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime189.jsx)("div", { className: "dataviews-picker-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime189.jsx)(DefaultUI, { search, searchLabel }) })
     }
   );
 }
@@ -39140,7 +38618,7 @@ var import_element160 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-context/index.mjs
 var import_element149 = __toESM(require_element(), 1);
-var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
 var DataFormContext = (0, import_element149.createContext)({
   fields: []
 });
@@ -39149,7 +38627,7 @@ function DataFormProvider({
   fields: fields3,
   children
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(DataFormContext.Provider, { value: { fields: fields3 }, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime190.jsx)(DataFormContext.Provider, { value: { fields: fields3 }, children });
 }
 var dataform_context_default = DataFormContext;
 
@@ -39279,15 +38757,15 @@ function normalizeForm(form2) {
 var normalize_form_default = normalizeForm;
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
 function Header6({ title }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-regular__header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(import_components48.__experimentalHeading, { level: 2, size: 13, children: title }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(import_components48.__experimentalHeading, { level: 2, size: 13, children: title }) })
     }
   );
 }
@@ -39309,9 +38787,9 @@ function FormRegularField({
     [field]
   );
   if (!!field.children) {
-    return /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(import_jsx_runtime192.Fragment, { children: [
-      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(Header6, { title: field.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(import_jsx_runtime191.Fragment, { children: [
+      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(Header6, { title: field.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
         DataFormLayout,
         {
           data,
@@ -39330,30 +38808,30 @@ function FormRegularField({
     return null;
   }
   if (labelPosition === "side") {
-    return /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(
       Stack,
       {
         direction: "row",
         className: "dataforms-layouts-regular__field",
         gap: "sm",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
             "div",
             {
               className: clsx_default(
                 "dataforms-layouts-regular__field-label",
                 `dataforms-layouts-regular__field-label--label-position-${labelPosition}`
               ),
-              children: /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(import_components48.BaseControl.VisualLabel, { children: fieldDefinition.label })
+              children: /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(import_components48.BaseControl.VisualLabel, { children: fieldDefinition.label })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime191.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
             fieldDefinition.render,
             {
               item: data,
               field: fieldDefinition
             }
-          ) : /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+          ) : /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
             fieldDefinition.Edit,
             {
               data,
@@ -39369,16 +38847,16 @@ function FormRegularField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime192.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(import_jsx_runtime192.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(import_jsx_runtime192.Fragment, { children: [
-    !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(import_components48.BaseControl.VisualLabel, { children: fieldDefinition.label }),
-    /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime191.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(import_jsx_runtime191.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime191.jsxs)(import_jsx_runtime191.Fragment, { children: [
+    !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(import_components48.BaseControl.VisualLabel, { children: fieldDefinition.label }),
+    /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
       fieldDefinition.render,
       {
         item: data,
         field: fieldDefinition
       }
     )
-  ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
+  ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime191.jsx)(
     fieldDefinition.Edit,
     {
       data,
@@ -39415,15 +38893,15 @@ var get_label_classname_default = getLabelClassName;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-content.mjs
 var import_components49 = __toESM(require_components(), 1);
-var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
 function getLabelContent(showError, errorMessage, fieldLabel) {
-  return showError ? /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(tooltip_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
+  return showError ? /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(tooltip_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(
       tooltip_exports.Trigger,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(import_components49.Icon, { icon: error_default, size: 16 }),
-          /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(VisuallyHidden, { children: [
+        render: /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(import_components49.Icon, { icon: error_default, size: 16 }),
+          /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(VisuallyHidden, { children: [
             errorMessage,
             ": "
           ] }),
@@ -39431,7 +38909,7 @@ function getLabelContent(showError, errorMessage, fieldLabel) {
         ] })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(tooltip_exports.Popup, { children: errorMessage })
+    /* @__PURE__ */ (0, import_jsx_runtime192.jsx)(tooltip_exports.Popup, { children: errorMessage })
   ] }) : fieldLabel;
 }
 var get_label_content_default = getLabelContent;
@@ -39472,7 +38950,7 @@ function getFirstValidationError(validity) {
 var get_first_validation_error_default = getFirstValidationError;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
-var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
 function SummaryButton({
   data,
   field,
@@ -39524,7 +39002,7 @@ function SummaryButton({
       onClick();
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime194.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(
     "div",
     {
       ref: rowRef,
@@ -39532,30 +39010,30 @@ function SummaryButton({
       onClick: !disabled2 ? handleRowClick : void 0,
       onKeyDown: !disabled2 ? handleKeyDown : void 0,
       children: [
-        labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime194.jsx)("span", { className: labelClassName, children: labelContent }),
-        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime194.jsxs)(tooltip_exports.Root, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
+        labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)("span", { className: labelClassName, children: labelContent }),
+        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime193.jsxs)(tooltip_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
             tooltip_exports.Trigger,
             {
-              render: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
+              render: /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
                 "span",
                 {
                   className: "dataforms-layouts-panel__field-label-error-content",
                   role: "img",
                   "aria-label": errorMessage,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(import_components50.Icon, { icon: error_default, size: 16 })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(import_components50.Icon, { icon: error_default, size: 16 })
                 }
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(tooltip_exports.Popup, { children: errorMessage })
+          /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(tooltip_exports.Popup, { children: errorMessage })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
           "span",
           {
             id: `${controlId}`,
             className: "dataforms-layouts-panel__field-control",
-            children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
+            children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
               "span",
               {
                 style: {
@@ -39565,11 +39043,11 @@ function SummaryButton({
                   width: "100%",
                   gap: "2px"
                 },
-                children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
+                children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
                   "span",
                   {
                     style: { width: "100%" },
-                    children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
+                    children: /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
                       summaryField.render,
                       {
                         item: data,
@@ -39580,7 +39058,7 @@ function SummaryButton({
                   summaryField.id
                 ))
               }
-            ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
+            ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
               summaryField.render,
               {
                 item: data,
@@ -39590,7 +39068,7 @@ function SummaryButton({
             ))
           }
         ),
-        !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
+        !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
           import_components50.Button,
           {
             ref: editButtonRef,
@@ -40183,7 +39661,7 @@ function useFieldFromFormField(field) {
 var use_field_from_form_field_default = useFieldFromFormField;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
-var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
 function ModalContent({
   data,
   field,
@@ -40240,7 +39718,7 @@ function ModalContent({
   const contentRef = (0, import_element155.useRef)(null);
   const mergedRef = (0, import_compose23.useMergeRefs)([focusOnMountRef, contentRef]);
   useReportValidity(contentRef, touched);
-  return /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime194.jsxs)(
     import_components51.Modal,
     {
       className: "dataforms-layouts-panel__modal",
@@ -40249,14 +39727,14 @@ function ModalContent({
       title: fieldLabel,
       size: "medium",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("div", { ref: mergedRef, children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime194.jsx)("div", { ref: mergedRef, children: /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
           DataFormLayout,
           {
             data: modalData,
             form: form2,
             onChange: handleOnChange,
             validity,
-            children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+            children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
               FieldLayout,
               {
                 data: modalData,
@@ -40270,15 +39748,15 @@ function ModalContent({
             )
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime194.jsxs)(
           Stack,
           {
             direction: "row",
             className: "dataforms-layouts-panel__modal-footer",
             gap: "md",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(import_components51.__experimentalSpacer, { style: { flex: 1 } }),
-              /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(import_components51.__experimentalSpacer, { style: { flex: 1 } }),
+              /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
                 import_components51.Button,
                 {
                   variant: "tertiary",
@@ -40287,7 +39765,7 @@ function ModalContent({
                   children: cancelLabel
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
                 import_components51.Button,
                 {
                   variant: "primary",
@@ -40319,8 +39797,8 @@ function PanelModal({
     setIsOpen(false);
     setTouched(true);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(import_jsx_runtime195.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime194.jsxs)(import_jsx_runtime194.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
       SummaryButton,
       {
         data,
@@ -40334,7 +39812,7 @@ function PanelModal({
         isOpen
       }
     ),
-    isOpen && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+    isOpen && /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
       ModalContent,
       {
         data,
@@ -40354,21 +39832,21 @@ var import_components52 = __toESM(require_components(), 1);
 var import_i18n57 = __toESM(require_i18n(), 1);
 var import_element156 = __toESM(require_element(), 1);
 var import_compose24 = __toESM(require_compose(), 1);
-var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
   title,
   onClose
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-panel__dropdown-header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
-        title && /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(import_components52.__experimentalHeading, { level: 2, size: 13, children: title }),
-        /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(import_components52.__experimentalSpacer, { style: { flex: 1 } }),
-        onClose && /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
+        title && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(import_components52.__experimentalHeading, { level: 2, size: 13, children: title }),
+        /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(import_components52.__experimentalSpacer, { style: { flex: 1 } }),
+        onClose && /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
           import_components52.Button,
           {
             label: (0, import_i18n57.__)("Close"),
@@ -40387,7 +39865,7 @@ function DropdownContentWithValidation({
 }) {
   const ref = (0, import_element156.useRef)(null);
   useReportValidity(ref, touched);
-  return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)("div", { ref, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("div", { ref, children });
 }
 function PanelDropdown({
   data,
@@ -40436,12 +39914,12 @@ function PanelDropdown({
   if (!fieldDefinition) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
     "div",
     {
       ref: setPopoverAnchor,
       className: "dataforms-layouts-panel__field-dropdown-anchor",
-      children: /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
         import_components52.Dropdown,
         {
           contentClassName: "dataforms-layouts-panel__field-dropdown",
@@ -40452,7 +39930,7 @@ function PanelDropdown({
               setTouched(true);
             }
           },
-          renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
+          renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
             SummaryButton,
             {
               data,
@@ -40466,22 +39944,22 @@ function PanelDropdown({
               onClick: onToggle
             }
           ),
-          renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime196.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
+          renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime195.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
               DropdownHeader,
               {
                 title: fieldLabel,
                 onClose
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
               DataFormLayout,
               {
                 data,
                 form: form2,
                 onChange,
                 validity: formValidity,
-                children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
+                children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
                   FieldLayout,
                   {
                     data,
@@ -40504,7 +39982,7 @@ function PanelDropdown({
 var dropdown_default = PanelDropdown;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/index.mjs
-var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
 function FormPanelField({
   data,
   field,
@@ -40513,7 +39991,7 @@ function FormPanelField({
 }) {
   const layout = field.layout;
   if (layout.openAs.type === "modal") {
-    return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
       modal_default,
       {
         data,
@@ -40523,7 +40001,7 @@ function FormPanelField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
     dropdown_default,
     {
       data,
@@ -40539,7 +40017,7 @@ var import_element157 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
 var import_i18n58 = __toESM(require_i18n(), 1);
-var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime197 = __toESM(require_jsx_runtime(), 1);
 function countInvalidFields(validity) {
   if (!validity) {
     return 0;
@@ -40568,7 +40046,7 @@ function ValidationBadge({
   if (invalidCount === 0) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(Badge, { intent: "high", children: (0, import_i18n58.sprintf)(
+  return /* @__PURE__ */ (0, import_jsx_runtime197.jsx)(Badge, { intent: "high", children: (0, import_i18n58.sprintf)(
     /* translators: %d: Number of fields that need attention */
     (0, import_i18n58._n)(
       "%d field needs attention",
@@ -40580,7 +40058,7 @@ function ValidationBadge({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
 function isSummaryFieldVisible(summaryField, summaryConfig, isOpen) {
   if (!summaryConfig || Array.isArray(summaryConfig) && summaryConfig.length === 0) {
     return false;
@@ -40621,17 +40099,17 @@ function HeaderContent({
   );
   const hasBadge = touched && layout.isCollapsible;
   const hasSummary = visibleSummaryFields.length > 0 && layout.withHeader;
-  return /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(
     Stack,
     {
       align: "center",
       justify: "space-between",
       className: "dataforms-layouts-card__field-header-content",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(card_exports.Title, { children: label }),
-        (hasBadge || hasSummary) && /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(collapsible_card_exports.HeaderDescription, { className: "dataforms-layouts-card__field-header-content-description", children: [
-          hasBadge && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(ValidationBadge, { validity }),
-          hasSummary && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(card_exports.Title, { children: label }),
+        (hasBadge || hasSummary) && /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(collapsible_card_exports.HeaderDescription, { className: "dataforms-layouts-card__field-header-content-description", children: [
+          hasBadge && /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(ValidationBadge, { validity }),
+          hasSummary && /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
             summaryField.render,
             {
               item: data,
@@ -40655,9 +40133,9 @@ function BodyContent({
   withHeader
 }) {
   if (field.children) {
-    return /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(import_jsx_runtime199.Fragment, { children: [
-      field.description && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
-      /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(import_jsx_runtime198.Fragment, { children: [
+      field.description && /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
+      /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
         DataFormLayout,
         {
           data,
@@ -40672,7 +40150,7 @@ function BodyContent({
   if (!SingleFieldLayout) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
     SingleFieldLayout,
     {
       data,
@@ -40735,7 +40213,7 @@ function FormCardField({
     label = fieldDefinition.label;
     withHeader = !!label && layout.withHeader;
   }
-  const bodyContent = /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+  const bodyContent = /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
     BodyContent,
     {
       data,
@@ -40748,7 +40226,7 @@ function FormCardField({
       withHeader
     }
   );
-  const headerContent = /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+  const headerContent = /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
     HeaderContent,
     {
       data,
@@ -40761,15 +40239,15 @@ function FormCardField({
     }
   );
   if (withHeader && isCollapsible) {
-    return /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(
       collapsible_card_exports.Root,
       {
         className: "dataforms-layouts-card__field",
         open: isOpen,
         onOpenChange: handleOpenChange,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(collapsible_card_exports.Header, { children: headerContent }),
-          /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(collapsible_card_exports.Header, { children: headerContent }),
+          /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
             collapsible_card_exports.Content,
             {
               ref: contentRef,
@@ -40781,27 +40259,27 @@ function FormCardField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(card_exports.Root, { className: "dataforms-layouts-card__field", children: [
-    withHeader && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(card_exports.Header, { children: headerContent }),
-    /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(card_exports.Content, { ref: contentRef, onBlur: handleBlur, children: bodyContent })
+  return /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(card_exports.Root, { className: "dataforms-layouts-card__field", children: [
+    withHeader && /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(card_exports.Header, { children: headerContent }),
+    /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(card_exports.Content, { ref: contentRef, onBlur: handleBlur, children: bodyContent })
   ] });
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/row/index.mjs
 var import_components53 = __toESM(require_components(), 1);
-var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
 function Header7({ title }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-row__header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(import_components53.__experimentalHeading, { level: 2, size: 13, children: title }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(import_components53.__experimentalHeading, { level: 2, size: 13, children: title }) })
     }
   );
 }
-var EMPTY_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(import_jsx_runtime200.Fragment, { children });
+var EMPTY_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(import_jsx_runtime199.Fragment, { children });
 function FormRowField({
   data,
   field,
@@ -40816,9 +40294,9 @@ function FormRowField({
       layout: DEFAULT_LAYOUT,
       fields: field.children
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
-      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(Header7, { title: field.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(Stack, { direction: "row", align: layout.alignment, gap: "lg", children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
+      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(Header7, { title: field.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(Stack, { direction: "row", align: layout.alignment, gap: "lg", children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
         DataFormLayout,
         {
           data,
@@ -40826,12 +40304,12 @@ function FormRowField({
           onChange,
           validity: validity?.children,
           as: EMPTY_WRAPPER,
-          children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+          children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
             "div",
             {
               className: "dataforms-layouts-row__field-control",
               style: layout.styles[childField.id],
-              children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
                 FieldLayout,
                 {
                   data,
@@ -40853,7 +40331,7 @@ function FormRowField({
   if (!RegularLayout) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(import_jsx_runtime200.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)("div", { className: "dataforms-layouts-row__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(import_jsx_runtime199.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)("div", { className: "dataforms-layouts-row__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
     RegularLayout,
     {
       data,
@@ -40868,7 +40346,7 @@ function FormRowField({
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
 var import_element158 = __toESM(require_element(), 1);
 var import_i18n59 = __toESM(require_i18n(), 1);
-var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
 function FormDetailsField({
   data,
   field,
@@ -40915,17 +40393,17 @@ function FormDetailsField({
   const summaryField = summaryFieldId ? fields3.find((fieldDef) => fieldDef.id === summaryFieldId) : void 0;
   let summaryContent;
   if (summaryField && summaryField.render) {
-    summaryContent = /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(summaryField.render, { item: data, field: summaryField });
+    summaryContent = /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(summaryField.render, { item: data, field: summaryField });
   } else {
     summaryContent = field.label || (0, import_i18n59.__)("More details");
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)(
     "details",
     {
       ref: detailsRef,
       className: "dataforms-layouts-details__details",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime201.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime200.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)(
           Stack,
           {
             direction: "row",
@@ -40934,17 +40412,17 @@ function FormDetailsField({
             className: "dataforms-layouts-details__summary-content",
             children: [
               summaryContent,
-              touched && /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(ValidationBadge, { validity })
+              touched && /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(ValidationBadge, { validity })
             ]
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
           "div",
           {
             ref: contentRef,
             className: "dataforms-layouts-details__content",
             onBlur: handleBlur,
-            children: /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
               DataFormLayout,
               {
                 data,
@@ -40961,12 +40439,12 @@ function FormDetailsField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/index.mjs
-var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
 var FORM_FIELD_LAYOUTS = [
   {
     type: "regular",
     component: FormRegularField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
       Stack,
       {
         direction: "column",
@@ -40979,7 +40457,7 @@ var FORM_FIELD_LAYOUTS = [
   {
     type: "panel",
     component: FormPanelField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
       Stack,
       {
         direction: "column",
@@ -40992,7 +40470,7 @@ var FORM_FIELD_LAYOUTS = [
   {
     type: "card",
     component: FormCardField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
       Stack,
       {
         direction: "column",
@@ -41008,13 +40486,13 @@ var FORM_FIELD_LAYOUTS = [
     wrapper: ({
       children,
       layout
-    }) => /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
+    }) => /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
       Stack,
       {
         direction: "column",
         className: "dataforms-layouts__wrapper",
         gap: "lg",
-        children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime201.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
           Stack,
           {
             direction: "row",
@@ -41036,8 +40514,8 @@ function getFormFieldLayout(type) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
-var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "lg", children });
+var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
+var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "lg", children });
 function DataFormLayout({
   data,
   form: form2,
@@ -41060,7 +40538,7 @@ function DataFormLayout({
     );
   }
   const Wrapper = as ?? getFormFieldLayout(form2.layout.type)?.wrapper ?? DEFAULT_WRAPPER;
-  return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(Wrapper, { layout: form2.layout, children: form2.fields.map((formField) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(Wrapper, { layout: form2.layout, children: form2.fields.map((formField) => {
     const FieldLayout = getFormFieldLayout(formField.layout.type)?.component;
     if (!FieldLayout) {
       return null;
@@ -41077,7 +40555,7 @@ function DataFormLayout({
         markWhenOptional
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
       FieldLayout,
       {
         data,
@@ -41092,7 +40570,7 @@ function DataFormLayout({
 }
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
 function DataForm({
   data,
   form: form2,
@@ -41108,7 +40586,7 @@ function DataForm({
   if (!form2.fields) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(
     DataFormLayout,
     {
       data,
@@ -41224,11 +40702,11 @@ var import_element161 = __toESM(require_element(), 1);
 
 // packages/widget-dashboard/build-module/components/layout-settings/layout-model-edit-field/thumbnail-grid.mjs
 var import_primitives38 = __toESM(require_primitives(), 1);
-var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
 function GridThumbnail({
   className
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime204.jsxs)(
     import_primitives38.SVG,
     {
       className,
@@ -41236,12 +40714,12 @@ function GridThumbnail({
       fill: "currentColor",
       "aria-hidden": "true",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_primitives38.Rect, { x: "2", y: "1.25", width: "11", height: "10", rx: "1.5" }),
-        /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_primitives38.Rect, { x: "14.5", y: "1.25", width: "11", height: "10", rx: "1.5" }),
-        /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_primitives38.Rect, { x: "27", y: "1.25", width: "11", height: "10", rx: "1.5" }),
-        /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_primitives38.Rect, { x: "2", y: "12.75", width: "11", height: "10", rx: "1.5" }),
-        /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_primitives38.Rect, { x: "14.5", y: "12.75", width: "11", height: "10", rx: "1.5" }),
-        /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_primitives38.Rect, { x: "27", y: "12.75", width: "11", height: "10", rx: "1.5" })
+        /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(import_primitives38.Rect, { x: "2", y: "1.25", width: "11", height: "10", rx: "1.5" }),
+        /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(import_primitives38.Rect, { x: "14.5", y: "1.25", width: "11", height: "10", rx: "1.5" }),
+        /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(import_primitives38.Rect, { x: "27", y: "1.25", width: "11", height: "10", rx: "1.5" }),
+        /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(import_primitives38.Rect, { x: "2", y: "12.75", width: "11", height: "10", rx: "1.5" }),
+        /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(import_primitives38.Rect, { x: "14.5", y: "12.75", width: "11", height: "10", rx: "1.5" }),
+        /* @__PURE__ */ (0, import_jsx_runtime204.jsx)(import_primitives38.Rect, { x: "27", y: "12.75", width: "11", height: "10", rx: "1.5" })
       ]
     }
   );
@@ -41249,11 +40727,11 @@ function GridThumbnail({
 
 // packages/widget-dashboard/build-module/components/layout-settings/layout-model-edit-field/thumbnail-masonry.mjs
 var import_primitives39 = __toESM(require_primitives(), 1);
-var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
 function MasonryThumbnail({
   className
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime205.jsxs)(
     import_primitives39.SVG,
     {
       className,
@@ -41261,19 +40739,19 @@ function MasonryThumbnail({
       fill: "currentColor",
       "aria-hidden": "true",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(import_primitives39.Rect, { x: "2", y: "0.75", width: "11", height: "13", rx: "1.5" }),
-        /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(import_primitives39.Rect, { x: "2", y: "15.25", width: "11", height: "8", rx: "1.5" }),
-        /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(import_primitives39.Rect, { x: "14.5", y: "0.75", width: "11", height: "8", rx: "1.5" }),
-        /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(import_primitives39.Rect, { x: "14.5", y: "10.25", width: "11", height: "13", rx: "1.5" }),
-        /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(import_primitives39.Rect, { x: "27", y: "0.75", width: "11", height: "10", rx: "1.5" }),
-        /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(import_primitives39.Rect, { x: "27", y: "12.25", width: "11", height: "11", rx: "1.5" })
+        /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_primitives39.Rect, { x: "2", y: "0.75", width: "11", height: "13", rx: "1.5" }),
+        /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_primitives39.Rect, { x: "2", y: "15.25", width: "11", height: "8", rx: "1.5" }),
+        /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_primitives39.Rect, { x: "14.5", y: "0.75", width: "11", height: "8", rx: "1.5" }),
+        /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_primitives39.Rect, { x: "14.5", y: "10.25", width: "11", height: "13", rx: "1.5" }),
+        /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_primitives39.Rect, { x: "27", y: "0.75", width: "11", height: "10", rx: "1.5" }),
+        /* @__PURE__ */ (0, import_jsx_runtime205.jsx)(import_primitives39.Rect, { x: "27", y: "12.25", width: "11", height: "11", rx: "1.5" })
       ]
     }
   );
 }
 
 // packages/widget-dashboard/build-module/components/layout-settings/layout-model-edit-field/index.mjs
-var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE50 = "data-wp-hash";
 function getRuntime50() {
   const globalScope = globalThis;
@@ -41362,7 +40840,7 @@ function ModelThumbnail({
   model,
   className
 }) {
-  return model === "masonry" ? /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(MasonryThumbnail, { className }) : /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(GridThumbnail, { className });
+  return model === "masonry" ? /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(MasonryThumbnail, { className }) : /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(GridThumbnail, { className });
 }
 function LayoutModelEditField({
   data,
@@ -41376,11 +40854,11 @@ function LayoutModelEditField({
     (nextValue) => onChange(setValue({ item: data, value: nextValue })),
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(fieldset_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(fieldset_exports.Legend, { children: field.label }),
-    /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(Stack, { direction: "row", gap: "md", role: "radiogroup", children: elements.map((option) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(fieldset_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(fieldset_exports.Legend, { children: field.label }),
+    /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Stack, { direction: "row", gap: "md", role: "radiogroup", children: elements.map((option) => {
       const isSelected2 = value === option.value;
-      return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
         Button4,
         {
           variant: "unstyled",
@@ -41391,26 +40869,26 @@ function LayoutModelEditField({
             [style_default46.optionSelected]: isSelected2
           }),
           onClick: () => onSelect(option.value),
-          children: /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(Stack, { direction: "column", gap: "sm", align: "stretch", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime206.jsxs)(Stack, { direction: "column", gap: "sm", align: "stretch", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
               ModelThumbnail,
               {
                 model: String(option.value),
                 className: style_default46.thumbnail
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(Text, { children: option.label })
+            /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Text, { children: option.label })
           ] })
         },
         String(option.value)
       );
     }) }),
-    typeof field.description === "string" && /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(fieldset_exports.Description, { children: field.description })
+    typeof field.description === "string" && /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(fieldset_exports.Description, { children: field.description })
   ] });
 }
 
 // packages/widget-dashboard/build-module/components/layout-settings/layout-settings.mjs
-var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
 function getModel(item) {
   return item.model ?? "grid";
 }
@@ -41519,18 +40997,18 @@ function LayoutSettings() {
   if (!canEditGridSettings) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
     drawer_exports.Root,
     {
       open,
       onOpenChange: handleOpenChange,
       swipeDirection: "right",
-      children: /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(drawer_exports.Popup, { size: "medium", style: { marginTop: "32px" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(drawer_exports.Header, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(drawer_exports.Title, { children: (0, import_i18n60.__)("Layout settings") }),
-          /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(drawer_exports.CloseIcon, {})
+      children: /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(drawer_exports.Popup, { size: "medium", style: { marginTop: "32px" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(drawer_exports.Header, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(drawer_exports.Title, { children: (0, import_i18n60.__)("Layout settings") }),
+          /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(drawer_exports.CloseIcon, {})
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(drawer_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(drawer_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
           DataForm,
           {
             data: gridSettings,
@@ -41539,8 +41017,8 @@ function LayoutSettings() {
             onChange: handleChange
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(drawer_exports.Footer, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime207.jsxs)(drawer_exports.Footer, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
             Button4,
             {
               variant: "minimal",
@@ -41551,7 +41029,7 @@ function LayoutSettings() {
               children: (0, import_i18n60.__)("Reset")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
             Button4,
             {
               variant: "minimal",
@@ -41561,7 +41039,7 @@ function LayoutSettings() {
               children: (0, import_i18n60.__)("Cancel")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
             Button4,
             {
               variant: "solid",
@@ -41580,7 +41058,7 @@ function LayoutSettings() {
 
 // packages/widget-dashboard/build-module/components/no-widgets-state/no-widgets-state.mjs
 var import_i18n61 = __toESM(require_i18n(), 1);
-var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE51 = "data-wp-hash";
 function getRuntime51() {
   const globalScope = globalThis;
@@ -41672,10 +41150,10 @@ function NoWidgetsState({
   if (layout.length > 0) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(Stack, { justify: "center", align: "center", className: no_widgets_state_default.root, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime209.jsxs)(empty_state_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(empty_state_exports.Icon, { icon: home_default }),
-    /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(empty_state_exports.Title, { children: (0, import_i18n61.__)("Your dashboard is empty") }),
-    /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(empty_state_exports.Description, { children: (0, import_i18n61.__)(
+  return /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(Stack, { justify: "center", align: "center", className: no_widgets_state_default.root, children: children ?? /* @__PURE__ */ (0, import_jsx_runtime208.jsxs)(empty_state_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(empty_state_exports.Icon, { icon: home_default }),
+    /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(empty_state_exports.Title, { children: (0, import_i18n61.__)("Your dashboard is empty") }),
+    /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(empty_state_exports.Description, { children: (0, import_i18n61.__)(
       "Add widgets to start customizing your dashboard."
     ) })
   ] }) });
@@ -41683,11 +41161,11 @@ function NoWidgetsState({
 
 // packages/widget-dashboard/build-module/components/reset-confirmation/reset-confirmation.mjs
 var import_i18n62 = __toESM(require_i18n(), 1);
-var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
 function ResetConfirmation() {
   const { onLayoutReset, onEditChange } = useDashboardInternalContext();
   const { resetDialogOpen, setResetDialogOpen } = useDashboardUIContext();
-  return /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(
     alert_dialog_exports.Root,
     {
       open: resetDialogOpen,
@@ -41697,7 +41175,7 @@ function ResetConfirmation() {
         onEditChange?.(false);
         setResetDialogOpen(false);
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime209.jsx)(
         alert_dialog_exports.Popup,
         {
           intent: "irreversible",
@@ -41713,27 +41191,156 @@ function ResetConfirmation() {
 }
 
 // packages/widget-dashboard/build-module/components/widget-chrome/widget-chrome.mjs
-var import_element168 = __toESM(require_element(), 1);
-var import_i18n64 = __toESM(require_i18n(), 1);
+var import_components54 = __toESM(require_components(), 1);
+var import_element167 = __toESM(require_element(), 1);
+var import_i18n63 = __toESM(require_i18n(), 1);
 
 // packages/widget-dashboard/build-module/context/widget-context.mjs
 var import_element163 = __toESM(require_element(), 1);
-var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
 var WidgetContext = (0, import_element163.createContext)(null);
 function WidgetContextProvider({
   value,
   children
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(WidgetContext.Provider, { value, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(WidgetContext.Provider, { value, children });
 }
 
-// packages/widget-dashboard/build-module/components/widget-frame/widget-frame.mjs
-var import_components54 = __toESM(require_components(), 1);
-var import_element167 = __toESM(require_element(), 1);
-var import_i18n63 = __toESM(require_i18n(), 1);
+// packages/widget-dashboard/build-module/components/widget-render/widget-render.mjs
+var import_element166 = __toESM(require_element(), 1);
 
-// packages/widget-dashboard/build-module/components/widget-header/widget-header.mjs
+// packages/widget-primitives/build-module/tools/get-lazy-widget-component/get-lazy-widget-component.mjs
+var import_element164 = __toESM(require_element(), 1);
+function isValidWidgetModule(module) {
+  return typeof module === "object" && module !== null && "default" in module && typeof module.default === "function";
+}
+var componentCache = /* @__PURE__ */ new Map();
+function getLazyWidgetComponent(renderModule, resolveWidgetModule) {
+  const cached = componentCache.get(renderModule);
+  if (cached) {
+    return cached;
+  }
+  const lazyComponent = (0, import_element164.lazy)(async () => {
+    const module = await resolveWidgetModule(renderModule);
+    if (!isValidWidgetModule(module)) {
+      throw new Error(`Invalid widget module: ${renderModule}`);
+    }
+    return module;
+  });
+  componentCache.set(renderModule, lazyComponent);
+  return lazyComponent;
+}
+
+// packages/widget-primitives/build-module/components/widget-render/widget-render.mjs
+var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
+function WidgetRender({
+  widgetType,
+  attributes,
+  setAttributes,
+  resolveWidgetModule
+}) {
+  const WidgetComponent = getLazyWidgetComponent(
+    widgetType.renderModule,
+    resolveWidgetModule
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(import_jsx_runtime211.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime211.jsx)(
+    WidgetComponent,
+    {
+      attributes,
+      setAttributes
+    }
+  ) });
+}
+
+// packages/widget-primitives/build-module/hooks/use-widget-types.mjs
+var import_element165 = __toESM(require_element(), 1);
+function useWidgetTypes(records) {
+  const [widgetTypes, setWidgetTypes] = (0, import_element165.useState)([]);
+  const [isResolvingWidgetTypes, setIsResolvingWidgetTypes] = (0, import_element165.useState)(true);
+  (0, import_element165.useEffect)(() => {
+    if (records === null || records === void 0) {
+      setIsResolvingWidgetTypes(true);
+      return;
+    }
+    if (records.length === 0) {
+      setWidgetTypes([]);
+      setIsResolvingWidgetTypes(false);
+      return;
+    }
+    let cancelled = false;
+    setIsResolvingWidgetTypes(true);
+    Promise.all(
+      records.map(async (record) => {
+        if (!record.widget_module) {
+          return null;
+        }
+        try {
+          const module = await import(
+            /* webpackIgnore: true */
+            record.widget_module
+          );
+          if (!module?.default) {
+            return null;
+          }
+          return {
+            ...module.default,
+            name: record.name,
+            renderModule: record.render_module ?? "",
+            ...record.presentation ? { presentation: record.presentation } : {}
+          };
+        } catch {
+          return null;
+        }
+      })
+    ).then((results) => {
+      if (cancelled) {
+        return;
+      }
+      setWidgetTypes(
+        results.filter((t2) => t2 !== null)
+      );
+      setIsResolvingWidgetTypes(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [records]);
+  return [widgetTypes, isResolvingWidgetTypes];
+}
+
+// packages/widget-dashboard/build-module/components/widget-render/widget-render.mjs
 var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
+function WidgetRender2({ widget, widgetType }) {
+  const { layout, onLayoutChange, resolveWidgetModule } = useDashboardInternalContext();
+  const setAttributes = (0, import_element166.useCallback)(
+    (next) => {
+      onLayoutChange(
+        layout.map(
+          (w2) => w2.uuid === widget.uuid ? {
+            ...w2,
+            attributes: {
+              ...w2.attributes,
+              ...next
+            }
+          } : w2
+        )
+      );
+    },
+    [widget.uuid, layout, onLayoutChange]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
+    WidgetRender,
+    {
+      widgetType,
+      attributes: widget.attributes,
+      setAttributes,
+      resolveWidgetModule
+    }
+  );
+}
+
+// packages/widget-dashboard/build-module/components/widget-chrome/widget-chrome.mjs
+var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE52 = "data-wp-hash";
 function getRuntime52() {
   const globalScope = globalThis;
@@ -41815,186 +41422,214 @@ function registerStyle52(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle52("751faaf868", ".a7cf38a139398543__widgetHeader{align-items:center;display:flex;gap:var(--wpds-dimension-gap-sm,8px)}._967cd798e5c37202__toolbar,.f41e4aad10324455__identity{align-items:center;display:flex;height:var(--wpds-dimension-size-lg,40px)}.f41e4aad10324455__identity{min-width:0}._53584a4927dfbcf1__icon{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-flex}._967cd798e5c37202__toolbar{margin-inline-start:auto}.f32f2cd669c9b4b0__overlay{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);inset-block-start:0;inset-inline:0;pointer-events:none;position:absolute;z-index:1}.f32f2cd669c9b4b0__overlay ._967cd798e5c37202__toolbar{pointer-events:auto}");
+  registerStyle52("345dedc0b8", "._79b45ce7d3422efe__widgetChrome{contain:layout;height:100%}._79b45ce7d3422efe__widgetChrome:has(._9f0be51a1b96c8d7__widgetChromeContent :focus-visible){outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:2px}.d85f7657585b9203__widgetChromeHeaderIcon{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-flex}._9f0be51a1b96c8d7__widgetChromeContent{flex:1;height:100%;min-height:0;min-width:0;overflow-y:auto}._21770471c9c2115b__widgetChromeContentBleed{padding-block:0}._229727240ac2aa18__widgetChromeBleedScroll{height:100%;margin-block-end:0;overflow-y:auto}._3c919e86d1bb80ab__loading,._9b694d63bdec1a98__unavailable{height:100%}");
 }
-var widget_header_default = { "widgetHeader": "a7cf38a139398543__widgetHeader", "identity": "f41e4aad10324455__identity", "toolbar": "_967cd798e5c37202__toolbar", "icon": "_53584a4927dfbcf1__icon", "overlay": "f32f2cd669c9b4b0__overlay" };
-function WidgetHeader({
-  widgetType,
-  titleId,
-  showIdentity = false,
-  overlay = false,
-  children
-}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
-    card_exports.Header,
-    {
-      className: clsx_default(widget_header_default.widgetHeader, overlay && widget_header_default.overlay),
-      children: [
-        showIdentity && widgetType?.title && /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
-          Stack,
-          {
-            direction: "row",
-            align: "center",
-            gap: "sm",
-            className: widget_header_default.identity,
-            children: [
-              widgetType.icon && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("span", { className: widget_header_default.icon, "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Icon, { icon: widgetType.icon }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(card_exports.Title, { id: titleId, render: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("h2", {}), children: widgetType.title })
-            ]
-          }
-        ),
-        children && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("div", { className: widget_header_default.toolbar, children })
-      ]
-    }
-  );
-}
-
-// packages/widget-dashboard/build-module/components/widget-render/widget-render.mjs
-var import_element166 = __toESM(require_element(), 1);
-
-// packages/widget-primitives/build-module/tools/get-lazy-widget-component/get-lazy-widget-component.mjs
-var import_element164 = __toESM(require_element(), 1);
-function isValidWidgetModule(module) {
-  return typeof module === "object" && module !== null && "default" in module && typeof module.default === "function";
-}
-var componentCache = /* @__PURE__ */ new Map();
-function getLazyWidgetComponent(renderModule, resolveWidgetModule) {
-  const cached = componentCache.get(renderModule);
-  if (cached) {
-    return cached;
+var widget_chrome_default = { "widgetChrome": "_79b45ce7d3422efe__widgetChrome", "widgetChromeContent": "_9f0be51a1b96c8d7__widgetChromeContent", "widgetChromeHeaderIcon": "d85f7657585b9203__widgetChromeHeaderIcon", "widgetChromeContentBleed": "_21770471c9c2115b__widgetChromeContentBleed", "widgetChromeBleedScroll": "_229727240ac2aa18__widgetChromeBleedScroll", "loading": "_3c919e86d1bb80ab__loading", "unavailable": "_9b694d63bdec1a98__unavailable" };
+var WidgetErrorBoundary = class extends import_element167.Component {
+  state = { hasError: false };
+  static getDerivedStateFromError() {
+    return { hasError: true };
   }
-  const lazyComponent = (0, import_element164.lazy)(async () => {
-    const module = await resolveWidgetModule(renderModule);
-    if (!isValidWidgetModule(module)) {
-      throw new Error(`Invalid widget module: ${renderModule}`);
+  render() {
+    if (this.state.hasError) {
+      return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(notice_exports.Root, { intent: "error", children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(notice_exports.Description, { children: (0, import_i18n63.__)("This widget encountered an error.") }) });
     }
-    return module;
-  });
-  componentCache.set(renderModule, lazyComponent);
-  return lazyComponent;
+    return this.props.children;
+  }
+};
+function LoadingOverlay() {
+  return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Stack, { justify: "center", align: "center", className: widget_chrome_default.loading, children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_components54.Spinner, {}) });
 }
-
-// packages/widget-primitives/build-module/components/widget-render/widget-render.mjs
-var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
-function WidgetRender({
-  widgetType,
-  attributes,
-  setAttributes,
-  resolveWidgetModule
-}) {
-  const WidgetComponent = getLazyWidgetComponent(
-    widgetType.renderModule,
-    resolveWidgetModule
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_jsx_runtime213.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
-    WidgetComponent,
-    {
-      attributes,
-      setAttributes
-    }
-  ) });
-}
-
-// packages/widget-primitives/build-module/hooks/use-widget-types.mjs
-var import_element165 = __toESM(require_element(), 1);
-function useWidgetTypes(records) {
-  const [widgetTypes, setWidgetTypes] = (0, import_element165.useState)([]);
-  const [isResolvingWidgetTypes, setIsResolvingWidgetTypes] = (0, import_element165.useState)(true);
-  (0, import_element165.useEffect)(() => {
-    if (records === null || records === void 0) {
-      setIsResolvingWidgetTypes(true);
-      return;
-    }
-    if (records.length === 0) {
-      setWidgetTypes([]);
-      setIsResolvingWidgetTypes(false);
-      return;
-    }
-    let cancelled = false;
-    setIsResolvingWidgetTypes(true);
-    Promise.all(
-      records.map(async (record) => {
-        if (!record.widget_module) {
-          return null;
-        }
-        try {
-          const module = await import(
-            /* webpackIgnore: true */
-            record.widget_module
-          );
-          if (!module?.default) {
-            return null;
-          }
-          const metadata = module.default;
-          return {
-            ...metadata,
-            name: record.name,
-            renderModule: record.render_module ?? "",
-            /*
-             * `title` is required:
-             * - Server-side title wins
-             * - Then the module's title
-             * - Then the record's name as fallback
-             */
-            title: record.title ?? metadata.title ?? record.name,
-            ...record.presentation ? { presentation: record.presentation } : {},
-            ...record.category ? { category: record.category } : {},
-            ...record.description ? { description: record.description } : {},
-            ...record.keywords ? { keywords: record.keywords } : {}
-          };
-        } catch {
-          return null;
-        }
-      })
-    ).then((results) => {
-      if (cancelled) {
-        return;
+function UnavailableWidget({ widgetTypeName }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(import_jsx_runtime213.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(card_exports.Header, { children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+      "span",
+      {
+        className: widget_chrome_default.widgetChromeHeaderIcon,
+        "aria-hidden": "true",
+        children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Icon, { icon: plugins_default })
       }
-      setWidgetTypes(
-        results.filter((t2) => t2 !== null)
-      );
-      setIsResolvingWidgetTypes(false);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [records]);
-  return [widgetTypes, isResolvingWidgetTypes];
+    ) }),
+    /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(card_exports.Content, { className: widget_chrome_default.widgetChromeContent, children: /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(
+      Stack,
+      {
+        direction: "column",
+        justify: "center",
+        align: "center",
+        gap: "md",
+        className: widget_chrome_default.unavailable,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Text, { children: (0, import_i18n63.__)("Widget is no longer available.") }),
+          /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Text, { render: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("code", {}), children: widgetTypeName })
+        ]
+      }
+    ) })
+  ] });
 }
-
-// packages/widget-dashboard/build-module/components/widget-render/widget-render.mjs
-var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
-function WidgetRender2({ widget, widgetType }) {
-  const { layout, onLayoutChange, resolveWidgetModule } = useDashboardInternalContext();
-  const setAttributes = (0, import_element166.useCallback)(
-    (next) => {
-      onLayoutChange(
-        layout.map(
-          (w2) => w2.uuid === widget.uuid ? {
-            ...w2,
-            attributes: {
-              ...w2.attributes,
-              ...next
-            }
-          } : w2
-        )
-      );
-    },
-    [widget.uuid, layout, onLayoutChange]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
-    WidgetRender,
-    {
-      widgetType,
-      attributes: widget.attributes,
-      setAttributes,
-      resolveWidgetModule
+function Header8({ titleId, widgetType }) {
+  if (!widgetType.title) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(card_exports.Header, { children: /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(Stack, { direction: "row", align: "center", gap: "sm", children: [
+    widgetType.icon && /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+      "span",
+      {
+        className: widget_chrome_default.widgetChromeHeaderIcon,
+        "aria-hidden": "true",
+        children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Icon, { icon: widgetType.icon })
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(card_exports.Title, { id: titleId, render: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("h2", {}), children: widgetType.title })
+  ] }) });
+}
+var WidgetChrome = (0, import_element167.forwardRef)(
+  function WidgetChrome2({ widget, index: index2, className }, ref) {
+    const { widgetTypes, isResolvingWidgetTypes, editMode } = useDashboardInternalContext();
+    const widgetType = widgetTypes.find((t2) => t2.name === widget.type);
+    const titleId = (0, import_element167.useId)();
+    const contextValue = (0, import_element167.useMemo)(
+      () => ({
+        uuid: widget.uuid,
+        name: widget.type,
+        index: index2
+      }),
+      [widget.uuid, widget.type, index2]
+    );
+    if (!widgetType) {
+      if (isResolvingWidgetTypes) {
+        return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+          card_exports.Root,
+          {
+            render: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("section", {}),
+            ref,
+            className: clsx_default(widget_chrome_default.widgetChrome, className),
+            "aria-busy": "true",
+            "aria-label": (0, import_i18n63.__)("Loading"),
+            children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+              card_exports.Content,
+              {
+                className: widget_chrome_default.widgetChromeContent,
+                children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(LoadingOverlay, {})
+              }
+            )
+          }
+        ) });
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+        card_exports.Root,
+        {
+          render: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("section", {}),
+          ref,
+          className: clsx_default(widget_chrome_default.widgetChrome, className),
+          "aria-label": (0, import_i18n63.__)("Missing widget"),
+          children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(UnavailableWidget, { widgetTypeName: widget.type })
+        }
+      ) });
     }
-  );
+    const { presentation } = widgetType;
+    const isHeaderHidden = presentation === "full-bleed";
+    const isBodyBleeding = presentation === "full-bleed" || presentation === "content-bleed";
+    const header = /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(Header8, { titleId, widgetType });
+    const body = /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(import_element167.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(WidgetRender2, { widget, widgetType }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(
+      card_exports.Root,
+      {
+        render: /* @__PURE__ */ (0, import_jsx_runtime213.jsx)("section", {}),
+        ref,
+        className: clsx_default(widget_chrome_default.widgetChrome, className),
+        "aria-labelledby": widgetType.title ? titleId : void 0,
+        ...editMode ? { inert: "true" } : {},
+        children: [
+          isHeaderHidden ? /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(VisuallyHidden, { children: header }) : header,
+          /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+            card_exports.Content,
+            {
+              className: clsx_default(
+                widget_chrome_default.widgetChromeContent,
+                isBodyBleeding && widget_chrome_default.widgetChromeContentBleed
+              ),
+              children: isBodyBleeding ? /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(
+                card_exports.FullBleed,
+                {
+                  className: widget_chrome_default.widgetChromeBleedScroll,
+                  children: body
+                }
+              ) : body
+            }
+          )
+        ]
+      }
+    ) });
+  }
+);
+
+// packages/widget-dashboard/build-module/components/widget-inserter/widget-inserter.mjs
+var import_element169 = __toESM(require_element(), 1);
+var import_i18n65 = __toESM(require_i18n(), 1);
+
+// node_modules/uuid/dist/stringify.js
+var byteToHex = [];
+for (let i2 = 0; i2 < 256; ++i2) {
+  byteToHex.push((i2 + 256).toString(16).slice(1));
+}
+function unsafeStringify(arr, offset4 = 0) {
+  return (byteToHex[arr[offset4 + 0]] + byteToHex[arr[offset4 + 1]] + byteToHex[arr[offset4 + 2]] + byteToHex[arr[offset4 + 3]] + "-" + byteToHex[arr[offset4 + 4]] + byteToHex[arr[offset4 + 5]] + "-" + byteToHex[arr[offset4 + 6]] + byteToHex[arr[offset4 + 7]] + "-" + byteToHex[arr[offset4 + 8]] + byteToHex[arr[offset4 + 9]] + "-" + byteToHex[arr[offset4 + 10]] + byteToHex[arr[offset4 + 11]] + byteToHex[arr[offset4 + 12]] + byteToHex[arr[offset4 + 13]] + byteToHex[arr[offset4 + 14]] + byteToHex[arr[offset4 + 15]]).toLowerCase();
 }
 
-// packages/widget-dashboard/build-module/components/widget-frame/widget-frame.mjs
-var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
+// node_modules/uuid/dist/rng.js
+var rnds8 = new Uint8Array(16);
+function rng() {
+  return crypto.getRandomValues(rnds8);
+}
+
+// node_modules/uuid/dist/v4.js
+function v4(options, buf, offset4) {
+  if (!buf && !options && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return _v4(options, buf, offset4);
+}
+function _v4(options, buf, offset4) {
+  options = options || {};
+  const rnds = options.random ?? options.rng?.() ?? rng();
+  if (rnds.length < 16) {
+    throw new Error("Random bytes length must be >= 16");
+  }
+  rnds[6] = rnds[6] & 15 | 64;
+  rnds[8] = rnds[8] & 63 | 128;
+  if (buf) {
+    offset4 = offset4 || 0;
+    if (offset4 < 0 || offset4 + 16 > buf.length) {
+      throw new RangeError(`UUID byte range ${offset4}:${offset4 + 15} is out of buffer bounds`);
+    }
+    for (let i2 = 0; i2 < 16; ++i2) {
+      buf[offset4 + i2] = rnds[i2];
+    }
+    return buf;
+  }
+  return unsafeStringify(rnds);
+}
+var v4_default = v4;
+
+// packages/widget-dashboard/build-module/utils/create-dashboard-widget/create-dashboard-widget.mjs
+var DEFAULT_PLACEMENT = {
+  width: 1,
+  height: 2,
+  order: 0
+};
+function createDashboardWidget(widgetType, initialAttributes) {
+  return {
+    uuid: v4_default(),
+    type: widgetType.name,
+    attributes: initialAttributes ?? widgetType.example?.attributes,
+    placement: DEFAULT_PLACEMENT
+  };
+}
+
+// packages/widget-dashboard/build-module/components/widget-picker/widget-picker.mjs
+var import_element168 = __toESM(require_element(), 1);
+var import_i18n64 = __toESM(require_i18n(), 1);
+var import_jsx_runtime214 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE53 = "data-wp-hash";
 function getRuntime53() {
   const globalScope = globalThis;
@@ -42076,59 +41711,163 @@ function registerStyle53(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle53("627665ae60", "._5848d9de101def77__content{flex:1;height:100%;min-height:0;min-width:0;overflow-y:auto}._475e9e5d90f37dab__bleedContent{padding:0}._605aa8383905f0a9__loading{height:100%}");
+  registerStyle53("93a9ea86b0", "._623aa9eba189276f__preview{height:125%;overflow:hidden;padding:0;pointer-events:none;transform:scale(.8);transform-origin:top left;user-select:none;width:125%}");
 }
-var widget_frame_default = { "content": "_5848d9de101def77__content", "bleedContent": "_475e9e5d90f37dab__bleedContent", "loading": "_605aa8383905f0a9__loading" };
-var WidgetErrorBoundary = class extends import_element167.Component {
-  state = { hasError: false };
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-  render() {
-    if (this.state.hasError) {
-      return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(notice_exports.Root, { intent: "error", children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(notice_exports.Description, { children: (0, import_i18n63.__)("This widget encountered an error.") }) });
-    }
-    return this.props.children;
-  }
+var widget_picker_default = { "preview": "_623aa9eba189276f__preview" };
+var DEFAULT_VIEW = {
+  type: "pickerGrid",
+  page: 1,
+  search: "",
+  mediaField: "preview",
+  titleField: "title"
 };
-function LoadingOverlay() {
-  return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(Stack, { justify: "center", align: "center", className: widget_frame_default.loading, children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(import_components54.Spinner, {}) });
+var getItemId = (item) => item.name;
+function WidgetPreview({ item }) {
+  const exampleWidget = (0, import_element168.useMemo)(
+    () => createDashboardWidget(item, item.example?.attributes),
+    [item]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)("div", { className: widget_picker_default.preview, ...{ inert: "" }, children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(import_element168.Suspense, { fallback: null, children: /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(WidgetRender2, { widget: exampleWidget, widgetType: item }) }) });
 }
-function WidgetFrame({
-  widget,
-  widgetType,
-  titleId
+var fields2 = [
+  {
+    id: "title",
+    type: "text",
+    label: (0, import_i18n64.__)("Title"),
+    filterBy: false
+  },
+  {
+    id: "preview",
+    type: "media",
+    render: WidgetPreview
+  },
+  {
+    id: "name",
+    type: "text",
+    enableGlobalSearch: true,
+    enableHiding: false,
+    enableSorting: false,
+    filterBy: false,
+    getValue: ({ item }) => `${item.name.replace(/[\/,\-_]/g, " ")} ${item.title}`
+  }
+];
+function WidgetPicker({
+  onSelect,
+  itemListLabel = (0, import_i18n64.__)("Widget list")
 }) {
-  const { presentation } = widgetType;
-  const isHeaderHidden = presentation === "full-bleed";
-  const isBodyBleeding = presentation === "full-bleed" || presentation === "content-bleed";
-  const body = /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(WidgetErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(import_element167.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(LoadingOverlay, {}), children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(WidgetRender2, { widget, widgetType }) }) });
-  return /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(import_jsx_runtime215.Fragment, { children: [
-    !isHeaderHidden && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
-      WidgetHeader,
+  const { widgetTypes: registeredTypes } = useDashboardInternalContext();
+  const [selection, setSelection] = (0, import_element168.useState)([]);
+  const [view, setView] = (0, import_element168.useState)(DEFAULT_VIEW);
+  const { data: widgetTypes } = filterSortAndPaginate(
+    registeredTypes,
+    view,
+    fields2
+  );
+  const actions = (0, import_element168.useMemo)(
+    () => [
       {
-        showIdentity: true,
-        widgetType,
-        titleId
+        id: "select",
+        label: (0, import_i18n64.__)("Select"),
+        isPrimary: true,
+        supportsBulk: true,
+        callback: (items) => onSelect(items)
       }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(
-      card_exports.Content,
-      {
-        className: clsx_default(
-          widget_frame_default.content,
-          isBodyBleeding && widget_frame_default.bleedContent
-        ),
-        children: [
-          isHeaderHidden && widgetType.title && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)("h2", { id: titleId }), children: widgetType.title }),
-          body
-        ]
-      }
-    )
-  ] });
+    ],
+    [onSelect]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime214.jsx)(
+    dataviews_picker_default,
+    {
+      data: widgetTypes,
+      fields: fields2,
+      view,
+      actions,
+      defaultLayouts: { pickerGrid: {} },
+      onChangeView: setView,
+      isLoading: false,
+      paginationInfo: {
+        totalItems: widgetTypes.length,
+        totalPages: 1
+      },
+      selection,
+      onChangeSelection: setSelection,
+      getItemId,
+      itemListLabel
+    }
+  );
 }
 
-// packages/widget-dashboard/build-module/components/widget-chrome/widget-chrome.mjs
+// packages/widget-dashboard/build-module/components/widget-inserter/widget-inserter.mjs
+var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
+function WidgetInserter() {
+  const { layout, onLayoutChange } = useDashboardInternalContext();
+  const { inserterOpen, setInserterOpen } = useDashboardUIContext();
+  const insertWidgets = (0, import_element169.useCallback)(
+    (widgetTypes) => {
+      if (widgetTypes.length > 0) {
+        const newWidgets = widgetTypes.map(
+          (widgetType) => createDashboardWidget(widgetType)
+        );
+        onLayoutChange([...layout, ...newWidgets]);
+      }
+      setInserterOpen(false);
+    },
+    [layout, onLayoutChange, setInserterOpen]
+  );
+  if (!inserterOpen) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(dialog_exports.Root, { open: inserterOpen, onOpenChange: setInserterOpen, children: /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(
+    dialog_exports.Popup,
+    {
+      size: "full",
+      portal: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
+        dialog_exports.Portal,
+        {
+          style: {
+            "--wp-ui-dialog-z-index": 99999
+          }
+        }
+      ),
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(dialog_exports.Header, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(dialog_exports.Title, { children: (0, import_i18n65.__)("Add widget") }),
+          /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(dialog_exports.CloseIcon, {})
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(dialog_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(WidgetPicker, { onSelect: insertWidgets }) })
+      ]
+    }
+  ) });
+}
+
+// packages/widget-dashboard/build-module/components/widget-settings/widget-settings.mjs
+var import_element170 = __toESM(require_element(), 1);
+var import_i18n67 = __toESM(require_i18n(), 1);
+
+// packages/widget-dashboard/build-module/components/widget-settings/utils/get-admin-menu-inset.mjs
+var ADMIN_MENU_ID = "adminmenuback";
+function getAdminMenuInset() {
+  if (typeof document === "undefined") {
+    return 0;
+  }
+  const adminMenu = document.getElementById(ADMIN_MENU_ID);
+  if (!adminMenu) {
+    return 0;
+  }
+  return Math.max(0, adminMenu.getBoundingClientRect().right);
+}
+
+// packages/widget-dashboard/build-module/components/widget-settings/utils/get-widget-settings.mjs
+var import_i18n66 = __toESM(require_i18n(), 1);
+function getWidgetSettingsTitle(widgetType) {
+  return widgetType?.title ? (0, import_i18n66.sprintf)(
+    /* translators: %s: Widget title. */
+    (0, import_i18n66.__)("%s settings"),
+    widgetType.title
+  ) : (0, import_i18n66.__)("Widget settings");
+}
+
+// packages/widget-dashboard/build-module/components/widget-settings/widget-settings.mjs
 var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE54 = "data-wp-hash";
 function getRuntime54() {
@@ -42211,169 +41950,152 @@ function registerStyle54(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle54("6d4975b814", "._79b45ce7d3422efe__widgetChrome:has(:focus-visible){outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:2px}.d85f7657585b9203__widgetChromeHeaderIcon{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-flex}._9f0be51a1b96c8d7__widgetChromeContent{flex:1;height:100%;min-height:0;min-width:0}._9b694d63bdec1a98__unavailable{height:100%}");
+  registerStyle54("809494c486", "._34828f30ba41ad89__popup{margin-block-start:var(--wp-admin--admin-bar--height,0)}");
 }
-var widget_chrome_default = { "widgetChrome": "_79b45ce7d3422efe__widgetChrome", "widgetChromeHeaderIcon": "d85f7657585b9203__widgetChromeHeaderIcon", "widgetChromeContent": "_9f0be51a1b96c8d7__widgetChromeContent", "unavailable": "_9b694d63bdec1a98__unavailable" };
-function UnavailableWidget({ widgetTypeName }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(import_jsx_runtime216.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(card_exports.Header, { children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
-      "span",
-      {
-        className: widget_chrome_default.widgetChromeHeaderIcon,
-        "aria-hidden": "true",
-        children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(Icon, { icon: plugins_default })
-      }
-    ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(card_exports.Content, { className: widget_chrome_default.widgetChromeContent, children: /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(
-      Stack,
-      {
-        direction: "column",
-        justify: "center",
-        align: "center",
-        gap: "md",
-        className: widget_chrome_default.unavailable,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(Text, { children: (0, import_i18n64.__)("Widget is no longer available.") }),
-          /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(Text, { render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("code", {}), children: widgetTypeName })
-        ]
-      }
-    ) })
-  ] });
-}
-var WidgetChrome = (0, import_element168.forwardRef)(
-  function WidgetChrome2({ widget, index: index2, className }, ref) {
-    const { widgetTypes, isResolvingWidgetTypes, editMode } = useDashboardInternalContext();
-    const widgetType = widgetTypes.find((t2) => t2.name === widget.type);
-    const titleId = (0, import_element168.useId)();
-    const contextValue = (0, import_element168.useMemo)(
-      () => ({
-        uuid: widget.uuid,
-        name: widget.type,
-        index: index2
-      }),
-      [widget.uuid, widget.type, index2]
-    );
-    if (!widgetType) {
-      if (isResolvingWidgetTypes) {
-        return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
-          card_exports.Root,
-          {
-            render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("section", {}),
-            ref,
-            className: clsx_default(widget_chrome_default.widgetChrome, className),
-            "aria-busy": "true",
-            "aria-label": (0, import_i18n64.__)("Loading"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
-              card_exports.Content,
-              {
-                className: widget_chrome_default.widgetChromeContent,
-                children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(LoadingOverlay, {})
-              }
-            )
-          }
-        ) });
-      }
-      return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
-        card_exports.Root,
-        {
-          render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("section", {}),
-          ref,
-          className: clsx_default(widget_chrome_default.widgetChrome, className),
-          "aria-label": (0, import_i18n64.__)("Missing widget"),
-          children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(UnavailableWidget, { widgetTypeName: widget.type })
-        }
-      ) });
+var widget_settings_default = { "popup": "_34828f30ba41ad89__popup" };
+function WidgetSettings() {
+  const {
+    layout,
+    onLayoutChange,
+    widgetTypes,
+    commit,
+    cancel: cancelStaging,
+    hasUncommittedChanges
+  } = useDashboardInternalContext();
+  const {
+    settingsWidgetUuid,
+    setSettingsWidgetUuid,
+    settingsDrawerSide,
+    settingsDrawerInset
+  } = useDashboardUIContext();
+  const open = settingsWidgetUuid !== null;
+  const [lastWidgetUuid, setLastWidgetUuid] = (0, import_element170.useState)(
+    settingsWidgetUuid
+  );
+  (0, import_element170.useEffect)(() => {
+    if (settingsWidgetUuid) {
+      setLastWidgetUuid(settingsWidgetUuid);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
-      card_exports.Root,
-      {
-        render: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)("section", {}),
-        ref,
-        className: clsx_default(widget_chrome_default.widgetChrome, className),
-        "aria-labelledby": widgetType.title ? titleId : void 0,
-        ...editMode ? { inert: "true" } : {},
-        children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
-          WidgetFrame,
-          {
-            widget,
-            widgetType,
-            titleId
-          }
+  }, [settingsWidgetUuid]);
+  const activeUuid = settingsWidgetUuid ?? lastWidgetUuid;
+  const widget = activeUuid ? layout.find((instance) => instance.uuid === activeUuid) : void 0;
+  const widgetType = widget ? widgetTypes.find((type) => type.name === widget.type) : void 0;
+  const fields3 = (0, import_element170.useMemo)(
+    () => widgetType?.attributes ?? [],
+    [widgetType?.attributes]
+  );
+  const form2 = (0, import_element170.useMemo)(
+    () => ({
+      layout: { type: "regular", labelPosition: "top" },
+      fields: fields3.map((field) => field.id)
+    }),
+    [fields3]
+  );
+  const handleChange = (0, import_element170.useCallback)(
+    (edits) => {
+      if (!widget) {
+        return;
+      }
+      onLayoutChange(
+        layout.map(
+          (instance) => instance.uuid === widget.uuid ? {
+            ...instance,
+            attributes: {
+              ...instance.attributes,
+              ...edits
+            }
+          } : instance
         )
+      );
+    },
+    [layout, onLayoutChange, widget]
+  );
+  const close = (0, import_element170.useCallback)(
+    () => setSettingsWidgetUuid(null),
+    [setSettingsWidgetUuid]
+  );
+  const handleSave = (0, import_element170.useCallback)(() => {
+    commit();
+    close();
+  }, [commit, close]);
+  const handleOpenChange = (0, import_element170.useCallback)(
+    (nextOpen) => {
+      if (!nextOpen) {
+        cancelStaging();
+        close();
       }
-    ) });
+    },
+    [cancelStaging, close]
+  );
+  const popupStyle = (0, import_element170.useMemo)(
+    () => settingsDrawerSide === "left" && settingsDrawerInset > 0 ? { marginLeft: settingsDrawerInset } : {},
+    [settingsDrawerSide, settingsDrawerInset]
+  );
+  const hasForm = !!widget && !!widgetType && fields3.length > 0;
+  if (!hasForm) {
+    return null;
   }
-);
-
-// packages/widget-dashboard/build-module/components/widget-inserter/widget-inserter.mjs
-var import_element171 = __toESM(require_element(), 1);
-var import_i18n66 = __toESM(require_i18n(), 1);
-
-// node_modules/uuid/dist/stringify.js
-var byteToHex = [];
-for (let i2 = 0; i2 < 256; ++i2) {
-  byteToHex.push((i2 + 256).toString(16).slice(1));
-}
-function unsafeStringify(arr, offset4 = 0) {
-  return (byteToHex[arr[offset4 + 0]] + byteToHex[arr[offset4 + 1]] + byteToHex[arr[offset4 + 2]] + byteToHex[arr[offset4 + 3]] + "-" + byteToHex[arr[offset4 + 4]] + byteToHex[arr[offset4 + 5]] + "-" + byteToHex[arr[offset4 + 6]] + byteToHex[arr[offset4 + 7]] + "-" + byteToHex[arr[offset4 + 8]] + byteToHex[arr[offset4 + 9]] + "-" + byteToHex[arr[offset4 + 10]] + byteToHex[arr[offset4 + 11]] + byteToHex[arr[offset4 + 12]] + byteToHex[arr[offset4 + 13]] + byteToHex[arr[offset4 + 14]] + byteToHex[arr[offset4 + 15]]).toLowerCase();
-}
-
-// node_modules/uuid/dist/rng.js
-var rnds8 = new Uint8Array(16);
-function rng() {
-  return crypto.getRandomValues(rnds8);
-}
-
-// node_modules/uuid/dist/v4.js
-function v4(options, buf, offset4) {
-  if (!buf && !options && crypto.randomUUID) {
-    return crypto.randomUUID();
-  }
-  return _v4(options, buf, offset4);
-}
-function _v4(options, buf, offset4) {
-  options = options || {};
-  const rnds = options.random ?? options.rng?.() ?? rng();
-  if (rnds.length < 16) {
-    throw new Error("Random bytes length must be >= 16");
-  }
-  rnds[6] = rnds[6] & 15 | 64;
-  rnds[8] = rnds[8] & 63 | 128;
-  if (buf) {
-    offset4 = offset4 || 0;
-    if (offset4 < 0 || offset4 + 16 > buf.length) {
-      throw new RangeError(`UUID byte range ${offset4}:${offset4 + 15} is out of buffer bounds`);
+  const title = getWidgetSettingsTitle(widgetType);
+  const data = widget?.attributes ?? widgetType?.example?.attributes ?? {};
+  return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+    drawer_exports.Root,
+    {
+      open,
+      onOpenChange: handleOpenChange,
+      swipeDirection: settingsDrawerSide,
+      modal: false,
+      disablePointerDismissal: true,
+      children: /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(
+        drawer_exports.Popup,
+        {
+          size: "medium",
+          className: widget_settings_default.popup,
+          style: popupStyle,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(drawer_exports.Header, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(drawer_exports.Title, { children: title }),
+              /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(drawer_exports.CloseIcon, {})
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(drawer_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+              DataForm,
+              {
+                data,
+                fields: fields3,
+                form: form2,
+                onChange: handleChange
+              }
+            ) }),
+            /* @__PURE__ */ (0, import_jsx_runtime216.jsxs)(drawer_exports.Footer, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+                Button4,
+                {
+                  variant: "minimal",
+                  tone: "brand",
+                  size: "compact",
+                  onClick: () => handleOpenChange(false),
+                  children: (0, import_i18n67.__)("Cancel")
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
+                Button4,
+                {
+                  variant: "solid",
+                  tone: "brand",
+                  size: "compact",
+                  onClick: handleSave,
+                  disabled: !hasUncommittedChanges,
+                  children: (0, import_i18n67.__)("Save")
+                }
+              )
+            ] })
+          ]
+        }
+      )
     }
-    for (let i2 = 0; i2 < 16; ++i2) {
-      buf[offset4 + i2] = rnds[i2];
-    }
-    return buf;
-  }
-  return unsafeStringify(rnds);
-}
-var v4_default = v4;
-
-// packages/widget-dashboard/build-module/utils/create-dashboard-widget/create-dashboard-widget.mjs
-var DEFAULT_PLACEMENT = {
-  width: 1,
-  height: 2,
-  order: 0
-};
-function createDashboardWidget(widgetType, initialAttributes) {
-  return {
-    uuid: v4_default(),
-    type: widgetType.name,
-    attributes: initialAttributes ?? widgetType.example?.attributes,
-    placement: DEFAULT_PLACEMENT
-  };
+  );
 }
 
-// packages/widget-dashboard/build-module/components/widget-picker/widget-picker.mjs
-var import_element170 = __toESM(require_element(), 1);
-var import_i18n65 = __toESM(require_i18n(), 1);
-
-// packages/widget-dashboard/build-module/components/widget-preview-chrome/widget-preview-chrome.mjs
-var import_element169 = __toESM(require_element(), 1);
+// packages/widget-dashboard/build-module/components/widget-toolbar/widget-toolbar.mjs
 var import_jsx_runtime217 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE55 = "data-wp-hash";
 function getRuntime55() {
@@ -42456,187 +42178,77 @@ function registerStyle55(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle55("c47f6c464f", "._23cdee3dfcd79c9c__viewport{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border-radius:var(--wpds-border-radius-md,4px);inset:0;overflow:hidden;pointer-events:none;position:absolute;user-select:none}._5312b3880a174b72__canvas{display:grid;height:100%;width:100%}._8b8693cb129db8d2__card{height:100%;min-height:0}");
+  registerStyle55("c8afc26222", "._4a01b99834540429__widgetToolbar{border-radius:var(--wpds-border-radius-md,4px);inset-block-start:var(--wpds-dimension-padding-sm,8px);inset-inline-end:var(--wpds-dimension-padding-sm,8px);padding:var(--wpds-dimension-padding-xs,4px);position:absolute;z-index:1}");
 }
-var widget_preview_chrome_default = { "viewport": "_23cdee3dfcd79c9c__viewport", "canvas": "_5312b3880a174b72__canvas", "card": "_8b8693cb129db8d2__card" };
-function WidgetPreviewChrome({
-  widget,
-  widgetType,
-  index: index2 = 0
+var widget_toolbar_default = { "widgetToolbar": "_4a01b99834540429__widgetToolbar" };
+function WidgetToolbar({
+  children,
+  className
 }) {
-  const titleId = (0, import_element169.useId)();
-  const contextValue = (0, import_element169.useMemo)(
-    () => ({
-      uuid: widget.uuid,
-      name: widget.type,
-      index: index2
-    }),
-    [widget.uuid, widget.type, index2]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(WidgetContextProvider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("div", { className: widget_preview_chrome_default.viewport, ...{ inert: "" }, children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("div", { className: widget_preview_chrome_default.canvas, children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
-    card_exports.Root,
+  return /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
+    Stack,
     {
-      render: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)("section", {}),
-      className: widget_preview_chrome_default.card,
-      "aria-labelledby": widgetType.title ? titleId : void 0,
-      children: /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
-        WidgetFrame,
-        {
-          widget,
-          widgetType,
-          titleId
-        }
-      )
+      direction: "row",
+      align: "center",
+      gap: "xs",
+      className: clsx_default(widget_toolbar_default.widgetToolbar, className),
+      children
     }
-  ) }) }) });
+  );
 }
 
-// packages/widget-dashboard/build-module/components/widget-picker/widget-picker.mjs
+// packages/widget-dashboard/build-module/components/widget-settings/widget-settings-trigger.mjs
+var import_element171 = __toESM(require_element(), 1);
+var import_i18n68 = __toESM(require_i18n(), 1);
 var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
-var DEFAULT_VIEW = {
-  type: "pickerGrid",
-  page: 1,
-  search: "",
-  mediaField: "preview",
-  titleField: "title",
-  // Larger default tile than the built-in 230.
-  layout: { previewSize: 290 }
-};
-var getItemId = (item) => item.name;
-function WidgetPreview({ item }) {
-  const exampleWidget = (0, import_element170.useMemo)(
-    () => createDashboardWidget(item, item.example?.attributes),
-    [item]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(WidgetPreviewChrome, { widget: exampleWidget, widgetType: item });
-}
-var fields2 = [
-  {
-    id: "title",
-    type: "text",
-    label: (0, import_i18n65.__)("Title"),
-    filterBy: false
-  },
-  {
-    id: "preview",
-    type: "media",
-    render: WidgetPreview
-  },
-  {
-    id: "name",
-    type: "text",
-    enableGlobalSearch: true,
-    enableHiding: false,
-    enableSorting: false,
-    filterBy: false,
-    getValue: ({ item }) => `${item.name.replace(/[\/,\-_]/g, " ")} ${item.title}`
-  }
-];
-function WidgetPicker({
-  onSelect,
-  itemListLabel = (0, import_i18n65.__)("Widget list")
+function WidgetSettingsTrigger({
+  widget,
+  widgetType
 }) {
-  const { widgetTypes: registeredTypes } = useDashboardInternalContext();
-  const [selection, setSelection] = (0, import_element170.useState)([]);
-  const [view, setView] = (0, import_element170.useState)(DEFAULT_VIEW);
-  const { data: widgetTypes } = filterSortAndPaginate(
-    registeredTypes,
-    view,
-    fields2
-  );
-  const actions = (0, import_element170.useMemo)(
-    () => [
-      {
-        id: "select",
-        label: (0, import_i18n65.__)("Select"),
-        isPrimary: true,
-        supportsBulk: true,
-        callback: (items) => onSelect(items)
-      }
-    ],
-    [onSelect]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
-    dataviews_picker_default,
-    {
-      data: widgetTypes,
-      fields: fields2,
-      view,
-      actions,
-      defaultLayouts: { pickerGrid: {} },
-      onChangeView: setView,
-      isLoading: false,
-      paginationInfo: {
-        totalItems: widgetTypes.length,
-        totalPages: 1
-      },
-      selection,
-      onChangeSelection: setSelection,
-      getItemId,
-      itemListLabel
-    }
-  );
-}
-
-// packages/widget-dashboard/build-module/components/widget-inserter/widget-inserter.mjs
-var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
-function WidgetInserter() {
-  const { layout, onLayoutChange } = useDashboardInternalContext();
-  const { inserterOpen, setInserterOpen } = useDashboardUIContext();
-  const insertWidgets = (0, import_element171.useCallback)(
-    (widgetTypes) => {
-      if (widgetTypes.length > 0) {
-        const newWidgets = widgetTypes.map(
-          (widgetType) => createDashboardWidget(widgetType)
-        );
-        onLayoutChange([...layout, ...newWidgets]);
-      }
-      setInserterOpen(false);
+  const {
+    setSettingsWidgetUuid,
+    setSettingsDrawerSide,
+    setSettingsDrawerInset
+  } = useDashboardUIContext();
+  const open = (0, import_element171.useCallback)(
+    (event) => {
+      const adminMenuInset = getAdminMenuInset();
+      const tile = event.currentTarget.closest(
+        "[data-wp-grid-item-key]"
+      );
+      const rect = (tile ?? event.currentTarget).getBoundingClientRect();
+      const widgetCenter = rect.left + rect.width / 2;
+      const contentCenter = (adminMenuInset + window.innerWidth) / 2;
+      const side = widgetCenter > contentCenter ? "left" : "right";
+      setSettingsDrawerSide(side);
+      setSettingsDrawerInset(side === "left" ? adminMenuInset : 0);
+      setSettingsWidgetUuid(widget.uuid);
     },
-    [layout, onLayoutChange, setInserterOpen]
+    [
+      setSettingsDrawerSide,
+      setSettingsDrawerInset,
+      setSettingsWidgetUuid,
+      widget.uuid
+    ]
   );
-  if (!inserterOpen) {
+  if (!widgetType.attributes?.length) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(dialog_exports.Root, { open: inserterOpen, onOpenChange: setInserterOpen, children: /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(
-    dialog_exports.Popup,
+  return /* @__PURE__ */ (0, import_jsx_runtime218.jsx)(
+    IconButton,
     {
-      size: "full",
-      portal: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
-        dialog_exports.Portal,
-        {
-          style: {
-            "--wp-ui-dialog-z-index": 99999
-          }
-        }
-      ),
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime219.jsxs)(dialog_exports.Header, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(dialog_exports.Title, { children: (0, import_i18n66.__)("Add widget") }),
-          /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(dialog_exports.CloseIcon, {})
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(dialog_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(WidgetPicker, { onSelect: insertWidgets }) })
-      ]
+      icon: cog_default,
+      label: (0, import_i18n68.__)("Widget settings"),
+      variant: "minimal",
+      tone: "neutral",
+      size: "compact",
+      onClick: open
     }
-  ) });
+  );
 }
 
-// packages/widget-dashboard/build-module/components/widget-settings/widget-settings.mjs
-var import_element172 = __toESM(require_element(), 1);
-var import_i18n68 = __toESM(require_i18n(), 1);
-
-// packages/widget-dashboard/build-module/components/widget-settings/utils/get-widget-settings.mjs
-var import_i18n67 = __toESM(require_i18n(), 1);
-function getWidgetSettingsTitle(widgetType) {
-  return widgetType?.title ? (0, import_i18n67.sprintf)(
-    /* translators: %s: Widget title. */
-    (0, import_i18n67.__)("%s settings"),
-    widgetType.title
-  ) : (0, import_i18n67.__)("Widget settings");
-}
-
-// packages/widget-dashboard/build-module/components/widget-settings/widget-settings.mjs
-var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
+// packages/widget-dashboard/build-module/components/widget-settings/widget-settings-toolbar.mjs
+var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE56 = "data-wp-hash";
 function getRuntime56() {
   const globalScope = globalThis;
@@ -42718,170 +42330,27 @@ function registerStyle56(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle56("809494c486", "._34828f30ba41ad89__popup{margin-block-start:var(--wp-admin--admin-bar--height,0)}");
+  registerStyle56("76555dc7e2", "._931c420497181bdb__widgetSettingsToolbar{background:color-mix(in srgb,var(--wpds-color-background-surface-neutral,#fcfcfc) 40%,transparent);opacity:0;pointer-events:none}[data-wp-grid-item-key]:focus-within ._931c420497181bdb__widgetSettingsToolbar,[data-wp-grid-item-key]:hover ._931c420497181bdb__widgetSettingsToolbar{opacity:1;pointer-events:auto}@media not (prefers-reduced-motion){._931c420497181bdb__widgetSettingsToolbar{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}");
 }
-var widget_settings_default = { "popup": "_34828f30ba41ad89__popup" };
-function WidgetSettings() {
-  const {
-    layout,
-    onLayoutChange,
-    widgetTypes,
-    commit,
-    cancel: cancelStaging,
-    hasUncommittedChanges
-  } = useDashboardInternalContext();
-  const { settingsWidgetUuid, setSettingsWidgetUuid } = useDashboardUIContext();
-  const open = settingsWidgetUuid !== null;
-  const [lastWidgetUuid, setLastWidgetUuid] = (0, import_element172.useState)(
-    settingsWidgetUuid
-  );
-  (0, import_element172.useEffect)(() => {
-    if (settingsWidgetUuid) {
-      setLastWidgetUuid(settingsWidgetUuid);
-    }
-  }, [settingsWidgetUuid]);
-  const activeUuid = settingsWidgetUuid ?? lastWidgetUuid;
-  const widget = activeUuid ? layout.find((instance) => instance.uuid === activeUuid) : void 0;
-  const widgetType = widget ? widgetTypes.find((type) => type.name === widget.type) : void 0;
-  const fields3 = (0, import_element172.useMemo)(
-    () => widgetType?.attributes ?? [],
-    [widgetType?.attributes]
-  );
-  const form2 = (0, import_element172.useMemo)(
-    () => ({
-      layout: { type: "regular", labelPosition: "top" },
-      fields: fields3.map((field) => field.id)
-    }),
-    [fields3]
-  );
-  const handleChange = (0, import_element172.useCallback)(
-    (edits) => {
-      if (!widget) {
-        return;
-      }
-      onLayoutChange(
-        layout.map(
-          (instance) => instance.uuid === widget.uuid ? {
-            ...instance,
-            attributes: {
-              ...instance.attributes,
-              ...edits
-            }
-          } : instance
-        )
-      );
-    },
-    [layout, onLayoutChange, widget]
-  );
-  const close = (0, import_element172.useCallback)(
-    () => setSettingsWidgetUuid(null),
-    [setSettingsWidgetUuid]
-  );
-  const handleSave = (0, import_element172.useCallback)(() => {
-    commit();
-    close();
-  }, [commit, close]);
-  const handleOpenChange = (0, import_element172.useCallback)(
-    (nextOpen) => {
-      if (!nextOpen) {
-        cancelStaging();
-        close();
-      }
-    },
-    [cancelStaging, close]
-  );
-  const hasForm = !!widget && !!widgetType && fields3.length > 0;
-  if (!hasForm) {
-    return null;
-  }
-  const title = getWidgetSettingsTitle(widgetType);
-  const data = widget?.attributes ?? widgetType?.example?.attributes ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
-    drawer_exports.Root,
-    {
-      open,
-      onOpenChange: handleOpenChange,
-      swipeDirection: "right",
-      modal: false,
-      disablePointerDismissal: true,
-      children: /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(drawer_exports.Popup, { size: "medium", className: widget_settings_default.popup, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(drawer_exports.Header, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(drawer_exports.Title, { children: title }),
-          /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(drawer_exports.CloseIcon, {})
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(drawer_exports.Content, { children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
-          DataForm,
-          {
-            data,
-            fields: fields3,
-            form: form2,
-            onChange: handleChange
-          }
-        ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime220.jsxs)(drawer_exports.Footer, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
-            Button4,
-            {
-              variant: "minimal",
-              tone: "brand",
-              size: "compact",
-              onClick: () => handleOpenChange(false),
-              children: (0, import_i18n68.__)("Cancel")
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
-            Button4,
-            {
-              variant: "solid",
-              tone: "brand",
-              size: "compact",
-              onClick: handleSave,
-              disabled: !hasUncommittedChanges,
-              children: (0, import_i18n68.__)("Save")
-            }
-          )
-        ] })
-      ] })
-    }
-  );
-}
-
-// packages/widget-dashboard/build-module/components/widget-settings/widget-settings-trigger.mjs
-var import_element173 = __toESM(require_element(), 1);
-var import_i18n69 = __toESM(require_i18n(), 1);
-var import_jsx_runtime221 = __toESM(require_jsx_runtime(), 1);
-function WidgetSettingsTrigger({
+var widget_settings_toolbar_default = { "widgetSettingsToolbar": "_931c420497181bdb__widgetSettingsToolbar" };
+function WidgetSettingsToolbar({
   widget,
   widgetType
 }) {
-  const { settingsWidgetUuid, setSettingsWidgetUuid } = useDashboardUIContext();
-  const { cancel } = useDashboardInternalContext();
-  const toggle = (0, import_element173.useCallback)(() => {
-    if (settingsWidgetUuid === widget.uuid) {
-      cancel();
-      setSettingsWidgetUuid(null);
-      return;
-    }
-    setSettingsWidgetUuid(widget.uuid);
-  }, [cancel, settingsWidgetUuid, setSettingsWidgetUuid, widget.uuid]);
   if (!widgetType.attributes?.length) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
-    IconButton,
+  return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(WidgetToolbar, { className: widget_settings_toolbar_default.widgetSettingsToolbar, children: /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
+    WidgetSettingsTrigger,
     {
-      icon: cog_default,
-      label: (0, import_i18n69.__)("Widget settings"),
-      variant: "minimal",
-      tone: "neutral",
-      size: "compact",
-      onClick: toggle
+      widget,
+      widgetType
     }
-  );
+  ) });
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widgets.mjs
-var import_element185 = __toESM(require_element(), 1);
+var import_element183 = __toESM(require_element(), 1);
 
 // node_modules/@dnd-kit/core/dist/core.esm.js
 var import_react44 = __toESM(require_react());
@@ -47128,19 +46597,19 @@ function isAfter(a2, b2) {
 
 // packages/grid/build-module/dashboard-grid/index.mjs
 var import_compose27 = __toESM(require_compose(), 1);
-var import_element179 = __toESM(require_element(), 1);
+var import_element177 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-grid/grid-item.mjs
-var import_element175 = __toESM(require_element(), 1);
+var import_element173 = __toESM(require_element(), 1);
 var import_compose26 = __toESM(require_compose(), 1);
 
 // packages/grid/build-module/shared/grid-item-key.mjs
 var GRID_ITEM_DATA_KEY = "data-wp-grid-item-key";
 
 // packages/grid/build-module/shared/resize-handle.mjs
-var import_element174 = __toESM(require_element(), 1);
+var import_element172 = __toESM(require_element(), 1);
 var import_compose25 = __toESM(require_compose(), 1);
-var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime220 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE57 = "data-wp-hash";
 function getRuntime57() {
   const globalScope = globalThis;
@@ -47242,12 +46711,12 @@ function ResizeHandle({
     id: "draggable",
     data: { itemId }
   });
-  const ownerDocumentRef = (0, import_element174.useRef)(null);
-  const setOwnerDocumentRef = (0, import_element174.useCallback)((node) => {
+  const ownerDocumentRef = (0, import_element172.useRef)(null);
+  const setOwnerDocumentRef = (0, import_element172.useCallback)((node) => {
     ownerDocumentRef.current = node?.ownerDocument ?? null;
   }, []);
   const mergedRef = (0, import_compose25.useMergeRefs)([setOwnerDocumentRef, setNodeRef]);
-  (0, import_element174.useEffect)(() => {
+  (0, import_element172.useEffect)(() => {
     if (!isDragging) {
       return;
     }
@@ -47259,7 +46728,7 @@ function ResizeHandle({
   }, [isDragging, verticalResizable]);
   if (renderResizeHandle) {
     const RenderResizeHandle = renderResizeHandle;
-    return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
       RenderResizeHandle,
       {
         ref: mergedRef,
@@ -47271,7 +46740,7 @@ function ResizeHandle({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
     "div",
     {
       ref: mergedRef,
@@ -47305,7 +46774,7 @@ function ResizeHandleWrapper(props) {
       props.onResizeEnd();
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
     DndContext,
     {
       autoScroll: {
@@ -47314,7 +46783,7 @@ function ResizeHandleWrapper(props) {
       },
       onDragMove: handleDragMove,
       onDragEnd: handleDragEnd,
-      children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)("div", { className: resize_handle_default["resize-handle-slot"], children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(ResizeHandle, { ...props }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)("div", { className: resize_handle_default["resize-handle-slot"], children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(ResizeHandle, { ...props }) })
     }
   );
 }
@@ -47337,7 +46806,7 @@ function gridSpanToPixelSize(columnSpan, rowSpan, columnWidth, gapPx, rowHeightP
 }
 
 // packages/grid/build-module/dashboard-grid/grid-item.mjs
-var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime221 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE58 = "data-wp-hash";
 function getRuntime58() {
   const globalScope = globalThis;
@@ -47451,12 +46920,12 @@ function GridItem4({
   minResizeHeightPx,
   renderResizeHandle
 }) {
-  const [resizeDelta, setResizeDelta] = (0, import_element175.useState)(
+  const [resizeDelta, setResizeDelta] = (0, import_element173.useState)(
     null
   );
-  const [initialContentSize, setInitialContentSize] = (0, import_element175.useState)(null);
-  const itemRef = (0, import_element175.useRef)(null);
-  const contentRef = (0, import_element175.useRef)(null);
+  const [initialContentSize, setInitialContentSize] = (0, import_element173.useState)(null);
+  const itemRef = (0, import_element173.useRef)(null);
+  const contentRef = (0, import_element173.useRef)(null);
   const {
     attributes,
     listeners,
@@ -47512,8 +46981,8 @@ function GridItem4({
     width: initialContentSize.width + resizeDelta.width,
     height: verticalResizable ? initialContentSize.height + resizeDelta.height : void 0
   } : void 0;
-  const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(SnapPreviewOverlay, { snap: resizeSnapPreview }) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(
+  const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(SnapPreviewOverlay, { snap: resizeSnapPreview }) : null;
+  return /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)(
     "div",
     {
       ref: mergedRef,
@@ -47522,11 +46991,11 @@ function GridItem4({
       ...{ [GRID_ITEM_DATA_KEY]: item.key },
       "data-wp-grid-item-resizing": isResizing || void 0,
       children: [
-        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
+        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
           "div",
           {
             className: actionable_area_slot_default["actionable-area-slot"],
-            children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
               "div",
               {
                 style: { display: "contents" },
@@ -47536,7 +47005,7 @@ function GridItem4({
             )
           }
         ) : null,
-        /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)(
           "div",
           {
             ref: setActivatorNodeRef,
@@ -47547,7 +47016,7 @@ function GridItem4({
               cursor: getItemCursor(disabled2, interacting)
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)(
                 "div",
                 {
                   ref: contentMergedRef,
@@ -47555,7 +47024,7 @@ function GridItem4({
                   style: continuousContentStyle,
                   children: [
                     children,
-                    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
+                    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
                       ResizeHandleWrapper,
                       {
                         itemId: item.key,
@@ -47577,7 +47046,7 @@ function GridItem4({
   );
 }
 function SnapPreviewOverlay({ snap }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
     "div",
     {
       className: grid_item_default["preview-overlay"],
@@ -47590,8 +47059,8 @@ function SnapPreviewOverlay({ snap }) {
 }
 
 // packages/grid/build-module/shared/grid-overlay.mjs
-var import_element176 = __toESM(require_element(), 1);
-var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
+var import_element174 = __toESM(require_element(), 1);
+var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE59 = "data-wp-hash";
 function getRuntime59() {
   const globalScope = globalThis;
@@ -47683,8 +47152,8 @@ function GridOverlay({
   isActive
 }) {
   const showRows = typeof rowHeight === "number" && typeof rows === "number" && rows > 0;
-  const [waveKey, setWaveKey] = (0, import_element176.useState)(0);
-  (0, import_element176.useEffect)(() => {
+  const [waveKey, setWaveKey] = (0, import_element174.useState)(0);
+  (0, import_element174.useEffect)(() => {
     if (isActive) {
       setWaveKey((key2) => key2 + 1);
     }
@@ -47695,7 +47164,7 @@ function GridOverlay({
       "--wp-grid-overlay-row-height": `${rowHeight}px`
     } : {}
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
     "div",
     {
       "aria-hidden": true,
@@ -47705,7 +47174,7 @@ function GridOverlay({
         showRows && grid_overlay_default["has-rows"]
       ),
       style,
-      children: Array.from({ length: columns }, (_column, columnIndex) => /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+      children: Array.from({ length: columns }, (_column, columnIndex) => /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
         "div",
         {
           className: grid_overlay_default.column,
@@ -47713,7 +47182,7 @@ function GridOverlay({
             "--wp-grid-overlay-column-index": columnIndex,
             "--wp-grid-overlay-row-index": 0
           },
-          children: showRows && Array.from({ length: rows }, (_row, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
+          children: showRows && Array.from({ length: rows }, (_row, rowIndex) => /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
             "div",
             {
               className: grid_overlay_default.row,
@@ -47732,7 +47201,7 @@ function GridOverlay({
 }
 
 // packages/grid/build-module/shared/item-exit-overlay.mjs
-var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE60 = "data-wp-hash";
 function getRuntime60() {
   const globalScope = globalThis;
@@ -47823,7 +47292,7 @@ function ItemExitOverlay({
   children,
   onAnimationEnd
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
     "div",
     {
       className: item_exit_animation_default["exit-overlay"],
@@ -47847,7 +47316,7 @@ function ItemExitOverlay({
 }
 
 // packages/grid/build-module/shared/use-layout-shift-animation.mjs
-var import_element177 = __toESM(require_element(), 1);
+var import_element175 = __toESM(require_element(), 1);
 function queryGridItems(container) {
   return Array.from(
     container.querySelectorAll(
@@ -47906,15 +47375,15 @@ function useLayoutShiftAnimation({
   layoutFingerprint,
   excludeItemKey = null
 }) {
-  const snapshotBeforeChangeRef = (0, import_element177.useRef)(null);
-  const lastRenderedPositionsRef = (0, import_element177.useRef)(null);
-  const positionsBeforeLastChangeRef = (0, import_element177.useRef)(null);
-  const captureLayoutSnapshot = (0, import_element177.useCallback)(() => {
+  const snapshotBeforeChangeRef = (0, import_element175.useRef)(null);
+  const lastRenderedPositionsRef = (0, import_element175.useRef)(null);
+  const positionsBeforeLastChangeRef = (0, import_element175.useRef)(null);
+  const captureLayoutSnapshot = (0, import_element175.useCallback)(() => {
     if (container) {
       snapshotBeforeChangeRef.current = snapshotPositions(container);
     }
   }, [container]);
-  (0, import_element177.useLayoutEffect)(() => {
+  (0, import_element175.useLayoutEffect)(() => {
     if (!container || !enabled) {
       snapshotBeforeChangeRef.current = null;
       lastRenderedPositionsRef.current = null;
@@ -47951,10 +47420,10 @@ function useLayoutShiftAnimation({
       }
     }
   }, [container, enabled, layoutFingerprint, excludeItemKey]);
-  const getLastPositions = (0, import_element177.useCallback)(() => {
+  const getLastPositions = (0, import_element175.useCallback)(() => {
     return lastRenderedPositionsRef.current;
   }, []);
-  const getPositionsBeforeLastChange = (0, import_element177.useCallback)(() => {
+  const getPositionsBeforeLastChange = (0, import_element175.useCallback)(() => {
     return positionsBeforeLastChangeRef.current;
   }, []);
   return {
@@ -47981,7 +47450,7 @@ function getPlacementFingerprint(itemStyles) {
 }
 
 // packages/grid/build-module/shared/use-item-exit-animation.mjs
-var import_element178 = __toESM(require_element(), 1);
+var import_element176 = __toESM(require_element(), 1);
 var EXIT_SAFETY_TIMEOUT_MS = 1e3;
 function prefersReducedMotion() {
   return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -47993,12 +47462,12 @@ function useItemExitAnimation({
   getPositionsBeforeLastChange,
   childrenCacheRef
 }) {
-  const [exitingItems, setExitingItems] = (0, import_element178.useState)(
+  const [exitingItems, setExitingItems] = (0, import_element176.useState)(
     []
   );
-  const prevLayoutKeysRef = (0, import_element178.useRef)(/* @__PURE__ */ new Set());
-  const exitTimeoutsRef = (0, import_element178.useRef)(/* @__PURE__ */ new Map());
-  const clearExitingItem = (0, import_element178.useCallback)(
+  const prevLayoutKeysRef = (0, import_element176.useRef)(/* @__PURE__ */ new Set());
+  const exitTimeoutsRef = (0, import_element176.useRef)(/* @__PURE__ */ new Map());
+  const clearExitingItem = (0, import_element176.useCallback)(
     (key2) => {
       const timeout = exitTimeoutsRef.current.get(key2);
       if (timeout) {
@@ -48012,7 +47481,7 @@ function useItemExitAnimation({
     },
     [childrenCacheRef]
   );
-  const scheduleExitComplete = (0, import_element178.useCallback)(
+  const scheduleExitComplete = (0, import_element176.useCallback)(
     (key2) => {
       if (exitTimeoutsRef.current.has(key2)) {
         return;
@@ -48025,7 +47494,7 @@ function useItemExitAnimation({
     },
     [clearExitingItem]
   );
-  (0, import_element178.useLayoutEffect)(() => {
+  (0, import_element176.useLayoutEffect)(() => {
     if (!enabled || !container) {
       prevLayoutKeysRef.current = new Set(layoutKeys);
       for (const timeout of exitTimeoutsRef.current.values()) {
@@ -48084,7 +47553,7 @@ function useItemExitAnimation({
     childrenCacheRef,
     scheduleExitComplete
   ]);
-  (0, import_element178.useLayoutEffect)(() => {
+  (0, import_element176.useLayoutEffect)(() => {
     const exitTimeouts = exitTimeoutsRef.current;
     return () => {
       for (const timeout of exitTimeouts.values()) {
@@ -48301,7 +47770,7 @@ function createDashboardDragDropAnimation(dragPreviewFrameClassName, exitingFram
 }
 
 // packages/grid/build-module/dashboard-grid/index.mjs
-var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE61 = "data-wp-hash";
 function getRuntime61() {
   const globalScope = globalThis;
@@ -48397,7 +47866,7 @@ var dashboardDragDropAnimation = createDashboardDragDropAnimation(
 var FALLBACK_GAP_PX = 24;
 var DEFAULT_COLUMNS = 6;
 var NO_SORT_STRATEGY = () => null;
-var DashboardGrid = (0, import_element179.forwardRef)(
+var DashboardGrid = (0, import_element177.forwardRef)(
   function DashboardGrid2(props, ref) {
     const {
       layout,
@@ -48415,25 +47884,25 @@ var DashboardGrid = (0, import_element179.forwardRef)(
       renderGridOverlay,
       ...divProps
     } = props;
-    const [temporaryLayout, setTemporaryLayout] = (0, import_element179.useState)();
-    const [activeId, setActiveId] = (0, import_element179.useState)(null);
-    const [isResizing, setIsResizing] = (0, import_element179.useState)(false);
-    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element179.useState)(null);
-    const latestLayoutRef = (0, import_element179.useRef)();
-    const lastReorderCursorRef = (0, import_element179.useRef)(null);
-    const resizeBaselineRef = (0, import_element179.useRef)(null);
-    const captureLayoutSnapshotRef = (0, import_element179.useRef)(() => {
+    const [temporaryLayout, setTemporaryLayout] = (0, import_element177.useState)();
+    const [activeId, setActiveId] = (0, import_element177.useState)(null);
+    const [isResizing, setIsResizing] = (0, import_element177.useState)(false);
+    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element177.useState)(null);
+    const latestLayoutRef = (0, import_element177.useRef)();
+    const lastReorderCursorRef = (0, import_element177.useRef)(null);
+    const resizeBaselineRef = (0, import_element177.useRef)(null);
+    const captureLayoutSnapshotRef = (0, import_element177.useRef)(() => {
     });
-    const childrenCacheRef = (0, import_element179.useRef)(
+    const childrenCacheRef = (0, import_element177.useRef)(
       /* @__PURE__ */ new Map()
     );
     const activeLayout = temporaryLayout ?? layout;
-    const [gridRoot, setGridRoot] = (0, import_element179.useState)(
+    const [gridRoot, setGridRoot] = (0, import_element177.useState)(
       null
     );
-    const [containerWidth, setContainerWidth] = (0, import_element179.useState)(0);
-    const [containerHeight, setContainerHeight] = (0, import_element179.useState)(0);
-    const [gapPx, setGapPx] = (0, import_element179.useState)(FALLBACK_GAP_PX);
+    const [containerWidth, setContainerWidth] = (0, import_element177.useState)(0);
+    const [containerHeight, setContainerHeight] = (0, import_element177.useState)(0);
+    const [gapPx, setGapPx] = (0, import_element177.useState)(FALLBACK_GAP_PX);
     const resizeObserverRef = (0, import_compose27.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
@@ -48445,7 +47914,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
       resizeObserverRef,
       ref
     ]);
-    (0, import_element179.useLayoutEffect)(() => {
+    (0, import_element177.useLayoutEffect)(() => {
       if (!gridRoot) {
         return;
       }
@@ -48463,7 +47932,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
         setGapPx(parsed);
       }
     }, [gridRoot]);
-    const effectiveColumns = (0, import_element179.useMemo)(() => {
+    const effectiveColumns = (0, import_element177.useMemo)(() => {
       if (!minColumnWidth) {
         return columns ?? DEFAULT_COLUMNS;
       }
@@ -48484,23 +47953,23 @@ var DashboardGrid = (0, import_element179.forwardRef)(
     ).widthPx;
     const rowHeightPx = typeof rowHeight === "number" ? rowHeight : null;
     const minResizeHeightPx = rowHeightPx === null ? void 0 : gridSpanToPixelSize(1, 1, columnWidth, gapPx, rowHeightPx).heightPx ?? void 0;
-    const layoutMap = (0, import_element179.useMemo)(() => {
+    const layoutMap = (0, import_element177.useMemo)(() => {
       const map = /* @__PURE__ */ new Map();
       activeLayout.forEach((item) => map.set(item.key, item));
       return map;
     }, [activeLayout]);
-    const layoutKeys = (0, import_element179.useMemo)(
+    const layoutKeys = (0, import_element177.useMemo)(
       () => new Set(layout.map((item) => item.key)),
       [layout]
     );
-    const sortedItems = (0, import_element179.useMemo)(
+    const sortedItems = (0, import_element177.useMemo)(
       () => activeLayout.map((item, index2) => ({ item, index: index2 })).sort(
         (a2, b2) => (a2.item.order ?? a2.index) - (b2.item.order ?? b2.index)
       ).map(({ item }) => item.key),
       [activeLayout]
     );
     const items = sortedItems;
-    const resolvedItemMap = (0, import_element179.useMemo)(() => {
+    const resolvedItemMap = (0, import_element177.useMemo)(() => {
       const fillWidths = resolveFillWidths(
         items,
         layoutMap,
@@ -48519,13 +47988,13 @@ var DashboardGrid = (0, import_element179.forwardRef)(
       }
       return map;
     }, [items, layoutMap, effectiveColumns]);
-    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element179.useMemo)(() => {
+    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element177.useMemo)(() => {
       const childMap = /* @__PURE__ */ new Map();
       const actionableMap = /* @__PURE__ */ new Map();
       const rest = [];
       const byKey = /* @__PURE__ */ new Map();
-      import_element179.Children.forEach(children, (child) => {
-        if (!(0, import_element179.isValidElement)(child)) {
+      import_element177.Children.forEach(children, (child) => {
+        if (!(0, import_element177.isValidElement)(child)) {
           rest.push(child);
           return;
         }
@@ -48535,7 +48004,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
           return;
         }
         const { actionableArea } = child.props;
-        const stripped = actionableArea !== void 0 ? (0, import_element179.cloneElement)(child, {
+        const stripped = actionableArea !== void 0 ? (0, import_element177.cloneElement)(child, {
           actionableArea: void 0
         }) : child;
         byKey.set(key2, stripped);
@@ -48550,7 +48019,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
       });
       return [childMap, actionableMap, rest, byKey];
     }, [children, layoutKeys]);
-    (0, import_element179.useLayoutEffect)(() => {
+    (0, import_element177.useLayoutEffect)(() => {
       for (const [key2, child] of renderedByKey) {
         childrenCacheRef.current.set(key2, child);
       }
@@ -48702,10 +48171,10 @@ var DashboardGrid = (0, import_element179.forwardRef)(
     });
     const activeClone = activeId ? childrenMap.get(activeId) : null;
     const DragPreview = renderDragPreview;
-    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("div", { className: grid_default3["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("div", { className: grid_default3["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
+    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime224.jsx)("div", { className: grid_default3["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)("div", { className: grid_default3["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
     const Overlay = renderGridOverlay ?? GridOverlay;
     const overlayRowHeight = typeof rowHeight === "number" ? rowHeight : void 0;
-    const overlayRows = (0, import_element179.useMemo)(() => {
+    const overlayRows = (0, import_element177.useMemo)(() => {
       if (overlayRowHeight === void 0 || containerHeight <= 0) {
         return void 0;
       }
@@ -48715,8 +48184,8 @@ var DashboardGrid = (0, import_element179.forwardRef)(
         Math.floor((containerHeight + gapPx) / rowTile)
       );
     }, [overlayRowHeight, containerHeight, gapPx]);
-    const gridOverlay = (0, import_element179.useMemo)(
-      () => /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
+    const gridOverlay = (0, import_element177.useMemo)(
+      () => /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
         Overlay,
         {
           columns: effectiveColumns,
@@ -48733,7 +48202,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
         overlayRows
       ]
     );
-    const layoutFingerprint = (0, import_element179.useMemo)(
+    const layoutFingerprint = (0, import_element177.useMemo)(
       () => getLayoutFingerprint([...resolvedItemMap.values()]),
       [resolvedItemMap]
     );
@@ -48752,10 +48221,10 @@ var DashboardGrid = (0, import_element179.forwardRef)(
       childrenCacheRef
     });
     const layoutAnimating = editMode;
-    (0, import_element179.useLayoutEffect)(() => {
+    (0, import_element177.useLayoutEffect)(() => {
       captureLayoutSnapshotRef.current = captureLayoutSnapshot;
     }, [captureLayoutSnapshot]);
-    return /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(
       DndContext,
       {
         sensors,
@@ -48768,7 +48237,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
           setActiveId(null);
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY, children: /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY, children: /* @__PURE__ */ (0, import_jsx_runtime224.jsxs)(
             "div",
             {
               ...divProps,
@@ -48787,7 +48256,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
               },
               children: [
                 gridOverlay,
-                items.map((id) => /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
+                items.map((id) => /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
                   GridItem4,
                   {
                     item: resolvedItemMap.get(
@@ -48810,7 +48279,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
                   id
                 )),
                 remaining,
-                exitingItems.map(({ key: key2, rect, child }) => /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
+                exitingItems.map(({ key: key2, rect, child }) => /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
                   ItemExitOverlay,
                   {
                     itemKey: key2,
@@ -48823,7 +48292,7 @@ var DashboardGrid = (0, import_element179.forwardRef)(
               ]
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(DragOverlay, { dropAnimation: dashboardDragDropAnimation, children: dragOverlayContent })
+          /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(DragOverlay, { dropAnimation: dashboardDragDropAnimation, children: dragOverlayContent })
         ]
       }
     );
@@ -48832,12 +48301,12 @@ var DashboardGrid = (0, import_element179.forwardRef)(
 
 // packages/grid/build-module/dashboard-lanes/index.mjs
 var import_compose29 = __toESM(require_compose(), 1);
-var import_element182 = __toESM(require_element(), 1);
+var import_element180 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-lanes/lanes-item.mjs
-var import_element180 = __toESM(require_element(), 1);
+var import_element178 = __toESM(require_element(), 1);
 var import_compose28 = __toESM(require_compose(), 1);
-var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE62 = "data-wp-hash";
 function getRuntime62() {
   const globalScope = globalThis;
@@ -48949,12 +48418,12 @@ function LanesItem({
   renderResizeHandle,
   dragging = false
 }) {
-  const [resizeDelta, setResizeDelta] = (0, import_element180.useState)(
+  const [resizeDelta, setResizeDelta] = (0, import_element178.useState)(
     null
   );
-  const [initialContentSize, setInitialContentSize] = (0, import_element180.useState)(null);
-  const itemRef = (0, import_element180.useRef)(null);
-  const contentRef = (0, import_element180.useRef)(null);
+  const [initialContentSize, setInitialContentSize] = (0, import_element178.useState)(null);
+  const itemRef = (0, import_element178.useRef)(null);
+  const contentRef = (0, import_element178.useRef)(null);
   const {
     attributes,
     listeners,
@@ -49002,7 +48471,7 @@ function LanesItem({
   const continuousContentStyle = resizeDelta && initialContentSize ? {
     width: initialContentSize.width + resizeDelta.width
   } : void 0;
-  const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
+  const previewOverlay = resizeSnapPreview ? /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
     "div",
     {
       className: lanes_item_default["preview-overlay"],
@@ -49012,7 +48481,7 @@ function LanesItem({
       }
     }
   ) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(
     "div",
     {
       ref: mergedRef,
@@ -49021,11 +48490,11 @@ function LanesItem({
       ...{ [GRID_ITEM_DATA_KEY]: itemKey },
       "data-wp-grid-item-resizing": isResizing || void 0,
       children: [
-        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
+        actionableArea ? /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
           "div",
           {
             className: actionable_area_slot_default2["actionable-area-slot"],
-            children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
               "div",
               {
                 style: { display: "contents" },
@@ -49035,7 +48504,7 @@ function LanesItem({
             )
           }
         ) : null,
-        /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(
           "div",
           {
             ref: setActivatorNodeRef,
@@ -49046,7 +48515,7 @@ function LanesItem({
               cursor: getItemCursor2(disabled2, interacting)
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(
                 "div",
                 {
                   ref: contentMergedRef,
@@ -49054,7 +48523,7 @@ function LanesItem({
                   style: continuousContentStyle,
                   children: [
                     children,
-                    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
+                    !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
                       ResizeHandleWrapper,
                       {
                         itemId: itemKey,
@@ -49077,7 +48546,7 @@ function LanesItem({
 }
 
 // packages/grid/build-module/dashboard-lanes/use-lane-placement.mjs
-var import_element181 = __toESM(require_element(), 1);
+var import_element179 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-lanes/lane-placement.mjs
 function clampSpan(span, lanes) {
@@ -49176,9 +48645,9 @@ function clampSpan2(span) {
   return Math.max(1, Math.floor(span));
 }
 function useLanePlacement(container, input) {
-  const [isPolyfilled] = (0, import_element181.useState)(() => !supportsGridLanes());
-  const [itemStyles, setItemStyles] = (0, import_element181.useState)(() => /* @__PURE__ */ new Map());
-  const nativeStyles = (0, import_element181.useMemo)(() => {
+  const [isPolyfilled] = (0, import_element179.useState)(() => !supportsGridLanes());
+  const [itemStyles, setItemStyles] = (0, import_element179.useState)(() => /* @__PURE__ */ new Map());
+  const nativeStyles = (0, import_element179.useMemo)(() => {
     const map = /* @__PURE__ */ new Map();
     for (const item of input.items) {
       map.set(item.key, {
@@ -49187,14 +48656,14 @@ function useLanePlacement(container, input) {
     }
     return map;
   }, [input.items]);
-  const itemsSignature = (0, import_element181.useMemo)(() => {
+  const itemsSignature = (0, import_element179.useMemo)(() => {
     return input.items.map(
       (item) => `${item.key}/${item.span ?? 1}/${item.lane ?? ""}`
     ).join("\0");
   }, [input.items]);
-  const itemsForPlacement = (0, import_element181.useMemo)(() => input.items, [itemsSignature]);
+  const itemsForPlacement = (0, import_element179.useMemo)(() => input.items, [itemsSignature]);
   const { lanes, gap, flowTolerance, rowUnit } = input;
-  (0, import_element181.useLayoutEffect)(() => {
+  (0, import_element179.useLayoutEffect)(() => {
     if (!isPolyfilled || !container) {
       return;
     }
@@ -49337,7 +48806,7 @@ function useLanePlacement(container, input) {
 }
 
 // packages/grid/build-module/dashboard-lanes/index.mjs
-var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime226 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE63 = "data-wp-hash";
 function getRuntime63() {
   const globalScope = globalThis;
@@ -49433,7 +48902,7 @@ var dashboardDragDropAnimation2 = createDashboardDragDropAnimation(
 var FALLBACK_GAP_PX2 = 24;
 var DEFAULT_COLUMNS2 = 6;
 var NO_SORT_STRATEGY2 = () => null;
-var DashboardLanes = (0, import_element182.forwardRef)(
+var DashboardLanes = (0, import_element180.forwardRef)(
   function DashboardLanes2(props, ref) {
     const {
       layout,
@@ -49452,24 +48921,24 @@ var DashboardLanes = (0, import_element182.forwardRef)(
       renderGridOverlay,
       ...divProps
     } = props;
-    const [temporaryLayout, setTemporaryLayout] = (0, import_element182.useState)();
-    const [activeId, setActiveId] = (0, import_element182.useState)(null);
-    const [isResizing, setIsResizing] = (0, import_element182.useState)(false);
-    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element182.useState)(null);
-    const latestLayoutRef = (0, import_element182.useRef)();
-    const lastReorderCursorRef = (0, import_element182.useRef)(null);
-    const resizeBaselineRef = (0, import_element182.useRef)(null);
-    const captureLayoutSnapshotRef = (0, import_element182.useRef)(() => {
+    const [temporaryLayout, setTemporaryLayout] = (0, import_element180.useState)();
+    const [activeId, setActiveId] = (0, import_element180.useState)(null);
+    const [isResizing, setIsResizing] = (0, import_element180.useState)(false);
+    const [resizeSnapPreview, setResizeSnapPreview] = (0, import_element180.useState)(null);
+    const latestLayoutRef = (0, import_element180.useRef)();
+    const lastReorderCursorRef = (0, import_element180.useRef)(null);
+    const resizeBaselineRef = (0, import_element180.useRef)(null);
+    const captureLayoutSnapshotRef = (0, import_element180.useRef)(() => {
     });
-    const childrenCacheRef = (0, import_element182.useRef)(
+    const childrenCacheRef = (0, import_element180.useRef)(
       /* @__PURE__ */ new Map()
     );
     const activeLayout = temporaryLayout ?? layout;
-    const [container, setContainer] = (0, import_element182.useState)(
+    const [container, setContainer] = (0, import_element180.useState)(
       null
     );
-    const [containerWidth, setContainerWidth] = (0, import_element182.useState)(0);
-    const [gapPx, setGapPx] = (0, import_element182.useState)(FALLBACK_GAP_PX2);
+    const [containerWidth, setContainerWidth] = (0, import_element180.useState)(0);
+    const [gapPx, setGapPx] = (0, import_element180.useState)(FALLBACK_GAP_PX2);
     const resizeObserverRef = (0, import_compose29.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
@@ -49480,7 +48949,7 @@ var DashboardLanes = (0, import_element182.forwardRef)(
       resizeObserverRef,
       ref
     ]);
-    (0, import_element182.useLayoutEffect)(() => {
+    (0, import_element180.useLayoutEffect)(() => {
       if (!container) {
         return;
       }
@@ -49495,7 +48964,7 @@ var DashboardLanes = (0, import_element182.forwardRef)(
         setGapPx(parsed);
       }
     }, [container]);
-    const effectiveColumns = (0, import_element182.useMemo)(() => {
+    const effectiveColumns = (0, import_element180.useMemo)(() => {
       if (!minColumnWidth) {
         return columns ?? DEFAULT_COLUMNS2;
       }
@@ -49514,23 +48983,23 @@ var DashboardLanes = (0, import_element182.forwardRef)(
       gapPx,
       null
     ).widthPx;
-    const layoutMap = (0, import_element182.useMemo)(() => {
+    const layoutMap = (0, import_element180.useMemo)(() => {
       const map = /* @__PURE__ */ new Map();
       activeLayout.forEach((item) => map.set(item.key, item));
       return map;
     }, [activeLayout]);
-    const layoutKeys = (0, import_element182.useMemo)(
+    const layoutKeys = (0, import_element180.useMemo)(
       () => new Set(layout.map((item) => item.key)),
       [layout]
     );
-    const sortedItems = (0, import_element182.useMemo)(
+    const sortedItems = (0, import_element180.useMemo)(
       () => activeLayout.map((item, index2) => ({ item, index: index2 })).sort(
         (a2, b2) => (a2.item.order ?? a2.index) - (b2.item.order ?? b2.index)
       ).map(({ item }) => item.key),
       [activeLayout]
     );
     const items = sortedItems;
-    const placementItems = (0, import_element182.useMemo)(() => {
+    const placementItems = (0, import_element180.useMemo)(() => {
       return items.map((key2) => {
         const item = layoutMap.get(key2);
         const width = item?.width;
@@ -49545,13 +49014,13 @@ var DashboardLanes = (0, import_element182.forwardRef)(
       flowTolerance,
       rowUnit
     });
-    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element182.useMemo)(() => {
+    const [childrenMap, actionableAreaMap, remaining, renderedByKey] = (0, import_element180.useMemo)(() => {
       const childMap = /* @__PURE__ */ new Map();
       const actionableMap = /* @__PURE__ */ new Map();
       const rest = [];
       const byKey = /* @__PURE__ */ new Map();
-      import_element182.Children.forEach(children, (child) => {
-        if (!(0, import_element182.isValidElement)(child)) {
+      import_element180.Children.forEach(children, (child) => {
+        if (!(0, import_element180.isValidElement)(child)) {
           rest.push(child);
           return;
         }
@@ -49561,7 +49030,7 @@ var DashboardLanes = (0, import_element182.forwardRef)(
           return;
         }
         const { actionableArea } = child.props;
-        const stripped = actionableArea !== void 0 ? (0, import_element182.cloneElement)(
+        const stripped = actionableArea !== void 0 ? (0, import_element180.cloneElement)(
           child,
           { actionableArea: void 0 }
         ) : child;
@@ -49577,7 +49046,7 @@ var DashboardLanes = (0, import_element182.forwardRef)(
       });
       return [childMap, actionableMap, rest, byKey];
     }, [children, layoutKeys]);
-    (0, import_element182.useLayoutEffect)(() => {
+    (0, import_element180.useLayoutEffect)(() => {
       for (const [key2, child] of renderedByKey) {
         childrenCacheRef.current.set(key2, child);
       }
@@ -49713,13 +49182,13 @@ var DashboardLanes = (0, import_element182.forwardRef)(
     const interacting = activeId !== null || isResizing;
     const activeClone = activeId ? childrenMap.get(activeId) : null;
     const DragPreview = renderDragPreview;
-    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime228.jsx)("div", { className: lanes_default["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime228.jsx)("div", { className: lanes_default["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
+    const dragOverlayContent = activeId && activeClone ? /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("div", { className: lanes_default["drag-preview-frame"], children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("div", { className: lanes_default["drag-preview-frame__lift"], children: DragPreview ? /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(DragPreview, { itemId: activeId, children: activeClone }) : activeClone }) }) : null;
     const Overlay = renderGridOverlay ?? GridOverlay;
-    const gridOverlay = (0, import_element182.useMemo)(
-      () => /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(Overlay, { columns: effectiveColumns, isActive: editMode }),
+    const gridOverlay = (0, import_element180.useMemo)(
+      () => /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(Overlay, { columns: effectiveColumns, isActive: editMode }),
       [Overlay, editMode, effectiveColumns]
     );
-    const layoutFingerprint = (0, import_element182.useMemo)(() => {
+    const layoutFingerprint = (0, import_element180.useMemo)(() => {
       const layoutSig = getLayoutFingerprint(activeLayout);
       const placementSig = getPlacementFingerprint(itemStyles);
       return `${layoutSig}\0${placementSig}`;
@@ -49739,10 +49208,10 @@ var DashboardLanes = (0, import_element182.forwardRef)(
       childrenCacheRef
     });
     const layoutAnimating = editMode;
-    (0, import_element182.useLayoutEffect)(() => {
+    (0, import_element180.useLayoutEffect)(() => {
       captureLayoutSnapshotRef.current = captureLayoutSnapshot;
     }, [captureLayoutSnapshot]);
-    return /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(
       DndContext,
       {
         sensors,
@@ -49755,7 +49224,7 @@ var DashboardLanes = (0, import_element182.forwardRef)(
           setActiveId(null);
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY2, children: /* @__PURE__ */ (0, import_jsx_runtime228.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(SortableContext, { items, strategy: NO_SORT_STRATEGY2, children: /* @__PURE__ */ (0, import_jsx_runtime226.jsxs)(
             "div",
             {
               ...divProps,
@@ -49791,7 +49260,7 @@ var DashboardLanes = (0, import_element182.forwardRef)(
                   if (!child) {
                     return null;
                   }
-                  return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
                     LanesItem,
                     {
                       itemKey: id,
@@ -49813,7 +49282,7 @@ var DashboardLanes = (0, import_element182.forwardRef)(
                   );
                 }),
                 remaining,
-                exitingItems.map(({ key: key2, rect, child }) => /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
+                exitingItems.map(({ key: key2, rect, child }) => /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(
                   ItemExitOverlay,
                   {
                     itemKey: key2,
@@ -49826,7 +49295,7 @@ var DashboardLanes = (0, import_element182.forwardRef)(
               ]
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(DragOverlay, { dropAnimation: dashboardDragDropAnimation2, children: dragOverlayContent })
+          /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(DragOverlay, { dropAnimation: dashboardDragDropAnimation2, children: dragOverlayContent })
         ]
       }
     );
@@ -49835,7 +49304,7 @@ var DashboardLanes = (0, import_element182.forwardRef)(
 
 // packages/widget-dashboard/build-module/hooks/use-dashboard-container-column-count.mjs
 var import_compose30 = __toESM(require_compose(), 1);
-var import_element183 = __toESM(require_element(), 1);
+var import_element181 = __toESM(require_element(), 1);
 
 // packages/widget-dashboard/build-module/utils/resolve-dashboard-column-count/resolve-dashboard-column-count.mjs
 var WIDGET_DASHBOARD_CONTAINER_BREAKPOINT_ONE_COLUMN = 600;
@@ -49855,10 +49324,10 @@ function resolveDashboardColumnCount(containerWidth) {
 
 // packages/widget-dashboard/build-module/hooks/use-dashboard-container-column-count.mjs
 function useDashboardContainerColumnCount(forwardedRef) {
-  const [container, setContainer] = (0, import_element183.useState)(
+  const [container, setContainer] = (0, import_element181.useState)(
     null
   );
-  const [containerWidth, setContainerWidth] = (0, import_element183.useState)(0);
+  const [containerWidth, setContainerWidth] = (0, import_element181.useState)(0);
   const resizeObserverRef = (0, import_compose30.useResizeObserver)(([{ contentRect }]) => {
     setContainerWidth(contentRect.width);
   });
@@ -49867,7 +49336,7 @@ function useDashboardContainerColumnCount(forwardedRef) {
     resizeObserverRef,
     forwardedRef ?? null
   ]);
-  (0, import_element183.useLayoutEffect)(() => {
+  (0, import_element181.useLayoutEffect)(() => {
     if (!container) {
       return;
     }
@@ -49876,98 +49345,17 @@ function useDashboardContainerColumnCount(forwardedRef) {
       setContainerWidth(width);
     }
   }, [container]);
-  const columnCount = (0, import_element183.useMemo)(
+  const columnCount = (0, import_element181.useMemo)(
     () => resolveDashboardColumnCount(containerWidth),
     [containerWidth]
   );
   return { containerRef, columnCount };
 }
 
-// packages/widget-dashboard/build-module/components/widget-layout-controls/widget-layout-controls.mjs
+// packages/widget-dashboard/build-module/components/widgets/widget-layout-toolbar.mjs
 var import_components55 = __toESM(require_components(), 1);
-var import_i18n70 = __toESM(require_i18n(), 1);
-var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu7 } = unlock2(import_components55.privateApis);
-function WidgetLayoutControls({
-  widget
-}) {
-  const { layout, onLayoutChange } = useDashboardInternalContext();
-  const width = widget.placement?.width;
-  const updateWidth = (nextWidth) => {
-    const nextLayout = layout.map(
-      (currentWidget) => currentWidget.uuid === widget.uuid ? {
-        ...currentWidget,
-        placement: {
-          ...currentWidget.placement,
-          width: nextWidth
-        }
-      } : currentWidget
-    );
-    onLayoutChange(nextLayout);
-  };
-  const onNamedWidthChange = (nextWidth) => {
-    updateWidth(nextWidth);
-  };
-  const onRemove = () => {
-    onLayoutChange(
-      layout.filter(
-        (currentWidget) => currentWidget.uuid !== widget.uuid
-      )
-    );
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(import_jsx_runtime229.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(Menu7, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
-        Menu7.TriggerButton,
-        {
-          render: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
-            IconButton,
-            {
-              icon: more_vertical_default,
-              label: (0, import_i18n70.__)("Widget options"),
-              size: "compact",
-              variant: "minimal",
-              tone: "neutral"
-            }
-          )
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Menu7.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(Menu7.Group, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Menu7.GroupLabel, { children: (0, import_i18n70.__)("Width") }),
-        /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
-          Menu7.Item,
-          {
-            disabled: width === "fill",
-            onClick: () => onNamedWidthChange("fill"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Menu7.ItemLabel, { children: (0, import_i18n70.__)("Use available width") })
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
-          Menu7.Item,
-          {
-            disabled: width === "full",
-            onClick: () => onNamedWidthChange("full"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Menu7.ItemLabel, { children: (0, import_i18n70.__)("Make full width") })
-          }
-        )
-      ] }) })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
-      IconButton,
-      {
-        icon: trash_default,
-        label: (0, import_i18n70.__)("Remove"),
-        size: "compact",
-        variant: "minimal",
-        tone: "neutral",
-        onClick: onRemove
-      }
-    )
-  ] });
-}
-
-// packages/widget-dashboard/build-module/components/widget-toolbar/widget-toolbar.mjs
-var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
+var import_i18n69 = __toESM(require_i18n(), 1);
+var import_jsx_runtime227 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE64 = "data-wp-hash";
 function getRuntime64() {
   const globalScope = globalThis;
@@ -50049,31 +49437,91 @@ function registerStyle64(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle64("e7596f6870", "._4a01b99834540429__widgetToolbar{border-radius:var(--wpds-border-radius-md,4px);padding:var(--wpds-dimension-padding-xs,4px)}._32f1176d3d6fc011__solid{background:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}._45a811d7f0b925d2__subtle{background:color-mix(in srgb,var(--wpds-color-background-surface-neutral,#fcfcfc) 40%,transparent);opacity:0;pointer-events:none}[data-wp-grid-item-key]:focus-within ._45a811d7f0b925d2__subtle,[data-wp-grid-item-key]:hover ._45a811d7f0b925d2__subtle{opacity:1;pointer-events:auto}@media not (prefers-reduced-motion){._45a811d7f0b925d2__subtle{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}");
+  registerStyle64("2696f7462d", "._6f7360b4588de00a__widgetLayoutToolbar{background:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}");
 }
-var widget_toolbar_default = { "widgetToolbar": "_4a01b99834540429__widgetToolbar", "solid": "_32f1176d3d6fc011__solid", "subtle": "_45a811d7f0b925d2__subtle" };
-function WidgetToolbar({
-  children,
-  revealOnHover = false
+var widget_layout_toolbar_default = { "widgetLayoutToolbar": "_6f7360b4588de00a__widgetLayoutToolbar" };
+var { Menu: Menu7 } = unlock2(import_components55.privateApis);
+function WidgetLayoutToolbar({
+  widget
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
-    Stack,
-    {
-      direction: "row",
-      align: "center",
-      gap: "xs",
-      className: clsx_default(
-        widget_toolbar_default.widgetToolbar,
-        revealOnHover ? widget_toolbar_default.subtle : widget_toolbar_default.solid
+  const { layout, onLayoutChange } = useDashboardInternalContext();
+  const width = widget.placement?.width;
+  const updateWidth = (nextWidth) => {
+    const nextLayout = layout.map(
+      (currentWidget) => currentWidget.uuid === widget.uuid ? {
+        ...currentWidget,
+        placement: {
+          ...currentWidget.placement,
+          width: nextWidth
+        }
+      } : currentWidget
+    );
+    onLayoutChange(nextLayout);
+  };
+  const onNamedWidthChange = (nextWidth) => {
+    updateWidth(nextWidth);
+  };
+  const onRemove = () => {
+    onLayoutChange(
+      layout.filter(
+        (currentWidget) => currentWidget.uuid !== widget.uuid
+      )
+    );
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(WidgetToolbar, { className: widget_layout_toolbar_default.widgetLayoutToolbar, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(Menu7, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
+        Menu7.TriggerButton,
+        {
+          render: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
+            IconButton,
+            {
+              icon: more_vertical_default,
+              label: (0, import_i18n69.__)("Widget options"),
+              size: "compact",
+              variant: "minimal",
+              tone: "neutral"
+            }
+          )
+        }
       ),
-      children
-    }
-  );
+      /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(Menu7.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime227.jsxs)(Menu7.Group, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(Menu7.GroupLabel, { children: (0, import_i18n69.__)("Width") }),
+        /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
+          Menu7.Item,
+          {
+            disabled: width === "fill",
+            onClick: () => onNamedWidthChange("fill"),
+            children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(Menu7.ItemLabel, { children: (0, import_i18n69.__)("Use available width") })
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
+          Menu7.Item,
+          {
+            disabled: width === "full",
+            onClick: () => onNamedWidthChange("full"),
+            children: /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(Menu7.ItemLabel, { children: (0, import_i18n69.__)("Make full width") })
+          }
+        )
+      ] }) })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime227.jsx)(
+      IconButton,
+      {
+        icon: trash_default,
+        label: (0, import_i18n69.__)("Remove"),
+        size: "compact",
+        variant: "minimal",
+        tone: "neutral",
+        onClick: onRemove
+      }
+    )
+  ] });
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widget-resize-handle.mjs
-var import_element184 = __toESM(require_element(), 1);
-var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
+var import_element182 = __toESM(require_element(), 1);
+var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE65 = "data-wp-hash";
 function getRuntime65() {
   const globalScope = globalThis;
@@ -50158,9 +49606,9 @@ if (typeof process === "undefined" || true) {
   registerStyle65("2e64f95efa", '.a70c7d5347a2f54b__handle{--widget-resize-handle-visual-inset:var(--wpds-dimension-padding-xs,4px);--widget-resize-handle-hover-scale:1.18;background:transparent;bottom:0;box-sizing:border-box;inset-inline-end:0;padding:0;position:absolute;z-index:1}.a70c7d5347a2f54b__handle:focus-visible{border-radius:var(--wpds-border-radius-sm,2px);outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa1d4aafe4d24e03__resizing{opacity:.72}._61d861c3afc33ad5__handleCorner{cursor:nwse-resize;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px)}._61d861c3afc33ad5__handleCorner:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-block-start:none;border-end-end-radius:var(--wpds-border-radius-md,4px);border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:none;bottom:var(--widget-resize-handle-visual-inset);box-sizing:border-box;content:"";height:var(--wpds-dimension-size-4xs,8px);inset-inline-end:var(--widget-resize-handle-visual-inset);position:absolute;transform:scale(1);transform-origin:100% 100%;width:var(--wpds-dimension-size-4xs,8px)}[dir=rtl] ._61d861c3afc33ad5__handleCorner:after{transform-origin:0 100%}._61d861c3afc33ad5__handleCorner.aa1d4aafe4d24e03__resizing:after,._61d861c3afc33ad5__handleCorner:focus-visible:after,._61d861c3afc33ad5__handleCorner:hover:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}._86ab3a6eb52bc222__handleHorizontal{align-items:center;border:none;cursor:ew-resize;display:flex;height:var(--wpds-dimension-size-lg,40px);justify-content:center;padding-inline-end:var(--widget-resize-handle-visual-inset);width:var(--wpds-dimension-size-sm,24px)}@media not (prefers-reduced-motion){._61d861c3afc33ad5__handleCorner:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-block-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-inline-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}._86ab3a6eb52bc222__handleHorizontal:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),background-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}}._86ab3a6eb52bc222__handleHorizontal:after{background-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));content:"";height:var(--wpds-dimension-size-3xs,12px);transform:scale(1);transform-origin:50% 100%;width:var(--wpds-border-width-sm,2px)}._86ab3a6eb52bc222__handleHorizontal.aa1d4aafe4d24e03__resizing:after,._86ab3a6eb52bc222__handleHorizontal:focus-visible:after,._86ab3a6eb52bc222__handleHorizontal:hover:after{background-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}@media (forced-colors:active){._61d861c3afc33ad5__handleCorner.aa1d4aafe4d24e03__resizing:after,._61d861c3afc33ad5__handleCorner:after,._61d861c3afc33ad5__handleCorner:focus-visible:after,._61d861c3afc33ad5__handleCorner:hover:after{border-block-end-color:Highlight;border-inline-end-color:Highlight}._86ab3a6eb52bc222__handleHorizontal.aa1d4aafe4d24e03__resizing:after,._86ab3a6eb52bc222__handleHorizontal:after,._86ab3a6eb52bc222__handleHorizontal:focus-visible:after,._86ab3a6eb52bc222__handleHorizontal:hover:after{background-color:Highlight}}');
 }
 var widget_resize_handle_default = { "handle": "a70c7d5347a2f54b__handle", "resizing": "aa1d4aafe4d24e03__resizing", "handleCorner": "_61d861c3afc33ad5__handleCorner", "handleHorizontal": "_86ab3a6eb52bc222__handleHorizontal" };
-var WidgetResizeHandle = (0, import_element184.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
+var WidgetResizeHandle = (0, import_element182.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
   if (!verticalResizable) {
-    return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
       "div",
       {
         ref,
@@ -50174,7 +49622,7 @@ var WidgetResizeHandle = (0, import_element184.forwardRef)(function WidgetResize
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(
     "div",
     {
       ref,
@@ -50190,7 +49638,7 @@ var WidgetResizeHandle = (0, import_element184.forwardRef)(function WidgetResize
 });
 
 // packages/widget-dashboard/build-module/components/widgets/widgets.mjs
-var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE66 = "data-wp-hash";
 function getRuntime66() {
   const globalScope = globalThis;
@@ -50319,22 +49767,22 @@ function applyMasonryChange(widgets, masonryLayout) {
     };
   });
 }
-var Widgets = (0, import_element185.forwardRef)(
+var Widgets = (0, import_element183.forwardRef)(
   function Widgets2({ className }, ref) {
     const { layout, onLayoutChange, editMode, gridSettings, widgetTypes } = useDashboardInternalContext();
     const { containerRef, columnCount } = useDashboardContainerColumnCount(ref);
     const isMasonry2 = gridSettings.model === "masonry";
-    const gridLayout = (0, import_element185.useMemo)(
+    const gridLayout = (0, import_element183.useMemo)(
       () => isMasonry2 ? toMasonryLayout(layout) : toGridLayout(layout),
       [layout, isMasonry2]
     );
-    const handleGridChange = (0, import_element185.useCallback)(
+    const handleGridChange = (0, import_element183.useCallback)(
       (newGridLayout) => {
         onLayoutChange(applyGridChange(layout, newGridLayout));
       },
       [layout, onLayoutChange]
     );
-    const handleMasonryChange = (0, import_element185.useCallback)(
+    const handleMasonryChange = (0, import_element183.useCallback)(
       (newMasonryLayout) => {
         onLayoutChange(
           applyMasonryChange(layout, newMasonryLayout)
@@ -50347,20 +49795,19 @@ var Widgets = (0, import_element185.forwardRef)(
         (type) => type.name === widget.type
       );
       const hasSettings = !!widgetType?.attributes?.length;
-      let controls;
+      let actionableArea;
       if (editMode) {
-        controls = /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetLayoutControls, { widget });
+        actionableArea = /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(WidgetLayoutToolbar, { widget });
       } else if (hasSettings && widgetType) {
-        controls = /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
-          WidgetSettingsTrigger,
+        actionableArea = /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+          WidgetSettingsToolbar,
           {
             widget,
             widgetType
           }
         );
       }
-      const actionableArea = controls ? /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetHeader, { overlay: true, children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetToolbar, { revealOnHover: !editMode, children: controls }) }) : void 0;
-      return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
         WidgetChrome,
         {
           widget,
@@ -50373,8 +49820,8 @@ var Widgets = (0, import_element185.forwardRef)(
         widget.uuid
       );
     });
-    const renderDragPreview = (0, import_element185.useCallback)(
-      ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime232.jsx)("div", { className: widgets_default.dragPreview, children: clone }),
+    const renderDragPreview = (0, import_element183.useCallback)(
+      ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime229.jsx)("div", { className: widgets_default.dragPreview, children: clone }),
       []
     );
     const sharedRenderProps = {
@@ -50382,7 +49829,7 @@ var Widgets = (0, import_element185.forwardRef)(
       renderDragPreview,
       renderResizeHandle: WidgetResizeHandle
     };
-    const surface = isMasonry2 ? /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
+    const surface = isMasonry2 ? /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
       DashboardLanes,
       {
         layout: gridLayout,
@@ -50392,7 +49839,7 @@ var Widgets = (0, import_element185.forwardRef)(
         ...sharedRenderProps,
         children
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
+    ) : /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
       DashboardGrid,
       {
         layout: gridLayout,
@@ -50403,7 +49850,7 @@ var Widgets = (0, import_element185.forwardRef)(
         children
       }
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
       "div",
       {
         ref: containerRef,
@@ -50415,7 +49862,7 @@ var Widgets = (0, import_element185.forwardRef)(
 );
 
 // packages/widget-dashboard/build-module/widget-dashboard.mjs
-var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
 var WidgetDashboard = Object.assign(
   function WidgetDashboard2({
     layout,
@@ -50430,7 +49877,7 @@ var WidgetDashboard = Object.assign(
     onGridSettingsChange,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
       WidgetDashboardProvider,
       {
         layout,
@@ -50443,17 +49890,17 @@ var WidgetDashboard = Object.assign(
         resolveWidgetModule,
         gridSettings,
         onGridSettingsChange,
-        children: /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)(WidgetDashboardUIProvider, { children: [
-          children ?? /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)(import_jsx_runtime233.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(NoWidgetsState, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(Actions3, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(Widgets, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(Commands, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(WidgetDashboardUIProvider, { children: [
+          children ?? /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(import_jsx_runtime230.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(NoWidgetsState, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Actions3, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Widgets, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Commands, {})
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(WidgetInserter, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(LayoutSettings, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(WidgetSettings, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(ResetConfirmation, {})
+          /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(WidgetInserter, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(LayoutSettings, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(WidgetSettings, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(ResetConfirmation, {})
         ] })
       }
     );
@@ -50514,7 +49961,7 @@ function useDashboardGridSettings() {
 }
 
 // routes/dashboard/stage.tsx
-var import_jsx_runtime234 = __toESM(require_jsx_runtime());
+var import_jsx_runtime231 = __toESM(require_jsx_runtime());
 function Dashboard() {
   const [layout, setLayout, resetLayout] = useDashboardLayout(
     "gutenberg_dashboard"
@@ -50525,7 +49972,7 @@ function Dashboard() {
     []
   );
   const [widgetTypes, isResolving] = useWidgetTypes(widgetsModules);
-  const [editMode, setEditMode] = (0, import_element186.useState)(false);
+  const [editMode, setEditMode] = (0, import_element184.useState)(false);
   const isMobileViewport = (0, import_data9.useSelect)(
     (select) => select(import_viewport2.store).isViewportMatch("< small"),
     []
@@ -50533,12 +49980,12 @@ function Dashboard() {
   const { createSuccessNotice } = (0, import_data9.useDispatch)(import_notices.store);
   const handleLayoutChange = (next) => {
     setLayout(next);
-    void createSuccessNotice((0, import_i18n71.__)("Dashboard saved."), {
+    void createSuccessNotice((0, import_i18n70.__)("Dashboard saved."), {
       type: "snackbar"
     });
   };
-  const pageTitle = editMode ? (0, import_i18n71.__)("Customize Dashboard") : (0, import_i18n71.__)("Dashboard");
-  return /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(
+  const pageTitle = editMode ? (0, import_i18n70.__)("Customize Dashboard") : (0, import_i18n70.__)("Dashboard");
+  return /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)(
     WidgetDashboard,
     {
       widgetTypes,
@@ -50551,20 +49998,20 @@ function Dashboard() {
       editMode,
       onEditChange: setEditMode,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime231.jsxs)(
           page_default,
           {
             title: editMode && isMobileViewport ? void 0 : pageTitle,
             ariaLabel: pageTitle,
-            actions: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetDashboard.Actions, {}),
+            actions: /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(WidgetDashboard.Actions, {}),
             hasPadding: true,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetDashboard.NoWidgetsState, {}),
-              /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetDashboard.Widgets, {})
+              /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(WidgetDashboard.NoWidgetsState, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(WidgetDashboard.Widgets, {})
             ]
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetDashboard.Commands, {})
+        /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(WidgetDashboard.Commands, {})
       ]
     }
   );
