@@ -9417,11 +9417,11 @@ var page_default = Page;
 // packages/admin-ui/build-module/admin-theme-colors/index.mjs
 var DEFAULT_THEME_COLORS = {
   primary: "#3858e9",
-  background: "#25292b"
+  background: "#222524"
 };
 var ADMIN_THEME_COLORS = /* @__PURE__ */ new Map([
-  ["fresh", DEFAULT_THEME_COLORS],
-  ["modern", { primary: "#3858e9", background: "#222524" }],
+  ["modern", DEFAULT_THEME_COLORS],
+  ["fresh", { primary: "#3858e9", background: "#25292b" }],
   ["midnight", { primary: "#cf4339", background: "#3d4042" }],
   ["coffee", { primary: "#916745", background: "#5b534d" }],
   ["ocean", { primary: "#567958", background: "#5f787f" }],
@@ -9431,7 +9431,7 @@ var ADMIN_THEME_COLORS = /* @__PURE__ */ new Map([
   ["light", { primary: "#007cba", background: "#eaeeed" }]
 ]);
 function getAdminThemeColors() {
-  const scheme = document.body.className.match(/admin-color-([\w-]+)/)?.[1] ?? "fresh";
+  const scheme = document.body.className.match(/admin-color-([\w-]+)/)?.[1] ?? "modern";
   return ADMIN_THEME_COLORS.get(scheme) ?? DEFAULT_THEME_COLORS;
 }
 
