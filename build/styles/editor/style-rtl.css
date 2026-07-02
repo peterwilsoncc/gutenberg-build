@@ -1426,7 +1426,6 @@ button.font-library__upload-area {
   min-height: 0;
   box-sizing: border-box;
   scroll-padding-bottom: 64px;
-  /* stylelint-disable-next-line property-no-unknown -- '@container' not globally permitted */
   container: dataviews-wrapper/inline-size;
   display: flex;
   flex-direction: column;
@@ -2257,7 +2256,6 @@ button.font-library__upload-area {
 
 .dataviews-view-config {
   width: 320px;
-  /* stylelint-disable-next-line property-no-unknown -- the linter needs to be updated to accepted the container-type property */
   container-type: inline-size;
   font-size: var(--wpds-typography-font-size-md, 13px);
   line-height: var(--wpds-typography-line-height-sm, 20px);
@@ -4349,7 +4347,6 @@ fieldset.fields__media-edit .fields__media-edit-description {
 }
 
 fieldset.fields__media-edit {
-  /* stylelint-disable-next-line property-no-unknown -- '@container' not globally permitted */
   container-type: inline-size;
 }
 
@@ -4589,7 +4586,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded.is-empty .fields__media
 
 fieldset.fields__media-edit .fields__media-edit-expanded.is-multiple:not(.is-empty) {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  /* stylelint-disable-next-line property-no-unknown -- '@container' not globally permitted */
 }
 
 @container (max-width: 500px) {

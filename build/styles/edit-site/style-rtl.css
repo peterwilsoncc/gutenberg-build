@@ -214,7 +214,6 @@
   min-height: 0;
   box-sizing: border-box;
   scroll-padding-bottom: 64px;
-  /* stylelint-disable-next-line property-no-unknown -- '@container' not globally permitted */
   container: dataviews-wrapper/inline-size;
   display: flex;
   flex-direction: column;
@@ -1045,7 +1044,6 @@
 
 .dataviews-view-config {
   width: 320px;
-  /* stylelint-disable-next-line property-no-unknown -- the linter needs to be updated to accepted the container-type property */
   container-type: inline-size;
   font-size: var(--wpds-typography-font-size-md, 13px);
   line-height: var(--wpds-typography-line-height-sm, 20px);
@@ -3137,7 +3135,6 @@ fieldset.fields__media-edit .fields__media-edit-description {
 }
 
 fieldset.fields__media-edit {
-  /* stylelint-disable-next-line property-no-unknown -- '@container' not globally permitted */
   container-type: inline-size;
 }
 
@@ -3377,7 +3374,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded.is-empty .fields__media
 
 fieldset.fields__media-edit .fields__media-edit-expanded.is-multiple:not(.is-empty) {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  /* stylelint-disable-next-line property-no-unknown -- '@container' not globally permitted */
 }
 
 @container (max-width: 500px) {
@@ -4640,9 +4636,7 @@ button.font-library__upload-area {
 }
 
 .edit-site-editor__view-mode-toggle {
-  /* stylelint-disable -- Disable reason: View Transitions not supported properly by stylelint. */
   view-transition-name: toggle;
-  /* stylelint-enable */
   position: relative;
   top: 0;
   right: 0;
@@ -4881,7 +4875,6 @@ button.font-library__upload-area {
   height: 100%;
 }
 
-/* stylelint-disable -- Disable reason: View Transitions not supported properly by stylelint. */
 html.canvas-mode-edit-transition::view-transition-group(toggle) {
   animation-delay: 255ms;
 }
@@ -4893,15 +4886,12 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
     animation: none !important;
   }
 }
-/* stylelint-enable  */
 .edit-site-layout.is-full-canvas .edit-site-layout__sidebar-region .edit-site-layout__view-mode-toggle {
   display: none;
 }
 
 .edit-site-layout__view-mode-toggle.components-button {
-  /* stylelint-disable -- Disable reason: View Transitions not supported properly by stylelint. */
   view-transition-name: toggle;
-  /* stylelint-enable  */
   position: relative;
   color: var(--wpds-color-foreground-interactive-neutral, #1e1e1e);
   height: 64px;
@@ -5583,7 +5573,6 @@ body:has(.edit-site-resizable-frame__inner.is-resizing) {
   font-size: var(--wpds-typography-font-size-sm, 12px);
 }
 
-/* stylelint-disable -- Disable reason: View Transitions not supported properly by stylelint. */
 ::view-transition-image-pair(root) {
   isolation: auto;
 }
@@ -5595,7 +5584,6 @@ body:has(.edit-site-resizable-frame__inner.is-resizing) {
   display: block;
 }
 
-/* stylelint-enable */
 body.js #wpbody {
   padding-top: 0;
 }
