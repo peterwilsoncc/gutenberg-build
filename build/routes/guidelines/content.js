@@ -30323,10 +30323,10 @@ function BlockGuidelineModal({
 }
 
 // routes/guidelines/components/block-guidelines.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='3b11cd5a2f']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='68ec5761c9']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "3b11cd5a2f");
-  style.appendChild(document.createTextNode(".block-guidelines .block-guidelines__icon{align-items:center;display:flex;height:100%;justify-content:center;width:100%}.block-guidelines .dataviews-view-list__field-wrapper{display:flex;justify-content:center}.block-guidelines .dataviews-wrapper{margin-inline:-24px}.block-guidelines .dataviews-search{margin-inline:24px}"));
+  style.setAttribute("data-wp-hash", "68ec5761c9");
+  style.appendChild(document.createTextNode(".block-guidelines .block-guidelines__icon{align-items:center;display:flex;height:100%;justify-content:center;width:100%}.block-guidelines .block-guidelines__icon svg{fill:currentColor;max-height:24px;max-width:24px;min-height:20px;min-width:20px}@media (forced-colors:active){.block-guidelines .block-guidelines__icon svg{fill:CanvasText}}.block-guidelines .dataviews-view-list__field-wrapper{display:flex;justify-content:center}.block-guidelines .dataviews-wrapper{margin-inline:-24px}.block-guidelines .dataviews-search{margin-inline:24px}"));
   document.head.appendChild(style);
 }
 
@@ -30340,17 +30340,21 @@ var initialView = {
   filters: [],
   mediaField: "icon",
   showMedia: true,
-  titleField: "label",
-  layout: {
-    density: "compact"
-  }
+  titleField: "label"
+  // Default (non-compact) density: its 48px media tile gives block icons
+  // padding around the canonical 24px render, without shrinking the icon
+  // (which would crop icons that lack a viewBox, e.g. core/icon).
 };
 var fields = [
   {
     id: "icon",
     label: (0, import_i18n52.__)("Icon"),
     type: "media",
-    render: ({ item }) => /* @__PURE__ */ React.createElement("div", { className: "block-guidelines__icon" }, /* @__PURE__ */ React.createElement(import_components56.Icon, { icon: item.icon ?? block_default_default, size: 16 }))
+    // No `size` prop: block icons render at their native 24px, matching the
+    // editor's `.block-editor-block-icon`. That keeps viewBox-less icons
+    // (e.g. core/icon) centered and uncropped. Painted and clamped in
+    // block-guidelines.scss.
+    render: ({ item }) => /* @__PURE__ */ React.createElement("div", { className: "block-guidelines__icon" }, /* @__PURE__ */ React.createElement(import_components56.Icon, { icon: item.icon ?? block_default_default }))
   },
   {
     id: "label",
