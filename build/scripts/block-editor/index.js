@@ -12700,6 +12700,7 @@ var wp;
         ...variation.attributes
       },
       innerBlocks: variation.innerBlocks,
+      innerContent: variation.innerContent,
       keywords: variation.keywords || item.keywords,
       frecency: calculateFrecency(time, count),
       // Pass through search-only flag for block-scope variations.
@@ -15975,7 +15976,14 @@ var wp;
       return [getCategories(), getCollections()];
     }, []);
     const onSelectItem = (0, import_element10.useCallback)(
-      ({ name, initialAttributes, innerBlocks, syncStatus, content }, shouldFocusBlock) => {
+      ({
+        name,
+        initialAttributes,
+        innerBlocks,
+        innerContent,
+        syncStatus,
+        content
+      }, shouldFocusBlock) => {
         const destinationClientId = getClosestAllowedInsertionPoint2(
           name,
           rootClientId
@@ -16000,7 +16008,8 @@ var wp;
         }) : (0, import_blocks10.createBlock)(
           name,
           initialAttributes,
-          (0, import_blocks10.createBlocksFromInnerBlocksTemplate)(innerBlocks)
+          (0, import_blocks10.createBlocksFromInnerBlocksTemplate)(innerBlocks),
+          innerContent
         );
         onInsert(
           insertedBlock,
@@ -16161,7 +16170,14 @@ var wp;
         return !(/\S/.test(before) || /\S/.test(after));
       },
       getOptionCompletion(inserterItem) {
-        const { name, initialAttributes, innerBlocks, syncStatus, blocks: blocks2 } = inserterItem;
+        const {
+          name,
+          initialAttributes,
+          innerBlocks,
+          innerContent,
+          syncStatus,
+          blocks: blocks2
+        } = inserterItem;
         return {
           action: "replace",
           value: syncStatus === "unsynced" ? (blocks2 ?? []).map(
@@ -16171,7 +16187,8 @@ var wp;
             initialAttributes,
             (0, import_blocks11.createBlocksFromInnerBlocksTemplate)(
               innerBlocks
-            )
+            ),
+            innerContent
           )
         };
       }
@@ -18546,7 +18563,7 @@ var wp;
         if (!clientId) {
           return null;
         }
-        const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3 } = select3(store);
+        const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3, getBlock: getBlock2 } = select3(store);
         const { getBlockType: getBlockType29, getActiveBlockVariation } = select3(import_blocks15.store);
         const blockName = getBlockName2(clientId);
         const blockType = getBlockType29(blockName);
@@ -18558,7 +18575,12 @@ var wp;
         if (label !== blockType.title) {
           return label;
         }
-        const match2 = getActiveBlockVariation(blockName, attributes);
+        const match2 = getActiveBlockVariation(
+          blockName,
+          attributes,
+          void 0,
+          getBlock2?.(clientId)?.innerContent
+        );
         return match2?.title || blockType.title;
       },
       [clientId, context]
@@ -38483,7 +38505,8 @@ var wp;
           ...example.attributes,
           ...initialAttributes
         },
-        innerBlocks: example.innerBlocks
+        innerBlocks: example.innerBlocks,
+        innerContent: example.innerContent
       });
     }, [name, example, initialAttributes]);
     const previewHeight = 144;
@@ -38773,10 +38796,16 @@ var wp;
         (0, import_blocks31.createBlock)(
           item.name,
           item.initialAttributes,
-          (0, import_blocks31.createBlocksFromInnerBlocksTemplate)(item.innerBlocks)
+          (0, import_blocks31.createBlocksFromInnerBlocksTemplate)(item.innerBlocks),
+          item.innerContent
         )
       ],
-      [item.name, item.initialAttributes, item.innerBlocks]
+      [
+        item.name,
+        item.initialAttributes,
+        item.innerBlocks,
+        item.innerContent
+      ]
     );
     const isSynced = (0, import_blocks31.isReusableBlock)(item) && item.syncStatus !== "unsynced" || (0, import_blocks31.isTemplatePart)(item);
     return /* @__PURE__ */ (0, import_jsx_runtime196.jsx)(
@@ -45485,6 +45514,7 @@ var wp;
         const {
           getBlockName: getBlockName2,
           getBlockAttributes: getBlockAttributes3,
+          getBlock: getBlock2,
           __experimentalGetParsedPattern: __experimentalGetParsedPattern2
         } = blockEditorSelect;
         const { getBlockType: getBlockType29, getActiveBlockVariation } = select3(import_blocks46.store);
@@ -45510,7 +45540,12 @@ var wp;
             name: pattern?.title || attributes?.metadata?.name
           };
         }
-        const match2 = getActiveBlockVariation(blockName, attributes);
+        const match2 = getActiveBlockVariation(
+          blockName,
+          attributes,
+          void 0,
+          getBlock2?.(clientId)?.innerContent
+        );
         const isSynced = (0, import_blocks46.isReusableBlock)(blockType) || (0, import_blocks46.isTemplatePart)(blockType);
         const syncedTitle = isSynced ? (0, import_blocks46.__experimentalGetBlockLabel)(blockType, attributes) : void 0;
         const title = syncedTitle || blockType.title;
@@ -48935,7 +48970,8 @@ var wp;
       if (example && blockName) {
         return (0, import_blocks64.getBlockFromExample)(blockName, {
           attributes: example.attributes,
-          innerBlocks: example.innerBlocks
+          innerBlocks: example.innerBlocks,
+          innerContent: example.innerContent
         });
       }
       if (block) {
@@ -52220,9 +52256,7 @@ var wp;
     return "default";
   }
   function getBlockIcon({ select: select3, clientIds }) {
-    const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3, isSectionBlock: isSectionBlock2 } = unlock(
-      select3(store)
-    );
+    const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3, getBlock: getBlock2, isSectionBlock: isSectionBlock2 } = unlock(select3(store));
     const _isSingleBlock = clientIds.length === 1;
     const firstClientId = clientIds[0];
     const blockAttributes = getBlockAttributes3(firstClientId);
@@ -52233,7 +52267,12 @@ var wp;
     const blockType = (0, import_blocks73.getBlockType)(blockName);
     if (_isSingleBlock) {
       const { getActiveBlockVariation } = select3(import_blocks73.store);
-      const match2 = getActiveBlockVariation(blockName, blockAttributes);
+      const match2 = getActiveBlockVariation(
+        blockName,
+        blockAttributes,
+        void 0,
+        getBlock2?.(firstClientId)?.innerContent
+      );
       return match2?.icon || blockType?.icon;
     }
     const blockNames = clientIds.map((id) => getBlockName2(id));

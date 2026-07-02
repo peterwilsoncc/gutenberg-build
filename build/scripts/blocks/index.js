@@ -570,6 +570,62 @@ var wp;
     }
   });
 
+  // node_modules/fast-deep-equal/es6/index.js
+  var require_es6 = __commonJS({
+    "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
+      "use strict";
+      module.exports = function equal(a2, b3) {
+        if (a2 === b3) return true;
+        if (a2 && b3 && typeof a2 == "object" && typeof b3 == "object") {
+          if (a2.constructor !== b3.constructor) return false;
+          var length, i2, keys;
+          if (Array.isArray(a2)) {
+            length = a2.length;
+            if (length != b3.length) return false;
+            for (i2 = length; i2-- !== 0; )
+              if (!equal(a2[i2], b3[i2])) return false;
+            return true;
+          }
+          if (a2 instanceof Map && b3 instanceof Map) {
+            if (a2.size !== b3.size) return false;
+            for (i2 of a2.entries())
+              if (!b3.has(i2[0])) return false;
+            for (i2 of a2.entries())
+              if (!equal(i2[1], b3.get(i2[0]))) return false;
+            return true;
+          }
+          if (a2 instanceof Set && b3 instanceof Set) {
+            if (a2.size !== b3.size) return false;
+            for (i2 of a2.entries())
+              if (!b3.has(i2[0])) return false;
+            return true;
+          }
+          if (ArrayBuffer.isView(a2) && ArrayBuffer.isView(b3)) {
+            length = a2.length;
+            if (length != b3.length) return false;
+            for (i2 = length; i2-- !== 0; )
+              if (a2[i2] !== b3[i2]) return false;
+            return true;
+          }
+          if (a2.constructor === RegExp) return a2.source === b3.source && a2.flags === b3.flags;
+          if (a2.valueOf !== Object.prototype.valueOf) return a2.valueOf() === b3.valueOf();
+          if (a2.toString !== Object.prototype.toString) return a2.toString() === b3.toString();
+          keys = Object.keys(a2);
+          length = keys.length;
+          if (length !== Object.keys(b3).length) return false;
+          for (i2 = length; i2-- !== 0; )
+            if (!Object.prototype.hasOwnProperty.call(b3, keys[i2])) return false;
+          for (i2 = length; i2-- !== 0; ) {
+            var key = keys[i2];
+            if (!equal(a2[key], b3[key])) return false;
+          }
+          return true;
+        }
+        return a2 !== a2 && b3 !== b3;
+      };
+    }
+  });
+
   // packages/blocks/node_modules/react-is/cjs/react-is.development.js
   var require_react_is_development = __commonJS({
     "packages/blocks/node_modules/react-is/cjs/react-is.development.js"(exports) {
@@ -796,62 +852,6 @@ var wp;
   var require_jsx_runtime = __commonJS({
     "vendor-external:react/jsx-runtime"(exports, module) {
       module.exports = window.ReactJSXRuntime;
-    }
-  });
-
-  // node_modules/fast-deep-equal/es6/index.js
-  var require_es6 = __commonJS({
-    "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
-      "use strict";
-      module.exports = function equal(a2, b3) {
-        if (a2 === b3) return true;
-        if (a2 && b3 && typeof a2 == "object" && typeof b3 == "object") {
-          if (a2.constructor !== b3.constructor) return false;
-          var length, i2, keys;
-          if (Array.isArray(a2)) {
-            length = a2.length;
-            if (length != b3.length) return false;
-            for (i2 = length; i2-- !== 0; )
-              if (!equal(a2[i2], b3[i2])) return false;
-            return true;
-          }
-          if (a2 instanceof Map && b3 instanceof Map) {
-            if (a2.size !== b3.size) return false;
-            for (i2 of a2.entries())
-              if (!b3.has(i2[0])) return false;
-            for (i2 of a2.entries())
-              if (!equal(i2[1], b3.get(i2[0]))) return false;
-            return true;
-          }
-          if (a2 instanceof Set && b3 instanceof Set) {
-            if (a2.size !== b3.size) return false;
-            for (i2 of a2.entries())
-              if (!b3.has(i2[0])) return false;
-            return true;
-          }
-          if (ArrayBuffer.isView(a2) && ArrayBuffer.isView(b3)) {
-            length = a2.length;
-            if (length != b3.length) return false;
-            for (i2 = length; i2-- !== 0; )
-              if (a2[i2] !== b3[i2]) return false;
-            return true;
-          }
-          if (a2.constructor === RegExp) return a2.source === b3.source && a2.flags === b3.flags;
-          if (a2.valueOf !== Object.prototype.valueOf) return a2.valueOf() === b3.valueOf();
-          if (a2.toString !== Object.prototype.toString) return a2.toString() === b3.toString();
-          keys = Object.keys(a2);
-          length = keys.length;
-          if (length !== Object.keys(b3).length) return false;
-          for (i2 = length; i2-- !== 0; )
-            if (!Object.prototype.hasOwnProperty.call(b3, keys[i2])) return false;
-          for (i2 = length; i2-- !== 0; ) {
-            var key = keys[i2];
-            if (!equal(a2[key], b3[key])) return false;
-          }
-          return true;
-        }
-        return a2 !== a2 && b3 !== b3;
-      };
     }
   });
 
@@ -2430,6 +2430,7 @@ var wp;
     isMatchingSearchTerm: () => isMatchingSearchTerm
   });
   var import_remove_accents = __toESM(require_remove_accents(), 1);
+  var import_es6 = __toESM(require_es6(), 1);
   var import_data4 = __toESM(require_data(), 1);
   var import_rich_text2 = __toESM(require_rich_text(), 1);
   var import_deprecated3 = __toESM(require_deprecated(), 1);
@@ -2648,16 +2649,27 @@ var wp;
       state.blockVariations[blockName]
     ]
   );
-  function getActiveBlockVariation(state, blockName, attributes, scope) {
+  function getActiveBlockVariation(state, blockName, attributes, scope, innerContent) {
     const variations = getBlockVariations2(state, blockName, scope);
     if (!variations) {
       return variations;
+    }
+    if (innerContent) {
+      const innerContentMatch = variations.find(
+        (variation) => variation.innerContent && (0, import_es6.default)(variation.innerContent, innerContent)
+      );
+      if (innerContentMatch) {
+        return innerContentMatch;
+      }
     }
     const blockType = getBlockType2(state, blockName);
     const attributeKeys = Object.keys(blockType?.attributes || {});
     let match;
     let maxMatchedAttributes = 0;
     for (const variation of variations) {
+      if (variation.innerContent) {
+        continue;
+      }
       if (Array.isArray(variation.isActive)) {
         const definedAttributes = variation.isActive.filter(
           (attribute) => {
@@ -4488,7 +4500,7 @@ var wp;
   );
 
   // packages/blocks/build-module/api/validation/index.mjs
-  var import_es6 = __toESM(require_es6(), 1);
+  var import_es62 = __toESM(require_es6(), 1);
   var import_deprecated7 = __toESM(require_deprecated(), 1);
   var import_html_entities = __toESM(require_html_entities(), 1);
 
@@ -4679,7 +4691,7 @@ var wp;
       return actualDiff.length === 0 && expectedDiff.length === 0;
     },
     style: (actual, expected) => {
-      return (0, import_es6.default)(
+      return (0, import_es62.default)(
         ...[actual, expected].map(getStyleProperties)
       );
     },
