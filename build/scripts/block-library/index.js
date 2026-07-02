@@ -138,13 +138,13 @@ var wp;
         };
       })();
       var __assign2 = exports && exports.__assign || function() {
-        __assign2 = Object.assign || function(t3) {
+        __assign2 = Object.assign || function(t2) {
           for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
             s2 = arguments[i2];
             for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2))
-              t3[p2] = s2[p2];
+              t2[p2] = s2[p2];
           }
-          return t3;
+          return t2;
         };
         return __assign2.apply(this, arguments);
       };
@@ -552,21 +552,21 @@ var wp;
   var require_lib2 = __commonJS({
     "node_modules/domhandler/lib/index.js"(exports) {
       "use strict";
-      var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o2, m2, k2, k22) {
+      var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o2, m3, k2, k22) {
         if (k22 === void 0) k22 = k2;
-        var desc = Object.getOwnPropertyDescriptor(m2, k2);
-        if (!desc || ("get" in desc ? !m2.__esModule : desc.writable || desc.configurable)) {
+        var desc = Object.getOwnPropertyDescriptor(m3, k2);
+        if (!desc || ("get" in desc ? !m3.__esModule : desc.writable || desc.configurable)) {
           desc = { enumerable: true, get: function() {
-            return m2[k2];
+            return m3[k2];
           } };
         }
         Object.defineProperty(o2, k22, desc);
-      }) : (function(o2, m2, k2, k22) {
+      }) : (function(o2, m3, k2, k22) {
         if (k22 === void 0) k22 = k2;
-        o2[k22] = m2[k2];
+        o2[k22] = m3[k2];
       }));
-      var __exportStar = exports && exports.__exportStar || function(m2, exports2) {
-        for (var p2 in m2) if (p2 !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p2)) __createBinding(exports2, m2, p2);
+      var __exportStar = exports && exports.__exportStar || function(m3, exports2) {
+        for (var p2 in m3) if (p2 !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p2)) __createBinding(exports2, m3, p2);
       };
       Object.defineProperty(exports, "__esModule", { value: true });
       exports.DomHandler = void 0;
@@ -1999,12 +1999,12 @@ var wp;
           }
         }
         function match(re) {
-          var m2 = re.exec(style2);
-          if (!m2) return;
-          var str = m2[0];
+          var m3 = re.exec(style2);
+          if (!m3) return;
+          var str = m3[0];
           updatePosition(str);
           style2 = style2.slice(str.length);
-          return m2;
+          return m3;
         }
         function whitespace() {
           match(WHITESPACE_REGEX);
@@ -3171,17 +3171,17 @@ var wp;
   var import_i18n281 = __toESM(require_i18n(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
-  function r(e2) {
-    var t3, f2, n2 = "";
-    if ("string" == typeof e2 || "number" == typeof e2) n2 += e2;
-    else if ("object" == typeof e2) if (Array.isArray(e2)) {
-      var o2 = e2.length;
-      for (t3 = 0; t3 < o2; t3++) e2[t3] && (f2 = r(e2[t3])) && (n2 && (n2 += " "), n2 += f2);
-    } else for (f2 in e2) e2[f2] && (n2 && (n2 += " "), n2 += f2);
+  function r(e3) {
+    var t2, f2, n2 = "";
+    if ("string" == typeof e3 || "number" == typeof e3) n2 += e3;
+    else if ("object" == typeof e3) if (Array.isArray(e3)) {
+      var o2 = e3.length;
+      for (t2 = 0; t2 < o2; t2++) e3[t2] && (f2 = r(e3[t2])) && (n2 && (n2 += " "), n2 += f2);
+    } else for (f2 in e3) e3[f2] && (n2 && (n2 += " "), n2 += f2);
     return n2;
   }
   function clsx() {
-    for (var e2, t3, f2 = 0, n2 = "", o2 = arguments.length; f2 < o2; f2++) (e2 = arguments[f2]) && (t3 = r(e2)) && (n2 && (n2 += " "), n2 += t3);
+    for (var e3, t2, f2 = 0, n2 = "", o2 = arguments.length; f2 < o2; f2++) (e3 = arguments[f2]) && (t2 = r(e3)) && (n2 && (n2 += " "), n2 += t2);
     return n2;
   }
   var clsx_default = clsx;
@@ -10617,8 +10617,8 @@ var wp;
 
   // node_modules/@base-ui/react/merge-props/mergeProps.mjs
   var EMPTY_PROPS = {};
-  function mergeProps(a2, b2, c2, d2, e2) {
-    if (!c2 && !d2 && !e2 && !a2) {
+  function mergeProps(a2, b2, c2, d2, e3) {
+    if (!c2 && !d2 && !e3 && !a2) {
       return createInitialMergedProps(b2);
     }
     let merged = createInitialMergedProps(a2);
@@ -10631,8 +10631,8 @@ var wp;
     if (d2) {
       merged = mergeInto(merged, d2);
     }
-    if (e2) {
-      merged = mergeInto(merged, e2);
+    if (e3) {
+      merged = mergeInto(merged, e3);
     }
     return merged;
   }
@@ -11270,8 +11270,8 @@ var wp;
       "taxonomy",
       { per_page: -1 }
     );
-    const taxonomies = allTaxonomies?.filter((t3) => t3.visibility.public);
-    const taxonomy = taxonomies?.find((t3) => t3.slug === taxonomySlug);
+    const taxonomies = allTaxonomies?.filter((t2) => t2.visibility.public);
+    const taxonomy = taxonomies?.find((t2) => t2.slug === taxonomySlug);
     const isHierarchicalTaxonomy = !isResolvingTaxonomies && taxonomy?.hierarchical;
     const query = { per_page: -1, hide_empty: !showEmpty, context: "view" };
     if (isHierarchicalTaxonomy && showOnlyTopLevel) {
@@ -11410,9 +11410,9 @@ var wp;
                   {
                     __next40pxDefaultSize: true,
                     label: (0, import_i18n18.__)("Taxonomy"),
-                    options: taxonomies.map((t3) => ({
-                      label: t3.name,
-                      value: t3.slug
+                    options: taxonomies.map((t2) => ({
+                      label: t2.name,
+                      value: t2.slug
                     })),
                     value: taxonomySlug,
                     onChange: (selectedTaxonomy) => setAttributes({
@@ -13101,7 +13101,7 @@ var wp;
     const columnWidth = +(100 / columnCount).toFixed(2);
     const innerBlocksTemplate = Array.from(
       { length: columnCount },
-      (_, columnIndex) => [
+      (_2, columnIndex) => [
         "core/column",
         { width: `${columnWidth}%` },
         innerBlocks.filter(
@@ -19304,11 +19304,11 @@ var wp;
   var t = function(r3) {
     return "string" == typeof r3 ? r3.length > 0 : "number" == typeof r3;
   };
-  var n = function(r3, t3, n2) {
-    return void 0 === t3 && (t3 = 0), void 0 === n2 && (n2 = Math.pow(10, t3)), Math.round(n2 * r3) / n2 + 0;
+  var n = function(r3, t2, n2) {
+    return void 0 === t2 && (t2 = 0), void 0 === n2 && (n2 = Math.pow(10, t2)), Math.round(n2 * r3) / n2 + 0;
   };
-  var e = function(r3, t3, n2) {
-    return void 0 === t3 && (t3 = 0), void 0 === n2 && (n2 = 1), r3 > n2 ? n2 : r3 > t3 ? r3 : t3;
+  var e = function(r3, t2, n2) {
+    return void 0 === t2 && (t2 = 0), void 0 === n2 && (n2 = 1), r3 > n2 ? n2 : r3 > t2 ? r3 : t2;
   };
   var u = function(r3) {
     return (r3 = isFinite(r3) ? r3 % 360 : 0) > 0 ? r3 : r3 + 360;
@@ -19321,18 +19321,18 @@ var wp;
   };
   var i = /^#([0-9a-f]{3,8})$/i;
   var s = function(r3) {
-    var t3 = r3.toString(16);
-    return t3.length < 2 ? "0" + t3 : t3;
+    var t2 = r3.toString(16);
+    return t2.length < 2 ? "0" + t2 : t2;
   };
   var h = function(r3) {
-    var t3 = r3.r, n2 = r3.g, e2 = r3.b, u2 = r3.a, a2 = Math.max(t3, n2, e2), o2 = a2 - Math.min(t3, n2, e2), i2 = o2 ? a2 === t3 ? (n2 - e2) / o2 : a2 === n2 ? 2 + (e2 - t3) / o2 : 4 + (t3 - n2) / o2 : 0;
+    var t2 = r3.r, n2 = r3.g, e3 = r3.b, u2 = r3.a, a2 = Math.max(t2, n2, e3), o2 = a2 - Math.min(t2, n2, e3), i2 = o2 ? a2 === t2 ? (n2 - e3) / o2 : a2 === n2 ? 2 + (e3 - t2) / o2 : 4 + (t2 - n2) / o2 : 0;
     return { h: 60 * (i2 < 0 ? i2 + 6 : i2), s: a2 ? o2 / a2 * 100 : 0, v: a2 / 255 * 100, a: u2 };
   };
   var b = function(r3) {
-    var t3 = r3.h, n2 = r3.s, e2 = r3.v, u2 = r3.a;
-    t3 = t3 / 360 * 6, n2 /= 100, e2 /= 100;
-    var a2 = Math.floor(t3), o2 = e2 * (1 - n2), i2 = e2 * (1 - (t3 - a2) * n2), s2 = e2 * (1 - (1 - t3 + a2) * n2), h2 = a2 % 6;
-    return { r: 255 * [e2, i2, o2, o2, s2, e2][h2], g: 255 * [s2, e2, e2, i2, o2, o2][h2], b: 255 * [o2, o2, s2, e2, e2, i2][h2], a: u2 };
+    var t2 = r3.h, n2 = r3.s, e3 = r3.v, u2 = r3.a;
+    t2 = t2 / 360 * 6, n2 /= 100, e3 /= 100;
+    var a2 = Math.floor(t2), o2 = e3 * (1 - n2), i2 = e3 * (1 - (t2 - a2) * n2), s2 = e3 * (1 - (1 - t2 + a2) * n2), h2 = a2 % 6;
+    return { r: 255 * [e3, i2, o2, o2, s2, e3][h2], g: 255 * [s2, e3, e3, i2, o2, o2][h2], b: 255 * [o2, o2, s2, e3, e3, i2][h2], a: u2 };
   };
   var g = function(r3) {
     return { h: u(r3.h), s: e(r3.s, 0, 100), l: e(r3.l, 0, 100), a: e(r3.a) };
@@ -19341,35 +19341,35 @@ var wp;
     return { h: n(r3.h), s: n(r3.s), l: n(r3.l), a: n(r3.a, 3) };
   };
   var f = function(r3) {
-    return b((n2 = (t3 = r3).s, { h: t3.h, s: (n2 *= ((e2 = t3.l) < 50 ? e2 : 100 - e2) / 100) > 0 ? 2 * n2 / (e2 + n2) * 100 : 0, v: e2 + n2, a: t3.a }));
-    var t3, n2, e2;
+    return b((n2 = (t2 = r3).s, { h: t2.h, s: (n2 *= ((e3 = t2.l) < 50 ? e3 : 100 - e3) / 100) > 0 ? 2 * n2 / (e3 + n2) * 100 : 0, v: e3 + n2, a: t2.a }));
+    var t2, n2, e3;
   };
   var c = function(r3) {
-    return { h: (t3 = h(r3)).h, s: (u2 = (200 - (n2 = t3.s)) * (e2 = t3.v) / 100) > 0 && u2 < 200 ? n2 * e2 / 100 / (u2 <= 100 ? u2 : 200 - u2) * 100 : 0, l: u2 / 2, a: t3.a };
-    var t3, n2, e2, u2;
+    return { h: (t2 = h(r3)).h, s: (u2 = (200 - (n2 = t2.s)) * (e3 = t2.v) / 100) > 0 && u2 < 200 ? n2 * e3 / 100 / (u2 <= 100 ? u2 : 200 - u2) * 100 : 0, l: u2 / 2, a: t2.a };
+    var t2, n2, e3, u2;
   };
   var l = /^hsla?\(\s*([+-]?\d*\.?\d+)(deg|rad|grad|turn)?\s*,\s*([+-]?\d*\.?\d+)%\s*,\s*([+-]?\d*\.?\d+)%\s*(?:,\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
   var p = /^hsla?\(\s*([+-]?\d*\.?\d+)(deg|rad|grad|turn)?\s+([+-]?\d*\.?\d+)%\s+([+-]?\d*\.?\d+)%\s*(?:\/\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
   var v = /^rgba?\(\s*([+-]?\d*\.?\d+)(%)?\s*,\s*([+-]?\d*\.?\d+)(%)?\s*,\s*([+-]?\d*\.?\d+)(%)?\s*(?:,\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
   var m = /^rgba?\(\s*([+-]?\d*\.?\d+)(%)?\s+([+-]?\d*\.?\d+)(%)?\s+([+-]?\d*\.?\d+)(%)?\s*(?:\/\s*([+-]?\d*\.?\d+)(%)?\s*)?\)$/i;
   var y = { string: [[function(r3) {
-    var t3 = i.exec(r3);
-    return t3 ? (r3 = t3[1]).length <= 4 ? { r: parseInt(r3[0] + r3[0], 16), g: parseInt(r3[1] + r3[1], 16), b: parseInt(r3[2] + r3[2], 16), a: 4 === r3.length ? n(parseInt(r3[3] + r3[3], 16) / 255, 2) : 1 } : 6 === r3.length || 8 === r3.length ? { r: parseInt(r3.substr(0, 2), 16), g: parseInt(r3.substr(2, 2), 16), b: parseInt(r3.substr(4, 2), 16), a: 8 === r3.length ? n(parseInt(r3.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
+    var t2 = i.exec(r3);
+    return t2 ? (r3 = t2[1]).length <= 4 ? { r: parseInt(r3[0] + r3[0], 16), g: parseInt(r3[1] + r3[1], 16), b: parseInt(r3[2] + r3[2], 16), a: 4 === r3.length ? n(parseInt(r3[3] + r3[3], 16) / 255, 2) : 1 } : 6 === r3.length || 8 === r3.length ? { r: parseInt(r3.substr(0, 2), 16), g: parseInt(r3.substr(2, 2), 16), b: parseInt(r3.substr(4, 2), 16), a: 8 === r3.length ? n(parseInt(r3.substr(6, 2), 16) / 255, 2) : 1 } : null : null;
   }, "hex"], [function(r3) {
-    var t3 = v.exec(r3) || m.exec(r3);
-    return t3 ? t3[2] !== t3[4] || t3[4] !== t3[6] ? null : a({ r: Number(t3[1]) / (t3[2] ? 100 / 255 : 1), g: Number(t3[3]) / (t3[4] ? 100 / 255 : 1), b: Number(t3[5]) / (t3[6] ? 100 / 255 : 1), a: void 0 === t3[7] ? 1 : Number(t3[7]) / (t3[8] ? 100 : 1) }) : null;
-  }, "rgb"], [function(t3) {
-    var n2 = l.exec(t3) || p.exec(t3);
+    var t2 = v.exec(r3) || m.exec(r3);
+    return t2 ? t2[2] !== t2[4] || t2[4] !== t2[6] ? null : a({ r: Number(t2[1]) / (t2[2] ? 100 / 255 : 1), g: Number(t2[3]) / (t2[4] ? 100 / 255 : 1), b: Number(t2[5]) / (t2[6] ? 100 / 255 : 1), a: void 0 === t2[7] ? 1 : Number(t2[7]) / (t2[8] ? 100 : 1) }) : null;
+  }, "rgb"], [function(t2) {
+    var n2 = l.exec(t2) || p.exec(t2);
     if (!n2) return null;
-    var e2, u2, a2 = g({ h: (e2 = n2[1], u2 = n2[2], void 0 === u2 && (u2 = "deg"), Number(e2) * (r2[u2] || 1)), s: Number(n2[3]), l: Number(n2[4]), a: void 0 === n2[5] ? 1 : Number(n2[5]) / (n2[6] ? 100 : 1) });
+    var e3, u2, a2 = g({ h: (e3 = n2[1], u2 = n2[2], void 0 === u2 && (u2 = "deg"), Number(e3) * (r2[u2] || 1)), s: Number(n2[3]), l: Number(n2[4]), a: void 0 === n2[5] ? 1 : Number(n2[5]) / (n2[6] ? 100 : 1) });
     return f(a2);
   }, "hsl"]], object: [[function(r3) {
-    var n2 = r3.r, e2 = r3.g, u2 = r3.b, o2 = r3.a, i2 = void 0 === o2 ? 1 : o2;
-    return t(n2) && t(e2) && t(u2) ? a({ r: Number(n2), g: Number(e2), b: Number(u2), a: Number(i2) }) : null;
+    var n2 = r3.r, e3 = r3.g, u2 = r3.b, o2 = r3.a, i2 = void 0 === o2 ? 1 : o2;
+    return t(n2) && t(e3) && t(u2) ? a({ r: Number(n2), g: Number(e3), b: Number(u2), a: Number(i2) }) : null;
   }, "rgb"], [function(r3) {
-    var n2 = r3.h, e2 = r3.s, u2 = r3.l, a2 = r3.a, o2 = void 0 === a2 ? 1 : a2;
-    if (!t(n2) || !t(e2) || !t(u2)) return null;
-    var i2 = g({ h: Number(n2), s: Number(e2), l: Number(u2), a: Number(o2) });
+    var n2 = r3.h, e3 = r3.s, u2 = r3.l, a2 = r3.a, o2 = void 0 === a2 ? 1 : a2;
+    if (!t(n2) || !t(e3) || !t(u2)) return null;
+    var i2 = g({ h: Number(n2), s: Number(e3), l: Number(u2), a: Number(o2) });
     return f(i2);
   }, "hsl"], [function(r3) {
     var n2 = r3.h, a2 = r3.s, o2 = r3.v, i2 = r3.a, s2 = void 0 === i2 ? 1 : i2;
@@ -19379,26 +19379,26 @@ var wp;
     })({ h: Number(n2), s: Number(a2), v: Number(o2), a: Number(s2) });
     return b(h2);
   }, "hsv"]] };
-  var N = function(r3, t3) {
-    for (var n2 = 0; n2 < t3.length; n2++) {
-      var e2 = t3[n2][0](r3);
-      if (e2) return [e2, t3[n2][1]];
+  var N = function(r3, t2) {
+    for (var n2 = 0; n2 < t2.length; n2++) {
+      var e3 = t2[n2][0](r3);
+      if (e3) return [e3, t2[n2][1]];
     }
     return [null, void 0];
   };
   var x = function(r3) {
     return "string" == typeof r3 ? N(r3.trim(), y.string) : "object" == typeof r3 && null !== r3 ? N(r3, y.object) : [null, void 0];
   };
-  var M = function(r3, t3) {
+  var M = function(r3, t2) {
     var n2 = c(r3);
-    return { h: n2.h, s: e(n2.s + 100 * t3, 0, 100), l: n2.l, a: n2.a };
+    return { h: n2.h, s: e(n2.s + 100 * t2, 0, 100), l: n2.l, a: n2.a };
   };
   var H = function(r3) {
     return (299 * r3.r + 587 * r3.g + 114 * r3.b) / 1e3 / 255;
   };
-  var $ = function(r3, t3) {
+  var $ = function(r3, t2) {
     var n2 = c(r3);
-    return { h: n2.h, s: n2.s, l: e(n2.l + 100 * t3, 0, 100), a: n2.a };
+    return { h: n2.h, s: n2.s, l: e(n2.l + 100 * t2, 0, 100), a: n2.a };
   };
   var j = (function() {
     function r3(r4) {
@@ -19413,18 +19413,18 @@ var wp;
     }, r3.prototype.isLight = function() {
       return H(this.rgba) >= 0.5;
     }, r3.prototype.toHex = function() {
-      return r4 = o(this.rgba), t3 = r4.r, e2 = r4.g, u2 = r4.b, i2 = (a2 = r4.a) < 1 ? s(n(255 * a2)) : "", "#" + s(t3) + s(e2) + s(u2) + i2;
-      var r4, t3, e2, u2, a2, i2;
+      return r4 = o(this.rgba), t2 = r4.r, e3 = r4.g, u2 = r4.b, i2 = (a2 = r4.a) < 1 ? s(n(255 * a2)) : "", "#" + s(t2) + s(e3) + s(u2) + i2;
+      var r4, t2, e3, u2, a2, i2;
     }, r3.prototype.toRgb = function() {
       return o(this.rgba);
     }, r3.prototype.toRgbString = function() {
-      return r4 = o(this.rgba), t3 = r4.r, n2 = r4.g, e2 = r4.b, (u2 = r4.a) < 1 ? "rgba(" + t3 + ", " + n2 + ", " + e2 + ", " + u2 + ")" : "rgb(" + t3 + ", " + n2 + ", " + e2 + ")";
-      var r4, t3, n2, e2, u2;
+      return r4 = o(this.rgba), t2 = r4.r, n2 = r4.g, e3 = r4.b, (u2 = r4.a) < 1 ? "rgba(" + t2 + ", " + n2 + ", " + e3 + ", " + u2 + ")" : "rgb(" + t2 + ", " + n2 + ", " + e3 + ")";
+      var r4, t2, n2, e3, u2;
     }, r3.prototype.toHsl = function() {
       return d(c(this.rgba));
     }, r3.prototype.toHslString = function() {
-      return r4 = d(c(this.rgba)), t3 = r4.h, n2 = r4.s, e2 = r4.l, (u2 = r4.a) < 1 ? "hsla(" + t3 + ", " + n2 + "%, " + e2 + "%, " + u2 + ")" : "hsl(" + t3 + ", " + n2 + "%, " + e2 + "%)";
-      var r4, t3, n2, e2, u2;
+      return r4 = d(c(this.rgba)), t2 = r4.h, n2 = r4.s, e3 = r4.l, (u2 = r4.a) < 1 ? "hsla(" + t2 + ", " + n2 + "%, " + e3 + "%, " + u2 + ")" : "hsl(" + t2 + ", " + n2 + "%, " + e3 + "%)";
+      var r4, t2, n2, e3, u2;
     }, r3.prototype.toHsv = function() {
       return r4 = h(this.rgba), { h: n(r4.h), s: n(r4.s), v: n(r4.v), a: n(r4.a, 3) };
       var r4;
@@ -19444,11 +19444,11 @@ var wp;
     }, r3.prototype.rotate = function(r4) {
       return void 0 === r4 && (r4 = 15), this.hue(this.hue() + r4);
     }, r3.prototype.alpha = function(r4) {
-      return "number" == typeof r4 ? w({ r: (t3 = this.rgba).r, g: t3.g, b: t3.b, a: r4 }) : n(this.rgba.a, 3);
-      var t3;
+      return "number" == typeof r4 ? w({ r: (t2 = this.rgba).r, g: t2.g, b: t2.b, a: r4 }) : n(this.rgba.a, 3);
+      var t2;
     }, r3.prototype.hue = function(r4) {
-      var t3 = c(this.rgba);
-      return "number" == typeof r4 ? w({ h: r4, s: t3.s, l: t3.l, a: t3.a }) : n(t3.h);
+      var t2 = c(this.rgba);
+      return "number" == typeof r4 ? w({ h: r4, s: t2.s, l: t2.l, a: t2.a }) : n(t2.h);
     }, r3.prototype.isEqual = function(r4) {
       return this.toHex() === w(r4).toHex();
     }, r3;
@@ -19464,27 +19464,27 @@ var wp;
   };
 
   // node_modules/colord/plugins/names.mjs
-  function names_default(e2, f2) {
+  function names_default(e3, f2) {
     var a2 = { white: "#ffffff", bisque: "#ffe4c4", blue: "#0000ff", cadetblue: "#5f9ea0", chartreuse: "#7fff00", chocolate: "#d2691e", coral: "#ff7f50", antiquewhite: "#faebd7", aqua: "#00ffff", azure: "#f0ffff", whitesmoke: "#f5f5f5", papayawhip: "#ffefd5", plum: "#dda0dd", blanchedalmond: "#ffebcd", black: "#000000", gold: "#ffd700", goldenrod: "#daa520", gainsboro: "#dcdcdc", cornsilk: "#fff8dc", cornflowerblue: "#6495ed", burlywood: "#deb887", aquamarine: "#7fffd4", beige: "#f5f5dc", crimson: "#dc143c", cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkkhaki: "#bdb76b", darkgray: "#a9a9a9", darkgreen: "#006400", darkgrey: "#a9a9a9", peachpuff: "#ffdab9", darkmagenta: "#8b008b", darkred: "#8b0000", darkorchid: "#9932cc", darkorange: "#ff8c00", darkslateblue: "#483d8b", gray: "#808080", darkslategray: "#2f4f4f", darkslategrey: "#2f4f4f", deeppink: "#ff1493", deepskyblue: "#00bfff", wheat: "#f5deb3", firebrick: "#b22222", floralwhite: "#fffaf0", ghostwhite: "#f8f8ff", darkviolet: "#9400d3", magenta: "#ff00ff", green: "#008000", dodgerblue: "#1e90ff", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", blueviolet: "#8a2be2", forestgreen: "#228b22", lawngreen: "#7cfc00", indianred: "#cd5c5c", indigo: "#4b0082", fuchsia: "#ff00ff", brown: "#a52a2a", maroon: "#800000", mediumblue: "#0000cd", lightcoral: "#f08080", darkturquoise: "#00ced1", lightcyan: "#e0ffff", ivory: "#fffff0", lightyellow: "#ffffe0", lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", linen: "#faf0e6", mediumaquamarine: "#66cdaa", lemonchiffon: "#fffacd", lime: "#00ff00", khaki: "#f0e68c", mediumseagreen: "#3cb371", limegreen: "#32cd32", mediumspringgreen: "#00fa9a", lightskyblue: "#87cefa", lightblue: "#add8e6", midnightblue: "#191970", lightpink: "#ffb6c1", mistyrose: "#ffe4e1", moccasin: "#ffe4b5", mintcream: "#f5fffa", lightslategray: "#778899", lightslategrey: "#778899", navajowhite: "#ffdead", navy: "#000080", mediumvioletred: "#c71585", powderblue: "#b0e0e6", palegoldenrod: "#eee8aa", oldlace: "#fdf5e6", paleturquoise: "#afeeee", mediumturquoise: "#48d1cc", mediumorchid: "#ba55d3", rebeccapurple: "#663399", lightsteelblue: "#b0c4de", mediumslateblue: "#7b68ee", thistle: "#d8bfd8", tan: "#d2b48c", orchid: "#da70d6", mediumpurple: "#9370db", purple: "#800080", pink: "#ffc0cb", skyblue: "#87ceeb", springgreen: "#00ff7f", palegreen: "#98fb98", red: "#ff0000", yellow: "#ffff00", slateblue: "#6a5acd", lavenderblush: "#fff0f5", peru: "#cd853f", palevioletred: "#db7093", violet: "#ee82ee", teal: "#008080", slategray: "#708090", slategrey: "#708090", aliceblue: "#f0f8ff", darkseagreen: "#8fbc8f", darkolivegreen: "#556b2f", greenyellow: "#adff2f", seagreen: "#2e8b57", seashell: "#fff5ee", tomato: "#ff6347", silver: "#c0c0c0", sienna: "#a0522d", lavender: "#e6e6fa", lightgreen: "#90ee90", orange: "#ffa500", orangered: "#ff4500", steelblue: "#4682b4", royalblue: "#4169e1", turquoise: "#40e0d0", yellowgreen: "#9acd32", salmon: "#fa8072", saddlebrown: "#8b4513", sandybrown: "#f4a460", rosybrown: "#bc8f8f", darksalmon: "#e9967a", lightgoldenrodyellow: "#fafad2", snow: "#fffafa", lightgrey: "#d3d3d3", lightgray: "#d3d3d3", dimgray: "#696969", dimgrey: "#696969", olivedrab: "#6b8e23", olive: "#808000" }, r3 = {};
     for (var d2 in a2) r3[a2[d2]] = d2;
     var l2 = {};
-    e2.prototype.toName = function(f3) {
+    e3.prototype.toName = function(f3) {
       if (!(this.rgba.a || this.rgba.r || this.rgba.g || this.rgba.b)) return "transparent";
       var d3, i2, n2 = r3[this.toHex()];
       if (n2) return n2;
       if (null == f3 ? void 0 : f3.closest) {
-        var o2 = this.toRgb(), t3 = 1 / 0, b2 = "black";
-        if (!l2.length) for (var c2 in a2) l2[c2] = new e2(a2[c2]).toRgb();
-        for (var g3 in a2) {
-          var u2 = (d3 = o2, i2 = l2[g3], Math.pow(d3.r - i2.r, 2) + Math.pow(d3.g - i2.g, 2) + Math.pow(d3.b - i2.b, 2));
-          u2 < t3 && (t3 = u2, b2 = g3);
+        var o2 = this.toRgb(), t2 = 1 / 0, b2 = "black";
+        if (!l2.length) for (var c2 in a2) l2[c2] = new e3(a2[c2]).toRgb();
+        for (var g2 in a2) {
+          var u2 = (d3 = o2, i2 = l2[g2], Math.pow(d3.r - i2.r, 2) + Math.pow(d3.g - i2.g, 2) + Math.pow(d3.b - i2.b, 2));
+          u2 < t2 && (t2 = u2, b2 = g2);
         }
         return b2;
       }
     };
     f2.string.push([function(f3) {
       var r4 = f3.toLowerCase(), d3 = "transparent" === r4 ? "#0000" : a2[r4];
-      return d3 ? new e2(d3).toRgb() : null;
+      return d3 ? new e3(d3).toRgb() : null;
     }, "name"]);
   }
 
@@ -19849,8 +19849,8 @@ var wp;
           this.ctx.drawImage(resource, size.srcLeft, size.srcTop, size.srcWidth, size.srcHeight, 0, 0, size.destWidth, size.destHeight);
           var bitmapData = this.ctx.getImageData(0, 0, size.destWidth, size.destHeight).data;
           value = this.getColorFromArray4(bitmapData, options2);
-        } catch (e2) {
-          outputError("security error (CORS) for resource ".concat(getSrc(resource), ".\nDetails: https://developer.mozilla.org/en/docs/Web/HTML/CORS_enabled_image"), options2.silent, e2);
+        } catch (e3) {
+          outputError("security error (CORS) for resource ".concat(getSrc(resource), ".\nDetails: https://developer.mozilla.org/en/docs/Web/HTML/CORS_enabled_image"), options2.silent, e3);
         }
         return this.prepareResult(value);
       };
@@ -19963,7 +19963,7 @@ var wp;
     if (!url) {
       return DEFAULT_BACKGROUND_COLOR;
     }
-    const { r: r3, g: g3, b: b2, a: a2 } = w(DEFAULT_BACKGROUND_COLOR).toRgb();
+    const { r: r3, g: g2, b: b2, a: a2 } = w(DEFAULT_BACKGROUND_COLOR).toRgb();
     try {
       const imgCrossOrigin = (0, import_hooks19.applyFilters)(
         "media.crossOrigin",
@@ -19974,7 +19974,7 @@ var wp;
         // The default color is white, which is the color
         // that is returned if there's an error.
         // colord returns alpga 0-1, FAC needs 0-255
-        defaultColor: [r3, g3, b2, a2 * 255],
+        defaultColor: [r3, g2, b2, a2 * 255],
         // Errors that come up don't reject the promise,
         // so error logging has to be silenced
         // with this option.
@@ -40854,12 +40854,12 @@ ${text}
 
   // node_modules/tslib/tslib.es6.mjs
   var __assign = function() {
-    __assign = Object.assign || function __assign2(t3) {
+    __assign = Object.assign || function __assign2(t2) {
       for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
         s2 = arguments[i2];
-        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2)) t3[p2] = s2[p2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2)) t2[p2] = s2[p2];
       }
-      return t3;
+      return t2;
     };
     return __assign.apply(this, arguments);
   };
@@ -42739,8 +42739,8 @@ ${text}
       {
         className,
         icon: (0, import_i18n136.isRTL)() ? chevron_right_small_default : chevron_left_small_default,
-        onClick: (e2) => {
-          e2.preventDefault();
+        onClick: (e3) => {
+          e3.preventDefault();
           onBack();
         },
         size: "small",
@@ -43190,8 +43190,8 @@ ${text}
           __next40pxDefaultSize: true,
           ref: addPageButtonRef,
           icon: plus_default,
-          onClick: (e2) => {
-            e2.preventDefault();
+          onClick: (e3) => {
+            e3.preventDefault();
             setAddingPage(true);
           },
           "aria-haspopup": blockInserterAriaRole,
@@ -43204,8 +43204,8 @@ ${text}
           __next40pxDefaultSize: true,
           ref: addBlockButtonRef,
           icon: plus_default,
-          onClick: (e2) => {
-            e2.preventDefault();
+          onClick: (e3) => {
+            e3.preventDefault();
             setAddingBlock(true);
           },
           "aria-haspopup": blockInserterAriaRole,
@@ -49104,257 +49104,334 @@ ${text}
   var import_compose42 = __toESM(require_compose(), 1);
 
   // packages/block-library/node_modules/@arraypress/waveform-player/dist/waveform-player.esm.js
-  function L(t3) {
-    let e2 = {};
-    if (t3.dataset.url && (e2.url = t3.dataset.url), t3.dataset.height && (e2.height = parseInt(t3.dataset.height)), t3.dataset.samples && (e2.samples = parseInt(t3.dataset.samples)), t3.dataset.preload && (e2.preload = t3.dataset.preload), t3.dataset.waveformStyle && (e2.waveformStyle = t3.dataset.waveformStyle), t3.dataset.barWidth && (e2.barWidth = parseInt(t3.dataset.barWidth)), t3.dataset.barSpacing && (e2.barSpacing = parseInt(t3.dataset.barSpacing)), t3.dataset.buttonAlign && (e2.buttonAlign = t3.dataset.buttonAlign), t3.dataset.colorPreset && (e2.colorPreset = t3.dataset.colorPreset), t3.dataset.waveformColor && (e2.waveformColor = t3.dataset.waveformColor), t3.dataset.progressColor && (e2.progressColor = t3.dataset.progressColor), t3.dataset.buttonColor && (e2.buttonColor = t3.dataset.buttonColor), t3.dataset.buttonHoverColor && (e2.buttonHoverColor = t3.dataset.buttonHoverColor), t3.dataset.textColor && (e2.textColor = t3.dataset.textColor), t3.dataset.textSecondaryColor && (e2.textSecondaryColor = t3.dataset.textSecondaryColor), t3.dataset.backgroundColor && (e2.backgroundColor = t3.dataset.backgroundColor), t3.dataset.borderColor && (e2.borderColor = t3.dataset.borderColor), t3.dataset.color && (e2.waveformColor = t3.dataset.color), t3.dataset.theme && (e2.colorPreset = t3.dataset.theme), t3.dataset.autoplay && (e2.autoplay = t3.dataset.autoplay === "true"), t3.dataset.showTime && (e2.showTime = t3.dataset.showTime === "true"), t3.dataset.showHoverTime && (e2.showHoverTime = t3.dataset.showHoverTime === "true"), t3.dataset.showBpm && (e2.showBPM = t3.dataset.showBpm === "true"), t3.dataset.singlePlay && (e2.singlePlay = t3.dataset.singlePlay === "true"), t3.dataset.playOnSeek && (e2.playOnSeek = t3.dataset.playOnSeek === "true"), t3.dataset.title && (e2.title = t3.dataset.title), t3.dataset.subtitle && (e2.subtitle = t3.dataset.subtitle), t3.dataset.album && (e2.album = t3.dataset.album), t3.dataset.artwork && (e2.artwork = t3.dataset.artwork), t3.dataset.waveform && (e2.waveform = t3.dataset.waveform), t3.dataset.markers) try {
-      e2.markers = JSON.parse(t3.dataset.markers);
-    } catch (i2) {
-      console.warn("Invalid markers JSON:", i2);
+  function W(e3) {
+    let t2 = -1 / 0;
+    for (let i2 = 0; i2 < e3.length; i2++) e3[i2] > t2 && (t2 = e3[i2]);
+    return t2;
+  }
+  function x2(e3) {
+    return String(e3 ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+  function U(e3) {
+    if (typeof e3 != "string" || e3 === "") return false;
+    try {
+      let t2 = new URL(e3, "http://localhost/");
+      return t2.protocol === "http:" || t2.protocol === "https:";
+    } catch {
+      return false;
     }
-    if (t3.dataset.playbackRate && (e2.playbackRate = parseFloat(t3.dataset.playbackRate)), t3.dataset.showPlaybackSpeed !== void 0 && (e2.showPlaybackSpeed = t3.dataset.showPlaybackSpeed === "true"), t3.dataset.playbackRates) try {
-      e2.playbackRates = JSON.parse(t3.dataset.playbackRates);
-    } catch (i2) {
-      console.warn("Invalid playbackRates JSON:", i2);
+  }
+  function m2(e3, t2 = 0, i2 = 1) {
+    return Math.max(t2, Math.min(e3, i2));
+  }
+  function at(e3) {
+    return e3 === void 0 ? void 0 : e3 === "true";
+  }
+  function q(e3) {
+    if (typeof e3 == "string" && e3.trim().startsWith("[")) try {
+      return JSON.parse(e3);
+    } catch {
     }
-    return t3.dataset.enableMediaSession !== void 0 && (e2.enableMediaSession = t3.dataset.enableMediaSession === "true"), e2;
+    return e3;
   }
-  function P(t3) {
-    if (!t3 || isNaN(t3)) return "0:00";
-    let e2 = Math.floor(t3 / 60), i2 = Math.floor(t3 % 60);
-    return `${e2}:${i2.toString().padStart(2, "0")}`;
+  function D(e3) {
+    let t2 = {}, i2 = (a2, o2 = a2) => {
+      let n2 = at(e3.dataset[o2]);
+      n2 !== void 0 && (t2[a2] = n2);
+    }, r3 = (a2, o2 = a2, n2 = false) => {
+      let l2 = e3.dataset[o2];
+      l2 && (t2[a2] = n2 ? parseFloat(l2) : parseInt(l2, 10));
+    }, s2 = (a2, o2 = a2) => {
+      let n2 = e3.dataset[o2];
+      if (n2) try {
+        t2[a2] = JSON.parse(n2);
+      } catch (l2) {
+        console.warn(`[WaveformPlayer] Invalid ${o2} JSON:`, l2);
+      }
+    };
+    if (e3.dataset.src && (t2.url = e3.dataset.src), e3.dataset.url && (t2.url = e3.dataset.url), r3("height"), r3("samples"), e3.dataset.preload && (t2.preload = e3.dataset.preload), e3.dataset.audioMode && (t2.audioMode = e3.dataset.audioMode), e3.dataset.style && (t2.waveformStyle = e3.dataset.style), e3.dataset.waveformStyle && (t2.waveformStyle = e3.dataset.waveformStyle), e3.dataset.waveformGradient && (t2.waveformGradient = e3.dataset.waveformGradient), r3("barWidth"), r3("barSpacing"), r3("barRadius"), e3.dataset.buttonAlign && (t2.buttonAlign = e3.dataset.buttonAlign), e3.dataset.layout && (t2.layout = e3.dataset.layout), e3.dataset.buttonStyle && (t2.buttonStyle = e3.dataset.buttonStyle), e3.dataset.buttonSize) {
+      let a2 = e3.dataset.buttonSize;
+      t2.buttonSize = /^\d+(\.\d+)?$/.test(a2.trim()) ? parseFloat(a2) : a2;
+    }
+    return e3.dataset.colorPreset && (t2.colorPreset = e3.dataset.colorPreset), e3.dataset.waveformColor && (t2.waveformColor = q(e3.dataset.waveformColor)), e3.dataset.progressColor && (t2.progressColor = q(e3.dataset.progressColor)), e3.dataset.color && (t2.waveformColor = e3.dataset.color), e3.dataset.theme && (t2.colorPreset = e3.dataset.theme), i2("autoplay"), i2("showControls"), i2("showInfo"), i2("showTime"), i2("showHoverTime"), i2("seekHandle"), i2("showBPM", "showBpm"), r3("bpm"), i2("singlePlay"), i2("playOnSeek"), e3.dataset.title && (t2.title = e3.dataset.title), e3.dataset.artist && (t2.artist = e3.dataset.artist), e3.dataset.album && (t2.album = e3.dataset.album), e3.dataset.artwork && (t2.artwork = e3.dataset.artwork), e3.dataset.waveform && (t2.waveform = e3.dataset.waveform), s2("markers"), r3("playbackRate", "playbackRate", true), i2("showPlaybackSpeed"), s2("playbackRates"), i2("enableMediaSession"), i2("showMarkers"), i2("accessibleSeek"), e3.dataset.seekLabel && (t2.seekLabel = e3.dataset.seekLabel), e3.dataset.errorText && (t2.errorText = e3.dataset.errorText), e3.dataset.playIcon && (t2.playIcon = e3.dataset.playIcon), e3.dataset.pauseIcon && (t2.pauseIcon = e3.dataset.pauseIcon), t2;
   }
-  function A(t3) {
-    let e2 = t3 || Math.random().toString();
-    return btoa(e2.substring(0, 10)).replace(/[^a-zA-Z0-9]/g, "");
+  function S2(e3) {
+    if (!e3 || isNaN(e3) || e3 < 0) return "0:00";
+    let t2 = Math.floor(e3 / 3600), i2 = Math.floor(e3 % 3600 / 60), r3 = Math.floor(e3 % 60);
+    return t2 > 0 ? `${t2}:${i2.toString().padStart(2, "0")}:${r3.toString().padStart(2, "0")}` : `${i2}:${r3.toString().padStart(2, "0")}`;
   }
-  function R(t3) {
-    if (!t3) return "Audio";
-    let e2 = t3.split("/");
-    return e2[e2.length - 1].split(".")[0].replace(/[-_]/g, " ").replace(/\b\w/g, (s2) => s2.toUpperCase());
+  var ot = 0;
+  function N2(e3) {
+    let t2 = e3 || "audio", i2 = 5381;
+    for (let r3 = 0; r3 < t2.length; r3++) i2 = (i2 << 5) + i2 + t2.charCodeAt(r3) | 0;
+    return `wp_${(i2 >>> 0).toString(36)}_${(ot++).toString(36)}`;
   }
-  function C(...t3) {
-    let e2 = {};
-    for (let i2 of t3) for (let a2 in i2) i2[a2] !== null && i2[a2] !== void 0 && (e2[a2] = i2[a2]);
-    return e2;
+  function H2(e3) {
+    if (!e3) return "Audio";
+    let t2 = e3.split("/");
+    return t2[t2.length - 1].split(".")[0].replace(/[-_]/g, " ").replace(/\b\w/g, (s2) => s2.toUpperCase());
   }
-  function B(t3, e2) {
+  function V(e3) {
+    let t2 = typeof e3 == "string" ? e3.match(/\d+/g) : null;
+    if (!t2 || t2.length < 3) return null;
+    let [i2, r3, s2] = t2.map(Number);
+    return (i2 * 299 + r3 * 587 + s2 * 114) / 1e3;
+  }
+  function B(...e3) {
+    let t2 = {};
+    for (let i2 of e3) for (let r3 in i2) i2[r3] !== null && i2[r3] !== void 0 && (t2[r3] = i2[r3]);
+    return t2;
+  }
+  function j2(e3, t2) {
     let i2;
     return function(...s2) {
-      let n2 = () => {
-        clearTimeout(i2), t3(...s2);
+      let a2 = () => {
+        clearTimeout(i2), e3(...s2);
       };
-      clearTimeout(i2), i2 = setTimeout(n2, e2);
+      clearTimeout(i2), i2 = setTimeout(a2, t2);
     };
   }
-  function S2(t3, e2) {
-    if (t3.length === e2) return t3;
-    if (t3.length === 0 || e2 === 0) return [];
+  function L(e3, t2) {
+    if (e3.length === t2) return e3;
+    if (e3.length === 0 || t2 === 0) return [];
     let i2 = [];
-    if (e2 > t3.length) {
-      let a2 = (t3.length - 1) / (e2 - 1);
-      for (let s2 = 0; s2 < e2; s2++) {
-        let n2 = s2 * a2, r3 = Math.floor(n2), o2 = Math.ceil(n2), h2 = n2 - r3;
-        if (o2 >= t3.length) i2.push(t3[t3.length - 1]);
-        else if (r3 === o2) i2.push(t3[r3]);
+    if (t2 > e3.length) {
+      let r3 = (e3.length - 1) / (t2 - 1);
+      for (let s2 = 0; s2 < t2; s2++) {
+        let a2 = s2 * r3, o2 = Math.floor(a2), n2 = Math.ceil(a2), l2 = a2 - o2;
+        if (n2 >= e3.length) i2.push(e3[e3.length - 1]);
+        else if (o2 === n2) i2.push(e3[o2]);
         else {
-          let l2 = t3[r3] * (1 - h2) + t3[o2] * h2;
-          i2.push(l2);
+          let h2 = e3[o2] * (1 - l2) + e3[n2] * l2;
+          i2.push(h2);
         }
       }
     } else {
-      let a2 = t3.length / e2;
-      for (let s2 = 0; s2 < e2; s2++) {
-        let n2 = Math.floor(s2 * a2), r3 = Math.floor((s2 + 1) * a2), o2 = 0, h2 = 0;
-        for (let l2 = n2; l2 <= r3 && l2 < t3.length; l2++) t3[l2] > o2 && (o2 = t3[l2]), h2++;
-        if (h2 === 0) {
-          let l2 = Math.min(Math.round(s2 * a2), t3.length - 1);
-          o2 = t3[l2];
+      let r3 = e3.length / t2;
+      for (let s2 = 0; s2 < t2; s2++) {
+        let a2 = Math.floor(s2 * r3), o2 = Math.floor((s2 + 1) * r3), n2 = 0, l2 = 0;
+        for (let h2 = a2; h2 <= o2 && h2 < e3.length; h2++) e3[h2] > n2 && (n2 = e3[h2]), l2++;
+        if (l2 === 0) {
+          let h2 = Math.min(Math.round(s2 * r3), e3.length - 1);
+          n2 = e3[h2];
         }
-        i2.push(o2);
+        i2.push(n2);
       }
     }
     return i2;
   }
-  function x2(t3, e2, i2, a2, s2) {
-    let n2 = window.devicePixelRatio || 1, r3 = s2.barWidth * n2, o2 = s2.barSpacing * n2, h2 = Math.floor(e2.width / (r3 + o2)), l2 = S2(i2, h2), d2 = e2.height, p2 = a2 * e2.width;
-    t3.clearRect(0, 0, e2.width, e2.height);
-    for (let y2 = 0; y2 < l2.length; y2++) {
-      let f2 = y2 * (r3 + o2);
-      if (f2 + r3 > e2.width) break;
-      let c2 = l2[y2] * d2 * 0.9, m2 = d2 - c2;
-      t3.fillStyle = s2.color, t3.fillRect(f2, m2, r3, c2);
-    }
-    t3.save(), t3.beginPath(), t3.rect(0, 0, p2, d2), t3.clip();
-    for (let y2 = 0; y2 < l2.length; y2++) {
-      let f2 = y2 * (r3 + o2);
-      if (f2 > p2) break;
-      let c2 = l2[y2] * d2 * 0.9, m2 = d2 - c2;
-      t3.fillStyle = s2.progressColor, t3.fillRect(f2, m2, r3, c2);
-    }
-    t3.restore();
-  }
-  function q(t3, e2, i2, a2, s2) {
-    let n2 = window.devicePixelRatio || 1, r3 = s2.barWidth * n2, o2 = s2.barSpacing * n2, h2 = Math.floor(e2.width / (r3 + o2)), l2 = S2(i2, h2), d2 = e2.height, p2 = d2 / 2, y2 = a2 * e2.width;
-    t3.clearRect(0, 0, e2.width, e2.height);
-    for (let f2 = 0; f2 < l2.length; f2++) {
-      let c2 = f2 * (r3 + o2);
-      if (c2 + r3 > e2.width) break;
-      let m2 = l2[f2] * d2 * 0.45;
-      t3.fillStyle = s2.color, t3.fillRect(c2, p2 - m2, r3, m2), t3.fillRect(c2, p2, r3, m2);
-    }
-    t3.save(), t3.beginPath(), t3.rect(0, 0, y2, d2), t3.clip();
-    for (let f2 = 0; f2 < l2.length; f2++) {
-      let c2 = f2 * (r3 + o2);
-      if (c2 > y2) break;
-      let m2 = l2[f2] * d2 * 0.45;
-      t3.fillStyle = s2.progressColor, t3.fillRect(c2, p2 - m2, r3, m2), t3.fillRect(c2, p2, r3, m2);
-    }
-    t3.restore();
-  }
-  function $2(t3, e2, i2, a2, s2) {
-    let n2 = e2.width, r3 = e2.height, o2 = r3 / 2, h2 = r3 * 0.35;
-    t3.clearRect(0, 0, n2, r3);
-    let l2 = (d2, p2, y2 = 1, f2 = false) => {
-      f2 && (t3.shadowBlur = 12, t3.shadowColor = d2), t3.strokeStyle = d2, t3.lineWidth = p2, t3.lineCap = "round", t3.lineJoin = "round", t3.beginPath(), t3.moveTo(0, o2);
-      let c2 = [], m2 = Math.floor(i2.length * y2);
-      for (let u2 = 0; u2 < m2; u2++) {
-        let v20 = u2 / (i2.length - 1) * n2, k2 = i2[u2], b2 = Math.sin(u2 * 0.1) * k2, w2 = o2 + b2 * h2;
-        c2.push({ x: v20, y: w2 });
-      }
-      for (let u2 = 0; u2 < c2.length - 1; u2++) {
-        let v20 = c2[u2].x + (c2[u2 + 1].x - c2[u2].x) * 0.5, k2 = c2[u2].y, b2 = c2[u2 + 1].x - (c2[u2 + 1].x - c2[u2].x) * 0.5, w2 = c2[u2 + 1].y;
-        t3.bezierCurveTo(v20, k2, b2, w2, c2[u2 + 1].x, c2[u2 + 1].y);
-      }
-      t3.stroke(), f2 && (t3.shadowBlur = 0);
-    };
-    t3.strokeStyle = "rgba(255, 255, 255, 0.03)", t3.lineWidth = 0.5, t3.beginPath(), t3.moveTo(0, o2), t3.lineTo(n2, o2), t3.stroke();
-    for (let d2 = 0; d2 <= 10; d2++) {
-      let p2 = n2 / 10 * d2;
-      t3.beginPath(), t3.moveTo(p2, 0), t3.lineTo(p2, r3), t3.stroke();
-    }
-    l2(s2.color, 2, 1, false), a2 > 0 && l2(s2.progressColor, 3, a2, true);
-  }
-  function U(t3, e2, i2, a2, s2) {
-    let n2 = window.devicePixelRatio || 1, r3 = (s2.barWidth || 3) * n2, o2 = (s2.barSpacing || 1) * n2, h2 = Math.floor(e2.width / (r3 + o2)), l2 = S2(i2, h2), d2 = e2.height, p2 = 4 * n2, y2 = 2 * n2, f2 = a2 * e2.width, c2 = d2 / 2;
-    t3.clearRect(0, 0, e2.width, e2.height);
-    for (let m2 = 0; m2 < l2.length; m2++) {
-      let u2 = m2 * (r3 + o2);
-      if (u2 + r3 > e2.width) break;
-      let v20 = l2[m2] * d2 * 0.9, k2 = Math.floor(v20 / (p2 + y2));
-      t3.fillStyle = u2 < f2 ? s2.progressColor : s2.color;
-      for (let b2 = 0; b2 < k2; b2++) {
-        let w2 = b2 * (p2 + y2);
-        t3.fillRect(u2, c2 - w2 - p2, r3, p2), b2 > 0 && t3.fillRect(u2, c2 + w2, r3, p2);
-      }
-    }
-  }
-  function F(t3, e2, i2, a2, s2) {
-    let n2 = window.devicePixelRatio || 1, r3 = (s2.barWidth || 2) * n2, o2 = (s2.barSpacing || 3) * n2, h2 = Math.floor(e2.width / (r3 + o2)), l2 = S2(i2, h2), d2 = e2.height, p2 = Math.max(1.5 * n2, r3 / 2), y2 = a2 * e2.width, f2 = d2 / 2;
-    t3.clearRect(0, 0, e2.width, e2.height);
-    for (let c2 = 0; c2 < l2.length; c2++) {
-      let m2 = c2 * (r3 + o2) + r3 / 2;
-      if (m2 > e2.width) break;
-      let u2 = l2[c2] * d2 * 0.9;
-      t3.fillStyle = m2 < y2 ? s2.progressColor : s2.color, t3.beginPath(), t3.arc(m2, f2 - u2 / 2, p2, 0, Math.PI * 2), t3.fill(), t3.beginPath(), t3.arc(m2, f2 + u2 / 2, p2, 0, Math.PI * 2), t3.fill();
-    }
-  }
-  function N2(t3, e2, i2, a2, s2) {
-    let n2 = e2.width, r3 = e2.height, o2 = r3 / 2, h2 = 4, l2 = h2 / 2;
-    if (t3.clearRect(0, 0, n2, r3), t3.fillStyle = s2.color || "rgba(255, 255, 255, 0.2)", t3.beginPath(), t3.moveTo(l2, o2 - h2 / 2), t3.lineTo(n2 - l2, o2 - h2 / 2), t3.arc(n2 - l2, o2, h2 / 2, -Math.PI / 2, Math.PI / 2), t3.lineTo(l2, o2 + h2 / 2), t3.arc(l2, o2, h2 / 2, Math.PI / 2, -Math.PI / 2), t3.closePath(), t3.fill(), a2 > 0) {
-      let d2 = Math.max(l2 * 2, a2 * n2);
-      t3.shadowBlur = 8, t3.shadowColor = s2.progressColor, t3.fillStyle = s2.progressColor || "rgba(255, 255, 255, 0.9)", t3.beginPath(), t3.moveTo(l2, o2 - h2 / 2), t3.lineTo(d2 - l2, o2 - h2 / 2), t3.arc(d2 - l2, o2, h2 / 2, -Math.PI / 2, Math.PI / 2), t3.lineTo(l2, o2 + h2 / 2), t3.arc(l2, o2, h2 / 2, Math.PI / 2, -Math.PI / 2), t3.closePath(), t3.fill(), t3.shadowBlur = 0;
-      let p2 = 8, y2 = d2;
-      t3.shadowBlur = 4, t3.shadowColor = "rgba(0, 0, 0, 0.3)", t3.shadowOffsetY = 2, t3.fillStyle = "#ffffff", t3.beginPath(), t3.arc(y2, o2, p2, 0, Math.PI * 2), t3.fill(), t3.shadowBlur = 0, t3.shadowOffsetY = 0, t3.fillStyle = s2.progressColor || "rgba(255, 255, 255, 0.9)", t3.beginPath(), t3.arc(y2, o2, p2 * 0.4, 0, Math.PI * 2), t3.fill();
-    }
-  }
-  var Y = { bars: x2, mirror: q, line: $2, blocks: U, dots: F, seekbar: N2 };
-  function W(t3, e2, i2, a2, s2) {
-    (Y[s2.waveformStyle] || x2)(t3, e2, i2, a2, s2);
-  }
-  function I(t3) {
+  function E(e3, t2, i2, r3) {
+    if (!Array.isArray(t2)) return t2;
+    if (t2.length < 2) return t2[0];
+    let s2 = i2.width, a2 = i2.height, o2 = r3 && r3.waveformGradient, [n2, l2, h2, d2] = o2 === "horizontal" ? [0, 0, s2, 0] : o2 === "diagonal" ? [0, 0, s2, a2] : [0, 0, 0, a2];
     try {
-      let e2 = t3.getChannelData(0), i2 = t3.sampleRate, a2 = j2(e2, i2);
-      if (a2.length < 2) return 120;
-      let s2 = [];
-      for (let h2 = 1; h2 < a2.length; h2++) s2.push((a2[h2] - a2[h2 - 1]) / i2);
-      let n2 = {};
-      s2.forEach((h2) => {
-        let l2 = 60 / h2, d2 = Math.round(l2 / 3) * 3;
-        d2 > 60 && d2 < 200 && (n2[d2] = (n2[d2] || 0) + 1);
-      });
-      let r3 = 0, o2 = 120;
-      for (let [h2, l2] of Object.entries(n2)) l2 > r3 && (r3 = l2, o2 = parseInt(h2));
-      return o2 < 70 && n2[o2 * 2] ? o2 *= 2 : o2 > 160 && n2[Math.round(o2 / 2)] && (o2 = Math.round(o2 / 2)), o2 - 1;
-    } catch (e2) {
-      return console.warn("BPM detection failed:", e2), null;
+      let u2 = e3.createLinearGradient(n2, l2, h2, d2);
+      return t2.forEach((v20, g2) => u2.addColorStop(g2 / (t2.length - 1), v20)), u2;
+    } catch {
+      return t2[0];
     }
   }
-  function j2(t3, e2) {
-    let s2 = [], n2 = 0;
-    for (let r3 = 0; r3 < t3.length - 2048; r3 += 1024) {
-      let o2 = 0;
-      for (let d2 = r3; d2 < r3 + 2048; d2++) o2 += t3[d2] * t3[d2];
-      o2 = o2 / 2048;
-      let h2 = o2 - n2, l2 = n2 * 1.8 + 0.01;
-      if (h2 > l2 && o2 > 0.01) {
-        let d2 = s2[s2.length - 1] || 0, p2 = e2 * 0.15;
-        r3 - d2 > p2 && s2.push(r3);
+  function A(e3, t2, i2, r3, s2, a2) {
+    if ((Array.isArray(a2) ? a2.some((n2) => n2 > 0) : a2 > 0) && typeof e3.roundRect == "function") {
+      let n2 = Math.min(r3 / 2, Math.abs(s2) / 2), l2 = (h2) => m2(h2, 0, n2);
+      e3.beginPath(), e3.roundRect(t2, i2, r3, s2, Array.isArray(a2) ? a2.map(l2) : l2(a2)), e3.fill();
+    } else e3.fillRect(t2, i2, r3, s2);
+  }
+  function Y(e3, t2) {
+    return (e3.barRadius || 0) * t2;
+  }
+  function nt(e3, t2) {
+    let i2 = Y(e3, t2);
+    return [i2, i2, 0, 0];
+  }
+  function G2(e3, t2, i2, r3, s2) {
+    let a2 = s2 / 2;
+    e3.beginPath(), e3.moveTo(t2, r3 - a2), e3.lineTo(i2 - a2, r3 - a2), e3.arc(i2 - a2, r3, a2, -Math.PI / 2, Math.PI / 2), e3.lineTo(t2, r3 + a2), e3.arc(t2, r3, a2, Math.PI / 2, -Math.PI / 2), e3.closePath();
+  }
+  function I(e3, t2, i2, r3, s2) {
+    let a2 = window.devicePixelRatio || 1, o2 = s2.barWidth * a2, n2 = s2.barSpacing * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = L(i2, l2), d2 = t2.height, u2 = r3 * t2.width, v20 = nt(s2, a2), g2 = E(e3, s2.color, t2, s2), w2 = E(e3, s2.progressColor, t2, s2);
+    e3.clearRect(0, 0, t2.width, t2.height), e3.fillStyle = g2;
+    for (let f2 = 0; f2 < h2.length; f2++) {
+      let p2 = f2 * (o2 + n2);
+      if (p2 + o2 > t2.width) break;
+      let y2 = h2[f2] * d2 * 0.9, c2 = d2 - y2;
+      A(e3, p2, c2, o2, y2, v20);
+    }
+    e3.save(), e3.beginPath(), e3.rect(0, 0, u2, d2), e3.clip(), e3.fillStyle = w2;
+    for (let f2 = 0; f2 < h2.length; f2++) {
+      let p2 = f2 * (o2 + n2);
+      if (p2 > u2) break;
+      let y2 = h2[f2] * d2 * 0.9, c2 = d2 - y2;
+      A(e3, p2, c2, o2, y2, v20);
+    }
+    e3.restore();
+  }
+  function lt(e3, t2, i2, r3, s2) {
+    let a2 = window.devicePixelRatio || 1, o2 = s2.barWidth * a2, n2 = s2.barSpacing * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = L(i2, l2), d2 = t2.height, u2 = d2 / 2, v20 = r3 * t2.width, g2 = Y(s2, a2), w2 = [g2, g2, 0, 0], f2 = [0, 0, g2, g2], p2 = E(e3, s2.color, t2, s2), y2 = E(e3, s2.progressColor, t2, s2);
+    e3.clearRect(0, 0, t2.width, t2.height), e3.fillStyle = p2;
+    for (let c2 = 0; c2 < h2.length; c2++) {
+      let b2 = c2 * (o2 + n2);
+      if (b2 + o2 > t2.width) break;
+      let k2 = h2[c2] * d2 * 0.45;
+      A(e3, b2, u2 - k2, o2, k2, w2), A(e3, b2, u2, o2, k2, f2);
+    }
+    e3.save(), e3.beginPath(), e3.rect(0, 0, v20, d2), e3.clip(), e3.fillStyle = y2;
+    for (let c2 = 0; c2 < h2.length; c2++) {
+      let b2 = c2 * (o2 + n2);
+      if (b2 > v20) break;
+      let k2 = h2[c2] * d2 * 0.45;
+      A(e3, b2, u2 - k2, o2, k2, w2), A(e3, b2, u2, o2, k2, f2);
+    }
+    e3.restore();
+  }
+  function ht(e3, t2, i2, r3, s2) {
+    let a2 = t2.width, o2 = t2.height, n2 = o2 / 2, l2 = o2 * 0.35;
+    e3.clearRect(0, 0, a2, o2);
+    let h2 = (d2, u2, v20 = 1, g2 = false) => {
+      let w2 = E(e3, d2, t2, s2), f2 = Array.isArray(d2) ? d2[d2.length - 1] : d2;
+      g2 && (e3.shadowBlur = 12, e3.shadowColor = f2), e3.strokeStyle = w2, e3.lineWidth = u2, e3.lineCap = "round", e3.lineJoin = "round", e3.beginPath(), e3.moveTo(0, n2);
+      let p2 = [], y2 = Math.floor(i2.length * v20);
+      for (let c2 = 0; c2 < y2; c2++) {
+        let b2 = c2 / (i2.length - 1) * a2, k2 = i2[c2], P = Math.sin(c2 * 0.1) * k2, C = n2 + P * l2;
+        p2.push({ x: b2, y: C });
       }
-      n2 = o2 * 0.8 + n2 * 0.2;
+      for (let c2 = 0; c2 < p2.length - 1; c2++) {
+        let b2 = p2[c2].x + (p2[c2 + 1].x - p2[c2].x) * 0.5, k2 = p2[c2].y, P = p2[c2 + 1].x - (p2[c2 + 1].x - p2[c2].x) * 0.5, C = p2[c2 + 1].y;
+        e3.bezierCurveTo(b2, k2, P, C, p2[c2 + 1].x, p2[c2 + 1].y);
+      }
+      e3.stroke(), g2 && (e3.shadowBlur = 0);
+    };
+    e3.strokeStyle = "rgba(255, 255, 255, 0.03)", e3.lineWidth = 0.5, e3.beginPath(), e3.moveTo(0, n2), e3.lineTo(a2, n2), e3.stroke();
+    for (let d2 = 0; d2 <= 10; d2++) {
+      let u2 = a2 / 10 * d2;
+      e3.beginPath(), e3.moveTo(u2, 0), e3.lineTo(u2, o2), e3.stroke();
+    }
+    h2(s2.color, 2, 1, false), r3 > 0 && h2(s2.progressColor, 3, r3, true);
+  }
+  function J(e3, t2, i2, r3, s2) {
+    let a2 = window.devicePixelRatio || 1, o2 = (s2.barWidth || 3) * a2, n2 = (s2.barSpacing || 1) * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = L(i2, l2), d2 = t2.height, u2 = 4 * a2, v20 = 2 * a2, g2 = r3 * t2.width, w2 = d2 / 2, f2 = E(e3, s2.color, t2, s2), p2 = E(e3, s2.progressColor, t2, s2);
+    e3.clearRect(0, 0, t2.width, t2.height);
+    for (let y2 = 0; y2 < h2.length; y2++) {
+      let c2 = y2 * (o2 + n2);
+      if (c2 + o2 > t2.width) break;
+      let b2 = h2[y2] * d2 * 0.9, k2 = Math.floor(b2 / (u2 + v20));
+      e3.fillStyle = c2 < g2 ? p2 : f2;
+      for (let P = 0; P < k2; P++) {
+        let C = P * (u2 + v20);
+        e3.fillRect(c2, w2 - C - u2, o2, u2), P > 0 && e3.fillRect(c2, w2 + C, o2, u2);
+      }
+    }
+  }
+  function K(e3, t2, i2, r3, s2) {
+    let a2 = window.devicePixelRatio || 1, o2 = (s2.barWidth || 2) * a2, n2 = (s2.barSpacing || 3) * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = L(i2, l2), d2 = t2.height, u2 = Math.max(1.5 * a2, o2 / 2), v20 = r3 * t2.width, g2 = d2 / 2, w2 = E(e3, s2.color, t2, s2), f2 = E(e3, s2.progressColor, t2, s2);
+    e3.clearRect(0, 0, t2.width, t2.height);
+    for (let p2 = 0; p2 < h2.length; p2++) {
+      let y2 = p2 * (o2 + n2) + o2 / 2;
+      if (y2 > t2.width) break;
+      let c2 = h2[p2] * d2 * 0.9;
+      e3.fillStyle = y2 < v20 ? f2 : w2, e3.beginPath(), e3.arc(y2, g2 - c2 / 2, u2, 0, Math.PI * 2), e3.fill(), e3.beginPath(), e3.arc(y2, g2 + c2 / 2, u2, 0, Math.PI * 2), e3.fill();
+    }
+  }
+  function dt(e3, t2, i2, r3, s2) {
+    let a2 = t2.width, o2 = t2.height, n2 = o2 / 2, l2 = 4, h2 = l2 / 2, d2 = !!s2.seekActive;
+    if (e3.clearRect(0, 0, a2, o2), e3.fillStyle = E(e3, s2.color, t2, s2) || "rgba(255, 255, 255, 0.2)", G2(e3, h2, a2, n2, l2), e3.fill(), r3 > 0) {
+      let u2 = Math.max(h2 * 2, r3 * a2);
+      e3.save(), e3.globalAlpha = s2.seekHandle && !d2 ? 0.7 : 1, e3.fillStyle = E(e3, s2.progressColor, t2, s2) || "rgba(255, 255, 255, 0.9)", G2(e3, h2, u2, n2, l2), e3.fill(), e3.restore();
+    }
+  }
+  var ct = { bars: I, bar: I, mirror: lt, line: ht, blocks: J, block: J, dots: K, dot: K, seekbar: dt };
+  function X(e3, t2, i2, r3, s2) {
+    (ct[s2.waveformStyle] || I)(e3, t2, i2, r3, s2);
+  }
+  function Q(e3) {
+    try {
+      let t2 = e3.getChannelData(0), i2 = e3.sampleRate, r3 = ut(t2, i2);
+      if (r3.length < 2) return 120;
+      let s2 = [];
+      for (let l2 = 1; l2 < r3.length; l2++) s2.push((r3[l2] - r3[l2 - 1]) / i2);
+      let a2 = {};
+      s2.forEach((l2) => {
+        let h2 = 60 / l2, d2 = Math.round(h2 / 3) * 3;
+        d2 > 60 && d2 < 200 && (a2[d2] = (a2[d2] || 0) + 1);
+      });
+      let o2 = 0, n2 = 120;
+      for (let [l2, h2] of Object.entries(a2)) h2 > o2 && (o2 = h2, n2 = parseInt(l2));
+      return n2 < 70 && a2[n2 * 2] ? n2 *= 2 : n2 > 160 && a2[Math.round(n2 / 2)] && (n2 = Math.round(n2 / 2)), n2 - 1;
+    } catch (t2) {
+      return console.warn("[WaveformPlayer] BPM detection failed:", t2), null;
+    }
+  }
+  function ut(e3, t2) {
+    let s2 = [], a2 = 0;
+    for (let o2 = 0; o2 < e3.length - 2048; o2 += 1024) {
+      let n2 = 0;
+      for (let d2 = o2; d2 < o2 + 2048; d2++) n2 += e3[d2] * e3[d2];
+      n2 = n2 / 2048;
+      let l2 = n2 - a2, h2 = a2 * 1.8 + 0.01;
+      if (l2 > h2 && n2 > 0.01) {
+        let d2 = s2[s2.length - 1] || 0, u2 = t2 * 0.15;
+        o2 - d2 > u2 && s2.push(o2);
+      }
+      a2 = n2 * 0.8 + a2 * 0.2;
     }
     return s2;
   }
-  function V(t3, e2 = 200) {
-    let i2 = t3.length / e2, a2 = ~~(i2 / 10) || 1, s2 = t3.numberOfChannels, n2 = [];
-    for (let o2 = 0; o2 < s2; o2++) {
-      let h2 = t3.getChannelData(o2);
-      for (let l2 = 0; l2 < e2; l2++) {
-        let d2 = ~~(l2 * i2), p2 = ~~(d2 + i2), y2 = 0, f2 = 0;
-        for (let m2 = d2; m2 < p2; m2 += a2) {
-          let u2 = h2[m2];
-          u2 > f2 && (f2 = u2), u2 < y2 && (y2 = u2);
+  function pt(e3, t2 = 1800) {
+    let i2 = e3.length / t2, r3 = e3.numberOfChannels, s2 = [];
+    for (let o2 = 0; o2 < r3; o2++) {
+      let n2 = e3.getChannelData(o2);
+      for (let l2 = 0; l2 < t2; l2++) {
+        let h2 = ~~(l2 * i2), d2 = ~~(h2 + i2), u2 = 0, v20 = 0;
+        for (let w2 = h2; w2 < d2; w2++) {
+          let f2 = n2[w2];
+          f2 > v20 && (v20 = f2), f2 < u2 && (u2 = f2);
         }
-        let c2 = Math.max(Math.abs(f2), Math.abs(y2));
-        (o2 === 0 || c2 > n2[l2]) && (n2[l2] = c2);
+        let g2 = Math.max(Math.abs(v20), Math.abs(u2));
+        (o2 === 0 || g2 > s2[l2]) && (s2[l2] = g2);
       }
     }
-    let r3 = Math.max(...n2);
-    return r3 > 0 ? n2.map((o2) => o2 / r3) : n2;
+    let a2 = W(s2);
+    return a2 > 0 ? s2.map((o2) => o2 / a2) : s2;
   }
-  async function M2(t3, e2 = 200, i2 = false) {
+  async function z(e3, t2 = 1800, i2 = false) {
+    let r3;
     try {
-      let a2 = new (window.AudioContext || window.webkitAudioContext)(), n2 = await (await fetch(t3)).arrayBuffer(), r3 = await a2.decodeAudioData(n2), o2 = V(r3, e2);
-      o2 = J(o2);
+      let s2 = window.AudioContext || window.webkitAudioContext;
+      r3 = new s2();
+      let o2 = await (await fetch(e3)).arrayBuffer(), n2 = await r3.decodeAudioData(o2), l2 = pt(n2, t2);
+      l2 = ft(l2);
       let h2 = null;
-      return i2 && (h2 = await I(r3)), a2.close(), { peaks: o2, bpm: h2 };
-    } catch (a2) {
-      throw console.error("Failed to generate waveform:", a2), a2;
+      return i2 && (h2 = Q(n2)), { peaks: l2, bpm: h2 };
+    } finally {
+      r3 && r3.close();
     }
   }
-  function D(t3 = 200) {
-    let e2 = [];
-    for (let i2 = 0; i2 < t3; i2++) {
-      let a2 = Math.random() * 0.5 + 0.3, s2 = Math.sin(i2 / t3 * Math.PI * 4) * 0.2;
-      e2.push(Math.max(0.1, Math.min(1, a2 + s2)));
+  function Z(e3 = 1800) {
+    let t2 = [];
+    for (let i2 = 0; i2 < e3; i2++) {
+      let r3 = Math.random() * 0.5 + 0.3, s2 = Math.sin(i2 / e3 * Math.PI * 4) * 0.2;
+      t2.push(m2(r3 + s2, 0.1, 1));
     }
-    return e2;
+    return t2;
   }
-  function J(t3, e2 = 0.95) {
-    let i2 = Math.max(...t3);
-    if (i2 === 0 || i2 > e2) return t3;
-    let a2 = e2 / i2;
-    return t3.map((s2) => s2 * a2);
+  function ft(e3, t2 = 0.95) {
+    let i2 = W(e3);
+    if (i2 === 0 || i2 > t2) return e3;
+    let r3 = t2 / i2;
+    return e3.map((s2) => s2 * r3);
   }
-  function G2() {
-    let t3 = document.documentElement, e2 = document.body;
-    if (t3.classList.contains("dark") || t3.classList.contains("dark-mode") || t3.classList.contains("theme-dark") || t3.getAttribute("data-theme") === "dark" || t3.getAttribute("data-color-scheme") === "dark" || e2.classList.contains("dark") || e2.classList.contains("dark-mode") || e2.getAttribute("data-theme") === "dark") return "dark";
-    if (t3.classList.contains("light") || t3.classList.contains("light-mode") || t3.classList.contains("theme-light") || t3.getAttribute("data-theme") === "light" || t3.getAttribute("data-color-scheme") === "light" || e2.classList.contains("light") || e2.classList.contains("light-mode") || e2.getAttribute("data-theme") === "light") return "light";
+  function tt(e3) {
+    let t2 = document.documentElement, i2 = document.body;
+    return t2.classList.contains(e3) || t2.classList.contains(`${e3}-mode`) || t2.classList.contains(`theme-${e3}`) || t2.getAttribute("data-theme") === e3 || t2.getAttribute("data-color-scheme") === e3 || i2.classList.contains(e3) || i2.classList.contains(`${e3}-mode`) || i2.getAttribute("data-theme") === e3;
+  }
+  function R() {
+    if (tt("dark")) return "dark";
+    if (tt("light")) return "light";
     try {
-      let a2 = getComputedStyle(document.body).backgroundColor.match(/\d+/g);
-      if (a2 && a2.length >= 3) {
-        let [s2, n2, r3] = a2.map(Number), o2 = (s2 * 299 + n2 * 587 + r3 * 114) / 1e3;
-        if (o2 > 128) return "light";
-        if (o2 < 128) return "dark";
+      let e3 = getComputedStyle(document.body).backgroundColor, t2 = V(e3);
+      if (t2 !== null) {
+        if (t2 > 128) return "light";
+        if (t2 < 128) return "dark";
       }
     } catch {
     }
@@ -49364,62 +49441,60 @@ ${text}
     }
     return "dark";
   }
-  var E = { dark: { waveformColor: "rgba(255, 255, 255, 0.3)", progressColor: "rgba(255, 255, 255, 0.9)", buttonColor: "rgba(255, 255, 255, 0.9)", buttonHoverColor: "rgba(255, 255, 255, 1)", textColor: "#ffffff", textSecondaryColor: "rgba(255, 255, 255, 0.6)", backgroundColor: "rgba(255, 255, 255, 0.03)", borderColor: "rgba(255, 255, 255, 0.1)" }, light: { waveformColor: "rgba(0, 0, 0, 0.2)", progressColor: "rgba(0, 0, 0, 0.8)", buttonColor: "rgba(0, 0, 0, 0.8)", buttonHoverColor: "rgba(0, 0, 0, 0.9)", textColor: "#333333", textSecondaryColor: "rgba(0, 0, 0, 0.6)", backgroundColor: "rgba(0, 0, 0, 0.02)", borderColor: "rgba(0, 0, 0, 0.1)" } };
-  function z(t3) {
-    if (t3 && E[t3]) return E[t3];
-    let e2 = G2();
-    return E[e2];
+  var _ = { dark: { waveformColor: "rgba(255, 255, 255, 0.3)", progressColor: "rgba(255, 255, 255, 0.9)" }, light: { waveformColor: "rgba(0, 0, 0, 0.2)", progressColor: "rgba(0, 0, 0, 0.8)" } };
+  function F(e3) {
+    if (e3 && _[e3]) return _[e3];
+    let t2 = R();
+    return _[t2];
   }
-  var O = { url: "", height: 60, samples: 200, preload: "metadata", playbackRate: 1, showPlaybackSpeed: false, playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2], buttonAlign: "auto", waveformStyle: "mirror", barWidth: 2, barSpacing: 0, colorPreset: null, waveformColor: null, progressColor: null, buttonColor: null, buttonHoverColor: null, textColor: null, textSecondaryColor: null, backgroundColor: null, borderColor: null, autoplay: false, showTime: true, showHoverTime: false, showBPM: false, singlePlay: true, playOnSeek: true, enableMediaSession: true, markers: [], showMarkers: true, title: null, subtitle: null, artwork: null, album: "", playIcon: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>', pauseIcon: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>', onLoad: null, onPlay: null, onPause: null, onEnd: null, onError: null, onTimeUpdate: null };
-  var H2 = { bars: { barWidth: 3, barSpacing: 1 }, mirror: { barWidth: 2, barSpacing: 0 }, line: { barWidth: 2, barSpacing: 0 }, blocks: { barWidth: 4, barSpacing: 2 }, dots: { barWidth: 3, barSpacing: 3 }, seekbar: { barWidth: 1, barSpacing: 0 } };
-  var g2 = class t2 {
+  var et = { url: "", height: 64, samples: 1800, preload: "metadata", audioMode: "self", playbackRate: 1, showPlaybackSpeed: false, playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2], buttonAlign: "auto", layout: "default", buttonStyle: "circle", buttonSize: null, waveformStyle: "mirror", barWidth: 2, barSpacing: 0, barRadius: 1, waveformGradient: "vertical", colorPreset: null, waveformColor: null, progressColor: null, autoplay: false, showControls: true, showInfo: true, showTime: true, showHoverTime: false, seekHandle: false, showBPM: false, bpm: null, singlePlay: true, playOnSeek: true, enableMediaSession: true, markers: [], showMarkers: true, accessibleSeek: true, seekLabel: null, title: null, artist: null, artwork: null, album: "", errorText: "Unable to load audio", playIcon: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>', pauseIcon: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>', onLoad: null, onPlay: null, onPause: null, onEnd: null, onError: null, onTimeUpdate: null, onNextTrack: null, onPreviousTrack: null };
+  var it = { bars: { barWidth: 3, barSpacing: 1 }, mirror: { barWidth: 2, barSpacing: 2 }, line: { barWidth: 2, barSpacing: 0 }, blocks: { barWidth: 4, barSpacing: 2 }, dots: { barWidth: 3, barSpacing: 3 }, seekbar: { barWidth: 1, barSpacing: 0 } };
+  var mt = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#71717a" fill-opacity="0.15"/><g fill="none" stroke="#a1a1aa" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="17" r="2.2"/><circle cx="17" cy="15" r="2.2"/><path d="M10.2 17V7l9-1.6v9"/></g></svg>');
+  var st = 5;
+  var rt = 10;
+  var gt = 'button, a[href], input, [role="slider"]';
+  var T = class e2 {
     static instances = /* @__PURE__ */ new Map();
     static currentlyPlaying = null;
-    constructor(e2, i2 = {}) {
-      if (this.container = typeof e2 == "string" ? document.querySelector(e2) : e2, !this.container) throw new Error("WaveformPlayer: Container element not found");
-      let a2 = L(this.container);
-      this.options = C(O, a2, i2);
-      let s2 = z(this.options.colorPreset);
-      for (let [r3, o2] of Object.entries(s2)) (this.options[r3] === null || this.options[r3] === void 0) && (this.options[r3] = o2);
-      let n2 = H2[this.options.waveformStyle];
-      n2 && (a2.barWidth === void 0 && i2.barWidth === void 0 && (this.options.barWidth = n2.barWidth), a2.barSpacing === void 0 && i2.barSpacing === void 0 && (this.options.barSpacing = n2.barSpacing)), this.audio = null, this.canvas = null, this.ctx = null, this.waveformData = [], this.progress = 0, this.isPlaying = false, this.isLoading = false, this.hasError = false, this.updateTimer = null, this.resizeObserver = null, this.id = this.container.id || A(this.options.url), t2.instances.set(this.id, this), this.init(), setTimeout(() => {
-        this.container.dispatchEvent(new CustomEvent("waveformplayer:ready", { bubbles: true, detail: { player: this, url: this.options.url } }));
+    constructor(t2, i2 = {}) {
+      if (this.container = typeof t2 == "string" ? document.querySelector(t2) : t2, !this.container) throw new Error("[WaveformPlayer] Container element not found");
+      let r3 = D(this.container), s2 = { ...i2 };
+      s2.style && !s2.waveformStyle && (s2.waveformStyle = s2.style), s2.src && !s2.url && (s2.url = s2.src), this.options = B(et, r3, s2);
+      let a2 = F(this.options.colorPreset);
+      this._autoTheme = this.options.colorPreset == null || !_[this.options.colorPreset], this._presetKeys = [], this._scheme = this.options.colorPreset && _[this.options.colorPreset] ? this.options.colorPreset : R();
+      for (let [n2, l2] of Object.entries(a2)) (this.options[n2] === null || this.options[n2] === void 0) && (this.options[n2] = l2, this._presetKeys.push(n2));
+      let o2 = it[this.options.waveformStyle];
+      o2 && (r3.barWidth === void 0 && i2.barWidth === void 0 && (this.options.barWidth = o2.barWidth), r3.barSpacing === void 0 && i2.barSpacing === void 0 && (this.options.barSpacing = o2.barSpacing)), this.audio = null, this.canvas = null, this.ctx = null, this.waveformData = [], this.progress = 0, this._activeMarkerIndex = -1, this._markerLabelTimer = null, this.isPlaying = false, this.isLoading = false, this.hasError = false, this.updateTimer = null, this.resizeObserver = null, this._ac = new AbortController(), this.id = this.container.id || N2(this.options.url), e2.instances.set(this.id, this), e2._watchTheme(), this.init(), setTimeout(() => {
+        this._emit("waveformplayer:ready", { player: this, url: this.options.url });
       }, 100);
     }
+    _emit(t2, i2, r3 = false) {
+      let s2 = new CustomEvent(t2, { bubbles: true, cancelable: r3, detail: i2 });
+      return this.container.dispatchEvent(s2), s2;
+    }
+    _requestSeek(t2) {
+      this._emit("waveformplayer:request-seek", { ...this._buildTrackDetail(), percent: t2 }, true).defaultPrevented || (this.progress = t2, this.drawWaveform?.());
+    }
     init() {
-      this.createDOM(), this.createAudio(), this.initPlaybackSpeed(), this.initKeyboardControls(), this.bindEvents(), this.setupResizeObserver(), requestAnimationFrame(() => {
+      this.createDOM(), this.createAudio(), this.initPlaybackSpeed(), this.initKeyboardControls(), this.initSeekControl(), this.bindEvents(), this.setupResizeObserver(), requestAnimationFrame(() => {
         this.resizeCanvas(), this.options.url && this.load(this.options.url).then(() => {
-          this.options.autoplay && this.play();
-        }).catch((e2) => {
-          console.error("Failed to load audio:", e2);
+          this.options.autoplay && this.play()?.catch(() => {
+          });
+        }).catch((t2) => {
+          console.error("[WaveformPlayer] Failed to load audio:", t2);
         });
       });
     }
     createDOM() {
       this.container.innerHTML = "", this.container.className = "waveform-player";
-      let e2 = this.options.buttonAlign;
-      e2 === "auto" && (this.options.waveformStyle === "bars" ? e2 = "bottom" : e2 = "center"), this.container.innerHTML = `
-  <div class="waveform-player-inner">
-    <div class="waveform-body">
-      <div class="waveform-track waveform-align-${e2}">
-        <button class="waveform-btn" aria-label="Play/Pause" style="
-            border-color: ${this.options.buttonColor};
-            color: ${this.options.buttonColor};
-        ">
+      let t2 = this.options.buttonAlign;
+      t2 === "auto" && (this.options.waveformStyle === "bars" ? t2 = "bottom" : t2 = "center"), this.options.layout === "preview" && this.container.classList.add("waveform-layout-preview"), this.container.classList.toggle("waveform-theme-light", this._scheme === "light");
+      let r3 = this.options.showControls ? `
+        <button class="waveform-btn${this.options.buttonStyle === "minimal" ? " waveform-btn-minimal" : ""}" aria-label="Play/Pause"${this.options.buttonSize != null ? ` style="--wfp-btn-size: ${typeof this.options.buttonSize == "number" ? `${this.options.buttonSize}px` : this.options.buttonSize};"` : ""}>
           <span class="waveform-icon-play">${this.options.playIcon}</span>
           <span class="waveform-icon-pause" style="display:none;">${this.options.pauseIcon}</span>
         </button>
-        
-        <div class="waveform-container">
-          <canvas></canvas>
-          <div class="waveform-markers"></div>
-          <div class="waveform-loading" style="display:none;"></div>
-          <div class="waveform-error" style="display:none;">
-            <span class="waveform-error-text">Unable to load audio</span>
-          </div>
-        </div>
-      </div>
-      
+        ` : "", s2 = this.options.showInfo ? `
       <div class="waveform-info">
         ${this.options.artwork ? `
           <img class="waveform-artwork" src="${this.options.artwork}" alt="Album artwork" style="
@@ -49431,268 +49506,542 @@ ${text}
           ">
         ` : ""}
         <div class="waveform-text">
-          <span class="waveform-title" style="color: ${this.options.textColor};"></span>
-          ${this.options.subtitle ? `<span class="waveform-subtitle" style="color: ${this.options.textSecondaryColor};">${this.options.subtitle}</span>` : ""}
+          <span class="waveform-title"></span>
+          ${this.options.artist ? `<span class="waveform-artist">${this.options.artist}</span>` : ""}
         </div>
-        <div style="display: flex; align-items: center; gap: 1rem;">
+        <div class="waveform-meta" style="display: flex; align-items: center; gap: 1rem;">
           ${this.options.showBPM ? `
-            <span class="waveform-bpm" style="color: ${this.options.textSecondaryColor}; display: none;">
+            <span class="waveform-bpm" style="display: none;">
               <span class="bpm-value">--</span> BPM
             </span>
           ` : ""}
           ${this.options.showPlaybackSpeed ? `
             <div class="waveform-speed">
-              <button class="speed-btn" aria-label="Playback speed">
+              <button class="speed-btn" aria-label="Playback speed" aria-haspopup="true" aria-expanded="false">
                 <span class="speed-value">1x</span>
               </button>
               <div class="speed-menu" style="display: none;">
-                ${this.options.playbackRates.map((i2) => `<button class="speed-option" data-rate="${i2}">${i2}x</button>`).join("")}
+                ${this.options.playbackRates.map((a2) => `<button class="speed-option" data-rate="${a2}">${a2}x</button>`).join("")}
               </div>
             </div>
           ` : ""}
           ${this.options.showTime ? `
-            <span class="waveform-time" style="color: ${this.options.textSecondaryColor};">
+            <span class="waveform-time">
               <span class="time-current">0:00</span> / <span class="time-total">0:00</span>
             </span>
           ` : ""}
         </div>
       </div>
+        ` : "";
+      this.container.innerHTML = `
+  <div class="waveform-player-inner">
+    <div class="waveform-body">
+      <div class="waveform-track waveform-align-${t2}">
+        ${r3}
+        
+        <div class="waveform-container">
+          <canvas></canvas>
+          <div class="waveform-markers"></div>
+          <div class="waveform-loading" style="display:none;"></div>
+          <div class="waveform-error" style="display:none;" role="alert">
+            <span class="waveform-error-text">${x2(this.options.errorText)}</span>
+          </div>
+        </div>
+      </div>
+      
+      ${s2}
     </div>
   </div>
-`, this.playBtn = this.container.querySelector(".waveform-btn"), this.canvas = this.container.querySelector("canvas"), this.ctx = this.canvas.getContext("2d"), this.titleEl = this.container.querySelector(".waveform-title"), this.subtitleEl = this.container.querySelector(".waveform-subtitle"), this.artworkEl = this.container.querySelector(".waveform-artwork"), this.currentTimeEl = this.container.querySelector(".time-current"), this.totalTimeEl = this.container.querySelector(".time-total"), this.bpmEl = this.container.querySelector(".waveform-bpm"), this.bpmValueEl = this.container.querySelector(".bpm-value"), this.loadingEl = this.container.querySelector(".waveform-loading"), this.errorEl = this.container.querySelector(".waveform-error"), this.markersContainer = this.container.querySelector(".waveform-markers"), this.speedBtn = this.container.querySelector(".speed-btn"), this.speedMenu = this.container.querySelector(".speed-menu"), this.resizeCanvas();
+`, this.playBtn = this.container.querySelector(".waveform-btn"), this.canvas = this.container.querySelector("canvas"), this.ctx = this.canvas.getContext("2d"), this.titleEl = this.container.querySelector(".waveform-title"), this.artistEl = this.container.querySelector(".waveform-artist"), this.artworkEl = this.container.querySelector(".waveform-artwork"), this.artworkEl && this.artworkEl.addEventListener("error", () => {
+        this.artworkEl.src.startsWith("data:") || (this.artworkEl.src = mt);
+      }), this.currentTimeEl = this.container.querySelector(".time-current"), this.totalTimeEl = this.container.querySelector(".time-total"), this.bpmEl = this.container.querySelector(".waveform-bpm"), this.bpmValueEl = this.container.querySelector(".bpm-value"), this.loadingEl = this.container.querySelector(".waveform-loading"), this.errorEl = this.container.querySelector(".waveform-error"), this.markersContainer = this.container.querySelector(".waveform-markers"), this.speedBtn = this.container.querySelector(".speed-btn"), this.speedMenu = this.container.querySelector(".speed-menu"), this.resizeCanvas(), this.updateBPMDisplay();
     }
     createAudio() {
+      if (this.options.audioMode === "external") {
+        this.audio = null;
+        return;
+      }
       this.audio = new Audio(), this.audio.preload = this.options.preload || "metadata", this.audio.crossOrigin = "anonymous";
     }
     initPlaybackSpeed() {
-      this.options.playbackRate && this.options.playbackRate !== 1 && (this.audio.playbackRate = this.options.playbackRate), this.options.showPlaybackSpeed && this.initSpeedControls();
+      this.audio && this.options.playbackRate && this.options.playbackRate !== 1 && (this.audio.playbackRate = this.options.playbackRate), this.options.showPlaybackSpeed && this.initSpeedControls();
     }
     initSpeedControls() {
-      let e2 = this.container.querySelector(".speed-btn"), i2 = this.container.querySelector(".speed-menu");
-      !e2 || !i2 || (e2.addEventListener("click", (a2) => {
-        a2.stopPropagation(), i2.style.display = i2.style.display === "none" ? "block" : "none";
-      }), document.addEventListener("click", () => {
-        i2.style.display = "none";
-      }), i2.addEventListener("click", (a2) => {
-        if (a2.stopPropagation(), a2.target.classList.contains("speed-option")) {
-          let s2 = parseFloat(a2.target.dataset.rate);
-          this.setPlaybackRate(s2), i2.style.display = "none";
-        }
-      }), this.updateSpeedUI());
+      let t2 = this.container.querySelector(".speed-btn"), i2 = this.container.querySelector(".speed-menu");
+      if (!t2 || !i2) return;
+      let r3 = (s2) => {
+        i2.style.display = s2 ? "block" : "none", t2.setAttribute("aria-expanded", s2 ? "true" : "false");
+      };
+      t2.addEventListener("click", (s2) => {
+        s2.stopPropagation(), r3(i2.style.display === "none");
+      }, { signal: this._ac.signal }), document.addEventListener("click", () => r3(false), { signal: this._ac.signal }), i2.addEventListener("click", (s2) => {
+        s2.stopPropagation(), s2.target.classList.contains("speed-option") && (this.setPlaybackRate(parseFloat(s2.target.dataset.rate)), r3(false), t2.focus());
+      }, { signal: this._ac.signal }), t2.closest(".waveform-speed")?.addEventListener("keydown", (s2) => {
+        s2.key === "Escape" && i2.style.display !== "none" && (r3(false), t2.focus());
+      }, { signal: this._ac.signal }), this.updateSpeedUI();
     }
     initKeyboardControls() {
-      this.container.setAttribute("tabindex", "-1"), this.container.addEventListener("click", () => {
-        t2.getAllInstances().forEach((e2) => {
-          e2 !== this && e2.container.setAttribute("tabindex", "-1");
-        }), this.container.setAttribute("tabindex", "0"), this.container.focus();
-      }), this.container.addEventListener("keydown", (e2) => {
+      this.container.setAttribute("tabindex", "-1"), this.container.addEventListener("click", (t2) => {
+        t2.target.closest(gt) || (e2.getAllInstances().forEach((i2) => {
+          i2 !== this && i2.container.setAttribute("tabindex", "-1");
+        }), this.container.setAttribute("tabindex", "0"), this.container.focus());
+      }, { signal: this._ac.signal }), this.container.addEventListener("keydown", (t2) => {
         if (document.activeElement !== this.container) return;
-        let i2 = e2.key, a2 = this.audio.currentTime;
-        if (i2 >= "0" && i2 <= "9") {
-          e2.preventDefault(), this.seekToPercent(parseInt(i2) / 10);
+        let i2 = t2.key, r3 = !!this.audio, s2 = r3 ? this.audio.currentTime : 0;
+        if (r3 && i2 >= "0" && i2 <= "9") {
+          t2.preventDefault(), this.seekToPercent(parseInt(i2) / 10);
           return;
         }
-        let s2 = { " ": () => this.togglePlay(), ArrowLeft: () => this.seekTo(Math.max(0, a2 - 5)), ArrowRight: () => this.seekTo(Math.min(this.audio.duration, a2 + 5)), ArrowUp: () => this.setVolume(Math.min(1, this.audio.volume + 0.1)), ArrowDown: () => this.setVolume(Math.max(0, this.audio.volume - 0.1)), m: () => this.audio.muted = !this.audio.muted, M: () => this.audio.muted = !this.audio.muted };
-        s2[i2] && (e2.preventDefault(), s2[i2]());
-      });
+        let a2 = { " ": () => this.togglePlay() };
+        r3 && (a2.ArrowLeft = () => this.seekTo(m2(s2 - 5, 0, this.audio.duration)), a2.ArrowRight = () => this.seekTo(m2(s2 + 5, 0, this.audio.duration)), a2.ArrowUp = () => this.setVolume(m2(this.audio.volume + 0.1)), a2.ArrowDown = () => this.setVolume(m2(this.audio.volume - 0.1)), a2.m = a2.M = () => this.audio.muted = !this.audio.muted), a2[i2] && (t2.preventDefault(), a2[i2]());
+      }, { signal: this._ac.signal });
+    }
+    initSeekControl() {
+      this.options.accessibleSeek && (this.seekEl = this.container.querySelector(".waveform-container"), this.seekEl && (this.seekEl.setAttribute("role", "slider"), this.seekEl.setAttribute("tabindex", "0"), this.seekEl.setAttribute("aria-valuemin", "0"), this.applySeekLabel(), this.updateSeekAccessibility(), this.seekEl.addEventListener("keydown", (t2) => {
+        if (t2.key === " " || t2.key === "Spacebar") {
+          t2.preventDefault(), t2.stopPropagation(), this.togglePlay();
+          return;
+        }
+        let i2 = this.getSeekDuration();
+        if (!i2) return;
+        let r3 = this.getSeekCurrentTime(), s2;
+        switch (t2.key) {
+          case "ArrowLeft":
+          case "ArrowDown":
+            s2 = r3 - st;
+            break;
+          case "ArrowRight":
+          case "ArrowUp":
+            s2 = r3 + st;
+            break;
+          case "PageDown":
+            s2 = r3 - rt;
+            break;
+          case "PageUp":
+            s2 = r3 + rt;
+            break;
+          case "Home":
+            s2 = 0;
+            break;
+          case "End":
+            s2 = i2;
+            break;
+          default:
+            return;
+        }
+        t2.preventDefault(), t2.stopPropagation(), this.seekToSeconds(s2);
+      }, { signal: this._ac.signal })));
+    }
+    getSeekDuration() {
+      return this.options.audioMode === "external" ? this._extDuration || 0 : this.audio && Number.isFinite(this.audio.duration) ? this.audio.duration : 0;
+    }
+    getSeekCurrentTime() {
+      return this.options.audioMode === "external" ? this.progress * (this._extDuration || 0) : this.audio && Number.isFinite(this.audio.currentTime) ? this.audio.currentTime : 0;
+    }
+    seekToSeconds(t2) {
+      let i2 = this.getSeekDuration();
+      if (!i2) return;
+      let r3 = m2(t2, 0, i2);
+      if (this.options.audioMode === "external") {
+        this._requestSeek(r3 / i2), this.updateSeekAccessibility();
+        return;
+      }
+      this.seekTo(r3);
+    }
+    applySeekLabel(t2 = this.options.title) {
+      if (!this.seekEl) return;
+      let i2 = this.options.seekLabel || t2 || "Seek";
+      this.seekEl.setAttribute("aria-label", i2);
+    }
+    updateSeekAccessibility() {
+      if (!this.seekEl) return;
+      let t2 = this.getSeekDuration(), i2 = Math.min(this.getSeekCurrentTime(), t2);
+      this.seekEl.setAttribute("aria-valuemax", String(Math.round(t2))), this.seekEl.setAttribute("aria-valuenow", String(Math.round(i2))), this.seekEl.setAttribute("aria-valuetext", `${S2(i2)} of ${S2(t2)}`);
     }
     initMediaSession() {
-      !("mediaSession" in navigator) || !this.options.enableMediaSession || (navigator.mediaSession.metadata = new MediaMetadata({ title: this.options.title || "Unknown Track", artist: this.options.subtitle || "", album: this.options.album || "", artwork: this.options.artwork ? [{ src: this.options.artwork, sizes: "512x512", type: "image/jpeg" }] : [] }), navigator.mediaSession.setActionHandler("play", () => this.play()), navigator.mediaSession.setActionHandler("pause", () => this.pause()), navigator.mediaSession.setActionHandler("seekbackward", () => {
-        this.seekTo(Math.max(0, this.audio.currentTime - 10));
+      if (!("mediaSession" in navigator) || !this.options.enableMediaSession || !this.audio) return;
+      this._applyMediaMetadata(), navigator.mediaSession.setActionHandler("play", () => this.play()), navigator.mediaSession.setActionHandler("pause", () => this.pause()), navigator.mediaSession.setActionHandler("seekbackward", () => {
+        this.seekTo(m2(this.audio.currentTime - 10, 0, this.audio.duration));
       }), navigator.mediaSession.setActionHandler("seekforward", () => {
-        this.seekTo(Math.min(this.audio.duration, this.audio.currentTime + 10));
-      }), navigator.mediaSession.setActionHandler("seekto", (e2) => {
-        e2.seekTime !== null && this.seekTo(e2.seekTime);
-      }));
+        this.seekTo(m2(this.audio.currentTime + 10, 0, this.audio.duration));
+      }), navigator.mediaSession.setActionHandler("seekto", (r3) => {
+        r3.seekTime !== null && this.seekTo(r3.seekTime);
+      });
+      let t2 = this.options.onNextTrack, i2 = this.options.onPreviousTrack;
+      try {
+        navigator.mediaSession.setActionHandler("nexttrack", typeof t2 == "function" ? () => t2(this) : null);
+      } catch {
+      }
+      try {
+        navigator.mediaSession.setActionHandler("previoustrack", typeof i2 == "function" ? () => i2(this) : null);
+      } catch {
+      }
+    }
+    _applyMediaMetadata() {
+      !("mediaSession" in navigator) || !this.options.enableMediaSession || (navigator.mediaSession.metadata = new MediaMetadata({ title: this.options.title || "Unknown Track", artist: this.options.artist || "", album: this.options.album || "", artwork: this.options.artwork ? [{ src: this.options.artwork, sizes: "512x512", type: "image/jpeg" }] : [] }));
+    }
+    _updateMediaSession(t2) {
+      if (!(!("mediaSession" in navigator) || !this.options.enableMediaSession || !this.audio)) try {
+        t2 === "playing" && this._applyMediaMetadata(), navigator.mediaSession.playbackState = t2;
+        let i2 = this.audio.duration;
+        navigator.mediaSession.setPositionState && i2 && isFinite(i2) && navigator.mediaSession.setPositionState({ duration: i2, playbackRate: this.audio.playbackRate || 1, position: m2(this.audio.currentTime, 0, i2) });
+      } catch {
+      }
     }
     bindEvents() {
-      this.playBtn.addEventListener("click", () => this.togglePlay()), this.audio.addEventListener("loadstart", () => this.setLoading(true)), this.audio.addEventListener("loadedmetadata", () => this.onMetadataLoaded()), this.audio.addEventListener("canplay", () => this.setLoading(false)), this.audio.addEventListener("play", () => this.onPlay()), this.audio.addEventListener("pause", () => this.onPause()), this.audio.addEventListener("ended", () => this.onEnded()), this.audio.addEventListener("error", (e2) => this.onError(e2)), this.canvas.addEventListener("click", (e2) => this.handleCanvasClick(e2)), this.resizeHandler = B(() => this.resizeCanvas(), 100), window.addEventListener("resize", this.resizeHandler);
+      this.playBtn && this.playBtn.addEventListener("click", () => this.togglePlay()), this.audio && (this.audio.addEventListener("loadstart", () => this.setLoading(true)), this.audio.addEventListener("loadedmetadata", () => this.onMetadataLoaded()), this.audio.addEventListener("canplay", () => this.setLoading(false)), this.audio.addEventListener("play", () => this.onPlay()), this.audio.addEventListener("pause", () => this.onPause()), this.audio.addEventListener("ended", () => this.onEnded()), this.audio.addEventListener("error", (i2) => this.onError(i2))), this.canvas.addEventListener("click", (i2) => this.handleCanvasClick(i2)), this._dragging = false, this._seekHover = false, this._handleNear = false, this.canvas.addEventListener("pointerenter", () => {
+        this._seekHover = true, this.drawWaveform(), this._updateSeekHandle();
+      }), this.canvas.addEventListener("pointerleave", () => {
+        this._seekHover = false, this._handleNear = false, this._dragging || this._hideHoverTip(), this.drawWaveform(), this._updateSeekHandle();
+      }), this.canvas.addEventListener("pointerdown", (i2) => {
+        if (!(i2.pointerType === "mouse" && i2.button !== 0)) {
+          this._dragging = true;
+          try {
+            this.canvas.setPointerCapture(i2.pointerId);
+          } catch {
+          }
+          this._scrubTo(i2.clientX);
+        }
+      }), this.canvas.addEventListener("pointermove", (i2) => {
+        if (this._dragging) {
+          this._scrubTo(i2.clientX);
+          return;
+        }
+        let r3 = this.canvas.getBoundingClientRect();
+        r3.width && (this._handleNear = Math.abs(i2.clientX - r3.left - this.progress * r3.width) <= 10, this._updateSeekHandle());
+      });
+      let t2 = (i2) => {
+        if (this._dragging) {
+          this._dragging = false, this._suppressClick = true;
+          try {
+            this.canvas.releasePointerCapture(i2.pointerId);
+          } catch {
+          }
+          this._seekFromPointer(i2.clientX), !this._seekHover && !this.options.showHoverTime && this._hideHoverTip(), this._updateSeekHandle();
+        }
+      };
+      this.canvas.addEventListener("pointerup", t2), this.canvas.addEventListener("pointercancel", t2), this.setupHoverTime(), this.setupSeekHandle(), this.resizeHandler = j2(() => this.resizeCanvas(), 100), window.addEventListener("resize", this.resizeHandler);
     }
     setupResizeObserver() {
       "ResizeObserver" in window && (this.resizeObserver = new ResizeObserver(() => {
         this.resizeCanvas();
       }), this.canvas?.parentElement && this.resizeObserver.observe(this.canvas.parentElement));
     }
-    async load(e2) {
+    async load(t2) {
       try {
-        this.setLoading(true), this.progress = 0, this.hasError = false, this.audio.src = e2, await new Promise((a2, s2) => {
-          let n2 = () => {
-            this.audio.removeEventListener("loadedmetadata", n2), this.audio.removeEventListener("error", r3), a2();
-          }, r3 = (o2) => {
-            this.audio.removeEventListener("loadedmetadata", n2), this.audio.removeEventListener("error", r3), s2(o2);
+        this.setLoading(true), this.progress = 0, this.hasError = false, this.audio && (this.audio.src = t2, await new Promise((r3, s2) => {
+          let a2 = () => {
+            this.audio.removeEventListener("loadedmetadata", a2), this.audio.removeEventListener("error", o2), r3();
+          }, o2 = (n2) => {
+            this.audio.removeEventListener("loadedmetadata", a2), this.audio.removeEventListener("error", o2), s2(n2);
           };
-          this.audio.addEventListener("loadedmetadata", n2), this.audio.addEventListener("error", r3);
-        });
-        let i2 = this.options.title || R(e2);
-        if (this.titleEl && (this.titleEl.textContent = i2), this.options.waveform) this.setWaveformData(this.options.waveform);
+          this.audio.addEventListener("loadedmetadata", a2), this.audio.addEventListener("error", o2);
+        }));
+        let i2 = this.options.title || H2(t2);
+        if (this.titleEl && (this.titleEl.textContent = i2), this.applySeekLabel(i2), this.options.waveform) this.setWaveformData(this.options.waveform);
         else try {
-          let a2 = await M2(e2, this.options.samples, this.options.showBPM);
-          this.waveformData = a2.peaks, a2.bpm && (this.detectedBPM = a2.bpm, this.updateBPMDisplay());
-        } catch (a2) {
-          console.warn("Using placeholder waveform:", a2), this.waveformData = D(this.options.samples);
+          let r3 = await z(t2, this.options.samples, this.options.showBPM);
+          this.waveformData = r3.peaks, r3.bpm && (this.detectedBPM = r3.bpm, this.updateBPMDisplay());
+        } catch (r3) {
+          console.warn("[WaveformPlayer] Using placeholder waveform:", r3), this.waveformData = Z(this.options.samples);
         }
         this.drawWaveform(), this.renderMarkers(), this.initMediaSession(), this.options.onLoad && this.options.onLoad(this);
       } catch (i2) {
-        console.error("Failed to load audio:", i2), this.onError(i2);
+        this.onError(i2);
       } finally {
         this.setLoading(false);
       }
     }
-    async loadTrack(e2, i2 = null, a2 = null, s2 = {}) {
-      this.isPlaying && this.pause(), this.audio.src = "", this.audio.load(), this.hasError = false, this.errorEl && (this.errorEl.style.display = "none"), this.canvas && (this.canvas.style.opacity = "1"), this.playBtn && (this.playBtn.disabled = false), this.progress = 0, this.waveformData = [], this.options = C(this.options, { url: e2, title: i2 || this.options.title, subtitle: a2 || this.options.subtitle, ...s2 }), s2.preload && (this.audio.preload = s2.preload), this.subtitleEl && (a2 ? (this.subtitleEl.textContent = a2, this.subtitleEl.style.display = "") : a2 === "" && (this.subtitleEl.style.display = "none")), s2.artwork && this.artworkEl && (this.artworkEl.src = s2.artwork), s2.markers && (this.options.markers = s2.markers), await this.load(e2), this.play();
+    async loadTrack(t2, i2 = null, r3 = null, s2 = {}) {
+      this.isPlaying && this.pause(), this.audio && (this.audio.src = "", this.audio.load()), this.hasError = false, this.errorEl && (this.errorEl.style.display = "none"), this.canvas && (this.canvas.style.opacity = "1"), this.playBtn && (this.playBtn.disabled = false), this.progress = 0, this.waveformData = [], this.options = B(this.options, { url: t2, title: i2 || this.options.title, artist: r3 || this.options.artist, ...s2 }), s2.preload && this.audio && (this.audio.preload = s2.preload), this.artistEl && (r3 ? (this.artistEl.textContent = r3, this.artistEl.style.display = "") : r3 === "" && (this.artistEl.style.display = "none")), s2.artwork && this.artworkEl && (this.artworkEl.src = s2.artwork), this.options.markers = s2.markers || [], this.options.waveform = s2.waveform || null, await this.load(t2), s2.autoplay !== false && this.play()?.catch(() => {
+      });
     }
-    setWaveformData(e2) {
-      if (typeof e2 == "string") try {
-        let i2 = JSON.parse(e2);
+    setWaveformData(t2) {
+      if (typeof t2 == "string" && t2.trim().endsWith(".json")) {
+        fetch(t2.trim()).then((i2) => i2.json()).then((i2) => {
+          this.waveformData = Array.isArray(i2) ? i2 : i2.peaks || [], i2.markers && !this.options.markers?.length && (this.options.markers = i2.markers, this.renderMarkers()), this.drawWaveform();
+        }).catch(() => {
+        });
+        return;
+      }
+      if (typeof t2 == "string") try {
+        let i2 = JSON.parse(t2);
         this.waveformData = Array.isArray(i2) ? i2 : [];
       } catch {
-        this.waveformData = e2.split(",").map(Number);
+        this.waveformData = t2.split(",").map(Number);
       }
-      else this.waveformData = Array.isArray(e2) ? e2 : [];
+      else this.waveformData = Array.isArray(t2) ? t2 : [];
       this.drawWaveform();
     }
     drawWaveform() {
-      !this.ctx || this.waveformData.length === 0 || W(this.ctx, this.canvas, this.waveformData, this.progress, { ...this.options, waveformStyle: this.options.waveformStyle || "bars", color: this.options.waveformColor, progressColor: this.options.progressColor });
+      !this.ctx || this.waveformData.length === 0 || X(this.ctx, this.canvas, this.waveformData, this.progress, { ...this.options, waveformStyle: this.options.waveformStyle || "bars", color: this.options.waveformColor, progressColor: this.options.progressColor, seekActive: this._seekHover || this._dragging });
     }
     resizeCanvas() {
       if (!this.canvas || this.isDestroying) return;
-      let e2 = window.devicePixelRatio || 1, i2 = this.canvas.getBoundingClientRect();
-      this.canvas.width = i2.width * e2, this.canvas.height = this.options.height * e2, this.canvas.style.height = this.options.height + "px", this.canvas.parentElement.style.height = this.options.height + "px", this.drawWaveform();
+      let t2 = window.devicePixelRatio || 1, i2 = this.canvas.parentElement.getBoundingClientRect();
+      this.canvas.width = i2.width * t2, this.canvas.height = this.options.height * t2, this.canvas.parentElement.style.height = this.options.height + "px", this.drawWaveform();
     }
     renderMarkers() {
-      !this.options.showMarkers || !this.options.markers?.length || !this.markersContainer || (this.markersContainer.innerHTML = "", !(!this.audio || !this.audio.duration || this.audio.duration === 0) && this.options.markers.forEach((e2, i2) => {
-        if (e2.time > this.audio.duration) {
-          console.warn(`Marker "${e2.label}" at ${e2.time}s exceeds audio duration of ${this.audio.duration}s`);
+      if (!this.markersContainer || (this.markersContainer.innerHTML = "", this._activeMarkerIndex = -1, clearTimeout(this._markerLabelTimer), !this.options.showMarkers || !this.options.markers?.length)) return;
+      let t2 = this.getSeekDuration();
+      t2 && this.options.markers.forEach((i2, r3) => {
+        if (i2.time > t2) {
+          console.warn(`[WaveformPlayer] Marker "${i2.label}" at ${i2.time}s exceeds audio duration of ${t2}s`);
           return;
         }
-        let a2 = e2.time / this.audio.duration * 100, s2 = document.createElement("button");
-        s2.className = "waveform-marker", s2.style.left = `${a2}%`, s2.style.backgroundColor = e2.color || "rgba(255, 255, 255, 0.5)", s2.setAttribute("aria-label", e2.label), s2.setAttribute("data-time", e2.time);
-        let n2 = document.createElement("span");
-        n2.className = "waveform-marker-tooltip", n2.textContent = e2.label, s2.appendChild(n2), s2.addEventListener("click", (r3) => {
-          r3.stopPropagation(), this.seekTo(e2.time), this.options.playOnSeek && !this.isPlaying && this.play();
-        }), this.markersContainer.appendChild(s2);
+        let s2 = i2.time / t2 * 100, a2 = document.createElement("button");
+        a2.className = "waveform-marker", a2.style.left = `${s2}%`, a2.style.backgroundColor = i2.color || "rgba(255, 255, 255, 0.5)", a2.setAttribute("aria-label", i2.label), a2.setAttribute("data-time", i2.time);
+        let o2 = document.createElement("span");
+        o2.className = "waveform-marker-tooltip", o2.textContent = i2.label, a2.appendChild(o2), a2.addEventListener("click", (n2) => {
+          n2.stopPropagation(), this.seekTo(i2.time), this.options.playOnSeek && !this.isPlaying && this.play();
+        }), this.markersContainer.appendChild(a2);
+      });
+    }
+    setActiveMarker(t2) {
+      if (!this.markersContainer) return;
+      this.markersContainer.querySelectorAll(".waveform-marker").forEach((r3, s2) => r3.classList.toggle("active", s2 === t2));
+    }
+    updateActiveMarker() {
+      if (!this.markersContainer) return;
+      let t2 = this.markersContainer.querySelectorAll(".waveform-marker");
+      if (!t2.length) return;
+      let i2 = this.getSeekDuration(), r3 = i2 ? this.progress * i2 : 0, s2 = -1, a2 = -1 / 0;
+      t2.forEach((o2, n2) => {
+        let l2 = parseFloat(o2.getAttribute("data-time"));
+        Number.isFinite(l2) && l2 <= r3 + 0.05 && l2 > a2 && (a2 = l2, s2 = n2);
+      }), s2 !== this._activeMarkerIndex && (this._activeMarkerIndex = s2, this.setActiveMarker(s2), clearTimeout(this._markerLabelTimer), t2.forEach((o2, n2) => o2.classList.toggle("show-label", n2 === s2)), s2 >= 0 && (this._markerLabelTimer = setTimeout(() => {
+        this.markersContainer?.querySelectorAll(".waveform-marker").forEach((o2) => o2.classList.remove("show-label"));
+      }, 2500)));
+    }
+    setupHoverTime() {
+      if (!this.seekEl) return;
+      let t2 = document.createElement("div");
+      t2.className = "waveform-hover-time", t2.setAttribute("aria-hidden", "true"), this.seekEl.appendChild(t2), this.hoverTimeEl = t2, this.options.showHoverTime && (this.seekEl.addEventListener("pointermove", (i2) => {
+        this._dragging || this._updateHoverTip(i2.clientX);
+      }), this.seekEl.addEventListener("pointerleave", () => {
+        this._dragging || this._hideHoverTip();
       }));
     }
-    handleCanvasClick(e2) {
-      if (!this.audio.duration) return;
-      let i2 = this.canvas.getBoundingClientRect(), a2 = e2.clientX - i2.left, s2 = Math.max(0, Math.min(1, a2 / i2.width));
-      this.seekToPercent(s2);
+    _updateHoverTip(t2) {
+      let i2 = this.hoverTimeEl;
+      if (!i2) return;
+      let r3 = this.getSeekDuration();
+      if (!r3) {
+        i2.style.opacity = "0";
+        return;
+      }
+      let s2 = this.canvas.getBoundingClientRect(), a2 = m2((t2 - s2.left) / s2.width);
+      i2.textContent = S2(a2 * r3), i2.style.left = a2 * 100 + "%", i2.style.opacity = "1";
     }
-    setLoading(e2) {
-      this.isLoading = e2, this.loadingEl && (this.loadingEl.style.display = e2 ? "block" : "none");
+    _hideHoverTip() {
+      this.hoverTimeEl && (this.hoverTimeEl.style.opacity = "0");
+    }
+    _scrubTo(t2) {
+      let i2 = this.canvas.getBoundingClientRect();
+      if (!i2.width) return;
+      this.progress = m2((t2 - i2.left) / i2.width), this.drawWaveform(), this._updateSeekHandle(), this._updateHoverTip(t2);
+      let r3 = this.getSeekDuration();
+      r3 && this.currentTimeEl && (this.currentTimeEl.textContent = S2(this.progress * r3));
+    }
+    setupSeekHandle() {
+      if (!this.options.seekHandle || this.options.waveformStyle !== "seekbar" || !this.seekEl) return;
+      let t2 = document.createElement("div");
+      t2.className = "waveform-seek-handle", t2.setAttribute("aria-hidden", "true"), this.seekEl.appendChild(t2), this.seekHandleEl = t2;
+    }
+    _updateSeekHandle() {
+      let t2 = this.seekHandleEl;
+      t2 && (t2.style.left = this.progress * 100 + "%", t2.classList.toggle("is-visible", this._seekHover || this._dragging), t2.classList.toggle("is-active", this._dragging || this._handleNear));
+    }
+    handleCanvasClick(t2) {
+      if (this._suppressClick) {
+        this._suppressClick = false;
+        return;
+      }
+      this._seekFromPointer(t2.clientX);
+    }
+    _seekFromPointer(t2) {
+      let i2 = this.canvas.getBoundingClientRect();
+      if (!i2.width) return;
+      let r3 = m2((t2 - i2.left) / i2.width);
+      if (this.options.audioMode === "external") {
+        this._requestSeek(r3);
+        return;
+      }
+      !this.audio || !this.audio.duration || this.seekToPercent(r3);
+    }
+    setLoading(t2) {
+      this.isLoading = t2, this.loadingEl && (this.loadingEl.style.display = t2 ? "block" : "none"), this.seekEl && this.seekEl.setAttribute("aria-busy", t2 ? "true" : "false");
     }
     onMetadataLoaded() {
-      this.isDestroying || (this.totalTimeEl && (this.totalTimeEl.textContent = P(this.audio.duration)), this.renderMarkers());
+      this.isDestroying || (this.totalTimeEl && (this.totalTimeEl.textContent = S2(this.audio.duration)), this.renderMarkers(), this.updateSeekAccessibility());
+    }
+    setPlayButtonState(t2) {
+      if (!this.playBtn) return;
+      this.playBtn.classList.toggle("playing", t2);
+      let i2 = this.playBtn.querySelector(".waveform-icon-play"), r3 = this.playBtn.querySelector(".waveform-icon-pause");
+      i2 && (i2.style.display = t2 ? "none" : "flex"), r3 && (r3.style.display = t2 ? "flex" : "none");
     }
     onPlay() {
-      if (this.isDestroying) return;
-      this.isPlaying = true, this.playBtn.classList.add("playing");
-      let e2 = this.playBtn.querySelector(".waveform-icon-play"), i2 = this.playBtn.querySelector(".waveform-icon-pause");
-      e2 && (e2.style.display = "none"), i2 && (i2.style.display = "flex"), this.startSmoothUpdate(), this.container.dispatchEvent(new CustomEvent("waveformplayer:play", { bubbles: true, detail: { player: this, url: this.options.url } })), this.options.onPlay && this.options.onPlay(this);
+      this.isDestroying || (this.isPlaying = true, this.setPlayButtonState(true), this.startSmoothUpdate(), this._updateMediaSession("playing"), this._emit("waveformplayer:play", { player: this, url: this.options.url }), this.options.onPlay && this.options.onPlay(this));
     }
     onPause() {
-      if (this.isDestroying) return;
-      this.isPlaying = false, this.playBtn.classList.remove("playing");
-      let e2 = this.playBtn.querySelector(".waveform-icon-play"), i2 = this.playBtn.querySelector(".waveform-icon-pause");
-      e2 && (e2.style.display = "flex"), i2 && (i2.style.display = "none"), this.stopSmoothUpdate(), this.container.dispatchEvent(new CustomEvent("waveformplayer:pause", { bubbles: true, detail: { player: this, url: this.options.url } })), this.options.onPause && this.options.onPause(this);
+      this.isDestroying || (this.isPlaying = false, this.setPlayButtonState(false), this.stopSmoothUpdate(), this._updateMediaSession("paused"), this._emit("waveformplayer:pause", { player: this, url: this.options.url }), this.options.onPause && this.options.onPause(this));
     }
     onEnded() {
-      this.isDestroying || (this.progress = 0, this.audio.currentTime = 0, this.drawWaveform(), this.currentTimeEl && (this.currentTimeEl.textContent = "0:00"), this.container.dispatchEvent(new CustomEvent("waveformplayer:ended", { bubbles: true, detail: { player: this, url: this.options.url } })), this.onPause(), this.options.onEnd && this.options.onEnd(this));
+      if (this.isDestroying) return;
+      let t2 = this.audio.duration;
+      this.progress = 0, this.audio.currentTime = 0, this.drawWaveform(), this.currentTimeEl && (this.currentTimeEl.textContent = "0:00"), this._emit("waveformplayer:ended", { player: this, url: this.options.url, currentTime: t2, duration: t2 }), this.onPause(), this.options.onEnd && this.options.onEnd(this);
     }
-    onError(e2) {
-      this.isDestroying || (console.error("Audio error:", e2), this.hasError = true, this.setLoading(false), this.errorEl && (this.errorEl.style.display = "flex"), this.canvas && (this.canvas.style.opacity = "0.2"), this.playBtn && (this.playBtn.disabled = true), this.options.onError && this.options.onError(e2, this));
+    onError(t2) {
+      this.isDestroying || (console.error("[WaveformPlayer] Audio error:", t2), this.hasError = true, this.setLoading(false), this.errorEl && (this.errorEl.style.display = "flex"), this.canvas && (this.canvas.style.opacity = "0.2"), this.playBtn && (this.playBtn.disabled = true), this.options.onError && this.options.onError(t2, this));
     }
     startSmoothUpdate() {
       this.stopSmoothUpdate();
-      let e2 = () => {
-        this.isPlaying && this.audio.duration && (this.updateProgress(), this.updateTimer = requestAnimationFrame(e2));
+      let t2 = () => {
+        this.isPlaying && this.audio && this.audio.duration && (this.updateProgress(), this.updateTimer = requestAnimationFrame(t2));
       };
-      this.updateTimer = requestAnimationFrame(e2);
+      this.updateTimer = requestAnimationFrame(t2);
     }
     stopSmoothUpdate() {
       this.updateTimer && (cancelAnimationFrame(this.updateTimer), this.updateTimer = null);
     }
     updateProgress() {
-      if (!this.audio.duration) return;
-      let e2 = this.audio.currentTime / this.audio.duration;
-      Math.abs(e2 - this.progress) > 1e-3 && (this.progress = e2, this.drawWaveform()), this.currentTimeEl && (this.currentTimeEl.textContent = P(this.audio.currentTime)), this.container.dispatchEvent(new CustomEvent("waveformplayer:timeupdate", { bubbles: true, detail: { player: this, currentTime: this.audio.currentTime, duration: this.audio.duration, url: this.options.url } })), this.options.onTimeUpdate && this.options.onTimeUpdate(this.audio.currentTime, this.audio.duration, this);
+      if (!this.audio || !this.audio.duration || this._dragging) return;
+      let t2 = this.audio.currentTime / this.audio.duration;
+      Math.abs(t2 - this.progress) > 1e-3 && (this.progress = t2, this.drawWaveform(), this._updateSeekHandle()), this.currentTimeEl && (this.currentTimeEl.textContent = S2(this.audio.currentTime)), this._emit("waveformplayer:timeupdate", { player: this, currentTime: this.audio.currentTime, duration: this.audio.duration, progress: this.progress, url: this.options.url }), this.options.onTimeUpdate && this.options.onTimeUpdate(this.audio.currentTime, this.audio.duration, this), this.updateActiveMarker(), this.updateSeekAccessibility();
     }
     updateBPMDisplay() {
-      this.bpmEl && this.bpmValueEl && this.detectedBPM && (this.bpmValueEl.textContent = Math.round(this.detectedBPM), this.bpmEl.style.display = "inline-flex");
+      let t2 = this.options.bpm || this.detectedBPM;
+      this.bpmEl && this.bpmValueEl && t2 && (this.bpmValueEl.textContent = Math.round(t2), this.bpmEl.style.display = "inline-flex");
+    }
+    refreshTheme() {
+      if (!this._autoTheme) return;
+      this._scheme = R();
+      let t2 = F(this.options.colorPreset);
+      for (let i2 of this._presetKeys || []) i2 in t2 && (this.options[i2] = t2[i2]);
+      this._applyThemeColors();
+    }
+    _applyThemeColors() {
+      this.container.classList.toggle("waveform-theme-light", this._scheme === "light"), this.canvas && this.drawWaveform();
+    }
+    static _watchTheme() {
+      if (e2._themeWatch || typeof document > "u") return;
+      let t2 = () => requestAnimationFrame(() => {
+        e2.instances.forEach((a2) => {
+          try {
+            a2.refreshTheme();
+          } catch {
+          }
+        });
+      }), i2 = { attributes: true, attributeFilter: ["class", "data-theme", "data-color-scheme", "style"] }, r3 = new MutationObserver(t2);
+      r3.observe(document.documentElement, i2), document.body && r3.observe(document.body, i2);
+      let s2 = null;
+      try {
+        s2 = window.matchMedia("(prefers-color-scheme: dark)"), s2.addEventListener("change", t2);
+      } catch {
+      }
+      e2._themeWatch = { obs: r3, mq: s2, refresh: t2 };
     }
     updateSpeedUI() {
-      let e2 = this.container.querySelector(".speed-value");
-      if (e2) {
+      if (!this.audio) return;
+      let t2 = this.container.querySelector(".speed-value");
+      if (t2) {
         let i2 = this.audio.playbackRate;
-        e2.textContent = i2 === 1 ? "1x" : `${i2}x`;
+        t2.textContent = i2 === 1 ? "1x" : `${i2}x`;
       }
       this.container.querySelectorAll(".speed-option").forEach((i2) => {
         i2.classList.toggle("active", parseFloat(i2.dataset.rate) === this.audio.playbackRate);
       });
     }
     play() {
-      this.options.singlePlay && t2.currentlyPlaying && t2.currentlyPlaying !== this && t2.currentlyPlaying.pause(), t2.currentlyPlaying = this, this.audio.play();
+      if (this.options.singlePlay && e2.currentlyPlaying && e2.currentlyPlaying !== this && e2.currentlyPlaying.pause(), this.options.audioMode === "external") {
+        this._emit("waveformplayer:request-play", this._buildTrackDetail(), true).defaultPrevented || (e2.currentlyPlaying = this);
+        return;
+      }
+      return e2.currentlyPlaying = this, this.audio.play();
     }
     pause() {
-      t2.currentlyPlaying === this && (t2.currentlyPlaying = null), this.audio.pause();
+      if (e2.currentlyPlaying === this && (e2.currentlyPlaying = null), this.options.audioMode === "external") {
+        this._emit("waveformplayer:request-pause", this._buildTrackDetail(), true);
+        return;
+      }
+      this.audio.pause();
+    }
+    _buildTrackDetail() {
+      return { url: this.options.url, title: this.options.title, artist: this.options.artist, artwork: this.options.artwork, markers: this.options.markers, waveform: this.options.waveform, id: this.id, player: this };
+    }
+    setPlayingState(t2) {
+      let i2 = this.isPlaying;
+      this.isPlaying = !!t2, this.setPlayButtonState(this.isPlaying), this.isPlaying && !i2 ? (this.startSmoothUpdate?.(), this._emit("waveformplayer:play", { player: this, url: this.options.url }), this.options.onPlay && this.options.onPlay(this)) : !this.isPlaying && i2 && (this.stopSmoothUpdate?.(), this._emit("waveformplayer:pause", { player: this, url: this.options.url }), this.options.onPause && this.options.onPause(this));
+    }
+    setProgress(t2, i2) {
+      !i2 || i2 <= 0 || (this.progress = m2(t2 / i2), this.currentTimeEl && (this.currentTimeEl.textContent = S2(t2)), this._extDuration = i2, this.totalTimeEl && (!this.totalTimeEl.dataset._extSet || this.totalTimeEl.dataset._extDur !== String(i2)) && (this.totalTimeEl.textContent = S2(i2), this.totalTimeEl.dataset._extSet = "1", this.totalTimeEl.dataset._extDur = String(i2)), this.drawWaveform?.(), this.updateActiveMarker(), this._emit("waveformplayer:timeupdate", { player: this, currentTime: t2, duration: i2, progress: this.progress, url: this.options.url }), this.options.onTimeUpdate && this.options.onTimeUpdate(t2, i2, this), this.progress >= 1 ? this._extEnded || (this._extEnded = true, this._emit("waveformplayer:ended", { player: this, url: this.options.url, currentTime: i2, duration: i2 }), this.options.onEnd && this.options.onEnd(this)) : this._extEnded = false, this.updateSeekAccessibility());
     }
     togglePlay() {
       this.isPlaying ? this.pause() : this.play();
     }
-    seekTo(e2) {
-      this.audio && this.audio.duration && (this.audio.currentTime = Math.max(0, Math.min(e2, this.audio.duration)), this.updateProgress());
+    seekTo(t2) {
+      this.audio && this.audio.duration && (this.audio.currentTime = m2(t2, 0, this.audio.duration), this.updateProgress());
     }
-    seekToPercent(e2) {
-      this.audio && this.audio.duration && (this.audio.currentTime = this.audio.duration * Math.max(0, Math.min(1, e2)), this.updateProgress());
+    seekToPercent(t2) {
+      this.audio && this.audio.duration && (this.audio.currentTime = this.audio.duration * m2(t2), this.updateProgress());
     }
-    setVolume(e2) {
-      this.audio && (this.audio.volume = Math.max(0, Math.min(1, e2)));
+    setVolume(t2) {
+      let i2 = Number(t2);
+      this.audio && Number.isFinite(i2) && (this.audio.volume = m2(i2));
     }
-    setPlaybackRate(e2) {
+    setPlaybackRate(t2) {
       if (!this.audio) return;
-      let i2 = Math.max(0.5, Math.min(2, e2));
+      let i2 = m2(t2, 0.5, 2);
       this.audio.playbackRate = i2, this.options.playbackRate = i2, this.updateSpeedUI();
     }
     destroy() {
-      this.isDestroying = true, this.pause(), this.stopSmoothUpdate(), this.resizeObserver && (this.resizeObserver.disconnect(), this.resizeObserver = null), this.resizeHandler && (window.removeEventListener("resize", this.resizeHandler), this.resizeHandler = null), t2.instances.delete(this.id), t2.currentlyPlaying === this && (t2.currentlyPlaying = null), this.audio && (this.audio.pause(), this.audio.src = "", this.audio.load(), this.audio = null), this.container.innerHTML = "", this.canvas = null, this.ctx = null, this.playBtn = null, this.waveformData = [];
+      this.isDestroying = true, this._emit("waveformplayer:destroy", { player: this, url: this.options.url }), this.pause(), this.stopSmoothUpdate(), clearTimeout(this._markerLabelTimer), this._ac?.abort(), this.resizeObserver && (this.resizeObserver.disconnect(), this.resizeObserver = null), this.resizeHandler && (window.removeEventListener("resize", this.resizeHandler), this.resizeHandler = null), e2.instances.delete(this.id), e2.currentlyPlaying === this && (e2.currentlyPlaying = null), this.audio && (this.audio.pause(), this.audio.src = "", this.audio.load(), this.audio = null), this.container.innerHTML = "", this.canvas = null, this.ctx = null, this.playBtn = null, this.waveformData = [];
     }
-    static getInstance(e2) {
-      if (typeof e2 == "string") {
-        let i2 = this.instances.get(e2);
+    static getInstance(t2) {
+      if (typeof t2 == "string") {
+        let i2 = this.instances.get(t2);
         if (i2) return i2;
-        let a2 = document.getElementById(e2);
-        if (a2) return Array.from(this.instances.values()).find((s2) => s2.container === a2);
+        let r3 = document.getElementById(t2);
+        if (r3) return Array.from(this.instances.values()).find((s2) => s2.container === r3);
       }
-      if (e2 instanceof HTMLElement) return Array.from(this.instances.values()).find((i2) => i2.container === e2);
+      if (t2 instanceof HTMLElement) return Array.from(this.instances.values()).find((i2) => i2.container === t2);
     }
     static getAllInstances() {
       return Array.from(this.instances.values());
     }
     static destroyAll() {
-      this.instances.forEach((e2) => e2.destroy()), this.instances.clear();
+      this.instances.forEach((t2) => t2.destroy()), this.instances.clear();
     }
-    static async generateWaveformData(e2, i2 = 200) {
+    static async generateWaveformData(t2, i2 = 1800) {
       try {
-        return (await M2(e2, i2)).peaks;
-      } catch (a2) {
-        throw console.error("Failed to generate waveform:", a2), a2;
+        return (await z(t2, i2)).peaks;
+      } catch (r3) {
+        throw console.error("[WaveformPlayer] Failed to generate waveform:", r3), r3;
       }
     }
+    static getPeaksUrl(t2) {
+      if (!t2) return;
+      let i2 = t2.replace(/\.(mp3|wav|ogg|flac|m4a|aac)(\?[^#]*)?(#.*)?$/i, ".json$2$3");
+      return i2 === t2 ? void 0 : i2;
+    }
   };
-  function T() {
-    if (typeof document > "u") return;
-    document.querySelectorAll("[data-waveform-player]").forEach((e2) => {
-      if (e2.dataset.waveformInitialized !== "true") try {
-        new g2(e2), e2.dataset.waveformInitialized = "true";
+  T.utils = { formatTime: S2, extractTitleFromUrl: H2, escapeHtml: x2, isSafeHref: U, parseDataAttributes: D };
+  var $2 = () => typeof window < "u" && typeof document < "u";
+  function O() {
+    if (!$2()) return;
+    document.querySelectorAll("[data-waveform-player]").forEach((t2) => {
+      if (t2.dataset.waveformInitialized !== "true") try {
+        new T(t2), t2.dataset.waveformInitialized = "true";
       } catch (i2) {
-        console.error("Failed to initialize WaveformPlayer:", i2, e2);
+        console.error("[WaveformPlayer] Failed to initialize:", i2, t2);
       }
     });
   }
-  typeof document < "u" && (document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", T) : T());
-  g2.init = T;
-  typeof window < "u" && (window.WaveformPlayer = g2);
-  var lt = g2;
+  $2() && (document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", O) : O());
+  T.init = O;
+  $2() && (window.WaveformPlayer = T);
+  var Ht = T;
 
   // packages/block-library/build-module/utils/waveform-utils.mjs
   var DEFAULT_WAVEFORM_HEIGHT = 100;
@@ -49781,7 +50130,7 @@ ${text}
       waveformStyle
     });
     element.appendChild(container);
-    const instance = new lt(container);
+    const instance = new Ht(container);
     let cleanupAccessibility;
     const handlers = {
       ready: () => {
@@ -68592,7 +68941,7 @@ ${text}
         ...state[sectionName].slice(0, rowIndex),
         {
           cells: Array.from({ length: cellCount }).map(
-            (_, index) => {
+            (_2, index) => {
               const firstCellInColumn = firstRow?.cells?.[index] ?? {};
               const inheritedAttributes = Object.fromEntries(
                 Object.entries(firstCellInColumn).filter(
@@ -72746,7 +73095,7 @@ ${text}
         "a",
         {
           href: "#term-name-pseudo-link",
-          onClick: (e2) => e2.preventDefault(),
+          onClick: (e3) => e3.preventDefault(),
           children: termName2
         }
       );
@@ -73875,7 +74224,7 @@ ${text}
           ...(0, import_block_editor288.useBlockProps)({
             className: `align${width} columns-${columns}`
           }),
-          children: Array.from({ length: columns }).map((_, index) => {
+          children: Array.from({ length: columns }).map((_2, index) => {
             return /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
               "div",
               {
@@ -73963,7 +74312,7 @@ ${text}
         ...import_block_editor289.useBlockProps.save({
           className: `align${width} columns-${columns}`
         }),
-        children: Array.from({ length: columns }).map((_, index) => /* @__PURE__ */ (0, import_jsx_runtime537.jsx)("div", { className: "wp-block-column", children: /* @__PURE__ */ (0, import_jsx_runtime537.jsx)(
+        children: Array.from({ length: columns }).map((_2, index) => /* @__PURE__ */ (0, import_jsx_runtime537.jsx)("div", { className: "wp-block-column", children: /* @__PURE__ */ (0, import_jsx_runtime537.jsx)(
           import_block_editor289.RichText.Content,
           {
             tagName: "p",
