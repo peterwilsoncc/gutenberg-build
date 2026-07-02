@@ -155,9 +155,9 @@ var require_with_selector_development = __commonJS({
         return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React47 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef21 = React47.useRef, useEffect18 = React47.useEffect, useMemo19 = React47.useMemo, useDebugValue2 = React47.useDebugValue;
+      var React47 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef22 = React47.useRef, useEffect18 = React47.useEffect, useMemo19 = React47.useMemo, useDebugValue2 = React47.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
-        var instRef = useRef21(null);
+        var instRef = useRef22(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -303,12 +303,12 @@ var require_html_entities = __commonJS({
 });
 
 // packages/boot/build-module/components/app/index.mjs
-var import_element31 = __toESM(require_element(), 1);
+var import_element32 = __toESM(require_element(), 1);
 var import_data10 = __toESM(require_data(), 1);
 
 // packages/boot/build-module/components/app/router.mjs
 var import_i18n10 = __toESM(require_i18n(), 1);
-var import_element29 = __toESM(require_element(), 1);
+var import_element30 = __toESM(require_element(), 1);
 
 // node_modules/clsx/dist/clsx.mjs
 function r(e) {
@@ -9444,10 +9444,10 @@ import {
 
 // packages/boot/build-module/components/root/index.mjs
 var import_notices = __toESM(require_notices(), 1);
-var import_compose3 = __toESM(require_compose(), 1);
+var import_compose4 = __toESM(require_compose(), 1);
 var import_components13 = __toESM(require_components(), 1);
 import { privateApis as routePrivateApis4 } from "@wordpress/route";
-var import_element28 = __toESM(require_element(), 1);
+var import_element29 = __toESM(require_element(), 1);
 var import_i18n9 = __toESM(require_i18n(), 1);
 var import_theme = __toESM(require_theme(), 1);
 
@@ -10560,6 +10560,29 @@ function useRouteTitle() {
   }, [routeTitle, siteTitle, location]);
 }
 
+// packages/boot/build-module/components/root/use-sync-body-background.mjs
+var import_element28 = __toESM(require_element(), 1);
+var import_compose3 = __toESM(require_compose(), 1);
+function useSyncBodyBackground() {
+  const layoutRef = (0, import_element28.useRef)(null);
+  (0, import_compose3.useIsomorphicLayoutEffect)(() => {
+    if (!layoutRef.current) {
+      return;
+    }
+    const body = layoutRef.current.ownerDocument.body;
+    const bg = getComputedStyle(layoutRef.current).backgroundColor;
+    if (!bg) {
+      return;
+    }
+    const previousBackground = body.style.background;
+    body.style.background = bg;
+    return () => {
+      body.style.background = previousBackground;
+    };
+  }, []);
+  return layoutRef;
+}
+
 // packages/boot/build-module/components/root/index.mjs
 var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d38c56df8c']")) {
@@ -10577,13 +10600,14 @@ function Root2() {
   const routeContentModule = currentMatch?.loaderData?.routeContentModule;
   const isFullScreen = canvas && !canvas.isPreview;
   useRouteTitle();
-  const isMobileViewport = (0, import_compose3.useViewportMatch)("medium", "<");
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = (0, import_element28.useState)(false);
-  const disableMotion = (0, import_compose3.useReducedMotion)();
-  (0, import_element28.useEffect)(() => {
+  const isMobileViewport = (0, import_compose4.useViewportMatch)("medium", "<");
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = (0, import_element29.useState)(false);
+  const disableMotion = (0, import_compose4.useReducedMotion)();
+  (0, import_element29.useEffect)(() => {
     setIsMobileSidebarOpen(false);
   }, [location.pathname, isMobileViewport]);
-  const themeColors = (0, import_element28.useMemo)(getAdminThemeColors, []);
+  const themeColors = (0, import_element29.useMemo)(getAdminThemeColors, []);
+  const layoutRef = useSyncBodyBackground();
   return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_components13.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(tooltip_exports.Provider, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
     import_theme.ThemeProvider,
     {
@@ -10592,6 +10616,7 @@ function Root2() {
       children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_theme.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
         "div",
         {
+          ref: layoutRef,
           className: clsx_default("boot-layout", {
             "has-canvas": !!canvas || canvas === null,
             "has-full-canvas": isFullScreen
@@ -10812,7 +10837,7 @@ function Router({
   routes,
   rootComponent = Root2
 }) {
-  const router = (0, import_element29.useMemo)(() => {
+  const router = (0, import_element30.useMemo)(() => {
     const history = createPathHistory();
     const routeTree = createRouteTree(routes, rootComponent);
     return createRouter({
@@ -10838,7 +10863,7 @@ function Router({
 // packages/boot/build-module/components/root/single-page.mjs
 var import_notices2 = __toESM(require_notices(), 1);
 var import_components14 = __toESM(require_components(), 1);
-var import_element30 = __toESM(require_element(), 1);
+var import_element31 = __toESM(require_element(), 1);
 import { privateApis as routePrivateApis6 } from "@wordpress/route";
 var import_theme2 = __toESM(require_theme(), 1);
 var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
@@ -10856,7 +10881,8 @@ function RootSinglePage() {
   const routeContentModule = currentMatch?.loaderData?.routeContentModule;
   const isFullScreen = canvas && !canvas.isPreview;
   useRouteTitle();
-  const themeColors = (0, import_element30.useMemo)(getAdminThemeColors, []);
+  const themeColors = (0, import_element31.useMemo)(getAdminThemeColors, []);
+  const layoutRef = useSyncBodyBackground();
   return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_components14.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
     import_theme2.ThemeProvider,
     {
@@ -10865,6 +10891,7 @@ function RootSinglePage() {
       children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_theme2.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
         "div",
         {
+          ref: layoutRef,
           className: clsx_default(
             "boot-layout boot-layout--single-page",
             {
@@ -10932,9 +10959,9 @@ async function init({
   await runInitModules(initModules);
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
-    const root = (0, import_element31.createRoot)(rootElement);
+    const root = (0, import_element32.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_element31.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_element32.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(App, {}) })
     );
   }
 }
@@ -10949,9 +10976,9 @@ async function initSinglePage({
   await runInitModules(initModules);
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
-    const root = (0, import_element31.createRoot)(rootElement);
+    const root = (0, import_element32.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_element31.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(App, { rootComponent: RootSinglePage }) })
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_element32.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(App, { rootComponent: RootSinglePage }) })
     );
   }
 }
