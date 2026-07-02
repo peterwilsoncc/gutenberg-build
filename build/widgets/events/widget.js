@@ -18493,11 +18493,13 @@ var location_picker_default = {
 // widgets/events/components/location-picker/location-picker.tsx
 var import_jsx_runtime71 = __toESM(require_jsx_runtime());
 var DRAFT_DEBOUNCE_MS = 300;
+var SEARCH_DEBOUNCE_MS = 500;
 function LocationPicker({
   onSubmit = () => {
   },
   seedInput = "",
   hideLabelFromVision = true,
+  showDescription = true,
   selectButton = true,
   onChange
 }) {
@@ -18625,7 +18627,7 @@ function LocationPicker({
         }
         setLocationOptions([]);
       }
-    }, 200);
+    }, SEARCH_DEBOUNCE_MS);
     return () => {
       clearTimeout(timeoutId);
       controller.abort();
@@ -18660,9 +18662,9 @@ function LocationPicker({
                       label: (0, import_i18n4.__)("City"),
                       hideLabelFromVision,
                       size: "compact",
-                      description: (0, import_i18n4.__)(
+                      description: showDescription ? (0, import_i18n4.__)(
                         "Select a city to view upcoming events."
-                      ),
+                      ) : void 0,
                       onValueChange: () => {
                       },
                       onBlur: !selectButton ? flushDraftPublish : void 0,
@@ -18684,7 +18686,7 @@ function LocationPicker({
                       ] })
                     }
                   ),
-                  placeholder: (0, import_i18n4.__)("City, like Tokyo\u2026")
+                  placeholder: (0, import_i18n4.__)("Select city\u2026")
                 }
               ),
               locationOptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.Popup, { children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.List, { children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.ListBody, { children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.Collection, { children: (item) => /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
@@ -18738,6 +18740,7 @@ function LocationSettingControl({
     {
       seedInput: value ?? "",
       hideLabelFromVision,
+      showDescription: !hideLabelFromVision,
       selectButton: false,
       onChange: onLocationChange
     }
@@ -18753,9 +18756,8 @@ var widget_default = {
       id: "location",
       type: "text",
       label: (0, import_i18n5.__)("Event location"),
-      description: (0, import_i18n5.__)(
-        "City or region for nearby events. Edits apply when you save this panel."
-      ),
+      description: (0, import_i18n5.__)("City or region for nearby events."),
+      relevance: "high",
       Edit: LocationSettingControl
     }
   ]

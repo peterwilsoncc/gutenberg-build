@@ -82,7 +82,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState75({
+        cachedValue = useState76({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -94,7 +94,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot]
         );
-        useEffect67(
+        useEffect68(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React101 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState75 = React101.useState, useEffect67 = React101.useEffect, useLayoutEffect12 = React101.useLayoutEffect, useDebugValue2 = React101.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React101 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState76 = React101.useState, useEffect68 = React101.useEffect, useLayoutEffect12 = React101.useLayoutEffect, useDebugValue2 = React101.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React101.useSyncExternalStore ? React101.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -148,14 +148,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React101 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef83 = React101.useRef, useEffect67 = React101.useEffect, useMemo78 = React101.useMemo, useDebugValue2 = React101.useDebugValue;
+      var React101 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef83 = React101.useRef, useEffect68 = React101.useEffect, useMemo79 = React101.useMemo, useDebugValue2 = React101.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef83(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo78(
+        instRef = useMemo79(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -191,7 +191,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector2, isEqual]
         );
         var value = useSyncExternalStore3(subscribe2, instRef[0], instRef[1]);
-        useEffect67(
+        useEffect68(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -22791,7 +22791,7 @@ var page_default = Page;
 // routes/dashboard/stage.tsx
 var import_core_data = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
-var import_element186 = __toESM(require_element());
+var import_element187 = __toESM(require_element());
 var import_i18n71 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_viewport2 = __toESM(require_viewport());
@@ -29863,11 +29863,11 @@ function useStoreProps(store, props, key2, setKey) {
 function useStore2(createStore2, props) {
   const [store, setStore] = React97.useState(() => createStore2(props));
   useSafeLayoutEffect(() => init(store), [store]);
-  const useState75 = React97.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+  const useState76 = React97.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
   return [React97.useMemo(() => ({
     ...store,
-    useState: useState75
-  }), [store, useState75]), useEvent(() => {
+    useState: useState76
+  }), [store, useState76]), useEvent(() => {
     setStore((store2) => createStore2({
       ...props,
       ...store2.getState()
@@ -41818,6 +41818,7 @@ function WidgetHeader({
   titleId,
   showIdentity = false,
   overlay = false,
+  editMode = false,
   children
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime212.jsxs)(
@@ -41832,6 +41833,7 @@ function WidgetHeader({
             align: "center",
             gap: "sm",
             className: widget_header_default.identity,
+            ...editMode ? { inert: "true" } : {},
             children: [
               widgetType.icon && /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("span", { className: widget_header_default.icon, "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(Icon, { icon: widgetType.icon }) }),
               /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(card_exports.Title, { id: titleId, render: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("h2", {}), children: widgetType.title })
@@ -42092,7 +42094,9 @@ function LoadingOverlay() {
 function WidgetFrame({
   widget,
   widgetType,
-  titleId
+  titleId,
+  editMode = false,
+  headerToolbar
 }) {
   const { presentation } = widgetType;
   const isHeaderHidden = presentation === "full-bleed";
@@ -42104,7 +42108,9 @@ function WidgetFrame({
       {
         showIdentity: true,
         widgetType,
-        titleId
+        titleId,
+        editMode,
+        children: headerToolbar
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime215.jsxs)(
@@ -42114,6 +42120,7 @@ function WidgetFrame({
           widget_frame_default.content,
           isBodyBleeding && widget_frame_default.bleedContent
         ),
+        ...editMode ? { inert: "true" } : {},
         children: [
           isHeaderHidden && widgetType.title && /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)("h2", { id: titleId }), children: widgetType.title }),
           body
@@ -42236,7 +42243,7 @@ function UnavailableWidget({ widgetTypeName }) {
   ] });
 }
 var WidgetChrome = (0, import_element168.forwardRef)(
-  function WidgetChrome2({ widget, index: index2, className }, ref) {
+  function WidgetChrome2({ widget, index: index2, className, headerToolbar }, ref) {
     const { widgetTypes, isResolvingWidgetTypes, editMode } = useDashboardInternalContext();
     const widgetType = widgetTypes.find((t2) => t2.name === widget.type);
     const titleId = (0, import_element168.useId)();
@@ -42286,13 +42293,14 @@ var WidgetChrome = (0, import_element168.forwardRef)(
         ref,
         className: clsx_default(widget_chrome_default.widgetChrome, className),
         "aria-labelledby": widgetType.title ? titleId : void 0,
-        ...editMode ? { inert: "true" } : {},
         children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(
           WidgetFrame,
           {
             widget,
             widgetType,
-            titleId
+            titleId,
+            editMode,
+            headerToolbar
           }
         )
       }
@@ -42859,13 +42867,16 @@ function WidgetSettingsTrigger({
     }
     setSettingsWidgetUuid(widget.uuid);
   }, [cancel, settingsWidgetUuid, setSettingsWidgetUuid, widget.uuid]);
-  if (!widgetType.attributes?.length) {
+  const hasNonPromotedAttributes = widgetType.attributes?.some(
+    (attribute) => attribute.relevance !== "high"
+  );
+  if (!hasNonPromotedAttributes) {
     return null;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
     IconButton,
     {
-      icon: cog_default,
+      icon: more_vertical_default,
       label: (0, import_i18n69.__)("Widget settings"),
       variant: "minimal",
       tone: "neutral",
@@ -42876,7 +42887,7 @@ function WidgetSettingsTrigger({
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widgets.mjs
-var import_element185 = __toESM(require_element(), 1);
+var import_element186 = __toESM(require_element(), 1);
 
 // node_modules/@dnd-kit/core/dist/core.esm.js
 var import_react44 = __toESM(require_react());
@@ -49878,10 +49889,79 @@ function useDashboardContainerColumnCount(forwardedRef) {
   return { containerRef, columnCount };
 }
 
+// packages/widget-dashboard/build-module/components/widget-attribute-controls/widget-attribute-controls.mjs
+var import_element184 = __toESM(require_element(), 1);
+var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
+function WidgetAttributeControls({
+  widget,
+  widgetType
+}) {
+  const { layout, onLayoutChange, commit } = useDashboardInternalContext();
+  const fields3 = (0, import_element184.useMemo)(
+    () => (widgetType.attributes ?? []).filter(
+      (attribute) => attribute.relevance === "high"
+    ),
+    [widgetType.attributes]
+  );
+  const form2 = (0, import_element184.useMemo)(
+    () => ({
+      layout: { type: "row", alignment: "center" },
+      fields: fields3.map((field) => ({
+        id: field.id,
+        layout: { type: "regular", labelPosition: "none" }
+      }))
+    }),
+    [fields3]
+  );
+  const [pendingCommit, setPendingCommit] = (0, import_element184.useState)(false);
+  (0, import_element184.useEffect)(() => {
+    if (pendingCommit) {
+      commit({ exitEditMode: false });
+      setPendingCommit(false);
+    }
+  }, [pendingCommit, commit]);
+  const handleChange = (0, import_element184.useCallback)(
+    (edits) => {
+      onLayoutChange(
+        layout.map(
+          (instance) => instance.uuid === widget.uuid ? {
+            ...instance,
+            attributes: {
+              ...instance.attributes,
+              ...edits
+            }
+          } : instance
+        )
+      );
+      setPendingCommit(true);
+    },
+    [layout, onLayoutChange, widget.uuid]
+  );
+  const data = widget.attributes ?? widgetType.example?.attributes ?? {};
+  return /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(import_jsx_runtime229.Fragment, { children: [
+    fields3.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+      DataForm,
+      {
+        data,
+        fields: fields3,
+        form: form2,
+        onChange: handleChange
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+      WidgetSettingsTrigger,
+      {
+        widget,
+        widgetType
+      }
+    )
+  ] });
+}
+
 // packages/widget-dashboard/build-module/components/widget-layout-controls/widget-layout-controls.mjs
 var import_components55 = __toESM(require_components(), 1);
 var import_i18n70 = __toESM(require_i18n(), 1);
-var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu7 } = unlock2(import_components55.privateApis);
 function WidgetLayoutControls({
   widget
@@ -49910,12 +49990,12 @@ function WidgetLayoutControls({
       )
     );
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(import_jsx_runtime229.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(Menu7, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(import_jsx_runtime230.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(Menu7, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
         Menu7.TriggerButton,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+          render: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
             IconButton,
             {
               icon: more_vertical_default,
@@ -49927,27 +50007,27 @@ function WidgetLayoutControls({
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Menu7.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(Menu7.Group, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Menu7.GroupLabel, { children: (0, import_i18n70.__)("Width") }),
-        /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Menu7.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(Menu7.Group, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Menu7.GroupLabel, { children: (0, import_i18n70.__)("Width") }),
+        /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
           Menu7.Item,
           {
             disabled: width === "fill",
             onClick: () => onNamedWidthChange("fill"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Menu7.ItemLabel, { children: (0, import_i18n70.__)("Use available width") })
+            children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Menu7.ItemLabel, { children: (0, import_i18n70.__)("Use available width") })
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
           Menu7.Item,
           {
             disabled: width === "full",
             onClick: () => onNamedWidthChange("full"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Menu7.ItemLabel, { children: (0, import_i18n70.__)("Make full width") })
+            children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(Menu7.ItemLabel, { children: (0, import_i18n70.__)("Make full width") })
           }
         )
       ] }) })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
       IconButton,
       {
         icon: trash_default,
@@ -49962,7 +50042,7 @@ function WidgetLayoutControls({
 }
 
 // packages/widget-dashboard/build-module/components/widget-toolbar/widget-toolbar.mjs
-var import_jsx_runtime230 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE64 = "data-wp-hash";
 function getRuntime64() {
   const globalScope = globalThis;
@@ -50044,14 +50124,14 @@ function registerStyle64(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle64("e7596f6870", "._4a01b99834540429__widgetToolbar{border-radius:var(--wpds-border-radius-md,4px);padding:var(--wpds-dimension-padding-xs,4px)}._32f1176d3d6fc011__solid{background:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}._45a811d7f0b925d2__subtle{background:color-mix(in srgb,var(--wpds-color-background-surface-neutral,#fcfcfc) 40%,transparent);opacity:0;pointer-events:none}[data-wp-grid-item-key]:focus-within ._45a811d7f0b925d2__subtle,[data-wp-grid-item-key]:hover ._45a811d7f0b925d2__subtle{opacity:1;pointer-events:auto}@media not (prefers-reduced-motion){._45a811d7f0b925d2__subtle{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}");
+  registerStyle64("e1a51f5597", "._4a01b99834540429__widgetToolbar{background:var(--wpds-color-background-surface-neutral-strong,#fff);padding:var(--wpds-dimension-padding-xs,4px)}._78bb9900d58f945e__elevated{border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);box-shadow:var(--wpds-elevation-xs,0 1px 1px 0 #00000008,0 1px 2px 0 #00000005,0 3px 3px 0 #00000005,0 4px 4px 0 #00000003)}");
 }
-var widget_toolbar_default = { "widgetToolbar": "_4a01b99834540429__widgetToolbar", "solid": "_32f1176d3d6fc011__solid", "subtle": "_45a811d7f0b925d2__subtle" };
+var widget_toolbar_default = { "widgetToolbar": "_4a01b99834540429__widgetToolbar", "elevated": "_78bb9900d58f945e__elevated" };
 function WidgetToolbar({
   children,
-  revealOnHover = false
+  editMode = false
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
     Stack,
     {
       direction: "row",
@@ -50059,7 +50139,7 @@ function WidgetToolbar({
       gap: "xs",
       className: clsx_default(
         widget_toolbar_default.widgetToolbar,
-        revealOnHover ? widget_toolbar_default.subtle : widget_toolbar_default.solid
+        editMode && widget_toolbar_default.elevated
       ),
       children
     }
@@ -50067,8 +50147,8 @@ function WidgetToolbar({
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widget-resize-handle.mjs
-var import_element184 = __toESM(require_element(), 1);
-var import_jsx_runtime231 = __toESM(require_jsx_runtime(), 1);
+var import_element185 = __toESM(require_element(), 1);
+var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE65 = "data-wp-hash";
 function getRuntime65() {
   const globalScope = globalThis;
@@ -50153,9 +50233,9 @@ if (typeof process === "undefined" || true) {
   registerStyle65("2e64f95efa", '.a70c7d5347a2f54b__handle{--widget-resize-handle-visual-inset:var(--wpds-dimension-padding-xs,4px);--widget-resize-handle-hover-scale:1.18;background:transparent;bottom:0;box-sizing:border-box;inset-inline-end:0;padding:0;position:absolute;z-index:1}.a70c7d5347a2f54b__handle:focus-visible{border-radius:var(--wpds-border-radius-sm,2px);outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa1d4aafe4d24e03__resizing{opacity:.72}._61d861c3afc33ad5__handleCorner{cursor:nwse-resize;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px)}._61d861c3afc33ad5__handleCorner:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-block-start:none;border-end-end-radius:var(--wpds-border-radius-md,4px);border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:none;bottom:var(--widget-resize-handle-visual-inset);box-sizing:border-box;content:"";height:var(--wpds-dimension-size-4xs,8px);inset-inline-end:var(--widget-resize-handle-visual-inset);position:absolute;transform:scale(1);transform-origin:100% 100%;width:var(--wpds-dimension-size-4xs,8px)}[dir=rtl] ._61d861c3afc33ad5__handleCorner:after{transform-origin:0 100%}._61d861c3afc33ad5__handleCorner.aa1d4aafe4d24e03__resizing:after,._61d861c3afc33ad5__handleCorner:focus-visible:after,._61d861c3afc33ad5__handleCorner:hover:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}._86ab3a6eb52bc222__handleHorizontal{align-items:center;border:none;cursor:ew-resize;display:flex;height:var(--wpds-dimension-size-lg,40px);justify-content:center;padding-inline-end:var(--widget-resize-handle-visual-inset);width:var(--wpds-dimension-size-sm,24px)}@media not (prefers-reduced-motion){._61d861c3afc33ad5__handleCorner:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-block-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-inline-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}._86ab3a6eb52bc222__handleHorizontal:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),background-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}}._86ab3a6eb52bc222__handleHorizontal:after{background-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));content:"";height:var(--wpds-dimension-size-3xs,12px);transform:scale(1);transform-origin:50% 100%;width:var(--wpds-border-width-sm,2px)}._86ab3a6eb52bc222__handleHorizontal.aa1d4aafe4d24e03__resizing:after,._86ab3a6eb52bc222__handleHorizontal:focus-visible:after,._86ab3a6eb52bc222__handleHorizontal:hover:after{background-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}@media (forced-colors:active){._61d861c3afc33ad5__handleCorner.aa1d4aafe4d24e03__resizing:after,._61d861c3afc33ad5__handleCorner:after,._61d861c3afc33ad5__handleCorner:focus-visible:after,._61d861c3afc33ad5__handleCorner:hover:after{border-block-end-color:Highlight;border-inline-end-color:Highlight}._86ab3a6eb52bc222__handleHorizontal.aa1d4aafe4d24e03__resizing:after,._86ab3a6eb52bc222__handleHorizontal:after,._86ab3a6eb52bc222__handleHorizontal:focus-visible:after,._86ab3a6eb52bc222__handleHorizontal:hover:after{background-color:Highlight}}');
 }
 var widget_resize_handle_default = { "handle": "a70c7d5347a2f54b__handle", "resizing": "aa1d4aafe4d24e03__resizing", "handleCorner": "_61d861c3afc33ad5__handleCorner", "handleHorizontal": "_86ab3a6eb52bc222__handleHorizontal" };
-var WidgetResizeHandle = (0, import_element184.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
+var WidgetResizeHandle = (0, import_element185.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
   if (!verticalResizable) {
-    return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
       "div",
       {
         ref,
@@ -50169,7 +50249,7 @@ var WidgetResizeHandle = (0, import_element184.forwardRef)(function WidgetResize
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
     "div",
     {
       ref,
@@ -50185,7 +50265,7 @@ var WidgetResizeHandle = (0, import_element184.forwardRef)(function WidgetResize
 });
 
 // packages/widget-dashboard/build-module/components/widgets/widgets.mjs
-var import_jsx_runtime232 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE66 = "data-wp-hash";
 function getRuntime66() {
   const globalScope = globalThis;
@@ -50314,22 +50394,22 @@ function applyMasonryChange(widgets, masonryLayout) {
     };
   });
 }
-var Widgets = (0, import_element185.forwardRef)(
+var Widgets = (0, import_element186.forwardRef)(
   function Widgets2({ className }, ref) {
     const { layout, onLayoutChange, editMode, gridSettings, widgetTypes } = useDashboardInternalContext();
     const { containerRef, columnCount } = useDashboardContainerColumnCount(ref);
     const isMasonry2 = gridSettings.model === "masonry";
-    const gridLayout = (0, import_element185.useMemo)(
+    const gridLayout = (0, import_element186.useMemo)(
       () => isMasonry2 ? toMasonryLayout(layout) : toGridLayout(layout),
       [layout, isMasonry2]
     );
-    const handleGridChange = (0, import_element185.useCallback)(
+    const handleGridChange = (0, import_element186.useCallback)(
       (newGridLayout) => {
         onLayoutChange(applyGridChange(layout, newGridLayout));
       },
       [layout, onLayoutChange]
     );
-    const handleMasonryChange = (0, import_element185.useCallback)(
+    const handleMasonryChange = (0, import_element186.useCallback)(
       (newMasonryLayout) => {
         onLayoutChange(
           applyMasonryChange(layout, newMasonryLayout)
@@ -50342,20 +50422,23 @@ var Widgets = (0, import_element185.forwardRef)(
         (type) => type.name === widget.type
       );
       const hasSettings = !!widgetType?.attributes?.length;
+      const isFullBleed = widgetType?.presentation === "full-bleed";
       let controls;
       if (editMode) {
-        controls = /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetLayoutControls, { widget });
+        controls = /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(WidgetLayoutControls, { widget });
       } else if (hasSettings && widgetType) {
-        controls = /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
-          WidgetSettingsTrigger,
+        controls = /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(
+          WidgetAttributeControls,
           {
             widget,
             widgetType
           }
         );
       }
-      const actionableArea = controls ? /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetHeader, { overlay: true, children: /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(WidgetToolbar, { revealOnHover: !editMode, children: controls }) }) : void 0;
-      return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
+      const toolbar = controls ? /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(WidgetToolbar, { editMode, children: controls }) : void 0;
+      const inSlot = editMode || isFullBleed;
+      const actionableArea = inSlot && toolbar ? /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(WidgetHeader, { overlay: true, children: toolbar }) : void 0;
+      return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(
         WidgetChrome,
         {
           widget,
@@ -50363,13 +50446,14 @@ var Widgets = (0, import_element185.forwardRef)(
           className: clsx_default(widgets_default.tile, {
             [widgets_default.tileEditMode]: editMode
           }),
-          actionableArea
+          actionableArea,
+          headerToolbar: !inSlot ? toolbar : void 0
         },
         widget.uuid
       );
     });
-    const renderDragPreview = (0, import_element185.useCallback)(
-      ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime232.jsx)("div", { className: widgets_default.dragPreview, children: clone }),
+    const renderDragPreview = (0, import_element186.useCallback)(
+      ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime233.jsx)("div", { className: widgets_default.dragPreview, children: clone }),
       []
     );
     const sharedRenderProps = {
@@ -50377,7 +50461,7 @@ var Widgets = (0, import_element185.forwardRef)(
       renderDragPreview,
       renderResizeHandle: WidgetResizeHandle
     };
-    const surface = isMasonry2 ? /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
+    const surface = isMasonry2 ? /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(
       DashboardLanes,
       {
         layout: gridLayout,
@@ -50387,7 +50471,7 @@ var Widgets = (0, import_element185.forwardRef)(
         ...sharedRenderProps,
         children
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
+    ) : /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(
       DashboardGrid,
       {
         layout: gridLayout,
@@ -50398,7 +50482,7 @@ var Widgets = (0, import_element185.forwardRef)(
         children
       }
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime232.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(
       "div",
       {
         ref: containerRef,
@@ -50410,7 +50494,7 @@ var Widgets = (0, import_element185.forwardRef)(
 );
 
 // packages/widget-dashboard/build-module/widget-dashboard.mjs
-var import_jsx_runtime233 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
 var WidgetDashboard = Object.assign(
   function WidgetDashboard2({
     layout,
@@ -50425,7 +50509,7 @@ var WidgetDashboard = Object.assign(
     onGridSettingsChange,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
       WidgetDashboardProvider,
       {
         layout,
@@ -50438,17 +50522,17 @@ var WidgetDashboard = Object.assign(
         resolveWidgetModule,
         gridSettings,
         onGridSettingsChange,
-        children: /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)(WidgetDashboardUIProvider, { children: [
-          children ?? /* @__PURE__ */ (0, import_jsx_runtime233.jsxs)(import_jsx_runtime233.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(NoWidgetsState, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(Actions3, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(Widgets, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(Commands, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(WidgetDashboardUIProvider, { children: [
+          children ?? /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(import_jsx_runtime234.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(NoWidgetsState, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(Actions3, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(Widgets, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(Commands, {})
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(WidgetInserter, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(LayoutSettings, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(WidgetSettings, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime233.jsx)(ResetConfirmation, {})
+          /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetInserter, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(LayoutSettings, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetSettings, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(ResetConfirmation, {})
         ] })
       }
     );
@@ -50509,7 +50593,7 @@ function useDashboardGridSettings() {
 }
 
 // routes/dashboard/stage.tsx
-var import_jsx_runtime234 = __toESM(require_jsx_runtime());
+var import_jsx_runtime235 = __toESM(require_jsx_runtime());
 function Dashboard() {
   const [layout, setLayout, resetLayout] = useDashboardLayout(
     "gutenberg_dashboard"
@@ -50520,7 +50604,7 @@ function Dashboard() {
     []
   );
   const [widgetTypes, isResolving] = useWidgetTypes(widgetsModules);
-  const [editMode, setEditMode] = (0, import_element186.useState)(false);
+  const [editMode, setEditMode] = (0, import_element187.useState)(false);
   const isMobileViewport = (0, import_data9.useSelect)(
     (select) => select(import_viewport2.store).isViewportMatch("< small"),
     []
@@ -50533,7 +50617,7 @@ function Dashboard() {
     });
   };
   const pageTitle = editMode ? (0, import_i18n71.__)("Customize Dashboard") : (0, import_i18n71.__)("Dashboard");
-  return /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)(
     WidgetDashboard,
     {
       widgetTypes,
@@ -50546,20 +50630,20 @@ function Dashboard() {
       editMode,
       onEditChange: setEditMode,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)(
           page_default,
           {
             title: editMode && isMobileViewport ? void 0 : pageTitle,
             ariaLabel: pageTitle,
-            actions: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetDashboard.Actions, {}),
+            actions: /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(WidgetDashboard.Actions, {}),
             hasPadding: true,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetDashboard.NoWidgetsState, {}),
-              /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetDashboard.Widgets, {})
+              /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(WidgetDashboard.NoWidgetsState, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(WidgetDashboard.Widgets, {})
             ]
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(WidgetDashboard.Commands, {})
+        /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(WidgetDashboard.Commands, {})
       ]
     }
   );
