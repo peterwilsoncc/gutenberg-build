@@ -84486,7 +84486,6 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(
         import_components208.FormTokenField,
         {
-          __next40pxDefaultSize: true,
           value: values,
           suggestions,
           onChange,

@@ -57955,8 +57955,7 @@ ${text}
         value: sanitizedValue,
         suggestions: authorsInfo.names,
         onChange: onAuthorChange,
-        help: "",
-        __next40pxDefaultSize: true
+        help: ""
       }
     );
   }
@@ -58080,7 +58079,6 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
       import_components122.FormTokenField,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n195.__)("Parents"),
         value,
         onInputChange: debouncedSearch,
@@ -58270,8 +58268,7 @@ ${text}
         suggestions,
         displayTransform: import_html_entities11.decodeEntities,
         onChange: onTermsChange,
-        help: "",
-        __next40pxDefaultSize: true
+        help: ""
       }
     ) });
   }
@@ -58338,8 +58335,7 @@ ${text}
           });
         },
         help: "",
-        __experimentalExpandOnFocus: true,
-        __next40pxDefaultSize: true
+        __experimentalExpandOnFocus: true
       }
     );
   }
@@ -73183,7 +73179,6 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
       import_components176.FormTokenField,
       {
-        __next40pxDefaultSize: true,
         value,
         onInputChange: debouncedSearch,
         suggestions,

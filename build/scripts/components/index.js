@@ -43699,16 +43699,12 @@ This message will only show in development mode. It won't appear in production. 
   }
 
   // packages/components/build-module/form-token-field/styles.mjs
-  var deprecatedPaddings = ({
-    __next40pxDefaultSize,
-    hasTokens
-  }) => !__next40pxDefaultSize && /* @__PURE__ */ css("padding-top:", space(hasTokens ? 1 : 0.5), ";padding-bottom:", space(hasTokens ? 1 : 0.5), ";" + (false ? "" : ";label:deprecatedPaddings;"), false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUF1QkkiLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBGbGV4IH0gZnJvbSAnLi4vZmxleCc7XG5pbXBvcnQgeyBzcGFjZSB9IGZyb20gJy4uL3V0aWxzL3NwYWNlJztcbmltcG9ydCB7IGJveFNpemluZ1Jlc2V0IH0gZnJvbSAnLi4vdXRpbHMnO1xuXG50eXBlIFRva2Vuc0FuZElucHV0V3JhcHBlclByb3BzID0ge1xuXHRfX25leHQ0MHB4RGVmYXVsdFNpemU6IGJvb2xlYW47XG5cdGhhc1Rva2VuczogYm9vbGVhbjtcbn07XG5cbmNvbnN0IGRlcHJlY2F0ZWRQYWRkaW5ncyA9ICgge1xuXHRfX25leHQ0MHB4RGVmYXVsdFNpemUsXG5cdGhhc1Rva2Vucyxcbn06IFRva2Vuc0FuZElucHV0V3JhcHBlclByb3BzICkgPT5cblx0ISBfX25leHQ0MHB4RGVmYXVsdFNpemUgJiZcblx0Y3NzYFxuXHRcdHBhZGRpbmctdG9wOiAkeyBzcGFjZSggaGFzVG9rZW5zID8gMSA6IDAuNSApIH07XG5cdFx0cGFkZGluZy1ib3R0b206ICR7IHNwYWNlKCBoYXNUb2tlbnMgPyAxIDogMC41ICkgfTtcblx0YDtcblxuZXhwb3J0IGNvbnN0IFRva2Vuc0FuZElucHV0V3JhcHBlckZsZXggPSBzdHlsZWQoIEZsZXggKWBcblx0cGFkZGluZzogN3B4O1xuXHQkeyBib3hTaXppbmdSZXNldCB9XG5cblx0JHsgZGVwcmVjYXRlZFBhZGRpbmdzIH1cbmA7XG4iXX0= */");
   var TokensAndInputWrapperFlex = /* @__PURE__ */ createStyled(component_default3, false ? {
     target: "ehq8nmi0"
   } : {
     target: "ehq8nmi0",
     label: "TokensAndInputWrapperFlex"
-  })("padding:7px;", boxSizingReset, " ", deprecatedPaddings, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUE0QnVEIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcblxuLyoqXG4gKiBJbnRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHsgRmxleCB9IGZyb20gJy4uL2ZsZXgnO1xuaW1wb3J0IHsgc3BhY2UgfSBmcm9tICcuLi91dGlscy9zcGFjZSc7XG5pbXBvcnQgeyBib3hTaXppbmdSZXNldCB9IGZyb20gJy4uL3V0aWxzJztcblxudHlwZSBUb2tlbnNBbmRJbnB1dFdyYXBwZXJQcm9wcyA9IHtcblx0X19uZXh0NDBweERlZmF1bHRTaXplOiBib29sZWFuO1xuXHRoYXNUb2tlbnM6IGJvb2xlYW47XG59O1xuXG5jb25zdCBkZXByZWNhdGVkUGFkZGluZ3MgPSAoIHtcblx0X19uZXh0NDBweERlZmF1bHRTaXplLFxuXHRoYXNUb2tlbnMsXG59OiBUb2tlbnNBbmRJbnB1dFdyYXBwZXJQcm9wcyApID0+XG5cdCEgX19uZXh0NDBweERlZmF1bHRTaXplICYmXG5cdGNzc2Bcblx0XHRwYWRkaW5nLXRvcDogJHsgc3BhY2UoIGhhc1Rva2VucyA/IDEgOiAwLjUgKSB9O1xuXHRcdHBhZGRpbmctYm90dG9tOiAkeyBzcGFjZSggaGFzVG9rZW5zID8gMSA6IDAuNSApIH07XG5cdGA7XG5cbmV4cG9ydCBjb25zdCBUb2tlbnNBbmRJbnB1dFdyYXBwZXJGbGV4ID0gc3R5bGVkKCBGbGV4IClgXG5cdHBhZGRpbmc6IDdweDtcblx0JHsgYm94U2l6aW5nUmVzZXQgfVxuXG5cdCR7IGRlcHJlY2F0ZWRQYWRkaW5ncyB9XG5gO1xuIl19 */"));
+  })("padding:7px;", boxSizingReset, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFXdUQiLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBFeHRlcm5hbCBkZXBlbmRlbmNpZXNcbiAqL1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBGbGV4IH0gZnJvbSAnLi4vZmxleCc7XG5pbXBvcnQgeyBib3hTaXppbmdSZXNldCB9IGZyb20gJy4uL3V0aWxzJztcblxuZXhwb3J0IGNvbnN0IFRva2Vuc0FuZElucHV0V3JhcHBlckZsZXggPSBzdHlsZWQoIEZsZXggKWBcblx0cGFkZGluZzogN3B4O1xuXHQkeyBib3hTaXppbmdSZXNldCB9XG5gO1xuIl19 */"));
 
   // packages/components/build-module/form-token-field/index.mjs
   var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
@@ -43744,16 +43740,10 @@ This message will only show in development mode. It won't appear in production. 
       __experimentalExpandOnFocus = false,
       __experimentalValidateInput = () => true,
       __experimentalShowHowTo,
-      __next40pxDefaultSize = false,
       __experimentalAutoSelectFirstMatch = false,
       tokenizeOnBlur = false,
       help
-    } = useDeprecated36pxDefaultSizeProp(props);
-    maybeWarnDeprecated36pxSize({
-      componentName: "FormTokenField",
-      size: void 0,
-      __next40pxDefaultSize
-    });
+    } = props;
     const defaultHelp = tokenizeOnSpace ? (0, import_i18n57.__)("Separate with commas, spaces, or the Enter key.") : (0, import_i18n57.__)("Separate with commas or the Enter key.");
     let computedHelp = help !== void 0 ? help : defaultHelp;
     if (typeof __experimentalShowHowTo === "boolean") {
@@ -44244,8 +44234,6 @@ This message will only show in development mode. It won't appear in production. 
           align: "center",
           gap: 1,
           wrap: true,
-          __next40pxDefaultSize,
-          hasTokens: !!value.length,
           children: renderTokensAndInput()
         }), isExpanded && /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(suggestions_list_default, {
           instanceId,
@@ -45825,7 +45813,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var notice_default = Notice;
 
   // packages/components/build-module/notice/list.mjs
-  var import_react119 = __toESM(require_react(), 1);
+  var import_react118 = __toESM(require_react(), 1);
   var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
   var noop20 = () => {
   };
@@ -45844,7 +45832,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           content,
           ...restNotice
         } = notice;
-        return /* @__PURE__ */ (0, import_react119.createElement)(notice_default, {
+        return /* @__PURE__ */ (0, import_react118.createElement)(notice_default, {
           ...restNotice,
           key: notice.id,
           onRemove: removeNotice(notice.id)
@@ -46361,7 +46349,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         selectedCategoryId: props.selectedCategoryId,
         onChange: props.onCategoryChange
       }, "query-controls-category-select"), isMultipleCategorySelection(props) && props.categorySuggestions && props.onCategoryChange && /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(form_token_field_default, {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n64.__)("Categories"),
         value: props.selectedCategories && props.selectedCategories.map((item2) => ({
           id: item2.id,
@@ -51638,7 +51625,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var badge_default = Badge;
 
   // node_modules/react-day-picker/dist/esm/DayPicker.js
-  var import_react159 = __toESM(require_react(), 1);
+  var import_react158 = __toESM(require_react(), 1);
 
   // node_modules/@date-fns/tz/tzOffset/index.js
   var offsetFormatCache = {};
@@ -52351,115 +52338,115 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // node_modules/react-day-picker/dist/esm/components/Button.js
-  var import_react128 = __toESM(require_react(), 1);
+  var import_react127 = __toESM(require_react(), 1);
   function Button4(props) {
-    return import_react128.default.createElement("button", { ...props });
+    return import_react127.default.createElement("button", { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/components/CaptionLabel.js
-  var import_react129 = __toESM(require_react(), 1);
+  var import_react128 = __toESM(require_react(), 1);
   function CaptionLabel(props) {
-    return import_react129.default.createElement("span", { ...props });
+    return import_react128.default.createElement("span", { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/components/Chevron.js
-  var import_react130 = __toESM(require_react(), 1);
+  var import_react129 = __toESM(require_react(), 1);
   function Chevron(props) {
     const { size: size4 = 24, orientation = "left", className: className2 } = props;
-    return import_react130.default.createElement(
+    return import_react129.default.createElement(
       "svg",
       { className: className2, width: size4, height: size4, viewBox: "0 0 24 24" },
-      orientation === "up" && import_react130.default.createElement("polygon", { points: "6.77 17 12.5 11.43 18.24 17 20 15.28 12.5 8 5 15.28" }),
-      orientation === "down" && import_react130.default.createElement("polygon", { points: "6.77 8 12.5 13.57 18.24 8 20 9.72 12.5 17 5 9.72" }),
-      orientation === "left" && import_react130.default.createElement("polygon", { points: "16 18.112 9.81111111 12 16 5.87733333 14.0888889 4 6 12 14.0888889 20" }),
-      orientation === "right" && import_react130.default.createElement("polygon", { points: "8 18.112 14.18888889 12 8 5.87733333 9.91111111 4 18 12 9.91111111 20" })
+      orientation === "up" && import_react129.default.createElement("polygon", { points: "6.77 17 12.5 11.43 18.24 17 20 15.28 12.5 8 5 15.28" }),
+      orientation === "down" && import_react129.default.createElement("polygon", { points: "6.77 8 12.5 13.57 18.24 8 20 9.72 12.5 17 5 9.72" }),
+      orientation === "left" && import_react129.default.createElement("polygon", { points: "16 18.112 9.81111111 12 16 5.87733333 14.0888889 4 6 12 14.0888889 20" }),
+      orientation === "right" && import_react129.default.createElement("polygon", { points: "8 18.112 14.18888889 12 8 5.87733333 9.91111111 4 18 12 9.91111111 20" })
     );
   }
 
   // node_modules/react-day-picker/dist/esm/components/Day.js
-  var import_react131 = __toESM(require_react(), 1);
+  var import_react130 = __toESM(require_react(), 1);
   function Day3(props) {
     const { day, modifiers, ...tdProps } = props;
-    return import_react131.default.createElement("td", { ...tdProps });
+    return import_react130.default.createElement("td", { ...tdProps });
   }
 
   // node_modules/react-day-picker/dist/esm/components/DayButton.js
-  var import_react132 = __toESM(require_react(), 1);
+  var import_react131 = __toESM(require_react(), 1);
   function DayButton2(props) {
     const { day, modifiers, ...buttonProps } = props;
-    const ref = import_react132.default.useRef(null);
-    import_react132.default.useEffect(() => {
+    const ref = import_react131.default.useRef(null);
+    import_react131.default.useEffect(() => {
       if (modifiers.focused)
         ref.current?.focus();
     }, [modifiers.focused]);
-    return import_react132.default.createElement("button", { ref, ...buttonProps });
+    return import_react131.default.createElement("button", { ref, ...buttonProps });
   }
 
   // node_modules/react-day-picker/dist/esm/components/Dropdown.js
-  var import_react133 = __toESM(require_react(), 1);
+  var import_react132 = __toESM(require_react(), 1);
   function Dropdown2(props) {
     const { options: options2, className: className2, components, classNames, ...selectProps } = props;
     const cssClassSelect = [classNames[UI2.Dropdown], className2].join(" ");
     const selectedOption = options2?.find(({ value }) => value === selectProps.value);
-    return import_react133.default.createElement(
+    return import_react132.default.createElement(
       "span",
       { "data-disabled": selectProps.disabled, className: classNames[UI2.DropdownRoot] },
-      import_react133.default.createElement(components.Select, { className: cssClassSelect, ...selectProps }, options2?.map(({ value, label, disabled }) => import_react133.default.createElement(components.Option, { key: value, value, disabled }, label))),
-      import_react133.default.createElement(
+      import_react132.default.createElement(components.Select, { className: cssClassSelect, ...selectProps }, options2?.map(({ value, label, disabled }) => import_react132.default.createElement(components.Option, { key: value, value, disabled }, label))),
+      import_react132.default.createElement(
         "span",
         { className: classNames[UI2.CaptionLabel], "aria-hidden": true },
         selectedOption?.label,
-        import_react133.default.createElement(components.Chevron, { orientation: "down", size: 18, className: classNames[UI2.Chevron] })
+        import_react132.default.createElement(components.Chevron, { orientation: "down", size: 18, className: classNames[UI2.Chevron] })
       )
     );
   }
 
   // node_modules/react-day-picker/dist/esm/components/DropdownNav.js
-  var import_react134 = __toESM(require_react(), 1);
+  var import_react133 = __toESM(require_react(), 1);
   function DropdownNav(props) {
-    return import_react134.default.createElement("div", { ...props });
+    return import_react133.default.createElement("div", { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/components/Footer.js
-  var import_react135 = __toESM(require_react(), 1);
+  var import_react134 = __toESM(require_react(), 1);
   function Footer2(props) {
-    return import_react135.default.createElement("div", { ...props });
+    return import_react134.default.createElement("div", { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/components/Month.js
-  var import_react136 = __toESM(require_react(), 1);
+  var import_react135 = __toESM(require_react(), 1);
   function Month(props) {
     const { calendarMonth, displayIndex, ...divProps } = props;
-    return import_react136.default.createElement("div", { ...divProps }, props.children);
+    return import_react135.default.createElement("div", { ...divProps }, props.children);
   }
 
   // node_modules/react-day-picker/dist/esm/components/MonthCaption.js
-  var import_react137 = __toESM(require_react(), 1);
+  var import_react136 = __toESM(require_react(), 1);
   function MonthCaption(props) {
     const { calendarMonth, displayIndex, ...divProps } = props;
-    return import_react137.default.createElement("div", { ...divProps });
+    return import_react136.default.createElement("div", { ...divProps });
   }
 
   // node_modules/react-day-picker/dist/esm/components/MonthGrid.js
-  var import_react138 = __toESM(require_react(), 1);
+  var import_react137 = __toESM(require_react(), 1);
   function MonthGrid(props) {
-    return import_react138.default.createElement("table", { ...props });
+    return import_react137.default.createElement("table", { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/components/Months.js
-  var import_react139 = __toESM(require_react(), 1);
+  var import_react138 = __toESM(require_react(), 1);
   function Months(props) {
-    return import_react139.default.createElement("div", { ...props });
+    return import_react138.default.createElement("div", { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/components/MonthsDropdown.js
-  var import_react141 = __toESM(require_react(), 1);
+  var import_react140 = __toESM(require_react(), 1);
 
   // node_modules/react-day-picker/dist/esm/useDayPicker.js
-  var import_react140 = __toESM(require_react(), 1);
-  var dayPickerContext = (0, import_react140.createContext)(void 0);
+  var import_react139 = __toESM(require_react(), 1);
+  var dayPickerContext = (0, import_react139.createContext)(void 0);
   function useDayPicker() {
-    const context = (0, import_react140.useContext)(dayPickerContext);
+    const context = (0, import_react139.useContext)(dayPickerContext);
     if (context === void 0) {
       throw new Error("useDayPicker() must be used within a custom component.");
     }
@@ -52469,120 +52456,120 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // node_modules/react-day-picker/dist/esm/components/MonthsDropdown.js
   function MonthsDropdown(props) {
     const { components } = useDayPicker();
-    return import_react141.default.createElement(components.Dropdown, { ...props });
+    return import_react140.default.createElement(components.Dropdown, { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/components/Nav.js
-  var import_react142 = __toESM(require_react(), 1);
+  var import_react141 = __toESM(require_react(), 1);
   function Nav(props) {
     const { onPreviousClick, onNextClick, previousMonth, nextMonth, ...navProps } = props;
     const { components, classNames, labels: { labelPrevious: labelPrevious2, labelNext: labelNext2 } } = useDayPicker();
-    const handleNextClick = (0, import_react142.useCallback)((e3) => {
+    const handleNextClick = (0, import_react141.useCallback)((e3) => {
       if (nextMonth) {
         onNextClick?.(e3);
       }
     }, [nextMonth, onNextClick]);
-    const handlePreviousClick = (0, import_react142.useCallback)((e3) => {
+    const handlePreviousClick = (0, import_react141.useCallback)((e3) => {
       if (previousMonth) {
         onPreviousClick?.(e3);
       }
     }, [previousMonth, onPreviousClick]);
-    return import_react142.default.createElement(
+    return import_react141.default.createElement(
       "nav",
       { ...navProps },
-      import_react142.default.createElement(
+      import_react141.default.createElement(
         components.PreviousMonthButton,
         { type: "button", className: classNames[UI2.PreviousMonthButton], tabIndex: previousMonth ? void 0 : -1, "aria-disabled": previousMonth ? void 0 : true, "aria-label": labelPrevious2(previousMonth), onClick: handlePreviousClick },
-        import_react142.default.createElement(components.Chevron, { disabled: previousMonth ? void 0 : true, className: classNames[UI2.Chevron], orientation: "left" })
+        import_react141.default.createElement(components.Chevron, { disabled: previousMonth ? void 0 : true, className: classNames[UI2.Chevron], orientation: "left" })
       ),
-      import_react142.default.createElement(
+      import_react141.default.createElement(
         components.NextMonthButton,
         { type: "button", className: classNames[UI2.NextMonthButton], tabIndex: nextMonth ? void 0 : -1, "aria-disabled": nextMonth ? void 0 : true, "aria-label": labelNext2(nextMonth), onClick: handleNextClick },
-        import_react142.default.createElement(components.Chevron, { disabled: nextMonth ? void 0 : true, orientation: "right", className: classNames[UI2.Chevron] })
+        import_react141.default.createElement(components.Chevron, { disabled: nextMonth ? void 0 : true, orientation: "right", className: classNames[UI2.Chevron] })
       )
     );
   }
 
   // node_modules/react-day-picker/dist/esm/components/NextMonthButton.js
-  var import_react143 = __toESM(require_react(), 1);
+  var import_react142 = __toESM(require_react(), 1);
   function NextMonthButton(props) {
     const { components } = useDayPicker();
-    return import_react143.default.createElement(components.Button, { ...props });
+    return import_react142.default.createElement(components.Button, { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/components/Option.js
-  var import_react144 = __toESM(require_react(), 1);
+  var import_react143 = __toESM(require_react(), 1);
   function Option3(props) {
-    return import_react144.default.createElement("option", { ...props });
+    return import_react143.default.createElement("option", { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/components/PreviousMonthButton.js
-  var import_react145 = __toESM(require_react(), 1);
+  var import_react144 = __toESM(require_react(), 1);
   function PreviousMonthButton(props) {
     const { components } = useDayPicker();
-    return import_react145.default.createElement(components.Button, { ...props });
+    return import_react144.default.createElement(components.Button, { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/components/Root.js
-  var import_react146 = __toESM(require_react(), 1);
+  var import_react145 = __toESM(require_react(), 1);
   function Root5(props) {
     const { rootRef, ...rest } = props;
-    return import_react146.default.createElement("div", { ...rest, ref: rootRef });
+    return import_react145.default.createElement("div", { ...rest, ref: rootRef });
   }
 
   // node_modules/react-day-picker/dist/esm/components/Select.js
-  var import_react147 = __toESM(require_react(), 1);
+  var import_react146 = __toESM(require_react(), 1);
   function Select4(props) {
-    return import_react147.default.createElement("select", { ...props });
+    return import_react146.default.createElement("select", { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/components/Week.js
-  var import_react148 = __toESM(require_react(), 1);
+  var import_react147 = __toESM(require_react(), 1);
   function Week(props) {
     const { week, ...trProps } = props;
-    return import_react148.default.createElement("tr", { ...trProps });
+    return import_react147.default.createElement("tr", { ...trProps });
   }
 
   // node_modules/react-day-picker/dist/esm/components/Weekday.js
-  var import_react149 = __toESM(require_react(), 1);
+  var import_react148 = __toESM(require_react(), 1);
   function Weekday(props) {
-    return import_react149.default.createElement("th", { ...props });
+    return import_react148.default.createElement("th", { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/components/Weekdays.js
-  var import_react150 = __toESM(require_react(), 1);
+  var import_react149 = __toESM(require_react(), 1);
   function Weekdays(props) {
-    return import_react150.default.createElement(
+    return import_react149.default.createElement(
       "thead",
       { "aria-hidden": true },
-      import_react150.default.createElement("tr", { ...props })
+      import_react149.default.createElement("tr", { ...props })
     );
   }
 
   // node_modules/react-day-picker/dist/esm/components/WeekNumber.js
-  var import_react151 = __toESM(require_react(), 1);
+  var import_react150 = __toESM(require_react(), 1);
   function WeekNumber(props) {
     const { week, ...thProps } = props;
-    return import_react151.default.createElement("th", { ...thProps });
+    return import_react150.default.createElement("th", { ...thProps });
   }
 
   // node_modules/react-day-picker/dist/esm/components/WeekNumberHeader.js
-  var import_react152 = __toESM(require_react(), 1);
+  var import_react151 = __toESM(require_react(), 1);
   function WeekNumberHeader(props) {
-    return import_react152.default.createElement("th", { ...props });
+    return import_react151.default.createElement("th", { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/components/Weeks.js
-  var import_react153 = __toESM(require_react(), 1);
+  var import_react152 = __toESM(require_react(), 1);
   function Weeks(props) {
-    return import_react153.default.createElement("tbody", { ...props });
+    return import_react152.default.createElement("tbody", { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/components/YearsDropdown.js
-  var import_react154 = __toESM(require_react(), 1);
+  var import_react153 = __toESM(require_react(), 1);
   function YearsDropdown(props) {
     const { components } = useDayPicker();
-    return import_react154.default.createElement(components.Dropdown, { ...props });
+    return import_react153.default.createElement(components.Dropdown, { ...props });
   }
 
   // node_modules/react-day-picker/dist/esm/helpers/getComponents.js
@@ -52847,7 +52834,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // node_modules/react-day-picker/dist/esm/useAnimation.js
-  var import_react155 = __toESM(require_react(), 1);
+  var import_react154 = __toESM(require_react(), 1);
   var asHtmlElement = (element) => {
     if (element instanceof HTMLElement)
       return element;
@@ -52862,10 +52849,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var queryNavEl = (element) => asHtmlElement(element.querySelector("[data-animated-nav]"));
   var queryWeekdaysEl = (element) => asHtmlElement(element.querySelector("[data-animated-weekdays]"));
   function useAnimation(rootElRef, enabled, { classNames, months, focused, dateLib }) {
-    const previousRootElSnapshotRef = (0, import_react155.useRef)(null);
-    const previousMonthsRef = (0, import_react155.useRef)(months);
-    const animatingRef = (0, import_react155.useRef)(false);
-    (0, import_react155.useLayoutEffect)(() => {
+    const previousRootElSnapshotRef = (0, import_react154.useRef)(null);
+    const previousMonthsRef = (0, import_react154.useRef)(months);
+    const animatingRef = (0, import_react154.useRef)(false);
+    (0, import_react154.useLayoutEffect)(() => {
       const previousMonths = previousMonthsRef.current;
       previousMonthsRef.current = months;
       if (!enabled || !rootElRef.current || // safety check because the ref can be set to anything by consumers
@@ -52975,7 +52962,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // node_modules/react-day-picker/dist/esm/useCalendar.js
-  var import_react157 = __toESM(require_react(), 1);
+  var import_react156 = __toESM(require_react(), 1);
 
   // node_modules/react-day-picker/dist/esm/helpers/getDates.js
   function getDates(displayMonths, maxDate, props, dateLib) {
@@ -53171,9 +53158,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // node_modules/react-day-picker/dist/esm/helpers/useControlledValue.js
-  var import_react156 = __toESM(require_react(), 1);
+  var import_react155 = __toESM(require_react(), 1);
   function useControlledValue2(defaultValue2, controlledValue) {
-    const [uncontrolledValue, setValue] = (0, import_react156.useState)(defaultValue2);
+    const [uncontrolledValue, setValue] = (0, import_react155.useState)(defaultValue2);
     const value = controlledValue === void 0 ? uncontrolledValue : controlledValue;
     return [value, setValue];
   }
@@ -53188,7 +53175,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       // initialMonth is always computed from props.month if provided
       props.month ? initialMonth : void 0
     );
-    (0, import_react157.useEffect)(() => {
+    (0, import_react156.useEffect)(() => {
       const newInitialMonth = getInitialMonth(props, dateLib);
       setFirstMonth(newInitialMonth);
     }, [props.timeZone]);
@@ -53236,7 +53223,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // node_modules/react-day-picker/dist/esm/useFocus.js
-  var import_react158 = __toESM(require_react(), 1);
+  var import_react157 = __toESM(require_react(), 1);
 
   // node_modules/react-day-picker/dist/esm/helpers/calculateFocusTarget.js
   var FocusTargetPriority;
@@ -53316,9 +53303,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // node_modules/react-day-picker/dist/esm/useFocus.js
   function useFocus(props, calendar, getModifiers, isSelected2, dateLib) {
     const { autoFocus } = props;
-    const [lastFocused, setLastFocused] = (0, import_react158.useState)();
+    const [lastFocused, setLastFocused] = (0, import_react157.useState)();
     const focusTarget = calculateFocusTarget(calendar.days, getModifiers, isSelected2 || (() => false), lastFocused);
-    const [focusedDay, setFocused] = (0, import_react158.useState)(autoFocus ? focusTarget : void 0);
+    const [focusedDay, setFocused] = (0, import_react157.useState)(autoFocus ? focusTarget : void 0);
     const blur = () => {
       setLastFocused(focusedDay);
       setFocused(void 0);
@@ -53619,7 +53606,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         };
       }
     }
-    const { components, formatters: formatters2, labels, dateLib, locale, classNames } = (0, import_react159.useMemo)(() => {
+    const { components, formatters: formatters2, labels, dateLib, locale, classNames } = (0, import_react158.useMemo)(() => {
       const locale2 = { ...enUS, ...props.locale };
       const dateLib2 = new DateLib({
         locale: locale2,
@@ -53661,36 +53648,36 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const { isSelected: isSelected2, select, selected: selectedValue } = useSelection(props, dateLib) ?? {};
     const { blur, focused, isFocusTarget, moveFocus, setFocused } = useFocus(props, calendar, getModifiers, isSelected2 ?? (() => false), dateLib);
     const { labelDayButton: labelDayButton2, labelGridcell: labelGridcell2, labelGrid: labelGrid2, labelMonthDropdown: labelMonthDropdown2, labelNav: labelNav2, labelPrevious: labelPrevious2, labelNext: labelNext2, labelWeekday: labelWeekday2, labelWeekNumber: labelWeekNumber2, labelWeekNumberHeader: labelWeekNumberHeader2, labelYearDropdown: labelYearDropdown2 } = labels;
-    const weekdays = (0, import_react159.useMemo)(() => getWeekdays(dateLib, props.ISOWeek), [dateLib, props.ISOWeek]);
+    const weekdays = (0, import_react158.useMemo)(() => getWeekdays(dateLib, props.ISOWeek), [dateLib, props.ISOWeek]);
     const isInteractive = mode2 !== void 0 || onDayClick !== void 0;
-    const handlePreviousClick = (0, import_react159.useCallback)(() => {
+    const handlePreviousClick = (0, import_react158.useCallback)(() => {
       if (!previousMonth)
         return;
       goToMonth(previousMonth);
       onPrevClick?.(previousMonth);
     }, [previousMonth, goToMonth, onPrevClick]);
-    const handleNextClick = (0, import_react159.useCallback)(() => {
+    const handleNextClick = (0, import_react158.useCallback)(() => {
       if (!nextMonth)
         return;
       goToMonth(nextMonth);
       onNextClick?.(nextMonth);
     }, [goToMonth, nextMonth, onNextClick]);
-    const handleDayClick = (0, import_react159.useCallback)((day, m3) => (e3) => {
+    const handleDayClick = (0, import_react158.useCallback)((day, m3) => (e3) => {
       e3.preventDefault();
       e3.stopPropagation();
       setFocused(day);
       select?.(day.date, m3, e3);
       onDayClick?.(day.date, m3, e3);
     }, [select, onDayClick, setFocused]);
-    const handleDayFocus = (0, import_react159.useCallback)((day, m3) => (e3) => {
+    const handleDayFocus = (0, import_react158.useCallback)((day, m3) => (e3) => {
       setFocused(day);
       onDayFocus?.(day.date, m3, e3);
     }, [onDayFocus, setFocused]);
-    const handleDayBlur = (0, import_react159.useCallback)((day, m3) => (e3) => {
+    const handleDayBlur = (0, import_react158.useCallback)((day, m3) => (e3) => {
       blur();
       onDayBlur?.(day.date, m3, e3);
     }, [blur, onDayBlur]);
-    const handleDayKeyDown = (0, import_react159.useCallback)((day, modifiers) => (e3) => {
+    const handleDayKeyDown = (0, import_react158.useCallback)((day, modifiers) => (e3) => {
       const keyMap = {
         ArrowLeft: ["day", props.dir === "rtl" ? "after" : "before"],
         ArrowRight: ["day", props.dir === "rtl" ? "before" : "after"],
@@ -53709,28 +53696,28 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       onDayKeyDown?.(day.date, modifiers, e3);
     }, [moveFocus, onDayKeyDown, props.dir]);
-    const handleDayMouseEnter = (0, import_react159.useCallback)((day, modifiers) => (e3) => {
+    const handleDayMouseEnter = (0, import_react158.useCallback)((day, modifiers) => (e3) => {
       onDayMouseEnter?.(day.date, modifiers, e3);
     }, [onDayMouseEnter]);
-    const handleDayMouseLeave = (0, import_react159.useCallback)((day, modifiers) => (e3) => {
+    const handleDayMouseLeave = (0, import_react158.useCallback)((day, modifiers) => (e3) => {
       onDayMouseLeave?.(day.date, modifiers, e3);
     }, [onDayMouseLeave]);
-    const handleMonthChange = (0, import_react159.useCallback)((date) => (e3) => {
+    const handleMonthChange = (0, import_react158.useCallback)((date) => (e3) => {
       const selectedMonth = Number(e3.target.value);
       const month = dateLib.setMonth(dateLib.startOfMonth(date), selectedMonth);
       goToMonth(month);
     }, [dateLib, goToMonth]);
-    const handleYearChange = (0, import_react159.useCallback)((date) => (e3) => {
+    const handleYearChange = (0, import_react158.useCallback)((date) => (e3) => {
       const selectedYear = Number(e3.target.value);
       const month = dateLib.setYear(dateLib.startOfMonth(date), selectedYear);
       goToMonth(month);
     }, [dateLib, goToMonth]);
-    const { className: className2, style: style2 } = (0, import_react159.useMemo)(() => ({
+    const { className: className2, style: style2 } = (0, import_react158.useMemo)(() => ({
       className: [classNames[UI2.Root], props.className].filter(Boolean).join(" "),
       style: { ...styles3?.[UI2.Root], ...props.style }
     }), [classNames, props.className, props.style, styles3]);
     const dataAttributes = getDataAttributes(props);
-    const rootElRef = (0, import_react159.useRef)(null);
+    const rootElRef = (0, import_react158.useRef)(null);
     useAnimation(rootElRef, Boolean(props.animate), {
       classNames,
       months,
@@ -53753,33 +53740,33 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       labels,
       formatters: formatters2
     };
-    return import_react159.default.createElement(
+    return import_react158.default.createElement(
       dayPickerContext.Provider,
       { value: contextValue },
-      import_react159.default.createElement(
+      import_react158.default.createElement(
         components.Root,
         { rootRef: props.animate ? rootElRef : void 0, className: className2, style: style2, dir: props.dir, id: props.id, lang: props.lang, nonce: props.nonce, title: props.title, role: props.role, "aria-label": props["aria-label"], ...dataAttributes },
-        import_react159.default.createElement(
+        import_react158.default.createElement(
           components.Months,
           { className: classNames[UI2.Months], style: styles3?.[UI2.Months] },
-          !props.hideNavigation && !navLayout && import_react159.default.createElement(components.Nav, { "data-animated-nav": props.animate ? "true" : void 0, className: classNames[UI2.Nav], style: styles3?.[UI2.Nav], "aria-label": labelNav2(), onPreviousClick: handlePreviousClick, onNextClick: handleNextClick, previousMonth, nextMonth }),
+          !props.hideNavigation && !navLayout && import_react158.default.createElement(components.Nav, { "data-animated-nav": props.animate ? "true" : void 0, className: classNames[UI2.Nav], style: styles3?.[UI2.Nav], "aria-label": labelNav2(), onPreviousClick: handlePreviousClick, onNextClick: handleNextClick, previousMonth, nextMonth }),
           months.map((calendarMonth, displayIndex) => {
             const dropdownMonths = getMonthOptions(calendarMonth.date, navStart, navEnd, formatters2, dateLib);
             const dropdownYears = getYearOptions(navStart, navEnd, formatters2, dateLib);
-            return import_react159.default.createElement(
+            return import_react158.default.createElement(
               components.Month,
               { "data-animated-month": props.animate ? "true" : void 0, className: classNames[UI2.Month], style: styles3?.[UI2.Month], key: displayIndex, displayIndex, calendarMonth },
-              navLayout === "around" && !props.hideNavigation && displayIndex === 0 && import_react159.default.createElement(
+              navLayout === "around" && !props.hideNavigation && displayIndex === 0 && import_react158.default.createElement(
                 components.PreviousMonthButton,
                 { type: "button", className: classNames[UI2.PreviousMonthButton], tabIndex: previousMonth ? void 0 : -1, "aria-disabled": previousMonth ? void 0 : true, "aria-label": labelPrevious2(previousMonth), onClick: handlePreviousClick, "data-animated-button": props.animate ? "true" : void 0 },
-                import_react159.default.createElement(components.Chevron, { disabled: previousMonth ? void 0 : true, className: classNames[UI2.Chevron], orientation: props.dir === "rtl" ? "right" : "left" })
+                import_react158.default.createElement(components.Chevron, { disabled: previousMonth ? void 0 : true, className: classNames[UI2.Chevron], orientation: props.dir === "rtl" ? "right" : "left" })
               ),
-              import_react159.default.createElement(components.MonthCaption, { "data-animated-caption": props.animate ? "true" : void 0, className: classNames[UI2.MonthCaption], style: styles3?.[UI2.MonthCaption], calendarMonth, displayIndex }, captionLayout?.startsWith("dropdown") ? import_react159.default.createElement(
+              import_react158.default.createElement(components.MonthCaption, { "data-animated-caption": props.animate ? "true" : void 0, className: classNames[UI2.MonthCaption], style: styles3?.[UI2.MonthCaption], calendarMonth, displayIndex }, captionLayout?.startsWith("dropdown") ? import_react158.default.createElement(
                 components.DropdownNav,
                 { className: classNames[UI2.Dropdowns], style: styles3?.[UI2.Dropdowns] },
-                captionLayout === "dropdown" || captionLayout === "dropdown-months" ? import_react159.default.createElement(components.MonthsDropdown, { className: classNames[UI2.MonthsDropdown], "aria-label": labelMonthDropdown2(), classNames, components, disabled: Boolean(props.disableNavigation), onChange: handleMonthChange(calendarMonth.date), options: dropdownMonths, style: styles3?.[UI2.Dropdown], value: dateLib.getMonth(calendarMonth.date) }) : import_react159.default.createElement("span", null, formatMonthDropdown2(calendarMonth.date, dateLib)),
-                captionLayout === "dropdown" || captionLayout === "dropdown-years" ? import_react159.default.createElement(components.YearsDropdown, { className: classNames[UI2.YearsDropdown], "aria-label": labelYearDropdown2(dateLib.options), classNames, components, disabled: Boolean(props.disableNavigation), onChange: handleYearChange(calendarMonth.date), options: dropdownYears, style: styles3?.[UI2.Dropdown], value: dateLib.getYear(calendarMonth.date) }) : import_react159.default.createElement("span", null, formatYearDropdown2(calendarMonth.date, dateLib)),
-                import_react159.default.createElement("span", { role: "status", "aria-live": "polite", style: {
+                captionLayout === "dropdown" || captionLayout === "dropdown-months" ? import_react158.default.createElement(components.MonthsDropdown, { className: classNames[UI2.MonthsDropdown], "aria-label": labelMonthDropdown2(), classNames, components, disabled: Boolean(props.disableNavigation), onChange: handleMonthChange(calendarMonth.date), options: dropdownMonths, style: styles3?.[UI2.Dropdown], value: dateLib.getMonth(calendarMonth.date) }) : import_react158.default.createElement("span", null, formatMonthDropdown2(calendarMonth.date, dateLib)),
+                captionLayout === "dropdown" || captionLayout === "dropdown-years" ? import_react158.default.createElement(components.YearsDropdown, { className: classNames[UI2.YearsDropdown], "aria-label": labelYearDropdown2(dateLib.options), classNames, components, disabled: Boolean(props.disableNavigation), onChange: handleYearChange(calendarMonth.date), options: dropdownYears, style: styles3?.[UI2.Dropdown], value: dateLib.getYear(calendarMonth.date) }) : import_react158.default.createElement("span", null, formatYearDropdown2(calendarMonth.date, dateLib)),
+                import_react158.default.createElement("span", { role: "status", "aria-live": "polite", style: {
                   border: 0,
                   clip: "rect(0 0 0 0)",
                   height: "1px",
@@ -53791,27 +53778,27 @@ The screen with id ${screen.id} will not be added.`) : void 0;
                   whiteSpace: "nowrap",
                   wordWrap: "normal"
                 } }, formatCaption2(calendarMonth.date, dateLib.options, dateLib))
-              ) : import_react159.default.createElement(components.CaptionLabel, { className: classNames[UI2.CaptionLabel], role: "status", "aria-live": "polite" }, formatCaption2(calendarMonth.date, dateLib.options, dateLib))),
-              navLayout === "around" && !props.hideNavigation && displayIndex === numberOfMonths - 1 && import_react159.default.createElement(
+              ) : import_react158.default.createElement(components.CaptionLabel, { className: classNames[UI2.CaptionLabel], role: "status", "aria-live": "polite" }, formatCaption2(calendarMonth.date, dateLib.options, dateLib))),
+              navLayout === "around" && !props.hideNavigation && displayIndex === numberOfMonths - 1 && import_react158.default.createElement(
                 components.NextMonthButton,
                 { type: "button", className: classNames[UI2.NextMonthButton], tabIndex: nextMonth ? void 0 : -1, "aria-disabled": nextMonth ? void 0 : true, "aria-label": labelNext2(nextMonth), onClick: handleNextClick, "data-animated-button": props.animate ? "true" : void 0 },
-                import_react159.default.createElement(components.Chevron, { disabled: nextMonth ? void 0 : true, className: classNames[UI2.Chevron], orientation: props.dir === "rtl" ? "left" : "right" })
+                import_react158.default.createElement(components.Chevron, { disabled: nextMonth ? void 0 : true, className: classNames[UI2.Chevron], orientation: props.dir === "rtl" ? "left" : "right" })
               ),
-              displayIndex === numberOfMonths - 1 && navLayout === "after" && !props.hideNavigation && import_react159.default.createElement(components.Nav, { "data-animated-nav": props.animate ? "true" : void 0, className: classNames[UI2.Nav], style: styles3?.[UI2.Nav], "aria-label": labelNav2(), onPreviousClick: handlePreviousClick, onNextClick: handleNextClick, previousMonth, nextMonth }),
-              import_react159.default.createElement(
+              displayIndex === numberOfMonths - 1 && navLayout === "after" && !props.hideNavigation && import_react158.default.createElement(components.Nav, { "data-animated-nav": props.animate ? "true" : void 0, className: classNames[UI2.Nav], style: styles3?.[UI2.Nav], "aria-label": labelNav2(), onPreviousClick: handlePreviousClick, onNextClick: handleNextClick, previousMonth, nextMonth }),
+              import_react158.default.createElement(
                 components.MonthGrid,
                 { role: "grid", "aria-multiselectable": mode2 === "multiple" || mode2 === "range", "aria-label": labelGrid2(calendarMonth.date, dateLib.options, dateLib) || void 0, className: classNames[UI2.MonthGrid], style: styles3?.[UI2.MonthGrid] },
-                !props.hideWeekdays && import_react159.default.createElement(
+                !props.hideWeekdays && import_react158.default.createElement(
                   components.Weekdays,
                   { "data-animated-weekdays": props.animate ? "true" : void 0, className: classNames[UI2.Weekdays], style: styles3?.[UI2.Weekdays] },
-                  showWeekNumber && import_react159.default.createElement(components.WeekNumberHeader, { "aria-label": labelWeekNumberHeader2(dateLib.options), className: classNames[UI2.WeekNumberHeader], style: styles3?.[UI2.WeekNumberHeader], scope: "col" }, formatWeekNumberHeader2()),
-                  weekdays.map((weekday, i3) => import_react159.default.createElement(components.Weekday, { "aria-label": labelWeekday2(weekday, dateLib.options, dateLib), className: classNames[UI2.Weekday], key: i3, style: styles3?.[UI2.Weekday], scope: "col" }, formatWeekdayName2(weekday, dateLib.options, dateLib)))
+                  showWeekNumber && import_react158.default.createElement(components.WeekNumberHeader, { "aria-label": labelWeekNumberHeader2(dateLib.options), className: classNames[UI2.WeekNumberHeader], style: styles3?.[UI2.WeekNumberHeader], scope: "col" }, formatWeekNumberHeader2()),
+                  weekdays.map((weekday, i3) => import_react158.default.createElement(components.Weekday, { "aria-label": labelWeekday2(weekday, dateLib.options, dateLib), className: classNames[UI2.Weekday], key: i3, style: styles3?.[UI2.Weekday], scope: "col" }, formatWeekdayName2(weekday, dateLib.options, dateLib)))
                 ),
-                import_react159.default.createElement(components.Weeks, { "data-animated-weeks": props.animate ? "true" : void 0, className: classNames[UI2.Weeks], style: styles3?.[UI2.Weeks] }, calendarMonth.weeks.map((week, weekIndex) => {
-                  return import_react159.default.createElement(
+                import_react158.default.createElement(components.Weeks, { "data-animated-weeks": props.animate ? "true" : void 0, className: classNames[UI2.Weeks], style: styles3?.[UI2.Weeks] }, calendarMonth.weeks.map((week, weekIndex) => {
+                  return import_react158.default.createElement(
                     components.Week,
                     { className: classNames[UI2.Week], key: week.weekNumber, style: styles3?.[UI2.Week], week },
-                    showWeekNumber && import_react159.default.createElement(components.WeekNumber, { week, style: styles3?.[UI2.WeekNumber], "aria-label": labelWeekNumber2(week.weekNumber, {
+                    showWeekNumber && import_react158.default.createElement(components.WeekNumber, { week, style: styles3?.[UI2.WeekNumber], "aria-label": labelWeekNumber2(week.weekNumber, {
                       locale
                     }), className: classNames[UI2.WeekNumber], scope: "row", role: "rowheader" }, formatWeekNumber2(week.weekNumber, dateLib)),
                     week.days.map((day) => {
@@ -53828,7 +53815,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
                       const style3 = getStyleForModifiers(modifiers, styles3, props.modifiersStyles);
                       const className3 = getClassNamesForModifiers(modifiers, classNames, props.modifiersClassNames);
                       const ariaLabel = !isInteractive && !modifiers.hidden ? labelGridcell2(date, modifiers, dateLib.options, dateLib) : void 0;
-                      return import_react159.default.createElement(components.Day, { key: `${dateLib.format(date, "yyyy-MM-dd")}_${dateLib.format(day.displayMonth, "yyyy-MM")}`, day, modifiers, className: className3.join(" "), style: style3, role: "gridcell", "aria-selected": modifiers.selected || void 0, "aria-label": ariaLabel, "data-day": dateLib.format(date, "yyyy-MM-dd"), "data-month": day.outside ? dateLib.format(date, "yyyy-MM") : void 0, "data-selected": modifiers.selected || void 0, "data-disabled": modifiers.disabled || void 0, "data-hidden": modifiers.hidden || void 0, "data-outside": day.outside || void 0, "data-focused": modifiers.focused || void 0, "data-today": modifiers.today || void 0 }, !modifiers.hidden && isInteractive ? import_react159.default.createElement(components.DayButton, { className: classNames[UI2.DayButton], style: styles3?.[UI2.DayButton], type: "button", day, modifiers, disabled: modifiers.disabled || void 0, tabIndex: isFocusTarget(day) ? 0 : -1, "aria-label": labelDayButton2(date, modifiers, dateLib.options, dateLib), onClick: handleDayClick(day, modifiers), onBlur: handleDayBlur(day, modifiers), onFocus: handleDayFocus(day, modifiers), onKeyDown: handleDayKeyDown(day, modifiers), onMouseEnter: handleDayMouseEnter(day, modifiers), onMouseLeave: handleDayMouseLeave(day, modifiers) }, formatDay2(date, dateLib.options, dateLib)) : !modifiers.hidden && formatDay2(day.date, dateLib.options, dateLib));
+                      return import_react158.default.createElement(components.Day, { key: `${dateLib.format(date, "yyyy-MM-dd")}_${dateLib.format(day.displayMonth, "yyyy-MM")}`, day, modifiers, className: className3.join(" "), style: style3, role: "gridcell", "aria-selected": modifiers.selected || void 0, "aria-label": ariaLabel, "data-day": dateLib.format(date, "yyyy-MM-dd"), "data-month": day.outside ? dateLib.format(date, "yyyy-MM") : void 0, "data-selected": modifiers.selected || void 0, "data-disabled": modifiers.disabled || void 0, "data-hidden": modifiers.hidden || void 0, "data-outside": day.outside || void 0, "data-focused": modifiers.focused || void 0, "data-today": modifiers.today || void 0 }, !modifiers.hidden && isInteractive ? import_react158.default.createElement(components.DayButton, { className: classNames[UI2.DayButton], style: styles3?.[UI2.DayButton], type: "button", day, modifiers, disabled: modifiers.disabled || void 0, tabIndex: isFocusTarget(day) ? 0 : -1, "aria-label": labelDayButton2(date, modifiers, dateLib.options, dateLib), onClick: handleDayClick(day, modifiers), onBlur: handleDayBlur(day, modifiers), onFocus: handleDayFocus(day, modifiers), onKeyDown: handleDayKeyDown(day, modifiers), onMouseEnter: handleDayMouseEnter(day, modifiers), onMouseLeave: handleDayMouseLeave(day, modifiers) }, formatDay2(date, dateLib.options, dateLib)) : !modifiers.hidden && formatDay2(day.date, dateLib.options, dateLib));
                     })
                   );
                 }))
@@ -53836,7 +53823,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             );
           })
         ),
-        props.footer && import_react159.default.createElement(components.Footer, { className: classNames[UI2.Footer], style: styles3?.[UI2.Footer], role: "status", "aria-live": "polite" }, props.footer)
+        props.footer && import_react158.default.createElement(components.Footer, { className: classNames[UI2.Footer], style: styles3?.[UI2.Footer], role: "status", "aria-live": "polite" }, props.footer)
       )
     );
   }
@@ -54572,7 +54559,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
         children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(FormTokenField, {
-          __next40pxDefaultSize: true,
           ...restProps
         })
       }), /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("input", {
