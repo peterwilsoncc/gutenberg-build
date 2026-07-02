@@ -56120,6 +56120,16 @@ If there's a particular need for this, please submit a feature request at https:
         /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(Subtitle, { children: (0, import_i18n151.__)("Style Variations") }),
         /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(VariationsPanel, { name: name2 })
       ] }) }),
+      hasTypographyPanel && /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(
+        StylesTypographyPanel,
+        {
+          inheritedValue: inheritedStyle,
+          value: style,
+          onChange: onChangeTypography,
+          settings,
+          isGlobalStyles: !hasSelectedState
+        }
+      ),
       hasBackgroundPanel && /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(
         StylesBackgroundPanel,
         {
@@ -56130,14 +56140,14 @@ If there's a particular need for this, please submit a feature request at https:
           defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES2
         }
       ),
-      hasTypographyPanel && /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(
-        StylesTypographyPanel,
+      shouldShowFiltersPanel && /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(
+        StylesFiltersPanel,
         {
-          inheritedValue: inheritedStyle,
-          value: style,
-          onChange: onChangeTypography,
+          inheritedValue: inheritedStyleWithLayout,
+          value: styleWithLayout,
+          onChange: setStyle2,
           settings,
-          isGlobalStyles: !hasSelectedState
+          includeLayoutControls: true
         }
       ),
       hasDimensionsPanel && /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(
@@ -56157,16 +56167,6 @@ If there's a particular need for this, please submit a feature request at https:
           value: style,
           onChange: onChangeBorders,
           settings
-        }
-      ),
-      shouldShowFiltersPanel && /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(
-        StylesFiltersPanel,
-        {
-          inheritedValue: inheritedStyleWithLayout,
-          value: styleWithLayout,
-          onChange: setStyle2,
-          settings,
-          includeLayoutControls: true
         }
       ),
       hasColorPanel && /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(
