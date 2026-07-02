@@ -2381,7 +2381,7 @@ var wp;
   function isValidImageFormat(format) {
     return VALID_IMAGE_FORMATS.includes(format);
   }
-  async function getTranscodeImageOperation(file, outputMimeType, interlaced = false) {
+  async function getTranscodeImageOperation(file, outputMimeType, interlaced = false, quality = DEFAULT_OUTPUT_QUALITY) {
     if (file.type === "image/png" && outputMimeType === "image/jpeg") {
       const blobUrl = (0, import_blob.createBlobURL)(file);
       try {
@@ -2403,7 +2403,7 @@ var wp;
       OperationType.TranscodeImage,
       {
         outputFormat: formatPart,
-        outputQuality: DEFAULT_OUTPUT_QUALITY,
+        outputQuality: quality,
         interlaced
       }
     ];
@@ -2663,7 +2663,8 @@ var wp;
           // smartCrop
           addSuffix,
           item.abortController?.signal,
-          scaledSuffix
+          scaledSuffix,
+          args.quality
         );
         measure({
           measureName: `ResizeCrop ${item.file.name}`,
@@ -2962,12 +2963,23 @@ var wp;
         const isUltraHdr = ultraHdrItems.has(item.id);
         const outputMimeType = attachment.image_output_format;
         const interlaced = attachment.image_save_progressive ?? false;
+        const imageQuality = attachment.image_quality;
+        const fallbackQuality = settings.imageQuality ?? DEFAULT_OUTPUT_QUALITY;
+        const defaultQuality = typeof imageQuality?.default === "number" ? imageQuality.default / 100 : fallbackQuality;
+        const qualityForSize = (sizeName) => {
+          const sized = imageQuality?.sizes?.[sizeName];
+          if (typeof sized === "number") {
+            return sized / 100;
+          }
+          return defaultQuality;
+        };
         let thumbnailTranscodeOperation = null;
         if (!isUltraHdr && outputMimeType) {
           thumbnailTranscodeOperation = await getTranscodeImageOperation(
             thumbnailSource,
             outputMimeType,
-            interlaced
+            interlaced,
+            defaultQuality
           );
         }
         const dimensionGroups = /* @__PURE__ */ new Map();
@@ -2989,11 +3001,21 @@ var wp;
         }
         for (const [, names] of dimensionGroups) {
           const imageSize = allImageSizes[names[0]];
+          const sizeQuality = qualityForSize(names[0]);
           const thumbnailOperations = [
-            [OperationType.ResizeCrop, { resize: imageSize }]
+            [
+              OperationType.ResizeCrop,
+              { resize: imageSize, quality: sizeQuality }
+            ]
           ];
           if (!isUltraHdr && thumbnailTranscodeOperation) {
-            thumbnailOperations.push(thumbnailTranscodeOperation);
+            thumbnailOperations.push([
+              thumbnailTranscodeOperation[0],
+              {
+                ...thumbnailTranscodeOperation[1],
+                outputQuality: sizeQuality
+              }
+            ]);
           }
           thumbnailOperations.push(OperationType.Upload);
           const imageSizeParam = names.length === 1 ? names[0] : names;
@@ -3027,7 +3049,8 @@ var wp;
                       width: bigImageSizeThreshold,
                       height: bigImageSizeThreshold
                     },
-                    isThresholdResize: true
+                    isThresholdResize: true,
+                    quality: defaultQuality
                   }
                 ]
               ];

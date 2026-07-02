@@ -299,6 +299,35 @@ class Gutenberg_REST_Attachments_Controller extends WP_REST_Attachments_Controll
 			'readonly'    => true,
 		);
 
+		// Enumerate the registered sub-sizes so the schema documents exactly which
+		// keys may appear under "sizes".
+		$size_quality_properties = array();
+		foreach ( array_keys( wp_get_registered_image_subsizes() ) as $size_name ) {
+			$size_quality_properties[ $size_name ] = array(
+				'type'    => 'integer',
+				'minimum' => 1,
+				'maximum' => 100,
+			);
+		}
+
+		$schema['properties']['image_quality'] = array(
+			'description' => __( 'Encode quality (1-100) from the wp_editor_set_quality filter, resolved against the output MIME type. "default" applies to the full-size image; "sizes" lists per-registered-size overrides where the filtered value differs from "default".', 'gutenberg' ),
+			'type'        => 'object',
+			'context'     => array( 'edit' ),
+			'readonly'    => true,
+			'properties'  => array(
+				'default' => array(
+					'type'    => 'integer',
+					'minimum' => 1,
+					'maximum' => 100,
+				),
+				'sizes'   => array(
+					'type'       => 'object',
+					'properties' => $size_quality_properties,
+				),
+			),
+		);
+
 		return $schema;
 	}
 
@@ -372,6 +401,60 @@ class Gutenberg_REST_Attachments_Controller extends WP_REST_Attachments_Controll
 					'image_save_progressive', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 					false,
 					$mime_type
+				);
+			}
+		}
+
+		// Add per-file, size-aware encode quality for images.
+		if ( rest_is_field_included( 'image_quality', $fields ) ) {
+			if ( wp_attachment_is_image( $item ) ) {
+				$mime_type = (string) get_post_mime_type( $item );
+				$filename  = get_attached_file( $item->ID );
+
+				// Resolve the output MIME type the same way core's
+				// WP_Image_Editor::set_quality() does: quality is filtered
+				// against the format the file will actually be saved as.
+				/** This filter is documented in wp-includes/class-wp-image-editor.php */
+				$output_formats = apply_filters(
+					'image_editor_output_format', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+					array( $mime_type => $mime_type ),
+					$filename ? $filename : '',
+					$mime_type
+				);
+				$output_mime    = $output_formats[ $mime_type ] ?? $mime_type;
+
+				$metadata    = wp_get_attachment_metadata( $item->ID, true );
+				$full_width  = max( 0, ( is_array( $metadata ) && isset( $metadata['width'] ) ) ? (int) $metadata['width'] : 0 );
+				$full_height = max( 0, ( is_array( $metadata ) && isset( $metadata['height'] ) ) ? (int) $metadata['height'] : 0 );
+
+				$full_quality = $this->get_image_encode_quality(
+					$output_mime,
+					array(
+						'width'  => $full_width,
+						'height' => $full_height,
+					)
+				);
+
+				$size_quality = array();
+				foreach ( wp_get_registered_image_subsizes() as $size_name => $size_data ) {
+					$quality = $this->get_image_encode_quality(
+						$output_mime,
+						array(
+							'width'  => (int) $size_data['width'],
+							'height' => (int) $size_data['height'],
+						)
+					);
+
+					// Only report sizes that diverge from the full-size value
+					// to keep the response payload small.
+					if ( $quality !== $full_quality ) {
+						$size_quality[ $size_name ] = $quality;
+					}
+				}
+
+				$data['image_quality'] = array(
+					'default' => $full_quality,
+					'sizes'   => $size_quality,
 				);
 			}
 		}
@@ -972,5 +1055,63 @@ class Gutenberg_REST_Attachments_Controller extends WP_REST_Attachments_Controll
 		}
 
 		return rest_ensure_response( $sub_size_data );
+	}
+
+	/**
+	 * Resolves the encode quality WordPress would use for an image.
+	 *
+	 * Prefers the core wp_get_image_encode_quality() helper when available, and
+	 * otherwise mirrors WP_Image_Editor::set_quality() inline for WordPress
+	 * versions that predate it: per-format default, the wp_editor_set_quality
+	 * filter, the jpeg_quality filter for JPEG output, then resets non-numeric
+	 * or out-of-range values to the default and squashes 0 to 1.
+	 *
+	 * wp_get_image_encode_quality() is proposed for WordPress core in
+	 * https://github.com/WordPress/wordpress-develop/pull/11856; until it lands
+	 * the function_exists() guard falls back to the inline implementation below.
+	 *
+	 * @param non-empty-string $mime_type The output image MIME type, e.g. 'image/jpeg'.
+	 * @param array{ width?: non-negative-int, height?: non-negative-int } $size Dimensions ('width', 'height') for the wp_editor_set_quality filter.
+	 * @return int<1, 100> Encode quality between 1 and 100.
+	 */
+	private function get_image_encode_quality( string $mime_type, array $size = array() ): int {
+		if ( function_exists( 'wp_get_image_encode_quality' ) ) {
+			return wp_get_image_encode_quality( $mime_type, $size );
+		}
+
+		// Mirror WP_Image_Editor::get_default_quality(): WebP defaults to 86,
+		// everything else to 82.
+		$default_quality = ( 'image/webp' === $mime_type ) ? 86 : 82;
+
+		/** This filter is documented in wp-includes/class-wp-image-editor.php */
+		$quality = apply_filters(
+			'wp_editor_set_quality', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+			$default_quality,
+			$mime_type,
+			$size
+		);
+
+		if ( 'image/jpeg' === $mime_type ) {
+			/** This filter is documented in wp-includes/class-wp-image-editor.php */
+			$quality = apply_filters( 'jpeg_quality', $quality, 'image_resize' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+		}
+
+		if ( ! is_numeric( $quality ) ) {
+			$quality = $default_quality;
+		} else {
+			$quality = (int) $quality;
+		}
+
+		// Reset out-of-range values to the default, matching WP_Image_Editor::set_quality().
+		if ( $quality < 0 || $quality > 100 ) {
+			$quality = $default_quality;
+		}
+
+		// Allow 0, but squash to 1, matching WP_Image_Editor::set_quality().
+		if ( 0 === $quality ) {
+			$quality = 1;
+		}
+
+		return $quality;
 	}
 }
