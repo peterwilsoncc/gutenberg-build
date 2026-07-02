@@ -32895,15 +32895,8 @@ This message will only show in development mode. It won't appear in production. 
       units: unitsProp = CSS_UNITS,
       value: valueProp,
       onFocus: onFocusProp,
-      __shouldNotWarnDeprecated36pxSize,
       ...props
-    } = useDeprecated36pxDefaultSizeProp(unitControlProps);
-    maybeWarnDeprecated36pxSize({
-      componentName: "UnitControl",
-      __next40pxDefaultSize: props.__next40pxDefaultSize,
-      size: size4,
-      __shouldNotWarnDeprecated36pxSize
-    });
+    } = unitControlProps;
     if ("unit" in unitControlProps) {
       (0, import_deprecated8.default)("UnitControl unit prop", {
         since: "5.6",
@@ -32978,7 +32971,7 @@ This message will only show in development mode. It won't appear in production. 
       disabled,
       isUnitSelectTabbable,
       onChange: handleOnUnitChange,
-      size: ["small", "compact"].includes(size4) || size4 === "default" && !props.__next40pxDefaultSize ? "small" : "default",
+      size: ["small", "compact"].includes(size4) ? "small" : "default",
       unit,
       units,
       onFocus: onFocusProp,
@@ -32991,7 +32984,7 @@ This message will only show in development mode. It won't appear in production. 
     }
     return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(ValueInput, {
       ...props,
-      __shouldNotWarnDeprecated36pxSize: true,
+      __next40pxDefaultSize: true,
       autoComplete,
       className: classes,
       disabled,
@@ -33171,7 +33164,6 @@ This message will only show in development mode. It won't appear in production. 
         spacing: 4,
         className: innerWrapperClassName,
         children: [/* @__PURE__ */ (0, import_jsx_runtime150.jsx)(unit_control_default, {
-          __next40pxDefaultSize: true,
           prefix: /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(component_default6, {
             marginRight: 1,
             marginBottom: 0,
@@ -34350,8 +34342,6 @@ This message will only show in development mode. It won't appear in production. 
           children: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(StyledUnitControl, {
             ...props,
             min: min3,
-            __shouldNotWarnDeprecated36pxSize: true,
-            __next40pxDefaultSize: true,
             className: "component-box-control__unit-control",
             id: inputId,
             isPressEnterToChange: true,
@@ -42841,7 +42831,6 @@ This message will only show in development mode. It won't appear in production. 
   }
   function FocalPointUnitControl(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(StyledUnitControl2, {
-      __next40pxDefaultSize: true,
       className: "focal-point-picker__controls-position-unit-control",
       labelPosition: "top",
       max: TEXTCONTROL_MAX,
@@ -43471,7 +43460,6 @@ This message will only show in development mode. It won't appear in production. 
           children: [/* @__PURE__ */ (0, import_jsx_runtime215.jsx)(component_default4, {
             isBlock: true,
             children: /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(unit_control_default, {
-              __next40pxDefaultSize: true,
               label: (0, import_i18n55.__)("Font size"),
               labelPosition: "top",
               hideLabelFromVision: true,

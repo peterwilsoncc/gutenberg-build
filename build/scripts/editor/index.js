@@ -70271,7 +70271,6 @@ If there's a particular need for this, please submit a feature request at https:
       import_components135.__experimentalUnitControl,
       {
         label,
-        __next40pxDefaultSize: true,
         value,
         onChange: onValueChange
       }
@@ -71473,7 +71472,6 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(import_components147.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
         import_components147.__experimentalUnitControl,
         {
-          __next40pxDefaultSize: true,
           label,
           hideLabelFromVision: true,
           value,

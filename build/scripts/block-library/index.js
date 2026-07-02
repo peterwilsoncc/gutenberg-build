@@ -12211,7 +12211,6 @@ var wp;
               {
                 label: (0, import_i18n25.__)("Width"),
                 __unstableInputWidth: "calc(50% - 8px)",
-                __next40pxDefaultSize: true,
                 value: width || "",
                 onChange: (nextWidth) => {
                   nextWidth = 0 > parseFloat(nextWidth) ? "0" : nextWidth;
@@ -18484,7 +18483,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
       import_components31.__experimentalUnitControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n49.__)("Minimum height"),
         id: inputId,
         isResetValueOnUnitChange: true,
@@ -63523,7 +63521,6 @@ ${text}
                   /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
                     import_components146.__experimentalUnitControl,
                     {
-                      __next40pxDefaultSize: true,
                       label: (0, import_i18n226.__)("Width"),
                       id: unitControlInputId,
                       min: isPercentageUnit(widthUnit) ? 0 : MIN_WIDTH,
@@ -66959,8 +66956,7 @@ ${text}
         onChange,
         value: computedValue,
         units,
-        label,
-        __next40pxDefaultSize: true
+        label
       }
     ) : /* @__PURE__ */ (0, import_jsx_runtime489.jsx)("div", { className: "tools-panel-item-spacing", children: /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
       import_block_editor250.__experimentalSpacingSizesControl,
@@ -70859,8 +70855,7 @@ ${text}
                     },
                     units,
                     min: MIN_FONT_SIZE,
-                    max: MAX_FONT_SIZE,
-                    size: "__unstable-large"
+                    max: MAX_FONT_SIZE
                   }
                 ) }),
                 /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(import_components160.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(
@@ -70876,8 +70871,7 @@ ${text}
                     },
                     units,
                     min: MIN_FONT_SIZE,
-                    max: MAX_FONT_SIZE,
-                    size: "__unstable-large"
+                    max: MAX_FONT_SIZE
                   }
                 ) })
               ] })

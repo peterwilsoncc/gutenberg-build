@@ -17253,7 +17253,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
                 import_components13.__experimentalUnitControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n14.__)("Content width"),
                   labelPosition: "top",
                   value: contentSize === null ? "" : contentSize || wideSize || "",
@@ -17281,7 +17280,6 @@ var wp;
                 /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
                   import_components13.__experimentalUnitControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n14.__)("Wide width"),
                     labelPosition: "top",
                     value: wideSize === null ? "" : wideSize || contentSize || "",
@@ -17799,7 +17797,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components15.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
           import_components15.__experimentalUnitControl,
           {
-            size: "__unstable-large",
             onChange: (newValue) => {
               onChange({
                 ...layout,
@@ -56960,7 +56957,6 @@ var wp;
         onFocus: onMouseOver,
         onMouseOut,
         onMouseOver,
-        size: "__unstable-large",
         units: units2,
         value: [parsedQuantity, computedUnit].join(""),
         placeholder: allPlaceholder,
@@ -58344,8 +58340,6 @@ var wp;
   var import_i18n132 = __toESM(require_i18n(), 1);
   var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
   function LetterSpacingControl({
-    /** @deprecated Default behavior since WordPress 7.1. Prop can be safely removed. */
-    __next40pxDefaultSize: _next40pxDefaultSize,
     value,
     onChange,
     __unstableInputWidth = "60px",
@@ -58359,8 +58353,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(
       import_components146.__experimentalUnitControl,
       {
-        __next40pxDefaultSize: true,
-        __shouldNotWarnDeprecated36pxSize: true,
         ...otherProps,
         label: (0, import_i18n132.__)("Letter spacing"),
         value,
@@ -59136,7 +59128,6 @@ var wp;
             onChange,
             onUnitChange: handleUnitChange,
             min: 0,
-            size: "__unstable-large",
             label,
             hideLabelFromVision: true
           }
@@ -67321,7 +67312,6 @@ var wp;
         import_components197.__experimentalUnitControl,
         {
           ...otherProps,
-          __next40pxDefaultSize: true,
           label: (0, import_i18n183.__)("Line indent"),
           value,
           __unstableInputWidth,
@@ -67337,7 +67327,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(import_components197.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
           import_components197.__experimentalUnitControl,
           {
-            __next40pxDefaultSize: true,
             label: (0, import_i18n183.__)("Line indent"),
             labelPosition: "top",
             hideLabelFromVision: true,
@@ -68958,7 +68947,6 @@ var wp;
           hasFlexSizeValue && /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
             import_components201.__experimentalUnitControl,
             {
-              size: "__unstable-large",
               units: units2,
               onChange: (value) => {
                 onChange({
@@ -69605,7 +69593,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(
                 import_components203.__experimentalUnitControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n189.__)("Content width"),
                   labelPosition: "top",
                   value: contentSizeValue || "",
@@ -69629,7 +69616,6 @@ var wp;
               children: /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(
                 import_components203.__experimentalUnitControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n189.__)("Wide width"),
                   labelPosition: "top",
                   value: wideSizeValue || "",
@@ -69769,7 +69755,6 @@ var wp;
                 ) : /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(
                   import_components203.__experimentalUnitControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n189.__)("Block spacing"),
                     min: 0,
                     onChange: setGapValue,
@@ -71130,7 +71115,6 @@ var wp;
             "aria-label": (0, import_i18n195.__)("Background image width"),
             onChange: updateBackgroundSize,
             value: sizeValue,
-            size: "__unstable-large",
             __unstableInputWidth: "100px",
             min: 0,
             placeholder: (0, import_i18n195.__)("Auto"),
@@ -88827,8 +88811,7 @@ var wp;
               units: units2,
               min: 0,
               value: width,
-              onChange: onDimensionChange("width"),
-              size: "__unstable-large"
+              onChange: onDimensionChange("width")
             }
           )
         }
@@ -88851,8 +88834,7 @@ var wp;
               units: units2,
               min: 0,
               value: height,
-              onChange: onDimensionChange("height"),
-              size: "__unstable-large"
+              onChange: onDimensionChange("height")
             }
           )
         }
