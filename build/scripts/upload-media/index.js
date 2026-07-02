@@ -1108,7 +1108,7 @@ var wp;
       if (parentId) {
         const parentItem = select2.getItem(parentId);
         if (parentItem) {
-          const isOptionalCompanion = item.additionalData?.image_size === "animated-video" || item.additionalData?.image_size === "animated-video-poster";
+          const isOptionalCompanion = item.additionalData?.image_size === "animated_video" || item.additionalData?.image_size === "animated_video_poster";
           if (select2.hasPendingItemsByParentId(parentId)) {
             if (parentItem.operations && parentItem.operations.length > 0) {
               dispatch.processItem(parentId);
@@ -2838,7 +2838,7 @@ var wp;
           parentId: item.parentId,
           additionalData: {
             post: item.additionalData?.post,
-            image_size: "animated-video-poster",
+            image_size: "animated_video_poster",
             convert_format: false
           },
           operations: [
@@ -2898,7 +2898,7 @@ var wp;
           parentId: item.id,
           additionalData: {
             post: attachment.id,
-            image_size: "original-heic",
+            image_size: "source_original",
             convert_format: false
           },
           operations: [OperationType.Upload]
@@ -2912,7 +2912,7 @@ var wp;
           parentId: item.id,
           additionalData: {
             post: attachment.id,
-            image_size: "animated-video",
+            image_size: "animated_video",
             convert_format: false
           },
           operations: [
