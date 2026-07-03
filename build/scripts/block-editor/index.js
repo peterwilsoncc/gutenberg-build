@@ -45698,7 +45698,6 @@ var wp;
     return options.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(inspector_controls_default, { group: "position", children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components74.BaseControl, { help: stickyHelpText, children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
       import_components74.CustomSelectControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n69.__)("Position"),
         hideLabelFromVision: true,
         describedBy: (0, import_i18n69.sprintf)(
@@ -45710,8 +45709,7 @@ var wp;
         value: selectedOption,
         onChange: ({ selectedItem }) => {
           onChangeType(selectedItem.value);
-        },
-        size: "__unstable-large"
+        }
       }
     ) }) }) : null;
   }
@@ -57239,7 +57237,6 @@ var wp;
               onMouseOut,
               onMouseOver,
               options,
-              size: "__unstable-large",
               value: (
                 // passing empty string as a fallback to continue using the
                 // component in controlled mode
@@ -57864,7 +57861,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
         import_components142.CustomSelectControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n125.__)("Choose a format"),
           options: [...suggestedOptions, customOption],
           value: isCustom ? customOption : suggestedOptions.find(
@@ -58313,7 +58309,6 @@ var wp;
       import_components144.CustomSelectControl,
       {
         ...otherProps,
-        __next40pxDefaultSize: true,
         className: "components-font-appearance-control",
         label,
         describedBy: getDescribedBy(),
@@ -58363,7 +58358,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
       import_components145.CustomSelectControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n131.__)("Font"),
         value: selectedValue,
         onChange: ({ selectedItem }) => onChange(selectedItem.key),

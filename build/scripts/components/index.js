@@ -38740,8 +38740,9 @@ This message will only show in development mode. It won't appear in production. 
   }
   function CustomSelectControl(props) {
     const {
-      __next40pxDefaultSize = false,
-      __shouldNotWarnDeprecated36pxSize,
+      // Prevent passing legacy props to internal component.
+      __next40pxDefaultSize: _next40pxDefaultSize,
+      __shouldNotWarnDeprecated36pxSize: _shouldNotWarnDeprecated36pxSize,
       describedBy,
       options: options2,
       onChange,
@@ -38751,12 +38752,6 @@ This message will only show in development mode. It won't appear in production. 
       showSelectedHint = false,
       ...restProps
     } = useDeprecatedProps5(props);
-    maybeWarnDeprecated36pxSize({
-      componentName: "CustomSelectControl",
-      __next40pxDefaultSize,
-      size: size4,
-      __shouldNotWarnDeprecated36pxSize
-    });
     const descriptionId = (0, import_compose51.useInstanceId)(CustomSelectControl, "custom-select-control__description");
     const store = useSelectStore({
       async setValue(nextValue) {
@@ -38828,20 +38823,11 @@ This message will only show in development mode. It won't appear in production. 
         })]
       });
     };
-    const translatedSize = (() => {
-      if (__next40pxDefaultSize && size4 === "default" || size4 === "__unstable-large") {
-        return "default";
-      }
-      if (!__next40pxDefaultSize && size4 === "default") {
-        return "compact";
-      }
-      return size4;
-    })();
     return /* @__PURE__ */ (0, import_jsx_runtime192.jsxs)(import_jsx_runtime192.Fragment, {
       children: [/* @__PURE__ */ (0, import_jsx_runtime192.jsx)(custom_select_default, {
         "aria-describedby": descriptionId,
         renderSelectedValue,
-        size: translatedSize,
+        size: size4 === "__unstable-large" ? "default" : size4,
         store,
         className: clsx_default(
           // Keeping the classname for legacy reasons
@@ -43278,7 +43264,6 @@ This message will only show in development mode. It won't appear in production. 
       return options2.find((option) => option.value === value) ?? DEFAULT_OPTION;
     }, [value, valueMode, options2]);
     return /* @__PURE__ */ (0, import_jsx_runtime213.jsx)(StyledCustomSelectControl, {
-      __next40pxDefaultSize: true,
       className: "components-font-size-picker__select",
       label: (0, import_i18n52.__)("Font size"),
       hideLabelFromVision: true,
