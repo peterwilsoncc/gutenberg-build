@@ -2226,10 +2226,6 @@ var wp;
         return;
       }
       if (ownerDocument.activeElement !== element) {
-        ownerDocument.removeEventListener(
-          "selectionchange",
-          handleSelectionChange
-        );
         return;
       }
       if (isComposing) {
@@ -2268,19 +2264,11 @@ var wp;
     }
     function onCompositionStart() {
       isComposing = true;
-      ownerDocument.removeEventListener(
-        "selectionchange",
-        handleSelectionChange
-      );
       element.querySelector(`[${PLACEHOLDER_ATTR_NAME}]`)?.remove();
     }
     function onCompositionEnd() {
       isComposing = false;
       onInput({ inputType: "insertText" });
-      ownerDocument.addEventListener(
-        "selectionchange",
-        handleSelectionChange
-      );
     }
     function onFocus(event) {
       if (event.target !== element) {
@@ -2306,10 +2294,6 @@ var wp;
       }
       onSelectionChange(record.current.start, record.current.end);
       window.queueMicrotask(handleSelectionChange);
-      ownerDocument.addEventListener(
-        "selectionchange",
-        handleSelectionChange
-      );
     }
     const unsubscribeInput = subscribeDelegatedListener5(
       element,
@@ -2333,11 +2317,17 @@ var wp;
       "focusin",
       onFocus
     );
+    const unsubscribeSelectionChange = subscribeDelegatedListener5(
+      ownerDocument,
+      "selectionchange",
+      handleSelectionChange
+    );
     return () => {
       unsubscribeInput();
       unsubscribeCompositionStart();
       unsubscribeCompositionEnd();
       unsubscribeFocus();
+      unsubscribeSelectionChange();
     };
   };
 
