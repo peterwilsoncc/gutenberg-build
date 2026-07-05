@@ -31212,6 +31212,63 @@ var wp;
   function reverseArray(array) {
     return array.slice().reverse();
   }
+  function noop6(..._) {
+  }
+  function hasOwnProperty(object, prop) {
+    if (typeof Object.hasOwn === "function") return Object.hasOwn(object, prop);
+    return Object.prototype.hasOwnProperty.call(object, prop);
+  }
+  function chain(...fns) {
+    return (...args) => {
+      for (const fn of fns) if (typeof fn === "function") fn(...args);
+    };
+  }
+  function normalizeString(str3) {
+    return str3.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+  function omit(object, keys) {
+    const result = { ...object };
+    for (const key of keys) if (hasOwnProperty(result, key)) delete result[key];
+    return result;
+  }
+  function pick(object, paths) {
+    const result = {};
+    for (const key of paths) if (hasOwnProperty(object, key)) result[key] = object[key];
+    return result;
+  }
+  function identity(value) {
+    return value;
+  }
+  function afterPaint(cb = noop6) {
+    let raf2 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(cb);
+    });
+    return () => cancelAnimationFrame(raf2);
+  }
+  function invariant(condition, message2) {
+    if (condition) return;
+    if (typeof message2 !== "string") throw new Error("Invariant failed");
+    throw new Error(message2);
+  }
+  function getKeys(obj) {
+    return Object.keys(obj);
+  }
+  function isFalsyBooleanCallback(booleanOrCallback, ...args) {
+    const result = typeof booleanOrCallback === "function" ? booleanOrCallback(...args) : booleanOrCallback;
+    if (result == null) return false;
+    return !result;
+  }
+  function disabledFromProps(props) {
+    return props.disabled || props["aria-disabled"] === true || props["aria-disabled"] === "true";
+  }
+  function removeUndefinedValues(obj) {
+    const result = {};
+    for (const key in obj) if (obj[key] !== void 0) result[key] = obj[key];
+    return result;
+  }
+  function defaultValue(...values) {
+    for (const value of values) if (value !== void 0) return value;
+  }
   var canUseDOM = checkIsBrowser();
   function checkIsBrowser() {
     return typeof window !== "undefined" && !!window.document?.createElement;
@@ -31267,9 +31324,9 @@ var wp;
   }
   function isTextField(element) {
     try {
-      const isTextInput = element instanceof HTMLInputElement && element.selectionStart !== null;
-      const isTextArea = element.tagName === "TEXTAREA";
-      return isTextInput || isTextArea || false;
+      if (element.tagName === "TEXTAREA") return true;
+      if (element.tagName !== "INPUT") return false;
+      return element.selectionStart !== null;
     } catch (_error) {
       return false;
     }
@@ -31309,17 +31366,27 @@ var wp;
       end
     };
   }
+  var allowedPopupRoles = [
+    "dialog",
+    "menu",
+    "listbox",
+    "tree",
+    "grid"
+  ];
+  var itemRoleByPopupRole = {
+    menu: "menuitem",
+    listbox: "option",
+    tree: "treeitem"
+  };
   function getPopupRole(element, fallback) {
-    const allowedPopupRoles = [
-      "dialog",
-      "menu",
-      "listbox",
-      "tree",
-      "grid"
-    ];
     const role = element?.getAttribute("role");
     if (role && allowedPopupRoles.indexOf(role) !== -1) return role;
     return fallback;
+  }
+  function getItemRoleByPopupRole(popupRole) {
+    if (popupRole == null) return;
+    if (!hasOwnProperty(itemRoleByPopupRole, popupRole)) return;
+    return itemRoleByPopupRole[popupRole];
   }
   function getScrollingElement(element) {
     if (!element) return null;
@@ -31335,7 +31402,8 @@ var wp;
       const { overflowX } = getComputedStyle(element);
       if (isScrollableOverflow(overflowX)) return element;
     }
-    return getScrollingElement(element.parentElement) || document.scrollingElement || document.body;
+    const doc = getDocument(element);
+    return getScrollingElement(element.parentElement) || doc.scrollingElement || doc.body;
   }
   function setSelectionRange(element, ...args) {
     if (/text|search|password|tel|url/i.test(element.type)) element.setSelectionRange(...args);
@@ -31383,27 +31451,24 @@ var wp;
   function isSelfTarget(event) {
     return event.target === event.currentTarget;
   }
+  function isActivatableNavigationTarget(element) {
+    if (!isElement2(element)) return false;
+    const target = element;
+    const tagName = target.tagName.toLowerCase();
+    if (tagName === "a") return true;
+    if (tagName === "button" && target.type === "submit") return true;
+    if (tagName === "input" && target.type === "submit") return true;
+    return false;
+  }
   function isOpeningInNewTab(event) {
-    const element = event.currentTarget;
-    if (!element) return false;
     const isAppleDevice = isApple();
     if (isAppleDevice && !event.metaKey) return false;
     if (!isAppleDevice && !event.ctrlKey) return false;
-    const tagName = element.tagName.toLowerCase();
-    if (tagName === "a") return true;
-    if (tagName === "button" && element.type === "submit") return true;
-    if (tagName === "input" && element.type === "submit") return true;
-    return false;
+    return isActivatableNavigationTarget(event.currentTarget);
   }
   function isDownloading(event) {
-    const element = event.currentTarget;
-    if (!element) return false;
-    const tagName = element.tagName.toLowerCase();
     if (!event.altKey) return false;
-    if (tagName === "a") return true;
-    if (tagName === "button" && element.type === "submit") return true;
-    if (tagName === "input" && element.type === "submit") return true;
-    return false;
+    return isActivatableNavigationTarget(event.currentTarget);
   }
   function fireBlurEvent(element, eventInit) {
     const event = new FocusEvent("blur", eventInit);
@@ -31428,6 +31493,9 @@ var wp;
     const relatedTarget = event.relatedTarget;
     return !isNode2(relatedTarget) || !contains2(containerElement, relatedTarget);
   }
+  function isInputEvent(event) {
+    return event.type === "input";
+  }
   function queueBeforeEvent(element, type, callback, timeout) {
     const createTimer = (callback2) => {
       if (timeout) {
@@ -31449,7 +31517,10 @@ var wp;
       once: true,
       capture: true
     });
-    return cancelTimer;
+    return () => {
+      cancelTimer();
+      element.removeEventListener(type, callSync, true);
+    };
   }
   function addGlobalEventListener(type, listener, options, scope = window) {
     const children = [];
@@ -31503,57 +31574,6 @@ var wp;
       });
     }
   }
-  function noop6(..._) {
-  }
-  function hasOwnProperty(object, prop) {
-    if (typeof Object.hasOwn === "function") return Object.hasOwn(object, prop);
-    return Object.prototype.hasOwnProperty.call(object, prop);
-  }
-  function chain(...fns) {
-    return (...args) => {
-      for (const fn of fns) if (typeof fn === "function") fn(...args);
-    };
-  }
-  function normalizeString(str3) {
-    return str3.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  }
-  function omit(object, keys) {
-    const result = { ...object };
-    for (const key of keys) if (hasOwnProperty(result, key)) delete result[key];
-    return result;
-  }
-  function pick(object, paths) {
-    const result = {};
-    for (const key of paths) if (hasOwnProperty(object, key)) result[key] = object[key];
-    return result;
-  }
-  function identity(value) {
-    return value;
-  }
-  function invariant(condition, message2) {
-    if (condition) return;
-    if (typeof message2 !== "string") throw new Error("Invariant failed");
-    throw new Error(message2);
-  }
-  function getKeys(obj) {
-    return Object.keys(obj);
-  }
-  function isFalsyBooleanCallback(booleanOrCallback, ...args) {
-    const result = typeof booleanOrCallback === "function" ? booleanOrCallback(...args) : booleanOrCallback;
-    if (result == null) return false;
-    return !result;
-  }
-  function disabledFromProps(props) {
-    return props.disabled || props["aria-disabled"] === true || props["aria-disabled"] === "true";
-  }
-  function removeUndefinedValues(obj) {
-    const result = {};
-    for (const key in obj) if (obj[key] !== void 0) result[key] = obj[key];
-    return result;
-  }
-  function defaultValue(...values) {
-    for (const value of values) if (value !== void 0) return value;
-  }
   function createUndoCallback(callback) {
     return async () => {
       const redo2 = await callback?.();
@@ -31582,7 +31602,6 @@ var wp;
     };
     const execute = async (callback, group) => {
       if (!callback) return;
-      while (undoStack.length > limit) undoStack.shift();
       const sameGroup = group === currentGroup;
       currentGroup = group ?? null;
       const nextIndex = sameGroup ? Math.max(0, undoStack.length - 1) : undoStack.length;
@@ -31598,6 +31617,7 @@ var wp;
           await callback?.();
         };
       });
+      while (undoStack.length > limit) undoStack.shift();
     };
     return {
       canUndo,
@@ -31613,8 +31633,10 @@ var wp;
   var import_react16 = __toESM(require_react(), 1);
   var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
   function setRef(ref, value) {
-    if (typeof ref === "function") ref(value);
-    else if (ref) ref.current = value;
+    if (typeof ref === "function") {
+      const cleanup = ref(value);
+      if (typeof cleanup === "function") return cleanup;
+    } else if (ref) ref.current = value;
   }
   function isValidElementWithRef(element) {
     if (!element) return false;
@@ -31709,7 +31731,20 @@ var wp;
     return (0, import_react16.useMemo)(() => {
       if (!refs.some(Boolean)) return;
       return (value) => {
-        for (const ref of refs) setRef(ref, value);
+        const refEffects = [];
+        for (const ref of refs) {
+          if (!ref) continue;
+          const cleanup = setRef(ref, value);
+          refEffects.push({
+            ref,
+            cleanup: typeof cleanup === "function" ? cleanup : void 0
+          });
+        }
+        if (!refEffects.some((effect) => effect.cleanup)) return;
+        return () => {
+          for (const { ref, cleanup } of refEffects) if (cleanup) cleanup();
+          else setRef(ref, null);
+        };
       };
     }, refs);
   }
@@ -31948,22 +31983,6 @@ var wp;
     if (!tagName) return true;
     return tagName === "button" || tagName === "input" || tagName === "select" || tagName === "textarea";
   }
-  var buttonInputTypes2 = [
-    "button",
-    "color",
-    "file",
-    "image",
-    "reset",
-    "submit"
-  ];
-  function needsSafariTabIndex(tagName, inputType) {
-    if (tagName === "button") return true;
-    if (tagName === "input" && inputType) {
-      if (inputType === "checkbox" || inputType === "radio") return true;
-      return buttonInputTypes2.includes(inputType);
-    }
-    return false;
-  }
   function isNativeSubmitControl(element) {
     if (element.tagName === "BUTTON") {
       const { type } = element;
@@ -32145,9 +32164,9 @@ var wp;
       if (!focusable2) return;
       const element = ref.current;
       if (!element) return;
-      const tag = element.tagName.toLowerCase();
-      const type = element.type;
-      setSafariTabIndex(needsSafariTabIndex(tag, type));
+      const { type } = element;
+      const isNativeCheckboxOrRadio = element.tagName === "INPUT" && (type === "checkbox" || type === "radio");
+      setSafariTabIndex(isButton(element) || isNativeCheckboxOrRadio);
     }, [focusable2]);
     const styleProp = props.style;
     const style = (0, import_react17.useMemo)(() => {
@@ -32210,6 +32229,11 @@ var wp;
     const activeRef = (0, import_react18.useRef)(false);
     const disabled2 = disabledFromProps(props);
     const [isDuplicate, metadataProps] = useMetadataProps(props, symbol, true);
+    useSafeLayoutEffect(() => {
+      if (!disabled2) return;
+      activeRef.current = false;
+      setActive(false);
+    }, [disabled2]);
     const onKeyDownProp = props.onKeyDown;
     const onKeyDown = useEvent((event) => {
       onKeyDownProp?.(event);
@@ -32250,21 +32274,28 @@ var wp;
     const onKeyUpProp = props.onKeyUp;
     const onKeyUp = useEvent((event) => {
       onKeyUpProp?.(event);
-      if (event.defaultPrevented) return;
       if (isDuplicate) return;
+      const isSpace = clickOnSpace && event.key === " ";
+      if (!activeRef.current || !isSpace) return;
+      const nativeClick = isNativeClick(event);
+      activeRef.current = false;
+      if (!nativeClick) setActive(false);
+      if (event.defaultPrevented) return;
+      if (!isSelfTarget(event)) return;
       if (disabled2) return;
       if (event.metaKey) return;
-      const isSpace = clickOnSpace && event.key === " ";
-      if (activeRef.current && isSpace) {
-        activeRef.current = false;
-        if (!isNativeClick(event)) {
-          event.preventDefault();
-          setActive(false);
-          const element = event.currentTarget;
-          const { view, ...eventInit } = event;
-          queueMicrotask(() => fireClickEvent(element, eventInit));
-        }
-      }
+      if (nativeClick) return;
+      event.preventDefault();
+      const element = event.currentTarget;
+      const { view, ...eventInit } = event;
+      queueMicrotask(() => fireClickEvent(element, eventInit));
+    });
+    const onBlurProp = props.onBlur;
+    const onBlur = useEvent((event) => {
+      onBlurProp?.(event);
+      if (!activeRef.current) return;
+      activeRef.current = false;
+      setActive(false);
     });
     props = {
       "data-active": active || void 0,
@@ -32273,7 +32304,8 @@ var wp;
       ...props,
       ref: useMergeRefs2(ref, props.ref),
       onKeyDown,
-      onKeyUp
+      onKeyUp,
+      onBlur
     };
     props = useFocusable(props);
     return props;
@@ -32335,57 +32367,6 @@ var wp;
   var CompositeItemContext = (0, import_react20.createContext)(void 0);
   var CompositeRowContext = (0, import_react20.createContext)(void 0);
 
-  // node_modules/@ariakit/react-components/dist/composite/utils.js
-  function findFirstEnabledItem(items, excludeId) {
-    return items.find((item) => {
-      if (excludeId) return !item.disabled && item.id !== excludeId;
-      return !item.disabled;
-    });
-  }
-  function getEnabledItem(store4, id) {
-    if (!id) return null;
-    return store4.item(id) || null;
-  }
-  function groupItemsByRows(items) {
-    const rows = [];
-    for (const item of items) {
-      const row = rows.find((currentRow) => currentRow[0]?.rowId === item.rowId);
-      if (row) row.push(item);
-      else rows.push([item]);
-    }
-    return rows;
-  }
-  function selectTextField(element, collapseToEnd = false) {
-    if (isTextField(element)) element.setSelectionRange(collapseToEnd ? element.value.length : 0, element.value.length);
-    else if (element.isContentEditable) {
-      const selection = getDocument(element).getSelection();
-      selection?.selectAllChildren(element);
-      if (collapseToEnd) selection?.collapseToEnd();
-    }
-  }
-  var FOCUS_SILENTLY = /* @__PURE__ */ Symbol("FOCUS_SILENTLY");
-  function focusSilently(element) {
-    element[FOCUS_SILENTLY] = true;
-    element.focus({ preventScroll: true });
-  }
-  function silentlyFocused(element) {
-    const isSilentlyFocused = element[FOCUS_SILENTLY];
-    delete element[FOCUS_SILENTLY];
-    return isSilentlyFocused;
-  }
-  function isItem(store4, element, exclude) {
-    if (!element) return false;
-    if (element === exclude) return false;
-    const item = store4.item(element.id);
-    if (!item) return false;
-    if (exclude && item.element === exclude) return false;
-    return true;
-  }
-
-  // node_modules/@ariakit/react-components/dist/composite/composite-item.js
-  var import_react21 = __toESM(require_react(), 1);
-  var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
-
   // node_modules/@ariakit/store/dist/index.js
   function getInternal(store4, key) {
     const internals = store4.__unstableInternals;
@@ -32399,6 +32380,20 @@ var wp;
     } else if (currentKey === updatedKey) return true;
     return false;
   }
+  function isSameValue(value, other) {
+    return value === other || value !== value && other !== other;
+  }
+  function getCleanupPrevState(prevState, state2, stateBeforeCleanup, updatedKey) {
+    let cleanupPrevState;
+    for (const key of getKeys(state2)) {
+      if (isSameValue(state2[key], stateBeforeCleanup[key])) continue;
+      if (updatedKey !== void 0 && hasUpdatedKey([key], updatedKey)) continue;
+      cleanupPrevState ??= { ...prevState };
+      cleanupPrevState[key] = state2[key];
+    }
+    return cleanupPrevState;
+  }
+  var MAX_REPAIR_PASSES = 100;
   function addKeyedListener(map, keys, listener) {
     if (!keys) return;
     for (const key of keys) {
@@ -32418,6 +32413,133 @@ var wp;
       if (!listeners2) continue;
       listeners2.delete(listener);
       if (!listeners2.size) map.delete(key);
+    }
+  }
+  function getFastPathNotifiedListeners(frame) {
+    const notifiedListeners = /* @__PURE__ */ new Set();
+    const currentListener = frame.currentListener;
+    if (!currentListener) return notifiedListeners;
+    for (const listener of frame.keyedListeners) {
+      notifiedListeners.add(listener);
+      if (listener === currentListener) return notifiedListeners;
+    }
+    notifiedListeners.clear();
+    notifiedListeners.add(currentListener);
+    return notifiedListeners;
+  }
+  function preserveFastPathNotifiedListeners(frame) {
+    frame.notifiedListeners ??= getFastPathNotifiedListeners(frame);
+  }
+  function hasFastPathPassedListener(frame, listener) {
+    if (!frame.currentListener) return false;
+    let foundCurrentKeyedListener = false;
+    for (const currentListener of frame.keyedListeners) {
+      if (currentListener === frame.currentListener) {
+        foundCurrentKeyedListener = true;
+        continue;
+      }
+      if (!foundCurrentKeyedListener) continue;
+      if (currentListener === listener) return false;
+    }
+    let foundListener = false;
+    for (const currentListener of frame.group.listeners) {
+      if (currentListener === frame.currentListener) return foundListener;
+      if (currentListener === listener) foundListener = true;
+    }
+    return false;
+  }
+  function preserveFastPathFrames(fastPathFrames, group, listener) {
+    for (const frame of fastPathFrames) {
+      if (frame.group !== group) continue;
+      if (frame.recovering) continue;
+      if (listener && !frame.keyedListeners.has(listener)) continue;
+      preserveFastPathNotifiedListeners(frame);
+      for (const currentListener of frame.group.listeners) {
+        if (currentListener === frame.currentListener) break;
+        if (!hasFastPathPassedListener(frame, currentListener)) continue;
+        frame.notifiedListeners?.add(currentListener);
+      }
+    }
+  }
+  function preserveFastPathPassedListeners(fastPathFrames, group, listener) {
+    for (const frame of fastPathFrames) {
+      if (frame.group !== group) continue;
+      if (frame.recovering) continue;
+      if (!hasFastPathPassedListener(frame, listener)) continue;
+      preserveFastPathNotifiedListeners(frame);
+      frame.notifiedListeners?.add(listener);
+    }
+  }
+  function preserveFastPathPassedKeyedListeners({ fastPathFrames, group, keys, listener }) {
+    const wasRegistered = group.listeners.has(listener);
+    for (const frame of fastPathFrames) {
+      if (frame.group !== group) continue;
+      if (frame.recovering) continue;
+      if (!keys.includes(frame.updatedKey)) continue;
+      if (hasFastPathPassedListener(frame, listener)) {
+        preserveFastPathNotifiedListeners(frame);
+        frame.notifiedListeners?.add(listener);
+      } else if (wasRegistered) {
+        preserveFastPathNotifiedListeners(frame);
+        frame.recoverToLive = true;
+      }
+    }
+  }
+  function clearFastPathNotifiedListener(fastPathFrames, group, listener) {
+    for (const frame of fastPathFrames) {
+      if (frame.group !== group) continue;
+      frame.notifiedListeners?.delete(listener);
+    }
+  }
+  function addFastPathKeyedListener({ fastPathFrames, group, keys, listener }) {
+    for (const frame of fastPathFrames) {
+      if (frame.group !== group) continue;
+      if (frame.recovering) continue;
+      if (!keys.includes(frame.updatedKey)) continue;
+      frame.keyedListeners.add(listener);
+    }
+  }
+  function runPendingCleanup(group, listener) {
+    if (!group.disposables.size) return;
+    const cleanup = group.disposables.get(listener);
+    if (!cleanup) return;
+    group.disposables.delete(listener);
+    cleanup();
+  }
+  function setListenerCleanup(group, listener, cleanup) {
+    const currentCleanup = group.disposables.get(listener);
+    if (!currentCleanup) {
+      group.disposables.set(listener, cleanup);
+      return;
+    }
+    group.disposables.set(listener, () => {
+      currentCleanup();
+      cleanup();
+    });
+  }
+  function notifyStoreListener(group, listener, state2, prevState, getState2, updatedKey) {
+    if (group.suspendCounts?.has(listener)) return;
+    const { disposables } = group;
+    const cleanup = disposables.size ? disposables.get(listener) : void 0;
+    if (cleanup) {
+      disposables.delete(listener);
+      const stateBeforeCleanup = state2;
+      cleanup();
+      state2 = getState2?.() ?? state2;
+      if (state2 !== stateBeforeCleanup) prevState = getCleanupPrevState(prevState, state2, stateBeforeCleanup, updatedKey) ?? prevState;
+    }
+    const result = listener(state2, prevState);
+    if (result) setListenerCleanup(group, listener, result);
+  }
+  function runLiveListeners({ group, getState: getState2, prevState, updatedKey, notifiedListeners }) {
+    const allKeysListeners = group.allKeysListeners;
+    for (const listener of group.listeners) {
+      if (notifiedListeners?.has(listener)) continue;
+      if (!allKeysListeners?.has(listener)) {
+        if (!hasUpdatedKey(group.listenerKeys.get(listener), updatedKey)) continue;
+      }
+      notifiedListeners?.add(listener);
+      notifyStoreListener(group, listener, getState2(), prevState, getState2, updatedKey);
     }
   }
   function createStore(initialState, ...stores) {
@@ -32448,7 +32570,7 @@ var wp;
       const instance = /* @__PURE__ */ Symbol();
       instances.add(instance);
       const maybeDestroy = () => {
-        instances.delete(instance);
+        if (!instances.delete(instance)) return;
         if (instances.size) return;
         destroy();
       };
@@ -32466,14 +32588,17 @@ var wp;
           }));
           continue;
         }
-        let didSyncInitialState = false;
-        desyncs.push(sync2(store4, keys, (state3, prevState) => {
+        desyncs.push(subscribe3(store4, keys, (state3, prevState) => {
           for (const key of keys) {
-            if (didSyncInitialState && state3[key] === prevState[key]) continue;
+            if (state3[key] === prevState[key]) continue;
             setState(key, state3[key], true);
           }
-          didSyncInitialState = true;
         }));
+        for (const key of keys) {
+          const liveState = store4?.getState?.();
+          if (!liveState) continue;
+          setState(key, liveState[key], true);
+        }
       }
       const teardowns = [];
       for (const setup2 of setups) teardowns.push(setup2());
@@ -32486,86 +32611,170 @@ var wp;
       if (keys) deleteKeyedListener(group.listenersByKey, keys, listener);
       else group.allKeysListeners?.delete(listener);
     };
+    const fastPathFrames = [];
     const registerListener = (keys, listener, group = syncListenerGroup) => {
       const listenerKeysValue = keys ? [...keys] : null;
-      if (group.listeners.has(listener)) deleteListenerIndexes(group, listener, group.listenerKeys.get(listener));
+      const wasRegistered = group.listeners.has(listener);
+      if (!wasRegistered) clearFastPathNotifiedListener(fastPathFrames, group, listener);
+      if (!listenerKeysValue) {
+        if (wasRegistered) preserveFastPathFrames(fastPathFrames, group);
+        preserveFastPathPassedListeners(fastPathFrames, group, listener);
+      } else preserveFastPathPassedKeyedListeners({
+        fastPathFrames,
+        group,
+        keys: listenerKeysValue,
+        listener
+      });
+      if (wasRegistered) {
+        preserveFastPathFrames(fastPathFrames, group, listener);
+        deleteListenerIndexes(group, listener, group.listenerKeys.get(listener));
+      }
       group.listeners.add(listener);
       if (listenerKeysValue) {
         group.listenersByKey ??= /* @__PURE__ */ new Map();
         addKeyedListener(group.listenersByKey, listenerKeysValue, listener);
+        addFastPathKeyedListener({
+          fastPathFrames,
+          group,
+          keys: listenerKeysValue,
+          listener
+        });
       } else {
         group.allKeysListeners ??= /* @__PURE__ */ new Set();
         group.allKeysListeners.add(listener);
       }
       group.listenerKeys.set(listener, listenerKeysValue);
       return () => {
-        group.disposables.get(listener)?.();
+        const cleanup = group.disposables.get(listener);
         group.disposables.delete(listener);
+        preserveFastPathFrames(fastPathFrames, group, listener);
         const currentKeys = group.listenerKeys.get(listener);
         deleteListenerIndexes(group, listener, listenerKeysValue);
         if (currentKeys !== listenerKeysValue) deleteListenerIndexes(group, listener, currentKeys);
         group.listenerKeys.delete(listener);
         group.listeners.delete(listener);
+        cleanup?.();
       };
     };
     const storeSubscribe = (keys, listener) => registerListener(keys, listener);
-    const reconcileInitialCleanup = (group, listener, cleanup) => {
-      if (cleanup) group.disposables.set(listener, cleanup);
-      else group.disposables.delete(listener);
+    const runInitialListener = (group, listener, prevState) => {
+      const shouldSuspend = group.listeners.has(listener);
+      if (shouldSuspend) {
+        group.suspendCounts ??= /* @__PURE__ */ new Map();
+        const count = group.suspendCounts.get(listener) ?? 0;
+        group.suspendCounts.set(listener, count + 1);
+      }
+      let cleanupPrevState;
+      try {
+        const stateBeforeCleanups = state2;
+        runPendingCleanup(group, listener);
+        if (state2 !== stateBeforeCleanups) cleanupPrevState = getCleanupPrevState(prevState, state2, stateBeforeCleanups);
+        const cleanup = listener(state2, cleanupPrevState ?? prevState);
+        if (cleanup) setListenerCleanup(group, listener, cleanup);
+      } finally {
+        if (shouldSuspend) {
+          const suspendCounts = group.suspendCounts;
+          const count = suspendCounts?.get(listener);
+          if (count && count > 1) suspendCounts?.set(listener, count - 1);
+          else suspendCounts?.delete(listener);
+          if (!suspendCounts?.size) delete group.suspendCounts;
+        }
+      }
     };
     const storeSync = (keys, listener) => {
-      reconcileInitialCleanup(syncListenerGroup, listener, listener(state2, state2));
+      runInitialListener(syncListenerGroup, listener, state2);
       return registerListener(keys, listener);
     };
     const storeBatch = (keys, listener) => {
       if (!batchListenerGroup.listeners.size && !inDispatch) prevStateBatch = state2;
-      reconcileInitialCleanup(batchListenerGroup, listener, listener(state2, prevStateBatch));
+      runInitialListener(batchListenerGroup, listener, prevStateBatch);
       return registerListener(keys, listener, batchListenerGroup);
     };
     const storePick = (keys) => createStore(pick(state2, keys), finalStore);
     const storeOmit = (keys) => createStore(omit(state2, keys), finalStore);
     const getState2 = () => state2;
     const runListeners = (group, prevState, updatedKey) => {
-      const { disposables } = group;
       if (!(updatedKey instanceof Set) && !group.allKeysListeners?.size) {
         const keyedListeners = group.listenersByKey?.get(updatedKey);
         if (!keyedListeners) return;
-        for (const listener of keyedListeners) {
-          const cleanup = disposables.size ? disposables.get(listener) : void 0;
-          if (cleanup) cleanup();
-          const result = listener(state2, prevState);
-          if (result) disposables.set(listener, result);
-          else if (cleanup) disposables.delete(listener);
+        const frame = {
+          group,
+          keyedListeners,
+          updatedKey,
+          currentListener: null
+        };
+        fastPathFrames.push(frame);
+        try {
+          for (const listener of keyedListeners) {
+            if (frame.notifiedListeners?.has(listener)) continue;
+            frame.currentListener = listener;
+            frame.notifiedListeners?.add(listener);
+            notifyStoreListener(group, listener, state2, prevState, getState2, updatedKey);
+            if (!group.allKeysListeners?.size && !frame.recoverToLive) continue;
+            const notifiedListeners = frame.notifiedListeners ?? getFastPathNotifiedListeners(frame);
+            frame.notifiedListeners = notifiedListeners;
+            frame.recovering = true;
+            runLiveListeners({
+              group,
+              getState: getState2,
+              prevState,
+              updatedKey,
+              notifiedListeners
+            });
+            return;
+          }
+        } finally {
+          fastPathFrames.pop();
         }
         return;
       }
-      const allKeysListeners = group.allKeysListeners;
-      for (const listener of group.listeners) {
-        if (!allKeysListeners?.has(listener)) {
-          if (!hasUpdatedKey(group.listenerKeys.get(listener), updatedKey)) continue;
-        }
-        const cleanup = disposables.size ? disposables.get(listener) : void 0;
-        if (cleanup) cleanup();
-        const result = listener(state2, prevState);
-        if (result) disposables.set(listener, result);
-        else if (cleanup) disposables.delete(listener);
-      }
+      runLiveListeners({
+        group,
+        getState: getState2,
+        prevState,
+        updatedKey
+      });
     };
     const setState = (key, value, fromStores = false) => {
       if (!hasOwnProperty(state2, key)) return;
       const currentValue = state2[key];
       const nextValue = typeof value === "function" ? value(currentValue) : value;
-      if (nextValue === currentValue) return;
-      if (!fromStores && stores.length) for (const store4 of stores) store4?.setState?.(key, nextValue);
+      if (isSameValue(nextValue, currentValue)) return;
+      const wasInDispatch = inDispatch;
+      inDispatch = true;
       const prevState = state2;
-      state2 = {
+      const nextState = {
         ...state2,
         [key]: nextValue
       };
-      const wasInDispatch = inDispatch;
-      inDispatch = true;
+      state2 = nextState;
+      let superseded = false;
       try {
-        runListeners(syncListenerGroup, prevState, key);
+        if (!fromStores && stores.length) {
+          for (const store4 of stores) {
+            store4?.setState?.(key, nextValue);
+            if (isSameValue(state2[key], nextValue)) continue;
+            superseded = true;
+            break;
+          }
+          if (superseded) {
+            let pass = 0;
+            for (; pass < MAX_REPAIR_PASSES; pass += 1) {
+              let changed = false;
+              for (const store4 of stores) {
+                const previousValue = state2[key];
+                store4?.setState?.(key, previousValue);
+                if (!isSameValue(state2[key], previousValue)) changed = true;
+              }
+              if (!changed) break;
+            }
+            if (pass === MAX_REPAIR_PASSES) console.warn("Parent stores did not converge after a superseded fan-out; a parent listener may be rewriting this key in a cycle.");
+          }
+        }
+        if (!superseded) runListeners(syncListenerGroup, state2 === nextState ? prevState : {
+          ...state2,
+          [key]: prevState[key]
+        }, key);
       } finally {
         inDispatch = wasInDispatch;
       }
@@ -32664,808 +32873,6 @@ See https://github.com/ariakit/ariakit/pull/2745 for more details.
 If there's a particular need for this, please submit a feature request at https://github.com/ariakit/ariakit
 `);
   }
-
-  // node_modules/@ariakit/react-store/dist/index.js
-  var React76 = __toESM(require_react(), 1);
-  var import_shim3 = __toESM(require_shim(), 1);
-  var noopSubscribe = () => () => {
-  };
-  function useStoreState(store4, keyOrSelector = identity) {
-    const storeSubscribe = React76.useCallback((callback) => {
-      if (!store4) return noopSubscribe();
-      return subscribe3(store4, null, callback);
-    }, [store4]);
-    const getSnapshot2 = () => {
-      const key = typeof keyOrSelector === "string" ? keyOrSelector : null;
-      const selector2 = typeof keyOrSelector === "function" ? keyOrSelector : null;
-      const state2 = store4?.getState();
-      if (selector2) return selector2(state2);
-      if (!state2) return;
-      if (!key) return;
-      if (!hasOwnProperty(state2, key)) return;
-      return state2[key];
-    };
-    return (0, import_shim3.useSyncExternalStore)(storeSubscribe, getSnapshot2, getSnapshot2);
-  }
-  function useStoreStateObject(store4, object) {
-    const objRef = React76.useRef({});
-    const storeSubscribe = React76.useCallback((callback) => {
-      if (!store4) return noopSubscribe();
-      return subscribe3(store4, null, callback);
-    }, [store4]);
-    const getSnapshot2 = () => {
-      const state2 = store4?.getState();
-      let updated = false;
-      const obj = objRef.current;
-      for (const prop in object) {
-        const keyOrSelector = object[prop];
-        if (typeof keyOrSelector === "function") {
-          const value = keyOrSelector(state2);
-          if (value !== obj[prop]) {
-            obj[prop] = value;
-            updated = true;
-          }
-        }
-        if (typeof keyOrSelector === "string") {
-          if (!state2) continue;
-          if (!hasOwnProperty(state2, keyOrSelector)) continue;
-          const value = state2[keyOrSelector];
-          if (value !== obj[prop]) {
-            obj[prop] = value;
-            updated = true;
-          }
-        }
-      }
-      if (updated) objRef.current = { ...obj };
-      return objRef.current;
-    };
-    return (0, import_shim3.useSyncExternalStore)(storeSubscribe, getSnapshot2, getSnapshot2);
-  }
-  function useStoreProps(store4, props, key, setKey) {
-    const value = hasOwnProperty(props, key) ? props[key] : void 0;
-    const propsRef = useLiveRef({
-      value,
-      setValue: setKey ? props[setKey] : void 0
-    });
-    useSafeLayoutEffect(() => {
-      return sync2(store4, [key], (state2, prev) => {
-        const { value: value2, setValue } = propsRef.current;
-        if (!setValue) return;
-        if (state2[key] === prev[key]) return;
-        if (state2[key] === value2) return;
-        setValue(state2[key]);
-      });
-    }, [store4, key]);
-    useSafeLayoutEffect(() => {
-      if (value === void 0) return;
-      store4.setState(key, value);
-      return batch(store4, [key], () => {
-        if (value === void 0) return;
-        store4.setState(key, value);
-      });
-    });
-  }
-  function useStore2(createStore2, props) {
-    const [store4, setStore] = React76.useState(() => createStore2(props));
-    useSafeLayoutEffect(() => init(store4), [store4]);
-    const useState159 = React76.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
-    return [React76.useMemo(() => ({
-      ...store4,
-      useState: useState159
-    }), [store4, useState159]), useEvent(() => {
-      setStore((store5) => createStore2({
-        ...props,
-        ...store5.getState()
-      }));
-    })];
-  }
-
-  // node_modules/@ariakit/react-components/dist/composite/composite-item.js
-  var TagName4 = "button";
-  function isEditableElement(element) {
-    if (isTextbox(element)) return true;
-    return element.tagName === "INPUT" && !isButton(element);
-  }
-  function getNextPageOffset(scrollingElement, pageUp = false) {
-    const height = scrollingElement.clientHeight;
-    const { top } = scrollingElement.getBoundingClientRect();
-    const pageSize = Math.max(height * 0.875, height - 40) * 1.5;
-    const pageOffset = pageUp ? height - pageSize + top : pageSize + top;
-    if (scrollingElement.tagName === "HTML") return pageOffset + scrollingElement.scrollTop;
-    return pageOffset;
-  }
-  function getItemOffset(itemElement, pageUp = false) {
-    const { top } = itemElement.getBoundingClientRect();
-    if (pageUp) return top + itemElement.clientHeight;
-    return top;
-  }
-  function findNextPageItemId(element, store4, next, pageUp = false) {
-    if (!store4) return;
-    if (!next) return;
-    const { renderedItems } = store4.getState();
-    const scrollingElement = getScrollingElement(element);
-    if (!scrollingElement) return;
-    const nextPageOffset = getNextPageOffset(scrollingElement, pageUp);
-    let id;
-    let prevDifference;
-    for (let i3 = 0; i3 < renderedItems.length; i3 += 1) {
-      const previousId = id;
-      id = next(i3);
-      if (!id) break;
-      if (id === previousId) continue;
-      const itemElement = getEnabledItem(store4, id)?.element;
-      if (!itemElement) continue;
-      const difference = getItemOffset(itemElement, pageUp) - nextPageOffset;
-      const absDifference = Math.abs(difference);
-      if (pageUp && difference <= 0 || !pageUp && difference >= 0) {
-        if (prevDifference !== void 0 && prevDifference < absDifference) id = previousId;
-        break;
-      }
-      prevDifference = absDifference;
-    }
-    return id;
-  }
-  function targetIsAnotherItem(event, store4) {
-    if (isSelfTarget(event)) return false;
-    return isItem(store4, event.target);
-  }
-  var useCompositeItem2 = createHook(function useCompositeItem3({ store: store4, rowId: rowIdProp, preventScrollOnKeyDown = false, moveOnKeyPress = true, tabbable: tabbable2 = false, getItem: getItemProp, "aria-setsize": ariaSetSizeProp, "aria-posinset": ariaPosInSetProp, ...props }) {
-    const context = useCompositeScopedContext();
-    store4 = store4 || context;
-    const id = useId5(props.id);
-    const ref = (0, import_react21.useRef)(null);
-    const row = (0, import_react21.useContext)(CompositeRowContext);
-    const trulyDisabled = disabledFromProps(props) && !props.accessibleWhenDisabled;
-    const { rowId, baseElement, isActiveItem, ariaSetSize, ariaPosInSet, isTabbable } = useStoreStateObject(store4, {
-      rowId(state2) {
-        if (rowIdProp) return rowIdProp;
-        if (!state2) return;
-        if (!row?.baseElement) return;
-        if (row.baseElement !== state2.baseElement) return;
-        return row.id;
-      },
-      baseElement(state2) {
-        return state2?.baseElement || void 0;
-      },
-      isActiveItem(state2) {
-        return !!state2 && state2.activeId === id;
-      },
-      ariaSetSize(state2) {
-        if (ariaSetSizeProp != null) return ariaSetSizeProp;
-        if (!state2) return;
-        if (!row?.ariaSetSize) return;
-        if (row.baseElement !== state2.baseElement) return;
-        return row.ariaSetSize;
-      },
-      ariaPosInSet(state2) {
-        if (ariaPosInSetProp != null) return ariaPosInSetProp;
-        if (!state2) return;
-        if (!row?.ariaPosInSet) return;
-        if (row.baseElement !== state2.baseElement) return;
-        const itemsInRow = state2.renderedItems.filter((item) => item.rowId === rowId);
-        return row.ariaPosInSet + itemsInRow.findIndex((item) => item.id === id);
-      },
-      isTabbable(state2) {
-        if (!state2?.renderedItems.length) return true;
-        if (state2.virtualFocus) return false;
-        if (tabbable2) return true;
-        if (state2.activeId === null) return false;
-        const item = store4?.item(state2.activeId);
-        if (item?.disabled) return true;
-        if (!item?.element) return true;
-        return state2.activeId === id;
-      }
-    });
-    const getItem = (0, import_react21.useCallback)((item) => {
-      const nextItem = {
-        ...item,
-        id: id || item.id,
-        rowId,
-        disabled: trulyDisabled,
-        children: item.element?.textContent
-      };
-      if (getItemProp) return getItemProp(nextItem);
-      return nextItem;
-    }, [
-      id,
-      rowId,
-      trulyDisabled,
-      getItemProp
-    ]);
-    const onFocusProp = props.onFocus;
-    const hasFocusedComposite = (0, import_react21.useRef)(false);
-    const onFocus = useEvent((event) => {
-      onFocusProp?.(event);
-      if (event.defaultPrevented) return;
-      if (isPortalEvent(event)) return;
-      if (!id) return;
-      if (!store4) return;
-      if (targetIsAnotherItem(event, store4)) return;
-      const { virtualFocus, baseElement: baseElement2 } = store4.getState();
-      store4.setActiveId(id);
-      if (isTextbox(event.currentTarget)) selectTextField(event.currentTarget);
-      if (!virtualFocus) return;
-      if (!isSelfTarget(event)) return;
-      if (isEditableElement(event.currentTarget)) return;
-      if (!baseElement2?.isConnected) return;
-      if (isSafari() && event.currentTarget.hasAttribute("data-autofocus")) event.currentTarget.scrollIntoView({
-        block: "nearest",
-        inline: "nearest"
-      });
-      hasFocusedComposite.current = true;
-      if (event.relatedTarget === baseElement2 || isItem(store4, event.relatedTarget)) focusSilently(baseElement2);
-      else baseElement2.focus();
-    });
-    const onBlurCaptureProp = props.onBlurCapture;
-    const onBlurCapture = useEvent((event) => {
-      onBlurCaptureProp?.(event);
-      if (event.defaultPrevented) return;
-      if (store4?.getState()?.virtualFocus && hasFocusedComposite.current) {
-        hasFocusedComposite.current = false;
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    });
-    const onKeyDownProp = props.onKeyDown;
-    const preventScrollOnKeyDownProp = useBooleanEvent(preventScrollOnKeyDown);
-    const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-    const onKeyDown = useEvent((event) => {
-      onKeyDownProp?.(event);
-      if (event.defaultPrevented) return;
-      if (!isSelfTarget(event)) return;
-      if (!store4) return;
-      const { currentTarget } = event;
-      const state2 = store4.getState();
-      const isGrid2 = !!store4.item(id)?.rowId;
-      const isVertical = state2.orientation !== "horizontal";
-      const isHorizontal = state2.orientation !== "vertical";
-      const canHomeEnd = () => {
-        if (isGrid2) return true;
-        if (isHorizontal) return true;
-        if (!state2.baseElement) return true;
-        if (!isTextField(state2.baseElement)) return true;
-        return false;
-      };
-      const action = {
-        ArrowUp: (isGrid2 || isVertical) && store4.up,
-        ArrowRight: (isGrid2 || isHorizontal) && store4.next,
-        ArrowDown: (isGrid2 || isVertical) && store4.down,
-        ArrowLeft: (isGrid2 || isHorizontal) && store4.previous,
-        Home: () => {
-          if (!canHomeEnd()) return;
-          if (!isGrid2 || event.ctrlKey) return store4?.first();
-          return store4?.previous(-1);
-        },
-        End: () => {
-          if (!canHomeEnd()) return;
-          if (!isGrid2 || event.ctrlKey) return store4?.last();
-          return store4?.next(-1);
-        },
-        PageUp: () => {
-          return findNextPageItemId(currentTarget, store4, store4?.up, true);
-        },
-        PageDown: () => {
-          return findNextPageItemId(currentTarget, store4, store4?.down);
-        }
-      }[event.key];
-      if (action) {
-        if (isTextbox(currentTarget)) {
-          const selection = getTextboxSelection(currentTarget);
-          const isLeft = isHorizontal && event.key === "ArrowLeft";
-          const isRight = isHorizontal && event.key === "ArrowRight";
-          const isUp = isVertical && event.key === "ArrowUp";
-          const isDown = isVertical && event.key === "ArrowDown";
-          if (isRight || isDown) {
-            const { length: valueLength } = getTextboxValue(currentTarget);
-            if (selection.end !== valueLength) return;
-          } else if ((isLeft || isUp) && selection.start !== 0) return;
-        }
-        const nextId2 = action();
-        if (preventScrollOnKeyDownProp(event) || nextId2 !== void 0) {
-          if (!moveOnKeyPressProp(event)) return;
-          event.preventDefault();
-          store4.move(nextId2);
-        }
-      }
-    });
-    const providerValue = (0, import_react21.useMemo)(() => ({
-      id,
-      baseElement
-    }), [id, baseElement]);
-    props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(CompositeItemContext.Provider, {
-      value: providerValue,
-      children: element
-    }), [providerValue]);
-    props = {
-      "data-active-item": isActiveItem || void 0,
-      ...props,
-      id,
-      ref: useMergeRefs2(ref, props.ref),
-      tabIndex: isTabbable ? props.tabIndex : -1,
-      onFocus,
-      onBlurCapture,
-      onKeyDown
-    };
-    props = useCommand(props);
-    props = useCollectionItem({
-      store: store4,
-      ...props,
-      getItem,
-      shouldRegisterItem: id ? props.shouldRegisterItem : false
-    });
-    return removeUndefinedValues({
-      ...props,
-      "aria-setsize": ariaSetSize,
-      "aria-posinset": ariaPosInSet
-    });
-  });
-  var CompositeItem = memo3(forwardRef52(function CompositeItem2(props) {
-    return createElement5(TagName4, useCompositeItem2(props));
-  }));
-
-  // node_modules/@ariakit/react-components/dist/composite/composite.js
-  var import_react22 = __toESM(require_react(), 1);
-  var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
-  var TagName5 = "div";
-  function isGrid(items) {
-    return items.some((item) => !!item.rowId);
-  }
-  function isPrintableKey(event) {
-    const target = event.target;
-    if (target && !isTextField(target)) return false;
-    return event.key.length === 1 && !event.ctrlKey && !event.metaKey;
-  }
-  function isModifierKey(event) {
-    return event.key === "Shift" || event.key === "Control" || event.key === "Alt" || event.key === "Meta";
-  }
-  function useKeyboardEventProxy(store4, onKeyboardEvent, previousElementRef) {
-    return useEvent((event) => {
-      onKeyboardEvent?.(event);
-      if (event.defaultPrevented) return;
-      if (event.isPropagationStopped()) return;
-      if (!isSelfTarget(event)) return;
-      if (isModifierKey(event)) return;
-      if (isPrintableKey(event)) return;
-      const activeElement2 = getEnabledItem(store4, store4.getState().activeId)?.element;
-      if (!activeElement2) return;
-      const { view, ...eventInit } = event;
-      if (activeElement2 !== previousElementRef?.current) activeElement2.focus();
-      if (!fireKeyboardEvent(activeElement2, event.type, eventInit)) event.preventDefault();
-      if (event.currentTarget.contains(activeElement2)) event.stopPropagation();
-    });
-  }
-  function findFirstEnabledItemInTheLastRow(items) {
-    return findFirstEnabledItem(flatten2DArray(reverseArray(groupItemsByRows(items))));
-  }
-  function withBaseScrollPreserved(store4, callback) {
-    const { virtualFocus, baseElement } = store4.getState();
-    if (!virtualFocus || !baseElement || !isTextField(baseElement)) {
-      callback();
-      return;
-    }
-    const savedScrollLeft = baseElement.scrollLeft;
-    const savedScrollTop = baseElement.scrollTop;
-    callback();
-    baseElement.scrollLeft = savedScrollLeft;
-    baseElement.scrollTop = savedScrollTop;
-  }
-  function useScheduleFocus(store4) {
-    const [scheduled, setScheduled] = (0, import_react22.useState)(false);
-    const schedule2 = (0, import_react22.useCallback)(() => setScheduled(true), []);
-    const activeItem = useStoreState(store4, (state2) => getEnabledItem(store4, state2.activeId));
-    (0, import_react22.useEffect)(() => {
-      const activeElement2 = activeItem?.element;
-      if (!scheduled) return;
-      if (!activeElement2) return;
-      setScheduled(false);
-      withBaseScrollPreserved(store4, () => {
-        activeElement2.focus({ preventScroll: true });
-      });
-    }, [
-      store4,
-      activeItem,
-      scheduled
-    ]);
-    return schedule2;
-  }
-  var useComposite = createHook(function useComposite2({ store: store4, composite = true, focusOnMove = composite, moveOnKeyPress = true, ...props }) {
-    const context = useCompositeProviderContext();
-    store4 = store4 || context;
-    invariant(store4, "Composite must receive a `store` prop or be wrapped in a CompositeProvider component.");
-    const ref = (0, import_react22.useRef)(null);
-    const previousElementRef = (0, import_react22.useRef)(null);
-    const scheduleFocus = useScheduleFocus(store4);
-    const moves = useStoreState(store4, "moves");
-    const [, setBaseElement] = useTransactionState(composite ? store4.setBaseElement : null);
-    (0, import_react22.useEffect)(() => {
-      if (!store4) return;
-      if (!moves) return;
-      if (!composite) return;
-      if (!focusOnMove) return;
-      const { activeId: activeId2 } = store4.getState();
-      const itemElement = getEnabledItem(store4, activeId2)?.element;
-      if (!itemElement) return;
-      withBaseScrollPreserved(store4, () => focusIntoView(itemElement));
-    }, [
-      store4,
-      moves,
-      composite,
-      focusOnMove
-    ]);
-    useSafeLayoutEffect(() => {
-      if (!store4) return;
-      if (!moves) return;
-      if (!composite) return;
-      const { baseElement, activeId: activeId2 } = store4.getState();
-      if (!(activeId2 === null)) return;
-      if (!baseElement) return;
-      const previousElement = previousElementRef.current;
-      previousElementRef.current = null;
-      if (previousElement) fireBlurEvent(previousElement, { relatedTarget: baseElement });
-      if (!hasFocus(baseElement)) baseElement.focus();
-    }, [
-      store4,
-      moves,
-      composite
-    ]);
-    const activeId = useStoreState(store4, "activeId");
-    const virtualFocus = useStoreState(store4, "virtualFocus");
-    useSafeLayoutEffect(() => {
-      if (!store4) return;
-      if (!composite) return;
-      if (!virtualFocus) return;
-      const previousElement = previousElementRef.current;
-      previousElementRef.current = null;
-      if (!previousElement) return;
-      const relatedTarget = getEnabledItem(store4, activeId)?.element || getActiveElement(previousElement);
-      if (relatedTarget === previousElement) return;
-      fireBlurEvent(previousElement, { relatedTarget });
-    }, [
-      store4,
-      activeId,
-      virtualFocus,
-      composite
-    ]);
-    const onKeyDownCapture = useKeyboardEventProxy(store4, props.onKeyDownCapture, previousElementRef);
-    const onKeyUpCapture = useKeyboardEventProxy(store4, props.onKeyUpCapture, previousElementRef);
-    const onFocusCaptureProp = props.onFocusCapture;
-    const onFocusCapture = useEvent((event) => {
-      onFocusCaptureProp?.(event);
-      if (event.defaultPrevented) return;
-      if (!store4) return;
-      const { virtualFocus: virtualFocus2 } = store4.getState();
-      if (!virtualFocus2) return;
-      const previousActiveElement = event.relatedTarget;
-      const isSilentlyFocused = silentlyFocused(event.currentTarget);
-      if (isSelfTarget(event) && isSilentlyFocused) {
-        event.stopPropagation();
-        previousElementRef.current = previousActiveElement;
-      }
-    });
-    const onFocusProp = props.onFocus;
-    const onFocus = useEvent((event) => {
-      onFocusProp?.(event);
-      if (event.defaultPrevented) return;
-      if (!composite) return;
-      if (!store4) return;
-      const { relatedTarget } = event;
-      const { virtualFocus: virtualFocus2 } = store4.getState();
-      if (virtualFocus2) {
-        if (isSelfTarget(event) && !isItem(store4, relatedTarget)) queueMicrotask(scheduleFocus);
-      } else if (isSelfTarget(event)) store4.setActiveId(null);
-    });
-    const onBlurCaptureProp = props.onBlurCapture;
-    const onBlurCapture = useEvent((event) => {
-      onBlurCaptureProp?.(event);
-      if (event.defaultPrevented) return;
-      if (!store4) return;
-      const { virtualFocus: virtualFocus2, activeId: activeId2 } = store4.getState();
-      if (!virtualFocus2) return;
-      const activeElement2 = getEnabledItem(store4, activeId2)?.element;
-      const nextActiveElement = event.relatedTarget;
-      const nextActiveElementIsItem = isItem(store4, nextActiveElement);
-      const previousElement = previousElementRef.current;
-      previousElementRef.current = null;
-      if (isSelfTarget(event) && nextActiveElementIsItem) {
-        if (nextActiveElement === activeElement2) {
-          if (previousElement && previousElement !== nextActiveElement) fireBlurEvent(previousElement, event);
-        } else if (activeElement2) fireBlurEvent(activeElement2, event);
-        else if (previousElement) fireBlurEvent(previousElement, event);
-        event.stopPropagation();
-      } else if (!isItem(store4, event.target) && activeElement2) fireBlurEvent(activeElement2, event);
-    });
-    const onKeyDownProp = props.onKeyDown;
-    const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-    const onKeyDown = useEvent((event) => {
-      onKeyDownProp?.(event);
-      if (event.nativeEvent.isComposing) return;
-      if (event.defaultPrevented) return;
-      if (!store4) return;
-      if (!isSelfTarget(event)) return;
-      const { orientation, renderedItems, activeId: activeId2 } = store4.getState();
-      if (getEnabledItem(store4, activeId2)?.element?.isConnected) return;
-      const isVertical = orientation !== "horizontal";
-      const isHorizontal = orientation !== "vertical";
-      const grid = isGrid(renderedItems);
-      if ((event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "Home" || event.key === "End") && isTextField(event.currentTarget)) return;
-      const up = () => {
-        if (grid) return findFirstEnabledItemInTheLastRow(renderedItems)?.id;
-        return store4?.last();
-      };
-      const action = {
-        ArrowUp: (grid || isVertical) && up,
-        ArrowRight: (grid || isHorizontal) && store4.first,
-        ArrowDown: (grid || isVertical) && store4.first,
-        ArrowLeft: (grid || isHorizontal) && store4.last,
-        Home: store4.first,
-        End: store4.last,
-        PageUp: store4.first,
-        PageDown: store4.last
-      }[event.key];
-      if (action) {
-        const id = action();
-        if (id !== void 0) {
-          if (!moveOnKeyPressProp(event)) return;
-          event.preventDefault();
-          store4.move(id);
-        }
-      }
-    });
-    props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(CompositeScopedContextProvider, {
-      value: store4,
-      children: element
-    }), [store4]);
-    props = {
-      "aria-activedescendant": useStoreState(store4, (state2) => {
-        if (!store4) return;
-        if (!composite) return;
-        if (!state2.virtualFocus) return;
-        return getEnabledItem(store4, state2.activeId)?.id;
-      }),
-      ...props,
-      ref: useMergeRefs2(ref, setBaseElement, props.ref),
-      onKeyDownCapture,
-      onKeyUpCapture,
-      onFocusCapture,
-      onFocus,
-      onBlurCapture,
-      onKeyDown
-    };
-    props = useFocusable({
-      focusable: useStoreState(store4, (state2) => composite && (state2.virtualFocus || state2.activeId === null)),
-      ...props
-    });
-    return props;
-  });
-  var Composite6 = forwardRef52(function Composite7(props) {
-    return createElement5(TagName5, useComposite(props));
-  });
-
-  // node_modules/@ariakit/react-components/dist/disclosure/disclosure-context.js
-  var ctx4 = createStoreContext();
-  var useDisclosureContext = ctx4.useContext;
-  var useDisclosureScopedContext = ctx4.useScopedContext;
-  var useDisclosureProviderContext = ctx4.useProviderContext;
-  var DisclosureContextProvider = ctx4.ContextProvider;
-  var DisclosureScopedContextProvider = ctx4.ScopedContextProvider;
-
-  // node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
-  var import_react23 = __toESM(require_react(), 1);
-  var ctx5 = createStoreContext([DisclosureContextProvider], [DisclosureScopedContextProvider]);
-  var useDialogContext = ctx5.useContext;
-  var useDialogScopedContext = ctx5.useScopedContext;
-  var useDialogProviderContext = ctx5.useProviderContext;
-  var DialogContextProvider = ctx5.ContextProvider;
-  var DialogScopedContextProvider = ctx5.ScopedContextProvider;
-  var DialogHeadingContext = (0, import_react23.createContext)(void 0);
-  var DialogDescriptionContext = (0, import_react23.createContext)(void 0);
-
-  // node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
-  var import_react24 = __toESM(require_react(), 1);
-  var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
-  var import_react_dom5 = __toESM(require_react_dom(), 1);
-  var TagName6 = "div";
-  function afterTimeout(timeoutMs, cb) {
-    const timeoutId = setTimeout(cb, timeoutMs);
-    return () => clearTimeout(timeoutId);
-  }
-  function afterPaint(cb) {
-    let raf2 = requestAnimationFrame(() => {
-      raf2 = requestAnimationFrame(cb);
-    });
-    return () => cancelAnimationFrame(raf2);
-  }
-  function parseCSSTime(...times) {
-    return times.join(", ").split(", ").reduce((longestTime, currentTimeString) => {
-      const multiplier = currentTimeString.endsWith("ms") ? 1 : 1e3;
-      const currentTime = Number.parseFloat(currentTimeString || "0s") * multiplier;
-      if (currentTime > longestTime) return currentTime;
-      return longestTime;
-    }, 0);
-  }
-  function isHidden(mounted, hidden, alwaysVisible) {
-    return !alwaysVisible && hidden !== false && (!mounted || !!hidden);
-  }
-  var useDisclosureContent = createHook(function useDisclosureContent2({ store: store4, alwaysVisible, ...props }) {
-    const context = useDisclosureProviderContext();
-    store4 = store4 || context;
-    invariant(store4, "DisclosureContent must receive a `store` prop or be wrapped in a DisclosureProvider component.");
-    const ref = (0, import_react24.useRef)(null);
-    const id = useId5(props.id);
-    const [transition, setTransition] = (0, import_react24.useState)(null);
-    const open = useStoreState(store4, "open");
-    const mounted = useStoreState(store4, "mounted");
-    const animated2 = useStoreState(store4, "animated");
-    const contentElement = useStoreState(store4, "contentElement");
-    const otherElement = useStoreState(store4.disclosure, "contentElement");
-    const hasClosedRef = (0, import_react24.useRef)(false);
-    useSafeLayoutEffect(() => {
-      if (!ref.current) return;
-      store4?.setContentElement(ref.current);
-    }, [store4]);
-    useSafeLayoutEffect(() => {
-      let previousAnimated;
-      store4?.setState("animated", (animated3) => {
-        previousAnimated = animated3;
-        return true;
-      });
-      return () => {
-        if (previousAnimated === void 0) return;
-        store4?.setState("animated", previousAnimated);
-      };
-    }, [store4]);
-    useSafeLayoutEffect(() => {
-      if (!animated2) {
-        if (!open) {
-          hasClosedRef.current = true;
-          setTransition(null);
-        } else if (hasClosedRef.current) {
-          hasClosedRef.current = false;
-          setTransition("enter");
-        }
-        return;
-      }
-      if (!contentElement?.isConnected) {
-        setTransition(null);
-        return;
-      }
-      return afterPaint(() => {
-        setTransition(open ? "enter" : mounted ? "leave" : null);
-      });
-    }, [
-      animated2,
-      contentElement,
-      open,
-      mounted
-    ]);
-    useSafeLayoutEffect(() => {
-      if (!store4) return;
-      if (!animated2) return;
-      if (!transition) return;
-      if (!contentElement) return;
-      const stopAnimation = () => store4?.setState("animating", false);
-      const stopAnimationSync = () => (0, import_react_dom5.flushSync)(stopAnimation);
-      if (transition === "leave" && open) return;
-      if (transition === "enter" && !open) return;
-      if (typeof animated2 === "number") return afterTimeout(animated2, stopAnimationSync);
-      const { transitionDuration, animationDuration, transitionDelay, animationDelay } = getComputedStyle(contentElement);
-      const { transitionDuration: transitionDuration2 = "0", animationDuration: animationDuration2 = "0", transitionDelay: transitionDelay2 = "0", animationDelay: animationDelay2 = "0" } = otherElement ? getComputedStyle(otherElement) : {};
-      const timeout = parseCSSTime(transitionDelay, animationDelay, transitionDelay2, animationDelay2) + parseCSSTime(transitionDuration, animationDuration, transitionDuration2, animationDuration2);
-      if (!timeout) {
-        if (transition === "enter") store4.setState("animated", false);
-        stopAnimation();
-        return;
-      }
-      return afterTimeout(Math.max(timeout - 1e3 / 60, 0), stopAnimationSync);
-    }, [
-      store4,
-      animated2,
-      contentElement,
-      otherElement,
-      open,
-      transition
-    ]);
-    props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(DialogScopedContextProvider, {
-      value: store4,
-      children: element
-    }), [store4]);
-    const hidden = isHidden(mounted, props.hidden, alwaysVisible);
-    const styleProp = props.style;
-    const style = (0, import_react24.useMemo)(() => {
-      if (hidden) return {
-        ...styleProp,
-        display: "none"
-      };
-      return styleProp;
-    }, [hidden, styleProp]);
-    props = {
-      "data-open": open || void 0,
-      "data-enter": transition === "enter" || void 0,
-      "data-leave": transition === "leave" || void 0,
-      hidden,
-      ...props,
-      id,
-      ref: useMergeRefs2(id ? store4.setContentElement : null, ref, props.ref),
-      style
-    };
-    return removeUndefinedValues(props);
-  });
-  var DisclosureContentImpl = forwardRef52(function DisclosureContentImpl2(props) {
-    return createElement5(TagName6, useDisclosureContent(props));
-  });
-  var DisclosureContent = forwardRef52(function DisclosureContent2({ unmountOnHide, ...props }) {
-    const context = useDisclosureProviderContext();
-    if (useStoreState(props.store || context, (state2) => !unmountOnHide || state2?.mounted) === false) return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(DisclosureContentImpl, { ...props });
-  });
-
-  // node_modules/@ariakit/components/dist/disclosure/disclosure-store.js
-  function createDisclosureStore(props = {}) {
-    const store4 = mergeStore(props.store, omit2(props.disclosure, ["contentElement", "disclosureElement"]));
-    throwOnConflictingProps(props, store4);
-    const syncState = store4?.getState();
-    const open = defaultValue(props.open, syncState?.open, props.defaultOpen, false);
-    const animated2 = defaultValue(props.animated, syncState?.animated, false);
-    const disclosure = createStore({
-      open,
-      animated: animated2,
-      animating: !!animated2 && open,
-      mounted: open,
-      contentElement: defaultValue(syncState?.contentElement, null),
-      disclosureElement: defaultValue(syncState?.disclosureElement, null)
-    }, store4);
-    setup(disclosure, () => sync2(disclosure, ["animated", "animating"], (state2) => {
-      if (state2.animated) return;
-      disclosure.setState("animating", false);
-    }));
-    setup(disclosure, () => subscribe3(disclosure, ["open"], () => {
-      if (!disclosure.getState().animated) return;
-      disclosure.setState("animating", true);
-    }));
-    setup(disclosure, () => sync2(disclosure, ["open", "animating"], (state2) => {
-      disclosure.setState("mounted", state2.open || state2.animating);
-    }));
-    return {
-      ...disclosure,
-      disclosure: props.disclosure,
-      setOpen: (value) => disclosure.setState("open", value),
-      show: () => disclosure.setState("open", true),
-      hide: () => disclosure.setState("open", false),
-      toggle: () => disclosure.setState("open", (open2) => !open2),
-      stopAnimation: () => disclosure.setState("animating", false),
-      setContentElement: (value) => disclosure.setState("contentElement", value),
-      setDisclosureElement: (value) => disclosure.setState("disclosureElement", value)
-    };
-  }
-
-  // node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
-  function useDisclosureStoreProps(store4, update4, props) {
-    useUpdateEffect(update4, [props.store, props.disclosure]);
-    useStoreProps(store4, props, "open", "setOpen");
-    useStoreProps(store4, props, "mounted", "setMounted");
-    useStoreProps(store4, props, "animated");
-    return Object.assign(store4, { disclosure: props.disclosure });
-  }
-
-  // node_modules/@ariakit/react-components/dist/popover/popover-context.js
-  var ctx6 = createStoreContext([DialogContextProvider], [DialogScopedContextProvider]);
-  var usePopoverContext = ctx6.useContext;
-  var usePopoverScopedContext = ctx6.useScopedContext;
-  var usePopoverProviderContext = ctx6.useProviderContext;
-  var PopoverContextProvider = ctx6.ContextProvider;
-  var PopoverScopedContextProvider = ctx6.ScopedContextProvider;
-
-  // node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
-  var import_react25 = __toESM(require_react(), 1);
-  var ComboboxListRoleContext = (0, import_react25.createContext)(void 0);
-  var ctx7 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
-  var useComboboxContext = ctx7.useContext;
-  var useComboboxScopedContext = ctx7.useScopedContext;
-  var useComboboxProviderContext = ctx7.useProviderContext;
-  var ComboboxContextProvider = ctx7.ContextProvider;
-  var ComboboxScopedContextProvider = ctx7.ScopedContextProvider;
-  var ComboboxItemValueContext = (0, import_react25.createContext)(void 0);
-  var ComboboxItemCheckedContext = (0, import_react25.createContext)(false);
 
   // node_modules/@ariakit/components/dist/collection/collection-store.js
   function getCommonParent(items) {
@@ -33591,16 +32998,9 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
-  // node_modules/@ariakit/react-components/dist/collection/collection-store.js
-  function useCollectionStoreProps(store4, update4, props) {
-    useUpdateEffect(update4, [props.store]);
-    useStoreProps(store4, props, "items", "setItems");
-    return store4;
-  }
-
   // node_modules/@ariakit/components/dist/composite/composite-store.js
   var NULL_ITEM = { id: null };
-  function findFirstEnabledItem2(items, excludeId) {
+  function findFirstEnabledItem(items, excludeId) {
     return items.find((item) => {
       if (excludeId) return !item.disabled && item.id !== excludeId;
       return !item.disabled;
@@ -33615,6 +33015,16 @@ If there's a particular need for this, please submit a feature request at https:
   function getItemsInRow(items, rowId) {
     return items.filter((item) => item.rowId === rowId);
   }
+  function findEnabledItemId({ items, fromIndex, step, rowId, excludeId }) {
+    for (let i3 = fromIndex; i3 >= 0 && i3 < items.length; i3 += step) {
+      const item = items[i3];
+      if (!item) continue;
+      if (item.rowId !== rowId) continue;
+      if (item.disabled) continue;
+      if (excludeId != null && item.id === excludeId) continue;
+      return item.id;
+    }
+  }
   function flipItems(items, activeId, shouldInsertNullItem = false) {
     const index2 = items.findIndex((item) => item.id === activeId);
     return [
@@ -33623,7 +33033,7 @@ If there's a particular need for this, please submit a feature request at https:
       ...items.slice(0, index2)
     ];
   }
-  function groupItemsByRows2(items) {
+  function groupItemsByRows(items) {
     const rows = [];
     for (const item of items) {
       const row = rows.find((currentRow) => currentRow[0]?.rowId === item.rowId);
@@ -33649,14 +33059,14 @@ If there's a particular need for this, please submit a feature request at https:
     for (const row of rows) for (let i3 = 0; i3 < maxLength; i3 += 1) {
       const item = row[i3];
       if (!item || focusShift && item.disabled) {
-        const previousItem = i3 === 0 && focusShift ? findFirstEnabledItem2(row) : row[i3 - 1];
+        const previousItem = i3 === 0 && focusShift ? findFirstEnabledItem(row) : row[i3 - 1];
         row[i3] = previousItem && activeId !== previousItem.id && focusShift ? previousItem : createEmptyItem(previousItem?.rowId);
       }
     }
     return rows;
   }
   function verticalizeItems(items) {
-    const rows = groupItemsByRows2(items);
+    const rows = groupItemsByRows(items);
     const maxLength = getMaxRowLength(rows);
     const verticalized = [];
     for (let i3 = 0; i3 < maxLength; i3 += 1) for (const row of rows) {
@@ -33689,7 +33099,7 @@ If there's a particular need for this, please submit a feature request at https:
     setup(composite, () => sync2(composite, ["renderedItems", "activeId"], (state2) => {
       composite.setState("activeId", (activeId2) => {
         if (activeId2 !== void 0) return activeId2;
-        return findFirstEnabledItem2(state2.renderedItems)?.id;
+        return findFirstEnabledItem(state2.renderedItems)?.id;
       });
     }));
     const getNextId = (direction = "next", options = {}) => {
@@ -33699,12 +33109,37 @@ If there's a particular need for this, please submit a feature request at https:
       const isNextDirection = direction === "next" || direction === "down";
       const canReverse = isNextDirection ? rtl && !isVerticalDirection : !rtl || isVerticalDirection;
       const canShift = focusShift && !skip;
-      let items = !isVerticalDirection ? renderedItems : flatten2DArray(normalizeRows(groupItemsByRows2(renderedItems), activeId2, canShift));
+      if (!skip && !focusWrap && !includesBaseElement && activeId2 != null) {
+        if (!isVerticalDirection ? true : !canShift && !renderedItems.some((item) => item.rowId != null)) {
+          const activeIndex2 = renderedItems.findIndex((item) => item.id === activeId2);
+          const activeItem2 = renderedItems[activeIndex2];
+          if (activeItem2) {
+            const step = canReverse ? -1 : 1;
+            const nextId2 = findEnabledItemId({
+              items: renderedItems,
+              fromIndex: activeIndex2 + step,
+              step,
+              rowId: activeItem2.rowId,
+              excludeId: activeId2
+            });
+            if (nextId2 !== void 0) return nextId2;
+            if (!(focusLoop && (isVerticalDirection ? focusLoop !== "horizontal" : focusLoop !== "vertical"))) return void 0;
+            return findEnabledItemId({
+              items: renderedItems,
+              fromIndex: step === 1 ? 0 : renderedItems.length - 1,
+              step,
+              rowId: activeItem2.rowId,
+              excludeId: activeId2
+            });
+          }
+        }
+      }
+      let items = !isVerticalDirection ? renderedItems : flatten2DArray(normalizeRows(groupItemsByRows(renderedItems), activeId2, canShift));
       items = canReverse ? reverseArray(items) : items;
       items = isVerticalDirection ? verticalizeItems(items) : items;
-      if (activeId2 == null) return findFirstEnabledItem2(items)?.id;
+      if (activeId2 == null) return findFirstEnabledItem(items)?.id;
       const activeItem = items.find((item) => item.id === activeId2);
-      if (!activeItem) return findFirstEnabledItem2(items)?.id;
+      if (!activeItem) return findFirstEnabledItem(items)?.id;
       const isGrid2 = items.some((item) => item.rowId);
       const activeIndex = items.indexOf(activeItem);
       const nextItems = items.slice(activeIndex + 1);
@@ -33716,14 +33151,18 @@ If there's a particular need for this, please submit a feature request at https:
       const canLoop = focusLoop && (isVerticalDirection ? focusLoop !== "horizontal" : focusLoop !== "vertical");
       const canWrap = isGrid2 && focusWrap && (isVerticalDirection ? focusWrap !== "horizontal" : focusWrap !== "vertical");
       const hasNullItem = isNextDirection ? (!isGrid2 || isVerticalDirection) && canLoop && includesBaseElement : isVerticalDirection ? includesBaseElement : false;
-      if (canLoop) return findFirstEnabledItem2(flipItems(canWrap && !hasNullItem ? items : getItemsInRow(items, activeItem.rowId), activeId2, hasNullItem), activeId2)?.id;
+      if (canLoop) return findFirstEnabledItem(flipItems(canWrap && !hasNullItem ? items : getItemsInRow(items, activeItem.rowId), activeId2, hasNullItem), activeId2)?.id;
       if (canWrap) {
-        const nextItem2 = findFirstEnabledItem2(hasNullItem ? nextItemsInRow : nextItems, activeId2);
+        const nextItem2 = findFirstEnabledItem(hasNullItem ? nextItemsInRow : nextItems, activeId2);
         return hasNullItem ? nextItem2?.id || null : nextItem2?.id;
       }
-      const nextItem = findFirstEnabledItem2(nextItemsInRow, activeId2);
+      const nextItem = findFirstEnabledItem(nextItemsInRow, activeId2);
       if (!nextItem && hasNullItem) return null;
       return nextItem?.id;
+    };
+    const getNextIdFromOptions = (direction, options) => {
+      if (typeof options === "number") return getNextId(direction, { skip: options });
+      return getNextId(direction, options);
     };
     return {
       ...collection,
@@ -33735,25 +33174,907 @@ If there's a particular need for this, please submit a feature request at https:
         composite.setState("activeId", id);
         composite.setState("moves", (moves) => moves + 1);
       },
-      first: () => findFirstEnabledItem2(composite.getState().renderedItems)?.id,
-      last: () => findFirstEnabledItem2(reverseArray(composite.getState().renderedItems))?.id,
-      next: (options) => {
-        if (options !== void 0 && typeof options === "number") options = { skip: options };
-        return getNextId("next", options);
-      },
-      previous: (options) => {
-        if (options !== void 0 && typeof options === "number") options = { skip: options };
-        return getNextId("previous", options);
-      },
-      down: (options) => {
-        if (options !== void 0 && typeof options === "number") options = { skip: options };
-        return getNextId("down", options);
-      },
-      up: (options) => {
-        if (options !== void 0 && typeof options === "number") options = { skip: options };
-        return getNextId("up", options);
-      }
+      first: () => findFirstEnabledItem(composite.getState().renderedItems)?.id,
+      last: () => findFirstEnabledItem(reverseArray(composite.getState().renderedItems))?.id,
+      next: (options) => getNextIdFromOptions("next", options),
+      previous: (options) => getNextIdFromOptions("previous", options),
+      down: (options) => getNextIdFromOptions("down", options),
+      up: (options) => getNextIdFromOptions("up", options)
     };
+  }
+
+  // node_modules/@ariakit/react-components/dist/composite/utils.js
+  var findFirstEnabledItem2 = findFirstEnabledItem;
+  var groupItemsByRows2 = groupItemsByRows;
+  function getEnabledItem(store4, id) {
+    if (!id) return null;
+    return store4.item(id) || null;
+  }
+  function selectTextField(element, collapseToEnd = false) {
+    if (isTextField(element)) element.setSelectionRange(collapseToEnd ? element.value.length : 0, element.value.length);
+    else if (element.isContentEditable) {
+      const selection = getDocument(element).getSelection();
+      selection?.selectAllChildren(element);
+      if (collapseToEnd) selection?.collapseToEnd();
+    }
+  }
+  var FOCUS_SILENTLY = /* @__PURE__ */ Symbol("FOCUS_SILENTLY");
+  function focusSilently(element) {
+    element[FOCUS_SILENTLY] = true;
+    element.focus({ preventScroll: true });
+  }
+  function silentlyFocused(element) {
+    const isSilentlyFocused = element[FOCUS_SILENTLY];
+    delete element[FOCUS_SILENTLY];
+    return isSilentlyFocused;
+  }
+  function isItem(store4, element, exclude) {
+    if (!element) return false;
+    if (element === exclude) return false;
+    const item = store4.item(element.id);
+    if (!item) return false;
+    if (exclude && item.element === exclude) return false;
+    return true;
+  }
+
+  // node_modules/@ariakit/react-components/dist/composite/composite-item.js
+  var import_react21 = __toESM(require_react(), 1);
+  var import_jsx_runtime201 = __toESM(require_jsx_runtime(), 1);
+
+  // node_modules/@ariakit/react-store/dist/index.js
+  var React76 = __toESM(require_react(), 1);
+  var import_shim3 = __toESM(require_shim(), 1);
+  var noopSubscribe = () => () => {
+  };
+  function useStoreState(store4, keyOrSelector = identity) {
+    const storeSubscribe = React76.useCallback((callback) => {
+      if (!store4) return noopSubscribe();
+      return subscribe3(store4, null, callback);
+    }, [store4]);
+    const getSnapshot2 = () => {
+      const key = typeof keyOrSelector === "string" ? keyOrSelector : null;
+      const selector2 = typeof keyOrSelector === "function" ? keyOrSelector : null;
+      const state2 = store4?.getState();
+      if (selector2) return selector2(state2);
+      if (!state2) return;
+      if (!key) return;
+      if (!hasOwnProperty(state2, key)) return;
+      return state2[key];
+    };
+    return (0, import_shim3.useSyncExternalStore)(storeSubscribe, getSnapshot2, getSnapshot2);
+  }
+  function useStoreStateObject(store4, object) {
+    const objRef = React76.useRef({});
+    const storeSubscribe = React76.useCallback((callback) => {
+      if (!store4) return noopSubscribe();
+      return subscribe3(store4, null, callback);
+    }, [store4]);
+    const getSnapshot2 = () => {
+      const state2 = store4?.getState();
+      let updated = false;
+      const obj = objRef.current;
+      for (const prop in object) {
+        const keyOrSelector = object[prop];
+        if (typeof keyOrSelector === "function") {
+          const value = keyOrSelector(state2);
+          if (!Object.is(value, obj[prop])) {
+            obj[prop] = value;
+            updated = true;
+          }
+        }
+        if (typeof keyOrSelector === "string") {
+          if (!state2) continue;
+          if (!hasOwnProperty(state2, keyOrSelector)) continue;
+          const value = state2[keyOrSelector];
+          if (!Object.is(value, obj[prop])) {
+            obj[prop] = value;
+            updated = true;
+          }
+        }
+      }
+      if (updated) objRef.current = { ...obj };
+      return objRef.current;
+    };
+    return (0, import_shim3.useSyncExternalStore)(storeSubscribe, getSnapshot2, getSnapshot2);
+  }
+  function useStoreProps(store4, props, key, setKey) {
+    const value = hasOwnProperty(props, key) ? props[key] : void 0;
+    const propsRef = useLiveRef({
+      value,
+      setValue: setKey ? props[setKey] : void 0
+    });
+    useSafeLayoutEffect(() => {
+      return sync2(store4, [key], (state2, prev) => {
+        const { value: value2, setValue } = propsRef.current;
+        if (!setValue) return;
+        if (state2[key] === prev[key]) return;
+        if (state2[key] === value2) return;
+        setValue(state2[key]);
+      });
+    }, [store4, key]);
+    useSafeLayoutEffect(() => {
+      if (value === void 0) return;
+      store4.setState(key, value);
+      return batch(store4, [key], () => {
+        if (value === void 0) return;
+        store4.setState(key, value);
+      });
+    });
+  }
+  function useStore2(createStore2, props) {
+    const [store4, setStore] = React76.useState(() => createStore2(props));
+    useSafeLayoutEffect(() => init(store4), [store4]);
+    const useState159 = React76.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
+    return [React76.useMemo(() => ({
+      ...store4,
+      useState: useState159
+    }), [store4, useState159]), useEvent(() => {
+      setStore((store5) => createStore2({
+        ...props,
+        ...store5.getState()
+      }));
+    })];
+  }
+
+  // node_modules/@ariakit/react-components/dist/composite/composite-item.js
+  var TagName4 = "button";
+  function isEditableElement(element) {
+    if (isTextbox(element)) return true;
+    return element.tagName === "INPUT" && !isButton(element);
+  }
+  function getNextPageOffset(scrollingElement, pageUp = false) {
+    const height = scrollingElement.clientHeight;
+    const { top } = scrollingElement.getBoundingClientRect();
+    const pageSize = Math.max(height * 0.875, height - 40) * 1.5;
+    const pageOffset = pageUp ? height - pageSize + top : pageSize + top;
+    if (scrollingElement.tagName === "HTML") return pageOffset + scrollingElement.scrollTop;
+    return pageOffset;
+  }
+  function getItemOffset(itemElement, pageUp = false) {
+    const { top } = itemElement.getBoundingClientRect();
+    if (pageUp) return top + itemElement.clientHeight;
+    return top;
+  }
+  function findNextPageItemId(element, store4, next, pageUp = false) {
+    if (!store4) return;
+    if (!next) return;
+    const { renderedItems } = store4.getState();
+    const scrollingElement = getScrollingElement(element);
+    if (!scrollingElement) return;
+    const nextPageOffset = getNextPageOffset(scrollingElement, pageUp);
+    let id;
+    let prevDifference;
+    for (let i3 = 0; i3 < renderedItems.length; i3 += 1) {
+      const previousId = id;
+      id = next(i3);
+      if (!id) break;
+      if (id === previousId) continue;
+      const itemElement = getEnabledItem(store4, id)?.element;
+      if (!itemElement) continue;
+      const difference = getItemOffset(itemElement, pageUp) - nextPageOffset;
+      const absDifference = Math.abs(difference);
+      if (pageUp && difference <= 0 || !pageUp && difference >= 0) {
+        if (prevDifference !== void 0 && prevDifference < absDifference) id = previousId;
+        break;
+      }
+      prevDifference = absDifference;
+    }
+    return id;
+  }
+  function targetIsAnotherItem(event, store4) {
+    if (isSelfTarget(event)) return false;
+    return isItem(store4, event.target);
+  }
+  var useCompositeItem2 = createHook(function useCompositeItem3({ store: store4, rowId: rowIdProp, preventScrollOnKeyDown = false, moveOnKeyPress = true, tabbable: tabbable2 = false, getItem: getItemProp, "aria-setsize": ariaSetSizeProp, "aria-posinset": ariaPosInSetProp, ...props }) {
+    const context = useCompositeScopedContext();
+    store4 = store4 || context;
+    const id = useId5(props.id);
+    const ref = (0, import_react21.useRef)(null);
+    const row = (0, import_react21.useContext)(CompositeRowContext);
+    const trulyDisabled = disabledFromProps(props) && !props.accessibleWhenDisabled;
+    const shouldRegisterItem = props.shouldRegisterItem;
+    const getRowId = (state2) => {
+      if (rowIdProp) return rowIdProp;
+      if (!state2) return;
+      if (!row?.baseElement) return;
+      if (row.baseElement !== state2.baseElement) return;
+      return row.id;
+    };
+    const { rowId, baseElement, isActiveItem, ariaSetSize, ariaPosInSet, isTabbable } = useStoreStateObject(store4, {
+      rowId: getRowId,
+      baseElement(state2) {
+        return state2?.baseElement || void 0;
+      },
+      isActiveItem(state2) {
+        return !!state2 && state2.activeId === id;
+      },
+      ariaSetSize(state2) {
+        if (ariaSetSizeProp != null) return ariaSetSizeProp;
+        if (!state2) return;
+        if (!row?.ariaSetSize) return;
+        if (row.baseElement !== state2.baseElement) return;
+        return row.ariaSetSize;
+      },
+      ariaPosInSet(state2) {
+        if (ariaPosInSetProp != null) return ariaPosInSetProp;
+        if (!state2) return;
+        if (!row?.ariaPosInSet) return;
+        if (row.baseElement !== state2.baseElement) return;
+        const rowId2 = getRowId(state2);
+        const itemsInRow = state2.renderedItems.filter((item) => item.rowId === rowId2);
+        return row.ariaPosInSet + itemsInRow.findIndex((item) => item.id === id);
+      },
+      isTabbable(state2) {
+        if (!state2?.renderedItems.length) return true;
+        if (state2.virtualFocus) return false;
+        if (tabbable2) return true;
+        if (state2.activeId === null) return false;
+        const item = store4?.item(state2.activeId);
+        if (item?.disabled) return true;
+        if (!item?.element) return true;
+        return state2.activeId === id;
+      }
+    });
+    const getItem = (0, import_react21.useCallback)((item) => {
+      const nextItem = {
+        ...item,
+        id: id || item.id,
+        rowId,
+        disabled: trulyDisabled,
+        children: item.element?.textContent
+      };
+      if (getItemProp) return getItemProp(nextItem);
+      return nextItem;
+    }, [
+      id,
+      rowId,
+      trulyDisabled,
+      getItemProp
+    ]);
+    const onFocusProp = props.onFocus;
+    const hasFocusedComposite = (0, import_react21.useRef)(false);
+    const cancelScheduledFocusRedirectRef = (0, import_react21.useRef)(null);
+    const onFocus = useEvent((event) => {
+      onFocusProp?.(event);
+      if (event.defaultPrevented) return;
+      if (isPortalEvent(event)) return;
+      if (!id) return;
+      if (!store4) return;
+      if (targetIsAnotherItem(event, store4)) return;
+      const { virtualFocus, baseElement: baseElement2 } = store4.getState();
+      store4.setActiveId(id);
+      if (isTextbox(event.currentTarget)) selectTextField(event.currentTarget);
+      if (!virtualFocus) return;
+      if (!isSelfTarget(event)) return;
+      if (isEditableElement(event.currentTarget)) return;
+      const redirectFocusToBaseElement = (currentTarget2, relatedTarget2, baseElement3) => {
+        if (isSafari() && currentTarget2.hasAttribute("data-autofocus")) currentTarget2.scrollIntoView({
+          block: "nearest",
+          inline: "nearest"
+        });
+        hasFocusedComposite.current = true;
+        if (relatedTarget2 === baseElement3 || isItem(store4, relatedTarget2)) focusSilently(baseElement3);
+        else baseElement3.focus();
+      };
+      if (baseElement2?.isConnected) {
+        redirectFocusToBaseElement(event.currentTarget, event.relatedTarget, baseElement2);
+        return;
+      }
+      if (shouldRegisterItem === false) return;
+      const { currentTarget, relatedTarget } = event;
+      const cancelScheduledFocusRedirect = () => {
+        cancelScheduledFocusRedirectRef.current?.();
+        cancelScheduledFocusRedirectRef.current = null;
+      };
+      cancelScheduledFocusRedirect();
+      cancelScheduledFocusRedirectRef.current = subscribe3(store4, null, () => {
+        if (getActiveElement(currentTarget) !== currentTarget) {
+          cancelScheduledFocusRedirect();
+          return;
+        }
+        const state2 = store4.getState();
+        const nextBaseElement = state2.baseElement;
+        if (!nextBaseElement?.isConnected) return;
+        cancelScheduledFocusRedirect();
+        if (!state2.virtualFocus) return;
+        redirectFocusToBaseElement(currentTarget, relatedTarget, nextBaseElement);
+      });
+    });
+    const onBlurCaptureProp = props.onBlurCapture;
+    const onBlurCapture = useEvent((event) => {
+      onBlurCaptureProp?.(event);
+      if (event.defaultPrevented) return;
+      if (store4?.getState()?.virtualFocus && hasFocusedComposite.current) {
+        hasFocusedComposite.current = false;
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    });
+    const onKeyDownProp = props.onKeyDown;
+    const preventScrollOnKeyDownProp = useBooleanEvent(preventScrollOnKeyDown);
+    const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
+    const onKeyDown = useEvent((event) => {
+      onKeyDownProp?.(event);
+      if (event.defaultPrevented) return;
+      if (!isSelfTarget(event)) return;
+      if (!store4) return;
+      const { currentTarget } = event;
+      const state2 = store4.getState();
+      const isGrid2 = !!store4.item(id)?.rowId;
+      const isVertical = state2.orientation !== "horizontal";
+      const isHorizontal = state2.orientation !== "vertical";
+      const canHomeEnd = () => {
+        if (isGrid2) return true;
+        if (isHorizontal) return true;
+        if (!state2.baseElement) return true;
+        if (!isTextField(state2.baseElement)) return true;
+        return false;
+      };
+      const action = {
+        ArrowUp: (isGrid2 || isVertical) && store4.up,
+        ArrowRight: (isGrid2 || isHorizontal) && store4.next,
+        ArrowDown: (isGrid2 || isVertical) && store4.down,
+        ArrowLeft: (isGrid2 || isHorizontal) && store4.previous,
+        Home: () => {
+          if (!canHomeEnd()) return;
+          if (!isGrid2 || event.ctrlKey) return store4?.first();
+          return store4?.previous(-1);
+        },
+        End: () => {
+          if (!canHomeEnd()) return;
+          if (!isGrid2 || event.ctrlKey) return store4?.last();
+          return store4?.next(-1);
+        },
+        PageUp: () => {
+          return findNextPageItemId(currentTarget, store4, store4?.up, true);
+        },
+        PageDown: () => {
+          return findNextPageItemId(currentTarget, store4, store4?.down);
+        }
+      }[event.key];
+      if (action) {
+        if (isTextbox(currentTarget)) {
+          const selection = getTextboxSelection(currentTarget);
+          const isLeft = isHorizontal && event.key === "ArrowLeft";
+          const isRight = isHorizontal && event.key === "ArrowRight";
+          const isUp = isVertical && event.key === "ArrowUp";
+          const isDown = isVertical && event.key === "ArrowDown";
+          if (isRight || isDown) {
+            const { length: valueLength } = getTextboxValue(currentTarget);
+            if (selection.end !== valueLength) return;
+          } else if ((isLeft || isUp) && selection.start !== 0) return;
+        }
+        const nextId2 = action();
+        if (preventScrollOnKeyDownProp(event) || nextId2 !== void 0) {
+          if (!moveOnKeyPressProp(event)) return;
+          event.preventDefault();
+          store4.move(nextId2);
+        }
+      }
+    });
+    const providerValue = (0, import_react21.useMemo)(() => ({
+      id,
+      baseElement
+    }), [id, baseElement]);
+    props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(CompositeItemContext.Provider, {
+      value: providerValue,
+      children: element
+    }), [providerValue]);
+    props = {
+      "data-active-item": isActiveItem || void 0,
+      ...props,
+      id,
+      ref: useMergeRefs2(ref, props.ref),
+      tabIndex: isTabbable ? props.tabIndex : -1,
+      onFocus,
+      onBlurCapture,
+      onKeyDown
+    };
+    props = useCommand(props);
+    props = useCollectionItem({
+      store: store4,
+      ...props,
+      getItem,
+      shouldRegisterItem: id ? shouldRegisterItem : false
+    });
+    return removeUndefinedValues({
+      ...props,
+      "aria-setsize": ariaSetSize,
+      "aria-posinset": ariaPosInSet
+    });
+  });
+  var CompositeItem = memo3(forwardRef52(function CompositeItem2(props) {
+    return createElement5(TagName4, useCompositeItem2(props));
+  }));
+
+  // node_modules/@ariakit/react-components/dist/composite/composite.js
+  var import_react22 = __toESM(require_react(), 1);
+  var import_jsx_runtime202 = __toESM(require_jsx_runtime(), 1);
+  var TagName5 = "div";
+  function isGrid(items) {
+    return items.some((item) => !!item.rowId);
+  }
+  function isPrintableKey(event) {
+    const target = event.target;
+    if (target && !isTextField(target)) return false;
+    return event.key.length === 1 && !event.ctrlKey && !event.metaKey;
+  }
+  function isModifierKey(event) {
+    return event.key === "Shift" || event.key === "Control" || event.key === "Alt" || event.key === "Meta";
+  }
+  function useKeyboardEventProxy(store4, onKeyboardEvent, previousElementRef) {
+    return useEvent((event) => {
+      onKeyboardEvent?.(event);
+      if (event.defaultPrevented) return;
+      if (event.isPropagationStopped()) return;
+      if (!isSelfTarget(event)) return;
+      if (isModifierKey(event)) return;
+      if (isPrintableKey(event)) return;
+      const activeElement2 = getEnabledItem(store4, store4.getState().activeId)?.element;
+      if (!activeElement2) return;
+      const { view, ...eventInit } = event;
+      if (activeElement2 !== previousElementRef?.current) activeElement2.focus();
+      if (!fireKeyboardEvent(activeElement2, event.type, eventInit)) event.preventDefault();
+      if (event.currentTarget.contains(activeElement2)) event.stopPropagation();
+    });
+  }
+  function findFirstEnabledItemInTheLastRow(items) {
+    return findFirstEnabledItem2(flatten2DArray(reverseArray(groupItemsByRows2(items))));
+  }
+  function withBaseScrollPreserved(store4, callback) {
+    const { virtualFocus, baseElement } = store4.getState();
+    if (!virtualFocus || !baseElement || !isTextField(baseElement)) {
+      callback();
+      return;
+    }
+    const savedScrollLeft = baseElement.scrollLeft;
+    const savedScrollTop = baseElement.scrollTop;
+    callback();
+    baseElement.scrollLeft = savedScrollLeft;
+    baseElement.scrollTop = savedScrollTop;
+  }
+  function useScheduleFocus(store4) {
+    const [scheduled, setScheduled] = (0, import_react22.useState)(false);
+    const schedule2 = (0, import_react22.useCallback)(() => setScheduled(true), []);
+    const activeItem = useStoreState(store4, (state2) => scheduled ? getEnabledItem(store4, state2.activeId) : null);
+    (0, import_react22.useEffect)(() => {
+      const activeElement2 = activeItem?.element;
+      if (!scheduled) return;
+      if (!activeElement2) return;
+      setScheduled(false);
+      withBaseScrollPreserved(store4, () => {
+        activeElement2.focus({ preventScroll: true });
+      });
+    }, [
+      store4,
+      activeItem,
+      scheduled
+    ]);
+    return schedule2;
+  }
+  var CompositeFocusOnMove = memo3(function CompositeFocusOnMove2({ store: store4, focusOnMove, previousElementRef }) {
+    const moves = useStoreState(store4, "moves");
+    const baseElement = useStoreState(store4, "baseElement");
+    (0, import_react22.useEffect)(() => {
+      if (!moves) return;
+      if (!focusOnMove) return;
+      const { activeId } = store4.getState();
+      const itemElement = getEnabledItem(store4, activeId)?.element;
+      if (!itemElement) return;
+      withBaseScrollPreserved(store4, () => focusIntoView(itemElement));
+    }, [
+      store4,
+      moves,
+      focusOnMove
+    ]);
+    useSafeLayoutEffect(() => {
+      if (!moves) return;
+      if (!baseElement) return;
+      const { activeId } = store4.getState();
+      if (!(activeId === null)) return;
+      const previousElement = previousElementRef.current;
+      previousElementRef.current = null;
+      if (previousElement) fireBlurEvent(previousElement, { relatedTarget: baseElement });
+      if (!hasFocus(baseElement)) baseElement.focus();
+    }, [
+      store4,
+      moves,
+      baseElement
+    ]);
+    return null;
+  });
+  var useComposite = createHook(function useComposite2({ store: store4, composite = true, focusOnMove = composite, moveOnKeyPress = true, ...props }) {
+    const context = useCompositeProviderContext();
+    store4 = store4 || context;
+    invariant(store4, "Composite must receive a `store` prop or be wrapped in a CompositeProvider component.");
+    const ref = (0, import_react22.useRef)(null);
+    const previousElementRef = (0, import_react22.useRef)(null);
+    const scheduleFocus = useScheduleFocus(store4);
+    const [, setBaseElement] = useTransactionState(composite ? store4.setBaseElement : null);
+    const virtualFocus = useStoreState(store4, "virtualFocus");
+    const activeId = useStoreState(store4, (state2) => state2.virtualFocus ? state2.activeId : null);
+    useSafeLayoutEffect(() => {
+      if (!store4) return;
+      if (!composite) return;
+      if (!virtualFocus) return;
+      const previousElement = previousElementRef.current;
+      previousElementRef.current = null;
+      if (!previousElement) return;
+      const relatedTarget = getEnabledItem(store4, activeId)?.element || getActiveElement(previousElement);
+      if (relatedTarget === previousElement) return;
+      fireBlurEvent(previousElement, { relatedTarget });
+    }, [
+      store4,
+      activeId,
+      virtualFocus,
+      composite
+    ]);
+    const onKeyDownCapture = useKeyboardEventProxy(store4, props.onKeyDownCapture, previousElementRef);
+    const onKeyUpCapture = useKeyboardEventProxy(store4, props.onKeyUpCapture, previousElementRef);
+    const onFocusCaptureProp = props.onFocusCapture;
+    const onFocusCapture = useEvent((event) => {
+      onFocusCaptureProp?.(event);
+      if (event.defaultPrevented) return;
+      if (!store4) return;
+      const { virtualFocus: virtualFocus2 } = store4.getState();
+      if (!virtualFocus2) return;
+      const previousActiveElement = event.relatedTarget;
+      const isSilentlyFocused = silentlyFocused(event.currentTarget);
+      if (isSelfTarget(event) && isSilentlyFocused) {
+        event.stopPropagation();
+        previousElementRef.current = previousActiveElement;
+      }
+    });
+    const onFocusProp = props.onFocus;
+    const onFocus = useEvent((event) => {
+      onFocusProp?.(event);
+      if (event.defaultPrevented) return;
+      if (!composite) return;
+      if (!store4) return;
+      const { relatedTarget } = event;
+      const { virtualFocus: virtualFocus2 } = store4.getState();
+      if (virtualFocus2) {
+        if (isSelfTarget(event) && !isItem(store4, relatedTarget)) queueMicrotask(scheduleFocus);
+      } else if (isSelfTarget(event)) store4.setActiveId(null);
+    });
+    const onBlurCaptureProp = props.onBlurCapture;
+    const onBlurCapture = useEvent((event) => {
+      onBlurCaptureProp?.(event);
+      if (event.defaultPrevented) return;
+      if (!store4) return;
+      const { virtualFocus: virtualFocus2, activeId: activeId2 } = store4.getState();
+      if (!virtualFocus2) return;
+      const activeElement2 = getEnabledItem(store4, activeId2)?.element;
+      const nextActiveElement = event.relatedTarget;
+      const nextActiveElementIsItem = isItem(store4, nextActiveElement);
+      const previousElement = previousElementRef.current;
+      previousElementRef.current = null;
+      if (isSelfTarget(event) && nextActiveElementIsItem) {
+        if (nextActiveElement === activeElement2) {
+          if (previousElement && previousElement !== nextActiveElement) fireBlurEvent(previousElement, event);
+        } else if (activeElement2) fireBlurEvent(activeElement2, event);
+        else if (previousElement) fireBlurEvent(previousElement, event);
+        event.stopPropagation();
+      } else if (!isItem(store4, event.target) && activeElement2) fireBlurEvent(activeElement2, event);
+    });
+    const onKeyDownProp = props.onKeyDown;
+    const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
+    const onKeyDown = useEvent((event) => {
+      onKeyDownProp?.(event);
+      if (event.nativeEvent.isComposing) return;
+      if (event.defaultPrevented) return;
+      if (!store4) return;
+      if (!isSelfTarget(event)) return;
+      const { orientation, renderedItems, activeId: activeId2, rtl } = store4.getState();
+      if (getEnabledItem(store4, activeId2)?.element?.isConnected) return;
+      const isVertical = orientation !== "horizontal";
+      const isHorizontal = orientation !== "vertical";
+      const grid = isGrid(renderedItems);
+      if ((event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "Home" || event.key === "End") && isTextField(event.currentTarget)) return;
+      const up = () => {
+        if (grid) return findFirstEnabledItemInTheLastRow(renderedItems)?.id;
+        return store4?.last();
+      };
+      const action = {
+        ArrowUp: (grid || isVertical) && up,
+        ArrowRight: (grid || isHorizontal) && (rtl ? store4.last : store4.first),
+        ArrowDown: (grid || isVertical) && store4.first,
+        ArrowLeft: (grid || isHorizontal) && (rtl ? store4.first : store4.last),
+        Home: store4.first,
+        End: store4.last,
+        PageUp: store4.first,
+        PageDown: store4.last
+      }[event.key];
+      if (action) {
+        const id = action();
+        if (id !== void 0) {
+          if (!moveOnKeyPressProp(event)) return;
+          event.preventDefault();
+          store4.move(id);
+        }
+      }
+    });
+    props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime202.jsxs)(CompositeScopedContextProvider, {
+      value: store4,
+      children: [element, composite && /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(CompositeFocusOnMove, {
+        store: store4,
+        focusOnMove,
+        previousElementRef
+      })]
+    }), [
+      store4,
+      composite,
+      focusOnMove
+    ]);
+    props = {
+      "aria-activedescendant": useStoreState(store4, (state2) => {
+        if (!store4) return;
+        if (!composite) return;
+        if (!state2.virtualFocus) return;
+        return getEnabledItem(store4, state2.activeId)?.id;
+      }),
+      ...props,
+      ref: useMergeRefs2(ref, setBaseElement, props.ref),
+      onKeyDownCapture,
+      onKeyUpCapture,
+      onFocusCapture,
+      onFocus,
+      onBlurCapture,
+      onKeyDown
+    };
+    props = useFocusable({
+      focusable: useStoreState(store4, (state2) => composite && (state2.virtualFocus || state2.activeId === null)),
+      ...props
+    });
+    return props;
+  });
+  var Composite6 = forwardRef52(function Composite7(props) {
+    return createElement5(TagName5, useComposite(props));
+  });
+
+  // node_modules/@ariakit/react-components/dist/disclosure/disclosure-context.js
+  var ctx4 = createStoreContext();
+  var useDisclosureContext = ctx4.useContext;
+  var useDisclosureScopedContext = ctx4.useScopedContext;
+  var useDisclosureProviderContext = ctx4.useProviderContext;
+  var DisclosureContextProvider = ctx4.ContextProvider;
+  var DisclosureScopedContextProvider = ctx4.ScopedContextProvider;
+
+  // node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
+  var import_react23 = __toESM(require_react(), 1);
+  var ctx5 = createStoreContext([DisclosureContextProvider], [DisclosureScopedContextProvider]);
+  var useDialogContext = ctx5.useContext;
+  var useDialogScopedContext = ctx5.useScopedContext;
+  var useDialogProviderContext = ctx5.useProviderContext;
+  var DialogContextProvider = ctx5.ContextProvider;
+  var DialogScopedContextProvider = ctx5.ScopedContextProvider;
+  var DialogHeadingContext = (0, import_react23.createContext)(void 0);
+  var DialogDescriptionContext = (0, import_react23.createContext)(void 0);
+
+  // node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
+  var import_react24 = __toESM(require_react(), 1);
+  var import_jsx_runtime203 = __toESM(require_jsx_runtime(), 1);
+  var import_react_dom5 = __toESM(require_react_dom(), 1);
+  var TagName6 = "div";
+  function afterTimeout(timeoutMs, cb) {
+    const timeoutId = setTimeout(cb, timeoutMs);
+    return () => clearTimeout(timeoutId);
+  }
+  function parseCSSTime(time) {
+    const value = time?.trim() || "0s";
+    const multiplier = value.endsWith("ms") ? 1 : 1e3;
+    const parsed = Number.parseFloat(value) * multiplier;
+    return Number.isNaN(parsed) ? 0 : parsed;
+  }
+  function getEndTime(names, delays, durations) {
+    const nameList = names.split(",");
+    const delayList = delays.split(",");
+    const durationList = durations.split(",");
+    let endTime = 0;
+    for (const [index2, name2] of nameList.entries()) {
+      if (name2.trim() === "none") continue;
+      const delay = parseCSSTime(delayList[index2 % delayList.length]);
+      const duration = parseCSSTime(durationList[index2 % durationList.length]);
+      endTime = Math.max(endTime, delay + duration);
+    }
+    return endTime;
+  }
+  function getElementEndTime(element) {
+    const { transitionProperty, transitionDuration, transitionDelay, animationName, animationDuration, animationDelay } = getComputedStyle(element);
+    return Math.max(getEndTime(transitionProperty, transitionDelay, transitionDuration), getEndTime(animationName, animationDelay, animationDuration));
+  }
+  function isHidden(mounted, hidden, alwaysVisible) {
+    return !alwaysVisible && hidden !== false && (!mounted || !!hidden);
+  }
+  var useDisclosureContent = createHook(function useDisclosureContent2({ store: store4, alwaysVisible, unstable_otherElementRef: otherElementRef, ...props }) {
+    const context = useDisclosureProviderContext();
+    store4 = store4 || context;
+    invariant(store4, "DisclosureContent must receive a `store` prop or be wrapped in a DisclosureProvider component.");
+    const ref = (0, import_react24.useRef)(null);
+    const id = useId5(props.id);
+    const [transition, setTransition] = (0, import_react24.useState)(null);
+    const open = useStoreState(store4, "open");
+    const mounted = useStoreState(store4, "mounted");
+    const animated2 = useStoreState(store4, "animated");
+    const contentElement = useStoreState(store4, "contentElement");
+    const otherElement = useStoreState(store4.disclosure, "contentElement");
+    const hasClosedRef = (0, import_react24.useRef)(false);
+    useSafeLayoutEffect(() => {
+      if (!ref.current) return;
+      store4?.setContentElement(ref.current);
+    }, [store4]);
+    useSafeLayoutEffect(() => {
+      let previousAnimated;
+      store4?.setState("animated", (animated3) => {
+        previousAnimated = animated3;
+        return true;
+      });
+      return () => {
+        if (previousAnimated === void 0) return;
+        store4?.setState("animated", previousAnimated);
+      };
+    }, [store4]);
+    useSafeLayoutEffect(() => {
+      if (!animated2) {
+        if (!open) {
+          hasClosedRef.current = true;
+          setTransition(null);
+        } else if (hasClosedRef.current) {
+          hasClosedRef.current = false;
+          setTransition("enter");
+        }
+        return;
+      }
+      if (!contentElement?.isConnected) {
+        setTransition(null);
+        return;
+      }
+      return afterPaint(() => {
+        setTransition(open ? "enter" : mounted ? "leave" : null);
+      });
+    }, [
+      animated2,
+      contentElement,
+      open,
+      mounted
+    ]);
+    useSafeLayoutEffect(() => {
+      if (!store4) return;
+      if (!animated2) return;
+      if (!transition) return;
+      if (!contentElement) return;
+      const stopAnimation = () => store4?.setState("animating", false);
+      const stopAnimationSync = () => (0, import_react_dom5.flushSync)(stopAnimation);
+      if (transition === "leave" && open) return;
+      if (transition === "enter" && !open) return;
+      if (typeof animated2 === "number") return afterTimeout(animated2, stopAnimationSync);
+      const elements2 = [contentElement];
+      if (otherElement) elements2.push(otherElement);
+      const relatedElement = otherElementRef?.current;
+      if (relatedElement) elements2.push(relatedElement);
+      const timeout = Math.max(...elements2.map(getElementEndTime));
+      if (!timeout) {
+        if (transition === "enter") store4.setState("animated", false);
+        stopAnimation();
+        return;
+      }
+      return afterTimeout(Math.max(timeout - 1e3 / 60, 0), stopAnimationSync);
+    }, [
+      store4,
+      animated2,
+      contentElement,
+      otherElement,
+      otherElementRef,
+      open,
+      transition
+    ]);
+    props = useWrapElement(props, (element) => /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(DialogScopedContextProvider, {
+      value: store4,
+      children: element
+    }), [store4]);
+    const hidden = isHidden(mounted, props.hidden, alwaysVisible);
+    const styleProp = props.style;
+    const style = (0, import_react24.useMemo)(() => {
+      if (hidden) return {
+        ...styleProp,
+        display: "none"
+      };
+      return styleProp;
+    }, [hidden, styleProp]);
+    props = {
+      "data-open": open || void 0,
+      "data-enter": transition === "enter" || void 0,
+      "data-leave": transition === "leave" || void 0,
+      hidden,
+      ...props,
+      id,
+      ref: useMergeRefs2(id ? store4.setContentElement : null, ref, props.ref),
+      style
+    };
+    return removeUndefinedValues(props);
+  });
+  var DisclosureContentImpl = forwardRef52(function DisclosureContentImpl2(props) {
+    return createElement5(TagName6, useDisclosureContent(props));
+  });
+  var DisclosureContent = forwardRef52(function DisclosureContent2({ unmountOnHide, ...props }) {
+    const context = useDisclosureProviderContext();
+    if (useStoreState(props.store || context, (state2) => !unmountOnHide || state2?.mounted) === false) return null;
+    return /* @__PURE__ */ (0, import_jsx_runtime203.jsx)(DisclosureContentImpl, { ...props });
+  });
+
+  // node_modules/@ariakit/components/dist/disclosure/disclosure-store.js
+  function createDisclosureStore(props = {}) {
+    const store4 = mergeStore(props.store, omit2(props.disclosure, ["contentElement", "disclosureElement"]));
+    throwOnConflictingProps(props, store4);
+    const syncState = store4?.getState();
+    const open = defaultValue(props.open, syncState?.open, props.defaultOpen, false);
+    const animated2 = defaultValue(props.animated, syncState?.animated, false);
+    const disclosure = createStore({
+      open,
+      animated: animated2,
+      animating: !!animated2 && open,
+      mounted: open,
+      contentElement: defaultValue(syncState?.contentElement, null),
+      disclosureElement: defaultValue(syncState?.disclosureElement, null)
+    }, store4);
+    setup(disclosure, () => sync2(disclosure, ["animated", "animating"], (state2) => {
+      if (state2.animated) return;
+      disclosure.setState("animating", false);
+    }));
+    setup(disclosure, () => subscribe3(disclosure, ["open"], () => {
+      if (!disclosure.getState().animated) return;
+      disclosure.setState("animating", true);
+    }));
+    setup(disclosure, () => sync2(disclosure, ["open", "animating"], (state2) => {
+      disclosure.setState("mounted", state2.open || state2.animating);
+    }));
+    return {
+      ...disclosure,
+      disclosure: props.disclosure,
+      setOpen: (value) => disclosure.setState("open", value),
+      show: () => disclosure.setState("open", true),
+      hide: () => disclosure.setState("open", false),
+      toggle: () => disclosure.setState("open", (open2) => !open2),
+      stopAnimation: () => disclosure.setState("animating", false),
+      setContentElement: (value) => disclosure.setState("contentElement", value),
+      setDisclosureElement: (value) => disclosure.setState("disclosureElement", value)
+    };
+  }
+
+  // node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
+  function useDisclosureStoreProps(store4, update4, props) {
+    useUpdateEffect(update4, [props.store, props.disclosure]);
+    useStoreProps(store4, props, "open", "setOpen");
+    useStoreProps(store4, props, "mounted", "setMounted");
+    useStoreProps(store4, props, "animated");
+    return Object.assign(store4, { disclosure: props.disclosure });
+  }
+
+  // node_modules/@ariakit/react-components/dist/popover/popover-context.js
+  var ctx6 = createStoreContext([DialogContextProvider], [DialogScopedContextProvider]);
+  var usePopoverContext = ctx6.useContext;
+  var usePopoverScopedContext = ctx6.useScopedContext;
+  var usePopoverProviderContext = ctx6.useProviderContext;
+  var PopoverContextProvider = ctx6.ContextProvider;
+  var PopoverScopedContextProvider = ctx6.ScopedContextProvider;
+
+  // node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
+  var import_react25 = __toESM(require_react(), 1);
+  var ComboboxListRoleContext = (0, import_react25.createContext)(void 0);
+  var ctx7 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
+  var useComboboxContext = ctx7.useContext;
+  var useComboboxScopedContext = ctx7.useScopedContext;
+  var useComboboxProviderContext = ctx7.useProviderContext;
+  var ComboboxContextProvider = ctx7.ContextProvider;
+  var ComboboxScopedContextProvider = ctx7.ScopedContextProvider;
+  var ComboboxItemValueContext = (0, import_react25.createContext)(void 0);
+  var ComboboxItemCheckedContext = (0, import_react25.createContext)(false);
+
+  // node_modules/@ariakit/react-components/dist/collection/collection-store.js
+  function useCollectionStoreProps(store4, update4, props) {
+    useUpdateEffect(update4, [props.store]);
+    useStoreProps(store4, props, "items", "setItems");
+    return store4;
   }
 
   // node_modules/@ariakit/react-components/dist/composite/composite-store.js
@@ -33919,11 +34240,11 @@ If there's a particular need for this, please submit a feature request at https:
   function hasCompletionString(value, activeValue) {
     if (!activeValue) return false;
     if (value == null) return false;
-    value = normalizeString(value);
-    return activeValue.length > value.length && activeValue.toLowerCase().indexOf(value.toLowerCase()) === 0;
-  }
-  function isInputEvent(event) {
-    return event.type === "input";
+    const normalizedValue = normalizeString(value);
+    const normalizedActiveValue = normalizeString(activeValue);
+    if (normalizedValue.length !== value.length) return false;
+    if (normalizedActiveValue.length !== activeValue.length) return false;
+    return normalizedActiveValue.length > normalizedValue.length && normalizedActiveValue.toLowerCase().startsWith(normalizedValue.toLowerCase());
   }
   function isAriaAutoCompleteValue(value) {
     return value === "inline" || value === "list" || value === "both" || value === "none";
@@ -34025,7 +34346,6 @@ If there's a particular need for this, please submit a feature request at https:
       autoSelect,
       storeValue
     ]);
-    const scrollingElementRef = (0, import_react27.useRef)(null);
     const getAutoSelectIdProp = useEvent(getAutoSelectId);
     const autoSelectIdRef = (0, import_react27.useRef)(null);
     const autoSelectMovedRef = (0, import_react27.useRef)(void 0);
@@ -34036,7 +34356,6 @@ If there's a particular need for this, please submit a feature request at https:
       if (!contentElement) return;
       const scrollingElement = getScrollingElement(contentElement);
       if (!scrollingElement) return;
-      scrollingElementRef.current = scrollingElement;
       const onUserScroll = () => {
         canAutoSelectRef.current = false;
         userScrolledRef.current = true;
@@ -34175,12 +34494,12 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
       if (setValueOnChangeProp(event)) {
-        const isSameValue = value2 === store4.getState().value;
+        const isSameValue2 = value2 === store4.getState().value;
         store4.setValue(value2);
         queueMicrotask(() => {
           setSelectionRange(currentTarget, selectionStart, selectionEnd);
         });
-        if (inline4 && autoSelect && isSameValue) forceValueUpdate();
+        if (inline4 && autoSelect && isSameValue2) forceValueUpdate();
       }
       if (showOnChangeProp(event)) store4.show();
       if (!autoSelect || !canAutoSelectRef.current) store4.setActiveId(null);
@@ -34236,7 +34555,6 @@ If there's a particular need for this, please submit a feature request at https:
     const onBlur = useEvent((event) => {
       canAutoSelectRef.current = false;
       onBlurProp?.(event);
-      if (event.defaultPrevented) return;
     });
     const id = useId5(props.id);
     const ariaAutoComplete = isAriaAutoCompleteValue(autoComplete) ? autoComplete : void 0;
@@ -34292,11 +34610,7 @@ If there's a particular need for this, please submit a feature request at https:
     return storeValue === itemValue;
   }
   function getItemRole(popupRole) {
-    return {
-      menu: "menuitem",
-      listbox: "option",
-      tree: "treeitem"
-    }[popupRole] ?? "option";
+    return getItemRoleByPopupRole(popupRole) ?? "option";
   }
   var useComboboxItem = createHook(function useComboboxItem2({ store: store4, value, hideOnClick, setValueOnClick, selectValueOnClick = true, resetValueOnSelect, focusOnHover = false, moveOnKeyPress = true, getItem: getItemProp, ...props }) {
     const context = useComboboxScopedContext();
@@ -34351,7 +34665,10 @@ If there's a particular need for this, please submit a feature request at https:
       const baseElement = store4?.getState().baseElement;
       if (!baseElement) return;
       if (hasFocus(baseElement)) return;
-      if (event.key.length === 1 || event.key === "Backspace" || event.key === "Delete") {
+      const printable = event.key.length === 1 && !event.ctrlKey && !event.metaKey;
+      const paste = (!isApple() ? event.ctrlKey : event.metaKey) && event.key.toLowerCase() === "v";
+      const deleteKey = event.key === "Backspace" || event.key === "Delete";
+      if (printable || paste || deleteKey) {
         queueMicrotask(() => baseElement.focus());
         if (isTextField(baseElement)) store4?.setValue(baseElement.value);
       }
@@ -34407,35 +34724,78 @@ If there's a particular need for this, please submit a feature request at https:
   function getOffsets(string, values) {
     const offsets = [];
     for (const value of values) {
+      if (!value) continue;
       let pos = 0;
       const length2 = value.length;
-      while (string.indexOf(value, pos) !== -1) {
-        const index2 = string.indexOf(value, pos);
-        if (index2 !== -1) offsets.push([index2, length2]);
+      let index2 = string.indexOf(value, pos);
+      while (index2 !== -1) {
+        offsets.push([index2, length2]);
         pos = index2 + 1;
+        index2 = string.indexOf(value, pos);
       }
     }
     return offsets;
   }
-  function filterOverlappingOffsets(offsets) {
-    return offsets.filter(([offset4, length2], i3, arr) => {
-      return !arr.some(([o4, l3], j2) => j2 !== i3 && o4 <= offset4 && o4 + l3 >= offset4 + length2);
-    });
+  function mergeOverlappingOffsets(offsets) {
+    offsets.sort(([a3], [b3]) => a3 - b3);
+    const merged = [];
+    for (const [offset4, length2] of offsets) {
+      const last = merged[merged.length - 1];
+      if (last && offset4 < last[0] + last[1]) last[1] = Math.max(last[1], offset4 + length2 - last[0]);
+      else merged.push([offset4, length2]);
+    }
+    return merged;
   }
-  function sortOffsets(offsets) {
-    return offsets.sort(([a3], [b3]) => a3 - b3);
+  function getNormalizedIndexes(itemValue) {
+    const starts = [];
+    const ends = [];
+    let index2 = 0;
+    for (const char of itemValue) {
+      const normalizedLength = normalizeValue2(char).length;
+      for (let i3 = 0; i3 < normalizedLength; i3 += 1) {
+        starts.push(i3 === 0 ? index2 : -1);
+        ends.push(index2);
+      }
+      index2 += char.length;
+    }
+    starts.push(itemValue.length);
+    ends.push(itemValue.length);
+    let nextBoundary = itemValue.length;
+    for (let i3 = starts.length - 1; i3 >= 0; i3 -= 1) {
+      const start2 = starts[i3];
+      if (start2 == null) continue;
+      if (start2 === -1) starts[i3] = nextBoundary;
+      else nextBoundary = start2;
+    }
+    return {
+      starts,
+      ends
+    };
+  }
+  function toOriginalOffsets(itemValue, normalizedOffsets) {
+    if (!normalizedOffsets.length) return normalizedOffsets;
+    const { starts, ends } = getNormalizedIndexes(itemValue);
+    const offsets = [];
+    for (const [normalizedOffset, normalizedLength] of normalizedOffsets) {
+      const start2 = starts[normalizedOffset];
+      const end = ends[normalizedOffset + normalizedLength];
+      if (start2 == null || end == null) continue;
+      if (end <= start2) continue;
+      offsets.push([start2, end - start2]);
+    }
+    return offsets;
   }
   function splitValue(itemValue, userValue) {
     if (!itemValue) return itemValue;
     if (!userValue) return itemValue;
-    const userValues = toArray2(userValue).filter(Boolean).map(normalizeValue2);
+    const userValues = toArray2(userValue).map(normalizeValue2);
     const parts = [];
     const span = (value, autocomplete = false) => /* @__PURE__ */ (0, import_jsx_runtime205.jsx)("span", {
       "data-autocomplete-value": autocomplete ? "" : void 0,
       "data-user-value": autocomplete ? void 0 : "",
       children: value
     }, parts.length);
-    const offsets = sortOffsets(filterOverlappingOffsets(getOffsets(normalizeValue2(itemValue), new Set(userValues))));
+    const offsets = toOriginalOffsets(itemValue, mergeOverlappingOffsets(getOffsets(normalizeValue2(itemValue), new Set(userValues))));
     const firstEntry = offsets[0];
     if (!firstEntry) {
       parts.push(span(itemValue, true));
