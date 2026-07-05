@@ -7944,6 +7944,7 @@ var wp;
   );
   var isNavigationPostEditorKey = /* @__PURE__ */ Symbol("isNavigationPostEditor");
   var mediaUploadOnSuccessKey = /* @__PURE__ */ Symbol("mediaUploadOnSuccess");
+  var mediaSideloadFromUrlKey = /* @__PURE__ */ Symbol("mediaSideloadFromUrl");
   var openMediaEditorModalKey = /* @__PURE__ */ Symbol("openMediaEditorModal");
 
   // packages/block-editor/build-module/store/reducer.mjs
@@ -96551,6 +96552,7 @@ var wp;
     isNavigationOverlayContextKey,
     isNavigationPostEditorKey,
     mediaUploadOnSuccessKey,
+    mediaSideloadFromUrlKey,
     openMediaEditorModalKey,
     useBlockElement,
     useBlockElementRef,
