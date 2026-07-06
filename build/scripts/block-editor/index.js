@@ -74065,15 +74065,12 @@ var wp;
     "@tablet": (0, import_i18n207.__)("Tablet"),
     "@mobile": (0, import_i18n207.__)("Mobile")
   };
-  var DEVICE_STATE_OPTIONS = [
-    { value: "default", label: (0, import_i18n207.__)("Desktop") },
-    ...Object.entries(RESPONSIVE_STATE_LABELS).map(
-      ([value, label]) => ({
-        value,
-        label
-      })
-    )
-  ];
+  var DEVICE_STATE_OPTIONS = Object.entries(RESPONSIVE_STATE_LABELS).map(
+    ([value, label]) => ({
+      value,
+      label
+    })
+  );
   var VALID_BLOCK_PSEUDO_STATES = {
     "core/button": [":hover", ":focus", ":focus-visible", ":active"],
     "core/navigation-link": [":hover", ":focus", ":focus-visible", ":active"]
@@ -74426,13 +74423,12 @@ var wp;
     blockEditingMode,
     selectedBlockStyleState: selectedBlockStyleState2,
     showStateOnCanvas,
-    isResponsiveEditing: isResponsiveEditing3,
-    isBlockStyleStateSelected
+    isResponsiveEditing: isResponsiveEditing3
   }) => {
     const listViewRef = (0, import_element249.useRef)(null);
     const hasMultipleTabs = availableTabs?.length > 1;
     const hasPseudoState = hasPseudoBlockStyleState(selectedBlockStyleState2);
-    const isEditingStyleState = isBlockStyleStateSelected || isResponsiveEditing3;
+    const isEditingStyleState = hasViewportBlockStyleState(selectedBlockStyleState2) && isResponsiveEditing3 || hasPseudoBlockStyleState(selectedBlockStyleState2);
     const hasParentChildBlockCards = editedContentOnlySection2 && editedContentOnlySection2 !== renderedBlockClientId;
     const parentBlockInformation = useBlockDisplayInformation(
       editedContentOnlySection2
