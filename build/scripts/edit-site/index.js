@@ -16861,9 +16861,8 @@ var wp;
       previewingTheme?.name?.rendered ?? "..."
     ) });
     const activateTheme = useActivateTheme();
-    const onSave = async (values) => {
+    const onSave = async () => {
       await activateTheme();
-      return values;
     };
     return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
       EntitiesSavedStatesExtensible,

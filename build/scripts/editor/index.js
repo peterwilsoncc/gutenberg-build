@@ -21521,14 +21521,14 @@ var wp;
     }
     _get() {
       let transform = "";
-      let identity5 = true;
+      let identity4 = true;
       each(this.inputs, (input, i3) => {
         const arg1 = getFluidValue(input[0]);
         const [t4, id] = this.transforms[i3](is.arr(arg1) ? arg1 : input.map(getFluidValue));
         transform += " " + t4;
-        identity5 = identity5 && id;
+        identity4 = identity4 && id;
       });
-      return identity5 ? "none" : transform;
+      return identity4 ? "none" : transform;
     }
     observerAdded(count) {
       if (count == 1) each(this.inputs, (input) => each(input, (value) => hasFluidValue(value) && addFluidObserver(value, this)));
@@ -76619,8 +76619,11 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }
     registry.dispatch(import_block_editor35.store).__unstableMarkLastChangeAsPersistent();
-    Promise.all(pendingSavedRecords).then((values) => {
-      return onSave ? onSave(values) : values;
+    Promise.all(pendingSavedRecords).then(async (values) => {
+      if (onSave) {
+        await onSave();
+      }
+      return values;
     }).then((values) => {
       if (values.some((value) => typeof value === "undefined")) {
         registry.dispatch(import_notices19.store).createErrorNotice((0, import_i18n203.__)("Saving failed."));
@@ -80535,9 +80538,6 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/entities-saved-states/index.mjs
   var import_jsx_runtime393 = __toESM(require_jsx_runtime(), 1);
-  function identity3(values) {
-    return values;
-  }
   function EntitiesSavedStates({
     close,
     renderDialog,
@@ -80557,7 +80557,7 @@ If there's a particular need for this, please submit a feature request at https:
   function EntitiesSavedStatesExtensible({
     additionalPrompt = void 0,
     close,
-    onSave = identity3,
+    onSave = void 0,
     saveEnabled: saveEnabledProp = void 0,
     saveLabel = (0, import_i18n219.__)("Save"),
     renderDialog,
@@ -86557,8 +86557,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data173 = __toESM(require_data(), 1);
   var import_core_data101 = __toESM(require_core_data(), 1);
   var import_jsx_runtime460 = __toESM(require_jsx_runtime(), 1);
-  var identity4 = (x2) => x2;
-  function PostTaxonomies({ taxonomyWrapper = identity4 }) {
+  var identity3 = (x2) => x2;
+  function PostTaxonomies({ taxonomyWrapper = identity3 }) {
     const { postType: postType2, taxonomies } = (0, import_data173.useSelect)((select8) => {
       return {
         postType: select8(store).getCurrentPostType(),
