@@ -3165,7 +3165,7 @@ var wp;
   });
   var import_blocks133 = __toESM(require_blocks(), 1);
   var import_compose62 = __toESM(require_compose(), 1);
-  var import_data175 = __toESM(require_data(), 1);
+  var import_data176 = __toESM(require_data(), 1);
   var import_block_editor303 = __toESM(require_block_editor(), 1);
   var import_server_side_render7 = __toESM(require_server_side_render(), 1);
   var import_i18n284 = __toESM(require_i18n(), 1);
@@ -11594,51 +11594,45 @@ var wp;
 
   // packages/block-library/build-module/freeform/edit.mjs
   var import_block_editor30 = __toESM(require_block_editor(), 1);
-  var import_data15 = __toESM(require_data(), 1);
+  var import_data16 = __toESM(require_data(), 1);
   var import_components15 = __toESM(require_components(), 1);
   var import_element15 = __toESM(require_element(), 1);
   var import_i18n22 = __toESM(require_i18n(), 1);
 
-  // packages/block-library/build-module/freeform/migration-notice.mjs
-  var import_block_editor28 = __toESM(require_block_editor(), 1);
-  var import_components13 = __toESM(require_components(), 1);
-  var import_blocks12 = __toESM(require_blocks(), 1);
+  // packages/block-library/build-module/freeform/convert-to-blocks-button.mjs
   var import_i18n20 = __toESM(require_i18n(), 1);
+  var import_components13 = __toESM(require_components(), 1);
+  var import_data14 = __toESM(require_data(), 1);
+  var import_blocks12 = __toESM(require_blocks(), 1);
+  var import_block_editor28 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
-  function MigrationNotice({ content, onReplace }) {
-    const actions = [
-      /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
-        import_components13.Button,
-        {
-          __next40pxDefaultSize: true,
-          variant: "primary",
-          onClick: () => onReplace((0, import_blocks12.rawHandler)({ HTML: content })),
-          children: (0, import_i18n20.__)("Convert to blocks")
-        },
-        "convert-to-blocks"
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
-        import_components13.Button,
-        {
-          __next40pxDefaultSize: true,
-          variant: "secondary",
-          onClick: () => onReplace((0, import_blocks12.createBlock)("core/html", {}, [], [content])),
-          children: (0, import_i18n20.__)("Convert to HTML")
-        },
-        "convert-to-html"
-      )
-    ];
-    return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(import_block_editor28.Warning, { actions, children: (0, import_i18n20.__)(
-      "The Classic block is being phased out. Convert this content to blocks for the best editing experience, or move it to a Custom HTML block to preserve the original markup."
-    ) });
-  }
+  var ConvertToBlocksButton = ({ clientId }) => {
+    const { replaceBlocks } = (0, import_data14.useDispatch)(import_block_editor28.store);
+    const block = (0, import_data14.useSelect)(
+      (select9) => {
+        return select9(import_block_editor28.store).getBlock(clientId);
+      },
+      [clientId]
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime185.jsx)(
+      import_components13.ToolbarButton,
+      {
+        onClick: () => replaceBlocks(
+          block.clientId,
+          (0, import_blocks12.rawHandler)({ HTML: (0, import_blocks12.serialize)(block) })
+        ),
+        children: (0, import_i18n20.__)("Convert to blocks")
+      }
+    );
+  };
+  var convert_to_blocks_button_default = ConvertToBlocksButton;
 
   // packages/block-library/build-module/freeform/modal.mjs
   var import_block_editor29 = __toESM(require_block_editor(), 1);
   var import_components14 = __toESM(require_components(), 1);
   var import_element14 = __toESM(require_element(), 1);
   var import_i18n21 = __toESM(require_i18n(), 1);
-  var import_data14 = __toESM(require_data(), 1);
+  var import_data15 = __toESM(require_data(), 1);
   var import_compose11 = __toESM(require_compose(), 1);
   var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
   function ModalAuxiliaryActions({ onClick, isModalFullScreen }) {
@@ -11658,7 +11652,7 @@ var wp;
     );
   }
   function ClassicEdit(props) {
-    const styles = (0, import_data14.useSelect)(
+    const styles = (0, import_data15.useSelect)(
       (select9) => select9(import_block_editor29.store).getSettings().styles
     );
     (0, import_element14.useEffect)(() => {
@@ -11750,18 +11744,17 @@ var wp;
   function FreeformEdit({
     attributes,
     setAttributes,
-    clientId,
-    onReplace
+    clientId
   }) {
     const { content } = attributes;
     const [isOpen, setOpen] = (0, import_element15.useState)(false);
     const editButtonRef = (0, import_element15.useRef)(null);
-    const canRemove = (0, import_data15.useSelect)(
+    const canRemove = (0, import_data16.useSelect)(
       (select9) => select9(import_block_editor30.store).canRemoveBlock(clientId),
       [clientId]
     );
-    const { removeBlock } = (0, import_data15.useDispatch)(import_block_editor30.store);
     return /* @__PURE__ */ (0, import_jsx_runtime187.jsxs)(import_jsx_runtime187.Fragment, { children: [
+      canRemove && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(import_block_editor30.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(import_components15.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(convert_to_blocks_button_default, { clientId }) }) }),
       /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(import_block_editor30.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(import_components15.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
         import_components15.ToolbarButton,
         {
@@ -11771,41 +11764,23 @@ var wp;
         }
       ) }) }),
       /* @__PURE__ */ (0, import_jsx_runtime187.jsxs)("div", { ...(0, import_block_editor30.useBlockProps)(), children: [
-        canRemove && content && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
-          MigrationNotice,
-          {
-            content,
-            onReplace
-          }
-        ),
-        content ? /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(import_element15.RawHTML, { children: content }) : /* @__PURE__ */ (0, import_jsx_runtime187.jsxs)(
+        content ? /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(import_element15.RawHTML, { children: content }) : /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
           import_components15.Placeholder,
           {
             icon: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(import_block_editor30.BlockIcon, { icon: classic_default }),
             label: (0, import_i18n22.__)("Classic"),
             instructions: (0, import_i18n22.__)(
-              "The Classic block is being phased out. It\u2019s recommended to use other blocks for the best editing experience."
+              "Use the classic editor to add content."
             ),
-            children: [
-              canRemove && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
-                import_components15.Button,
-                {
-                  __next40pxDefaultSize: true,
-                  variant: "primary",
-                  onClick: () => removeBlock(clientId),
-                  children: (0, import_i18n22.__)("Remove block")
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
-                import_components15.Button,
-                {
-                  __next40pxDefaultSize: true,
-                  variant: canRemove ? "secondary" : "primary",
-                  onClick: () => setOpen(true),
-                  children: (0, import_i18n22.__)("Edit contents")
-                }
-              )
-            ]
+            children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
+              import_components15.Button,
+              {
+                __next40pxDefaultSize: true,
+                variant: "primary",
+                onClick: () => setOpen(true),
+                children: (0, import_i18n22.__)("Edit contents")
+              }
+            )
           }
         ),
         isOpen && /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
@@ -11868,13 +11843,7 @@ var wp;
     edit: FreeformEdit,
     save: save8
   };
-  var init13 = () => {
-    const supports2 = {
-      ...block_default14.supports,
-      inserter: !!window?.__needsClassicBlock
-    };
-    return initBlock({ name: name13, metadata: block_default14, settings: { ...settings13, supports: supports2 } });
-  };
+  var init13 = () => initBlock({ name: name13, metadata: block_default14, settings: settings13 });
 
   // packages/block-library/build-module/code/index.mjs
   var code_exports = {};
@@ -12182,7 +12151,7 @@ var wp;
   // packages/block-library/build-module/column/edit.mjs
   var import_block_editor34 = __toESM(require_block_editor(), 1);
   var import_components16 = __toESM(require_components(), 1);
-  var import_data16 = __toESM(require_data(), 1);
+  var import_data17 = __toESM(require_data(), 1);
   var import_i18n25 = __toESM(require_i18n(), 1);
   var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
   function ColumnInspectorControls({ width, setAttributes }) {
@@ -12232,7 +12201,7 @@ var wp;
     const classes = clsx_default("block-core-columns", {
       [`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment
     });
-    const { columnsIds, hasChildBlocks, rootClientId } = (0, import_data16.useSelect)(
+    const { columnsIds, hasChildBlocks, rootClientId } = (0, import_data17.useSelect)(
       (select9) => {
         const { getBlockOrder, getBlockRootClientId } = select9(import_block_editor34.store);
         const rootId = getBlockRootClientId(clientId);
@@ -12244,7 +12213,7 @@ var wp;
       },
       [clientId]
     );
-    const { updateBlockAttributes } = (0, import_data16.useDispatch)(import_block_editor34.store);
+    const { updateBlockAttributes } = (0, import_data17.useDispatch)(import_block_editor34.store);
     const updateAlignment = (value) => {
       setAttributes({ verticalAlignment: value });
       updateBlockAttributes(rootClientId, {
@@ -12585,7 +12554,7 @@ var wp;
   var import_i18n26 = __toESM(require_i18n(), 1);
   var import_components17 = __toESM(require_components(), 1);
   var import_block_editor37 = __toESM(require_block_editor(), 1);
-  var import_data17 = __toESM(require_data(), 1);
+  var import_data18 = __toESM(require_data(), 1);
   var import_blocks17 = __toESM(require_blocks(), 1);
 
   // packages/block-library/build-module/columns/utils.mjs
@@ -12648,7 +12617,7 @@ var wp;
     setAttributes,
     isStackedOnMobile
   }) {
-    const { count, canInsertColumnBlock, minCount } = (0, import_data17.useSelect)(
+    const { count, canInsertColumnBlock, minCount } = (0, import_data18.useSelect)(
       (select9) => {
         const { canInsertBlockType, canRemoveBlock, getBlockOrder } = select9(import_block_editor37.store);
         const blockOrder = getBlockOrder(clientId);
@@ -12672,8 +12641,8 @@ var wp;
       },
       [clientId]
     );
-    const { getBlocks } = (0, import_data17.useSelect)(import_block_editor37.store);
-    const { replaceInnerBlocks } = (0, import_data17.useDispatch)(import_block_editor37.store);
+    const { getBlocks } = (0, import_data18.useSelect)(import_block_editor37.store);
+    const { replaceInnerBlocks } = (0, import_data18.useDispatch)(import_block_editor37.store);
     function updateColumns(previousColumns, newColumns) {
       let innerBlocks = getBlocks(clientId);
       const hasExplicitWidths = hasExplicitPercentColumnWidths(innerBlocks);
@@ -12770,9 +12739,9 @@ var wp;
   }
   function ColumnsEditContainer({ attributes, setAttributes, clientId }) {
     const { isStackedOnMobile, verticalAlignment, templateLock } = attributes;
-    const registry = (0, import_data17.useRegistry)();
-    const { getBlockOrder } = (0, import_data17.useSelect)(import_block_editor37.store);
-    const { updateBlockAttributes } = (0, import_data17.useDispatch)(import_block_editor37.store);
+    const registry = (0, import_data18.useRegistry)();
+    const { getBlockOrder } = (0, import_data18.useSelect)(import_block_editor37.store);
+    const { updateBlockAttributes } = (0, import_data18.useDispatch)(import_block_editor37.store);
     const classes = clsx_default({
       [`are-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
       [`is-not-stacked-on-mobile`]: !isStackedOnMobile
@@ -12816,7 +12785,7 @@ var wp;
     ] });
   }
   function Placeholder4({ clientId, name: name122, setAttributes }) {
-    const { blockType, variations: variations22 } = (0, import_data17.useSelect)(
+    const { blockType, variations: variations22 } = (0, import_data18.useSelect)(
       (select9) => {
         const { getBlockVariations: getBlockVariations4, getBlockType: getBlockType5 } = select9(import_blocks17.store);
         return {
@@ -12826,7 +12795,7 @@ var wp;
       },
       [name122]
     );
-    const { replaceInnerBlocks } = (0, import_data17.useDispatch)(import_block_editor37.store);
+    const { replaceInnerBlocks } = (0, import_data18.useDispatch)(import_block_editor37.store);
     const blockProps = (0, import_block_editor37.useBlockProps)();
     return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
       import_block_editor37.__experimentalBlockVariationPicker,
@@ -12854,7 +12823,7 @@ var wp;
   }
   var ColumnsEdit = (props) => {
     const { clientId } = props;
-    const hasInnerBlocks = (0, import_data17.useSelect)(
+    const hasInnerBlocks = (0, import_data18.useSelect)(
       (select9) => select9(import_block_editor37.store).getBlocks(clientId).length > 0,
       [clientId]
     );
@@ -13472,7 +13441,7 @@ var wp;
   // packages/block-library/build-module/comments/edit/placeholder.mjs
   var import_block_editor42 = __toESM(require_block_editor(), 1);
   var import_i18n31 = __toESM(require_i18n(), 1);
-  var import_data19 = __toESM(require_data(), 1);
+  var import_data20 = __toESM(require_data(), 1);
   var import_core_data8 = __toESM(require_core_data(), 1);
   var import_element17 = __toESM(require_element(), 1);
 
@@ -13482,7 +13451,7 @@ var wp;
   var import_components19 = __toESM(require_components(), 1);
   var import_compose13 = __toESM(require_compose(), 1);
   var import_core_data7 = __toESM(require_core_data(), 1);
-  var import_data18 = __toESM(require_data(), 1);
+  var import_data19 = __toESM(require_data(), 1);
   var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
   var CommentsFormPlaceholder = () => {
     const instanceId = (0, import_compose13.useInstanceId)(CommentsFormPlaceholder);
@@ -13535,11 +13504,11 @@ var wp;
       postId
     );
     const isSiteEditor = postType === void 0 || postId === void 0;
-    const defaultCommentStatus = (0, import_data18.useSelect)(
+    const defaultCommentStatus = (0, import_data19.useSelect)(
       (select9) => select9(import_block_editor41.store).getSettings().__experimentalDiscussionSettings?.defaultCommentStatus,
       []
     );
-    const postTypeSupportsComments = (0, import_data18.useSelect)(
+    const postTypeSupportsComments = (0, import_data19.useSelect)(
       (select9) => postType ? !!select9(import_core_data7.store).getPostType(postType)?.supports.comments : false
     );
     if (!isSiteEditor && "open" !== commentStatus) {
@@ -13585,7 +13554,7 @@ var wp;
   function PostCommentsPlaceholder({ postType, postId }) {
     let [postTitle] = (0, import_core_data8.useEntityProp)("postType", postType, "title", postId);
     postTitle = postTitle || (0, import_i18n31.__)("Post Title");
-    const avatarURL = (0, import_data19.useSelect)(
+    const avatarURL = (0, import_data20.useSelect)(
       (select9) => select9(import_block_editor42.store).getSettings().__experimentalDiscussionSettings?.avatarURL,
       []
     );
@@ -13917,7 +13886,7 @@ var wp;
   var import_block_editor46 = __toESM(require_block_editor(), 1);
   var import_components21 = __toESM(require_components(), 1);
   var import_core_data9 = __toESM(require_core_data(), 1);
-  var import_data20 = __toESM(require_data(), 1);
+  var import_data21 = __toESM(require_data(), 1);
   var import_i18n33 = __toESM(require_i18n(), 1);
   var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
   function Edit6({
@@ -13946,7 +13915,7 @@ var wp;
     const blockProps = (0, import_block_editor46.useBlockProps)();
     const spacingProps = (0, import_block_editor46.__experimentalGetSpacingClassesAndStyles)(attributes);
     const maxSizeBuffer = Math.floor(maxSize * 2.5);
-    const avatarURL = (0, import_data20.useSelect)((select9) => {
+    const avatarURL = (0, import_data21.useSelect)((select9) => {
       const { __experimentalDiscussionSettings } = select9(import_block_editor46.store).getSettings();
       return __experimentalDiscussionSettings?.avatarURL;
     }, []);
@@ -14092,7 +14061,7 @@ var wp;
 
   // packages/block-library/build-module/comment-author-name/edit.mjs
   var import_i18n34 = __toESM(require_i18n(), 1);
-  var import_data21 = __toESM(require_data(), 1);
+  var import_data22 = __toESM(require_data(), 1);
   var import_block_editor47 = __toESM(require_block_editor(), 1);
   var import_core_data10 = __toESM(require_core_data(), 1);
   var import_components22 = __toESM(require_components(), 1);
@@ -14106,7 +14075,7 @@ var wp;
     useDeprecatedTextAlign(props);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockProps = (0, import_block_editor47.useBlockProps)();
-    let displayName = (0, import_data21.useSelect)(
+    let displayName = (0, import_data22.useSelect)(
       (select9) => {
         const { getEntityRecord } = select9(import_core_data10.store);
         const comment = getEntityRecord("root", "comment", commentId);
@@ -15056,7 +15025,7 @@ var wp;
 
   // packages/block-library/build-module/comment-template/edit.mjs
   var import_element20 = __toESM(require_element(), 1);
-  var import_data23 = __toESM(require_data(), 1);
+  var import_data24 = __toESM(require_data(), 1);
   var import_i18n39 = __toESM(require_i18n(), 1);
   var import_block_editor53 = __toESM(require_block_editor(), 1);
   var import_components26 = __toESM(require_components(), 1);
@@ -15064,7 +15033,7 @@ var wp;
 
   // packages/block-library/build-module/comment-template/hooks.mjs
   var import_element19 = __toESM(require_element(), 1);
-  var import_data22 = __toESM(require_data(), 1);
+  var import_data23 = __toESM(require_data(), 1);
   var import_block_editor52 = __toESM(require_block_editor(), 1);
   var import_url4 = __toESM(require_url(), 1);
   var import_api_fetch = __toESM(require_api_fetch(), 1);
@@ -15081,7 +15050,7 @@ var wp;
       pageComments,
       commentsPerPage,
       defaultCommentsPage: defaultPage
-    } = (0, import_data22.useSelect)((select9) => {
+    } = (0, import_data23.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor52.store);
       const { __experimentalDiscussionSettings } = getSettings2();
       return __experimentalDiscussionSettings ?? {};
@@ -15302,14 +15271,14 @@ var wp;
       threadComments,
       commentsPerPage,
       pageComments
-    } = (0, import_data23.useSelect)((select9) => {
+    } = (0, import_data24.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor53.store);
       return getSettings2().__experimentalDiscussionSettings ?? {};
     }, []);
     const commentQuery = useCommentQueryArgs({
       postId
     });
-    const { topLevelComments, blocks } = (0, import_data23.useSelect)(
+    const { topLevelComments, blocks } = (0, import_data24.useSelect)(
       (select9) => {
         const { getEntityRecords } = select9(import_core_data13.store);
         const { getBlocks } = select9(import_block_editor53.store);
@@ -15565,7 +15534,7 @@ var wp;
   // packages/block-library/build-module/comments-pagination/edit.mjs
   var import_i18n43 = __toESM(require_i18n(), 1);
   var import_block_editor56 = __toESM(require_block_editor(), 1);
-  var import_data24 = __toESM(require_data(), 1);
+  var import_data25 = __toESM(require_data(), 1);
   var import_components28 = __toESM(require_components(), 1);
 
   // packages/block-library/build-module/comments-pagination/comments-pagination-arrow-controls.mjs
@@ -15631,7 +15600,7 @@ var wp;
     setAttributes,
     clientId
   }) {
-    const hasNextPreviousBlocks = (0, import_data24.useSelect)((select9) => {
+    const hasNextPreviousBlocks = (0, import_data25.useSelect)((select9) => {
       const { getBlocks } = select9(import_block_editor56.store);
       const innerBlocks = getBlocks(clientId);
       return innerBlocks?.find((innerBlock) => {
@@ -15646,7 +15615,7 @@ var wp;
     const innerBlocksProps = (0, import_block_editor56.useInnerBlocksProps)(blockProps, {
       template: TEMPLATE4
     });
-    const pageComments = (0, import_data24.useSelect)((select9) => {
+    const pageComments = (0, import_data25.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor56.store);
       const { __experimentalDiscussionSettings } = getSettings2();
       return __experimentalDiscussionSettings?.pageComments;
@@ -15994,7 +15963,7 @@ var wp;
   var import_core_data14 = __toESM(require_core_data(), 1);
   var import_components29 = __toESM(require_components(), 1);
   var import_element21 = __toESM(require_element(), 1);
-  var import_data25 = __toESM(require_data(), 1);
+  var import_data26 = __toESM(require_data(), 1);
   var import_api_fetch2 = __toESM(require_api_fetch(), 1);
   var import_url5 = __toESM(require_url(), 1);
   var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
@@ -16018,7 +15987,7 @@ var wp;
       threadComments,
       commentsPerPage,
       pageComments
-    } = (0, import_data25.useSelect)((select9) => {
+    } = (0, import_data26.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor60.store);
       return getSettings2().__experimentalDiscussionSettings ?? {};
     }, []);
@@ -18157,7 +18126,7 @@ var wp;
   var import_compose17 = __toESM(require_compose(), 1);
   var import_block_editor68 = __toESM(require_block_editor(), 1);
   var import_i18n53 = __toESM(require_i18n(), 1);
-  var import_data28 = __toESM(require_data(), 1);
+  var import_data29 = __toESM(require_data(), 1);
   var import_blob7 = __toESM(require_blob(), 1);
   var import_notices4 = __toESM(require_notices(), 1);
 
@@ -18167,7 +18136,7 @@ var wp;
   var import_compose16 = __toESM(require_compose(), 1);
   var import_block_editor64 = __toESM(require_block_editor(), 1);
   var import_i18n49 = __toESM(require_i18n(), 1);
-  var import_data27 = __toESM(require_data(), 1);
+  var import_data28 = __toESM(require_data(), 1);
   var import_core_data15 = __toESM(require_core_data(), 1);
 
   // packages/block-library/build-module/utils/style-state.mjs
@@ -18302,7 +18271,7 @@ var wp;
   var import_i18n48 = __toESM(require_i18n(), 1);
   var import_element22 = __toESM(require_element(), 1);
   var import_compose15 = __toESM(require_compose(), 1);
-  var import_data26 = __toESM(require_data(), 1);
+  var import_data27 = __toESM(require_data(), 1);
   var import_jsx_runtime221 = __toESM(require_jsx_runtime(), 1);
   var POSTER_IMAGE_ALLOWED_MEDIA_TYPES = ["image"];
   function PosterImage({ poster, onChange }) {
@@ -18312,8 +18281,8 @@ var wp;
       PosterImage,
       "block-library-poster-image-description"
     );
-    const { getSettings: getSettings2 } = (0, import_data26.useSelect)(import_block_editor63.store);
-    const { createErrorNotice } = (0, import_data26.useDispatch)(import_notices3.store);
+    const { getSettings: getSettings2 } = (0, import_data27.useSelect)(import_block_editor63.store);
+    const { createErrorNotice } = (0, import_data27.useDispatch)(import_notices3.store);
     const onDropFiles = (filesList) => {
       getSettings2().mediaUpload({
         allowedTypes: POSTER_IMAGE_ALLOWED_MEDIA_TYPES,
@@ -18526,7 +18495,7 @@ var wp;
     } = currentSettings;
     const sizeSlug = attributes.sizeSlug || DEFAULT_MEDIA_SIZE_SLUG;
     const { gradientValue, setGradient } = (0, import_block_editor64.__experimentalUseGradient)();
-    const { imageSizes, selectedStyleState } = (0, import_data27.useSelect)(
+    const { imageSizes, selectedStyleState } = (0, import_data28.useSelect)(
       (select9) => {
         const { getSettings: getSettings2, getSelectedBlockStyleState } = unlock(
           select9(import_block_editor64.store)
@@ -18558,7 +18527,7 @@ var wp;
       attributeKey: "aspectRatio",
       rootValue: attributes?.style?.dimensions?.aspectRatio
     });
-    const image = (0, import_data27.useSelect)(
+    const image = (0, import_data28.useSelect)(
       (select9) => id && isImageBackground ? select9(import_core_data15.store).getEntityRecord(
         "postType",
         "attachment",
@@ -20053,17 +20022,17 @@ var wp;
       "featured_media",
       postId
     );
-    const { getSettings: getSettings2 } = (0, import_data28.useSelect)(import_block_editor68.store);
-    const openMediaEditorModal = (0, import_data28.useSelect)(
+    const { getSettings: getSettings2 } = (0, import_data29.useSelect)(import_block_editor68.store);
+    const openMediaEditorModal = (0, import_data29.useSelect)(
       (select9) => select9(import_block_editor68.store).getSettings()[openMediaEditorModalKey],
       []
     );
-    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data28.useDispatch)(import_block_editor68.store);
+    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data29.useDispatch)(import_block_editor68.store);
     const propsRef = (0, import_element27.useRef)({ attributes, overlayColor });
     (0, import_element27.useLayoutEffect)(() => {
       propsRef.current = { attributes, overlayColor };
     });
-    const { media } = (0, import_data28.useSelect)(
+    const { media } = (0, import_data29.useSelect)(
       (select9) => {
         return {
           media: featuredImage && useFeaturedImage ? select9(import_core_data16.store).getEntityRecord(
@@ -20115,7 +20084,7 @@ var wp;
       originalUrl?.replaceAll("&amp;", "&")
     );
     const backgroundType = useFeaturedImage ? IMAGE_BACKGROUND_TYPE : originalBackgroundType;
-    const { createErrorNotice } = (0, import_data28.useDispatch)(import_notices4.store);
+    const { createErrorNotice } = (0, import_data29.useDispatch)(import_notices4.store);
     const { gradientClass, gradientValue } = (0, import_block_editor68.__experimentalUseGradient)();
     const onSelectMedia = async (newMedia) => {
       const mediaAttributes = attributesFromMedia(newMedia);
@@ -20226,7 +20195,7 @@ var wp;
         useFeaturedImage: void 0
       });
     };
-    const { embedPreview, isFetchingEmbed } = (0, import_data28.useSelect)(
+    const { embedPreview, isFetchingEmbed } = (0, import_data29.useSelect)(
       (select9) => {
         if (backgroundType !== EMBED_VIDEO_BACKGROUND_TYPE || !url) {
           return {
@@ -20273,7 +20242,7 @@ var wp;
       objectPosition: focalPoint && isImgElement ? mediaPosition(focalPoint) : void 0
     };
     const hasBackground = !!(url || overlayColor.color || gradientValue);
-    const hasInnerBlocks = (0, import_data28.useSelect)(
+    const hasInnerBlocks = (0, import_data29.useSelect)(
       (select9) => select9(import_block_editor68.store).getBlock(clientId).innerBlocks.length > 0,
       [clientId]
     );
@@ -21327,7 +21296,7 @@ var wp;
   var import_components35 = __toESM(require_components(), 1);
   var import_i18n56 = __toESM(require_i18n(), 1);
   var import_element28 = __toESM(require_element(), 1);
-  var import_data29 = __toESM(require_data(), 1);
+  var import_data30 = __toESM(require_data(), 1);
   var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
   var { withIgnoreIMEEvents } = unlock(import_components35.privateApis);
   var TEMPLATE5 = [
@@ -21348,7 +21317,7 @@ var wp;
     });
     const [isOpen, setIsOpen] = (0, import_element28.useState)(showContent);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    const hasSelectedInnerBlock = (0, import_data29.useSelect)(
+    const hasSelectedInnerBlock = (0, import_data30.useSelect)(
       (select9) => select9(import_block_editor71.store).hasSelectedInnerBlock(clientId, true),
       [clientId]
     );
@@ -21560,7 +21529,7 @@ var wp;
   // packages/block-library/build-module/embed/edit.mjs
   var import_i18n61 = __toESM(require_i18n(), 1);
   var import_element31 = __toESM(require_element(), 1);
-  var import_data30 = __toESM(require_data(), 1);
+  var import_data31 = __toESM(require_data(), 1);
   var import_block_editor76 = __toESM(require_block_editor(), 1);
   var import_core_data17 = __toESM(require_core_data(), 1);
 
@@ -22005,15 +21974,15 @@ var wp;
     const { icon: icon4, title } = getEmbedInfoByProvider(providerNameSlug) || defaultEmbedInfo;
     const [url, setURL] = (0, import_element31.useState)(attributesUrl);
     const [isEditingURL, setIsEditingURL] = (0, import_element31.useState)(false);
-    const { invalidateResolution } = (0, import_data30.useDispatch)(import_core_data17.store);
-    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data30.useDispatch)(import_block_editor76.store);
+    const { invalidateResolution } = (0, import_data31.useDispatch)(import_core_data17.store);
+    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data31.useDispatch)(import_block_editor76.store);
     const {
       preview,
       fetching,
       themeSupportsResponsive,
       cannotEmbed,
       hasResolved
-    } = (0, import_data30.useSelect)(
+    } = (0, import_data31.useSelect)(
       (select9) => {
         const {
           getEmbedPreview,
@@ -23023,7 +22992,7 @@ ${url}
   // packages/block-library/build-module/file/edit.mjs
   var import_blob8 = __toESM(require_blob(), 1);
   var import_components42 = __toESM(require_components(), 1);
-  var import_data31 = __toESM(require_data(), 1);
+  var import_data32 = __toESM(require_data(), 1);
   var import_block_editor81 = __toESM(require_block_editor(), 1);
   var import_element32 = __toESM(require_element(), 1);
   var import_compose19 = __toESM(require_compose(), 1);
@@ -23218,7 +23187,7 @@ ${url}
   var MIN_PREVIEW_HEIGHT = 200;
   var MAX_PREVIEW_HEIGHT = 2e3;
   function ClipboardToolbarButton({ text, disabled }) {
-    const { createNotice } = (0, import_data31.useDispatch)(import_notices5.store);
+    const { createNotice } = (0, import_data32.useDispatch)(import_notices5.store);
     const ref = (0, import_compose19.useCopyToClipboard)(text, () => {
       createNotice("info", (0, import_i18n65.__)("Copied URL to clipboard."), {
         isDismissible: true,
@@ -23248,7 +23217,7 @@ ${url}
       previewHeight
     } = attributes;
     const [temporaryURL, setTemporaryURL] = (0, import_element32.useState)(attributes.blob);
-    const { media } = (0, import_data31.useSelect)(
+    const { media } = (0, import_data32.useSelect)(
       (select9) => ({
         media: id === void 0 ? void 0 : select9(import_core_data18.store).getEntityRecord(
           "postType",
@@ -23258,8 +23227,8 @@ ${url}
       }),
       [id]
     );
-    const { createErrorNotice } = (0, import_data31.useDispatch)(import_notices5.store);
-    const { toggleSelection } = (0, import_data31.useDispatch)(import_block_editor81.store);
+    const { createErrorNotice } = (0, import_data32.useDispatch)(import_notices5.store);
+    const { toggleSelection } = (0, import_data32.useDispatch)(import_block_editor81.store);
     useUploadMediaFromBlobURL({
       url: temporaryURL,
       onChange: onSelectFile,
@@ -23643,7 +23612,7 @@ ${url}
   // packages/block-library/build-module/file/transforms.mjs
   var import_blob9 = __toESM(require_blob(), 1);
   var import_blocks26 = __toESM(require_blocks(), 1);
-  var import_data32 = __toESM(require_data(), 1);
+  var import_data33 = __toESM(require_data(), 1);
   var import_core_data19 = __toESM(require_core_data(), 1);
   var import_i18n66 = __toESM(require_i18n(), 1);
   var import_url9 = __toESM(require_url(), 1);
@@ -23717,7 +23686,7 @@ ${url}
           if (!id) {
             return false;
           }
-          const { getEntityRecord } = (0, import_data32.select)(import_core_data19.store);
+          const { getEntityRecord } = (0, import_data33.select)(import_core_data19.store);
           const media = getEntityRecord("postType", "attachment", id);
           return !!media && media.mime_type.includes("audio");
         },
@@ -23737,7 +23706,7 @@ ${url}
           if (!id) {
             return false;
           }
-          const { getEntityRecord } = (0, import_data32.select)(import_core_data19.store);
+          const { getEntityRecord } = (0, import_data33.select)(import_core_data19.store);
           const media = getEntityRecord("postType", "attachment", id);
           return !!media && media.mime_type.includes("video");
         },
@@ -23757,7 +23726,7 @@ ${url}
           if (!id) {
             return false;
           }
-          const { getEntityRecord } = (0, import_data32.select)(import_core_data19.store);
+          const { getEntityRecord } = (0, import_data33.select)(import_core_data19.store);
           const media = getEntityRecord("postType", "attachment", id);
           return !!media && media.mime_type.includes("image");
         },
@@ -23861,7 +23830,7 @@ ${url}
   var import_i18n70 = __toESM(require_i18n(), 1);
   var import_block_editor83 = __toESM(require_block_editor(), 1);
   var import_components43 = __toESM(require_components(), 1);
-  var import_data33 = __toESM(require_data(), 1);
+  var import_data34 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/form/utils.mjs
   var import_i18n69 = __toESM(require_i18n(), 1);
@@ -23937,7 +23906,7 @@ ${url}
     };
     const { action, method, email, submissionMethod } = attributes;
     const blockProps = (0, import_block_editor83.useBlockProps)();
-    const { hasInnerBlocks } = (0, import_data33.useSelect)(
+    const { hasInnerBlocks } = (0, import_data34.useSelect)(
       (select9) => {
         const { getBlock } = select9(import_block_editor83.store);
         const block = getBlock(clientId);
@@ -25119,7 +25088,7 @@ ${url}
   // packages/block-library/build-module/form-submission-notification/edit.mjs
   var import_i18n75 = __toESM(require_i18n(), 1);
   var import_block_editor91 = __toESM(require_block_editor(), 1);
-  var import_data34 = __toESM(require_data(), 1);
+  var import_data35 = __toESM(require_data(), 1);
   var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE8 = [
     [
@@ -25138,7 +25107,7 @@ ${url}
         [`form-notification-type-${type}`]: type
       })
     });
-    const { hasInnerBlocks } = (0, import_data34.useSelect)(
+    const { hasInnerBlocks } = (0, import_data35.useSelect)(
       (select9) => {
         const { getBlock } = select9(import_block_editor91.store);
         const block = getBlock(clientId);
@@ -26232,7 +26201,7 @@ ${url}
   var import_block_editor98 = __toESM(require_block_editor(), 1);
   var import_element38 = __toESM(require_element(), 1);
   var import_i18n80 = __toESM(require_i18n(), 1);
-  var import_data37 = __toESM(require_data(), 1);
+  var import_data38 = __toESM(require_data(), 1);
   var import_blocks30 = __toESM(require_blocks(), 1);
   var import_blob10 = __toESM(require_blob(), 1);
   var import_notices6 = __toESM(require_notices(), 1);
@@ -26477,11 +26446,11 @@ ${url}
   }
 
   // packages/block-library/build-module/gallery/use-get-media.mjs
-  var import_data35 = __toESM(require_data(), 1);
+  var import_data36 = __toESM(require_data(), 1);
   var import_core_data20 = __toESM(require_core_data(), 1);
   var EMPTY_IMAGE_MEDIA = [];
   function useGetMedia(innerBlockImages) {
-    return (0, import_data35.useSelect)(
+    return (0, import_data36.useSelect)(
       (select9) => {
         const imageIds = innerBlockImages.map((imageBlock) => imageBlock.attributes.id).filter((id) => id !== void 0);
         if (imageIds.length === 0) {
@@ -26523,7 +26492,7 @@ ${url}
 
   // packages/block-library/build-module/gallery/use-dynamic-gallery.mjs
   var import_element36 = __toESM(require_element(), 1);
-  var import_data36 = __toESM(require_data(), 1);
+  var import_data37 = __toESM(require_data(), 1);
   var import_block_editor96 = __toESM(require_block_editor(), 1);
   var import_core_data21 = __toESM(require_core_data(), 1);
   var import_blocks29 = __toESM(require_blocks(), 1);
@@ -26617,12 +26586,12 @@ ${url}
     const sourceDescriptor = getDynamicSource(dynamicContent?.source);
     const sourceOrderby = dynamicContent?.args?.orderBy ?? DEFAULT_ORDERBY;
     const sourceOrder = dynamicContent?.args?.order ?? DEFAULT_ORDER;
-    const { replaceInnerBlocks } = (0, import_data36.useDispatch)(import_block_editor96.store);
+    const { replaceInnerBlocks } = (0, import_data37.useDispatch)(import_block_editor96.store);
     const query = (0, import_element36.useMemo)(
       () => dynamicContent ? getSourceQuery(dynamicContent, { postId }) : null,
       [dynamicContent, postId]
     );
-    const { dynamicMedia, dynamicMediaTotal, isResolvingDynamic } = (0, import_data36.useSelect)(
+    const { dynamicMedia, dynamicMediaTotal, isResolvingDynamic } = (0, import_data37.useSelect)(
       (select9) => {
         if (!query) {
           return {
@@ -27044,9 +27013,9 @@ ${url}
       replaceInnerBlocks,
       updateBlockAttributes,
       selectBlock
-    } = (0, import_data37.useDispatch)(import_block_editor98.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data37.useDispatch)(import_notices6.store);
-    const { getBlock, getSettings: getSettings2, innerBlockImages, multiGallerySelection } = (0, import_data37.useSelect)(
+    } = (0, import_data38.useDispatch)(import_block_editor98.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data38.useDispatch)(import_notices6.store);
+    const { getBlock, getSettings: getSettings2, innerBlockImages, multiGallerySelection } = (0, import_data38.useSelect)(
       (select9) => {
         const {
           getBlockName,
@@ -28473,13 +28442,13 @@ ${url}
   var deprecated_default20 = deprecated8;
 
   // packages/block-library/build-module/group/edit.mjs
-  var import_data39 = __toESM(require_data(), 1);
+  var import_data40 = __toESM(require_data(), 1);
   var import_block_editor102 = __toESM(require_block_editor(), 1);
   var import_element40 = __toESM(require_element(), 1);
   var import_i18n83 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/group/placeholder.mjs
-  var import_data38 = __toESM(require_data(), 1);
+  var import_data39 = __toESM(require_data(), 1);
   var import_block_editor101 = __toESM(require_block_editor(), 1);
   var import_i18n82 = __toESM(require_i18n(), 1);
   var import_blocks32 = __toESM(require_blocks(), 1);
@@ -28560,7 +28529,7 @@ ${url}
     return [showPlaceholder, setShowPlaceholder];
   }
   function GroupPlaceHolder({ name: name122, onSelect }) {
-    const variations22 = (0, import_data38.useSelect)(
+    const variations22 = (0, import_data39.useSelect)(
       (select9) => select9(import_blocks32.store).getBlockVariations(name122, "block"),
       [name122]
     );
@@ -28626,7 +28595,7 @@ ${url}
     ) });
   }
   function GroupEdit({ attributes, name: name122, setAttributes, clientId }) {
-    const { hasInnerBlocks, themeSupportsLayout } = (0, import_data39.useSelect)(
+    const { hasInnerBlocks, themeSupportsLayout } = (0, import_data40.useSelect)(
       (select9) => {
         const { getBlock, getSettings: getSettings2 } = select9(import_block_editor102.store);
         const block = getBlock(clientId);
@@ -28667,7 +28636,7 @@ ${url}
         renderAppender
       }
     );
-    const { selectBlock } = (0, import_data39.useDispatch)(import_block_editor102.store);
+    const { selectBlock } = (0, import_data40.useDispatch)(import_block_editor102.store);
     const selectVariation = (nextVariation) => {
       setAttributes(nextVariation.attributes);
       selectBlock(clientId, -1);
@@ -29349,7 +29318,7 @@ ${url}
   // packages/block-library/build-module/heading/edit.mjs
   var import_i18n86 = __toESM(require_i18n(), 1);
   var import_element41 = __toESM(require_element(), 1);
-  var import_data40 = __toESM(require_data(), 1);
+  var import_data41 = __toESM(require_data(), 1);
   var import_block_editor105 = __toESM(require_block_editor(), 1);
 
   // packages/block-library/build-module/heading/autogenerate-anchors.mjs
@@ -29398,14 +29367,14 @@ ${url}
     const blockProps = (0, import_block_editor105.useBlockProps)({
       style: style2
     });
-    const { canGenerateAnchors } = (0, import_data40.useSelect)((select9) => {
+    const { canGenerateAnchors } = (0, import_data41.useSelect)((select9) => {
       const { getGlobalBlockCount, getSettings: getSettings2 } = select9(import_block_editor105.store);
       const settings121 = getSettings2();
       return {
         canGenerateAnchors: !!settings121.generateAnchors || getGlobalBlockCount("core/table-of-contents") > 0
       };
     }, []);
-    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data40.useDispatch)(import_block_editor105.store);
+    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data41.useDispatch)(import_block_editor105.store);
     (0, import_element41.useEffect)(() => {
       if (!canGenerateAnchors) {
         return;
@@ -29839,7 +29808,7 @@ ${url}
   var import_block_editor107 = __toESM(require_block_editor(), 1);
   var import_components48 = __toESM(require_components(), 1);
   var import_i18n89 = __toESM(require_i18n(), 1);
-  var import_data41 = __toESM(require_data(), 1);
+  var import_data42 = __toESM(require_data(), 1);
   var import_core_data22 = __toESM(require_core_data(), 1);
   var import_dom4 = __toESM(require_dom(), 1);
   var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
@@ -29850,7 +29819,7 @@ ${url}
       onNavigateToEntityRecord,
       frontPageId,
       frontPageTemplateId
-    } = (0, import_data41.useSelect)((select9) => {
+    } = (0, import_data42.useSelect)((select9) => {
       const { getEntityRecord, getDefaultTemplateId, canUser } = select9(import_core_data22.store);
       const baseUrl = getEntityRecord("root", "__unstableBase")?.home;
       const canReadSettings = canUser("read", {
@@ -30059,14 +30028,14 @@ ${url}
   var import_element44 = __toESM(require_element(), 1);
   var import_block_editor111 = __toESM(require_block_editor(), 1);
   var import_blocks36 = __toESM(require_blocks(), 1);
-  var import_data44 = __toESM(require_data(), 1);
+  var import_data45 = __toESM(require_data(), 1);
   var import_deprecated23 = __toESM(require_deprecated(), 1);
   var import_components51 = __toESM(require_components(), 1);
 
   // packages/block-library/build-module/html/modal.mjs
   var import_i18n92 = __toESM(require_i18n(), 1);
   var import_element43 = __toESM(require_element(), 1);
-  var import_data43 = __toESM(require_data(), 1);
+  var import_data44 = __toESM(require_data(), 1);
   var import_components50 = __toESM(require_components(), 1);
   var import_block_editor110 = __toESM(require_block_editor(), 1);
   var import_compose20 = __toESM(require_compose(), 1);
@@ -30075,7 +30044,7 @@ ${url}
   var import_element42 = __toESM(require_element(), 1);
   var import_block_editor109 = __toESM(require_block_editor(), 1);
   var import_components49 = __toESM(require_components(), 1);
-  var import_data42 = __toESM(require_data(), 1);
+  var import_data43 = __toESM(require_data(), 1);
   var import_i18n91 = __toESM(require_i18n(), 1);
   var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_STYLES = `
@@ -30087,7 +30056,7 @@ ${url}
 	}
 `;
   function HTMLEditPreview({ content, isSelected }) {
-    const settingStyles = (0, import_data42.useSelect)(
+    const settingStyles = (0, import_data43.useSelect)(
       (select9) => select9(import_block_editor109.store).getSettings().styles,
       []
     );
@@ -30166,7 +30135,7 @@ ${js}
     const [editedJs, setEditedJs] = (0, import_element43.useState)(js);
     const [isFullscreen, setIsFullscreen] = (0, import_element43.useState)(false);
     const isMobileViewport = (0, import_compose20.useViewportMatch)("small", "<");
-    const { canUserUseUnfilteredHTML } = (0, import_data43.useSelect)((select9) => {
+    const { canUserUseUnfilteredHTML } = (0, import_data44.useSelect)((select9) => {
       const settings121 = select9(import_block_editor110.store).getSettings();
       return {
         canUserUseUnfilteredHTML: settings121.__experimentalCanUserUseUnfilteredHTML
@@ -30359,9 +30328,9 @@ ${js}
   var { InnerContent } = unlock(import_block_editor111.privateApis);
   function HTMLEdit({ clientId, attributes }) {
     const [isModalOpen, setIsModalOpen] = (0, import_element44.useState)(false);
-    const registry = (0, import_data44.useRegistry)();
-    const { updateBlock, replaceInnerBlocks } = (0, import_data44.useDispatch)(import_block_editor111.store);
-    const content = (0, import_data44.useSelect)(
+    const registry = (0, import_data45.useRegistry)();
+    const { updateBlock, replaceInnerBlocks } = (0, import_data45.useDispatch)(import_block_editor111.store);
+    const content = (0, import_data45.useSelect)(
       (select9) => {
         const block = select9(import_block_editor111.store).getBlock(clientId);
         return block ? (0, import_blocks36.getBlockContent)(block) : "";
@@ -30549,7 +30518,7 @@ ${text}
   var import_block_editor112 = __toESM(require_block_editor(), 1);
   var import_element46 = __toESM(require_element(), 1);
   var import_primitives159 = __toESM(require_primitives(), 1);
-  var import_data45 = __toESM(require_data(), 1);
+  var import_data46 = __toESM(require_data(), 1);
   var import_core_data23 = __toESM(require_core_data(), 1);
 
   // packages/block-library/build-module/icon/components/custom-inserter/index.mjs
@@ -30725,7 +30694,7 @@ ${text}
     const spacingProps = (0, import_block_editor112.__experimentalGetSpacingClassesAndStyles)(attributes);
     const borderProps = (0, import_block_editor112.__experimentalUseBorderProps)(attributes);
     const dimensionsProps = (0, import_block_editor112.getDimensionsClassesAndStyles)(attributes);
-    const { selectedIcon, allIcons = [] } = (0, import_data45.useSelect)(
+    const { selectedIcon, allIcons = [] } = (0, import_data46.useSelect)(
       (select9) => {
         const { getEntityRecord, getEntityRecords } = select9(import_core_data23.store);
         return {
@@ -32242,7 +32211,7 @@ ${text}
   var import_blob13 = __toESM(require_blob(), 1);
   var import_blocks40 = __toESM(require_blocks(), 1);
   var import_components60 = __toESM(require_components(), 1);
-  var import_data50 = __toESM(require_data(), 1);
+  var import_data51 = __toESM(require_data(), 1);
   var import_block_editor118 = __toESM(require_block_editor(), 1);
   var import_element51 = __toESM(require_element(), 1);
   var import_i18n101 = __toESM(require_i18n(), 1);
@@ -32267,7 +32236,7 @@ ${text}
   var import_blob12 = __toESM(require_blob(), 1);
   var import_components59 = __toESM(require_components(), 1);
   var import_compose22 = __toESM(require_compose(), 1);
-  var import_data49 = __toESM(require_data(), 1);
+  var import_data50 = __toESM(require_data(), 1);
   var import_block_editor117 = __toESM(require_block_editor(), 1);
   var import_element49 = __toESM(require_element(), 1);
   var import_i18n100 = __toESM(require_i18n(), 1);
@@ -32282,7 +32251,7 @@ ${text}
   var import_dom5 = __toESM(require_dom(), 1);
   var import_element47 = __toESM(require_element(), 1);
   var import_i18n98 = __toESM(require_i18n(), 1);
-  var import_data46 = __toESM(require_data(), 1);
+  var import_data47 = __toESM(require_data(), 1);
   var import_url10 = __toESM(require_url(), 1);
   var import_jsx_runtime279 = __toESM(require_jsx_runtime(), 1);
   var focusToggleButton = (containerRef) => {
@@ -32326,7 +32295,7 @@ ${text}
     isUploading = false,
     emptyLabel = (0, import_i18n98.__)("Media")
   }) {
-    const { getSettings: getSettings2 } = (0, import_data46.useSelect)(import_block_editor114.store);
+    const { getSettings: getSettings2 } = (0, import_data47.useSelect)(import_block_editor114.store);
     const onFilesDrop = (filesList) => {
       const { mediaUpload } = getSettings2();
       if (!mediaUpload) {
@@ -32395,7 +32364,7 @@ ${text}
   var import_core_data24 = __toESM(require_core_data(), 1);
   var import_block_editor115 = __toESM(require_block_editor(), 1);
   var import_dom6 = __toESM(require_dom(), 1);
-  var import_data47 = __toESM(require_data(), 1);
+  var import_data48 = __toESM(require_data(), 1);
   var import_element48 = __toESM(require_element(), 1);
   function normalizeImageBlockCaption(caption) {
     if (typeof caption !== "string") {
@@ -32472,8 +32441,8 @@ ${text}
     onClose
   }) {
     const { id, url, alt, caption } = attributes;
-    const registry = (0, import_data47.useRegistry)();
-    const openMediaEditorModal = (0, import_data47.useSelect)(
+    const registry = (0, import_data48.useRegistry)();
+    const openMediaEditorModal = (0, import_data48.useSelect)(
       (select9) => select9(import_block_editor115.store).getSettings()[openMediaEditorModalKey2],
       []
     );
@@ -32605,13 +32574,13 @@ ${text}
   var import_block_editor116 = __toESM(require_block_editor(), 1);
   var import_core_data25 = __toESM(require_core_data(), 1);
   var import_blocks38 = __toESM(require_blocks(), 1);
-  var import_data48 = __toESM(require_data(), 1);
+  var import_data49 = __toESM(require_data(), 1);
   var import_i18n99 = __toESM(require_i18n(), 1);
   var import_jsx_runtime280 = __toESM(require_jsx_runtime(), 1);
   function AnimatedGifConvertControl({ attributes, clientId }) {
     const { id, url, caption } = attributes;
-    const { replaceBlocks } = (0, import_data48.useDispatch)(import_block_editor116.store);
-    const companion = (0, import_data48.useSelect)(
+    const { replaceBlocks } = (0, import_data49.useDispatch)(import_block_editor116.store);
+    const companion = (0, import_data49.useSelect)(
       (select9) => {
         if (!id) {
           return null;
@@ -32900,7 +32869,7 @@ ${text}
     }, [imageElement]);
     const setRefs = (0, import_compose22.useMergeRefs)([setImageElement, setResizeObserved]);
     const { allowResize = true } = context;
-    const { image, attachmentResolutionError } = (0, import_data49.useSelect)(
+    const { image, attachmentResolutionError } = (0, import_data50.useSelect)(
       (select9) => {
         const imageRecord = id && isSingleSelected ? select9(import_core_data26.store).getEntityRecord(
           "postType",
@@ -32930,7 +32899,7 @@ ${text}
       imageSizes,
       maxWidth,
       editMediaEntity
-    } = (0, import_data49.useSelect)(
+    } = (0, import_data50.useSelect)(
       (select9) => {
         const { getBlockRootClientId, canInsertBlockType, getSettings: getSettings22 } = select9(import_block_editor117.store);
         const rootClientId = getBlockRootClientId(clientId);
@@ -32948,7 +32917,7 @@ ${text}
       },
       [clientId]
     );
-    const { getBlock, getSettings: getSettings2 } = (0, import_data49.useSelect)(import_block_editor117.store);
+    const { getBlock, getSettings: getSettings2 } = (0, import_data50.useSelect)(import_block_editor117.store);
     const cropButtonRef = (0, import_element49.useRef)();
     const handleMediaEditorModalClose = (0, import_element49.useCallback)(
       () => cropButtonRef.current?.focus(),
@@ -32963,9 +32932,9 @@ ${text}
       replaceBlocks,
       toggleSelection,
       __unstableMarkNextChangeAsNotPersistent
-    } = (0, import_data49.useDispatch)(import_block_editor117.store);
-    const { createErrorNotice, createSuccessNotice } = (0, import_data49.useDispatch)(import_notices7.store);
-    const { editEntityRecord } = (0, import_data49.useDispatch)(import_core_data26.store);
+    } = (0, import_data50.useDispatch)(import_block_editor117.store);
+    const { createErrorNotice, createSuccessNotice } = (0, import_data50.useDispatch)(import_notices7.store);
+    const { editEntityRecord } = (0, import_data50.useDispatch)(import_core_data26.store);
     const isLargeViewport = (0, import_compose22.useViewportMatch)("medium");
     const isWideAligned = ["wide", "full"].includes(align);
     const [
@@ -33141,7 +33110,7 @@ ${text}
     );
     const lightboxChecked = !!lightbox?.enabled || !lightbox && !!lightboxSetting?.enabled;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    const selectedStyleState = (0, import_data49.useSelect)(
+    const selectedStyleState = (0, import_data50.useSelect)(
       (select9) => {
         if (!isSingleSelected) {
           return void 0;
@@ -33256,7 +33225,7 @@ ${text}
       lockTitleControls = false,
       lockTitleControlsMessage,
       hideCaptionControls = false
-    } = (0, import_data49.useSelect)(
+    } = (0, import_data50.useSelect)(
       (select9) => {
         if (!isSingleSelected) {
           return {};
@@ -33847,7 +33816,7 @@ ${text}
     (0, import_element51.useEffect)(() => {
       captionRef.current = caption;
     }, [caption]);
-    const { __unstableMarkNextChangeAsNotPersistent, replaceBlock } = (0, import_data50.useDispatch)(import_block_editor118.store);
+    const { __unstableMarkNextChangeAsNotPersistent, replaceBlock } = (0, import_data51.useDispatch)(import_block_editor118.store);
     (0, import_element51.useEffect)(() => {
       if (["wide", "full"].includes(align)) {
         __unstableMarkNextChangeAsNotPersistent();
@@ -33862,9 +33831,9 @@ ${text}
       getBlockRootClientId,
       getBlockName,
       canInsertBlockType
-    } = (0, import_data50.useSelect)(import_block_editor118.store);
+    } = (0, import_data51.useSelect)(import_block_editor118.store);
     const blockEditingMode = (0, import_block_editor118.useBlockEditingMode)();
-    const { createErrorNotice } = (0, import_data50.useDispatch)(import_notices8.store);
+    const { createErrorNotice } = (0, import_data51.useDispatch)(import_notices8.store);
     function onUploadError(message) {
       createErrorNotice(message, { type: "snackbar" });
       setTemporaryURL();
@@ -34045,7 +34014,7 @@ ${text}
     });
     const isExternal = isExternalImage(id, url);
     const src = isExternal ? url : void 0;
-    const isSideloading = (0, import_data50.useSelect)(
+    const isSideloading = (0, import_data51.useSelect)(
       (select9) => {
         if (!window.__clientSideMediaProcessing && !window.__heicUploadSupport || !id) {
           return false;
@@ -34075,7 +34044,7 @@ ${text}
       ref: containerRef,
       className: classes
     });
-    const { lockUrlControls = false, lockUrlControlsMessage } = (0, import_data50.useSelect)(
+    const { lockUrlControls = false, lockUrlControlsMessage } = (0, import_data51.useSelect)(
       (select9) => {
         if (!isSingleSelected) {
           return {};
@@ -35297,7 +35266,7 @@ ${text}
   var import_i18n104 = __toESM(require_i18n(), 1);
   var import_date2 = __toESM(require_date(), 1);
   var import_block_editor121 = __toESM(require_block_editor(), 1);
-  var import_data51 = __toESM(require_data(), 1);
+  var import_data52 = __toESM(require_data(), 1);
   var import_core_data27 = __toESM(require_core_data(), 1);
   var import_notices9 = __toESM(require_notices(), 1);
   var import_compose26 = __toESM(require_compose(), 1);
@@ -35377,7 +35346,7 @@ ${text}
       defaultImageHeight,
       categoriesList,
       authorList
-    } = (0, import_data51.useSelect)(
+    } = (0, import_data52.useSelect)(
       (select9) => {
         const { getEntityRecords, getUsers } = select9(import_core_data27.store);
         const settings121 = select9(import_block_editor121.store).getSettings();
@@ -35763,7 +35732,7 @@ ${text}
     const { type: savedLayoutType, minimumColumnWidth } = layout || {};
     const layoutType = savedLayoutType || (postLayout === "grid" ? "grid" : "default");
     const columnCount = layout?.columnCount ?? (!savedLayoutType ? columns : void 0) ?? 3;
-    const { latestPosts } = (0, import_data51.useSelect)(
+    const { latestPosts } = (0, import_data52.useSelect)(
       (select9) => {
         const { getEntityRecords } = select9(import_core_data27.store);
         const catIds = categories && categories.length > 0 ? categories.map((cat) => cat.id) : [];
@@ -35788,7 +35757,7 @@ ${text}
       },
       [postsToShow, order, orderBy, categories, selectedAuthor]
     );
-    const { createWarningNotice } = (0, import_data51.useDispatch)(import_notices9.store);
+    const { createWarningNotice } = (0, import_data52.useDispatch)(import_notices9.store);
     const showRedirectionPreventedNotice = (event) => {
       event.preventDefault();
       createWarningNotice((0, import_i18n104.__)("Links are disabled in the editor."), {
@@ -36336,7 +36305,7 @@ ${text}
   // packages/block-library/build-module/list/edit.mjs
   var import_block_editor124 = __toESM(require_block_editor(), 1);
   var import_components64 = __toESM(require_components(), 1);
-  var import_data52 = __toESM(require_data(), 1);
+  var import_data53 = __toESM(require_data(), 1);
   var import_i18n106 = __toESM(require_i18n(), 1);
   var import_blocks44 = __toESM(require_blocks(), 1);
   var import_element54 = __toESM(require_element(), 1);
@@ -36480,8 +36449,8 @@ ${text}
   };
   var TEMPLATE9 = [["core/list-item"]];
   function useMigrateOnLoad(attributes, clientId) {
-    const registry = (0, import_data52.useRegistry)();
-    const { updateBlockAttributes, replaceInnerBlocks } = (0, import_data52.useDispatch)(import_block_editor124.store);
+    const registry = (0, import_data53.useRegistry)();
+    const { updateBlockAttributes, replaceInnerBlocks } = (0, import_data53.useDispatch)(import_block_editor124.store);
     (0, import_element54.useEffect)(() => {
       if (!attributes.values) {
         return;
@@ -36499,8 +36468,8 @@ ${text}
     }, [attributes.values]);
   }
   function useOutdentList(clientId) {
-    const { replaceBlocks, selectionChange } = (0, import_data52.useDispatch)(import_block_editor124.store);
-    const { getBlockRootClientId, getBlockAttributes: getBlockAttributes4, getBlock } = (0, import_data52.useSelect)(import_block_editor124.store);
+    const { replaceBlocks, selectionChange } = (0, import_data53.useDispatch)(import_block_editor124.store);
+    const { getBlockRootClientId, getBlockAttributes: getBlockAttributes4, getBlock } = (0, import_data53.useSelect)(import_block_editor124.store);
     return (0, import_element54.useCallback)(() => {
       const parentBlockId = getBlockRootClientId(clientId);
       const parentBlockAttributes = getBlockAttributes4(parentBlockId);
@@ -36515,7 +36484,7 @@ ${text}
   }
   function IndentUI({ clientId }) {
     const outdentList = useOutdentList(clientId);
-    const canOutdent = (0, import_data52.useSelect)(
+    const canOutdent = (0, import_data53.useSelect)(
       (select9) => {
         const { getBlockRootClientId, getBlockName } = select9(import_block_editor124.store);
         return getBlockName(getBlockRootClientId(clientId)) === "core/list-item";
@@ -36867,7 +36836,7 @@ ${text}
   var import_block_editor126 = __toESM(require_block_editor(), 1);
   var import_components65 = __toESM(require_components(), 1);
   var import_element55 = __toESM(require_element(), 1);
-  var import_data53 = __toESM(require_data(), 1);
+  var import_data54 = __toESM(require_data(), 1);
   var import_a11y = __toESM(require_a11y(), 1);
   var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
   var { Badge: WCBadge } = unlock(import_components65.privateApis);
@@ -36877,7 +36846,7 @@ ${text}
     const [error, setError] = (0, import_element55.useState)(null);
     const [latexToMathML, setLatexToMathML] = (0, import_element55.useState)();
     const initialLatex = (0, import_element55.useRef)(latex);
-    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data53.useDispatch)(import_block_editor126.store);
+    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data54.useDispatch)(import_block_editor126.store);
     (0, import_element55.useEffect)(() => {
       import("@wordpress/latex-to-mathml").then((module) => {
         setLatexToMathML(() => module.default);
@@ -37185,22 +37154,22 @@ ${text}
   var import_i18n109 = __toESM(require_i18n(), 1);
   var import_components66 = __toESM(require_components(), 1);
   var import_compose29 = __toESM(require_compose(), 1);
-  var import_data59 = __toESM(require_data(), 1);
+  var import_data60 = __toESM(require_data(), 1);
   var import_keycodes4 = __toESM(require_keycodes(), 1);
 
   // packages/block-library/build-module/list-item/hooks/use-outdent-list-item.mjs
   var import_element56 = __toESM(require_element(), 1);
-  var import_data54 = __toESM(require_data(), 1);
+  var import_data55 = __toESM(require_data(), 1);
   var import_block_editor129 = __toESM(require_block_editor(), 1);
   var import_blocks46 = __toESM(require_blocks(), 1);
   function useOutdentListItem() {
-    const registry = (0, import_data54.useRegistry)();
+    const registry = (0, import_data55.useRegistry)();
     const {
       moveBlocksToPosition,
       removeBlock,
       insertBlock,
       updateBlockListSettings
-    } = (0, import_data54.useDispatch)(import_block_editor129.store);
+    } = (0, import_data55.useDispatch)(import_block_editor129.store);
     const {
       getBlockRootClientId,
       getBlockName,
@@ -37209,7 +37178,7 @@ ${text}
       getSelectedBlockClientIds,
       getBlock,
       getBlockListSettings
-    } = (0, import_data54.useSelect)(import_block_editor129.store);
+    } = (0, import_data55.useSelect)(import_block_editor129.store);
     function getParentListItemId(id) {
       const listId = getBlockRootClientId(id);
       const parentListItemId = getBlockRootClientId(listId);
@@ -37281,11 +37250,11 @@ ${text}
 
   // packages/block-library/build-module/list-item/hooks/use-indent-list-item.mjs
   var import_element57 = __toESM(require_element(), 1);
-  var import_data55 = __toESM(require_data(), 1);
+  var import_data56 = __toESM(require_data(), 1);
   var import_block_editor130 = __toESM(require_block_editor(), 1);
   var import_blocks47 = __toESM(require_blocks(), 1);
   function useIndentListItem(clientId) {
-    const { replaceBlocks, selectionChange, multiSelect } = (0, import_data55.useDispatch)(import_block_editor130.store);
+    const { replaceBlocks, selectionChange, multiSelect } = (0, import_data56.useDispatch)(import_block_editor130.store);
     const {
       getBlock,
       getPreviousBlockClientId,
@@ -37293,7 +37262,7 @@ ${text}
       getSelectionEnd,
       hasMultiSelection,
       getMultiSelectedBlockClientIds
-    } = (0, import_data55.useSelect)(import_block_editor130.store);
+    } = (0, import_data56.useSelect)(import_block_editor130.store);
     return (0, import_element57.useCallback)(() => {
       const _hasMultiSelection = hasMultiSelection();
       const clientIds = _hasMultiSelection ? getMultiSelectedBlockClientIds() : [clientId];
@@ -37331,12 +37300,12 @@ ${text}
   var import_element58 = __toESM(require_element(), 1);
   var import_compose27 = __toESM(require_compose(), 1);
   var import_keycodes2 = __toESM(require_keycodes(), 1);
-  var import_data56 = __toESM(require_data(), 1);
+  var import_data57 = __toESM(require_data(), 1);
   var import_block_editor131 = __toESM(require_block_editor(), 1);
   var { subscribeDelegatedListener: subscribeDelegatedListener2 } = unlock(import_compose27.privateApis);
   function useEnter2(props) {
-    const { replaceBlocks, selectionChange } = (0, import_data56.useDispatch)(import_block_editor131.store);
-    const { getBlock, getBlockRootClientId, getBlockIndex, getBlockName } = (0, import_data56.useSelect)(import_block_editor131.store);
+    const { replaceBlocks, selectionChange } = (0, import_data57.useDispatch)(import_block_editor131.store);
+    const { getBlock, getBlockRootClientId, getBlockIndex, getBlockName } = (0, import_data57.useSelect)(import_block_editor131.store);
     const propsRef = (0, import_element58.useRef)(props);
     propsRef.current = props;
     const outdentListItem = useOutdentListItem();
@@ -37401,10 +37370,10 @@ ${text}
   var import_compose28 = __toESM(require_compose(), 1);
   var import_keycodes3 = __toESM(require_keycodes(), 1);
   var import_block_editor132 = __toESM(require_block_editor(), 1);
-  var import_data57 = __toESM(require_data(), 1);
+  var import_data58 = __toESM(require_data(), 1);
   var { subscribeDelegatedListener: subscribeDelegatedListener3 } = unlock(import_compose28.privateApis);
   function useSpace(clientId) {
-    const { getSelectionStart, getSelectionEnd, getBlockIndex } = (0, import_data57.useSelect)(import_block_editor132.store);
+    const { getSelectionStart, getSelectionEnd, getBlockIndex } = (0, import_data58.useSelect)(import_block_editor132.store);
     const indentListItem = useIndentListItem(clientId);
     const outdentListItem = useOutdentListItem();
     return (0, import_compose28.useRefEffect)(
@@ -37443,11 +37412,11 @@ ${text}
   }
 
   // packages/block-library/build-module/list-item/hooks/use-merge.mjs
-  var import_data58 = __toESM(require_data(), 1);
+  var import_data59 = __toESM(require_data(), 1);
   var import_block_editor133 = __toESM(require_block_editor(), 1);
   var import_blocks49 = __toESM(require_blocks(), 1);
   function useMerge(clientId, onMerge) {
-    const registry = (0, import_data58.useRegistry)();
+    const registry = (0, import_data59.useRegistry)();
     const {
       getPreviousBlockClientId,
       getNextBlockClientId,
@@ -37455,8 +37424,8 @@ ${text}
       getBlockRootClientId,
       getBlockName,
       getBlock
-    } = (0, import_data58.useSelect)(import_block_editor133.store);
-    const { mergeBlocks, moveBlocksToPosition, removeBlock, insertBlocks } = (0, import_data58.useDispatch)(import_block_editor133.store);
+    } = (0, import_data59.useSelect)(import_block_editor133.store);
+    const { mergeBlocks, moveBlocksToPosition, removeBlock, insertBlocks } = (0, import_data59.useDispatch)(import_block_editor133.store);
     const outdentListItem = useOutdentListItem();
     function getTrailingId(id) {
       const order = getBlockOrder(id);
@@ -37579,7 +37548,7 @@ ${text}
   function IndentUI2({ clientId }) {
     const indentListItem = useIndentListItem(clientId);
     const outdentListItem = useOutdentListItem();
-    const { canIndent, canOutdent } = (0, import_data59.useSelect)(
+    const { canIndent, canOutdent } = (0, import_data60.useSelect)(
       (select9) => {
         const { getBlockIndex, getBlockRootClientId, getBlockName } = select9(import_block_editor134.store);
         return {
@@ -38828,7 +38797,7 @@ ${text}
 
   // packages/block-library/build-module/media-text/edit.mjs
   var import_i18n114 = __toESM(require_i18n(), 1);
-  var import_data61 = __toESM(require_data(), 1);
+  var import_data62 = __toESM(require_data(), 1);
   var import_element60 = __toESM(require_element(), 1);
   var import_block_editor140 = __toESM(require_block_editor(), 1);
   var import_components69 = __toESM(require_components(), 1);
@@ -38840,7 +38809,7 @@ ${text}
   var import_block_editor139 = __toESM(require_block_editor(), 1);
   var import_i18n113 = __toESM(require_i18n(), 1);
   var import_compose31 = __toESM(require_compose(), 1);
-  var import_data60 = __toESM(require_data(), 1);
+  var import_data61 = __toESM(require_data(), 1);
   var import_element59 = __toESM(require_element(), 1);
   var import_blob15 = __toESM(require_blob(), 1);
   var import_notices10 = __toESM(require_notices(), 1);
@@ -38898,7 +38867,7 @@ ${text}
     onSelectMedia,
     toggleUseFeaturedImage
   }) {
-    const { createErrorNotice } = (0, import_data60.useDispatch)(import_notices10.store);
+    const { createErrorNotice } = (0, import_data61.useDispatch)(import_notices10.store);
     const onUploadError = (message) => {
       createErrorNotice(message, { type: "snackbar" });
     };
@@ -38948,7 +38917,7 @@ ${text}
       refMedia
     } = props;
     const isTemporaryMedia2 = !mediaId && (0, import_blob15.isBlobURL)(mediaUrl);
-    const { toggleSelection } = (0, import_data60.useDispatch)(import_block_editor139.store);
+    const { toggleSelection } = (0, import_data61.useDispatch)(import_block_editor139.store);
     if (mediaUrl || featuredImageURL || useFeaturedImage) {
       const onResizeStart = () => {
         toggleSelection(false);
@@ -39122,7 +39091,7 @@ ${text}
     };
   }
   function MediaTextResolutionTool({ image, value, onChange }) {
-    const { imageSizes } = (0, import_data61.useSelect)((select9) => {
+    const { imageSizes } = (0, import_data62.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor140.store);
       return {
         imageSizes: getSettings2().imageSizes
@@ -39174,7 +39143,7 @@ ${text}
       "featured_media",
       postId
     );
-    const { featuredImageMedia } = (0, import_data61.useSelect)(
+    const { featuredImageMedia } = (0, import_data62.useSelect)(
       (select9) => {
         return {
           featuredImageMedia: featuredImage && useFeaturedImage ? select9(import_core_data28.store).getEntityRecord(
@@ -39189,7 +39158,7 @@ ${text}
       },
       [featuredImage, useFeaturedImage]
     );
-    const { image } = (0, import_data61.useSelect)(
+    const { image } = (0, import_data62.useSelect)(
       (select9) => {
         return {
           image: mediaId && isSelected ? select9(import_core_data28.store).getEntityRecord(
@@ -40015,14 +39984,14 @@ ${text}
   var import_element61 = __toESM(require_element(), 1);
   var import_components70 = __toESM(require_components(), 1);
   var import_blocks54 = __toESM(require_blocks(), 1);
-  var import_data62 = __toESM(require_data(), 1);
+  var import_data63 = __toESM(require_data(), 1);
   var import_block_editor142 = __toESM(require_block_editor(), 1);
   var import_dom7 = __toESM(require_dom(), 1);
   var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
   function MissingEdit({ attributes, clientId }) {
     const { originalName, originalUndelimitedContent } = attributes;
     const hasContent = !!originalUndelimitedContent;
-    const { hasFreeformBlock, hasHTMLBlock } = (0, import_data62.useSelect)(
+    const { hasFreeformBlock, hasHTMLBlock } = (0, import_data63.useSelect)(
       (select9) => {
         const { canInsertBlockType, getBlockRootClientId } = select9(import_block_editor142.store);
         return {
@@ -40038,7 +40007,7 @@ ${text}
       },
       [clientId]
     );
-    const { replaceBlock } = (0, import_data62.useDispatch)(import_block_editor142.store);
+    const { replaceBlock } = (0, import_data63.useDispatch)(import_block_editor142.store);
     function convertToHTML() {
       replaceBlock(
         clientId,
@@ -40344,7 +40313,7 @@ ${text}
     settings: () => settings54
   });
   var import_i18n150 = __toESM(require_i18n(), 1);
-  var import_data90 = __toESM(require_data(), 1);
+  var import_data91 = __toESM(require_data(), 1);
   var import_core_data53 = __toESM(require_core_data(), 1);
   var import_html_entities7 = __toESM(require_html_entities(), 1);
 
@@ -40507,7 +40476,7 @@ ${text}
   var import_element85 = __toESM(require_element(), 1);
   var import_block_editor164 = __toESM(require_block_editor(), 1);
   var import_core_data52 = __toESM(require_core_data(), 1);
-  var import_data89 = __toESM(require_data(), 1);
+  var import_data90 = __toESM(require_data(), 1);
   var import_components96 = __toESM(require_components(), 1);
   var import_i18n149 = __toESM(require_i18n(), 1);
   var import_a11y3 = __toESM(require_a11y(), 1);
@@ -40516,7 +40485,7 @@ ${text}
 
   // packages/block-library/build-module/navigation/use-navigation-menu.mjs
   var import_core_data29 = __toESM(require_core_data(), 1);
-  var import_data63 = __toESM(require_data(), 1);
+  var import_data64 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/navigation/constants.mjs
   var DEFAULT_BLOCK5 = {
@@ -40554,7 +40523,7 @@ ${text}
       navigationMenu,
       isNavigationMenuResolved,
       isNavigationMenuMissing
-    } = (0, import_data63.useSelect)(
+    } = (0, import_data64.useSelect)(
       (select9) => {
         return selectExistingMenu(select9, ref);
       },
@@ -40877,7 +40846,7 @@ ${text}
   var import_components74 = __toESM(require_components(), 1);
   var import_i18n122 = __toESM(require_i18n(), 1);
   var import_block_editor144 = __toESM(require_block_editor(), 1);
-  var import_data64 = __toESM(require_data(), 1);
+  var import_data65 = __toESM(require_data(), 1);
   var import_core_data32 = __toESM(require_core_data(), 1);
 
   // packages/block-library/build-module/navigation/edit/overlay-menu-icon.mjs
@@ -40925,7 +40894,7 @@ ${text}
     overlay,
     onNavigateToEntityRecord
   }) {
-    const currentTheme = (0, import_data64.useSelect)(
+    const currentTheme = (0, import_data65.useSelect)(
       (select9) => select9(import_core_data32.store).getCurrentTheme()?.stylesheet,
       []
     );
@@ -41039,7 +41008,7 @@ ${text}
   // packages/block-library/build-module/navigation/edit/inner-blocks.mjs
   var import_core_data33 = __toESM(require_core_data(), 1);
   var import_block_editor145 = __toESM(require_block_editor(), 1);
-  var import_data65 = __toESM(require_data(), 1);
+  var import_data66 = __toESM(require_data(), 1);
   var import_element66 = __toESM(require_element(), 1);
   var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
   function NavigationInnerBlocks({
@@ -41053,7 +41022,7 @@ ${text}
       selectedBlockHasChildren,
       isSelected,
       hasSelectedDescendant
-    } = (0, import_data65.useSelect)(
+    } = (0, import_data66.useSelect)(
       (select9) => {
         const {
           getBlockCount,
@@ -41136,7 +41105,7 @@ ${text}
   var import_block_editor146 = __toESM(require_block_editor(), 1);
   var import_components76 = __toESM(require_components(), 1);
   var import_core_data35 = __toESM(require_core_data(), 1);
-  var import_data66 = __toESM(require_data(), 1);
+  var import_data67 = __toESM(require_data(), 1);
   var import_element67 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/navigation/edit/are-blocks-dirty.mjs
@@ -41200,7 +41169,7 @@ ${text}
         directInsert: true
       }
     );
-    const { isSaving, hasResolvedAllNavigationMenus } = (0, import_data66.useSelect)(
+    const { isSaving, hasResolvedAllNavigationMenus } = (0, import_data67.useSelect)(
       (select9) => {
         if (isDisabled) {
           return EMPTY_OBJECT2;
@@ -41237,14 +41206,14 @@ ${text}
   // packages/block-library/build-module/navigation/edit/navigation-menu-delete-control.mjs
   var import_components77 = __toESM(require_components(), 1);
   var import_core_data36 = __toESM(require_core_data(), 1);
-  var import_data67 = __toESM(require_data(), 1);
+  var import_data68 = __toESM(require_data(), 1);
   var import_element68 = __toESM(require_element(), 1);
   var import_i18n124 = __toESM(require_i18n(), 1);
   var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   function NavigationMenuDeleteControl({ onDelete }) {
     const [isConfirmDialogVisible, setIsConfirmDialogVisible] = (0, import_element68.useState)(false);
     const id = (0, import_core_data36.useEntityId)("postType", "wp_navigation");
-    const { deleteEntityRecord } = (0, import_data67.useDispatch)(import_core_data36.store);
+    const { deleteEntityRecord } = (0, import_data68.useDispatch)(import_core_data36.store);
     return /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)(import_jsx_runtime314.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
         import_components77.Button,
@@ -41284,11 +41253,11 @@ ${text}
 
   // packages/block-library/build-module/navigation/edit/use-navigation-notice.mjs
   var import_element69 = __toESM(require_element(), 1);
-  var import_data68 = __toESM(require_data(), 1);
+  var import_data69 = __toESM(require_data(), 1);
   var import_notices11 = __toESM(require_notices(), 1);
   function useNavigationNotice({ name: name122, message = "" } = {}) {
     const noticeRef = (0, import_element69.useRef)();
-    const { createWarningNotice, removeNotice } = (0, import_data68.useDispatch)(import_notices11.store);
+    const { createWarningNotice, removeNotice } = (0, import_data69.useDispatch)(import_notices11.store);
     const showNotice = (0, import_element69.useCallback)(
       (customMsg) => {
         if (noticeRef.current) {
@@ -41388,7 +41357,7 @@ ${text}
   var import_element72 = __toESM(require_element(), 1);
   var import_compose32 = __toESM(require_compose(), 1);
   var import_core_data38 = __toESM(require_core_data(), 1);
-  var import_data70 = __toESM(require_data(), 1);
+  var import_data71 = __toESM(require_data(), 1);
   var import_components80 = __toESM(require_components(), 1);
   var import_i18n128 = __toESM(require_i18n(), 1);
   var import_html_entities4 = __toESM(require_html_entities(), 1);
@@ -41396,7 +41365,7 @@ ${text}
 
   // packages/block-library/build-module/navigation/edit/use-create-overlay.mjs
   var import_element70 = __toESM(require_element(), 1);
-  var import_data69 = __toESM(require_data(), 1);
+  var import_data70 = __toESM(require_data(), 1);
   var import_core_data37 = __toESM(require_core_data(), 1);
   var import_block_editor147 = __toESM(require_block_editor(), 1);
   var import_i18n126 = __toESM(require_i18n(), 1);
@@ -41564,8 +41533,8 @@ ${text}
 
   // packages/block-library/build-module/navigation/edit/use-create-overlay.mjs
   function useCreateOverlayTemplatePart(overlayTemplateParts) {
-    const { saveEntityRecord } = (0, import_data69.useDispatch)(import_core_data37.store);
-    const pattern = (0, import_data69.useSelect)(
+    const { saveEntityRecord } = (0, import_data70.useDispatch)(import_core_data37.store);
+    const pattern = (0, import_data70.useSelect)(
       (select9) => unlock(select9(import_block_editor147.store)).getPatternBySlug(
         "core/navigation-overlay"
       ),
@@ -41672,8 +41641,8 @@ ${text}
     } = (0, import_core_data38.useEntityRecords)("postType", "wp_template_part", {
       per_page: -1
     });
-    const { createErrorNotice } = (0, import_data70.useDispatch)(import_notices12.store);
-    const currentTheme = (0, import_data70.useSelect)(
+    const { createErrorNotice } = (0, import_data71.useDispatch)(import_notices12.store);
+    const currentTheme = (0, import_data71.useSelect)(
       (select9) => select9(import_core_data38.store).getCurrentTheme()?.stylesheet,
       []
     );
@@ -42058,7 +42027,7 @@ ${text}
   }
 
   // packages/block-library/build-module/navigation/edit/overlay-preview.mjs
-  var import_data71 = __toESM(require_data(), 1);
+  var import_data72 = __toESM(require_data(), 1);
   var import_core_data39 = __toESM(require_core_data(), 1);
   var import_element73 = __toESM(require_element(), 1);
   var import_blocks60 = __toESM(require_blocks(), 1);
@@ -42073,7 +42042,7 @@ ${text}
       }
       return createTemplatePartId(currentTheme, overlay);
     }, [currentTheme, overlay]);
-    const { content, editedBlocks, hasResolved } = (0, import_data71.useSelect)(
+    const { content, editedBlocks, hasResolved } = (0, import_data72.useSelect)(
       (select9) => {
         if (!templatePartId) {
           return {
@@ -42205,7 +42174,7 @@ ${text}
   }
 
   // packages/block-library/build-module/navigation/edit/use-convert-classic-menu-to-block-menu.mjs
-  var import_data73 = __toESM(require_data(), 1);
+  var import_data74 = __toESM(require_data(), 1);
   var import_core_data41 = __toESM(require_core_data(), 1);
   var import_element76 = __toESM(require_element(), 1);
   var import_i18n134 = __toESM(require_i18n(), 1);
@@ -42217,7 +42186,7 @@ ${text}
   // packages/block-library/build-module/navigation-link/shared/use-entity-binding.mjs
   var import_element75 = __toESM(require_element(), 1);
   var import_block_editor149 = __toESM(require_block_editor(), 1);
-  var import_data72 = __toESM(require_data(), 1);
+  var import_data73 = __toESM(require_data(), 1);
   var import_core_data40 = __toESM(require_core_data(), 1);
   function buildNavigationLinkEntityBinding(kind) {
     if (kind === void 0) {
@@ -42247,7 +42216,7 @@ ${text}
     const hasUrlBinding = !!metadata?.bindings?.url && !!id;
     const expectedSource = kind === "post-type" ? "core/post-data" : "core/term-data";
     const hasCorrectBinding = hasUrlBinding && metadata?.bindings?.url?.source === expectedSource;
-    const { isBoundEntityAvailable, entityRecord } = (0, import_data72.useSelect)(
+    const { isBoundEntityAvailable, entityRecord } = (0, import_data73.useSelect)(
       (select9) => {
         if (!hasCorrectBinding || !id) {
           return { isBoundEntityAvailable: false, entityRecord: null };
@@ -42446,8 +42415,8 @@ ${text}
   var CLASSIC_MENU_CONVERSION_IDLE = "idle";
   var classicMenuBeingConvertedId = null;
   function useConvertClassicToBlockMenu(createNavigationMenu, { throwOnError = false } = {}) {
-    const registry = (0, import_data73.useRegistry)();
-    const { editEntityRecord } = (0, import_data73.useDispatch)(import_core_data41.store);
+    const registry = (0, import_data74.useRegistry)();
+    const { editEntityRecord } = (0, import_data74.useDispatch)(import_core_data41.store);
     const [status, setStatus] = (0, import_element76.useState)(CLASSIC_MENU_CONVERSION_IDLE);
     const [error, setError] = (0, import_element76.useState)(null);
     const convertClassicMenuToBlockMenu = (0, import_element76.useCallback)(
@@ -42565,20 +42534,20 @@ ${text}
   // packages/block-library/build-module/navigation/edit/use-create-navigation-menu.mjs
   var import_blocks62 = __toESM(require_blocks(), 1);
   var import_core_data44 = __toESM(require_core_data(), 1);
-  var import_data76 = __toESM(require_data(), 1);
+  var import_data77 = __toESM(require_data(), 1);
   var import_element78 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/navigation/edit/use-generate-default-navigation-title.mjs
   var import_components86 = __toESM(require_components(), 1);
   var import_core_data43 = __toESM(require_core_data(), 1);
-  var import_data75 = __toESM(require_data(), 1);
+  var import_data76 = __toESM(require_data(), 1);
   var import_element77 = __toESM(require_element(), 1);
   var import_i18n135 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/navigation/use-template-part-area-label.mjs
   var import_block_editor150 = __toESM(require_block_editor(), 1);
   var import_core_data42 = __toESM(require_core_data(), 1);
-  var import_data74 = __toESM(require_data(), 1);
+  var import_data75 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/template-part/edit/utils/get-template-part-icon.mjs
   var getTemplatePartIcon = (areaOrIconName) => {
@@ -42596,7 +42565,7 @@ ${text}
 
   // packages/block-library/build-module/navigation/use-template-part-area-label.mjs
   function useTemplatePartAreaLabel(clientId) {
-    return (0, import_data74.useSelect)(
+    return (0, import_data75.useSelect)(
       (select9) => {
         if (!clientId) {
           return;
@@ -42655,7 +42624,7 @@ ${text}
   function useGenerateDefaultNavigationTitle(clientId) {
     const isDisabled = (0, import_element77.useContext)(import_components86.Disabled.Context);
     const area = useTemplatePartAreaLabel(isDisabled ? void 0 : clientId);
-    const registry = (0, import_data75.useRegistry)();
+    const registry = (0, import_data76.useRegistry)();
     return (0, import_element77.useCallback)(async () => {
       if (isDisabled) {
         return "";
@@ -42694,7 +42663,7 @@ ${text}
     const [status, setStatus] = (0, import_element78.useState)(CREATE_NAVIGATION_MENU_IDLE);
     const [value, setValue] = (0, import_element78.useState)(null);
     const [error, setError] = (0, import_element78.useState)(null);
-    const { saveEntityRecord, editEntityRecord } = (0, import_data76.useDispatch)(import_core_data44.store);
+    const { saveEntityRecord, editEntityRecord } = (0, import_data77.useDispatch)(import_core_data44.store);
     const generateDefaultTitle = useGenerateDefaultNavigationTitle(clientId);
     const create5 = (0, import_element78.useCallback)(
       async (title = null, blocks = [], postStatus) => {
@@ -42762,11 +42731,11 @@ ${text}
   }
 
   // packages/block-library/build-module/navigation/edit/use-inner-blocks.mjs
-  var import_data77 = __toESM(require_data(), 1);
+  var import_data78 = __toESM(require_data(), 1);
   var import_block_editor151 = __toESM(require_block_editor(), 1);
   var EMPTY_ARRAY4 = [];
   function useInnerBlocks(clientId) {
-    return (0, import_data77.useSelect)(
+    return (0, import_data78.useSelect)(
       (select9) => {
         const { getBlock, getBlocks, hasSelectedInnerBlock } = select9(import_block_editor151.store);
         const _uncontrolledInnerBlocks = getBlock(clientId).innerBlocks;
@@ -42816,7 +42785,7 @@ ${text}
   // packages/block-library/build-module/navigation/edit/menu-inspector-controls.mjs
   var import_block_editor163 = __toESM(require_block_editor(), 1);
   var import_components95 = __toESM(require_components(), 1);
-  var import_data87 = __toESM(require_data(), 1);
+  var import_data88 = __toESM(require_data(), 1);
   var import_i18n147 = __toESM(require_i18n(), 1);
   var import_element84 = __toESM(require_element(), 1);
 
@@ -42856,7 +42825,7 @@ ${text}
   // packages/block-library/build-module/navigation/edit/leaf-more-menu.mjs
   var import_blocks63 = __toESM(require_blocks(), 1);
   var import_components89 = __toESM(require_components(), 1);
-  var import_data78 = __toESM(require_data(), 1);
+  var import_data79 = __toESM(require_data(), 1);
   var import_i18n138 = __toESM(require_i18n(), 1);
   var import_block_editor153 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
@@ -42875,7 +42844,7 @@ ${text}
     expand,
     setInsertedBlock
   }) {
-    const { insertBlock, replaceBlock, replaceInnerBlocks } = (0, import_data78.useDispatch)(import_block_editor153.store);
+    const { insertBlock, replaceBlock, replaceInnerBlocks } = (0, import_data79.useDispatch)(import_block_editor153.store);
     const clientId = block.clientId;
     const isDisabled = !BLOCKS_THAT_CAN_BE_CONVERTED_TO_SUBMENU.includes(
       block.name
@@ -42931,13 +42900,13 @@ ${text}
       duplicateBlocks,
       insertBeforeBlock,
       insertAfterBlock
-    } = (0, import_data78.useDispatch)(import_block_editor153.store);
+    } = (0, import_data79.useDispatch)(import_block_editor153.store);
     const removeLabel = (0, import_i18n138.sprintf)(
       /* translators: %s: block name */
       (0, import_i18n138.__)("Remove %s"),
       (0, import_block_editor153.BlockTitle)({ clientId, maximumLength: 25 })
     );
-    const { rootClientId, canDuplicate, canInsertBlock, isFirst, isLast } = (0, import_data78.useSelect)(
+    const { rootClientId, canDuplicate, canInsertBlock, isFirst, isLast } = (0, import_data79.useSelect)(
       (select9) => {
         const {
           getBlockRootClientId,
@@ -43060,19 +43029,19 @@ ${text}
 
   // packages/block-library/build-module/navigation/edit/navigation-link-ui.mjs
   var import_block_editor161 = __toESM(require_block_editor(), 1);
-  var import_data86 = __toESM(require_data(), 1);
+  var import_data87 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/navigation-link/shared/controls.mjs
   var import_components93 = __toESM(require_components(), 1);
   var import_i18n144 = __toESM(require_i18n(), 1);
   var import_dom10 = __toESM(require_dom(), 1);
   var import_block_editor159 = __toESM(require_block_editor(), 1);
-  var import_data84 = __toESM(require_data(), 1);
+  var import_data85 = __toESM(require_data(), 1);
   var import_core_data49 = __toESM(require_core_data(), 1);
 
   // packages/block-library/build-module/navigation-link/shared/use-handle-link-change.mjs
   var import_element80 = __toESM(require_element(), 1);
-  var import_data79 = __toESM(require_data(), 1);
+  var import_data80 = __toESM(require_data(), 1);
   var import_block_editor154 = __toESM(require_block_editor(), 1);
   var import_dom8 = __toESM(require_dom(), 1);
   var import_escape_html2 = __toESM(require_escape_html(), 1);
@@ -43201,7 +43170,7 @@ ${text}
     setAttributes,
     allowTextUpdate = false
   }) {
-    const { updateBlockAttributes } = (0, import_data79.useDispatch)(import_block_editor154.store);
+    const { updateBlockAttributes } = (0, import_data80.useDispatch)(import_block_editor154.store);
     const { hasUrlBinding, createBinding, clearBinding } = useEntityBinding({
       clientId,
       attributes
@@ -43272,7 +43241,7 @@ ${text}
   // packages/block-library/build-module/navigation-link/link-ui/page-creator.mjs
   var import_components91 = __toESM(require_components(), 1);
   var import_i18n140 = __toESM(require_i18n(), 1);
-  var import_data80 = __toESM(require_data(), 1);
+  var import_data81 = __toESM(require_data(), 1);
   var import_core_data45 = __toESM(require_core_data(), 1);
   var import_notices13 = __toESM(require_notices(), 1);
   var import_html_entities5 = __toESM(require_html_entities(), 1);
@@ -43341,7 +43310,7 @@ ${text}
     const [title, setTitle] = (0, import_element81.useState)(initialTitle);
     const [shouldPublish, setShouldPublish] = (0, import_element81.useState)(true);
     const isTitleValid = title.trim().length > 0;
-    const { lastError, isSaving } = (0, import_data80.useSelect)(
+    const { lastError, isSaving } = (0, import_data81.useSelect)(
       (select9) => ({
         lastError: select9(import_core_data45.store).getLastEntitySaveError(
           "postType",
@@ -43354,8 +43323,8 @@ ${text}
       }),
       [postType]
     );
-    const { saveEntityRecord } = (0, import_data80.useDispatch)(import_core_data45.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data80.useDispatch)(import_notices13.store);
+    const { saveEntityRecord } = (0, import_data81.useDispatch)(import_core_data45.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data81.useDispatch)(import_notices13.store);
     async function createPage(event) {
       event.preventDefault();
       if (isSaving || !isTitleValid) {
@@ -43463,14 +43432,14 @@ ${text}
 
   // packages/block-library/build-module/navigation-link/link-ui/block-inserter.mjs
   var import_i18n141 = __toESM(require_i18n(), 1);
-  var import_data81 = __toESM(require_data(), 1);
+  var import_data82 = __toESM(require_data(), 1);
   var import_block_editor155 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
   var { PrivateQuickInserter: QuickInserter } = unlock(
     import_block_editor155.privateApis
   );
   function LinkUIBlockInserter({ clientId, onBack, onBlockInsert }) {
-    const { rootBlockClientId } = (0, import_data81.useSelect)(
+    const { rootBlockClientId } = (0, import_data82.useSelect)(
       (select9) => {
         const { getBlockRootClientId } = select9(import_block_editor155.store);
         return {
@@ -43769,7 +43738,7 @@ ${text}
   var import_i18n143 = __toESM(require_i18n(), 1);
   var import_url16 = __toESM(require_url(), 1);
   var import_block_editor157 = __toESM(require_block_editor(), 1);
-  var import_data82 = __toESM(require_data(), 1);
+  var import_data83 = __toESM(require_data(), 1);
   var import_core_data47 = __toESM(require_core_data(), 1);
   var { useRemoteUrlData, isHashLink, isRelativePath } = unlock(
     import_block_editor157.privateApis
@@ -43902,7 +43871,7 @@ ${text}
     hasBinding,
     isEntityAvailable
   }) {
-    const homeUrl = (0, import_data82.useSelect)((select9) => {
+    const homeUrl = (0, import_data83.useSelect)((select9) => {
       return select9(import_core_data47.store).getEntityRecord(
         "root",
         "__unstableBase"
@@ -43914,7 +43883,7 @@ ${text}
       linkUrl: url,
       homeUrl
     });
-    const image = (0, import_data82.useSelect)(
+    const image = (0, import_data83.useSelect)(
       (select9) => {
         if (!entityRecord?.featured_media) {
           return null;
@@ -43948,14 +43917,14 @@ ${text}
   }
 
   // packages/block-library/build-module/navigation-link/shared/use-is-invalid-link.mjs
-  var import_data83 = __toESM(require_data(), 1);
+  var import_data84 = __toESM(require_data(), 1);
   var import_core_data48 = __toESM(require_core_data(), 1);
   var import_block_editor158 = __toESM(require_block_editor(), 1);
   var useIsInvalidLink = (kind, type, id, enabled) => {
     const isPostType = kind === "post-type" || type === "post" || type === "page";
     const hasId = Number.isInteger(id);
     const blockEditingMode = (0, import_block_editor158.useBlockEditingMode)();
-    const { postStatus, isDeleted } = (0, import_data83.useSelect)(
+    const { postStatus, isDeleted } = (0, import_data84.useSelect)(
       (select9) => {
         if (!isPostType) {
           return { postStatus: null, isDeleted: false };
@@ -44043,14 +44012,14 @@ ${text}
       attributes,
       setAttributes
     });
-    const onNavigateToEntityRecord = (0, import_data84.useSelect)(
+    const onNavigateToEntityRecord = (0, import_data85.useSelect)(
       (select9) => select9(import_block_editor159.store).getSettings().onNavigateToEntityRecord,
       []
     );
-    const homeUrl = (0, import_data84.useSelect)((select9) => {
+    const homeUrl = (0, import_data85.useSelect)((select9) => {
       return select9(import_core_data49.store).getEntityRecord("root", "__unstableBase")?.home;
     }, []);
-    const blockEditingMode = (0, import_data84.useSelect)(
+    const blockEditingMode = (0, import_data85.useSelect)(
       (select9) => select9(import_block_editor159.store).getBlockEditingMode(clientId),
       [clientId]
     );
@@ -44282,10 +44251,10 @@ ${text}
   }
 
   // packages/block-library/build-module/navigation-link/shared/use-enable-link-status-validation.mjs
-  var import_data85 = __toESM(require_data(), 1);
+  var import_data86 = __toESM(require_data(), 1);
   var import_block_editor160 = __toESM(require_block_editor(), 1);
   function useEnableLinkStatusValidation(clientId) {
-    return (0, import_data85.useSelect)(
+    return (0, import_data86.useSelect)(
       (select9) => {
         const {
           getSelectedBlockClientId,
@@ -44353,7 +44322,7 @@ ${text}
     "core/navigation-submenu"
   ];
   function NavigationLinkUI({ block, insertedBlock, setInsertedBlock }) {
-    const { updateBlockAttributes, removeBlock } = (0, import_data86.useDispatch)(import_block_editor161.store);
+    const { updateBlockAttributes, removeBlock } = (0, import_data87.useDispatch)(import_block_editor161.store);
     const supportsLinkControls = BLOCKS_WITH_LINK_UI_SUPPORT?.includes(
       insertedBlock?.name
     );
@@ -44482,14 +44451,14 @@ ${text}
     onCreateNew,
     expandRevision
   }) => {
-    const hasChildren = (0, import_data87.useSelect)(
+    const hasChildren = (0, import_data88.useSelect)(
       (select9) => {
         return !!select9(import_block_editor163.store).getBlockCount(clientId);
       },
       [clientId]
     );
     const { openListViewContentPanel } = unlock(
-      (0, import_data87.useDispatch)(import_block_editor163.store)
+      (0, import_data88.useDispatch)(import_block_editor163.store)
     );
     const { navigationMenu } = useNavigationMenu(currentMenuId);
     if (currentMenuId && isNavigationMenuMissing) {
@@ -44610,15 +44579,15 @@ ${text}
   }
 
   // packages/block-library/build-module/utils/is-within-overlay.mjs
-  var import_data88 = __toESM(require_data(), 1);
+  var import_data89 = __toESM(require_data(), 1);
   var import_core_data51 = __toESM(require_core_data(), 1);
   function isWithinNavigationOverlay() {
-    const editorStore = (0, import_data88.select)("core/editor");
+    const editorStore = (0, import_data89.select)("core/editor");
     if (!editorStore) {
       return false;
     }
     const { getCurrentPostType, getCurrentPostId } = editorStore;
-    const { getEditedEntityRecord } = (0, import_data88.select)(import_core_data51.store);
+    const { getEditedEntityRecord } = (0, import_data89.select)(import_core_data51.store);
     const postType = getCurrentPostType?.();
     const postId = getCurrentPostId?.();
     if (postType === "wp_template_part" && postId) {
@@ -44636,8 +44605,8 @@ ${text}
   var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
   var { isNavigationPostEditorKey } = unlock(import_block_editor164.privateApis);
   function NavigationAddPageButton({ clientId }) {
-    const { insertBlock } = (0, import_data89.useDispatch)(import_block_editor164.store);
-    const { getBlockCount } = (0, import_data89.useSelect)(import_block_editor164.store);
+    const { insertBlock } = (0, import_data90.useDispatch)(import_block_editor164.store);
+    const { getBlockCount } = (0, import_data90.useSelect)(import_block_editor164.store);
     const onAddPage = (0, import_element85.useCallback)(() => {
       const blockCount = getBlockCount(clientId);
       const newBlock = (0, import_blocks64.createBlock)(DEFAULT_BLOCK5.name, {
@@ -44676,7 +44645,7 @@ ${text}
       setDetectedOverlayBackgroundColor
     ] = (0, import_element85.useState)();
     const [detectedOverlayColor, setDetectedOverlayColor] = (0, import_element85.useState)();
-    const isWithinOverlay = (0, import_data89.useSelect)(() => isWithinNavigationOverlay(), []);
+    const isWithinOverlay = (0, import_data90.useSelect)(() => isWithinNavigationOverlay(), []);
     (0, import_element85.useEffect)(() => {
       detectColors(
         navRef.current,
@@ -44812,7 +44781,7 @@ ${text}
       onNavigateToEntityRecord,
       currentTheme,
       editorDisabledResponsive
-    } = (0, import_data89.useSelect)((select9) => {
+    } = (0, import_data90.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor164.store);
       const settings121 = getSettings2();
       return {
@@ -44866,7 +44835,7 @@ ${text}
       replaceInnerBlocks,
       selectBlock,
       __unstableMarkNextChangeAsNotPersistent
-    } = (0, import_data89.useDispatch)(import_block_editor164.store);
+    } = (0, import_data90.useDispatch)(import_block_editor164.store);
     (0, import_element85.useEffect)(() => {
       if (orientation === "horizontal" && submenuVisibility === "always") {
         __unstableMarkNextChangeAsNotPersistent();
@@ -44882,7 +44851,7 @@ ${text}
       __unstableMarkNextChangeAsNotPersistent
     ]);
     const hasPageListWithSubmenuRef = (0, import_element85.useRef)(false);
-    const hasSubmenus = (0, import_data89.useSelect)(
+    const hasSubmenus = (0, import_data90.useSelect)(
       (select9) => {
         const hasNavigationSubmenu = innerBlocks.some(
           (block) => block.name === "core/navigation-submenu"
@@ -44953,7 +44922,7 @@ ${text}
     );
     const isEntityAvailable = !isNavigationMenuMissing && isNavigationMenuResolved;
     const hasUnsavedBlocks = hasUncontrolledInnerBlocks && !isEntityAvailable;
-    const { getNavigationFallbackId } = unlock((0, import_data89.useSelect)(import_core_data52.store));
+    const { getNavigationFallbackId } = unlock((0, import_data90.useSelect)(import_core_data52.store));
     const navigationFallbackId = !(ref || hasUnsavedBlocks) ? getNavigationFallbackId() : null;
     (0, import_element85.useEffect)(() => {
       if (ref || hasUnsavedBlocks || !navigationFallbackId) {
@@ -44969,12 +44938,12 @@ ${text}
       __unstableMarkNextChangeAsNotPersistent
     ]);
     const navRef = (0, import_element85.useRef)();
-    const isWithinOverlay = (0, import_data89.useSelect)(() => isWithinNavigationOverlay(), []);
+    const isWithinOverlay = (0, import_data90.useSelect)(() => isWithinNavigationOverlay(), []);
     const TagName2 = isWithinOverlay ? "div" : "nav";
     const isPlaceholder = !ref && !isCreatingNavigationMenu && !isConvertingClassicMenu && hasResolvedNavigationMenus && classicMenus?.length === 0 && !hasUncontrolledInnerBlocks;
     const isLoading = !hasResolvedNavigationMenus || isCreatingNavigationMenu || isConvertingClassicMenu || !!(ref && !isEntityAvailable && !isConvertingClassicMenu);
     const textDecoration = attributes.style?.typography?.textDecoration;
-    const hasBlockOverlay = (0, import_data89.useSelect)(
+    const hasBlockOverlay = (0, import_data90.useSelect)(
       (select9) => select9(import_block_editor164.store).__unstableHasActiveBlockOverlayActive(
         clientId
       ),
@@ -46208,7 +46177,7 @@ ${text}
       if (!ref) {
         return;
       }
-      const navigation = (0, import_data90.select)(import_core_data53.store).getEditedEntityRecord(
+      const navigation = (0, import_data91.select)(import_core_data53.store).getEditedEntityRecord(
         "postType",
         "wp_navigation",
         ref
@@ -46334,7 +46303,7 @@ ${text}
 
   // packages/block-library/build-module/navigation-link/edit.mjs
   var import_blocks65 = __toESM(require_blocks(), 1);
-  var import_data91 = __toESM(require_data(), 1);
+  var import_data92 = __toESM(require_data(), 1);
   var import_components97 = __toESM(require_components(), 1);
   var import_keycodes5 = __toESM(require_keycodes(), 1);
   var import_i18n151 = __toESM(require_i18n(), 1);
@@ -46384,7 +46353,7 @@ ${text}
       replaceBlock,
       __unstableMarkNextChangeAsNotPersistent,
       selectBlock
-    } = (0, import_data91.useDispatch)(import_block_editor167.store);
+    } = (0, import_data92.useDispatch)(import_block_editor167.store);
     const [isLinkOpen, setIsLinkOpen] = (0, import_element86.useState)(isSelected && !url);
     const [popoverAnchor, setPopoverAnchor] = (0, import_element86.useState)(null);
     const listItemRef = (0, import_element86.useRef)(null);
@@ -46401,7 +46370,7 @@ ${text}
       hasChildren,
       parentBlockClientId,
       isSubmenu
-    } = (0, import_data91.useSelect)(
+    } = (0, import_data92.useSelect)(
       (select9) => {
         const {
           getBlockCount,
@@ -46433,7 +46402,7 @@ ${text}
       [clientId, maxNestingLevel]
     );
     const validateLinkStatus = useEnableLinkStatusValidation(clientId);
-    const { getBlocks } = (0, import_data91.useSelect)(import_block_editor167.store);
+    const { getBlocks } = (0, import_data92.useSelect)(import_block_editor167.store);
     const { hasUrlBinding, isBoundEntityAvailable, entityRecord } = useEntityBinding({
       clientId,
       attributes
@@ -47073,7 +47042,7 @@ ${text}
   };
 
   // packages/block-library/build-module/navigation-submenu/edit.mjs
-  var import_data92 = __toESM(require_data(), 1);
+  var import_data93 = __toESM(require_data(), 1);
   var import_components99 = __toESM(require_components(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_i18n153 = __toESM(require_i18n(), 1);
@@ -47130,7 +47099,7 @@ ${text}
       setAttributes,
       allowTextUpdate: true
     });
-    const { __unstableMarkNextChangeAsNotPersistent, replaceBlock } = (0, import_data92.useDispatch)(import_block_editor170.store);
+    const { __unstableMarkNextChangeAsNotPersistent, replaceBlock } = (0, import_data93.useDispatch)(import_block_editor170.store);
     const [isLinkOpen, setIsLinkOpen] = (0, import_element87.useState)(false);
     const [popoverAnchor, setPopoverAnchor] = (0, import_element87.useState)(null);
     const listItemRef = (0, import_element87.useRef)(null);
@@ -47144,7 +47113,7 @@ ${text}
       hasChildren,
       selectedBlockHasChildren,
       onlyDescendantIsEmptyLink
-    } = (0, import_data92.useSelect)(
+    } = (0, import_data93.useSelect)(
       (select9) => {
         const {
           hasSelectedInnerBlock,
@@ -47778,17 +47747,17 @@ ${text}
 
   // packages/block-library/build-module/pattern/edit.mjs
   var import_blocks72 = __toESM(require_blocks(), 1);
-  var import_data94 = __toESM(require_data(), 1);
+  var import_data95 = __toESM(require_data(), 1);
   var import_element89 = __toESM(require_element(), 1);
   var import_block_editor174 = __toESM(require_block_editor(), 1);
   var import_core_data54 = __toESM(require_core_data(), 1);
   var import_i18n157 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/pattern/recursion-detector.mjs
-  var import_data93 = __toESM(require_data(), 1);
+  var import_data94 = __toESM(require_data(), 1);
   var cachedParsers = /* @__PURE__ */ new WeakMap();
   function useParsePatternDependencies() {
-    const registry = (0, import_data93.useRegistry)();
+    const registry = (0, import_data94.useRegistry)();
     if (!cachedParsers.has(registry)) {
       const deps = /* @__PURE__ */ new Map();
       cachedParsers.set(
@@ -47841,14 +47810,14 @@ ${text}
   // packages/block-library/build-module/pattern/edit.mjs
   var import_jsx_runtime350 = __toESM(require_jsx_runtime(), 1);
   var PatternEdit = ({ attributes, clientId }) => {
-    const registry = (0, import_data94.useRegistry)();
-    const selectedPattern = (0, import_data94.useSelect)(
+    const registry = (0, import_data95.useRegistry)();
+    const selectedPattern = (0, import_data95.useSelect)(
       (select9) => select9(import_block_editor174.store).__experimentalGetParsedPattern(
         attributes.slug
       ),
       [attributes.slug]
     );
-    const currentThemeStylesheet = (0, import_data94.useSelect)(
+    const currentThemeStylesheet = (0, import_data95.useSelect)(
       (select9) => select9(import_core_data54.store).getCurrentTheme()?.stylesheet,
       []
     );
@@ -47856,8 +47825,8 @@ ${text}
       replaceBlocks,
       setBlockEditingMode,
       __unstableMarkNextChangeAsNotPersistent
-    } = (0, import_data94.useDispatch)(import_block_editor174.store);
-    const { getBlockRootClientId, getBlockEditingMode } = (0, import_data94.useSelect)(import_block_editor174.store);
+    } = (0, import_data95.useDispatch)(import_block_editor174.store);
+    const { getBlockRootClientId, getBlockEditingMode } = (0, import_data95.useSelect)(import_block_editor174.store);
     const [hasRecursionError, setHasRecursionError] = (0, import_element89.useState)(false);
     const parsePatternDependencies2 = useParsePatternDependencies();
     function injectThemeAttributeInBlockTemplateContent(block) {
@@ -48043,11 +48012,11 @@ ${text}
   var import_i18n159 = __toESM(require_i18n(), 1);
   var import_element90 = __toESM(require_element(), 1);
   var import_core_data55 = __toESM(require_core_data(), 1);
-  var import_data96 = __toESM(require_data(), 1);
+  var import_data97 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/page-list/use-convert-to-navigation-links.mjs
   var import_blocks73 = __toESM(require_blocks(), 1);
-  var import_data95 = __toESM(require_data(), 1);
+  var import_data96 = __toESM(require_data(), 1);
   var import_block_editor175 = __toESM(require_block_editor(), 1);
   function createNavigationLinks(pages = []) {
     const POST_TYPE_KIND = "post-type";
@@ -48132,7 +48101,7 @@ ${text}
     parentClientId,
     parentPageID
   }) {
-    const { replaceBlock, selectBlock } = (0, import_data95.useDispatch)(import_block_editor175.store);
+    const { replaceBlock, selectBlock } = (0, import_data96.useDispatch)(import_block_editor175.store);
     return () => {
       const navigationLinks = convertToNavigationLinks(pages, parentPageID);
       replaceBlock(clientId, navigationLinks);
@@ -48358,7 +48327,7 @@ ${text}
       parentClientId,
       hasDraggedChild,
       isChildOfNavigation
-    } = (0, import_data96.useSelect)(
+    } = (0, import_data97.useSelect)(
       (select9) => {
         const {
           getBlockParentsByBlockName,
@@ -48393,7 +48362,7 @@ ${text}
       onChange: NOOP,
       value: blockList
     });
-    const { selectBlock } = (0, import_data96.useDispatch)(import_block_editor176.store);
+    const { selectBlock } = (0, import_data97.useDispatch)(import_block_editor176.store);
     (0, import_element90.useEffect)(() => {
       if (hasSelectedChild || hasDraggedChild) {
         openModal();
@@ -48568,7 +48537,7 @@ ${text}
 
   // packages/block-library/build-module/page-list-item/edit.mjs
   var import_block_editor177 = __toESM(require_block_editor(), 1);
-  var import_data97 = __toESM(require_data(), 1);
+  var import_data98 = __toESM(require_data(), 1);
   var import_core_data56 = __toESM(require_core_data(), 1);
   var import_dom11 = __toESM(require_dom(), 1);
 
@@ -48590,7 +48559,7 @@ ${text}
   // packages/block-library/build-module/page-list-item/edit.mjs
   var import_jsx_runtime354 = __toESM(require_jsx_runtime(), 1);
   function useFrontPageId() {
-    return (0, import_data97.useSelect)((select9) => {
+    return (0, import_data98.useSelect)((select9) => {
       const canReadSettings = select9(import_core_data56.store).canUser("read", {
         kind: "root",
         name: "site"
@@ -49095,20 +49064,20 @@ ${text}
   var import_i18n161 = __toESM(require_i18n(), 1);
   var import_components104 = __toESM(require_components(), 1);
   var import_block_editor181 = __toESM(require_block_editor(), 1);
-  var import_data100 = __toESM(require_data(), 1);
+  var import_data101 = __toESM(require_data(), 1);
   var import_blocks76 = __toESM(require_blocks(), 1);
 
   // packages/block-library/build-module/paragraph/use-enter.mjs
   var import_element92 = __toESM(require_element(), 1);
   var import_compose40 = __toESM(require_compose(), 1);
   var import_keycodes7 = __toESM(require_keycodes(), 1);
-  var import_data98 = __toESM(require_data(), 1);
+  var import_data99 = __toESM(require_data(), 1);
   var import_block_editor179 = __toESM(require_block_editor(), 1);
   var import_blocks75 = __toESM(require_blocks(), 1);
   var { subscribeDelegatedListener: subscribeDelegatedListener4 } = unlock(import_compose40.privateApis);
   function useOnEnter(props) {
-    const { batch } = (0, import_data98.useRegistry)();
-    const { moveBlocksToPosition, replaceBlocks, selectionChange } = (0, import_data98.useDispatch)(import_block_editor179.store);
+    const { batch } = (0, import_data99.useRegistry)();
+    const { moveBlocksToPosition, replaceBlocks, selectionChange } = (0, import_data99.useDispatch)(import_block_editor179.store);
     const {
       getBlockRootClientId,
       getBlockIndex,
@@ -49116,7 +49085,7 @@ ${text}
       getBlockName,
       getBlock,
       canInsertBlockType
-    } = (0, import_data98.useSelect)(import_block_editor179.store);
+    } = (0, import_data99.useSelect)(import_block_editor179.store);
     const propsRef = (0, import_element92.useRef)(props);
     propsRef.current = props;
     return (0, import_compose40.useRefEffect)((element) => {
@@ -49195,10 +49164,10 @@ ${text}
   var import_compose41 = __toESM(require_compose(), 1);
   var import_element93 = __toESM(require_element(), 1);
   var import_deprecated32 = __toESM(require_deprecated(), 1);
-  var import_data99 = __toESM(require_data(), 1);
+  var import_data100 = __toESM(require_data(), 1);
   var import_block_editor180 = __toESM(require_block_editor(), 1);
   function useDeprecatedAlign(align, style2, setAttributes) {
-    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data99.useDispatch)(import_block_editor180.store);
+    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data100.useDispatch)(import_block_editor180.store);
     const updateStyleWithAlign = (0, import_compose41.useEvent)(() => {
       (0, import_deprecated32.default)("align attribute in paragraph block", {
         alternative: "style.typography.textAlign",
@@ -49245,7 +49214,7 @@ ${text}
   }
   function DropCapControl({ clientId, attributes, setAttributes, name: name122 }) {
     const [isDropCapFeatureEnabled] = (0, import_block_editor181.useSettings)("typography.dropCap");
-    const hasSelectedStyleState = (0, import_data100.useSelect)(
+    const hasSelectedStyleState = (0, import_data101.useSelect)(
       (select9) => {
         const { hasSelectedStyleState: hasSelectedBlockStyleState } = unlock(select9(import_block_editor181.store));
         return hasSelectedBlockStyleState(clientId);
@@ -49644,7 +49613,7 @@ ${text}
   var import_element96 = __toESM(require_element(), 1);
   var import_block_editor183 = __toESM(require_block_editor(), 1);
   var import_components105 = __toESM(require_components(), 1);
-  var import_data101 = __toESM(require_data(), 1);
+  var import_data102 = __toESM(require_data(), 1);
   var import_notices14 = __toESM(require_notices(), 1);
   var import_i18n165 = __toESM(require_i18n(), 1);
   var import_blocks79 = __toESM(require_blocks(), 1);
@@ -50831,14 +50800,14 @@ ${text}
     } = attributes;
     const waveformStyle = attributes.className?.match(/is-style-([\w-]+)/)?.[1] || "bars";
     const blockProps = (0, import_block_editor183.useBlockProps)();
-    const { replaceInnerBlocks } = (0, import_data101.useDispatch)(import_block_editor183.store);
-    const { createErrorNotice } = (0, import_data101.useDispatch)(import_notices14.store);
+    const { replaceInnerBlocks } = (0, import_data102.useDispatch)(import_block_editor183.store);
+    const { createErrorNotice } = (0, import_data102.useDispatch)(import_notices14.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     function onUploadError(message) {
       createErrorNotice(message, { type: "snackbar" });
     }
     const [currentTrackClientId, setCurrentTrackClientId] = (0, import_element96.useState)(null);
-    const { innerBlockTracks } = (0, import_data101.useSelect)(
+    const { innerBlockTracks } = (0, import_data102.useSelect)(
       (select9) => {
         const { getBlock: _getBlock } = select9(import_block_editor183.store);
         return {
@@ -50934,7 +50903,7 @@ ${text}
         setAttributes({ [attribute]: newValue });
       };
     }
-    const hasSelectedChild = (0, import_data101.useSelect)(
+    const hasSelectedChild = (0, import_data102.useSelect)(
       (select9) => select9(import_block_editor183.store).hasSelectedInnerBlock(clientId),
       [clientId]
     );
@@ -51273,7 +51242,7 @@ ${text}
   var import_element97 = __toESM(require_element(), 1);
   var import_block_editor185 = __toESM(require_block_editor(), 1);
   var import_components106 = __toESM(require_components(), 1);
-  var import_data102 = __toESM(require_data(), 1);
+  var import_data103 = __toESM(require_data(), 1);
   var import_notices15 = __toESM(require_notices(), 1);
   var import_i18n166 = __toESM(require_i18n(), 1);
   var import_dom12 = __toESM(require_dom(), 1);
@@ -51293,7 +51262,7 @@ ${text}
     const imageButton = (0, import_element97.useRef)();
     const blockProps = (0, import_block_editor185.useBlockProps)();
     const { currentTrackClientId, setCurrentTrackClientId } = (0, import_element97.useContext)(PlaylistContext);
-    const { createErrorNotice } = (0, import_data102.useDispatch)(import_notices15.store);
+    const { createErrorNotice } = (0, import_data103.useDispatch)(import_notices15.store);
     function onUploadError(message) {
       createErrorNotice(message, { type: "snackbar" });
     }
@@ -51628,7 +51597,7 @@ ${text}
   var import_components107 = __toESM(require_components(), 1);
   var import_compose43 = __toESM(require_compose(), 1);
   var import_core_data57 = __toESM(require_core_data(), 1);
-  var import_data103 = __toESM(require_data(), 1);
+  var import_data104 = __toESM(require_data(), 1);
   var import_element98 = __toESM(require_element(), 1);
   var import_html_entities8 = __toESM(require_html_entities(), 1);
   var import_i18n168 = __toESM(require_i18n(), 1);
@@ -51757,7 +51726,7 @@ ${text}
   };
   function AuthorCombobox({ value, onChange }) {
     const [filterValue, setFilterValue] = (0, import_element98.useState)("");
-    const { authors, isLoading } = (0, import_data103.useSelect)(
+    const { authors, isLoading } = (0, import_data104.useSelect)(
       (select9) => {
         const { getUsers, isResolving } = select9(import_core_data57.store);
         const query = { ...AUTHORS_QUERY2 };
@@ -51823,7 +51792,7 @@ ${text}
     const isDescendentOfQueryLoop = Number.isFinite(queryId);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const defaultAvatar = useDefaultAvatar();
-    const { authorDetails, canAssignAuthor, supportsAuthor } = (0, import_data103.useSelect)(
+    const { authorDetails, canAssignAuthor, supportsAuthor } = (0, import_data104.useSelect)(
       (select9) => {
         const { getEditedEntityRecord, getUser, getPostType } = select9(import_core_data57.store);
         const currentPost = getEditedEntityRecord(
@@ -51840,12 +51809,12 @@ ${text}
       },
       [postType, postId]
     );
-    const blockTypes = (0, import_data103.useSelect)(
+    const blockTypes = (0, import_data104.useSelect)(
       (select9) => select9(import_blocks81.store).getBlockTypes(),
       []
     );
-    const { editEntityRecord } = (0, import_data103.useDispatch)(import_core_data57.store);
-    const { replaceBlock } = (0, import_data103.useDispatch)(import_block_editor187.store);
+    const { editEntityRecord } = (0, import_data104.useDispatch)(import_core_data57.store);
+    const { replaceBlock } = (0, import_data104.useDispatch)(import_block_editor187.store);
     const {
       textAlign,
       showAvatar,
@@ -52186,7 +52155,7 @@ ${text}
 
   // packages/block-library/build-module/post-author-name/edit.mjs
   var import_block_editor188 = __toESM(require_block_editor(), 1);
-  var import_data104 = __toESM(require_data(), 1);
+  var import_data105 = __toESM(require_data(), 1);
   var import_i18n170 = __toESM(require_i18n(), 1);
   var import_core_data58 = __toESM(require_core_data(), 1);
   var import_components108 = __toESM(require_components(), 1);
@@ -52198,7 +52167,7 @@ ${text}
       setAttributes,
       context: { postType, postId }
     } = props;
-    const { authorName, supportsAuthor } = (0, import_data104.useSelect)(
+    const { authorName, supportsAuthor } = (0, import_data105.useSelect)(
       (select9) => {
         const { getEditedEntityRecord, getUser, getPostType } = select9(import_core_data58.store);
         const _authorId = getEditedEntityRecord(
@@ -52455,7 +52424,7 @@ ${text}
 
   // packages/block-library/build-module/post-author-biography/edit.mjs
   var import_block_editor189 = __toESM(require_block_editor(), 1);
-  var import_data105 = __toESM(require_data(), 1);
+  var import_data106 = __toESM(require_data(), 1);
   var import_i18n171 = __toESM(require_i18n(), 1);
   var import_core_data59 = __toESM(require_core_data(), 1);
   var import_jsx_runtime364 = __toESM(require_jsx_runtime(), 1);
@@ -52464,7 +52433,7 @@ ${text}
     const {
       context: { postType, postId }
     } = props;
-    const { authorDetails } = (0, import_data105.useSelect)(
+    const { authorDetails } = (0, import_data106.useSelect)(
       (select9) => {
         const { getEditedEntityRecord, getUser } = select9(import_core_data59.store);
         const _authorId = getEditedEntityRecord(
@@ -53100,7 +53069,7 @@ ${text}
   // packages/block-library/build-module/post-comments-link/edit.mjs
   var import_block_editor194 = __toESM(require_block_editor(), 1);
   var import_element101 = __toESM(require_element(), 1);
-  var import_data106 = __toESM(require_data(), 1);
+  var import_data107 = __toESM(require_data(), 1);
   var import_api_fetch4 = __toESM(require_api_fetch(), 1);
   var import_url20 = __toESM(require_url(), 1);
   var import_i18n174 = __toESM(require_i18n(), 1);
@@ -53126,7 +53095,7 @@ ${text}
         }
       });
     }, [postId]);
-    const post = (0, import_data106.useSelect)(
+    const post = (0, import_data107.useSelect)(
       (select9) => select9(import_core_data60.store).getEditedEntityRecord(
         "postType",
         postType,
@@ -53359,7 +53328,7 @@ ${text}
   var import_block_editor195 = __toESM(require_block_editor(), 1);
   var import_blocks85 = __toESM(require_blocks(), 1);
   var import_core_data61 = __toESM(require_core_data(), 1);
-  var import_data107 = __toESM(require_data(), 1);
+  var import_data108 = __toESM(require_data(), 1);
   var import_element102 = __toESM(require_element(), 1);
   var import_jsx_runtime370 = __toESM(require_jsx_runtime(), 1);
   var { HTMLElementControl: HTMLElementControl5 } = unlock(import_block_editor195.privateApis);
@@ -53404,7 +53373,7 @@ ${text}
       postType,
       { id: postId }
     );
-    const entityRecord = (0, import_data107.useSelect)(
+    const entityRecord = (0, import_data108.useSelect)(
       (select9) => {
         return select9(import_core_data61.store).getEntityRecord(
           "postType",
@@ -53621,7 +53590,7 @@ ${text}
   var import_components110 = __toESM(require_components(), 1);
   var import_i18n176 = __toESM(require_i18n(), 1);
   var import_keycodes8 = __toESM(require_keycodes(), 1);
-  var import_data108 = __toESM(require_data(), 1);
+  var import_data109 = __toESM(require_data(), 1);
   var import_blocks86 = __toESM(require_blocks(), 1);
   var import_jsx_runtime371 = __toESM(require_jsx_runtime(), 1);
   function PostDateEdit(props) {
@@ -53640,7 +53609,7 @@ ${text}
       () => ({ anchor: popoverAnchor }),
       [popoverAnchor]
     );
-    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data108.useDispatch)(import_block_editor196.store);
+    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data109.useDispatch)(import_block_editor196.store);
     (0, import_element103.useEffect)(() => {
       if (datetime === void 0) {
         __unstableMarkNextChangeAsNotPersistent();
@@ -53653,7 +53622,7 @@ ${text}
       postType,
       siteFormat = dateSettings.formats.date,
       siteTimeFormat = dateSettings.formats.time
-    } = (0, import_data108.useSelect)(
+    } = (0, import_data109.useSelect)(
       (select9) => {
         const { getPostType, getEntityRecord } = select9(import_core_data62.store);
         const siteSettings = getEntityRecord("root", "site");
@@ -53665,7 +53634,7 @@ ${text}
       },
       [postTypeSlug]
     );
-    const activeBlockVariationName = (0, import_data108.useSelect)(
+    const activeBlockVariationName = (0, import_data109.useSelect)(
       (select9) => select9(import_blocks86.store).getActiveBlockVariation(name122, attributes)?.name,
       [name122, attributes]
     );
@@ -54244,7 +54213,7 @@ ${text}
   var import_block_editor197 = __toESM(require_block_editor(), 1);
   var import_components111 = __toESM(require_components(), 1);
   var import_i18n178 = __toESM(require_i18n(), 1);
-  var import_data109 = __toESM(require_data(), 1);
+  var import_data110 = __toESM(require_data(), 1);
   var import_jsx_runtime372 = __toESM(require_jsx_runtime(), 1);
   var ELLIPSIS = "\u2026";
   function PostExcerptEditor(props) {
@@ -54263,7 +54232,7 @@ ${text}
       { rendered: renderedExcerpt, protected: isProtected } = {}
     ] = (0, import_core_data63.useEntityProp)("postType", postType, "excerpt", postId);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    const postTypeSupportsExcerpts = (0, import_data109.useSelect)(
+    const postTypeSupportsExcerpts = (0, import_data110.useSelect)(
       (select9) => {
         if (postType === "page") {
           return true;
@@ -54628,7 +54597,7 @@ ${text}
   // packages/block-library/build-module/post-featured-image/edit.mjs
   var import_blob18 = __toESM(require_blob(), 1);
   var import_core_data64 = __toESM(require_core_data(), 1);
-  var import_data110 = __toESM(require_data(), 1);
+  var import_data111 = __toESM(require_data(), 1);
   var import_components114 = __toESM(require_components(), 1);
   var import_block_editor201 = __toESM(require_block_editor(), 1);
   var import_element105 = __toESM(require_element(), 1);
@@ -54875,7 +54844,7 @@ ${text}
   var hasDimensionValue = (value) => value !== void 0 && value !== null && value !== "";
   var DEFAULT_MEDIA_SIZE_SLUG5 = "full";
   function FeaturedImageResolutionTool({ image, value, onChange }) {
-    const { imageSizes } = (0, import_data110.useSelect)((select9) => {
+    const { imageSizes } = (0, import_data111.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor201.store);
       return {
         imageSizes: getSettings2().imageSizes
@@ -54941,7 +54910,7 @@ ${text}
       const imageId = imageOpener?.groups?.attrs && JSON.parse(imageOpener.groups.attrs)?.id;
       return imageId;
     }, [storedFeaturedImage, useFirstImageFromPost, postContent]);
-    const { media, postType, postPermalink, selectedStyleState } = (0, import_data110.useSelect)(
+    const { media, postType, postPermalink, selectedStyleState } = (0, import_data111.useSelect)(
       (select9) => {
         const { getEntityRecord, getPostType, getEditedEntityRecord } = select9(import_core_data64.store);
         const { getSelectedBlockStyleState } = unlock(
@@ -55014,7 +54983,7 @@ ${text}
         setTemporaryURL();
       }
     }, [mediaUrl, temporaryURL]);
-    const { createErrorNotice } = (0, import_data110.useDispatch)(import_notices16.store);
+    const { createErrorNotice } = (0, import_data111.useDispatch)(import_notices16.store);
     const onUploadError = (message) => {
       createErrorNotice(message, { type: "snackbar" });
       setTemporaryURL();
@@ -55343,7 +55312,7 @@ ${text}
   var import_components115 = __toESM(require_components(), 1);
   var import_block_editor202 = __toESM(require_block_editor(), 1);
   var import_i18n182 = __toESM(require_i18n(), 1);
-  var import_data111 = __toESM(require_data(), 1);
+  var import_data112 = __toESM(require_data(), 1);
   var import_core_data65 = __toESM(require_core_data(), 1);
   var import_jsx_runtime377 = __toESM(require_jsx_runtime(), 1);
   function PostNavigationLinkEdit({
@@ -55370,7 +55339,7 @@ ${text}
     }
     const ariaLabel = isNext ? (0, import_i18n182.__)("Next post") : (0, import_i18n182.__)("Previous post");
     const blockProps = (0, import_block_editor202.useBlockProps)();
-    const taxonomies = (0, import_data111.useSelect)(
+    const taxonomies = (0, import_data112.useSelect)(
       (select9) => {
         const { getTaxonomies } = select9(import_core_data65.store);
         const filteredTaxonomies = getTaxonomies({
@@ -55775,7 +55744,7 @@ ${text}
 
   // packages/block-library/build-module/post-template/edit.mjs
   var import_element106 = __toESM(require_element(), 1);
-  var import_data112 = __toESM(require_data(), 1);
+  var import_data113 = __toESM(require_data(), 1);
   var import_i18n185 = __toESM(require_i18n(), 1);
   var import_block_editor203 = __toESM(require_block_editor(), 1);
   var import_components116 = __toESM(require_components(), 1);
@@ -55875,7 +55844,7 @@ ${text}
       minimumColumnWidth
     } = layout || {};
     const [activeBlockContextId, setActiveBlockContextId] = (0, import_element106.useState)();
-    const { posts, blocks } = (0, import_data112.useSelect)(
+    const { posts, blocks } = (0, import_data113.useSelect)(
       (select9) => {
         const { getEntityRecords, getTaxonomies } = select9(import_core_data66.store);
         const { getBlocks } = select9(import_block_editor203.store);
@@ -56183,18 +56152,18 @@ ${text}
   var import_block_editor205 = __toESM(require_block_editor(), 1);
   var import_blocks88 = __toESM(require_blocks(), 1);
   var import_components117 = __toESM(require_components(), 1);
-  var import_data114 = __toESM(require_data(), 1);
+  var import_data115 = __toESM(require_data(), 1);
   var import_html_entities9 = __toESM(require_html_entities(), 1);
   var import_i18n186 = __toESM(require_i18n(), 1);
   var import_core_data68 = __toESM(require_core_data(), 1);
 
   // packages/block-library/build-module/post-terms/use-post-terms.mjs
   var import_core_data67 = __toESM(require_core_data(), 1);
-  var import_data113 = __toESM(require_data(), 1);
+  var import_data114 = __toESM(require_data(), 1);
   var EMPTY_ARRAY5 = [];
   function usePostTerms({ postId, term }) {
     const { slug } = term;
-    return (0, import_data113.useSelect)(
+    return (0, import_data114.useSelect)(
       (select9) => {
         const visible = term?.visibility?.publicly_queryable;
         if (!visible || !postId) {
@@ -56245,7 +56214,7 @@ ${text}
   }) {
     const { term, separator, prefix, suffix } = attributes;
     const { postId, postType } = context;
-    const selectedTerm = (0, import_data114.useSelect)(
+    const selectedTerm = (0, import_data115.useSelect)(
       (select9) => {
         if (!term) {
           return {};
@@ -56858,7 +56827,7 @@ ${text}
   var import_i18n189 = __toESM(require_i18n(), 1);
   var import_blocks90 = __toESM(require_blocks(), 1);
   var import_core_data70 = __toESM(require_core_data(), 1);
-  var import_data115 = __toESM(require_data(), 1);
+  var import_data116 = __toESM(require_data(), 1);
   var import_element108 = __toESM(require_element(), 1);
   var import_jsx_runtime382 = __toESM(require_jsx_runtime(), 1);
   function PostTitleEdit({
@@ -56869,7 +56838,7 @@ ${text}
   }) {
     const TagName2 = level === 0 ? "p" : `h${level}`;
     const isDescendentOfQueryLoop = Number.isFinite(queryId);
-    const userCanEdit = (0, import_data115.useSelect)(
+    const userCanEdit = (0, import_data116.useSelect)(
       (select9) => {
         if (isDescendentOfQueryLoop) {
           return false;
@@ -57398,7 +57367,7 @@ ${text}
 
   // packages/block-library/build-module/pullquote/deprecated.mjs
   var import_block_editor210 = __toESM(require_block_editor(), 1);
-  var import_data116 = __toESM(require_data(), 1);
+  var import_data117 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/pullquote/shared.mjs
   var SOLID_COLOR_CLASS = `is-style-solid-color`;
@@ -57913,7 +57882,7 @@ ${text}
           borderColor: customMainColor
         };
       } else if (mainColor) {
-        const colors = (0, import_data116.select)(import_block_editor210.store).getSettings().colors ?? [];
+        const colors = (0, import_data117.select)(import_block_editor210.store).getSettings().colors ?? [];
         const colorObject = (0, import_block_editor210.getColorObjectByAttributeValues)(
           colors,
           mainColor
@@ -58398,12 +58367,12 @@ ${text}
   };
 
   // packages/block-library/build-module/query/edit/index.mjs
-  var import_data128 = __toESM(require_data(), 1);
+  var import_data129 = __toESM(require_data(), 1);
   var import_element117 = __toESM(require_element(), 1);
   var import_block_editor219 = __toESM(require_block_editor(), 1);
 
   // packages/block-library/build-module/query/edit/query-content.mjs
-  var import_data126 = __toESM(require_data(), 1);
+  var import_data127 = __toESM(require_data(), 1);
   var import_compose50 = __toESM(require_compose(), 1);
   var import_element115 = __toESM(require_element(), 1);
   var import_block_editor217 = __toESM(require_block_editor(), 1);
@@ -58415,7 +58384,7 @@ ${text}
   var import_i18n195 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/query/utils.mjs
-  var import_data117 = __toESM(require_data(), 1);
+  var import_data118 = __toESM(require_data(), 1);
   var import_element109 = __toESM(require_element(), 1);
   var import_core_data71 = __toESM(require_core_data(), 1);
   var import_block_editor213 = __toESM(require_block_editor(), 1);
@@ -58453,7 +58422,7 @@ ${text}
     }));
   };
   var usePostTypes = () => {
-    const postTypes = (0, import_data117.useSelect)((select9) => {
+    const postTypes = (0, import_data118.useSelect)((select9) => {
       const { getPostTypes } = select9(import_core_data71.store);
       const excludedPostTypes = ["attachment"];
       const filteredPostTypes = getPostTypes({ per_page: -1 })?.filter(
@@ -58493,7 +58462,7 @@ ${text}
     };
   };
   var useTaxonomies = (postType) => {
-    const taxonomies = (0, import_data117.useSelect)(
+    const taxonomies = (0, import_data118.useSelect)(
       (select9) => {
         const { getTaxonomies, getPostType } = select9(import_core_data71.store);
         if (getPostType(postType)?.taxonomies?.length > 0) {
@@ -58513,7 +58482,7 @@ ${text}
     }, [taxonomies]);
   };
   function useIsPostTypeHierarchical(postType) {
-    return (0, import_data117.useSelect)(
+    return (0, import_data118.useSelect)(
       (select9) => {
         const type = select9(import_core_data71.store).getPostType(postType);
         return type?.viewable && type?.hierarchical;
@@ -58522,7 +58491,7 @@ ${text}
     );
   }
   function useOrderByOptions(postType) {
-    const supportsCustomOrder = (0, import_data117.useSelect)(
+    const supportsCustomOrder = (0, import_data118.useSelect)(
       (select9) => {
         const type = select9(import_core_data71.store).getPostType(postType);
         return !!type?.supports?.["page-attributes"];
@@ -58568,7 +58537,7 @@ ${text}
     }, [supportsCustomOrder]);
   }
   function useAllowedControls(attributes) {
-    return (0, import_data117.useSelect)(
+    return (0, import_data118.useSelect)(
       (select9) => select9(import_blocks97.store).getActiveBlockVariation(
         "core/query",
         attributes
@@ -58610,7 +58579,7 @@ ${text}
     return { newBlocks: clonedBlocks, queryClientIds };
   };
   function useBlockNameForPatterns(clientId, attributes) {
-    return (0, import_data117.useSelect)(
+    return (0, import_data118.useSelect)(
       (select9) => {
         const activeVariationName = select9(
           import_blocks97.store
@@ -58630,7 +58599,7 @@ ${text}
     );
   }
   function useScopedBlockVariations(attributes) {
-    const { activeVariationName, blockVariations } = (0, import_data117.useSelect)(
+    const { activeVariationName, blockVariations } = (0, import_data118.useSelect)(
       (select9) => {
         const { getActiveBlockVariation, getBlockVariations: getBlockVariations4 } = select9(import_blocks97.store);
         return {
@@ -58659,7 +58628,7 @@ ${text}
     return variations22;
   }
   var usePatterns = (clientId, name122) => {
-    return (0, import_data117.useSelect)(
+    return (0, import_data118.useSelect)(
       (select9) => {
         const { getBlockRootClientId, getPatternsByBlockTypes } = select9(import_block_editor213.store);
         const rootClientId = getBlockRootClientId(clientId);
@@ -58669,7 +58638,7 @@ ${text}
     );
   };
   var useUnsupportedBlocks = (clientId) => {
-    return (0, import_data117.useSelect)(
+    return (0, import_data118.useSelect)(
       (select9) => {
         const { getClientIdsOfDescendants, getBlockName } = select9(import_block_editor213.store);
         return getClientIdsOfDescendants(clientId).some(
@@ -58740,7 +58709,7 @@ ${text}
 
   // packages/block-library/build-module/query/edit/inspector-controls/index.mjs
   var import_components130 = __toESM(require_components(), 1);
-  var import_data122 = __toESM(require_data(), 1);
+  var import_data123 = __toESM(require_data(), 1);
   var import_core_data76 = __toESM(require_core_data(), 1);
   var import_i18n205 = __toESM(require_i18n(), 1);
   var import_compose49 = __toESM(require_compose(), 1);
@@ -58795,7 +58764,7 @@ ${text}
   // packages/block-library/build-module/query/edit/inspector-controls/author-control.mjs
   var import_i18n197 = __toESM(require_i18n(), 1);
   var import_components122 = __toESM(require_components(), 1);
-  var import_data118 = __toESM(require_data(), 1);
+  var import_data119 = __toESM(require_data(), 1);
   var import_core_data72 = __toESM(require_core_data(), 1);
   var import_jsx_runtime390 = __toESM(require_jsx_runtime(), 1);
   var AUTHORS_QUERY3 = {
@@ -58805,7 +58774,7 @@ ${text}
     context: "view"
   };
   function AuthorControl({ value, onChange }) {
-    const authorsList = (0, import_data118.useSelect)((select9) => {
+    const authorsList = (0, import_data119.useSelect)((select9) => {
       const { getUsers } = select9(import_core_data72.store);
       return getUsers(AUTHORS_QUERY3);
     }, []);
@@ -58861,7 +58830,7 @@ ${text}
   // packages/block-library/build-module/query/edit/inspector-controls/parent-control.mjs
   var import_i18n198 = __toESM(require_i18n(), 1);
   var import_components123 = __toESM(require_components(), 1);
-  var import_data119 = __toESM(require_data(), 1);
+  var import_data120 = __toESM(require_data(), 1);
   var import_core_data73 = __toESM(require_core_data(), 1);
   var import_element110 = __toESM(require_element(), 1);
   var import_compose47 = __toESM(require_compose(), 1);
@@ -58877,7 +58846,7 @@ ${text}
     const [value, setValue] = (0, import_element110.useState)(EMPTY_ARRAY6);
     const [suggestions, setSuggestions] = (0, import_element110.useState)(EMPTY_ARRAY6);
     const debouncedSearch = (0, import_compose47.useDebounce)(setSearch, 250);
-    const { searchResults, searchHasResolved } = (0, import_data119.useSelect)(
+    const { searchResults, searchHasResolved } = (0, import_data120.useSelect)(
       (select9) => {
         if (!search) {
           return { searchResults: EMPTY_ARRAY6, searchHasResolved: true };
@@ -58904,7 +58873,7 @@ ${text}
       },
       [search, postType, parents]
     );
-    const currentParents = (0, import_data119.useSelect)(
+    const currentParents = (0, import_data120.useSelect)(
       (select9) => {
         if (!parents?.length) {
           return EMPTY_ARRAY6;
@@ -58989,7 +58958,7 @@ ${text}
 
   // packages/block-library/build-module/query/edit/inspector-controls/taxonomy-controls.mjs
   var import_components124 = __toESM(require_components(), 1);
-  var import_data120 = __toESM(require_data(), 1);
+  var import_data121 = __toESM(require_data(), 1);
   var import_core_data74 = __toESM(require_core_data(), 1);
   var import_element111 = __toESM(require_element(), 1);
   var import_compose48 = __toESM(require_compose(), 1);
@@ -59078,7 +59047,7 @@ ${text}
     const [value, setValue] = (0, import_element111.useState)(EMPTY_ARRAY7);
     const [suggestions, setSuggestions] = (0, import_element111.useState)(EMPTY_ARRAY7);
     const debouncedSearch = (0, import_compose48.useDebounce)(setSearch, 250);
-    const { searchResults, searchHasResolved } = (0, import_data120.useSelect)(
+    const { searchResults, searchHasResolved } = (0, import_data121.useSelect)(
       (select9) => {
         if (!search) {
           return { searchResults: EMPTY_ARRAY7, searchHasResolved: true };
@@ -59106,7 +59075,7 @@ ${text}
       },
       [search, taxonomy.slug, termIds, oppositeTermIds]
     );
-    const existingTerms = (0, import_data120.useSelect)(
+    const existingTerms = (0, import_data121.useSelect)(
       (select9) => {
         if (!termIds?.length) {
           return EMPTY_ARRAY7;
@@ -59172,7 +59141,7 @@ ${text}
 
   // packages/block-library/build-module/query/edit/inspector-controls/format-controls.mjs
   var import_components125 = __toESM(require_components(), 1);
-  var import_data121 = __toESM(require_data(), 1);
+  var import_data122 = __toESM(require_data(), 1);
   var import_core_data75 = __toESM(require_core_data(), 1);
   var import_i18n200 = __toESM(require_i18n(), 1);
   var import_jsx_runtime393 = __toESM(require_jsx_runtime(), 1);
@@ -59207,7 +59176,7 @@ ${text}
   }
   function FormatControls({ onChange, query: { format: format3 } }) {
     const normalizedFormats = Array.isArray(format3) ? format3 : [format3];
-    const { supportedFormats } = (0, import_data121.useSelect)((select9) => {
+    const { supportedFormats } = (0, import_data122.useSelect)((select9) => {
       const themeSupports = select9(import_core_data75.store).getThemeSupports();
       return {
         supportedFormats: themeSupports.formats
@@ -59424,7 +59393,7 @@ ${text}
     const showSearchControl = isControlAllowed(allowedControls, "search");
     const showParentControl = isControlAllowed(allowedControls, "parents") && isPostTypeHierarchical;
     const postTypeHasFormatSupport = postTypeFormatSupportMap[postType];
-    const showFormatControl = (0, import_data122.useSelect)(
+    const showFormatControl = (0, import_data123.useSelect)(
       (select9) => {
         if (!postTypeHasFormatSupport || !isControlAllowed(allowedControls, "format")) {
           return false;
@@ -59758,7 +59727,7 @@ ${text}
   var import_components131 = __toESM(require_components(), 1);
   var import_i18n206 = __toESM(require_i18n(), 1);
   var import_element113 = __toESM(require_element(), 1);
-  var import_data123 = __toESM(require_data(), 1);
+  var import_data124 = __toESM(require_data(), 1);
   var import_block_editor214 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime399 = __toESM(require_jsx_runtime(), 1);
   var modalDescriptionId = "wp-block-query-enhanced-pagination-modal__description";
@@ -59769,7 +59738,7 @@ ${text}
   }) {
     const [isOpen, setOpen] = (0, import_element113.useState)(false);
     const hasUnsupportedBlocks = useUnsupportedBlocks(clientId);
-    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data123.useDispatch)(import_block_editor214.store);
+    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data124.useDispatch)(import_block_editor214.store);
     (0, import_element113.useEffect)(() => {
       if (enhancedPagination && hasUnsupportedBlocks) {
         __unstableMarkNextChangeAsNotPersistent();
@@ -59821,12 +59790,12 @@ ${text}
   // packages/block-library/build-module/query/edit/query-toolbar.mjs
   var import_components133 = __toESM(require_components(), 1);
   var import_i18n208 = __toESM(require_i18n(), 1);
-  var import_data125 = __toESM(require_data(), 1);
+  var import_data126 = __toESM(require_data(), 1);
   var import_block_editor216 = __toESM(require_block_editor(), 1);
 
   // packages/block-library/build-module/query/edit/pattern-selection.mjs
   var import_element114 = __toESM(require_element(), 1);
-  var import_data124 = __toESM(require_data(), 1);
+  var import_data125 = __toESM(require_data(), 1);
   var import_components132 = __toESM(require_components(), 1);
   var import_block_editor215 = __toESM(require_block_editor(), 1);
   var import_i18n207 = __toESM(require_i18n(), 1);
@@ -59867,7 +59836,7 @@ ${text}
     showSearch = true
   }) {
     const [searchValue, setSearchValue] = (0, import_element114.useState)("");
-    const { replaceBlock, selectBlock } = (0, import_data124.useDispatch)(import_block_editor215.store);
+    const { replaceBlock, selectBlock } = (0, import_data125.useDispatch)(import_block_editor215.store);
     const blockPatterns = useBlockPatterns(clientId, attributes);
     const blockPreviewContext = (0, import_element114.useMemo)(
       () => ({
@@ -59945,7 +59914,7 @@ ${text}
     ) }) });
   }
   function QueryToolbar(props) {
-    const isLocked = (0, import_data125.useSelect)(
+    const isLocked = (0, import_data126.useSelect)(
       (select9) => {
         const { isLockedBlock } = unlock(select9(import_block_editor216.store));
         return isLockedBlock(props.clientId);
@@ -59980,13 +59949,13 @@ ${text}
     } = attributes;
     const { templateSlug } = context;
     const { isSingular } = getQueryContextFromTemplate(templateSlug);
-    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data126.useDispatch)(import_block_editor217.store);
+    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data127.useDispatch)(import_block_editor217.store);
     const instanceId = (0, import_compose50.useInstanceId)(QueryContent);
     const blockProps = (0, import_block_editor217.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor217.useInnerBlocksProps)(blockProps, {
       template: TEMPLATE13
     });
-    const { postsPerPage } = (0, import_data126.useSelect)((select9) => {
+    const { postsPerPage } = (0, import_data127.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor217.store);
       const { getEntityRecord, getEntityRecordEdits, canUser } = select9(import_core_data77.store);
       const settingPerPage = canUser("read", {
@@ -60090,7 +60059,7 @@ ${text}
   }
 
   // packages/block-library/build-module/query/edit/query-placeholder.mjs
-  var import_data127 = __toESM(require_data(), 1);
+  var import_data128 = __toESM(require_data(), 1);
   var import_blocks98 = __toESM(require_blocks(), 1);
   var import_element116 = __toESM(require_element(), 1);
   var import_block_editor218 = __toESM(require_block_editor(), 1);
@@ -60112,7 +60081,7 @@ ${text}
     });
     const SMALL_CONTAINER_BREAKPOINT = 160;
     const isSmallContainer = containerWidth > 0 && containerWidth < SMALL_CONTAINER_BREAKPOINT;
-    const { blockType, activeBlockVariation } = (0, import_data127.useSelect)(
+    const { blockType, activeBlockVariation } = (0, import_data128.useSelect)(
       (select9) => {
         const { getActiveBlockVariation, getBlockType: getBlockType5 } = select9(import_blocks98.store);
         return {
@@ -60187,7 +60156,7 @@ ${text}
   }
   function QueryVariationPicker({ clientId, attributes, icon: icon4, label }) {
     const scopeVariations = useScopedBlockVariations(attributes);
-    const { replaceInnerBlocks } = (0, import_data127.useDispatch)(import_block_editor218.store);
+    const { replaceInnerBlocks } = (0, import_data128.useDispatch)(import_block_editor218.store);
     const blockProps = (0, import_block_editor218.useBlockProps)();
     return /* @__PURE__ */ (0, import_jsx_runtime403.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(
       import_block_editor218.__experimentalBlockVariationPicker,
@@ -60215,7 +60184,7 @@ ${text}
   var QueryEdit = (props) => {
     const { clientId, attributes } = props;
     const [isPatternSelectionModalOpen, setIsPatternSelectionModalOpen] = (0, import_element117.useState)(false);
-    const hasInnerBlocks = (0, import_data128.useSelect)(
+    const hasInnerBlocks = (0, import_data129.useSelect)(
       (select9) => !!select9(import_block_editor219.store).getBlocks(clientId).length,
       [clientId]
     );
@@ -61086,7 +61055,7 @@ ${text}
   // packages/block-library/build-module/query-pagination/edit.mjs
   var import_i18n216 = __toESM(require_i18n(), 1);
   var import_block_editor224 = __toESM(require_block_editor(), 1);
-  var import_data129 = __toESM(require_data(), 1);
+  var import_data130 = __toESM(require_data(), 1);
   var import_components138 = __toESM(require_components(), 1);
   var import_element118 = __toESM(require_element(), 1);
 
@@ -61169,7 +61138,7 @@ ${text}
     setAttributes,
     clientId
   }) {
-    const hasNextPreviousBlocks = (0, import_data129.useSelect)(
+    const hasNextPreviousBlocks = (0, import_data130.useSelect)(
       (select9) => {
         const { getBlocks } = select9(import_block_editor224.store);
         const innerBlocks = getBlocks(clientId);
@@ -61182,7 +61151,7 @@ ${text}
       },
       [clientId]
     );
-    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data129.useDispatch)(import_block_editor224.store);
+    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data130.useDispatch)(import_block_editor224.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockProps = (0, import_block_editor224.useBlockProps)();
     const innerBlocksProps = (0, import_block_editor224.useInnerBlocksProps)(blockProps, {
@@ -61750,9 +61719,9 @@ ${text}
 
   // packages/block-library/build-module/query-title/use-archive-label.mjs
   var import_core_data78 = __toESM(require_core_data(), 1);
-  var import_data130 = __toESM(require_data(), 1);
+  var import_data131 = __toESM(require_data(), 1);
   function useArchiveLabel() {
-    const templateSlug = (0, import_data130.useSelect)((select9) => {
+    const templateSlug = (0, import_data131.useSelect)((select9) => {
       const { getCurrentPostId, getCurrentPostType, getCurrentTemplateId } = select9("core/editor");
       const currentPostType = getCurrentPostType();
       const templateId = getCurrentTemplateId() || (currentPostType === "wp_template" ? getCurrentPostId() : null);
@@ -61786,7 +61755,7 @@ ${text}
         }
       }
     }
-    return (0, import_data130.useSelect)(
+    return (0, import_data131.useSelect)(
       (select9) => {
         const { getEntityRecords, getTaxonomy, getAuthors } = select9(import_core_data78.store);
         let archiveTypeLabel;
@@ -61823,13 +61792,13 @@ ${text}
 
   // packages/block-library/build-module/query-title/use-post-type-label.mjs
   var import_core_data79 = __toESM(require_core_data(), 1);
-  var import_data131 = __toESM(require_data(), 1);
+  var import_data132 = __toESM(require_data(), 1);
   function usePostTypeLabel(contextPostType) {
-    const currentPostType = (0, import_data131.useSelect)((select9) => {
+    const currentPostType = (0, import_data132.useSelect)((select9) => {
       const { getCurrentPostType } = select9("core/editor");
       return getCurrentPostType();
     }, []);
-    return (0, import_data131.useSelect)(
+    return (0, import_data132.useSelect)(
       (select9) => {
         const { getPostType } = select9(import_core_data79.store);
         const postTypeSlug = contextPostType || currentPostType;
@@ -62663,14 +62632,14 @@ ${text}
   var import_i18n223 = __toESM(require_i18n(), 1);
   var import_block_editor233 = __toESM(require_block_editor(), 1);
   var import_components143 = __toESM(require_components(), 1);
-  var import_data132 = __toESM(require_data(), 1);
+  var import_data133 = __toESM(require_data(), 1);
   var import_element119 = __toESM(require_element(), 1);
   var import_deprecated49 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime422 = __toESM(require_jsx_runtime(), 1);
   var TEMPLATE16 = [["core/paragraph", {}]];
   var useMigrateOnLoad2 = (attributes, clientId) => {
-    const registry = (0, import_data132.useRegistry)();
-    const { updateBlockAttributes, replaceInnerBlocks } = (0, import_data132.useDispatch)(import_block_editor233.store);
+    const registry = (0, import_data133.useRegistry)();
+    const { updateBlockAttributes, replaceInnerBlocks } = (0, import_data133.useDispatch)(import_block_editor233.store);
     (0, import_element119.useEffect)(() => {
       if (!attributes.value) {
         return;
@@ -63104,7 +63073,7 @@ ${text}
     settings: () => settings92
   });
   var import_core_data81 = __toESM(require_core_data(), 1);
-  var import_data134 = __toESM(require_data(), 1);
+  var import_data135 = __toESM(require_data(), 1);
   var import_html_entities12 = __toESM(require_html_entities(), 1);
 
   // packages/block-library/build-module/block/block.json
@@ -63142,7 +63111,7 @@ ${text}
   };
 
   // packages/block-library/build-module/block/edit.mjs
-  var import_data133 = __toESM(require_data(), 1);
+  var import_data134 = __toESM(require_data(), 1);
   var import_element120 = __toESM(require_element(), 1);
   var import_core_data80 = __toESM(require_core_data(), 1);
   var import_components144 = __toESM(require_components(), 1);
@@ -63194,7 +63163,7 @@ ${text}
     handleEditOriginal,
     resetContent
   }) {
-    const canUserEdit = (0, import_data133.useSelect)(
+    const canUserEdit = (0, import_data134.useSelect)(
       (select9) => !!select9(import_core_data80.store).canUser("update", {
         kind: "postType",
         name: "wp_block",
@@ -63230,12 +63199,12 @@ ${text}
       id: ref
     });
     const isMissing = hasResolved && !record;
-    const { __unstableMarkLastChangeAsPersistent } = (0, import_data133.useDispatch)(import_block_editor236.store);
+    const { __unstableMarkLastChangeAsPersistent } = (0, import_data134.useDispatch)(import_block_editor236.store);
     const {
       onNavigateToEntityRecord,
       hasPatternOverridesSource,
       supportedBlockTypesRaw
-    } = (0, import_data133.useSelect)((select9) => {
+    } = (0, import_data134.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor236.store);
       return {
         onNavigateToEntityRecord: getSettings2().onNavigateToEntityRecord,
@@ -63421,7 +63390,7 @@ ${text}
       if (!ref) {
         return;
       }
-      const entity = (0, import_data134.select)(import_core_data81.store).getEditedEntityRecord(
+      const entity = (0, import_data135.select)(import_core_data81.store).getEditedEntityRecord(
         "postType",
         "wp_block",
         ref
@@ -64084,7 +64053,7 @@ ${text}
 
   // packages/block-library/build-module/search/edit.mjs
   var import_block_editor239 = __toESM(require_block_editor(), 1);
-  var import_data135 = __toESM(require_data(), 1);
+  var import_data136 = __toESM(require_data(), 1);
   var import_element122 = __toESM(require_element(), 1);
   var import_components147 = __toESM(require_components(), 1);
   var import_compose53 = __toESM(require_compose(), 1);
@@ -64136,14 +64105,14 @@ ${text}
       tagName,
       style: style2
     } = attributes;
-    const wasJustInsertedIntoNavigationBlock = (0, import_data135.useSelect)(
+    const wasJustInsertedIntoNavigationBlock = (0, import_data136.useSelect)(
       (select9) => {
         const { getBlockParentsByBlockName, wasBlockJustInserted } = select9(import_block_editor239.store);
         return !!getBlockParentsByBlockName(clientId, "core/navigation")?.length && wasBlockJustInserted(clientId);
       },
       [clientId]
     );
-    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data135.useDispatch)(import_block_editor239.store);
+    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data136.useDispatch)(import_block_editor239.store);
     (0, import_element122.useEffect)(() => {
       if (wasJustInsertedIntoNavigationBlock) {
         __unstableMarkNextChangeAsNotPersistent();
@@ -65145,7 +65114,7 @@ ${text}
   var import_components150 = __toESM(require_components(), 1);
   var import_compose56 = __toESM(require_compose(), 1);
   var import_block_editor244 = __toESM(require_block_editor(), 1);
-  var import_data136 = __toESM(require_data(), 1);
+  var import_data137 = __toESM(require_data(), 1);
   var import_core_data82 = __toESM(require_core_data(), 1);
   var import_notices17 = __toESM(require_notices(), 1);
   var import_jsx_runtime433 = __toESM(require_jsx_runtime(), 1);
@@ -65171,7 +65140,7 @@ ${text}
     const isResizable = !isWideAligned && isLargeViewport;
     const [{ naturalWidth, naturalHeight }, setNaturalSize] = (0, import_element125.useState)({});
     const cropButtonRef = (0, import_element125.useRef)();
-    const { toggleSelection, __unstableMarkNextChangeAsNotPersistent } = (0, import_data136.useDispatch)(import_block_editor244.store);
+    const { toggleSelection, __unstableMarkNextChangeAsNotPersistent } = (0, import_data137.useDispatch)(import_block_editor244.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockEditingMode = (0, import_block_editor244.useBlockEditingMode)();
     const isContentOnlyMode = blockEditingMode === "contentOnly";
@@ -65181,7 +65150,7 @@ ${text}
       title,
       editMediaEntity,
       openMediaEditorModal
-    } = (0, import_data136.useSelect)((select9) => {
+    } = (0, import_data137.useSelect)((select9) => {
       const settings121 = select9(import_block_editor244.store).getSettings();
       const siteEntities = select9(import_core_data82.store).getEntityRecord(
         "root",
@@ -65447,7 +65416,7 @@ ${text}
       siteIconId,
       mediaItemData,
       isRequestingMediaItem
-    } = (0, import_data136.useSelect)((select9) => {
+    } = (0, import_data137.useSelect)((select9) => {
       const { canUser, getEntityRecord, getEditedEntityRecord } = select9(import_core_data82.store);
       const _canUserEdit = canUser("update", {
         kind: "root",
@@ -65480,10 +65449,10 @@ ${text}
         siteIconId: _siteIconId
       };
     }, []);
-    const { getSettings: getSettings2 } = (0, import_data136.useSelect)(import_block_editor244.store);
+    const { getSettings: getSettings2 } = (0, import_data137.useSelect)(import_block_editor244.store);
     const [temporaryURL, setTemporaryURL] = (0, import_element125.useState)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    const { editEntityRecord } = (0, import_data136.useDispatch)(import_core_data82.store);
+    const { editEntityRecord } = (0, import_data137.useDispatch)(import_core_data82.store);
     const setLogo = (newValue, shouldForceSync = false) => {
       if (shouldSyncIcon || shouldForceSync) {
         setIcon(newValue);
@@ -65523,7 +65492,7 @@ ${text}
       setLogo(null);
       setAttributes({ width: void 0 });
     };
-    const { createErrorNotice } = (0, import_data136.useDispatch)(import_notices17.store);
+    const { createErrorNotice } = (0, import_data137.useDispatch)(import_notices17.store);
     const onUploadError = (message) => {
       createErrorNotice(message, { type: "snackbar" });
       setTemporaryURL();
@@ -65810,7 +65779,7 @@ ${text}
   };
 
   // packages/block-library/build-module/site-tagline/edit.mjs
-  var import_data137 = __toESM(require_data(), 1);
+  var import_data138 = __toESM(require_data(), 1);
   var import_core_data83 = __toESM(require_core_data(), 1);
   var import_block_editor245 = __toESM(require_block_editor(), 1);
   var import_i18n235 = __toESM(require_i18n(), 1);
@@ -65820,7 +65789,7 @@ ${text}
     useDeprecatedTextAlign(props);
     const { attributes, setAttributes, insertBlocksAfter } = props;
     const { level, levelOptions } = attributes;
-    const { canUserEdit, tagline } = (0, import_data137.useSelect)((select9) => {
+    const { canUserEdit, tagline } = (0, import_data138.useSelect)((select9) => {
       const { canUser, getEntityRecord, getEditedEntityRecord } = select9(import_core_data83.store);
       const canEdit = canUser("update", {
         kind: "root",
@@ -65834,7 +65803,7 @@ ${text}
       };
     }, []);
     const TagName2 = level === 0 ? "p" : `h${level}`;
-    const { editEntityRecord } = (0, import_data137.useDispatch)(import_core_data83.store);
+    const { editEntityRecord } = (0, import_data138.useDispatch)(import_core_data83.store);
     function setTagline(newTagline) {
       editEntityRecord("root", "site", void 0, {
         description: newTagline
@@ -66078,7 +66047,7 @@ ${text}
   };
 
   // packages/block-library/build-module/site-title/edit.mjs
-  var import_data138 = __toESM(require_data(), 1);
+  var import_data139 = __toESM(require_data(), 1);
   var import_core_data84 = __toESM(require_core_data(), 1);
   var import_i18n236 = __toESM(require_i18n(), 1);
   var import_block_editor246 = __toESM(require_block_editor(), 1);
@@ -66090,7 +66059,7 @@ ${text}
     useDeprecatedTextAlign(props);
     const { attributes, setAttributes, insertBlocksAfter } = props;
     const { level, levelOptions, isLink, linkTarget } = attributes;
-    const { canUserEdit, title } = (0, import_data138.useSelect)((select9) => {
+    const { canUserEdit, title } = (0, import_data139.useSelect)((select9) => {
       const { canUser, getEntityRecord, getEditedEntityRecord } = select9(import_core_data84.store);
       const canEdit = canUser("update", {
         kind: "root",
@@ -66103,7 +66072,7 @@ ${text}
         title: canEdit ? settings121?.title : readOnlySettings?.name
       };
     }, []);
-    const { editEntityRecord } = (0, import_data138.useDispatch)(import_core_data84.store);
+    const { editEntityRecord } = (0, import_data139.useDispatch)(import_core_data84.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const blockEditingMode = (0, import_block_editor246.useBlockEditingMode)();
     function setTitle(newTitle) {
@@ -66378,7 +66347,7 @@ ${text}
 
   // packages/block-library/build-module/social-link/edit.mjs
   var import_keycodes9 = __toESM(require_keycodes(), 1);
-  var import_data139 = __toESM(require_data(), 1);
+  var import_data140 = __toESM(require_data(), 1);
   var import_block_editor247 = __toESM(require_block_editor(), 1);
   var import_element126 = __toESM(require_element(), 1);
   var import_components153 = __toESM(require_components(), 1);
@@ -66662,7 +66631,7 @@ ${text}
     popoverAnchor,
     clientId
   }) => {
-    const { removeBlock } = (0, import_data139.useDispatch)(import_block_editor247.store);
+    const { removeBlock } = (0, import_data140.useDispatch)(import_block_editor247.store);
     return /* @__PURE__ */ (0, import_jsx_runtime485.jsx)(
       import_block_editor247.URLPopover,
       {
@@ -66746,7 +66715,7 @@ ${text}
     );
     const [popoverAnchor, setPopoverAnchor] = (0, import_element126.useState)(null);
     const isContentOnlyMode = (0, import_block_editor247.useBlockEditingMode)() === "contentOnly";
-    const { activeVariation } = (0, import_data139.useSelect)(
+    const { activeVariation } = (0, import_data140.useSelect)(
       (select9) => {
         const { getActiveBlockVariation } = select9(import_blocks111.store);
         return {
@@ -67377,7 +67346,7 @@ ${text}
   var import_block_editor249 = __toESM(require_block_editor(), 1);
   var import_components154 = __toESM(require_components(), 1);
   var import_i18n241 = __toESM(require_i18n(), 1);
-  var import_data140 = __toESM(require_data(), 1);
+  var import_data141 = __toESM(require_data(), 1);
   var import_jsx_runtime487 = __toESM(require_jsx_runtime(), 1);
   var sizeOptions = [
     { label: (0, import_i18n241.__)("Default"), value: "" },
@@ -67404,7 +67373,7 @@ ${text}
       showLabels,
       size
     } = attributes;
-    const { hasSocialIcons, hasSelectedChild } = (0, import_data140.useSelect)(
+    const { hasSocialIcons, hasSelectedChild } = (0, import_data141.useSelect)(
       (select9) => {
         const { getBlockCount, hasSelectedInnerBlock } = select9(import_block_editor249.store);
         return {
@@ -67821,7 +67790,7 @@ ${text}
   var import_block_editor253 = __toESM(require_block_editor(), 1);
   var import_components156 = __toESM(require_components(), 1);
   var import_element128 = __toESM(require_element(), 1);
-  var import_data141 = __toESM(require_data(), 1);
+  var import_data142 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/spacer/controls.mjs
   var import_i18n242 = __toESM(require_i18n(), 1);
@@ -67997,7 +67966,7 @@ ${text}
     __unstableParentLayout: parentLayout,
     className
   }) => {
-    const disableCustomSpacingSizes = (0, import_data141.useSelect)((select9) => {
+    const disableCustomSpacingSizes = (0, import_data142.useSelect)((select9) => {
       const editorSettings = select9(import_block_editor253.store).getSettings();
       return editorSettings?.disableCustomSpacingSizes;
     });
@@ -68018,7 +67987,7 @@ ${text}
     const [temporaryWidth, setTemporaryWidth] = (0, import_element128.useState)(null);
     const onResizeStart = () => toggleSelection(false);
     const onResizeStop = () => toggleSelection(true);
-    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data141.useDispatch)(import_block_editor253.store);
+    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data142.useDispatch)(import_block_editor253.store);
     const handleOnVerticalResizeStop = (newHeight) => {
       onResizeStop();
       if (isFlexLayout) {
@@ -68314,34 +68283,34 @@ ${text}
   // packages/block-library/build-module/tab-panel/edit.mjs
   var import_i18n246 = __toESM(require_i18n(), 1);
   var import_block_editor258 = __toESM(require_block_editor(), 1);
-  var import_data145 = __toESM(require_data(), 1);
+  var import_data146 = __toESM(require_data(), 1);
   var import_element129 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/tab-panel/controls.mjs
   var import_block_editor257 = __toESM(require_block_editor(), 1);
   var import_components158 = __toESM(require_components(), 1);
   var import_i18n245 = __toESM(require_i18n(), 1);
-  var import_data144 = __toESM(require_data(), 1);
+  var import_data145 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/tabs/tab-toolbar-controls.mjs
   var import_i18n244 = __toESM(require_i18n(), 1);
   var import_block_editor256 = __toESM(require_block_editor(), 1);
   var import_components157 = __toESM(require_components(), 1);
-  var import_data143 = __toESM(require_data(), 1);
+  var import_data144 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/tabs/use-tab-actions.mjs
   var import_i18n243 = __toESM(require_i18n(), 1);
   var import_blocks114 = __toESM(require_blocks(), 1);
   var import_block_editor255 = __toESM(require_block_editor(), 1);
-  var import_data142 = __toESM(require_data(), 1);
+  var import_data143 = __toESM(require_data(), 1);
   function useTabActions(tabsClientId) {
-    const registry = (0, import_data142.useRegistry)();
+    const registry = (0, import_data143.useRegistry)();
     const {
       insertBlock,
       removeBlock,
       updateBlockAttributes,
       __unstableMarkNextChangeAsNotPersistent
-    } = (0, import_data142.useDispatch)(import_block_editor255.store);
+    } = (0, import_data143.useDispatch)(import_block_editor255.store);
     const getTabsState = () => {
       const { getBlocks, getBlockAttributes: getBlockAttributes4 } = registry.select(import_block_editor255.store);
       const tabsAttributes = tabsClientId ? getBlockAttributes4(tabsClientId) : void 0;
@@ -68396,7 +68365,7 @@ ${text}
   var import_jsx_runtime493 = __toESM(require_jsx_runtime(), 1);
   function TabToolbarControls({ tabsClientId }) {
     const { insertTab, removeTab } = useTabActions(tabsClientId);
-    const isRemoveDisabled = (0, import_data143.useSelect)(
+    const isRemoveDisabled = (0, import_data144.useSelect)(
       (select9) => {
         if (!tabsClientId) {
           return true;
@@ -68430,7 +68399,7 @@ ${text}
   // packages/block-library/build-module/tab-panel/controls.mjs
   var import_jsx_runtime494 = __toESM(require_jsx_runtime(), 1);
   function Controls3({ tabsClientId, blockIndex, isDefaultTab }) {
-    const { updateBlockAttributes } = (0, import_data144.useDispatch)(import_block_editor257.store);
+    const { updateBlockAttributes } = (0, import_data145.useDispatch)(import_block_editor257.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime494.jsxs)(import_jsx_runtime494.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(TabToolbarControls, { tabsClientId }),
@@ -68488,7 +68457,7 @@ ${text}
     const activeTabIndex = context["core/tabs-activeTabIndex"];
     const editorActiveTabIndex = context["core/tabs-editorActiveTabIndex"];
     const effectiveActiveIndex = editorActiveTabIndex ?? activeTabIndex;
-    const { blockIndex, hasInnerBlocksSelected, tabsClientId } = (0, import_data145.useSelect)(
+    const { blockIndex, hasInnerBlocksSelected, tabsClientId } = (0, import_data146.useSelect)(
       (select9) => {
         const {
           getBlockRootClientId,
@@ -68510,7 +68479,7 @@ ${text}
       },
       [clientId]
     );
-    const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = (0, import_data145.useDispatch)(import_block_editor258.store);
+    const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = (0, import_data146.useDispatch)(import_block_editor258.store);
     (0, import_element129.useEffect)(() => {
       const isTabSelected = isSelected || hasInnerBlocksSelected;
       if (isTabSelected && tabsClientId && effectiveActiveIndex !== blockIndex) {
@@ -68645,7 +68614,7 @@ ${text}
 
   // packages/block-library/build-module/tab-panels/edit.mjs
   var import_block_editor260 = __toESM(require_block_editor(), 1);
-  var import_data146 = __toESM(require_data(), 1);
+  var import_data147 = __toESM(require_data(), 1);
   var import_i18n247 = __toESM(require_i18n(), 1);
   var import_jsx_runtime497 = __toESM(require_jsx_runtime(), 1);
   var TAB_PANELS_TEMPLATE = [
@@ -68660,7 +68629,7 @@ ${text}
       renderAppender: false
       // Appender handled by individual tab blocks
     });
-    const tabsClientId = (0, import_data146.useSelect)(
+    const tabsClientId = (0, import_data147.useSelect)(
       (select9) => select9(import_block_editor260.store).getBlockRootClientId(clientId),
       [clientId]
     );
@@ -70633,7 +70602,7 @@ ${text}
   var import_block_editor266 = __toESM(require_block_editor(), 1);
   var import_blocks116 = __toESM(require_blocks(), 1);
   var import_components160 = __toESM(require_components(), 1);
-  var import_data148 = __toESM(require_data(), 1);
+  var import_data149 = __toESM(require_data(), 1);
   var import_element132 = __toESM(require_element(), 1);
   var import_i18n250 = __toESM(require_i18n(), 1);
   var import_compose59 = __toESM(require_compose(), 1);
@@ -70711,7 +70680,7 @@ ${text}
 
   // packages/block-library/build-module/table-of-contents/hooks.mjs
   var import_es6 = __toESM(require_es6(), 1);
-  var import_data147 = __toESM(require_data(), 1);
+  var import_data148 = __toESM(require_data(), 1);
   var import_dom14 = __toESM(require_dom(), 1);
   var import_element131 = __toESM(require_element(), 1);
   var import_url22 = __toESM(require_url(), 1);
@@ -70801,7 +70770,7 @@ ${text}
     }
   }
   function useObserveHeadings(clientId) {
-    const registry = (0, import_data147.useRegistry)();
+    const registry = (0, import_data148.useRegistry)();
     (0, import_element131.useEffect)(() => {
       return registry.subscribe(
         () => observeCallback(registry.select, registry.dispatch, clientId)
@@ -70827,7 +70796,7 @@ ${text}
       TableOfContentsEdit,
       "table-of-contents"
     );
-    const { createWarningNotice } = (0, import_data148.useDispatch)(import_notices18.store);
+    const { createWarningNotice } = (0, import_data149.useDispatch)(import_notices18.store);
     const showRedirectionPreventedNotice = (event) => {
       event.preventDefault();
       createWarningNotice((0, import_i18n250.__)("Links are disabled in the editor."), {
@@ -70835,7 +70804,7 @@ ${text}
         type: "snackbar"
       });
     };
-    const canInsertList = (0, import_data148.useSelect)(
+    const canInsertList = (0, import_data149.useSelect)(
       (select9) => {
         const { getBlockRootClientId, canInsertBlockType } = select9(import_block_editor266.store);
         const rootClientId = getBlockRootClientId(clientId);
@@ -70843,7 +70812,7 @@ ${text}
       },
       [clientId]
     );
-    const { replaceBlocks } = (0, import_data148.useDispatch)(import_block_editor266.store);
+    const { replaceBlocks } = (0, import_data149.useDispatch)(import_block_editor266.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const headingTree = linearToNestedHeadingList(headings);
     const toolbarControls = /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(import_block_editor266.BlockControls, { children: [
@@ -71086,7 +71055,7 @@ ${text}
   // packages/block-library/build-module/tab-list/edit.mjs
   var import_i18n252 = __toESM(require_i18n(), 1);
   var import_block_editor268 = __toESM(require_block_editor(), 1);
-  var import_data149 = __toESM(require_data(), 1);
+  var import_data150 = __toESM(require_data(), 1);
   var import_element133 = __toESM(require_element(), 1);
   var import_jsx_runtime505 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY8 = [];
@@ -71100,7 +71069,7 @@ ${text}
     const colorProps = (0, import_block_editor268.__experimentalUseColorProps)(attributes);
     const borderProps = (0, import_block_editor268.__experimentalUseBorderProps)(attributes);
     const spacingProps = (0, import_block_editor268.__experimentalGetSpacingClassesAndStyles)(attributes);
-    const { tabsClientId, editorActiveTabIndex, activeTabIndex } = (0, import_data149.useSelect)(
+    const { tabsClientId, editorActiveTabIndex, activeTabIndex } = (0, import_data150.useSelect)(
       (select9) => {
         const { getBlockRootClientId, getBlockAttributes: getBlockAttributes4 } = select9(import_block_editor268.store);
         const _tabsClientId = getBlockRootClientId(clientId);
@@ -71113,8 +71082,8 @@ ${text}
       },
       [clientId]
     );
-    const { isBlockSelected, hasSelectedInnerBlock } = (0, import_data149.useSelect)(import_block_editor268.store);
-    const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = (0, import_data149.useDispatch)(import_block_editor268.store);
+    const { isBlockSelected, hasSelectedInnerBlock } = (0, import_data150.useSelect)(import_block_editor268.store);
+    const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = (0, import_data150.useDispatch)(import_block_editor268.store);
     const { insertTab, removeTab } = useTabActions(tabsClientId);
     const effectiveActiveIndex = editorActiveTabIndex ?? activeTabIndex;
     function selectTabPanel(tabIndex) {
@@ -71340,16 +71309,16 @@ ${text}
 
   // packages/block-library/build-module/tabs/edit.mjs
   var import_block_editor271 = __toESM(require_block_editor(), 1);
-  var import_data151 = __toESM(require_data(), 1);
+  var import_data152 = __toESM(require_data(), 1);
   var import_element135 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/tabs/use-tab-list-items-sync.mjs
   var import_block_editor270 = __toESM(require_block_editor(), 1);
-  var import_data150 = __toESM(require_data(), 1);
+  var import_data151 = __toESM(require_data(), 1);
   var import_element134 = __toESM(require_element(), 1);
   function useTabListItemsSync({ tabPanels, tabListClientId }) {
-    const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = (0, import_data150.useDispatch)(import_block_editor270.store);
-    const { getBlockAttributes: getBlockAttributes4 } = (0, import_data150.useSelect)(import_block_editor270.store);
+    const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = (0, import_data151.useDispatch)(import_block_editor270.store);
+    const { getBlockAttributes: getBlockAttributes4 } = (0, import_data151.useSelect)(import_block_editor270.store);
     (0, import_element134.useEffect)(() => {
       if (!tabListClientId) {
         return;
@@ -71378,7 +71347,7 @@ ${text}
   var TABS_TEMPLATE = [["core/tab-list"], ["core/tab-panels"]];
   function Edit22({ clientId, attributes }) {
     const { anchor, activeTabIndex, editorActiveTabIndex } = attributes;
-    const { tabPanels, tabListClientId } = (0, import_data151.useSelect)(
+    const { tabPanels, tabListClientId } = (0, import_data152.useSelect)(
       (select9) => {
         const { getBlocks } = select9(import_block_editor271.store);
         const innerBlocks = getBlocks(clientId);
@@ -71637,7 +71606,7 @@ ${text}
 
   // packages/block-library/build-module/tag-cloud/edit.mjs
   var import_components161 = __toESM(require_components(), 1);
-  var import_data152 = __toESM(require_data(), 1);
+  var import_data153 = __toESM(require_data(), 1);
   var import_i18n254 = __toESM(require_i18n(), 1);
   var import_block_editor273 = __toESM(require_block_editor(), 1);
   var import_core_data85 = __toESM(require_core_data(), 1);
@@ -71661,7 +71630,7 @@ ${text}
     const units = (0, import_components161.__experimentalUseCustomUnits)({
       availableUnits: availableUnits ? [...availableUnits, "pt"] : ["%", "px", "em", "rem", "pt"]
     });
-    const taxonomies = (0, import_data152.useSelect)(
+    const taxonomies = (0, import_data153.useSelect)(
       (select9) => select9(import_core_data85.store).getTaxonomies({ per_page: -1 }),
       []
     );
@@ -71855,7 +71824,7 @@ ${text}
     settings: () => settings111
   });
   var import_core_data93 = __toESM(require_core_data(), 1);
-  var import_data161 = __toESM(require_data(), 1);
+  var import_data162 = __toESM(require_data(), 1);
   var import_hooks82 = __toESM(require_hooks(), 1);
   var import_html_entities14 = __toESM(require_html_entities(), 1);
 
@@ -71896,7 +71865,7 @@ ${text}
 
   // packages/block-library/build-module/template-part/edit/index.mjs
   var import_blocks122 = __toESM(require_blocks(), 1);
-  var import_data159 = __toESM(require_data(), 1);
+  var import_data160 = __toESM(require_data(), 1);
   var import_block_editor278 = __toESM(require_block_editor(), 1);
   var import_components167 = __toESM(require_components(), 1);
   var import_i18n261 = __toESM(require_i18n(), 1);
@@ -71908,18 +71877,18 @@ ${text}
   var import_i18n257 = __toESM(require_i18n(), 1);
   var import_components163 = __toESM(require_components(), 1);
   var import_element138 = __toESM(require_element(), 1);
-  var import_data154 = __toESM(require_data(), 1);
+  var import_data155 = __toESM(require_data(), 1);
   var import_core_data87 = __toESM(require_core_data(), 1);
 
   // packages/block-library/build-module/template-part/edit/utils/hooks.mjs
-  var import_data153 = __toESM(require_data(), 1);
+  var import_data154 = __toESM(require_data(), 1);
   var import_core_data86 = __toESM(require_core_data(), 1);
   var import_block_editor274 = __toESM(require_block_editor(), 1);
   var import_element136 = __toESM(require_element(), 1);
   var import_blocks118 = __toESM(require_blocks(), 1);
   var import_i18n255 = __toESM(require_i18n(), 1);
   function useAlternativeTemplateParts(area, excludedId) {
-    const { templateParts, isResolving } = (0, import_data153.useSelect)((select9) => {
+    const { templateParts, isResolving } = (0, import_data154.useSelect)((select9) => {
       const { getEntityRecords, isResolving: _isResolving } = select9(import_core_data86.store);
       const query = { per_page: -1 };
       return {
@@ -71952,7 +71921,7 @@ ${text}
     };
   }
   function useAlternativeBlockPatterns(area, clientId) {
-    return (0, import_data153.useSelect)(
+    return (0, import_data154.useSelect)(
       (select9) => {
         const blockNameWithArea = area ? `core/template-part/${area}` : "core/template-part";
         const { getBlockRootClientId, getPatternsByBlockTypes } = select9(import_block_editor274.store);
@@ -71963,7 +71932,7 @@ ${text}
     );
   }
   function useCreateTemplatePartFromBlocks(area, setAttributes) {
-    const { saveEntityRecord } = (0, import_data153.useDispatch)(import_core_data86.store);
+    const { saveEntityRecord } = (0, import_data154.useDispatch)(import_core_data86.store);
     return async (blocks = [], title = (0, import_i18n255.__)("Untitled Template Part")) => {
       const cleanSlug = paramCase(title).replace(/[^\w-]+/g, "") || "wp-custom-part";
       const record = {
@@ -71987,7 +71956,7 @@ ${text}
     };
   }
   function useTemplatePartArea(area) {
-    return (0, import_data153.useSelect)(
+    return (0, import_data154.useSelect)(
       (select9) => {
         const definedAreas = select9(import_core_data86.store).getCurrentTheme()?.default_template_part_areas || [];
         const selectedArea = definedAreas.find(
@@ -72082,7 +72051,7 @@ ${text}
       templatePartId
     );
     const blockPatterns = useAlternativeBlockPatterns(area, clientId);
-    const { isBlockBasedTheme, canCreateTemplatePart } = (0, import_data154.useSelect)(
+    const { isBlockBasedTheme, canCreateTemplatePart } = (0, import_data155.useSelect)(
       (select9) => {
         const { getCurrentTheme, canUser } = select9(import_core_data87.store);
         return {
@@ -72156,7 +72125,7 @@ ${text}
   var import_element139 = __toESM(require_element(), 1);
   var import_i18n258 = __toESM(require_i18n(), 1);
   var import_notices19 = __toESM(require_notices(), 1);
-  var import_data155 = __toESM(require_data(), 1);
+  var import_data156 = __toESM(require_data(), 1);
   var import_block_editor275 = __toESM(require_block_editor(), 1);
   var import_components164 = __toESM(require_components(), 1);
 
@@ -72195,7 +72164,7 @@ ${text}
     const filteredBlockPatterns = (0, import_element139.useMemo)(() => {
       return searchPatterns(blockPatterns, searchValue);
     }, [blockPatterns, searchValue]);
-    const { createSuccessNotice } = (0, import_data155.useDispatch)(import_notices19.store);
+    const { createSuccessNotice } = (0, import_data156.useDispatch)(import_notices19.store);
     const onTemplatePartSelect = (templatePart) => {
       setAttributes({
         slug: templatePart.slug,
@@ -72246,13 +72215,13 @@ ${text}
   var import_core_data89 = __toESM(require_core_data(), 1);
   var import_components166 = __toESM(require_components(), 1);
   var import_i18n260 = __toESM(require_i18n(), 1);
-  var import_data157 = __toESM(require_data(), 1);
+  var import_data158 = __toESM(require_data(), 1);
   var import_block_editor276 = __toESM(require_block_editor(), 1);
 
   // packages/block-library/build-module/template-part/edit/import-controls.mjs
   var import_i18n259 = __toESM(require_i18n(), 1);
   var import_element140 = __toESM(require_element(), 1);
-  var import_data156 = __toESM(require_data(), 1);
+  var import_data157 = __toESM(require_data(), 1);
   var import_components165 = __toESM(require_components(), 1);
   var import_core_data88 = __toESM(require_core_data(), 1);
   var import_notices20 = __toESM(require_notices(), 1);
@@ -72341,8 +72310,8 @@ ${text}
   function TemplatePartImportControls({ area, setAttributes }) {
     const [selectedSidebar, setSelectedSidebar] = (0, import_element140.useState)("");
     const [isBusy, setIsBusy] = (0, import_element140.useState)(false);
-    const registry = (0, import_data156.useRegistry)();
-    const { sidebars, hasResolved } = (0, import_data156.useSelect)((select9) => {
+    const registry = (0, import_data157.useRegistry)();
+    const { sidebars, hasResolved } = (0, import_data157.useSelect)((select9) => {
       const { getSidebars, hasFinishedResolution } = select9(import_core_data88.store);
       return {
         sidebars: getSidebars(SIDEBARS_QUERY),
@@ -72351,7 +72320,7 @@ ${text}
         ])
       };
     }, []);
-    const { createErrorNotice } = (0, import_data156.useDispatch)(import_notices20.store);
+    const { createErrorNotice } = (0, import_data157.useDispatch)(import_notices20.store);
     const createFromBlocks = useCreateTemplatePartFromBlocks(
       area,
       setAttributes
@@ -72480,7 +72449,7 @@ ${text}
       "title",
       templatePartId
     );
-    const defaultTemplatePartAreas = (0, import_data157.useSelect)(
+    const defaultTemplatePartAreas = (0, import_data158.useSelect)(
       (select9) => select9(import_core_data89.store).getCurrentTheme()?.default_template_part_areas || [],
       []
     );
@@ -72553,7 +72522,7 @@ ${text}
   // packages/block-library/build-module/template-part/edit/inner-blocks.mjs
   var import_core_data90 = __toESM(require_core_data(), 1);
   var import_block_editor277 = __toESM(require_block_editor(), 1);
-  var import_data158 = __toESM(require_data(), 1);
+  var import_data159 = __toESM(require_data(), 1);
   var import_element141 = __toESM(require_element(), 1);
   var import_blocks121 = __toESM(require_blocks(), 1);
   var import_jsx_runtime515 = __toESM(require_jsx_runtime(), 1);
@@ -72567,7 +72536,7 @@ ${text}
     }
   }
   function useLayout(layout) {
-    const themeSupportsLayout = (0, import_data158.useSelect)((select9) => {
+    const themeSupportsLayout = (0, import_data159.useSelect)((select9) => {
       const { getSettings: getSettings2 } = select9(import_block_editor277.store);
       return getSettings2()?.supportsLayout;
     }, []);
@@ -72583,7 +72552,7 @@ ${text}
     blockProps
   }) {
     (0, import_block_editor277.useBlockEditingMode)("disabled");
-    const { content, editedBlocks } = (0, import_data158.useSelect)(
+    const { content, editedBlocks } = (0, import_data159.useSelect)(
       (select9) => {
         if (!id) {
           return {};
@@ -72632,7 +72601,7 @@ ${text}
     tagName: TagName2,
     blockProps
   }) {
-    const onNavigateToEntityRecord = (0, import_data158.useSelect)(
+    const onNavigateToEntityRecord = (0, import_data159.useSelect)(
       (select9) => select9(import_block_editor277.store).getSettings().onNavigateToEntityRecord,
       []
     );
@@ -72664,7 +72633,7 @@ ${text}
     tagName: TagName2,
     blockProps
   }) {
-    const { canViewTemplatePart, canEditTemplatePart } = (0, import_data158.useSelect)(
+    const { canViewTemplatePart, canEditTemplatePart } = (0, import_data159.useSelect)(
       (select9) => {
         return {
           canViewTemplatePart: !!select9(import_core_data90.store).canUser("read", {
@@ -72749,9 +72718,9 @@ ${text}
     setAttributes,
     clientId
   }) {
-    const { createSuccessNotice } = (0, import_data159.useDispatch)(import_notices21.store);
-    const { editEntityRecord } = (0, import_data159.useDispatch)(import_core_data91.store);
-    const currentTheme = (0, import_data159.useSelect)(
+    const { createSuccessNotice } = (0, import_data160.useDispatch)(import_notices21.store);
+    const { editEntityRecord } = (0, import_data160.useDispatch)(import_core_data91.store);
+    const currentTheme = (0, import_data160.useSelect)(
       (select9) => select9(import_core_data91.store).getCurrentTheme()?.stylesheet,
       []
     );
@@ -72768,7 +72737,7 @@ ${text}
       title,
       canUserEdit,
       canUserEditBlock
-    } = (0, import_data159.useSelect)(
+    } = (0, import_data160.useSelect)(
       (select9) => {
         const { getEditedEntityRecord, hasFinishedResolution } = select9(import_core_data91.store);
         const { getBlockCount, getSettings: getSettings2, canEditBlock } = select9(import_block_editor278.store);
@@ -72942,7 +72911,7 @@ ${text}
 
   // packages/block-library/build-module/template-part/variations.mjs
   var import_core_data92 = __toESM(require_core_data(), 1);
-  var import_data160 = __toESM(require_data(), 1);
+  var import_data161 = __toESM(require_data(), 1);
   function enhanceTemplatePartVariations(settings121, name122) {
     if (name122 !== "core/template-part") {
       return settings121;
@@ -72956,7 +72925,7 @@ ${text}
         if (!slug) {
           return false;
         }
-        const { getCurrentTheme, getEntityRecord } = (0, import_data160.select)(import_core_data92.store);
+        const { getCurrentTheme, getEntityRecord } = (0, import_data161.select)(import_core_data92.store);
         const entity = getEntityRecord(
           "postType",
           "wp_template_part",
@@ -72992,7 +72961,7 @@ ${text}
       if (!slug) {
         return;
       }
-      const { getCurrentTheme, getEditedEntityRecord } = (0, import_data161.select)(import_core_data93.store);
+      const { getCurrentTheme, getEditedEntityRecord } = (0, import_data162.select)(import_core_data93.store);
       const entity = getEditedEntityRecord(
         "postType",
         "wp_template_part",
@@ -73120,7 +73089,7 @@ ${text}
 
   // packages/block-library/build-module/term-count/use-term-count.mjs
   var import_core_data94 = __toESM(require_core_data(), 1);
-  var import_data162 = __toESM(require_data(), 1);
+  var import_data163 = __toESM(require_data(), 1);
   function useTermCount(termId, taxonomy) {
     const [count] = (0, import_core_data94.useEntityProp)("taxonomy", taxonomy, "count", termId);
     const templateBasedData = useTemplateBasedTermData();
@@ -73131,7 +73100,7 @@ ${text}
     };
   }
   function useTemplateBasedTermData() {
-    const templateSlug = (0, import_data162.useSelect)((select9) => {
+    const templateSlug = (0, import_data163.useSelect)((select9) => {
       const { getCurrentPostId, getCurrentPostType, getCurrentTemplateId } = select9("core/editor");
       const currentPostType = getCurrentPostType();
       const templateId = getCurrentTemplateId() || (currentPostType === "wp_template" ? getCurrentPostId() : null);
@@ -73155,7 +73124,7 @@ ${text}
       }
       taxonomy = taxonomy === "tag" ? "post_tag" : taxonomy;
     }
-    return (0, import_data162.useSelect)(
+    return (0, import_data163.useSelect)(
       (select9) => {
         if (!taxonomy || !termSlug) {
           return "";
@@ -73321,7 +73290,7 @@ ${text}
 
   // packages/block-library/build-module/term-description/use-term-description.mjs
   var import_core_data95 = __toESM(require_core_data(), 1);
-  var import_data163 = __toESM(require_data(), 1);
+  var import_data164 = __toESM(require_data(), 1);
   function useTermDescription(termId, taxonomy) {
     const [description, setDescription, fullDescription] = (0, import_core_data95.useEntityProp)(
       "taxonomy",
@@ -73338,7 +73307,7 @@ ${text}
     };
   }
   function useTemplateBasedTermData2() {
-    const templateSlug = (0, import_data163.useSelect)((select9) => {
+    const templateSlug = (0, import_data164.useSelect)((select9) => {
       const { getCurrentPostId, getCurrentPostType, getCurrentTemplateId } = select9("core/editor");
       const currentPostType = getCurrentPostType();
       const templateId = getCurrentTemplateId() || (currentPostType === "wp_template" ? getCurrentPostId() : null);
@@ -73362,7 +73331,7 @@ ${text}
       }
       taxonomy = taxonomy === "tag" ? "post_tag" : taxonomy;
     }
-    return (0, import_data163.useSelect)(
+    return (0, import_data164.useSelect)(
       (select9) => {
         if (!taxonomy || !termSlug) {
           return "";
@@ -73558,9 +73527,9 @@ ${text}
 
   // packages/block-library/build-module/term-name/use-term-name.mjs
   var import_core_data96 = __toESM(require_core_data(), 1);
-  var import_data164 = __toESM(require_data(), 1);
+  var import_data165 = __toESM(require_data(), 1);
   function useTermName(termId, taxonomy) {
-    const contextBasedTerm = (0, import_data164.useSelect)(
+    const contextBasedTerm = (0, import_data165.useSelect)(
       (select9) => {
         if (!termId || !taxonomy) {
           return null;
@@ -73581,7 +73550,7 @@ ${text}
     };
   }
   function useTemplateBasedTermData3() {
-    const templateSlug = (0, import_data164.useSelect)((select9) => {
+    const templateSlug = (0, import_data165.useSelect)((select9) => {
       const { getCurrentPostId, getCurrentPostType, getCurrentTemplateId } = select9("core/editor");
       const currentPostType = getCurrentPostType();
       const templateId = getCurrentTemplateId() || (currentPostType === "wp_template" ? getCurrentPostId() : null);
@@ -73603,7 +73572,7 @@ ${text}
       }
       taxonomy = taxonomy === "tag" ? "post_tag" : taxonomy;
     }
-    return (0, import_data164.useSelect)(
+    return (0, import_data165.useSelect)(
       (select9) => {
         if (!taxonomy || !termSlug) {
           return null;
@@ -73766,7 +73735,7 @@ ${text}
   };
 
   // packages/block-library/build-module/terms-query/edit/index.mjs
-  var import_data168 = __toESM(require_data(), 1);
+  var import_data169 = __toESM(require_data(), 1);
   var import_block_editor286 = __toESM(require_block_editor(), 1);
 
   // packages/block-library/build-module/terms-query/edit/terms-query-content.mjs
@@ -73780,10 +73749,10 @@ ${text}
 
   // packages/block-library/build-module/terms-query/utils.mjs
   var import_core_data97 = __toESM(require_core_data(), 1);
-  var import_data165 = __toESM(require_data(), 1);
+  var import_data166 = __toESM(require_data(), 1);
   var import_element143 = __toESM(require_element(), 1);
   function usePublicTaxonomies() {
-    const taxonomies = (0, import_data165.useSelect)(
+    const taxonomies = (0, import_data166.useSelect)(
       (select9) => select9(import_core_data97.store).getTaxonomies({ per_page: -1 }),
       []
     );
@@ -73954,7 +73923,7 @@ ${text}
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/include-control.mjs
   var import_components177 = __toESM(require_components(), 1);
-  var import_data166 = __toESM(require_data(), 1);
+  var import_data167 = __toESM(require_data(), 1);
   var import_core_data98 = __toESM(require_core_data(), 1);
   var import_element144 = __toESM(require_element(), 1);
   var import_compose61 = __toESM(require_compose(), 1);
@@ -73976,7 +73945,7 @@ ${text}
     const [value, setValue] = (0, import_element144.useState)(EMPTY_ARRAY10);
     const [suggestions, setSuggestions] = (0, import_element144.useState)(EMPTY_ARRAY10);
     const debouncedSearch = (0, import_compose61.useDebounce)(setSearch, 250);
-    const { searchResults, searchHasResolved } = (0, import_data166.useSelect)(
+    const { searchResults, searchHasResolved } = (0, import_data167.useSelect)(
       (select9) => {
         if (!search) {
           return { searchResults: EMPTY_ARRAY10, searchHasResolved: true };
@@ -74003,7 +73972,7 @@ ${text}
       },
       [search, taxonomy, include]
     );
-    const currentTerms = (0, import_data166.useSelect)(
+    const currentTerms = (0, import_data167.useSelect)(
       (select9) => {
         if (!include?.length) {
           return EMPTY_ARRAY10;
@@ -74331,7 +74300,7 @@ ${text}
   }
 
   // packages/block-library/build-module/terms-query/edit/terms-query-placeholder.mjs
-  var import_data167 = __toESM(require_data(), 1);
+  var import_data168 = __toESM(require_data(), 1);
   var import_blocks123 = __toESM(require_blocks(), 1);
   var import_block_editor285 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime531 = __toESM(require_jsx_runtime(), 1);
@@ -74340,7 +74309,7 @@ ${text}
     clientId,
     name: name122
   }) {
-    const { blockType, activeBlockVariation, scopeVariations } = (0, import_data167.useSelect)(
+    const { blockType, activeBlockVariation, scopeVariations } = (0, import_data168.useSelect)(
       (select9) => {
         const {
           getActiveBlockVariation,
@@ -74360,7 +74329,7 @@ ${text}
     );
     const icon4 = activeBlockVariation?.icon?.src || activeBlockVariation?.icon || blockType?.icon?.src;
     const label = activeBlockVariation?.title || blockType?.title;
-    const { replaceInnerBlocks } = (0, import_data167.useDispatch)(import_block_editor285.store);
+    const { replaceInnerBlocks } = (0, import_data168.useDispatch)(import_block_editor285.store);
     const blockProps = (0, import_block_editor285.useBlockProps)();
     return /* @__PURE__ */ (0, import_jsx_runtime531.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(
       import_block_editor285.__experimentalBlockVariationPicker,
@@ -74386,7 +74355,7 @@ ${text}
   // packages/block-library/build-module/terms-query/edit/index.mjs
   var import_jsx_runtime532 = __toESM(require_jsx_runtime(), 1);
   var TermsQueryEdit = (props) => {
-    const hasInnerBlocks = (0, import_data168.useSelect)(
+    const hasInnerBlocks = (0, import_data169.useSelect)(
       (select9) => !!select9(import_block_editor286.store).getBlocks(props.clientId).length,
       [props.clientId]
     );
@@ -74539,7 +74508,7 @@ ${text}
   // packages/block-library/build-module/term-template/edit.mjs
   var import_components180 = __toESM(require_components(), 1);
   var import_element146 = __toESM(require_element(), 1);
-  var import_data169 = __toESM(require_data(), 1);
+  var import_data170 = __toESM(require_data(), 1);
   var import_i18n271 = __toESM(require_i18n(), 1);
   var import_block_editor288 = __toESM(require_block_editor(), 1);
   var import_core_data99 = __toESM(require_core_data(), 1);
@@ -74625,7 +74594,7 @@ ${text}
       taxonomy,
       queryArgs
     );
-    const blocks = (0, import_data169.useSelect)(
+    const blocks = (0, import_data170.useSelect)(
       (select9) => select9(import_block_editor288.store).getBlocks(clientId),
       [clientId]
     );
@@ -75432,7 +75401,7 @@ ${text}
   var import_block_editor298 = __toESM(require_block_editor(), 1);
   var import_element149 = __toESM(require_element(), 1);
   var import_i18n279 = __toESM(require_i18n(), 1);
-  var import_data172 = __toESM(require_data(), 1);
+  var import_data173 = __toESM(require_data(), 1);
   var import_notices22 = __toESM(require_notices(), 1);
   var import_url24 = __toESM(require_url(), 1);
 
@@ -75612,7 +75581,7 @@ ${text}
   var import_i18n276 = __toESM(require_i18n(), 1);
   var import_components183 = __toESM(require_components(), 1);
   var import_block_editor296 = __toESM(require_block_editor(), 1);
-  var import_data170 = __toESM(require_data(), 1);
+  var import_data171 = __toESM(require_data(), 1);
   var import_element148 = __toESM(require_element(), 1);
   var import_url23 = __toESM(require_url(), 1);
   var import_jsx_runtime545 = __toESM(require_jsx_runtime(), 1);
@@ -75781,7 +75750,7 @@ ${text}
     );
   }
   function TracksEditor({ tracks = [], onChange }) {
-    const mediaUpload = (0, import_data170.useSelect)((select9) => {
+    const mediaUpload = (0, import_data171.useSelect)((select9) => {
       return select9(import_block_editor296.store).getSettings().mediaUpload;
     }, []);
     const [trackBeingEdited, setTrackBeingEdited] = (0, import_element148.useState)(null);
@@ -75996,13 +75965,13 @@ ${text}
   var import_block_editor297 = __toESM(require_block_editor(), 1);
   var import_core_data100 = __toESM(require_core_data(), 1);
   var import_blocks128 = __toESM(require_blocks(), 1);
-  var import_data171 = __toESM(require_data(), 1);
+  var import_data172 = __toESM(require_data(), 1);
   var import_i18n278 = __toESM(require_i18n(), 1);
   var import_jsx_runtime546 = __toESM(require_jsx_runtime(), 1);
   function GifRestoreControl({ attributes, clientId }) {
     const { id, caption } = attributes;
-    const { replaceBlocks } = (0, import_data171.useDispatch)(import_block_editor297.store);
-    const gif = (0, import_data171.useSelect)(
+    const { replaceBlocks } = (0, import_data172.useDispatch)(import_block_editor297.store);
+    const gif = (0, import_data172.useSelect)(
       (select9) => {
         if (!id) {
           return null;
@@ -76119,7 +76088,7 @@ ${text}
         setTemporaryURL();
       }
     }
-    const { createErrorNotice } = (0, import_data172.useDispatch)(import_notices22.store);
+    const { createErrorNotice } = (0, import_data173.useDispatch)(import_notices22.store);
     function onUploadError(message) {
       createErrorNotice(message, { type: "snackbar" });
     }
@@ -76664,7 +76633,7 @@ ${text}
   var import_i18n282 = __toESM(require_i18n(), 1);
   var import_rich_text6 = __toESM(require_rich_text(), 1);
   var import_block_editor301 = __toESM(require_block_editor(), 1);
-  var import_data173 = __toESM(require_data(), 1);
+  var import_data174 = __toESM(require_data(), 1);
   var import_core_data102 = __toESM(require_core_data(), 1);
   var import_blocks131 = __toESM(require_blocks(), 1);
   var import_jsx_runtime550 = __toESM(require_jsx_runtime(), 1);
@@ -76688,7 +76657,7 @@ ${text}
       isObjectActive,
       context: { postType, postId }
     }) {
-      const registry = (0, import_data173.useRegistry)();
+      const registry = (0, import_data174.useRegistry)();
       const {
         getSelectedBlockClientId,
         getBlocks,
@@ -76696,7 +76665,7 @@ ${text}
         getBlockName,
         getBlockParentsByBlockName
       } = registry.select(import_block_editor301.store);
-      const isFootnotesSupported = (0, import_data173.useSelect)(
+      const isFootnotesSupported = (0, import_data174.useSelect)(
         (select9) => {
           if (!select9(import_blocks131.store).getBlockType("core/footnotes")) {
             return false;
@@ -76733,7 +76702,7 @@ ${text}
         },
         [postType, postId]
       );
-      const { selectionChange, insertBlock } = (0, import_data173.useDispatch)(import_block_editor301.store);
+      const { selectionChange, insertBlock } = (0, import_data174.useDispatch)(import_block_editor301.store);
       if (!isFootnotesSupported) {
         return null;
       }
@@ -76819,15 +76788,15 @@ ${text}
 
   // packages/block-library/build-module/block-keyboard-shortcuts/index.mjs
   var import_element150 = __toESM(require_element(), 1);
-  var import_data174 = __toESM(require_data(), 1);
+  var import_data175 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
   var import_i18n283 = __toESM(require_i18n(), 1);
   var import_blocks132 = __toESM(require_blocks(), 1);
   var import_block_editor302 = __toESM(require_block_editor(), 1);
   function BlockKeyboardShortcuts() {
-    const { registerShortcut } = (0, import_data174.useDispatch)(import_keyboard_shortcuts.store);
-    const { replaceBlocks } = (0, import_data174.useDispatch)(import_block_editor302.store);
-    const { getBlockName, getSelectedBlockClientId, getBlockAttributes: getBlockAttributes4 } = (0, import_data174.useSelect)(import_block_editor302.store);
+    const { registerShortcut } = (0, import_data175.useDispatch)(import_keyboard_shortcuts.store);
+    const { replaceBlocks } = (0, import_data175.useDispatch)(import_block_editor302.store);
+    const { getBlockName, getSelectedBlockClientId, getBlockAttributes: getBlockAttributes4 } = (0, import_data175.useSelect)(import_block_editor302.store);
     const handleTransformHeadingAndParagraph = (event, level) => {
       event.preventDefault();
       const currentClientId = getSelectedBlockClientId();
@@ -77075,7 +77044,7 @@ ${text}
     if (window.__unstableAutoRegisterBlocks) {
       window.__unstableAutoRegisterBlocks.forEach((blockName) => {
         const bootstrappedBlockType = unlock(
-          (0, import_data175.select)(import_blocks133.store)
+          (0, import_data176.select)(import_blocks133.store)
         ).getBootstrappedBlockType(blockName);
         (0, import_blocks133.registerBlockType)(blockName, {
           // Use all metadata from PHP registration,
