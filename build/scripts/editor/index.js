@@ -52790,10 +52790,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (!blockSelector) {
       return variationClass;
     }
-    const ancestorRegex = /((?::\([^)]+\))?\s*)([^\s:]+)/;
-    const addVariationClass = (_match, group1, group2) => {
-      return group1 + group2 + variationClass;
-    };
+    const ancestorRegex = /[^\s:]+/;
+    const addVariationClass = (match3) => match3 + variationClass;
     const result = splitSelectorList(blockSelector).map(
       (part) => part.replace(ancestorRegex, addVariationClass)
     );

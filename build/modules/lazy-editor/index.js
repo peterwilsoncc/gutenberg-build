@@ -583,10 +583,8 @@ function getBlockStyleVariationSelector(variation, blockSelector) {
   if (!blockSelector) {
     return variationClass;
   }
-  const ancestorRegex = /((?::\([^)]+\))?\s*)([^\s:]+)/;
-  const addVariationClass = (_match, group1, group2) => {
-    return group1 + group2 + variationClass;
-  };
+  const ancestorRegex = /[^\s:]+/;
+  const addVariationClass = (match) => match + variationClass;
   const result = splitSelectorList(blockSelector).map(
     (part) => part.replace(ancestorRegex, addVariationClass)
   );
