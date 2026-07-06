@@ -155,9 +155,9 @@ var require_with_selector_development = __commonJS({
         return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React117 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef43 = React117.useRef, useEffect22 = React117.useEffect, useMemo33 = React117.useMemo, useDebugValue2 = React117.useDebugValue;
+      var React117 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef42 = React117.useRef, useEffect22 = React117.useEffect, useMemo33 = React117.useMemo, useDebugValue2 = React117.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
-        var instRef = useRef43(null);
+        var instRef = useRef42(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -18492,7 +18492,6 @@ var location_picker_default = {
 
 // widgets/events/components/location-picker/location-picker.tsx
 var import_jsx_runtime71 = __toESM(require_jsx_runtime());
-var DRAFT_DEBOUNCE_MS = 300;
 var SEARCH_DEBOUNCE_MS = 500;
 function LocationPicker({
   onSubmit = () => {
@@ -18507,53 +18506,11 @@ function LocationPicker({
   const [locationInput, setLocationInput] = (0, import_element50.useState)(seedInput);
   const [locationOptions, setLocationOptions] = (0, import_element50.useState)([]);
   const [isLocatingCity, setIsLocatingCity] = (0, import_element50.useState)(false);
-  const draftTimeoutRef = (0, import_element50.useRef)(
-    null
-  );
   (0, import_element50.useEffect)(() => {
     if (!selectButton || seedInput) {
       setLocationInput(seedInput);
     }
   }, [selectButton, seedInput]);
-  const clearDraftTimeout = (0, import_element50.useCallback)(() => {
-    if (draftTimeoutRef.current) {
-      clearTimeout(draftTimeoutRef.current);
-      draftTimeoutRef.current = null;
-    }
-  }, []);
-  const tryPublishDraft = (0, import_element50.useCallback)(() => {
-    if (selectButton || !onChange) {
-      return;
-    }
-    const draft = locationInput.trim();
-    const saved = seedInput.trim();
-    if (draft === saved) {
-      return;
-    }
-    onChange(locationInput);
-  }, [selectButton, locationInput, onChange, seedInput]);
-  const scheduleDraftPublish = (0, import_element50.useCallback)(() => {
-    if (selectButton || !onChange) {
-      return;
-    }
-    clearDraftTimeout();
-    draftTimeoutRef.current = setTimeout(() => {
-      draftTimeoutRef.current = null;
-      tryPublishDraft();
-    }, DRAFT_DEBOUNCE_MS);
-  }, [clearDraftTimeout, selectButton, onChange, tryPublishDraft]);
-  (0, import_element50.useEffect)(() => {
-    if (selectButton || !onChange) {
-      clearDraftTimeout();
-      return;
-    }
-    scheduleDraftPublish();
-    return clearDraftTimeout;
-  }, [clearDraftTimeout, selectButton, onChange, scheduleDraftPublish]);
-  const flushDraftPublish = (0, import_element50.useCallback)(() => {
-    clearDraftTimeout();
-    tryPublishDraft();
-  }, [clearDraftTimeout, tryPublishDraft]);
   const fillCityFromGeolocation = async () => {
     if (!navigator.geolocation || isLocatingCity) {
       return;
@@ -18576,6 +18533,9 @@ function LocationPicker({
       const city = data.address?.city ?? data.address?.town ?? data.address?.village ?? data.address?.municipality;
       if (city) {
         setLocationInput(city);
+        if (!selectButton) {
+          onChange?.(city);
+        }
       }
     } catch {
     } finally {
@@ -18648,7 +18608,13 @@ function LocationPicker({
           {
             items: locationOptions,
             value: locationInput,
-            onValueChange: setLocationInput,
+            onValueChange: (value, eventDetails) => {
+              setLocationInput(value);
+              const isDeliberate = eventDetails.reason === "item-press" || eventDetails.reason === "clear-press";
+              if (!selectButton && isDeliberate) {
+                onChange?.(value);
+              }
+            },
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
                 autocomplete_exports.Input,
@@ -18667,7 +18633,6 @@ function LocationPicker({
                       ) : void 0,
                       onValueChange: () => {
                       },
-                      onBlur: !selectButton ? flushDraftPublish : void 0,
                       suffix: /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(InputLayout3.Slot, { padding: "minimal", children: [
                         /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(autocomplete_exports.Clear, {}),
                         /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(

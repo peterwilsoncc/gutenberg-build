@@ -82,7 +82,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState78({
+        cachedValue = useState77({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -94,7 +94,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot]
         );
-        useEffect71(
+        useEffect70(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React120 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState78 = React120.useState, useEffect71 = React120.useEffect, useLayoutEffect12 = React120.useLayoutEffect, useDebugValue2 = React120.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React120 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState77 = React120.useState, useEffect70 = React120.useEffect, useLayoutEffect12 = React120.useLayoutEffect, useDebugValue2 = React120.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React120.useSyncExternalStore ? React120.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -148,7 +148,7 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React120 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef87 = React120.useRef, useEffect71 = React120.useEffect, useMemo81 = React120.useMemo, useDebugValue2 = React120.useDebugValue;
+      var React120 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef87 = React120.useRef, useEffect70 = React120.useEffect, useMemo81 = React120.useMemo, useDebugValue2 = React120.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef87(null);
         if (null === instRef.current) {
@@ -191,7 +191,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector2, isEqual]
         );
         var value = useSyncExternalStore3(subscribe2, instRef[0], instRef[1]);
-        useEffect71(
+        useEffect70(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -24472,6 +24472,7 @@ var import_viewport2 = __toESM(require_viewport());
 
 // packages/widget-dashboard/build-module/context/dashboard-context.mjs
 var import_es6 = __toESM(require_es6(), 1);
+var import_compose11 = __toESM(require_compose(), 1);
 var import_element96 = __toESM(require_element(), 1);
 
 // packages/widget-dashboard/build-module/types.mjs
@@ -24631,6 +24632,7 @@ var DEFAULT_RESOLVE_WIDGET_MODULE = (moduleId) => import(
   /* webpackIgnore: true */
   moduleId
 );
+var AUTO_SAVE_DELAY_MS = 5e3;
 function canonicalize(layout) {
   const indexed = layout.map((widget, index2) => ({
     widget,
@@ -24719,6 +24721,22 @@ function WidgetDashboardProvider({
       onEditChange
     ]
   );
+  const publishAutoSave = (0, import_compose11.useEvent)(() => commit({ exitEditMode: false }));
+  const scheduleAutoSave = (0, import_element96.useMemo)(
+    () => (0, import_compose11.debounce)(publishAutoSave, AUTO_SAVE_DELAY_MS),
+    [publishAutoSave]
+  );
+  const flushAutoSave = (0, import_element96.useCallback)(
+    () => scheduleAutoSave.flush(),
+    [scheduleAutoSave]
+  );
+  (0, import_element96.useEffect)(() => {
+    if (!editMode) {
+      return;
+    }
+    scheduleAutoSave.flush();
+  }, [editMode, scheduleAutoSave]);
+  (0, import_element96.useEffect)(() => () => scheduleAutoSave.flush(), [scheduleAutoSave]);
   const cancel = (0, import_element96.useCallback)(
     (options) => {
       if (options?.revertLayout !== false) {
@@ -24780,6 +24798,8 @@ function WidgetDashboardProvider({
       commit,
       commitGridModelChange,
       cancel,
+      scheduleAutoSave,
+      flushAutoSave,
       hasUncommittedChanges,
       editMode,
       onEditChange,
@@ -24796,6 +24816,8 @@ function WidgetDashboardProvider({
       commit,
       commitGridModelChange,
       cancel,
+      scheduleAutoSave,
+      flushAutoSave,
       hasUncommittedChanges,
       editMode,
       onEditChange,
@@ -25449,7 +25471,7 @@ var import_components4 = __toESM(require_components(), 1);
 var import_i18n13 = __toESM(require_i18n(), 1);
 var import_element102 = __toESM(require_element(), 1);
 var import_data2 = __toESM(require_data(), 1);
-var import_compose11 = __toESM(require_compose(), 1);
+var import_compose12 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/lock-unlock.mjs
 var import_private_apis3 = __toESM(require_private_apis(), 1);
@@ -25566,7 +25588,7 @@ function ItemActions({
       eligibleActions: _eligibleActions
     };
   }, [actions, item]);
-  const isMobileViewport = (0, import_compose11.useViewportMatch)("medium", "<");
+  const isMobileViewport = (0, import_compose12.useViewportMatch)("medium", "<");
   if (isCompact) {
     return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
       CompactItemActions,
@@ -25665,7 +25687,7 @@ function PrimaryActions({
   buttonVariant
 }) {
   const [activeModalAction, setActiveModalAction] = (0, import_element102.useState)(null);
-  const isMobileViewport = (0, import_compose11.useViewportMatch)("medium", "<");
+  const isMobileViewport = (0, import_compose12.useViewportMatch)("medium", "<");
   if (isMobileViewport) {
     return null;
   }
@@ -25705,7 +25727,7 @@ var import_components5 = __toESM(require_components(), 1);
 var import_i18n15 = __toESM(require_i18n(), 1);
 var import_element103 = __toESM(require_element(), 1);
 var import_data3 = __toESM(require_data(), 1);
-var import_compose12 = __toESM(require_compose(), 1);
+var import_compose13 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/utils/get-footer-message.mjs
 var import_i18n14 = __toESM(require_i18n(), 1);
@@ -26869,7 +26891,7 @@ var import_i18n22 = __toESM(require_i18n(), 1);
 // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
 var import_components10 = __toESM(require_components(), 1);
 var import_i18n21 = __toESM(require_i18n(), 1);
-var import_compose13 = __toESM(require_compose(), 1);
+var import_compose14 = __toESM(require_compose(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
 var import_element113 = __toESM(require_element(), 1);
 
@@ -27012,7 +27034,7 @@ var GridItem = (0, import_element113.forwardRef)(
       [forwardedRef]
     );
     useIntersectionObserver(elementRef, posinset);
-    const instanceId = (0, import_compose13.useInstanceId)(GridItem2);
+    const instanceId = (0, import_compose14.useInstanceId)(GridItem2);
     const isSelected2 = selection.includes(id);
     const mediaPlaceholder = /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("span", { className: "dataviews-view-grid__media-placeholder" });
     const rendersMediaField = showMedia && mediaField?.render;
@@ -27518,7 +27540,7 @@ function ViewGrid({
 var grid_default2 = ViewGrid;
 
 // packages/dataviews/build-module/components/dataviews-layouts/list/index.mjs
-var import_compose14 = __toESM(require_compose(), 1);
+var import_compose15 = __toESM(require_compose(), 1);
 var import_components12 = __toESM(require_components(), 1);
 var import_element114 = __toESM(require_element(), 1);
 var import_i18n23 = __toESM(require_i18n(), 1);
@@ -27849,7 +27871,7 @@ function ViewList(props) {
     className,
     empty
   } = props;
-  const baseId = (0, import_compose14.useInstanceId)(ViewList, "view-list");
+  const baseId = (0, import_compose15.useInstanceId)(ViewList, "view-list");
   const isDelayedLoading = useDelayedLoading(!!isLoading);
   const { paginationInfo } = (0, import_element114.useContext)(dataviews_context_default);
   const selectedItem = data?.findLast(
@@ -27888,7 +27910,7 @@ function ViewList(props) {
   const activeItemIndex = data.findIndex(
     (item) => isActiveCompositeItem(item, activeCompositeId ?? "")
   );
-  const previousActiveItemIndex = (0, import_compose14.usePrevious)(activeItemIndex);
+  const previousActiveItemIndex = (0, import_compose15.usePrevious)(activeItemIndex);
   const isActiveIdInList = activeItemIndex !== -1;
   const selectCompositeItem = (0, import_element114.useCallback)(
     (targetIndex, generateCompositeId) => {
@@ -28114,7 +28136,7 @@ function ActivityGroup({
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-item.mjs
 var import_element116 = __toESM(require_element(), 1);
 var import_data5 = __toESM(require_data(), 1);
-var import_compose15 = __toESM(require_compose(), 1);
+var import_compose16 = __toESM(require_compose(), 1);
 var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
 function ActivityItem(props) {
   const {
@@ -28151,7 +28173,7 @@ function ActivityItem(props) {
       eligibleActions: _eligibleActions
     };
   }, [actions, item]);
-  const isMobileViewport = (0, import_compose15.useViewportMatch)("medium", "<");
+  const isMobileViewport = (0, import_compose16.useViewportMatch)("medium", "<");
   const density = view.layout?.density ?? "balanced";
   const mediaContent = showMedia && density !== "compact" && mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(
     mediaField.render,
@@ -28384,7 +28406,7 @@ function ViewActivity(props) {
 // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
 var import_components16 = __toESM(require_components(), 1);
 var import_i18n27 = __toESM(require_i18n(), 1);
-var import_compose16 = __toESM(require_compose(), 1);
+var import_compose17 = __toESM(require_compose(), 1);
 var import_element119 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
@@ -28875,7 +28897,7 @@ function GridGroup({
   showLabel = true,
   children
 }) {
-  const headerId = (0, import_compose16.useInstanceId)(
+  const headerId = (0, import_compose17.useInstanceId)(
     GridGroup,
     "dataviews-view-picker-grid-group__header"
   );
@@ -29532,7 +29554,7 @@ var picker_table_default = ViewPickerTable;
 // packages/dataviews/build-module/components/dataviews-layouts/picker-activity/index.mjs
 var import_components18 = __toESM(require_components(), 1);
 var import_element121 = __toESM(require_element(), 1);
-var import_compose17 = __toESM(require_compose(), 1);
+var import_compose18 = __toESM(require_compose(), 1);
 var import_i18n29 = __toESM(require_i18n(), 1);
 var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
 function isDefined4(item) {
@@ -29670,7 +29692,7 @@ function PickerActivityGroup({
   showLabel = true,
   children
 }) {
-  const headerId = (0, import_compose17.useInstanceId)(
+  const headerId = (0, import_compose18.useInstanceId)(
     PickerActivityGroup,
     "dataviews-view-picker-activity-group__header"
   );
@@ -30499,7 +30521,7 @@ function useLiveRef(value) {
   });
   return ref;
 }
-function useEvent(callback) {
+function useEvent2(callback) {
   const ref = (0, import_react26.useRef)(() => {
     throw new Error("Cannot call an event handler while rendering.");
   });
@@ -30615,7 +30637,7 @@ function useForceUpdate() {
   return (0, import_react26.useReducer)(() => [], []);
 }
 function useBooleanEvent(booleanOrCallback) {
-  return useEvent(typeof booleanOrCallback === "function" ? booleanOrCallback : () => booleanOrCallback);
+  return useEvent2(typeof booleanOrCallback === "function" ? booleanOrCallback : () => booleanOrCallback);
 }
 function useWrapElement(props, callback, deps = []) {
   const wrapElement = (0, import_react26.useCallback)((element) => {
@@ -30650,7 +30672,7 @@ function useIsMouseMoving() {
     addGlobalEventListener("scroll", resetMouseMoving, true);
     hasInstalledGlobalEventListeners = true;
   }, []);
-  return useEvent(() => mouseMoving);
+  return useEvent2(() => mouseMoving);
 }
 var mouseMoving = false;
 var previousScreenX = 0;
@@ -30805,7 +30827,7 @@ function getTabIndex4({ focusable: focusable2, trulyDisabled, nativeTabbable, su
   return tabIndexProp ?? 0;
 }
 function useDisableEvent(onEvent, disabled2) {
-  return useEvent((event) => {
+  return useEvent2((event) => {
     onEvent?.(event);
     if (event.defaultPrevented) return;
     if (disabled2) {
@@ -30842,7 +30864,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
   const [focusVisible, setFocusVisible] = (0, import_react27.useState)(false);
   const focusVisibleRef = (0, import_react27.useRef)(false);
   const nativeSubmitObserverCleanupRef = (0, import_react27.useRef)(null);
-  const cleanupFocusVisible = useEvent((element) => {
+  const cleanupFocusVisible = useEvent2((element) => {
     nativeSubmitObserverCleanupRef.current?.();
     nativeSubmitObserverCleanupRef.current = null;
     focusVisibleRef.current = false;
@@ -30906,7 +30928,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
     setFocusVisible(true);
   };
   const onKeyDownCaptureProp = props.onKeyDownCapture;
-  const onKeyDownCapture = useEvent((event) => {
+  const onKeyDownCapture = useEvent2((event) => {
     onKeyDownCaptureProp?.(event);
     if (event.defaultPrevented) return;
     if (!focusable2) return;
@@ -30921,7 +30943,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
     queueBeforeEvent(element, "focusout", applyFocusVisible);
   });
   const onFocusCaptureProp = props.onFocusCapture;
-  const onFocusCapture = useEvent((event) => {
+  const onFocusCapture = useEvent2((event) => {
     onFocusCaptureProp?.(event);
     if (event.defaultPrevented) return;
     if (!focusable2) return;
@@ -30935,7 +30957,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
     else setFocusVisible(false);
   });
   const onBlurProp = props.onBlur;
-  const onBlur = useEvent((event) => {
+  const onBlur = useEvent2((event) => {
     onBlurProp?.(event);
     if (!focusable2) return;
     if (!isFocusEventOutside(event)) return;
@@ -30943,7 +30965,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
     setFocusVisible(false);
   });
   const autoFocusOnShow = (0, import_react27.useContext)(FocusableContext);
-  const autoFocusRef = useEvent((element) => {
+  const autoFocusRef = useEvent2((element) => {
     if (!focusable2) return;
     if (!autoFocus) return;
     if (!element) return;
@@ -31033,7 +31055,7 @@ var useCommand = createHook(function useCommand2({ clickOnEnter = true, clickOnS
     setActive(false);
   }, [disabled2]);
   const onKeyDownProp = props.onKeyDown;
-  const onKeyDown = useEvent((event) => {
+  const onKeyDown = useEvent2((event) => {
     onKeyDownProp?.(event);
     const element = event.currentTarget;
     if (event.defaultPrevented) return;
@@ -31070,7 +31092,7 @@ var useCommand = createHook(function useCommand2({ clickOnEnter = true, clickOnS
     }
   });
   const onKeyUpProp = props.onKeyUp;
-  const onKeyUp = useEvent((event) => {
+  const onKeyUp = useEvent2((event) => {
     onKeyUpProp?.(event);
     if (isDuplicate) return;
     const isSpace = clickOnSpace && event.key === " ";
@@ -31089,7 +31111,7 @@ var useCommand = createHook(function useCommand2({ clickOnEnter = true, clickOnS
     queueMicrotask(() => fireClickEvent(element, eventInit));
   });
   const onBlurProp = props.onBlur;
-  const onBlur = useEvent((event) => {
+  const onBlur = useEvent2((event) => {
     onBlurProp?.(event);
     if (!activeRef.current) return;
     activeRef.current = false;
@@ -32102,11 +32124,11 @@ function useStoreProps(store, props, key2, setKey) {
 function useStore2(createStore2, props) {
   const [store, setStore] = React116.useState(() => createStore2(props));
   useSafeLayoutEffect(() => init(store), [store]);
-  const useState78 = React116.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+  const useState77 = React116.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
   return [React116.useMemo(() => ({
     ...store,
-    useState: useState78
-  }), [store, useState78]), useEvent(() => {
+    useState: useState77
+  }), [store, useState77]), useEvent2(() => {
     setStore((store2) => createStore2({
       ...props,
       ...store2.getState()
@@ -32232,7 +32254,7 @@ var useCompositeItem = createHook(function useCompositeItem2({ store, rowId: row
   const onFocusProp = props.onFocus;
   const hasFocusedComposite = (0, import_react31.useRef)(false);
   const cancelScheduledFocusRedirectRef = (0, import_react31.useRef)(null);
-  const onFocus = useEvent((event) => {
+  const onFocus = useEvent2((event) => {
     onFocusProp?.(event);
     if (event.defaultPrevented) return;
     if (isPortalEvent(event)) return;
@@ -32279,7 +32301,7 @@ var useCompositeItem = createHook(function useCompositeItem2({ store, rowId: row
     });
   });
   const onBlurCaptureProp = props.onBlurCapture;
-  const onBlurCapture = useEvent((event) => {
+  const onBlurCapture = useEvent2((event) => {
     onBlurCaptureProp?.(event);
     if (event.defaultPrevented) return;
     if (store?.getState()?.virtualFocus && hasFocusedComposite.current) {
@@ -32291,7 +32313,7 @@ var useCompositeItem = createHook(function useCompositeItem2({ store, rowId: row
   const onKeyDownProp = props.onKeyDown;
   const preventScrollOnKeyDownProp = useBooleanEvent(preventScrollOnKeyDown);
   const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-  const onKeyDown = useEvent((event) => {
+  const onKeyDown = useEvent2((event) => {
     onKeyDownProp?.(event);
     if (event.defaultPrevented) return;
     if (!isSelfTarget(event)) return;
@@ -32401,7 +32423,7 @@ function isModifierKey(event) {
   return event.key === "Shift" || event.key === "Control" || event.key === "Alt" || event.key === "Meta";
 }
 function useKeyboardEventProxy(store, onKeyboardEvent, previousElementRef) {
-  return useEvent((event) => {
+  return useEvent2((event) => {
     onKeyboardEvent?.(event);
     if (event.defaultPrevented) return;
     if (event.isPropagationStopped()) return;
@@ -32510,7 +32532,7 @@ var useComposite = createHook(function useComposite2({ store, composite = true, 
   const onKeyDownCapture = useKeyboardEventProxy(store, props.onKeyDownCapture, previousElementRef);
   const onKeyUpCapture = useKeyboardEventProxy(store, props.onKeyUpCapture, previousElementRef);
   const onFocusCaptureProp = props.onFocusCapture;
-  const onFocusCapture = useEvent((event) => {
+  const onFocusCapture = useEvent2((event) => {
     onFocusCaptureProp?.(event);
     if (event.defaultPrevented) return;
     if (!store) return;
@@ -32524,7 +32546,7 @@ var useComposite = createHook(function useComposite2({ store, composite = true, 
     }
   });
   const onFocusProp = props.onFocus;
-  const onFocus = useEvent((event) => {
+  const onFocus = useEvent2((event) => {
     onFocusProp?.(event);
     if (event.defaultPrevented) return;
     if (!composite) return;
@@ -32536,7 +32558,7 @@ var useComposite = createHook(function useComposite2({ store, composite = true, 
     } else if (isSelfTarget(event)) store.setActiveId(null);
   });
   const onBlurCaptureProp = props.onBlurCapture;
-  const onBlurCapture = useEvent((event) => {
+  const onBlurCapture = useEvent2((event) => {
     onBlurCaptureProp?.(event);
     if (event.defaultPrevented) return;
     if (!store) return;
@@ -32557,7 +32579,7 @@ var useComposite = createHook(function useComposite2({ store, composite = true, 
   });
   const onKeyDownProp = props.onKeyDown;
   const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-  const onKeyDown = useEvent((event) => {
+  const onKeyDown = useEvent2((event) => {
     onKeyDownProp?.(event);
     if (event.nativeEvent.isComposing) return;
     if (event.defaultPrevented) return;
@@ -32988,7 +33010,7 @@ var useCompositeHover = createHook(function useCompositeHover2({ store, focusOnH
   const isMouseMoving = useIsMouseMoving();
   const onMouseMoveProp = props.onMouseMove;
   const focusOnHoverProp = useBooleanEvent(focusOnHover);
-  const onMouseMove = useEvent((event) => {
+  const onMouseMove = useEvent2((event) => {
     onMouseMoveProp?.(event);
     if (event.defaultPrevented) return;
     if (!isMouseMoving()) return;
@@ -33001,7 +33023,7 @@ var useCompositeHover = createHook(function useCompositeHover2({ store, focusOnH
   });
   const onMouseLeaveProp = props.onMouseLeave;
   const blurOnHoverEndProp = useBooleanEvent(blurOnHoverEnd);
-  const onMouseLeave = useEvent((event) => {
+  const onMouseLeave = useEvent2((event) => {
     onMouseLeaveProp?.(event);
     if (event.defaultPrevented) return;
     if (!isMouseMoving()) return;
@@ -33144,7 +33166,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     autoSelect,
     storeValue
   ]);
-  const getAutoSelectIdProp = useEvent(getAutoSelectId);
+  const getAutoSelectIdProp = useEvent2(getAutoSelectId);
   const autoSelectIdRef = (0, import_react37.useRef)(null);
   const autoSelectMovedRef = (0, import_react37.useRef)(void 0);
   const userScrolledRef = (0, import_react37.useRef)(false);
@@ -33272,7 +33294,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
   const onChangeProp = props.onChange;
   const showOnChangeProp = useBooleanEvent(showOnChange ?? canShow);
   const setValueOnChangeProp = useBooleanEvent(setValueOnChange ?? !store.tag);
-  const onChange = useEvent((event) => {
+  const onChange = useEvent2((event) => {
     onChangeProp?.(event);
     if (event.defaultPrevented) return;
     if (!store) return;
@@ -33303,7 +33325,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     if (!autoSelect || !canAutoSelectRef.current) store.setActiveId(null);
   });
   const onCompositionEndProp = props.onCompositionEnd;
-  const onCompositionEnd = useEvent((event) => {
+  const onCompositionEnd = useEvent2((event) => {
     canAutoSelectRef.current = true;
     composingRef.current = false;
     onCompositionEndProp?.(event);
@@ -33315,7 +33337,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
   const blurActiveItemOnClickProp = useBooleanEvent(blurActiveItemOnClick ?? (() => store.getState().includesBaseElement));
   const setValueOnClickProp = useBooleanEvent(setValueOnClick);
   const showOnClickProp = useBooleanEvent(showOnClick ?? canShow);
-  const onMouseDown = useEvent((event) => {
+  const onMouseDown = useEvent2((event) => {
     onMouseDownProp?.(event);
     if (event.defaultPrevented) return;
     if (event.button) return;
@@ -33327,7 +33349,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
   });
   const onKeyDownProp = props.onKeyDown;
   const showOnKeyPressProp = useBooleanEvent(showOnKeyPress ?? canShow);
-  const onKeyDown = useEvent((event) => {
+  const onKeyDown = useEvent2((event) => {
     onKeyDownProp?.(event);
     if (!event.repeat) canAutoSelectRef.current = false;
     if (event.defaultPrevented) return;
@@ -33350,7 +33372,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     }
   });
   const onBlurProp = props.onBlur;
-  const onBlur = useEvent((event) => {
+  const onBlur = useEvent2((event) => {
     canAutoSelectRef.current = false;
     onBlurProp?.(event);
   });
@@ -33438,7 +33460,7 @@ var useComboboxItem = createHook(function useComboboxItem2({ store, value, hideO
   const selectValueOnClickProp = useBooleanEvent(selectValueOnClick);
   const resetValueOnSelectProp = useBooleanEvent(resetValueOnSelect ?? resetValueOnSelectState ?? multiSelectable);
   const hideOnClickProp = useBooleanEvent(hideOnClick);
-  const onClick = useEvent((event) => {
+  const onClick = useEvent2((event) => {
     onClickProp?.(event);
     if (event.defaultPrevented) return;
     if (isDownloading(event)) return;
@@ -33457,7 +33479,7 @@ var useComboboxItem = createHook(function useComboboxItem2({ store, value, hideO
     if (hideOnClickProp(event)) store?.hide();
   });
   const onKeyDownProp = props.onKeyDown;
-  const onKeyDown = useEvent((event) => {
+  const onKeyDown = useEvent2((event) => {
     onKeyDownProp?.(event);
     if (event.defaultPrevented) return;
     const baseElement = store?.getState().baseElement;
@@ -33833,7 +33855,7 @@ function ComboboxProvider(props = {}) {
 
 // packages/dataviews/build-module/components/dataviews-filters/search-widget.mjs
 var import_remove_accents = __toESM(require_remove_accents(), 1);
-var import_compose18 = __toESM(require_compose(), 1);
+var import_compose19 = __toESM(require_compose(), 1);
 var import_i18n33 = __toESM(require_i18n(), 1);
 var import_element125 = __toESM(require_element(), 1);
 var import_components21 = __toESM(require_components(), 1);
@@ -33935,7 +33957,7 @@ var SingleSelectionOption = ({ selected }) => {
   );
 };
 function ListBox({ view, filter, onChangeView }) {
-  const baseId = (0, import_compose18.useInstanceId)(ListBox, "dataviews-filter-list-box");
+  const baseId = (0, import_compose19.useInstanceId)(ListBox, "dataviews-filter-list-box");
   const [activeCompositeId, setActiveCompositeId] = (0, import_element125.useState)(
     // When there are one or less operators, the first item is set as active
     // (by setting the initial `activeId` to `undefined`).
@@ -34193,7 +34215,7 @@ function SearchWidget(props) {
 
 // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
 var import_es62 = __toESM(require_es6(), 1);
-var import_compose19 = __toESM(require_compose(), 1);
+var import_compose20 = __toESM(require_compose(), 1);
 var import_element126 = __toESM(require_element(), 1);
 var import_components22 = __toESM(require_components(), 1);
 var import_jsx_runtime169 = __toESM(require_jsx_runtime(), 1);
@@ -34236,7 +34258,7 @@ function InputWidget({
       {}
     );
   }, [view.filters]);
-  const handleChange = (0, import_compose19.useEvent)((updatedData) => {
+  const handleChange = (0, import_compose20.useEvent)((updatedData) => {
     if (!field || !currentFilter) {
       return;
     }
@@ -37143,11 +37165,11 @@ function DataViewsLayout({ className }) {
 var import_i18n40 = __toESM(require_i18n(), 1);
 var import_element135 = __toESM(require_element(), 1);
 var import_components28 = __toESM(require_components(), 1);
-var import_compose20 = __toESM(require_compose(), 1);
+var import_compose21 = __toESM(require_compose(), 1);
 var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
 var DataViewsSearch = (0, import_element135.memo)(function Search({ label }) {
   const { view, onChangeView } = (0, import_element135.useContext)(dataviews_context_default);
-  const [search, setSearch, debouncedSearch] = (0, import_compose20.useDebouncedInput)(
+  const [search, setSearch, debouncedSearch] = (0, import_compose21.useDebouncedInput)(
     view.search
   );
   (0, import_element135.useEffect)(() => {
@@ -37191,7 +37213,7 @@ var import_components29 = __toESM(require_components(), 1);
 var import_i18n41 = __toESM(require_i18n(), 1);
 var import_element136 = __toESM(require_element(), 1);
 var import_warning = __toESM(require_warning(), 1);
-var import_compose21 = __toESM(require_compose(), 1);
+var import_compose22 = __toESM(require_compose(), 1);
 var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu6 } = unlock3(import_components29.privateApis);
 var DATAVIEWS_CONFIG_POPOVER_PROPS = {
@@ -37404,7 +37426,7 @@ function ResetViewButton() {
 }
 function DataviewsViewConfigDropdown() {
   const { view, onReset } = (0, import_element136.useContext)(dataviews_context_default);
-  const popoverId = (0, import_compose21.useInstanceId)(
+  const popoverId = (0, import_compose22.useInstanceId)(
     _DataViewsViewConfig,
     "dataviews-view-config-dropdown"
   );
@@ -40809,7 +40831,7 @@ function useData({
 
 // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
 var import_element155 = __toESM(require_element(), 1);
-var import_compose22 = __toESM(require_compose(), 1);
+var import_compose23 = __toESM(require_compose(), 1);
 function captureAnchorElement(container, anchorElementRef, direction) {
   const containerRect = container.getBoundingClientRect();
   const centerY = containerRect.top + containerRect.height / 2;
@@ -40936,7 +40958,7 @@ function useInfiniteScroll({
     let lastScrollTop = 0;
     const BOTTOM_THRESHOLD = 600;
     const TOP_THRESHOLD = 800;
-    const handleScroll = (0, import_compose22.throttle)((event) => {
+    const handleScroll = (0, import_compose23.throttle)((event) => {
       const currentView = viewRef.current;
       const totalItems = totalItemsRef.current;
       const target = event.target;
@@ -40990,7 +41012,7 @@ function useInfiniteScroll({
 
 // packages/dataviews/build-module/dataviews-picker/index.mjs
 var import_element156 = __toESM(require_element(), 1);
-var import_compose23 = __toESM(require_compose(), 1);
+var import_compose24 = __toESM(require_compose(), 1);
 var import_jsx_runtime205 = __toESM(require_jsx_runtime(), 1);
 var isItemClickable = () => false;
 var dataViewsPickerLayouts = VIEW_LAYOUTS.filter(
@@ -41071,7 +41093,7 @@ function DataViewsPicker({
   });
   const containerRef = (0, import_element156.useRef)(null);
   const [containerWidth, setContainerWidth] = (0, import_element156.useState)(0);
-  const resizeObserverRef = (0, import_compose23.useResizeObserver)(
+  const resizeObserverRef = (0, import_compose24.useResizeObserver)(
     (resizeObserverEntries) => {
       setContainerWidth(
         resizeObserverEntries[0].borderBoxSize[0].inlineSize
@@ -41434,12 +41456,12 @@ function FormRegularField({
 var import_deepmerge2 = __toESM(require_cjs(), 1);
 var import_components51 = __toESM(require_components(), 1);
 var import_element163 = __toESM(require_element(), 1);
-var import_compose25 = __toESM(require_compose(), 1);
+var import_compose26 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 var import_components50 = __toESM(require_components(), 1);
 var import_i18n55 = __toESM(require_i18n(), 1);
-var import_compose24 = __toESM(require_compose(), 1);
+var import_compose25 = __toESM(require_compose(), 1);
 var import_element159 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
@@ -41536,7 +41558,7 @@ function SummaryButton({
       "dataforms-layouts-panel__field-trigger--edit-always": editVisibility === "always"
     }
   );
-  const controlId = (0, import_compose24.useInstanceId)(
+  const controlId = (0, import_compose25.useInstanceId)(
     SummaryButton,
     "dataforms-layouts-panel__field-control"
   );
@@ -42275,9 +42297,9 @@ function ModalContent({
       })
     );
   };
-  const focusOnMountRef = (0, import_compose25.useFocusOnMount)("firstInputElement");
+  const focusOnMountRef = (0, import_compose26.useFocusOnMount)("firstInputElement");
   const contentRef = (0, import_element163.useRef)(null);
-  const mergedRef = (0, import_compose25.useMergeRefs)([focusOnMountRef, contentRef]);
+  const mergedRef = (0, import_compose26.useMergeRefs)([focusOnMountRef, contentRef]);
   useReportValidity(contentRef, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime210.jsxs)(
     import_components51.Modal,
@@ -42392,7 +42414,7 @@ var modal_default = PanelModal;
 var import_components52 = __toESM(require_components(), 1);
 var import_i18n57 = __toESM(require_i18n(), 1);
 var import_element164 = __toESM(require_element(), 1);
-var import_compose26 = __toESM(require_compose(), 1);
+var import_compose27 = __toESM(require_compose(), 1);
 var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
   title,
@@ -42449,7 +42471,7 @@ function PanelDropdown({
     }),
     [popoverAnchor]
   );
-  const [dialogRef, dialogProps] = (0, import_compose26.__experimentalUseDialog)({
+  const [dialogRef, dialogProps] = (0, import_compose27.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
   const form2 = (0, import_element164.useMemo)(
@@ -45040,15 +45062,22 @@ function WidgetSettingsTrigger({
   widgetType
 }) {
   const { settingsWidgetUuid, setSettingsWidgetUuid } = useDashboardUIContext();
-  const { cancel } = useDashboardInternalContext();
+  const { cancel, flushAutoSave } = useDashboardInternalContext();
   const toggle = (0, import_element182.useCallback)(() => {
     if (settingsWidgetUuid === widget.uuid) {
       cancel();
       setSettingsWidgetUuid(null);
       return;
     }
+    flushAutoSave();
     setSettingsWidgetUuid(widget.uuid);
-  }, [cancel, settingsWidgetUuid, setSettingsWidgetUuid, widget.uuid]);
+  }, [
+    cancel,
+    flushAutoSave,
+    settingsWidgetUuid,
+    setSettingsWidgetUuid,
+    widget.uuid
+  ]);
   const hasNonPromotedAttributes = widgetType.attributes?.some(
     (attribute) => attribute.relevance !== "high"
   );
@@ -45145,7 +45174,7 @@ function getOwnerDocument(target) {
   return document;
 }
 var useIsomorphicLayoutEffect2 = canUseDOM2 ? import_react42.useLayoutEffect : import_react42.useEffect;
-function useEvent3(handler) {
+function useEvent4(handler) {
   const handlerRef = (0, import_react42.useRef)(handler);
   useIsomorphicLayoutEffect2(() => {
     handlerRef.current = handler;
@@ -45195,7 +45224,7 @@ function useLazyMemo(callback, dependencies) {
   );
 }
 function useNodeRef(onChange) {
-  const onChangeHandler = useEvent3(onChange);
+  const onChangeHandler = useEvent4(onChange);
   const node = (0, import_react42.useRef)(null);
   const setNodeRef = (0, import_react42.useCallback)(
     (element) => {
@@ -47088,7 +47117,7 @@ function useMutationObserver(_ref) {
     callback,
     disabled: disabled2
   } = _ref;
-  const handleMutations = useEvent3(callback);
+  const handleMutations = useEvent4(callback);
   const mutationObserver = (0, import_react44.useMemo)(() => {
     if (disabled2 || typeof window === "undefined" || typeof window.MutationObserver === "undefined") {
       return void 0;
@@ -47108,7 +47137,7 @@ function useResizeObserver2(_ref) {
     callback,
     disabled: disabled2
   } = _ref;
-  const handleResize = useEvent3(callback);
+  const handleResize = useEvent4(callback);
   const resizeObserver = (0, import_react44.useMemo)(
     () => {
       if (disabled2 || typeof window === "undefined" || typeof window.ResizeObserver === "undefined") {
@@ -48605,7 +48634,7 @@ function useDropAnimation(_ref3) {
     droppableContainers,
     measuringConfiguration
   } = _ref3;
-  return useEvent3((id, node) => {
+  return useEvent4((id, node) => {
     if (config === null) {
       return;
     }
@@ -49315,19 +49344,19 @@ function isAfter(a2, b2) {
 }
 
 // packages/grid/build-module/dashboard-grid/index.mjs
-var import_compose29 = __toESM(require_compose(), 1);
+var import_compose30 = __toESM(require_compose(), 1);
 var import_element188 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-grid/grid-item.mjs
 var import_element184 = __toESM(require_element(), 1);
-var import_compose28 = __toESM(require_compose(), 1);
+var import_compose29 = __toESM(require_compose(), 1);
 
 // packages/grid/build-module/shared/grid-item-key.mjs
 var GRID_ITEM_DATA_KEY = "data-wp-grid-item-key";
 
 // packages/grid/build-module/shared/resize-handle.mjs
 var import_element183 = __toESM(require_element(), 1);
-var import_compose27 = __toESM(require_compose(), 1);
+var import_compose28 = __toESM(require_compose(), 1);
 var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE62 = "data-wp-hash";
 function getRuntime62() {
@@ -49434,7 +49463,7 @@ function ResizeHandle({
   const setOwnerDocumentRef = (0, import_element183.useCallback)((node) => {
     ownerDocumentRef.current = node?.ownerDocument ?? null;
   }, []);
-  const mergedRef = (0, import_compose27.useMergeRefs)([setOwnerDocumentRef, setNodeRef]);
+  const mergedRef = (0, import_compose28.useMergeRefs)([setOwnerDocumentRef, setNodeRef]);
   (0, import_element183.useEffect)(() => {
     if (!isDragging) {
       return;
@@ -49474,7 +49503,7 @@ function ResizeHandle({
 }
 function ResizeHandleWrapper(props) {
   const throttleDelay = 16;
-  const throttledResize = (0, import_compose27.useThrottle)((delta) => {
+  const throttledResize = (0, import_compose28.useThrottle)((delta) => {
     if (props.onResize) {
       props.onResize(delta);
     }
@@ -49655,8 +49684,8 @@ function GridItem4({
     id: item.key,
     disabled: disabled2
   });
-  const mergedRef = (0, import_compose28.useMergeRefs)([itemRef, setNodeRef]);
-  const contentMergedRef = (0, import_compose28.useMergeRefs)([contentRef]);
+  const mergedRef = (0, import_compose29.useMergeRefs)([itemRef, setNodeRef]);
+  const contentMergedRef = (0, import_compose29.useMergeRefs)([contentRef]);
   const style = {
     gridColumnEnd: `span ${item.width === "full" ? maxColumns : Math.min(
       typeof item.width === "number" ? item.width : 1,
@@ -50622,13 +50651,13 @@ var DashboardGrid = (0, import_element188.forwardRef)(
     const [containerWidth, setContainerWidth] = (0, import_element188.useState)(0);
     const [containerHeight, setContainerHeight] = (0, import_element188.useState)(0);
     const [gapPx, setGapPx] = (0, import_element188.useState)(FALLBACK_GAP_PX);
-    const resizeObserverRef = (0, import_compose29.useResizeObserver)(
+    const resizeObserverRef = (0, import_compose30.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
         setContainerHeight(contentRect.height);
       }
     );
-    const mergedGridRef = (0, import_compose29.useMergeRefs)([
+    const mergedGridRef = (0, import_compose30.useMergeRefs)([
       setGridRoot,
       resizeObserverRef,
       ref
@@ -50749,11 +50778,11 @@ var DashboardGrid = (0, import_element188.forwardRef)(
         coordinateGetter: sortableKeyboardCoordinates
       })
     );
-    const handleDragStart = (0, import_compose29.useEvent)((event) => {
+    const handleDragStart = (0, import_compose30.useEvent)((event) => {
       setActiveId(String(event.active.id));
       lastReorderCursorRef.current = null;
     });
-    const handleDragCancel = (0, import_compose29.useEvent)(() => {
+    const handleDragCancel = (0, import_compose30.useEvent)(() => {
       setActiveId(null);
       latestLayoutRef.current = void 0;
       lastReorderCursorRef.current = null;
@@ -50762,7 +50791,7 @@ var DashboardGrid = (0, import_element188.forwardRef)(
       setResizeSnapPreview(null);
       setTemporaryLayout(void 0);
     });
-    const handleDragMove = (0, import_compose29.useEvent)((event) => {
+    const handleDragMove = (0, import_compose30.useEvent)((event) => {
       const { active, over } = event;
       if (!over || active.id === over.id) {
         return;
@@ -50809,7 +50838,7 @@ var DashboardGrid = (0, import_element188.forwardRef)(
       setTemporaryLayout(updatedLayout);
       onPreviewLayout?.(updatedLayout);
     });
-    const persistTemporaryLayout = (0, import_compose29.useEvent)(() => {
+    const persistTemporaryLayout = (0, import_compose30.useEvent)(() => {
       const latest = latestLayoutRef.current;
       latestLayoutRef.current = void 0;
       resizeBaselineRef.current = null;
@@ -50822,7 +50851,7 @@ var DashboardGrid = (0, import_element188.forwardRef)(
       onChangeLayout(latest);
       setTemporaryLayout(void 0);
     });
-    const handleResize = (0, import_compose29.useEvent)((id, delta) => {
+    const handleResize = (0, import_compose30.useEvent)((id, delta) => {
       if (!editMode) {
         return;
       }
@@ -51019,12 +51048,12 @@ var DashboardGrid = (0, import_element188.forwardRef)(
 );
 
 // packages/grid/build-module/dashboard-lanes/index.mjs
-var import_compose31 = __toESM(require_compose(), 1);
+var import_compose32 = __toESM(require_compose(), 1);
 var import_element191 = __toESM(require_element(), 1);
 
 // packages/grid/build-module/dashboard-lanes/lanes-item.mjs
 var import_element189 = __toESM(require_element(), 1);
-var import_compose30 = __toESM(require_compose(), 1);
+var import_compose31 = __toESM(require_compose(), 1);
 var import_jsx_runtime243 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE67 = "data-wp-hash";
 function getRuntime67() {
@@ -51153,8 +51182,8 @@ function LanesItem({
     id: itemKey,
     disabled: disabled2
   });
-  const mergedRef = (0, import_compose30.useMergeRefs)([itemRef, setNodeRef]);
-  const contentMergedRef = (0, import_compose30.useMergeRefs)([contentRef]);
+  const mergedRef = (0, import_compose31.useMergeRefs)([itemRef, setNodeRef]);
+  const contentMergedRef = (0, import_compose31.useMergeRefs)([contentRef]);
   const style = {
     ...placementStyle,
     alignSelf: "start"
@@ -51658,12 +51687,12 @@ var DashboardLanes = (0, import_element191.forwardRef)(
     );
     const [containerWidth, setContainerWidth] = (0, import_element191.useState)(0);
     const [gapPx, setGapPx] = (0, import_element191.useState)(FALLBACK_GAP_PX2);
-    const resizeObserverRef = (0, import_compose31.useResizeObserver)(
+    const resizeObserverRef = (0, import_compose32.useResizeObserver)(
       ([{ contentRect }]) => {
         setContainerWidth(contentRect.width);
       }
     );
-    const mergedRootRef = (0, import_compose31.useMergeRefs)([
+    const mergedRootRef = (0, import_compose32.useMergeRefs)([
       setContainer,
       resizeObserverRef,
       ref
@@ -51776,11 +51805,11 @@ var DashboardLanes = (0, import_element191.forwardRef)(
         coordinateGetter: sortableKeyboardCoordinates
       })
     );
-    const handleDragStart = (0, import_compose31.useEvent)((event) => {
+    const handleDragStart = (0, import_compose32.useEvent)((event) => {
       setActiveId(String(event.active.id));
       lastReorderCursorRef.current = null;
     });
-    const handleDragCancel = (0, import_compose31.useEvent)(() => {
+    const handleDragCancel = (0, import_compose32.useEvent)(() => {
       setActiveId(null);
       latestLayoutRef.current = void 0;
       lastReorderCursorRef.current = null;
@@ -51789,7 +51818,7 @@ var DashboardLanes = (0, import_element191.forwardRef)(
       setResizeSnapPreview(null);
       setTemporaryLayout(void 0);
     });
-    const handleDragMove = (0, import_compose31.useEvent)((event) => {
+    const handleDragMove = (0, import_compose32.useEvent)((event) => {
       const { active, over } = event;
       if (!over || active.id === over.id) {
         return;
@@ -51840,7 +51869,7 @@ var DashboardLanes = (0, import_element191.forwardRef)(
       setTemporaryLayout(updatedLayout);
       onPreviewLayout?.(updatedLayout);
     });
-    const persistTemporaryLayout = (0, import_compose31.useEvent)(() => {
+    const persistTemporaryLayout = (0, import_compose32.useEvent)(() => {
       const latest = latestLayoutRef.current;
       latestLayoutRef.current = void 0;
       resizeBaselineRef.current = null;
@@ -51853,7 +51882,7 @@ var DashboardLanes = (0, import_element191.forwardRef)(
       onChangeLayout(latest);
       setTemporaryLayout(void 0);
     });
-    const handleResize = (0, import_compose31.useEvent)((id, delta) => {
+    const handleResize = (0, import_compose32.useEvent)((id, delta) => {
       if (!editMode) {
         return;
       }
@@ -52022,7 +52051,7 @@ var DashboardLanes = (0, import_element191.forwardRef)(
 );
 
 // packages/widget-dashboard/build-module/hooks/use-dashboard-container-column-count.mjs
-var import_compose32 = __toESM(require_compose(), 1);
+var import_compose33 = __toESM(require_compose(), 1);
 var import_element192 = __toESM(require_element(), 1);
 
 // packages/widget-dashboard/build-module/utils/resolve-dashboard-column-count/resolve-dashboard-column-count.mjs
@@ -52047,10 +52076,10 @@ function useDashboardContainerColumnCount(forwardedRef) {
     null
   );
   const [containerWidth, setContainerWidth] = (0, import_element192.useState)(0);
-  const resizeObserverRef = (0, import_compose32.useResizeObserver)(([{ contentRect }]) => {
+  const resizeObserverRef = (0, import_compose33.useResizeObserver)(([{ contentRect }]) => {
     setContainerWidth(contentRect.width);
   });
-  const containerRef = (0, import_compose32.useMergeRefs)([
+  const containerRef = (0, import_compose33.useMergeRefs)([
     setContainer,
     resizeObserverRef,
     forwardedRef ?? null
@@ -52078,7 +52107,7 @@ function WidgetAttributeControls({
   widget,
   widgetType
 }) {
-  const { layout, onLayoutChange, commit } = useDashboardInternalContext();
+  const { layout, onLayoutChange, scheduleAutoSave } = useDashboardInternalContext();
   const fields3 = (0, import_element193.useMemo)(
     () => (widgetType.attributes ?? []).filter(
       (attribute) => attribute.relevance === "high"
@@ -52095,13 +52124,6 @@ function WidgetAttributeControls({
     }),
     [fields3]
   );
-  const [pendingCommit, setPendingCommit] = (0, import_element193.useState)(false);
-  (0, import_element193.useEffect)(() => {
-    if (pendingCommit) {
-      commit({ exitEditMode: false });
-      setPendingCommit(false);
-    }
-  }, [pendingCommit, commit]);
   const handleChange = (0, import_element193.useCallback)(
     (edits) => {
       onLayoutChange(
@@ -52115,9 +52137,9 @@ function WidgetAttributeControls({
           } : instance
         )
       );
-      setPendingCommit(true);
+      scheduleAutoSave();
     },
-    [layout, onLayoutChange, widget.uuid]
+    [layout, onLayoutChange, widget.uuid, scheduleAutoSave]
   );
   const data = widget.attributes ?? widgetType.example?.attributes ?? {};
   return /* @__PURE__ */ (0, import_jsx_runtime245.jsxs)(import_jsx_runtime245.Fragment, { children: [
