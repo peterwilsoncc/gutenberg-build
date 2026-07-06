@@ -1640,6 +1640,12 @@ iframe[name=editor-canvas] {
   border-top: 1px solid #ddd;
 }
 
+.block-editor-dimension-control {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
 .block-editor-duotone-control__popover.components-popover > .components-popover__content {
   padding: 8px;
   width: 260px;
