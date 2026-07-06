@@ -22481,7 +22481,6 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
       import_components27.SelectControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n37.__)("Sort by"),
         value: view.sort?.field,
         options: orderOptions,
@@ -22894,7 +22893,6 @@ If there's a particular need for this, please submit a feature request at https:
             import_components30.SelectControl,
             {
               className: "dataviews-controls__relative-date-unit",
-              __next40pxDefaultSize: true,
               label: (0, import_i18n38.__)("Unit"),
               value: unit,
               options,
@@ -23801,7 +23799,6 @@ If there's a particular need for this, please submit a feature request at https:
         help: description,
         options: elements,
         onChange: onChangeControl,
-        __next40pxDefaultSize: true,
         hideLabelFromVision,
         multiple: isMultiple,
         disabled: disabled2

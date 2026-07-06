@@ -22554,7 +22554,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
       import_components5.SelectControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n18.__)("Template"),
         hideLabelFromVision: true,
         value,
@@ -22614,7 +22613,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
       import_components5.SelectControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n18.__)("Template"),
         hideLabelFromVision: true,
         value,
@@ -38666,7 +38664,6 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime219.jsx)(
       import_components53.SelectControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n108.__)("Sort by"),
         value: view.sort?.field,
         options: orderOptions,
@@ -39079,7 +39076,6 @@ If there's a particular need for this, please submit a feature request at https:
             import_components56.SelectControl,
             {
               className: "dataviews-controls__relative-date-unit",
-              __next40pxDefaultSize: true,
               label: (0, import_i18n109.__)("Unit"),
               value: unit,
               options,
@@ -39986,7 +39982,6 @@ If there's a particular need for this, please submit a feature request at https:
         help: description,
         options: elements2,
         onChange: onChangeControl,
-        __next40pxDefaultSize: true,
         hideLabelFromVision,
         multiple: isMultiple,
         disabled: disabled2
@@ -50971,7 +50966,6 @@ If there's a particular need for this, please submit a feature request at https:
             /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(
               import_components88.SelectControl,
               {
-                __next40pxDefaultSize: true,
                 label: (0, import_i18n137.__)("Aspect ratio"),
                 value: aspectRatioValue,
                 onChange: onAspectRatioChange,
@@ -58553,7 +58547,6 @@ If there's a particular need for this, please submit a feature request at https:
                   /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
                     import_components116.SelectControl,
                     {
-                      __next40pxDefaultSize: true,
                       label: (0, import_i18n159.__)("Category"),
                       value: filters.category,
                       onChange: handleCategoryFilter,
@@ -81712,7 +81705,6 @@ If there's a particular need for this, please submit a feature request at https:
       !allowSwitchingTemplate ? /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(import_components175.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n226.__)("The posts page template cannot be changed.") }) : /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
         import_components175.SelectControl,
         {
-          __next40pxDefaultSize: true,
           hideLabelFromVision: true,
           label: (0, import_i18n226.__)("Template"),
           value: selectedOption?.value ?? "",
@@ -82551,7 +82543,6 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
       import_components189.SelectControl,
       {
-        __next40pxDefaultSize: true,
         className: "post-author-selector",
         label: (0, import_i18n233.__)("Author"),
         options: authorOptions,

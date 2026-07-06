@@ -230,7 +230,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
       import_components.SelectControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n.__)("Legacy widget"),
         value: selectedId ?? "",
         options: [

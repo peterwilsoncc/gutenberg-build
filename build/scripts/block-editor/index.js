@@ -68238,8 +68238,7 @@ var wp;
           value: slug,
           options: imageSizeOptions,
           onChange: onChangeImage,
-          help: imageSizeHelp,
-          size: "__unstable-large"
+          help: imageSizeHelp
         }
       ),
       isResizable && /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)(import_jsx_runtime371.Fragment, { children: [
@@ -76336,8 +76335,7 @@ var wp;
             label: (0, import_i18n190.__)("Aspect ratio"),
             value: displayValue,
             options: options ?? aspectRatioOptions,
-            onChange,
-            size: "__unstable-large"
+            onChange
           }
         )
       }
@@ -85876,7 +85874,6 @@ var wp;
             import_components236.SelectControl,
             {
               className: "dataviews-controls__relative-date-unit",
-              __next40pxDefaultSize: true,
               label: (0, import_i18n219.__)("Unit"),
               value: unit,
               options,
@@ -86783,7 +86780,6 @@ var wp;
         help: description,
         options: elements,
         onChange: onChangeControl,
-        __next40pxDefaultSize: true,
         hideLabelFromVision,
         multiple: isMultiple,
         disabled: disabled2
@@ -96144,8 +96140,7 @@ var wp;
             value: displayValue,
             options,
             onChange,
-            help: (0, import_i18n252.__)("Select the size of the source image."),
-            size: "__unstable-large"
+            help: (0, import_i18n252.__)("Select the size of the source image.")
           }
         )
       }
@@ -96242,7 +96237,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime535.jsx)(
         import_components281.SelectControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n254.__)("HTML element"),
           options: modifiedOptions,
           value: tagName,

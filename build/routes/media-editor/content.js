@@ -16587,7 +16587,6 @@ function RelativeDateControl({
           import_components5.SelectControl,
           {
             className: "dataviews-controls__relative-date-unit",
-            __next40pxDefaultSize: true,
             label: (0, import_i18n6.__)("Unit"),
             value: unit,
             options,
@@ -17494,7 +17493,6 @@ function Select({
       help: description,
       options: elements,
       onChange: onChangeControl,
-      __next40pxDefaultSize: true,
       hideLabelFromVision,
       multiple: isMultiple,
       disabled: disabled2
@@ -27786,7 +27784,6 @@ function MediaEditorCropPanel({
           /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
             import_components37.SelectControl,
             {
-              __next40pxDefaultSize: true,
               label: (0, import_i18n34.__)("Aspect ratio"),
               value: aspectRatioValue,
               onChange: onAspectRatioChange,

@@ -5591,7 +5591,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime167.jsx)(
                   import_components3.SelectControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n5.__)("Group by"),
                     options: [
                       { label: (0, import_i18n5.__)("Year"), value: "yearly" },
@@ -6753,7 +6752,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
                   import_components8.SelectControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n10._x)(
                       "Preload",
                       "noun; Audio block parameter"
@@ -11408,7 +11406,6 @@ var wp;
                 children: /* @__PURE__ */ (0, import_jsx_runtime184.jsx)(
                   import_components12.SelectControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n18.__)("Taxonomy"),
                     options: taxonomies.map((t2) => ({
                       label: t2.name,
@@ -23104,7 +23101,6 @@ ${url}
                 children: /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
                   import_components41.SelectControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n64.__)("Link to"),
                     value: textLinkHref,
                     options: linkDestinationOptions,
@@ -23940,7 +23936,6 @@ ${url}
                 children: /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
                   import_components43.SelectControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n70.__)("Submissions method"),
                     options: [
                       // TODO: Allow plugins to add their own submission methods.
@@ -24004,7 +23999,6 @@ ${url}
         /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
           import_components43.SelectControl,
           {
-            __next40pxDefaultSize: true,
             label: (0, import_i18n70.__)("Method"),
             options: [
               { label: "Get", value: "get" },
@@ -26716,7 +26710,6 @@ ${url}
     return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
       import_components45.SelectControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n79.__)("Order by"),
         value: `${orderby}/${order}`,
         options: ORDER_OPTIONS,
@@ -27481,8 +27474,7 @@ ${url}
                       value: sizeSlug,
                       options: imageSizeOptions,
                       onChange: updateImagesSize,
-                      hideCancelButton: true,
-                      size: "__unstable-large"
+                      hideCancelButton: true
                     }
                   )
                 }
@@ -27548,7 +27540,6 @@ ${url}
                   children: /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(
                     import_components46.SelectControl,
                     {
-                      __next40pxDefaultSize: true,
                       label: (0, import_i18n80.__)("Aspect ratio"),
                       help: (0, import_i18n80.__)(
                         "Set a consistent aspect ratio for all images in the gallery."
@@ -34856,7 +34847,6 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime285.jsx)(
                   import_components61.SelectControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n103.__)("Display content"),
                     value: displayContent,
                     options: [
@@ -36345,7 +36335,6 @@ ${text}
               children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
                 import_components63.SelectControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n105.__)("List style"),
                   options: LIST_STYLE_OPTIONS,
                   value: type || "decimal",
@@ -41806,7 +41795,6 @@ ${text}
               /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(import_components80.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(
                 import_components80.SelectControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n128.__)("Overlay template"),
                   hideLabelFromVision: true,
                   "aria-labelledby": headingId,
@@ -51054,7 +51042,6 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
                   import_components105.SelectControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n165.__)("Order"),
                     value: order,
                     options: [
@@ -51889,7 +51876,6 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
                   import_components107.SelectControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n168.__)("Avatar size"),
                     value: avatarSize,
                     options: avatarSizes,
@@ -55464,7 +55450,6 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(import_block_editor202.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
         import_components115.SelectControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n182.__)("Filter by taxonomy"),
           value: taxonomy,
           options: getTaxonomyOptions(),
@@ -58728,7 +58713,6 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
       import_components121.SelectControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n196.__)("Order by"),
         value: `${orderBy}/${order}`,
         options: orderByOptions,
@@ -59200,7 +59184,6 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
       import_components126.SelectControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n201.__)("Sticky posts"),
         options: stickyOptions,
         value,
@@ -59474,7 +59457,6 @@ ${text}
                 children: postTypesSelectOptions.length > 2 ? /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(
                   import_components130.SelectControl,
                   {
-                    __next40pxDefaultSize: true,
                     options: postTypesSelectOptions,
                     value: postType,
                     label: postTypeControlLabel,
@@ -64318,7 +64300,6 @@ ${text}
                   import_components147.SelectControl,
                   {
                     value: buttonPosition,
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n229.__)("Button position"),
                     onChange: (value) => {
                       setAttributes({
@@ -64429,7 +64410,6 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(import_block_editor239.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime427.jsx)(
         import_components147.SelectControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n229.__)("HTML element"),
           value: tagName ?? "",
           options: [
@@ -64655,8 +64635,7 @@ ${text}
           "Only select <hr> if the separator conveys important information and should be announced by screen readers."
         ) : (0, import_i18n232.__)(
           "The <div> element should only be used if the block is a design element with no semantic meaning."
-        ),
-        __next40pxDefaultSize: true
+        )
       }
     );
   };
@@ -67455,7 +67434,6 @@ ${text}
                 children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
                   import_components154.SelectControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n241.__)("Icon size"),
                     onChange: (newSize) => {
                       setAttributes({
@@ -70885,7 +70863,6 @@ ${text}
               children: /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
                 import_components160.SelectControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n250.__)("Include headings down to level"),
                   value: maxLevel || "",
                   options: [
@@ -71670,7 +71647,6 @@ ${text}
               children: /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(
                 import_components161.SelectControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n254.__)("Taxonomy"),
                   options: getTaxonomyOptions(),
                   value: taxonomy,
@@ -72378,8 +72354,7 @@ ${text}
           value: selectedSidebar,
           options: options2,
           onChange: (value) => setSelectedSidebar(value),
-          disabled: !options2.length,
-          __next40pxDefaultSize: true
+          disabled: !options2.length
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
@@ -72455,7 +72430,6 @@ ${text}
         /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(
           import_components166.SelectControl,
           {
-            __next40pxDefaultSize: true,
             label: (0, import_i18n260.__)("Area"),
             labelPosition: "top",
             options: areaOptions,
@@ -73755,7 +73729,6 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(
       import_components171.SelectControl,
       {
-        __next40pxDefaultSize: true,
         options: taxonomyOptions,
         value,
         onChange,
@@ -73772,7 +73745,6 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(
       import_components172.SelectControl,
       {
-        __next40pxDefaultSize: true,
         options: [
           {
             label: (0, import_i18n265.__)("Name: A \u2192 Z"),
@@ -75543,7 +75515,6 @@ ${text}
           children: /* @__PURE__ */ (0, import_jsx_runtime544.jsx)(
             import_components182.SelectControl,
             {
-              __next40pxDefaultSize: true,
               label: (0, import_i18n275.__)("Preload"),
               value: preload,
               onChange: onChangePreload,
@@ -75676,7 +75647,6 @@ ${text}
             /* @__PURE__ */ (0, import_jsx_runtime545.jsx)(
               import_components183.SelectControl,
               {
-                __next40pxDefaultSize: true,
                 className: "block-library-video-tracks-editor__single-track-editor-kind-select",
                 options: KIND_OPTIONS,
                 value: kind,

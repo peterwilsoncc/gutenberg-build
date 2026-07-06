@@ -25045,7 +25045,6 @@ function SortFieldControl() {
   return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
     import_components27.SelectControl,
     {
-      __next40pxDefaultSize: true,
       label: (0, import_i18n33.__)("Sort by"),
       value: view.sort?.field,
       options: orderOptions,
@@ -25458,7 +25457,6 @@ function RelativeDateControl({
           import_components30.SelectControl,
           {
             className: "dataviews-controls__relative-date-unit",
-            __next40pxDefaultSize: true,
             label: (0, import_i18n34.__)("Unit"),
             value: unit,
             options,
@@ -26365,7 +26363,6 @@ function Select({
       help: description,
       options: elements,
       onChange: onChangeControl,
-      __next40pxDefaultSize: true,
       hideLabelFromVision,
       multiple: isMultiple,
       disabled: disabled2

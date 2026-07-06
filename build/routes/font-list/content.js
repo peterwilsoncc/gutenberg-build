@@ -13322,7 +13322,6 @@ function FontCollection({ slug }) {
                 /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
                   import_components26.SelectControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n16.__)("Category"),
                     value: filters.category,
                     onChange: handleCategoryFilter,

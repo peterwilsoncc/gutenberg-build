@@ -5658,7 +5658,6 @@ var wp;
               /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
                 import_components5.SelectControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n17.__)("Text direction"),
                   value: dir,
                   options: [
