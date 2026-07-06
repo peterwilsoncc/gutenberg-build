@@ -27851,6 +27851,7 @@ function ViewList(props) {
   } = props;
   const baseId = (0, import_compose14.useInstanceId)(ViewList, "view-list");
   const isDelayedLoading = useDelayedLoading(!!isLoading);
+  const { paginationInfo } = (0, import_element114.useContext)(dataviews_context_default);
   const selectedItem = data?.findLast(
     (item) => selection.includes(getItemId2(item))
   );
@@ -27943,6 +27944,7 @@ function ViewList(props) {
   const groupField = view.groupBy?.field ? fields3.find((field) => field.id === view.groupBy?.field) : null;
   const dataByGroup = hasData && groupField ? getDataByGroup(data, groupField) : null;
   const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
+  const hasMoreItems = isInfiniteScroll && (view.startPosition ?? 1) + (view.perPage ?? 0) < paginationInfo.totalItems;
   if (!hasData) {
     return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
       "div",
@@ -28054,7 +28056,17 @@ function ViewList(props) {
         })
       }
     ),
-    isInfiniteScroll && isLoading && /* @__PURE__ */ (0, import_jsx_runtime148.jsx)("p", { className: "dataviews-loading-more", children: /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(import_components12.Spinner, {}) })
+    (hasMoreItems || isInfiniteScroll && isLoading) && // Keep the spinner's height reserved while loading more so the
+    // scroll position doesn't bounce. Hidden, and silent to a11y,
+    // while idle.
+    /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
+      "p",
+      {
+        className: "dataviews-loading-more",
+        "aria-hidden": !isLoading,
+        children: /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(import_components12.Spinner, {})
+      }
+    )
   ] });
 }
 
@@ -28386,15 +28398,15 @@ var import_components14 = __toESM(require_components(), 1);
 var import_element117 = __toESM(require_element(), 1);
 var import_i18n25 = __toESM(require_i18n(), 1);
 var import_jsx_runtime152 = __toESM(require_jsx_runtime(), 1);
+function hasPaginationControls(view, paginationInfo) {
+  return !view.infiniteScrollEnabled && paginationInfo.totalItems > 0 && paginationInfo.totalPages > 1;
+}
 function DataViewsPagination() {
-  const {
-    view,
-    onChangeView,
-    paginationInfo: { totalItems = 0, totalPages }
-  } = (0, import_element117.useContext)(dataviews_context_default);
-  if (!totalItems || !totalPages || view.infiniteScrollEnabled) {
+  const { view, onChangeView, paginationInfo } = (0, import_element117.useContext)(dataviews_context_default);
+  if (!hasPaginationControls(view, paginationInfo)) {
     return null;
   }
+  const { totalPages } = paginationInfo;
   const currentPage = view.page ?? 1;
   const pageSelectOptions = Array.from(Array(totalPages)).map(
     (_, i2) => {
@@ -28411,7 +28423,7 @@ function DataViewsPagination() {
       };
     }
   );
-  return !!totalItems && totalPages !== 1 && /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(
     Stack,
     {
       direction: "row",
@@ -28431,10 +28443,7 @@ function DataViewsPagination() {
             children: (0, import_element117.createInterpolateElement)(
               (0, import_i18n25.sprintf)(
                 // translators: 1: Current page number, 2: Total number of pages.
-                (0, import_i18n25._x)(
-                  "<div>Page</div>%1$s<div>of %2$d</div>",
-                  "paging"
-                ),
+                (0, import_i18n25._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"),
                 "<CurrentPage />",
                 totalPages
               ),
@@ -40462,6 +40471,7 @@ function captureAnchorElement(container, anchorElementRef, direction) {
   anchorElementRef.current = {
     posinset,
     viewportOffset: anchorRect.top - containerRect.top,
+    scrollTop: container.scrollTop,
     direction
   };
   return true;
@@ -40530,7 +40540,7 @@ function useInfiniteScroll({
       const containerRect = container.getBoundingClientRect();
       const anchorRect = anchorElement.getBoundingClientRect();
       const currentOffset = anchorRect.top - containerRect.top;
-      const scrollAdjustment = currentOffset - anchor.viewportOffset;
+      const scrollAdjustment = currentOffset - anchor.viewportOffset + (container.scrollTop - anchor.scrollTop);
       if (Math.abs(scrollAdjustment) > 1) {
         container.scrollTop += scrollAdjustment;
       }

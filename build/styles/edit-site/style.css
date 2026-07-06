@@ -276,6 +276,10 @@
   text-align: center;
 }
 
+.dataviews-loading-more[aria-hidden=true] {
+  visibility: hidden;
+}
+
 @container (max-width: 430px) {
   .dataviews__view-actions,
   .dataviews-filters__container {
