@@ -7436,6 +7436,33 @@ var wp;
   // packages/block-editor/build-module/utils/block-bindings.mjs
   var DEFAULT_ATTRIBUTE = "__default";
   var PATTERN_OVERRIDES_SOURCE = "core/pattern-overrides";
+  var EMPTY_CONTEXT = {};
+  function getBlockBindingsContext(blockContext, blockTypeUsesContext, sources) {
+    let context;
+    if (blockTypeUsesContext) {
+      for (const [key, value] of Object.entries(blockContext)) {
+        if (blockTypeUsesContext.includes(key)) {
+          if (context === void 0) {
+            context = {};
+          }
+          context[key] = value;
+        }
+      }
+    }
+    if (sources) {
+      for (const source of sources) {
+        source?.usesContext?.forEach((key) => {
+          if (key in blockContext) {
+            if (context === void 0) {
+              context = {};
+            }
+            context[key] = blockContext[key];
+          }
+        });
+      }
+    }
+    return context ?? EMPTY_CONTEXT;
+  }
   function hasPatternOverridesDefaultBinding(bindings) {
     return bindings?.[DEFAULT_ATTRIBUTE]?.source === PATTERN_OVERRIDES_SOURCE;
   }
@@ -7458,7 +7485,6 @@ var wp;
 
   // packages/block-editor/build-module/components/block-edit/edit.mjs
   var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-  var DEFAULT_BLOCK_CONTEXT = {};
   var Edit = (props) => {
     const { name } = props;
     const blockType = (0, import_blocks.getBlockType)(name);
@@ -7480,28 +7506,21 @@ var wp;
     );
     const { bindableAttributes } = (0, import_element4.useContext)(PrivateBlockContext);
     const { blockBindings, context, hasPatternOverrides } = (0, import_element4.useMemo)(() => {
-      const computedContext = blockType?.usesContext ? Object.fromEntries(
-        Object.entries(blockContext).filter(
-          ([key]) => blockType.usesContext.includes(key)
-        )
-      ) : DEFAULT_BLOCK_CONTEXT;
-      if (attributes?.metadata?.bindings) {
-        Object.values(attributes?.metadata?.bindings || {}).forEach(
-          (binding) => {
-            registeredSources[binding?.source]?.usesContext?.forEach(
-              (key) => {
-                computedContext[key] = blockContext[key];
-              }
-            );
-          }
-        );
-      }
       return {
         blockBindings: replacePatternOverridesDefaultBinding(
           attributes?.metadata?.bindings,
           bindableAttributes
         ),
-        context: computedContext,
+        // Assign context values using the block type's declared context
+        // needs, plus the context requested by the block's bindings
+        // sources.
+        context: getBlockBindingsContext(
+          blockContext,
+          blockType?.usesContext,
+          attributes?.metadata?.bindings ? Object.values(attributes.metadata.bindings).map(
+            (binding) => registeredSources[binding?.source]
+          ) : void 0
+        ),
         hasPatternOverrides: hasPatternOverridesDefaultBinding(
           attributes?.metadata?.bindings
         )
@@ -72030,7 +72049,7 @@ var wp;
   var import_element230 = __toESM(require_element(), 1);
   var import_jsx_runtime394 = __toESM(require_jsx_runtime(), 1);
   var import_react16 = __toESM(require_react(), 1);
-  var DEFAULT_BLOCK_CONTEXT2 = {};
+  var DEFAULT_BLOCK_CONTEXT = {};
   var usesContextKey = /* @__PURE__ */ Symbol("usesContext");
   function Edit3({
     onChange,
@@ -72051,7 +72070,7 @@ var wp;
         Object.entries(blockContext).filter(
           ([key]) => usesContext.includes(key)
         )
-      ) : DEFAULT_BLOCK_CONTEXT2;
+      ) : DEFAULT_BLOCK_CONTEXT;
     }, [usesContext, blockContext]);
     if (!EditFunction) {
       return null;
