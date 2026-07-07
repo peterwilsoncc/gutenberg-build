@@ -2805,14 +2805,70 @@ var wp;
     return useRichTextBase(props);
   }
 
+  // packages/rich-text/build-module/contexts.mjs
+  var import_element6 = __toESM(require_element(), 1);
+  var KeyboardShortcutContext = (0, import_element6.createContext)();
+  KeyboardShortcutContext.displayName = "KeyboardShortcutContext";
+  var InputEventContext = (0, import_element6.createContext)();
+  InputEventContext.displayName = "InputEventContext";
+
+  // packages/rich-text/build-module/keyboard-shortcut.mjs
+  var import_keycodes3 = __toESM(require_keycodes(), 1);
+  var import_element7 = __toESM(require_element(), 1);
+  var import_compose10 = __toESM(require_compose(), 1);
+  function RichTextShortcut({ character, type, onUse }) {
+    const keyboardShortcuts = (0, import_element7.useContext)(KeyboardShortcutContext);
+    const stableOnUse = (0, import_compose10.useEvent)(onUse);
+    (0, import_element7.useEffect)(() => {
+      const shortcuts = keyboardShortcuts.current;
+      function callback(event) {
+        if (import_keycodes3.isKeyboardEvent[type](event, character)) {
+          stableOnUse();
+          event.preventDefault();
+        }
+      }
+      shortcuts.add(callback);
+      return () => {
+        shortcuts.delete(callback);
+      };
+    }, [character, type, keyboardShortcuts, stableOnUse]);
+    return null;
+  }
+
+  // packages/rich-text/build-module/input-event.mjs
+  var import_element8 = __toESM(require_element(), 1);
+  var import_compose11 = __toESM(require_compose(), 1);
+  function RichTextInputEvent({ inputType, onInput }) {
+    const callbacks = (0, import_element8.useContext)(InputEventContext);
+    const stableOnInput = (0, import_compose11.useEvent)(onInput);
+    (0, import_element8.useEffect)(() => {
+      const inputCallbacks = callbacks.current;
+      function callback(event) {
+        if (event.inputType === inputType) {
+          stableOnInput();
+          event.preventDefault();
+        }
+      }
+      inputCallbacks.add(callback);
+      return () => {
+        inputCallbacks.delete(callback);
+      };
+    }, [inputType, callbacks, stableOnInput]);
+    return null;
+  }
+
   // packages/rich-text/build-module/private-apis.mjs
   var privateApis = {};
   lock(privateApis, {
-    useRichText
+    useRichText,
+    KeyboardShortcutContext,
+    InputEventContext,
+    RichTextShortcut,
+    RichTextInputEvent
   });
 
   // packages/rich-text/build-module/hook/use-anchor-ref.mjs
-  var import_element6 = __toESM(require_element(), 1);
+  var import_element9 = __toESM(require_element(), 1);
   var import_deprecated2 = __toESM(require_deprecated(), 1);
   function useAnchorRef({ ref, value, settings = {} }) {
     (0, import_deprecated2.default)("`useAnchorRef` hook", {
@@ -2821,7 +2877,7 @@ var wp;
     });
     const { tagName, className, name } = settings;
     const activeFormat = name ? getActiveFormat(value, name) : void 0;
-    return (0, import_element6.useMemo)(() => {
+    return (0, import_element9.useMemo)(() => {
       if (!ref.current) {
         return;
       }
@@ -2848,8 +2904,8 @@ var wp;
   }
 
   // packages/rich-text/build-module/hook/use-anchor.mjs
-  var import_compose10 = __toESM(require_compose(), 1);
-  var import_element7 = __toESM(require_element(), 1);
+  var import_compose12 = __toESM(require_compose(), 1);
+  var import_element10 = __toESM(require_element(), 1);
   var import_dom = __toESM(require_dom(), 1);
   function getFormatElement(range, editableContentElement, tagName, className) {
     let element = range.startContainer;
@@ -2930,11 +2986,11 @@ var wp;
   }) {
     const { tagName, className } = settings ?? DEFAULT_SETTINGS;
     const isActive = !!(settings && "isActive" in settings && settings.isActive);
-    const [anchor, setAnchor] = (0, import_element7.useState)(
+    const [anchor, setAnchor] = (0, import_element10.useState)(
       () => getAnchor(editableContentElement, tagName, className ?? "")
     );
-    const wasActive = (0, import_compose10.usePrevious)(isActive);
-    (0, import_element7.useLayoutEffect)(() => {
+    const wasActive = (0, import_compose12.usePrevious)(isActive);
+    (0, import_element10.useLayoutEffect)(() => {
       if (!editableContentElement) {
         return;
       }
