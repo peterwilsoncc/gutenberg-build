@@ -14730,7 +14730,7 @@ var wp;
       clientIdsArray[clientIdsArray.length - 1]
     );
     const clonedBlocks = blocks2.map(
-      (block) => (0, import_blocks7.__experimentalCloneSanitizedBlock)(block)
+      (block) => (0, import_blocks7.cloneSanitizedBlock)(block)
     );
     dispatch.insertBlocks(
       clonedBlocks,
@@ -50940,7 +50940,7 @@ var wp;
             blocks2.unshift(targetBlock);
           }
           const groupInnerBlocks = blocks2.map(
-            (block) => (0, import_blocks42.__experimentalCloneSanitizedBlock)(block)
+            (block) => (0, import_blocks42.cloneSanitizedBlock)(block)
           );
           const areAllImages = blocks2.every((block) => {
             return block.name === "core/image";

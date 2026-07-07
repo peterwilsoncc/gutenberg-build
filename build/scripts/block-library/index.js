@@ -21455,9 +21455,7 @@ var wp;
           return (0, import_blocks23.createBlock)(
             "core/details",
             {},
-            blocks.map(
-              (block) => (0, import_blocks23.__experimentalCloneSanitizedBlock)(block)
-            )
+            blocks.map((block) => (0, import_blocks23.cloneSanitizedBlock)(block))
           );
         }
       }
@@ -28793,7 +28791,7 @@ ${url}
             void 0
           );
           const groupInnerBlocks = blocks.map(
-            (block) => (0, import_blocks33.__experimentalCloneSanitizedBlock)(block)
+            (block) => (0, import_blocks33.cloneSanitizedBlock)(block)
           );
           return (0, import_blocks33.createBlock)(
             "core/group",
@@ -62892,9 +62890,7 @@ ${text}
         __experimentalConvert: (blocks) => (0, import_blocks101.createBlock)(
           "core/quote",
           {},
-          blocks.map(
-            (block) => (0, import_blocks101.__experimentalCloneSanitizedBlock)(block)
-          )
+          blocks.map((block) => (0, import_blocks101.cloneSanitizedBlock)(block))
         )
       }
     ],

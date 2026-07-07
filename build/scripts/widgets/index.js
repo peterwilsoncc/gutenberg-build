@@ -1330,7 +1330,7 @@ var wp;
           },
           __experimentalConvert(blocks) {
             let innerBlocks = blocks.map(
-              (block) => (0, import_blocks3.__experimentalCloneSanitizedBlock)(block)
+              (block) => (0, import_blocks3.cloneSanitizedBlock)(block)
             );
             const firstHeadingBlock = innerBlocks[0].name === "core/heading" ? innerBlocks[0] : null;
             innerBlocks = innerBlocks.filter(
