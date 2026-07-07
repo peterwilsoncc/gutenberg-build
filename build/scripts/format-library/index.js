@@ -4288,7 +4288,6 @@ var wp;
               /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
                 import_components.__experimentalNumberControl,
                 {
-                  __next40pxDefaultSize: true,
                   label: (0, import_i18n4.__)("Width"),
                   value: editedWidth,
                   min: 1,

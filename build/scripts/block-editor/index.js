@@ -17883,7 +17883,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components15.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
           import_components15.__experimentalNumberControl,
           {
-            size: "__unstable-large",
             onChange: (value) => {
               const defaultNewColumnCount = isManualPlacement ? 1 : void 0;
               const newColumnCount = value === "" || value === "0" ? defaultNewColumnCount : parseInt(value, 10);
@@ -17901,7 +17900,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components15.FlexItem, { isBlock: true, children: allowSizingOnChildren && isManualPlacement ? /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
           import_components15.__experimentalNumberControl,
           {
-            size: "__unstable-large",
             onChange: (value) => {
               const newRowCount = value === "" || value === "0" ? 1 : parseInt(value, 10);
               onChange({
@@ -68262,8 +68260,7 @@ var wp;
               label: (0, import_i18n147.__)("Width"),
               value: currentWidth,
               min: 1,
-              onChange: (value) => updateDimension("width", value),
-              size: "__unstable-large"
+              onChange: (value) => updateDimension("width", value)
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
@@ -68272,8 +68269,7 @@ var wp;
               label: (0, import_i18n147.__)("Height"),
               value: currentHeight,
               min: 1,
-              onChange: (value) => updateDimension("height", value),
-              size: "__unstable-large"
+              onChange: (value) => updateDimension("height", value)
             }
           )
         ] }),
@@ -69928,7 +69924,6 @@ var wp;
       import_components169.__experimentalNumberControl,
       {
         ...otherProps,
-        __next40pxDefaultSize: true,
         __unstableInputWidth,
         __unstableStateReducer: stateReducer,
         onChange: handleOnChange,
@@ -75785,7 +75780,6 @@ var wp;
                   max: MAX_TEXT_COLUMNS,
                   min: MIN_TEXT_COLUMNS,
                   onChange: setTextColumns,
-                  size: "__unstable-large",
                   spinControls: "custom",
                   value: textColumns,
                   initialPosition: 1
@@ -85873,7 +85867,6 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime470.jsx)(
             import_components236.__experimentalNumberControl,
             {
-              __next40pxDefaultSize: true,
               className: "dataviews-controls__relative-date-number",
               spinControls: "none",
               min: 1,
@@ -86993,7 +86986,6 @@ var wp;
               value: min2,
               max: max2 ? Number(max2) - step : void 0,
               onChange: onChangeMin,
-              __next40pxDefaultSize: true,
               hideLabelFromVision,
               step
             }
@@ -87005,7 +86997,6 @@ var wp;
               value: max2,
               min: min2 ? Number(min2) + step : void 0,
               onChange: onChangeMax,
-              __next40pxDefaultSize: true,
               hideLabelFromVision,
               step
             }
@@ -87080,7 +87071,6 @@ var wp;
         help: description,
         value,
         onChange: onChangeControl,
-        __next40pxDefaultSize: true,
         hideLabelFromVision,
         step,
         min: isValid2.min ? isValid2.min.constraint : void 0,

@@ -39066,7 +39066,6 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
             import_components56.__experimentalNumberControl,
             {
-              __next40pxDefaultSize: true,
               className: "dataviews-controls__relative-date-number",
               spinControls: "none",
               min: 1,
@@ -40186,7 +40185,6 @@ If there's a particular need for this, please submit a feature request at https:
               value: min3,
               max: max3 ? Number(max3) - step : void 0,
               onChange: onChangeMin,
-              __next40pxDefaultSize: true,
               hideLabelFromVision,
               step
             }
@@ -40198,7 +40196,6 @@ If there's a particular need for this, please submit a feature request at https:
               value: max3,
               min: min3 ? Number(min3) + step : void 0,
               onChange: onChangeMax,
-              __next40pxDefaultSize: true,
               hideLabelFromVision,
               step
             }
@@ -40273,7 +40270,6 @@ If there's a particular need for this, please submit a feature request at https:
         help: description,
         value,
         onChange: onChangeControl,
-        __next40pxDefaultSize: true,
         hideLabelFromVision,
         step,
         min: isValid2.min ? isValid2.min.constraint : void 0,
@@ -80959,7 +80955,6 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components171.Flex, { children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(import_components171.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
       import_components171.__experimentalNumberControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n222.__)("Order"),
         help: (0, import_i18n222.__)("Set the page order."),
         value,
@@ -94473,7 +94468,6 @@ If there's a particular need for this, please submit a feature request at https:
             {
               placeholder: 0,
               value: postsPerPage,
-              size: "__unstable-large",
               spinControls: "custom",
               step: "1",
               min: "1",

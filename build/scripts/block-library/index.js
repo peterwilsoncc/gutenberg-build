@@ -59311,7 +59311,6 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime396.jsx)(
       import_components128.__experimentalNumberControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n204.__)("Offset"),
         value: offset,
         min: MIN_OFFSET,
@@ -59334,7 +59333,6 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
       import_components129.__experimentalNumberControl,
       {
-        __next40pxDefaultSize: true,
         label: (0, import_i18n205.__)("Max pages to show"),
         value: pages,
         min: 0,

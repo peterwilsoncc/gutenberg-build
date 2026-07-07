@@ -27323,15 +27323,8 @@ This message will only show in development mode. It won't appear in production. 
       size: size4 = "default",
       suffix,
       onChange = noop6,
-      __shouldNotWarnDeprecated36pxSize,
       ...restProps
-    } = useDeprecated36pxDefaultSizeProp(props);
-    maybeWarnDeprecated36pxSize({
-      componentName: "NumberControl",
-      size: size4,
-      __next40pxDefaultSize: restProps.__next40pxDefaultSize,
-      __shouldNotWarnDeprecated36pxSize
-    });
+    } = props;
     if (hideHTMLArrows) {
       (0, import_deprecated5.default)("wp.components.NumberControl hideHTMLArrows prop ", {
         alternative: 'spinControls="none"',
@@ -27449,7 +27442,7 @@ This message will only show in development mode. It won't appear in production. 
       value: valueProp,
       __unstableStateReducer: numberControlStateReducer,
       size: size4,
-      __shouldNotWarnDeprecated36pxSize: true,
+      __next40pxDefaultSize: true,
       suffix: spinControls === "custom" ? /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(import_jsx_runtime98.Fragment, {
         children: [suffix, /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(component_default6, {
           marginBottom: 0,
@@ -27708,7 +27701,6 @@ This message will only show in development mode. It won't appear in production. 
       gap: 2,
       children: [/* @__PURE__ */ (0, import_jsx_runtime102.jsx)(component_default5, {
         children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(number_control_default, {
-          __next40pxDefaultSize: true,
           label,
           className: "components-angle-picker-control__input-field",
           max: 360,
@@ -31421,7 +31413,6 @@ This message will only show in development mode. It won't appear in production. 
           onChange: handleOnChange,
           shiftStep,
           __unstableInputWidth: space(20),
-          __next40pxDefaultSize: true,
           step,
           value: inputSliderValue
         }), allowReset && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(ActionRightWrapper, {
@@ -31576,7 +31567,6 @@ This message will only show in development mode. It won't appear in production. 
     return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(component_default9, {
       spacing: 4,
       children: [/* @__PURE__ */ (0, import_jsx_runtime131.jsx)(NumberControlWrapper, {
-        __next40pxDefaultSize: true,
         min: min3,
         max: max3,
         label,
@@ -33685,7 +33675,6 @@ This message will only show in development mode. It won't appear in production. 
     }
     return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(ValueInput, {
       ...props,
-      __next40pxDefaultSize: true,
       autoComplete,
       className: classes,
       disabled,
@@ -42160,7 +42149,6 @@ This message will only show in development mode. It won't appear in production. 
             className: "components-datetime__time-field-hours-input",
             label: (0, import_i18n44.__)("Hours"),
             hideLabelFromVision: true,
-            __next40pxDefaultSize: true,
             value: String(is12Hour ? hours12Format : value.hours).padStart(2, "0"),
             step: 1,
             min: is12Hour ? 1 : 0,
@@ -42184,7 +42172,6 @@ This message will only show in development mode. It won't appear in production. 
             ),
             label: (0, import_i18n44.__)("Minutes"),
             hideLabelFromVision: true,
-            __next40pxDefaultSize: true,
             value: String(value.minutes).padStart(2, "0"),
             step: 1,
             min: 0,
@@ -42319,7 +42306,6 @@ This message will only show in development mode. It won't appear in production. 
       className: "components-datetime__time-field components-datetime__time-field-day",
       label: (0, import_i18n45.__)("Day"),
       hideLabelFromVision: true,
-      __next40pxDefaultSize: true,
       value: day,
       step: 1,
       min: 1,
@@ -42351,7 +42337,6 @@ This message will only show in development mode. It won't appear in production. 
       className: "components-datetime__time-field components-datetime__time-field-year",
       label: (0, import_i18n45.__)("Year"),
       hideLabelFromVision: true,
-      __next40pxDefaultSize: true,
       value: year,
       step: 1,
       min: 1,
@@ -55365,7 +55350,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
       children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(number_control_default, {
-        __next40pxDefaultSize: true,
         ref: mergedRefs,
         ...restProps
       })

@@ -16573,7 +16573,6 @@ function RelativeDateControl({
         /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
           import_components5.__experimentalNumberControl,
           {
-            __next40pxDefaultSize: true,
             className: "dataviews-controls__relative-date-number",
             spinControls: "none",
             min: 1,
@@ -17693,7 +17692,6 @@ function BetweenControls({
             value: min3,
             max: max3 ? Number(max3) - step : void 0,
             onChange: onChangeMin,
-            __next40pxDefaultSize: true,
             hideLabelFromVision,
             step
           }
@@ -17705,7 +17703,6 @@ function BetweenControls({
             value: max3,
             min: min3 ? Number(min3) + step : void 0,
             onChange: onChangeMax,
-            __next40pxDefaultSize: true,
             hideLabelFromVision,
             step
           }
@@ -17780,7 +17777,6 @@ function ValidatedNumber({
       help: description,
       value,
       onChange: onChangeControl,
-      __next40pxDefaultSize: true,
       hideLabelFromVision,
       step,
       min: isValid2.min ? isValid2.min.constraint : void 0,
