@@ -48423,10 +48423,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       MutationObserver: MutationObserver2
     } = window;
-    if (!MutationObserver2 || !document.body || !window.parent) {
+    if (!MutationObserver2 || !window.parent) {
       return;
     }
     function sendResize() {
+      if (!document.body) {
+        return;
+      }
       const clientBoundingRect = document.body.getBoundingClientRect();
       window.parent.postMessage({
         action: "resize",
@@ -48434,34 +48437,53 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         height: clientBoundingRect.height
       }, "*");
     }
-    const observer = new MutationObserver2(sendResize);
-    observer.observe(document.body, {
-      attributes: true,
-      attributeOldValue: false,
-      characterData: true,
-      characterDataOldValue: false,
-      childList: true,
-      subtree: true
-    });
-    window.addEventListener("load", sendResize, true);
-    function removeViewportStyles(ruleOrNode) {
-      if (ruleOrNode.style) {
-        ["width", "height", "minHeight", "maxHeight"].forEach(function(style2) {
-          if (/^\d*\.?\d+(?:vw|vh|svw|lvw|dvw|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax)$/.test(ruleOrNode.style[style2])) {
-            ruleOrNode.style[style2] = "";
-          }
-        });
+    function connect() {
+      const {
+        body
+      } = document;
+      if (!body) {
+        return;
       }
+      const observer = new MutationObserver2(sendResize);
+      observer.observe(body, {
+        attributes: true,
+        attributeOldValue: false,
+        characterData: true,
+        characterDataOldValue: false,
+        childList: true,
+        subtree: true
+      });
+      function removeViewportStyles(ruleOrNode) {
+        if (ruleOrNode.style) {
+          ["width", "height", "minHeight", "maxHeight"].forEach(function(style2) {
+            if (/^\d*\.?\d+(?:vw|vh|svw|lvw|dvw|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax)$/.test(ruleOrNode.style[style2])) {
+              ruleOrNode.style[style2] = "";
+            }
+          });
+        }
+      }
+      Array.prototype.forEach.call(document.querySelectorAll("[style]"), removeViewportStyles);
+      Array.prototype.forEach.call(document.styleSheets, function(stylesheet) {
+        let rules;
+        try {
+          rules = stylesheet.cssRules || stylesheet.rules;
+        } catch {
+          return;
+        }
+        Array.prototype.forEach.call(rules, removeViewportStyles);
+      });
+      body.style.position = "absolute";
+      body.style.width = "100%";
+      body.setAttribute("data-resizable-iframe-connected", "");
+      sendResize();
     }
-    Array.prototype.forEach.call(document.querySelectorAll("[style]"), removeViewportStyles);
-    Array.prototype.forEach.call(document.styleSheets, function(stylesheet) {
-      Array.prototype.forEach.call(stylesheet.cssRules || stylesheet.rules, removeViewportStyles);
-    });
-    document.body.style.position = "absolute";
-    document.body.style.width = "100%";
-    document.body.setAttribute("data-resizable-iframe-connected", "");
-    sendResize();
+    window.addEventListener("load", sendResize, true);
     window.addEventListener("resize", sendResize, true);
+    if (document.body) {
+      connect();
+    } else {
+      document.addEventListener("DOMContentLoaded", connect);
+    }
   };
   var style = `
 	body {
@@ -48490,10 +48512,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     title,
     type,
     styles: styles3,
-    scripts
+    scripts,
+    lang
   }) {
     const htmlDoc = /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)("html", {
-      lang: document.documentElement.lang,
+      lang,
       className: type,
       children: [/* @__PURE__ */ (0, import_jsx_runtime253.jsxs)("head", {
         children: [/* @__PURE__ */ (0, import_jsx_runtime253.jsx)("title", {
@@ -48506,18 +48529,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           dangerouslySetInnerHTML: {
             __html: rules
           }
-        }, i3))]
+        }, i3)), /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("script", {
+          type: "text/javascript",
+          dangerouslySetInnerHTML: {
+            __html: `(${observeAndResizeJS.toString()})();`
+          }
+        })]
       }), /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)("body", {
         "data-resizable-iframe-connected": "data-resizable-iframe-connected",
         className: type,
         children: [/* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", {
           dangerouslySetInnerHTML: {
             __html: html
-          }
-        }), /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("script", {
-          type: "text/javascript",
-          dangerouslySetInnerHTML: {
-            __html: `(${observeAndResizeJS.toString()})();`
           }
         }), scripts.map((src) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("script", {
           src
@@ -48543,7 +48566,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       title,
       type,
       styles: styles3,
-      scripts
+      scripts,
+      // Read inside the memo: the `no-dom-globals-in-react-fc` lint
+      // rule forbids DOM globals in the render body. `lang` rarely
+      // changes after load, so leaving it out of the deps is fine.
+      lang: document.documentElement.lang
     }), [html, title, type, styles3, scripts]);
     (0, import_element171.useEffect)(() => {
       const iframe = ref.current;
@@ -48626,40 +48653,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       if (!forceRerender && null !== contentDocument?.body.getAttribute("data-resizable-iframe-connected")) {
         return;
       }
-      const htmlDoc = /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)("html", {
-        lang: ownerDocument.documentElement.lang,
-        className: type,
-        children: [/* @__PURE__ */ (0, import_jsx_runtime253.jsxs)("head", {
-          children: [/* @__PURE__ */ (0, import_jsx_runtime253.jsx)("title", {
-            children: title
-          }), /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("style", {
-            dangerouslySetInnerHTML: {
-              __html: style
-            }
-          }), styles3.map((rules, i3) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("style", {
-            dangerouslySetInnerHTML: {
-              __html: rules
-            }
-          }, i3))]
-        }), /* @__PURE__ */ (0, import_jsx_runtime253.jsxs)("body", {
-          "data-resizable-iframe-connected": "data-resizable-iframe-connected",
-          className: type,
-          children: [/* @__PURE__ */ (0, import_jsx_runtime253.jsx)("div", {
-            dangerouslySetInnerHTML: {
-              __html: html
-            }
-          }), /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("script", {
-            type: "text/javascript",
-            dangerouslySetInnerHTML: {
-              __html: `(${observeAndResizeJS.toString()})();`
-            }
-          }), scripts.map((src) => /* @__PURE__ */ (0, import_jsx_runtime253.jsx)("script", {
-            src
-          }, src))]
-        })]
-      });
       contentDocument.open();
-      contentDocument.write("<!DOCTYPE html>" + (0, import_element171.renderToString)(htmlDoc));
+      contentDocument.write(buildSandBoxDocument({
+        html,
+        title,
+        type,
+        styles: styles3,
+        scripts,
+        lang: ownerDocument.documentElement.lang
+      }));
       contentDocument.close();
     }
     (0, import_element171.useEffect)(() => {
