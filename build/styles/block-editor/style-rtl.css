@@ -1291,7 +1291,6 @@ iframe[name=editor-canvas] {
 }
 
 .block-editor-block-types-list > [role=presentation] {
-  overflow: hidden;
   display: flex;
   flex-wrap: wrap;
 }
@@ -2097,15 +2096,6 @@ iframe[name=editor-canvas] {
   opacity: 0.04;
   background: var(--wp-admin-theme-color);
   pointer-events: none;
-}
-.components-button.block-editor-block-types-list__item:not(:disabled, [aria-disabled=true]).is-active {
-  color: #fff;
-  background: #1e1e1e;
-  outline: 2px solid transparent;
-  outline-offset: -2px;
-}
-.components-button.block-editor-block-types-list__item:not(:disabled):focus {
-  box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
 }
 
 .block-editor-block-types-list__item-icon {
