@@ -46,6 +46,20 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/data
+  var require_data = __commonJS({
+    "package-external:@wordpress/data"(exports, module) {
+      module.exports = window.wp.data;
+    }
+  });
+
+  // package-external:@wordpress/core-data
+  var require_core_data = __commonJS({
+    "package-external:@wordpress/core-data"(exports, module) {
+      module.exports = window.wp.coreData;
+    }
+  });
+
   // package-external:@wordpress/blob
   var require_blob = __commonJS({
     "package-external:@wordpress/blob"(exports, module) {
@@ -57,20 +71,6 @@ var wp;
   var require_api_fetch = __commonJS({
     "package-external:@wordpress/api-fetch"(exports, module) {
       module.exports = window.wp.apiFetch;
-    }
-  });
-
-  // package-external:@wordpress/core-data
-  var require_core_data = __commonJS({
-    "package-external:@wordpress/core-data"(exports, module) {
-      module.exports = window.wp.coreData;
-    }
-  });
-
-  // package-external:@wordpress/data
-  var require_data = __commonJS({
-    "package-external:@wordpress/data"(exports, module) {
-      module.exports = window.wp.data;
     }
   });
 
@@ -880,6 +880,21 @@ var wp;
   // packages/media-utils/build-module/components/media-upload/index.mjs
   var import_element = __toESM(require_element(), 1);
   var import_i18n = __toESM(require_i18n(), 1);
+  var import_data = __toESM(require_data(), 1);
+
+  // packages/media-utils/build-module/utils/invalidate-attachment-resolutions.mjs
+  var import_core_data = __toESM(require_core_data(), 1);
+  function invalidateAttachmentResolutions(registry) {
+    const resolvers = registry.select(import_core_data.store).getCachedResolvers();
+    const entityRecordResolutions = resolvers.getEntityRecords;
+    entityRecordResolutions?.forEach((_value, args) => {
+      if (args[0] === "postType" && args[1] === "attachment") {
+        registry.dispatch(import_core_data.store).invalidateResolution("getEntityRecords", args);
+      }
+    });
+  }
+
+  // packages/media-utils/build-module/components/media-upload/index.mjs
   var DEFAULT_EMPTY_GALLERY = [];
   var getFeaturedImageMediaFrame = () => {
     const { wp } = window;
@@ -1254,6 +1269,7 @@ var wp;
       if (onClose) {
         onClose();
       }
+      invalidateAttachmentResolutions({ select: import_data.select, dispatch: import_data.dispatch });
       this.frame.detach();
     }
     updateCollection() {
@@ -1631,7 +1647,7 @@ var wp;
   var import_element83 = __toESM(require_element(), 1);
   var import_i18n67 = __toESM(require_i18n(), 1);
   var import_core_data6 = __toESM(require_core_data(), 1);
-  var import_data13 = __toESM(require_data(), 1);
+  var import_data14 = __toESM(require_data(), 1);
   var import_components53 = __toESM(require_components(), 1);
 
   // packages/icons/build-module/library/arrow-down.mjs
@@ -10651,7 +10667,7 @@ var wp;
   var import_components2 = __toESM(require_components(), 1);
   var import_i18n9 = __toESM(require_i18n(), 1);
   var import_element19 = __toESM(require_element(), 1);
-  var import_data = __toESM(require_data(), 1);
+  var import_data2 = __toESM(require_data(), 1);
   var import_compose = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/lock-unlock.mjs
@@ -10756,7 +10772,7 @@ var wp;
     actions,
     isCompact
   }) {
-    const registry = (0, import_data.useRegistry)();
+    const registry = (0, import_data2.useRegistry)();
     const { primaryActions, eligibleActions } = (0, import_element19.useMemo)(() => {
       const _eligibleActions = actions.filter(
         (action) => !action.isEligible || action.isEligible(item)
@@ -10907,7 +10923,7 @@ var wp;
   var import_components3 = __toESM(require_components(), 1);
   var import_i18n11 = __toESM(require_i18n(), 1);
   var import_element20 = __toESM(require_element(), 1);
-  var import_data2 = __toESM(require_data(), 1);
+  var import_data3 = __toESM(require_data(), 1);
   var import_compose2 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/utils/get-footer-message.mjs
@@ -12725,7 +12741,7 @@ var wp;
   var import_components10 = __toESM(require_components(), 1);
   var import_element31 = __toESM(require_element(), 1);
   var import_i18n19 = __toESM(require_i18n(), 1);
-  var import_data3 = __toESM(require_data(), 1);
+  var import_data4 = __toESM(require_data(), 1);
   var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu3 } = unlock2(import_components10.privateApis);
   function generateItemWrapperCompositeId(idPrefix) {
@@ -12742,7 +12758,7 @@ var wp;
     primaryAction,
     item
   }) {
-    const registry = (0, import_data3.useRegistry)();
+    const registry = (0, import_data4.useRegistry)();
     const [isModalOpen, setIsModalOpen] = (0, import_element31.useState)(false);
     const compositeItemId = generatePrimaryActionCompositeId(
       idPrefix,
@@ -12814,7 +12830,7 @@ var wp;
     const itemRef = (0, import_element31.useRef)(null);
     const labelId = `${idPrefix}-label`;
     const descriptionId = `${idPrefix}-description`;
-    const registry = (0, import_data3.useRegistry)();
+    const registry = (0, import_data4.useRegistry)();
     const [isHovered, setIsHovered] = (0, import_element31.useState)(false);
     const [activeModalAction, setActiveModalAction] = (0, import_element31.useState)(
       null
@@ -13316,7 +13332,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-item.mjs
   var import_element33 = __toESM(require_element(), 1);
-  var import_data4 = __toESM(require_data(), 1);
+  var import_data5 = __toESM(require_data(), 1);
   var import_compose5 = __toESM(require_compose(), 1);
   var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
   function ActivityItem(props) {
@@ -13340,7 +13356,7 @@ var wp;
       infiniteScrollEnabled
     } = view;
     const itemRef = (0, import_element33.useRef)(null);
-    const registry = (0, import_data4.useRegistry)();
+    const registry = (0, import_data5.useRegistry)();
     const { paginationInfo } = (0, import_element33.useContext)(dataviews_context_default);
     const { primaryActions, eligibleActions } = (0, import_element33.useMemo)(() => {
       const _eligibleActions = actions.filter(
@@ -13592,7 +13608,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
   var import_components13 = __toESM(require_components(), 1);
-  var import_data5 = __toESM(require_data(), 1);
+  var import_data6 = __toESM(require_data(), 1);
   var import_element35 = __toESM(require_element(), 1);
   var import_i18n22 = __toESM(require_i18n(), 1);
 
@@ -13774,7 +13790,7 @@ var wp;
     items,
     selection
   }) {
-    const registry = (0, import_data5.useRegistry)();
+    const registry = (0, import_data6.useRegistry)();
     const [actionInProgress, setActionInProgress] = (0, import_element35.useState)(
       null
     );
@@ -26448,7 +26464,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/views/build-module/use-view.mjs
   var import_element74 = __toESM(require_element(), 1);
-  var import_data6 = __toESM(require_data(), 1);
+  var import_data7 = __toESM(require_data(), 1);
   var import_preferences = __toESM(require_preferences(), 1);
 
   // packages/views/build-module/preference-keys.mjs
@@ -26579,16 +26595,16 @@ If there's a particular need for this, please submit a feature request at https:
       onChangeQueryParams
     } = config;
     const preferenceKey = generatePreferenceKey(kind, name, slug);
-    const persistedView = (0, import_data6.useSelect)(
-      (select2) => {
-        return select2(import_preferences.store).get(
+    const persistedView = (0, import_data7.useSelect)(
+      (select3) => {
+        return select3(import_preferences.store).get(
           "core/views",
           preferenceKey
         );
       },
       [preferenceKey]
     );
-    const { set: set2 } = (0, import_data6.useDispatch)(import_preferences.store);
+    const { set: set2 } = (0, import_data7.useDispatch)(import_preferences.store);
     const baseView = (0, import_element74.useMemo)(
       () => persistedView ?? defaultView2 ?? {},
       [persistedView, defaultView2]
@@ -26667,12 +26683,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/views/build-module/load-view.mjs
-  var import_data7 = __toESM(require_data(), 1);
+  var import_data8 = __toESM(require_data(), 1);
   var import_preferences2 = __toESM(require_preferences(), 1);
 
   // packages/views/build-module/use-view-config.mjs
-  var import_data8 = __toESM(require_data(), 1);
-  var import_core_data = __toESM(require_core_data(), 1);
+  var import_data9 = __toESM(require_data(), 1);
+  var import_core_data2 = __toESM(require_core_data(), 1);
 
   // packages/views/build-module/lock-unlock.mjs
   var import_private_apis3 = __toESM(require_private_apis(), 1);
@@ -26751,12 +26767,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-fields/build-module/attached_to/edit.mjs
-  var import_core_data2 = __toESM(require_core_data(), 1);
+  var import_core_data3 = __toESM(require_core_data(), 1);
   var import_components47 = __toESM(require_components(), 1);
   var import_i18n52 = __toESM(require_i18n(), 1);
   var import_element76 = __toESM(require_element(), 1);
   var import_compose14 = __toESM(require_compose(), 1);
-  var import_data9 = __toESM(require_data(), 1);
+  var import_data10 = __toESM(require_data(), 1);
   var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
   function MediaAttachedToEdit({
     data,
@@ -26778,8 +26794,8 @@ If there's a particular need for this, please submit a feature request at https:
     const [value, setValue] = (0, import_element76.useState)(
       data?.post?.toString() ?? null
     );
-    const postTypes = (0, import_data9.useSelect)(
-      (select2) => select2(import_core_data2.store).getPostTypes(),
+    const postTypes = (0, import_data10.useSelect)(
+      (select3) => select3(import_core_data3.store).getPostTypes(),
       []
     );
     const handleDetach = () => {
@@ -26792,7 +26808,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const onValueChange = async (filterValue) => {
       setIsLoading(true);
-      const results = await (0, import_core_data2.__experimentalFetchLinkSuggestions)(
+      const results = await (0, import_core_data3.__experimentalFetchLinkSuggestions)(
         filterValue,
         /*
          * @TODO `fetchLinkSuggestions()` should accept `perPage` as an option argument.
@@ -26894,8 +26910,8 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/author/index.mjs
   var import_i18n55 = __toESM(require_i18n(), 1);
-  var import_data10 = __toESM(require_data(), 1);
-  var import_core_data3 = __toESM(require_core_data(), 1);
+  var import_data11 = __toESM(require_data(), 1);
+  var import_core_data4 = __toESM(require_core_data(), 1);
 
   // packages/media-fields/build-module/author/view.mjs
   var import_i18n54 = __toESM(require_i18n(), 1);
@@ -26952,7 +26968,7 @@ If there's a particular need for this, please submit a feature request at https:
     id: "author",
     type: "integer",
     getElements: async () => {
-      const authors = await (0, import_data10.resolveSelect)(import_core_data3.store).getEntityRecords(
+      const authors = await (0, import_data11.resolveSelect)(import_core_data4.store).getEntityRecords(
         "root",
         "user",
         {
@@ -27211,8 +27227,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n64 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/media_thumbnail/view.mjs
-  var import_data11 = __toESM(require_data(), 1);
-  var import_core_data4 = __toESM(require_core_data(), 1);
+  var import_data12 = __toESM(require_data(), 1);
+  var import_core_data5 = __toESM(require_core_data(), 1);
   var import_components51 = __toESM(require_components(), 1);
   var import_element79 = __toESM(require_element(), 1);
   var import_url5 = __toESM(require_url(), 1);
@@ -27350,12 +27366,12 @@ If there's a particular need for this, please submit a feature request at https:
     config
   }) {
     const [imageError, setImageError] = (0, import_element79.useState)(false);
-    const _featuredMedia = (0, import_data11.useSelect)(
-      (select2) => {
+    const _featuredMedia = (0, import_data12.useSelect)(
+      (select3) => {
         if (!item.featured_media) {
           return;
         }
-        return select2(import_core_data4.store).getEntityRecord(
+        return select3(import_core_data5.store).getEntityRecord(
           "postType",
           "attachment",
           item.featured_media
@@ -27547,19 +27563,13 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-utils/build-module/components/media-upload-modal/use-invalidate-attachment-resolutions.mjs
   var import_element81 = __toESM(require_element(), 1);
-  var import_core_data5 = __toESM(require_core_data(), 1);
-  var import_data12 = __toESM(require_data(), 1);
+  var import_data13 = __toESM(require_data(), 1);
   function useInvalidateAttachmentResolutions() {
-    const registry = (0, import_data12.useRegistry)();
-    return (0, import_element81.useCallback)(() => {
-      const resolvers = registry.select(import_core_data5.store).getCachedResolvers();
-      const entityRecordResolutions = resolvers.getEntityRecords;
-      entityRecordResolutions?.forEach((_value, args) => {
-        if (args[0] === "postType" && args[1] === "attachment") {
-          registry.dispatch(import_core_data5.store).invalidateResolution("getEntityRecords", args);
-        }
-      });
-    }, [registry]);
+    const registry = (0, import_data13.useRegistry)();
+    return (0, import_element81.useCallback)(
+      () => invalidateAttachmentResolutions(registry),
+      [registry]
+    );
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/use-upload-status.mjs
@@ -27727,8 +27737,8 @@ If there's a particular need for this, please submit a feature request at https:
     const [selection, setSelection] = (0, import_element83.useState)(
       () => getSelectionFromValue(value)
     );
-    const { createSuccessNotice, removeAllNotices } = (0, import_data13.useDispatch)(import_notices.store);
-    const invalidateAttachmentResolutions = useInvalidateAttachmentResolutions();
+    const { createSuccessNotice, removeAllNotices } = (0, import_data14.useDispatch)(import_notices.store);
+    const invalidateAttachmentResolutions2 = useInvalidateAttachmentResolutions();
     const [queryParams, setQueryParams] = (0, import_element83.useState)(
       () => defaultQueryParams
     );
@@ -27820,9 +27830,9 @@ If there's a particular need for this, please submit a feature request at https:
         } else {
           setSelection(uploadedIds.slice(0, 1));
         }
-        invalidateAttachmentResolutions();
+        invalidateAttachmentResolutions2();
       },
-      [multiple, invalidateAttachmentResolutions]
+      [multiple, invalidateAttachmentResolutions2]
     );
     const {
       uploadingFiles,
@@ -27894,7 +27904,7 @@ If there's a particular need for this, please submit a feature request at https:
               include: selection,
               per_page: -1
             };
-            const selectedPosts = await (0, import_data13.resolveSelect)(
+            const selectedPosts = await (0, import_data14.resolveSelect)(
               import_core_data6.store
             ).getEntityRecords(
               "postType",
