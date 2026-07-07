@@ -68,6 +68,12 @@
  * Focus styles.
  */
 /**
+ * Standard focus rings for the WordPress Design System.
+ *
+ * Apply `outset-ring__focus` inside the relevant pseudo-class at the call site,
+ * e.g. `&:focus { @include outset-ring__focus(); }`.
+ */
+/**
  * Applies editor left position to the selector passed as argument
  */
 /**
@@ -819,7 +825,7 @@ _::-webkit-full-page-media, _:future, :root [data-has-multi-selection=true] .blo
   position: fixed;
   right: 0;
   left: 0;
-  top: calc(-1 * var(--wp-block-editor-iframe-zoom-out-scroll-top, 0));
+  top: calc(-1 * var(--wp-block-editor-iframe-zoom-out-scroll-top, 0px));
   bottom: 0;
   overflow-y: var(--wp-block-editor-iframe-zoom-out-overflow-behavior, scroll);
 }
@@ -827,12 +833,12 @@ _::-webkit-full-page-media, _:future, :root [data-has-multi-selection=true] .blo
   transform: translateX(calc(-1*((var(--wp-block-editor-iframe-zoom-out-scale-container-width) - var(--wp-block-editor-iframe-zoom-out-container-width, 100vw)) / 2 / var(--wp-block-editor-iframe-zoom-out-scale, 1))));
   scale: var(--wp-block-editor-iframe-zoom-out-scale, 1);
   background-color: var(--wp-editor-canvas-background);
-  margin-bottom: calc(-1 * calc(calc(var(--wp-block-editor-iframe-zoom-out-content-height) * (1 - var(--wp-block-editor-iframe-zoom-out-scale, 1))) + calc(2 * var(--wp-block-editor-iframe-zoom-out-frame-size, 0) / var(--wp-block-editor-iframe-zoom-out-scale, 1)) + 2px));
-  padding-top: calc(var(--wp-block-editor-iframe-zoom-out-frame-size, 0) / var(--wp-block-editor-iframe-zoom-out-scale, 1));
-  padding-bottom: calc(var(--wp-block-editor-iframe-zoom-out-frame-size, 0) / var(--wp-block-editor-iframe-zoom-out-scale, 1));
+  margin-bottom: calc(-1 * calc(calc(var(--wp-block-editor-iframe-zoom-out-content-height) * (1 - var(--wp-block-editor-iframe-zoom-out-scale, 1))) + calc(2 * var(--wp-block-editor-iframe-zoom-out-frame-size, 0px) / var(--wp-block-editor-iframe-zoom-out-scale, 1)) + 2px));
+  padding-top: calc(var(--wp-block-editor-iframe-zoom-out-frame-size, 0px) / var(--wp-block-editor-iframe-zoom-out-scale, 1));
+  padding-bottom: calc(var(--wp-block-editor-iframe-zoom-out-frame-size, 0px) / var(--wp-block-editor-iframe-zoom-out-scale, 1));
 }
 .block-editor-iframe__html.is-zoomed-out body {
-  min-height: calc((var(--wp-block-editor-iframe-zoom-out-inner-height) - calc(2 * var(--wp-block-editor-iframe-zoom-out-frame-size, 0) / var(--wp-block-editor-iframe-zoom-out-scale, 1))) / var(--wp-block-editor-iframe-zoom-out-scale, 1));
+  min-height: calc((var(--wp-block-editor-iframe-zoom-out-inner-height) - calc(2 * var(--wp-block-editor-iframe-zoom-out-frame-size, 0px) / var(--wp-block-editor-iframe-zoom-out-scale, 1))) / var(--wp-block-editor-iframe-zoom-out-scale, 1));
 }
 .block-editor-iframe__html.is-zoomed-out body > .is-root-container:not(.wp-block-post-content) {
   flex: 1;

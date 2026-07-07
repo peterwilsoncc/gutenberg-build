@@ -220,7 +220,9 @@ var VALID_SETTINGS = [
   "typography.textDecoration",
   "typography.textIndent",
   "typography.textTransform",
-  "typography.writingMode"
+  "typography.writingMode",
+  "viewport.mobile",
+  "viewport.tablet"
 ];
 function getSetting(globalStyles, path, blockName) {
   const appendedBlockPath = blockName ? ".blocks." + blockName : "";
@@ -583,10 +585,8 @@ function getBlockStyleVariationSelector(variation, blockSelector) {
   if (!blockSelector) {
     return variationClass;
   }
-  const ancestorRegex = /((?::\([^)]+\))?\s*)([^\s:]+)/;
-  const addVariationClass = (_match, group1, group2) => {
-    return group1 + group2 + variationClass;
-  };
+  const ancestorRegex = /[^\s:]+/;
+  const addVariationClass = (match) => match + variationClass;
   const result = splitSelectorList(blockSelector).map(
     (part) => part.replace(ancestorRegex, addVariationClass)
   );
@@ -1209,6 +1209,82 @@ var LAYOUT_DEFINITIONS = {
   }
 };
 
+// packages/global-styles-engine/build-module/utils/viewport.mjs
+var DEFAULT_VIEWPORT_BREAKPOINTS = {
+  mobile: "480px",
+  tablet: "782px"
+};
+var VIEWPORT_SIZE_REGEXP = /^(\d+|\d*\.\d+)(px|em|rem)$/;
+var DEFAULT_FONT_SIZE = 16;
+function isViewportSettings(configOrSettings) {
+  return "mobile" in configOrSettings || "tablet" in configOrSettings;
+}
+function getViewportSettings(configOrSettings) {
+  if (!configOrSettings || typeof configOrSettings !== "object") {
+    return {};
+  }
+  if (isViewportSettings(configOrSettings)) {
+    return configOrSettings;
+  }
+  return configOrSettings.settings?.viewport ?? {};
+}
+function isValidViewportSize(value) {
+  return typeof value === "string" && VIEWPORT_SIZE_REGEXP.test(value.trim());
+}
+function getViewportBreakpointValueInPixels(value) {
+  if (typeof value === "number") {
+    return value;
+  }
+  if (typeof value !== "string") {
+    return void 0;
+  }
+  const match = value.trim().match(VIEWPORT_SIZE_REGEXP);
+  if (!match) {
+    return void 0;
+  }
+  const numericValue = Number.parseFloat(match[1]);
+  const unit = match[2];
+  return unit === "px" ? numericValue : numericValue * DEFAULT_FONT_SIZE;
+}
+function getViewportBreakpoints(configOrSettings) {
+  const viewportSettings = getViewportSettings(configOrSettings);
+  const breakpoints = {};
+  const breakpointValuesInPixels = {};
+  Object.keys(DEFAULT_VIEWPORT_BREAKPOINTS).forEach((breakpoint) => {
+    const key = breakpoint;
+    const value = viewportSettings[key];
+    const px = getViewportBreakpointValueInPixels(value);
+    if (px !== void 0 && isValidViewportSize(value)) {
+      breakpoints[key] = value.trim();
+      breakpointValuesInPixels[key] = px;
+    }
+  });
+  const breakpointNames = Object.keys(breakpoints);
+  if (!breakpointNames.length) {
+    return { ...DEFAULT_VIEWPORT_BREAKPOINTS };
+  }
+  if (1 === breakpointNames.length) {
+    return breakpoints;
+  }
+  const mobile = breakpoints.mobile;
+  const tablet = breakpoints.tablet;
+  if (breakpointValuesInPixels.mobile >= breakpointValuesInPixels.tablet) {
+    return { mobile };
+  }
+  return { mobile, tablet };
+}
+function getResponsiveMediaQueries(configOrSettings) {
+  const breakpoints = getViewportBreakpoints(configOrSettings);
+  const mediaQueries = {};
+  if (breakpoints.mobile) {
+    mediaQueries["@mobile"] = `@media (width <= ${breakpoints.mobile})`;
+  }
+  if (breakpoints.tablet) {
+    mediaQueries["@tablet"] = breakpoints.mobile ? `@media (${breakpoints.mobile} < width <= ${breakpoints.tablet})` : `@media (width <= ${breakpoints.tablet})`;
+  }
+  return mediaQueries;
+}
+
 // packages/global-styles-engine/build-module/core/render.mjs
 var ELEMENT_CLASS_NAMES = {
   button: "wp-element-button",
@@ -1244,10 +1320,6 @@ var VALID_ELEMENT_PSEUDO_SELECTORS = {
     ":focus-visible",
     ":active"
   ]
-};
-var RESPONSIVE_BREAKPOINTS = {
-  "@mobile": "@media (width <= 480px)",
-  "@tablet": "@media (480px < width <= 782px)"
 };
 function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
   return PRESET_METADATA.reduce(
@@ -1610,17 +1682,21 @@ var STYLE_KEYS = [
   "shadow",
   "background"
 ];
-function pickStyleKeys(treeToPickFrom) {
-  return pickStyleAndPseudoKeys(treeToPickFrom);
+function pickStyleKeys(treeToPickFrom, responsiveMediaQueries) {
+  return pickStyleAndPseudoKeys(
+    treeToPickFrom,
+    void 0,
+    responsiveMediaQueries
+  );
 }
-function pickStyleAndPseudoKeys(treeToPickFrom, blockName) {
+function pickStyleAndPseudoKeys(treeToPickFrom, blockName, responsiveMediaQueries) {
   if (!treeToPickFrom) {
     return {};
   }
   const entries = Object.entries(treeToPickFrom);
   const allowedPseudoSelectors = blockName ? VALID_BLOCK_PSEUDO_SELECTORS[blockName] ?? [] : [];
   const pickedEntries = entries.filter(
-    ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key) || RESPONSIVE_BREAKPOINTS[key]
+    ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key) || responsiveMediaQueries[key]
   );
   const clonedEntries = pickedEntries.map(([key, style]) => [
     key,
@@ -1661,7 +1737,7 @@ function getPseudoStyleNodes(node) {
     ];
   });
 }
-function getResponsiveStyleNodes(node) {
+function getResponsiveStyleNodes(node, responsiveMediaQueries) {
   const {
     styles,
     selector,
@@ -1674,7 +1750,7 @@ function getResponsiveStyleNodes(node) {
   if (!name && !elementName) {
     return [];
   }
-  return Object.entries(RESPONSIVE_BREAKPOINTS).flatMap(
+  return Object.entries(responsiveMediaQueries).flatMap(
     ([breakpointKey, mediaQuery]) => {
       const breakpointStyles = styles?.[breakpointKey];
       if (!breakpointStyles || typeof breakpointStyles !== "object") {
@@ -1700,7 +1776,8 @@ var getNodesWithStyles = (tree, blockSelectors) => {
   if (!tree?.styles) {
     return nodes;
   }
-  const styles = pickStyleKeys(tree.styles);
+  const responsiveMediaQueries = getResponsiveMediaQueries(tree);
+  const styles = pickStyleKeys(tree.styles, responsiveMediaQueries);
   if (styles) {
     nodes.push({
       styles,
@@ -1724,7 +1801,11 @@ var getNodesWithStyles = (tree, blockSelectors) => {
   });
   Object.entries(tree.styles?.blocks ?? {}).forEach(
     ([blockName, node]) => {
-      const blockStyles = pickStyleAndPseudoKeys(node, blockName);
+      const blockStyles = pickStyleAndPseudoKeys(
+        node,
+        blockName,
+        responsiveMediaQueries
+      );
       const typedNode = node;
       const variationNodesToAdd = [];
       const variationStyleNodesToAdd = [];
@@ -1734,7 +1815,8 @@ var getNodesWithStyles = (tree, blockSelectors) => {
             const typedVariation = variation;
             const variationStyles = pickStyleAndPseudoKeys(
               typedVariation,
-              blockName
+              blockName,
+              responsiveMediaQueries
             );
             if (typedVariation?.css) {
               variationStyles.css = typedVariation.css;
@@ -1789,7 +1871,8 @@ var getNodesWithStyles = (tree, blockSelectors) => {
                 ) : void 0;
                 const variationBlockStyleNodes = pickStyleAndPseudoKeys(
                   variationBlockStyles,
-                  variationBlockName
+                  variationBlockName,
+                  responsiveMediaQueries
                 );
                 if (variationBlockStyles?.css) {
                   variationBlockStyleNodes.css = variationBlockStyles.css;
@@ -2135,11 +2218,15 @@ var transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGa
     ruleset += "}";
   }
   if (options.blockStyles) {
+    const responsiveMediaQueries = getResponsiveMediaQueries(tree);
     nodesWithStyles.forEach((node) => {
       if (node.isStyleVariation && !options.variationStyles) {
         return;
       }
-      const responsiveNodes = getResponsiveStyleNodes(node);
+      const responsiveNodes = getResponsiveStyleNodes(
+        node,
+        responsiveMediaQueries
+      );
       [
         node,
         ...responsiveNodes,
