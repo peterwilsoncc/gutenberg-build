@@ -23099,9 +23099,10 @@ var wp;
 
   // packages/fields/build-module/fields/status/status-view.mjs
   var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
-  function StatusView({ item }) {
-    const status = status_elements_default.find(({ value }) => value === item.status);
-    const label = status?.label || item.status;
+  function StatusView({ item, field }) {
+    const currentStatus = field.getValue({ item });
+    const status = status_elements_default.find(({ value }) => value === currentStatus);
+    const label = status?.label || currentStatus;
     const icon = status?.icon;
     return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(import_components8.__experimentalHStack, { alignment: "left", spacing: 0, children: [
       icon && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { className: "fields-controls__status-icon", children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(import_components8.Icon, { icon }) }),
@@ -23117,6 +23118,9 @@ var wp;
     id: "status",
     type: "text",
     elements: status_elements_default,
+    // An auto-draft is a draft that hasn't been saved yet, so treat it as
+    // one for display, selection, and filtering.
+    getValue: ({ item }) => item.status === "auto-draft" ? "draft" : item.status,
     render: status_view_default,
     Edit: "radio",
     enableSorting: false,
