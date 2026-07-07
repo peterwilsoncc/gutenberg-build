@@ -21203,36 +21203,29 @@ var wp;
           extraSidebarPanels: !postWithTemplate && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(plugin_template_setting_panel_default.Slot, {}),
           children: [
             isEditMode && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(ViewportSync, {}),
-            isEditMode && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(BackButton, { children: ({ length }) => length <= 1 && /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)("div", { className: "edit-site-editor__view-mode-toggle", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
-                import_components19.Button,
-                {
-                  __next40pxDefaultSize: true,
-                  label: (0, import_i18n22.__)("Open Navigation"),
-                  showTooltip: true,
-                  tooltipPosition: "middle right",
-                  onClick: () => {
-                    resetZoomLevel();
-                    setCurrentRevisionId(null);
-                    history.navigate(
-                      getNavigationPath(
-                        location,
-                        postWithTemplate ? context.postType : postType2
-                      ),
-                      {
-                        transition: "canvas-mode-view-transition"
-                      }
-                    );
-                  }
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime121.jsx)("div", { className: "edit-site-editor__back-icon", children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
-                icon_default,
-                {
-                  icon: (0, import_i18n22.isRTL)() ? chevron_right_default : chevron_left_default
-                }
-              ) })
-            ] }) }),
+            isEditMode && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(BackButton, { children: ({ length }) => length <= 1 && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+              import_components19.Button,
+              {
+                size: "compact",
+                label: (0, import_i18n22.__)("Open Navigation"),
+                showTooltip: true,
+                tooltipPosition: "middle right",
+                onClick: () => {
+                  resetZoomLevel();
+                  setCurrentRevisionId(null);
+                  history.navigate(
+                    getNavigationPath(
+                      location,
+                      postWithTemplate ? context.postType : postType2
+                    ),
+                    {
+                      transition: "canvas-mode-view-transition"
+                    }
+                  );
+                },
+                icon: (0, import_i18n22.isRTL)() ? chevron_right_default : chevron_left_default
+              }
+            ) }),
             /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(MoreMenu, {})
           ]
         }

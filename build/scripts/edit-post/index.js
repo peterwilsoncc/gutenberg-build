@@ -9565,25 +9565,17 @@ var wp;
       post_type: postType.slug
     });
     const buttonLabel = postType?.labels?.view_items ?? (0, import_i18n.__)("Back");
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "edit-post-fullscreen-mode-close__view-mode-toggle", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-        import_components.Button,
-        {
-          __next40pxDefaultSize: true,
-          className: "edit-post-fullscreen-mode-close",
-          href: buttonHref,
-          label: buttonLabel,
-          showTooltip,
-          tooltipPosition: "bottom"
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "edit-post-fullscreen-mode-close__back-icon", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-        import_components.Icon,
-        {
-          icon: icon ?? ((0, import_i18n.isRTL)() ? chevron_right_default : chevron_left_default)
-        }
-      ) })
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+      import_components.Button,
+      {
+        size: "compact",
+        href: buttonHref,
+        label: buttonLabel,
+        showTooltip,
+        tooltipPosition: "bottom",
+        icon: icon ?? ((0, import_i18n.isRTL)() ? chevron_right_default : chevron_left_default)
+      }
+    );
   }
   var fullscreen_mode_close_default = FullscreenModeClose;
 

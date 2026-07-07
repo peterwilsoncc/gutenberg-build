@@ -10385,12 +10385,6 @@ import { useNavigate } from "@wordpress/route";
 var import_components11 = __toESM(require_components(), 1);
 var import_i18n7 = __toESM(require_i18n(), 1);
 var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='f4eb7e3102']")) {
-  const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "f4eb7e3102");
-  style.appendChild(document.createTextNode(".boot-canvas-back-button{height:64px;left:0;position:absolute;top:0;width:64px;z-index:100}.boot-canvas-back-button__container{height:100%;position:relative;width:100%}.boot-canvas-back-button__link.components-button{align-items:center;border-radius:0;display:inline-flex;height:64px;justify-content:center;padding:0;text-decoration:none;width:64px}@media not (prefers-reduced-motion){.boot-canvas-back-button__link.components-button{transition:outline .1s ease-out}}.boot-canvas-back-button__link.components-button:focus:not(:active){outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*-1)}.boot-canvas-back-button__icon{align-items:center;display:flex;height:64px;justify-content:center;left:0;pointer-events:none;position:absolute;top:0;width:64px}.boot-canvas-back-button__icon svg{fill:currentColor}.interface-interface-skeleton__header{margin-top:0!important}"));
-  document.head.appendChild(style);
-}
 function BootBackButton({ length }) {
   const handleBack = () => {
     window.history.back();
@@ -10398,18 +10392,15 @@ function BootBackButton({ length }) {
   if (length > 1) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "boot-canvas-back-button", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-      import_components11.Button,
-      {
-        className: "boot-canvas-back-button__link",
-        onClick: handleBack,
-        "aria-label": (0, import_i18n7.__)("Go back"),
-        __next40pxDefaultSize: true
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { className: "boot-canvas-back-button__icon", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_components11.Icon, { icon: (0, import_i18n7.isRTL)() ? chevron_right_default : chevron_left_default }) })
-  ] });
+  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+    import_components11.Button,
+    {
+      size: "compact",
+      onClick: handleBack,
+      label: (0, import_i18n7.__)("Go back"),
+      icon: (0, import_i18n7.isRTL)() ? chevron_right_default : chevron_left_default
+    }
+  );
 }
 
 // packages/boot/build-module/components/canvas/index.mjs
