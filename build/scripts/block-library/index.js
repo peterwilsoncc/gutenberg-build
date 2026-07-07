@@ -2526,6 +2526,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/a11y
+  var require_a11y = __commonJS({
+    "package-external:@wordpress/a11y"(exports, module) {
+      module.exports = window.wp.a11y;
+    }
+  });
+
   // package-external:@wordpress/deprecated
   var require_deprecated = __commonJS({
     "package-external:@wordpress/deprecated"(exports, module) {
@@ -2537,13 +2544,6 @@ var wp;
   var require_rich_text = __commonJS({
     "package-external:@wordpress/rich-text"(exports, module) {
       module.exports = window.wp.richText;
-    }
-  });
-
-  // package-external:@wordpress/a11y
-  var require_a11y = __commonJS({
-    "package-external:@wordpress/a11y"(exports, module) {
-      module.exports = window.wp.a11y;
     }
   });
 
@@ -7379,7 +7379,7 @@ var wp;
     name: () => name9,
     settings: () => settings9
   });
-  var import_i18n14 = __toESM(require_i18n(), 1);
+  var import_i18n15 = __toESM(require_i18n(), 1);
   var import_blocks8 = __toESM(require_blocks(), 1);
 
   // packages/block-library/build-module/button/deprecated.mjs
@@ -9014,1414 +9014,14 @@ var wp;
   var deprecated_default3 = deprecated;
 
   // packages/block-library/build-module/button/edit.mjs
-  var import_i18n13 = __toESM(require_i18n(), 1);
-  var import_element10 = __toESM(require_element(), 1);
+  var import_i18n14 = __toESM(require_i18n(), 1);
+  var import_element13 = __toESM(require_element(), 1);
   var import_components10 = __toESM(require_components(), 1);
   var import_block_editor21 = __toESM(require_block_editor(), 1);
   var import_keycodes = __toESM(require_keycodes(), 1);
   var import_blocks7 = __toESM(require_blocks(), 1);
   var import_compose8 = __toESM(require_compose(), 1);
   var import_data11 = __toESM(require_data(), 1);
-
-  // packages/block-library/build-module/button/constants.mjs
-  var NEW_TAB_REL = "noopener";
-  var NEW_TAB_TARGET = "_blank";
-  var NOFOLLOW_REL = "nofollow";
-
-  // packages/block-library/build-module/button/get-updated-link-attributes.mjs
-  var import_url3 = __toESM(require_url(), 1);
-  function getUpdatedLinkAttributes({
-    rel = "",
-    url = "",
-    opensInNewTab,
-    nofollow
-  }) {
-    let newLinkTarget;
-    let updatedRel = rel;
-    if (opensInNewTab) {
-      newLinkTarget = NEW_TAB_TARGET;
-      updatedRel = updatedRel?.includes(NEW_TAB_REL) ? updatedRel : updatedRel + ` ${NEW_TAB_REL}`;
-    } else {
-      const relRegex = new RegExp(`\\b${NEW_TAB_REL}\\s*`, "g");
-      updatedRel = updatedRel?.replace(relRegex, "").trim();
-    }
-    if (nofollow) {
-      updatedRel = updatedRel?.includes(NOFOLLOW_REL) ? updatedRel : (updatedRel + ` ${NOFOLLOW_REL}`).trim();
-    } else {
-      const relRegex = new RegExp(`\\b${NOFOLLOW_REL}\\s*`, "g");
-      updatedRel = updatedRel?.replace(relRegex, "").trim();
-    }
-    return {
-      url: (0, import_url3.prependHTTPS)(url),
-      linkTarget: newLinkTarget,
-      rel: updatedRel || void 0
-    };
-  }
-
-  // packages/block-library/build-module/utils/remove-anchor-tag.mjs
-  function removeAnchorTag(value) {
-    return value.toString().replace(/<\/?a[^>]*>/g, "");
-  }
-
-  // packages/block-library/build-module/utils/deprecated-text-align-attributes.mjs
-  var import_compose7 = __toESM(require_compose(), 1);
-  var import_element9 = __toESM(require_element(), 1);
-  var import_deprecated3 = __toESM(require_deprecated(), 1);
-  var import_data10 = __toESM(require_data(), 1);
-  var import_block_editor20 = __toESM(require_block_editor(), 1);
-  function useDeprecatedTextAlign(props) {
-    const { name: name122, attributes, setAttributes } = props;
-    const { textAlign } = attributes;
-    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data10.useDispatch)(import_block_editor20.store);
-    const updateStyleWithAlign = (0, import_compose7.useEvent)(() => {
-      (0, import_deprecated3.default)(`textAlign attribute in ${name122}`, {
-        alternative: "style.typography.textAlign",
-        since: "7.0"
-      });
-      __unstableMarkNextChangeAsNotPersistent();
-      setAttributes((currentAttr) => ({
-        style: {
-          ...currentAttr.style,
-          typography: {
-            ...currentAttr.style?.typography,
-            textAlign
-          }
-        }
-      }));
-    });
-    const lastUpdatedAlignRef = (0, import_element9.useRef)();
-    (0, import_element9.useEffect)(() => {
-      if (textAlign === lastUpdatedAlignRef.current) {
-        return;
-      }
-      lastUpdatedAlignRef.current = textAlign;
-      updateStyleWithAlign();
-    }, [textAlign, updateStyleWithAlign]);
-  }
-
-  // packages/block-library/build-module/button/utils.mjs
-  function isPercentageWidth(width) {
-    return typeof width === "string" && width.endsWith("%");
-  }
-  function getWidthClasses(width) {
-    if (!width) {
-      return {};
-    }
-    if (isPercentageWidth(width)) {
-      const legacyWidthClasses = {
-        "25%": "wp-block-button__width-25",
-        "50%": "wp-block-button__width-50",
-        "75%": "wp-block-button__width-75",
-        "100%": "wp-block-button__width-100"
-      };
-      return {
-        "has-custom-width": true,
-        "wp-block-button__width": true,
-        // Maintain legacy class for backwards compatibility.
-        ...legacyWidthClasses[width] && {
-          [legacyWidthClasses[width]]: true
-        }
-      };
-    }
-    return {
-      "has-custom-width": true
-    };
-  }
-
-  // packages/block-library/build-module/button/edit.mjs
-  var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
-  var { HTMLElementControl } = unlock(import_block_editor21.privateApis);
-  var { subscribeDelegatedListener } = unlock(import_compose8.privateApis);
-  var LINK_SETTINGS = [
-    ...import_block_editor21.LinkControl.DEFAULT_LINK_SETTINGS,
-    {
-      id: "nofollow",
-      title: (0, import_i18n13.__)("Mark as nofollow")
-    }
-  ];
-  function useEnter(props) {
-    const { replaceBlocks, selectionChange } = (0, import_data11.useDispatch)(import_block_editor21.store);
-    const { getBlock, getBlockRootClientId, getBlockIndex } = (0, import_data11.useSelect)(import_block_editor21.store);
-    const propsRef = (0, import_element10.useRef)(props);
-    propsRef.current = props;
-    return (0, import_compose8.useRefEffect)((element) => {
-      function onKeyDown(event) {
-        if (event.defaultPrevented || event.keyCode !== import_keycodes.ENTER) {
-          return;
-        }
-        const { content, clientId } = propsRef.current;
-        if (content.length) {
-          return;
-        }
-        event.preventDefault();
-        const topParentListBlock = getBlock(
-          getBlockRootClientId(clientId)
-        );
-        const blockIndex = getBlockIndex(clientId);
-        const head = (0, import_blocks7.cloneBlock)({
-          ...topParentListBlock,
-          innerBlocks: topParentListBlock.innerBlocks.slice(
-            0,
-            blockIndex
-          )
-        });
-        const middle = (0, import_blocks7.createBlock)((0, import_blocks7.getDefaultBlockName)());
-        const after = topParentListBlock.innerBlocks.slice(
-          blockIndex + 1
-        );
-        const tail = after.length ? [
-          (0, import_blocks7.cloneBlock)({
-            ...topParentListBlock,
-            innerBlocks: after
-          })
-        ] : [];
-        replaceBlocks(
-          topParentListBlock.clientId,
-          [head, middle, ...tail],
-          1
-        );
-        selectionChange(middle.clientId);
-      }
-      return subscribeDelegatedListener(
-        element,
-        "keydown",
-        onKeyDown,
-        true
-      );
-    }, []);
-  }
-  function ButtonEdit(props) {
-    const {
-      attributes,
-      setAttributes,
-      className,
-      isSelected,
-      onReplace,
-      mergeBlocks,
-      clientId,
-      context
-    } = props;
-    const {
-      tagName,
-      linkTarget,
-      placeholder: placeholder2,
-      rel,
-      style: style2,
-      text,
-      url,
-      metadata
-    } = attributes;
-    const width = style2?.dimensions?.width;
-    useDeprecatedTextAlign(props);
-    const TagName2 = tagName || "a";
-    function onKeyDown(event) {
-      if (import_keycodes.isKeyboardEvent.primary(event, "k")) {
-        startEditing(event);
-      } else if (import_keycodes.isKeyboardEvent.primaryShift(event, "k")) {
-        unlink();
-        richTextRef.current?.focus();
-      }
-    }
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element10.useState)(null);
-    const borderProps = (0, import_block_editor21.__experimentalUseBorderProps)(attributes);
-    const colorProps = (0, import_block_editor21.__experimentalUseColorProps)(attributes);
-    const spacingProps = (0, import_block_editor21.__experimentalGetSpacingClassesAndStyles)(attributes);
-    const shadowProps = (0, import_block_editor21.__experimentalGetShadowClassesAndStyles)(attributes);
-    const dimensionsProps = (0, import_block_editor21.__experimentalGetDimensionsClassesAndStyles)(attributes);
-    const ref = (0, import_element10.useRef)();
-    const richTextRef = (0, import_element10.useRef)();
-    const blockProps = (0, import_block_editor21.useBlockProps)({
-      ref: (0, import_compose8.useMergeRefs)([setPopoverAnchor, ref]),
-      onKeyDown
-    });
-    const blockEditingMode = (0, import_block_editor21.useBlockEditingMode)();
-    const [isEditingURL, setIsEditingURL] = (0, import_element10.useState)(false);
-    const isURLSet = !!url;
-    const opensInNewTab = linkTarget === NEW_TAB_TARGET;
-    const nofollow = !!rel?.includes(NOFOLLOW_REL);
-    const isLinkTag = "a" === TagName2;
-    const {
-      createPageEntity,
-      userCanCreatePages,
-      lockUrlControls = false
-    } = (0, import_data11.useSelect)(
-      (select9) => {
-        if (!isSelected) {
-          return {};
-        }
-        const _settings = select9(import_block_editor21.store).getSettings();
-        const blockBindingsSource = (0, import_blocks7.getBlockBindingsSource)(
-          metadata?.bindings?.url?.source
-        );
-        return {
-          createPageEntity: _settings.__experimentalCreatePageEntity,
-          userCanCreatePages: _settings.__experimentalUserCanCreatePages,
-          lockUrlControls: !!metadata?.bindings?.url && !blockBindingsSource?.canUserEditValue?.({
-            select: select9,
-            context,
-            args: metadata?.bindings?.url?.args
-          })
-        };
-      },
-      [context, isSelected, metadata?.bindings?.url]
-    );
-    async function handleCreate(pageTitle) {
-      const page = await createPageEntity({
-        title: pageTitle,
-        status: "draft"
-      });
-      return {
-        id: page.id,
-        type: page.type,
-        title: page.title.rendered,
-        url: page.link,
-        kind: "post-type"
-      };
-    }
-    function createButtonText(searchTerm) {
-      return (0, import_element10.createInterpolateElement)(
-        (0, import_i18n13.sprintf)(
-          /* translators: %s: search term. */
-          (0, import_i18n13.__)("Create page: <mark>%s</mark>"),
-          searchTerm
-        ),
-        { mark: /* @__PURE__ */ (0, import_jsx_runtime177.jsx)("mark", {}) }
-      );
-    }
-    function startEditing(event) {
-      event.preventDefault();
-      setIsEditingURL(true);
-    }
-    function unlink() {
-      setAttributes({
-        url: void 0,
-        linkTarget: void 0,
-        rel: void 0
-      });
-      setIsEditingURL(false);
-    }
-    (0, import_element10.useEffect)(() => {
-      if (!isSelected) {
-        setIsEditingURL(false);
-      }
-    }, [isSelected]);
-    const linkValue = (0, import_element10.useMemo)(
-      () => ({ url, opensInNewTab, nofollow }),
-      [url, opensInNewTab, nofollow]
-    );
-    const useEnterRef = useEnter({ content: text, clientId });
-    const mergedRef = (0, import_compose8.useMergeRefs)([useEnterRef, richTextRef]);
-    const [fluidTypographySettings, layout, dimensionSizes] = (0, import_block_editor21.useSettings)(
-      "typography.fluid",
-      "layout",
-      "dimensions.dimensionSizes"
-    );
-    const dimensionPresets = (0, import_element10.useMemo)(() => {
-      if (!dimensionSizes) {
-        return [];
-      }
-      return [
-        ...dimensionSizes?.custom ?? [],
-        ...dimensionSizes?.theme ?? [],
-        ...dimensionSizes?.default ?? []
-      ];
-    }, [dimensionSizes]);
-    const typographyProps = (0, import_block_editor21.getTypographyClassesAndStyles)(attributes, {
-      typography: {
-        fluid: fluidTypographySettings
-      },
-      layout: {
-        wideSize: layout?.wideSize
-      }
-    });
-    const resolvedWidth = (0, import_element10.useMemo)(() => {
-      if (!width) {
-        return void 0;
-      }
-      const presetPrefix = "var:preset|dimension|";
-      if (width.startsWith(presetPrefix)) {
-        const slug = width.slice(presetPrefix.length);
-        const preset = dimensionPresets?.find((p2) => p2.slug === slug);
-        return preset?.size ?? width;
-      }
-      return width;
-    }, [width, dimensionPresets]);
-    const hasNonContentControls = blockEditingMode === "default";
-    const hasBlockControls = hasNonContentControls || isLinkTag && !lockUrlControls;
-    const classes = clsx_default(
-      blockProps.className,
-      getWidthClasses(resolvedWidth)
-    );
-    const widthStyle = (0, import_element10.useMemo)(() => {
-      if (!width) {
-        return {};
-      }
-      if (isPercentageWidth(resolvedWidth)) {
-        return {
-          "--wp--block-button--width": parseFloat(resolvedWidth)
-        };
-      }
-      return dimensionsProps.style;
-    }, [width, resolvedWidth, dimensionsProps.style]);
-    return /* @__PURE__ */ (0, import_jsx_runtime177.jsxs)(import_jsx_runtime177.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
-        "div",
-        {
-          ...blockProps,
-          className: classes,
-          style: { ...blockProps.style, ...widthStyle },
-          children: /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
-            import_block_editor21.RichText,
-            {
-              ref: mergedRef,
-              "aria-label": (0, import_i18n13.__)("Button text"),
-              placeholder: placeholder2 || (0, import_i18n13.__)("Add text\u2026"),
-              value: text,
-              onChange: (value) => setAttributes({
-                text: removeAnchorTag(value)
-              }),
-              withoutInteractiveFormatting: true,
-              className: clsx_default(
-                className,
-                "wp-block-button__link",
-                colorProps.className,
-                borderProps.className,
-                typographyProps.className,
-                {
-                  // For backwards compatibility add style that isn't
-                  // provided via block support.
-                  "no-border-radius": style2?.border?.radius === 0,
-                  [`has-custom-font-size`]: blockProps.style.fontSize
-                },
-                (0, import_block_editor21.__experimentalGetElementClassName)("button")
-              ),
-              style: {
-                ...borderProps.style,
-                ...colorProps.style,
-                ...spacingProps.style,
-                ...shadowProps.style,
-                ...typographyProps.style,
-                writingMode: void 0
-              },
-              onReplace,
-              onMerge: mergeBlocks,
-              identifier: "text"
-            }
-          )
-        }
-      ),
-      hasBlockControls && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(import_block_editor21.BlockControls, { group: "block", children: isLinkTag && !lockUrlControls && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
-        import_components10.ToolbarButton,
-        {
-          name: "link",
-          icon: !isURLSet ? link_default : link_off_default,
-          title: !isURLSet ? (0, import_i18n13.__)("Link") : (0, import_i18n13.__)("Unlink"),
-          shortcut: !isURLSet ? import_keycodes.displayShortcut.primary("k") : import_keycodes.displayShortcut.primaryShift("k"),
-          onClick: !isURLSet ? startEditing : unlink,
-          isActive: isURLSet
-        }
-      ) }),
-      isLinkTag && isSelected && (isEditingURL || isURLSet) && !lockUrlControls && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
-        import_components10.Popover,
-        {
-          placement: "bottom",
-          onClose: () => {
-            setIsEditingURL(false);
-            richTextRef.current?.focus();
-          },
-          anchor: popoverAnchor,
-          focusOnMount: isEditingURL ? "firstElement" : false,
-          __unstableSlotName: "__unstable-block-tools-after",
-          shift: true,
-          children: /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
-            import_block_editor21.LinkControl,
-            {
-              value: linkValue,
-              onChange: ({
-                url: newURL,
-                opensInNewTab: newOpensInNewTab,
-                nofollow: newNofollow
-              }) => setAttributes(
-                getUpdatedLinkAttributes({
-                  rel,
-                  url: newURL,
-                  opensInNewTab: newOpensInNewTab,
-                  nofollow: newNofollow
-                })
-              ),
-              onRemove: () => {
-                unlink();
-                richTextRef.current?.focus();
-              },
-              forceIsEditingLink: isEditingURL,
-              settings: LINK_SETTINGS,
-              createSuggestion: createPageEntity && handleCreate,
-              withCreateSuggestion: userCanCreatePages,
-              createSuggestionButtonText: createButtonText
-            }
-          )
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime177.jsxs)(import_block_editor21.InspectorControls, { group: "advanced", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
-          HTMLElementControl,
-          {
-            tagName,
-            onChange: (value) => setAttributes({ tagName: value }),
-            options: [
-              { label: (0, import_i18n13.__)("Default (<a>)"), value: "a" },
-              { label: "<button>", value: "button" }
-            ]
-          }
-        ),
-        isLinkTag && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
-          import_components10.TextControl,
-          {
-            label: (0, import_i18n13.__)("Link relation"),
-            help: (0, import_element10.createInterpolateElement)(
-              (0, import_i18n13.__)(
-                "The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document."
-              ),
-              {
-                a: /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(import_components10.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
-              }
-            ),
-            value: rel || "",
-            onChange: (newRel) => setAttributes({ rel: newRel })
-          }
-        )
-      ] })
-    ] });
-  }
-  var edit_default2 = ButtonEdit;
-
-  // packages/block-library/build-module/button/block.json
-  var block_default10 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
-    apiVersion: 3,
-    name: "core/button",
-    title: "Button",
-    category: "design",
-    parent: ["core/buttons"],
-    description: "Prompt visitors to take action with a button-style link.",
-    keywords: ["link"],
-    textdomain: "default",
-    attributes: {
-      tagName: {
-        type: "string",
-        enum: ["a", "button"],
-        default: "a"
-      },
-      type: {
-        type: "string",
-        default: "button"
-      },
-      url: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "href",
-        role: "content"
-      },
-      title: {
-        type: "string",
-        source: "attribute",
-        selector: "a,button",
-        attribute: "title",
-        role: "content"
-      },
-      text: {
-        type: "rich-text",
-        source: "rich-text",
-        selector: "a,button",
-        role: "content"
-      },
-      linkTarget: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "target",
-        role: "content"
-      },
-      rel: {
-        type: "string",
-        source: "attribute",
-        selector: "a",
-        attribute: "rel",
-        role: "content"
-      },
-      placeholder: {
-        type: "string"
-      },
-      backgroundColor: {
-        type: "string"
-      },
-      textColor: {
-        type: "string"
-      },
-      gradient: {
-        type: "string"
-      }
-    },
-    supports: {
-      anchor: true,
-      splitting: true,
-      align: false,
-      alignWide: false,
-      color: {
-        __experimentalSkipSerialization: true,
-        gradients: true,
-        __experimentalDefaultControls: {
-          background: true,
-          text: true
-        }
-      },
-      dimensions: {
-        width: true,
-        __experimentalSkipSerialization: ["width"],
-        __experimentalDefaultControls: {
-          width: true
-        }
-      },
-      typography: {
-        __experimentalSkipSerialization: [
-          "fontSize",
-          "lineHeight",
-          "textAlign",
-          "fontFamily",
-          "fontWeight",
-          "fontStyle",
-          "textTransform",
-          "textDecoration",
-          "letterSpacing"
-        ],
-        fontSize: true,
-        lineHeight: true,
-        textAlign: true,
-        __experimentalFontFamily: true,
-        __experimentalFontWeight: true,
-        __experimentalFontStyle: true,
-        __experimentalTextTransform: true,
-        __experimentalTextDecoration: true,
-        __experimentalLetterSpacing: true,
-        __experimentalWritingMode: true,
-        __experimentalDefaultControls: {
-          fontSize: true
-        }
-      },
-      reusable: false,
-      shadow: {
-        __experimentalSkipSerialization: true
-      },
-      spacing: {
-        __experimentalSkipSerialization: true,
-        padding: ["horizontal", "vertical"],
-        __experimentalDefaultControls: {
-          padding: true
-        }
-      },
-      __experimentalBorder: {
-        color: true,
-        radius: true,
-        style: true,
-        width: true,
-        __experimentalSkipSerialization: true,
-        __experimentalDefaultControls: {
-          color: true,
-          radius: true,
-          style: true,
-          width: true
-        }
-      },
-      interactivity: {
-        clientNavigation: true
-      }
-    },
-    styles: [
-      { name: "fill", label: "Fill", isDefault: true },
-      { name: "outline", label: "Outline" }
-    ],
-    editorStyle: "wp-block-button-editor",
-    style: "wp-block-button",
-    selectors: {
-      root: ".wp-block-button .wp-block-button__link",
-      typography: {
-        writingMode: ".wp-block-button"
-      },
-      dimensions: {
-        root: ".wp-block-button",
-        width: ".wp-block-button"
-      }
-    }
-  };
-
-  // packages/block-library/build-module/button/save.mjs
-  var import_block_editor22 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
-  function save6({ attributes }) {
-    const {
-      tagName,
-      type,
-      fontSize,
-      linkTarget,
-      rel,
-      style: style2,
-      text,
-      title,
-      url
-    } = attributes;
-    const TagName2 = tagName || "a";
-    const isButtonTag = "button" === TagName2;
-    const buttonType = type || "button";
-    const borderProps = (0, import_block_editor22.__experimentalGetBorderClassesAndStyles)(attributes);
-    const colorProps = (0, import_block_editor22.__experimentalGetColorClassesAndStyles)(attributes);
-    const spacingProps = (0, import_block_editor22.__experimentalGetSpacingClassesAndStyles)(attributes);
-    const shadowProps = (0, import_block_editor22.__experimentalGetShadowClassesAndStyles)(attributes);
-    const typographyProps = (0, import_block_editor22.getTypographyClassesAndStyles)(attributes);
-    const buttonClasses = clsx_default(
-      "wp-block-button__link",
-      colorProps.className,
-      borderProps.className,
-      typographyProps.className,
-      {
-        // For backwards compatibility add style that isn't provided via
-        // block support.
-        "no-border-radius": style2?.border?.radius === 0,
-        [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
-      },
-      (0, import_block_editor22.__experimentalGetElementClassName)("button")
-    );
-    const buttonStyle = {
-      ...borderProps.style,
-      ...colorProps.style,
-      ...spacingProps.style,
-      ...shadowProps.style,
-      ...typographyProps.style,
-      writingMode: void 0
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime178.jsx)("div", { ...import_block_editor22.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
-      import_block_editor22.RichText.Content,
-      {
-        tagName: TagName2,
-        type: isButtonTag ? buttonType : null,
-        className: buttonClasses,
-        href: isButtonTag ? null : url,
-        title,
-        style: buttonStyle,
-        value: text,
-        target: isButtonTag ? null : linkTarget,
-        rel: isButtonTag ? null : rel
-      }
-    ) });
-  }
-
-  // packages/block-library/build-module/button/index.mjs
-  var { fieldsKey: fieldsKey2, formKey: formKey2 } = unlock(import_blocks8.privateApis);
-  var { name: name9 } = block_default10;
-  var settings9 = {
-    icon: button_default,
-    example: {
-      attributes: {
-        className: "is-style-fill",
-        text: (0, import_i18n14.__)("Call to action")
-      }
-    },
-    edit: edit_default2,
-    save: save6,
-    deprecated: deprecated_default3,
-    merge: (a2, { text = "" }) => ({
-      ...a2,
-      text: (a2.text || "") + text
-    }),
-    __experimentalLabel(attributes, { context }) {
-      const { text } = attributes;
-      const customName = attributes?.metadata?.name;
-      const hasContent = text?.trim().length > 0;
-      if (context === "list-view" && (customName || hasContent)) {
-        return customName || text;
-      }
-      if (context === "breadcrumb" && customName) {
-        return customName;
-      }
-    }
-  };
-  if (window.__experimentalContentOnlyInspectorFields) {
-    settings9[fieldsKey2] = [
-      {
-        id: "text",
-        label: (0, import_i18n14.__)("Content"),
-        type: "text",
-        Edit: "rich-text"
-        // TODO: replace with custom component
-      },
-      {
-        id: "link",
-        label: (0, import_i18n14.__)("Link"),
-        type: "url",
-        Edit: "link",
-        // TODO: replace with custom component
-        getValue: ({ item }) => ({
-          url: item.url,
-          rel: item.rel,
-          linkTarget: item.linkTarget
-        }),
-        setValue: ({ value }) => ({
-          url: value.url,
-          rel: value.rel,
-          linkTarget: value.linkTarget
-        })
-      }
-    ];
-    settings9[formKey2] = {
-      fields: ["text", "link"]
-    };
-  }
-  var init9 = () => initBlock({ name: name9, metadata: block_default10, settings: settings9 });
-
-  // packages/block-library/build-module/buttons/index.mjs
-  var buttons_exports = {};
-  __export(buttons_exports, {
-    init: () => init10,
-    metadata: () => block_default11,
-    name: () => name10,
-    settings: () => settings10
-  });
-  var import_i18n15 = __toESM(require_i18n(), 1);
-
-  // packages/block-library/build-module/buttons/deprecated.mjs
-  var import_block_editor23 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
-  var migrateWithLayout = (attributes) => {
-    if (!!attributes.layout) {
-      return attributes;
-    }
-    const { contentJustification, orientation, ...updatedAttributes } = attributes;
-    if (contentJustification || orientation) {
-      Object.assign(updatedAttributes, {
-        layout: {
-          type: "flex",
-          ...contentJustification && {
-            justifyContent: contentJustification
-          },
-          ...orientation && { orientation }
-        }
-      });
-    }
-    return updatedAttributes;
-  };
-  var deprecated3 = [
-    {
-      attributes: {
-        contentJustification: {
-          type: "string"
-        },
-        orientation: {
-          type: "string",
-          default: "horizontal"
-        }
-      },
-      supports: {
-        anchor: true,
-        align: ["wide", "full"],
-        __experimentalExposeControlsToChildren: true,
-        spacing: {
-          blockGap: true,
-          margin: ["top", "bottom"],
-          __experimentalDefaultControls: {
-            blockGap: true
-          }
-        }
-      },
-      isEligible: ({ contentJustification, orientation }) => !!contentJustification || !!orientation,
-      migrate: migrateWithLayout,
-      save({ attributes: { contentJustification, orientation } }) {
-        return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-          "div",
-          {
-            ...import_block_editor23.useBlockProps.save({
-              className: clsx_default({
-                [`is-content-justification-${contentJustification}`]: contentJustification,
-                "is-vertical": orientation === "vertical"
-              })
-            }),
-            children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(import_block_editor23.InnerBlocks.Content, {})
-          }
-        );
-      }
-    },
-    {
-      supports: {
-        align: ["center", "left", "right"],
-        anchor: true
-      },
-      save() {
-        return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(import_block_editor23.InnerBlocks.Content, {}) });
-      },
-      isEligible({ align }) {
-        return align && ["center", "left", "right"].includes(align);
-      },
-      migrate(attributes) {
-        return migrateWithLayout({
-          ...attributes,
-          align: void 0,
-          // Floating Buttons blocks shouldn't have been supported in the
-          // first place. Most users using them probably expected them to
-          // act like content justification controls, so these blocks are
-          // migrated to use content justification.
-          // As for center-aligned Buttons blocks, the content justification
-          // equivalent will create an identical end result in most cases.
-          contentJustification: attributes.align
-        });
-      }
-    }
-  ];
-  var deprecated_default4 = deprecated3;
-
-  // packages/block-library/build-module/buttons/transforms.mjs
-  var import_blocks10 = __toESM(require_blocks(), 1);
-  var import_rich_text = __toESM(require_rich_text(), 1);
-
-  // packages/block-library/build-module/utils/get-transformed-attributes.mjs
-  var import_blocks9 = __toESM(require_blocks(), 1);
-  function getTransformedAttributes(attributes, newBlockName, bindingsCallback = null) {
-    if (!attributes) {
-      return void 0;
-    }
-    const newBlockType = (0, import_blocks9.getBlockType)(newBlockName);
-    if (!newBlockType) {
-      return void 0;
-    }
-    const transformedAttributes = {};
-    if ((0, import_blocks9.hasBlockSupport)(newBlockType, "anchor") && attributes.anchor) {
-      transformedAttributes.anchor = attributes.anchor;
-    }
-    if ((0, import_blocks9.hasBlockSupport)(newBlockType, "ariaLabel") && attributes.ariaLabel) {
-      transformedAttributes.ariaLabel = attributes.ariaLabel;
-    }
-    if (attributes.metadata) {
-      const transformedMetadata = [];
-      if (bindingsCallback) {
-        transformedMetadata.push("id", "bindings");
-      }
-      if (transformedMetadata.length > 0) {
-        const newMetadata = Object.entries(attributes.metadata).reduce(
-          (obj, [prop, value]) => {
-            if (!transformedMetadata.includes(prop)) {
-              return obj;
-            }
-            obj[prop] = prop === "bindings" ? bindingsCallback(value) : value;
-            return obj;
-          },
-          {}
-        );
-        if (Object.keys(newMetadata).length > 0) {
-          transformedAttributes.metadata = newMetadata;
-        }
-      }
-    }
-    if (Object.keys(transformedAttributes).length === 0) {
-      return void 0;
-    }
-    return transformedAttributes;
-  }
-
-  // packages/block-library/build-module/buttons/transforms.mjs
-  var transforms2 = {
-    from: [
-      {
-        type: "block",
-        isMultiBlock: true,
-        blocks: ["core/button"],
-        transform: (buttons) => (
-          // Creates the buttons block.
-          (0, import_blocks10.createBlock)(
-            "core/buttons",
-            {},
-            // Loop the selected buttons.
-            buttons.map(
-              (attributes) => (
-                // Create singular button in the buttons block.
-                (0, import_blocks10.createBlock)("core/button", attributes)
-              )
-            )
-          )
-        )
-      },
-      {
-        type: "block",
-        isMultiBlock: true,
-        blocks: ["core/paragraph"],
-        transform: (buttons) => (
-          // Creates the buttons block.
-          (0, import_blocks10.createBlock)(
-            "core/buttons",
-            {},
-            // Loop the selected buttons.
-            buttons.map((attributes) => {
-              const { content } = attributes;
-              const element = (0, import_rich_text.__unstableCreateElement)(document, content);
-              const text = element.innerText || "";
-              const link = element.querySelector("a");
-              const url = link?.getAttribute("href");
-              return (0, import_blocks10.createBlock)("core/button", {
-                ...attributes,
-                ...getTransformedAttributes(
-                  attributes,
-                  "core/button",
-                  ({ content: contentBinding }) => ({
-                    text: contentBinding
-                  })
-                ),
-                text,
-                url
-              });
-            })
-          )
-        ),
-        isMatch: (paragraphs) => {
-          return paragraphs.every((attributes) => {
-            const element = (0, import_rich_text.__unstableCreateElement)(
-              document,
-              attributes.content
-            );
-            const text = element.innerText || "";
-            const links = element.querySelectorAll("a");
-            return text.length <= 30 && links.length <= 1;
-          });
-        }
-      }
-    ]
-  };
-  var transforms_default2 = transforms2;
-
-  // packages/block-library/build-module/buttons/edit.mjs
-  var import_block_editor24 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
-  var DEFAULT_BLOCK = {
-    name: "core/button",
-    attributesToCopy: [
-      "backgroundColor",
-      "border",
-      "className",
-      "fontFamily",
-      "fontSize",
-      "gradient",
-      "style",
-      "textColor",
-      "width"
-    ]
-  };
-  function ButtonsEdit({ attributes, className }) {
-    const { fontSize, layout, style: style2 } = attributes;
-    const blockProps = (0, import_block_editor24.useBlockProps)({
-      className: clsx_default(className, {
-        "has-custom-font-size": fontSize || style2?.typography?.fontSize
-      })
-    });
-    const innerBlocksProps = (0, import_block_editor24.useInnerBlocksProps)(blockProps, {
-      defaultBlock: DEFAULT_BLOCK,
-      template: [["core/button"]],
-      templateInsertUpdatesSelection: true,
-      orientation: layout?.orientation ?? "horizontal"
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)("div", { ...innerBlocksProps });
-  }
-  var edit_default3 = ButtonsEdit;
-
-  // packages/block-library/build-module/buttons/block.json
-  var block_default11 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
-    apiVersion: 3,
-    name: "core/buttons",
-    title: "Buttons",
-    category: "design",
-    allowedBlocks: ["core/button"],
-    description: "Prompt visitors to take action with a group of button-style links.",
-    keywords: ["link"],
-    textdomain: "default",
-    supports: {
-      anchor: true,
-      align: ["wide", "full"],
-      html: false,
-      __experimentalExposeControlsToChildren: true,
-      color: {
-        gradients: true,
-        text: false,
-        __experimentalDefaultControls: {
-          background: true
-        }
-      },
-      spacing: {
-        blockGap: ["horizontal", "vertical"],
-        padding: true,
-        margin: ["top", "bottom"],
-        __experimentalDefaultControls: {
-          blockGap: true
-        }
-      },
-      typography: {
-        fontSize: true,
-        lineHeight: true,
-        __experimentalFontFamily: true,
-        __experimentalFontWeight: true,
-        __experimentalFontStyle: true,
-        __experimentalTextTransform: true,
-        __experimentalTextDecoration: true,
-        __experimentalLetterSpacing: true,
-        __experimentalDefaultControls: {
-          fontSize: true
-        }
-      },
-      __experimentalBorder: {
-        color: true,
-        radius: true,
-        style: true,
-        width: true,
-        __experimentalDefaultControls: {
-          color: true,
-          radius: true,
-          style: true,
-          width: true
-        }
-      },
-      layout: {
-        allowSwitching: false,
-        allowInheriting: false,
-        default: {
-          type: "flex"
-        }
-      },
-      interactivity: {
-        clientNavigation: true
-      },
-      listView: true,
-      contentRole: true
-    },
-    editorStyle: "wp-block-buttons-editor",
-    style: "wp-block-buttons"
-  };
-
-  // packages/block-library/build-module/buttons/save.mjs
-  var import_block_editor25 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
-  function save7({ attributes, className }) {
-    const { fontSize, style: style2 } = attributes;
-    const blockProps = import_block_editor25.useBlockProps.save({
-      className: clsx_default(className, {
-        "has-custom-font-size": fontSize || style2?.typography?.fontSize
-      })
-    });
-    const innerBlocksProps = import_block_editor25.useInnerBlocksProps.save(blockProps);
-    return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)("div", { ...innerBlocksProps });
-  }
-
-  // packages/block-library/build-module/buttons/index.mjs
-  var { name: name10 } = block_default11;
-  var settings10 = {
-    icon: buttons_default,
-    example: {
-      attributes: {
-        layout: {
-          type: "flex",
-          justifyContent: "center"
-        }
-      },
-      innerBlocks: [
-        {
-          name: "core/button",
-          attributes: { text: (0, import_i18n15.__)("Find out more") }
-        },
-        {
-          name: "core/button",
-          attributes: { text: (0, import_i18n15.__)("Contact us") }
-        }
-      ]
-    },
-    deprecated: deprecated_default4,
-    transforms: transforms_default2,
-    edit: edit_default3,
-    save: save7
-  };
-  var init10 = () => initBlock({ name: name10, metadata: block_default11, settings: settings10 });
-
-  // packages/block-library/build-module/calendar/index.mjs
-  var calendar_exports = {};
-  __export(calendar_exports, {
-    init: () => init11,
-    metadata: () => block_default12,
-    name: () => name11,
-    settings: () => settings11
-  });
-
-  // packages/block-library/build-module/calendar/block.json
-  var block_default12 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
-    apiVersion: 3,
-    name: "core/calendar",
-    title: "Calendar",
-    category: "widgets",
-    description: "A calendar of your site\u2019s posts.",
-    keywords: ["posts", "archive"],
-    textdomain: "default",
-    attributes: {
-      month: {
-        type: "integer"
-      },
-      year: {
-        type: "integer"
-      }
-    },
-    supports: {
-      anchor: true,
-      align: true,
-      html: false,
-      color: {
-        link: true,
-        __experimentalSkipSerialization: ["text", "background"],
-        __experimentalDefaultControls: {
-          background: true,
-          text: true
-        },
-        __experimentalSelector: "table, th"
-      },
-      typography: {
-        fontSize: true,
-        lineHeight: true,
-        __experimentalFontFamily: true,
-        __experimentalFontWeight: true,
-        __experimentalFontStyle: true,
-        __experimentalTextTransform: true,
-        __experimentalLetterSpacing: true,
-        __experimentalDefaultControls: {
-          fontSize: true
-        }
-      },
-      interactivity: {
-        clientNavigation: true
-      }
-    },
-    style: "wp-block-calendar"
-  };
-
-  // packages/block-library/build-module/calendar/edit.mjs
-  var import_components11 = __toESM(require_components(), 1);
-  var import_data12 = __toESM(require_data(), 1);
-  var import_server_side_render3 = __toESM(require_server_side_render(), 1);
-  var import_block_editor26 = __toESM(require_block_editor(), 1);
-  var import_core_data5 = __toESM(require_core_data(), 1);
-  var import_i18n16 = __toESM(require_i18n(), 1);
-  var import_compose9 = __toESM(require_compose(), 1);
-  var import_jsx_runtime182 = __toESM(require_jsx_runtime(), 1);
-  var getYearMonth = memize((date) => {
-    if (!date) {
-      return {};
-    }
-    const dateObj = new Date(date);
-    return {
-      year: dateObj.getFullYear(),
-      month: dateObj.getMonth() + 1
-    };
-  });
-  function CalendarEdit({ attributes, name: name122 }) {
-    const { date, hasPosts, hasPostsResolved } = (0, import_data12.useSelect)((select9) => {
-      const { getEntityRecords, hasFinishedResolution } = select9(import_core_data5.store);
-      const singlePublishedPostQuery = {
-        status: "publish",
-        per_page: 1
-      };
-      const posts = getEntityRecords(
-        "postType",
-        "post",
-        singlePublishedPostQuery
-      );
-      const postsResolved = hasFinishedResolution("getEntityRecords", [
-        "postType",
-        "post",
-        singlePublishedPostQuery
-      ]);
-      let _date;
-      const editorSelectors = select9("core/editor");
-      if (editorSelectors) {
-        const postType = editorSelectors.getEditedPostAttribute("type");
-        if (postType === "post") {
-          _date = editorSelectors.getEditedPostAttribute("date");
-        }
-      }
-      return {
-        date: _date,
-        hasPostsResolved: postsResolved,
-        hasPosts: postsResolved && posts?.length === 1
-      };
-    }, []);
-    const { content, status, error } = (0, import_server_side_render3.useServerSideRender)({
-      attributes: {
-        ...attributes,
-        ...getYearMonth(date)
-      },
-      block: name122
-    });
-    const disabledRef = (0, import_compose9.useDisabled)();
-    const blockProps = (0, import_block_editor26.useBlockProps)({ ref: disabledRef });
-    if (!hasPosts) {
-      return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(import_components11.Placeholder, { icon: calendar_default, label: (0, import_i18n16.__)("Calendar"), children: !hasPostsResolved ? /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(import_components11.Spinner, {}) : (0, import_i18n16.__)("No published posts found.") }) });
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime182.jsxs)(import_jsx_runtime182.Fragment, { children: [
-      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(import_components11.Spinner, {}) }),
-      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("p", { children: (0, import_i18n16.sprintf)(
-        /* translators: %s: error message returned when rendering the block. */
-        (0, import_i18n16.__)("Error: %s"),
-        error
-      ) }) }),
-      status === "success" && /* @__PURE__ */ (0, import_jsx_runtime182.jsx)(html_renderer_default, { wrapperProps: blockProps, html: content })
-    ] });
-  }
-
-  // packages/block-library/build-module/calendar/transforms.mjs
-  var import_blocks11 = __toESM(require_blocks(), 1);
-  var transforms3 = {
-    from: [
-      {
-        type: "block",
-        blocks: ["core/archives"],
-        transform: () => (0, import_blocks11.createBlock)("core/calendar")
-      }
-    ],
-    to: [
-      {
-        type: "block",
-        blocks: ["core/archives"],
-        transform: () => (0, import_blocks11.createBlock)("core/archives")
-      }
-    ]
-  };
-  var transforms_default3 = transforms3;
-
-  // packages/block-library/build-module/calendar/index.mjs
-  var { name: name11 } = block_default12;
-  var settings11 = {
-    icon: calendar_default,
-    example: {},
-    edit: CalendarEdit,
-    transforms: transforms_default3
-  };
-  var init11 = () => initBlock({ name: name11, metadata: block_default12, settings: settings11 });
-
-  // packages/block-library/build-module/categories/index.mjs
-  var categories_exports = {};
-  __export(categories_exports, {
-    init: () => init12,
-    metadata: () => block_default13,
-    name: () => name12,
-    settings: () => settings12
-  });
-
-  // packages/block-library/build-module/categories/block.json
-  var block_default13 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
-    apiVersion: 3,
-    name: "core/categories",
-    title: "Terms List",
-    category: "widgets",
-    description: "Display a list of all terms of a given taxonomy.",
-    keywords: ["categories"],
-    textdomain: "default",
-    attributes: {
-      taxonomy: {
-        type: "string",
-        default: "category"
-      },
-      displayAsDropdown: {
-        type: "boolean",
-        default: false
-      },
-      showHierarchy: {
-        type: "boolean",
-        default: false
-      },
-      showPostCounts: {
-        type: "boolean",
-        default: false
-      },
-      showOnlyTopLevel: {
-        type: "boolean",
-        default: false
-      },
-      showEmpty: {
-        type: "boolean",
-        default: false
-      },
-      label: {
-        type: "string",
-        role: "content"
-      },
-      showLabel: {
-        type: "boolean",
-        default: true
-      }
-    },
-    usesContext: ["enhancedPagination"],
-    supports: {
-      anchor: true,
-      align: true,
-      html: false,
-      spacing: {
-        margin: true,
-        padding: true,
-        __experimentalDefaultControls: {
-          margin: false,
-          padding: false
-        }
-      },
-      typography: {
-        fontSize: true,
-        lineHeight: true,
-        __experimentalFontFamily: true,
-        __experimentalFontWeight: true,
-        __experimentalFontStyle: true,
-        __experimentalTextTransform: true,
-        __experimentalTextDecoration: true,
-        __experimentalLetterSpacing: true,
-        __experimentalDefaultControls: {
-          fontSize: true
-        }
-      },
-      color: {
-        gradients: true,
-        link: true,
-        __experimentalDefaultControls: {
-          background: true,
-          text: true,
-          link: true
-        }
-      },
-      interactivity: {
-        clientNavigation: true
-      },
-      __experimentalBorder: {
-        radius: true,
-        color: true,
-        width: true,
-        style: true,
-        __experimentalDefaultControls: {
-          radius: true,
-          color: true,
-          width: true,
-          style: true
-        }
-      }
-    },
-    editorStyle: "wp-block-categories-editor",
-    style: "wp-block-categories"
-  };
-
-  // packages/block-library/build-module/categories/edit.mjs
-  var import_components12 = __toESM(require_components(), 1);
-  var import_compose10 = __toESM(require_compose(), 1);
-  var import_block_editor27 = __toESM(require_block_editor(), 1);
-  var import_html_entities2 = __toESM(require_html_entities(), 1);
-  var import_i18n18 = __toESM(require_i18n(), 1);
-  var import_core_data6 = __toESM(require_core_data(), 1);
-  var import_data13 = __toESM(require_data(), 1);
 
   // node_modules/@base-ui/utils/useRefWithInit.mjs
   var React = __toESM(require_react(), 1);
@@ -10892,7 +9492,7 @@ var wp;
   }
 
   // packages/ui/build-module/stack/stack.mjs
-  var import_element11 = __toESM(require_element(), 1);
+  var import_element9 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE = "data-wp-hash";
   function getRuntime() {
     const globalScope = globalThis;
@@ -10986,7 +9586,7 @@ var wp;
     "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
     "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
   };
-  var Stack = (0, import_element11.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render, ...props }, ref) {
+  var Stack = (0, import_element9.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render, ...props }, ref) {
     const style2 = {
       gap: gap && gapTokens[gap],
       alignItems: align,
@@ -11003,7 +9603,7 @@ var wp;
   });
 
   // packages/ui/build-module/visually-hidden/visually-hidden.mjs
-  var import_element12 = __toESM(require_element(), 1);
+  var import_element10 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE2 = "data-wp-hash";
   function getRuntime2() {
     const globalScope = globalThis;
@@ -11088,7 +9688,7 @@ var wp;
     registerStyle2("fa606a57ae", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f37b9e2e191ebd66__visually-hidden{word-wrap:normal;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal}}}");
   }
   var style_default2 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
-  var VisuallyHidden = (0, import_element12.forwardRef)(
+  var VisuallyHidden = (0, import_element10.forwardRef)(
     function VisuallyHidden2({ render, ...restProps }, ref) {
       const element = useRender({
         render,
@@ -11107,9 +9707,9 @@ var wp;
   );
 
   // packages/ui/build-module/link/link.mjs
-  var import_element13 = __toESM(require_element(), 1);
-  var import_i18n17 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
+  var import_element11 = __toESM(require_element(), 1);
+  var import_i18n13 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE3 = "data-wp-hash";
   function getRuntime3() {
     const globalScope = globalThis;
@@ -11202,7 +9802,7 @@ var wp;
     registerStyle3("d390e935a7", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-medium,499));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
   }
   var global_css_defense_default = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
-  var Link = (0, import_element13.forwardRef)(function Link2({
+  var Link = (0, import_element11.forwardRef)(function Link2({
     children,
     variant = "default",
     tone = "brand",
@@ -11225,16 +9825,16 @@ var wp;
           className
         ),
         target: openInNewTab ? "_blank" : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime183.jsxs)(import_jsx_runtime183.Fragment, { children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime177.jsxs)(import_jsx_runtime177.Fragment, { children: [
           children,
-          openInNewTab && /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(
+          openInNewTab && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
             "span",
             {
               className: style_default3["link-icon"],
               role: "img",
               "aria-label": (
                 /* translators: accessibility text appended to link text */
-                (0, import_i18n17.__)("(opens in a new tab)")
+                (0, import_i18n13.__)("(opens in a new tab)")
               )
             }
           )
@@ -11244,7 +9844,1414 @@ var wp;
     return element;
   });
 
+  // packages/block-library/build-module/button/constants.mjs
+  var NEW_TAB_REL = "noopener";
+  var NEW_TAB_TARGET = "_blank";
+  var NOFOLLOW_REL = "nofollow";
+
+  // packages/block-library/build-module/button/get-updated-link-attributes.mjs
+  var import_url3 = __toESM(require_url(), 1);
+  function getUpdatedLinkAttributes({
+    rel = "",
+    url = "",
+    opensInNewTab,
+    nofollow
+  }) {
+    let newLinkTarget;
+    let updatedRel = rel;
+    if (opensInNewTab) {
+      newLinkTarget = NEW_TAB_TARGET;
+      updatedRel = updatedRel?.includes(NEW_TAB_REL) ? updatedRel : updatedRel + ` ${NEW_TAB_REL}`;
+    } else {
+      const relRegex = new RegExp(`\\b${NEW_TAB_REL}\\s*`, "g");
+      updatedRel = updatedRel?.replace(relRegex, "").trim();
+    }
+    if (nofollow) {
+      updatedRel = updatedRel?.includes(NOFOLLOW_REL) ? updatedRel : (updatedRel + ` ${NOFOLLOW_REL}`).trim();
+    } else {
+      const relRegex = new RegExp(`\\b${NOFOLLOW_REL}\\s*`, "g");
+      updatedRel = updatedRel?.replace(relRegex, "").trim();
+    }
+    return {
+      url: (0, import_url3.prependHTTPS)(url),
+      linkTarget: newLinkTarget,
+      rel: updatedRel || void 0
+    };
+  }
+
+  // packages/block-library/build-module/utils/remove-anchor-tag.mjs
+  function removeAnchorTag(value) {
+    return value.toString().replace(/<\/?a[^>]*>/g, "");
+  }
+
+  // packages/block-library/build-module/utils/deprecated-text-align-attributes.mjs
+  var import_compose7 = __toESM(require_compose(), 1);
+  var import_element12 = __toESM(require_element(), 1);
+  var import_deprecated3 = __toESM(require_deprecated(), 1);
+  var import_data10 = __toESM(require_data(), 1);
+  var import_block_editor20 = __toESM(require_block_editor(), 1);
+  function useDeprecatedTextAlign(props) {
+    const { name: name122, attributes, setAttributes } = props;
+    const { textAlign } = attributes;
+    const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data10.useDispatch)(import_block_editor20.store);
+    const updateStyleWithAlign = (0, import_compose7.useEvent)(() => {
+      (0, import_deprecated3.default)(`textAlign attribute in ${name122}`, {
+        alternative: "style.typography.textAlign",
+        since: "7.0"
+      });
+      __unstableMarkNextChangeAsNotPersistent();
+      setAttributes((currentAttr) => ({
+        style: {
+          ...currentAttr.style,
+          typography: {
+            ...currentAttr.style?.typography,
+            textAlign
+          }
+        }
+      }));
+    });
+    const lastUpdatedAlignRef = (0, import_element12.useRef)();
+    (0, import_element12.useEffect)(() => {
+      if (textAlign === lastUpdatedAlignRef.current) {
+        return;
+      }
+      lastUpdatedAlignRef.current = textAlign;
+      updateStyleWithAlign();
+    }, [textAlign, updateStyleWithAlign]);
+  }
+
+  // packages/block-library/build-module/button/utils.mjs
+  function isPercentageWidth(width) {
+    return typeof width === "string" && width.endsWith("%");
+  }
+  function getWidthClasses(width) {
+    if (!width) {
+      return {};
+    }
+    if (isPercentageWidth(width)) {
+      const legacyWidthClasses = {
+        "25%": "wp-block-button__width-25",
+        "50%": "wp-block-button__width-50",
+        "75%": "wp-block-button__width-75",
+        "100%": "wp-block-button__width-100"
+      };
+      return {
+        "has-custom-width": true,
+        "wp-block-button__width": true,
+        // Maintain legacy class for backwards compatibility.
+        ...legacyWidthClasses[width] && {
+          [legacyWidthClasses[width]]: true
+        }
+      };
+    }
+    return {
+      "has-custom-width": true
+    };
+  }
+
+  // packages/block-library/build-module/button/edit.mjs
+  var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
+  var { HTMLElementControl } = unlock(import_block_editor21.privateApis);
+  var { subscribeDelegatedListener } = unlock(import_compose8.privateApis);
+  var LINK_SETTINGS = [
+    ...import_block_editor21.LinkControl.DEFAULT_LINK_SETTINGS,
+    {
+      id: "nofollow",
+      title: (0, import_i18n14.__)("Mark as nofollow")
+    }
+  ];
+  function useEnter(clientId) {
+    const { replaceBlocks, selectionChange } = (0, import_data11.useDispatch)(import_block_editor21.store);
+    const {
+      getBlock,
+      getBlockAttributes: getBlockAttributes4,
+      getBlockRootClientId,
+      getBlockIndex
+    } = (0, import_data11.useSelect)(import_block_editor21.store);
+    return (0, import_compose8.useRefEffect)((element) => {
+      function onKeyDown(event) {
+        if (event.defaultPrevented || event.keyCode !== import_keycodes.ENTER) {
+          return;
+        }
+        const { text } = getBlockAttributes4(clientId) ?? {};
+        if (text?.length) {
+          return;
+        }
+        event.preventDefault();
+        const topParentListBlock = getBlock(
+          getBlockRootClientId(clientId)
+        );
+        const blockIndex = getBlockIndex(clientId);
+        const head = (0, import_blocks7.cloneBlock)({
+          ...topParentListBlock,
+          innerBlocks: topParentListBlock.innerBlocks.slice(
+            0,
+            blockIndex
+          )
+        });
+        const middle = (0, import_blocks7.createBlock)((0, import_blocks7.getDefaultBlockName)());
+        const after = topParentListBlock.innerBlocks.slice(
+          blockIndex + 1
+        );
+        const tail = after.length ? [
+          (0, import_blocks7.cloneBlock)({
+            ...topParentListBlock,
+            innerBlocks: after
+          })
+        ] : [];
+        replaceBlocks(
+          topParentListBlock.clientId,
+          [head, middle, ...tail],
+          1
+        );
+        selectionChange(middle.clientId);
+      }
+      return subscribeDelegatedListener(
+        element,
+        "keydown",
+        onKeyDown,
+        true
+      );
+    }, []);
+  }
+  function ButtonEdit(props) {
+    const {
+      attributes,
+      setAttributes,
+      className,
+      isSelected,
+      onReplace,
+      mergeBlocks,
+      clientId,
+      context
+    } = props;
+    const {
+      tagName,
+      linkTarget,
+      placeholder: placeholder2,
+      rel,
+      style: style2,
+      text,
+      url,
+      metadata
+    } = attributes;
+    const width = style2?.dimensions?.width;
+    useDeprecatedTextAlign(props);
+    const TagName2 = tagName || "a";
+    function onKeyDown(event) {
+      if (import_keycodes.isKeyboardEvent.primary(event, "k")) {
+        startEditing(event);
+      } else if (import_keycodes.isKeyboardEvent.primaryShift(event, "k")) {
+        unlink();
+        richTextRef.current?.focus();
+      }
+    }
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element13.useState)(null);
+    const borderProps = (0, import_block_editor21.__experimentalUseBorderProps)(attributes);
+    const colorProps = (0, import_block_editor21.__experimentalUseColorProps)(attributes);
+    const spacingProps = (0, import_block_editor21.__experimentalGetSpacingClassesAndStyles)(attributes);
+    const shadowProps = (0, import_block_editor21.__experimentalGetShadowClassesAndStyles)(attributes);
+    const dimensionsProps = (0, import_block_editor21.__experimentalGetDimensionsClassesAndStyles)(attributes);
+    const ref = (0, import_element13.useRef)();
+    const richTextRef = (0, import_element13.useRef)();
+    const blockProps = (0, import_block_editor21.useBlockProps)({
+      ref: (0, import_compose8.useMergeRefs)([setPopoverAnchor, ref]),
+      onKeyDown
+    });
+    const blockEditingMode = (0, import_block_editor21.useBlockEditingMode)();
+    const [isEditingURL, setIsEditingURL] = (0, import_element13.useState)(false);
+    const isURLSet = !!url;
+    const opensInNewTab = linkTarget === NEW_TAB_TARGET;
+    const nofollow = !!rel?.includes(NOFOLLOW_REL);
+    const isLinkTag = "a" === TagName2;
+    const {
+      createPageEntity,
+      userCanCreatePages,
+      lockUrlControls = false
+    } = (0, import_data11.useSelect)(
+      (select9) => {
+        if (!isSelected) {
+          return {};
+        }
+        const _settings = select9(import_block_editor21.store).getSettings();
+        const blockBindingsSource = (0, import_blocks7.getBlockBindingsSource)(
+          metadata?.bindings?.url?.source
+        );
+        return {
+          createPageEntity: _settings.__experimentalCreatePageEntity,
+          userCanCreatePages: _settings.__experimentalUserCanCreatePages,
+          lockUrlControls: !!metadata?.bindings?.url && !blockBindingsSource?.canUserEditValue?.({
+            select: select9,
+            context,
+            args: metadata?.bindings?.url?.args
+          })
+        };
+      },
+      [context, isSelected, metadata?.bindings?.url]
+    );
+    async function handleCreate(pageTitle) {
+      const page = await createPageEntity({
+        title: pageTitle,
+        status: "draft"
+      });
+      return {
+        id: page.id,
+        type: page.type,
+        title: page.title.rendered,
+        url: page.link,
+        kind: "post-type"
+      };
+    }
+    function createButtonText(searchTerm) {
+      return (0, import_element13.createInterpolateElement)(
+        (0, import_i18n14.sprintf)(
+          /* translators: %s: search term. */
+          (0, import_i18n14.__)("Create page: <mark>%s</mark>"),
+          searchTerm
+        ),
+        { mark: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)("mark", {}) }
+      );
+    }
+    function startEditing(event) {
+      event.preventDefault();
+      setIsEditingURL(true);
+    }
+    function unlink() {
+      setAttributes({
+        url: void 0,
+        linkTarget: void 0,
+        rel: void 0
+      });
+      setIsEditingURL(false);
+    }
+    (0, import_element13.useEffect)(() => {
+      if (!isSelected) {
+        setIsEditingURL(false);
+      }
+    }, [isSelected]);
+    const linkValue = (0, import_element13.useMemo)(
+      () => ({ url, opensInNewTab, nofollow }),
+      [url, opensInNewTab, nofollow]
+    );
+    const useEnterRef = useEnter(clientId);
+    const mergedRef = (0, import_compose8.useMergeRefs)([useEnterRef, richTextRef]);
+    const [fluidTypographySettings, layout, dimensionSizes] = (0, import_block_editor21.useSettings)(
+      "typography.fluid",
+      "layout",
+      "dimensions.dimensionSizes"
+    );
+    const dimensionPresets = (0, import_element13.useMemo)(() => {
+      if (!dimensionSizes) {
+        return [];
+      }
+      return [
+        ...dimensionSizes?.custom ?? [],
+        ...dimensionSizes?.theme ?? [],
+        ...dimensionSizes?.default ?? []
+      ];
+    }, [dimensionSizes]);
+    const typographyProps = (0, import_block_editor21.getTypographyClassesAndStyles)(attributes, {
+      typography: {
+        fluid: fluidTypographySettings
+      },
+      layout: {
+        wideSize: layout?.wideSize
+      }
+    });
+    const resolvedWidth = (0, import_element13.useMemo)(() => {
+      if (!width) {
+        return void 0;
+      }
+      const presetPrefix = "var:preset|dimension|";
+      if (width.startsWith(presetPrefix)) {
+        const slug = width.slice(presetPrefix.length);
+        const preset = dimensionPresets?.find((p2) => p2.slug === slug);
+        return preset?.size ?? width;
+      }
+      return width;
+    }, [width, dimensionPresets]);
+    const hasNonContentControls = blockEditingMode === "default";
+    const hasBlockControls = hasNonContentControls || isLinkTag && !lockUrlControls;
+    const classes = clsx_default(
+      blockProps.className,
+      getWidthClasses(resolvedWidth)
+    );
+    const widthStyle = (0, import_element13.useMemo)(() => {
+      if (!width) {
+        return {};
+      }
+      if (isPercentageWidth(resolvedWidth)) {
+        return {
+          "--wp--block-button--width": parseFloat(resolvedWidth)
+        };
+      }
+      return dimensionsProps.style;
+    }, [width, resolvedWidth, dimensionsProps.style]);
+    return /* @__PURE__ */ (0, import_jsx_runtime178.jsxs)(import_jsx_runtime178.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
+        "div",
+        {
+          ...blockProps,
+          className: classes,
+          style: { ...blockProps.style, ...widthStyle },
+          children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
+            import_block_editor21.RichText,
+            {
+              ref: mergedRef,
+              "aria-label": (0, import_i18n14.__)("Button text"),
+              placeholder: placeholder2 || (0, import_i18n14.__)("Add text\u2026"),
+              value: text,
+              onChange: (value) => setAttributes({
+                text: removeAnchorTag(value)
+              }),
+              withoutInteractiveFormatting: true,
+              className: clsx_default(
+                className,
+                "wp-block-button__link",
+                colorProps.className,
+                borderProps.className,
+                typographyProps.className,
+                {
+                  // For backwards compatibility add style that isn't
+                  // provided via block support.
+                  "no-border-radius": style2?.border?.radius === 0,
+                  [`has-custom-font-size`]: blockProps.style.fontSize
+                },
+                (0, import_block_editor21.__experimentalGetElementClassName)("button")
+              ),
+              style: {
+                ...borderProps.style,
+                ...colorProps.style,
+                ...spacingProps.style,
+                ...shadowProps.style,
+                ...typographyProps.style,
+                writingMode: void 0
+              },
+              onReplace,
+              onMerge: mergeBlocks,
+              identifier: "text"
+            }
+          )
+        }
+      ),
+      hasBlockControls && /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(import_block_editor21.BlockControls, { group: "block", children: isLinkTag && !lockUrlControls && /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
+        import_components10.ToolbarButton,
+        {
+          name: "link",
+          icon: !isURLSet ? link_default : link_off_default,
+          title: !isURLSet ? (0, import_i18n14.__)("Link") : (0, import_i18n14.__)("Unlink"),
+          shortcut: !isURLSet ? import_keycodes.displayShortcut.primary("k") : import_keycodes.displayShortcut.primaryShift("k"),
+          onClick: !isURLSet ? startEditing : unlink,
+          isActive: isURLSet
+        }
+      ) }),
+      isLinkTag && isSelected && (isEditingURL || isURLSet) && !lockUrlControls && /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
+        import_components10.Popover,
+        {
+          placement: "bottom",
+          onClose: () => {
+            setIsEditingURL(false);
+            richTextRef.current?.focus();
+          },
+          anchor: popoverAnchor,
+          focusOnMount: isEditingURL ? "firstElement" : false,
+          __unstableSlotName: "__unstable-block-tools-after",
+          shift: true,
+          children: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
+            import_block_editor21.LinkControl,
+            {
+              value: linkValue,
+              onChange: ({
+                url: newURL,
+                opensInNewTab: newOpensInNewTab,
+                nofollow: newNofollow
+              }) => setAttributes(
+                getUpdatedLinkAttributes({
+                  rel,
+                  url: newURL,
+                  opensInNewTab: newOpensInNewTab,
+                  nofollow: newNofollow
+                })
+              ),
+              onRemove: () => {
+                unlink();
+                richTextRef.current?.focus();
+              },
+              forceIsEditingLink: isEditingURL,
+              settings: LINK_SETTINGS,
+              createSuggestion: createPageEntity && handleCreate,
+              withCreateSuggestion: userCanCreatePages,
+              createSuggestionButtonText: createButtonText
+            }
+          )
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime178.jsxs)(import_block_editor21.InspectorControls, { group: "advanced", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
+          HTMLElementControl,
+          {
+            tagName,
+            onChange: (value) => setAttributes({ tagName: value }),
+            options: [
+              { label: (0, import_i18n14.__)("Default (<a>)"), value: "a" },
+              { label: "<button>", value: "button" }
+            ]
+          }
+        ),
+        isLinkTag && /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
+          import_components10.TextControl,
+          {
+            label: (0, import_i18n14.__)("Link relation"),
+            help: (0, import_element13.createInterpolateElement)(
+              (0, import_i18n14.__)(
+                "The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document."
+              ),
+              {
+                a: /* @__PURE__ */ (0, import_jsx_runtime178.jsx)(
+                  Link,
+                  {
+                    openInNewTab: true,
+                    href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel"
+                  }
+                )
+              }
+            ),
+            value: rel || "",
+            onChange: (newRel) => setAttributes({ rel: newRel })
+          }
+        )
+      ] })
+    ] });
+  }
+  var edit_default2 = ButtonEdit;
+
+  // packages/block-library/build-module/button/block.json
+  var block_default10 = {
+    $schema: "https://schemas.wp.org/trunk/block.json",
+    apiVersion: 3,
+    name: "core/button",
+    title: "Button",
+    category: "design",
+    parent: ["core/buttons"],
+    description: "Prompt visitors to take action with a button-style link.",
+    keywords: ["link"],
+    textdomain: "default",
+    attributes: {
+      tagName: {
+        type: "string",
+        enum: ["a", "button"],
+        default: "a"
+      },
+      type: {
+        type: "string",
+        default: "button"
+      },
+      url: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "href",
+        role: "content"
+      },
+      title: {
+        type: "string",
+        source: "attribute",
+        selector: "a,button",
+        attribute: "title",
+        role: "content"
+      },
+      text: {
+        type: "rich-text",
+        source: "rich-text",
+        selector: "a,button",
+        role: "content"
+      },
+      linkTarget: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "target",
+        role: "content"
+      },
+      rel: {
+        type: "string",
+        source: "attribute",
+        selector: "a",
+        attribute: "rel",
+        role: "content"
+      },
+      placeholder: {
+        type: "string"
+      },
+      backgroundColor: {
+        type: "string"
+      },
+      textColor: {
+        type: "string"
+      },
+      gradient: {
+        type: "string"
+      }
+    },
+    supports: {
+      anchor: true,
+      splitting: true,
+      align: false,
+      alignWide: false,
+      color: {
+        __experimentalSkipSerialization: true,
+        gradients: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
+      },
+      dimensions: {
+        width: true,
+        __experimentalSkipSerialization: ["width"],
+        __experimentalDefaultControls: {
+          width: true
+        }
+      },
+      typography: {
+        __experimentalSkipSerialization: [
+          "fontSize",
+          "lineHeight",
+          "textAlign",
+          "fontFamily",
+          "fontWeight",
+          "fontStyle",
+          "textTransform",
+          "textDecoration",
+          "letterSpacing"
+        ],
+        fontSize: true,
+        lineHeight: true,
+        textAlign: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalWritingMode: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      reusable: false,
+      shadow: {
+        __experimentalSkipSerialization: true
+      },
+      spacing: {
+        __experimentalSkipSerialization: true,
+        padding: ["horizontal", "vertical"],
+        __experimentalDefaultControls: {
+          padding: true
+        }
+      },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true,
+        __experimentalSkipSerialization: true,
+        __experimentalDefaultControls: {
+          color: true,
+          radius: true,
+          style: true,
+          width: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      }
+    },
+    styles: [
+      { name: "fill", label: "Fill", isDefault: true },
+      { name: "outline", label: "Outline" }
+    ],
+    editorStyle: "wp-block-button-editor",
+    style: "wp-block-button",
+    selectors: {
+      root: ".wp-block-button .wp-block-button__link",
+      typography: {
+        writingMode: ".wp-block-button"
+      },
+      dimensions: {
+        root: ".wp-block-button",
+        width: ".wp-block-button"
+      }
+    }
+  };
+
+  // packages/block-library/build-module/button/save.mjs
+  var import_block_editor22 = __toESM(require_block_editor(), 1);
+  var import_jsx_runtime179 = __toESM(require_jsx_runtime(), 1);
+  function save6({ attributes }) {
+    const {
+      tagName,
+      type,
+      fontSize,
+      linkTarget,
+      rel,
+      style: style2,
+      text,
+      title,
+      url
+    } = attributes;
+    const TagName2 = tagName || "a";
+    const isButtonTag = "button" === TagName2;
+    const buttonType = type || "button";
+    const borderProps = (0, import_block_editor22.__experimentalGetBorderClassesAndStyles)(attributes);
+    const colorProps = (0, import_block_editor22.__experimentalGetColorClassesAndStyles)(attributes);
+    const spacingProps = (0, import_block_editor22.__experimentalGetSpacingClassesAndStyles)(attributes);
+    const shadowProps = (0, import_block_editor22.__experimentalGetShadowClassesAndStyles)(attributes);
+    const typographyProps = (0, import_block_editor22.getTypographyClassesAndStyles)(attributes);
+    const buttonClasses = clsx_default(
+      "wp-block-button__link",
+      colorProps.className,
+      borderProps.className,
+      typographyProps.className,
+      {
+        // For backwards compatibility add style that isn't provided via
+        // block support.
+        "no-border-radius": style2?.border?.radius === 0,
+        [`has-custom-font-size`]: fontSize || style2?.typography?.fontSize
+      },
+      (0, import_block_editor22.__experimentalGetElementClassName)("button")
+    );
+    const buttonStyle = {
+      ...borderProps.style,
+      ...colorProps.style,
+      ...spacingProps.style,
+      ...shadowProps.style,
+      ...typographyProps.style,
+      writingMode: void 0
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)("div", { ...import_block_editor22.useBlockProps.save(), children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
+      import_block_editor22.RichText.Content,
+      {
+        tagName: TagName2,
+        type: isButtonTag ? buttonType : null,
+        className: buttonClasses,
+        href: isButtonTag ? null : url,
+        title,
+        style: buttonStyle,
+        value: text,
+        target: isButtonTag ? null : linkTarget,
+        rel: isButtonTag ? null : rel
+      }
+    ) });
+  }
+
+  // packages/block-library/build-module/button/index.mjs
+  var { fieldsKey: fieldsKey2, formKey: formKey2 } = unlock(import_blocks8.privateApis);
+  var { name: name9 } = block_default10;
+  var settings9 = {
+    icon: button_default,
+    example: {
+      attributes: {
+        className: "is-style-fill",
+        text: (0, import_i18n15.__)("Call to action")
+      }
+    },
+    edit: edit_default2,
+    save: save6,
+    deprecated: deprecated_default3,
+    merge: (a2, { text = "" }) => ({
+      ...a2,
+      text: (a2.text || "") + text
+    }),
+    __experimentalLabel(attributes, { context }) {
+      const { text } = attributes;
+      const customName = attributes?.metadata?.name;
+      const hasContent = text?.trim().length > 0;
+      if (context === "list-view" && (customName || hasContent)) {
+        return customName || text;
+      }
+      if (context === "breadcrumb" && customName) {
+        return customName;
+      }
+    }
+  };
+  if (window.__experimentalContentOnlyInspectorFields) {
+    settings9[fieldsKey2] = [
+      {
+        id: "text",
+        label: (0, import_i18n15.__)("Content"),
+        type: "text",
+        Edit: "rich-text"
+        // TODO: replace with custom component
+      },
+      {
+        id: "link",
+        label: (0, import_i18n15.__)("Link"),
+        type: "url",
+        Edit: "link",
+        // TODO: replace with custom component
+        getValue: ({ item }) => ({
+          url: item.url,
+          rel: item.rel,
+          linkTarget: item.linkTarget
+        }),
+        setValue: ({ value }) => ({
+          url: value.url,
+          rel: value.rel,
+          linkTarget: value.linkTarget
+        })
+      }
+    ];
+    settings9[formKey2] = {
+      fields: ["text", "link"]
+    };
+  }
+  var init9 = () => initBlock({ name: name9, metadata: block_default10, settings: settings9 });
+
+  // packages/block-library/build-module/buttons/index.mjs
+  var buttons_exports = {};
+  __export(buttons_exports, {
+    init: () => init10,
+    metadata: () => block_default11,
+    name: () => name10,
+    settings: () => settings10
+  });
+  var import_i18n16 = __toESM(require_i18n(), 1);
+
+  // packages/block-library/build-module/buttons/deprecated.mjs
+  var import_block_editor23 = __toESM(require_block_editor(), 1);
+  var import_jsx_runtime180 = __toESM(require_jsx_runtime(), 1);
+  var migrateWithLayout = (attributes) => {
+    if (!!attributes.layout) {
+      return attributes;
+    }
+    const { contentJustification, orientation, ...updatedAttributes } = attributes;
+    if (contentJustification || orientation) {
+      Object.assign(updatedAttributes, {
+        layout: {
+          type: "flex",
+          ...contentJustification && {
+            justifyContent: contentJustification
+          },
+          ...orientation && { orientation }
+        }
+      });
+    }
+    return updatedAttributes;
+  };
+  var deprecated3 = [
+    {
+      attributes: {
+        contentJustification: {
+          type: "string"
+        },
+        orientation: {
+          type: "string",
+          default: "horizontal"
+        }
+      },
+      supports: {
+        anchor: true,
+        align: ["wide", "full"],
+        __experimentalExposeControlsToChildren: true,
+        spacing: {
+          blockGap: true,
+          margin: ["top", "bottom"],
+          __experimentalDefaultControls: {
+            blockGap: true
+          }
+        }
+      },
+      isEligible: ({ contentJustification, orientation }) => !!contentJustification || !!orientation,
+      migrate: migrateWithLayout,
+      save({ attributes: { contentJustification, orientation } }) {
+        return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(
+          "div",
+          {
+            ...import_block_editor23.useBlockProps.save({
+              className: clsx_default({
+                [`is-content-justification-${contentJustification}`]: contentJustification,
+                "is-vertical": orientation === "vertical"
+              })
+            }),
+            children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(import_block_editor23.InnerBlocks.Content, {})
+          }
+        );
+      }
+    },
+    {
+      supports: {
+        align: ["center", "left", "right"],
+        anchor: true
+      },
+      save() {
+        return /* @__PURE__ */ (0, import_jsx_runtime180.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime180.jsx)(import_block_editor23.InnerBlocks.Content, {}) });
+      },
+      isEligible({ align }) {
+        return align && ["center", "left", "right"].includes(align);
+      },
+      migrate(attributes) {
+        return migrateWithLayout({
+          ...attributes,
+          align: void 0,
+          // Floating Buttons blocks shouldn't have been supported in the
+          // first place. Most users using them probably expected them to
+          // act like content justification controls, so these blocks are
+          // migrated to use content justification.
+          // As for center-aligned Buttons blocks, the content justification
+          // equivalent will create an identical end result in most cases.
+          contentJustification: attributes.align
+        });
+      }
+    }
+  ];
+  var deprecated_default4 = deprecated3;
+
+  // packages/block-library/build-module/buttons/transforms.mjs
+  var import_blocks10 = __toESM(require_blocks(), 1);
+  var import_rich_text = __toESM(require_rich_text(), 1);
+
+  // packages/block-library/build-module/utils/get-transformed-attributes.mjs
+  var import_blocks9 = __toESM(require_blocks(), 1);
+  function getTransformedAttributes(attributes, newBlockName, bindingsCallback = null) {
+    if (!attributes) {
+      return void 0;
+    }
+    const newBlockType = (0, import_blocks9.getBlockType)(newBlockName);
+    if (!newBlockType) {
+      return void 0;
+    }
+    const transformedAttributes = {};
+    if ((0, import_blocks9.hasBlockSupport)(newBlockType, "anchor") && attributes.anchor) {
+      transformedAttributes.anchor = attributes.anchor;
+    }
+    if ((0, import_blocks9.hasBlockSupport)(newBlockType, "ariaLabel") && attributes.ariaLabel) {
+      transformedAttributes.ariaLabel = attributes.ariaLabel;
+    }
+    if (attributes.metadata) {
+      const transformedMetadata = [];
+      if (bindingsCallback) {
+        transformedMetadata.push("id", "bindings");
+      }
+      if (transformedMetadata.length > 0) {
+        const newMetadata = Object.entries(attributes.metadata).reduce(
+          (obj, [prop, value]) => {
+            if (!transformedMetadata.includes(prop)) {
+              return obj;
+            }
+            obj[prop] = prop === "bindings" ? bindingsCallback(value) : value;
+            return obj;
+          },
+          {}
+        );
+        if (Object.keys(newMetadata).length > 0) {
+          transformedAttributes.metadata = newMetadata;
+        }
+      }
+    }
+    if (Object.keys(transformedAttributes).length === 0) {
+      return void 0;
+    }
+    return transformedAttributes;
+  }
+
+  // packages/block-library/build-module/buttons/transforms.mjs
+  var transforms2 = {
+    from: [
+      {
+        type: "block",
+        isMultiBlock: true,
+        blocks: ["core/button"],
+        transform: (buttons) => (
+          // Creates the buttons block.
+          (0, import_blocks10.createBlock)(
+            "core/buttons",
+            {},
+            // Loop the selected buttons.
+            buttons.map(
+              (attributes) => (
+                // Create singular button in the buttons block.
+                (0, import_blocks10.createBlock)("core/button", attributes)
+              )
+            )
+          )
+        )
+      },
+      {
+        type: "block",
+        isMultiBlock: true,
+        blocks: ["core/paragraph"],
+        transform: (buttons) => (
+          // Creates the buttons block.
+          (0, import_blocks10.createBlock)(
+            "core/buttons",
+            {},
+            // Loop the selected buttons.
+            buttons.map((attributes) => {
+              const { content } = attributes;
+              const element = (0, import_rich_text.__unstableCreateElement)(document, content);
+              const text = element.innerText || "";
+              const link = element.querySelector("a");
+              const url = link?.getAttribute("href");
+              return (0, import_blocks10.createBlock)("core/button", {
+                ...attributes,
+                ...getTransformedAttributes(
+                  attributes,
+                  "core/button",
+                  ({ content: contentBinding }) => ({
+                    text: contentBinding
+                  })
+                ),
+                text,
+                url
+              });
+            })
+          )
+        ),
+        isMatch: (paragraphs) => {
+          return paragraphs.every((attributes) => {
+            const element = (0, import_rich_text.__unstableCreateElement)(
+              document,
+              attributes.content
+            );
+            const text = element.innerText || "";
+            const links = element.querySelectorAll("a");
+            return text.length <= 30 && links.length <= 1;
+          });
+        }
+      }
+    ]
+  };
+  var transforms_default2 = transforms2;
+
+  // packages/block-library/build-module/buttons/edit.mjs
+  var import_block_editor24 = __toESM(require_block_editor(), 1);
+  var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
+  var DEFAULT_BLOCK = {
+    name: "core/button",
+    attributesToCopy: [
+      "backgroundColor",
+      "border",
+      "className",
+      "fontFamily",
+      "fontSize",
+      "gradient",
+      "style",
+      "textColor",
+      "width"
+    ]
+  };
+  function ButtonsEdit({ attributes, className }) {
+    const { fontSize, layout, style: style2 } = attributes;
+    const blockProps = (0, import_block_editor24.useBlockProps)({
+      className: clsx_default(className, {
+        "has-custom-font-size": fontSize || style2?.typography?.fontSize
+      })
+    });
+    const innerBlocksProps = (0, import_block_editor24.useInnerBlocksProps)(blockProps, {
+      defaultBlock: DEFAULT_BLOCK,
+      template: [["core/button"]],
+      templateInsertUpdatesSelection: true,
+      orientation: layout?.orientation ?? "horizontal"
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime181.jsx)("div", { ...innerBlocksProps });
+  }
+  var edit_default3 = ButtonsEdit;
+
+  // packages/block-library/build-module/buttons/block.json
+  var block_default11 = {
+    $schema: "https://schemas.wp.org/trunk/block.json",
+    apiVersion: 3,
+    name: "core/buttons",
+    title: "Buttons",
+    category: "design",
+    allowedBlocks: ["core/button"],
+    description: "Prompt visitors to take action with a group of button-style links.",
+    keywords: ["link"],
+    textdomain: "default",
+    supports: {
+      anchor: true,
+      align: ["wide", "full"],
+      html: false,
+      __experimentalExposeControlsToChildren: true,
+      color: {
+        gradients: true,
+        text: false,
+        __experimentalDefaultControls: {
+          background: true
+        }
+      },
+      spacing: {
+        blockGap: ["horizontal", "vertical"],
+        padding: true,
+        margin: ["top", "bottom"],
+        __experimentalDefaultControls: {
+          blockGap: true
+        }
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      __experimentalBorder: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true,
+        __experimentalDefaultControls: {
+          color: true,
+          radius: true,
+          style: true,
+          width: true
+        }
+      },
+      layout: {
+        allowSwitching: false,
+        allowInheriting: false,
+        default: {
+          type: "flex"
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      },
+      listView: true,
+      contentRole: true
+    },
+    editorStyle: "wp-block-buttons-editor",
+    style: "wp-block-buttons"
+  };
+
+  // packages/block-library/build-module/buttons/save.mjs
+  var import_block_editor25 = __toESM(require_block_editor(), 1);
+  var import_jsx_runtime182 = __toESM(require_jsx_runtime(), 1);
+  function save7({ attributes, className }) {
+    const { fontSize, style: style2 } = attributes;
+    const blockProps = import_block_editor25.useBlockProps.save({
+      className: clsx_default(className, {
+        "has-custom-font-size": fontSize || style2?.typography?.fontSize
+      })
+    });
+    const innerBlocksProps = import_block_editor25.useInnerBlocksProps.save(blockProps);
+    return /* @__PURE__ */ (0, import_jsx_runtime182.jsx)("div", { ...innerBlocksProps });
+  }
+
+  // packages/block-library/build-module/buttons/index.mjs
+  var { name: name10 } = block_default11;
+  var settings10 = {
+    icon: buttons_default,
+    example: {
+      attributes: {
+        layout: {
+          type: "flex",
+          justifyContent: "center"
+        }
+      },
+      innerBlocks: [
+        {
+          name: "core/button",
+          attributes: { text: (0, import_i18n16.__)("Find out more") }
+        },
+        {
+          name: "core/button",
+          attributes: { text: (0, import_i18n16.__)("Contact us") }
+        }
+      ]
+    },
+    deprecated: deprecated_default4,
+    transforms: transforms_default2,
+    edit: edit_default3,
+    save: save7
+  };
+  var init10 = () => initBlock({ name: name10, metadata: block_default11, settings: settings10 });
+
+  // packages/block-library/build-module/calendar/index.mjs
+  var calendar_exports = {};
+  __export(calendar_exports, {
+    init: () => init11,
+    metadata: () => block_default12,
+    name: () => name11,
+    settings: () => settings11
+  });
+
+  // packages/block-library/build-module/calendar/block.json
+  var block_default12 = {
+    $schema: "https://schemas.wp.org/trunk/block.json",
+    apiVersion: 3,
+    name: "core/calendar",
+    title: "Calendar",
+    category: "widgets",
+    description: "A calendar of your site\u2019s posts.",
+    keywords: ["posts", "archive"],
+    textdomain: "default",
+    attributes: {
+      month: {
+        type: "integer"
+      },
+      year: {
+        type: "integer"
+      }
+    },
+    supports: {
+      anchor: true,
+      align: true,
+      html: false,
+      color: {
+        link: true,
+        __experimentalSkipSerialization: ["text", "background"],
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        },
+        __experimentalSelector: "table, th"
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      }
+    },
+    style: "wp-block-calendar"
+  };
+
+  // packages/block-library/build-module/calendar/edit.mjs
+  var import_components11 = __toESM(require_components(), 1);
+  var import_data12 = __toESM(require_data(), 1);
+  var import_server_side_render3 = __toESM(require_server_side_render(), 1);
+  var import_block_editor26 = __toESM(require_block_editor(), 1);
+  var import_core_data5 = __toESM(require_core_data(), 1);
+  var import_i18n17 = __toESM(require_i18n(), 1);
+  var import_compose9 = __toESM(require_compose(), 1);
+  var import_jsx_runtime183 = __toESM(require_jsx_runtime(), 1);
+  var getYearMonth = memize((date) => {
+    if (!date) {
+      return {};
+    }
+    const dateObj = new Date(date);
+    return {
+      year: dateObj.getFullYear(),
+      month: dateObj.getMonth() + 1
+    };
+  });
+  function CalendarEdit({ attributes, name: name122 }) {
+    const { date, hasPosts, hasPostsResolved } = (0, import_data12.useSelect)((select9) => {
+      const { getEntityRecords, hasFinishedResolution } = select9(import_core_data5.store);
+      const singlePublishedPostQuery = {
+        status: "publish",
+        per_page: 1
+      };
+      const posts = getEntityRecords(
+        "postType",
+        "post",
+        singlePublishedPostQuery
+      );
+      const postsResolved = hasFinishedResolution("getEntityRecords", [
+        "postType",
+        "post",
+        singlePublishedPostQuery
+      ]);
+      let _date;
+      const editorSelectors = select9("core/editor");
+      if (editorSelectors) {
+        const postType = editorSelectors.getEditedPostAttribute("type");
+        if (postType === "post") {
+          _date = editorSelectors.getEditedPostAttribute("date");
+        }
+      }
+      return {
+        date: _date,
+        hasPostsResolved: postsResolved,
+        hasPosts: postsResolved && posts?.length === 1
+      };
+    }, []);
+    const { content, status, error } = (0, import_server_side_render3.useServerSideRender)({
+      attributes: {
+        ...attributes,
+        ...getYearMonth(date)
+      },
+      block: name122
+    });
+    const disabledRef = (0, import_compose9.useDisabled)();
+    const blockProps = (0, import_block_editor26.useBlockProps)({ ref: disabledRef });
+    if (!hasPosts) {
+      return /* @__PURE__ */ (0, import_jsx_runtime183.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(import_components11.Placeholder, { icon: calendar_default, label: (0, import_i18n17.__)("Calendar"), children: !hasPostsResolved ? /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(import_components11.Spinner, {}) : (0, import_i18n17.__)("No published posts found.") }) });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime183.jsxs)(import_jsx_runtime183.Fragment, { children: [
+      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime183.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(import_components11.Spinner, {}) }),
+      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime183.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime183.jsx)("p", { children: (0, import_i18n17.sprintf)(
+        /* translators: %s: error message returned when rendering the block. */
+        (0, import_i18n17.__)("Error: %s"),
+        error
+      ) }) }),
+      status === "success" && /* @__PURE__ */ (0, import_jsx_runtime183.jsx)(html_renderer_default, { wrapperProps: blockProps, html: content })
+    ] });
+  }
+
+  // packages/block-library/build-module/calendar/transforms.mjs
+  var import_blocks11 = __toESM(require_blocks(), 1);
+  var transforms3 = {
+    from: [
+      {
+        type: "block",
+        blocks: ["core/archives"],
+        transform: () => (0, import_blocks11.createBlock)("core/calendar")
+      }
+    ],
+    to: [
+      {
+        type: "block",
+        blocks: ["core/archives"],
+        transform: () => (0, import_blocks11.createBlock)("core/archives")
+      }
+    ]
+  };
+  var transforms_default3 = transforms3;
+
+  // packages/block-library/build-module/calendar/index.mjs
+  var { name: name11 } = block_default12;
+  var settings11 = {
+    icon: calendar_default,
+    example: {},
+    edit: CalendarEdit,
+    transforms: transforms_default3
+  };
+  var init11 = () => initBlock({ name: name11, metadata: block_default12, settings: settings11 });
+
+  // packages/block-library/build-module/categories/index.mjs
+  var categories_exports = {};
+  __export(categories_exports, {
+    init: () => init12,
+    metadata: () => block_default13,
+    name: () => name12,
+    settings: () => settings12
+  });
+
+  // packages/block-library/build-module/categories/block.json
+  var block_default13 = {
+    $schema: "https://schemas.wp.org/trunk/block.json",
+    apiVersion: 3,
+    name: "core/categories",
+    title: "Terms List",
+    category: "widgets",
+    description: "Display a list of all terms of a given taxonomy.",
+    keywords: ["categories"],
+    textdomain: "default",
+    attributes: {
+      taxonomy: {
+        type: "string",
+        default: "category"
+      },
+      displayAsDropdown: {
+        type: "boolean",
+        default: false
+      },
+      showHierarchy: {
+        type: "boolean",
+        default: false
+      },
+      showPostCounts: {
+        type: "boolean",
+        default: false
+      },
+      showOnlyTopLevel: {
+        type: "boolean",
+        default: false
+      },
+      showEmpty: {
+        type: "boolean",
+        default: false
+      },
+      label: {
+        type: "string",
+        role: "content"
+      },
+      showLabel: {
+        type: "boolean",
+        default: true
+      }
+    },
+    usesContext: ["enhancedPagination"],
+    supports: {
+      anchor: true,
+      align: true,
+      html: false,
+      spacing: {
+        margin: true,
+        padding: true,
+        __experimentalDefaultControls: {
+          margin: false,
+          padding: false
+        }
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      color: {
+        gradients: true,
+        link: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true,
+          link: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true,
+        __experimentalDefaultControls: {
+          radius: true,
+          color: true,
+          width: true,
+          style: true
+        }
+      }
+    },
+    editorStyle: "wp-block-categories-editor",
+    style: "wp-block-categories"
+  };
+
   // packages/block-library/build-module/categories/edit.mjs
+  var import_components12 = __toESM(require_components(), 1);
+  var import_compose10 = __toESM(require_compose(), 1);
+  var import_block_editor27 = __toESM(require_block_editor(), 1);
+  var import_html_entities2 = __toESM(require_html_entities(), 1);
+  var import_i18n18 = __toESM(require_i18n(), 1);
+  var import_core_data6 = __toESM(require_core_data(), 1);
+  var import_data13 = __toESM(require_data(), 1);
   var import_notices2 = __toESM(require_notices(), 1);
   var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
   function CategoriesEdit({
