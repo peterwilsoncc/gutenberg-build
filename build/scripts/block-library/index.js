@@ -13114,10 +13114,17 @@ var wp;
         __experimentalConvert: (blocks) => {
           const columnWidth = +(100 / blocks.length).toFixed(2);
           const innerBlocksTemplate = blocks.map(
-            ({ name: name122, attributes, innerBlocks }) => [
+            ({ name: name122, attributes, innerBlocks, innerContent }) => [
               "core/column",
               { width: `${columnWidth}%` },
-              [[name122, { ...attributes }, innerBlocks]]
+              [
+                [
+                  name122,
+                  { ...attributes },
+                  innerBlocks,
+                  innerContent
+                ]
+              ]
             ]
           );
           return (0, import_blocks18.createBlock)(
@@ -21448,7 +21455,9 @@ var wp;
           return (0, import_blocks23.createBlock)(
             "core/details",
             {},
-            blocks.map((block) => (0, import_blocks23.cloneBlock)(block))
+            blocks.map(
+              (block) => (0, import_blocks23.__experimentalCloneSanitizedBlock)(block)
+            )
           );
         }
       }
@@ -28783,13 +28792,9 @@ ${url}
             },
             void 0
           );
-          const groupInnerBlocks = blocks.map((block) => {
-            return (0, import_blocks33.createBlock)(
-              block.name,
-              block.attributes,
-              block.innerBlocks
-            );
-          });
+          const groupInnerBlocks = blocks.map(
+            (block) => (0, import_blocks33.__experimentalCloneSanitizedBlock)(block)
+          );
           return (0, import_blocks33.createBlock)(
             "core/group",
             {
@@ -62888,11 +62893,7 @@ ${text}
           "core/quote",
           {},
           blocks.map(
-            (block) => (0, import_blocks101.createBlock)(
-              block.name,
-              block.attributes,
-              block.innerBlocks
-            )
+            (block) => (0, import_blocks101.__experimentalCloneSanitizedBlock)(block)
           )
         )
       }

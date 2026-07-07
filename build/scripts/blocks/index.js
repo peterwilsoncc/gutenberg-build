@@ -3249,15 +3249,17 @@ var wp;
       const innerBlockTemplate = Array.isArray(innerBlock) ? innerBlock : [
         innerBlock.name,
         innerBlock.attributes,
-        innerBlock.innerBlocks
+        innerBlock.innerBlocks,
+        innerBlock.innerContent
       ];
-      const [name, attributes, innerBlocks = []] = innerBlockTemplate;
+      const [name, attributes, innerBlocks = [], innerContent] = innerBlockTemplate;
       return createBlock(
         name,
         attributes,
         createBlocksFromInnerBlocksTemplate(
           innerBlocks
-        )
+        ),
+        innerContent
       );
     });
   }

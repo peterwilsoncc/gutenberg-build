@@ -1329,15 +1329,9 @@ var wp;
             );
           },
           __experimentalConvert(blocks) {
-            let innerBlocks = [
-              ...blocks.map((block) => {
-                return (0, import_blocks3.createBlock)(
-                  block.name,
-                  block.attributes,
-                  block.innerBlocks
-                );
-              })
-            ];
+            let innerBlocks = blocks.map(
+              (block) => (0, import_blocks3.__experimentalCloneSanitizedBlock)(block)
+            );
             const firstHeadingBlock = innerBlocks[0].name === "core/heading" ? innerBlocks[0] : null;
             innerBlocks = innerBlocks.filter(
               (block) => block !== firstHeadingBlock

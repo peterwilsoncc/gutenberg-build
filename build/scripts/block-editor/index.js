@@ -50939,13 +50939,9 @@ var wp;
           } else {
             blocks2.unshift(targetBlock);
           }
-          const groupInnerBlocks = blocks2.map((block) => {
-            return (0, import_blocks42.createBlock)(
-              block.name,
-              block.attributes,
-              block.innerBlocks
-            );
-          });
+          const groupInnerBlocks = blocks2.map(
+            (block) => (0, import_blocks42.__experimentalCloneSanitizedBlock)(block)
+          );
           const areAllImages = blocks2.every((block) => {
             return block.name === "core/image";
           });
