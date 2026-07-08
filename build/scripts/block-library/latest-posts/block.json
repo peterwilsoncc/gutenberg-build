@@ -41,6 +41,14 @@
 			"type": "boolean",
 			"default": false
 		},
+		"postLayout": {
+			"type": "string",
+			"default": "list"
+		},
+		"columns": {
+			"type": "number",
+			"default": 3
+		},
 		"order": {
 			"type": "string",
 			"default": "desc"
@@ -78,7 +86,6 @@
 		"anchor": true,
 		"align": true,
 		"html": false,
-		"layout": true,
 		"color": {
 			"gradients": true,
 			"link": true,
@@ -90,13 +97,7 @@
 		},
 		"spacing": {
 			"margin": true,
-			"padding": true,
-			"blockGap": {
-				"__experimentalDefault": "1.25em"
-			},
-			"__experimentalDefaultControls": {
-				"blockGap": true
-			}
+			"padding": true
 		},
 		"typography": {
 			"fontSize": true,

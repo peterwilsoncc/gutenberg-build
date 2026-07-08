@@ -21,12 +21,19 @@ function gutenberg_render_block_core_playlist_track( $attributes ) {
 
 	$wrapper_attributes = get_block_wrapper_attributes();
 
-	$artist = $attributes['artist'] ?? '';
-	$length = $attributes['length'] ?? '';
-	$title  = isset( $attributes['title'] ) && ! empty( $attributes['title'] ) ? $attributes['title'] : __( 'Unknown title' );
+	$unique_id = $attributes['uniqueId'] ?? wp_unique_id( 'playlist-track-' );
+	$artist    = $attributes['artist'] ?? '';
+	$length    = $attributes['length'] ?? '';
+	$title     = isset( $attributes['title'] ) && ! empty( $attributes['title'] ) ? $attributes['title'] : __( 'Unknown title' );
+
+	$context = wp_interactivity_data_wp_context(
+		array(
+			'uniqueId' => $unique_id,
+		)
+	);
 
 	$html  = '<li ' . $wrapper_attributes . '>';
-	$html .= '<button data-wp-on--click="actions.changeTrack" data-wp-bind--aria-current="state.isCurrentTrack" class="wp-block-playlist-track__button">';
+	$html .= '<button ' . $context . 'data-wp-on--click="actions.changeTrack" data-wp-bind--aria-current="state.isCurrentTrack" class="wp-block-playlist-track__button">';
 
 	$html .= '<span class="wp-block-playlist-track__content">';
 	if ( $title ) {

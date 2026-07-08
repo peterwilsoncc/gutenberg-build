@@ -147,9 +147,9 @@ var wp;
   }
 
   // node_modules/@radix-ui/react-dialog/dist/index.mjs
-  var React24 = __toESM(require_react(), 1);
+  var React37 = __toESM(require_react(), 1);
 
-  // node_modules/@radix-ui/primitive/dist/index.mjs
+  // node_modules/@radix-ui/react-dialog/node_modules/@radix-ui/primitive/dist/index.mjs
   var canUseDOM = !!(typeof window !== "undefined" && window.document && window.document.createElement);
   function composeEventHandlers(originalEventHandler, ourEventHandler, { checkForDefaultPrevented = true } = {}) {
     return function handleEvent(event) {
@@ -160,7 +160,7 @@ var wp;
     };
   }
 
-  // node_modules/@radix-ui/react-compose-refs/dist/index.mjs
+  // node_modules/@radix-ui/react-dialog/node_modules/@radix-ui/react-compose-refs/dist/index.mjs
   var React = __toESM(require_react(), 1);
   function setRef(ref, value) {
     if (typeof ref === "function") {
@@ -274,15 +274,15 @@ var wp;
     return createScope;
   }
 
-  // node_modules/@radix-ui/react-id/dist/index.mjs
+  // node_modules/@radix-ui/react-dialog/node_modules/@radix-ui/react-id/dist/index.mjs
   var React4 = __toESM(require_react(), 1);
 
-  // node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs
+  // node_modules/@radix-ui/react-dialog/node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs
   var React3 = __toESM(require_react(), 1);
   var useLayoutEffect2 = globalThis?.document ? React3.useLayoutEffect : () => {
   };
 
-  // node_modules/@radix-ui/react-id/dist/index.mjs
+  // node_modules/@radix-ui/react-dialog/node_modules/@radix-ui/react-id/dist/index.mjs
   var useReactId = React4[" useId ".trim().toString()] || (() => void 0);
   var count = 0;
   function useId(deterministicId) {
@@ -362,33 +362,83 @@ var wp;
   }
 
   // node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs
-  var React10 = __toESM(require_react(), 1);
+  var React11 = __toESM(require_react(), 1);
 
-  // node_modules/@radix-ui/react-primitive/dist/index.mjs
-  var React7 = __toESM(require_react(), 1);
+  // node_modules/@radix-ui/react-dismissable-layer/node_modules/@radix-ui/primitive/dist/index.mjs
+  var canUseDOM2 = !!(typeof window !== "undefined" && window.document && window.document.createElement);
+  function composeEventHandlers2(originalEventHandler, ourEventHandler, { checkForDefaultPrevented = true } = {}) {
+    return function handleEvent(event) {
+      originalEventHandler?.(event);
+      if (checkForDefaultPrevented === false || !event.defaultPrevented) {
+        return ourEventHandler?.(event);
+      }
+    };
+  }
+
+  // node_modules/@radix-ui/react-dismissable-layer/node_modules/@radix-ui/react-primitive/dist/index.mjs
+  var React8 = __toESM(require_react(), 1);
   var ReactDOM = __toESM(require_react_dom(), 1);
 
-  // node_modules/@radix-ui/react-slot/dist/index.mjs
+  // node_modules/@radix-ui/react-dismissable-layer/node_modules/@radix-ui/react-slot/dist/index.mjs
+  var React7 = __toESM(require_react(), 1);
+
+  // node_modules/@radix-ui/react-dismissable-layer/node_modules/@radix-ui/react-compose-refs/dist/index.mjs
   var React6 = __toESM(require_react(), 1);
+  function setRef2(ref, value) {
+    if (typeof ref === "function") {
+      return ref(value);
+    } else if (ref !== null && ref !== void 0) {
+      ref.current = value;
+    }
+  }
+  function composeRefs2(...refs) {
+    return (node) => {
+      let hasCleanup = false;
+      const cleanups = refs.map((ref) => {
+        const cleanup = setRef2(ref, node);
+        if (!hasCleanup && typeof cleanup == "function") {
+          hasCleanup = true;
+        }
+        return cleanup;
+      });
+      if (hasCleanup) {
+        return () => {
+          for (let i = 0; i < cleanups.length; i++) {
+            const cleanup = cleanups[i];
+            if (typeof cleanup == "function") {
+              cleanup();
+            } else {
+              setRef2(refs[i], null);
+            }
+          }
+        };
+      }
+    };
+  }
+  function useComposedRefs2(...refs) {
+    return React6.useCallback(composeRefs2(...refs), refs);
+  }
+
+  // node_modules/@radix-ui/react-dismissable-layer/node_modules/@radix-ui/react-slot/dist/index.mjs
   var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
   // @__NO_SIDE_EFFECTS__
   function createSlot(ownerName) {
     const SlotClone = /* @__PURE__ */ createSlotClone(ownerName);
-    const Slot2 = React6.forwardRef((props, forwardedRef) => {
+    const Slot2 = React7.forwardRef((props, forwardedRef) => {
       const { children, ...slotProps } = props;
-      const childrenArray = React6.Children.toArray(children);
+      const childrenArray = React7.Children.toArray(children);
       const slottable = childrenArray.find(isSlottable);
       if (slottable) {
         const newElement = slottable.props.children;
         const newChildren = childrenArray.map((child) => {
           if (child === slottable) {
-            if (React6.Children.count(newElement) > 1) return React6.Children.only(null);
-            return React6.isValidElement(newElement) ? newElement.props.children : null;
+            if (React7.Children.count(newElement) > 1) return React7.Children.only(null);
+            return React7.isValidElement(newElement) ? newElement.props.children : null;
           } else {
             return child;
           }
         });
-        return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children: React6.isValidElement(newElement) ? React6.cloneElement(newElement, void 0, newChildren) : null });
+        return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children: React7.isValidElement(newElement) ? React7.cloneElement(newElement, void 0, newChildren) : null });
       }
       return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children });
     });
@@ -397,24 +447,24 @@ var wp;
   }
   // @__NO_SIDE_EFFECTS__
   function createSlotClone(ownerName) {
-    const SlotClone = React6.forwardRef((props, forwardedRef) => {
+    const SlotClone = React7.forwardRef((props, forwardedRef) => {
       const { children, ...slotProps } = props;
-      if (React6.isValidElement(children)) {
+      if (React7.isValidElement(children)) {
         const childrenRef = getElementRef(children);
         const props2 = mergeProps(slotProps, children.props);
-        if (children.type !== React6.Fragment) {
-          props2.ref = forwardedRef ? composeRefs(forwardedRef, childrenRef) : childrenRef;
+        if (children.type !== React7.Fragment) {
+          props2.ref = forwardedRef ? composeRefs2(forwardedRef, childrenRef) : childrenRef;
         }
-        return React6.cloneElement(children, props2);
+        return React7.cloneElement(children, props2);
       }
-      return React6.Children.count(children) > 1 ? React6.Children.only(null) : null;
+      return React7.Children.count(children) > 1 ? React7.Children.only(null) : null;
     });
     SlotClone.displayName = `${ownerName}.SlotClone`;
     return SlotClone;
   }
   var SLOTTABLE_IDENTIFIER = /* @__PURE__ */ Symbol("radix.slottable");
   function isSlottable(child) {
-    return React6.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
+    return React7.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
   }
   function mergeProps(slotProps, childProps) {
     const overrideProps = { ...childProps };
@@ -454,7 +504,7 @@ var wp;
     return element.props.ref || element.ref;
   }
 
-  // node_modules/@radix-ui/react-primitive/dist/index.mjs
+  // node_modules/@radix-ui/react-dismissable-layer/node_modules/@radix-ui/react-primitive/dist/index.mjs
   var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
   var NODES = [
     "a",
@@ -477,7 +527,7 @@ var wp;
   ];
   var Primitive = NODES.reduce((primitive, node) => {
     const Slot2 = createSlot(`Primitive.${node}`);
-    const Node2 = React7.forwardRef((props, forwardedRef) => {
+    const Node2 = React8.forwardRef((props, forwardedRef) => {
       const { asChild, ...primitiveProps } = props;
       const Comp = asChild ? Slot2 : node;
       if (typeof window !== "undefined") {
@@ -492,21 +542,21 @@ var wp;
     if (target) ReactDOM.flushSync(() => target.dispatchEvent(event));
   }
 
-  // node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs
-  var React8 = __toESM(require_react(), 1);
+  // node_modules/@radix-ui/react-dismissable-layer/node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs
+  var React9 = __toESM(require_react(), 1);
   function useCallbackRef(callback) {
-    const callbackRef = React8.useRef(callback);
-    React8.useEffect(() => {
+    const callbackRef = React9.useRef(callback);
+    React9.useEffect(() => {
       callbackRef.current = callback;
     });
-    return React8.useMemo(() => (...args) => callbackRef.current?.(...args), []);
+    return React9.useMemo(() => (...args) => callbackRef.current?.(...args), []);
   }
 
   // node_modules/@radix-ui/react-dismissable-layer/node_modules/@radix-ui/react-use-escape-keydown/dist/index.mjs
-  var React9 = __toESM(require_react(), 1);
+  var React10 = __toESM(require_react(), 1);
   function useEscapeKeydown(onEscapeKeyDownProp, ownerDocument = globalThis?.document) {
     const onEscapeKeyDown = useCallbackRef(onEscapeKeyDownProp);
-    React9.useEffect(() => {
+    React10.useEffect(() => {
       const handleKeyDown = (event) => {
         if (event.key === "Escape") {
           onEscapeKeyDown(event);
@@ -524,12 +574,12 @@ var wp;
   var POINTER_DOWN_OUTSIDE = "dismissableLayer.pointerDownOutside";
   var FOCUS_OUTSIDE = "dismissableLayer.focusOutside";
   var originalBodyPointerEvents;
-  var DismissableLayerContext = React10.createContext({
+  var DismissableLayerContext = React11.createContext({
     layers: /* @__PURE__ */ new Set(),
     layersWithOutsidePointerEventsDisabled: /* @__PURE__ */ new Set(),
     branches: /* @__PURE__ */ new Set()
   });
-  var DismissableLayer = React10.forwardRef(
+  var DismissableLayer = React11.forwardRef(
     (props, forwardedRef) => {
       const {
         disableOutsidePointerEvents = false,
@@ -540,11 +590,11 @@ var wp;
         onDismiss,
         ...layerProps
       } = props;
-      const context2 = React10.useContext(DismissableLayerContext);
-      const [node, setNode] = React10.useState(null);
+      const context2 = React11.useContext(DismissableLayerContext);
+      const [node, setNode] = React11.useState(null);
       const ownerDocument = node?.ownerDocument ?? globalThis?.document;
-      const [, force] = React10.useState({});
-      const composedRefs = useComposedRefs(forwardedRef, (node2) => setNode(node2));
+      const [, force] = React11.useState({});
+      const composedRefs = useComposedRefs2(forwardedRef, (node2) => setNode(node2));
       const layers = Array.from(context2.layers);
       const [highestLayerWithOutsidePointerEventsDisabled] = [...context2.layersWithOutsidePointerEventsDisabled].slice(-1);
       const highestLayerWithOutsidePointerEventsDisabledIndex = layers.indexOf(highestLayerWithOutsidePointerEventsDisabled);
@@ -576,7 +626,7 @@ var wp;
           onDismiss();
         }
       }, ownerDocument);
-      React10.useEffect(() => {
+      React11.useEffect(() => {
         if (!node) return;
         if (disableOutsidePointerEvents) {
           if (context2.layersWithOutsidePointerEventsDisabled.size === 0) {
@@ -593,7 +643,7 @@ var wp;
           }
         };
       }, [node, ownerDocument, disableOutsidePointerEvents, context2]);
-      React10.useEffect(() => {
+      React11.useEffect(() => {
         return () => {
           if (!node) return;
           context2.layers.delete(node);
@@ -601,7 +651,7 @@ var wp;
           dispatchUpdate();
         };
       }, [node, context2]);
-      React10.useEffect(() => {
+      React11.useEffect(() => {
         const handleUpdate = () => force({});
         document.addEventListener(CONTEXT_UPDATE, handleUpdate);
         return () => document.removeEventListener(CONTEXT_UPDATE, handleUpdate);
@@ -615,9 +665,9 @@ var wp;
             pointerEvents: isBodyPointerEventsDisabled ? isPointerEventsEnabled ? "auto" : "none" : void 0,
             ...props.style
           },
-          onFocusCapture: composeEventHandlers(props.onFocusCapture, focusOutside.onFocusCapture),
-          onBlurCapture: composeEventHandlers(props.onBlurCapture, focusOutside.onBlurCapture),
-          onPointerDownCapture: composeEventHandlers(
+          onFocusCapture: composeEventHandlers2(props.onFocusCapture, focusOutside.onFocusCapture),
+          onBlurCapture: composeEventHandlers2(props.onBlurCapture, focusOutside.onBlurCapture),
+          onPointerDownCapture: composeEventHandlers2(
             props.onPointerDownCapture,
             pointerDownOutside.onPointerDownCapture
           )
@@ -627,11 +677,11 @@ var wp;
   );
   DismissableLayer.displayName = DISMISSABLE_LAYER_NAME;
   var BRANCH_NAME = "DismissableLayerBranch";
-  var DismissableLayerBranch = React10.forwardRef((props, forwardedRef) => {
-    const context2 = React10.useContext(DismissableLayerContext);
-    const ref = React10.useRef(null);
-    const composedRefs = useComposedRefs(forwardedRef, ref);
-    React10.useEffect(() => {
+  var DismissableLayerBranch = React11.forwardRef((props, forwardedRef) => {
+    const context2 = React11.useContext(DismissableLayerContext);
+    const ref = React11.useRef(null);
+    const composedRefs = useComposedRefs2(forwardedRef, ref);
+    React11.useEffect(() => {
       const node = ref.current;
       if (node) {
         context2.branches.add(node);
@@ -645,10 +695,10 @@ var wp;
   DismissableLayerBranch.displayName = BRANCH_NAME;
   function usePointerDownOutside(onPointerDownOutside, ownerDocument = globalThis?.document) {
     const handlePointerDownOutside = useCallbackRef(onPointerDownOutside);
-    const isPointerInsideReactTreeRef = React10.useRef(false);
-    const handleClickRef = React10.useRef(() => {
+    const isPointerInsideReactTreeRef = React11.useRef(false);
+    const handleClickRef = React11.useRef(() => {
     });
-    React10.useEffect(() => {
+    React11.useEffect(() => {
       const handlePointerDown = (event) => {
         if (event.target && !isPointerInsideReactTreeRef.current) {
           let handleAndDispatchPointerDownOutsideEvent2 = function() {
@@ -689,8 +739,8 @@ var wp;
   }
   function useFocusOutside(onFocusOutside, ownerDocument = globalThis?.document) {
     const handleFocusOutside = useCallbackRef(onFocusOutside);
-    const isFocusInsideReactTreeRef = React10.useRef(false);
-    React10.useEffect(() => {
+    const isFocusInsideReactTreeRef = React11.useRef(false);
+    React11.useEffect(() => {
       const handleFocus = (event) => {
         if (event.target && !isFocusInsideReactTreeRef.current) {
           const eventDetail = { originalEvent: event };
@@ -723,13 +773,187 @@ var wp;
   }
 
   // node_modules/@radix-ui/react-focus-scope/dist/index.mjs
-  var React11 = __toESM(require_react(), 1);
+  var React16 = __toESM(require_react(), 1);
+
+  // node_modules/@radix-ui/react-focus-scope/node_modules/@radix-ui/react-compose-refs/dist/index.mjs
+  var React12 = __toESM(require_react(), 1);
+  function setRef3(ref, value) {
+    if (typeof ref === "function") {
+      return ref(value);
+    } else if (ref !== null && ref !== void 0) {
+      ref.current = value;
+    }
+  }
+  function composeRefs3(...refs) {
+    return (node) => {
+      let hasCleanup = false;
+      const cleanups = refs.map((ref) => {
+        const cleanup = setRef3(ref, node);
+        if (!hasCleanup && typeof cleanup == "function") {
+          hasCleanup = true;
+        }
+        return cleanup;
+      });
+      if (hasCleanup) {
+        return () => {
+          for (let i = 0; i < cleanups.length; i++) {
+            const cleanup = cleanups[i];
+            if (typeof cleanup == "function") {
+              cleanup();
+            } else {
+              setRef3(refs[i], null);
+            }
+          }
+        };
+      }
+    };
+  }
+  function useComposedRefs3(...refs) {
+    return React12.useCallback(composeRefs3(...refs), refs);
+  }
+
+  // node_modules/@radix-ui/react-focus-scope/node_modules/@radix-ui/react-primitive/dist/index.mjs
+  var React14 = __toESM(require_react(), 1);
+  var ReactDOM2 = __toESM(require_react_dom(), 1);
+
+  // node_modules/@radix-ui/react-focus-scope/node_modules/@radix-ui/react-slot/dist/index.mjs
+  var React13 = __toESM(require_react(), 1);
   var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
+  // @__NO_SIDE_EFFECTS__
+  function createSlot2(ownerName) {
+    const SlotClone = /* @__PURE__ */ createSlotClone2(ownerName);
+    const Slot2 = React13.forwardRef((props, forwardedRef) => {
+      const { children, ...slotProps } = props;
+      const childrenArray = React13.Children.toArray(children);
+      const slottable = childrenArray.find(isSlottable2);
+      if (slottable) {
+        const newElement = slottable.props.children;
+        const newChildren = childrenArray.map((child) => {
+          if (child === slottable) {
+            if (React13.Children.count(newElement) > 1) return React13.Children.only(null);
+            return React13.isValidElement(newElement) ? newElement.props.children : null;
+          } else {
+            return child;
+          }
+        });
+        return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children: React13.isValidElement(newElement) ? React13.cloneElement(newElement, void 0, newChildren) : null });
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children });
+    });
+    Slot2.displayName = `${ownerName}.Slot`;
+    return Slot2;
+  }
+  // @__NO_SIDE_EFFECTS__
+  function createSlotClone2(ownerName) {
+    const SlotClone = React13.forwardRef((props, forwardedRef) => {
+      const { children, ...slotProps } = props;
+      if (React13.isValidElement(children)) {
+        const childrenRef = getElementRef2(children);
+        const props2 = mergeProps2(slotProps, children.props);
+        if (children.type !== React13.Fragment) {
+          props2.ref = forwardedRef ? composeRefs3(forwardedRef, childrenRef) : childrenRef;
+        }
+        return React13.cloneElement(children, props2);
+      }
+      return React13.Children.count(children) > 1 ? React13.Children.only(null) : null;
+    });
+    SlotClone.displayName = `${ownerName}.SlotClone`;
+    return SlotClone;
+  }
+  var SLOTTABLE_IDENTIFIER2 = /* @__PURE__ */ Symbol("radix.slottable");
+  function isSlottable2(child) {
+    return React13.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER2;
+  }
+  function mergeProps2(slotProps, childProps) {
+    const overrideProps = { ...childProps };
+    for (const propName in childProps) {
+      const slotPropValue = slotProps[propName];
+      const childPropValue = childProps[propName];
+      const isHandler = /^on[A-Z]/.test(propName);
+      if (isHandler) {
+        if (slotPropValue && childPropValue) {
+          overrideProps[propName] = (...args) => {
+            const result = childPropValue(...args);
+            slotPropValue(...args);
+            return result;
+          };
+        } else if (slotPropValue) {
+          overrideProps[propName] = slotPropValue;
+        }
+      } else if (propName === "style") {
+        overrideProps[propName] = { ...slotPropValue, ...childPropValue };
+      } else if (propName === "className") {
+        overrideProps[propName] = [slotPropValue, childPropValue].filter(Boolean).join(" ");
+      }
+    }
+    return { ...slotProps, ...overrideProps };
+  }
+  function getElementRef2(element) {
+    let getter = Object.getOwnPropertyDescriptor(element.props, "ref")?.get;
+    let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+    if (mayWarn) {
+      return element.ref;
+    }
+    getter = Object.getOwnPropertyDescriptor(element, "ref")?.get;
+    mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+    if (mayWarn) {
+      return element.props.ref;
+    }
+    return element.props.ref || element.ref;
+  }
+
+  // node_modules/@radix-ui/react-focus-scope/node_modules/@radix-ui/react-primitive/dist/index.mjs
+  var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+  var NODES2 = [
+    "a",
+    "button",
+    "div",
+    "form",
+    "h2",
+    "h3",
+    "img",
+    "input",
+    "label",
+    "li",
+    "nav",
+    "ol",
+    "p",
+    "select",
+    "span",
+    "svg",
+    "ul"
+  ];
+  var Primitive2 = NODES2.reduce((primitive, node) => {
+    const Slot2 = createSlot2(`Primitive.${node}`);
+    const Node2 = React14.forwardRef((props, forwardedRef) => {
+      const { asChild, ...primitiveProps } = props;
+      const Comp = asChild ? Slot2 : node;
+      if (typeof window !== "undefined") {
+        window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
+    });
+    Node2.displayName = `Primitive.${node}`;
+    return { ...primitive, [node]: Node2 };
+  }, {});
+
+  // node_modules/@radix-ui/react-focus-scope/node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs
+  var React15 = __toESM(require_react(), 1);
+  function useCallbackRef2(callback) {
+    const callbackRef = React15.useRef(callback);
+    React15.useEffect(() => {
+      callbackRef.current = callback;
+    });
+    return React15.useMemo(() => (...args) => callbackRef.current?.(...args), []);
+  }
+
+  // node_modules/@radix-ui/react-focus-scope/dist/index.mjs
+  var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
   var AUTOFOCUS_ON_MOUNT = "focusScope.autoFocusOnMount";
   var AUTOFOCUS_ON_UNMOUNT = "focusScope.autoFocusOnUnmount";
   var EVENT_OPTIONS = { bubbles: false, cancelable: true };
   var FOCUS_SCOPE_NAME = "FocusScope";
-  var FocusScope = React11.forwardRef((props, forwardedRef) => {
+  var FocusScope = React16.forwardRef((props, forwardedRef) => {
     const {
       loop = false,
       trapped = false,
@@ -737,12 +961,12 @@ var wp;
       onUnmountAutoFocus: onUnmountAutoFocusProp,
       ...scopeProps
     } = props;
-    const [container, setContainer] = React11.useState(null);
-    const onMountAutoFocus = useCallbackRef(onMountAutoFocusProp);
-    const onUnmountAutoFocus = useCallbackRef(onUnmountAutoFocusProp);
-    const lastFocusedElementRef = React11.useRef(null);
-    const composedRefs = useComposedRefs(forwardedRef, (node) => setContainer(node));
-    const focusScope = React11.useRef({
+    const [container, setContainer] = React16.useState(null);
+    const onMountAutoFocus = useCallbackRef2(onMountAutoFocusProp);
+    const onUnmountAutoFocus = useCallbackRef2(onUnmountAutoFocusProp);
+    const lastFocusedElementRef = React16.useRef(null);
+    const composedRefs = useComposedRefs3(forwardedRef, (node) => setContainer(node));
+    const focusScope = React16.useRef({
       paused: false,
       pause() {
         this.paused = true;
@@ -751,7 +975,7 @@ var wp;
         this.paused = false;
       }
     }).current;
-    React11.useEffect(() => {
+    React16.useEffect(() => {
       if (trapped) {
         let handleFocusIn2 = function(event) {
           if (focusScope.paused || !container) return;
@@ -787,7 +1011,7 @@ var wp;
         };
       }
     }, [trapped, container, focusScope.paused]);
-    React11.useEffect(() => {
+    React16.useEffect(() => {
       if (container) {
         focusScopesStack.add(focusScope);
         const previouslyFocusedElement = document.activeElement;
@@ -818,7 +1042,7 @@ var wp;
         };
       }
     }, [container, onMountAutoFocus, onUnmountAutoFocus, focusScope]);
-    const handleKeyDown = React11.useCallback(
+    const handleKeyDown = React16.useCallback(
       (event) => {
         if (!loop && !trapped) return;
         if (focusScope.paused) return;
@@ -843,7 +1067,7 @@ var wp;
       },
       [loop, trapped, focusScope.paused]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Primitive.div, { tabIndex: -1, ...scopeProps, ref: composedRefs, onKeyDown: handleKeyDown });
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Primitive2.div, { tabIndex: -1, ...scopeProps, ref: composedRefs, onKeyDown: handleKeyDown });
   });
   FocusScope.displayName = FOCUS_SCOPE_NAME;
   function focusFirst(candidates, { select = false } = {}) {
@@ -927,24 +1151,236 @@ var wp;
   }
 
   // node_modules/@radix-ui/react-portal/dist/index.mjs
-  var React12 = __toESM(require_react(), 1);
+  var React21 = __toESM(require_react(), 1);
   var import_react_dom = __toESM(require_react_dom(), 1);
-  var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+
+  // node_modules/@radix-ui/react-portal/node_modules/@radix-ui/react-primitive/dist/index.mjs
+  var React19 = __toESM(require_react(), 1);
+  var ReactDOM3 = __toESM(require_react_dom(), 1);
+
+  // node_modules/@radix-ui/react-portal/node_modules/@radix-ui/react-slot/dist/index.mjs
+  var React18 = __toESM(require_react(), 1);
+
+  // node_modules/@radix-ui/react-portal/node_modules/@radix-ui/react-compose-refs/dist/index.mjs
+  var React17 = __toESM(require_react(), 1);
+  function setRef4(ref, value) {
+    if (typeof ref === "function") {
+      return ref(value);
+    } else if (ref !== null && ref !== void 0) {
+      ref.current = value;
+    }
+  }
+  function composeRefs4(...refs) {
+    return (node) => {
+      let hasCleanup = false;
+      const cleanups = refs.map((ref) => {
+        const cleanup = setRef4(ref, node);
+        if (!hasCleanup && typeof cleanup == "function") {
+          hasCleanup = true;
+        }
+        return cleanup;
+      });
+      if (hasCleanup) {
+        return () => {
+          for (let i = 0; i < cleanups.length; i++) {
+            const cleanup = cleanups[i];
+            if (typeof cleanup == "function") {
+              cleanup();
+            } else {
+              setRef4(refs[i], null);
+            }
+          }
+        };
+      }
+    };
+  }
+
+  // node_modules/@radix-ui/react-portal/node_modules/@radix-ui/react-slot/dist/index.mjs
+  var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
+  // @__NO_SIDE_EFFECTS__
+  function createSlot3(ownerName) {
+    const SlotClone = /* @__PURE__ */ createSlotClone3(ownerName);
+    const Slot2 = React18.forwardRef((props, forwardedRef) => {
+      const { children, ...slotProps } = props;
+      const childrenArray = React18.Children.toArray(children);
+      const slottable = childrenArray.find(isSlottable3);
+      if (slottable) {
+        const newElement = slottable.props.children;
+        const newChildren = childrenArray.map((child) => {
+          if (child === slottable) {
+            if (React18.Children.count(newElement) > 1) return React18.Children.only(null);
+            return React18.isValidElement(newElement) ? newElement.props.children : null;
+          } else {
+            return child;
+          }
+        });
+        return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children: React18.isValidElement(newElement) ? React18.cloneElement(newElement, void 0, newChildren) : null });
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children });
+    });
+    Slot2.displayName = `${ownerName}.Slot`;
+    return Slot2;
+  }
+  // @__NO_SIDE_EFFECTS__
+  function createSlotClone3(ownerName) {
+    const SlotClone = React18.forwardRef((props, forwardedRef) => {
+      const { children, ...slotProps } = props;
+      if (React18.isValidElement(children)) {
+        const childrenRef = getElementRef3(children);
+        const props2 = mergeProps3(slotProps, children.props);
+        if (children.type !== React18.Fragment) {
+          props2.ref = forwardedRef ? composeRefs4(forwardedRef, childrenRef) : childrenRef;
+        }
+        return React18.cloneElement(children, props2);
+      }
+      return React18.Children.count(children) > 1 ? React18.Children.only(null) : null;
+    });
+    SlotClone.displayName = `${ownerName}.SlotClone`;
+    return SlotClone;
+  }
+  var SLOTTABLE_IDENTIFIER3 = /* @__PURE__ */ Symbol("radix.slottable");
+  function isSlottable3(child) {
+    return React18.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER3;
+  }
+  function mergeProps3(slotProps, childProps) {
+    const overrideProps = { ...childProps };
+    for (const propName in childProps) {
+      const slotPropValue = slotProps[propName];
+      const childPropValue = childProps[propName];
+      const isHandler = /^on[A-Z]/.test(propName);
+      if (isHandler) {
+        if (slotPropValue && childPropValue) {
+          overrideProps[propName] = (...args) => {
+            const result = childPropValue(...args);
+            slotPropValue(...args);
+            return result;
+          };
+        } else if (slotPropValue) {
+          overrideProps[propName] = slotPropValue;
+        }
+      } else if (propName === "style") {
+        overrideProps[propName] = { ...slotPropValue, ...childPropValue };
+      } else if (propName === "className") {
+        overrideProps[propName] = [slotPropValue, childPropValue].filter(Boolean).join(" ");
+      }
+    }
+    return { ...slotProps, ...overrideProps };
+  }
+  function getElementRef3(element) {
+    let getter = Object.getOwnPropertyDescriptor(element.props, "ref")?.get;
+    let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+    if (mayWarn) {
+      return element.ref;
+    }
+    getter = Object.getOwnPropertyDescriptor(element, "ref")?.get;
+    mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+    if (mayWarn) {
+      return element.props.ref;
+    }
+    return element.props.ref || element.ref;
+  }
+
+  // node_modules/@radix-ui/react-portal/node_modules/@radix-ui/react-primitive/dist/index.mjs
+  var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+  var NODES3 = [
+    "a",
+    "button",
+    "div",
+    "form",
+    "h2",
+    "h3",
+    "img",
+    "input",
+    "label",
+    "li",
+    "nav",
+    "ol",
+    "p",
+    "select",
+    "span",
+    "svg",
+    "ul"
+  ];
+  var Primitive3 = NODES3.reduce((primitive, node) => {
+    const Slot2 = createSlot3(`Primitive.${node}`);
+    const Node2 = React19.forwardRef((props, forwardedRef) => {
+      const { asChild, ...primitiveProps } = props;
+      const Comp = asChild ? Slot2 : node;
+      if (typeof window !== "undefined") {
+        window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
+    });
+    Node2.displayName = `Primitive.${node}`;
+    return { ...primitive, [node]: Node2 };
+  }, {});
+
+  // node_modules/@radix-ui/react-portal/node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs
+  var React20 = __toESM(require_react(), 1);
+  var useLayoutEffect22 = globalThis?.document ? React20.useLayoutEffect : () => {
+  };
+
+  // node_modules/@radix-ui/react-portal/dist/index.mjs
+  var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
   var PORTAL_NAME = "Portal";
-  var Portal = React12.forwardRef((props, forwardedRef) => {
+  var Portal = React21.forwardRef((props, forwardedRef) => {
     const { container: containerProp, ...portalProps } = props;
-    const [mounted, setMounted] = React12.useState(false);
-    useLayoutEffect2(() => setMounted(true), []);
+    const [mounted, setMounted] = React21.useState(false);
+    useLayoutEffect22(() => setMounted(true), []);
     const container = containerProp || mounted && globalThis?.document?.body;
-    return container ? import_react_dom.default.createPortal(/* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Primitive.div, { ...portalProps, ref: forwardedRef }), container) : null;
+    return container ? import_react_dom.default.createPortal(/* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Primitive3.div, { ...portalProps, ref: forwardedRef }), container) : null;
   });
   Portal.displayName = PORTAL_NAME;
 
   // node_modules/@radix-ui/react-presence/dist/index.mjs
+  var React25 = __toESM(require_react(), 1);
+
+  // node_modules/@radix-ui/react-presence/node_modules/@radix-ui/react-compose-refs/dist/index.mjs
   var React23 = __toESM(require_react(), 1);
-  var React13 = __toESM(require_react(), 1);
+  function setRef5(ref, value) {
+    if (typeof ref === "function") {
+      return ref(value);
+    } else if (ref !== null && ref !== void 0) {
+      ref.current = value;
+    }
+  }
+  function composeRefs5(...refs) {
+    return (node) => {
+      let hasCleanup = false;
+      const cleanups = refs.map((ref) => {
+        const cleanup = setRef5(ref, node);
+        if (!hasCleanup && typeof cleanup == "function") {
+          hasCleanup = true;
+        }
+        return cleanup;
+      });
+      if (hasCleanup) {
+        return () => {
+          for (let i = 0; i < cleanups.length; i++) {
+            const cleanup = cleanups[i];
+            if (typeof cleanup == "function") {
+              cleanup();
+            } else {
+              setRef5(refs[i], null);
+            }
+          }
+        };
+      }
+    };
+  }
+  function useComposedRefs4(...refs) {
+    return React23.useCallback(composeRefs5(...refs), refs);
+  }
+
+  // node_modules/@radix-ui/react-presence/node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs
+  var React24 = __toESM(require_react(), 1);
+  var useLayoutEffect23 = globalThis?.document ? React24.useLayoutEffect : () => {
+  };
+
+  // node_modules/@radix-ui/react-presence/dist/index.mjs
+  var React26 = __toESM(require_react(), 1);
   function useStateMachine(initialState, machine) {
-    return React13.useReducer((state, event) => {
+    return React26.useReducer((state, event) => {
       const nextState = machine[state][event];
       return nextState ?? state;
     }, initialState);
@@ -952,17 +1388,17 @@ var wp;
   var Presence = (props) => {
     const { present, children } = props;
     const presence = usePresence(present);
-    const child = typeof children === "function" ? children({ present: presence.isPresent }) : React23.Children.only(children);
-    const ref = useComposedRefs(presence.ref, getElementRef2(child));
+    const child = typeof children === "function" ? children({ present: presence.isPresent }) : React25.Children.only(children);
+    const ref = useComposedRefs4(presence.ref, getElementRef4(child));
     const forceMount = typeof children === "function";
-    return forceMount || presence.isPresent ? React23.cloneElement(child, { ref }) : null;
+    return forceMount || presence.isPresent ? React25.cloneElement(child, { ref }) : null;
   };
   Presence.displayName = "Presence";
   function usePresence(present) {
-    const [node, setNode] = React23.useState();
-    const stylesRef = React23.useRef(null);
-    const prevPresentRef = React23.useRef(present);
-    const prevAnimationNameRef = React23.useRef("none");
+    const [node, setNode] = React25.useState();
+    const stylesRef = React25.useRef(null);
+    const prevPresentRef = React25.useRef(present);
+    const prevAnimationNameRef = React25.useRef("none");
     const initialState = present ? "mounted" : "unmounted";
     const [state, send] = useStateMachine(initialState, {
       mounted: {
@@ -977,11 +1413,11 @@ var wp;
         MOUNT: "mounted"
       }
     });
-    React23.useEffect(() => {
+    React25.useEffect(() => {
       const currentAnimationName = getAnimationName(stylesRef.current);
       prevAnimationNameRef.current = state === "mounted" ? currentAnimationName : "none";
     }, [state]);
-    useLayoutEffect2(() => {
+    useLayoutEffect23(() => {
       const styles = stylesRef.current;
       const wasPresent = prevPresentRef.current;
       const hasPresentChanged = wasPresent !== present;
@@ -1003,7 +1439,7 @@ var wp;
         prevPresentRef.current = present;
       }
     }, [present, send]);
-    useLayoutEffect2(() => {
+    useLayoutEffect23(() => {
       if (node) {
         let timeoutId;
         const ownerWindow = node.ownerDocument.defaultView ?? window;
@@ -1043,7 +1479,7 @@ var wp;
     }, [node, send]);
     return {
       isPresent: ["mounted", "unmountSuspended"].includes(state),
-      ref: React23.useCallback((node2) => {
+      ref: React25.useCallback((node2) => {
         stylesRef.current = node2 ? getComputedStyle(node2) : null;
         setNode(node2);
       }, [])
@@ -1052,7 +1488,7 @@ var wp;
   function getAnimationName(styles) {
     return styles?.animationName || "none";
   }
-  function getElementRef2(element) {
+  function getElementRef4(element) {
     let getter = Object.getOwnPropertyDescriptor(element.props, "ref")?.get;
     let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
     if (mayWarn) {
@@ -1066,11 +1502,136 @@ var wp;
     return element.props.ref || element.ref;
   }
 
+  // node_modules/@radix-ui/react-dialog/node_modules/@radix-ui/react-primitive/dist/index.mjs
+  var React28 = __toESM(require_react(), 1);
+  var ReactDOM5 = __toESM(require_react_dom(), 1);
+
+  // node_modules/@radix-ui/react-dialog/node_modules/@radix-ui/react-slot/dist/index.mjs
+  var React27 = __toESM(require_react(), 1);
+  var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+  // @__NO_SIDE_EFFECTS__
+  function createSlot4(ownerName) {
+    const SlotClone = /* @__PURE__ */ createSlotClone4(ownerName);
+    const Slot2 = React27.forwardRef((props, forwardedRef) => {
+      const { children, ...slotProps } = props;
+      const childrenArray = React27.Children.toArray(children);
+      const slottable = childrenArray.find(isSlottable4);
+      if (slottable) {
+        const newElement = slottable.props.children;
+        const newChildren = childrenArray.map((child) => {
+          if (child === slottable) {
+            if (React27.Children.count(newElement) > 1) return React27.Children.only(null);
+            return React27.isValidElement(newElement) ? newElement.props.children : null;
+          } else {
+            return child;
+          }
+        });
+        return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children: React27.isValidElement(newElement) ? React27.cloneElement(newElement, void 0, newChildren) : null });
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children });
+    });
+    Slot2.displayName = `${ownerName}.Slot`;
+    return Slot2;
+  }
+  // @__NO_SIDE_EFFECTS__
+  function createSlotClone4(ownerName) {
+    const SlotClone = React27.forwardRef((props, forwardedRef) => {
+      const { children, ...slotProps } = props;
+      if (React27.isValidElement(children)) {
+        const childrenRef = getElementRef5(children);
+        const props2 = mergeProps4(slotProps, children.props);
+        if (children.type !== React27.Fragment) {
+          props2.ref = forwardedRef ? composeRefs(forwardedRef, childrenRef) : childrenRef;
+        }
+        return React27.cloneElement(children, props2);
+      }
+      return React27.Children.count(children) > 1 ? React27.Children.only(null) : null;
+    });
+    SlotClone.displayName = `${ownerName}.SlotClone`;
+    return SlotClone;
+  }
+  var SLOTTABLE_IDENTIFIER4 = /* @__PURE__ */ Symbol("radix.slottable");
+  function isSlottable4(child) {
+    return React27.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER4;
+  }
+  function mergeProps4(slotProps, childProps) {
+    const overrideProps = { ...childProps };
+    for (const propName in childProps) {
+      const slotPropValue = slotProps[propName];
+      const childPropValue = childProps[propName];
+      const isHandler = /^on[A-Z]/.test(propName);
+      if (isHandler) {
+        if (slotPropValue && childPropValue) {
+          overrideProps[propName] = (...args) => {
+            const result = childPropValue(...args);
+            slotPropValue(...args);
+            return result;
+          };
+        } else if (slotPropValue) {
+          overrideProps[propName] = slotPropValue;
+        }
+      } else if (propName === "style") {
+        overrideProps[propName] = { ...slotPropValue, ...childPropValue };
+      } else if (propName === "className") {
+        overrideProps[propName] = [slotPropValue, childPropValue].filter(Boolean).join(" ");
+      }
+    }
+    return { ...slotProps, ...overrideProps };
+  }
+  function getElementRef5(element) {
+    let getter = Object.getOwnPropertyDescriptor(element.props, "ref")?.get;
+    let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+    if (mayWarn) {
+      return element.ref;
+    }
+    getter = Object.getOwnPropertyDescriptor(element, "ref")?.get;
+    mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+    if (mayWarn) {
+      return element.props.ref;
+    }
+    return element.props.ref || element.ref;
+  }
+
+  // node_modules/@radix-ui/react-dialog/node_modules/@radix-ui/react-primitive/dist/index.mjs
+  var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+  var NODES4 = [
+    "a",
+    "button",
+    "div",
+    "form",
+    "h2",
+    "h3",
+    "img",
+    "input",
+    "label",
+    "li",
+    "nav",
+    "ol",
+    "p",
+    "select",
+    "span",
+    "svg",
+    "ul"
+  ];
+  var Primitive4 = NODES4.reduce((primitive, node) => {
+    const Slot2 = createSlot4(`Primitive.${node}`);
+    const Node2 = React28.forwardRef((props, forwardedRef) => {
+      const { asChild, ...primitiveProps } = props;
+      const Comp = asChild ? Slot2 : node;
+      if (typeof window !== "undefined") {
+        window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
+    });
+    Node2.displayName = `Primitive.${node}`;
+    return { ...primitive, [node]: Node2 };
+  }, {});
+
   // node_modules/@radix-ui/react-dialog/node_modules/@radix-ui/react-focus-guards/dist/index.mjs
-  var React14 = __toESM(require_react(), 1);
+  var React29 = __toESM(require_react(), 1);
   var count2 = 0;
   function useFocusGuards() {
-    React14.useEffect(() => {
+    React29.useEffect(() => {
       const edgeGuards = document.querySelectorAll("[data-radix-focus-guard]");
       document.body.insertAdjacentElement("afterbegin", edgeGuards[0] ?? createFocusGuard());
       document.body.insertAdjacentElement("beforeend", edgeGuards[1] ?? createFocusGuard());
@@ -1127,10 +1688,10 @@ var wp;
   }
 
   // node_modules/@radix-ui/react-dialog/node_modules/react-remove-scroll/dist/es2015/Combination.js
-  var React21 = __toESM(require_react());
+  var React36 = __toESM(require_react());
 
   // node_modules/@radix-ui/react-dialog/node_modules/react-remove-scroll/dist/es2015/UI.js
-  var React17 = __toESM(require_react());
+  var React32 = __toESM(require_react());
 
   // node_modules/react-remove-scroll-bar/dist/es2015/constants.js
   var zeroRightClassName = "right-scroll-bar-position";
@@ -1150,7 +1711,7 @@ var wp;
 
   // node_modules/use-callback-ref/dist/es2015/useRef.js
   var import_react = __toESM(require_react());
-  function useCallbackRef2(initialValue, callback) {
+  function useCallbackRef3(initialValue, callback) {
     var ref = (0, import_react.useState)(function() {
       return {
         // value
@@ -1177,11 +1738,11 @@ var wp;
   }
 
   // node_modules/use-callback-ref/dist/es2015/useMergeRef.js
-  var React15 = __toESM(require_react());
-  var useIsomorphicLayoutEffect = typeof window !== "undefined" ? React15.useLayoutEffect : React15.useEffect;
+  var React30 = __toESM(require_react());
+  var useIsomorphicLayoutEffect = typeof window !== "undefined" ? React30.useLayoutEffect : React30.useEffect;
   var currentValues = /* @__PURE__ */ new WeakMap();
   function useMergeRefs(refs, defaultValue) {
-    var callbackRef = useCallbackRef2(defaultValue || null, function(newValue) {
+    var callbackRef = useCallbackRef3(defaultValue || null, function(newValue) {
       return refs.forEach(function(ref) {
         return assignRef(ref, newValue);
       });
@@ -1295,7 +1856,7 @@ var wp;
   }
 
   // node_modules/use-sidecar/dist/es2015/exports.js
-  var React16 = __toESM(require_react());
+  var React31 = __toESM(require_react());
   var SideCar = function(_a) {
     var sideCar = _a.sideCar, rest = __rest(_a, ["sideCar"]);
     if (!sideCar) {
@@ -1305,7 +1866,7 @@ var wp;
     if (!Target) {
       throw new Error("Sidecar medium not found");
     }
-    return React16.createElement(Target, __assign({}, rest));
+    return React31.createElement(Target, __assign({}, rest));
   };
   SideCar.isSideCarExport = true;
   function exportSidecar(medium, exported) {
@@ -1320,9 +1881,9 @@ var wp;
   var nothing = function() {
     return;
   };
-  var RemoveScroll = React17.forwardRef(function(props, parentRef) {
-    var ref = React17.useRef(null);
-    var _a = React17.useState({
+  var RemoveScroll = React32.forwardRef(function(props, parentRef) {
+    var ref = React32.useRef(null);
+    var _a = React32.useState({
       onScrollCapture: nothing,
       onWheelCapture: nothing,
       onTouchMoveCapture: nothing
@@ -1331,11 +1892,11 @@ var wp;
     var SideCar2 = sideCar;
     var containerRef = useMergeRefs([ref, parentRef]);
     var containerProps = __assign(__assign({}, rest), callbacks);
-    return React17.createElement(
-      React17.Fragment,
+    return React32.createElement(
+      React32.Fragment,
       null,
-      enabled && React17.createElement(SideCar2, { sideCar: effectCar, removeScrollBar, shards, noRelative, noIsolation, inert, setCallbacks, allowPinchZoom: !!allowPinchZoom, lockRef: ref, gapMode }),
-      forwardProps ? React17.cloneElement(React17.Children.only(children), __assign(__assign({}, containerProps), { ref: containerRef })) : React17.createElement(Container, __assign({}, containerProps, { className, ref: containerRef }), children)
+      enabled && React32.createElement(SideCar2, { sideCar: effectCar, removeScrollBar, shards, noRelative, noIsolation, inert, setCallbacks, allowPinchZoom: !!allowPinchZoom, lockRef: ref, gapMode }),
+      forwardProps ? React32.cloneElement(React32.Children.only(children), __assign(__assign({}, containerProps), { ref: containerRef })) : React32.createElement(Container, __assign({}, containerProps, { className, ref: containerRef }), children)
     );
   });
   RemoveScroll.defaultProps = {
@@ -1349,13 +1910,13 @@ var wp;
   };
 
   // node_modules/@radix-ui/react-dialog/node_modules/react-remove-scroll/dist/es2015/SideEffect.js
-  var React20 = __toESM(require_react());
+  var React35 = __toESM(require_react());
 
   // node_modules/react-remove-scroll-bar/dist/es2015/component.js
-  var React19 = __toESM(require_react());
+  var React34 = __toESM(require_react());
 
   // node_modules/react-style-singleton/dist/es2015/hook.js
-  var React18 = __toESM(require_react());
+  var React33 = __toESM(require_react());
 
   // node_modules/get-nonce/dist/es2015/index.js
   var currentNonce;
@@ -1419,7 +1980,7 @@ var wp;
   var styleHookSingleton = function() {
     var sheet = stylesheetSingleton();
     return function(styles, isDynamic) {
-      React18.useEffect(function() {
+      React33.useEffect(function() {
         sheet.add(styles);
         return function() {
           sheet.remove();
@@ -1493,7 +2054,7 @@ var wp;
     return isFinite(counter) ? counter : 0;
   };
   var useLockAttribute = function() {
-    React19.useEffect(function() {
+    React34.useEffect(function() {
       document.body.setAttribute(lockAttribute, (getCurrentUseCounter() + 1).toString());
       return function() {
         var newCounter = getCurrentUseCounter() - 1;
@@ -1508,10 +2069,10 @@ var wp;
   var RemoveScrollBar = function(_a) {
     var noRelative = _a.noRelative, noImportant = _a.noImportant, _b = _a.gapMode, gapMode = _b === void 0 ? "margin" : _b;
     useLockAttribute();
-    var gap = React19.useMemo(function() {
+    var gap = React34.useMemo(function() {
       return getGapWidth(gapMode);
     }, [gapMode]);
-    return React19.createElement(Style, { styles: getStyles(gap, !noRelative, gapMode, !noImportant ? "!important" : "") });
+    return React34.createElement(Style, { styles: getStyles(gap, !noRelative, gapMode, !noImportant ? "!important" : "") });
   };
 
   // node_modules/@radix-ui/react-dialog/node_modules/react-remove-scroll/dist/es2015/aggresiveCapture.js
@@ -1652,16 +2213,16 @@ var wp;
   var idCounter = 0;
   var lockStack = [];
   function RemoveScrollSideCar(props) {
-    var shouldPreventQueue = React20.useRef([]);
-    var touchStartRef = React20.useRef([0, 0]);
-    var activeAxis = React20.useRef();
-    var id = React20.useState(idCounter++)[0];
-    var Style2 = React20.useState(styleSingleton)[0];
-    var lastProps = React20.useRef(props);
-    React20.useEffect(function() {
+    var shouldPreventQueue = React35.useRef([]);
+    var touchStartRef = React35.useRef([0, 0]);
+    var activeAxis = React35.useRef();
+    var id = React35.useState(idCounter++)[0];
+    var Style2 = React35.useState(styleSingleton)[0];
+    var lastProps = React35.useRef(props);
+    React35.useEffect(function() {
       lastProps.current = props;
     }, [props]);
-    React20.useEffect(function() {
+    React35.useEffect(function() {
       if (props.inert) {
         document.body.classList.add("block-interactivity-".concat(id));
         var allow_1 = __spreadArray([props.lockRef.current], (props.shards || []).map(extractRef), true).filter(Boolean);
@@ -1677,7 +2238,7 @@ var wp;
       }
       return;
     }, [props.inert, props.lockRef.current, props.shards]);
-    var shouldCancelEvent = React20.useCallback(function(event, parent) {
+    var shouldCancelEvent = React35.useCallback(function(event, parent) {
       if ("touches" in event && event.touches.length === 2 || event.type === "wheel" && event.ctrlKey) {
         return !lastProps.current.allowPinchZoom;
       }
@@ -1713,7 +2274,7 @@ var wp;
       var cancelingAxis = activeAxis.current || currentAxis;
       return handleScroll(cancelingAxis, parent, event, cancelingAxis === "h" ? deltaX : deltaY, true);
     }, []);
-    var shouldPrevent = React20.useCallback(function(_event) {
+    var shouldPrevent = React35.useCallback(function(_event) {
       var event = _event;
       if (!lockStack.length || lockStack[lockStack.length - 1] !== Style2) {
         return;
@@ -1740,7 +2301,7 @@ var wp;
         }
       }
     }, []);
-    var shouldCancel = React20.useCallback(function(name, delta, target, should) {
+    var shouldCancel = React35.useCallback(function(name, delta, target, should) {
       var event = { name, delta, target, should, shadowParent: getOutermostShadowParent(target) };
       shouldPreventQueue.current.push(event);
       setTimeout(function() {
@@ -1749,17 +2310,17 @@ var wp;
         });
       }, 1);
     }, []);
-    var scrollTouchStart = React20.useCallback(function(event) {
+    var scrollTouchStart = React35.useCallback(function(event) {
       touchStartRef.current = getTouchXY(event);
       activeAxis.current = void 0;
     }, []);
-    var scrollWheel = React20.useCallback(function(event) {
+    var scrollWheel = React35.useCallback(function(event) {
       shouldCancel(event.type, getDeltaXY(event), event.target, shouldCancelEvent(event, props.lockRef.current));
     }, []);
-    var scrollTouchMove = React20.useCallback(function(event) {
+    var scrollTouchMove = React35.useCallback(function(event) {
       shouldCancel(event.type, getTouchXY(event), event.target, shouldCancelEvent(event, props.lockRef.current));
     }, []);
-    React20.useEffect(function() {
+    React35.useEffect(function() {
       lockStack.push(Style2);
       props.setCallbacks({
         onScrollCapture: scrollWheel,
@@ -1779,11 +2340,11 @@ var wp;
       };
     }, []);
     var removeScrollBar = props.removeScrollBar, inert = props.inert;
-    return React20.createElement(
-      React20.Fragment,
+    return React35.createElement(
+      React35.Fragment,
       null,
-      inert ? React20.createElement(Style2, { styles: generateStyle(id) }) : null,
-      removeScrollBar ? React20.createElement(RemoveScrollBar, { noRelative: props.noRelative, gapMode: props.gapMode }) : null
+      inert ? React35.createElement(Style2, { styles: generateStyle(id) }) : null,
+      removeScrollBar ? React35.createElement(RemoveScrollBar, { noRelative: props.noRelative, gapMode: props.gapMode }) : null
     );
   }
   function getOutermostShadowParent(node) {
@@ -1802,8 +2363,8 @@ var wp;
   var sidecar_default = exportSidecar(effectCar, RemoveScrollSideCar);
 
   // node_modules/@radix-ui/react-dialog/node_modules/react-remove-scroll/dist/es2015/Combination.js
-  var ReactRemoveScroll = React21.forwardRef(function(props, ref) {
-    return React21.createElement(RemoveScroll, __assign({}, props, { ref, sideCar: sidecar_default }));
+  var ReactRemoveScroll = React36.forwardRef(function(props, ref) {
+    return React36.createElement(RemoveScroll, __assign({}, props, { ref, sideCar: sidecar_default }));
   });
   ReactRemoveScroll.classNames = RemoveScroll.classNames;
   var Combination_default = ReactRemoveScroll;
@@ -1930,7 +2491,7 @@ var wp;
   };
 
   // node_modules/@radix-ui/react-dialog/dist/index.mjs
-  var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
   var DIALOG_NAME = "Dialog";
   var [createDialogContext, createDialogScope] = createContextScope(DIALOG_NAME);
   var [DialogProvider, useDialogContext] = createDialogContext(DIALOG_NAME);
@@ -1943,15 +2504,15 @@ var wp;
       onOpenChange,
       modal = true
     } = props;
-    const triggerRef = React24.useRef(null);
-    const contentRef = React24.useRef(null);
+    const triggerRef = React37.useRef(null);
+    const contentRef = React37.useRef(null);
     const [open2, setOpen] = useControllableState({
       prop: openProp,
       defaultProp: defaultOpen ?? false,
       onChange: onOpenChange,
       caller: DIALOG_NAME
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
       DialogProvider,
       {
         scope: __scopeDialog,
@@ -1962,7 +2523,7 @@ var wp;
         descriptionId: useId(),
         open: open2,
         onOpenChange: setOpen,
-        onOpenToggle: React24.useCallback(() => setOpen((prevOpen) => !prevOpen), [setOpen]),
+        onOpenToggle: React37.useCallback(() => setOpen((prevOpen) => !prevOpen), [setOpen]),
         modal,
         children
       }
@@ -1970,13 +2531,13 @@ var wp;
   };
   Dialog.displayName = DIALOG_NAME;
   var TRIGGER_NAME = "DialogTrigger";
-  var DialogTrigger = React24.forwardRef(
+  var DialogTrigger = React37.forwardRef(
     (props, forwardedRef) => {
       const { __scopeDialog, ...triggerProps } = props;
       const context2 = useDialogContext(TRIGGER_NAME, __scopeDialog);
       const composedTriggerRef = useComposedRefs(forwardedRef, context2.triggerRef);
-      return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
-        Primitive.button,
+      return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+        Primitive4.button,
         {
           type: "button",
           "aria-haspopup": "dialog",
@@ -1998,29 +2559,29 @@ var wp;
   var DialogPortal = (props) => {
     const { __scopeDialog, forceMount, children, container } = props;
     const context2 = useDialogContext(PORTAL_NAME2, __scopeDialog);
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(PortalProvider, { scope: __scopeDialog, forceMount, children: React24.Children.map(children, (child) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Presence, { present: forceMount || context2.open, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Portal, { asChild: true, container, children: child }) })) });
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(PortalProvider, { scope: __scopeDialog, forceMount, children: React37.Children.map(children, (child) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Presence, { present: forceMount || context2.open, children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Portal, { asChild: true, container, children: child }) })) });
   };
   DialogPortal.displayName = PORTAL_NAME2;
   var OVERLAY_NAME = "DialogOverlay";
-  var DialogOverlay = React24.forwardRef(
+  var DialogOverlay = React37.forwardRef(
     (props, forwardedRef) => {
       const portalContext = usePortalContext(OVERLAY_NAME, props.__scopeDialog);
       const { forceMount = portalContext.forceMount, ...overlayProps } = props;
       const context2 = useDialogContext(OVERLAY_NAME, props.__scopeDialog);
-      return context2.modal ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Presence, { present: forceMount || context2.open, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(DialogOverlayImpl, { ...overlayProps, ref: forwardedRef }) }) : null;
+      return context2.modal ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Presence, { present: forceMount || context2.open, children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(DialogOverlayImpl, { ...overlayProps, ref: forwardedRef }) }) : null;
     }
   );
   DialogOverlay.displayName = OVERLAY_NAME;
-  var Slot = createSlot("DialogOverlay.RemoveScroll");
-  var DialogOverlayImpl = React24.forwardRef(
+  var Slot = createSlot4("DialogOverlay.RemoveScroll");
+  var DialogOverlayImpl = React37.forwardRef(
     (props, forwardedRef) => {
       const { __scopeDialog, ...overlayProps } = props;
       const context2 = useDialogContext(OVERLAY_NAME, __scopeDialog);
       return (
         // Make sure `Content` is scrollable even when it doesn't live inside `RemoveScroll`
         // ie. when `Overlay` and `Content` are siblings
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Combination_default, { as: Slot, allowPinchZoom: true, shards: [context2.contentRef], children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
-          Primitive.div,
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Combination_default, { as: Slot, allowPinchZoom: true, shards: [context2.contentRef], children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+          Primitive4.div,
           {
             "data-state": getState(context2.open),
             ...overlayProps,
@@ -2032,25 +2593,25 @@ var wp;
     }
   );
   var CONTENT_NAME = "DialogContent";
-  var DialogContent = React24.forwardRef(
+  var DialogContent = React37.forwardRef(
     (props, forwardedRef) => {
       const portalContext = usePortalContext(CONTENT_NAME, props.__scopeDialog);
       const { forceMount = portalContext.forceMount, ...contentProps } = props;
       const context2 = useDialogContext(CONTENT_NAME, props.__scopeDialog);
-      return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Presence, { present: forceMount || context2.open, children: context2.modal ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(DialogContentModal, { ...contentProps, ref: forwardedRef }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(DialogContentNonModal, { ...contentProps, ref: forwardedRef }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Presence, { present: forceMount || context2.open, children: context2.modal ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(DialogContentModal, { ...contentProps, ref: forwardedRef }) : /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(DialogContentNonModal, { ...contentProps, ref: forwardedRef }) });
     }
   );
   DialogContent.displayName = CONTENT_NAME;
-  var DialogContentModal = React24.forwardRef(
+  var DialogContentModal = React37.forwardRef(
     (props, forwardedRef) => {
       const context2 = useDialogContext(CONTENT_NAME, props.__scopeDialog);
-      const contentRef = React24.useRef(null);
+      const contentRef = React37.useRef(null);
       const composedRefs = useComposedRefs(forwardedRef, context2.contentRef, contentRef);
-      React24.useEffect(() => {
+      React37.useEffect(() => {
         const content = contentRef.current;
         if (content) return hideOthers(content);
       }, []);
-      return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
         DialogContentImpl,
         {
           ...props,
@@ -2075,12 +2636,12 @@ var wp;
       );
     }
   );
-  var DialogContentNonModal = React24.forwardRef(
+  var DialogContentNonModal = React37.forwardRef(
     (props, forwardedRef) => {
       const context2 = useDialogContext(CONTENT_NAME, props.__scopeDialog);
-      const hasInteractedOutsideRef = React24.useRef(false);
-      const hasPointerDownOutsideRef = React24.useRef(false);
-      return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+      const hasInteractedOutsideRef = React37.useRef(false);
+      const hasPointerDownOutsideRef = React37.useRef(false);
+      return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
         DialogContentImpl,
         {
           ...props,
@@ -2115,15 +2676,15 @@ var wp;
       );
     }
   );
-  var DialogContentImpl = React24.forwardRef(
+  var DialogContentImpl = React37.forwardRef(
     (props, forwardedRef) => {
       const { __scopeDialog, trapFocus, onOpenAutoFocus, onCloseAutoFocus, ...contentProps } = props;
       const context2 = useDialogContext(CONTENT_NAME, __scopeDialog);
-      const contentRef = React24.useRef(null);
+      const contentRef = React37.useRef(null);
       const composedRefs = useComposedRefs(forwardedRef, contentRef);
       useFocusGuards();
-      return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_jsx_runtime13.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
           FocusScope,
           {
             asChild: true,
@@ -2131,7 +2692,7 @@ var wp;
             trapped: trapFocus,
             onMountAutoFocus: onOpenAutoFocus,
             onUnmountAutoFocus: onCloseAutoFocus,
-            children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
               DismissableLayer,
               {
                 role: "dialog",
@@ -2146,38 +2707,38 @@ var wp;
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(TitleWarning, { titleId: context2.titleId }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(DescriptionWarning, { contentRef, descriptionId: context2.descriptionId })
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_jsx_runtime13.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(TitleWarning, { titleId: context2.titleId }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(DescriptionWarning, { contentRef, descriptionId: context2.descriptionId })
         ] })
       ] });
     }
   );
   var TITLE_NAME = "DialogTitle";
-  var DialogTitle = React24.forwardRef(
+  var DialogTitle = React37.forwardRef(
     (props, forwardedRef) => {
       const { __scopeDialog, ...titleProps } = props;
       const context2 = useDialogContext(TITLE_NAME, __scopeDialog);
-      return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Primitive.h2, { id: context2.titleId, ...titleProps, ref: forwardedRef });
+      return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Primitive4.h2, { id: context2.titleId, ...titleProps, ref: forwardedRef });
     }
   );
   DialogTitle.displayName = TITLE_NAME;
   var DESCRIPTION_NAME = "DialogDescription";
-  var DialogDescription = React24.forwardRef(
+  var DialogDescription = React37.forwardRef(
     (props, forwardedRef) => {
       const { __scopeDialog, ...descriptionProps } = props;
       const context2 = useDialogContext(DESCRIPTION_NAME, __scopeDialog);
-      return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Primitive.p, { id: context2.descriptionId, ...descriptionProps, ref: forwardedRef });
+      return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Primitive4.p, { id: context2.descriptionId, ...descriptionProps, ref: forwardedRef });
     }
   );
   DialogDescription.displayName = DESCRIPTION_NAME;
   var CLOSE_NAME = "DialogClose";
-  var DialogClose = React24.forwardRef(
+  var DialogClose = React37.forwardRef(
     (props, forwardedRef) => {
       const { __scopeDialog, ...closeProps } = props;
       const context2 = useDialogContext(CLOSE_NAME, __scopeDialog);
-      return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
-        Primitive.button,
+      return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+        Primitive4.button,
         {
           type: "button",
           ...closeProps,
@@ -2204,7 +2765,7 @@ var wp;
 If you want to hide the \`${titleWarningContext.titleName}\`, you can wrap it with our VisuallyHidden component.
 
 For more information, see https://radix-ui.com/primitives/docs/components/${titleWarningContext.docsSlug}`;
-    React24.useEffect(() => {
+    React37.useEffect(() => {
       if (titleId) {
         const hasTitle = document.getElementById(titleId);
         if (!hasTitle) console.error(MESSAGE);
@@ -2216,7 +2777,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
   var DescriptionWarning = ({ contentRef, descriptionId }) => {
     const descriptionWarningContext = useWarningContext(DESCRIPTION_WARNING_NAME);
     const MESSAGE = `Warning: Missing \`Description\` or \`aria-describedby={undefined}\` for {${descriptionWarningContext.contentName}}.`;
-    React24.useEffect(() => {
+    React37.useEffect(() => {
       const describedById = contentRef.current?.getAttribute("aria-describedby");
       if (descriptionId && describedById) {
         const hasDescription = document.getElementById(descriptionId);
@@ -2232,6 +2793,202 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
 
   // node_modules/cmdk/dist/index.mjs
   var t = __toESM(require_react(), 1);
+
+  // node_modules/cmdk/node_modules/@radix-ui/react-primitive/dist/index.mjs
+  var React40 = __toESM(require_react(), 1);
+  var ReactDOM6 = __toESM(require_react_dom(), 1);
+
+  // node_modules/cmdk/node_modules/@radix-ui/react-slot/dist/index.mjs
+  var React39 = __toESM(require_react(), 1);
+
+  // node_modules/cmdk/node_modules/@radix-ui/react-compose-refs/dist/index.mjs
+  var React38 = __toESM(require_react(), 1);
+  function setRef6(ref, value) {
+    if (typeof ref === "function") {
+      return ref(value);
+    } else if (ref !== null && ref !== void 0) {
+      ref.current = value;
+    }
+  }
+  function composeRefs6(...refs) {
+    return (node) => {
+      let hasCleanup = false;
+      const cleanups = refs.map((ref) => {
+        const cleanup = setRef6(ref, node);
+        if (!hasCleanup && typeof cleanup == "function") {
+          hasCleanup = true;
+        }
+        return cleanup;
+      });
+      if (hasCleanup) {
+        return () => {
+          for (let i = 0; i < cleanups.length; i++) {
+            const cleanup = cleanups[i];
+            if (typeof cleanup == "function") {
+              cleanup();
+            } else {
+              setRef6(refs[i], null);
+            }
+          }
+        };
+      }
+    };
+  }
+
+  // node_modules/cmdk/node_modules/@radix-ui/react-slot/dist/index.mjs
+  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+  var REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+  var use = React39[" use ".trim().toString()];
+  function isPromiseLike(value) {
+    return typeof value === "object" && value !== null && "then" in value;
+  }
+  function isLazyComponent(element) {
+    return element != null && typeof element === "object" && "$$typeof" in element && element.$$typeof === REACT_LAZY_TYPE && "_payload" in element && isPromiseLike(element._payload);
+  }
+  // @__NO_SIDE_EFFECTS__
+  function createSlot5(ownerName) {
+    const SlotClone = /* @__PURE__ */ createSlotClone5(ownerName);
+    const Slot2 = React39.forwardRef((props, forwardedRef) => {
+      let { children, ...slotProps } = props;
+      if (isLazyComponent(children) && typeof use === "function") {
+        children = use(children._payload);
+      }
+      const childrenArray = React39.Children.toArray(children);
+      const slottable = childrenArray.find(isSlottable5);
+      if (slottable) {
+        const newElement = slottable.props.children;
+        const newChildren = childrenArray.map((child) => {
+          if (child === slottable) {
+            if (React39.Children.count(newElement) > 1) return React39.Children.only(null);
+            return React39.isValidElement(newElement) ? newElement.props.children : null;
+          } else {
+            return child;
+          }
+        });
+        return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children: React39.isValidElement(newElement) ? React39.cloneElement(newElement, void 0, newChildren) : null });
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children });
+    });
+    Slot2.displayName = `${ownerName}.Slot`;
+    return Slot2;
+  }
+  // @__NO_SIDE_EFFECTS__
+  function createSlotClone5(ownerName) {
+    const SlotClone = React39.forwardRef((props, forwardedRef) => {
+      let { children, ...slotProps } = props;
+      if (isLazyComponent(children) && typeof use === "function") {
+        children = use(children._payload);
+      }
+      if (React39.isValidElement(children)) {
+        const childrenRef = getElementRef6(children);
+        const props2 = mergeProps5(slotProps, children.props);
+        if (children.type !== React39.Fragment) {
+          props2.ref = forwardedRef ? composeRefs6(forwardedRef, childrenRef) : childrenRef;
+        }
+        return React39.cloneElement(children, props2);
+      }
+      return React39.Children.count(children) > 1 ? React39.Children.only(null) : null;
+    });
+    SlotClone.displayName = `${ownerName}.SlotClone`;
+    return SlotClone;
+  }
+  var SLOTTABLE_IDENTIFIER5 = /* @__PURE__ */ Symbol("radix.slottable");
+  function isSlottable5(child) {
+    return React39.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER5;
+  }
+  function mergeProps5(slotProps, childProps) {
+    const overrideProps = { ...childProps };
+    for (const propName in childProps) {
+      const slotPropValue = slotProps[propName];
+      const childPropValue = childProps[propName];
+      const isHandler = /^on[A-Z]/.test(propName);
+      if (isHandler) {
+        if (slotPropValue && childPropValue) {
+          overrideProps[propName] = (...args) => {
+            const result = childPropValue(...args);
+            slotPropValue(...args);
+            return result;
+          };
+        } else if (slotPropValue) {
+          overrideProps[propName] = slotPropValue;
+        }
+      } else if (propName === "style") {
+        overrideProps[propName] = { ...slotPropValue, ...childPropValue };
+      } else if (propName === "className") {
+        overrideProps[propName] = [slotPropValue, childPropValue].filter(Boolean).join(" ");
+      }
+    }
+    return { ...slotProps, ...overrideProps };
+  }
+  function getElementRef6(element) {
+    let getter = Object.getOwnPropertyDescriptor(element.props, "ref")?.get;
+    let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+    if (mayWarn) {
+      return element.ref;
+    }
+    getter = Object.getOwnPropertyDescriptor(element, "ref")?.get;
+    mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+    if (mayWarn) {
+      return element.props.ref;
+    }
+    return element.props.ref || element.ref;
+  }
+
+  // node_modules/cmdk/node_modules/@radix-ui/react-primitive/dist/index.mjs
+  var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+  var NODES5 = [
+    "a",
+    "button",
+    "div",
+    "form",
+    "h2",
+    "h3",
+    "img",
+    "input",
+    "label",
+    "li",
+    "nav",
+    "ol",
+    "p",
+    "select",
+    "span",
+    "svg",
+    "ul"
+  ];
+  var Primitive5 = NODES5.reduce((primitive, node) => {
+    const Slot2 = createSlot5(`Primitive.${node}`);
+    const Node2 = React40.forwardRef((props, forwardedRef) => {
+      const { asChild, ...primitiveProps } = props;
+      const Comp = asChild ? Slot2 : node;
+      if (typeof window !== "undefined") {
+        window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
+    });
+    Node2.displayName = `Primitive.${node}`;
+    return { ...primitive, [node]: Node2 };
+  }, {});
+
+  // node_modules/cmdk/node_modules/@radix-ui/react-id/dist/index.mjs
+  var React42 = __toESM(require_react(), 1);
+
+  // node_modules/cmdk/node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs
+  var React41 = __toESM(require_react(), 1);
+  var useLayoutEffect24 = globalThis?.document ? React41.useLayoutEffect : () => {
+  };
+
+  // node_modules/cmdk/node_modules/@radix-ui/react-id/dist/index.mjs
+  var useReactId2 = React42[" useId ".trim().toString()] || (() => void 0);
+  var count3 = 0;
+  function useId2(deterministicId) {
+    const [id, setId] = React42.useState(useReactId2());
+    useLayoutEffect24(() => {
+      if (!deterministicId) setId((reactId) => reactId ?? String(count3++));
+    }, [deterministicId]);
+    return deterministicId || (id ? `radix-${id}` : "");
+  }
+
+  // node_modules/cmdk/dist/index.mjs
   var N = '[cmdk-group=""]';
   var Y2 = '[cmdk-group-items=""]';
   var be = '[cmdk-group-heading=""]';
@@ -2249,7 +3006,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
     let n = L(() => {
       var e, a;
       return { search: "", value: (a = (e = r2.value) != null ? e : r2.defaultValue) != null ? a : "", selectedItemId: void 0, filtered: { count: 0, items: /* @__PURE__ */ new Map(), groups: /* @__PURE__ */ new Set() } };
-    }), u2 = L(() => /* @__PURE__ */ new Set()), c = L(() => /* @__PURE__ */ new Map()), d = L(() => /* @__PURE__ */ new Map()), f = L(() => /* @__PURE__ */ new Set()), p2 = pe(r2), { label: b, children: m2, value: R, onValueChange: x, filter: C, shouldFilter: S, loop: A, disablePointerSelection: ge = false, vimBindings: j = true, ...O } = r2, $2 = useId(), q = useId(), _ = useId(), I = t.useRef(null), v = ke();
+    }), u2 = L(() => /* @__PURE__ */ new Set()), c = L(() => /* @__PURE__ */ new Map()), d = L(() => /* @__PURE__ */ new Map()), f = L(() => /* @__PURE__ */ new Set()), p2 = pe(r2), { label: b, children: m2, value: R, onValueChange: x, filter: C, shouldFilter: S, loop: A, disablePointerSelection: ge = false, vimBindings: j = true, ...O } = r2, $2 = useId2(), q = useId2(), _ = useId2(), I = t.useRef(null), v = ke();
     k2(() => {
       if (R !== void 0) {
         let e = R.trim();
@@ -2379,7 +3136,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
     }, se = (e) => {
       e.preventDefault(), e.metaKey ? X2(0) : e.altKey ? re(-1) : Q(-1);
     };
-    return t.createElement(Primitive.div, { ref: o, tabIndex: -1, ...O, "cmdk-root": "", onKeyDown: (e) => {
+    return t.createElement(Primitive5.div, { ref: o, tabIndex: -1, ...O, "cmdk-root": "", onKeyDown: (e) => {
       var s;
       (s = O.onKeyDown) == null || s.call(O, e);
       let a = e.nativeEvent.isComposing || e.keyCode === 229;
@@ -2423,7 +3180,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
   });
   var he = t.forwardRef((r2, o) => {
     var _, I;
-    let n = useId(), u2 = t.useRef(null), c = t.useContext(fe), d = K2(), f = pe(r2), p2 = (I = (_ = f.current) == null ? void 0 : _.forceMount) != null ? I : c == null ? void 0 : c.forceMount;
+    let n = useId2(), u2 = t.useRef(null), c = t.useContext(fe), d = K2(), f = pe(r2), p2 = (I = (_ = f.current) == null ? void 0 : _.forceMount) != null ? I : c == null ? void 0 : c.forceMount;
     k2(() => {
       if (!p2) return d.item(n, c == null ? void 0 : c.id);
     }, [p2]);
@@ -2441,23 +3198,23 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
     }
     if (!x) return null;
     let { disabled: A, value: ge, onSelect: j, forceMount: O, keywords: $2, ...q } = r2;
-    return t.createElement(Primitive.div, { ref: composeRefs(u2, o), ...q, id: n, "cmdk-item": "", role: "option", "aria-disabled": !!A, "aria-selected": !!R, "data-disabled": !!A, "data-selected": !!R, onPointerMove: A || d.getDisablePointerSelection() ? void 0 : S, onClick: A ? void 0 : C }, r2.children);
+    return t.createElement(Primitive5.div, { ref: composeRefs6(u2, o), ...q, id: n, "cmdk-item": "", role: "option", "aria-disabled": !!A, "aria-selected": !!R, "data-disabled": !!A, "data-selected": !!R, onPointerMove: A || d.getDisablePointerSelection() ? void 0 : S, onClick: A ? void 0 : C }, r2.children);
   });
   var Ee = t.forwardRef((r2, o) => {
-    let { heading: n, children: u2, forceMount: c, ...d } = r2, f = useId(), p2 = t.useRef(null), b = t.useRef(null), m2 = useId(), R = K2(), x = P((S) => c || R.filter() === false ? true : S.search ? S.filtered.groups.has(f) : true);
+    let { heading: n, children: u2, forceMount: c, ...d } = r2, f = useId2(), p2 = t.useRef(null), b = t.useRef(null), m2 = useId2(), R = K2(), x = P((S) => c || R.filter() === false ? true : S.search ? S.filtered.groups.has(f) : true);
     k2(() => R.group(f), []), ve(f, p2, [r2.value, r2.heading, b]);
     let C = t.useMemo(() => ({ id: f, forceMount: c }), [c]);
-    return t.createElement(Primitive.div, { ref: composeRefs(p2, o), ...d, "cmdk-group": "", role: "presentation", hidden: x ? void 0 : true }, n && t.createElement("div", { ref: b, "cmdk-group-heading": "", "aria-hidden": true, id: m2 }, n), B2(r2, (S) => t.createElement("div", { "cmdk-group-items": "", role: "group", "aria-labelledby": n ? m2 : void 0 }, t.createElement(fe.Provider, { value: C }, S))));
+    return t.createElement(Primitive5.div, { ref: composeRefs6(p2, o), ...d, "cmdk-group": "", role: "presentation", hidden: x ? void 0 : true }, n && t.createElement("div", { ref: b, "cmdk-group-heading": "", "aria-hidden": true, id: m2 }, n), B2(r2, (S) => t.createElement("div", { "cmdk-group-items": "", role: "group", "aria-labelledby": n ? m2 : void 0 }, t.createElement(fe.Provider, { value: C }, S))));
   });
   var ye = t.forwardRef((r2, o) => {
     let { alwaysRender: n, ...u2 } = r2, c = t.useRef(null), d = P((f) => !f.search);
-    return !n && !d ? null : t.createElement(Primitive.div, { ref: composeRefs(c, o), ...u2, "cmdk-separator": "", role: "separator" });
+    return !n && !d ? null : t.createElement(Primitive5.div, { ref: composeRefs6(c, o), ...u2, "cmdk-separator": "", role: "separator" });
   });
   var Se = t.forwardRef((r2, o) => {
     let { onValueChange: n, ...u2 } = r2, c = r2.value != null, d = ee(), f = P((m2) => m2.search), p2 = P((m2) => m2.selectedItemId), b = K2();
     return t.useEffect(() => {
       r2.value != null && d.setState("search", r2.value);
-    }, [r2.value]), t.createElement(Primitive.input, { ref: o, ...u2, "cmdk-input": "", autoComplete: "off", autoCorrect: "off", spellCheck: false, "aria-autocomplete": "list", role: "combobox", "aria-expanded": true, "aria-controls": b.listId, "aria-labelledby": b.labelId, "aria-activedescendant": p2, id: b.inputId, type: "text", value: c ? r2.value : f, onChange: (m2) => {
+    }, [r2.value]), t.createElement(Primitive5.input, { ref: o, ...u2, "cmdk-input": "", autoComplete: "off", autoCorrect: "off", spellCheck: false, "aria-autocomplete": "list", role: "combobox", "aria-expanded": true, "aria-controls": b.listId, "aria-labelledby": b.labelId, "aria-activedescendant": p2, id: b.inputId, type: "text", value: c ? r2.value : f, onChange: (m2) => {
       c || d.setState("search", m2.target.value), n == null || n(m2.target.value);
     } });
   });
@@ -2475,16 +3232,16 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
           cancelAnimationFrame(x), C.unobserve(m2);
         };
       }
-    }, []), t.createElement(Primitive.div, { ref: composeRefs(d, o), ...c, "cmdk-list": "", role: "listbox", tabIndex: -1, "aria-activedescendant": p2, "aria-label": u2, id: b.listId }, B2(r2, (m2) => t.createElement("div", { ref: composeRefs(f, b.listInnerRef), "cmdk-list-sizer": "" }, m2)));
+    }, []), t.createElement(Primitive5.div, { ref: composeRefs6(d, o), ...c, "cmdk-list": "", role: "listbox", tabIndex: -1, "aria-activedescendant": p2, "aria-label": u2, id: b.listId }, B2(r2, (m2) => t.createElement("div", { ref: composeRefs6(f, b.listInnerRef), "cmdk-list-sizer": "" }, m2)));
   });
   var xe = t.forwardRef((r2, o) => {
     let { open: n, onOpenChange: u2, overlayClassName: c, contentClassName: d, container: f, ...p2 } = r2;
     return t.createElement(Root, { open: n, onOpenChange: u2 }, t.createElement(Portal2, { container: f }, t.createElement(Overlay, { "cmdk-overlay": "", className: c }), t.createElement(Content, { "aria-label": r2.label, "cmdk-dialog": "", className: d }, t.createElement(me, { ref: o, ...p2 }))));
   });
-  var Ie = t.forwardRef((r2, o) => P((u2) => u2.filtered.count === 0) ? t.createElement(Primitive.div, { ref: o, ...r2, "cmdk-empty": "", role: "presentation" }) : null);
+  var Ie = t.forwardRef((r2, o) => P((u2) => u2.filtered.count === 0) ? t.createElement(Primitive5.div, { ref: o, ...r2, "cmdk-empty": "", role: "presentation" }) : null);
   var Pe = t.forwardRef((r2, o) => {
     let { progress: n, children: u2, label: c = "Loading...", ...d } = r2;
-    return t.createElement(Primitive.div, { ref: o, ...d, "cmdk-loading": "", role: "progressbar", "aria-valuenow": n, "aria-valuemin": 0, "aria-valuemax": 100, "aria-label": c }, B2(r2, (f) => t.createElement("div", { "aria-hidden": true }, f)));
+    return t.createElement(Primitive5.div, { ref: o, ...d, "cmdk-loading": "", role: "progressbar", "aria-valuenow": n, "aria-valuemin": 0, "aria-valuemax": 100, "aria-label": c }, B2(r2, (f) => t.createElement("div", { "aria-hidden": true }, f)));
   });
   var _e = Object.assign(me, { List: Ce, Item: he, Input: Se, Group: Ee, Separator: ye, Dialog: xe, Empty: Ie, Loading: Pe });
   function we(r2, o) {
@@ -2585,13 +3342,13 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
 
   // packages/icons/build-module/library/arrow-right.mjs
   var import_primitives = __toESM(require_primitives(), 1);
-  var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
-  var arrow_right_default = /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primitives.Path, { d: "m14.5 6.5-1 1 3.7 3.7H4v1.6h13.2l-3.7 3.7 1 1 5.6-5.5z" }) });
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+  var arrow_right_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives.Path, { d: "m14.5 6.5-1 1 3.7 3.7H4v1.6h13.2l-3.7 3.7 1 1 5.6-5.5z" }) });
 
   // packages/icons/build-module/library/search.mjs
   var import_primitives2 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
-  var search_default = /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_primitives2.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+  var search_default = /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_primitives2.Path, { d: "M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z" }) });
 
   // packages/commands/build-module/store/index.mjs
   var import_data3 = __toESM(require_data(), 1);
@@ -2906,7 +3663,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
   }
 
   // packages/commands/build-module/components/command-menu.mjs
-  var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
   var { withIgnoreIMEEvents } = unlock(import_components.privateApis);
   var ITEM_ID_PREFIX = "command-palette-item-";
   var inputLabel = (0, import_i18n.__)("Search commands and settings");
@@ -2928,7 +3685,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
     const commandCategory = category ?? command.category;
     const label = command.searchLabel ?? command.label;
     const value = valuePrefix ? `${valuePrefix}${command.name}` : label;
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
       _e.Item,
       {
         id: `${ITEM_ID_PREFIX}${value.toLowerCase()}`,
@@ -2938,7 +3695,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
           recordUsage(command.name);
           command.callback({ close: close2 });
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
           import_components.__experimentalHStack,
           {
             alignment: "left",
@@ -2946,15 +3703,15 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
               "has-icon": CATEGORY_ICONS[commandCategory] || command.icon
             }),
             children: [
-              CATEGORY_ICONS[commandCategory] ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(icon_default, { icon: CATEGORY_ICONS[commandCategory] }) : isValidIcon(command.icon) && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(icon_default, { icon: command.icon }),
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: "commands-command-menu__item-label", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              CATEGORY_ICONS[commandCategory] ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(icon_default, { icon: CATEGORY_ICONS[commandCategory] }) : isValidIcon(command.icon) && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(icon_default, { icon: command.icon }),
+              /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { className: "commands-command-menu__item-label", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
                 import_components.TextHighlight,
                 {
                   text: command.label,
                   highlight: search
                 }
               ) }),
-              CATEGORY_LABELS[commandCategory] && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: "commands-command-menu__item-category", children: CATEGORY_LABELS[commandCategory] })
+              CATEGORY_LABELS[commandCategory] && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { className: "commands-command-menu__item-category", children: CATEGORY_LABELS[commandCategory] })
             ]
           }
         )
@@ -2971,7 +3728,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
     if (!commands2.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_jsx_runtime10.Fragment, { children: commands2.map((command) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_jsx_runtime18.Fragment, { children: commands2.map((command) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
       CommandItem,
       {
         command,
@@ -2991,7 +3748,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
         setKey((prevKey) => prevKey + 1);
       }
     }, [hook]);
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
       CommandMenuLoader,
       {
         hook: currentLoaderRef.current,
@@ -3001,8 +3758,8 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
     );
   }
   function CommandList({ search, commands: commands2, loaders, valuePrefix }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_jsx_runtime10.Fragment, { children: [
-      commands2.map((command) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_jsx_runtime18.Fragment, { children: [
+      commands2.map((command) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
         CommandItem,
         {
           command,
@@ -3011,7 +3768,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
         },
         command.name
       )),
-      loaders.map((loader) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+      loaders.map((loader) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
         CommandMenuLoaderWrapper,
         {
           name: loader.name,
@@ -3033,8 +3790,8 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
     if (!commands2.length && !loaders.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(_e.Group, { heading: (0, import_i18n.__)("Recent"), children: [
-      loaders.map((loader) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(_e.Group, { heading: (0, import_i18n.__)("Recent"), children: [
+      loaders.map((loader) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
         RecentLoaderRunner,
         {
           name: loader.name,
@@ -3044,7 +3801,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
         },
         loader.name
       )),
-      commands2.map((command) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+      commands2.map((command) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
         CommandItem,
         {
           command,
@@ -3063,7 +3820,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
         loaders: getCommandLoaders2(true)
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(_e.Group, { heading: (0, import_i18n.__)("Suggestions"), children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(CommandList, { search: "", commands: commands2, loaders }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(_e.Group, { heading: (0, import_i18n.__)("Suggestions"), children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(CommandList, { search: "", commands: commands2, loaders }) });
   }
   function ResultsGroup({ search }) {
     const { commands: commands2, contextualCommands, loaders, contextualLoaders } = (0, import_data5.useSelect)((select) => {
@@ -3075,8 +3832,8 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
         contextualLoaders: getCommandLoaders2(true)
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(_e.Group, { heading: (0, import_i18n.__)("Results"), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(_e.Group, { heading: (0, import_i18n.__)("Results"), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
         CommandList,
         {
           search,
@@ -3084,7 +3841,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
           loaders
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
         CommandList,
         {
           search,
@@ -3101,7 +3858,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
     (0, import_element3.useEffect)(() => {
       commandMenuInput.current.focus();
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
       _e.Input,
       {
         ref: commandMenuInput,
@@ -3159,7 +3916,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
     if (!paletteIsOpen) {
       return false;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
       import_components.Modal,
       {
         className: "commands-command-menu",
@@ -3168,16 +3925,16 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
         __experimentalHideHeader: true,
         size: "medium",
         contentLabel: (0, import_i18n.__)("Command palette"),
-        children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "commands-command-menu__container", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(_e, { label: inputLabel, loop: true, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "commands-command-menu__header", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "commands-command-menu__container", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(_e, { label: inputLabel, loop: true, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "commands-command-menu__header", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
               icon_default,
               {
                 className: "commands-command-menu__header-search-icon",
                 icon: search_default
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
               CommandInput,
               {
                 search,
@@ -3185,11 +3942,11 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(_e.List, { label: (0, import_i18n.__)("Command suggestions"), children: [
-            search && !loadersLoading && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(_e.Empty, { children: (0, import_i18n.__)("No results found.") }),
-            !search && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(RecentGroup, {}),
-            !search && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(SuggestionsGroup, {}),
-            search && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(ResultsGroup, { search })
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(_e.List, { label: (0, import_i18n.__)("Command suggestions"), children: [
+            search && !loadersLoading && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(_e.Empty, { children: (0, import_i18n.__)("No results found.") }),
+            !search && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(RecentGroup, {}),
+            !search && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(SuggestionsGroup, {}),
+            search && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(ResultsGroup, { search })
           ] })
         ] }) })
       }

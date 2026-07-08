@@ -21,10 +21,8 @@
 		"background": {
 			"backgroundImage": true,
 			"backgroundSize": true,
-			"gradient": true,
 			"__experimentalDefaultControls": {
-				"backgroundImage": true,
-				"gradient": true
+				"backgroundImage": true
 			}
 		},
 		"color": {

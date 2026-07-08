@@ -14,7 +14,11 @@
 		}
 	},
 	"parent": [ "core/tab-panels" ],
-	"usesContext": [ "core/tabs-id" ],
+	"usesContext": [
+		"core/tabs-activeTabIndex",
+		"core/tabs-editorActiveTabIndex",
+		"core/tabs-id"
+	],
 	"supports": {
 		"anchor": true,
 		"html": false,
