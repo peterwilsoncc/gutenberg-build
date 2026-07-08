@@ -2896,7 +2896,9 @@ return array(
 		'title' => 'Gallery',
 		'category' => 'media',
 		'usesContext' => array(
-			'galleryId'
+			'galleryId',
+			'postId',
+			'postType'
 		),
 		'allowedBlocks' => array(
 			'core/image'
@@ -2962,6 +2964,9 @@ return array(
 				'default' => array(
 					
 				)
+			),
+			'dynamicContent' => array(
+				'type' => 'object'
 			),
 			'navigationButtonType' => array(
 				'type' => 'string',
@@ -3361,8 +3366,7 @@ return array(
 		'attributes' => array(
 			'content' => array(
 				'type' => 'string',
-				'source' => 'raw',
-				'role' => 'content'
+				'role' => 'local'
 			)
 		),
 		'supports' => array(
@@ -3372,6 +3376,7 @@ return array(
 			'interactivity' => array(
 				'clientNavigation' => true
 			),
+			'listView' => true,
 			'customCSS' => false,
 			'visibility' => false
 		),
@@ -3761,14 +3766,6 @@ return array(
 				'type' => 'boolean',
 				'default' => false
 			),
-			'postLayout' => array(
-				'type' => 'string',
-				'default' => 'list'
-			),
-			'columns' => array(
-				'type' => 'number',
-				'default' => 3
-			),
 			'order' => array(
 				'type' => 'string',
 				'default' => 'desc'
@@ -3810,6 +3807,7 @@ return array(
 			'anchor' => true,
 			'align' => true,
 			'html' => false,
+			'layout' => true,
 			'color' => array(
 				'gradients' => true,
 				'link' => true,
@@ -3821,7 +3819,13 @@ return array(
 			),
 			'spacing' => array(
 				'margin' => true,
-				'padding' => true
+				'padding' => true,
+				'blockGap' => array(
+					'__experimentalDefault' => '1.25em'
+				),
+				'__experimentalDefaultControls' => array(
+					'blockGap' => true
+				)
 			),
 			'typography' => array(
 				'fontSize' => true,
@@ -5119,9 +5123,6 @@ return array(
 			'core/playlist-track'
 		),
 		'attributes' => array(
-			'currentTrack' => array(
-				'type' => 'string'
-			),
 			'type' => array(
 				'type' => 'string',
 				'default' => 'audio'
@@ -5156,7 +5157,7 @@ return array(
 		),
 		'providesContext' => array(
 			'showArtists' => 'showArtists',
-			'currentTrack' => 'currentTrack'
+			'showImages' => 'showImages'
 		),
 		'supports' => array(
 			'anchor' => true,
@@ -5171,12 +5172,10 @@ return array(
 			),
 			'__experimentalBorder' => array(
 				'color' => true,
-				'radius' => true,
 				'style' => true,
 				'width' => true,
 				'__experimentalDefaultControls' => array(
 					'color' => true,
-					'radius' => true,
 					'style' => true,
 					'width' => true
 				)
@@ -5235,7 +5234,7 @@ return array(
 		'textdomain' => 'default',
 		'usesContext' => array(
 			'showArtists',
-			'currentTrack'
+			'showImages'
 		),
 		'attributes' => array(
 			'blob' => array(
@@ -5244,9 +5243,6 @@ return array(
 			),
 			'id' => array(
 				'type' => 'number'
-			),
-			'uniqueId' => array(
-				'type' => 'string'
 			),
 			'src' => array(
 				'type' => 'string'
@@ -5262,6 +5258,9 @@ return array(
 				'type' => 'string'
 			),
 			'image' => array(
+				'type' => 'string'
+			),
+			'imageAlt' => array(
 				'type' => 'string'
 			),
 			'length' => array(
@@ -8113,8 +8112,9 @@ return array(
 				'selector' => 'button',
 				'query' => array(
 					'label' => array(
-						'type' => 'string',
-						'source' => 'html'
+						'type' => 'rich-text',
+						'source' => 'rich-text',
+						'role' => 'content'
 					)
 				),
 				'default' => array(
@@ -8198,8 +8198,6 @@ return array(
 			'core/tab-panels'
 		),
 		'usesContext' => array(
-			'core/tabs-activeTabIndex',
-			'core/tabs-editorActiveTabIndex',
 			'core/tabs-id'
 		),
 		'supports' => array(
@@ -8640,10 +8638,6 @@ return array(
 				'fontSize' => true,
 				'__experimentalFontFamily' => true
 			)
-		),
-		'providesContext' => array(
-			'core/tabs-activeTabIndex' => 'activeTabIndex',
-			'core/tabs-editorActiveTabIndex' => 'editorActiveTabIndex'
 		),
 		'usesContext' => array(
 			'core/tabs-list',
@@ -9168,8 +9162,10 @@ return array(
 			'background' => array(
 				'backgroundImage' => true,
 				'backgroundSize' => true,
+				'gradient' => true,
 				'__experimentalDefaultControls' => array(
-					'backgroundImage' => true
+					'backgroundImage' => true,
+					'gradient' => true
 				)
 			),
 			'color' => array(
@@ -9292,6 +9288,12 @@ return array(
 				'selector' => 'video',
 				'attribute' => 'src',
 				'role' => 'content'
+			),
+			'width' => array(
+				'type' => 'number'
+			),
+			'height' => array(
+				'type' => 'number'
 			),
 			'playsInline' => array(
 				'type' => 'boolean',

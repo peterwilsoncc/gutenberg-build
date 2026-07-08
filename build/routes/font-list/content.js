@@ -497,13 +497,13 @@ function clsx() {
 }
 var clsx_default = clsx;
 
-// node_modules/@base-ui/utils/esm/safeReact.js
+// node_modules/@base-ui/utils/safeReact.mjs
 var React2 = __toESM(require_react(), 1);
 var SafeReact = {
   ...React2
 };
 
-// node_modules/@base-ui/utils/esm/useRefWithInit.js
+// node_modules/@base-ui/utils/useRefWithInit.mjs
 var React3 = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useRefWithInit(init, initArg) {
@@ -514,7 +514,7 @@ function useRefWithInit(init, initArg) {
   return ref;
 }
 
-// node_modules/@base-ui/utils/esm/useStableCallback.js
+// node_modules/@base-ui/utils/useStableCallback.mjs
 var useInsertionEffect = SafeReact.useInsertionEffect;
 var useSafeInsertionEffect = (
   // React 17 doesn't have useInsertionEffect.
@@ -547,13 +547,13 @@ function assertNotCalled() {
   }
 }
 
-// node_modules/@base-ui/utils/esm/useIsoLayoutEffect.js
+// node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
 var React4 = __toESM(require_react(), 1);
 var noop = () => {
 };
 var useIsoLayoutEffect = typeof document !== "undefined" ? React4.useLayoutEffect : noop;
 
-// node_modules/@base-ui/utils/esm/warn.js
+// node_modules/@base-ui/utils/warn.mjs
 var set;
 if (true) {
   set = /* @__PURE__ */ new Set();
@@ -568,7 +568,7 @@ function warn(...messages) {
   }
 }
 
-// node_modules/@base-ui/react/esm/internals/direction-context/DirectionContext.js
+// node_modules/@base-ui/react/internals/direction-context/DirectionContext.mjs
 var React5 = __toESM(require_react(), 1);
 var DirectionContext = /* @__PURE__ */ React5.createContext(void 0);
 if (true) DirectionContext.displayName = "DirectionContext";
@@ -577,10 +577,10 @@ function useDirection() {
   return context?.direction ?? "ltr";
 }
 
-// node_modules/@base-ui/react/esm/internals/useRenderElement.js
+// node_modules/@base-ui/react/internals/useRenderElement.mjs
 var React8 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/esm/useMergedRefs.js
+// node_modules/@base-ui/utils/useMergedRefs.mjs
 function useMergedRefs(a2, b2, c2, d2) {
   const forkRef = useRefWithInit(createForkRef).current;
   if (didChange(forkRef, a2, b2, c2, d2)) {
@@ -669,17 +669,17 @@ function update(forkRef, refs) {
   };
 }
 
-// node_modules/@base-ui/utils/esm/getReactElementRef.js
+// node_modules/@base-ui/utils/getReactElementRef.mjs
 var React7 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/esm/reactVersion.js
+// node_modules/@base-ui/utils/reactVersion.mjs
 var React6 = __toESM(require_react(), 1);
 var majorVersion = parseInt(React6.version, 10);
 function isReactVersionAtLeast(reactVersionToCheck) {
   return majorVersion >= reactVersionToCheck;
 }
 
-// node_modules/@base-ui/utils/esm/getReactElementRef.js
+// node_modules/@base-ui/utils/getReactElementRef.mjs
 function getReactElementRef(element) {
   if (!/* @__PURE__ */ React7.isValidElement(element)) {
     return null;
@@ -689,7 +689,7 @@ function getReactElementRef(element) {
   return (isReactVersionAtLeast(19) ? propsWithRef?.ref : reactElement.ref) ?? null;
 }
 
-// node_modules/@base-ui/utils/esm/mergeObjects.js
+// node_modules/@base-ui/utils/mergeObjects.mjs
 function mergeObjects(a2, b2) {
   if (a2 && !b2) {
     return a2;
@@ -706,13 +706,13 @@ function mergeObjects(a2, b2) {
   return void 0;
 }
 
-// node_modules/@base-ui/utils/esm/empty.js
+// node_modules/@base-ui/utils/empty.mjs
 function NOOP() {
 }
 var EMPTY_ARRAY = Object.freeze([]);
 var EMPTY_OBJECT = Object.freeze({});
 
-// node_modules/@base-ui/react/esm/internals/getStateAttributesProps.js
+// node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
 function getStateAttributesProps(state, customMapping) {
   const props = {};
   for (const key in state) {
@@ -733,17 +733,17 @@ function getStateAttributesProps(state, customMapping) {
   return props;
 }
 
-// node_modules/@base-ui/react/esm/utils/resolveClassName.js
+// node_modules/@base-ui/react/utils/resolveClassName.mjs
 function resolveClassName(className, state) {
   return typeof className === "function" ? className(state) : className;
 }
 
-// node_modules/@base-ui/react/esm/utils/resolveStyle.js
+// node_modules/@base-ui/react/utils/resolveStyle.mjs
 function resolveStyle(style, state) {
   return typeof style === "function" ? style(state) : style;
 }
 
-// node_modules/@base-ui/react/esm/merge-props/mergeProps.js
+// node_modules/@base-ui/react/merge-props/mergeProps.mjs
 var EMPTY_PROPS = {};
 function mergeProps(a2, b2, c2, d2, e2) {
   if (!c2 && !d2 && !e2 && !a2) {
@@ -898,7 +898,7 @@ function isSyntheticEvent(event) {
   return event != null && typeof event === "object" && "nativeEvent" in event;
 }
 
-// node_modules/@base-ui/react/esm/internals/useRenderElement.js
+// node_modules/@base-ui/react/internals/useRenderElement.mjs
 var import_react = __toESM(require_react(), 1);
 function useRenderElement(element, componentProps, params = {}) {
   const renderProp = componentProps.render;
@@ -1016,7 +1016,35 @@ function renderTag(Tag, props) {
   return /* @__PURE__ */ React8.createElement(Tag, props);
 }
 
-// node_modules/@base-ui/react/esm/internals/reason-parts.js
+// node_modules/@base-ui/utils/useId.mjs
+var React9 = __toESM(require_react(), 1);
+var globalId = 0;
+function useGlobalId(idOverride, prefix = "mui") {
+  const [defaultId, setDefaultId] = React9.useState(idOverride);
+  const id = idOverride || defaultId;
+  React9.useEffect(() => {
+    if (defaultId == null) {
+      globalId += 1;
+      setDefaultId(`${prefix}-${globalId}`);
+    }
+  }, [defaultId, prefix]);
+  return id;
+}
+var maybeReactUseId = SafeReact.useId;
+function useId(idOverride, prefix) {
+  if (maybeReactUseId !== void 0) {
+    const reactId = maybeReactUseId();
+    return idOverride ?? (prefix ? `${prefix}-${reactId}` : reactId);
+  }
+  return useGlobalId(idOverride, prefix);
+}
+
+// node_modules/@base-ui/react/internals/useBaseUiId.mjs
+function useBaseUiId(idOverride) {
+  return useId(idOverride, "base-ui");
+}
+
+// node_modules/@base-ui/react/internals/reason-parts.mjs
 var reason_parts_exports = {};
 __export(reason_parts_exports, {
   cancelOpen: () => cancelOpen,
@@ -1091,7 +1119,7 @@ var imperativeAction = "imperative-action";
 var swipe = "swipe";
 var windowResize = "window-resize";
 
-// node_modules/@base-ui/react/esm/internals/createBaseUIEventDetails.js
+// node_modules/@base-ui/react/internals/createBaseUIEventDetails.mjs
 function createChangeEventDetails(reason, event, trigger, customProperties) {
   let canceled = false;
   let allowPropagation = false;
@@ -1117,45 +1145,17 @@ function createChangeEventDetails(reason, event, trigger, customProperties) {
   return details;
 }
 
-// node_modules/@base-ui/utils/esm/useId.js
-var React9 = __toESM(require_react(), 1);
-var globalId = 0;
-function useGlobalId(idOverride, prefix = "mui") {
-  const [defaultId, setDefaultId] = React9.useState(idOverride);
-  const id = idOverride || defaultId;
-  React9.useEffect(() => {
-    if (defaultId == null) {
-      globalId += 1;
-      setDefaultId(`${prefix}-${globalId}`);
-    }
-  }, [defaultId, prefix]);
-  return id;
-}
-var maybeReactUseId = SafeReact.useId;
-function useId(idOverride, prefix) {
-  if (maybeReactUseId !== void 0) {
-    const reactId = maybeReactUseId();
-    return idOverride ?? (prefix ? `${prefix}-${reactId}` : reactId);
-  }
-  return useGlobalId(idOverride, prefix);
-}
-
-// node_modules/@base-ui/react/esm/internals/useBaseUiId.js
-function useBaseUiId(idOverride) {
-  return useId(idOverride, "base-ui");
-}
-
-// node_modules/@base-ui/react/esm/internals/useTransitionStatus.js
+// node_modules/@base-ui/react/internals/useTransitionStatus.mjs
 var React11 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/esm/useOnMount.js
+// node_modules/@base-ui/utils/useOnMount.mjs
 var React10 = __toESM(require_react(), 1);
 var EMPTY = [];
 function useOnMount(fn) {
   React10.useEffect(fn, EMPTY);
 }
 
-// node_modules/@base-ui/utils/esm/useAnimationFrame.js
+// node_modules/@base-ui/utils/useAnimationFrame.mjs
 var EMPTY2 = null;
 var LAST_RAF = globalThis.requestAnimationFrame;
 var Scheduler = class {
@@ -1243,7 +1243,7 @@ function useAnimationFrame() {
   return timeout;
 }
 
-// node_modules/@base-ui/react/esm/internals/useTransitionStatus.js
+// node_modules/@base-ui/react/internals/useTransitionStatus.mjs
 function useTransitionStatus(open, enableIdleState = false, deferEndingState = false) {
   const [transitionStatus, setTransitionStatus] = React11.useState(open && enableIdleState ? "idle" : void 0);
   const [mounted, setMounted] = React11.useState(open);
@@ -1300,7 +1300,7 @@ function useTransitionStatus(open, enableIdleState = false, deferEndingState = f
   };
 }
 
-// node_modules/@base-ui/react/esm/internals/stateAttributesMapping.js
+// node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
 var TransitionStatusDataAttributes = /* @__PURE__ */ (function(TransitionStatusDataAttributes2) {
   TransitionStatusDataAttributes2["startingStyle"] = "data-starting-style";
   TransitionStatusDataAttributes2["endingStyle"] = "data-ending-style";
@@ -1480,70 +1480,293 @@ function getFrameElement(win) {
   return win.parent && Object.getPrototypeOf(win.parent) ? win.frameElement : null;
 }
 
-// node_modules/@base-ui/utils/esm/detectBrowser.js
-var hasNavigator = typeof navigator !== "undefined";
-var nav = getNavigatorData();
-var platform = getPlatform();
-var userAgent = getUserAgent();
-var isWebKit2 = typeof CSS === "undefined" || !CSS.supports ? false : CSS.supports("-webkit-backdrop-filter:none");
-var isIOS = (
-  // iPads can claim to be MacIntel
-  nav.platform === "MacIntel" && nav.maxTouchPoints > 1 ? true : /iP(hone|ad|od)|iOS/.test(nav.platform)
-);
-var isFirefox = hasNavigator && /firefox/i.test(userAgent);
-var isSafari = hasNavigator && /apple/i.test(navigator.vendor);
-var isEdge = hasNavigator && /Edg/i.test(userAgent);
-var isAndroid = hasNavigator && /android/i.test(platform) || /android/i.test(userAgent);
-var isMac = hasNavigator && platform.toLowerCase().startsWith("mac") && !navigator.maxTouchPoints;
-var isJSDOM = userAgent.includes("jsdom/");
-function getNavigatorData() {
-  if (!hasNavigator) {
-    return {
-      platform: "",
-      maxTouchPoints: -1
-    };
-  }
-  const uaData = navigator.userAgentData;
-  if (uaData?.platform) {
-    return {
-      platform: uaData.platform,
-      maxTouchPoints: navigator.maxTouchPoints
-    };
-  }
-  return {
-    platform: navigator.platform ?? "",
-    maxTouchPoints: navigator.maxTouchPoints ?? -1
+// node_modules/@base-ui/utils/addEventListener.mjs
+function addEventListener(target, type, listener, options) {
+  target.addEventListener(type, listener, options);
+  return () => {
+    target.removeEventListener(type, listener, options);
   };
 }
-function getUserAgent() {
-  if (!hasNavigator) {
-    return "";
-  }
-  const uaData = navigator.userAgentData;
-  if (uaData && Array.isArray(uaData.brands)) {
-    return uaData.brands.map(({
-      brand,
-      version: version2
-    }) => `${brand}/${version2}`).join(" ");
-  }
-  return navigator.userAgent;
+
+// node_modules/@base-ui/utils/useValueAsRef.mjs
+function useValueAsRef(value) {
+  const latest = useRefWithInit(createLatestRef, value).current;
+  latest.next = value;
+  useIsoLayoutEffect(latest.effect);
+  return latest;
 }
-function getPlatform() {
-  if (!hasNavigator) {
-    return "";
-  }
-  const uaData = navigator.userAgentData;
-  if (uaData?.platform) {
-    return uaData.platform;
-  }
-  return navigator.platform ?? "";
+function createLatestRef(value) {
+  const latest = {
+    current: value,
+    next: value,
+    effect: () => {
+      latest.current = latest.next;
+    }
+  };
+  return latest;
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/utils/constants.js
+// node_modules/@base-ui/utils/owner.mjs
+function ownerDocument(node) {
+  return node?.ownerDocument || document;
+}
+
+// node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
+var React12 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
+var ReactDOM = __toESM(require_react_dom(), 1);
+
+// node_modules/@base-ui/react/utils/resolveRef.mjs
+function resolveRef(maybeRef) {
+  if (maybeRef == null) {
+    return maybeRef;
+  }
+  return "current" in maybeRef ? maybeRef.current : maybeRef;
+}
+
+// node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
+function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, treatAbortedAsFinished = true) {
+  const frame = useAnimationFrame();
+  return useStableCallback((fnToExecute, signal = null) => {
+    frame.cancel();
+    const element = resolveRef(elementOrRef);
+    if (element == null) {
+      return;
+    }
+    const resolvedElement = element;
+    const done = () => {
+      ReactDOM.flushSync(fnToExecute);
+    };
+    if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
+      fnToExecute();
+      return;
+    }
+    function exec() {
+      Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
+        if (!signal?.aborted) {
+          done();
+        }
+      }).catch(() => {
+        if (treatAbortedAsFinished) {
+          if (!signal?.aborted) {
+            done();
+          }
+          return;
+        }
+        const currentAnimations = resolvedElement.getAnimations();
+        if (!signal?.aborted && currentAnimations.length > 0 && currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
+          exec();
+        }
+      });
+    }
+    if (waitForStartingStyleRemoved) {
+      const startingStyleAttribute = TransitionStatusDataAttributes.startingStyle;
+      if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+        frame.request(exec);
+        return;
+      }
+      const attributeObserver = new MutationObserver(() => {
+        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
+          attributeObserver.disconnect();
+          exec();
+        }
+      });
+      attributeObserver.observe(resolvedElement, {
+        attributes: true,
+        attributeFilter: [startingStyleAttribute]
+      });
+      signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
+        once: true
+      });
+      return;
+    }
+    frame.request(exec);
+  });
+}
+
+// node_modules/@base-ui/react/internals/useOpenChangeComplete.mjs
+function useOpenChangeComplete(parameters) {
+  const {
+    enabled = true,
+    open,
+    ref,
+    onComplete: onCompleteParam
+  } = parameters;
+  const onComplete = useStableCallback(onCompleteParam);
+  const runOnceAnimationsFinish = useAnimationsFinished(ref, open, false);
+  React12.useEffect(() => {
+    if (!enabled) {
+      return void 0;
+    }
+    const abortController = new AbortController();
+    runOnceAnimationsFinish(onComplete, abortController.signal);
+    return () => {
+      abortController.abort();
+    };
+  }, [enabled, open, onComplete, runOnceAnimationsFinish]);
+}
+
+// node_modules/@base-ui/utils/useOnFirstRender.mjs
+var React13 = __toESM(require_react(), 1);
+function useOnFirstRender(fn) {
+  const ref = React13.useRef(true);
+  if (ref.current) {
+    ref.current = false;
+    fn();
+  }
+}
+
+// node_modules/@base-ui/utils/platform/parts.mjs
+var parts_exports = {};
+__export(parts_exports, {
+  engine: () => engine_exports,
+  env: () => env_exports,
+  os: () => os_exports,
+  screenReader: () => screen_reader_exports
+});
+
+// node_modules/@base-ui/utils/platform/os.mjs
+var os_exports = {};
+__export(os_exports, {
+  android: () => android,
+  apple: () => apple,
+  ios: () => ios,
+  linux: () => linux,
+  mac: () => mac,
+  windows: () => windows
+});
+
+// node_modules/@base-ui/utils/platform/shared.mjs
+function readRawData() {
+  if (typeof navigator === "undefined") {
+    return {
+      userAgent: "",
+      platform: "",
+      maxTouchPoints: 0
+    };
+  }
+  if (true) {
+    const uaData = navigator.userAgentData;
+    if (uaData && Array.isArray(uaData.brands)) {
+      return {
+        userAgent: uaData.brands.map(({
+          brand,
+          version: version2
+        }) => `${brand}/${version2}`).join(" "),
+        platform: uaData.platform ?? navigator.platform ?? "",
+        maxTouchPoints: navigator.maxTouchPoints ?? 0
+      };
+    }
+  }
+  return {
+    userAgent: navigator.userAgent,
+    platform: navigator.platform ?? "",
+    maxTouchPoints: navigator.maxTouchPoints ?? 0
+  };
+}
+var {
+  userAgent,
+  platform,
+  maxTouchPoints
+} = readRawData();
+var lowerUserAgent = userAgent.toLowerCase();
+var lowerPlatform = platform.toLowerCase();
+
+// node_modules/@base-ui/utils/platform/os.mjs
+var ios = /^i(os$|p)/.test(lowerPlatform) || lowerPlatform === "macintel" && maxTouchPoints > 1;
+var ANDROID_STRING = "android";
+var android = lowerPlatform === ANDROID_STRING || lowerUserAgent.includes(ANDROID_STRING);
+var mac = !ios && lowerPlatform.startsWith("mac");
+var windows = lowerPlatform.startsWith("win");
+var linux = !android && /^(linux|chrome os)/.test(lowerPlatform);
+var apple = mac || ios;
+
+// node_modules/@base-ui/utils/platform/engine.mjs
+var engine_exports = {};
+__export(engine_exports, {
+  blink: () => blink,
+  gecko: () => gecko,
+  webkit: () => webkit
+});
+var webkit = typeof CSS !== "undefined" && !!CSS.supports?.("-webkit-backdrop-filter:none");
+var gecko = !webkit && lowerUserAgent.includes("firefox");
+var blink = !webkit && lowerUserAgent.includes("chrom");
+
+// node_modules/@base-ui/utils/platform/screen-reader.mjs
+var screen_reader_exports = {};
+__export(screen_reader_exports, {
+  voiceOver: () => voiceOver
+});
+var voiceOver = apple;
+
+// node_modules/@base-ui/utils/platform/env.mjs
+var env_exports = {};
+__export(env_exports, {
+  jsdom: () => jsdom
+});
+var jsdom = /jsdom|happydom/.test(lowerUserAgent);
+
+// node_modules/@base-ui/utils/useTimeout.mjs
+var EMPTY3 = 0;
+var Timeout = class _Timeout {
+  static create() {
+    return new _Timeout();
+  }
+  currentId = EMPTY3;
+  /**
+   * Executes `fn` after `delay`, clearing any previously scheduled call.
+   */
+  start(delay, fn) {
+    this.clear();
+    this.currentId = setTimeout(() => {
+      this.currentId = EMPTY3;
+      fn();
+    }, delay);
+  }
+  isStarted() {
+    return this.currentId !== EMPTY3;
+  }
+  clear = () => {
+    if (this.currentId !== EMPTY3) {
+      clearTimeout(this.currentId);
+      this.currentId = EMPTY3;
+    }
+  };
+  disposeEffect = () => {
+    return this.clear;
+  };
+};
+function useTimeout() {
+  const timeout = useRefWithInit(Timeout.create).current;
+  useOnMount(timeout.disposeEffect);
+  return timeout;
+}
+
+// node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
+var React14 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/react/floating-ui-react/utils/event.mjs
+function isReactEvent(event) {
+  return "nativeEvent" in event;
+}
+function isMouseLikePointerType(pointerType, strict) {
+  const values = ["mouse", "pen"];
+  if (!strict) {
+    values.push("", void 0);
+  }
+  return values.includes(pointerType);
+}
+function isClickLikeEvent(event) {
+  const type = event.type;
+  return type === "click" || type === "mousedown" || type === "keydown" || type === "keyup";
+}
+
+// node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
 var FOCUSABLE_ATTRIBUTE = "data-base-ui-focusable";
 var TYPEABLE_SELECTOR = "input:not([type='hidden']):not([disabled]),[contenteditable]:not([contenteditable='false']),textarea:not([disabled])";
 
-// node_modules/@base-ui/react/esm/internals/shadowDom.js
+// node_modules/@base-ui/react/internals/shadowDom.mjs
 function activeElement(doc) {
   let element = doc.activeElement;
   while (element?.shadowRoot?.activeElement != null) {
@@ -1577,7 +1800,7 @@ function getTarget(event) {
   return event.target;
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/utils/element.js
+// node_modules/@base-ui/react/floating-ui-react/utils/element.mjs
 function isTargetInsideEnabledTrigger(target, triggerElements) {
   if (!isElement(target)) {
     return false;
@@ -1613,7 +1836,7 @@ function isInteractiveElement(element) {
   return element?.closest(`button,a[href],[role="button"],select,[tabindex]:not([tabindex="-1"]),${TYPEABLE_SELECTOR}`) != null;
 }
 function matchesFocusVisible(element) {
-  if (!element || isJSDOM) {
+  if (!element || parts_exports.env.jsdom) {
     return true;
   }
   try {
@@ -1623,27 +1846,263 @@ function matchesFocusVisible(element) {
   }
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/utils/nodes.js
-function getNodeChildren(nodes, id, onlyOpenChildren = true) {
-  const directChildren = nodes.filter((node) => node.parentId === id);
-  return directChildren.flatMap((child) => [...!onlyOpenChildren || child.context?.open ? [child] : [], ...getNodeChildren(nodes, child.id, onlyOpenChildren)]);
+// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverShared.mjs
+function resolveValue(value, pointerType) {
+  if (pointerType != null && !isMouseLikePointerType(pointerType)) {
+    return 0;
+  }
+  if (typeof value === "function") {
+    return value();
+  }
+  return value;
+}
+function getDelay(value, prop, pointerType) {
+  const result = resolveValue(value, pointerType);
+  if (typeof result === "number") {
+    return result;
+  }
+  return result?.[prop];
+}
+function getRestMs(value) {
+  if (typeof value === "function") {
+    return value();
+  }
+  return value;
+}
+function isClickLikeOpenEvent(openEventType, interactedInside) {
+  return interactedInside || openEventType === "click" || openEventType === "mousedown";
+}
+function isHoverOpenEvent(openEventType) {
+  return openEventType?.includes("mouse") && openEventType !== "mousedown";
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/utils/event.js
-function isReactEvent(event) {
-  return "nativeEvent" in event;
-}
-function isMouseLikePointerType(pointerType, strict) {
-  const values = ["mouse", "pen"];
-  if (!strict) {
-    values.push("", void 0);
+// node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
+var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+var FloatingDelayGroupContext = /* @__PURE__ */ React14.createContext({
+  hasProvider: false,
+  timeoutMs: 0,
+  delayRef: {
+    current: 0
+  },
+  initialDelayRef: {
+    current: 0
+  },
+  timeout: new Timeout(),
+  currentIdRef: {
+    current: null
+  },
+  currentContextRef: {
+    current: null
   }
-  return values.includes(pointerType);
+});
+if (true) FloatingDelayGroupContext.displayName = "FloatingDelayGroupContext";
+function resetDelayRef(delayRef, initialDelayRef) {
+  delayRef.current = initialDelayRef.current;
 }
-function isClickLikeEvent(event) {
-  const type = event.type;
-  return type === "click" || type === "mousedown" || type === "keydown" || type === "keyup";
+function FloatingDelayGroup(props) {
+  const {
+    children,
+    delay,
+    timeoutMs = 0
+  } = props;
+  const delayRef = React14.useRef(delay);
+  const initialDelayRef = React14.useRef(delay);
+  const currentIdRef = React14.useRef(null);
+  const currentContextRef = React14.useRef(null);
+  const timeout = useTimeout();
+  useIsoLayoutEffect(() => {
+    initialDelayRef.current = delay;
+    if (!currentIdRef.current) {
+      delayRef.current = delay;
+      return;
+    }
+    delayRef.current = {
+      open: getDelay(delayRef.current, "open"),
+      close: getDelay(delay, "close")
+    };
+  }, [delay, currentIdRef, delayRef, initialDelayRef]);
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FloatingDelayGroupContext.Provider, {
+    value: React14.useMemo(() => ({
+      hasProvider: true,
+      delayRef,
+      initialDelayRef,
+      currentIdRef,
+      timeoutMs,
+      currentContextRef,
+      timeout
+    }), [timeoutMs, timeout]),
+    children
+  });
 }
+function useDelayGroup(context, options = {
+  open: false
+}) {
+  const {
+    open
+  } = options;
+  const store = "rootStore" in context ? context.rootStore : context;
+  const floatingId = store.useState("floatingId");
+  const groupContext = React14.useContext(FloatingDelayGroupContext);
+  const {
+    currentIdRef,
+    delayRef,
+    timeoutMs,
+    initialDelayRef,
+    currentContextRef,
+    hasProvider,
+    timeout
+  } = groupContext;
+  const [isInstantPhase, setIsInstantPhase] = React14.useState(false);
+  const openRef = React14.useRef(open);
+  const isUnmountedRef = React14.useRef(false);
+  useIsoLayoutEffect(() => {
+    openRef.current = open;
+  }, [open]);
+  useIsoLayoutEffect(() => {
+    return () => {
+      isUnmountedRef.current = true;
+    };
+  }, []);
+  useIsoLayoutEffect(() => {
+    function unset() {
+      if (!isUnmountedRef.current) {
+        setIsInstantPhase(false);
+      }
+      currentContextRef.current?.setIsInstantPhase(false);
+      currentIdRef.current = null;
+      currentContextRef.current = null;
+      delayRef.current = initialDelayRef.current;
+      timeout.clear();
+    }
+    if (!currentIdRef.current) {
+      return void 0;
+    }
+    if (!open && currentIdRef.current === floatingId) {
+      setIsInstantPhase(false);
+      if (timeoutMs) {
+        const closingId = floatingId;
+        timeout.start(timeoutMs, () => {
+          if (store.select("open") || currentIdRef.current && currentIdRef.current !== closingId) {
+            return;
+          }
+          unset();
+        });
+        return () => {
+          if (openRef.current || currentIdRef.current !== closingId) {
+            timeout.clear();
+          }
+        };
+      }
+      unset();
+    }
+    return void 0;
+  }, [open, floatingId, currentIdRef, delayRef, timeoutMs, initialDelayRef, currentContextRef, timeout, store]);
+  useIsoLayoutEffect(() => {
+    if (!open) {
+      return;
+    }
+    const prevContext = currentContextRef.current;
+    const prevId = currentIdRef.current;
+    timeout.clear();
+    currentContextRef.current = {
+      onOpenChange: store.setOpen,
+      setIsInstantPhase
+    };
+    currentIdRef.current = floatingId;
+    delayRef.current = {
+      open: 0,
+      close: getDelay(initialDelayRef.current, "close")
+    };
+    if (prevId !== null && prevId !== floatingId) {
+      setIsInstantPhase(true);
+      prevContext?.setIsInstantPhase(true);
+      prevContext?.onOpenChange(false, createChangeEventDetails(reason_parts_exports.none));
+    } else {
+      setIsInstantPhase(false);
+      prevContext?.setIsInstantPhase(false);
+    }
+  }, [open, floatingId, store, currentIdRef, delayRef, initialDelayRef, currentContextRef, timeout]);
+  useIsoLayoutEffect(() => {
+    return () => {
+      if (currentIdRef.current === floatingId) {
+        currentContextRef.current = null;
+        if (!openRef.current) {
+          return;
+        }
+        currentIdRef.current = null;
+        resetDelayRef(delayRef, initialDelayRef);
+        timeout.clear();
+      }
+    };
+  }, [currentContextRef, currentIdRef, delayRef, floatingId, initialDelayRef, timeout]);
+  return React14.useMemo(() => ({
+    hasProvider,
+    delayRef,
+    isInstantPhase
+  }), [hasProvider, delayRef, isInstantPhase]);
+}
+
+// node_modules/@base-ui/utils/mergeCleanups.mjs
+function mergeCleanups(...cleanups) {
+  return () => {
+    for (let i2 = 0; i2 < cleanups.length; i2 += 1) {
+      const cleanup = cleanups[i2];
+      if (cleanup) {
+        cleanup();
+      }
+    }
+  };
+}
+
+// node_modules/@base-ui/react/utils/FocusGuard.mjs
+var React15 = __toESM(require_react(), 1);
+
+// node_modules/@base-ui/utils/visuallyHidden.mjs
+var visuallyHiddenBase = {
+  clipPath: "inset(50%)",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  border: 0,
+  padding: 0,
+  width: 1,
+  height: 1,
+  margin: -1
+};
+var visuallyHidden = {
+  ...visuallyHiddenBase,
+  position: "fixed",
+  top: 0,
+  left: 0
+};
+var visuallyHiddenInput = {
+  ...visuallyHiddenBase,
+  position: "absolute"
+};
+
+// node_modules/@base-ui/react/utils/FocusGuard.mjs
+var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+var FocusGuard = /* @__PURE__ */ React15.forwardRef(function FocusGuard2(props, ref) {
+  const [role, setRole] = React15.useState();
+  useIsoLayoutEffect(() => {
+    if (parts_exports.screenReader.voiceOver && parts_exports.engine.webkit) {
+      setRole("button");
+    }
+  }, []);
+  const restProps = {
+    tabIndex: 0,
+    // Role is only for VoiceOver
+    role
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", {
+    ...props,
+    ref,
+    style: visuallyHidden,
+    "aria-hidden": role ? void 0 : true,
+    ...restProps,
+    "data-base-ui-focus-guard": ""
+  });
+});
+if (true) FocusGuard.displayName = "FocusGuard";
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs
 var sides = ["top", "right", "bottom", "left"];
@@ -1774,7 +2233,7 @@ function rectToClientRect(rect) {
   };
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/utils/composite.js
+// node_modules/@base-ui/react/floating-ui-react/utils/composite.mjs
 function isHiddenByStyles(styles) {
   return styles.visibility === "hidden" || styles.visibility === "collapse";
 }
@@ -1788,12 +2247,7 @@ function isElementVisible(element, styles = element ? getComputedStyle2(element)
   return styles.display !== "none" && styles.display !== "contents";
 }
 
-// node_modules/@base-ui/utils/esm/owner.js
-function ownerDocument(node) {
-  return node?.ownerDocument || document;
-}
-
-// node_modules/@base-ui/react/esm/floating-ui-react/utils/tabbable.js
+// node_modules/@base-ui/react/floating-ui-react/utils/tabbable.mjs
 var CANDIDATE_SELECTOR = 'a[href],button,input,select,textarea,summary,details,iframe,object,embed,[tabindex],[contenteditable]:not([contenteditable="false"]),audio[controls],video[controls]';
 function getParentElement(element) {
   const assignedSlot = element.assignedSlot;
@@ -1961,408 +2415,22 @@ function enableFocusInside(container) {
   });
 }
 
-// node_modules/@base-ui/utils/esm/addEventListener.js
-function addEventListener(target, type, listener, options) {
-  target.addEventListener(type, listener, options);
-  return () => {
-    target.removeEventListener(type, listener, options);
-  };
+// node_modules/@base-ui/react/floating-ui-react/utils/nodes.mjs
+function getNodeChildren(nodes, id, onlyOpenChildren = true) {
+  const directChildren = nodes.filter((node) => node.parentId === id);
+  return directChildren.flatMap((child) => [...!onlyOpenChildren || child.context?.open ? [child] : [], ...getNodeChildren(nodes, child.id, onlyOpenChildren)]);
 }
 
-// node_modules/@base-ui/utils/esm/useValueAsRef.js
-function useValueAsRef(value) {
-  const latest = useRefWithInit(createLatestRef, value).current;
-  latest.next = value;
-  useIsoLayoutEffect(latest.effect);
-  return latest;
-}
-function createLatestRef(value) {
-  const latest = {
-    current: value,
-    next: value,
-    effect: () => {
-      latest.current = latest.next;
-    }
-  };
-  return latest;
-}
-
-// node_modules/@base-ui/react/esm/internals/useOpenChangeComplete.js
-var React12 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/react/esm/internals/useAnimationsFinished.js
-var ReactDOM = __toESM(require_react_dom(), 1);
-
-// node_modules/@base-ui/react/esm/utils/resolveRef.js
-function resolveRef(maybeRef) {
-  if (maybeRef == null) {
-    return maybeRef;
-  }
-  return "current" in maybeRef ? maybeRef.current : maybeRef;
-}
-
-// node_modules/@base-ui/react/esm/internals/useAnimationsFinished.js
-function useAnimationsFinished(elementOrRef, waitForStartingStyleRemoved = false, treatAbortedAsFinished = true) {
-  const frame = useAnimationFrame();
-  return useStableCallback((fnToExecute, signal = null) => {
-    frame.cancel();
-    const element = resolveRef(elementOrRef);
-    if (element == null) {
-      return;
-    }
-    const resolvedElement = element;
-    const done = () => {
-      ReactDOM.flushSync(fnToExecute);
-    };
-    if (typeof resolvedElement.getAnimations !== "function" || globalThis.BASE_UI_ANIMATIONS_DISABLED) {
-      fnToExecute();
-      return;
-    }
-    function exec() {
-      Promise.all(resolvedElement.getAnimations().map((animation) => animation.finished)).then(() => {
-        if (!signal?.aborted) {
-          done();
-        }
-      }).catch(() => {
-        if (treatAbortedAsFinished) {
-          if (!signal?.aborted) {
-            done();
-          }
-          return;
-        }
-        const currentAnimations = resolvedElement.getAnimations();
-        if (!signal?.aborted && currentAnimations.length > 0 && currentAnimations.some((animation) => animation.pending || animation.playState !== "finished")) {
-          exec();
-        }
-      });
-    }
-    if (waitForStartingStyleRemoved) {
-      const startingStyleAttribute = TransitionStatusDataAttributes.startingStyle;
-      if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-        frame.request(exec);
-        return;
-      }
-      const attributeObserver = new MutationObserver(() => {
-        if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
-          attributeObserver.disconnect();
-          exec();
-        }
-      });
-      attributeObserver.observe(resolvedElement, {
-        attributes: true,
-        attributeFilter: [startingStyleAttribute]
-      });
-      signal?.addEventListener("abort", () => attributeObserver.disconnect(), {
-        once: true
-      });
-      return;
-    }
-    frame.request(exec);
-  });
-}
-
-// node_modules/@base-ui/react/esm/internals/useOpenChangeComplete.js
-function useOpenChangeComplete(parameters) {
-  const {
-    enabled = true,
-    open,
-    ref,
-    onComplete: onCompleteParam
-  } = parameters;
-  const onComplete = useStableCallback(onCompleteParam);
-  const runOnceAnimationsFinish = useAnimationsFinished(ref, open, false);
-  React12.useEffect(() => {
-    if (!enabled) {
-      return void 0;
-    }
-    const abortController = new AbortController();
-    runOnceAnimationsFinish(onComplete, abortController.signal);
-    return () => {
-      abortController.abort();
-    };
-  }, [enabled, open, onComplete, runOnceAnimationsFinish]);
-}
-
-// node_modules/@base-ui/utils/esm/useOnFirstRender.js
-var React13 = __toESM(require_react(), 1);
-function useOnFirstRender(fn) {
-  const ref = React13.useRef(true);
-  if (ref.current) {
-    ref.current = false;
-    fn();
-  }
-}
-
-// node_modules/@base-ui/utils/esm/useTimeout.js
-var EMPTY3 = 0;
-var Timeout = class _Timeout {
-  static create() {
-    return new _Timeout();
-  }
-  currentId = EMPTY3;
-  /**
-   * Executes `fn` after `delay`, clearing any previously scheduled call.
-   */
-  start(delay, fn) {
-    this.clear();
-    this.currentId = setTimeout(() => {
-      this.currentId = EMPTY3;
-      fn();
-    }, delay);
-  }
-  isStarted() {
-    return this.currentId !== EMPTY3;
-  }
-  clear = () => {
-    if (this.currentId !== EMPTY3) {
-      clearTimeout(this.currentId);
-      this.currentId = EMPTY3;
-    }
-  };
-  disposeEffect = () => {
-    return this.clear;
-  };
-};
-function useTimeout() {
-  const timeout = useRefWithInit(Timeout.create).current;
-  useOnMount(timeout.disposeEffect);
-  return timeout;
-}
-
-// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingDelayGroup.js
-var React14 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverShared.js
-function resolveValue(value, pointerType) {
-  if (pointerType != null && !isMouseLikePointerType(pointerType)) {
-    return 0;
-  }
-  if (typeof value === "function") {
-    return value();
-  }
-  return value;
-}
-function getDelay(value, prop, pointerType) {
-  const result = resolveValue(value, pointerType);
-  if (typeof result === "number") {
-    return result;
-  }
-  return result?.[prop];
-}
-function getRestMs(value) {
-  if (typeof value === "function") {
-    return value();
-  }
-  return value;
-}
-function isClickLikeOpenEvent(openEventType, interactedInside) {
-  return interactedInside || openEventType === "click" || openEventType === "mousedown";
-}
-function isHoverOpenEvent(openEventType) {
-  return openEventType?.includes("mouse") && openEventType !== "mousedown";
-}
-
-// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingDelayGroup.js
-var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-var FloatingDelayGroupContext = /* @__PURE__ */ React14.createContext({
-  hasProvider: false,
-  timeoutMs: 0,
-  delayRef: {
-    current: 0
-  },
-  initialDelayRef: {
-    current: 0
-  },
-  timeout: new Timeout(),
-  currentIdRef: {
-    current: null
-  },
-  currentContextRef: {
-    current: null
-  }
-});
-if (true) FloatingDelayGroupContext.displayName = "FloatingDelayGroupContext";
-function FloatingDelayGroup(props) {
-  const {
-    children,
-    delay,
-    timeoutMs = 0
-  } = props;
-  const delayRef = React14.useRef(delay);
-  const initialDelayRef = React14.useRef(delay);
-  const currentIdRef = React14.useRef(null);
-  const currentContextRef = React14.useRef(null);
-  const timeout = useTimeout();
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FloatingDelayGroupContext.Provider, {
-    value: React14.useMemo(() => ({
-      hasProvider: true,
-      delayRef,
-      initialDelayRef,
-      currentIdRef,
-      timeoutMs,
-      currentContextRef,
-      timeout
-    }), [timeoutMs, timeout]),
-    children
-  });
-}
-function useDelayGroup(context, options = {
-  open: false
-}) {
-  const {
-    open
-  } = options;
-  const store = "rootStore" in context ? context.rootStore : context;
-  const floatingId = store.useState("floatingId");
-  const groupContext = React14.useContext(FloatingDelayGroupContext);
-  const {
-    currentIdRef,
-    delayRef,
-    timeoutMs,
-    initialDelayRef,
-    currentContextRef,
-    hasProvider,
-    timeout
-  } = groupContext;
-  const [isInstantPhase, setIsInstantPhase] = React14.useState(false);
-  useIsoLayoutEffect(() => {
-    function unset() {
-      setIsInstantPhase(false);
-      currentContextRef.current?.setIsInstantPhase(false);
-      currentIdRef.current = null;
-      currentContextRef.current = null;
-      delayRef.current = initialDelayRef.current;
-    }
-    if (!currentIdRef.current) {
-      return void 0;
-    }
-    if (!open && currentIdRef.current === floatingId) {
-      setIsInstantPhase(false);
-      if (timeoutMs) {
-        const closingId = floatingId;
-        timeout.start(timeoutMs, () => {
-          if (store.select("open") || currentIdRef.current && currentIdRef.current !== closingId) {
-            return;
-          }
-          unset();
-        });
-        return () => {
-          timeout.clear();
-        };
-      }
-      unset();
-    }
-    return void 0;
-  }, [open, floatingId, currentIdRef, delayRef, timeoutMs, initialDelayRef, currentContextRef, timeout, store]);
-  useIsoLayoutEffect(() => {
-    if (!open) {
-      return;
-    }
-    const prevContext = currentContextRef.current;
-    const prevId = currentIdRef.current;
-    timeout.clear();
-    currentContextRef.current = {
-      onOpenChange: store.setOpen,
-      setIsInstantPhase
-    };
-    currentIdRef.current = floatingId;
-    delayRef.current = {
-      open: 0,
-      close: getDelay(initialDelayRef.current, "close")
-    };
-    if (prevId !== null && prevId !== floatingId) {
-      setIsInstantPhase(true);
-      prevContext?.setIsInstantPhase(true);
-      prevContext?.onOpenChange(false, createChangeEventDetails(reason_parts_exports.none));
-    } else {
-      setIsInstantPhase(false);
-      prevContext?.setIsInstantPhase(false);
-    }
-  }, [open, floatingId, store, currentIdRef, delayRef, initialDelayRef, currentContextRef, timeout]);
-  useIsoLayoutEffect(() => {
-    return () => {
-      currentContextRef.current = null;
-    };
-  }, [currentContextRef]);
-  return React14.useMemo(() => ({
-    hasProvider,
-    delayRef,
-    isInstantPhase
-  }), [hasProvider, delayRef, isInstantPhase]);
-}
-
-// node_modules/@base-ui/utils/esm/mergeCleanups.js
-function mergeCleanups(...cleanups) {
-  return () => {
-    for (let i2 = 0; i2 < cleanups.length; i2 += 1) {
-      const cleanup = cleanups[i2];
-      if (cleanup) {
-        cleanup();
-      }
-    }
-  };
-}
-
-// node_modules/@base-ui/react/esm/utils/FocusGuard.js
-var React15 = __toESM(require_react(), 1);
-
-// node_modules/@base-ui/utils/esm/visuallyHidden.js
-var visuallyHiddenBase = {
-  clipPath: "inset(50%)",
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  border: 0,
-  padding: 0,
-  width: 1,
-  height: 1,
-  margin: -1
-};
-var visuallyHidden = {
-  ...visuallyHiddenBase,
-  position: "fixed",
-  top: 0,
-  left: 0
-};
-var visuallyHiddenInput = {
-  ...visuallyHiddenBase,
-  position: "absolute"
-};
-
-// node_modules/@base-ui/react/esm/utils/FocusGuard.js
-var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-var FocusGuard = /* @__PURE__ */ React15.forwardRef(function FocusGuard2(props, ref) {
-  const [role, setRole] = React15.useState();
-  useIsoLayoutEffect(() => {
-    if (isSafari) {
-      setRole("button");
-    }
-  }, []);
-  const restProps = {
-    tabIndex: 0,
-    // Role is only for VoiceOver
-    role
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", {
-    ...props,
-    ref,
-    style: visuallyHidden,
-    "aria-hidden": role ? void 0 : true,
-    ...restProps,
-    "data-base-ui-focus-guard": ""
-  });
-});
-if (true) FocusGuard.displayName = "FocusGuard";
-
-// node_modules/@base-ui/react/esm/floating-ui-react/utils/createAttribute.js
+// node_modules/@base-ui/react/floating-ui-react/utils/createAttribute.mjs
 function createAttribute(name2) {
   return `data-base-ui-${name2}`;
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingPortal.js
+// node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
 var React16 = __toESM(require_react(), 1);
 var ReactDOM2 = __toESM(require_react_dom(), 1);
 
-// node_modules/@base-ui/react/esm/internals/constants.js
+// node_modules/@base-ui/react/internals/constants.mjs
 var DISABLED_TRANSITIONS_STYLE = {
   style: {
     transition: "none"
@@ -2382,7 +2450,7 @@ var ownerVisuallyHidden = {
   left: 0
 };
 
-// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingPortal.js
+// node_modules/@base-ui/react/floating-ui-react/components/FloatingPortal.mjs
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
 var PortalContext = /* @__PURE__ */ React16.createContext(null);
 if (true) PortalContext.displayName = "PortalContext";
@@ -2493,8 +2561,8 @@ var FloatingPortal = /* @__PURE__ */ React16.forwardRef(function FloatingPortal2
     }
     return mergeCleanups(addEventListener(portalNode, "focusin", onFocus, true), addEventListener(portalNode, "focusout", onFocus, true));
   }, [portalNode, modal]);
-  React16.useEffect(() => {
-    if (!portalNode || open !== false) {
+  useIsoLayoutEffect(() => {
+    if (!portalNode || open !== true || !focusInsideDisabledRef.current) {
       return;
     }
     enableFocusInside(portalNode);
@@ -2547,10 +2615,10 @@ var FloatingPortal = /* @__PURE__ */ React16.forwardRef(function FloatingPortal2
 });
 if (true) FloatingPortal.displayName = "FloatingPortal";
 
-// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingTree.js
+// node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
 var React17 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/esm/floating-ui-react/utils/createEventEmitter.js
+// node_modules/@base-ui/react/floating-ui-react/utils/createEventEmitter.mjs
 function createEventEmitter() {
   const map = /* @__PURE__ */ new Map();
   return {
@@ -2569,7 +2637,7 @@ function createEventEmitter() {
   };
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingTree.js
+// node_modules/@base-ui/react/floating-ui-react/components/FloatingTree.mjs
 var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
 var FloatingNodeContext = /* @__PURE__ */ React17.createContext(null);
 if (true) FloatingNodeContext.displayName = "FloatingNodeContext";
@@ -2581,7 +2649,7 @@ var useFloatingTree = (externalTree) => {
   return externalTree ?? contextTree;
 };
 
-// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useClientPoint.js
+// node_modules/@base-ui/react/floating-ui-react/hooks/useClientPoint.mjs
 var React18 = __toESM(require_react(), 1);
 function createVirtualElement(domElement, data) {
   let offsetX = null;
@@ -2738,12 +2806,8 @@ function useClientPoint(context, props = {}) {
   } : {}, [enabled, reference]);
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useDismiss.js
+// node_modules/@base-ui/react/floating-ui-react/hooks/useDismiss.mjs
 var React19 = __toESM(require_react(), 1);
-var bubbleHandlerKeys = {
-  intentional: "onClick",
-  sloppy: "onPointerDown"
-};
 function alwaysFalse() {
   return false;
 }
@@ -2760,7 +2824,6 @@ function useDismiss(context, props = {}) {
     outsidePress: outsidePressProp = true,
     outsidePressEvent = "sloppy",
     referencePress = alwaysFalse,
-    referencePressEvent = "sloppy",
     bubbles,
     externalTree
   } = props;
@@ -2869,7 +2932,7 @@ function useDismiss(context, props = {}) {
       compositionTimeout.start(
         // 0ms or 1ms don't work in Safari. 5ms appears to consistently work.
         // Only apply to WebKit for the test to remain 0ms.
-        isWebKit() ? 5 : 0,
+        parts_exports.engine.webkit ? 5 : 0,
         () => {
           isComposingRef.current = false;
         }
@@ -3106,11 +3169,9 @@ function useDismiss(context, props = {}) {
   React19.useEffect(clearInsideReactTree, [outsidePress2, clearInsideReactTree]);
   const reference = React19.useMemo(() => ({
     onKeyDown: closeOnEscapeKeyDown,
-    [bubbleHandlerKeys[referencePressEvent]]: closeOnReferencePress,
-    ...referencePressEvent !== "intentional" && {
-      onClick: closeOnReferencePress
-    }
-  }), [closeOnEscapeKeyDown, closeOnReferencePress, referencePressEvent]);
+    onPointerDown: closeOnReferencePress,
+    onClick: closeOnReferencePress
+  }), [closeOnEscapeKeyDown, closeOnReferencePress]);
   const floating = React19.useMemo(() => ({
     onKeyDown: closeOnEscapeKeyDown,
     // `onMouseDown` may be blocked if `event.preventDefault()` is called in
@@ -3138,7 +3199,7 @@ function useDismiss(context, props = {}) {
   } : {}, [enabled, reference, floating]);
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFloating.js
+// node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
 var React26 = __toESM(require_react(), 1);
 
 // node_modules/@floating-ui/core/dist/floating-ui.core.mjs
@@ -4410,7 +4471,7 @@ var computePosition2 = (reference, floating, options) => {
   });
 };
 
-// node_modules/@base-ui/react/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
+// node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
 var React20 = __toESM(require_react(), 1);
 var import_react2 = __toESM(require_react(), 1);
 var ReactDOM3 = __toESM(require_react_dom(), 1);
@@ -4682,13 +4743,14 @@ var hide3 = (options, deps) => {
   };
 };
 
-// node_modules/@base-ui/react/esm/utils/popups/popupStoreUtils.js
+// node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
 var React25 = __toESM(require_react(), 1);
+var ReactDOM4 = __toESM(require_react_dom(), 1);
 
-// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useSyncedFloatingRootContext.js
+// node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
 var React24 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/utils/esm/store/createSelector.js
+// node_modules/@base-ui/utils/store/createSelector.mjs
 var createSelector = (a2, b2, c2, d2, e2, f2, ...other) => {
   if (other.length > 0) {
     throw new Error(true ? "Unsupported number of selectors" : formatErrorMessage_default(1));
@@ -4740,12 +4802,12 @@ var createSelector = (a2, b2, c2, d2, e2, f2, ...other) => {
   return selector;
 };
 
-// node_modules/@base-ui/utils/esm/store/useStore.js
+// node_modules/@base-ui/utils/store/useStore.mjs
 var React22 = __toESM(require_react(), 1);
 var import_shim = __toESM(require_shim(), 1);
 var import_with_selector = __toESM(require_with_selector(), 1);
 
-// node_modules/@base-ui/utils/esm/fastHooks.js
+// node_modules/@base-ui/utils/fastHooks.mjs
 var React21 = __toESM(require_react(), 1);
 var hooks = [];
 var currentInstance = void 0;
@@ -4786,7 +4848,7 @@ function createInstance() {
   };
 }
 
-// node_modules/@base-ui/utils/esm/store/useStore.js
+// node_modules/@base-ui/utils/store/useStore.mjs
 var canUseRawUseSyncExternalStore = isReactVersionAtLeast(19);
 var useStoreImplementation = canUseRawUseSyncExternalStore ? useStoreFast : useStoreLegacy;
 function useStore(store, selector, a1, a2, a3) {
@@ -4808,10 +4870,9 @@ register({
         for (let i2 = 0; i2 < instance.syncHooks.length; i2 += 1) {
           const hook = instance.syncHooks[i2];
           const value = hook.selector(hook.store.state, hook.a1, hook.a2, hook.a3);
-          if (hook.didChange || !Object.is(hook.value, value)) {
+          if (!Object.is(hook.value, value)) {
             didChange2 = true;
             hook.value = value;
-            hook.didChange = false;
           }
         }
         if (didChange2) {
@@ -4860,8 +4921,7 @@ function useStoreFast(store, selector, a1, a2, a3) {
       a1,
       a2,
       a3,
-      value: selector(store.getSnapshot(), a1, a2, a3),
-      didChange: false
+      value: selector(store.getSnapshot(), a1, a2, a3)
     };
     instance.syncHooks.push(hook);
   } else {
@@ -4875,7 +4935,7 @@ function useStoreFast(store, selector, a1, a2, a3) {
       hook.a1 = a1;
       hook.a2 = a2;
       hook.a3 = a3;
-      hook.didChange = true;
+      hook.value = selector(store.getSnapshot(), a1, a2, a3);
     }
   }
   return hook.value;
@@ -4884,7 +4944,7 @@ function useStoreLegacy(store, selector, a1, a2, a3) {
   return (0, import_with_selector.useSyncExternalStoreWithSelector)(store.subscribe, store.getSnapshot, store.getSnapshot, (state) => selector(state, a1, a2, a3));
 }
 
-// node_modules/@base-ui/utils/esm/store/Store.js
+// node_modules/@base-ui/utils/store/Store.mjs
 var Store = class {
   /**
    * The current state of the store.
@@ -4981,7 +5041,7 @@ var Store = class {
   }
 };
 
-// node_modules/@base-ui/utils/esm/store/ReactStore.js
+// node_modules/@base-ui/utils/store/ReactStore.mjs
 var React23 = __toESM(require_react(), 1);
 var ReactStore = class extends Store {
   /**
@@ -5152,7 +5212,7 @@ var ReactStore = class extends Store {
   }
 };
 
-// node_modules/@base-ui/react/esm/floating-ui-react/components/FloatingRootStore.js
+// node_modules/@base-ui/react/floating-ui-react/components/FloatingRootStore.mjs
 var selectors = {
   open: createSelector((state) => state.open),
   transitionStatus: createSelector((state) => state.transitionStatus),
@@ -5225,7 +5285,7 @@ var FloatingRootStore = class extends ReactStore {
   };
 };
 
-// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useSyncedFloatingRootContext.js
+// node_modules/@base-ui/react/floating-ui-react/hooks/useSyncedFloatingRootContext.mjs
 function useSyncedFloatingRootContext(options) {
   const {
     popupStore,
@@ -5276,7 +5336,7 @@ function useSyncedFloatingRootContext(options) {
   return store;
 }
 
-// node_modules/@base-ui/react/esm/utils/popups/popupStoreUtils.js
+// node_modules/@base-ui/react/utils/popups/popupStoreUtils.mjs
 var FOCUSABLE_POPUP_PROPS = {
   tabIndex: -1,
   [FOCUSABLE_ATTRIBUTE]: ""
@@ -5335,12 +5395,69 @@ function useTriggerRegistration(id, store) {
     }
   }, [store, id]);
 }
-function setOpenTriggerState(state, open, trigger) {
+function setPopupOpenState(state, open, trigger, preventUnmountOnClose = false) {
+  if (open) {
+    state.preventUnmountingOnClose = false;
+  } else if (preventUnmountOnClose) {
+    state.preventUnmountingOnClose = true;
+  }
   const triggerId = trigger?.id ?? null;
   if (triggerId || open) {
     state.activeTriggerId = triggerId;
     state.activeTriggerElement = trigger ?? null;
   }
+}
+function attachPreventUnmountOnClose(eventDetails) {
+  let preventUnmountOnClose = false;
+  eventDetails.preventUnmountOnClose = () => {
+    preventUnmountOnClose = true;
+  };
+  return () => preventUnmountOnClose;
+}
+function applyPopupOpenChange(store, nextOpen, eventDetails, options = {}) {
+  const reason = eventDetails.reason;
+  const isHover = reason === reason_parts_exports.triggerHover;
+  const isFocusOpen = nextOpen && reason === reason_parts_exports.triggerFocus;
+  const isDismissClose = !nextOpen && (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.escapeKey);
+  const shouldPreventUnmountOnClose = attachPreventUnmountOnClose(eventDetails);
+  store.context.onOpenChange?.(nextOpen, eventDetails);
+  if (eventDetails.isCanceled) {
+    return;
+  }
+  options.onBeforeDispatch?.();
+  store.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
+  const changeState = () => {
+    const updatedState = {
+      ...options.extraState,
+      open: nextOpen
+    };
+    if (isFocusOpen) {
+      updatedState.instantType = "focus";
+    } else if (isDismissClose) {
+      updatedState.instantType = "dismiss";
+    } else if (isHover) {
+      updatedState.instantType = void 0;
+    }
+    setPopupOpenState(updatedState, nextOpen, eventDetails.trigger, shouldPreventUnmountOnClose());
+    store.update(updatedState);
+  };
+  if (isHover) {
+    ReactDOM4.flushSync(changeState);
+  } else {
+    changeState();
+  }
+}
+function useInitialOpenSync(store, openProp, defaultOpen, defaultTriggerId) {
+  useOnFirstRender(() => {
+    if (openProp === void 0 && store.state.open === false && defaultOpen) {
+      store.state = {
+        ...store.state,
+        open: true,
+        activeTriggerId: defaultTriggerId,
+        preventUnmountingOnClose: false
+      };
+    }
+  });
 }
 function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpdates) {
   const isMountedByThisTrigger = store.useState("isMountedByTrigger", triggerId);
@@ -5380,7 +5497,10 @@ function useTriggerDataForwarding(triggerId, triggerElementRef, store, stateUpda
     isMountedByThisTrigger
   };
 }
-function useImplicitActiveTrigger(store) {
+function useImplicitActiveTrigger(store, options = {}) {
+  const {
+    closeOnActiveTriggerUnmount = false
+  } = options;
   const open = store.useState("open");
   const reactiveTriggerCount = store.useState("triggerCount");
   useIsoLayoutEffect(() => {
@@ -5395,7 +5515,17 @@ function useImplicitActiveTrigger(store) {
     if (store.state.triggerCount !== triggerCount) {
       stateUpdates.triggerCount = triggerCount;
     }
-    if (!store.select("activeTriggerId") && triggerCount === 1) {
+    const activeTriggerId = store.select("activeTriggerId");
+    let lostActiveTriggerId = null;
+    if (activeTriggerId) {
+      const activeTriggerElement = store.context.triggerElements.getById(activeTriggerId);
+      if (!activeTriggerElement) {
+        lostActiveTriggerId = activeTriggerId;
+      } else if (activeTriggerElement !== store.state.activeTriggerElement) {
+        stateUpdates.activeTriggerElement = activeTriggerElement;
+      }
+    }
+    if (!lostActiveTriggerId && !activeTriggerId && triggerCount === 1) {
       const iteratorResult = store.context.triggerElements.entries().next();
       if (!iteratorResult.done) {
         const [implicitTriggerId, implicitTriggerElement] = iteratorResult.value;
@@ -5403,10 +5533,26 @@ function useImplicitActiveTrigger(store) {
         stateUpdates.activeTriggerElement = implicitTriggerElement;
       }
     }
-    if (stateUpdates.triggerCount !== void 0 || stateUpdates.activeTriggerId !== void 0) {
+    if (stateUpdates.triggerCount !== void 0 || stateUpdates.activeTriggerId !== void 0 || stateUpdates.activeTriggerElement !== void 0) {
       store.update(stateUpdates);
     }
-  }, [open, store, reactiveTriggerCount]);
+    if (lostActiveTriggerId) {
+      if (closeOnActiveTriggerUnmount) {
+        queueMicrotask(() => {
+          if (store.select("open") && store.select("activeTriggerId") === lostActiveTriggerId && !store.context.triggerElements.getById(lostActiveTriggerId)) {
+            const eventDetails = createChangeEventDetails(reason_parts_exports.none);
+            store.setOpen(false, eventDetails);
+            if (!eventDetails.isCanceled) {
+              store.update({
+                activeTriggerId: null,
+                activeTriggerElement: null
+              });
+            }
+          }
+        });
+      }
+    }
+  }, [open, store, reactiveTriggerCount, closeOnActiveTriggerUnmount]);
 }
 function useOpenStateTransitions(open, store, onUnmount) {
   const {
@@ -5414,9 +5560,12 @@ function useOpenStateTransitions(open, store, onUnmount) {
     setMounted,
     transitionStatus
   } = useTransitionStatus(open);
+  const preventUnmountingOnClose = store.useState("preventUnmountingOnClose");
+  const syncedPreventUnmountingOnClose = open ? false : preventUnmountingOnClose;
   store.useSyncedValues({
     mounted,
-    transitionStatus
+    transitionStatus,
+    preventUnmountingOnClose: syncedPreventUnmountingOnClose
   });
   const forceUnmount = useStableCallback(() => {
     setMounted(false);
@@ -5429,9 +5578,8 @@ function useOpenStateTransitions(open, store, onUnmount) {
     onUnmount?.();
     store.context.onOpenChangeComplete?.(false);
   });
-  const preventUnmountingOnClose = store.useState("preventUnmountingOnClose");
   useOpenChangeComplete({
-    enabled: mounted && !open && !preventUnmountingOnClose,
+    enabled: mounted && !open && !syncedPreventUnmountingOnClose,
     open,
     ref: store.context.popupRef,
     onComplete() {
@@ -5456,7 +5604,7 @@ function usePopupInteractionProps(store, statePart) {
   }, [store]);
 }
 
-// node_modules/@base-ui/react/esm/utils/popups/popupTriggerMap.js
+// node_modules/@base-ui/react/utils/popups/popupTriggerMap.mjs
 var PopupTriggerMap = class {
   constructor() {
     this.elementsSet = /* @__PURE__ */ new Set();
@@ -5536,7 +5684,7 @@ var PopupTriggerMap = class {
   }
 };
 
-// node_modules/@base-ui/react/esm/floating-ui-react/utils/getEmptyRootContext.js
+// node_modules/@base-ui/react/floating-ui-react/utils/getEmptyRootContext.mjs
 function getEmptyRootContext() {
   return new FloatingRootStore({
     open: false,
@@ -5551,7 +5699,7 @@ function getEmptyRootContext() {
   });
 }
 
-// node_modules/@base-ui/react/esm/utils/popups/store.js
+// node_modules/@base-ui/react/utils/popups/store.mjs
 function createInitialPopupStoreState() {
   return {
     open: false,
@@ -5634,7 +5782,7 @@ var popupStoreSelectors = {
   positionerElement: createSelector((state) => state.positionerElement)
 };
 
-// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFloatingRootContext.js
+// node_modules/@base-ui/react/floating-ui-react/hooks/useFloatingRootContext.mjs
 function useFloatingRootContext(options) {
   const {
     open = false,
@@ -5679,7 +5827,7 @@ function useFloatingRootContext(options) {
   return store;
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFloating.js
+// node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
 function useFloating2(options = {}) {
   const {
     nodeId,
@@ -5785,9 +5933,9 @@ function useFloating2(options = {}) {
   }), [position, refs, elements2, context, store]);
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useFocus.js
+// node_modules/@base-ui/react/floating-ui-react/hooks/useFocus.mjs
 var React27 = __toESM(require_react(), 1);
-var isMacSafari = isMac && isSafari;
+var isMacSafari = parts_exports.os.mac && parts_exports.engine.webkit;
 function useFocus(context, props = {}) {
   const {
     enabled = true,
@@ -5913,10 +6061,10 @@ function useFocus(context, props = {}) {
   } : {}, [enabled, reference]);
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverFloatingInteraction.js
+// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
 var React28 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverInteractionSharedState.js
+// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverInteractionSharedState.mjs
 var HoverInteraction = class _HoverInteraction {
   constructor() {
     this.pointerType = void 0;
@@ -5990,7 +6138,7 @@ function useHoverInteractionSharedState(store) {
   return data.hoverInteractionState;
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverFloatingInteraction.js
+// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverFloatingInteraction.mjs
 function useHoverFloatingInteraction(context, parameters = {}) {
   const {
     enabled = true,
@@ -6107,7 +6255,7 @@ function useHoverFloatingInteraction(context, parameters = {}) {
         return;
       }
       clearPointerEvents();
-      if (!isClickLikeOpenEvent2()) {
+      if (isHoverOpen() && !isClickLikeOpenEvent2()) {
         closeWithDelay(event);
       }
     }
@@ -6125,12 +6273,12 @@ function useHoverFloatingInteraction(context, parameters = {}) {
     return mergeCleanups(floating && addEventListener(floating, "mouseenter", onFloatingMouseEnter), floating && addEventListener(floating, "mouseleave", onFloatingMouseLeave), floating && addEventListener(floating, "pointerdown", handleInteractInside, true), () => {
       tree?.events.off("floating.closed", onNodeClosed);
     });
-  }, [enabled, floatingElement, store, dataRef, closeDelayProp, nodeIdProp, isClickLikeOpenEvent2, clearPointerEvents, instance, tree, parentId, childClosedTimeout]);
+  }, [enabled, floatingElement, store, dataRef, closeDelayProp, nodeIdProp, isHoverOpen, isClickLikeOpenEvent2, clearPointerEvents, instance, tree, parentId, childClosedTimeout]);
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/hooks/useHoverReferenceInteraction.js
+// node_modules/@base-ui/react/floating-ui-react/hooks/useHoverReferenceInteraction.mjs
 var React29 = __toESM(require_react(), 1);
-var ReactDOM4 = __toESM(require_react_dom(), 1);
+var ReactDOM5 = __toESM(require_react_dom(), 1);
 var EMPTY_REF = {
   current: null
 };
@@ -6388,7 +6536,7 @@ function useHoverReferenceInteraction(context, props = {}) {
           }
         }
         if (instance.pointerType === "touch") {
-          ReactDOM4.flushSync(() => {
+          ReactDOM5.flushSync(() => {
             handleMouseMove();
           });
         } else if (isOverInactive && currentOpen) {
@@ -6402,7 +6550,7 @@ function useHoverReferenceInteraction(context, props = {}) {
   }, [enabled, instance, isClickLikeOpenEvent2, isOverInactiveTrigger, mouseOnly, store, restMsRef, checkShouldOpen]);
 }
 
-// node_modules/@base-ui/react/esm/floating-ui-react/safePolygon.js
+// node_modules/@base-ui/react/floating-ui-react/safePolygon.mjs
 var CURSOR_SPEED_THRESHOLD = 0.1;
 var CURSOR_SPEED_THRESHOLD_SQUARED = CURSOR_SPEED_THRESHOLD * CURSOR_SPEED_THRESHOLD;
 var POLYGON_BUFFER = 0.5;
@@ -6618,7 +6766,7 @@ function safePolygon(options = {}) {
   return fn;
 }
 
-// node_modules/@base-ui/react/esm/utils/popupStateMapping.js
+// node_modules/@base-ui/react/utils/popupStateMapping.mjs
 var CommonPopupDataAttributes = (function(CommonPopupDataAttributes2) {
   CommonPopupDataAttributes2["open"] = "data-open";
   CommonPopupDataAttributes2["closed"] = "data-closed";
@@ -6673,7 +6821,7 @@ var popupStateMapping = {
   }
 };
 
-// node_modules/@base-ui/utils/esm/inertValue.js
+// node_modules/@base-ui/utils/inertValue.mjs
 function inertValue(value) {
   if (isReactVersionAtLeast(19)) {
     return value;
@@ -6681,10 +6829,10 @@ function inertValue(value) {
   return value ? "true" : void 0;
 }
 
-// node_modules/@base-ui/react/esm/utils/useAnchorPositioning.js
+// node_modules/@base-ui/react/utils/useAnchorPositioning.mjs
 var React30 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/esm/floating-ui-react/middleware/arrow.js
+// node_modules/@base-ui/react/floating-ui-react/middleware/arrow.mjs
 var baseArrow = (options) => ({
   name: "arrow",
   options,
@@ -6753,7 +6901,8 @@ var arrow4 = (options, deps) => ({
   options: [options, deps]
 });
 
-// node_modules/@base-ui/react/esm/utils/hideMiddleware.js
+// node_modules/@base-ui/react/utils/hideMiddleware.mjs
+var nativeHideFn = hide3().fn;
 var hide4 = {
   name: "hide",
   async fn(state) {
@@ -6764,7 +6913,7 @@ var hide4 = {
       y: y2
     } = state.rects.reference;
     const anchorHidden = width === 0 && height === 0 && x2 === 0 && y2 === 0;
-    const nativeHideResult = await hide3().fn(state);
+    const nativeHideResult = await nativeHideFn(state);
     return {
       data: {
         referenceHidden: nativeHideResult.data?.referenceHidden || anchorHidden
@@ -6773,7 +6922,7 @@ var hide4 = {
   }
 };
 
-// node_modules/@base-ui/react/esm/utils/adaptiveOriginMiddleware.js
+// node_modules/@base-ui/react/utils/adaptiveOriginMiddleware.mjs
 var DEFAULT_SIDES = {
   sideX: "left",
   sideY: "top"
@@ -6845,7 +6994,7 @@ var adaptiveOrigin = {
   }
 };
 
-// node_modules/@base-ui/react/esm/utils/useAnchorPositioning.js
+// node_modules/@base-ui/react/utils/useAnchorPositioning.mjs
 function getLogicalSide(sideParam, renderedSide, isRtl) {
   const isLogicalSideParam = sideParam === "inline-start" || sideParam === "inline-end";
   const logicalRight = isRtl ? "inline-start" : "inline-end";
@@ -7171,8 +7320,8 @@ function useAnchorPositioning(params) {
     }
   }, [mounted, refs, anchorDep, anchorValueRef]);
   React30.useEffect(() => {
-    if (keepMounted && mounted && elements2.domReference && elements2.floating) {
-      return autoUpdate(elements2.domReference, elements2.floating, update2, autoUpdateOptions);
+    if (keepMounted && mounted && elements2.reference && elements2.floating) {
+      return autoUpdate(elements2.reference, elements2.floating, update2, autoUpdateOptions);
     }
     return void 0;
   }, [keepMounted, mounted, elements2, update2, autoUpdateOptions]);
@@ -7210,12 +7359,12 @@ function isRef(param) {
   return param != null && "current" in param;
 }
 
-// node_modules/@base-ui/react/esm/utils/getDisabledMountTransitionStyles.js
+// node_modules/@base-ui/react/utils/getDisabledMountTransitionStyles.mjs
 function getDisabledMountTransitionStyles(transitionStatus) {
   return transitionStatus === "starting" ? DISABLED_TRANSITIONS_STYLE : EMPTY_OBJECT;
 }
 
-// node_modules/@base-ui/react/esm/utils/usePositioner.js
+// node_modules/@base-ui/react/utils/usePositioner.mjs
 function usePositioner(componentProps, state, {
   styles,
   transitionStatus,
@@ -7242,11 +7391,11 @@ function usePositioner(componentProps, state, {
   });
 }
 
-// node_modules/@base-ui/react/esm/utils/usePopupViewport.js
+// node_modules/@base-ui/react/utils/usePopupViewport.mjs
 var React33 = __toESM(require_react(), 1);
-var ReactDOM5 = __toESM(require_react_dom(), 1);
+var ReactDOM6 = __toESM(require_react_dom(), 1);
 
-// node_modules/@base-ui/utils/esm/usePreviousValue.js
+// node_modules/@base-ui/utils/usePreviousValue.mjs
 var React31 = __toESM(require_react(), 1);
 function usePreviousValue(value) {
   const [state, setState] = React31.useState({
@@ -7262,10 +7411,10 @@ function usePreviousValue(value) {
   return state.previous;
 }
 
-// node_modules/@base-ui/react/esm/utils/usePopupAutoResize.js
+// node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
 var React32 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/esm/utils/getCssDimensions.js
+// node_modules/@base-ui/react/utils/getCssDimensions.mjs
 function getCssDimensions2(element) {
   const css = getComputedStyle2(element);
   let width = parseFloat(css.width) || 0;
@@ -7284,15 +7433,13 @@ function getCssDimensions2(element) {
   };
 }
 
-// node_modules/@base-ui/react/esm/utils/usePopupAutoResize.js
-var DEFAULT_ENABLED = () => true;
+// node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
 function usePopupAutoResize(parameters) {
   const {
     popupElement,
     positionerElement,
     content,
     mounted,
-    enabled = DEFAULT_ENABLED,
     onMeasureLayout: onMeasureLayoutParam,
     onMeasureLayoutComplete: onMeasureLayoutCompleteParam,
     side,
@@ -7301,7 +7448,6 @@ function usePopupAutoResize(parameters) {
   const runOnceAnimationsFinish = useAnimationsFinished(popupElement, true, false);
   const animationFrame = useAnimationFrame();
   const committedDimensionsRef = React32.useRef(null);
-  const liveDimensionsRef = React32.useRef(null);
   const isInitialRenderRef = React32.useRef(true);
   const restoreAnchoringStylesRef = React32.useRef(NOOP);
   const onMeasureLayout = useStableCallback(onMeasureLayoutParam);
@@ -7323,27 +7469,16 @@ function usePopupAutoResize(parameters) {
     } : EMPTY_OBJECT;
   }, [side, direction]);
   useIsoLayoutEffect(() => {
-    if (!mounted || !enabled() || typeof ResizeObserver !== "function") {
+    if (!mounted) {
       restoreAnchoringStylesRef.current = NOOP;
       isInitialRenderRef.current = true;
       committedDimensionsRef.current = null;
-      liveDimensionsRef.current = null;
       return void 0;
     }
     if (!popupElement || !positionerElement) {
       return void 0;
     }
     restoreAnchoringStylesRef.current = applyElementStyles(popupElement, anchoringStyles);
-    const observer = new ResizeObserver((entries) => {
-      const entry = entries[0];
-      if (entry) {
-        liveDimensionsRef.current = {
-          width: Math.ceil(entry.borderBoxSize[0].inlineSize),
-          height: Math.ceil(entry.borderBoxSize[0].blockSize)
-        };
-      }
-    });
-    observer.observe(popupElement);
     setPopupCssSize(popupElement, "auto");
     const restorePopupPosition = overrideElementStyle(popupElement, "position", "static");
     const restorePopupTransform = overrideElementStyle(popupElement, "transform", "none");
@@ -7371,27 +7506,14 @@ function usePopupAutoResize(parameters) {
       onMeasureLayoutComplete?.(null, dimensions);
       isInitialRenderRef.current = false;
       return () => {
-        observer.disconnect();
         restoreAnchoringStylesRef.current();
         restoreAnchoringStylesRef.current = NOOP;
       };
     }
-    setPopupCssSize(popupElement, "auto");
     setPositionerCssSize(positionerElement, "max-content");
-    const previousDimensions = committedDimensionsRef.current ?? liveDimensionsRef.current;
+    const previousDimensions = committedDimensionsRef.current;
     const newDimensions = getCssDimensions2(popupElement);
     committedDimensionsRef.current = newDimensions;
-    if (!previousDimensions) {
-      setPositionerCssSize(positionerElement, newDimensions);
-      restoreMeasurementOverridesIncludingScale();
-      onMeasureLayoutComplete?.(null, newDimensions);
-      return () => {
-        observer.disconnect();
-        animationFrame.cancel();
-        restoreAnchoringStylesRef.current();
-        restoreAnchoringStylesRef.current = NOOP;
-      };
-    }
     setPopupCssSize(popupElement, previousDimensions);
     restoreMeasurementOverridesIncludingScale();
     onMeasureLayoutComplete?.(previousDimensions, newDimensions);
@@ -7405,13 +7527,12 @@ function usePopupAutoResize(parameters) {
       }, abortController.signal);
     });
     return () => {
-      observer.disconnect();
       abortController.abort();
       animationFrame.cancel();
       restoreAnchoringStylesRef.current();
       restoreAnchoringStylesRef.current = NOOP;
     };
-  }, [content, popupElement, positionerElement, runOnceAnimationsFinish, animationFrame, enabled, mounted, onMeasureLayout, onMeasureLayoutComplete, anchoringStyles]);
+  }, [content, popupElement, positionerElement, runOnceAnimationsFinish, animationFrame, mounted, onMeasureLayout, onMeasureLayoutComplete, anchoringStyles]);
 }
 function overrideElementStyle(element, property, value) {
   const originalValue = element.style.getPropertyValue(property);
@@ -7442,7 +7563,7 @@ function setPositionerCssSize(positionerElement, size4) {
   positionerElement.style.setProperty("--positioner-height", height);
 }
 
-// node_modules/@base-ui/react/esm/utils/usePopupViewport.js
+// node_modules/@base-ui/react/utils/usePopupViewport.mjs
 var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
 function usePopupViewport(parameters) {
   const {
@@ -7491,13 +7612,18 @@ function usePopupViewport(parameters) {
   });
   const lastHandledTriggerRef = React33.useRef(null);
   useIsoLayoutEffect(() => {
+    if (!open || !mounted) {
+      lastHandledTriggerRef.current = null;
+    }
+  }, [open, mounted]);
+  useIsoLayoutEffect(() => {
     if (activeTrigger && previousActiveTrigger && activeTrigger !== previousActiveTrigger && lastHandledTriggerRef.current !== activeTrigger && capturedNodeRef.current) {
       setPreviousContentNode(capturedNodeRef.current);
       setShowStartingStyleAttribute(true);
       const offset4 = calculateRelativePosition(previousActiveTrigger, activeTrigger);
       setNewTriggerOffset(offset4);
       cleanupFrame.request(() => {
-        ReactDOM5.flushSync(() => {
+        ReactDOM6.flushSync(() => {
           setShowStartingStyleAttribute(false);
         });
         onAnimationsFinished(() => {
@@ -7630,9 +7756,9 @@ function usePopupContentKey(activeTriggerId, payload) {
   return `${activeTriggerId ?? "current"}-${contentKey}`;
 }
 
-// node_modules/@base-ui/react/esm/utils/FloatingPortalLite.js
+// node_modules/@base-ui/react/utils/FloatingPortalLite.mjs
 var React34 = __toESM(require_react(), 1);
-var ReactDOM6 = __toESM(require_react_dom(), 1);
+var ReactDOM7 = __toESM(require_react_dom(), 1);
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
 var FloatingPortalLite = /* @__PURE__ */ React34.forwardRef(function FloatingPortalLite2(componentProps, forwardedRef) {
   const {
@@ -7656,12 +7782,12 @@ var FloatingPortalLite = /* @__PURE__ */ React34.forwardRef(function FloatingPor
     return null;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(React34.Fragment, {
-    children: [portalSubtree, portalNode && /* @__PURE__ */ ReactDOM6.createPortal(children, portalNode)]
+    children: [portalSubtree, portalNode && /* @__PURE__ */ ReactDOM7.createPortal(children, portalNode)]
   });
 });
 if (true) FloatingPortalLite.displayName = "FloatingPortalLite";
 
-// node_modules/@base-ui/react/esm/tooltip/index.parts.js
+// node_modules/@base-ui/react/tooltip/index.parts.mjs
 var index_parts_exports = {};
 __export(index_parts_exports, {
   Arrow: () => TooltipArrow,
@@ -7676,10 +7802,10 @@ __export(index_parts_exports, {
   createHandle: () => createTooltipHandle
 });
 
-// node_modules/@base-ui/react/esm/tooltip/root/TooltipRoot.js
+// node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
 var React37 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/esm/tooltip/root/TooltipRootContext.js
+// node_modules/@base-ui/react/tooltip/root/TooltipRootContext.mjs
 var React35 = __toESM(require_react(), 1);
 var TooltipRootContext = /* @__PURE__ */ React35.createContext(void 0);
 if (true) TooltipRootContext.displayName = "TooltipRootContext";
@@ -7691,9 +7817,8 @@ function useTooltipRootContext(optional) {
   return context;
 }
 
-// node_modules/@base-ui/react/esm/tooltip/store/TooltipStore.js
+// node_modules/@base-ui/react/tooltip/store/TooltipStore.mjs
 var React36 = __toESM(require_react(), 1);
-var ReactDOM7 = __toESM(require_react_dom(), 1);
 var selectors2 = {
   ...popupStoreSelectors,
   disabled: createSelector((state) => state.disabled),
@@ -7722,38 +7847,11 @@ var TooltipStore = class _TooltipStore extends ReactStore {
     }, selectors2);
   }
   setOpen = (nextOpen, eventDetails) => {
-    const reason = eventDetails.reason;
-    const isHover = reason === reason_parts_exports.triggerHover;
-    const isFocusOpen = nextOpen && reason === reason_parts_exports.triggerFocus;
-    const isDismissClose = !nextOpen && (reason === reason_parts_exports.triggerPress || reason === reason_parts_exports.escapeKey);
-    eventDetails.preventUnmountOnClose = () => {
-      this.set("preventUnmountingOnClose", true);
-    };
-    this.context.onOpenChange?.(nextOpen, eventDetails);
-    if (eventDetails.isCanceled) {
-      return;
-    }
-    this.state.floatingRootContext.dispatchOpenChange(nextOpen, eventDetails);
-    const changeState = () => {
-      const updatedState = {
-        open: nextOpen,
-        openChangeReason: reason
-      };
-      if (isFocusOpen) {
-        updatedState.instantType = "focus";
-      } else if (isDismissClose) {
-        updatedState.instantType = "dismiss";
-      } else if (reason === reason_parts_exports.triggerHover) {
-        updatedState.instantType = void 0;
+    applyPopupOpenChange(this, nextOpen, eventDetails, {
+      extraState: {
+        openChangeReason: eventDetails.reason
       }
-      setOpenTriggerState(updatedState, nextOpen, eventDetails.trigger);
-      this.update(updatedState);
-    };
-    if (isHover) {
-      ReactDOM7.flushSync(changeState);
-    } else {
-      changeState();
-    }
+    });
   };
   // Used by trigger clicks to clear a delayed hover open without reporting a public open-state change.
   cancelPendingOpen(event) {
@@ -7779,7 +7877,7 @@ function createInitialState() {
   };
 }
 
-// node_modules/@base-ui/react/esm/tooltip/root/TooltipRoot.js
+// node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
 var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const {
@@ -7802,14 +7900,7 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
     activeTriggerId: defaultTriggerIdProp,
     triggerIdProp
   });
-  useOnFirstRender(() => {
-    if (openProp === void 0 && store.state.open === false && defaultOpen === true) {
-      store.update({
-        open: true,
-        activeTriggerId: defaultTriggerIdProp
-      });
-    }
-  });
+  useInitialOpenSync(store, openProp, defaultOpen, defaultTriggerIdProp);
   store.useControlledProp("openProp", openProp);
   store.useControlledProp("triggerIdProp", triggerIdProp);
   store.useContextCallback("onOpenChange", onOpenChange);
@@ -7824,7 +7915,9 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
     disableHoverablePopup
   });
   store.useSyncedValue("disabled", disabled2);
-  useImplicitActiveTrigger(store);
+  useImplicitActiveTrigger(store, {
+    closeOnActiveTriggerUnmount: true
+  });
   const {
     forceUnmount,
     transitionStatus
@@ -7901,10 +7994,10 @@ function TooltipInteractions({
   return null;
 }
 
-// node_modules/@base-ui/react/esm/tooltip/trigger/TooltipTrigger.js
+// node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
 var React39 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/esm/tooltip/provider/TooltipProviderContext.js
+// node_modules/@base-ui/react/tooltip/provider/TooltipProviderContext.mjs
 var React38 = __toESM(require_react(), 1);
 var TooltipProviderContext = /* @__PURE__ */ React38.createContext(void 0);
 if (true) TooltipProviderContext.displayName = "TooltipProviderContext";
@@ -7912,17 +8005,17 @@ function useTooltipProviderContext() {
   return React38.useContext(TooltipProviderContext);
 }
 
-// node_modules/@base-ui/react/esm/tooltip/trigger/TooltipTriggerDataAttributes.js
+// node_modules/@base-ui/react/tooltip/trigger/TooltipTriggerDataAttributes.mjs
 var TooltipTriggerDataAttributes = (function(TooltipTriggerDataAttributes2) {
   TooltipTriggerDataAttributes2[TooltipTriggerDataAttributes2["popupOpen"] = CommonTriggerDataAttributes.popupOpen] = "popupOpen";
   TooltipTriggerDataAttributes2["triggerDisabled"] = "data-trigger-disabled";
   return TooltipTriggerDataAttributes2;
 })({});
 
-// node_modules/@base-ui/react/esm/tooltip/utils/constants.js
+// node_modules/@base-ui/react/tooltip/utils/constants.mjs
 var OPEN_DELAY = 600;
 
-// node_modules/@base-ui/react/esm/tooltip/trigger/TooltipTrigger.js
+// node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
 var TOOLTIP_TRIGGER_IDENTIFIER = "data-base-ui-tooltip-trigger";
 function getTargetElement(event) {
   if ("composedPath" in event) {
@@ -8139,10 +8232,10 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
 });
 if (true) TooltipTrigger.displayName = "TooltipTrigger";
 
-// node_modules/@base-ui/react/esm/tooltip/portal/TooltipPortal.js
+// node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
 var React41 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/esm/tooltip/portal/TooltipPortalContext.js
+// node_modules/@base-ui/react/tooltip/portal/TooltipPortalContext.mjs
 var React40 = __toESM(require_react(), 1);
 var TooltipPortalContext = /* @__PURE__ */ React40.createContext(void 0);
 if (true) TooltipPortalContext.displayName = "TooltipPortalContext";
@@ -8154,7 +8247,7 @@ function useTooltipPortalContext() {
   return value;
 }
 
-// node_modules/@base-ui/react/esm/tooltip/portal/TooltipPortal.js
+// node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
 var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
 var TooltipPortal = /* @__PURE__ */ React41.forwardRef(function TooltipPortal2(props, forwardedRef) {
   const {
@@ -8177,10 +8270,10 @@ var TooltipPortal = /* @__PURE__ */ React41.forwardRef(function TooltipPortal2(p
 });
 if (true) TooltipPortal.displayName = "TooltipPortal";
 
-// node_modules/@base-ui/react/esm/tooltip/positioner/TooltipPositioner.js
+// node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
 var React43 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/esm/tooltip/positioner/TooltipPositionerContext.js
+// node_modules/@base-ui/react/tooltip/positioner/TooltipPositionerContext.mjs
 var React42 = __toESM(require_react(), 1);
 var TooltipPositionerContext = /* @__PURE__ */ React42.createContext(void 0);
 if (true) TooltipPositionerContext.displayName = "TooltipPositionerContext";
@@ -8192,7 +8285,7 @@ function useTooltipPositionerContext() {
   return context;
 }
 
-// node_modules/@base-ui/react/esm/tooltip/positioner/TooltipPositioner.js
+// node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
 var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
 var TooltipPositioner = /* @__PURE__ */ React43.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
   const {
@@ -8263,7 +8356,7 @@ var TooltipPositioner = /* @__PURE__ */ React43.forwardRef(function TooltipPosit
 });
 if (true) TooltipPositioner.displayName = "TooltipPositioner";
 
-// node_modules/@base-ui/react/esm/tooltip/popup/TooltipPopup.js
+// node_modules/@base-ui/react/tooltip/popup/TooltipPopup.mjs
 var React44 = __toESM(require_react(), 1);
 var stateAttributesMapping = {
   ...popupStateMapping,
@@ -8319,7 +8412,7 @@ var TooltipPopup = /* @__PURE__ */ React44.forwardRef(function TooltipPopup2(com
 });
 if (true) TooltipPopup.displayName = "TooltipPopup";
 
-// node_modules/@base-ui/react/esm/tooltip/arrow/TooltipArrow.js
+// node_modules/@base-ui/react/tooltip/arrow/TooltipArrow.mjs
 var React45 = __toESM(require_react(), 1);
 var TooltipArrow = /* @__PURE__ */ React45.forwardRef(function TooltipArrow2(componentProps, forwardedRef) {
   const {
@@ -8358,7 +8451,7 @@ var TooltipArrow = /* @__PURE__ */ React45.forwardRef(function TooltipArrow2(com
 });
 if (true) TooltipArrow.displayName = "TooltipArrow";
 
-// node_modules/@base-ui/react/esm/tooltip/provider/TooltipProvider.js
+// node_modules/@base-ui/react/tooltip/provider/TooltipProvider.mjs
 var React46 = __toESM(require_react(), 1);
 var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
 var TooltipProvider = function TooltipProvider2(props) {
@@ -8386,17 +8479,17 @@ var TooltipProvider = function TooltipProvider2(props) {
 };
 if (true) TooltipProvider.displayName = "TooltipProvider";
 
-// node_modules/@base-ui/react/esm/tooltip/viewport/TooltipViewport.js
+// node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
 var React47 = __toESM(require_react(), 1);
 
-// node_modules/@base-ui/react/esm/tooltip/viewport/TooltipViewportCssVars.js
+// node_modules/@base-ui/react/tooltip/viewport/TooltipViewportCssVars.mjs
 var TooltipViewportCssVars = /* @__PURE__ */ (function(TooltipViewportCssVars2) {
   TooltipViewportCssVars2["popupWidth"] = "--popup-width";
   TooltipViewportCssVars2["popupHeight"] = "--popup-height";
   return TooltipViewportCssVars2;
 })({});
 
-// node_modules/@base-ui/react/esm/tooltip/viewport/TooltipViewport.js
+// node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
 var stateAttributesMapping2 = {
   activationDirection: (value) => value ? {
     "data-activation-direction": value
@@ -8438,7 +8531,7 @@ var TooltipViewport = /* @__PURE__ */ React47.forwardRef(function TooltipViewpor
 });
 if (true) TooltipViewport.displayName = "TooltipViewport";
 
-// node_modules/@base-ui/react/esm/tooltip/store/TooltipHandle.js
+// node_modules/@base-ui/react/tooltip/store/TooltipHandle.mjs
 var TooltipHandle = class {
   /**
    * Internal store holding the tooltip state.
@@ -8479,7 +8572,7 @@ function createTooltipHandle() {
   return new TooltipHandle();
 }
 
-// node_modules/@base-ui/react/esm/use-render/useRender.js
+// node_modules/@base-ui/react/use-render/useRender.mjs
 function useRender(params) {
   return useRenderElement(params.defaultTagName ?? "div", params, params);
 }
@@ -9497,14 +9590,14 @@ var page_default = Page;
 
 // routes/font-list/stage.tsx
 var import_i18n47 = __toESM(require_i18n());
-var import_components61 = __toESM(require_components());
+var import_components60 = __toESM(require_components());
 var import_editor = __toESM(require_editor());
 var import_core_data12 = __toESM(require_core_data());
 var import_data13 = __toESM(require_data());
 var import_element51 = __toESM(require_element());
 
 // packages/global-styles-ui/build-module/global-styles-ui.mjs
-var import_components60 = __toESM(require_components(), 1);
+var import_components59 = __toESM(require_components(), 1);
 var import_blocks5 = __toESM(require_blocks(), 1);
 var import_data12 = __toESM(require_data(), 1);
 var import_block_editor14 = __toESM(require_block_editor(), 1);
@@ -9601,7 +9694,9 @@ var VALID_SETTINGS = [
   "typography.textDecoration",
   "typography.textIndent",
   "typography.textTransform",
-  "typography.writingMode"
+  "typography.writingMode",
+  "viewport.mobile",
+  "viewport.tablet"
 ];
 function getSetting(globalStyles, path, blockName) {
   const appendedBlockPath = blockName ? ".blocks." + blockName : "";
@@ -10345,6 +10440,97 @@ var k = function(r3) {
   });
 };
 
+// packages/global-styles-engine/build-module/utils/viewport.mjs
+var DEFAULT_VIEWPORT_BREAKPOINTS = {
+  mobile: "480px",
+  tablet: "782px"
+};
+var VIEWPORT_SIZE_REGEXP = /^(\d+|\d*\.\d+)(px|em|rem)$/;
+var DEFAULT_FONT_SIZE = 16;
+function isViewportSettings(configOrSettings) {
+  return "mobile" in configOrSettings || "tablet" in configOrSettings;
+}
+function getViewportSettings(configOrSettings) {
+  if (!configOrSettings || typeof configOrSettings !== "object") {
+    return {};
+  }
+  if (isViewportSettings(configOrSettings)) {
+    return configOrSettings;
+  }
+  return configOrSettings.settings?.viewport ?? {};
+}
+function isValidViewportSize(value) {
+  return typeof value === "string" && VIEWPORT_SIZE_REGEXP.test(value.trim());
+}
+function getViewportBreakpointValueInPixels(value) {
+  if (typeof value === "number") {
+    return value;
+  }
+  if (typeof value !== "string") {
+    return void 0;
+  }
+  const match2 = value.trim().match(VIEWPORT_SIZE_REGEXP);
+  if (!match2) {
+    return void 0;
+  }
+  const numericValue = Number.parseFloat(match2[1]);
+  const unit = match2[2];
+  return unit === "px" ? numericValue : numericValue * DEFAULT_FONT_SIZE;
+}
+function getViewportBreakpoints(configOrSettings) {
+  const viewportSettings = getViewportSettings(configOrSettings);
+  const breakpoints = {};
+  const breakpointValuesInPixels = {};
+  Object.keys(DEFAULT_VIEWPORT_BREAKPOINTS).forEach((breakpoint) => {
+    const key = breakpoint;
+    const value = viewportSettings[key];
+    const px = getViewportBreakpointValueInPixels(value);
+    if (px !== void 0 && isValidViewportSize(value)) {
+      breakpoints[key] = value.trim();
+      breakpointValuesInPixels[key] = px;
+    }
+  });
+  const breakpointNames = Object.keys(breakpoints);
+  if (!breakpointNames.length) {
+    return { ...DEFAULT_VIEWPORT_BREAKPOINTS };
+  }
+  if (1 === breakpointNames.length) {
+    return breakpoints;
+  }
+  const mobile = breakpoints.mobile;
+  const tablet = breakpoints.tablet;
+  if (breakpointValuesInPixels.mobile >= breakpointValuesInPixels.tablet) {
+    return { mobile };
+  }
+  return { mobile, tablet };
+}
+function getResponsiveMediaQueries(configOrSettings) {
+  const breakpoints = getViewportBreakpoints(configOrSettings);
+  const mediaQueries = {};
+  if (breakpoints.mobile) {
+    mediaQueries["@mobile"] = `@media (width <= ${breakpoints.mobile})`;
+  }
+  if (breakpoints.tablet) {
+    mediaQueries["@tablet"] = breakpoints.mobile ? `@media (${breakpoints.mobile} < width <= ${breakpoints.tablet})` : `@media (width <= ${breakpoints.tablet})`;
+  }
+  return mediaQueries;
+}
+
+// packages/global-styles-engine/build-module/lock-unlock.mjs
+var import_private_apis2 = __toESM(require_private_apis(), 1);
+var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/global-styles-engine"
+);
+
+// packages/global-styles-engine/build-module/private-apis.mjs
+var privateApis = {};
+lock2(privateApis, {
+  getResponsiveMediaQueries,
+  getViewportBreakpoints,
+  getViewportBreakpointValueInPixels
+});
+
 // packages/global-styles-ui/build-module/provider.mjs
 var import_element20 = __toESM(require_element(), 1);
 
@@ -10463,6 +10649,16 @@ var import_i18n2 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/utils.mjs
 var import_i18n = __toESM(require_i18n(), 1);
+
+// packages/global-styles-ui/build-module/lock-unlock.mjs
+var import_private_apis4 = __toESM(require_private_apis(), 1);
+var { lock: lock3, unlock: unlock3 } = (0, import_private_apis4.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/global-styles-ui"
+);
+
+// packages/global-styles-ui/build-module/utils.mjs
+var { getViewportBreakpoints: getViewportBreakpoints2 } = unlock3(privateApis);
 var VALID_ELEMENT_STATES = {
   link: [
     { value: ":link", label: (0, import_i18n.__)("Link") },
@@ -10705,13 +10901,6 @@ function useCurrentMergeThemeStyleVariationsWithUserConfig(properties = []) {
   }, [properties, userVariation, variationsFromTheme]);
 }
 
-// packages/global-styles-ui/build-module/lock-unlock.mjs
-var import_private_apis2 = __toESM(require_private_apis(), 1);
-var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-  "@wordpress/global-styles-ui"
-);
-
 // packages/global-styles-ui/build-module/root-menu.mjs
 var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
 var {
@@ -10720,7 +10909,7 @@ var {
   useHasColorPanel,
   useSettingsForBlockElement,
   useHasBackgroundPanel
-} = unlock2(import_block_editor.privateApis);
+} = unlock3(import_block_editor.privateApis);
 
 // packages/global-styles-ui/build-module/preview-styles.mjs
 var import_components7 = __toESM(require_components(), 1);
@@ -11236,7 +11425,7 @@ var import_components10 = __toESM(require_components(), 1);
 var import_i18n6 = __toESM(require_i18n(), 1);
 var import_block_editor2 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
-var { StateControl, StateControlBadges } = unlock2(import_block_editor2.privateApis);
+var { StateControl, StateControlBadges } = unlock3(import_block_editor2.privateApis);
 
 // packages/global-styles-ui/build-module/screen-block-list.mjs
 var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
@@ -11247,7 +11436,7 @@ var {
   useSettingsForBlockElement: useSettingsForBlockElement2,
   useHasColorPanel: useHasColorPanel2,
   useHasBackgroundPanel: useHasBackgroundPanel2
-} = unlock2(import_block_editor3.privateApis);
+} = unlock3(import_block_editor3.privateApis);
 function useSortedBlockTypes() {
   const blockItems = (0, import_data4.useSelect)(
     (select) => select(import_blocks2.store).getBlockTypes(),
@@ -11347,6 +11536,9 @@ var import_blocks3 = __toESM(require_blocks(), 1);
 var import_components12 = __toESM(require_components(), 1);
 var import_element25 = __toESM(require_element(), 1);
 var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+var { getViewportBreakpoints: getViewportBreakpoints3, getViewportBreakpointValueInPixels: getViewportBreakpointValueInPixels2 } = unlock3(
+  privateApis
+);
 
 // packages/global-styles-ui/build-module/subtitle.mjs
 var import_components13 = __toESM(require_components(), 1);
@@ -11374,7 +11566,7 @@ var {
   FiltersPanel: StylesFiltersPanel,
   ImageSettingsPanel,
   AdvancedPanel: StylesAdvancedPanel
-} = unlock2(import_block_editor5.privateApis);
+} = unlock3(import_block_editor5.privateApis);
 
 // packages/global-styles-ui/build-module/screen-typography.mjs
 var import_i18n22 = __toESM(require_i18n(), 1);
@@ -11634,7 +11826,7 @@ var FONT_STYLES = {
 
 // packages/global-styles-ui/build-module/font-library/utils/index.mjs
 var { File } = window;
-var { kebabCase } = unlock2(import_components19.privateApis);
+var { kebabCase } = unlock3(import_components19.privateApis);
 function setUIValuesNeeded(font2, extraValues = {}) {
   if (!font2.name && (font2.fontFamily || font2.slug)) {
     font2.name = font2.fontFamily || font2.slug;
@@ -13229,7 +13421,6 @@ function FontCollection({ slug }) {
                 /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
                   import_components26.SelectControl,
                   {
-                    __next40pxDefaultSize: true,
                     label: (0, import_i18n16.__)("Category"),
                     value: filters.category,
                     onChange: handleCategoryFilter,
@@ -23511,7 +23702,7 @@ var vmtx$1 = Object.freeze({ __proto__: null, vmtx });
 
 // packages/global-styles-ui/build-module/font-library/utils/make-families-from-faces.mjs
 var import_components27 = __toESM(require_components(), 1);
-var { kebabCase: kebabCase2 } = unlock2(import_components27.privateApis);
+var { kebabCase: kebabCase2 } = unlock3(import_components27.privateApis);
 function makeFamiliesFromFaces(fontFaces) {
   const fontFamiliesObject = fontFaces.reduce(
     (acc, item) => {
@@ -23699,7 +23890,7 @@ var upload_fonts_default = UploadFonts;
 
 // packages/global-styles-ui/build-module/font-library/modal.mjs
 var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
-var { Tabs } = unlock2(import_components29.privateApis);
+var { Tabs } = unlock3(import_components29.privateApis);
 var DEFAULT_TAB = {
   id: "installed-fonts",
   title: (0, import_i18n18._x)("Library", "Font library")
@@ -23734,7 +23925,7 @@ var import_element39 = __toESM(require_element(), 1);
 // packages/global-styles-ui/build-module/typography-panel.mjs
 var import_block_editor6 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
-var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock2(import_block_editor6.privateApis);
+var { useSettingsForBlockElement: useSettingsForBlockElement4, TypographyPanel: StylesTypographyPanel2 } = unlock3(import_block_editor6.privateApis);
 
 // packages/global-styles-ui/build-module/typography-preview.mjs
 var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
@@ -23783,13 +23974,12 @@ var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-colors.mjs
 var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
-var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock2(
+var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock3(
   import_block_editor7.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-color-palette.mjs
 var import_i18n28 = __toESM(require_i18n(), 1);
-var import_components42 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/color-palette-panel.mjs
 var import_compose4 = __toESM(require_compose(), 1);
@@ -23908,44 +24098,43 @@ var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-color-palette.mjs
 var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
-var { Tabs: Tabs2 } = unlock2(import_components42.privateApis);
 
 // packages/global-styles-ui/build-module/screen-background.mjs
 var import_i18n29 = __toESM(require_i18n(), 1);
 var import_block_editor9 = __toESM(require_block_editor(), 1);
-var import_components43 = __toESM(require_components(), 1);
+var import_components42 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/background-panel.mjs
 var import_block_editor8 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
-var { BackgroundPanel: StylesBackgroundPanel2 } = unlock2(
+var { BackgroundPanel: StylesBackgroundPanel2 } = unlock3(
   import_block_editor8.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-background.mjs
 var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
-var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock2(import_block_editor9.privateApis);
+var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock3(import_block_editor9.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
-var import_components45 = __toESM(require_components(), 1);
+var import_components44 = __toESM(require_components(), 1);
 var import_i18n31 = __toESM(require_i18n(), 1);
 var import_element41 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/confirm-reset-shadow-dialog.mjs
-var import_components44 = __toESM(require_components(), 1);
+var import_components43 = __toESM(require_components(), 1);
 var import_i18n30 = __toESM(require_i18n(), 1);
 var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
 var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
-var { Menu } = unlock2(import_components45.privateApis);
+var { Menu } = unlock3(import_components44.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
-var import_components46 = __toESM(require_components(), 1);
+var import_components45 = __toESM(require_components(), 1);
 var import_i18n32 = __toESM(require_i18n(), 1);
 var import_element42 = __toESM(require_element(), 1);
 var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu2 } = unlock2(import_components46.privateApis);
+var { Menu: Menu2 } = unlock3(import_components45.privateApis);
 var customShadowMenuItems = [
   {
     label: (0, import_i18n32.__)("Rename"),
@@ -23974,27 +24163,27 @@ var import_block_editor11 = __toESM(require_block_editor(), 1);
 var import_block_editor10 = __toESM(require_block_editor(), 1);
 var import_element43 = __toESM(require_element(), 1);
 var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
-var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock2(import_block_editor10.privateApis);
+var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock3(import_block_editor10.privateApis);
 
 // packages/global-styles-ui/build-module/screen-layout.mjs
 var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
-var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock2(
+var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock3(
   import_block_editor11.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-style-variations.mjs
-var import_components49 = __toESM(require_components(), 1);
+var import_components48 = __toESM(require_components(), 1);
 var import_i18n36 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/style-variations-content.mjs
 var import_i18n35 = __toESM(require_i18n(), 1);
-var import_components48 = __toESM(require_components(), 1);
+var import_components47 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/style-variations-container.mjs
 var import_core_data9 = __toESM(require_core_data(), 1);
 var import_data9 = __toESM(require_data(), 1);
 var import_element44 = __toESM(require_element(), 1);
-var import_components47 = __toESM(require_components(), 1);
+var import_components46 = __toESM(require_components(), 1);
 var import_i18n34 = __toESM(require_i18n(), 1);
 var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
 function StyleVariationsContainer({
@@ -24063,7 +24252,7 @@ function StyleVariationsContainer({
     return null;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
-    import_components47.__experimentalGrid,
+    import_components46.__experimentalGrid,
     {
       columns: 2,
       className: "global-styles-ui-style-variations-container",
@@ -24092,14 +24281,14 @@ var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-css.mjs
 var import_i18n37 = __toESM(require_i18n(), 1);
-var import_components50 = __toESM(require_components(), 1);
+var import_components49 = __toESM(require_components(), 1);
 var import_block_editor12 = __toESM(require_block_editor(), 1);
 var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
-var { AdvancedPanel: StylesAdvancedPanel2 } = unlock2(import_block_editor12.privateApis);
+var { AdvancedPanel: StylesAdvancedPanel2 } = unlock3(import_block_editor12.privateApis);
 
 // packages/global-styles-ui/build-module/screen-revisions/index.mjs
 var import_i18n40 = __toESM(require_i18n(), 1);
-var import_components53 = __toESM(require_components(), 1);
+var import_components52 = __toESM(require_components(), 1);
 var import_element46 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.mjs
@@ -24109,17 +24298,17 @@ var import_element45 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-revisions/revisions-buttons.mjs
 var import_i18n38 = __toESM(require_i18n(), 1);
-var import_components51 = __toESM(require_components(), 1);
+var import_components50 = __toESM(require_components(), 1);
 var import_date = __toESM(require_date(), 1);
 var import_core_data11 = __toESM(require_core_data(), 1);
 var import_data11 = __toESM(require_data(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
 var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
-var { Badge: WCBadge } = unlock2(import_components51.privateApis);
+var { Badge: WCBadge } = unlock3(import_components50.privateApis);
 var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
 // packages/global-styles-ui/build-module/pagination/index.mjs
-var import_components52 = __toESM(require_components(), 1);
+var import_components51 = __toESM(require_components(), 1);
 var import_i18n39 = __toESM(require_i18n(), 1);
 var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
 
@@ -24128,21 +24317,21 @@ var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
 var import_i18n42 = __toESM(require_i18n(), 1);
-var import_components55 = __toESM(require_components(), 1);
+var import_components54 = __toESM(require_components(), 1);
 var import_element47 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/confirm-reset-font-sizes-dialog.mjs
-var import_components54 = __toESM(require_components(), 1);
+var import_components53 = __toESM(require_components(), 1);
 var import_i18n41 = __toESM(require_i18n(), 1);
 var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
 var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu3 } = unlock2(import_components55.privateApis);
+var { Menu: Menu3 } = unlock3(import_components54.privateApis);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
 var import_i18n46 = __toESM(require_i18n(), 1);
-var import_components59 = __toESM(require_components(), 1);
+var import_components58 = __toESM(require_components(), 1);
 var import_element49 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
@@ -24151,23 +24340,23 @@ var import_i18n43 = __toESM(require_i18n(), 1);
 var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/confirm-delete-font-size-dialog.mjs
-var import_components56 = __toESM(require_components(), 1);
+var import_components55 = __toESM(require_components(), 1);
 var import_i18n44 = __toESM(require_i18n(), 1);
 var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/rename-font-size-dialog.mjs
-var import_components57 = __toESM(require_components(), 1);
+var import_components56 = __toESM(require_components(), 1);
 var import_i18n45 = __toESM(require_i18n(), 1);
 var import_element48 = __toESM(require_element(), 1);
 var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/size-control/index.mjs
-var import_components58 = __toESM(require_components(), 1);
+var import_components57 = __toESM(require_components(), 1);
 var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
 var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu4 } = unlock2(import_components59.privateApis);
+var { Menu: Menu4 } = unlock3(import_components58.privateApis);
 
 // packages/global-styles-ui/build-module/global-styles-ui.mjs
 var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
@@ -24233,23 +24422,23 @@ function FontLibrary({
 }
 
 // routes/font-list/lock-unlock.ts
-var import_private_apis3 = __toESM(require_private_apis());
-var { unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+var import_private_apis5 = __toESM(require_private_apis());
+var { unlock: unlock4 } = (0, import_private_apis5.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
   "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
   "@wordpress/font-list-route"
 );
 
 // routes/font-list/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='0e4c7272f7']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='3f4ac8b622']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "0e4c7272f7");
-  style.appendChild(document.createTextNode('@media (min-width:782px){.font-library-modal.font-library-modal{width:65vw}}.font-library-modal .components-modal__header{border-bottom:none}.font-library-modal .components-modal__content{margin-bottom:90px;padding:0}.font-library-modal .font-library__subtitle{font-size:11px;font-weight:499;text-transform:uppercase}.font-library-modal__tab-panel{height:calc(100% - 50px)}.font-library__tabpanel-layout{display:flex;flex-direction:column;height:100%}.font-library__tabpanel-layout>div{flex-grow:1}.font-library__tabpanel-layout .font-library__loading{align-items:center;box-sizing:border-box;display:flex;height:100%;justify-content:center;left:0;padding-top:124px;position:absolute;top:0;width:100%}.font-library__footer,.font-library__tabpanel-layout .components-navigator-screen{padding:24px;width:100%}.font-library__footer{background-color:#fff;border-top:1px solid #ddd;bottom:0;box-sizing:border-box;flex-grow:0!important;flex-shrink:0;height:90px;position:absolute}.font-library__page-selection{font-size:11px;font-weight:499;text-transform:uppercase}@media (min-width:600px){.font-library__page-selection .font-library__page-selection-trigger{font-size:11px!important;font-weight:499}}.font-library__fonts-title{font-size:11px;font-weight:600;margin-bottom:0;margin-top:0;text-transform:uppercase}.font-library__fonts-list{list-style:none;margin-bottom:0;margin-top:0;padding:0}.font-library__fonts-list-item{margin-bottom:0}.font-library__font-card{border:1px solid #ddd;box-sizing:border-box;height:auto!important;margin-top:-1px;padding:16px;width:100%}.font-library__font-card:hover{background-color:#f0f0f0}.font-library__font-card:focus{position:relative}.font-library__font-card .font-library__font-card__name{font-weight:700}.font-library__font-card .font-library__font-card__count{color:#757575}.font-library__font-card .font-library__font-variant_demo-image{display:block;height:24px;width:auto}.font-library__font-card .font-library__font-variant_demo-text{flex-shrink:0;white-space:nowrap}@media not (prefers-reduced-motion){.font-library__font-card .font-library__font-variant_demo-text{transition:opacity .3s ease-in-out}}.font-library-modal__tablist-container{background:#fff;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:1}.font-library__upload-area{align-items:center;display:flex;height:256px!important;justify-content:center;width:100%}button.font-library__upload-area{background-color:#f0f0f0}.font-library__local-fonts{margin:24px auto;width:80%}.font-library__local-fonts .font-library__upload-area__text{color:#757575}.font-library__google-fonts-confirm{align-items:center;display:flex;justify-content:center;margin-top:64px}.font-library__google-fonts-confirm p{line-height:1.4}.font-library__google-fonts-confirm h2{font-size:1.2rem;font-weight:400}.font-library__google-fonts-confirm .components-card{padding:16px;width:400px}.font-library__google-fonts-confirm .components-button{justify-content:center;width:100%}.font-library__select-all{padding:16px 16px 16px 17px}.font-library__select-all .components-checkbox-control__label{padding-left:16px}.global-styles-ui-pagination .components-button.is-tertiary{height:32px;justify-content:center;width:32px}.global-styles-ui-screen-revisions__revisions-list{flex-grow:1;list-style:none;margin:0 16px 16px}.global-styles-ui-screen-revisions__revisions-list li{margin-bottom:0}.global-styles-ui-screen-revisions__revision-item{cursor:var(--wpds-cursor-control,pointer);display:flex;flex-direction:column;position:relative}.global-styles-ui-screen-revisions__revision-item[role=option]:active,.global-styles-ui-screen-revisions__revision-item[role=option]:focus{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);outline:2px solid transparent}.global-styles-ui-screen-revisions__revision-item:hover{background:rgba(var(--wp-admin-theme-color--rgb),.04)}.global-styles-ui-screen-revisions__revision-item:hover .global-styles-ui-screen-revisions__date{color:var(--wp-admin-theme-color)}.global-styles-ui-screen-revisions__revision-item:after,.global-styles-ui-screen-revisions__revision-item:before{content:"\\a";display:block;position:absolute}.global-styles-ui-screen-revisions__revision-item:before{background:#ddd;border:4px solid transparent;border-radius:50%;height:8px;left:17px;top:18px;transform:translate(-50%,-50%);width:8px;z-index:1}.global-styles-ui-screen-revisions__revision-item[aria-selected=true]{background:rgba(var(--wp-admin-theme-color--rgb),.04);border-radius:2px;color:var(--wp-admin-theme-color);outline:3px solid transparent;outline-offset:-2px}.global-styles-ui-screen-revisions__revision-item[aria-selected=true] .global-styles-ui-screen-revisions__date{color:var(--wp-admin-theme-color)}.global-styles-ui-screen-revisions__revision-item[aria-selected=true]:before{background:var(--wp-admin-theme-color)}.global-styles-ui-screen-revisions__revision-item[aria-selected=true] .global-styles-ui-screen-revisions__changes>li,.global-styles-ui-screen-revisions__revision-item[aria-selected=true] .global-styles-ui-screen-revisions__meta{color:#1e1e1e}.global-styles-ui-screen-revisions__revision-item:after{border:.5px solid #ddd;height:100%;left:16px;top:0;width:0}.global-styles-ui-screen-revisions__revision-item:first-child:after{top:18px}.global-styles-ui-screen-revisions__revision-item:last-child:after{height:18px}.global-styles-ui-screen-revisions__revision-item-wrapper{display:block;padding:12px 12px 4px 40px}.global-styles-ui-screen-revisions__active-badge,.global-styles-ui-screen-revisions__apply-button.is-primary{align-self:flex-start;margin:0 12px 12px 40px}.global-styles-ui-screen-revisions__changes,.global-styles-ui-screen-revisions__meta{color:#757575;font-size:12px}.global-styles-ui-screen-revisions__description{align-items:flex-start;display:flex;flex-direction:column;gap:8px}.global-styles-ui-screen-revisions__description .global-styles-ui-screen-revisions__date{font-size:12px;font-weight:600;text-transform:uppercase}.global-styles-ui-screen-revisions__meta{align-items:flex-start;display:flex;justify-content:start;margin-bottom:4px;text-align:left;width:100%}.global-styles-ui-screen-revisions__meta img{border-radius:100%;height:16px;margin-right:8px;width:16px}.global-styles-ui-screen-revisions__loading{margin:24px auto!important}.global-styles-ui-screen-revisions__changes{line-height:1.4;list-style:disc;margin-left:12px;text-align:left}.global-styles-ui-screen-revisions__changes li{margin-bottom:4px}.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination{gap:2px;justify-content:space-between}.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .edit-site-pagination__total{height:1px;left:-1000px;margin:-1px;overflow:hidden;position:absolute}.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .components-text{font-size:12px;will-change:opacity}.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .components-button.is-tertiary{color:#1e1e1e}.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .components-button.is-tertiary:disabled,.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .components-button.is-tertiary[aria-disabled=true]{color:#949494}.global-styles-ui-screen-revisions__footer{background:#fff;border-top:1px solid #ddd;bottom:0;box-sizing:border-box;height:56px;min-width:100%;padding:12px;position:sticky;z-index:1}.global-styles-ui-variations_item{box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer)}.global-styles-ui-variations_item .global-styles-ui-variations_item-preview{border-radius:2px;outline:1px solid rgba(0,0,0,.1);outline-offset:-1px;overflow:hidden;position:relative}@media not (prefers-reduced-motion){.global-styles-ui-variations_item .global-styles-ui-variations_item-preview{transition:outline .1s linear}}.global-styles-ui-variations_item .global-styles-ui-variations_item-preview.is-pill{height:32px}.global-styles-ui-variations_item .global-styles-ui-variations_item-preview.is-pill .block-editor-iframe__scale-container{overflow:hidden}.global-styles-ui-variations_item:not(.is-active):hover .global-styles-ui-variations_item-preview{outline-color:rgba(0,0,0,.3)}.global-styles-ui-variations_item.is-active .global-styles-ui-variations_item-preview,.global-styles-ui-variations_item:focus-visible .global-styles-ui-variations_item-preview{outline-color:#1e1e1e;outline-offset:1px;outline-width:var(--wp-admin-border-width-focus)}.global-styles-ui-variations_item:focus-visible .global-styles-ui-variations_item-preview{outline-color:var(--wp-admin-theme-color)}.global-styles-ui-preview__wrapper{display:block;max-width:100%;width:100%}.global-styles-ui-preview__wrapper.is-hoverable{cursor:var(--wpds-cursor-control,pointer)}.global-styles-ui-typography-preview{align-items:center;background:#f0f0f0;border-radius:2px;display:flex;justify-content:center;margin-bottom:20px;min-height:100px;overflow:hidden}.global-styles-ui-font-size__item{line-break:anywhere;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.global-styles-ui-font-size__item-value{color:#757575}.global-styles-ui-screen-typography__indicator{align-items:center;border-radius:2px;display:flex!important;font-size:14px;height:24px;justify-content:center;width:24px}.global-styles-ui-block-types-search{margin-bottom:10px;padding:0 16px}.global-styles-ui-screen-typography__font-variants-count{color:#757575}.global-styles-ui-font-families__manage-fonts{justify-content:center}.global-styles-ui-screen .color-block-support-panel{border-top:none;padding-left:0;padding-right:0;padding-top:0;row-gap:12px}.global-styles-ui-header{line-height:1.9!important;margin-bottom:0!important}.global-styles-ui-subtitle{font-size:11px!important;font-weight:499!important;margin-bottom:0!important;text-transform:uppercase}.global-styles-ui-section-title{color:#2f2f2f;font-weight:600;line-height:1.2;margin:0;padding:16px 16px 0}.global-styles-ui-icon-with-current-color{fill:currentColor}.global-styles-ui__color-indicator-wrapper{flex-shrink:0;height:24px}.global-styles-ui__shadows-panel__options-container,.global-styles-ui__typography-panel__options-container{height:24px}.global-styles-ui__block-preview-panel{border:1px solid #ddd;border-radius:2px;overflow:hidden;position:relative;width:100%}.global-styles-ui__shadow-preview-panel{background-image:repeating-linear-gradient(45deg,#e0e0e0 25%,transparent 0,transparent 75%,#e0e0e0 0,#e0e0e0),repeating-linear-gradient(45deg,#e0e0e0 25%,transparent 0,transparent 75%,#e0e0e0 0,#e0e0e0);background-position:0 0,8px 8px;background-size:16px 16px;border:1px solid #ddd;border-radius:2px;height:144px;overflow:auto}.global-styles-ui__shadow-preview-panel .global-styles-ui__shadow-preview-block{background-color:#fff;border:1px solid #ddd;border-radius:2px;height:60px;width:60%}.global-styles-ui__shadow-editor__dropdown-content{width:280px}.global-styles-ui__shadow-editor-panel{margin-bottom:4px}.global-styles-ui__shadow-editor__dropdown{position:relative;width:100%}.global-styles-ui__shadow-editor__dropdown-toggle{border-radius:inherit;height:auto;padding-bottom:8px;padding-top:8px;text-align:left;width:100%}.global-styles-ui__shadow-editor__dropdown-toggle.is-open{background:#f0f0f0;color:var(--wp-admin-theme-color)}.global-styles-ui__shadow-editor__remove-button{opacity:0;position:absolute;right:8px;top:8px}.global-styles-ui__shadow-editor__remove-button.global-styles-ui__shadow-editor__remove-button{border:none}.global-styles-ui__shadow-editor__dropdown-toggle:hover+.global-styles-ui__shadow-editor__remove-button,.global-styles-ui__shadow-editor__remove-button:focus,.global-styles-ui__shadow-editor__remove-button:hover{opacity:1}@media (hover:none){.global-styles-ui__shadow-editor__remove-button{opacity:1}}.global-styles-ui-screen-css{display:flex;flex:1 1 auto;flex-direction:column;margin:16px}.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel{flex:1 1 auto}.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel__custom-css-input,.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel__custom-css-input .components-base-control__field{display:flex;flex:1 1 auto;flex-direction:column}.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel__custom-css-input textarea{flex:1 1 auto}.global-styles-ui-screen-css-help-link{display:inline-block;margin-top:8px}.global-styles-ui-screen-variations{border-top:1px solid #ddd;margin-top:16px}.global-styles-ui-screen-variations>*{margin:24px 16px}.global-styles-ui-sidebar__navigator-provider{height:100%}.global-styles-ui-sidebar__navigator-screen{display:flex;flex-direction:column;height:100%}.global-styles-ui-sidebar__navigator-screen .single-column{grid-column:span 1}.global-styles-ui-screen-root.global-styles-ui-screen-root,.global-styles-ui-screen-style-variations.global-styles-ui-screen-style-variations{background:unset;color:inherit}.global-styles-ui-sidebar__panel .block-editor-block-icon svg{fill:currentColor}.global-styles-ui-screen-root__active-style-tile.global-styles-ui-screen-root__active-style-tile,.global-styles-ui-screen-root__active-style-tile.global-styles-ui-screen-root__active-style-tile .global-styles-ui-screen-root__active-style-tile-preview{border-radius:2px}.global-styles-ui-screen-root__active-style-tile-preview{clip-path:border-box}.global-styles-ui-color-palette-panel,.global-styles-ui-gradient-palette-panel{padding:16px}.font-library-page__tablist{border-bottom:1px solid #f0f0f0;padding:0 24px}.font-library-page__tab-panel{flex-grow:1;max-height:calc(100% - 110px);overflow:auto}.font-library-page:has(.font-library__footer) .font-library-page__tab-panel{max-height:calc(100% - 198px)}'));
+  style.setAttribute("data-wp-hash", "3f4ac8b622");
+  style.appendChild(document.createTextNode('@media (min-width:782px){.font-library-modal.font-library-modal{width:65vw}}.font-library-modal .components-modal__header{border-bottom:none}.font-library-modal .components-modal__content{margin-bottom:90px;padding:0}.font-library-modal .font-library__subtitle{font-size:11px;font-weight:499;text-transform:uppercase}.font-library-modal__tab-panel{height:calc(100% - 50px)}.font-library__tabpanel-layout{display:flex;flex-direction:column;height:100%}.font-library__tabpanel-layout>div{flex-grow:1}.font-library__tabpanel-layout .font-library__loading{align-items:center;box-sizing:border-box;display:flex;height:100%;justify-content:center;left:0;padding-top:124px;position:absolute;top:0;width:100%}.font-library__footer,.font-library__tabpanel-layout .components-navigator-screen{padding:24px;width:100%}.font-library__footer{background-color:#fff;border-top:1px solid #ddd;bottom:0;box-sizing:border-box;flex-grow:0!important;flex-shrink:0;height:90px;position:absolute}.font-library__page-selection{font-size:11px;font-weight:499;text-transform:uppercase}@media (min-width:600px){.font-library__page-selection .font-library__page-selection-trigger{font-size:11px!important;font-weight:499}}.font-library__fonts-title{font-size:11px;font-weight:600;margin-bottom:0;margin-top:0;text-transform:uppercase}.font-library__fonts-list{list-style:none;margin-bottom:0;margin-top:0;padding:0}.font-library__fonts-list-item{margin-bottom:0}.font-library__font-card{border:1px solid #ddd;box-sizing:border-box;height:auto!important;margin-top:-1px;padding:16px;width:100%}.font-library__font-card:hover{background-color:#f0f0f0}.font-library__font-card:focus{position:relative}.font-library__font-card .font-library__font-card__name{font-weight:700}.font-library__font-card .font-library__font-card__count{color:#757575}.font-library__font-card .font-library__font-variant_demo-image{display:block;height:24px;width:auto}.font-library__font-card .font-library__font-variant_demo-text{flex-shrink:0;white-space:nowrap}@media not (prefers-reduced-motion){.font-library__font-card .font-library__font-variant_demo-text{transition:opacity .3s ease-in-out}}.font-library-modal__tablist-container{background:#fff;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:1}.font-library__upload-area{align-items:center;display:flex;height:256px!important;justify-content:center;width:100%}button.font-library__upload-area{background-color:#f0f0f0}.font-library__local-fonts{margin:24px auto;width:80%}.font-library__local-fonts .font-library__upload-area__text{color:#757575}.font-library__google-fonts-confirm{align-items:center;display:flex;justify-content:center;margin-top:64px}.font-library__google-fonts-confirm p{line-height:1.4}.font-library__google-fonts-confirm h2{font-size:1.2rem;font-weight:400}.font-library__google-fonts-confirm .components-card{padding:16px;width:400px}.font-library__google-fonts-confirm .components-button{justify-content:center;width:100%}.font-library__select-all{padding:16px 16px 16px 17px}.font-library__select-all .components-checkbox-control__label{padding-left:16px}.global-styles-ui-pagination .components-button.is-tertiary{height:32px;justify-content:center;width:32px}.global-styles-ui-screen-revisions__revisions-list{flex-grow:1;list-style:none;margin:0 16px 16px}.global-styles-ui-screen-revisions__revisions-list li{margin-bottom:0}.global-styles-ui-screen-revisions__revision-item{cursor:var(--wpds-cursor-control,pointer);display:flex;flex-direction:column;position:relative}.global-styles-ui-screen-revisions__revision-item[role=option]:active,.global-styles-ui-screen-revisions__revision-item[role=option]:focus{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);outline:2px solid transparent}.global-styles-ui-screen-revisions__revision-item:hover{background:rgba(var(--wp-admin-theme-color--rgb),.04)}.global-styles-ui-screen-revisions__revision-item:hover .global-styles-ui-screen-revisions__date{color:var(--wp-admin-theme-color)}.global-styles-ui-screen-revisions__revision-item:after,.global-styles-ui-screen-revisions__revision-item:before{content:"\\a";display:block;position:absolute}.global-styles-ui-screen-revisions__revision-item:before{background:#ddd;border:4px solid transparent;border-radius:50%;height:8px;left:17px;top:18px;transform:translate(-50%,-50%);width:8px;z-index:1}.global-styles-ui-screen-revisions__revision-item[aria-selected=true]{background:rgba(var(--wp-admin-theme-color--rgb),.04);border-radius:2px;color:var(--wp-admin-theme-color);outline:3px solid transparent;outline-offset:-2px}.global-styles-ui-screen-revisions__revision-item[aria-selected=true] .global-styles-ui-screen-revisions__date{color:var(--wp-admin-theme-color)}.global-styles-ui-screen-revisions__revision-item[aria-selected=true]:before{background:var(--wp-admin-theme-color)}.global-styles-ui-screen-revisions__revision-item[aria-selected=true] .global-styles-ui-screen-revisions__changes>li,.global-styles-ui-screen-revisions__revision-item[aria-selected=true] .global-styles-ui-screen-revisions__meta{color:#1e1e1e}.global-styles-ui-screen-revisions__revision-item:after{border:.5px solid #ddd;height:100%;left:16px;top:0;width:0}.global-styles-ui-screen-revisions__revision-item:first-child:after{top:18px}.global-styles-ui-screen-revisions__revision-item:last-child:after{height:18px}.global-styles-ui-screen-revisions__revision-item-wrapper{display:block;padding:12px 12px 4px 40px}.global-styles-ui-screen-revisions__active-badge,.global-styles-ui-screen-revisions__apply-button.is-primary{align-self:flex-start;margin:0 12px 12px 40px}.global-styles-ui-screen-revisions__changes,.global-styles-ui-screen-revisions__meta{color:#757575;font-size:12px}.global-styles-ui-screen-revisions__description{align-items:flex-start;display:flex;flex-direction:column;gap:8px}.global-styles-ui-screen-revisions__description .global-styles-ui-screen-revisions__date{font-size:12px;font-weight:600;text-transform:uppercase}.global-styles-ui-screen-revisions__meta{align-items:flex-start;display:flex;justify-content:start;margin-bottom:4px;text-align:left;width:100%}.global-styles-ui-screen-revisions__meta img{border-radius:100%;height:16px;margin-right:8px;width:16px}.global-styles-ui-screen-revisions__loading{margin:24px auto!important}.global-styles-ui-screen-revisions__changes{line-height:1.4;list-style:disc;margin-left:12px;text-align:left}.global-styles-ui-screen-revisions__changes li{margin-bottom:4px}.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination{gap:2px;justify-content:space-between}.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .edit-site-pagination__total{height:1px;left:-1000px;margin:-1px;overflow:hidden;position:absolute}.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .components-text{font-size:12px;will-change:opacity}.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .components-button.is-tertiary{color:#1e1e1e}.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .components-button.is-tertiary:disabled,.global-styles-ui-screen-revisions__pagination.global-styles-ui-screen-revisions__pagination .components-button.is-tertiary[aria-disabled=true]{color:#949494}.global-styles-ui-screen-revisions__footer{background:#fff;border-top:1px solid #ddd;bottom:0;box-sizing:border-box;height:56px;min-width:100%;padding:12px;position:sticky;z-index:1}.global-styles-ui-variations_item{box-sizing:border-box;cursor:var(--wpds-cursor-control,pointer)}.global-styles-ui-variations_item .global-styles-ui-variations_item-preview{border-radius:2px;outline:1px solid rgba(0,0,0,.1);outline-offset:-1px;overflow:hidden;position:relative}@media not (prefers-reduced-motion){.global-styles-ui-variations_item .global-styles-ui-variations_item-preview{transition:outline .1s linear}}.global-styles-ui-variations_item .global-styles-ui-variations_item-preview.is-pill{height:32px}.global-styles-ui-variations_item .global-styles-ui-variations_item-preview.is-pill .block-editor-iframe__scale-container{overflow:hidden}.global-styles-ui-variations_item:not(.is-active):hover .global-styles-ui-variations_item-preview{outline-color:rgba(0,0,0,.3)}.global-styles-ui-variations_item.is-active .global-styles-ui-variations_item-preview,.global-styles-ui-variations_item:focus-visible .global-styles-ui-variations_item-preview{outline-color:#1e1e1e;outline-offset:1px;outline-width:var(--wp-admin-border-width-focus)}.global-styles-ui-variations_item:focus-visible .global-styles-ui-variations_item-preview{outline-color:var(--wp-admin-theme-color)}.global-styles-ui-preview__wrapper{display:block;max-width:100%;width:100%}.global-styles-ui-preview__wrapper.is-hoverable{cursor:var(--wpds-cursor-control,pointer)}.global-styles-ui-typography-preview{align-items:center;background:#f0f0f0;border-radius:2px;display:flex;justify-content:center;margin-bottom:20px;min-height:100px;overflow:hidden}.global-styles-ui-font-size__item{line-break:anywhere;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.global-styles-ui-font-size__item-value{color:#757575}.global-styles-ui-screen-typography__indicator{align-items:center;border-radius:2px;display:flex!important;font-size:14px;height:24px;justify-content:center;width:24px}.global-styles-ui-block-types-search{margin-bottom:10px;padding:0 16px}.global-styles-ui-screen-typography__font-variants-count{color:#757575}.global-styles-ui-font-families__manage-fonts{justify-content:center}.global-styles-ui-screen .color-block-support-panel{border-top:none;padding-left:0;padding-right:0;padding-top:0;row-gap:12px}.global-styles-ui-header{line-height:1.9!important;margin-bottom:0!important}.global-styles-ui-subtitle{font-size:11px!important;font-weight:499!important;margin-bottom:0!important;text-transform:uppercase}.global-styles-ui-section-title{color:#2f2f2f;font-weight:600;line-height:1.2;margin:0;padding:16px 16px 0}.global-styles-ui-icon-with-current-color{fill:currentColor}.global-styles-ui__color-indicator-wrapper{flex-shrink:0;height:24px}.global-styles-ui__shadows-panel__options-container,.global-styles-ui__typography-panel__options-container{height:24px}.global-styles-ui__block-preview-panel{border:1px solid #ddd;border-radius:2px;overflow:hidden;position:relative;width:100%}.global-styles-ui__shadow-preview-panel{background-image:repeating-linear-gradient(45deg,#e0e0e0 25%,transparent 0,transparent 75%,#e0e0e0 0,#e0e0e0),repeating-linear-gradient(45deg,#e0e0e0 25%,transparent 0,transparent 75%,#e0e0e0 0,#e0e0e0);background-position:0 0,8px 8px;background-size:16px 16px;border:1px solid #ddd;border-radius:2px;height:144px;overflow:auto}.global-styles-ui__shadow-preview-panel .global-styles-ui__shadow-preview-block{background-color:#fff;border:1px solid #ddd;border-radius:2px;height:60px;width:60%}.global-styles-ui__shadow-editor__dropdown-content{width:280px}.global-styles-ui__shadow-editor-panel{margin-bottom:4px}.global-styles-ui__shadow-editor__dropdown{position:relative;width:100%}.global-styles-ui__shadow-editor__dropdown-toggle{border-radius:inherit;height:auto;padding-bottom:8px;padding-top:8px;text-align:left;width:100%}.global-styles-ui__shadow-editor__dropdown-toggle.is-open{background:#f0f0f0;color:var(--wp-admin-theme-color)}.global-styles-ui__shadow-editor__remove-button{opacity:0;position:absolute;right:8px;top:8px}.global-styles-ui__shadow-editor__remove-button.global-styles-ui__shadow-editor__remove-button{border:none}.global-styles-ui__shadow-editor__dropdown-toggle:hover+.global-styles-ui__shadow-editor__remove-button,.global-styles-ui__shadow-editor__remove-button:focus,.global-styles-ui__shadow-editor__remove-button:hover{opacity:1}@media (hover:none){.global-styles-ui__shadow-editor__remove-button{opacity:1}}.global-styles-ui-screen-css{display:flex;flex:1 1 auto;flex-direction:column;margin:16px}.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel{flex:1 1 auto}.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel__custom-css-input,.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel__custom-css-input .components-base-control__field{display:flex;flex:1 1 auto;flex-direction:column}.global-styles-ui-screen-css .block-editor-global-styles-advanced-panel__custom-css-input textarea{flex:1 1 auto}.global-styles-ui-screen-css-help-link{display:inline-block;margin-top:8px}.global-styles-ui-screen-variations{border-top:1px solid #ddd;margin-top:16px}.global-styles-ui-screen-variations>*{margin:24px 16px}.global-styles-ui-sidebar__navigator-provider{height:100%}.global-styles-ui-sidebar__navigator-screen{display:flex;flex-direction:column;height:100%}.global-styles-ui-color-palette__tablist-container{border-bottom:1px solid #ddd}.global-styles-ui-color-palette__tablist{margin-bottom:-1px}.global-styles-ui-sidebar__navigator-screen .single-column{grid-column:span 1}.global-styles-ui-screen-root.global-styles-ui-screen-root,.global-styles-ui-screen-style-variations.global-styles-ui-screen-style-variations{background:unset;color:inherit}.global-styles-ui-sidebar__panel .block-editor-block-icon svg{fill:currentColor}.global-styles-ui-screen-root__active-style-tile.global-styles-ui-screen-root__active-style-tile,.global-styles-ui-screen-root__active-style-tile.global-styles-ui-screen-root__active-style-tile .global-styles-ui-screen-root__active-style-tile-preview{border-radius:2px}.global-styles-ui-screen-root__active-style-tile-preview{clip-path:border-box}.global-styles-ui-color-palette-panel,.global-styles-ui-gradient-palette-panel{padding:16px}.font-library-page__tablist{border-bottom:1px solid #f0f0f0;padding:0 24px}.font-library-page__tab-panel{flex-grow:1;max-height:calc(100% - 110px);overflow:auto}.font-library-page:has(.font-library__footer) .font-library-page__tab-panel{max-height:calc(100% - 198px)}'));
   document.head.appendChild(style);
 }
 
 // routes/font-list/stage.tsx
-var { Tabs: Tabs3 } = unlock3(import_components61.privateApis);
-var { useGlobalStyles } = unlock3(import_editor.privateApis);
+var { Tabs: Tabs2 } = unlock4(import_components60.privateApis);
+var { useGlobalStyles } = unlock4(import_editor.privateApis);
 function FontLibraryPage() {
   const { records: collections = [] } = (0, import_core_data12.useEntityRecords)("root", "fontCollection", {
     _fields: "slug,name,description"
@@ -24284,14 +24473,14 @@ function FontLibraryPage() {
     );
   }
   return /* @__PURE__ */ React.createElement(page_default, { title: (0, import_i18n47.__)("Fonts"), className: "font-library-page" }, /* @__PURE__ */ React.createElement(
-    Tabs3,
+    Tabs2,
     {
       selectedTabId: activeTab,
       onSelect: (tabId) => setActiveTab(tabId)
     },
-    /* @__PURE__ */ React.createElement("div", { className: "font-library-page__tablist" }, /* @__PURE__ */ React.createElement(Tabs3.TabList, null, tabs.map(({ id, title }) => /* @__PURE__ */ React.createElement(Tabs3.Tab, { key: id, tabId: id }, title)))),
+    /* @__PURE__ */ React.createElement("div", { className: "font-library-page__tablist" }, /* @__PURE__ */ React.createElement(Tabs2.TabList, null, tabs.map(({ id, title }) => /* @__PURE__ */ React.createElement(Tabs2.Tab, { key: id, tabId: id }, title)))),
     tabs.map(({ id }) => /* @__PURE__ */ React.createElement(
-      Tabs3.TabPanel,
+      Tabs2.TabPanel,
       {
         key: id,
         tabId: id,
