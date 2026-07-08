@@ -67,7 +67,9 @@ function gutenberg_inject_dashboard_default_layout( $value, $user_id, $meta_key 
 		$base = array();
 	}
 
-	$committed = $base[ GUTENBERG_DASHBOARD_LAYOUT_SCOPE ][ GUTENBERG_DASHBOARD_LAYOUT_KEY ] ?? array();
+	$committed = isset( $base[ GUTENBERG_DASHBOARD_LAYOUT_SCOPE ][ GUTENBERG_DASHBOARD_LAYOUT_KEY ] )
+		? $base[ GUTENBERG_DASHBOARD_LAYOUT_SCOPE ][ GUTENBERG_DASHBOARD_LAYOUT_KEY ]
+		: array();
 
 	if ( ! empty( $committed ) ) {
 		return $value;

@@ -10,6 +10,9 @@
 	"textdomain": "default",
 	"allowedBlocks": [ "core/playlist-track" ],
 	"attributes": {
+		"currentTrack": {
+			"type": "string"
+		},
 		"type": {
 			"type": "string",
 			"default": "audio"
@@ -44,7 +47,7 @@
 	},
 	"providesContext": {
 		"showArtists": "showArtists",
-		"showImages": "showImages"
+		"currentTrack": "currentTrack"
 	},
 	"supports": {
 		"anchor": true,
@@ -59,10 +62,12 @@
 		},
 		"__experimentalBorder": {
 			"color": true,
+			"radius": true,
 			"style": true,
 			"width": true,
 			"__experimentalDefaultControls": {
 				"color": true,
+				"radius": true,
 				"style": true,
 				"width": true
 			}

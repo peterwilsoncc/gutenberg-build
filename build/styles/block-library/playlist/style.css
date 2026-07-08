@@ -1,17 +1,7 @@
 .waveform-player {
   font-family: inherit;
   color: inherit;
-  line-height: var(--waveform-line-height, 1.4);
-  --wfp-accent: #71717a;
-  --wfp-button-color: rgba(255, 255, 255, .9);
-  --wfp-text-color: #ffffff;
-  --wfp-text-secondary-color: rgba(255, 255, 255, .6);
-}
-
-.waveform-player.waveform-theme-light {
-  --wfp-button-color: rgba(0, 0, 0, .8);
-  --wfp-text-color: #333333;
-  --wfp-text-secondary-color: rgba(0, 0, 0, .6);
+  line-height: 1.4;
 }
 
 .waveform-player * {
@@ -21,24 +11,24 @@
 .waveform-body {
   display: flex;
   flex-direction: column;
-  gap: var(--waveform-body-gap, 8px);
+  gap: 8px;
 }
 
 .waveform-track {
   display: flex;
   align-items: center;
-  gap: var(--waveform-track-gap, 12px);
+  gap: 12px;
   position: relative;
 }
 
 .waveform-btn {
-  width: var(--wfp-btn-size, 36px);
-  height: var(--wfp-btn-size, 36px);
-  min-width: var(--wfp-btn-size, 36px);
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
   border-radius: 50%;
   border: 2px solid currentColor;
   background: transparent;
-  color: var(--wfp-button-color, inherit);
+  color: inherit;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -52,25 +42,6 @@
 .waveform-btn:hover:not(:disabled) {
   opacity: 1;
   transform: scale(1.05);
-}
-
-.waveform-btn-minimal {
-  width: calc(var(--wfp-btn-size, 36px) * 1.1);
-  height: calc(var(--wfp-btn-size, 36px) * 1.1);
-  min-width: calc(var(--wfp-btn-size, 36px) * 1.1);
-  border: none;
-  border-radius: 0;
-  opacity: 0.7;
-}
-
-.waveform-btn-minimal:hover:not(:disabled) {
-  opacity: 1;
-  transform: none;
-}
-
-.waveform-btn.waveform-btn-minimal svg {
-  width: calc(var(--wfp-btn-size, 36px) * 0.94);
-  height: calc(var(--wfp-btn-size, 36px) * 0.94);
 }
 
 .waveform-btn:disabled {
@@ -87,8 +58,8 @@
 }
 
 .waveform-btn svg {
-  width: calc(var(--wfp-btn-size, 36px) * 0.45);
-  height: calc(var(--wfp-btn-size, 36px) * 0.45);
+  width: 16px;
+  height: 16px;
   fill: currentColor;
   display: block;
 }
@@ -104,10 +75,6 @@
   cursor: pointer;
   min-width: 0;
   width: 100%;
-}
-
-.waveform-container:focus-visible {
-  outline: 2px solid currentColor;
 }
 
 .waveform-container canvas {
@@ -137,15 +104,13 @@
 }
 
 .waveform-title {
-  color: var(--wfp-text-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 500;
 }
 
-.waveform-artist {
-  color: var(--wfp-text-secondary-color);
+.waveform-subtitle {
   font-size: 11px;
   white-space: nowrap;
   overflow: hidden;
@@ -153,14 +118,12 @@
 }
 
 .waveform-time {
-  color: var(--wfp-text-secondary-color);
   font-size: 11px;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .waveform-bpm {
-  color: var(--wfp-text-secondary-color);
   font-size: 11px;
   white-space: nowrap;
   flex-shrink: 0;
@@ -218,12 +181,6 @@
   z-index: 20;
 }
 
-.waveform-marker.active {
-  width: 4px;
-  background: currentColor;
-  z-index: 10;
-}
-
 .waveform-marker-tooltip {
   position: absolute;
   bottom: calc(100% + 4px);
@@ -241,50 +198,8 @@
   z-index: 1000;
 }
 
-.waveform-marker:hover .waveform-marker-tooltip, .waveform-marker.show-label .waveform-marker-tooltip {
+.waveform-marker:hover .waveform-marker-tooltip {
   opacity: 1;
-}
-
-.waveform-hover-time {
-  position: absolute;
-  bottom: calc(100% + 4px);
-  transform: translate(-50%);
-  background: rgba(0, 0, 0, 0.9019607843);
-  color: #fff;
-  padding: 3px 7px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.15s;
-  z-index: 1000;
-}
-
-.waveform-seek-handle {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3490196078);
-  transform: translate(-50%, -50%) scale(0);
-  opacity: 0;
-  transition: opacity 0.12s ease, transform 0.12s ease;
-  pointer-events: none;
-  z-index: 6;
-}
-
-.waveform-seek-handle.is-visible {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.waveform-seek-handle.is-active {
-  transform: translate(-50%, -50%) scale(1.25);
 }
 
 .waveform-btn:focus-visible {
@@ -357,13 +272,13 @@
 }
 
 .speed-option.active {
-  background: rgba(255, 255, 255, 0.1607843137);
-  color: #fff;
+  background: rgba(168, 85, 247, 0.2);
+  color: #a855f7;
   font-weight: 600;
 }
 
 .waveform-player.waveform-focused {
-  outline: 2px solid var(--wfp-accent);
+  outline: 2px solid rgba(168, 85, 247, 0.5);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -373,22 +288,8 @@
 }
 
 .waveform-player:focus-visible {
-  outline: 1px solid var(--wfp-accent);
+  outline: 1px solid rgba(168, 85, 247, 0.3);
   outline-offset: 1px;
-}
-
-.waveform-layout-preview .waveform-meta {
-  display: none !important;
-}
-
-.waveform-layout-preview .waveform-info {
-  justify-content: center;
-}
-
-.waveform-layout-preview .waveform-text {
-  flex: 0 1 auto;
-  align-items: center;
-  text-align: center;
 }
 
 .waveform-player.waveform-focused {
@@ -427,16 +328,13 @@
   .waveform-info {
     font-size: 12px;
   }
-  .waveform-artist, .waveform-time, .waveform-bpm {
+  .waveform-subtitle, .waveform-time, .waveform-bpm {
     font-size: 10px;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .waveform-player *, .waveform-player *:before, .waveform-player *:after {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-  }
+.wp-block-playlist {
+  overflow: hidden;
+  overflow: clip;
 }
 .wp-block-playlist .wp-block-playlist__waveform-player {
   width: 100%;

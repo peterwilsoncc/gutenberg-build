@@ -149,7 +149,6 @@ var wp;
     OperationType2["ResizeCrop"] = "RESIZE_CROP";
     OperationType2["Rotate"] = "ROTATE";
     OperationType2["TranscodeImage"] = "TRANSCODE_IMAGE";
-    OperationType2["TranscodeGif"] = "TRANSCODE_GIF";
     OperationType2["ThumbnailGeneration"] = "THUMBNAIL_GENERATION";
     OperationType2["Finalize"] = "FINALIZE";
     OperationType2["DetectUltraHdr"] = "DETECT_ULTRAHDR";
@@ -414,7 +413,6 @@ var wp;
   __export(private_selectors_exports, {
     getActiveImageProcessingCount: () => getActiveImageProcessingCount,
     getActiveUploadCount: () => getActiveUploadCount,
-    getActiveVideoProcessingCount: () => getActiveVideoProcessingCount,
     getAllItems: () => getAllItems,
     getBlobUrls: () => getBlobUrls,
     getFailedItems: () => getFailedItems,
@@ -422,7 +420,6 @@ var wp;
     getItemProgress: () => getItemProgress,
     getPendingImageProcessing: () => getPendingImageProcessing,
     getPendingUploads: () => getPendingUploads,
-    getPendingVideoProcessing: () => getPendingVideoProcessing,
     hasPendingItemsByParentId: () => hasPendingItemsByParentId,
     isBatchUploaded: () => isBatchUploaded,
     isPaused: () => isPaused
@@ -461,21 +458,10 @@ var wp;
       (item) => item.currentOperation === OperationType.ResizeCrop || item.currentOperation === OperationType.Rotate
     ).length;
   }
-  function getActiveVideoProcessingCount(state) {
-    return state.queue.filter(
-      (item) => item.currentOperation === OperationType.TranscodeGif
-    ).length;
-  }
   function getPendingImageProcessing(state) {
     return state.queue.filter((item) => {
       const nextOperation = Array.isArray(item.operations?.[0]) ? item.operations[0][0] : item.operations?.[0];
       return (nextOperation === OperationType.ResizeCrop || nextOperation === OperationType.Rotate) && item.currentOperation !== OperationType.ResizeCrop && item.currentOperation !== OperationType.Rotate;
-    });
-  }
-  function getPendingVideoProcessing(state) {
-    return state.queue.filter((item) => {
-      const nextOperation = Array.isArray(item.operations?.[0]) ? item.operations[0][0] : item.operations?.[0];
-      return nextOperation === OperationType.TranscodeGif && item.currentOperation !== OperationType.TranscodeGif;
     });
   }
   function getFailedItems(state) {
@@ -637,22 +623,6 @@ var wp;
   function getFileBasename(name) {
     return name.includes(".") ? name.split(".").slice(0, -1).join(".") : name;
   }
-  function isAnimatedGif(buffer) {
-    const view = new Uint8Array(buffer);
-    if (view.length < 4 || view[0] !== 71 || view[1] !== 73 || view[2] !== 70 || view[3] !== 56) {
-      return false;
-    }
-    let frameCount = 0;
-    for (let i = 0; i < view.length - 2; i++) {
-      if (view[i] === 0 && view[i + 1] === 33 && view[i + 2] === 249) {
-        frameCount++;
-        if (frameCount > 1) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
 
   // packages/upload-media/build-module/store/utils/index.mjs
   var vipsModulePromise;
@@ -787,54 +757,6 @@ var wp;
     }
   }
 
-  // packages/upload-media/build-module/store/utils/video-conversion.mjs
-  var UNSUPPORTED_ERROR_PREFIX = "Unsupported";
-  function isUnsupportedConversionError(error) {
-    return error instanceof Error && error.message.startsWith(UNSUPPORTED_ERROR_PREFIX);
-  }
-  var videoConversionModulePromise;
-  var videoConversionModule;
-  function loadVideoConversionModule() {
-    if (!videoConversionModulePromise) {
-      videoConversionModulePromise = import("@wordpress/video-conversion/worker").then((mod) => {
-        videoConversionModule = mod;
-        return mod;
-      }).catch((error) => {
-        videoConversionModulePromise = void 0;
-        throw error;
-      });
-    }
-    return videoConversionModulePromise;
-  }
-  async function convertGifToVideo(id, file, outputMimeType, maxDimensions) {
-    const { convertGifToVideo: convert } = await loadVideoConversionModule();
-    const buffer = await convert(id, file, outputMimeType, maxDimensions);
-    const ext = outputMimeType === "video/webm" ? "webm" : "mp4";
-    const fileName = `${getFileBasename(file.name)}.${ext}`;
-    return new File(
-      [new Blob([buffer], { type: outputMimeType })],
-      fileName,
-      { type: outputMimeType }
-    );
-  }
-  async function cancelGifToVideoOperations(id) {
-    const mod = videoConversionModule ?? (videoConversionModulePromise ? await videoConversionModulePromise.catch(() => void 0) : void 0);
-    if (!mod) {
-      return false;
-    }
-    return mod.cancelGifToVideoOperations(id);
-  }
-  function terminateVideoConversionWorker() {
-    if (videoConversionModule) {
-      videoConversionModule.terminateVideoConversionWorker();
-      return;
-    }
-    if (videoConversionModulePromise) {
-      void videoConversionModulePromise.then((mod) => mod.terminateVideoConversionWorker()).catch(() => {
-      });
-    }
-  }
-
   // packages/upload-media/build-module/store/utils/debug-logger.mjs
   function isDebugEnabled() {
     return true;
@@ -887,7 +809,6 @@ var wp;
     ErrorCode2["IMAGE_TRANSCODING_ERROR"] = "IMAGE_TRANSCODING_ERROR";
     ErrorCode2["IMAGE_ROTATION_ERROR"] = "IMAGE_ROTATION_ERROR";
     ErrorCode2["MEDIA_TRANSCODING_ERROR"] = "MEDIA_TRANSCODING_ERROR";
-    ErrorCode2["GIF_TRANSCODING_ERROR"] = "GIF_TRANSCODING_ERROR";
     ErrorCode2["GENERAL"] = "GENERAL";
     return ErrorCode2;
   })(ErrorCode || {});
@@ -1067,7 +988,6 @@ var wp;
       }
       item.abortController?.abort();
       await vipsCancelOperations(id);
-      await cancelGifToVideoOperations(id);
       if (!silent) {
         const { onError } = item;
         onError?.(error ?? new Error("Upload cancelled"));
@@ -1097,23 +1017,17 @@ var wp;
           dispatch.processItem(pending.id);
         }
       }
-      if (currentOperation === OperationType.TranscodeGif) {
-        for (const pending of select2.getPendingVideoProcessing()) {
-          dispatch.processItem(pending.id);
-        }
-      }
       if (currentOperation === OperationType.ResizeCrop || currentOperation === OperationType.Rotate || currentOperation === OperationType.TranscodeImage) {
         maybeRecycleVipsWorker(select2.getActiveImageProcessingCount());
       }
       if (parentId) {
         const parentItem = select2.getItem(parentId);
         if (parentItem) {
-          const isOptionalCompanion = item.additionalData?.image_size === "animated_video" || item.additionalData?.image_size === "animated_video_poster";
           if (select2.hasPendingItemsByParentId(parentId)) {
             if (parentItem.operations && parentItem.operations.length > 0) {
               dispatch.processItem(parentId);
             }
-          } else if (parentItem.subSizes && parentItem.subSizes.length > 0 || isOptionalCompanion) {
+          } else if (parentItem.subSizes && parentItem.subSizes.length > 0) {
             if (parentItem.operations && parentItem.operations.length > 0) {
               dispatch.processItem(parentId);
             }
@@ -1124,7 +1038,7 @@ var wp;
               mediaDelete(parentAttachmentId).catch(() => {
               });
             }
-            await dispatch.cancelItem(
+            dispatch.cancelItem(
               parentId,
               new UploadError({
                 code: error instanceof UploadError && error.code || ErrorCode.GENERAL,
@@ -1228,7 +1142,6 @@ var wp;
     revokeBlobUrls: () => revokeBlobUrls,
     rotateItem: () => rotateItem,
     sideloadItem: () => sideloadItem,
-    transcodeGifItem: () => transcodeGifItem,
     transcodeImageItem: () => transcodeImageItem,
     updateItemProgress: () => updateItemProgress,
     updateSettings: () => updateSettings,
@@ -2201,12 +2114,6 @@ var wp;
           return;
         }
       }
-      if (operation === OperationType.TranscodeGif) {
-        const activeCount = select2.getActiveVideoProcessingCount();
-        if (activeCount >= 1) {
-          return;
-        }
-      }
       if (attachment) {
         const isHeicUrl = attachment.url && /\.hei[cf]$/i.test(attachment.url);
         if (!isHeicUrl) {
@@ -2274,12 +2181,6 @@ var wp;
             operationArgs
           );
           break;
-        case OperationType.TranscodeGif:
-          dispatch.transcodeGifItem(
-            item.id,
-            operationArgs
-          );
-          break;
         case OperationType.Upload:
           if (item.parentId) {
             dispatch.sideloadItem(id);
@@ -2340,7 +2241,6 @@ var wp;
       });
       if (select2.getAllItems().length === 0) {
         terminateVipsWorker();
-        terminateVideoConversionWorker();
       }
     };
   }
@@ -2366,12 +2266,6 @@ var wp;
           dispatch.processItem(pendingItem.id);
         }
       }
-      if (previousOperation === OperationType.TranscodeGif) {
-        const pendingItems = select2.getPendingVideoProcessing();
-        for (const pendingItem of pendingItems) {
-          dispatch.processItem(pendingItem.id);
-        }
-      }
       if (previousOperation === OperationType.ResizeCrop || previousOperation === OperationType.Rotate || previousOperation === OperationType.TranscodeImage) {
         maybeRecycleVipsWorker(select2.getActiveImageProcessingCount());
       }
@@ -2381,7 +2275,7 @@ var wp;
   function isValidImageFormat(format) {
     return VALID_IMAGE_FORMATS.includes(format);
   }
-  async function getTranscodeImageOperation(file, outputMimeType, interlaced = false, quality = DEFAULT_OUTPUT_QUALITY) {
+  async function getTranscodeImageOperation(file, outputMimeType, interlaced = false) {
     if (file.type === "image/png" && outputMimeType === "image/jpeg") {
       const blobUrl = (0, import_blob.createBlobURL)(file);
       try {
@@ -2403,7 +2297,7 @@ var wp;
       OperationType.TranscodeImage,
       {
         outputFormat: formatPart,
-        outputQuality: quality,
+        outputQuality: DEFAULT_OUTPUT_QUALITY,
         interlaced
       }
     ];
@@ -2417,41 +2311,6 @@ var wp;
       const { file } = item;
       const operations = [];
       const settings = select2.getSettings();
-      if (file.type === "image/gif" && settings.gifConvert !== false && typeof ImageDecoder !== "undefined" && typeof VideoEncoder !== "undefined") {
-        let isAnimated = false;
-        try {
-          isAnimated = isAnimatedGif(await file.arrayBuffer());
-        } catch {
-          isAnimated = false;
-        }
-        if (isAnimated) {
-          let hasTransparency = false;
-          const blobUrl = (0, import_blob.createBlobURL)(file);
-          try {
-            hasTransparency = await vipsHasTransparency(blobUrl);
-          } catch {
-            hasTransparency = true;
-          } finally {
-            (0, import_blob.revokeBlobURL)(blobUrl);
-          }
-          if (!hasTransparency) {
-            operations.push(
-              OperationType.Upload,
-              OperationType.ThumbnailGeneration,
-              OperationType.Finalize
-            );
-            dispatch({
-              type: Type.AddOperations,
-              id,
-              operations
-            });
-            dispatch.finishOperation(id, {
-              animatedGifFile: item.file
-            });
-            return;
-          }
-        }
-      }
       let heicJpeg = null;
       const isImage = file.type.startsWith("image/");
       const isVipsSupported = CLIENT_SIDE_SUPPORTED_MIME_TYPES.includes(
@@ -2663,8 +2522,7 @@ var wp;
           // smartCrop
           addSuffix,
           item.abortController?.signal,
-          scaledSuffix,
-          args.quality
+          scaledSuffix
         );
         measure({
           measureName: `ResizeCrop ${item.file.name}`,
@@ -2816,69 +2674,6 @@ var wp;
       }
     };
   }
-  function transcodeGifItem(id, args) {
-    return async ({ select: select2, dispatch }) => {
-      const item = select2.getItem(id);
-      if (!item) {
-        return;
-      }
-      const outputFormat = args?.outputFormat ?? "mp4";
-      const outputMimeType = `video/${outputFormat}`;
-      const gifFile = item.file;
-      try {
-        const file = await convertGifToVideo(
-          item.id,
-          gifFile,
-          outputMimeType
-        );
-        dispatch.finishOperation(id, { file });
-        dispatch.addSideloadItem({
-          file: gifFile,
-          batchId: v4_default(),
-          parentId: item.parentId,
-          additionalData: {
-            post: item.additionalData?.post,
-            image_size: "animated_video_poster",
-            convert_format: false
-          },
-          operations: [
-            [
-              OperationType.TranscodeImage,
-              {
-                outputFormat: "jpeg",
-                outputQuality: DEFAULT_OUTPUT_QUALITY,
-                interlaced: false
-              }
-            ],
-            OperationType.Upload
-          ]
-        });
-      } catch (error) {
-        if (isUnsupportedConversionError(error)) {
-          dispatch.cancelItem(
-            id,
-            new Error("Animated GIF conversion unsupported"),
-            true
-          );
-          return;
-        }
-        console.error(
-          "[video-conversion] GIF to video conversion failed:",
-          error
-        );
-        dispatch.cancelItem(
-          id,
-          new UploadError({
-            code: ErrorCode.GIF_TRANSCODING_ERROR,
-            message: "Animated GIF could not be converted to video",
-            file: item.file,
-            cause: error instanceof Error ? error : void 0
-          }),
-          true
-        );
-      }
-    };
-  }
   function generateThumbnails(id) {
     return async ({ select: select2, dispatch }) => {
       const item = select2.getItem(id);
@@ -2898,32 +2693,10 @@ var wp;
           parentId: item.id,
           additionalData: {
             post: attachment.id,
-            image_size: "source_original",
+            image_size: "original-heic",
             convert_format: false
           },
           operations: [OperationType.Upload]
-        });
-      }
-      if (item.animatedGifFile && attachment.id) {
-        const outputFormat = settings.videoOutputFormat === "video/webm" ? "webm" : "mp4";
-        dispatch.addSideloadItem({
-          file: item.animatedGifFile,
-          batchId: v4_default(),
-          parentId: item.id,
-          additionalData: {
-            post: attachment.id,
-            image_size: "animated_video",
-            convert_format: false
-          },
-          operations: [
-            [
-              OperationType.TranscodeGif,
-              {
-                outputFormat
-              }
-            ],
-            OperationType.Upload
-          ]
         });
       }
       {
@@ -2963,23 +2736,12 @@ var wp;
         const isUltraHdr = ultraHdrItems.has(item.id);
         const outputMimeType = attachment.image_output_format;
         const interlaced = attachment.image_save_progressive ?? false;
-        const imageQuality = attachment.image_quality;
-        const fallbackQuality = settings.imageQuality ?? DEFAULT_OUTPUT_QUALITY;
-        const defaultQuality = typeof imageQuality?.default === "number" ? imageQuality.default / 100 : fallbackQuality;
-        const qualityForSize = (sizeName) => {
-          const sized = imageQuality?.sizes?.[sizeName];
-          if (typeof sized === "number") {
-            return sized / 100;
-          }
-          return defaultQuality;
-        };
         let thumbnailTranscodeOperation = null;
         if (!isUltraHdr && outputMimeType) {
           thumbnailTranscodeOperation = await getTranscodeImageOperation(
             thumbnailSource,
             outputMimeType,
-            interlaced,
-            defaultQuality
+            interlaced
           );
         }
         const dimensionGroups = /* @__PURE__ */ new Map();
@@ -3001,21 +2763,11 @@ var wp;
         }
         for (const [, names] of dimensionGroups) {
           const imageSize = allImageSizes[names[0]];
-          const sizeQuality = qualityForSize(names[0]);
           const thumbnailOperations = [
-            [
-              OperationType.ResizeCrop,
-              { resize: imageSize, quality: sizeQuality }
-            ]
+            [OperationType.ResizeCrop, { resize: imageSize }]
           ];
           if (!isUltraHdr && thumbnailTranscodeOperation) {
-            thumbnailOperations.push([
-              thumbnailTranscodeOperation[0],
-              {
-                ...thumbnailTranscodeOperation[1],
-                outputQuality: sizeQuality
-              }
-            ]);
+            thumbnailOperations.push(thumbnailTranscodeOperation);
           }
           thumbnailOperations.push(OperationType.Upload);
           const imageSizeParam = names.length === 1 ? names[0] : names;
@@ -3049,8 +2801,7 @@ var wp;
                       width: bigImageSizeThreshold,
                       height: bigImageSizeThreshold
                     },
-                    isThresholdResize: true,
-                    quality: defaultQuality
+                    isThresholdResize: true
                   }
                 ]
               ];
