@@ -49550,7 +49550,8 @@ ${text}
       }
     },
     providesContext: {
-      showArtists: "showArtists"
+      showArtists: "showArtists",
+      showImages: "showImages"
     },
     supports: {
       anchor: true,
@@ -50685,7 +50686,17 @@ ${text}
     }
     console.error("Playlist play error:", error);
   }
-  function initWaveformPlayer(element, { src, title, artist, image, autoPlay, onEnded, labels, waveformStyle }) {
+  function initWaveformPlayer(element, {
+    src,
+    title,
+    artist,
+    image,
+    imageAlt,
+    autoPlay,
+    onEnded,
+    labels,
+    waveformStyle
+  }) {
     const { textColor, waveformColor, progressColor } = getWaveformColors(element);
     const container = createWaveformContainer({
       url: src,
@@ -50701,6 +50712,9 @@ ${text}
     });
     element.appendChild(container);
     const instance = new Rt(container);
+    if (instance.artworkEl) {
+      instance.artworkEl.alt = imageAlt || "";
+    }
     let cleanupPlayButtonAccessibility;
     const handlers = {
       ready: () => {
@@ -50739,7 +50753,7 @@ ${text}
   // packages/block-library/build-module/utils/waveform-player.mjs
   var import_jsx_runtime358 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARTIST_PLACEHOLDER = "\xA0";
-  function updatePlayerMetadata(instance, { title, artist, image }) {
+  function updatePlayerMetadata(instance, { title, artist, image, imageAlt }) {
     if (instance.titleEl) {
       instance.titleEl.textContent = title ?? "";
     }
@@ -50750,6 +50764,7 @@ ${text}
     }
     if (instance.artworkEl && image) {
       instance.artworkEl.src = image;
+      instance.artworkEl.alt = imageAlt || "";
     }
   }
   function WaveformPlayer({
@@ -50757,20 +50772,26 @@ ${text}
     title,
     artist,
     image,
+    imageAlt,
     waveformStyle,
     onEnded
   }) {
     const onEndedEvent = (0, import_compose42.useEvent)(onEnded);
-    const metadataRef = (0, import_element93.useRef)({ title, artist, image });
+    const metadataRef = (0, import_element93.useRef)({ title, artist, image, imageAlt });
     const playerRef = (0, import_element93.useRef)();
     const hasImage = !!image;
     (0, import_element93.useEffect)(() => {
-      metadataRef.current = { title, artist, image };
+      metadataRef.current = { title, artist, image, imageAlt };
       const instance = playerRef.current?.instance;
       if (instance) {
-        updatePlayerMetadata(instance, { title, artist, image });
+        updatePlayerMetadata(instance, {
+          title,
+          artist,
+          image,
+          imageAlt
+        });
       }
-    }, [title, artist, image]);
+    }, [title, artist, image, imageAlt]);
     const ref = (0, import_compose42.useRefEffect)(
       (element) => {
         if (!src) {
@@ -50825,6 +50846,20 @@ ${text}
 
   // packages/block-library/build-module/playlist/utils.mjs
   var import_i18n165 = __toESM(require_i18n(), 1);
+  function getAlbumCoverAttributes(image) {
+    const imageSrc = image?.src ?? image?.url;
+    if (imageSrc?.endsWith("/images/media/audio.svg")) {
+      return {
+        image: "",
+        imageAlt: ""
+      };
+    }
+    return {
+      // Note: Image is not available when a new track is uploaded.
+      image: imageSrc,
+      imageAlt: imageSrc ? image?.alt || image?.alt_text || "" : void 0
+    };
+  }
   function getTrackAttributes(media) {
     return {
       id: media.id || media.url,
@@ -50834,9 +50869,7 @@ ${text}
       artist: media.artist || media?.meta?.artist || media?.media_details?.artist || (0, import_i18n165.__)("Unknown artist"),
       album: media.album || media?.meta?.album || media?.media_details?.album || (0, import_i18n165.__)("Unknown album"),
       length: media?.fileLength || media?.media_details?.length_formatted,
-      // Prevent using the default media attachment icon as the track image.
-      // Note: Image is not available when a new track is uploaded.
-      image: media?.image?.src && media?.image?.src.endsWith("/images/media/audio.svg") ? "" : media?.image?.src
+      ...getAlbumCoverAttributes(media?.image)
     };
   }
 
@@ -51155,7 +51188,8 @@ ${text}
             src: currentTrackData?.src,
             title: currentTrackData?.title,
             artist: currentTrackData?.artist,
-            image: currentTrackData?.image,
+            image: showImages !== false ? currentTrackData?.image : void 0,
+            imageAlt: showImages !== false ? currentTrackData?.imageAlt : void 0,
             waveformStyle,
             onEnded: onTrackEnded
           }
@@ -51254,7 +51288,7 @@ ${text}
     description: "Playlist track.",
     keywords: ["music", "sound"],
     textdomain: "default",
-    usesContext: ["showArtists"],
+    usesContext: ["showArtists", "showImages"],
     attributes: {
       blob: {
         type: "string",
@@ -51277,6 +51311,9 @@ ${text}
         type: "string"
       },
       image: {
+        type: "string"
+      },
+      imageAlt: {
         type: "string"
       },
       length: {
@@ -51315,9 +51352,10 @@ ${text}
     clientId,
     isSelected
   }) => {
-    const { id, src, album, artist, image, length, title } = attributes;
+    const { id, src, album, artist, image, imageAlt, length, title } = attributes;
     const [temporaryURL, setTemporaryURL] = (0, import_element96.useState)(attributes.blob);
     const showArtists = context?.showArtists;
+    const showImages = context?.showImages ?? true;
     const imageButton = (0, import_element96.useRef)();
     const blockProps = (0, import_block_editor185.useBlockProps)();
     const { currentTrackClientId, setCurrentTrackClientId } = (0, import_element96.useContext)(PlaylistContext);
@@ -51349,6 +51387,7 @@ ${text}
           artist: void 0,
           album: void 0,
           image: void 0,
+          imageAlt: void 0,
           length: void 0,
           title: void 0,
           url: void 0
@@ -51366,18 +51405,17 @@ ${text}
         src: media.url,
         artist: media.artist || media?.meta?.artist || media?.media_details?.artist || (0, import_i18n167.__)("Unknown artist"),
         album: media.album || media?.meta?.album || media?.media_details?.album || (0, import_i18n167.__)("Unknown album"),
-        // Prevent using the default media attachment icon as the track image.
-        image: media?.image?.src && media?.image?.src.endsWith("/images/media/audio.svg") ? "" : media?.image?.src,
+        ...getAlbumCoverAttributes(media?.image),
         length: media?.fileLength || media?.media_details?.length_formatted,
         title: media.title
       });
       setTemporaryURL();
     }
     function onSelectAlbumCoverImage(coverImage) {
-      setAttributes({ image: coverImage.url });
+      setAttributes(getAlbumCoverAttributes(coverImage));
     }
     function onRemoveAlbumCoverImage() {
-      setAttributes({ image: void 0 });
+      setAttributes({ image: void 0, imageAlt: void 0 });
       imageButton.current.focus();
     }
     if (!src && !temporaryURL) {
@@ -51443,45 +51481,70 @@ ${text}
             }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_block_editor185.MediaUploadCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)("div", { className: "editor-video-poster-control", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_block_editor185.MediaUploadCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)(import_components106.BaseControl, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_components106.BaseControl.VisualLabel, { children: (0, import_i18n167.__)("Album cover image") }),
-          !!image && /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
-            "img",
-            {
-              src: image,
-              alt: (0, import_i18n167.__)(
-                "Preview of the album cover image"
-              )
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
-            import_block_editor185.MediaUpload,
-            {
-              title: (0, import_i18n167.__)("Select image"),
-              onSelect: onSelectAlbumCoverImage,
-              allowedTypes: ALBUM_COVER_ALLOWED_MEDIA_TYPES,
-              render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
-                import_components106.Button,
-                {
-                  __next40pxDefaultSize: true,
-                  variant: "primary",
-                  onClick: open,
-                  ref: imageButton,
-                  children: !image ? (0, import_i18n167.__)("Select") : (0, import_i18n167.__)("Replace")
-                }
-              )
-            }
-          ),
-          !!image && /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
-            import_components106.Button,
-            {
-              __next40pxDefaultSize: true,
-              onClick: onRemoveAlbumCoverImage,
-              variant: "tertiary",
-              children: (0, import_i18n167.__)("Remove")
-            }
-          )
-        ] }) })
+          /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)("div", { className: "editor-video-poster-control", children: [
+            !!image && /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+              "img",
+              {
+                src: image,
+                alt: (0, import_i18n167.__)(
+                  "Preview of the album cover image"
+                )
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+              import_block_editor185.MediaUpload,
+              {
+                title: (0, import_i18n167.__)("Select image"),
+                onSelect: onSelectAlbumCoverImage,
+                allowedTypes: ALBUM_COVER_ALLOWED_MEDIA_TYPES,
+                render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+                  import_components106.Button,
+                  {
+                    __next40pxDefaultSize: true,
+                    variant: "primary",
+                    onClick: open,
+                    ref: imageButton,
+                    children: !image ? (0, import_i18n167.__)("Select") : (0, import_i18n167.__)("Replace")
+                  }
+                )
+              }
+            ),
+            !!image && /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+              import_components106.Button,
+              {
+                __next40pxDefaultSize: true,
+                onClick: onRemoveAlbumCoverImage,
+                variant: "tertiary",
+                children: (0, import_i18n167.__)("Remove")
+              }
+            )
+          ] })
+        ] }) }),
+        !!image && /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+          import_components106.TextareaControl,
+          {
+            label: (0, import_i18n167.__)("Alternative text"),
+            value: imageAlt || "",
+            onChange: (value) => setAttributes({ imageAlt: value }),
+            help: /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+              Link,
+              {
+                openInNewTab: true,
+                href: (
+                  // translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations.
+                  (0, import_i18n167.__)(
+                    "https://www.w3.org/WAI/tutorials/images/decision-tree/"
+                  )
+                ),
+                children: (0, import_i18n167.__)(
+                  "Describe the purpose of the image."
+                )
+              }
+            )
+          }
+        )
       ] }) }),
       /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)("li", { ...blockProps, children: [
         !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_components106.Spinner, {}),
@@ -51492,6 +51555,14 @@ ${text}
             onClick: () => setCurrentTrackClientId(clientId),
             "aria-current": currentTrackClientId === clientId ? "true" : "false",
             children: [
+              showImages && !!image && /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
+                "img",
+                {
+                  className: "wp-block-playlist-track__image",
+                  src: image,
+                  alt: imageAlt || ""
+                }
+              ),
               /* @__PURE__ */ (0, import_jsx_runtime361.jsxs)("span", { className: "wp-block-playlist-track__content", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(
                   import_block_editor185.RichText,

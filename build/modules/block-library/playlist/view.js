@@ -1239,7 +1239,17 @@ function logPlayError(error) {
   }
   console.error("Playlist play error:", error);
 }
-function initWaveformPlayer(element, { src, title, artist, image, autoPlay, onEnded, labels, waveformStyle }) {
+function initWaveformPlayer(element, {
+  src,
+  title,
+  artist,
+  image,
+  imageAlt,
+  autoPlay,
+  onEnded,
+  labels,
+  waveformStyle
+}) {
   const { textColor, waveformColor, progressColor } = getWaveformColors(element);
   const container = createWaveformContainer({
     url: src,
@@ -1255,6 +1265,9 @@ function initWaveformPlayer(element, { src, title, artist, image, autoPlay, onEn
   });
   element.appendChild(container);
   const instance = new Rt(container);
+  if (instance.artworkEl) {
+    instance.artworkEl.alt = imageAlt || "";
+  }
   let cleanupPlayButtonAccessibility;
   const handlers = {
     ready: () => {
@@ -1337,6 +1350,9 @@ function initPlayer(ref, track, shouldAutoPlay, context) {
       artwork: track.image
     }).then(() => {
       existing.url = track.url;
+      if (existing.instance.artworkEl) {
+        existing.instance.artworkEl.alt = track.imageAlt || "";
+      }
       updateSeekControlLabel(
         existing.instance,
         track.title || ref.dataset.labelSeek
@@ -1358,6 +1374,7 @@ function initPlayer(ref, track, shouldAutoPlay, context) {
     title: track.title,
     artist: track.artist,
     image: track.image,
+    imageAlt: track.imageAlt,
     autoPlay: shouldAutoPlay,
     labels,
     waveformStyle: context.waveformStyle,

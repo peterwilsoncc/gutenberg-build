@@ -5156,7 +5156,8 @@ return array(
 			)
 		),
 		'providesContext' => array(
-			'showArtists' => 'showArtists'
+			'showArtists' => 'showArtists',
+			'showImages' => 'showImages'
 		),
 		'supports' => array(
 			'anchor' => true,
@@ -5232,7 +5233,8 @@ return array(
 		),
 		'textdomain' => 'default',
 		'usesContext' => array(
-			'showArtists'
+			'showArtists',
+			'showImages'
 		),
 		'attributes' => array(
 			'blob' => array(
@@ -5256,6 +5258,9 @@ return array(
 				'type' => 'string'
 			),
 			'image' => array(
+				'type' => 'string'
+			),
+			'imageAlt' => array(
 				'type' => 'string'
 			),
 			'length' => array(
