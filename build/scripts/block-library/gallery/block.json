@@ -4,7 +4,7 @@
 	"name": "core/gallery",
 	"title": "Gallery",
 	"category": "media",
-	"usesContext": [ "galleryId", "postId", "postType" ],
+	"usesContext": [ "galleryId" ],
 	"allowedBlocks": [ "core/image" ],
 	"description": "Display multiple images in a rich gallery.",
 	"keywords": [ "images", "photos" ],
@@ -60,9 +60,6 @@
 				"type": "number"
 			},
 			"default": []
-		},
-		"dynamicContent": {
-			"type": "object"
 		},
 		"navigationButtonType": {
 			"type": "string",

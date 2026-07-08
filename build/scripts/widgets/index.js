@@ -230,6 +230,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
       import_components.SelectControl,
       {
+        __next40pxDefaultSize: true,
         label: (0, import_i18n.__)("Legacy widget"),
         value: selectedId ?? "",
         options: [
@@ -1000,7 +1001,9 @@ var wp;
     {
       block: "core/html",
       widget: "custom_html",
-      transformBlock: ({ content }) => (0, import_blocks2.createBlock)("core/html", {}, [], [content])
+      transform: ({ content }) => ({
+        content
+      })
     },
     {
       block: "core/archives",
@@ -1143,7 +1146,7 @@ var wp;
         };
       }
     }
-  ].map(({ block, widget, transform, transformBlock }) => {
+  ].map(({ block, widget, transform }) => {
     return {
       type: "block",
       blocks: [block],
@@ -1151,7 +1154,7 @@ var wp;
         return idBase === widget && !!instance?.raw;
       },
       transform: ({ instance }) => {
-        const transformedBlock = transformBlock ? transformBlock(instance.raw) : (0, import_blocks2.createBlock)(
+        const transformedBlock = (0, import_blocks2.createBlock)(
           block,
           transform ? transform(instance.raw) : void 0
         );
@@ -1329,9 +1332,15 @@ var wp;
             );
           },
           __experimentalConvert(blocks) {
-            let innerBlocks = blocks.map(
-              (block) => (0, import_blocks3.cloneSanitizedBlock)(block)
-            );
+            let innerBlocks = [
+              ...blocks.map((block) => {
+                return (0, import_blocks3.createBlock)(
+                  block.name,
+                  block.attributes,
+                  block.innerBlocks
+                );
+              })
+            ];
             const firstHeadingBlock = innerBlocks[0].name === "core/heading" ? innerBlocks[0] : null;
             innerBlocks = innerBlocks.filter(
               (block) => block !== firstHeadingBlock

@@ -10,35 +10,30 @@
  *
  * @since 6.9.0
  *
- * @param array         $attributes The block attributes.
- * @param string        $content    The block content.
- * @param WP_Block|null $block      The block instance.
+ * @param array $attributes The block attributes.
  *
  * @return string Returns the Playlist Track.
  */
-function gutenberg_render_block_core_playlist_track( $attributes, $content = '', $block = null ) {
+function gutenberg_render_block_core_playlist_track( $attributes ) {
 	if ( empty( $attributes['id'] ) ) {
 		return '';
 	}
 
 	$wrapper_attributes = get_block_wrapper_attributes();
-	$show_images        = true;
-	if ( $block instanceof WP_Block && isset( $block->context['showImages'] ) ) {
-		$show_images = $block->context['showImages'];
-	}
 
-	$artist = $attributes['artist'] ?? '';
-	$image  = $attributes['image'] ?? '';
-	$alt    = empty( $attributes['imageAlt'] ) ? '' : wp_strip_all_tags( $attributes['imageAlt'] );
-	$length = $attributes['length'] ?? '';
-	$title  = isset( $attributes['title'] ) && ! empty( $attributes['title'] ) ? $attributes['title'] : __( 'Unknown title' );
+	$unique_id = $attributes['uniqueId'] ?? wp_unique_id( 'playlist-track-' );
+	$artist    = $attributes['artist'] ?? '';
+	$length    = $attributes['length'] ?? '';
+	$title     = isset( $attributes['title'] ) && ! empty( $attributes['title'] ) ? $attributes['title'] : __( 'Unknown title' );
+
+	$context = wp_interactivity_data_wp_context(
+		array(
+			'uniqueId' => $unique_id,
+		)
+	);
 
 	$html  = '<li ' . $wrapper_attributes . '>';
-	$html .= '<button data-wp-on--click="actions.changeTrack" data-wp-bind--aria-current="state.isCurrentTrack" class="wp-block-playlist-track__button">';
-
-	if ( $show_images && $image ) {
-		$html .= '<img class="wp-block-playlist-track__image" src="' . esc_url( $image ) . '" alt="' . esc_attr( $alt ) . '" />';
-	}
+	$html .= '<button ' . $context . 'data-wp-on--click="actions.changeTrack" data-wp-bind--aria-current="state.isCurrentTrack" class="wp-block-playlist-track__button">';
 
 	$html .= '<span class="wp-block-playlist-track__content">';
 	if ( $title ) {
