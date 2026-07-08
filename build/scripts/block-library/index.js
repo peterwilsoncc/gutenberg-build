@@ -77073,13 +77073,23 @@ ${text}
           ...(bootstrappedBlockType?.apiVersion ?? 0) < 3 && {
             apiVersion: 3
           },
+          // Always pass the postId context so the server-side render can
+          // reproduce the same output as the front end, while preserving
+          // any context declared in the block's PHP registration.
+          usesContext: Array.from(
+            /* @__PURE__ */ new Set([
+              ...bootstrappedBlockType?.usesContext ?? [],
+              "postId"
+            ])
+          ),
           // Inspector controls are rendered by the auto-register hook in block-editor
-          edit: function Edit24({ attributes }) {
+          edit: function Edit24({ attributes, context }) {
             const disabledRef = (0, import_compose62.useDisabled)();
             const blockProps = (0, import_block_editor303.useBlockProps)({ ref: disabledRef });
             const { content, status, error } = (0, import_server_side_render7.useServerSideRender)({
               block: blockName,
-              attributes
+              attributes,
+              urlQueryArgs: { post_id: context?.postId }
             });
             if (status === "loading") {
               return /* @__PURE__ */ (0, import_jsx_runtime551.jsx)("div", { ...blockProps, children: (0, import_i18n285.__)("Loading\u2026") });
