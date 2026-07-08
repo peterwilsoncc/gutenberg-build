@@ -50777,24 +50777,16 @@ ${text}
     onEnded
   }) {
     const onEndedEvent = (0, import_compose42.useEvent)(onEnded);
-    const metadataRef = (0, import_element93.useRef)({ title, artist, image, imageAlt });
     const playerRef = (0, import_element93.useRef)();
     const hasImage = !!image;
+    const hasSrc = !!src;
+    const metadataRef = (0, import_element93.useRef)({ src, title, artist, image, imageAlt });
     (0, import_element93.useEffect)(() => {
-      metadataRef.current = { title, artist, image, imageAlt };
-      const instance = playerRef.current?.instance;
-      if (instance) {
-        updatePlayerMetadata(instance, {
-          title,
-          artist,
-          image,
-          imageAlt
-        });
-      }
-    }, [title, artist, image, imageAlt]);
+      metadataRef.current = { src, title, artist, image, imageAlt };
+    }, [src, title, artist, image, imageAlt]);
     const ref = (0, import_compose42.useRefEffect)(
       (element) => {
-        if (!src) {
+        if (!hasSrc) {
           return;
         }
         let cancelled = false;
@@ -50804,10 +50796,12 @@ ${text}
             return;
           }
           const player = initWaveformPlayer(element, {
-            src,
-            ...metadataRef.current,
-            waveformStyle,
+            src: metadataRef.current.src,
+            title: metadataRef.current.title,
             artist: metadataRef.current.artist || EMPTY_ARTIST_PLACEHOLDER,
+            image: metadataRef.current.image,
+            imageAlt: metadataRef.current.imageAlt,
+            waveformStyle,
             labels: {
               seek: (0, import_i18n164.__)("Seek"),
               /* translators: %1$s: current audio time, %2$s: total audio duration. */
@@ -50819,7 +50813,6 @@ ${text}
             onEnded: () => onEndedEvent?.()
           });
           playerRef.current = player;
-          updatePlayerMetadata(player.instance, metadataRef.current);
           const { destroy } = player;
           playerDestroy = destroy;
         }
@@ -50831,8 +50824,39 @@ ${text}
           playerDestroy?.();
         };
       },
-      [onEndedEvent, src, waveformStyle, hasImage]
+      [onEndedEvent, hasSrc, waveformStyle, hasImage]
     );
+    (0, import_element93.useEffect)(() => {
+      if (playerRef.current?.instance) {
+        const instance = playerRef.current?.instance;
+        if (instance) {
+          updatePlayerMetadata(instance, {
+            title,
+            artist,
+            image,
+            imageAlt
+          });
+        }
+      }
+    }, [title, artist, image, imageAlt]);
+    (0, import_element93.useEffect)(() => {
+      if (src && playerRef.current?.instance) {
+        const wasPlaying = playerRef.current.instance.isPlaying;
+        const promise = playerRef.current.instance.loadTrack(
+          src,
+          metadataRef.current.title,
+          metadataRef.current.artist,
+          {
+            artwork: metadataRef.current.image
+          }
+        );
+        if (!wasPlaying) {
+          promise.then(() => {
+            playerRef.current.instance.pause();
+          });
+        }
+      }
+    }, [src]);
     return /* @__PURE__ */ (0, import_jsx_runtime358.jsx)("div", { ref, className: "wp-block-playlist__waveform-player" });
   }
 
