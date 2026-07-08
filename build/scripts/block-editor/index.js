@@ -186,6 +186,116 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/style-engine
+  var require_style_engine = __commonJS({
+    "package-external:@wordpress/style-engine"(exports, module) {
+      module.exports = window.wp.styleEngine;
+    }
+  });
+
+  // node_modules/deepmerge/dist/cjs.js
+  var require_cjs = __commonJS({
+    "node_modules/deepmerge/dist/cjs.js"(exports, module) {
+      "use strict";
+      var isMergeableObject = function isMergeableObject2(value) {
+        return isNonNullObject(value) && !isSpecial(value);
+      };
+      function isNonNullObject(value) {
+        return !!value && typeof value === "object";
+      }
+      function isSpecial(value) {
+        var stringValue = Object.prototype.toString.call(value);
+        return stringValue === "[object RegExp]" || stringValue === "[object Date]" || isReactElement(value);
+      }
+      var canUseSymbol = typeof Symbol === "function" && Symbol.for;
+      var REACT_ELEMENT_TYPE = canUseSymbol ? /* @__PURE__ */ Symbol.for("react.element") : 60103;
+      function isReactElement(value) {
+        return value.$$typeof === REACT_ELEMENT_TYPE;
+      }
+      function emptyTarget(val) {
+        return Array.isArray(val) ? [] : {};
+      }
+      function cloneUnlessOtherwiseSpecified(value, options) {
+        return options.clone !== false && options.isMergeableObject(value) ? deepmerge2(emptyTarget(value), value, options) : value;
+      }
+      function defaultArrayMerge(target, source, options) {
+        return target.concat(source).map(function(element) {
+          return cloneUnlessOtherwiseSpecified(element, options);
+        });
+      }
+      function getMergeFunction(key, options) {
+        if (!options.customMerge) {
+          return deepmerge2;
+        }
+        var customMerge = options.customMerge(key);
+        return typeof customMerge === "function" ? customMerge : deepmerge2;
+      }
+      function getEnumerableOwnPropertySymbols(target) {
+        return Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols(target).filter(function(symbol) {
+          return Object.propertyIsEnumerable.call(target, symbol);
+        }) : [];
+      }
+      function getKeys(target) {
+        return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target));
+      }
+      function propertyIsOnObject(object, property) {
+        try {
+          return property in object;
+        } catch (_) {
+          return false;
+        }
+      }
+      function propertyIsUnsafe(target, key) {
+        return propertyIsOnObject(target, key) && !(Object.hasOwnProperty.call(target, key) && Object.propertyIsEnumerable.call(target, key));
+      }
+      function mergeObject(target, source, options) {
+        var destination = {};
+        if (options.isMergeableObject(target)) {
+          getKeys(target).forEach(function(key) {
+            destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
+          });
+        }
+        getKeys(source).forEach(function(key) {
+          if (propertyIsUnsafe(target, key)) {
+            return;
+          }
+          if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) {
+            destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
+          } else {
+            destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
+          }
+        });
+        return destination;
+      }
+      function deepmerge2(target, source, options) {
+        options = options || {};
+        options.arrayMerge = options.arrayMerge || defaultArrayMerge;
+        options.isMergeableObject = options.isMergeableObject || isMergeableObject;
+        options.cloneUnlessOtherwiseSpecified = cloneUnlessOtherwiseSpecified;
+        var sourceIsArray = Array.isArray(source);
+        var targetIsArray = Array.isArray(target);
+        var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
+        if (!sourceAndTargetTypesMatch) {
+          return cloneUnlessOtherwiseSpecified(source, options);
+        } else if (sourceIsArray) {
+          return options.arrayMerge(target, source, options);
+        } else {
+          return mergeObject(target, source, options);
+        }
+      }
+      deepmerge2.all = function deepmergeAll(array, options) {
+        if (!Array.isArray(array)) {
+          throw new Error("first argument should be an array");
+        }
+        return array.reduce(function(prev, next) {
+          return deepmerge2(prev, next, options);
+        }, {});
+      };
+      var deepmerge_1 = deepmerge2;
+      module.exports = deepmerge_1;
+    }
+  });
+
   // package-external:@wordpress/a11y
   var require_a11y = __commonJS({
     "package-external:@wordpress/a11y"(exports, module) {
@@ -686,13 +796,6 @@ var wp;
       module.exports = removeAccents2;
       module.exports.has = hasAccents;
       module.exports.remove = removeAccents2;
-    }
-  });
-
-  // package-external:@wordpress/style-engine
-  var require_style_engine = __commonJS({
-    "package-external:@wordpress/style-engine"(exports, module) {
-      module.exports = window.wp.styleEngine;
     }
   });
 
@@ -2061,14 +2164,14 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React118 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef106 = React118.useRef, useEffect91 = React118.useEffect, useMemo152 = React118.useMemo, useDebugValue2 = React118.useDebugValue;
+        var React118 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef106 = React118.useRef, useEffect91 = React118.useEffect, useMemo153 = React118.useMemo, useDebugValue2 = React118.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector3, isEqual2) {
           var instRef = useRef106(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo152(
+          instRef = useMemo153(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -6439,109 +6542,6 @@ var wp;
     }
   });
 
-  // node_modules/deepmerge/dist/cjs.js
-  var require_cjs = __commonJS({
-    "node_modules/deepmerge/dist/cjs.js"(exports, module) {
-      "use strict";
-      var isMergeableObject = function isMergeableObject2(value) {
-        return isNonNullObject(value) && !isSpecial(value);
-      };
-      function isNonNullObject(value) {
-        return !!value && typeof value === "object";
-      }
-      function isSpecial(value) {
-        var stringValue = Object.prototype.toString.call(value);
-        return stringValue === "[object RegExp]" || stringValue === "[object Date]" || isReactElement(value);
-      }
-      var canUseSymbol = typeof Symbol === "function" && Symbol.for;
-      var REACT_ELEMENT_TYPE = canUseSymbol ? /* @__PURE__ */ Symbol.for("react.element") : 60103;
-      function isReactElement(value) {
-        return value.$$typeof === REACT_ELEMENT_TYPE;
-      }
-      function emptyTarget(val) {
-        return Array.isArray(val) ? [] : {};
-      }
-      function cloneUnlessOtherwiseSpecified(value, options) {
-        return options.clone !== false && options.isMergeableObject(value) ? deepmerge2(emptyTarget(value), value, options) : value;
-      }
-      function defaultArrayMerge(target, source, options) {
-        return target.concat(source).map(function(element) {
-          return cloneUnlessOtherwiseSpecified(element, options);
-        });
-      }
-      function getMergeFunction(key, options) {
-        if (!options.customMerge) {
-          return deepmerge2;
-        }
-        var customMerge = options.customMerge(key);
-        return typeof customMerge === "function" ? customMerge : deepmerge2;
-      }
-      function getEnumerableOwnPropertySymbols(target) {
-        return Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols(target).filter(function(symbol) {
-          return Object.propertyIsEnumerable.call(target, symbol);
-        }) : [];
-      }
-      function getKeys(target) {
-        return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target));
-      }
-      function propertyIsOnObject(object, property) {
-        try {
-          return property in object;
-        } catch (_) {
-          return false;
-        }
-      }
-      function propertyIsUnsafe(target, key) {
-        return propertyIsOnObject(target, key) && !(Object.hasOwnProperty.call(target, key) && Object.propertyIsEnumerable.call(target, key));
-      }
-      function mergeObject(target, source, options) {
-        var destination = {};
-        if (options.isMergeableObject(target)) {
-          getKeys(target).forEach(function(key) {
-            destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
-          });
-        }
-        getKeys(source).forEach(function(key) {
-          if (propertyIsUnsafe(target, key)) {
-            return;
-          }
-          if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) {
-            destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
-          } else {
-            destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
-          }
-        });
-        return destination;
-      }
-      function deepmerge2(target, source, options) {
-        options = options || {};
-        options.arrayMerge = options.arrayMerge || defaultArrayMerge;
-        options.isMergeableObject = options.isMergeableObject || isMergeableObject;
-        options.cloneUnlessOtherwiseSpecified = cloneUnlessOtherwiseSpecified;
-        var sourceIsArray = Array.isArray(source);
-        var targetIsArray = Array.isArray(target);
-        var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
-        if (!sourceAndTargetTypesMatch) {
-          return cloneUnlessOtherwiseSpecified(source, options);
-        } else if (sourceIsArray) {
-          return options.arrayMerge(target, source, options);
-        } else {
-          return mergeObject(target, source, options);
-        }
-      }
-      deepmerge2.all = function deepmergeAll(array, options) {
-        if (!Array.isArray(array)) {
-          throw new Error("first argument should be an array");
-        }
-        return array.reduce(function(prev, next) {
-          return deepmerge2(prev, next, options);
-        }, {});
-      };
-      var deepmerge_1 = deepmerge2;
-      module.exports = deepmerge_1;
-    }
-  });
-
   // package-external:@wordpress/commands
   var require_commands = __commonJS({
     "package-external:@wordpress/commands"(exports, module) {
@@ -6989,7 +6989,7 @@ var wp;
     __experimentalGetColorClassesAndStyles: () => getColorClassesAndStyles,
     __experimentalGetDimensionsClassesAndStyles: () => getDimensionsClassesAndStyles,
     __experimentalGetElementClassName: () => __experimentalGetElementClassName,
-    __experimentalGetGapCSSValue: () => getGapCSSValue,
+    __experimentalGetGapCSSValue: () => getGapCSSValue2,
     __experimentalGetGradientClass: () => __experimentalGetGradientClass,
     __experimentalGetGradientObjectByGradientValue: () => __experimentalGetGradientObjectByGradientValue,
     __experimentalGetShadowClassesAndStyles: () => getShadowClassesAndStyles,
@@ -7039,7 +7039,7 @@ var wp;
     getColorClassName: () => getColorClassName,
     getColorObjectByAttributeValues: () => getColorObjectByAttributeValues,
     getColorObjectByColorValue: () => getColorObjectByColorValue,
-    getComputedFluidTypographyValue: () => getComputedFluidTypographyValue,
+    getComputedFluidTypographyValue: () => getComputedFluidTypographyValue2,
     getCustomValueFromPreset: () => getCustomValueFromPreset,
     getDimensionsClassesAndStyles: () => getDimensionsClassesAndStyles,
     getFontSize: () => getFontSize,
@@ -7048,10 +7048,10 @@ var wp;
     getGradientSlugByValue: () => getGradientSlugByValue,
     getGradientValueBySlug: () => getGradientValueBySlug,
     getPxFromCssUnit: () => get_px_from_css_unit_default,
-    getSpacingPresetCssVar: () => getSpacingPresetCssVar,
+    getSpacingPresetCssVar: () => getSpacingPresetCssVar2,
     getTypographyClassesAndStyles: () => getTypographyClassesAndStyles,
     isValueSpacingPreset: () => isValueSpacingPreset,
-    privateApis: () => privateApis13,
+    privateApis: () => privateApis14,
     store: () => store,
     storeConfig: () => storeConfig,
     transformStyles: () => transform_styles_default,
@@ -7090,7 +7090,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/utils.mjs
   var import_blocks103 = __toESM(require_blocks(), 1);
-  var import_element272 = __toESM(require_element(), 1);
+  var import_element273 = __toESM(require_element(), 1);
   var import_data177 = __toESM(require_data(), 1);
   var import_compose102 = __toESM(require_compose(), 1);
   var import_hooks18 = __toESM(require_hooks(), 1);
@@ -7378,12 +7378,12 @@ var wp;
   var import_components5 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/use-settings/index.mjs
-  var import_data7 = __toESM(require_data(), 1);
+  var import_data8 = __toESM(require_data(), 1);
   var import_deprecated5 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/block-edit/index.mjs
   var import_element6 = __toESM(require_element(), 1);
-  var import_blocks9 = __toESM(require_blocks(), 1);
+  var import_blocks10 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-edit/edit.mjs
   var import_blocks = __toESM(require_blocks(), 1);
@@ -7695,13 +7695,13 @@ var wp;
   var edit_default = EditWithGeneratedProps;
 
   // packages/block-editor/build-module/components/block-edit/multiple-usage-warning.mjs
-  var import_blocks8 = __toESM(require_blocks(), 1);
+  var import_blocks9 = __toESM(require_blocks(), 1);
   var import_components4 = __toESM(require_components(), 1);
-  var import_data6 = __toESM(require_data(), 1);
+  var import_data7 = __toESM(require_data(), 1);
   var import_i18n7 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/store/index.mjs
-  var import_data5 = __toESM(require_data(), 1);
+  var import_data6 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/store/reducer.mjs
   var import_es6 = __toESM(require_es6(), 1);
@@ -10129,7 +10129,7 @@ var wp;
     isValidTemplate: () => isValidTemplate,
     wasBlockJustInserted: () => wasBlockJustInserted
   });
-  var import_blocks6 = __toESM(require_blocks(), 1);
+  var import_blocks7 = __toESM(require_blocks(), 1);
   var import_hooks2 = __toESM(require_hooks(), 1);
 
   // packages/icons/build-module/icon/index.mjs
@@ -10769,10 +10769,10 @@ var wp;
   // packages/block-editor/build-module/store/selectors.mjs
   var import_rich_text = __toESM(require_rich_text(), 1);
   var import_deprecated2 = __toESM(require_deprecated(), 1);
-  var import_data4 = __toESM(require_data(), 1);
+  var import_data5 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/store/utils.mjs
-  var import_blocks5 = __toESM(require_blocks(), 1);
+  var import_blocks6 = __toESM(require_blocks(), 1);
   var import_block_serialization_default_parser = __toESM(require_block_serialization_default_parser(), 1);
 
   // packages/block-editor/build-module/store/constants.mjs
@@ -10838,8 +10838,2008 @@ var wp;
     isZoomOut: () => isZoomOut,
     shouldRenderBlockListView: () => shouldRenderBlockListView
   });
+  var import_data4 = __toESM(require_data(), 1);
+  var import_blocks5 = __toESM(require_blocks(), 1);
+
+  // packages/global-styles-engine/build-module/utils/object.mjs
+  function setImmutably(object, path, value) {
+    path = Array.isArray(path) ? [...path] : [path];
+    object = Array.isArray(object) ? [...object] : { ...object };
+    const leaf = path.pop();
+    let prev = object;
+    for (const key of path) {
+      const lvl = prev[key];
+      prev = prev[key] = Array.isArray(lvl) ? [...lvl] : { ...lvl };
+    }
+    prev[leaf] = value;
+    return object;
+  }
+  var getValueFromObjectPath = (object, path, defaultValue) => {
+    const arrayPath = Array.isArray(path) ? path : path.split(".");
+    let value = object;
+    arrayPath.forEach((fieldName) => {
+      value = value?.[fieldName];
+    });
+    return value ?? defaultValue;
+  };
+
+  // packages/global-styles-engine/build-module/utils/common.mjs
+  var import_style_engine = __toESM(require_style_engine(), 1);
+
+  // packages/global-styles-engine/build-module/utils/fluid.mjs
+  var DEFAULT_MAXIMUM_VIEWPORT_WIDTH = "1600px";
+  var DEFAULT_MINIMUM_VIEWPORT_WIDTH = "320px";
+  var DEFAULT_SCALE_FACTOR = 1;
+  var DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MIN = 0.25;
+  var DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MAX = 0.75;
+  var DEFAULT_MINIMUM_FONT_SIZE_LIMIT = "14px";
+  function getComputedFluidTypographyValue({
+    minimumFontSize,
+    maximumFontSize,
+    fontSize,
+    minimumViewportWidth = DEFAULT_MINIMUM_VIEWPORT_WIDTH,
+    maximumViewportWidth = DEFAULT_MAXIMUM_VIEWPORT_WIDTH,
+    scaleFactor = DEFAULT_SCALE_FACTOR,
+    minimumFontSizeLimit
+  }) {
+    minimumFontSizeLimit = !!getTypographyValueAndUnit(minimumFontSizeLimit) ? minimumFontSizeLimit : DEFAULT_MINIMUM_FONT_SIZE_LIMIT;
+    if (fontSize) {
+      const fontSizeParsed = getTypographyValueAndUnit(fontSize);
+      if (!fontSizeParsed?.unit || !fontSizeParsed?.value) {
+        return null;
+      }
+      const minimumFontSizeLimitParsed = getTypographyValueAndUnit(
+        minimumFontSizeLimit,
+        {
+          coerceTo: fontSizeParsed.unit
+        }
+      );
+      if (!!minimumFontSizeLimitParsed?.value && !minimumFontSize && !maximumFontSize) {
+        if (fontSizeParsed?.value <= minimumFontSizeLimitParsed?.value) {
+          return null;
+        }
+      }
+      if (!maximumFontSize) {
+        maximumFontSize = `${fontSizeParsed.value}${fontSizeParsed.unit}`;
+      }
+      if (!minimumFontSize) {
+        const fontSizeValueInPx = fontSizeParsed.unit === "px" ? fontSizeParsed.value : fontSizeParsed.value * 16;
+        const minimumFontSizeFactor = Math.min(
+          Math.max(
+            1 - 0.075 * Math.log2(fontSizeValueInPx),
+            DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MIN
+          ),
+          DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MAX
+        );
+        const calculatedMinimumFontSize = roundToPrecision(
+          fontSizeParsed.value * minimumFontSizeFactor,
+          3
+        );
+        if (!!minimumFontSizeLimitParsed?.value && calculatedMinimumFontSize < minimumFontSizeLimitParsed?.value) {
+          minimumFontSize = `${minimumFontSizeLimitParsed.value}${minimumFontSizeLimitParsed.unit}`;
+        } else {
+          minimumFontSize = `${calculatedMinimumFontSize}${fontSizeParsed.unit}`;
+        }
+      }
+    }
+    const minimumFontSizeParsed = getTypographyValueAndUnit(minimumFontSize);
+    const fontSizeUnit = minimumFontSizeParsed?.unit || "rem";
+    const maximumFontSizeParsed = getTypographyValueAndUnit(maximumFontSize, {
+      coerceTo: fontSizeUnit
+    });
+    if (!minimumFontSizeParsed || !maximumFontSizeParsed) {
+      return null;
+    }
+    const minimumFontSizeRem = getTypographyValueAndUnit(minimumFontSize, {
+      coerceTo: "rem"
+    });
+    const maximumViewportWidthParsed = getTypographyValueAndUnit(
+      maximumViewportWidth,
+      { coerceTo: fontSizeUnit }
+    );
+    const minimumViewportWidthParsed = getTypographyValueAndUnit(
+      minimumViewportWidth,
+      { coerceTo: fontSizeUnit }
+    );
+    if (!maximumViewportWidthParsed || !minimumViewportWidthParsed || !minimumFontSizeRem) {
+      return null;
+    }
+    const linearDenominator = maximumViewportWidthParsed.value - minimumViewportWidthParsed.value;
+    if (!linearDenominator) {
+      return null;
+    }
+    const minViewportWidthOffsetValue = roundToPrecision(
+      minimumViewportWidthParsed.value / 100,
+      3
+    );
+    const viewportWidthOffset = roundToPrecision(minViewportWidthOffsetValue, 3) + fontSizeUnit;
+    const linearFactor = 100 * ((maximumFontSizeParsed.value - minimumFontSizeParsed.value) / linearDenominator);
+    const linearFactorScaled = roundToPrecision(
+      (linearFactor || 1) * scaleFactor,
+      3
+    );
+    const fluidTargetFontSize = `${minimumFontSizeRem.value}${minimumFontSizeRem.unit} + ((1vw - ${viewportWidthOffset}) * ${linearFactorScaled})`;
+    return `clamp(${minimumFontSize}, ${fluidTargetFontSize}, ${maximumFontSize})`;
+  }
+  function getTypographyValueAndUnit(rawValue, options = {}) {
+    if (typeof rawValue !== "string" && typeof rawValue !== "number") {
+      return null;
+    }
+    if (isFinite(rawValue)) {
+      rawValue = `${rawValue}px`;
+    }
+    const { coerceTo, rootSizeValue, acceptableUnits } = {
+      coerceTo: "",
+      // Default browser font size. Later we could inject some JS to compute this `getComputedStyle( document.querySelector( "html" ) ).fontSize`.
+      rootSizeValue: 16,
+      acceptableUnits: ["rem", "px", "em"],
+      ...options
+    };
+    const acceptableUnitsGroup = acceptableUnits?.join("|");
+    const regexUnits = new RegExp(
+      `^(\\d*\\.?\\d+)(${acceptableUnitsGroup}){1,1}$`
+    );
+    const matches = rawValue.toString().match(regexUnits);
+    if (!matches || matches.length < 3) {
+      return null;
+    }
+    let [, value, unit] = matches;
+    let returnValue = parseFloat(value);
+    if ("px" === coerceTo && ("em" === unit || "rem" === unit)) {
+      returnValue = returnValue * rootSizeValue;
+      unit = coerceTo;
+    }
+    if ("px" === unit && ("em" === coerceTo || "rem" === coerceTo)) {
+      returnValue = returnValue / rootSizeValue;
+      unit = coerceTo;
+    }
+    if (("em" === coerceTo || "rem" === coerceTo) && ("em" === unit || "rem" === unit)) {
+      unit = coerceTo;
+    }
+    if (!unit) {
+      return null;
+    }
+    return {
+      value: roundToPrecision(returnValue, 3),
+      unit
+    };
+  }
+  function roundToPrecision(value, digits = 3) {
+    const base = Math.pow(10, digits);
+    return Math.round(value * base) / base;
+  }
+
+  // packages/global-styles-engine/build-module/utils/typography.mjs
+  function isFluidTypographyEnabled(typographySettings) {
+    const fluidSettings = typographySettings?.fluid;
+    return true === fluidSettings || fluidSettings && typeof fluidSettings === "object" && Object.keys(fluidSettings).length > 0;
+  }
+  function getFluidTypographyOptionsFromSettings(settings2) {
+    const typographySettings = settings2?.typography ?? {};
+    const layoutSettings = settings2?.layout;
+    const defaultMaxViewportWidth = getTypographyValueAndUnit(
+      layoutSettings?.wideSize
+    ) ? layoutSettings?.wideSize : null;
+    return isFluidTypographyEnabled(typographySettings) && defaultMaxViewportWidth ? {
+      fluid: {
+        maxViewportWidth: defaultMaxViewportWidth,
+        ...typeof typographySettings.fluid === "object" ? typographySettings.fluid : {}
+      }
+    } : {
+      fluid: typographySettings?.fluid
+    };
+  }
+  function getTypographyFontSizeValue(preset, settings2) {
+    const { size: defaultSize } = preset;
+    if (!defaultSize || "0" === defaultSize || false === preset?.fluid) {
+      return defaultSize;
+    }
+    if (!isFluidTypographyEnabled(settings2?.typography) && !isFluidTypographyEnabled(preset)) {
+      return defaultSize;
+    }
+    const fluidTypographySettings = getFluidTypographyOptionsFromSettings(settings2)?.fluid ?? {};
+    const fluidFontSizeValue = getComputedFluidTypographyValue({
+      minimumFontSize: typeof preset?.fluid === "boolean" ? void 0 : preset?.fluid?.min,
+      maximumFontSize: typeof preset?.fluid === "boolean" ? void 0 : preset?.fluid?.max,
+      fontSize: defaultSize,
+      minimumFontSizeLimit: typeof fluidTypographySettings === "object" ? fluidTypographySettings?.minFontSize : void 0,
+      maximumViewportWidth: typeof fluidTypographySettings === "object" ? fluidTypographySettings?.maxViewportWidth : void 0,
+      minimumViewportWidth: typeof fluidTypographySettings === "object" ? fluidTypographySettings?.minViewportWidth : void 0
+    });
+    if (!!fluidFontSizeValue) {
+      return fluidFontSizeValue;
+    }
+    return defaultSize;
+  }
+
+  // packages/global-styles-engine/build-module/utils/common.mjs
+  var ROOT_BLOCK_SELECTOR = "body";
+  var ROOT_CSS_PROPERTIES_SELECTOR = ":root";
+  function splitSelectorList(selector3) {
+    if (!selector3.includes(",")) {
+      return [selector3];
+    }
+    const selectors4 = [];
+    let currentSelector = "";
+    let parenthesesDepth = 0;
+    for (const char of selector3) {
+      if (char === "(") {
+        parenthesesDepth++;
+      } else if (char === ")" && parenthesesDepth > 0) {
+        parenthesesDepth--;
+      } else if (char === "," && parenthesesDepth === 0) {
+        selectors4.push(currentSelector);
+        currentSelector = "";
+        continue;
+      }
+      currentSelector += char;
+    }
+    selectors4.push(currentSelector);
+    return selectors4;
+  }
+  var PRESET_METADATA = [
+    {
+      path: ["color", "palette"],
+      valueKey: "color",
+      cssVarInfix: "color",
+      classes: [
+        { classSuffix: "color", propertyName: "color" },
+        {
+          classSuffix: "background-color",
+          propertyName: "background-color"
+        },
+        {
+          classSuffix: "border-color",
+          propertyName: "border-color"
+        }
+      ]
+    },
+    {
+      path: ["color", "gradients"],
+      valueKey: "gradient",
+      cssVarInfix: "gradient",
+      classes: [
+        {
+          classSuffix: "gradient-background",
+          propertyName: "background"
+        }
+      ]
+    },
+    {
+      path: ["color", "duotone"],
+      valueKey: "colors",
+      cssVarInfix: "duotone",
+      valueFunc: ({ slug }) => `url( '#wp-duotone-${slug}' )`,
+      classes: []
+    },
+    {
+      path: ["shadow", "presets"],
+      valueKey: "shadow",
+      cssVarInfix: "shadow",
+      classes: []
+    },
+    {
+      path: ["typography", "fontSizes"],
+      valueFunc: (preset, settings2) => getTypographyFontSizeValue(preset, settings2),
+      valueKey: "size",
+      cssVarInfix: "font-size",
+      classes: [{ classSuffix: "font-size", propertyName: "font-size" }]
+    },
+    {
+      path: ["typography", "fontFamilies"],
+      valueKey: "fontFamily",
+      cssVarInfix: "font-family",
+      classes: [
+        { classSuffix: "font-family", propertyName: "font-family" }
+      ]
+    },
+    {
+      path: ["spacing", "spacingSizes"],
+      valueKey: "size",
+      cssVarInfix: "spacing",
+      valueFunc: ({ size: size4 }) => size4,
+      classes: []
+    },
+    {
+      path: ["border", "radiusSizes"],
+      valueKey: "size",
+      cssVarInfix: "border-radius",
+      classes: []
+    },
+    {
+      path: ["dimensions", "dimensionSizes"],
+      valueKey: "size",
+      cssVarInfix: "dimension",
+      classes: []
+    }
+  ];
+  function scopeSelector(scope, selector3) {
+    if (!scope || !selector3) {
+      return selector3;
+    }
+    const scopes = splitSelectorList(scope);
+    const selectors4 = splitSelectorList(selector3);
+    const selectorsScoped = [];
+    scopes.forEach((outer) => {
+      selectors4.forEach((inner) => {
+        selectorsScoped.push(`${outer.trim()} ${inner.trim()}`);
+      });
+    });
+    return selectorsScoped.join(", ");
+  }
+  function scopeFeatureSelectors(scope, selectors4) {
+    if (!scope || !selectors4) {
+      return;
+    }
+    const featureSelectors = {};
+    Object.entries(selectors4).forEach(([feature, selector3]) => {
+      if (typeof selector3 === "string") {
+        featureSelectors[feature] = scopeSelector(scope, selector3);
+      }
+      if (typeof selector3 === "object") {
+        featureSelectors[feature] = {};
+        Object.entries(selector3).forEach(
+          ([subfeature, subfeatureSelector]) => {
+            featureSelectors[feature][subfeature] = scopeSelector(
+              scope,
+              subfeatureSelector
+            );
+          }
+        );
+      }
+    });
+    return featureSelectors;
+  }
+  function appendToSelector(selector3, toAppend) {
+    if (!selector3.includes(",")) {
+      return selector3 + toAppend;
+    }
+    const selectors4 = splitSelectorList(selector3);
+    const newSelectors = selectors4.map((sel) => sel + toAppend);
+    return newSelectors.join(",");
+  }
+  function getBlockStyleVariationSelector(variation, blockSelector) {
+    const variationClass = `.is-style-${variation}`;
+    if (!blockSelector) {
+      return variationClass;
+    }
+    const ancestorRegex = /[^\s:]+/;
+    const addVariationClass = (match2) => match2 + variationClass;
+    const result = splitSelectorList(blockSelector).map(
+      (part) => part.replace(ancestorRegex, addVariationClass)
+    );
+    return result.join(",");
+  }
+  function getBlockStyleVariationFeatureSelector(variation, featureSelector) {
+    const variationClass = `.is-style-${variation}`;
+    const selectorParts = splitSelectorList(featureSelector).map(
+      (selector3) => {
+        const trimmedSelector = selector3.trim();
+        const prefix2 = `${variationClass} `;
+        if (trimmedSelector.startsWith(prefix2)) {
+          return trimmedSelector.slice(prefix2.length);
+        }
+        return trimmedSelector;
+      }
+    );
+    return getBlockStyleVariationSelector(
+      variation,
+      selectorParts.join(",")
+    );
+  }
+  function getResolvedRefValue(ruleValue, tree) {
+    if (!ruleValue || !tree) {
+      return ruleValue;
+    }
+    if (typeof ruleValue === "object" && "ref" in ruleValue && ruleValue?.ref) {
+      const resolvedRuleValue = (0, import_style_engine.getCSSValueFromRawStyle)(
+        getValueFromObjectPath(tree, ruleValue.ref)
+      );
+      if (typeof resolvedRuleValue === "object" && resolvedRuleValue !== null && "ref" in resolvedRuleValue && resolvedRuleValue?.ref) {
+        return void 0;
+      }
+      if (resolvedRuleValue === void 0) {
+        return ruleValue;
+      }
+      return resolvedRuleValue;
+    }
+    return ruleValue;
+  }
+  function getResolvedThemeFilePath(file, themeFileURIs) {
+    if (!file || !themeFileURIs || !Array.isArray(themeFileURIs)) {
+      return file;
+    }
+    const uri = themeFileURIs.find(
+      (themeFileUri) => themeFileUri?.name === file
+    );
+    if (!uri?.href) {
+      return file;
+    }
+    return uri?.href;
+  }
+  function getResolvedValue(ruleValue, tree) {
+    if (!ruleValue || !tree) {
+      return ruleValue;
+    }
+    const resolvedValue = getResolvedRefValue(ruleValue, tree);
+    if (typeof resolvedValue === "object" && resolvedValue !== null && "url" in resolvedValue && resolvedValue?.url) {
+      resolvedValue.url = getResolvedThemeFilePath(
+        resolvedValue.url,
+        tree?._links?.["wp:theme-file"]
+      );
+    }
+    return resolvedValue;
+  }
+  function findInPresetsBy(settings2, blockName, presetPath = [], presetProperty = "slug", presetValueValue) {
+    const orderedPresetsByOrigin = [
+      blockName ? getValueFromObjectPath(settings2, [
+        "blocks",
+        blockName,
+        ...presetPath
+      ]) : void 0,
+      getValueFromObjectPath(settings2, presetPath)
+    ].filter(Boolean);
+    for (const presetByOrigin of orderedPresetsByOrigin) {
+      if (presetByOrigin) {
+        const origins = ["custom", "theme", "default"];
+        for (const origin of origins) {
+          const presets = presetByOrigin[origin];
+          if (presets) {
+            const presetObject = presets.find(
+              (preset) => preset[presetProperty] === presetValueValue
+            );
+            if (presetObject) {
+              if (presetProperty === "slug") {
+                return presetObject;
+              }
+              const highestPresetObjectWithSameSlug = findInPresetsBy(
+                settings2,
+                blockName,
+                presetPath,
+                "slug",
+                presetObject.slug
+              );
+              if (highestPresetObjectWithSameSlug[presetProperty] === presetObject[presetProperty]) {
+                return presetObject;
+              }
+              return void 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  function getValueFromPresetVariable(features, blockName, variable, [presetType, slug] = []) {
+    const metadata = PRESET_METADATA.find(
+      (data) => data.cssVarInfix === presetType
+    );
+    if (!metadata || !features.settings) {
+      return variable;
+    }
+    const presetObject = findInPresetsBy(
+      features.settings,
+      blockName,
+      metadata.path,
+      "slug",
+      slug
+    );
+    if (presetObject) {
+      const { valueKey } = metadata;
+      const result = presetObject[valueKey];
+      return getValueFromVariable(features, blockName, result);
+    }
+    return variable;
+  }
+  function getValueFromCustomVariable(features, blockName, variable, path = []) {
+    const result = (blockName ? getValueFromObjectPath(features?.settings ?? {}, [
+      "blocks",
+      blockName,
+      "custom",
+      ...path
+    ]) : void 0) ?? getValueFromObjectPath(features?.settings ?? {}, [
+      "custom",
+      ...path
+    ]);
+    if (!result) {
+      return variable;
+    }
+    return getValueFromVariable(features, blockName, result);
+  }
+  function getValueFromVariable(features, blockName, variable) {
+    if (!variable || typeof variable !== "string") {
+      if (typeof variable === "object" && variable !== null && "ref" in variable && typeof variable.ref === "string") {
+        const resolvedVariable = getValueFromObjectPath(
+          features,
+          variable.ref
+        );
+        if (!resolvedVariable || typeof resolvedVariable === "object" && "ref" in resolvedVariable) {
+          return resolvedVariable;
+        }
+        variable = resolvedVariable;
+      } else {
+        return variable;
+      }
+    }
+    const USER_VALUE_PREFIX = "var:";
+    const THEME_VALUE_PREFIX = "var(--wp--";
+    const THEME_VALUE_SUFFIX = ")";
+    let parsedVar;
+    if (variable.startsWith(USER_VALUE_PREFIX)) {
+      parsedVar = variable.slice(USER_VALUE_PREFIX.length).split("|");
+    } else if (variable.startsWith(THEME_VALUE_PREFIX) && variable.endsWith(THEME_VALUE_SUFFIX)) {
+      parsedVar = variable.slice(THEME_VALUE_PREFIX.length, -THEME_VALUE_SUFFIX.length).split("--");
+    } else {
+      return variable;
+    }
+    const [type, ...path] = parsedVar;
+    if (type === "preset") {
+      return getValueFromPresetVariable(
+        features,
+        blockName,
+        variable,
+        path
+      );
+    }
+    if (type === "custom") {
+      return getValueFromCustomVariable(
+        features,
+        blockName,
+        variable,
+        path
+      );
+    }
+    return variable;
+  }
+
+  // packages/global-styles-engine/build-module/style-state-back-compat.mjs
+  var LEGACY_STYLE_STATE_ALIASES = {
+    "@mobile": "mobile",
+    "@tablet": "tablet",
+    "-current": "@current"
+  };
+  function isObjectRecord(value) {
+    return !!value && typeof value === "object" && !Array.isArray(value);
+  }
+  function normalizeStyleStateNode(node) {
+    if (!isObjectRecord(node)) {
+      return node;
+    }
+    let normalized = node;
+    Object.entries(LEGACY_STYLE_STATE_ALIASES).forEach(
+      ([state, legacyState]) => {
+        if (Object.hasOwn(node, legacyState)) {
+          if (normalized === node) {
+            normalized = { ...node };
+          }
+          if (!Object.hasOwn(node, state)) {
+            normalized[state] = node[legacyState];
+          }
+          delete normalized[legacyState];
+        }
+      }
+    );
+    Object.entries(normalized).forEach(([key, value]) => {
+      if (!isObjectRecord(value)) {
+        return;
+      }
+      const normalizedValue = normalizeStyleStateNode(value);
+      if (normalizedValue !== value) {
+        if (normalized === node) {
+          normalized = { ...node };
+        }
+        normalized[key] = normalizedValue;
+      }
+    });
+    return normalized;
+  }
+  function normalizeStyleStateAliases(globalStyles) {
+    if (false) {
+      return globalStyles;
+    }
+    if (!globalStyles?.styles) {
+      return globalStyles;
+    }
+    const styles = normalizeStyleStateNode(globalStyles.styles);
+    return styles === globalStyles.styles ? globalStyles : { ...globalStyles, styles };
+  }
+
+  // packages/global-styles-engine/build-module/core/merge.mjs
+  var import_deepmerge = __toESM(require_cjs(), 1);
+
+  // node_modules/is-plain-object/dist/is-plain-object.mjs
+  function isObject(o3) {
+    return Object.prototype.toString.call(o3) === "[object Object]";
+  }
+  function isPlainObject(o3) {
+    var ctor, prot;
+    if (isObject(o3) === false) return false;
+    ctor = o3.constructor;
+    if (ctor === void 0) return true;
+    prot = ctor.prototype;
+    if (isObject(prot) === false) return false;
+    if (prot.hasOwnProperty("isPrototypeOf") === false) {
+      return false;
+    }
+    return true;
+  }
+
+  // packages/global-styles-engine/build-module/core/merge.mjs
+  function mergeGlobalStyles(base, user) {
+    return (0, import_deepmerge.default)(
+      normalizeStyleStateAliases(base),
+      normalizeStyleStateAliases(user),
+      {
+        /*
+         * We only pass as arrays the presets,
+         * in which case we want the new array of values
+         * to override the old array (no merging).
+         */
+        isMergeableObject: isPlainObject,
+        /*
+         * Exceptions to the above rule.
+         * Background images should be replaced, not merged,
+         * as they themselves are specific object definitions for the style.
+         */
+        customMerge: (key) => {
+          if (key === "backgroundImage") {
+            return (baseConfig, userConfig) => userConfig ?? baseConfig;
+          }
+          return void 0;
+        }
+      }
+    );
+  }
+
+  // packages/global-styles-engine/build-module/core/render.mjs
+  var import_blocks3 = __toESM(require_blocks(), 1);
+  var import_style_engine2 = __toESM(require_style_engine(), 1);
   var import_data3 = __toESM(require_data(), 1);
-  var import_blocks4 = __toESM(require_blocks(), 1);
+
+  // packages/global-styles-engine/build-module/core/selectors.mjs
+  function getBlockSelector(blockType, target = "root", options = {}) {
+    if (!target) {
+      return null;
+    }
+    const { fallback = false } = options;
+    const { name, selectors: selectors4, supports } = blockType;
+    const hasSelectors = selectors4 && Object.keys(selectors4).length > 0;
+    const path = Array.isArray(target) ? target.join(".") : target;
+    let rootSelector = null;
+    if (hasSelectors && selectors4.root) {
+      rootSelector = selectors4?.root;
+    } else if (supports?.__experimentalSelector) {
+      rootSelector = supports.__experimentalSelector;
+    } else {
+      rootSelector = ".wp-block-" + name.replace("core/", "").replace("/", "-");
+    }
+    if (path === "root") {
+      return rootSelector;
+    }
+    const pathArray = Array.isArray(target) ? target : target.split(".");
+    if (pathArray.length === 1) {
+      const fallbackSelector = fallback ? rootSelector : null;
+      if (hasSelectors) {
+        const featureSelector2 = getValueFromObjectPath(
+          selectors4,
+          `${path}.root`,
+          null
+        ) || getValueFromObjectPath(selectors4, path, null);
+        return featureSelector2 || fallbackSelector;
+      }
+      const featureSelector = supports ? getValueFromObjectPath(
+        supports,
+        `${path}.__experimentalSelector`,
+        null
+      ) : void 0;
+      if (!featureSelector) {
+        return fallbackSelector;
+      }
+      return scopeSelector(rootSelector, featureSelector);
+    }
+    let subfeatureSelector;
+    if (hasSelectors) {
+      subfeatureSelector = getValueFromObjectPath(selectors4, path, null);
+    }
+    if (subfeatureSelector) {
+      return subfeatureSelector;
+    }
+    if (fallback) {
+      return getBlockSelector(blockType, pathArray[0], options);
+    }
+    return null;
+  }
+
+  // packages/global-styles-engine/build-module/utils/string.mjs
+  function kebabCase2(str) {
+    return str.replace(/([a-z])([A-Z])/g, "$1-$2").replace(/([0-9])([a-zA-Z])/g, "$1-$2").replace(/([a-zA-Z])([0-9])/g, "$1-$2").replace(/[\s_]+/g, "-").toLowerCase();
+  }
+
+  // packages/global-styles-engine/build-module/utils/spacing.mjs
+  function getSpacingPresetCssVar(value) {
+    if (!value) {
+      return;
+    }
+    const slug = value.match(/var:preset\|spacing\|(.+)/);
+    if (!slug) {
+      return value;
+    }
+    return `var(--wp--preset--spacing--${slug[1]})`;
+  }
+
+  // packages/global-styles-engine/build-module/utils/gap.mjs
+  function getGapBoxControlValueFromStyle(blockGapValue) {
+    if (!blockGapValue) {
+      return null;
+    }
+    const isValueString = typeof blockGapValue === "string";
+    return {
+      top: isValueString ? blockGapValue : blockGapValue?.top,
+      left: isValueString ? blockGapValue : blockGapValue?.left
+    };
+  }
+  function getGapCSSValue(blockGapValue, defaultValue = "0") {
+    const blockGapBoxControlValue = getGapBoxControlValueFromStyle(blockGapValue);
+    if (!blockGapBoxControlValue) {
+      return null;
+    }
+    const row = getSpacingPresetCssVar(blockGapBoxControlValue?.top) || defaultValue;
+    const column = getSpacingPresetCssVar(blockGapBoxControlValue?.left) || defaultValue;
+    return row === column ? row : `${row} ${column}`;
+  }
+
+  // packages/global-styles-engine/build-module/utils/background.mjs
+  var BACKGROUND_BLOCK_DEFAULT_VALUES = {
+    backgroundSize: "cover",
+    backgroundPosition: "50% 50%"
+    // used only when backgroundSize is 'contain'.
+  };
+  function setBackgroundStyleDefaults(backgroundStyle) {
+    if (!backgroundStyle || // @ts-expect-error
+    !backgroundStyle?.backgroundImage?.url) {
+      return;
+    }
+    let backgroundStylesWithDefaults;
+    if (!backgroundStyle?.backgroundSize) {
+      backgroundStylesWithDefaults = {
+        backgroundSize: BACKGROUND_BLOCK_DEFAULT_VALUES.backgroundSize
+      };
+    }
+    if ("contain" === backgroundStyle?.backgroundSize && !backgroundStyle?.backgroundPosition) {
+      backgroundStylesWithDefaults = {
+        backgroundPosition: BACKGROUND_BLOCK_DEFAULT_VALUES.backgroundPosition
+      };
+    }
+    return backgroundStylesWithDefaults;
+  }
+
+  // packages/global-styles-engine/build-module/utils/layout.mjs
+  var LAYOUT_DEFINITIONS = {
+    default: {
+      name: "default",
+      slug: "flow",
+      className: "is-layout-flow",
+      baseStyles: [
+        {
+          selector: " > .alignleft",
+          rules: {
+            float: "left",
+            "margin-inline-start": "0",
+            "margin-inline-end": "2em"
+          }
+        },
+        {
+          selector: " > .alignright",
+          rules: {
+            float: "right",
+            "margin-inline-start": "2em",
+            "margin-inline-end": "0"
+          }
+        },
+        {
+          selector: " > .aligncenter",
+          rules: {
+            "margin-left": "auto !important",
+            "margin-right": "auto !important"
+          }
+        }
+      ],
+      spacingStyles: [
+        {
+          selector: " > :first-child",
+          rules: {
+            "margin-block-start": "0"
+          }
+        },
+        {
+          selector: " > :last-child",
+          rules: {
+            "margin-block-end": "0"
+          }
+        },
+        {
+          selector: " > *",
+          rules: {
+            "margin-block-start": null,
+            "margin-block-end": "0"
+          }
+        }
+      ]
+    },
+    constrained: {
+      name: "constrained",
+      slug: "constrained",
+      className: "is-layout-constrained",
+      baseStyles: [
+        {
+          selector: " > .alignleft",
+          rules: {
+            float: "left",
+            "margin-inline-start": "0",
+            "margin-inline-end": "2em"
+          }
+        },
+        {
+          selector: " > .alignright",
+          rules: {
+            float: "right",
+            "margin-inline-start": "2em",
+            "margin-inline-end": "0"
+          }
+        },
+        {
+          selector: " > .aligncenter",
+          rules: {
+            "margin-left": "auto !important",
+            "margin-right": "auto !important"
+          }
+        },
+        {
+          selector: " > :where(:not(.alignleft):not(.alignright):not(.alignfull))",
+          rules: {
+            "max-width": "var(--wp--style--global--content-size)",
+            "margin-left": "auto !important",
+            "margin-right": "auto !important"
+          }
+        },
+        {
+          selector: " > .alignwide",
+          rules: {
+            "max-width": "var(--wp--style--global--wide-size)"
+          }
+        }
+      ],
+      spacingStyles: [
+        {
+          selector: " > :first-child",
+          rules: {
+            "margin-block-start": "0"
+          }
+        },
+        {
+          selector: " > :last-child",
+          rules: {
+            "margin-block-end": "0"
+          }
+        },
+        {
+          selector: " > *",
+          rules: {
+            "margin-block-start": null,
+            "margin-block-end": "0"
+          }
+        }
+      ]
+    },
+    flex: {
+      name: "flex",
+      slug: "flex",
+      className: "is-layout-flex",
+      displayMode: "flex",
+      baseStyles: [
+        {
+          selector: "",
+          rules: {
+            "flex-wrap": "wrap",
+            "align-items": "center"
+          }
+        },
+        {
+          selector: " > :is(*, div)",
+          // :is(*, div) instead of just * increases the specificity by 001.
+          rules: {
+            margin: "0"
+          }
+        }
+      ],
+      spacingStyles: [
+        {
+          selector: "",
+          rules: {
+            gap: null
+          }
+        }
+      ]
+    },
+    grid: {
+      name: "grid",
+      slug: "grid",
+      className: "is-layout-grid",
+      displayMode: "grid",
+      baseStyles: [
+        {
+          selector: " > :is(*, div)",
+          // :is(*, div) instead of just * increases the specificity by 001.
+          rules: {
+            margin: "0"
+          }
+        }
+      ],
+      spacingStyles: [
+        {
+          selector: "",
+          rules: {
+            gap: null
+          }
+        }
+      ]
+    }
+  };
+
+  // packages/global-styles-engine/build-module/utils/viewport.mjs
+  var DEFAULT_VIEWPORT_BREAKPOINTS = {
+    mobile: "480px",
+    tablet: "782px"
+  };
+  var VIEWPORT_SIZE_REGEXP = /^(\d+|\d*\.\d+)(px|em|rem)$/;
+  var DEFAULT_FONT_SIZE = 16;
+  function isViewportSettings(configOrSettings) {
+    return "mobile" in configOrSettings || "tablet" in configOrSettings;
+  }
+  function getViewportSettings(configOrSettings) {
+    if (!configOrSettings || typeof configOrSettings !== "object") {
+      return {};
+    }
+    if (isViewportSettings(configOrSettings)) {
+      return configOrSettings;
+    }
+    return configOrSettings.settings?.viewport ?? {};
+  }
+  function isValidViewportSize(value) {
+    return typeof value === "string" && VIEWPORT_SIZE_REGEXP.test(value.trim());
+  }
+  function getViewportBreakpointValueInPixels(value) {
+    if (typeof value === "number") {
+      return value;
+    }
+    if (typeof value !== "string") {
+      return void 0;
+    }
+    const match2 = value.trim().match(VIEWPORT_SIZE_REGEXP);
+    if (!match2) {
+      return void 0;
+    }
+    const numericValue = Number.parseFloat(match2[1]);
+    const unit = match2[2];
+    return unit === "px" ? numericValue : numericValue * DEFAULT_FONT_SIZE;
+  }
+  function getViewportBreakpoints(configOrSettings) {
+    const viewportSettings = getViewportSettings(configOrSettings);
+    const breakpoints = {};
+    const breakpointValuesInPixels = {};
+    Object.keys(DEFAULT_VIEWPORT_BREAKPOINTS).forEach((breakpoint) => {
+      const key = breakpoint;
+      const value = viewportSettings[key];
+      const px = getViewportBreakpointValueInPixels(value);
+      if (px !== void 0 && isValidViewportSize(value)) {
+        breakpoints[key] = value.trim();
+        breakpointValuesInPixels[key] = px;
+      }
+    });
+    const breakpointNames = Object.keys(breakpoints);
+    if (!breakpointNames.length) {
+      return { ...DEFAULT_VIEWPORT_BREAKPOINTS };
+    }
+    if (1 === breakpointNames.length) {
+      return breakpoints;
+    }
+    const mobile = breakpoints.mobile;
+    const tablet = breakpoints.tablet;
+    if (breakpointValuesInPixels.mobile >= breakpointValuesInPixels.tablet) {
+      return { mobile };
+    }
+    return { mobile, tablet };
+  }
+  function getResponsiveMediaQueries(configOrSettings) {
+    const breakpoints = getViewportBreakpoints(configOrSettings);
+    const mediaQueries = {};
+    if (breakpoints.mobile) {
+      mediaQueries["@mobile"] = `@media (width <= ${breakpoints.mobile})`;
+    }
+    if (breakpoints.tablet) {
+      mediaQueries["@tablet"] = breakpoints.mobile ? `@media (${breakpoints.mobile} < width <= ${breakpoints.tablet})` : `@media (width <= ${breakpoints.tablet})`;
+    }
+    return mediaQueries;
+  }
+
+  // packages/global-styles-engine/build-module/core/render.mjs
+  var ELEMENT_CLASS_NAMES = {
+    button: "wp-element-button",
+    caption: "wp-element-caption"
+  };
+  var BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS = {
+    __experimentalBorder: "border",
+    color: "color",
+    dimensions: "dimensions",
+    spacing: "spacing",
+    typography: "typography"
+  };
+  var VALID_BLOCK_PSEUDO_SELECTORS = {
+    "core/button": [":hover", ":focus", ":focus-visible", ":active"],
+    "core/navigation-link": [":hover", ":focus", ":focus-visible", ":active"]
+  };
+  var VALID_ELEMENT_PSEUDO_SELECTORS = {
+    link: [
+      ":link",
+      ":any-link",
+      ":visited",
+      ":hover",
+      ":focus",
+      ":focus-visible",
+      ":active"
+    ],
+    button: [
+      ":link",
+      ":any-link",
+      ":visited",
+      ":hover",
+      ":focus",
+      ":focus-visible",
+      ":active"
+    ]
+  };
+  function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
+    return PRESET_METADATA.reduce(
+      (declarations, { path, cssVarInfix, classes }) => {
+        if (!classes) {
+          return declarations;
+        }
+        const presetByOrigin = getValueFromObjectPath(
+          blockPresets,
+          path,
+          []
+        );
+        ["default", "theme", "custom"].forEach((origin) => {
+          if (presetByOrigin[origin]) {
+            presetByOrigin[origin].forEach(
+              ({ slug }) => {
+                classes.forEach(
+                  ({
+                    classSuffix,
+                    propertyName
+                  }) => {
+                    const classSelectorToUse = `.has-${kebabCase2(
+                      slug
+                    )}-${classSuffix}`;
+                    const selectorToUse = blockSelector.split(",").map(
+                      (selector3) => `${selector3}${classSelectorToUse}`
+                    ).join(",");
+                    const value = `var(--wp--preset--${cssVarInfix}--${kebabCase2(
+                      slug
+                    )})`;
+                    declarations += `${selectorToUse}{${propertyName}: ${value} !important;}`;
+                  }
+                );
+              }
+            );
+          }
+        });
+        return declarations;
+      },
+      ""
+    );
+  }
+  var updateParagraphTextIndentSelector = (featureDeclarations, settings2, blockName) => {
+    if (blockName !== "core/paragraph") {
+      return featureDeclarations;
+    }
+    const blockSettings = settings2?.blocks?.["core/paragraph"];
+    const textIndentSetting = blockSettings?.typography?.textIndent ?? settings2?.typography?.textIndent ?? "subsequent";
+    if (textIndentSetting !== "all") {
+      return featureDeclarations;
+    }
+    const oldSelector = ".wp-block-paragraph + .wp-block-paragraph";
+    const newSelector = ".wp-block-paragraph";
+    if (oldSelector in featureDeclarations) {
+      const declarations = featureDeclarations[oldSelector];
+      const updated = { ...featureDeclarations };
+      delete updated[oldSelector];
+      updated[newSelector] = declarations;
+      return updated;
+    }
+    return featureDeclarations;
+  };
+  var updateButtonWidthDeclarations = (featureDeclarations, settings2) => {
+    const buttonSelector = ".wp-block-button";
+    if (!(buttonSelector in featureDeclarations)) {
+      return featureDeclarations;
+    }
+    const updated = { ...featureDeclarations };
+    updated[buttonSelector] = updated[buttonSelector].map(
+      (declaration) => {
+        const match2 = declaration.match(/^width:\s*(.+)$/);
+        if (!match2) {
+          return declaration;
+        }
+        const value = match2[1];
+        let percentage = null;
+        if (value.endsWith("%")) {
+          percentage = parseFloat(value);
+        }
+        const presetPrefix = "var(--wp--preset--dimension--";
+        if (percentage === null && value.startsWith(presetPrefix) && value.endsWith(")")) {
+          const slug = value.slice(presetPrefix.length, -1);
+          const dimensionSizes = {
+            ...settings2?.dimensions?.dimensionSizes ?? {},
+            ...settings2?.blocks?.["core/button"]?.dimensions?.dimensionSizes ?? {}
+          };
+          for (const origin of Object.values(dimensionSizes)) {
+            if (!Array.isArray(origin)) {
+              continue;
+            }
+            for (const preset of origin) {
+              if (preset.slug === slug && typeof preset.size === "string" && preset.size.endsWith("%")) {
+                percentage = parseFloat(preset.size);
+                break;
+              }
+            }
+            if (percentage !== null) {
+              break;
+            }
+          }
+        }
+        if (percentage === null || isNaN(percentage)) {
+          return declaration;
+        }
+        return `width: calc(${percentage} * 1% - (var(--wp--style--block-gap, 0.5em) * (1 - ${percentage} / 100)))`;
+      }
+    );
+    return updated;
+  };
+  var getFeatureDeclarations = (selectors4, styles) => {
+    const declarations = {};
+    Object.entries(selectors4).forEach(([feature, selector3]) => {
+      if (feature === "root" || !styles?.[feature]) {
+        return;
+      }
+      const isShorthand = typeof selector3 === "string";
+      if (!isShorthand && typeof selector3 === "object" && selector3 !== null) {
+        Object.entries(selector3).forEach(
+          ([subfeature, subfeatureSelector]) => {
+            if (subfeature === "root" || !styles?.[feature][subfeature]) {
+              return;
+            }
+            const subfeatureStyles = {
+              [feature]: {
+                [subfeature]: styles[feature][subfeature]
+              }
+            };
+            const newDeclarations = getStylesDeclarations(subfeatureStyles);
+            declarations[subfeatureSelector] = [
+              ...declarations[subfeatureSelector] || [],
+              ...newDeclarations
+            ];
+            delete styles[feature][subfeature];
+          }
+        );
+      }
+      if (isShorthand || typeof selector3 === "object" && selector3 !== null && "root" in selector3) {
+        const featureSelector = isShorthand ? selector3 : selector3.root;
+        const featureStyles = { [feature]: styles[feature] };
+        const newDeclarations = getStylesDeclarations(featureStyles);
+        declarations[featureSelector] = [
+          ...declarations[featureSelector] || [],
+          ...newDeclarations
+        ];
+        delete styles[feature];
+      }
+    });
+    return declarations;
+  };
+  function getStylesDeclarations(blockStyles = {}, selector3 = "", useRootPaddingAlign, tree = {}, disableRootPadding = false) {
+    const isRoot = ROOT_BLOCK_SELECTOR === selector3;
+    const output = Object.entries(
+      import_blocks3.__EXPERIMENTAL_STYLE_PROPERTY
+    ).reduce(
+      (declarations, [key, { value, properties, useEngine, rootOnly }]) => {
+        if (rootOnly && !isRoot) {
+          return declarations;
+        }
+        const pathToValue = value;
+        if (pathToValue[0] === "elements" || useEngine) {
+          return declarations;
+        }
+        const styleValue = getValueFromObjectPath(
+          blockStyles,
+          pathToValue
+        );
+        if (key === "--wp--style--root--padding" && (typeof styleValue === "string" || !useRootPaddingAlign)) {
+          return declarations;
+        }
+        if (properties && typeof styleValue !== "string") {
+          Object.entries(properties).forEach((entry) => {
+            const [name, prop] = entry;
+            if (!getValueFromObjectPath(styleValue, [prop], false)) {
+              return;
+            }
+            const cssProperty = name.startsWith("--") ? name : kebabCase2(name);
+            declarations.push(
+              `${cssProperty}: ${(0, import_style_engine2.getCSSValueFromRawStyle)(
+                getValueFromObjectPath(styleValue, [prop])
+              )}`
+            );
+          });
+        } else if (getValueFromObjectPath(blockStyles, pathToValue, false)) {
+          const cssProperty = key.startsWith("--") ? key : kebabCase2(key);
+          declarations.push(
+            `${cssProperty}: ${(0, import_style_engine2.getCSSValueFromRawStyle)(
+              getValueFromObjectPath(blockStyles, pathToValue)
+            )}`
+          );
+        }
+        return declarations;
+      },
+      []
+    );
+    if (!!blockStyles.background) {
+      if (blockStyles.background?.backgroundImage) {
+        blockStyles.background.backgroundImage = getResolvedValue(
+          blockStyles.background.backgroundImage,
+          tree
+        );
+      }
+      if (!isRoot && !!blockStyles.background?.backgroundImage?.id) {
+        blockStyles = {
+          ...blockStyles,
+          background: {
+            ...blockStyles.background,
+            ...setBackgroundStyleDefaults(blockStyles.background)
+          }
+        };
+      }
+    }
+    const extraRules = (0, import_style_engine2.getCSSRules)(blockStyles);
+    extraRules.forEach((rule) => {
+      if (isRoot && (useRootPaddingAlign || disableRootPadding) && rule.key.startsWith("padding")) {
+        return;
+      }
+      const cssProperty = rule.key.startsWith("--") ? rule.key : kebabCase2(rule.key);
+      let ruleValue = getResolvedValue(rule.value, tree);
+      if (cssProperty === "font-size") {
+        ruleValue = getTypographyFontSizeValue(
+          { name: "", slug: "", size: ruleValue },
+          tree?.settings
+        );
+      }
+      if (cssProperty === "aspect-ratio") {
+        output.push("min-height: unset");
+      }
+      output.push(`${cssProperty}: ${ruleValue}`);
+    });
+    return output;
+  }
+  function getLayoutStyles({
+    layoutDefinitions = LAYOUT_DEFINITIONS,
+    style,
+    selector: selector3,
+    hasBlockGapSupport,
+    hasFallbackGapSupport,
+    fallbackGapValue
+  }) {
+    let ruleset = "";
+    let gapValue = hasBlockGapSupport ? getGapCSSValue(style?.spacing?.blockGap) : "";
+    if (hasFallbackGapSupport) {
+      if (selector3 === ROOT_BLOCK_SELECTOR) {
+        gapValue = !gapValue ? "0.5em" : gapValue;
+      } else if (!hasBlockGapSupport && fallbackGapValue) {
+        gapValue = fallbackGapValue;
+      }
+    }
+    if (gapValue && layoutDefinitions) {
+      Object.values(layoutDefinitions).forEach(
+        ({ className, name, spacingStyles }) => {
+          if (!hasBlockGapSupport && "flex" !== name && "grid" !== name) {
+            return;
+          }
+          if (spacingStyles?.length) {
+            spacingStyles.forEach((spacingStyle) => {
+              const declarations = [];
+              if (spacingStyle.rules) {
+                Object.entries(spacingStyle.rules).forEach(
+                  ([cssProperty, cssValue]) => {
+                    declarations.push(
+                      `${cssProperty}: ${cssValue ? cssValue : gapValue}`
+                    );
+                  }
+                );
+              }
+              if (declarations.length) {
+                let combinedSelector = "";
+                if (!hasBlockGapSupport) {
+                  combinedSelector = selector3 === ROOT_BLOCK_SELECTOR ? `:where(.${className}${spacingStyle?.selector || ""})` : `:where(${selector3}.${className}${spacingStyle?.selector || ""})`;
+                } else {
+                  combinedSelector = selector3 === ROOT_BLOCK_SELECTOR ? `:root :where(.${className})${spacingStyle?.selector || ""}` : `:root :where(${selector3}-${className})${spacingStyle?.selector || ""}`;
+                }
+                ruleset += `${combinedSelector} { ${declarations.join(
+                  "; "
+                )}; }`;
+              }
+            });
+          }
+        }
+      );
+      if (selector3 === ROOT_BLOCK_SELECTOR && hasBlockGapSupport) {
+        ruleset += `${ROOT_CSS_PROPERTIES_SELECTOR} { --wp--style--block-gap: ${gapValue}; }`;
+      }
+    }
+    if (selector3 === ROOT_BLOCK_SELECTOR && layoutDefinitions) {
+      const validDisplayModes = ["block", "flex", "grid"];
+      Object.values(layoutDefinitions).forEach(
+        ({ className, displayMode, baseStyles }) => {
+          if (displayMode && validDisplayModes.includes(displayMode)) {
+            ruleset += `${selector3} .${className} { display:${displayMode}; }`;
+          }
+          if (baseStyles?.length) {
+            baseStyles.forEach((baseStyle) => {
+              const declarations = [];
+              if (baseStyle.rules) {
+                Object.entries(baseStyle.rules).forEach(
+                  ([cssProperty, cssValue]) => {
+                    declarations.push(
+                      `${cssProperty}: ${cssValue}`
+                    );
+                  }
+                );
+              }
+              if (declarations.length) {
+                const combinedSelector = `.${className}${baseStyle?.selector || ""}`;
+                ruleset += `${combinedSelector} { ${declarations.join(
+                  "; "
+                )}; }`;
+              }
+            });
+          }
+        }
+      );
+    }
+    return ruleset;
+  }
+  var STYLE_KEYS = [
+    "border",
+    "color",
+    "dimensions",
+    "spacing",
+    "typography",
+    "filter",
+    "outline",
+    "shadow",
+    "background"
+  ];
+  function pickStyleKeys(treeToPickFrom, responsiveMediaQueries) {
+    return pickStyleAndPseudoKeys(
+      treeToPickFrom,
+      void 0,
+      responsiveMediaQueries
+    );
+  }
+  function pickStyleAndPseudoKeys(treeToPickFrom, blockName, responsiveMediaQueries) {
+    if (!treeToPickFrom) {
+      return {};
+    }
+    const entries = Object.entries(treeToPickFrom);
+    const allowedPseudoSelectors = blockName ? VALID_BLOCK_PSEUDO_SELECTORS[blockName] ?? [] : [];
+    const pickedEntries = entries.filter(
+      ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key) || responsiveMediaQueries[key]
+    );
+    const clonedEntries = pickedEntries.map(([key, style]) => [
+      key,
+      JSON.parse(JSON.stringify(style))
+    ]);
+    return Object.fromEntries(clonedEntries);
+  }
+  function getPseudoStyleNodes(node) {
+    const {
+      styles,
+      selector: selector3,
+      featureSelectors,
+      name,
+      elementName,
+      mediaQuery,
+      variationName
+    } = node;
+    const pseudoSelectors = name ? VALID_BLOCK_PSEUDO_SELECTORS[name] ?? [] : VALID_ELEMENT_PSEUDO_SELECTORS[elementName ?? ""] ?? [];
+    if (!pseudoSelectors.length) {
+      return [];
+    }
+    return pseudoSelectors.flatMap((pseudoSelector) => {
+      const pseudoStyles = styles?.[pseudoSelector];
+      if (!pseudoStyles || typeof pseudoStyles !== "object") {
+        return [];
+      }
+      return [
+        {
+          styles: JSON.parse(JSON.stringify(pseudoStyles)),
+          selector: selector3,
+          selectorSuffix: pseudoSelector,
+          mediaQuery,
+          featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
+          name,
+          elementName,
+          variationName
+        }
+      ];
+    });
+  }
+  function getResponsiveStyleNodes(node, responsiveMediaQueries) {
+    const {
+      styles,
+      selector: selector3,
+      featureSelectors,
+      name,
+      elementName,
+      isStyleVariation,
+      variationName
+    } = node;
+    if (!name && !elementName) {
+      return [];
+    }
+    return Object.entries(responsiveMediaQueries).flatMap(
+      ([breakpointKey, mediaQuery]) => {
+        const breakpointStyles = styles?.[breakpointKey];
+        if (!breakpointStyles || typeof breakpointStyles !== "object") {
+          return [];
+        }
+        return [
+          {
+            styles: JSON.parse(JSON.stringify(breakpointStyles)),
+            selector: selector3,
+            mediaQuery,
+            featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
+            name,
+            elementName,
+            isStyleVariation,
+            variationName
+          }
+        ];
+      }
+    );
+  }
+  var getNodesWithStyles = (tree, blockSelectors) => {
+    const nodes = [];
+    if (!tree?.styles) {
+      return nodes;
+    }
+    const responsiveMediaQueries = getResponsiveMediaQueries(tree);
+    const styles = pickStyleKeys(tree.styles, responsiveMediaQueries);
+    if (styles) {
+      nodes.push({
+        styles,
+        selector: ROOT_BLOCK_SELECTOR,
+        // Root selector (body) styles should not be wrapped in `:root where()` to keep
+        // specificity at (0,0,1) and maintain backwards compatibility.
+        skipSelectorWrapper: true
+      });
+    }
+    Object.entries(import_blocks3.__EXPERIMENTAL_ELEMENTS).forEach(([name, selector3]) => {
+      if (tree.styles?.elements?.[name]) {
+        nodes.push({
+          styles: tree.styles?.elements?.[name] ?? {},
+          selector: selector3,
+          elementName: name,
+          // Top level elements that don't use a class name should not receive the
+          // `:root :where()` wrapper to maintain backwards compatibility.
+          skipSelectorWrapper: !ELEMENT_CLASS_NAMES[name]
+        });
+      }
+    });
+    Object.entries(tree.styles?.blocks ?? {}).forEach(
+      ([blockName, node]) => {
+        const blockStyles = pickStyleAndPseudoKeys(
+          node,
+          blockName,
+          responsiveMediaQueries
+        );
+        const typedNode = node;
+        const variationNodesToAdd = [];
+        const variationStyleNodesToAdd = [];
+        if (typedNode?.variations) {
+          Object.entries(typedNode.variations).forEach(
+            ([variationName, variation]) => {
+              const typedVariation = variation;
+              const variationStyles = pickStyleAndPseudoKeys(
+                typedVariation,
+                blockName,
+                responsiveMediaQueries
+              );
+              if (typedVariation?.css) {
+                variationStyles.css = typedVariation.css;
+              }
+              const variationSelector = typeof blockSelectors !== "string" ? blockSelectors[blockName]?.styleVariationSelectors?.[variationName] : void 0;
+              if (variationSelector && typeof blockSelectors !== "string") {
+                const blockSelector = blockSelectors[blockName];
+                variationStyleNodesToAdd.push({
+                  styles: variationStyles,
+                  selector: variationSelector,
+                  featureSelectors: blockSelector?.featureSelectors,
+                  fallbackGapValue: blockSelector?.fallbackGapValue,
+                  hasLayoutSupport: blockSelector?.hasLayoutSupport,
+                  isStyleVariation: true,
+                  variationName,
+                  layoutSelector: variationSelector + blockSelector.selector,
+                  layoutHasBlockGapSupport: true,
+                  name: blockName
+                });
+              }
+              Object.entries(
+                typedVariation?.elements ?? {}
+              ).forEach(([element, elementStyles]) => {
+                if (elementStyles && import_blocks3.__EXPERIMENTAL_ELEMENTS[element]) {
+                  variationNodesToAdd.push({
+                    styles: elementStyles,
+                    selector: scopeSelector(
+                      variationSelector,
+                      import_blocks3.__EXPERIMENTAL_ELEMENTS[element]
+                    ),
+                    elementName: element,
+                    isStyleVariation: true
+                  });
+                }
+              });
+              Object.entries(typedVariation?.blocks ?? {}).forEach(
+                ([
+                  variationBlockName,
+                  variationBlockStyles
+                ]) => {
+                  const variationBlockSelector = typeof blockSelectors !== "string" ? scopeSelector(
+                    variationSelector,
+                    blockSelectors[variationBlockName]?.selector
+                  ) : void 0;
+                  const variationDuotoneSelector = typeof blockSelectors !== "string" ? scopeSelector(
+                    variationSelector,
+                    blockSelectors[variationBlockName]?.duotoneSelector
+                  ) : void 0;
+                  const variationFeatureSelectors = typeof blockSelectors !== "string" ? scopeFeatureSelectors(
+                    variationSelector,
+                    blockSelectors[variationBlockName]?.featureSelectors ?? {}
+                  ) : void 0;
+                  const variationBlockStyleNodes = pickStyleAndPseudoKeys(
+                    variationBlockStyles,
+                    variationBlockName,
+                    responsiveMediaQueries
+                  );
+                  if (variationBlockStyles?.css) {
+                    variationBlockStyleNodes.css = variationBlockStyles.css;
+                  }
+                  if (!variationBlockSelector || typeof blockSelectors === "string") {
+                    return;
+                  }
+                  variationNodesToAdd.push({
+                    selector: variationBlockSelector,
+                    name: variationBlockName,
+                    isStyleVariation: true,
+                    duotoneSelector: variationDuotoneSelector,
+                    featureSelectors: variationFeatureSelectors,
+                    fallbackGapValue: blockSelectors[variationBlockName]?.fallbackGapValue,
+                    hasLayoutSupport: blockSelectors[variationBlockName]?.hasLayoutSupport,
+                    styles: variationBlockStyleNodes
+                  });
+                  Object.entries(
+                    variationBlockStyles.elements ?? {}
+                  ).forEach(
+                    ([
+                      variationBlockElement,
+                      variationBlockElementStyles
+                    ]) => {
+                      if (variationBlockElementStyles && import_blocks3.__EXPERIMENTAL_ELEMENTS[variationBlockElement]) {
+                        variationNodesToAdd.push({
+                          styles: variationBlockElementStyles,
+                          selector: scopeSelector(
+                            variationBlockSelector,
+                            import_blocks3.__EXPERIMENTAL_ELEMENTS[variationBlockElement]
+                          ),
+                          elementName: variationBlockElement,
+                          isStyleVariation: true
+                        });
+                      }
+                    }
+                  );
+                }
+              );
+            }
+          );
+        }
+        if (typeof blockSelectors !== "string" && blockSelectors?.[blockName]?.selector) {
+          nodes.push({
+            duotoneSelector: blockSelectors[blockName].duotoneSelector,
+            fallbackGapValue: blockSelectors[blockName].fallbackGapValue,
+            hasLayoutSupport: blockSelectors[blockName].hasLayoutSupport,
+            selector: blockSelectors[blockName].selector,
+            styles: blockStyles,
+            featureSelectors: blockSelectors[blockName].featureSelectors,
+            name: blockName
+          });
+        }
+        nodes.push(...variationStyleNodesToAdd);
+        Object.entries(typedNode?.elements ?? {}).forEach(
+          ([elementName, value]) => {
+            if (typeof blockSelectors !== "string" && value && blockSelectors?.[blockName] && import_blocks3.__EXPERIMENTAL_ELEMENTS[elementName]) {
+              nodes.push({
+                styles: value,
+                selector: blockSelectors[blockName]?.selector.split(",").map((sel) => {
+                  const elementSelectors = import_blocks3.__EXPERIMENTAL_ELEMENTS[elementName].split(",");
+                  return elementSelectors.map(
+                    (elementSelector) => sel + " " + elementSelector
+                  );
+                }).join(","),
+                elementName
+              });
+            }
+          }
+        );
+        nodes.push(...variationNodesToAdd);
+      }
+    );
+    return nodes;
+  };
+  var getNodesWithSettings = (tree, blockSelectors) => {
+    const nodes = [];
+    if (!tree?.settings) {
+      return nodes;
+    }
+    const pickPresets = (treeToPickFrom) => {
+      let presets2 = {};
+      PRESET_METADATA.forEach(({ path }) => {
+        const value = getValueFromObjectPath(treeToPickFrom, path, false);
+        if (value !== false) {
+          presets2 = setImmutably(presets2, path, value);
+        }
+      });
+      return presets2;
+    };
+    const presets = pickPresets(tree.settings);
+    const custom = tree.settings?.custom;
+    if (Object.keys(presets).length > 0 || custom) {
+      nodes.push({
+        presets,
+        custom,
+        selector: ROOT_CSS_PROPERTIES_SELECTOR
+      });
+    }
+    Object.entries(tree.settings?.blocks ?? {}).forEach(
+      ([blockName, node]) => {
+        const blockCustom = node.custom;
+        if (typeof blockSelectors === "string" || !blockSelectors[blockName]) {
+          return;
+        }
+        const blockPresets = pickPresets(node);
+        if (Object.keys(blockPresets).length > 0 || blockCustom) {
+          nodes.push({
+            presets: blockPresets,
+            custom: blockCustom,
+            selector: blockSelectors[blockName]?.selector,
+            featureSelectors: blockSelectors[blockName]?.featureSelectors
+          });
+        }
+      }
+    );
+    return nodes;
+  };
+  function renderStylesNode(node, {
+    tree,
+    useRootPaddingAlign,
+    disableLayoutStyles,
+    hasBlockGapSupport,
+    hasFallbackGapSupport,
+    disableRootPadding
+  }) {
+    const {
+      selector: selector3,
+      selectorSuffix,
+      mediaQuery,
+      duotoneSelector,
+      styles,
+      fallbackGapValue,
+      hasLayoutSupport: hasLayoutSupport2,
+      featureSelectors,
+      layoutSelector,
+      layoutHasBlockGapSupport,
+      skipSelectorWrapper,
+      name,
+      variationName
+    } = node;
+    let ruleset = "";
+    const effectiveSelector = selectorSuffix ? appendToSelector(selector3, selectorSuffix) : selector3;
+    if (featureSelectors && typeof featureSelectors !== "string") {
+      let featureDeclarations = getFeatureDeclarations(
+        featureSelectors,
+        styles
+      );
+      featureDeclarations = updateParagraphTextIndentSelector(
+        featureDeclarations,
+        tree.settings,
+        name
+      );
+      featureDeclarations = updateButtonWidthDeclarations(
+        featureDeclarations,
+        tree.settings
+      );
+      Object.entries(featureDeclarations).forEach(
+        ([featureSelector, declarations]) => {
+          if (declarations.length) {
+            let selectorForRule = variationName ? getBlockStyleVariationFeatureSelector(
+              variationName,
+              featureSelector
+            ) : featureSelector;
+            selectorForRule = selectorSuffix ? appendToSelector(selectorForRule, selectorSuffix) : selectorForRule;
+            const rules = declarations.join(";");
+            ruleset += `:root :where(${selectorForRule}){${rules};}`;
+          }
+        }
+      );
+    }
+    if (duotoneSelector) {
+      const duotoneStyles = {};
+      if (styles?.filter) {
+        duotoneStyles.filter = styles.filter;
+        delete styles.filter;
+      }
+      const duotoneDeclarations = getStylesDeclarations(duotoneStyles);
+      if (duotoneDeclarations.length) {
+        ruleset += `${duotoneSelector}{${duotoneDeclarations.join(
+          ";"
+        )};}`;
+      }
+    }
+    const selectorForLayout = layoutSelector ?? effectiveSelector;
+    const hasBlockGapSupportForLayout = layoutHasBlockGapSupport ?? hasBlockGapSupport;
+    if (!disableLayoutStyles && (ROOT_BLOCK_SELECTOR === selectorForLayout || hasLayoutSupport2)) {
+      ruleset += getLayoutStyles({
+        style: styles,
+        selector: selectorForLayout,
+        hasBlockGapSupport: hasBlockGapSupportForLayout,
+        hasFallbackGapSupport,
+        fallbackGapValue
+      });
+    }
+    const styleDeclarations = getStylesDeclarations(
+      styles,
+      effectiveSelector,
+      useRootPaddingAlign,
+      tree,
+      disableRootPadding
+    );
+    if (styleDeclarations?.length) {
+      const generalSelector = skipSelectorWrapper ? effectiveSelector : `:root :where(${effectiveSelector})`;
+      ruleset += `${generalSelector}{${styleDeclarations.join(";")};}`;
+    }
+    if (styles?.css) {
+      ruleset += processCSSNesting(
+        styles.css,
+        `:root :where(${effectiveSelector})`
+      );
+    }
+    if (mediaQuery && ruleset) {
+      return `${mediaQuery}{${ruleset}}`;
+    }
+    return ruleset;
+  }
+  var transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles = false, disableRootPadding = false, styleOptions = {}) => {
+    const options = {
+      blockGap: true,
+      blockStyles: true,
+      layoutStyles: true,
+      marginReset: true,
+      presets: true,
+      rootPadding: true,
+      variationStyles: false,
+      ...styleOptions
+    };
+    const normalizedTree = normalizeStyleStateAliases(tree);
+    const nodesWithStyles = getNodesWithStyles(
+      normalizedTree,
+      blockSelectors
+    );
+    const nodesWithSettings = getNodesWithSettings(
+      normalizedTree,
+      blockSelectors
+    );
+    const useRootPaddingAlign = normalizedTree?.settings?.useRootPaddingAwareAlignments;
+    const { contentSize, wideSize } = normalizedTree?.settings?.layout || {};
+    const hasBodyStyles = options.marginReset || options.rootPadding || options.layoutStyles;
+    let ruleset = "";
+    if (options.presets && (contentSize || wideSize)) {
+      ruleset += `${ROOT_CSS_PROPERTIES_SELECTOR} {`;
+      ruleset = contentSize ? ruleset + ` --wp--style--global--content-size: ${contentSize};` : ruleset;
+      ruleset = wideSize ? ruleset + ` --wp--style--global--wide-size: ${wideSize};` : ruleset;
+      ruleset += "}";
+    }
+    if (hasBodyStyles) {
+      ruleset += ":where(body) {margin: 0;";
+      if (options.rootPadding && useRootPaddingAlign) {
+        ruleset += `padding-right: 0; padding-left: 0; padding-top: var(--wp--style--root--padding-top); padding-bottom: var(--wp--style--root--padding-bottom) }
+				.has-global-padding { padding-right: var(--wp--style--root--padding-right); padding-left: var(--wp--style--root--padding-left); }
+				.has-global-padding > .alignfull { margin-right: calc(var(--wp--style--root--padding-right) * -1); margin-left: calc(var(--wp--style--root--padding-left) * -1); }
+				.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) { padding-right: 0; padding-left: 0; }
+				.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) > .alignfull { margin-left: 0; margin-right: 0;
+				`;
+      }
+      ruleset += "}";
+    }
+    if (options.blockStyles) {
+      const responsiveMediaQueries = getResponsiveMediaQueries(tree);
+      nodesWithStyles.forEach((node) => {
+        if (node.isStyleVariation && !options.variationStyles) {
+          return;
+        }
+        const responsiveNodes = getResponsiveStyleNodes(
+          node,
+          responsiveMediaQueries
+        );
+        [
+          node,
+          ...responsiveNodes,
+          ...getPseudoStyleNodes(node),
+          ...responsiveNodes.flatMap(getPseudoStyleNodes)
+        ].forEach((expandedNode) => {
+          ruleset += renderStylesNode(expandedNode, {
+            tree: normalizedTree,
+            useRootPaddingAlign,
+            disableLayoutStyles,
+            hasBlockGapSupport,
+            hasFallbackGapSupport,
+            disableRootPadding
+          });
+        });
+      });
+    }
+    if (options.layoutStyles) {
+      ruleset = ruleset + ".wp-site-blocks > .alignleft { float: left; margin-right: 2em; }";
+      ruleset = ruleset + ".wp-site-blocks > .alignright { float: right; margin-left: 2em; }";
+      ruleset = ruleset + ".wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }";
+    }
+    if (options.blockGap && hasBlockGapSupport) {
+      const gapValue = getGapCSSValue(normalizedTree?.styles?.spacing?.blockGap) || "0.5em";
+      ruleset = ruleset + `:root :where(.wp-site-blocks) > * { margin-block-start: ${gapValue}; margin-block-end: 0; }`;
+      ruleset = ruleset + ":root :where(.wp-site-blocks) > :first-child { margin-block-start: 0; }";
+      ruleset = ruleset + ":root :where(.wp-site-blocks) > :last-child { margin-block-end: 0; }";
+    }
+    if (options.presets) {
+      nodesWithSettings.forEach(({ selector: selector3, presets }) => {
+        if (ROOT_BLOCK_SELECTOR === selector3 || ROOT_CSS_PROPERTIES_SELECTOR === selector3) {
+          selector3 = "";
+        }
+        const classes = getPresetsClasses(selector3, presets);
+        if (classes.length > 0) {
+          ruleset += classes;
+        }
+      });
+    }
+    return ruleset;
+  };
+  var getSelectorsConfig = (blockType, rootSelector) => {
+    if (blockType?.selectors && Object.keys(blockType.selectors).length > 0) {
+      return blockType.selectors;
+    }
+    const config2 = {
+      root: rootSelector
+    };
+    Object.entries(BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS).forEach(
+      ([featureKey, featureName]) => {
+        const featureSelector = getBlockSelector(blockType, featureKey);
+        if (featureSelector) {
+          config2[featureName] = featureSelector;
+        }
+      }
+    );
+    return config2;
+  };
+  var getBlockSelectors = (blockTypes, variationInstanceId) => {
+    const { getBlockStyles: getBlockStyles2 } = (0, import_data3.select)(import_blocks3.store);
+    const result = {};
+    blockTypes.forEach((blockType) => {
+      const name = blockType.name;
+      const selector3 = getBlockSelector(blockType);
+      if (!selector3) {
+        return;
+      }
+      let duotoneSelector = getBlockSelector(blockType, "filter.duotone");
+      if (!duotoneSelector) {
+        const rootSelector = getBlockSelector(blockType);
+        const duotoneSupport = (0, import_blocks3.getBlockSupport)(
+          blockType,
+          "color.__experimentalDuotone",
+          false
+        );
+        if (typeof duotoneSupport === "string" && rootSelector) {
+          duotoneSelector = scopeSelector(rootSelector, duotoneSupport);
+        }
+      }
+      const hasLayoutSupport2 = !!blockType?.supports?.layout || !!blockType?.supports?.__experimentalLayout;
+      const fallbackGapValue = (
+        // @ts-expect-error
+        blockType?.supports?.spacing?.blockGap?.__experimentalDefault
+      );
+      const blockStyleVariations = getBlockStyles2(name);
+      const styleVariationSelectors = {};
+      blockStyleVariations?.forEach((variation) => {
+        const variationSuffix = variationInstanceId ? `-${variationInstanceId}` : "";
+        const variationName = `${variation.name}${variationSuffix}`;
+        const styleVariationSelector = getBlockStyleVariationSelector(
+          variationName,
+          selector3
+        );
+        styleVariationSelectors[variationName] = styleVariationSelector;
+      });
+      const featureSelectors = getSelectorsConfig(blockType, selector3);
+      result[name] = {
+        duotoneSelector: duotoneSelector ?? void 0,
+        fallbackGapValue,
+        featureSelectors: Object.keys(featureSelectors).length ? featureSelectors : void 0,
+        hasLayoutSupport: hasLayoutSupport2,
+        name,
+        selector: selector3,
+        styleVariationSelectors: blockStyleVariations?.length ? styleVariationSelectors : void 0
+      };
+    });
+    return result;
+  };
+  function processCSSNesting(css, blockSelector) {
+    let processedCSS = "";
+    if (!css || css.trim() === "") {
+      return processedCSS;
+    }
+    const parts = css.split("&");
+    parts.forEach((part) => {
+      if (!part || part.trim() === "") {
+        return;
+      }
+      const isRootCss = !part.includes("{");
+      if (isRootCss) {
+        processedCSS += `:root :where(${blockSelector}){${part.trim()}}`;
+      } else {
+        const splitPart = part.replace("}", "").split("{");
+        if (splitPart.length !== 2) {
+          return;
+        }
+        const [nestedSelector, cssValue] = splitPart;
+        const matches = nestedSelector.match(/([>+~\s]*::[a-zA-Z-]+)/);
+        const pseudoPart = matches ? matches[1] : "";
+        const withoutPseudoElement = matches ? nestedSelector.replace(pseudoPart, "").trim() : nestedSelector.trim();
+        let combinedSelector;
+        if (withoutPseudoElement === "") {
+          combinedSelector = blockSelector;
+        } else {
+          combinedSelector = nestedSelector.startsWith(" ") ? scopeSelector(blockSelector, withoutPseudoElement) : appendToSelector(blockSelector, withoutPseudoElement);
+        }
+        processedCSS += `:root :where(${combinedSelector})${pseudoPart}{${cssValue.trim()}}`;
+      }
+    });
+    return processedCSS;
+  }
+
+  // packages/global-styles-engine/build-module/lock-unlock.mjs
+  var import_private_apis2 = __toESM(require_private_apis(), 1);
+  var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/global-styles-engine"
+  );
+
+  // packages/global-styles-engine/build-module/private-apis.mjs
+  var privateApis = {};
+  lock2(privateApis, {
+    getResponsiveMediaQueries,
+    getViewportBreakpoints,
+    getViewportBreakpointValueInPixels
+  });
 
   // packages/block-editor/build-module/components/block-visibility/constants.mjs
   var import_i18n2 = __toESM(require_i18n(), 1);
@@ -10865,11 +12865,11 @@ var wp;
   );
 
   // packages/block-editor/build-module/store/get-block-settings.mjs
-  var import_blocks3 = __toESM(require_blocks(), 1);
+  var import_blocks4 = __toESM(require_blocks(), 1);
   var import_hooks = __toESM(require_hooks(), 1);
 
   // packages/block-editor/build-module/utils/object.mjs
-  function setImmutably(object, path, value) {
+  function setImmutably2(object, path, value) {
     const pathArray = Array.isArray(path) ? [...path] : [path];
     const result = Array.isArray(object) ? [...object] : { ...object };
     const leaf = pathArray.pop();
@@ -10881,7 +12881,7 @@ var wp;
     prev[leaf] = value;
     return result;
   }
-  var getValueFromObjectPath = (object, path, defaultValue) => {
+  var getValueFromObjectPath2 = (object, path, defaultValue) => {
     const arrayPath = Array.isArray(path) ? path : path.split(".");
     let value = object;
     arrayPath.forEach((fieldName) => {
@@ -10949,7 +12949,7 @@ var wp;
       let id = clientId;
       do {
         const name = getBlockName(state, id);
-        if ((0, import_blocks3.hasBlockSupport)(name, "__experimentalSettings", false)) {
+        if ((0, import_blocks4.hasBlockSupport)(name, "__experimentalSettings", false)) {
           candidates.push(id);
         }
       } while (id = state.blocks.parents.get(id));
@@ -10977,10 +12977,10 @@ var wp;
           state,
           candidateClientId
         );
-        result = getValueFromObjectPath(
+        result = getValueFromObjectPath2(
           candidateAtts.settings?.blocks?.[blockName],
           normalizedPath
-        ) ?? getValueFromObjectPath(
+        ) ?? getValueFromObjectPath2(
           candidateAtts.settings,
           normalizedPath
         );
@@ -10990,19 +12990,19 @@ var wp;
       }
       const settings2 = getSettings(state);
       if (result === void 0 && blockName) {
-        result = getValueFromObjectPath(
+        result = getValueFromObjectPath2(
           settings2.__experimentalFeatures?.blocks?.[blockName],
           normalizedPath
         );
       }
       if (result === void 0) {
-        result = getValueFromObjectPath(
+        result = getValueFromObjectPath2(
           settings2.__experimentalFeatures,
           normalizedPath
         );
       }
       if (result !== void 0) {
-        if (import_blocks3.__EXPERIMENTAL_PATHS_WITH_OVERRIDE[normalizedPath]) {
+        if (import_blocks4.__EXPERIMENTAL_PATHS_WITH_OVERRIDE[normalizedPath]) {
           return result.custom ?? result.theme ?? result.default;
         }
         return result;
@@ -11016,7 +13016,16 @@ var wp;
   }
 
   // packages/block-editor/build-module/store/private-selectors.mjs
-  var { isContentBlock: isContentBlock2 } = unlock(import_blocks4.privateApis);
+  var { isContentBlock: isContentBlock2 } = unlock(import_blocks5.privateApis);
+  var { getViewportBreakpoints: getViewportBreakpoints2 } = unlock(privateApis);
+  function isViewportAvailable(state, viewport) {
+    if (viewport === BLOCK_VISIBILITY_VIEWPORTS.desktop.key) {
+      return true;
+    }
+    return getViewportBreakpoints2(
+      getSettings(state)?.__experimentalFeatures?.viewport
+    )[viewport] !== void 0;
+  }
   function isBlockInterfaceHidden2(state) {
     return state.isBlockInterfaceHidden;
   }
@@ -11052,11 +13061,11 @@ var wp;
       (clientId) => getClientIdWithClientIdsTreeUnmemoized(state, clientId)
     );
   }
-  var getClientIdWithClientIdsTree = (0, import_data3.createSelector)(
+  var getClientIdWithClientIdsTree = (0, import_data4.createSelector)(
     getClientIdWithClientIdsTreeUnmemoized,
     (state) => [state.blocks.order]
   );
-  var getClientIdsTree = (0, import_data3.createSelector)(
+  var getClientIdsTree = (0, import_data4.createSelector)(
     getClientIdsTreeUnmemoized,
     (state) => [state.blocks.order]
   );
@@ -11129,15 +13138,15 @@ var wp;
       }
     );
   }
-  var getEnabledClientIdsTree = (0, import_data3.createRegistrySelector)(
-    () => (0, import_data3.createSelector)(getEnabledClientIdsTreeUnmemoized, (state) => [
+  var getEnabledClientIdsTree = (0, import_data4.createRegistrySelector)(
+    () => (0, import_data4.createSelector)(getEnabledClientIdsTreeUnmemoized, (state) => [
       state.blocks.order,
       state.derivedBlockEditingModes,
       state.blocks.blockEditingModes
     ])
   );
-  var getListViewClientIdsTree = (0, import_data3.createRegistrySelector)(
-    () => (0, import_data3.createSelector)(getListViewClientIdsTreeUnmemoized, (state) => [
+  var getListViewClientIdsTree = (0, import_data4.createRegistrySelector)(
+    () => (0, import_data4.createSelector)(getListViewClientIdsTreeUnmemoized, (state) => [
       state.blocks.order,
       state.derivedBlockEditingModes,
       state.blocks.blockEditingModes,
@@ -11149,7 +13158,7 @@ var wp;
       state.settings
     ])
   );
-  var getEnabledBlockParents = (0, import_data3.createSelector)(
+  var getEnabledBlockParents = (0, import_data4.createSelector)(
     (state, clientId, ascending = false) => {
       return getBlockParents(state, clientId, ascending).filter(
         (parent) => getBlockEditingMode(state, parent) !== "disabled"
@@ -11168,7 +13177,7 @@ var wp;
   function getBlockRemovalRules(state) {
     return state.blockRemovalRules;
   }
-  var getStyleOverrides = (0, import_data3.createSelector)(
+  var getStyleOverrides = (0, import_data4.createSelector)(
     (state) => {
       const clientIds = getClientIdsWithDescendants(state);
       const clientIdMap = clientIds.reduce((acc, clientId, index2) => {
@@ -11188,7 +13197,7 @@ var wp;
   function getRegisteredInserterMediaCategories(state) {
     return state.registeredInserterMediaCategories;
   }
-  var getInserterMediaCategories = (0, import_data3.createSelector)(
+  var getInserterMediaCategories = (0, import_data4.createSelector)(
     (state) => {
       const {
         settings: {
@@ -11224,8 +13233,8 @@ var wp;
       state.registeredInserterMediaCategories
     ]
   );
-  var hasAllowedPatterns = (0, import_data3.createRegistrySelector)(
-    (select3) => (0, import_data3.createSelector)(
+  var hasAllowedPatterns = (0, import_data4.createRegistrySelector)(
+    (select3) => (0, import_data4.createSelector)(
       (state, rootClientId = null) => {
         const { getAllPatterns: getAllPatterns2 } = unlock(select3(STORE_NAME));
         const patterns = getAllPatterns2();
@@ -11247,8 +13256,8 @@ var wp;
       ]
     )
   );
-  var getPatternBySlug = (0, import_data3.createRegistrySelector)(
-    (select3) => (0, import_data3.createSelector)(
+  var getPatternBySlug = (0, import_data4.createRegistrySelector)(
+    (select3) => (0, import_data4.createSelector)(
       (state, patternName) => {
         if (patternName?.startsWith("core/block/")) {
           const _id = parseInt(
@@ -11281,8 +13290,8 @@ var wp;
       ]
     )
   );
-  var getAllPatterns = (0, import_data3.createRegistrySelector)(
-    (select3) => (0, import_data3.createSelector)((state) => {
+  var getAllPatterns = (0, import_data4.createRegistrySelector)(
+    (select3) => (0, import_data4.createSelector)((state) => {
       return [
         ...unlock(select3(STORE_NAME)).getReusableBlocks().map(
           (userPattern) => mapUserPattern(
@@ -11301,7 +13310,7 @@ var wp;
     }, getAllPatternsDependants(select3))
   );
   var EMPTY_ARRAY = [];
-  var getReusableBlocks = (0, import_data3.createRegistrySelector)(
+  var getReusableBlocks = (0, import_data4.createRegistrySelector)(
     (select3) => (state) => {
       const reusableBlocksSelect = state.settings[reusableBlocksSelectKey];
       return (reusableBlocksSelect ? reusableBlocksSelect(select3) : state.settings.__experimentalReusableBlocks) ?? EMPTY_ARRAY;
@@ -11384,7 +13393,7 @@ var wp;
     }
     return false;
   }
-  var getBlockStyles = (0, import_data3.createSelector)(
+  var getBlockStyles = (0, import_data4.createSelector)(
     (state, clientIds) => clientIds.reduce((styles, clientId) => {
       styles[clientId] = state.blocks.attributes.get(clientId)?.style;
       return styles;
@@ -11443,7 +13452,7 @@ var wp;
   }
   var isBlockHiddenAnywhere = (state, clientId) => {
     const blockName = getBlockName(state, clientId);
-    if (!(0, import_blocks4.hasBlockSupport)(blockName, "visibility", true)) {
+    if (!(0, import_blocks5.hasBlockSupport)(blockName, "visibility", true)) {
       return false;
     }
     const attributes = state.blocks.attributes.get(clientId);
@@ -11453,14 +13462,14 @@ var wp;
     }
     if (typeof blockVisibility2?.viewport === "object" && blockVisibility2?.viewport !== null) {
       return Object.values(BLOCK_VISIBILITY_VIEWPORTS).some(
-        (viewport) => blockVisibility2?.viewport?.[viewport.key] === false
+        (viewport) => isViewportAvailable(state, viewport.key) && blockVisibility2?.viewport?.[viewport.key] === false
       );
     }
     return false;
   };
   var isBlockHiddenEverywhere = (state, clientId) => {
     const blockName = getBlockName(state, clientId);
-    if (!(0, import_blocks4.hasBlockSupport)(blockName, "visibility", true)) {
+    if (!(0, import_blocks5.hasBlockSupport)(blockName, "visibility", true)) {
       return false;
     }
     const attributes = state.blocks.attributes.get(clientId);
@@ -11483,7 +13492,8 @@ var wp;
     const attributes = state.blocks.attributes.get(clientId);
     const blockVisibilityViewport = attributes?.metadata?.blockVisibility?.viewport;
     if (typeof blockVisibilityViewport === "object" && blockVisibilityViewport !== null && typeof viewport === "string") {
-      return blockVisibilityViewport?.[viewport.toLowerCase()] === false;
+      const viewportKey = viewport.toLowerCase();
+      return isViewportAvailable(state, viewportKey) && blockVisibilityViewport?.[viewportKey] === false;
     }
     return false;
   };
@@ -11538,7 +13548,7 @@ var wp;
     if (blockName === "core/navigation") {
       return true;
     }
-    if (!(0, import_blocks4.hasBlockSupport)(blockName, "listView")) {
+    if (!(0, import_blocks5.hasBlockSupport)(blockName, "listView")) {
       return false;
     }
     const allowedBlocks = getBlockListSettings(
@@ -11564,7 +13574,7 @@ var wp;
   function isResponsiveEditing2(state) {
     return state.isResponsiveEditing;
   }
-  var getSelectedBlockStyleState = (0, import_data3.createSelector)(
+  var getSelectedBlockStyleState = (0, import_data4.createSelector)(
     (state, clientId) => {
       const perBlockState = state.selectedBlockStyleState?.clientId === clientId ? state.selectedBlockStyleState.value ?? DEFAULT_BLOCK_STYLE_STATE : DEFAULT_BLOCK_STYLE_STATE;
       return {
@@ -11654,7 +13664,7 @@ var wp;
     };
   }
   function parsePattern(pattern) {
-    const blocks2 = (0, import_blocks5.parse)(pattern.content, {
+    const blocks2 = (0, import_blocks6.parse)(pattern.content, {
       __unstableSkipMigrationLogs: true
     });
     if (blocks2.length === 1) {
@@ -11784,7 +13794,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/store/selectors.mjs
-  var { isContentBlock: isContentBlock3 } = unlock(import_blocks6.privateApis);
+  var { isContentBlock: isContentBlock3 } = unlock(import_blocks7.privateApis);
   var MILLISECONDS_PER_HOUR = 3600 * 1e3;
   var MILLISECONDS_PER_DAY = 24 * 3600 * 1e3;
   var MILLISECONDS_PER_WEEK = 7 * 24 * 3600 * 1e3;
@@ -11814,7 +13824,7 @@ var wp;
     }
     return state.blocks.tree.get(clientId);
   }
-  var __unstableGetBlockWithoutInnerBlocks = (0, import_data4.createSelector)(
+  var __unstableGetBlockWithoutInnerBlocks = (0, import_data5.createSelector)(
     (state, clientId) => {
       const block = state.blocks.byClientId.get(clientId);
       if (!block) {
@@ -11854,7 +13864,7 @@ var wp;
     );
     return getClientIdsTree(state, rootClientId);
   }
-  var getClientIdsOfDescendants = (0, import_data4.createSelector)(
+  var getClientIdsOfDescendants = (0, import_data5.createSelector)(
     (state, rootIds) => {
       rootIds = Array.isArray(rootIds) ? [...rootIds] : [rootIds];
       const ids = [];
@@ -11878,7 +13888,7 @@ var wp;
     (state) => [state.blocks.order]
   );
   var getClientIdsWithDescendants = (state) => getClientIdsOfDescendants(state, "");
-  var getGlobalBlockCount = (0, import_data4.createSelector)(
+  var getGlobalBlockCount = (0, import_data5.createSelector)(
     (state, blockName) => {
       const clientIds = getClientIdsWithDescendants(state);
       if (!blockName) {
@@ -11895,7 +13905,7 @@ var wp;
     },
     (state) => [state.blocks.order, state.blocks.byClientId]
   );
-  var getBlocksByName = (0, import_data4.createSelector)(
+  var getBlocksByName = (0, import_data5.createSelector)(
     (state, blockName) => {
       if (!blockName) {
         return EMPTY_ARRAY2;
@@ -11920,7 +13930,7 @@ var wp;
     );
     return getBlocksByName(state, blockName);
   }
-  var getBlocksByClientId = (0, import_data4.createSelector)(
+  var getBlocksByClientId = (0, import_data5.createSelector)(
     (state, clientIds) => (Array.isArray(clientIds) ? clientIds : [clientIds]).map(
       (clientId) => getBlock(state, clientId)
     ),
@@ -11928,7 +13938,7 @@ var wp;
       (clientId) => state.blocks.tree.get(clientId)
     )
   );
-  var getBlockNamesByClientId = (0, import_data4.createSelector)(
+  var getBlockNamesByClientId = (0, import_data5.createSelector)(
     (state, clientIds) => getBlocksByClientId(state, clientIds).filter(Boolean).map((block) => block.name),
     (state, clientIds) => getBlocksByClientId(state, clientIds)
   );
@@ -11973,7 +13983,7 @@ var wp;
   function getBlockRootClientId(state, clientId) {
     return state.blocks.parents.get(clientId) ?? null;
   }
-  var getBlockParents = (0, import_data4.createSelector)(
+  var getBlockParents = (0, import_data5.createSelector)(
     (state, clientId, ascending = false) => {
       const parents = [];
       let current = clientId;
@@ -11987,7 +13997,7 @@ var wp;
     },
     (state) => [state.blocks.parents]
   );
-  var getBlockParentsByBlockName = (0, import_data4.createSelector)(
+  var getBlockParentsByBlockName = (0, import_data5.createSelector)(
     (state, clientId, blockName, ascending = false) => {
       const parents = getBlockParents(state, clientId, ascending);
       const hasName = Array.isArray(blockName) ? (name) => blockName.includes(name) : (name) => blockName === name;
@@ -12061,7 +14071,7 @@ var wp;
   function getSelectedBlocksInitialCaretPosition(state) {
     return state.initialPosition;
   }
-  var getSelectedBlockClientIds = (0, import_data4.createSelector)(
+  var getSelectedBlockClientIds = (0, import_data5.createSelector)(
     (state) => {
       const { selectionStart, selectionEnd } = state.selection;
       if (!selectionStart.clientId || !selectionEnd.clientId) {
@@ -12098,7 +14108,7 @@ var wp;
     }
     return getSelectedBlockClientIds(state);
   }
-  var getMultiSelectedBlocks = (0, import_data4.createSelector)(
+  var getMultiSelectedBlocks = (0, import_data5.createSelector)(
     (state) => {
       const multiSelectedBlockClientIds = getMultiSelectedBlockClientIds(state);
       if (!multiSelectedBlockClientIds.length) {
@@ -12128,7 +14138,7 @@ var wp;
   function isBlockMultiSelected(state, clientId) {
     return getMultiSelectedBlockClientIds(state).indexOf(clientId) !== -1;
   }
-  var isAncestorMultiSelected = (0, import_data4.createSelector)(
+  var isAncestorMultiSelected = (0, import_data5.createSelector)(
     (state, clientId) => {
       let ancestorClientId = clientId;
       let isMultiSelected = false;
@@ -12171,7 +14181,7 @@ var wp;
   function __unstableSelectionHasUnmergeableBlock(state) {
     return getSelectedBlockClientIds(state).some((clientId) => {
       const blockName = getBlockName(state, clientId);
-      const blockType = (0, import_blocks6.getBlockType)(blockName);
+      const blockType = (0, import_blocks7.getBlockType)(blockName);
       return !blockType.merge;
     });
   }
@@ -12209,7 +14219,7 @@ var wp;
     const targetBlockClientId = isForward ? selectionEnd.clientId : selectionStart.clientId;
     const blockToMergeClientId = isForward ? selectionStart.clientId : selectionEnd.clientId;
     const targetBlockName = getBlockName(state, targetBlockClientId);
-    const targetBlockType = (0, import_blocks6.getBlockType)(targetBlockName);
+    const targetBlockType = (0, import_blocks7.getBlockType)(targetBlockName);
     if (!targetBlockType.merge) {
       return false;
     }
@@ -12217,7 +14227,7 @@ var wp;
     if (blockToMerge.name === targetBlockName) {
       return true;
     }
-    const blocksToMerge = (0, import_blocks6.switchToBlockType)(blockToMerge, targetBlockName);
+    const blocksToMerge = (0, import_blocks7.switchToBlockType)(blockToMerge, targetBlockName);
     return blocksToMerge && blocksToMerge.length;
   }
   var __unstableGetSelectedBlocksWithPartialSelection = (state) => {
@@ -12362,7 +14372,7 @@ var wp;
     );
     return false;
   }
-  var getBlockInsertionPoint = (0, import_data4.createSelector)(
+  var getBlockInsertionPoint = (0, import_data5.createSelector)(
     (state) => {
       let rootClientId, index2;
       const {
@@ -12417,7 +14427,7 @@ var wp;
       blockType = blockNameOrType;
       blockName = blockNameOrType.name;
     } else {
-      blockType = (0, import_blocks6.getBlockType)(blockNameOrType);
+      blockType = (0, import_blocks7.getBlockType)(blockNameOrType);
       blockName = blockNameOrType;
     }
     if (!blockType) {
@@ -12462,7 +14472,7 @@ var wp;
       blockType = blockName;
       blockName = blockType.name;
     } else {
-      blockType = (0, import_blocks6.getBlockType)(blockName);
+      blockType = (0, import_blocks7.getBlockType)(blockName);
     }
     const rootTemplateLock = getTemplateLock(state, rootClientId);
     if (rootTemplateLock && rootTemplateLock !== "contentOnly") {
@@ -12475,7 +14485,7 @@ var wp;
     const isParentSectionBlock = !!isSectionBlock(state, rootClientId);
     const sectionClientId = isParentSectionBlock ? rootClientId : getParentSectionBlock(state, rootClientId);
     const isWithinSection = !!sectionClientId;
-    if (blockEditingMode === "disabled" && (!isWithinSection || blockName !== (0, import_blocks6.getDefaultBlockName)())) {
+    if (blockEditingMode === "disabled" && (!isWithinSection || blockName !== (0, import_blocks7.getDefaultBlockName)())) {
       return false;
     }
     const parentBlockListSettings = getBlockListSettings(state, rootClientId);
@@ -12494,7 +14504,7 @@ var wp;
       blockName,
       rootClientId
     )) {
-      const defaultBlockName = (0, import_blocks6.getDefaultBlockName)();
+      const defaultBlockName = (0, import_blocks7.getDefaultBlockName)();
       if (blockName === defaultBlockName) {
         const existingBlocks = getBlockOrder(state, rootClientId);
         const hasDefaultBlock = existingBlocks.some(
@@ -12508,7 +14518,7 @@ var wp;
       }
     }
     const parentName = getBlockName(state, rootClientId);
-    const parentBlockType = (0, import_blocks6.getBlockType)(parentName);
+    const parentBlockType = (0, import_blocks7.getBlockType)(parentName);
     const parentAllowedChildBlocks = parentBlockType?.allowedBlocks;
     let hasParentAllowedBlock = checkAllowList(
       parentAllowedChildBlocks,
@@ -12564,8 +14574,8 @@ var wp;
       }
     );
   };
-  var canInsertBlockType = (0, import_data4.createRegistrySelector)(
-    (select3) => (0, import_data4.createSelector)(
+  var canInsertBlockType = (0, import_data5.createRegistrySelector)(
+    (select3) => (0, import_data5.createSelector)(
       canInsertBlockTypeUnmemoized,
       (state, blockName, rootClientId) => getInsertBlockTypeDependants(select3)(state, rootClientId)
     )
@@ -12611,7 +14621,7 @@ var wp;
     }
     const rootBlockEditingMode = getBlockEditingMode(state, rootClientId);
     const blockName = getBlockName(state, clientId);
-    const defaultBlockName = (0, import_blocks6.getDefaultBlockName)();
+    const defaultBlockName = (0, import_blocks7.getDefaultBlockName)();
     if (isWithinSection && (isParentSectionBlock || blockName === defaultBlockName || rootBlockEditingMode === "contentOnly") && !isContainerInsertableToInContentOnlyMode(
       state,
       getBlockName(state, clientId),
@@ -12682,14 +14692,14 @@ var wp;
     if (attributes === null) {
       return true;
     }
-    const { lock: lock4 } = attributes;
-    return !lock4?.edit;
+    const { lock: lock5 } = attributes;
+    return !lock5?.edit;
   }
   function canLockBlockType(state, nameOrType) {
     if (state.settings.isPreviewMode) {
       return false;
     }
-    if (!(0, import_blocks6.hasBlockSupport)(nameOrType, "lock", true)) {
+    if (!(0, import_blocks7.hasBlockSupport)(nameOrType, "lock", true)) {
       return false;
     }
     return !!state.settings?.canLockBlocks;
@@ -12698,7 +14708,7 @@ var wp;
     return state.preferences.insertUsage?.[id] ?? null;
   }
   var canIncludeBlockTypeInInserter = (state, blockType, rootClientId) => {
-    if (!(0, import_blocks6.hasBlockSupport)(blockType, "inserter", true)) {
+    if (!(0, import_blocks7.hasBlockSupport)(blockType, "inserter", true)) {
       return false;
     }
     return canInsertBlockTypeUnmemoized(state, blockType.name, rootClientId);
@@ -12746,7 +14756,7 @@ var wp;
   var buildBlockTypeItem = (state, { buildScope = "inserter" }) => (blockType) => {
     const id = blockType.name;
     let isDisabled = false;
-    if (!(0, import_blocks6.hasBlockSupport)(blockType.name, "multiple", true)) {
+    if (!(0, import_blocks7.hasBlockSupport)(blockType.name, "multiple", true)) {
       isDisabled = getBlocksByClientId(
         state,
         getClientIdsWithDescendants(state)
@@ -12764,11 +14774,11 @@ var wp;
     if (buildScope === "transform") {
       return blockItemBase;
     }
-    const inserterVariations = (0, import_blocks6.getBlockVariations)(
+    const inserterVariations = (0, import_blocks7.getBlockVariations)(
       blockType.name,
       "inserter"
     );
-    const blockVariations = (0, import_blocks6.getBlockVariations)(blockType.name, "block");
+    const blockVariations = (0, import_blocks7.getBlockVariations)(blockType.name, "block");
     const allVariations = [
       ...inserterVariations,
       // Built-in heading level variations have block scope but allow
@@ -12809,8 +14819,8 @@ var wp;
       variationName: variation.name
     };
   };
-  var getInserterItems = (0, import_data4.createRegistrySelector)(
-    (select3) => (0, import_data4.createSelector)(
+  var getInserterItems = (0, import_data5.createRegistrySelector)(
+    (select3) => (0, import_data5.createSelector)(
       (state, rootClientId = null, options = DEFAULT_INSERTER_OPTIONS) => {
         const buildReusableBlockInserterItem = (reusableBlock) => {
           const icon = !reusableBlock.wp_pattern_sync_status ? {
@@ -12847,8 +14857,8 @@ var wp;
         const buildBlockTypeInserterItem = buildBlockTypeItem(state, {
           buildScope: "inserter"
         });
-        let blockTypeInserterItems = (0, import_blocks6.getBlockTypes)().filter(
-          (blockType) => (0, import_blocks6.hasBlockSupport)(blockType, "inserter", true)
+        let blockTypeInserterItems = (0, import_blocks7.getBlockTypes)().filter(
+          (blockType) => (0, import_blocks7.hasBlockSupport)(blockType, "inserter", true)
         ).map(buildBlockTypeInserterItem);
         if (options[isFiltered] !== false) {
           blockTypeInserterItems = blockTypeInserterItems.filter(
@@ -12913,7 +14923,7 @@ var wp;
         return [...sortedBlockTypes, ...patternInserterItems];
       },
       (state, rootClientId) => [
-        (0, import_blocks6.getBlockTypes)(),
+        (0, import_blocks7.getBlockTypes)(),
         unlock(select3(STORE_NAME)).getReusableBlocks(),
         state.blocks.order,
         state.preferences.insertUsage,
@@ -12921,14 +14931,14 @@ var wp;
       ]
     )
   );
-  var getBlockTransformItems = (0, import_data4.createRegistrySelector)(
-    (select3) => (0, import_data4.createSelector)(
+  var getBlockTransformItems = (0, import_data5.createRegistrySelector)(
+    (select3) => (0, import_data5.createSelector)(
       (state, blocks2, rootClientId = null) => {
         const normalizedBlocks = Array.isArray(blocks2) ? blocks2 : [blocks2];
         const buildBlockTypeTransformItem = buildBlockTypeItem(state, {
           buildScope: "transform"
         });
-        const blockTypeTransformItems = (0, import_blocks6.getBlockTypes)().filter(
+        const blockTypeTransformItems = (0, import_blocks7.getBlockTypes)().filter(
           (blockType) => canIncludeBlockTypeInInserter(
             state,
             blockType,
@@ -12940,7 +14950,7 @@ var wp;
             ([, value]) => [value.name, value]
           )
         );
-        const possibleTransforms = (0, import_blocks6.getPossibleBlockTransformations)(
+        const possibleTransforms = (0, import_blocks7.getPossibleBlockTransformations)(
           normalizedBlocks
         ).reduce((accumulator, block) => {
           const item = itemsByName[block?.name];
@@ -12952,7 +14962,7 @@ var wp;
             accumulator.push(item);
             return accumulator;
           }
-          const variation = (0, import_blocks6.getBlockVariations)(
+          const variation = (0, import_blocks7.getBlockVariations)(
             item.name,
             "transform"
           )?.find(({ name }) => name === variationName);
@@ -12972,14 +14982,14 @@ var wp;
         );
       },
       (state, blocks2, rootClientId) => [
-        (0, import_blocks6.getBlockTypes)(),
+        (0, import_blocks7.getBlockTypes)(),
         state.preferences.insertUsage,
         ...getInsertBlockTypeDependants(select3)(state, rootClientId)
       ]
     )
   );
   var hasInserterItems = (state, rootClientId = null) => {
-    const hasBlockType = (0, import_blocks6.getBlockTypes)().some(
+    const hasBlockType = (0, import_blocks7.getBlockTypes)().some(
       (blockType) => canIncludeBlockTypeInInserter(state, blockType, rootClientId)
     );
     if (hasBlockType) {
@@ -12992,13 +15002,13 @@ var wp;
     );
     return hasReusableBlock;
   };
-  var getAllowedBlocks = (0, import_data4.createRegistrySelector)(
-    (select3) => (0, import_data4.createSelector)(
+  var getAllowedBlocks = (0, import_data5.createRegistrySelector)(
+    (select3) => (0, import_data5.createSelector)(
       (state, rootClientId = null) => {
         if (!rootClientId) {
           return;
         }
-        const blockTypes = (0, import_blocks6.getBlockTypes)().filter(
+        const blockTypes = (0, import_blocks7.getBlockTypes)().filter(
           (blockType) => canIncludeBlockTypeInInserter(state, blockType, rootClientId)
         );
         const hasReusableBlock = canInsertBlockTypeUnmemoized(
@@ -13012,12 +15022,12 @@ var wp;
         return blockTypes;
       },
       (state, rootClientId) => [
-        (0, import_blocks6.getBlockTypes)(),
+        (0, import_blocks7.getBlockTypes)(),
         ...getInsertBlockTypeDependants(select3)(state, rootClientId)
       ]
     )
   );
-  var __experimentalGetAllowedBlocks = (0, import_data4.createSelector)(
+  var __experimentalGetAllowedBlocks = (0, import_data5.createSelector)(
     (state, rootClientId = null) => {
       (0, import_deprecated2.default)(
         'wp.data.select( "core/block-editor" ).__experimentalGetAllowedBlocks',
@@ -13052,7 +15062,7 @@ var wp;
     );
     return getDirectInsertBlock(state, rootClientId);
   }
-  var __experimentalGetParsedPattern = (0, import_data4.createRegistrySelector)(
+  var __experimentalGetParsedPattern = (0, import_data5.createRegistrySelector)(
     (select3) => (state, patternName) => {
       const pattern = unlock(select3(STORE_NAME)).getPatternBySlug(
         patternName
@@ -13078,9 +15088,9 @@ var wp;
     }
     return enhancedPattern;
   }
-  var __experimentalGetAllowedPatterns = (0, import_data4.createRegistrySelector)(
+  var __experimentalGetAllowedPatterns = (0, import_data5.createRegistrySelector)(
     (select3) => {
-      return (0, import_data4.createSelector)(
+      return (0, import_data5.createSelector)(
         (state, rootClientId = null, options = DEFAULT_INSERTER_OPTIONS) => {
           const { getAllPatterns: getAllPatterns2 } = unlock(select3(STORE_NAME));
           const patterns = getAllPatterns2();
@@ -13111,8 +15121,8 @@ var wp;
       );
     }
   );
-  var getPatternsByBlockTypes = (0, import_data4.createRegistrySelector)(
-    (select3) => (0, import_data4.createSelector)(
+  var getPatternsByBlockTypes = (0, import_data5.createRegistrySelector)(
+    (select3) => (0, import_data5.createSelector)(
       (state, blockNames, rootClientId = null) => {
         if (!blockNames) {
           return EMPTY_ARRAY2;
@@ -13134,7 +15144,7 @@ var wp;
       (state, blockNames, rootClientId) => getAllowedPatternsDependants(select3)(state, rootClientId)
     )
   );
-  var __experimentalGetPatternsByBlockTypes = (0, import_data4.createRegistrySelector)(
+  var __experimentalGetPatternsByBlockTypes = (0, import_data5.createRegistrySelector)(
     (select3) => {
       (0, import_deprecated2.default)(
         'wp.data.select( "core/block-editor" ).__experimentalGetPatternsByBlockTypes',
@@ -13147,8 +15157,8 @@ var wp;
       return select3(STORE_NAME).getPatternsByBlockTypes;
     }
   );
-  var __experimentalGetPatternTransformItems = (0, import_data4.createRegistrySelector)(
-    (select3) => (0, import_data4.createSelector)(
+  var __experimentalGetPatternTransformItems = (0, import_data5.createRegistrySelector)(
+    (select3) => (0, import_data5.createSelector)(
       (state, blocks2, rootClientId = null) => {
         if (!blocks2) {
           return EMPTY_ARRAY2;
@@ -13184,7 +15194,7 @@ var wp;
     }
     return state.blocks.isPersistentChange === false ? "merge" : "persistent";
   }
-  var __experimentalGetBlockListSettingsForBlocks = (0, import_data4.createSelector)(
+  var __experimentalGetBlockListSettingsForBlocks = (0, import_data5.createSelector)(
     (state, clientIds = []) => {
       const blockListSettingsForBlocks = {};
       for (const clientId of clientIds) {
@@ -13197,8 +15207,8 @@ var wp;
     },
     (state) => [state.blockListSettings]
   );
-  var __experimentalGetReusableBlockTitle = (0, import_data4.createRegistrySelector)(
-    (select3) => (0, import_data4.createSelector)(
+  var __experimentalGetReusableBlockTitle = (0, import_data5.createRegistrySelector)(
+    (select3) => (0, import_data5.createSelector)(
       (state, ref) => {
         (0, import_deprecated2.default)(
           "wp.data.select( 'core/block-editor' ).__experimentalGetReusableBlockTitle",
@@ -13241,7 +15251,7 @@ var wp;
   function areInnerBlocksControlled(state, clientId) {
     return state.blocks.controlledInnerBlocks.has(clientId);
   }
-  var __experimentalGetActiveBlockIdByBlockNames = (0, import_data4.createSelector)(
+  var __experimentalGetActiveBlockIdByBlockNames = (0, import_data5.createSelector)(
     (state, validBlockNames) => {
       if (!validBlockNames.length) {
         return null;
@@ -13286,7 +15296,7 @@ var wp;
     );
     return void 0;
   }
-  var __unstableGetVisibleBlocks = (0, import_data4.createSelector)(
+  var __unstableGetVisibleBlocks = (0, import_data5.createSelector)(
     (state) => {
       const visibleBlocks = new Set(
         Object.keys(state.blockVisibility).filter(
@@ -13321,7 +15331,7 @@ var wp;
         return true;
       }
     }
-    const blockSupportDisable = (0, import_blocks6.hasBlockSupport)(
+    const blockSupportDisable = (0, import_blocks7.hasBlockSupport)(
       getBlockName(state, clientId),
       "__experimentalDisableBlockOverlay",
       false
@@ -13351,7 +15361,7 @@ var wp;
     }
     return "default";
   }
-  var isUngroupable = (0, import_data4.createRegistrySelector)(
+  var isUngroupable = (0, import_data5.createRegistrySelector)(
     (select3) => (state, clientId = "") => {
       const _clientId = clientId || getSelectedBlockClientId(state);
       if (!_clientId) {
@@ -13360,16 +15370,16 @@ var wp;
       if (isSectionBlock(state, _clientId)) {
         return false;
       }
-      const { getGroupingBlockName } = select3(import_blocks6.store);
+      const { getGroupingBlockName } = select3(import_blocks7.store);
       const block = getBlock(state, _clientId);
       const groupingBlockName = getGroupingBlockName();
-      const _isUngroupable = block && (block.name === groupingBlockName || (0, import_blocks6.getBlockType)(block.name)?.transforms?.ungroup) && !!block.innerBlocks.length;
+      const _isUngroupable = block && (block.name === groupingBlockName || (0, import_blocks7.getBlockType)(block.name)?.transforms?.ungroup) && !!block.innerBlocks.length;
       return _isUngroupable && canRemoveBlock(state, _clientId);
     }
   );
-  var isGroupable = (0, import_data4.createRegistrySelector)(
+  var isGroupable = (0, import_data5.createRegistrySelector)(
     (select3) => (state, clientIds = EMPTY_ARRAY2) => {
-      const { getGroupingBlockName } = select3(import_blocks6.store);
+      const { getGroupingBlockName } = select3(import_blocks7.store);
       const groupingBlockName = getGroupingBlockName();
       const _clientIds = clientIds?.length ? clientIds : getSelectedBlockClientIds(state);
       const rootClientId = _clientIds?.length ? getBlockRootClientId(state, _clientIds[0]) : void 0;
@@ -13788,7 +15798,7 @@ var wp;
     updateSettings: () => updateSettings,
     validateBlocksToTemplate: () => validateBlocksToTemplate
   });
-  var import_blocks7 = __toESM(require_blocks(), 1);
+  var import_blocks8 = __toESM(require_blocks(), 1);
   var import_a11y3 = __toESM(require_a11y(), 1);
   var import_i18n5 = __toESM(require_i18n(), 1);
   var import_notices = __toESM(require_notices(), 1);
@@ -13828,7 +15838,7 @@ var wp;
   var validateBlocksToTemplate = (blocks2) => ({ select: select3, dispatch }) => {
     const template2 = select3.getTemplate();
     const templateLock = select3.getTemplateLock();
-    const isBlocksValidToTemplate = !template2 || templateLock !== "all" || (0, import_blocks7.doBlocksMatchTemplate)(blocks2, template2);
+    const isBlocksValidToTemplate = !template2 || templateLock !== "all" || (0, import_blocks8.doBlocksMatchTemplate)(blocks2, template2);
     const isValidTemplate2 = select3.isValidTemplate();
     if (isBlocksValidToTemplate !== isValidTemplate2) {
       dispatch.setTemplateValidity(isBlocksValidToTemplate);
@@ -14100,7 +16110,7 @@ var wp;
     dispatch({ type: "SYNCHRONIZE_TEMPLATE" });
     const blocks2 = select3.getBlocks();
     const template2 = select3.getTemplate();
-    const updatedBlockList = (0, import_blocks7.synchronizeBlocksWithTemplate)(
+    const updatedBlockList = (0, import_blocks8.synchronizeBlocksWithTemplate)(
       blocks2,
       template2
     );
@@ -14137,7 +16147,7 @@ var wp;
     }
     const targetSelection = isForward ? selectionEnd : selectionStart;
     const targetBlock = select3.getBlock(targetSelection.clientId);
-    const targetBlockType = (0, import_blocks7.getBlockType)(targetBlock.name);
+    const targetBlockType = (0, import_blocks8.getBlockType)(targetBlock.name);
     if (!targetBlockType.merge) {
       return;
     }
@@ -14151,14 +16161,14 @@ var wp;
     let valueB = (0, import_rich_text3.create)({ html: htmlB });
     valueA = (0, import_rich_text3.remove)(valueA, selectionA.offset, valueA.text.length);
     valueB = (0, import_rich_text3.insert)(valueB, START_OF_SELECTED_AREA, 0, selectionB.offset);
-    const cloneA = (0, import_blocks7.cloneBlock)(blockA, {
+    const cloneA = (0, import_blocks8.cloneBlock)(blockA, {
       [selectionA.attributeKey]: (0, import_rich_text3.toHTMLString)({ value: valueA })
     });
-    const cloneB = (0, import_blocks7.cloneBlock)(blockB, {
+    const cloneB = (0, import_blocks8.cloneBlock)(blockB, {
       [selectionB.attributeKey]: (0, import_rich_text3.toHTMLString)({ value: valueB })
     });
     const followingBlock = isForward ? cloneA : cloneB;
-    const blocksWithTheSameType = blockA.name === blockB.name ? [followingBlock] : (0, import_blocks7.switchToBlockType)(followingBlock, targetBlockType.name);
+    const blocksWithTheSameType = blockA.name === blockB.name ? [followingBlock] : (0, import_blocks8.switchToBlockType)(followingBlock, targetBlockType.name);
     if (!blocksWithTheSameType || !blocksWithTheSameType.length) {
       return;
     }
@@ -14241,8 +16251,8 @@ var wp;
     const selectionB = selectionEnd;
     const blockA = select3.getBlock(selectionA.clientId);
     const blockB = select3.getBlock(selectionB.clientId);
-    const blockAType = (0, import_blocks7.getBlockType)(blockA.name);
-    const blockBType = (0, import_blocks7.getBlockType)(blockB.name);
+    const blockAType = (0, import_blocks8.getBlockType)(blockA.name);
+    const blockBType = (0, import_blocks8.getBlockType)(blockB.name);
     const attributeKeyA = typeof selectionA.attributeKey === "string" ? selectionA.attributeKey : findRichTextAttributeKey(blockAType);
     const attributeKeyB = typeof selectionB.attributeKey === "string" ? selectionB.attributeKey : findRichTextAttributeKey(blockBType);
     const blockAttributes = select3.getBlockAttributes(
@@ -14270,7 +16280,7 @@ var wp;
     }
     if (selectionA.clientId === selectionB.clientId && attributeKeyA === attributeKeyB && selectionA.offset === selectionB.offset) {
       if (blocks2.length) {
-        if ((0, import_blocks7.isUnmodifiedDefaultBlock)(blockA, "content")) {
+        if ((0, import_blocks8.isUnmodifiedDefaultBlock)(blockA, "content")) {
           dispatch.replaceBlocks(
             [selectionA.clientId],
             blocks2,
@@ -14281,11 +16291,11 @@ var wp;
         }
       } else if (!select3.getBlockOrder(selectionA.clientId).length) {
         let createEmpty2 = function() {
-          const defaultBlockName2 = (0, import_blocks7.getDefaultBlockName)();
+          const defaultBlockName2 = (0, import_blocks8.getDefaultBlockName)();
           return select3.canInsertBlockType(
             defaultBlockName2,
             anchorRootClientId
-          ) ? (0, import_blocks7.createBlock)(defaultBlockName2) : (0, import_blocks7.createBlock)(
+          ) ? (0, import_blocks8.createBlock)(defaultBlockName2) : (0, import_blocks8.createBlock)(
             select3.getBlockName(selectionA.clientId)
           );
         };
@@ -14330,19 +16340,19 @@ var wp;
     let tail = {
       ...blockB,
       // Only preserve the original client ID if the end is different.
-      clientId: blockA.clientId === blockB.clientId ? (0, import_blocks7.createBlock)(blockB.name).clientId : blockB.clientId,
+      clientId: blockA.clientId === blockB.clientId ? (0, import_blocks8.createBlock)(blockB.name).clientId : blockB.clientId,
       attributes: {
         ...blockB.attributes,
         [attributeKeyB]: (0, import_rich_text3.toHTMLString)({ value: valueB })
       }
     };
-    const defaultBlockName = (0, import_blocks7.getDefaultBlockName)();
+    const defaultBlockName = (0, import_blocks8.getDefaultBlockName)();
     if (
       // A block is only split when the selection is within the same
       // block.
       blockA.clientId === blockB.clientId && defaultBlockName && tail.name !== defaultBlockName && select3.canInsertBlockType(defaultBlockName, anchorRootClientId)
     ) {
-      const switched = (0, import_blocks7.switchToBlockType)(tail, defaultBlockName);
+      const switched = (0, import_blocks8.switchToBlockType)(tail, defaultBlockName);
       if (switched?.length === 1) {
         tail = switched[0];
       }
@@ -14358,8 +16368,8 @@ var wp;
     const output = [];
     const clonedBlocks = [...blocks2];
     const firstBlock = clonedBlocks.shift();
-    const headType = (0, import_blocks7.getBlockType)(head.name);
-    const firstBlocks = headType.merge && firstBlock.name === headType.name ? [firstBlock] : (0, import_blocks7.switchToBlockType)(firstBlock, headType.name);
+    const headType = (0, import_blocks8.getBlockType)(head.name);
+    const firstBlocks = headType.merge && firstBlock.name === headType.name ? [firstBlock] : (0, import_blocks8.switchToBlockType)(firstBlock, headType.name);
     if (firstBlocks?.length) {
       const first = firstBlocks.shift();
       head = {
@@ -14377,18 +16387,18 @@ var wp;
       };
       clonedBlocks.unshift(...firstBlocks);
     } else {
-      if (!(0, import_blocks7.isUnmodifiedBlock)(head)) {
+      if (!(0, import_blocks8.isUnmodifiedBlock)(head)) {
         output.push(head);
       }
       output.push(firstBlock);
     }
     const lastBlock = clonedBlocks.pop();
-    const tailType = (0, import_blocks7.getBlockType)(tail.name);
+    const tailType = (0, import_blocks8.getBlockType)(tail.name);
     if (clonedBlocks.length) {
       output.push(...clonedBlocks);
     }
     if (lastBlock) {
-      const lastBlocks = tailType.merge && tailType.name === lastBlock.name ? [lastBlock] : (0, import_blocks7.switchToBlockType)(lastBlock, tailType.name);
+      const lastBlocks = tailType.merge && tailType.name === lastBlock.name ? [lastBlock] : (0, import_blocks8.switchToBlockType)(lastBlock, tailType.name);
       if (lastBlocks?.length) {
         const last = lastBlocks.pop();
         output.push({
@@ -14408,11 +16418,11 @@ var wp;
         };
       } else {
         output.push(lastBlock);
-        if (!(0, import_blocks7.isUnmodifiedBlock)(tail)) {
+        if (!(0, import_blocks8.isUnmodifiedBlock)(tail)) {
           output.push(tail);
         }
       }
-    } else if (!(0, import_blocks7.isUnmodifiedBlock)(tail)) {
+    } else if (!(0, import_blocks8.isUnmodifiedBlock)(tail)) {
       output.push(tail);
     }
     registry.batch(() => {
@@ -14444,13 +16454,13 @@ var wp;
     const clientIdA = firstBlockClientId;
     const clientIdB = secondBlockClientId;
     const blockA = select3.getBlock(clientIdA);
-    const blockAType = (0, import_blocks7.getBlockType)(blockA.name);
+    const blockAType = (0, import_blocks8.getBlockType)(blockA.name);
     if (!blockAType || select3.getBlockEditingMode(clientIdA) === "disabled" || select3.getBlockEditingMode(clientIdB) === "disabled") {
       return;
     }
     const blockB = select3.getBlock(clientIdB);
-    if (!blockAType.merge && (0, import_blocks7.getBlockSupport)(blockA.name, "__experimentalOnMerge")) {
-      const blocksWithTheSameType2 = (0, import_blocks7.switchToBlockType)(
+    if (!blockAType.merge && (0, import_blocks8.getBlockSupport)(blockA.name, "__experimentalOnMerge")) {
+      const blocksWithTheSameType2 = (0, import_blocks8.switchToBlockType)(
         blockB,
         blockAType.name
       );
@@ -14491,14 +16501,14 @@ var wp;
       });
       return;
     }
-    if ((0, import_blocks7.isUnmodifiedDefaultBlock)(blockA)) {
+    if ((0, import_blocks8.isUnmodifiedDefaultBlock)(blockA)) {
       dispatch.removeBlock(
         clientIdA,
         select3.isBlockSelected(clientIdA)
       );
       return;
     }
-    if ((0, import_blocks7.isUnmodifiedDefaultBlock)(blockB)) {
+    if ((0, import_blocks8.isUnmodifiedDefaultBlock)(blockB)) {
       dispatch.removeBlock(
         clientIdB,
         select3.isBlockSelected(clientIdB)
@@ -14506,7 +16516,7 @@ var wp;
       return;
     }
     if (!blockAType.merge) {
-      if ((0, import_blocks7.isUnmodifiedBlock)(blockB, "content")) {
+      if ((0, import_blocks8.isUnmodifiedBlock)(blockB, "content")) {
         dispatch.removeBlock(
           clientIdB,
           select3.isBlockSelected(clientIdB)
@@ -14516,7 +16526,7 @@ var wp;
       }
       return;
     }
-    const blockBType = (0, import_blocks7.getBlockType)(blockB.name);
+    const blockBType = (0, import_blocks8.getBlockType)(blockB.name);
     const { clientId, attributeKey, offset: offset4 } = select3.getSelectionStart();
     const selectedBlockType = clientId === clientIdA ? blockAType : blockBType;
     const attributeDefinition = selectedBlockType.attributes[attributeKey];
@@ -14536,8 +16546,8 @@ var wp;
         );
       }
     }
-    const cloneA = (0, import_blocks7.cloneBlock)(blockA);
-    const cloneB = (0, import_blocks7.cloneBlock)(blockB);
+    const cloneA = (0, import_blocks8.cloneBlock)(blockA);
+    const cloneB = (0, import_blocks8.cloneBlock)(blockB);
     if (canRestoreTextSelection) {
       const selectedBlock = clientId === clientIdA ? cloneA : cloneB;
       const html = selectedBlock.attributes[attributeKey];
@@ -14551,7 +16561,7 @@ var wp;
         value
       });
     }
-    const blocksWithTheSameType = blockA.name === blockB.name ? [cloneB] : (0, import_blocks7.switchToBlockType)(cloneB, blockA.name);
+    const blocksWithTheSameType = blockA.name === blockB.name ? [cloneB] : (0, import_blocks8.switchToBlockType)(cloneB, blockA.name);
     if (!blocksWithTheSameType || !blocksWithTheSameType.length) {
       return;
     }
@@ -14664,11 +16674,11 @@ var wp;
     return { type: "SELECTION_CHANGE", ...clientId };
   }
   var insertDefaultBlock = (attributes, rootClientId, index2) => ({ dispatch }) => {
-    const defaultBlockName = (0, import_blocks7.getDefaultBlockName)();
+    const defaultBlockName = (0, import_blocks8.getDefaultBlockName)();
     if (!defaultBlockName) {
       return;
     }
-    const block = (0, import_blocks7.createBlock)(defaultBlockName, attributes);
+    const block = (0, import_blocks8.createBlock)(defaultBlockName, attributes);
     return dispatch.insertBlock(block, index2, rootClientId);
   };
   function updateBlockListSettings(clientId, settings2) {
@@ -14739,7 +16749,7 @@ var wp;
     }
     const blockNames = blocks2.map((block) => block.name);
     if (blockNames.some(
-      (blockName) => !(0, import_blocks7.hasBlockSupport)(blockName, "multiple", true)
+      (blockName) => !(0, import_blocks8.hasBlockSupport)(blockName, "multiple", true)
     )) {
       return;
     }
@@ -14749,7 +16759,7 @@ var wp;
       clientIdsArray[clientIdsArray.length - 1]
     );
     const clonedBlocks = blocks2.map(
-      (block) => (0, import_blocks7.cloneSanitizedBlock)(block)
+      (block) => (0, import_blocks8.cloneSanitizedBlock)(block)
     );
     dispatch.insertBlocks(
       clonedBlocks,
@@ -14784,7 +16794,7 @@ var wp;
         }
       });
     }
-    const block = (0, import_blocks7.createBlock)(directInsertBlock.name, {
+    const block = (0, import_blocks8.createBlock)(directInsertBlock.name, {
       ...directInsertBlock.attributes,
       ...copiedAttributes
     });
@@ -14813,7 +16823,7 @@ var wp;
         }
       });
     }
-    const block = (0, import_blocks7.createBlock)(directInsertBlock.name, {
+    const block = (0, import_blocks8.createBlock)(directInsertBlock.name, {
       ...directInsertBlock.attributes,
       ...copiedAttributes
     });
@@ -14947,11 +16957,11 @@ var wp;
     selectors: selectors_exports,
     actions: actions_exports
   };
-  var store = (0, import_data5.createReduxStore)(STORE_NAME, {
+  var store = (0, import_data6.createReduxStore)(STORE_NAME, {
     ...storeConfig,
     persist: ["preferences"]
   });
-  var registeredStore = (0, import_data5.registerStore)(STORE_NAME, {
+  var registeredStore = (0, import_data6.registerStore)(STORE_NAME, {
     ...storeConfig,
     persist: ["preferences"]
   });
@@ -15011,8 +17021,8 @@ var wp;
     name,
     onReplace
   }) {
-    const { selectBlock: selectBlock2 } = (0, import_data6.useDispatch)(store);
-    const blockType = (0, import_blocks8.getBlockType)(name);
+    const { selectBlock: selectBlock2 } = (0, import_data7.useDispatch)(store);
+    const blockType = (0, import_blocks9.getBlockType)(name);
     return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
       warning_default,
       {
@@ -15070,9 +17080,9 @@ var wp;
     } = props;
     const { layout = null, metadata = {} } = attributes;
     const { bindings } = metadata;
-    const layoutSupport = (0, import_blocks9.hasBlockSupport)(name, "layout", false) || (0, import_blocks9.hasBlockSupport)(name, "__experimentalLayout", false);
+    const layoutSupport = (0, import_blocks10.hasBlockSupport)(name, "layout", false) || (0, import_blocks10.hasBlockSupport)(name, "__experimentalLayout", false);
     const parentBlockEditContext = useBlockEditContext();
-    const isInListViewBlockSupportTree = !!parentBlockEditContext[isInListViewBlockSupportTreeKey] || (0, import_blocks9.hasBlockSupport)(name, "listView") || name === "core/navigation";
+    const isInListViewBlockSupportTree = !!parentBlockEditContext[isInListViewBlockSupportTreeKey] || (0, import_blocks10.hasBlockSupport)(name, "listView") || name === "core/navigation";
     const { originalBlockClientId } = (0, import_element6.useContext)(PrivateBlockContext);
     return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(
       Provider,
@@ -15128,7 +17138,7 @@ var wp;
   // packages/block-editor/build-module/components/use-settings/index.mjs
   function useSettings(...paths) {
     const { clientId = null } = useBlockEditContext();
-    return (0, import_data7.useSelect)(
+    return (0, import_data8.useSelect)(
       (select3) => unlock(select3(store)).getBlockSettings(
         clientId,
         ...paths
@@ -15148,7 +17158,7 @@ var wp;
 
   // packages/block-editor/build-module/components/colors/with-colors.mjs
   var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
-  var { kebabCase: kebabCase2 } = unlock(import_components5.privateApis);
+  var { kebabCase: kebabCase3 } = unlock(import_components5.privateApis);
   var upperFirst = ([firstLetter, ...rest]) => firstLetter.toUpperCase() + rest.join("");
   var withCustomColorPalette = (colorsArray) => (0, import_compose2.createHigherOrderComponent)(
     (WrappedComponent) => function WithCustomColorPalette(props) {
@@ -15179,7 +17189,7 @@ var wp;
     const colorMap = colorTypes.reduce((colorObject, colorType) => {
       return {
         ...colorObject,
-        ...typeof colorType === "string" ? { [colorType]: kebabCase2(colorType) } : colorType
+        ...typeof colorType === "string" ? { [colorType]: kebabCase3(colorType) } : colorType
       };
     }, {});
     return (0, import_compose2.compose)([
@@ -15289,7 +17299,7 @@ var wp;
 
   // packages/block-editor/build-module/components/gradients/use-gradient.mjs
   var import_element8 = __toESM(require_element(), 1);
-  var import_data8 = __toESM(require_data(), 1);
+  var import_data9 = __toESM(require_data(), 1);
   function __experimentalGetGradientClass(gradientSlug) {
     if (!gradientSlug) {
       return void 0;
@@ -15333,7 +17343,7 @@ var wp;
       ],
       [userGradientPalette, themeGradientPalette, defaultGradientPalette]
     );
-    const { gradient, customGradient } = (0, import_data8.useSelect)(
+    const { gradient, customGradient } = (0, import_data9.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3 } = select3(store);
         const attributes = getBlockAttributes3(clientId) || {};
@@ -15344,7 +17354,7 @@ var wp;
       },
       [clientId, gradientAttribute, customGradientAttribute]
     );
-    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data8.useDispatch)(store);
+    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data9.useDispatch)(store);
     const setGradient = (0, import_element8.useCallback)(
       (newGradientValue) => {
         const slug = getGradientSlugByValue(
@@ -15377,7 +17387,7 @@ var wp;
 
   // packages/block-editor/build-module/components/font-sizes/utils.mjs
   var import_components6 = __toESM(require_components(), 1);
-  var { kebabCase: kebabCase3 } = unlock(import_components6.privateApis);
+  var { kebabCase: kebabCase4 } = unlock(import_components6.privateApis);
   var getFontSize = (fontSizes, fontSizeAttribute, customFontSizeAttribute) => {
     if (fontSizeAttribute) {
       const fontSizeObject = fontSizes?.find(
@@ -15404,32 +17414,32 @@ var wp;
     if (!fontSizeSlug) {
       return;
     }
-    return `has-${kebabCase3(fontSizeSlug)}-font-size`;
+    return `has-${kebabCase4(fontSizeSlug)}-font-size`;
   }
 
   // packages/block-editor/build-module/components/font-sizes/fluid-utils.mjs
-  var DEFAULT_MAXIMUM_VIEWPORT_WIDTH = "1600px";
-  var DEFAULT_MINIMUM_VIEWPORT_WIDTH = "320px";
-  var DEFAULT_SCALE_FACTOR = 1;
-  var DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MIN = 0.25;
-  var DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MAX = 0.75;
-  var DEFAULT_MINIMUM_FONT_SIZE_LIMIT = "14px";
-  function getComputedFluidTypographyValue({
+  var DEFAULT_MAXIMUM_VIEWPORT_WIDTH2 = "1600px";
+  var DEFAULT_MINIMUM_VIEWPORT_WIDTH2 = "320px";
+  var DEFAULT_SCALE_FACTOR2 = 1;
+  var DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MIN2 = 0.25;
+  var DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MAX2 = 0.75;
+  var DEFAULT_MINIMUM_FONT_SIZE_LIMIT2 = "14px";
+  function getComputedFluidTypographyValue2({
     minimumFontSize,
     maximumFontSize,
     fontSize,
-    minimumViewportWidth = DEFAULT_MINIMUM_VIEWPORT_WIDTH,
-    maximumViewportWidth = DEFAULT_MAXIMUM_VIEWPORT_WIDTH,
-    scaleFactor = DEFAULT_SCALE_FACTOR,
+    minimumViewportWidth = DEFAULT_MINIMUM_VIEWPORT_WIDTH2,
+    maximumViewportWidth = DEFAULT_MAXIMUM_VIEWPORT_WIDTH2,
+    scaleFactor = DEFAULT_SCALE_FACTOR2,
     minimumFontSizeLimit
   }) {
-    minimumFontSizeLimit = !!getTypographyValueAndUnit(minimumFontSizeLimit) ? minimumFontSizeLimit : DEFAULT_MINIMUM_FONT_SIZE_LIMIT;
+    minimumFontSizeLimit = !!getTypographyValueAndUnit2(minimumFontSizeLimit) ? minimumFontSizeLimit : DEFAULT_MINIMUM_FONT_SIZE_LIMIT2;
     if (fontSize) {
-      const fontSizeParsed = getTypographyValueAndUnit(fontSize);
+      const fontSizeParsed = getTypographyValueAndUnit2(fontSize);
       if (!fontSizeParsed?.unit) {
         return null;
       }
-      const minimumFontSizeLimitParsed = getTypographyValueAndUnit(
+      const minimumFontSizeLimitParsed = getTypographyValueAndUnit2(
         minimumFontSizeLimit,
         {
           coerceTo: fontSizeParsed.unit
@@ -15448,11 +17458,11 @@ var wp;
         const minimumFontSizeFactor = Math.min(
           Math.max(
             1 - 0.075 * Math.log2(fontSizeValueInPx),
-            DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MIN
+            DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MIN2
           ),
-          DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MAX
+          DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MAX2
         );
-        const calculatedMinimumFontSize = roundToPrecision(
+        const calculatedMinimumFontSize = roundToPrecision2(
           fontSizeParsed.value * minimumFontSizeFactor,
           3
         );
@@ -15463,22 +17473,22 @@ var wp;
         }
       }
     }
-    const minimumFontSizeParsed = getTypographyValueAndUnit(minimumFontSize);
+    const minimumFontSizeParsed = getTypographyValueAndUnit2(minimumFontSize);
     const fontSizeUnit = minimumFontSizeParsed?.unit || "rem";
-    const maximumFontSizeParsed = getTypographyValueAndUnit(maximumFontSize, {
+    const maximumFontSizeParsed = getTypographyValueAndUnit2(maximumFontSize, {
       coerceTo: fontSizeUnit
     });
     if (!minimumFontSizeParsed || !maximumFontSizeParsed) {
       return null;
     }
-    const minimumFontSizeRem = getTypographyValueAndUnit(minimumFontSize, {
+    const minimumFontSizeRem = getTypographyValueAndUnit2(minimumFontSize, {
       coerceTo: "rem"
     });
-    const maximumViewportWidthParsed = getTypographyValueAndUnit(
+    const maximumViewportWidthParsed = getTypographyValueAndUnit2(
       maximumViewportWidth,
       { coerceTo: fontSizeUnit }
     );
-    const minimumViewportWidthParsed = getTypographyValueAndUnit(
+    const minimumViewportWidthParsed = getTypographyValueAndUnit2(
       minimumViewportWidth,
       { coerceTo: fontSizeUnit }
     );
@@ -15489,20 +17499,20 @@ var wp;
     if (!linearDenominator) {
       return null;
     }
-    const minViewportWidthOffsetValue = roundToPrecision(
+    const minViewportWidthOffsetValue = roundToPrecision2(
       minimumViewportWidthParsed.value / 100,
       3
     );
-    const viewportWidthOffset = roundToPrecision(minViewportWidthOffsetValue, 3) + fontSizeUnit;
+    const viewportWidthOffset = roundToPrecision2(minViewportWidthOffsetValue, 3) + fontSizeUnit;
     const linearFactor = 100 * ((maximumFontSizeParsed.value - minimumFontSizeParsed.value) / linearDenominator);
-    const linearFactorScaled = roundToPrecision(
+    const linearFactorScaled = roundToPrecision2(
       (linearFactor || 1) * scaleFactor,
       3
     );
     const fluidTargetFontSize = `${minimumFontSizeRem.value}${minimumFontSizeRem.unit} + ((1vw - ${viewportWidthOffset}) * ${linearFactorScaled})`;
     return `clamp(${minimumFontSize}, ${fluidTargetFontSize}, ${maximumFontSize})`;
   }
-  function getTypographyValueAndUnit(rawValue, options = {}) {
+  function getTypographyValueAndUnit2(rawValue, options = {}) {
     if (typeof rawValue !== "string" && typeof rawValue !== "number") {
       return null;
     }
@@ -15538,11 +17548,11 @@ var wp;
       unit = coerceTo;
     }
     return {
-      value: roundToPrecision(returnValue, 3),
+      value: roundToPrecision2(returnValue, 3),
       unit
     };
   }
-  function roundToPrecision(value, digits = 3) {
+  function roundToPrecision2(value, digits = 3) {
     const base = Math.pow(10, digits);
     return Number.isFinite(value) ? parseFloat(Math.round(value * base) / base) : void 0;
   }
@@ -15782,11 +17792,11 @@ var wp;
   var import_hooks3 = __toESM(require_hooks(), 1);
   var import_components10 = __toESM(require_components(), 1);
   var import_element13 = __toESM(require_element(), 1);
-  var import_blocks12 = __toESM(require_blocks(), 1);
+  var import_blocks13 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/autocompleters/block.mjs
-  var import_data10 = __toESM(require_data(), 1);
-  var import_blocks11 = __toESM(require_blocks(), 1);
+  var import_data11 = __toESM(require_data(), 1);
+  var import_blocks12 = __toESM(require_blocks(), 1);
   var import_element12 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inserter/search-items.mjs
@@ -15968,8 +17978,8 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/inserter/hooks/use-block-types-state.mjs
-  var import_blocks10 = __toESM(require_blocks(), 1);
-  var import_data9 = __toESM(require_data(), 1);
+  var import_blocks11 = __toESM(require_blocks(), 1);
+  var import_data10 = __toESM(require_data(), 1);
   var import_element10 = __toESM(require_element(), 1);
   var import_notices2 = __toESM(require_notices(), 1);
   var import_i18n9 = __toESM(require_i18n(), 1);
@@ -15978,7 +17988,7 @@ var wp;
       () => ({ [isFiltered]: !!isQuick }),
       [isQuick]
     );
-    const [items] = (0, import_data9.useSelect)(
+    const [items] = (0, import_data10.useSelect)(
       (select3) => [
         select3(store).getInserterItems(
           rootClientId,
@@ -15988,11 +17998,11 @@ var wp;
       [rootClientId, options]
     );
     const { getClosestAllowedInsertionPoint: getClosestAllowedInsertionPoint2 } = unlock(
-      (0, import_data9.useSelect)(store)
+      (0, import_data10.useSelect)(store)
     );
-    const { createErrorNotice } = (0, import_data9.useDispatch)(import_notices2.store);
-    const [categories, collections] = (0, import_data9.useSelect)((select3) => {
-      const { getCategories, getCollections } = select3(import_blocks10.store);
+    const { createErrorNotice } = (0, import_data10.useDispatch)(import_notices2.store);
+    const [categories, collections] = (0, import_data10.useSelect)((select3) => {
+      const { getCategories, getCollections } = select3(import_blocks11.store);
       return [getCategories(), getCollections()];
     }, []);
     const onSelectItem = (0, import_element10.useCallback)(
@@ -16009,7 +18019,7 @@ var wp;
           rootClientId
         );
         if (destinationClientId === null) {
-          const title = (0, import_blocks10.getBlockType)(name)?.title ?? name;
+          const title = (0, import_blocks11.getBlockType)(name)?.title ?? name;
           createErrorNotice(
             (0, import_i18n9.sprintf)(
               /* translators: %s: block pattern title. */
@@ -16023,12 +18033,12 @@ var wp;
           );
           return;
         }
-        const insertedBlock = syncStatus === "unsynced" ? (0, import_blocks10.parse)(content, {
+        const insertedBlock = syncStatus === "unsynced" ? (0, import_blocks11.parse)(content, {
           __unstableSkipMigrationLogs: true
-        }) : (0, import_blocks10.createBlock)(
+        }) : (0, import_blocks11.createBlock)(
           name,
           initialAttributes,
-          (0, import_blocks10.createBlocksFromInnerBlocksTemplate)(innerBlocks),
+          (0, import_blocks11.createBlocksFromInnerBlocksTemplate)(innerBlocks),
           innerContent
         );
         onInsert(
@@ -16113,14 +18123,14 @@ var wp;
       className: "block-editor-autocompleters__block",
       triggerPrefix: "/",
       useItems(filterValue) {
-        const { rootClientId, selectedBlockId, prioritizedBlocks } = (0, import_data10.useSelect)((select3) => {
+        const { rootClientId, selectedBlockId, prioritizedBlocks } = (0, import_data11.useSelect)((select3) => {
           const {
             getSelectedBlockClientId: getSelectedBlockClientId2,
             getBlock: getBlock2,
             getBlockListSettings: getBlockListSettings2,
             getBlockRootClientId: getBlockRootClientId2
           } = select3(store);
-          const { getActiveBlockVariation } = select3(import_blocks11.store);
+          const { getActiveBlockVariation } = select3(import_blocks12.store);
           const selectedBlockClientId = getSelectedBlockClientId2();
           const { name: blockName, attributes } = getBlock2(
             selectedBlockClientId
@@ -16201,11 +18211,11 @@ var wp;
         return {
           action: "replace",
           value: syncStatus === "unsynced" ? (blocks2 ?? []).map(
-            (block) => (0, import_blocks11.cloneBlock)(block)
-          ) : (0, import_blocks11.createBlock)(
+            (block) => (0, import_blocks12.cloneBlock)(block)
+          ) : (0, import_blocks12.createBlock)(
             name,
             initialAttributes,
-            (0, import_blocks11.createBlocksFromInnerBlocksTemplate)(
+            (0, import_blocks12.createBlocksFromInnerBlocksTemplate)(
               innerBlocks
             ),
             innerContent
@@ -16223,7 +18233,7 @@ var wp;
     const { name } = useBlockEditContext();
     return (0, import_element13.useMemo)(() => {
       let filteredCompleters = [...completers];
-      if (name === (0, import_blocks12.getDefaultBlockName)() || (0, import_blocks12.getBlockSupport)(name, "__experimentalSlashInserter", false)) {
+      if (name === (0, import_blocks13.getDefaultBlockName)() || (0, import_blocks13.getBlockSupport)(name, "__experimentalSlashInserter", false)) {
         filteredCompleters = [...filteredCompleters, block_default];
       }
       if ((0, import_hooks3.hasFilter)("editor.Autocomplete.completers")) {
@@ -16257,7 +18267,7 @@ var wp;
   var import_components16 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-alignment-control/use-available-alignments.mjs
-  var import_data11 = __toESM(require_data(), 1);
+  var import_data12 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/block-list/layout.mjs
   var import_element15 = __toESM(require_element(), 1);
@@ -16270,7 +18280,7 @@ var wp;
   var import_i18n10 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/layouts/definitions.mjs
-  var LAYOUT_DEFINITIONS = {
+  var LAYOUT_DEFINITIONS2 = {
     default: {
       name: "default",
       slug: "flow",
@@ -16448,7 +18458,7 @@ var wp;
       (subselector) => `${subselector}${append ? ` ${append}` : ""}`
     ).join(",");
   }
-  function getBlockGapCSS(selector3, layoutDefinitions = LAYOUT_DEFINITIONS, layoutType, blockGapValue) {
+  function getBlockGapCSS(selector3, layoutDefinitions = LAYOUT_DEFINITIONS2, layoutType, blockGapValue) {
     let output = "";
     if (layoutDefinitions?.[layoutType]?.spacingStyles?.length && blockGapValue) {
       layoutDefinitions[layoutType].spacingStyles.forEach((gapStyle) => {
@@ -16545,7 +18555,7 @@ var wp;
     }
     return value;
   }
-  function getSpacingPresetCssVar(value) {
+  function getSpacingPresetCssVar2(value) {
     if (!value) {
       return;
     }
@@ -16608,7 +18618,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/gap.mjs
-  function getGapBoxControlValueFromStyle(blockGapValue) {
+  function getGapBoxControlValueFromStyle2(blockGapValue) {
     if (!blockGapValue) {
       return null;
     }
@@ -16618,13 +18628,13 @@ var wp;
       left: isValueString ? blockGapValue : blockGapValue?.left
     };
   }
-  function getGapCSSValue(blockGapValue, defaultValue = "0") {
-    const blockGapBoxControlValue = getGapBoxControlValueFromStyle(blockGapValue);
+  function getGapCSSValue2(blockGapValue, defaultValue = "0") {
+    const blockGapBoxControlValue = getGapBoxControlValueFromStyle2(blockGapValue);
     if (!blockGapBoxControlValue) {
       return null;
     }
-    const row = getSpacingPresetCssVar(blockGapBoxControlValue?.top) || defaultValue;
-    const column = getSpacingPresetCssVar(blockGapBoxControlValue?.left) || defaultValue;
+    const row = getSpacingPresetCssVar2(blockGapBoxControlValue?.top) || defaultValue;
+    const column = getSpacingPresetCssVar2(blockGapBoxControlValue?.left) || defaultValue;
     return row === column ? row : `${row} ${column}`;
   }
 
@@ -16850,7 +18860,7 @@ var wp;
       blockName,
       hasBlockGapSupport,
       globalBlockGapValue,
-      layoutDefinitions = LAYOUT_DEFINITIONS
+      layoutDefinitions = LAYOUT_DEFINITIONS2
     }) {
       const hasViewportOverrides = viewportOverrides !== void 0;
       const effectiveLayout = hasViewportOverrides ? { ...layout, ...viewportOverrides } : layout;
@@ -16858,10 +18868,10 @@ var wp;
       const { orientation = "horizontal" } = effectiveLayout;
       let fallbackGapValue = "0.5em";
       if (globalBlockGapValue) {
-        const gapBox = getGapBoxControlValueFromStyle(globalBlockGapValue);
-        fallbackGapValue = getSpacingPresetCssVar(gapBox?.left) || getSpacingPresetCssVar(gapBox?.top) || "0.5em";
+        const gapBox = getGapBoxControlValueFromStyle2(globalBlockGapValue);
+        fallbackGapValue = getSpacingPresetCssVar2(gapBox?.left) || getSpacingPresetCssVar2(gapBox?.top) || "0.5em";
       }
-      const blockGapValue = style?.spacing?.blockGap && !shouldSkipSerialization(blockName, "spacing", "blockGap") ? getGapCSSValue(style?.spacing?.blockGap, fallbackGapValue) : void 0;
+      const blockGapValue = style?.spacing?.blockGap && !shouldSkipSerialization(blockName, "spacing", "blockGap") ? getGapCSSValue2(style?.spacing?.blockGap, fallbackGapValue) : void 0;
       const hasBlockGapOverride = !hasViewportOverrides || Object.hasOwn(style?.spacing || {}, "blockGap");
       const justifyContent = justifyContentMap[effectiveLayout.justifyContent];
       const flexWrap = flexWrapOptions.includes(effectiveLayout.flexWrap) ? effectiveLayout.flexWrap : "wrap";
@@ -17149,15 +19159,15 @@ var wp;
       style,
       blockName,
       hasBlockGapSupport,
-      layoutDefinitions = LAYOUT_DEFINITIONS
+      layoutDefinitions = LAYOUT_DEFINITIONS2
     }) {
-      const blockGapStyleValue = getGapCSSValue(style?.spacing?.blockGap);
+      const blockGapStyleValue = getGapCSSValue2(style?.spacing?.blockGap);
       let blockGapValue = "";
       if (!shouldSkipSerialization(blockName, "spacing", "blockGap")) {
         if (blockGapStyleValue?.top) {
-          blockGapValue = getGapCSSValue(blockGapStyleValue?.top);
+          blockGapValue = getGapCSSValue2(blockGapStyleValue?.top);
         } else if (typeof blockGapStyleValue === "string") {
-          blockGapValue = getGapCSSValue(blockGapStyleValue);
+          blockGapValue = getGapCSSValue2(blockGapStyleValue);
         }
       }
       let output = "";
@@ -17210,7 +19220,7 @@ var wp;
   // packages/block-editor/build-module/layouts/constrained.mjs
   var import_components13 = __toESM(require_components(), 1);
   var import_i18n14 = __toESM(require_i18n(), 1);
-  var import_style_engine = __toESM(require_style_engine(), 1);
+  var import_style_engine3 = __toESM(require_style_engine(), 1);
   var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
   var GLOBAL_CONTENT_SIZE = "var(--wp--style--global--content-size, none)";
   var GLOBAL_WIDE_SIZE = "var(--wp--style--global--wide-size, none)";
@@ -17394,21 +19404,21 @@ var wp;
       style,
       blockName,
       hasBlockGapSupport,
-      layoutDefinitions = LAYOUT_DEFINITIONS
+      layoutDefinitions = LAYOUT_DEFINITIONS2
     }) {
       const hasViewportOverrides = viewportOverrides !== void 0;
       const effectiveLayout = hasViewportOverrides ? { ...layout, ...viewportOverrides } : layout;
       const hasViewportOverride = (key) => Object.hasOwn(viewportOverrides || {}, key);
       const { contentSize, wideSize, justifyContent } = effectiveLayout;
-      const blockGapStyleValue = getGapCSSValue(style?.spacing?.blockGap);
+      const blockGapStyleValue = getGapCSSValue2(style?.spacing?.blockGap);
       const hasBlockGapOverride = !hasViewportOverrides || Object.hasOwn(style?.spacing || {}, "blockGap");
       const hasBlockSpacingOverride = !hasViewportOverrides || Object.hasOwn(style?.spacing || {}, "padding");
       let blockGapValue = "";
       if (!shouldSkipSerialization(blockName, "spacing", "blockGap")) {
         if (blockGapStyleValue?.top) {
-          blockGapValue = getGapCSSValue(blockGapStyleValue?.top);
+          blockGapValue = getGapCSSValue2(blockGapStyleValue?.top);
         } else if (typeof blockGapStyleValue === "string") {
-          blockGapValue = getGapCSSValue(blockGapStyleValue);
+          blockGapValue = getGapCSSValue2(blockGapStyleValue);
         }
       }
       const marginLeft = justifyContent === "left" ? "0 !important" : "auto !important";
@@ -17465,7 +19475,7 @@ var wp;
         }
       }
       if (hasBlockSpacingOverride && style?.spacing?.padding) {
-        const paddingValues = (0, import_style_engine.getCSSRules)(style);
+        const paddingValues = (0, import_style_engine3.getCSSRules)(style);
         paddingValues.forEach((rule) => {
           if (rule.key === "paddingRight") {
             const paddingRightValue = rule.value === "0" ? "0px" : rule.value;
@@ -17716,7 +19726,7 @@ var wp;
       blockName,
       hasBlockGapSupport,
       globalBlockGapValue,
-      layoutDefinitions = LAYOUT_DEFINITIONS
+      layoutDefinitions = LAYOUT_DEFINITIONS2
     }) {
       const hasViewportOverrides = viewportOverrides !== void 0;
       const effectiveLayout = hasViewportOverrides ? { ...layout, ...viewportOverrides } : layout;
@@ -17744,10 +19754,10 @@ var wp;
       }
       let fallbackGapValue = "1.2rem";
       if (globalBlockGapValue) {
-        const gapBox = getGapBoxControlValueFromStyle(globalBlockGapValue);
-        fallbackGapValue = getSpacingPresetCssVar(gapBox?.left) || getSpacingPresetCssVar(gapBox?.top) || "1.2rem";
+        const gapBox = getGapBoxControlValueFromStyle2(globalBlockGapValue);
+        fallbackGapValue = getSpacingPresetCssVar2(gapBox?.left) || getSpacingPresetCssVar2(gapBox?.top) || "1.2rem";
       }
-      const blockGapValue = style?.spacing?.blockGap && !shouldSkipSerialization(blockName, "spacing", "blockGap") ? getGapCSSValue(style?.spacing?.blockGap, fallbackGapValue) : void 0;
+      const blockGapValue = style?.spacing?.blockGap && !shouldSkipSerialization(blockName, "spacing", "blockGap") ? getGapCSSValue2(style?.spacing?.blockGap, fallbackGapValue) : void 0;
       const hasBlockGapOverride = !hasViewportOverrides || Object.hasOwn(style?.spacing || {}, "blockGap");
       let output = "";
       const rules = [];
@@ -18053,7 +20063,7 @@ var wp;
       controls = ["none", ...controls];
     }
     const isNoneOnly = controls.length === 1 && controls[0] === "none";
-    const [wideControlsEnabled, themeSupportsLayout, isBlockBasedTheme] = (0, import_data11.useSelect)(
+    const [wideControlsEnabled, themeSupportsLayout, isBlockBasedTheme] = (0, import_data12.useSelect)(
       (select3) => {
         if (isNoneOnly) {
           return [false, false, false];
@@ -18218,30 +20228,30 @@ var wp;
   // packages/block-editor/build-module/components/block-bindings/attribute-control.mjs
   var import_es63 = __toESM(require_es6(), 1);
   var import_i18n18 = __toESM(require_i18n(), 1);
-  var import_blocks14 = __toESM(require_blocks(), 1);
+  var import_blocks15 = __toESM(require_blocks(), 1);
   var import_components18 = __toESM(require_components(), 1);
-  var import_data14 = __toESM(require_data(), 1);
+  var import_data15 = __toESM(require_data(), 1);
   var import_element17 = __toESM(require_element(), 1);
   var import_compose5 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/block-bindings/source-fields-list.mjs
   var import_es62 = __toESM(require_es6(), 1);
-  var import_blocks13 = __toESM(require_blocks(), 1);
+  var import_blocks14 = __toESM(require_blocks(), 1);
   var import_components17 = __toESM(require_components(), 1);
-  var import_data13 = __toESM(require_data(), 1);
+  var import_data14 = __toESM(require_data(), 1);
   var import_element16 = __toESM(require_element(), 1);
   var import_compose4 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/block-bindings/use-block-bindings-utils.mjs
-  var import_data12 = __toESM(require_data(), 1);
+  var import_data13 = __toESM(require_data(), 1);
   function isObjectEmpty(object) {
     return !object || Object.keys(object).length === 0;
   }
   function useBlockBindingsUtils(clientId) {
     const { clientId: contextClientId } = useBlockEditContext();
     const blockClientId = clientId || contextClientId;
-    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data12.useDispatch)(store);
-    const { getBlockAttributes: getBlockAttributes3 } = (0, import_data12.useRegistry)().select(store);
+    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data13.useDispatch)(store);
+    const { getBlockAttributes: getBlockAttributes3 } = (0, import_data13.useRegistry)().select(store);
     const updateBlockBindings = (bindings) => {
       const { metadata: { bindings: currentBindings, ...metadata } = {} } = getBlockAttributes3(blockClientId);
       const newBindings = { ...currentBindings };
@@ -18292,7 +20302,7 @@ var wp;
       [field.args, field.key, sourceKey]
     );
     const blockContext = (0, import_element16.useContext)(block_context_default);
-    const values = (0, import_data13.useSelect)(
+    const values = (0, import_data14.useSelect)(
       (select3) => source.getValues({
         select: select3,
         context: blockContext,
@@ -18340,7 +20350,7 @@ var wp;
     if (!fields || fields.length === 0) {
       return null;
     }
-    const source = (0, import_blocks13.getBlockBindingsSource)(sourceKey);
+    const source = (0, import_blocks14.getBlockBindingsSource)(sourceKey);
     return /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)(
       Menu,
       {
@@ -18375,13 +20385,13 @@ var wp;
     const { updateBlockBindings } = useBlockBindingsUtils();
     const isMobile = (0, import_compose5.useViewportMatch)("medium", "<");
     const blockContext = (0, import_element17.useContext)(block_context_default);
-    const compatibleFields = (0, import_data14.useSelect)(
+    const compatibleFields = (0, import_data15.useSelect)(
       (select3) => {
         const {
           getAllBlockBindingsSources,
           getBlockBindingsSourceFieldsList,
           getBlockType: getBlockType29
-        } = unlock(select3(import_blocks14.store));
+        } = unlock(select3(import_blocks15.store));
         const _attribute = getBlockType29(blockName).attributes?.[attribute];
         if (_attribute?.enum) {
           return {};
@@ -18409,13 +20419,13 @@ var wp;
       },
       [attribute, blockName, blockContext]
     );
-    const { canUpdateBlockBindings } = (0, import_data14.useSelect)((select3) => ({
+    const { canUpdateBlockBindings } = (0, import_data15.useSelect)((select3) => ({
       canUpdateBlockBindings: select3(store).getSettings().canUpdateBlockBindings
     }));
     const hasCompatibleFields = Object.keys(compatibleFields).length > 0;
     const isAttributeReadOnly = !canUpdateBlockBindings || !hasCompatibleFields;
     const { source: boundSourceName, args } = binding || {};
-    const source = (0, import_blocks14.getBlockBindingsSource)(boundSourceName);
+    const source = (0, import_blocks15.getBlockBindingsSource)(boundSourceName);
     let displayText;
     let isValid2 = true;
     if (binding === void 0) {
@@ -18564,32 +20574,32 @@ var wp;
 
   // packages/block-editor/build-module/components/block-breadcrumb/index.mjs
   var import_components21 = __toESM(require_components(), 1);
-  var import_data16 = __toESM(require_data(), 1);
+  var import_data17 = __toESM(require_data(), 1);
   var import_i18n21 = __toESM(require_i18n(), 1);
   var import_element20 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-title/use-block-display-title.mjs
-  var import_data15 = __toESM(require_data(), 1);
-  var import_blocks15 = __toESM(require_blocks(), 1);
+  var import_data16 = __toESM(require_data(), 1);
+  var import_blocks16 = __toESM(require_blocks(), 1);
   function useBlockDisplayTitle({
     clientId,
     maximumLength,
     context
   }) {
-    const blockTitle = (0, import_data15.useSelect)(
+    const blockTitle = (0, import_data16.useSelect)(
       (select3) => {
         if (!clientId) {
           return null;
         }
         const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3, getBlock: getBlock2 } = select3(store);
-        const { getBlockType: getBlockType29, getActiveBlockVariation } = select3(import_blocks15.store);
+        const { getBlockType: getBlockType29, getActiveBlockVariation } = select3(import_blocks16.store);
         const blockName = getBlockName2(clientId);
         const blockType = getBlockType29(blockName);
         if (!blockType) {
           return null;
         }
         const attributes = getBlockAttributes3(clientId);
-        const label = (0, import_blocks15.__experimentalGetBlockLabel)(blockType, attributes, context);
+        const label = (0, import_blocks16.__experimentalGetBlockLabel)(blockType, attributes, context);
         if (label !== blockType.title) {
           return label;
         }
@@ -18690,8 +20700,8 @@ var wp;
   // packages/block-editor/build-module/components/block-breadcrumb/index.mjs
   var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
   function BlockBreadcrumb({ rootLabelText }) {
-    const { selectBlock: selectBlock2, clearSelectedBlock: clearSelectedBlock2 } = (0, import_data16.useDispatch)(store);
-    const { clientId, parents, hasSelection } = (0, import_data16.useSelect)((select3) => {
+    const { selectBlock: selectBlock2, clearSelectedBlock: clearSelectedBlock2 } = (0, import_data17.useDispatch)(store);
+    const { clientId, parents, hasSelection } = (0, import_data17.useSelect)((select3) => {
       const {
         getSelectionStart: getSelectionStart2,
         getSelectedBlockClientId: getSelectedBlockClientId2,
@@ -18793,9 +20803,9 @@ var wp;
   var block_breadcrumb_default = BlockBreadcrumb;
 
   // packages/block-editor/build-module/components/block-content-overlay/index.mjs
-  var import_data17 = __toESM(require_data(), 1);
+  var import_data18 = __toESM(require_data(), 1);
   function useBlockOverlayActive(clientId) {
-    return (0, import_data17.useSelect)(
+    return (0, import_data18.useSelect)(
       (select3) => {
         const { __unstableHasActiveBlockOverlayActive: __unstableHasActiveBlockOverlayActive2 } = select3(store);
         return __unstableHasActiveBlockOverlayActive2(clientId);
@@ -18811,16 +20821,16 @@ var wp;
   var import_components116 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-list/index.mjs
-  var import_data78 = __toESM(require_data(), 1);
+  var import_data79 = __toESM(require_data(), 1);
   var import_compose55 = __toESM(require_compose(), 1);
   var import_element141 = __toESM(require_element(), 1);
-  var import_blocks45 = __toESM(require_blocks(), 1);
+  var import_blocks46 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-list/block.mjs
   var import_element31 = __toESM(require_element(), 1);
-  var import_blocks22 = __toESM(require_blocks(), 1);
+  var import_blocks23 = __toESM(require_blocks(), 1);
   var import_components28 = __toESM(require_components(), 1);
-  var import_data29 = __toESM(require_data(), 1);
+  var import_data30 = __toESM(require_data(), 1);
   var import_compose17 = __toESM(require_compose(), 1);
   var import_dom7 = __toESM(require_dom(), 1);
 
@@ -18828,8 +20838,8 @@ var wp;
   var import_i18n23 = __toESM(require_i18n(), 1);
   var import_components23 = __toESM(require_components(), 1);
   var import_element22 = __toESM(require_element(), 1);
-  var import_blocks17 = __toESM(require_blocks(), 1);
-  var import_data18 = __toESM(require_data(), 1);
+  var import_blocks18 = __toESM(require_blocks(), 1);
+  var import_data19 = __toESM(require_data(), 1);
 
   // node_modules/diff/libesm/diff/base.js
   var Diff = class {
@@ -19043,7 +21053,7 @@ var wp;
 
   // packages/block-editor/build-module/components/block-compare/index.mjs
   var import_i18n22 = __toESM(require_i18n(), 1);
-  var import_blocks16 = __toESM(require_blocks(), 1);
+  var import_blocks17 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-compare/block-view.mjs
   var import_components22 = __toESM(require_components(), 1);
@@ -19099,7 +21109,7 @@ var wp;
     function getConvertedContent(convertedBlock) {
       const newBlocks = Array.isArray(convertedBlock) ? convertedBlock : [convertedBlock];
       const newContent = newBlocks.map(
-        (item) => (0, import_blocks16.getSaveContent)(item.name, item.attributes, item.innerBlocks)
+        (item) => (0, import_blocks17.getSaveContent)(item.name, item.attributes, item.innerBlocks)
       );
       return newContent.join("");
     }
@@ -19134,11 +21144,11 @@ var wp;
 
   // packages/block-editor/build-module/components/block-list/block-invalid-warning.mjs
   var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
-  var blockToBlocks = (block) => (0, import_blocks17.rawHandler)({
+  var blockToBlocks = (block) => (0, import_blocks18.rawHandler)({
     HTML: block.originalContent
   });
   function BlockInvalidWarning({ clientId }) {
-    const { block, canInsertHTMLBlock } = (0, import_data18.useSelect)(
+    const { block, canInsertHTMLBlock } = (0, import_data19.useSelect)(
       (select3) => {
         const { canInsertBlockType: canInsertBlockType2, getBlock: getBlock2, getBlockRootClientId: getBlockRootClientId2 } = select3(store);
         const rootClientId = getBlockRootClientId2(clientId);
@@ -19152,13 +21162,13 @@ var wp;
       },
       [clientId]
     );
-    const { replaceBlock: replaceBlock2 } = (0, import_data18.useDispatch)(store);
+    const { replaceBlock: replaceBlock2 } = (0, import_data19.useDispatch)(store);
     const [compare2, setCompare] = (0, import_element22.useState)(false);
     const onCompareClose = (0, import_element22.useCallback)(() => setCompare(false), []);
     const convert = (0, import_element22.useMemo)(
       () => ({
         toHTML() {
-          const htmlBlock = (0, import_blocks17.createBlock)(
+          const htmlBlock = (0, import_blocks18.createBlock)(
             "core/html",
             {},
             [],
@@ -19171,7 +21181,7 @@ var wp;
           return replaceBlock2(block.clientId, newBlocks);
         },
         toRecoveredBlock() {
-          const recoveredBlock = (0, import_blocks17.createBlock)(
+          const recoveredBlock = (0, import_blocks18.createBlock)(
             block.name,
             block.attributes,
             block.innerBlocks
@@ -19273,32 +21283,32 @@ var wp;
   // packages/block-editor/build-module/components/block-list/block-html.mjs
   var import_react_autosize_textarea = __toESM(require_lib(), 1);
   var import_element24 = __toESM(require_element(), 1);
-  var import_data19 = __toESM(require_data(), 1);
-  var import_blocks18 = __toESM(require_blocks(), 1);
+  var import_data20 = __toESM(require_data(), 1);
+  var import_blocks19 = __toESM(require_blocks(), 1);
   var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
   function BlockHTML({ clientId }) {
     const [html, setHtml] = (0, import_element24.useState)("");
-    const block = (0, import_data19.useSelect)(
+    const block = (0, import_data20.useSelect)(
       (select3) => select3(store).getBlock(clientId),
       [clientId]
     );
-    const { updateBlock: updateBlock2 } = (0, import_data19.useDispatch)(store);
+    const { updateBlock: updateBlock2 } = (0, import_data20.useDispatch)(store);
     const blockContent = (0, import_element24.useMemo)(
-      () => block ? (0, import_blocks18.getBlockContent)(block) : "",
+      () => block ? (0, import_blocks19.getBlockContent)(block) : "",
       [block]
     );
     const onChange = () => {
-      const blockType = (0, import_blocks18.getBlockType)(block.name);
+      const blockType = (0, import_blocks19.getBlockType)(block.name);
       if (!blockType) {
         return;
       }
-      const attributes = (0, import_blocks18.getBlockAttributes)(
+      const attributes = (0, import_blocks19.getBlockAttributes)(
         blockType,
         html,
         block.attributes
       );
-      const content = html ? html : (0, import_blocks18.getSaveContent)(blockType, attributes);
-      const [isValid2] = html ? (0, import_blocks18.validateBlock)({
+      const content = html ? html : (0, import_blocks19.getSaveContent)(blockType, attributes);
+      const [isValid2] = html ? (0, import_blocks19.validateBlock)({
         ...block,
         attributes,
         originalContent: content
@@ -19330,7 +21340,7 @@ var wp;
   // packages/block-editor/build-module/components/block-list/use-block-props/index.mjs
   var import_element30 = __toESM(require_element(), 1);
   var import_i18n30 = __toESM(require_i18n(), 1);
-  var import_blocks21 = __toESM(require_blocks(), 1);
+  var import_blocks22 = __toESM(require_blocks(), 1);
   var import_compose16 = __toESM(require_compose(), 1);
   var import_warning4 = __toESM(require_warning(), 1);
 
@@ -22237,7 +24247,7 @@ var wp;
   // packages/block-editor/build-module/components/use-moving-animation/index.mjs
   var import_element25 = __toESM(require_element(), 1);
   var import_dom2 = __toESM(require_dom(), 1);
-  var import_data20 = __toESM(require_data(), 1);
+  var import_data21 = __toESM(require_data(), 1);
   var BLOCK_ANIMATION_THRESHOLD = 200;
   function getAbsolutePosition(element) {
     return {
@@ -22255,7 +24265,7 @@ var wp;
       isBlockMultiSelected: isBlockMultiSelected2,
       isAncestorMultiSelected: isAncestorMultiSelected2,
       isDraggingBlocks: isDraggingBlocks2
-    } = (0, import_data20.useSelect)(store);
+    } = (0, import_data21.useSelect)(store);
     const { previous, prevRect } = (0, import_element25.useMemo)(
       () => ({
         previous: ref.current && getAbsolutePosition(ref.current),
@@ -22339,7 +24349,7 @@ var wp;
   // packages/block-editor/build-module/components/block-list/use-block-props/use-focus-first-element.mjs
   var import_element26 = __toESM(require_element(), 1);
   var import_dom3 = __toESM(require_dom(), 1);
-  var import_data21 = __toESM(require_data(), 1);
+  var import_data22 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/utils/dom.mjs
   var BLOCK_SELECTOR = ".block-editor-block-list__block";
@@ -22442,7 +24452,7 @@ var wp;
   function useFocusFirstElement({ clientId, initialPosition: initialPosition2 }) {
     const ref = (0, import_element26.useRef)();
     const { isBlockSelected: isBlockSelected2, isMultiSelecting: isMultiSelecting3, isZoomOut: isZoomOut2 } = unlock(
-      (0, import_data21.useSelect)(store)
+      (0, import_data22.useSelect)(store)
     );
     (0, import_element26.useEffect)(() => {
       if (!isBlockSelected2(clientId) || isMultiSelecting3() || isZoomOut2()) {
@@ -22517,12 +24527,12 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-list/use-block-props/use-focus-handler.mjs
-  var import_data22 = __toESM(require_data(), 1);
+  var import_data23 = __toESM(require_data(), 1);
   var import_compose9 = __toESM(require_compose(), 1);
   var { subscribeDelegatedListener: subscribeDelegatedListener2 } = unlock(import_compose9.privateApis);
   function useFocusHandler(clientId) {
-    const { isBlockSelected: isBlockSelected2 } = (0, import_data22.useSelect)(store);
-    const { selectBlock: selectBlock2, selectionChange: selectionChange2 } = (0, import_data22.useDispatch)(store);
+    const { isBlockSelected: isBlockSelected2 } = (0, import_data23.useSelect)(store);
+    const { selectBlock: selectBlock2, selectionChange: selectionChange2 } = (0, import_data23.useDispatch)(store);
     return (0, import_compose9.useRefEffect)(
       (node) => {
         function onFocus(event) {
@@ -22547,10 +24557,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-list/use-block-props/use-selected-block-event-handlers.mjs
-  var import_blocks19 = __toESM(require_blocks(), 1);
+  var import_blocks20 = __toESM(require_blocks(), 1);
   var import_dom6 = __toESM(require_dom(), 1);
   var import_keycodes2 = __toESM(require_keycodes(), 1);
-  var import_data23 = __toESM(require_data(), 1);
+  var import_data24 = __toESM(require_data(), 1);
   var import_compose10 = __toESM(require_compose(), 1);
   function isColorTransparent(color) {
     return !color || color === "transparent" || color === "rgba(0, 0, 0, 0)";
@@ -22563,7 +24573,7 @@ var wp;
       isSectionBlock: isSectionBlock2,
       editedContentOnlySection: editedContentOnlySection2,
       getBlock: getBlock2
-    } = unlock((0, import_data23.useSelect)(store));
+    } = unlock((0, import_data24.useSelect)(store));
     const {
       insertAfterBlock: insertAfterBlock2,
       removeBlock: removeBlock2,
@@ -22571,7 +24581,7 @@ var wp;
       startDraggingBlocks: startDraggingBlocks2,
       stopDraggingBlocks: stopDraggingBlocks2,
       editContentOnlySection: editContentOnlySection2
-    } = unlock((0, import_data23.useDispatch)(store));
+    } = unlock((0, import_data24.useDispatch)(store));
     return (0, import_compose10.useRefEffect)(
       (node) => {
         if (!isSelected) {
@@ -22743,8 +24753,8 @@ var wp;
         function onDoubleClick(event) {
           const isSection = isSectionBlock2(clientId);
           const block = getBlock2(clientId);
-          const isSyncedPattern = (0, import_blocks19.isReusableBlock)(block);
-          const isTemplatePartBlock = (0, import_blocks19.isTemplatePart)(block);
+          const isSyncedPattern = (0, import_blocks20.isReusableBlock)(block);
+          const isTemplatePartBlock = (0, import_blocks20.isTemplatePart)(block);
           const isAlreadyEditing = editedContentOnlySection2 === clientId;
           if (!isSection || isAlreadyEditing || isSyncedPattern || isTemplatePartBlock) {
             return;
@@ -22764,8 +24774,8 @@ var wp;
         isSelected,
         getBlockRootClientId2,
         getBlock2,
-        import_blocks19.isReusableBlock,
-        import_blocks19.isTemplatePart,
+        import_blocks20.isReusableBlock,
+        import_blocks20.isTemplatePart,
         insertAfterBlock2,
         removeBlock2,
         isZoomOut2,
@@ -22832,12 +24842,12 @@ var wp;
 
   // packages/block-editor/build-module/components/use-flash-editable-blocks/index.mjs
   var import_compose13 = __toESM(require_compose(), 1);
-  var import_data24 = __toESM(require_data(), 1);
+  var import_data25 = __toESM(require_data(), 1);
   function useFlashEditableBlocks({
     clientId = "",
     isEnabled = true
   } = {}) {
-    const { getEnabledClientIdsTree: getEnabledClientIdsTree2 } = unlock((0, import_data24.useSelect)(store));
+    const { getEnabledClientIdsTree: getEnabledClientIdsTree2 } = unlock((0, import_data25.useSelect)(store));
     return (0, import_compose13.useRefEffect)(
       (element) => {
         if (!isEnabled) {
@@ -22939,12 +24949,19 @@ var wp;
   var import_i18n26 = __toESM(require_i18n(), 1);
   var import_element28 = __toESM(require_element(), 1);
   var import_components24 = __toESM(require_components(), 1);
-  var import_data25 = __toESM(require_data(), 1);
+  var import_data26 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
   var import_notices3 = __toESM(require_notices(), 1);
 
   // packages/block-editor/build-module/components/block-visibility/utils.mjs
   var import_i18n25 = __toESM(require_i18n(), 1);
+  var { getViewportBreakpoints: getViewportBreakpoints3 } = unlock(privateApis);
+  function getBlockVisibilityViewportEntries(viewportSettings) {
+    const breakpoints = getViewportBreakpoints3(viewportSettings);
+    return BLOCK_VISIBILITY_VIEWPORT_ENTRIES.filter(
+      ([viewport]) => (viewport !== BLOCK_VISIBILITY_VIEWPORTS.tablet.key || breakpoints.tablet !== void 0) && (viewport !== BLOCK_VISIBILITY_VIEWPORTS.mobile.key || breakpoints.mobile !== void 0)
+    );
+  }
   function isBlockHiddenForViewport(block, viewport) {
     if (!block) {
       return false;
@@ -22997,7 +25014,7 @@ var wp;
     }
     return null;
   }
-  function getBlockVisibilityLabel(blockVisibility2) {
+  function getBlockVisibilityLabel(blockVisibility2, viewportSettings) {
     if (!blockVisibility2 && blockVisibility2 !== false) {
       return null;
     }
@@ -23005,7 +25022,9 @@ var wp;
       return (0, import_i18n25.__)("Block is hidden");
     }
     if (blockVisibility2?.viewport) {
-      const hiddenViewports = BLOCK_VISIBILITY_VIEWPORT_ENTRIES.filter(
+      const hiddenViewports = getBlockVisibilityViewportEntries(
+        viewportSettings
+      ).filter(
         ([key]) => blockVisibility2.viewport?.[key] === false
       ).map(([, viewport]) => viewport.label);
       if (hiddenViewports.length > 0) {
@@ -23028,17 +25047,25 @@ var wp;
   };
   var EMPTY_BLOCKS = [];
   function BlockVisibilityModal({ clientIds, onClose }) {
-    const { createSuccessNotice } = (0, import_data25.useDispatch)(import_notices3.store);
-    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data25.useDispatch)(store);
-    const blocks2 = (0, import_data25.useSelect)(
+    const { createSuccessNotice } = (0, import_data26.useDispatch)(import_notices3.store);
+    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data26.useDispatch)(store);
+    const blocks2 = (0, import_data26.useSelect)(
       (select3) => select3(store).getBlocksByClientId(clientIds) ?? EMPTY_BLOCKS,
       [clientIds]
     );
-    const listViewShortcut = (0, import_data25.useSelect)((select3) => {
+    const listViewShortcut = (0, import_data26.useSelect)((select3) => {
       return select3(import_keyboard_shortcuts.store).getShortcutRepresentation(
         "core/editor/toggle-list-view"
       );
     }, []);
+    const viewportSettings = (0, import_data26.useSelect)(
+      (select3) => select3(store).getSettings().__experimentalFeatures?.viewport,
+      []
+    );
+    const viewportEntries = (0, import_element28.useMemo)(
+      () => getBlockVisibilityViewportEntries(viewportSettings),
+      [viewportSettings]
+    );
     const initialViewportValues = (0, import_element28.useMemo)(() => {
       if (blocks2?.length === 0) {
         return {
@@ -23047,14 +25074,14 @@ var wp;
         };
       }
       const viewportValues = {};
-      BLOCK_VISIBILITY_VIEWPORT_ENTRIES.forEach(([, { key }]) => {
+      viewportEntries.forEach(([, { key }]) => {
         viewportValues[key] = getViewportCheckboxState(blocks2, key);
       });
       return {
         hideEverywhere: getHideEverywhereCheckboxState(blocks2),
         viewportChecked: viewportValues
       };
-    }, [blocks2]);
+    }, [blocks2, viewportEntries]);
     const [viewportChecked, setViewportChecked] = (0, import_element28.useState)(
       initialViewportValues?.viewportChecked ?? {}
     );
@@ -23103,10 +25130,15 @@ var wp;
       if (hideEverywhere !== initialViewportValues.hideEverywhere) {
         return true;
       }
-      return BLOCK_VISIBILITY_VIEWPORT_ENTRIES.some(
+      return viewportEntries.some(
         ([, { key }]) => viewportChecked[key] !== initialViewportValues.viewportChecked[key]
       );
-    }, [hideEverywhere, viewportChecked, initialViewportValues]);
+    }, [
+      hideEverywhere,
+      viewportChecked,
+      initialViewportValues,
+      viewportEntries
+    ]);
     const hasIndeterminateValues = (0, import_element28.useMemo)(() => {
       if (hideEverywhere === null) {
         return true;
@@ -23119,7 +25151,7 @@ var wp;
       (event) => {
         event.preventDefault();
         const newVisibility = hideEverywhere ? false : {
-          viewport: BLOCK_VISIBILITY_VIEWPORT_ENTRIES.reduce(
+          viewport: viewportEntries.reduce(
             (acc, [, { key }]) => {
               if (viewportChecked[key]) {
                 acc[key] = false;
@@ -23157,6 +25189,7 @@ var wp;
         noticeMessage,
         onClose,
         updateBlockAttributes2,
+        viewportEntries,
         viewportChecked
       ]
     );
@@ -23191,7 +25224,7 @@ var wp;
                   }
                 }
               ),
-              hideEverywhere !== true && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("ul", { className: "block-editor-block-visibility-modal__sub-options", children: BLOCK_VISIBILITY_VIEWPORT_ENTRIES.map(
+              hideEverywhere !== true && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("ul", { className: "block-editor-block-visibility-modal__sub-options", children: viewportEntries.map(
                 ([, { label, icon, key }]) => /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
                   "li",
                   {
@@ -23288,22 +25321,30 @@ var wp;
 
   // packages/block-editor/build-module/components/block-visibility/use-block-visibility.mjs
   var import_compose15 = __toESM(require_compose(), 1);
+  var { getViewportBreakpoints: getViewportBreakpoints4 } = unlock(privateApis);
   function useBlockVisibility(options = {}) {
     const {
       blockVisibility: blockVisibility2 = void 0,
       deviceType = BLOCK_VISIBILITY_VIEWPORTS.desktop.key,
+      viewportSettings,
       view = window
     } = options;
-    const isLargerThanMobile = (0, import_compose15.useViewportMatch)("mobile", ">=", view);
-    const isLargerThanTablet = (0, import_compose15.useViewportMatch)("medium", ">=", view);
+    const viewportBreakpoints = getViewportBreakpoints4(viewportSettings);
+    const mobileMediaQuery = viewportBreakpoints.mobile ? `(width <= ${viewportBreakpoints.mobile})` : void 0;
+    const isMobileViewport = (0, import_compose15.useMediaQuery)(mobileMediaQuery, view);
+    let tabletMediaQuery;
+    if (viewportBreakpoints.tablet) {
+      tabletMediaQuery = viewportBreakpoints.mobile ? `(${viewportBreakpoints.mobile} < width <= ${viewportBreakpoints.tablet})` : `(width <= ${viewportBreakpoints.tablet})`;
+    }
+    const isTabletViewport = (0, import_compose15.useMediaQuery)(tabletMediaQuery, view);
     let currentViewport;
-    if (deviceType === BLOCK_VISIBILITY_VIEWPORTS.mobile.key) {
+    if (deviceType === BLOCK_VISIBILITY_VIEWPORTS.mobile.key && viewportBreakpoints.mobile) {
       currentViewport = BLOCK_VISIBILITY_VIEWPORTS.mobile.key;
-    } else if (deviceType === BLOCK_VISIBILITY_VIEWPORTS.tablet.key) {
+    } else if (deviceType === BLOCK_VISIBILITY_VIEWPORTS.tablet.key && viewportBreakpoints.tablet) {
       currentViewport = BLOCK_VISIBILITY_VIEWPORTS.tablet.key;
-    } else if (!isLargerThanMobile) {
+    } else if (isMobileViewport) {
       currentViewport = BLOCK_VISIBILITY_VIEWPORTS.mobile.key;
-    } else if (isLargerThanMobile && !isLargerThanTablet) {
+    } else if (isTabletViewport && viewportBreakpoints.tablet) {
       currentViewport = BLOCK_VISIBILITY_VIEWPORTS.tablet.key;
     } else {
       currentViewport = BLOCK_VISIBILITY_VIEWPORTS.desktop.key;
@@ -23316,18 +25357,18 @@ var wp;
   var import_i18n27 = __toESM(require_i18n(), 1);
   var import_components25 = __toESM(require_components(), 1);
   var import_element29 = __toESM(require_element(), 1);
-  var import_blocks20 = __toESM(require_blocks(), 1);
-  var import_data26 = __toESM(require_data(), 1);
+  var import_blocks21 = __toESM(require_blocks(), 1);
+  var import_data27 = __toESM(require_data(), 1);
   var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
   function BlockVisibilityViewportToolbar({ clientIds }) {
     const hasBlockVisibilityButtonShownRef = (0, import_element29.useRef)(false);
-    const { canToggleBlockVisibility, areBlocksHiddenAnywhere } = (0, import_data26.useSelect)(
+    const { canToggleBlockVisibility, areBlocksHiddenAnywhere } = (0, import_data27.useSelect)(
       (select3) => {
         const { getBlocksByClientId: getBlocksByClientId2, getBlockName: getBlockName2, isBlockHiddenAnywhere: isBlockHiddenAnywhere2 } = unlock(select3(store));
         const _blocks = getBlocksByClientId2(clientIds);
         return {
           canToggleBlockVisibility: _blocks.every(
-            ({ clientId }) => (0, import_blocks20.hasBlockSupport)(
+            ({ clientId }) => (0, import_blocks21.hasBlockSupport)(
               getBlockName2(clientId),
               "visibility",
               true
@@ -23340,7 +25381,7 @@ var wp;
       },
       [clientIds]
     );
-    const blockEditorDispatch = (0, import_data26.useDispatch)(store);
+    const blockEditorDispatch = (0, import_data27.useDispatch)(store);
     (0, import_element29.useEffect)(() => {
       if (areBlocksHiddenAnywhere) {
         hasBlockVisibilityButtonShownRef.current = true;
@@ -23365,11 +25406,11 @@ var wp;
   // packages/block-editor/build-module/components/block-visibility/viewport-menu-item.mjs
   var import_i18n28 = __toESM(require_i18n(), 1);
   var import_components26 = __toESM(require_components(), 1);
-  var import_data27 = __toESM(require_data(), 1);
+  var import_data28 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts2 = __toESM(require_keyboard_shortcuts(), 1);
   var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
   function BlockVisibilityViewportMenuItem({ clientIds }) {
-    const { areBlocksHiddenAnywhere, shortcut } = (0, import_data27.useSelect)(
+    const { areBlocksHiddenAnywhere, shortcut } = (0, import_data28.useSelect)(
       (select3) => {
         const { isBlockHiddenAnywhere: isBlockHiddenAnywhere2 } = unlock(
           select3(store)
@@ -23387,7 +25428,7 @@ var wp;
       },
       [clientIds]
     );
-    const { showViewportModal: showViewportModal2 } = unlock((0, import_data27.useDispatch)(store));
+    const { showViewportModal: showViewportModal2 } = unlock((0, import_data28.useDispatch)(store));
     return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
       import_components26.MenuItem,
       {
@@ -23400,7 +25441,7 @@ var wp;
 
   // packages/block-editor/build-module/components/block-visibility/viewport-visibility-info.mjs
   var import_components27 = __toESM(require_components(), 1);
-  var import_data28 = __toESM(require_data(), 1);
+  var import_data29 = __toESM(require_data(), 1);
   var import_i18n29 = __toESM(require_i18n(), 1);
   var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
   var { Badge: WCBadge } = unlock(import_components27.privateApis);
@@ -23413,8 +25454,9 @@ var wp;
     const {
       currentBlockVisibility,
       selectedDeviceType,
+      viewportSettings,
       hasParentHiddenEverywhere
-    } = (0, import_data28.useSelect)(
+    } = (0, import_data29.useSelect)(
       (select3) => {
         if (!clientId) {
           return DEFAULT_VISIBILITY_STATE;
@@ -23424,9 +25466,11 @@ var wp;
           isBlockParentHiddenEverywhere: isBlockParentHiddenEverywhere2,
           getSettings: getSettings7
         } = unlock(select3(store));
+        const settings2 = getSettings7();
         return {
           currentBlockVisibility: getBlockAttributes3(clientId)?.metadata?.blockVisibility,
-          selectedDeviceType: getSettings7()?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.key,
+          selectedDeviceType: settings2?.[deviceTypeKey]?.toLowerCase() || BLOCK_VISIBILITY_VIEWPORTS.desktop.key,
+          viewportSettings: settings2?.__experimentalFeatures?.viewport,
           hasParentHiddenEverywhere: isBlockParentHiddenEverywhere2(clientId)
         };
       },
@@ -23438,9 +25482,10 @@ var wp;
     const { isBlockCurrentlyHidden, currentViewport } = useBlockVisibility({
       blockVisibility: currentBlockVisibility,
       deviceType: selectedDeviceType,
+      viewportSettings,
       view: canvasView
     });
-    const isBlockParentHiddenAtViewport2 = (0, import_data28.useSelect)(
+    const isBlockParentHiddenAtViewport2 = (0, import_data29.useSelect)(
       (select3) => {
         if (!clientId || !currentViewport) {
           return false;
@@ -23514,7 +25559,8 @@ var wp;
       isWithinSectionBlock,
       canMove,
       blockVisibility: blockVisibility2,
-      deviceType
+      deviceType,
+      viewportSettings
     } = (0, import_element30.useContext)(PrivateBlockContext);
     const defaultViewRef = (0, import_compose16.useRefEffect)((element) => {
       if (element) {
@@ -23554,6 +25600,7 @@ var wp;
     const { isBlockCurrentlyHidden } = useBlockVisibility({
       blockVisibility: blockVisibility2,
       deviceType,
+      viewportSettings,
       view: defaultViewRef.current
     });
     if (blockApiVersion < 2 && clientId === blockEditContext.clientId) {
@@ -23605,7 +25652,7 @@ var wp;
       style: { ...wrapperProps.style, ...props.style, ...bindingsStyle }
     };
   }
-  useBlockProps.save = import_blocks21.__unstableGetBlockProps;
+  useBlockProps.save = import_blocks22.__unstableGetBlockProps;
 
   // packages/block-editor/build-module/components/block-list/block.mjs
   var import_jsx_runtime151 = __toESM(require_jsx_runtime(), 1);
@@ -23677,7 +25724,7 @@ var wp;
         isPreviewMode: context.isPreviewMode
       }
     );
-    const blockType = (0, import_blocks22.getBlockType)(name);
+    const blockType = (0, import_blocks23.getBlockType)(name);
     if (blockType?.getEditWrapperProps) {
       wrapperProps = mergeWrapperProps(
         wrapperProps,
@@ -23698,7 +25745,7 @@ var wp;
     }
     let block;
     if (!isValid2) {
-      const saveContent = __unstableBlockSource ? (0, import_blocks22.serializeRawBlock)(__unstableBlockSource) : (0, import_blocks22.getSaveContent)(blockType, attributes);
+      const saveContent = __unstableBlockSource ? (0, import_blocks23.serializeRawBlock)(__unstableBlockSource) : (0, import_blocks23.getSaveContent)(blockType, attributes);
       block = /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(Block, { className: "has-warning", children: [
         /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(BlockInvalidWarning, { clientId }),
         /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(import_element31.RawHTML, { children: (0, import_dom7.safeHTML)(saveContent) })
@@ -23741,7 +25788,7 @@ var wp;
       }
     );
   }
-  var applyWithDispatch = (0, import_data29.withDispatch)((dispatch, ownProps, registry) => {
+  var applyWithDispatch = (0, import_data30.withDispatch)((dispatch, ownProps, registry) => {
     const {
       updateBlockAttributes: updateBlockAttributes2,
       insertBlocks: insertBlocks2,
@@ -23787,17 +25834,17 @@ var wp;
         } = registry.select(store);
         function switchToDefaultOrRemove() {
           const block = getBlock2(clientId);
-          const defaultBlockName = (0, import_blocks22.getDefaultBlockName)();
-          const defaultBlockType = (0, import_blocks22.getBlockType)(defaultBlockName);
+          const defaultBlockName = (0, import_blocks23.getDefaultBlockName)();
+          const defaultBlockType = (0, import_blocks23.getBlockType)(defaultBlockName);
           if (getBlockName2(clientId) !== defaultBlockName) {
-            const replacement = (0, import_blocks22.switchToBlockType)(
+            const replacement = (0, import_blocks23.switchToBlockType)(
               block,
               defaultBlockName
             );
             if (replacement && replacement.length) {
               replaceBlocks2(clientId, replacement);
             }
-          } else if ((0, import_blocks22.isUnmodifiedDefaultBlock)(block)) {
+          } else if ((0, import_blocks23.isUnmodifiedDefaultBlock)(block)) {
             const nextBlockClientId = getNextBlockClientId2(clientId);
             if (nextBlockClientId) {
               registry.batch(() => {
@@ -23812,18 +25859,18 @@ var wp;
             );
             replaceBlocks2(
               [clientId],
-              [(0, import_blocks22.createBlock)(defaultBlockName, attributes)]
+              [(0, import_blocks23.createBlock)(defaultBlockName, attributes)]
             );
           }
         }
         function moveFirstItemUp(_clientId, changeSelection = true) {
           const wrapperBlockName = getBlockName2(_clientId);
-          const wrapperBlockType = (0, import_blocks22.getBlockType)(wrapperBlockName);
+          const wrapperBlockType = (0, import_blocks23.getBlockType)(wrapperBlockName);
           const isTextualWrapper = wrapperBlockType.category === "text";
           const targetRootClientId = getBlockRootClientId2(_clientId);
           const blockOrder = getBlockOrder2(_clientId);
           const [firstClientId] = blockOrder;
-          if (blockOrder.length === 1 && (0, import_blocks22.isUnmodifiedBlock)(getBlock2(firstClientId))) {
+          if (blockOrder.length === 1 && (0, import_blocks23.isUnmodifiedBlock)(getBlock2(firstClientId))) {
             removeBlock2(_clientId);
           } else if (isTextualWrapper) {
             registry.batch(() => {
@@ -23838,9 +25885,9 @@ var wp;
                   getBlockIndex2(_clientId)
                 );
               } else {
-                const replacement = (0, import_blocks22.switchToBlockType)(
+                const replacement = (0, import_blocks23.switchToBlockType)(
                   getBlock2(firstClientId),
-                  (0, import_blocks22.getDefaultBlockName)()
+                  (0, import_blocks23.getDefaultBlockName)()
                 );
                 if (replacement && replacement.length && replacement.every(
                   (block) => canInsertBlockType2(
@@ -23859,7 +25906,7 @@ var wp;
                   switchToDefaultOrRemove();
                 }
               }
-              if (!getBlockOrder2(_clientId).length && (0, import_blocks22.isUnmodifiedBlock)(getBlock2(_clientId))) {
+              if (!getBlockOrder2(_clientId).length && (0, import_blocks23.isUnmodifiedBlock)(getBlock2(_clientId))) {
                 removeBlock2(_clientId, false);
               }
             });
@@ -23932,7 +25979,7 @@ var wp;
         }
       },
       onReplace(blocks2, indexToSelect, initialPosition2) {
-        if (blocks2.length && !(0, import_blocks22.isUnmodifiedDefaultBlock)(blocks2[blocks2.length - 1])) {
+        if (blocks2.length && !(0, import_blocks23.isUnmodifiedDefaultBlock)(blocks2[blocks2.length - 1])) {
           __unstableMarkLastChangeAsPersistent2();
         }
         const replacementBlocks = blocks2?.length === 1 && Array.isArray(blocks2[0]) ? blocks2[0] : blocks2;
@@ -23957,7 +26004,7 @@ var wp;
   )(BlockListBlock);
   function BlockListBlockProvider(props) {
     const { clientId, rootClientId } = props;
-    const selectedProps = (0, import_data29.useSelect)(
+    const selectedProps = (0, import_data30.useSelect)(
       (select3) => {
         const {
           isBlockSelected: isBlockSelected2,
@@ -23996,10 +26043,10 @@ var wp;
         const {
           hasBlockSupport: _hasBlockSupport,
           getActiveBlockVariation
-        } = select3(import_blocks22.store);
+        } = select3(import_blocks23.store);
         const attributes2 = getBlockAttributes3(clientId);
         const { name: blockName, isValid: isValid22 } = blockWithoutAttributes;
-        const blockType2 = (0, import_blocks22.getBlockType)(blockName);
+        const blockType2 = (0, import_blocks23.getBlockType)(blockName);
         const settings2 = getSettings7();
         const {
           supportsLayout,
@@ -24009,6 +26056,7 @@ var wp;
         const bindableAttributes2 = __experimentalBlockBindingsSupportedAttributes?.[blockName];
         const blockVisibility22 = attributes2?.metadata?.blockVisibility;
         const deviceType2 = settings2?.[deviceTypeKey]?.toLowerCase() || "desktop";
+        const viewportSettings2 = settings2?.__experimentalFeatures?.viewport;
         const hasLightBlockWrapper = blockType2?.apiVersion > 1;
         const isMultiSelected2 = isBlockMultiSelected2(clientId);
         const blockEditingMode2 = getBlockEditingMode2(clientId);
@@ -24020,13 +26068,14 @@ var wp;
           isValid: isValid22,
           themeSupportsLayout: supportsLayout,
           index: getBlockIndex2(clientId),
-          isReusable: (0, import_blocks22.isReusableBlock)(blockType2),
+          isReusable: (0, import_blocks23.isReusableBlock)(blockType2),
           className: hasLightBlockWrapper ? attributes2.className : void 0,
-          defaultClassName: hasLightBlockWrapper ? (0, import_blocks22.getBlockDefaultClassName)(blockName) : void 0,
+          defaultClassName: hasLightBlockWrapper ? (0, import_blocks23.getBlockDefaultClassName)(blockName) : void 0,
           blockTitle: blockType2?.title,
           bindableAttributes: bindableAttributes2,
           blockVisibility: blockVisibility22,
           deviceType: deviceType2,
+          viewportSettings: viewportSettings2,
           isMultiSelected: isMultiSelected2,
           blockEditingMode: blockEditingMode2,
           isEditingDisabled: blockEditingMode2 === "disabled"
@@ -24044,7 +26093,7 @@ var wp;
           checkDeep
         );
         const sectionBlockClientId = _isSectionBlock(clientId) ? clientId : getParentSectionBlock2(clientId);
-        const multiple = (0, import_blocks22.hasBlockSupport)(blockName, "multiple", true);
+        const multiple = (0, import_blocks23.hasBlockSupport)(blockName, "multiple", true);
         const blocksWithSameName = multiple ? [] : getBlocksByName2(blockName);
         const isInvalid = blocksWithSameName.length && blocksWithSameName[0] !== clientId;
         return {
@@ -24083,7 +26132,8 @@ var wp;
           hasEditableOutline: blockEditingMode2 !== "disabled" && getBlockEditingMode2(rootClientId) === "disabled",
           originalBlockClientId: isInvalid ? blocksWithSameName[0] : false,
           blockVisibility: blockVisibility22,
-          deviceType: deviceType2
+          deviceType: deviceType2,
+          viewportSettings: viewportSettings2
         };
       },
       [clientId, rootClientId]
@@ -24098,6 +26148,7 @@ var wp;
     const { isBlockCurrentlyHidden } = useBlockVisibility({
       blockVisibility: selectedProps?.blockVisibility,
       deviceType: selectedProps?.deviceType,
+      viewportSettings: selectedProps?.viewportSettings,
       view: defaultViewRef.current
     });
     const block = (0, import_element31.useMemo)(
@@ -24151,7 +26202,8 @@ var wp;
       originalBlockClientId,
       bindableAttributes,
       blockVisibility: blockVisibility2,
-      deviceType
+      deviceType,
+      viewportSettings
     } = selectedProps;
     const privateContext = {
       isPreviewMode,
@@ -24189,7 +26241,8 @@ var wp;
       isBlockCurrentlyHidden,
       bindableAttributes,
       blockVisibility: blockVisibility2,
-      deviceType
+      deviceType,
+      viewportSettings
     };
     if (isBlockCurrentlyHidden && !isSelected && !isMultiSelected && !hasChildSelected) {
       return null;
@@ -24220,21 +26273,21 @@ var wp;
   var block_default2 = (0, import_element31.memo)(BlockListBlockProvider);
 
   // packages/block-editor/build-module/components/block-list-appender/index.mjs
-  var import_data64 = __toESM(require_data(), 1);
-  var import_blocks39 = __toESM(require_blocks(), 1);
+  var import_data65 = __toESM(require_data(), 1);
+  var import_blocks40 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/default-block-appender/index.mjs
   var import_i18n64 = __toESM(require_i18n(), 1);
   var import_html_entities = __toESM(require_html_entities(), 1);
-  var import_data63 = __toESM(require_data(), 1);
+  var import_data64 = __toESM(require_data(), 1);
   var import_keycodes8 = __toESM(require_keycodes(), 1);
 
   // packages/block-editor/build-module/components/inserter/index.mjs
   var import_a11y10 = __toESM(require_a11y(), 1);
   var import_i18n63 = __toESM(require_i18n(), 1);
   var import_components61 = __toESM(require_components(), 1);
-  var import_data62 = __toESM(require_data(), 1);
-  var import_blocks38 = __toESM(require_blocks(), 1);
+  var import_data63 = __toESM(require_data(), 1);
+  var import_blocks39 = __toESM(require_blocks(), 1);
   var import_element128 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inserter/menu.mjs
@@ -40029,8 +42082,8 @@ var wp;
   var theme = __toESM(require_theme(), 1);
 
   // packages/ui/build-module/lock-unlock.mjs
-  var import_private_apis2 = __toESM(require_private_apis(), 1);
-  var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  var import_private_apis4 = __toESM(require_private_apis(), 1);
+  var { lock: lock3, unlock: unlock3 } = (0, import_private_apis4.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/ui"
   );
@@ -40046,7 +42099,7 @@ var wp;
         "@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`."
       );
     }
-    return unlock2(
+    return unlock3(
       themePackage.privateApis
     ).ThemeProvider;
   }
@@ -41981,7 +44034,7 @@ var wp;
   // packages/block-editor/build-module/components/inserter/menu.mjs
   var import_i18n61 = __toESM(require_i18n(), 1);
   var import_compose44 = __toESM(require_compose(), 1);
-  var import_data60 = __toESM(require_data(), 1);
+  var import_data61 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/inserter/tips.mjs
   var import_i18n33 = __toESM(require_i18n(), 1);
@@ -42019,16 +44072,16 @@ var wp;
   var tips_default = Tips;
 
   // packages/block-editor/build-module/components/inserter/preview-panel.mjs
-  var import_blocks29 = __toESM(require_blocks(), 1);
+  var import_blocks30 = __toESM(require_blocks(), 1);
   var import_element100 = __toESM(require_element(), 1);
   var import_i18n39 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/block-card/index.mjs
   var import_components30 = __toESM(require_components(), 1);
-  var import_data30 = __toESM(require_data(), 1);
+  var import_data31 = __toESM(require_data(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
   var import_i18n34 = __toESM(require_i18n(), 1);
-  var import_blocks23 = __toESM(require_blocks(), 1);
+  var import_blocks24 = __toESM(require_blocks(), 1);
   var import_jsx_runtime215 = __toESM(require_jsx_runtime(), 1);
   var { Badge: WCBadge2 } = unlock(import_components30.privateApis);
   function OptionalParentSelectButton({ children, onClick }) {
@@ -42066,7 +44119,7 @@ var wp;
       });
       ({ title, icon, description } = blockType);
     }
-    const { parentBlockClientId, parentBlockName } = (0, import_data30.useSelect)(
+    const { parentBlockClientId, parentBlockName } = (0, import_data31.useSelect)(
       (select3) => {
         if (parentClientId || isChild || !allowParentNavigation) {
           return {};
@@ -42083,7 +44136,7 @@ var wp;
       },
       [clientId, allowParentNavigation, isChild, parentClientId]
     );
-    const { selectBlock: selectBlock2 } = (0, import_data30.useDispatch)(store);
+    const { selectBlock: selectBlock2 } = (0, import_data31.useDispatch)(store);
     const TitleElement = parentClientId ? "div" : "h2";
     return /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
       "div",
@@ -42106,7 +44159,7 @@ var wp;
                   label: parentBlockName ? (0, import_i18n34.sprintf)(
                     /* translators: %s: The name of the parent block. */
                     (0, import_i18n34.__)('Go to "%s" block'),
-                    (0, import_blocks23.getBlockType)(parentBlockName)?.title
+                    (0, import_blocks24.getBlockType)(parentBlockName)?.title
                   ) : (0, import_i18n34.__)("Go to parent block"),
                   style: (
                     // TODO: This style override is also used in ToolsPanelHeader.
@@ -42153,19 +44206,19 @@ var wp;
 
   // packages/block-editor/build-module/components/block-preview/index.mjs
   var import_compose33 = __toESM(require_compose(), 1);
-  var import_data50 = __toESM(require_data(), 1);
+  var import_data51 = __toESM(require_data(), 1);
   var import_element99 = __toESM(require_element(), 1);
   var import_deprecated7 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/provider/index.mjs
-  var import_data34 = __toESM(require_data(), 1);
+  var import_data35 = __toESM(require_data(), 1);
   var import_element90 = __toESM(require_element(), 1);
   var import_components31 = __toESM(require_components(), 1);
   var import_upload_media = __toESM(require_upload_media(), 1);
 
   // packages/block-editor/build-module/components/provider/with-registry-provider.mjs
   var import_element85 = __toESM(require_element(), 1);
-  var import_data31 = __toESM(require_data(), 1);
+  var import_data32 = __toESM(require_data(), 1);
   var import_compose18 = __toESM(require_compose(), 1);
   var import_jsx_runtime216 = __toESM(require_jsx_runtime(), 1);
   function getSubRegistry(subRegistries, registry, useSubRegistry) {
@@ -42174,7 +44227,7 @@ var wp;
     }
     let subRegistry = subRegistries.get(registry);
     if (!subRegistry) {
-      subRegistry = (0, import_data31.createRegistry)({}, registry);
+      subRegistry = (0, import_data32.createRegistry)({}, registry);
       subRegistry.registerStore(STORE_NAME, storeConfig);
       subRegistries.set(registry, subRegistry);
     }
@@ -42182,7 +44235,7 @@ var wp;
   }
   var withRegistryProvider = (0, import_compose18.createHigherOrderComponent)(
     (WrappedComponent) => function WithRegistryProvider({ useSubRegistry = true, ...props }) {
-      const registry = (0, import_data31.useRegistry)();
+      const registry = (0, import_data32.useRegistry)();
       const [subRegistries] = (0, import_element85.useState)(() => /* @__PURE__ */ new WeakMap());
       const subRegistry = getSubRegistry(
         subRegistries,
@@ -42192,7 +44245,7 @@ var wp;
       if (subRegistry === registry) {
         return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(WrappedComponent, { registry, ...props });
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(import_data31.RegistryProvider, { value: subRegistry, children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(WrappedComponent, { registry: subRegistry, ...props }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(import_data32.RegistryProvider, { value: subRegistry, children: /* @__PURE__ */ (0, import_jsx_runtime216.jsx)(WrappedComponent, { registry: subRegistry, ...props }) });
     },
     "withRegistryProvider"
   );
@@ -42200,8 +44253,8 @@ var wp;
 
   // packages/block-editor/build-module/components/provider/use-block-sync.mjs
   var import_element87 = __toESM(require_element(), 1);
-  var import_data32 = __toESM(require_data(), 1);
-  var import_blocks24 = __toESM(require_blocks(), 1);
+  var import_data33 = __toESM(require_data(), 1);
+  var import_blocks25 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/provider/selection-context.mjs
   var import_element86 = __toESM(require_element(), 1);
@@ -42216,7 +44269,7 @@ var wp;
   var noop8 = () => {
   };
   function cloneBlockWithMapping(block, mapping) {
-    const clonedBlock = (0, import_blocks24.cloneBlock)(block);
+    const clonedBlock = (0, import_blocks25.cloneBlock)(block);
     mapping.externalToInternal.set(block.clientId, clonedBlock.clientId);
     mapping.internalToExternal.set(clonedBlock.clientId, block.clientId);
     if (block.innerBlocks?.length) {
@@ -42262,7 +44315,7 @@ var wp;
     onChange = noop8,
     onInput = noop8
   }) {
-    const registry = (0, import_data32.useRegistry)();
+    const registry = (0, import_data33.useRegistry)();
     const { getSelection, onChangeSelection } = (0, import_element87.useContext)(SelectionContext);
     const {
       resetBlocks: resetBlocks2,
@@ -42474,14 +44527,14 @@ var wp;
 
   // packages/block-editor/build-module/components/keyboard-shortcuts/index.mjs
   var import_element88 = __toESM(require_element(), 1);
-  var import_data33 = __toESM(require_data(), 1);
+  var import_data34 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts3 = __toESM(require_keyboard_shortcuts(), 1);
   var import_i18n35 = __toESM(require_i18n(), 1);
   function KeyboardShortcuts() {
     return null;
   }
   function KeyboardShortcutsRegister() {
-    const { registerShortcut } = (0, import_data33.useDispatch)(import_keyboard_shortcuts3.store);
+    const { registerShortcut } = (0, import_data34.useDispatch)(import_keyboard_shortcuts3.store);
     (0, import_element88.useEffect)(() => {
       registerShortcut({
         name: "core/block-editor/copy",
@@ -42863,7 +44916,7 @@ var wp;
         isMediaUploadIntercepted
       ]);
       const { __experimentalUpdateSettings: __experimentalUpdateSettings2 } = unlock(
-        (0, import_data34.useDispatch)(store)
+        (0, import_data35.useDispatch)(store)
       );
       (0, import_element90.useEffect)(() => {
         __experimentalUpdateSettings2(
@@ -42928,7 +44981,7 @@ var wp;
 
   // packages/block-editor/build-module/components/block-preview/auto.mjs
   var import_compose32 = __toESM(require_compose(), 1);
-  var import_data49 = __toESM(require_data(), 1);
+  var import_data50 = __toESM(require_data(), 1);
   var import_element97 = __toESM(require_element(), 1);
   var import_components34 = __toESM(require_components(), 1);
 
@@ -42938,17 +44991,17 @@ var wp;
   var import_i18n38 = __toESM(require_i18n(), 1);
   var import_compose31 = __toESM(require_compose(), 1);
   var import_components32 = __toESM(require_components(), 1);
-  var import_data47 = __toESM(require_data(), 1);
+  var import_data48 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/writing-flow/index.mjs
-  var import_data46 = __toESM(require_data(), 1);
+  var import_data47 = __toESM(require_data(), 1);
   var import_i18n37 = __toESM(require_i18n(), 1);
   var import_compose29 = __toESM(require_compose(), 1);
   var import_element93 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/writing-flow/use-multi-selection.mjs
   var import_compose19 = __toESM(require_compose(), 1);
-  var import_data35 = __toESM(require_data(), 1);
+  var import_data36 = __toESM(require_data(), 1);
   function selector(select3) {
     const {
       isMultiSelecting: isMultiSelecting3,
@@ -42975,7 +45028,7 @@ var wp;
       hasMultiSelection: hasMultiSelection2,
       selectedBlockClientId,
       isFullSelection
-    } = (0, import_data35.useSelect)(selector, []);
+    } = (0, import_data36.useSelect)(selector, []);
     return (0, import_compose19.useRefEffect)(
       (node) => {
         const { ownerDocument: ownerDocument2 } = node;
@@ -43011,7 +45064,7 @@ var wp;
   // packages/block-editor/build-module/components/writing-flow/use-tab-nav.mjs
   var import_dom35 = __toESM(require_dom(), 1);
   var import_keycodes3 = __toESM(require_keycodes(), 1);
-  var import_data36 = __toESM(require_data(), 1);
+  var import_data37 = __toESM(require_data(), 1);
   var import_compose20 = __toESM(require_compose(), 1);
   var import_element91 = __toESM(require_element(), 1);
   var import_jsx_runtime218 = __toESM(require_jsx_runtime(), 1);
@@ -43030,8 +45083,8 @@ var wp;
       getLastFocus: getLastFocus2,
       getSectionRootClientId: getSectionRootClientId2,
       isZoomOut: isZoomOut2
-    } = unlock((0, import_data36.useSelect)(store));
-    const { setLastFocus: setLastFocus2 } = unlock((0, import_data36.useDispatch)(store));
+    } = unlock((0, import_data37.useSelect)(store));
+    const { setLastFocus: setLastFocus2 } = unlock((0, import_data37.useDispatch)(store));
     const noCaptureRef = (0, import_element91.useRef)();
     function onFocusCapture(event) {
       const canvasElement = containerRef.current.ownerDocument === event.target.ownerDocument ? containerRef.current : containerRef.current.ownerDocument.defaultView.frameElement;
@@ -43156,7 +45209,7 @@ var wp;
   // packages/block-editor/build-module/components/writing-flow/use-arrow-nav.mjs
   var import_dom37 = __toESM(require_dom(), 1);
   var import_keycodes4 = __toESM(require_keycodes(), 1);
-  var import_data37 = __toESM(require_data(), 1);
+  var import_data38 = __toESM(require_data(), 1);
   var import_compose21 = __toESM(require_compose(), 1);
   function isNavigationCandidate(element, keyCode, hasModifier) {
     const isVertical = keyCode === import_keycodes4.UP || keyCode === import_keycodes4.DOWN;
@@ -43232,8 +45285,8 @@ var wp;
       getSettings: getSettings7,
       hasMultiSelection: hasMultiSelection2,
       __unstableIsFullySelected: __unstableIsFullySelected2
-    } = (0, import_data37.useSelect)(store);
-    const { selectBlock: selectBlock2 } = (0, import_data37.useDispatch)(store);
+    } = (0, import_data38.useSelect)(store);
+    const { selectBlock: selectBlock2 } = (0, import_data38.useDispatch)(store);
     return (0, import_compose21.useRefEffect)((node) => {
       let verticalRect;
       function onMouseDown() {
@@ -43340,10 +45393,10 @@ var wp;
 
   // packages/block-editor/build-module/components/writing-flow/use-preview-mode-nav.mjs
   var import_compose22 = __toESM(require_compose(), 1);
-  var import_data38 = __toESM(require_data(), 1);
+  var import_data39 = __toESM(require_data(), 1);
   var import_keycodes5 = __toESM(require_keycodes(), 1);
   function usePreviewModeNav() {
-    const isPreviewMode = (0, import_data38.useSelect)(
+    const isPreviewMode = (0, import_data39.useSelect)(
       (select3) => select3(store).getSettings().isPreviewMode,
       []
     );
@@ -43403,12 +45456,12 @@ var wp;
 
   // packages/block-editor/build-module/components/writing-flow/use-select-all.mjs
   var import_dom39 = __toESM(require_dom(), 1);
-  var import_data39 = __toESM(require_data(), 1);
+  var import_data40 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts5 = __toESM(require_keyboard_shortcuts(), 1);
   var import_compose23 = __toESM(require_compose(), 1);
   function useSelectAll() {
-    const { getBlockOrder: getBlockOrder2, getSelectedBlockClientIds: getSelectedBlockClientIds2, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data39.useSelect)(store);
-    const { multiSelect: multiSelect2, selectBlock: selectBlock2 } = (0, import_data39.useDispatch)(store);
+    const { getBlockOrder: getBlockOrder2, getSelectedBlockClientIds: getSelectedBlockClientIds2, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data40.useSelect)(store);
+    const { multiSelect: multiSelect2, selectBlock: selectBlock2 } = (0, import_data40.useDispatch)(store);
     const isMatch = (0, import_keyboard_shortcuts5.__unstableUseShortcutEventMatch)();
     return (0, import_compose23.useRefEffect)((node) => {
       function onKeyDown(event) {
@@ -43456,7 +45509,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/writing-flow/use-drag-selection.mjs
-  var import_data40 = __toESM(require_data(), 1);
+  var import_data41 = __toESM(require_data(), 1);
   var import_compose24 = __toESM(require_compose(), 1);
   function setContentEditableWrapper(node, value) {
     node.contentEditable = value;
@@ -43465,14 +45518,14 @@ var wp;
     }
   }
   function useDragSelection() {
-    const { startMultiSelect: startMultiSelect2, stopMultiSelect: stopMultiSelect2 } = (0, import_data40.useDispatch)(store);
+    const { startMultiSelect: startMultiSelect2, stopMultiSelect: stopMultiSelect2 } = (0, import_data41.useDispatch)(store);
     const {
       getSettings: getSettings7,
       isSelectionEnabled: isSelectionEnabled3,
       hasSelectedBlock: hasSelectedBlock2,
       isDraggingBlocks: isDraggingBlocks2,
       isMultiSelecting: isMultiSelecting3
-    } = (0, import_data40.useSelect)(store);
+    } = (0, import_data41.useSelect)(store);
     return (0, import_compose24.useRefEffect)(
       (node) => {
         const { ownerDocument: ownerDocument2 } = node;
@@ -43552,7 +45605,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/writing-flow/use-selection-observer.mjs
-  var import_data41 = __toESM(require_data(), 1);
+  var import_data42 = __toESM(require_data(), 1);
   var import_compose25 = __toESM(require_compose(), 1);
   var import_rich_text4 = __toESM(require_rich_text(), 1);
   var import_dom41 = __toESM(require_dom(), 1);
@@ -43599,8 +45652,8 @@ var wp;
     return element?.closest("[data-wp-block-attribute-key]");
   }
   function useSelectionObserver() {
-    const { multiSelect: multiSelect2, selectBlock: selectBlock2, selectionChange: selectionChange2 } = (0, import_data41.useDispatch)(store);
-    const { getBlockParents: getBlockParents2, getBlockSelectionStart: getBlockSelectionStart2, isMultiSelecting: isMultiSelecting3 } = (0, import_data41.useSelect)(store);
+    const { multiSelect: multiSelect2, selectBlock: selectBlock2, selectionChange: selectionChange2 } = (0, import_data42.useDispatch)(store);
+    const { getBlockParents: getBlockParents2, getBlockSelectionStart: getBlockSelectionStart2, isMultiSelecting: isMultiSelecting3 } = (0, import_data42.useSelect)(store);
     return (0, import_compose25.useRefEffect)(
       (node) => {
         const { ownerDocument: ownerDocument2 } = node;
@@ -43743,11 +45796,11 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/writing-flow/use-click-selection.mjs
-  var import_data42 = __toESM(require_data(), 1);
+  var import_data43 = __toESM(require_data(), 1);
   var import_compose26 = __toESM(require_compose(), 1);
   function useClickSelection() {
-    const { selectBlock: selectBlock2 } = (0, import_data42.useDispatch)(store);
-    const { isSelectionEnabled: isSelectionEnabled3, getBlockSelectionStart: getBlockSelectionStart2, hasMultiSelection: hasMultiSelection2 } = (0, import_data42.useSelect)(store);
+    const { selectBlock: selectBlock2 } = (0, import_data43.useDispatch)(store);
+    const { isSelectionEnabled: isSelectionEnabled3, getBlockSelectionStart: getBlockSelectionStart2, hasMultiSelection: hasMultiSelection2 } = (0, import_data43.useSelect)(store);
     return (0, import_compose26.useRefEffect)(
       (node) => {
         function onMouseDown(event) {
@@ -43780,10 +45833,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/writing-flow/use-input.mjs
-  var import_data43 = __toESM(require_data(), 1);
+  var import_data44 = __toESM(require_data(), 1);
   var import_compose27 = __toESM(require_compose(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
-  var import_blocks25 = __toESM(require_blocks(), 1);
+  var import_blocks26 = __toESM(require_blocks(), 1);
   function useInput() {
     const {
       __unstableIsFullySelected: __unstableIsFullySelected2,
@@ -43797,7 +45850,7 @@ var wp;
       getSelectionStart: getSelectionStart2,
       getSelectionEnd: getSelectionEnd2,
       getBlockAttributes: getBlockAttributes3
-    } = (0, import_data43.useSelect)(store);
+    } = (0, import_data44.useSelect)(store);
     const {
       replaceBlocks: replaceBlocks2,
       __unstableSplitSelection: __unstableSplitSelection2,
@@ -43805,7 +45858,7 @@ var wp;
       __unstableDeleteSelection: __unstableDeleteSelection2,
       __unstableExpandSelection: __unstableExpandSelection2,
       __unstableMarkAutomaticChange: __unstableMarkAutomaticChange2
-    } = (0, import_data43.useDispatch)(store);
+    } = (0, import_data44.useDispatch)(store);
     return (0, import_compose27.useRefEffect)((node) => {
       function onBeforeInput(event) {
         if (node.contentEditable === "true") {
@@ -43827,10 +45880,10 @@ var wp;
             const selectionEnd = getSelectionEnd2();
             if (selectionStart.attributeKey === selectionEnd.attributeKey) {
               const selectedAttributeValue = getBlockAttributes3(clientId)[selectionStart.attributeKey];
-              const transforms = (0, import_blocks25.getBlockTransforms)("from").filter(
+              const transforms = (0, import_blocks26.getBlockTransforms)("from").filter(
                 ({ type }) => type === "enter"
               );
-              const transformation = (0, import_blocks25.findTransform)(
+              const transformation = (0, import_blocks26.findTransform)(
                 transforms,
                 (item) => {
                   return item.regExp.test(
@@ -43849,11 +45902,11 @@ var wp;
                 return;
               }
             }
-            if (!(0, import_blocks25.hasBlockSupport)(blockName, "splitting", false) && !event.__deprecatedOnSplit) {
+            if (!(0, import_blocks26.hasBlockSupport)(blockName, "splitting", false) && !event.__deprecatedOnSplit) {
               return;
             }
             if (canInsertBlockType2(
-              (0, import_blocks25.getDefaultBlockName)(),
+              (0, import_blocks26.getDefaultBlockName)(),
               getBlockRootClientId2(clientId)
             ) || canInsertBlockType2(
               blockName,
@@ -43871,7 +45924,7 @@ var wp;
           if (__unstableIsFullySelected2()) {
             replaceBlocks2(
               getSelectedBlockClientIds2(),
-              (0, import_blocks25.createBlock)((0, import_blocks25.getDefaultBlockName)())
+              (0, import_blocks26.createBlock)((0, import_blocks26.getDefaultBlockName)())
             );
           } else {
             __unstableSplitSelection2();
@@ -43924,21 +45977,21 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/writing-flow/use-clipboard-handler.mjs
-  var import_blocks28 = __toESM(require_blocks(), 1);
+  var import_blocks29 = __toESM(require_blocks(), 1);
   var import_dom46 = __toESM(require_dom(), 1);
-  var import_data45 = __toESM(require_data(), 1);
+  var import_data46 = __toESM(require_data(), 1);
   var import_compose28 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/utils/use-notify-copy.mjs
   var import_element92 = __toESM(require_element(), 1);
-  var import_blocks26 = __toESM(require_blocks(), 1);
-  var import_data44 = __toESM(require_data(), 1);
+  var import_blocks27 = __toESM(require_blocks(), 1);
+  var import_data45 = __toESM(require_data(), 1);
   var import_i18n36 = __toESM(require_i18n(), 1);
   var import_notices4 = __toESM(require_notices(), 1);
   function useNotifyCopy() {
-    const { getBlockName: getBlockName2 } = (0, import_data44.useSelect)(store);
-    const { getBlockType: getBlockType29 } = (0, import_data44.useSelect)(import_blocks26.store);
-    const { createSuccessNotice } = (0, import_data44.useDispatch)(import_notices4.store);
+    const { getBlockName: getBlockName2 } = (0, import_data45.useSelect)(store);
+    const { getBlockType: getBlockType29 } = (0, import_data45.useSelect)(import_blocks27.store);
+    const { createSuccessNotice } = (0, import_data45.useDispatch)(import_notices4.store);
     return (0, import_element92.useCallback)(
       (eventType, selectedBlockClientIds) => {
         let notice = "";
@@ -43991,7 +46044,7 @@ var wp;
 
   // packages/block-editor/build-module/components/writing-flow/utils.mjs
   var import_dom45 = __toESM(require_dom(), 1);
-  var import_blocks27 = __toESM(require_blocks(), 1);
+  var import_blocks28 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/utils/pasting.mjs
   var import_dom44 = __toESM(require_dom(), 1);
@@ -44056,7 +46109,7 @@ var wp;
     let _blocks = blocks2;
     const [firstBlock] = blocks2;
     if (firstBlock) {
-      const firstBlockType = registry.select(import_blocks27.store).getBlockType(firstBlock.name);
+      const firstBlockType = registry.select(import_blocks28.store).getBlockType(firstBlock.name);
       if (firstBlockType[requiresWrapperOnCopy]) {
         const { getBlockRootClientId: getBlockRootClientId2, getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3 } = registry.select(store);
         const wrapperBlockClientId = getBlockRootClientId2(
@@ -44064,7 +46117,7 @@ var wp;
         );
         const wrapperBlockName = getBlockName2(wrapperBlockClientId);
         if (wrapperBlockName) {
-          _blocks = (0, import_blocks27.createBlock)(
+          _blocks = (0, import_blocks28.createBlock)(
             wrapperBlockName,
             getBlockAttributes3(wrapperBlockClientId),
             _blocks
@@ -44072,7 +46125,7 @@ var wp;
         }
       }
     }
-    const serialized = (0, import_blocks27.serialize)(_blocks);
+    const serialized = (0, import_blocks28.serialize)(_blocks);
     event.clipboardData.setData("text/plain", toPlainText(serialized));
     event.clipboardData.setData("text/html", serialized);
   }
@@ -44080,9 +46133,9 @@ var wp;
     const { plainText, html, files } = getPasteEventData(event);
     let blocks2 = [];
     if (files.length) {
-      const fromTransforms = (0, import_blocks27.getBlockTransforms)("from");
+      const fromTransforms = (0, import_blocks28.getBlockTransforms)("from");
       blocks2 = files.reduce((accumulator, file) => {
-        const transformation = (0, import_blocks27.findTransform)(
+        const transformation = (0, import_blocks28.findTransform)(
           fromTransforms,
           (transform) => transform.type === "files" && transform.isMatch([file])
         );
@@ -44092,7 +46145,7 @@ var wp;
         return accumulator;
       }, []).flat();
     } else {
-      blocks2 = (0, import_blocks27.pasteHandler)({
+      blocks2 = (0, import_blocks28.pasteHandler)({
         HTML: html,
         plainText,
         mode: "BLOCKS",
@@ -44109,7 +46162,7 @@ var wp;
 
   // packages/block-editor/build-module/components/writing-flow/use-clipboard-handler.mjs
   function useClipboardHandler() {
-    const registry = (0, import_data45.useRegistry)();
+    const registry = (0, import_data46.useRegistry)();
     const {
       getBlocksByClientId: getBlocksByClientId2,
       getSelectedBlockClientIds: getSelectedBlockClientIds2,
@@ -44122,7 +46175,7 @@ var wp;
       __unstableGetSelectedBlocksWithPartialSelection: __unstableGetSelectedBlocksWithPartialSelection2,
       canInsertBlockType: canInsertBlockType2,
       getBlockRootClientId: getBlockRootClientId2
-    } = (0, import_data45.useSelect)(store);
+    } = (0, import_data46.useSelect)(store);
     const {
       flashBlock: flashBlock2,
       removeBlocks: removeBlocks2,
@@ -44130,7 +46183,7 @@ var wp;
       __unstableDeleteSelection: __unstableDeleteSelection2,
       __unstableExpandSelection: __unstableExpandSelection2,
       __unstableSplitSelection: __unstableSplitSelection2
-    } = (0, import_data45.useDispatch)(store);
+    } = (0, import_data46.useDispatch)(store);
     const notifyCopy = useNotifyCopy();
     return (0, import_compose28.useRefEffect)((node) => {
       function handler(event) {
@@ -44205,9 +46258,9 @@ var wp;
               event.preventDefault();
               return;
             }
-            const fromTransforms = (0, import_blocks28.getBlockTransforms)("from");
+            const fromTransforms = (0, import_blocks29.getBlockTransforms)("from");
             blocks2 = files.reduce((accumulator, file) => {
-              const transformation = (0, import_blocks28.findTransform)(
+              const transformation = (0, import_blocks29.findTransform)(
                 fromTransforms,
                 (transform) => transform.type === "files" && transform.isMatch([file])
               );
@@ -44219,7 +46272,7 @@ var wp;
               return accumulator;
             }, []).flat();
           } else {
-            blocks2 = (0, import_blocks28.pasteHandler)({
+            blocks2 = (0, import_blocks29.pasteHandler)({
               HTML: html,
               plainText,
               mode: isFullySelected ? "BLOCKS" : "AUTO",
@@ -44239,7 +46292,7 @@ var wp;
             event.preventDefault();
             return;
           }
-          if (!hasMultiSelection2() && !(0, import_blocks28.hasBlockSupport)(
+          if (!hasMultiSelection2() && !(0, import_blocks29.hasBlockSupport)(
             getBlockName2(selectedBlockClientIds[0]),
             "splitting",
             false
@@ -44256,7 +46309,7 @@ var wp;
               newBlocks.push(block);
             } else {
               const rootBlockName = getBlockName2(rootClientId);
-              const switchedBlocks = block.name !== rootBlockName ? (0, import_blocks28.switchToBlockType)(block, rootBlockName) : [block];
+              const switchedBlocks = block.name !== rootBlockName ? (0, import_blocks29.switchToBlockType)(block, rootBlockName) : [block];
               if (!switchedBlocks) {
                 return;
               }
@@ -44286,7 +46339,7 @@ var wp;
   var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
   function useWritingFlow() {
     const [before, ref, after] = useTabNav();
-    const hasMultiSelection2 = (0, import_data46.useSelect)(
+    const hasMultiSelection2 = (0, import_data47.useSelect)(
       (select3) => select3(store).hasMultiSelection(),
       []
     );
@@ -44789,7 +46842,7 @@ var wp;
     title = (0, import_i18n38.__)("Editor canvas"),
     ...props
   }) {
-    const { resolvedAssets, isPreviewMode } = (0, import_data47.useSelect)((select3) => {
+    const { resolvedAssets, isPreviewMode } = (0, import_data48.useSelect)((select3) => {
       const settings2 = select3(store).getSettings();
       return {
         resolvedAssets: settings2.__unstableResolvedAssets,
@@ -44966,7 +47019,7 @@ var wp;
     ] });
   }
   function IframeIfReady(props, ref) {
-    const isInitialised = (0, import_data47.useSelect)(
+    const isInitialised = (0, import_data48.useSelect)(
       (select3) => select3(store).getSettings().__internalIsInitialized,
       []
     );
@@ -44980,7 +47033,7 @@ var wp;
   // packages/block-editor/build-module/components/editor-styles/index.mjs
   var import_components33 = __toESM(require_components(), 1);
   var import_element96 = __toESM(require_element(), 1);
-  var import_data48 = __toESM(require_data(), 1);
+  var import_data49 = __toESM(require_data(), 1);
 
   // node_modules/parsel-js/dist/parsel.js
   var TOKENS = {
@@ -45299,7 +47352,7 @@ var wp;
     );
   }
   function EditorStyles({ styles, scope, transformOptions }) {
-    const overrides = (0, import_data48.useSelect)(
+    const overrides = (0, import_data49.useSelect)(
       (select3) => unlock(select3(store)).getStyleOverrides(),
       []
     );
@@ -45367,7 +47420,7 @@ var wp;
       viewportWidth = containerWidth;
     }
     const [contentResizeListener, { height: contentHeight }] = (0, import_compose32.useResizeObserver)();
-    const { styles } = (0, import_data49.useSelect)((select3) => {
+    const { styles } = (0, import_data50.useSelect)((select3) => {
       const settings2 = select3(store).getSettings();
       return {
         styles: settings2.styles
@@ -45508,7 +47561,7 @@ var wp;
         alternative: "additionalStyles"
       });
     }
-    const originalSettings = (0, import_data50.useSelect)(
+    const originalSettings = (0, import_data51.useSelect)(
       (select3) => select3(store).getSettings(),
       []
     );
@@ -45548,7 +47601,7 @@ var wp;
   MemoizedBlockPreview.Async = Async;
   var block_preview_default = MemoizedBlockPreview;
   function useBlockPreview({ blocks: blocks2, props = {}, layout }) {
-    const originalSettings = (0, import_data50.useSelect)(
+    const originalSettings = (0, import_data51.useSelect)(
       (select3) => select3(store).getSettings(),
       []
     );
@@ -45596,12 +47649,12 @@ var wp;
   var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
   function InserterPreviewPanel({ item }) {
     const { name, title, icon, description, initialAttributes, example } = item;
-    const isReusable = (0, import_blocks29.isReusableBlock)(item);
+    const isReusable = (0, import_blocks30.isReusableBlock)(item);
     const blocks2 = (0, import_element100.useMemo)(() => {
       if (!example) {
-        return (0, import_blocks29.createBlock)(name, initialAttributes);
+        return (0, import_blocks30.createBlock)(name, initialAttributes);
       }
-      return (0, import_blocks29.getBlockFromExample)(name, {
+      return (0, import_blocks30.getBlockFromExample)(name, {
         attributes: {
           ...example.attributes,
           ...initialAttributes
@@ -45658,12 +47711,12 @@ var wp;
   var import_compose35 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/block-types-list/index.mjs
-  var import_blocks32 = __toESM(require_blocks(), 1);
+  var import_blocks33 = __toESM(require_blocks(), 1);
   var import_compose34 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/inserter-list-item/index.mjs
   var import_element106 = __toESM(require_element(), 1);
-  var import_blocks31 = __toESM(require_blocks(), 1);
+  var import_blocks32 = __toESM(require_blocks(), 1);
   var import_components40 = __toESM(require_components(), 1);
   var import_keycodes7 = __toESM(require_keycodes(), 1);
 
@@ -45767,8 +47820,8 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter-draggable-blocks/index.mjs
   var import_components39 = __toESM(require_components(), 1);
-  var import_blocks30 = __toESM(require_blocks(), 1);
-  var import_data51 = __toESM(require_data(), 1);
+  var import_blocks31 = __toESM(require_blocks(), 1);
+  var import_data52 = __toESM(require_data(), 1);
   var import_element105 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-draggable/draggable-chip.mjs
@@ -45817,17 +47870,17 @@ var wp;
     pattern
   }) => {
     const blockName = blocks2.length === 1 ? blocks2[0].name : void 0;
-    const blockTypeIcon = (0, import_data51.useSelect)(
+    const blockTypeIcon = (0, import_data52.useSelect)(
       (select3) => {
-        return blockName && select3(import_blocks30.store).getBlockType(blockName)?.icon;
+        return blockName && select3(import_blocks31.store).getBlockType(blockName)?.icon;
       },
       [blockName]
     );
     const { startDragging: startDragging2, stopDragging: stopDragging2 } = unlock(
-      (0, import_data51.useDispatch)(store)
+      (0, import_data52.useDispatch)(store)
     );
     const patternBlock = (0, import_element105.useMemo)(() => {
-      return pattern?.type === INSERTER_PATTERN_TYPES.user && pattern?.syncStatus !== "unsynced" ? [(0, import_blocks30.createBlock)("core/block", { ref: pattern.id })] : void 0;
+      return pattern?.type === INSERTER_PATTERN_TYPES.user && pattern?.syncStatus !== "unsynced" ? [(0, import_blocks31.createBlock)("core/block", { ref: pattern.id })] : void 0;
     }, [pattern?.type, pattern?.syncStatus, pattern?.id]);
     if (!isEnabled) {
       return children({
@@ -45894,10 +47947,10 @@ var wp;
     } : {};
     const blocks2 = (0, import_element106.useMemo)(
       () => [
-        (0, import_blocks31.createBlock)(
+        (0, import_blocks32.createBlock)(
           item.name,
           item.initialAttributes,
-          (0, import_blocks31.createBlocksFromInnerBlocksTemplate)(item.innerBlocks),
+          (0, import_blocks32.createBlocksFromInnerBlocksTemplate)(item.innerBlocks),
           item.innerContent
         )
       ],
@@ -45908,7 +47961,7 @@ var wp;
         item.innerContent
       ]
     );
-    const isSynced = (0, import_blocks31.isReusableBlock)(item) && item.syncStatus !== "unsynced" || (0, import_blocks31.isTemplatePart)(item);
+    const isSynced = (0, import_blocks32.isReusableBlock)(item) && item.syncStatus !== "unsynced" || (0, import_blocks32.isTemplatePart)(item);
     return /* @__PURE__ */ (0, import_jsx_runtime231.jsx)(
       inserter_draggable_blocks_default,
       {
@@ -46019,7 +48072,7 @@ var wp;
         inserter_list_item_default,
         {
           item,
-          className: (0, import_blocks32.getBlockMenuDefaultClassName)(
+          className: (0, import_blocks33.getBlockMenuDefaultClassName)(
             item.id
           ),
           onSelect,
@@ -46319,7 +48372,7 @@ var wp;
   var import_a11y7 = __toESM(require_a11y(), 1);
 
   // packages/block-editor/build-module/components/block-patterns-list/index.mjs
-  var import_blocks33 = __toESM(require_blocks(), 1);
+  var import_blocks34 = __toESM(require_blocks(), 1);
   var import_element108 = __toESM(require_element(), 1);
   var import_components44 = __toESM(require_components(), 1);
   var import_compose36 = __toESM(require_compose(), 1);
@@ -46464,7 +48517,7 @@ var wp;
         return blocks2;
       }
       return (blocks2 ?? []).map((block) => {
-        const clonedBlock = (0, import_blocks33.cloneBlock)(block);
+        const clonedBlock = (0, import_blocks34.cloneBlock)(block);
         if (clonedBlock.attributes.metadata?.categories?.includes(
           category
         )) {
@@ -46639,8 +48692,8 @@ var wp;
   var block_patterns_list_default = (0, import_element108.forwardRef)(BlockPatternsList);
 
   // packages/block-editor/build-module/components/inserter/hooks/use-insertion-point.mjs
-  var import_data52 = __toESM(require_data(), 1);
-  var import_blocks34 = __toESM(require_blocks(), 1);
+  var import_data53 = __toESM(require_data(), 1);
+  var import_blocks35 = __toESM(require_blocks(), 1);
   var import_i18n47 = __toESM(require_i18n(), 1);
   var import_a11y6 = __toESM(require_a11y(), 1);
   var import_element109 = __toESM(require_element(), 1);
@@ -46673,13 +48726,13 @@ var wp;
     shouldFocusBlock = true,
     selectBlockOnInsert = true
   }) {
-    const registry = (0, import_data52.useRegistry)();
+    const registry = (0, import_data53.useRegistry)();
     const {
       getSelectedBlock: getSelectedBlock2,
       getClosestAllowedInsertionPoint: getClosestAllowedInsertionPoint2,
       isBlockInsertionPointVisible: isBlockInsertionPointVisible2
-    } = unlock((0, import_data52.useSelect)(store));
-    const { destinationRootClientId, destinationIndex } = (0, import_data52.useSelect)(
+    } = unlock((0, import_data53.useSelect)(store));
+    const { destinationRootClientId, destinationIndex } = (0, import_data53.useSelect)(
       (select3) => {
         const {
           getSelectedBlockClientId: getSelectedBlockClientId2,
@@ -46722,14 +48775,14 @@ var wp;
       showInsertionPoint: showInsertionPoint2,
       hideInsertionPoint: hideInsertionPoint2,
       setLastFocus: setLastFocus2
-    } = unlock((0, import_data52.useDispatch)(store));
+    } = unlock((0, import_data53.useDispatch)(store));
     const onInsertBlocks = (0, import_element109.useCallback)(
       (blocks2, meta, shouldForceFocusBlock = false, _rootClientId) => {
         if (shouldForceFocusBlock || shouldFocusBlock || selectBlockOnInsert) {
           setLastFocus2(null);
         }
         const selectedBlock = getSelectedBlock2();
-        if (!isAppender && selectedBlock && (0, import_blocks34.isUnmodifiedDefaultBlock)(selectedBlock, "content")) {
+        if (!isAppender && selectedBlock && (0, import_blocks35.isUnmodifiedDefaultBlock)(selectedBlock, "content")) {
           replaceBlocks2(
             selectedBlock.clientId,
             blocks2,
@@ -46815,8 +48868,8 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter/hooks/use-patterns-state.mjs
   var import_element110 = __toESM(require_element(), 1);
-  var import_blocks35 = __toESM(require_blocks(), 1);
-  var import_data53 = __toESM(require_data(), 1);
+  var import_blocks36 = __toESM(require_blocks(), 1);
+  var import_data54 = __toESM(require_data(), 1);
   var import_i18n48 = __toESM(require_i18n(), 1);
   var import_notices5 = __toESM(require_notices(), 1);
   var usePatternsState = (onInsert, rootClientId, selectedCategory, isQuick) => {
@@ -46824,12 +48877,12 @@ var wp;
       () => ({ [isFiltered]: !!isQuick }),
       [isQuick]
     );
-    const isWithinNavigationOverlayContext = (0, import_data53.useSelect)((select3) => {
+    const isWithinNavigationOverlayContext = (0, import_data54.useSelect)((select3) => {
       const { getSettings: getSettings7 } = unlock(select3(store));
       const settings2 = getSettings7();
       return settings2[isNavigationOverlayContextKey] ?? false;
     }, []);
-    const { patternCategories, patterns, userPatternCategories } = (0, import_data53.useSelect)(
+    const { patternCategories, patterns, userPatternCategories } = (0, import_data54.useSelect)(
       (select3) => {
         const { getSettings: getSettings7, __experimentalGetAllowedPatterns: __experimentalGetAllowedPatterns2 } = unlock(
           select3(store)
@@ -46857,7 +48910,7 @@ var wp;
       });
     }, [patterns, isWithinNavigationOverlayContext]);
     const { getClosestAllowedInsertionPointForPattern: getClosestAllowedInsertionPointForPattern2 } = unlock(
-      (0, import_data53.useSelect)(store)
+      (0, import_data54.useSelect)(store)
     );
     const allCategories = (0, import_element110.useMemo)(() => {
       const categories = [...patternCategories];
@@ -46870,7 +48923,7 @@ var wp;
       });
       return categories;
     }, [patternCategories, userPatternCategories]);
-    const { createSuccessNotice } = (0, import_data53.useDispatch)(import_notices5.store);
+    const { createSuccessNotice } = (0, import_data54.useDispatch)(import_notices5.store);
     const onClickPattern = (0, import_element110.useCallback)(
       (pattern, blocks2) => {
         const destinationRootClientId = isQuick ? rootClientId : getClosestAllowedInsertionPointForPattern2(
@@ -46880,10 +48933,10 @@ var wp;
         if (destinationRootClientId === null) {
           return;
         }
-        const patternBlocks = pattern.type === INSERTER_PATTERN_TYPES.user && pattern.syncStatus !== "unsynced" ? [(0, import_blocks35.createBlock)("core/block", { ref: pattern.id })] : blocks2;
+        const patternBlocks = pattern.type === INSERTER_PATTERN_TYPES.user && pattern.syncStatus !== "unsynced" ? [(0, import_blocks36.createBlock)("core/block", { ref: pattern.id })] : blocks2;
         onInsert(
           (patternBlocks ?? []).map((block) => {
-            const clonedBlock = (0, import_blocks35.cloneBlock)(block);
+            const clonedBlock = (0, import_blocks36.cloneBlock)(block);
             if (clonedBlock.attributes.metadata?.categories?.includes(
               selectedCategory
             )) {
@@ -47741,7 +49794,7 @@ var wp;
   var import_i18n58 = __toESM(require_i18n(), 1);
   var import_element121 = __toESM(require_element(), 1);
   var import_compose41 = __toESM(require_compose(), 1);
-  var import_data57 = __toESM(require_data(), 1);
+  var import_data58 = __toESM(require_data(), 1);
   var import_notices7 = __toESM(require_notices(), 1);
 
   // packages/block-editor/build-module/components/inserter/media-tab/media-list.mjs
@@ -47752,14 +49805,14 @@ var wp;
   var import_components52 = __toESM(require_components(), 1);
   var import_i18n56 = __toESM(require_i18n(), 1);
   var import_element119 = __toESM(require_element(), 1);
-  var import_blocks37 = __toESM(require_blocks(), 1);
-  var import_data54 = __toESM(require_data(), 1);
+  var import_blocks38 = __toESM(require_blocks(), 1);
+  var import_data55 = __toESM(require_data(), 1);
   var import_notices6 = __toESM(require_notices(), 1);
   var import_blob = __toESM(require_blob(), 1);
   var import_url2 = __toESM(require_url(), 1);
 
   // packages/block-editor/build-module/components/inserter/media-tab/utils.mjs
-  var import_blocks36 = __toESM(require_blocks(), 1);
+  var import_blocks37 = __toESM(require_blocks(), 1);
   var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
   var mediaTypeTag = { image: "img", video: "video", audio: "audio" };
   function getBlockAndPreviewFromMedia(media, mediaType) {
@@ -47790,7 +49843,7 @@ var wp;
         }
       }
     );
-    return [(0, import_blocks36.createBlock)(`core/${mediaType}`, attributes), preview];
+    return [(0, import_blocks37.createBlock)(`core/${mediaType}`, attributes), preview];
   }
 
   // packages/block-editor/build-module/components/inserter/media-tab/media-preview.mjs
@@ -47897,16 +49950,16 @@ var wp;
       () => getBlockAndPreviewFromMedia(media, category.mediaType),
       [media, category.mediaType]
     );
-    const { createErrorNotice, createSuccessNotice } = (0, import_data54.useDispatch)(import_notices6.store);
-    const { getSettings: getSettings7, getBlock: getBlock2 } = (0, import_data54.useSelect)(store);
-    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data54.useDispatch)(store);
+    const { createErrorNotice, createSuccessNotice } = (0, import_data55.useDispatch)(import_notices6.store);
+    const { getSettings: getSettings7, getBlock: getBlock2 } = (0, import_data55.useSelect)(store);
+    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data55.useDispatch)(store);
     const onMediaInsert = (0, import_element119.useCallback)(
       (previewBlock) => {
         if (isInserting) {
           return;
         }
         const settings2 = getSettings7();
-        const clonedBlock = (0, import_blocks37.cloneBlock)(previewBlock);
+        const clonedBlock = (0, import_blocks38.cloneBlock)(previewBlock);
         const { id, url, caption } = clonedBlock.attributes;
         if (!id && !settings2.mediaUpload) {
           setShowExternalUploadModal(true);
@@ -48041,7 +50094,7 @@ var wp;
         {
           onClose: () => setShowExternalUploadModal(false),
           onSubmit: () => {
-            onClick((0, import_blocks37.cloneBlock)(block));
+            onClick((0, import_blocks38.cloneBlock)(block));
             createSuccessNotice((0, import_i18n56.__)("Image inserted."), {
               type: "snackbar",
               id: "inserter-notice"
@@ -48089,9 +50142,9 @@ var wp;
   var media_upload_default = (0, import_components54.withFilters)("editor.MediaUpload")(MediaUpload);
 
   // packages/block-editor/build-module/components/media-upload/check.mjs
-  var import_data55 = __toESM(require_data(), 1);
+  var import_data56 = __toESM(require_data(), 1);
   function MediaUploadCheck({ fallback = null, children }) {
-    const hasUploadPermissions = (0, import_data55.useSelect)((select3) => {
+    const hasUploadPermissions = (0, import_data56.useSelect)((select3) => {
       const { getSettings: getSettings7 } = select3(store);
       return !!getSettings7().mediaUpload;
     }, []);
@@ -48101,7 +50154,7 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter/media-tab/hooks.mjs
   var import_element120 = __toESM(require_element(), 1);
-  var import_data56 = __toESM(require_data(), 1);
+  var import_data57 = __toESM(require_data(), 1);
   function useMediaResults(category, query = {}, refreshKey) {
     const [mediaList, setMediaList] = (0, import_element120.useState)();
     const [isLoading, setIsLoading] = (0, import_element120.useState)(false);
@@ -48152,11 +50205,11 @@ var wp;
   }
   function useMediaCategories(rootClientId) {
     const [categories, setCategories] = (0, import_element120.useState)([]);
-    const inserterMediaCategories = (0, import_data56.useSelect)(
+    const inserterMediaCategories = (0, import_data57.useSelect)(
       (select3) => unlock(select3(store)).getInserterMediaCategories(),
       []
     );
-    const { canInsertImage, canInsertVideo, canInsertAudio } = (0, import_data56.useSelect)(
+    const { canInsertImage, canInsertVideo, canInsertAudio } = (0, import_data57.useSelect)(
       (select3) => {
         const { canInsertBlockType: canInsertBlockType2 } = select3(store);
         return {
@@ -48266,7 +50319,7 @@ var wp;
       query,
       refreshKey
     );
-    const { createErrorNotice, createSuccessNotice, createWarningNotice } = (0, import_data57.useDispatch)(import_notices7.store);
+    const { createErrorNotice, createSuccessNotice, createWarningNotice } = (0, import_data58.useDispatch)(import_notices7.store);
     const showRefreshing = useDelayedLoading(isLoading);
     const refresh = (0, import_element121.useCallback)(() => {
       category.invalidate?.(query);
@@ -48554,7 +50607,7 @@ var wp;
   var import_i18n60 = __toESM(require_i18n(), 1);
   var import_compose43 = __toESM(require_compose(), 1);
   var import_a11y9 = __toESM(require_a11y(), 1);
-  var import_data58 = __toESM(require_data(), 1);
+  var import_data59 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/inserter-menu-extension/index.mjs
   var import_components57 = __toESM(require_components(), 1);
@@ -48587,7 +50640,7 @@ var wp;
     isQuick
   }) {
     const debouncedSpeak = (0, import_compose43.useDebounce)(import_a11y9.speak, 500);
-    const { prioritizedBlocks } = (0, import_data58.useSelect)(
+    const { prioritizedBlocks } = (0, import_data59.useSelect)(
       (select3) => {
         const blockListSettings2 = select3(store).getBlockListSettings(rootClientId);
         return {
@@ -48799,13 +50852,13 @@ var wp;
   var tabbed_sidebar_default = (0, import_element124.forwardRef)(TabbedSidebar);
 
   // packages/block-editor/build-module/hooks/use-zoom-out.mjs
-  var import_data59 = __toESM(require_data(), 1);
+  var import_data60 = __toESM(require_data(), 1);
   var import_element125 = __toESM(require_element(), 1);
   function useZoomOut(enabled = true) {
     const { setZoomLevel: setZoomLevel2, resetZoomLevel: resetZoomLevel2 } = unlock(
-      (0, import_data59.useDispatch)(store)
+      (0, import_data60.useDispatch)(store)
     );
-    const { isZoomedOut, isZoomOut: isZoomOut2 } = (0, import_data59.useSelect)((select3) => {
+    const { isZoomedOut, isZoomOut: isZoomOut2 } = (0, import_data60.useSelect)((select3) => {
       const { isZoomOut: _isZoomOut } = unlock(select3(store));
       return {
         isZoomedOut: _isZoomOut(),
@@ -48856,7 +50909,7 @@ var wp;
     __experimentalInitialTab,
     __experimentalInitialCategory
   }, ref) {
-    const { isZoomOutMode, hasSectionRootClientId } = (0, import_data60.useSelect)((select3) => {
+    const { isZoomOutMode, hasSectionRootClientId } = (0, import_data61.useSelect)((select3) => {
       const { isZoomOut: isZoomOut2, getSectionRootClientId: getSectionRootClientId2 } = unlock(
         select3(store)
       );
@@ -49188,7 +51241,7 @@ var wp;
   var import_element127 = __toESM(require_element(), 1);
   var import_i18n62 = __toESM(require_i18n(), 1);
   var import_components60 = __toESM(require_components(), 1);
-  var import_data61 = __toESM(require_data(), 1);
+  var import_data62 = __toESM(require_data(), 1);
   var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
   var SEARCH_THRESHOLD = 6;
   var SHOWN_BLOCK_TYPES2 = 6;
@@ -49214,7 +51267,7 @@ var wp;
       onInsertBlocks,
       true
     );
-    const { setInserterIsOpened, insertionIndex } = (0, import_data61.useSelect)(
+    const { setInserterIsOpened, insertionIndex } = (0, import_data62.useSelect)(
       (select3) => {
         const { getSettings: getSettings7, getBlockIndex: getBlockIndex2, getBlockCount: getBlockCount2 } = select3(store);
         const settings2 = getSettings7();
@@ -49390,7 +51443,7 @@ var wp;
       blockToInsert,
       appenderLabel,
       targetRootClientId
-    } = (0, import_data62.useSelect)(
+    } = (0, import_data63.useSelect)(
       (select3) => {
         const {
           getBlockRootClientId: getBlockRootClientId22,
@@ -49399,7 +51452,7 @@ var wp;
           getDirectInsertBlock: getDirectInsertBlock2,
           getBlockListSettings: getBlockListSettings2
         } = select3(store);
-        const { getBlockVariations: getBlockVariations2, getBlockType: getBlockType210 } = select3(import_blocks38.store);
+        const { getBlockVariations: getBlockVariations2, getBlockType: getBlockType210 } = select3(import_blocks39.store);
         const _targetRootClientId = rootClientId || getBlockRootClientId22(clientId) || void 0;
         const allowedBlocks = getAllowedBlocks2(_targetRootClientId);
         const directInsertBlock = shouldDirectInsert && getDirectInsertBlock2(_targetRootClientId);
@@ -49426,7 +51479,7 @@ var wp;
       },
       [rootClientId, clientId, shouldDirectInsert]
     );
-    const { insertBlock: insertBlock2 } = (0, import_data62.useDispatch)(store);
+    const { insertBlock: insertBlock2 } = (0, import_data63.useDispatch)(store);
     const {
       getBlock: getBlock2,
       getBlockIndex: getBlockIndex2,
@@ -49434,8 +51487,8 @@ var wp;
       getBlockRootClientId: getBlockRootClientId2,
       getBlockSelectionEnd: getBlockSelectionEnd2,
       getPreviousBlockClientId: getPreviousBlockClientId2
-    } = (0, import_data62.useSelect)(store);
-    const { getActiveBlockVariation, getBlockType: getBlockType29 } = (0, import_data62.useSelect)(import_blocks38.store);
+    } = (0, import_data63.useSelect)(store);
+    const { getActiveBlockVariation, getBlockType: getBlockType29 } = (0, import_data63.useSelect)(import_blocks39.store);
     if (!hasItems && (isAppender || targetRootClientId || clientId)) {
       return null;
     }
@@ -49480,7 +51533,7 @@ var wp;
       const newAttributes = getAdjacentBlockAttributes(
         blockToInsert?.attributesToCopy
       );
-      const newBlock = (0, import_blocks38.createBlock)(blockName, {
+      const newBlock = (0, import_blocks39.createBlock)(blockName, {
         ...blockToInsert?.attributes,
         ...newAttributes
       });
@@ -49494,7 +51547,7 @@ var wp;
       const blockTypeToInsert = getBlockType29(blockName);
       let blockLabelToInsert;
       if (blockTypeToInsert) {
-        blockLabelToInsert = (0, import_blocks38.__experimentalGetBlockLabel)(
+        blockLabelToInsert = (0, import_blocks39.__experimentalGetBlockLabel)(
           blockTypeToInsert,
           newBlock.attributes
         );
@@ -49586,7 +51639,7 @@ var wp;
   var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
   var ZWNBSP = "\uFEFF";
   function DefaultBlockAppender({ rootClientId }) {
-    const { showPrompt, isLocked, placeholder, isManualGrid } = (0, import_data63.useSelect)(
+    const { showPrompt, isLocked, placeholder, isManualGrid } = (0, import_data64.useSelect)(
       (select3) => {
         const {
           getBlockCount: getBlockCount2,
@@ -49605,7 +51658,7 @@ var wp;
       },
       [rootClientId]
     );
-    const { insertDefaultBlock: insertDefaultBlock2, startTyping: startTyping2 } = (0, import_data63.useDispatch)(store);
+    const { insertDefaultBlock: insertDefaultBlock2, startTyping: startTyping2 } = (0, import_data64.useDispatch)(store);
     if (isLocked || isManualGrid) {
       return null;
     }
@@ -49740,9 +51793,9 @@ var wp;
   // packages/block-editor/build-module/components/block-list-appender/index.mjs
   var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
   function DefaultAppender({ rootClientId }) {
-    const canInsertDefaultBlock = (0, import_data64.useSelect)(
+    const canInsertDefaultBlock = (0, import_data65.useSelect)(
       (select3) => select3(store).canInsertBlockType(
-        (0, import_blocks39.getDefaultBlockName)(),
+        (0, import_blocks40.getDefaultBlockName)(),
         rootClientId
       )
     );
@@ -49763,7 +51816,7 @@ var wp;
     className,
     tagName: TagName = "div"
   }) {
-    const isDragOver = (0, import_data64.useSelect)(
+    const isDragOver = (0, import_data65.useSelect)(
       (select3) => {
         const {
           getBlockInsertionPoint: getBlockInsertionPoint2,
@@ -49791,18 +51844,18 @@ var wp;
 
   // packages/block-editor/build-module/components/block-list/use-in-between-inserter.mjs
   var import_compose49 = __toESM(require_compose(), 1);
-  var import_data68 = __toESM(require_data(), 1);
+  var import_data69 = __toESM(require_data(), 1);
   var import_element134 = __toESM(require_element(), 1);
   var import_i18n67 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/block-tools/insertion-point.mjs
-  var import_data67 = __toESM(require_data(), 1);
+  var import_data68 = __toESM(require_data(), 1);
   var import_element133 = __toESM(require_element(), 1);
   var import_components66 = __toESM(require_components(), 1);
   var import_compose48 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/block-popover/inbetween.mjs
-  var import_data65 = __toESM(require_data(), 1);
+  var import_data66 = __toESM(require_data(), 1);
   var import_element130 = __toESM(require_element(), 1);
   var import_components63 = __toESM(require_components(), 1);
   var import_i18n66 = __toESM(require_i18n(), 1);
@@ -49857,7 +51910,7 @@ var wp;
       (s2) => (s2 + 1) % MAX_POPOVER_RECOMPUTE_COUNTER,
       0
     );
-    const { orientation, rootClientId, isVisible } = (0, import_data65.useSelect)(
+    const { orientation, rootClientId, isVisible } = (0, import_data66.useSelect)(
       (select3) => {
         const {
           getBlockListSettings: getBlockListSettings2,
@@ -49998,7 +52051,7 @@ var wp;
   var inbetween_default = BlockPopoverInbetween;
 
   // packages/block-editor/build-module/components/block-popover/drop-zone.mjs
-  var import_data66 = __toESM(require_data(), 1);
+  var import_data67 = __toESM(require_data(), 1);
   var import_compose47 = __toESM(require_compose(), 1);
   var import_components65 = __toESM(require_components(), 1);
 
@@ -50187,7 +52240,7 @@ var wp;
     __unstablePopoverSlot,
     __unstableContentRef
   }) {
-    const { clientId } = (0, import_data66.useSelect)((select3) => {
+    const { clientId } = (0, import_data67.useSelect)((select3) => {
       const { getBlockOrder: getBlockOrder2, getBlockInsertionPoint: getBlockInsertionPoint2 } = select3(store);
       const insertionPoint2 = getBlockInsertionPoint2();
       const order = getBlockOrder2(insertionPoint2.rootClientId);
@@ -50231,7 +52284,7 @@ var wp;
     operation = "insert",
     nearestSide = "right"
   }) {
-    const { selectBlock: selectBlock2, hideInsertionPoint: hideInsertionPoint2 } = (0, import_data67.useDispatch)(store);
+    const { selectBlock: selectBlock2, hideInsertionPoint: hideInsertionPoint2 } = (0, import_data68.useDispatch)(store);
     const openRef = (0, import_element133.useContext)(InsertionPointOpenRef);
     const ref = (0, import_element133.useRef)();
     const {
@@ -50242,7 +52295,7 @@ var wp;
       isInserterShown,
       isDistractionFree,
       isZoomOutMode
-    } = (0, import_data67.useSelect)((select3) => {
+    } = (0, import_data68.useSelect)((select3) => {
       const {
         getBlockOrder: getBlockOrder2,
         getBlockListSettings: getBlockListSettings2,
@@ -50277,7 +52330,7 @@ var wp;
         isZoomOutMode: isZoomOut2()
       };
     }, []);
-    const { getBlockEditingMode: getBlockEditingMode2 } = (0, import_data67.useSelect)(store);
+    const { getBlockEditingMode: getBlockEditingMode2 } = (0, import_data68.useSelect)(store);
     const disableMotion = (0, import_compose48.useReducedMotion)();
     function onClick(event) {
       if (event.target === ref.current && nextClientId && getBlockEditingMode2(nextClientId) !== "disabled") {
@@ -50408,7 +52461,7 @@ var wp;
     );
   }
   function InsertionPoint(props) {
-    const { insertionPoint: insertionPoint2, isVisible, isBlockListEmpty } = (0, import_data67.useSelect)(
+    const { insertionPoint: insertionPoint2, isVisible, isBlockListEmpty } = (0, import_data68.useSelect)(
       (select3) => {
         const {
           getBlockInsertionPoint: getBlockInsertionPoint2,
@@ -50448,7 +52501,7 @@ var wp;
   // packages/block-editor/build-module/components/block-list/use-in-between-inserter.mjs
   function useInBetweenInserter() {
     const openRef = (0, import_element134.useContext)(InsertionPointOpenRef);
-    const isInBetweenInserterDisabled = (0, import_data68.useSelect)((select3) => {
+    const isInBetweenInserterDisabled = (0, import_data69.useSelect)((select3) => {
       const settings2 = select3(store).getSettings();
       return settings2.isDistractionFree || settings2.isPreviewMode || unlock(select3(store)).isZoomOut();
     }, []);
@@ -50464,8 +52517,8 @@ var wp;
       getBlockName: getBlockName2,
       getBlockAttributes: getBlockAttributes3,
       getParentSectionBlock: getParentSectionBlock2
-    } = unlock((0, import_data68.useSelect)(store));
-    const { showInsertionPoint: showInsertionPoint2, hideInsertionPoint: hideInsertionPoint2 } = (0, import_data68.useDispatch)(store);
+    } = unlock((0, import_data69.useSelect)(store));
+    const { showInsertionPoint: showInsertionPoint2, hideInsertionPoint: hideInsertionPoint2 } = (0, import_data69.useDispatch)(store);
     return (0, import_compose49.useRefEffect)(
       (node) => {
         if (isInBetweenInserterDisabled) {
@@ -50558,12 +52611,12 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-selection-clearer/index.mjs
-  var import_data69 = __toESM(require_data(), 1);
+  var import_data70 = __toESM(require_data(), 1);
   var import_compose50 = __toESM(require_compose(), 1);
   var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
   function useBlockSelectionClearer() {
-    const { getSettings: getSettings7, hasSelectedBlock: hasSelectedBlock2, hasMultiSelection: hasMultiSelection2 } = (0, import_data69.useSelect)(store);
-    const { clearSelectedBlock: clearSelectedBlock2 } = (0, import_data69.useDispatch)(store);
+    const { getSettings: getSettings7, hasSelectedBlock: hasSelectedBlock2, hasMultiSelection: hasMultiSelection2 } = (0, import_data70.useSelect)(store);
+    const { clearSelectedBlock: clearSelectedBlock2 } = (0, import_data70.useDispatch)(store);
     const { clearBlockSelection: isEnabled } = getSettings7();
     return (0, import_compose50.useRefEffect)(
       (node) => {
@@ -50594,8 +52647,8 @@ var wp;
   // packages/block-editor/build-module/components/inner-blocks/index.mjs
   var import_compose52 = __toESM(require_compose(), 1);
   var import_element139 = __toESM(require_element(), 1);
-  var import_data75 = __toESM(require_data(), 1);
-  var import_blocks44 = __toESM(require_blocks(), 1);
+  var import_data76 = __toESM(require_data(), 1);
+  var import_blocks45 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/inner-blocks/button-block-appender.mjs
   var import_jsx_runtime265 = __toESM(require_jsx_runtime(), 1);
@@ -50629,7 +52682,7 @@ var wp;
 
   // packages/block-editor/build-module/components/inner-blocks/use-nested-settings-update.mjs
   var import_element135 = __toESM(require_element(), 1);
-  var import_data70 = __toESM(require_data(), 1);
+  var import_data71 = __toESM(require_data(), 1);
   var import_deprecated9 = __toESM(require_deprecated(), 1);
   var import_is_shallow_equal = __toESM(require_is_shallow_equal(), 1);
   var pendingSettingsUpdates = /* @__PURE__ */ new WeakMap();
@@ -50647,7 +52700,7 @@ var wp;
     return memo14(value);
   }
   function useNestedSettingsUpdate(clientId, parentLock, allowedBlocks, prioritizedInserterBlocks, defaultBlock, directInsert, __experimentalDefaultBlock, __experimentalDirectInsert, templateLock, captureToolbars, orientation, layout) {
-    const registry = (0, import_data70.useRegistry)();
+    const registry = (0, import_data71.useRegistry)();
     const _allowedBlocks = useShallowMemo(allowedBlocks);
     const _prioritizedInserterBlocks = useShallowMemo(
       prioritizedInserterBlocks
@@ -50727,10 +52780,10 @@ var wp;
   // packages/block-editor/build-module/components/inner-blocks/use-inner-block-template-sync.mjs
   var import_es64 = __toESM(require_es6(), 1);
   var import_element136 = __toESM(require_element(), 1);
-  var import_data71 = __toESM(require_data(), 1);
-  var import_blocks40 = __toESM(require_blocks(), 1);
+  var import_data72 = __toESM(require_data(), 1);
+  var import_blocks41 = __toESM(require_blocks(), 1);
   function useInnerBlockTemplateSync(clientId, template2, templateLock, templateInsertUpdatesSelection) {
-    const registry = (0, import_data71.useRegistry)();
+    const registry = (0, import_data72.useRegistry)();
     const existingTemplateRef = (0, import_element136.useRef)(null);
     (0, import_element136.useLayoutEffect)(() => {
       let isCancelled = false;
@@ -50754,7 +52807,7 @@ var wp;
           return;
         }
         existingTemplateRef.current = template2;
-        const nextBlocks = (0, import_blocks40.synchronizeBlocksWithTemplate)(
+        const nextBlocks = (0, import_blocks41.synchronizeBlocksWithTemplate)(
           currentInnerBlocks,
           template2
         );
@@ -50787,16 +52840,16 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/inner-blocks/use-block-context.mjs
-  var import_blocks41 = __toESM(require_blocks(), 1);
-  var import_data72 = __toESM(require_data(), 1);
+  var import_blocks42 = __toESM(require_blocks(), 1);
+  var import_data73 = __toESM(require_data(), 1);
   function useBlockContext(clientId) {
-    return (0, import_data72.useSelect)(
+    return (0, import_data73.useSelect)(
       (select3) => {
         const block = select3(store).getBlock(clientId);
         if (!block) {
           return void 0;
         }
-        const blockType = select3(import_blocks41.store).getBlockType(block.name);
+        const blockType = select3(import_blocks42.store).getBlockType(block.name);
         if (!blockType) {
           return void 0;
         }
@@ -50817,16 +52870,16 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/use-block-drop-zone/index.mjs
-  var import_data74 = __toESM(require_data(), 1);
+  var import_data75 = __toESM(require_data(), 1);
   var import_element138 = __toESM(require_element(), 1);
   var import_compose51 = __toESM(require_compose(), 1);
   var import_i18n68 = __toESM(require_i18n(), 1);
-  var import_blocks43 = __toESM(require_blocks(), 1);
+  var import_blocks44 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/use-on-block-drop/index.mjs
   var import_element137 = __toESM(require_element(), 1);
-  var import_blocks42 = __toESM(require_blocks(), 1);
-  var import_data73 = __toESM(require_data(), 1);
+  var import_blocks43 = __toESM(require_blocks(), 1);
+  var import_data74 = __toESM(require_data(), 1);
   var import_dom50 = __toESM(require_dom(), 1);
   function parseDropEvent(event) {
     let result = {
@@ -50860,7 +52913,7 @@ var wp;
       if (dropType === "inserter") {
         clearSelectedBlock2();
         const blocksToInsert = blocks2.map(
-          (block) => (0, import_blocks42.cloneBlock)(block)
+          (block) => (0, import_blocks43.cloneBlock)(block)
         );
         insertOrReplaceBlocks(blocksToInsert, true, null);
       }
@@ -50898,8 +52951,8 @@ var wp;
       if (!getSettings7().mediaUpload) {
         return;
       }
-      const transformation = (0, import_blocks42.findTransform)(
-        (0, import_blocks42.getBlockTransforms)("from"),
+      const transformation = (0, import_blocks43.findTransform)(
+        (0, import_blocks43.getBlockTransforms)("from"),
         (transform) => transform.type === "files" && canInsertBlockType2(transform.blockName, targetRootClientId) && transform.isMatch(files)
       );
       if (transformation) {
@@ -50913,7 +52966,7 @@ var wp;
   }
   function onHTMLDrop(insertOrReplaceBlocks) {
     return (HTML) => {
-      const blocks2 = (0, import_blocks42.pasteHandler)({ HTML, mode: "BLOCKS" });
+      const blocks2 = (0, import_blocks43.pasteHandler)({ HTML, mode: "BLOCKS" });
       if (blocks2.length) {
         insertOrReplaceBlocks(blocks2);
       }
@@ -50929,8 +52982,8 @@ var wp;
       getBlocksByClientId: getBlocksByClientId2,
       getSettings: getSettings7,
       getBlock: getBlock2
-    } = (0, import_data73.useSelect)(store);
-    const { getGroupingBlockName } = (0, import_data73.useSelect)(import_blocks42.store);
+    } = (0, import_data74.useSelect)(store);
+    const { getGroupingBlockName } = (0, import_data74.useSelect)(import_blocks43.store);
     const {
       insertBlocks: insertBlocks2,
       moveBlocksToPosition: moveBlocksToPosition2,
@@ -50938,8 +52991,8 @@ var wp;
       clearSelectedBlock: clearSelectedBlock2,
       replaceBlocks: replaceBlocks2,
       removeBlocks: removeBlocks2
-    } = (0, import_data73.useDispatch)(store);
-    const registry = (0, import_data73.useRegistry)();
+    } = (0, import_data74.useDispatch)(store);
+    const registry = (0, import_data74.useRegistry)();
     const insertOrReplaceBlocks = (0, import_element137.useCallback)(
       (blocks2, updateSelection = true, initialPosition2 = 0, clientIdsToReplace = []) => {
         if (!Array.isArray(blocks2)) {
@@ -50957,7 +53010,7 @@ var wp;
             blocks2.unshift(targetBlock);
           }
           const groupInnerBlocks = blocks2.map(
-            (block) => (0, import_blocks42.cloneSanitizedBlock)(block)
+            (block) => (0, import_blocks43.cloneSanitizedBlock)(block)
           );
           const areAllImages = blocks2.every((block) => {
             return block.name === "core/image";
@@ -50966,7 +53019,7 @@ var wp;
             "core/gallery",
             targetRootClientId
           );
-          const wrappedBlocks = (0, import_blocks42.createBlock)(
+          const wrappedBlocks = (0, import_blocks43.createBlock)(
             areAllImages && galleryBlock ? "core/gallery" : getGroupingBlockName(),
             {
               layout: {
@@ -51249,12 +53302,12 @@ var wp;
     parentClientId: parentBlockClientId = "",
     isDisabled = false
   } = {}) {
-    const registry = (0, import_data74.useRegistry)();
+    const registry = (0, import_data75.useRegistry)();
     const [dropTarget, setDropTarget] = (0, import_element138.useState)({
       index: null,
       operation: "insert"
     });
-    const { getBlockType: getBlockType29, getBlockVariations: getBlockVariations2, getGroupingBlockName } = (0, import_data74.useSelect)(import_blocks43.store);
+    const { getBlockType: getBlockType29, getBlockVariations: getBlockVariations2, getGroupingBlockName } = (0, import_data75.useSelect)(import_blocks44.store);
     const {
       canInsertBlockType: canInsertBlockType2,
       getBlockListSettings: getBlockListSettings2,
@@ -51268,13 +53321,13 @@ var wp;
       isZoomOut: isZoomOut2,
       getSectionRootClientId: getSectionRootClientId2,
       getBlockParents: getBlockParents2
-    } = unlock((0, import_data74.useSelect)(store));
+    } = unlock((0, import_data75.useSelect)(store));
     const {
       showInsertionPoint: showInsertionPoint2,
       hideInsertionPoint: hideInsertionPoint2,
       startDragging: startDragging2,
       stopDragging: stopDragging2
-    } = unlock((0, import_data74.useDispatch)(store));
+    } = unlock((0, import_data75.useDispatch)(store));
     const onBlockDrop2 = useOnBlockDrop(
       dropTarget.operation === "before" || dropTarget.operation === "after" ? parentBlockClientId : targetRootClientId,
       dropTarget.index,
@@ -51321,7 +53374,7 @@ var wp;
             return;
           }
           const blocks2 = getBlocks2(targetRootClientId).filter((block) => {
-            return !((0, import_blocks43.hasBlockSupport)(block.name, "visibility", true) && block.attributes?.metadata?.blockVisibility === false);
+            return !((0, import_blocks44.hasBlockSupport)(block.name, "visibility", true) && block.attributes?.metadata?.blockVisibility === false);
           });
           if (blocks2.length === 0) {
             registry.batch(() => {
@@ -51338,7 +53391,7 @@ var wp;
           const blocksData = blocks2.map((block) => {
             const clientId = block.clientId;
             return {
-              isUnmodifiedDefaultBlock: (0, import_blocks43.isUnmodifiedDefaultBlock)(block),
+              isUnmodifiedDefaultBlock: (0, import_blocks44.isUnmodifiedDefaultBlock)(block),
               getBoundingClientRect: () => {
                 const blockElement = ownerDocument2.getElementById(
                   `block-${clientId}`
@@ -51509,7 +53562,7 @@ var wp;
       templateLock,
       templateInsertUpdatesSelection
     );
-    const defaultLayoutBlockSupport = (0, import_blocks44.getBlockSupport)(name, "layout") || (0, import_blocks44.getBlockSupport)(name, "__experimentalLayout") || EMPTY_OBJECT2;
+    const defaultLayoutBlockSupport = (0, import_blocks45.getBlockSupport)(name, "layout") || (0, import_blocks45.getBlockSupport)(name, "__experimentalLayout") || EMPTY_OBJECT2;
     const { allowSizingOnChildren = false } = defaultLayoutBlockSupport;
     const usedLayout = layout || defaultLayoutBlockSupport;
     const memoedLayout = (0, import_element139.useMemo)(
@@ -51558,7 +53611,7 @@ var wp;
       layout = null,
       __unstableLayoutClassNames: layoutClassNames = ""
     } = useBlockEditContext();
-    const selected = (0, import_data75.useSelect)(
+    const selected = (0, import_data76.useSelect)(
       (select3) => {
         const {
           getBlockName: getBlockName2,
@@ -51575,7 +53628,7 @@ var wp;
             isDropZoneDisabled: isZoomOut2() && sectionRootClientId !== ""
           };
         }
-        const { hasBlockSupport: hasBlockSupport45, getBlockType: getBlockType29 } = select3(import_blocks44.store);
+        const { hasBlockSupport: hasBlockSupport45, getBlockType: getBlockType29 } = select3(import_blocks45.store);
         const blockName = getBlockName2(clientId);
         const blockEditingMode = getBlockEditingMode2(clientId);
         const parentClientId2 = getBlockRootClientId2(clientId);
@@ -51640,7 +53693,7 @@ var wp;
       children: clientId ? /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(InnerBlocks, { ...innerBlocksProps, clientId }) : /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(BlockListItems, { ...options })
     };
   }
-  useInnerBlocksProps.save = import_blocks44.__unstableGetInnerBlocksProps;
+  useInnerBlocksProps.save = import_blocks45.__unstableGetInnerBlocksProps;
   ForwardedInnerBlocks.DefaultBlockAppender = DefaultBlockAppender2;
   ForwardedInnerBlocks.ButtonBlockAppender = ButtonBlockAppender2;
   ForwardedInnerBlocks.Content = () => useInnerBlocksProps.save().children;
@@ -51648,7 +53701,7 @@ var wp;
 
   // packages/block-editor/build-module/components/observe-typing/index.mjs
   var import_compose53 = __toESM(require_compose(), 1);
-  var import_data76 = __toESM(require_data(), 1);
+  var import_data77 = __toESM(require_data(), 1);
   var import_dom51 = __toESM(require_dom(), 1);
   var import_keycodes9 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
@@ -51665,11 +53718,11 @@ var wp;
     return !shiftKey && KEY_DOWN_ELIGIBLE_KEY_CODES.has(keyCode);
   }
   function useMouseMoveTypingReset() {
-    const isTyping3 = (0, import_data76.useSelect)(
+    const isTyping3 = (0, import_data77.useSelect)(
       (select3) => select3(store).isTyping(),
       []
     );
-    const { stopTyping: stopTyping2 } = (0, import_data76.useDispatch)(store);
+    const { stopTyping: stopTyping2 } = (0, import_data77.useDispatch)(store);
     return (0, import_compose53.useRefEffect)(
       (node) => {
         if (!isTyping3) {
@@ -51701,11 +53754,11 @@ var wp;
     );
   }
   function useTypingObserver() {
-    const isTyping3 = (0, import_data76.useSelect)(
+    const isTyping3 = (0, import_data77.useSelect)(
       (select3) => select3(store).isTyping(),
       []
     );
-    const { startTyping: startTyping2, stopTyping: stopTyping2 } = (0, import_data76.useDispatch)(store);
+    const { startTyping: startTyping2, stopTyping: stopTyping2 } = (0, import_data77.useDispatch)(store);
     const ref1 = useMouseMoveTypingReset();
     const ref2 = (0, import_compose53.useRefEffect)(
       (node) => {
@@ -51782,7 +53835,7 @@ var wp;
   // packages/block-editor/build-module/components/block-list/zoom-out-separator.mjs
   var import_components67 = __toESM(require_components(), 1);
   var import_compose54 = __toESM(require_compose(), 1);
-  var import_data77 = __toESM(require_data(), 1);
+  var import_data78 = __toESM(require_data(), 1);
   var import_element140 = __toESM(require_element(), 1);
   var import_i18n69 = __toESM(require_i18n(), 1);
   var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
@@ -51799,7 +53852,7 @@ var wp;
       blockInsertionPointVisible,
       blockInsertionPoint,
       blocksBeingDragged
-    } = (0, import_data77.useSelect)((select3) => {
+    } = (0, import_data78.useSelect)((select3) => {
       const {
         getInsertionPoint: getInsertionPoint2,
         getBlockOrder: getBlockOrder2,
@@ -51901,7 +53954,7 @@ var wp;
       isFocusMode,
       isPreviewMode,
       editedContentOnlySection: editedContentOnlySection2
-    } = (0, import_data78.useSelect)((select3) => {
+    } = (0, import_data79.useSelect)((select3) => {
       const {
         getSettings: getSettings7,
         isTyping: isTyping3,
@@ -51920,8 +53973,8 @@ var wp;
         editedContentOnlySection: getEditedContentOnlySection2()
       };
     }, []);
-    const registry = (0, import_data78.useRegistry)();
-    const { setBlockVisibility: setBlockVisibility2 } = (0, import_data78.useDispatch)(store);
+    const registry = (0, import_data79.useRegistry)();
+    const { setBlockVisibility: setBlockVisibility2 } = (0, import_data79.useDispatch)(store);
     const delayedBlockVisibilityUpdates = (0, import_compose55.useDebounce)(
       (0, import_element141.useCallback)(() => {
         const updates = {};
@@ -51976,9 +54029,9 @@ var wp;
   }
   function StopEditingContentOnlySectionOnOutsideSelect({ clientId }) {
     const { stopEditingContentOnlySection: stopEditingContentOnlySection2 } = unlock(
-      (0, import_data78.useDispatch)(store)
+      (0, import_data79.useDispatch)(store)
     );
-    const isBlockOrDescendantSelected = (0, import_data78.useSelect)(
+    const isBlockOrDescendantSelected = (0, import_data79.useSelect)(
       (select3) => {
         const {
           isBlockSelected: isBlockSelected2,
@@ -52016,7 +54069,7 @@ var wp;
       selectedBlocks,
       visibleBlocks,
       shouldRenderAppender
-    } = (0, import_data78.useSelect)(
+    } = (0, import_data79.useSelect)(
       (select3) => {
         const {
           getSettings: getSettings7,
@@ -52042,7 +54095,7 @@ var wp;
         const selectedBlockClientIds = getSelectedBlockClientIds2();
         const selectedBlockClientId = selectedBlockClientIds[0];
         const showRootAppender = !rootClientId && !selectedBlockClientId && (!_order.length || !canInsertBlockType2(
-          (0, import_blocks45.getDefaultBlockName)(),
+          (0, import_blocks46.getDefaultBlockName)(),
           rootClientId
         ));
         const hasSelectedRoot = !!(rootClientId && selectedBlockClientId && rootClientId === selectedBlockClientId);
@@ -52062,7 +54115,7 @@ var wp;
     );
     return /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)(LayoutProvider, { value: layout, children: [
       order.map((clientId) => /* @__PURE__ */ (0, import_jsx_runtime270.jsxs)(
-        import_data78.AsyncModeProvider,
+        import_data79.AsyncModeProvider,
         {
           value: (
             // Only provide data asynchronously if the block is
@@ -52109,7 +54162,7 @@ var wp;
     ] });
   }
   function BlockListItems(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(import_data78.AsyncModeProvider, { value: false, children: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(Items, { ...props }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(import_data79.AsyncModeProvider, { value: false, children: /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(Items, { ...props }) });
   }
 
   // packages/block-editor/build-module/components/block-tools/index.mjs
@@ -52124,15 +54177,15 @@ var wp;
 
   // packages/block-editor/build-module/components/block-tools/use-block-toolbar-popover-props.mjs
   var import_compose59 = __toESM(require_compose(), 1);
-  var import_data83 = __toESM(require_data(), 1);
+  var import_data84 = __toESM(require_data(), 1);
   var import_dom52 = __toESM(require_dom(), 1);
   var import_element149 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/hooks/position.mjs
   var import_i18n71 = __toESM(require_i18n(), 1);
-  var import_blocks47 = __toESM(require_blocks(), 1);
+  var import_blocks48 = __toESM(require_blocks(), 1);
   var import_compose58 = __toESM(require_compose(), 1);
-  var import_data82 = __toESM(require_data(), 1);
+  var import_data83 = __toESM(require_data(), 1);
   var import_element148 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls/fill.mjs
@@ -52224,14 +54277,14 @@ var wp;
     if (!path.length) {
       return style;
     }
-    return getValueFromObjectPath(style, path);
+    return getValueFromObjectPath2(style, path);
   }
   function setStyleForState(style, selectedState, newStyle) {
     const path = getStyleStatePath(selectedState);
     if (!path.length) {
       return cleanEmptyObject(newStyle);
     }
-    return cleanEmptyObject(setImmutably(style, path, newStyle));
+    return cleanEmptyObject(setImmutably2(style, path, newStyle));
   }
   function scopeResetAllFilterToState(selectedState, resetAllFilter) {
     if (!resetAllFilter || isDefaultBlockStyleState(selectedState)) {
@@ -52260,7 +54313,7 @@ var wp;
   var import_components69 = __toESM(require_components(), 1);
   var import_element143 = __toESM(require_element(), 1);
   var import_compose56 = __toESM(require_compose(), 1);
-  var import_data79 = __toESM(require_data(), 1);
+  var import_data80 = __toESM(require_data(), 1);
   var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
   var LIST_VIEW_CONTENT_PANEL_SLOT = /* @__PURE__ */ Symbol("ListViewContentPopover");
   var { Fill, Slot: Slot2 } = (0, import_components69.createSlotFill)(LIST_VIEW_CONTENT_PANEL_SLOT);
@@ -52278,7 +54331,7 @@ var wp;
     const { popoverProps: popoverProps3 } = useInspectorPopoverPlacement();
     const fills = (0, import_components69.__experimentalUseSlotFills)(LIST_VIEW_CONTENT_PANEL_SLOT);
     const hasFills = Boolean(fills && fills.length);
-    const { selectedClientId, isOpen } = (0, import_data79.useSelect)((select3) => {
+    const { selectedClientId, isOpen } = (0, import_data80.useSelect)((select3) => {
       const { getSelectedBlockClientId: getSelectedBlockClientId2 } = select3(store);
       const privateSelectors = unlock(select3(store));
       return {
@@ -52298,7 +54351,7 @@ var wp;
       setAnchorElement(element);
     }, [selectedClientId, listViewRef]);
     const { closeListViewContentPanel: closeListViewContentPanel2 } = unlock(
-      (0, import_data79.useDispatch)(store)
+      (0, import_data80.useDispatch)(store)
     );
     if (!isOpen || !hasFills || !anchorElement) {
       return null;
@@ -52407,7 +54460,7 @@ var wp;
 
   // packages/block-editor/build-module/components/inspector-controls/block-support-tools-panel.mjs
   var import_components71 = __toESM(require_components(), 1);
-  var import_data80 = __toESM(require_data(), 1);
+  var import_data81 = __toESM(require_data(), 1);
   var import_element145 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/global-styles/utils.mjs
@@ -52422,7 +54475,7 @@ var wp;
       }
     } : {};
   }
-  function scopeSelector(scope, selector3) {
+  function scopeSelector2(scope, selector3) {
     if (!scope || !selector3) {
       return selector3;
     }
@@ -52440,14 +54493,14 @@ var wp;
   // packages/block-editor/build-module/components/inspector-controls/block-support-tools-panel.mjs
   var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
   function BlockSupportToolsPanel({ children, group, label }) {
-    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data80.useDispatch)(store);
+    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data81.useDispatch)(store);
     const {
       getBlockAttributes: getBlockAttributes3,
       getBlockName: getBlockName2,
       getMultiSelectedBlockClientIds: getMultiSelectedBlockClientIds2,
       getSelectedBlockClientId: getSelectedBlockClientId2,
       hasMultiSelection: hasMultiSelection2
-    } = (0, import_data80.useSelect)(store);
+    } = (0, import_data81.useSelect)(store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const panelId = getSelectedBlockClientId2();
     const resetAll = (0, import_element145.useCallback)(
@@ -52587,8 +54640,8 @@ var wp;
   var inspector_controls_default = InspectorControls;
 
   // packages/block-editor/build-module/components/use-block-display-information/index.mjs
-  var import_data81 = __toESM(require_data(), 1);
-  var import_blocks46 = __toESM(require_blocks(), 1);
+  var import_data82 = __toESM(require_data(), 1);
+  var import_blocks47 = __toESM(require_blocks(), 1);
   var import_i18n70 = __toESM(require_i18n(), 1);
   function getPositionTypeLabel(attributes) {
     const positionType = attributes?.style?.position?.type;
@@ -52601,7 +54654,7 @@ var wp;
     return null;
   }
   function useBlockDisplayInformation(clientId) {
-    return (0, import_data81.useSelect)(
+    return (0, import_data82.useSelect)(
       (select3) => {
         if (!clientId) {
           return null;
@@ -52613,7 +54666,7 @@ var wp;
           getBlock: getBlock2,
           __experimentalGetParsedPattern: __experimentalGetParsedPattern2
         } = blockEditorSelect;
-        const { getBlockType: getBlockType29, getActiveBlockVariation } = select3(import_blocks46.store);
+        const { getBlockType: getBlockType29, getActiveBlockVariation } = select3(import_blocks47.store);
         const blockName = getBlockName2(clientId);
         const blockType = getBlockType29(blockName);
         if (!blockType) {
@@ -52642,8 +54695,8 @@ var wp;
           void 0,
           getBlock2?.(clientId)?.innerContent
         );
-        const isSynced = (0, import_blocks46.isReusableBlock)(blockType) || (0, import_blocks46.isTemplatePart)(blockType);
-        const syncedTitle = isSynced ? (0, import_blocks46.__experimentalGetBlockLabel)(blockType, attributes) : void 0;
+        const isSynced = (0, import_blocks47.isReusableBlock)(blockType) || (0, import_blocks47.isTemplatePart)(blockType);
+        const syncedTitle = isSynced ? (0, import_blocks47.__experimentalGetBlockLabel)(blockType, attributes) : void 0;
         const title = syncedTitle || blockType.title;
         const positionLabel = getPositionTypeLabel(attributes);
         const blockTypeInfo = {
@@ -52718,15 +54771,15 @@ var wp;
     return output;
   }
   function hasStickyPositionSupport(blockType) {
-    const support = (0, import_blocks47.getBlockSupport)(blockType, POSITION_SUPPORT_KEY);
+    const support = (0, import_blocks48.getBlockSupport)(blockType, POSITION_SUPPORT_KEY);
     return !!(true === support || support?.sticky);
   }
   function hasFixedPositionSupport(blockType) {
-    const support = (0, import_blocks47.getBlockSupport)(blockType, POSITION_SUPPORT_KEY);
+    const support = (0, import_blocks48.getBlockSupport)(blockType, POSITION_SUPPORT_KEY);
     return !!(true === support || support?.fixed);
   }
   function hasPositionSupport(blockType) {
-    const support = (0, import_blocks47.getBlockSupport)(blockType, POSITION_SUPPORT_KEY);
+    const support = (0, import_blocks48.getBlockSupport)(blockType, POSITION_SUPPORT_KEY);
     return !!support;
   }
   function hasStickyOrFixedPositionValue(attributes) {
@@ -52750,7 +54803,7 @@ var wp;
     const allowFixed = hasFixedPositionSupport(blockName);
     const allowSticky = hasStickyPositionSupport(blockName);
     const value = style?.position?.type;
-    const { firstParentClientId } = (0, import_data82.useSelect)(
+    const { firstParentClientId } = (0, import_data83.useSelect)(
       (select3) => {
         const { getBlockParents: getBlockParents2 } = select3(store);
         const parents = getBlockParents2(clientId);
@@ -52842,12 +54895,12 @@ var wp;
     useBlockProps: useBlockProps2,
     attributeKeys: ["style"],
     hasSupport(name) {
-      return (0, import_blocks47.hasBlockSupport)(name, POSITION_SUPPORT_KEY);
+      return (0, import_blocks48.hasBlockSupport)(name, POSITION_SUPPORT_KEY);
     }
   };
   var POSITION_BLOCK_PROPS_REFERENCE = {};
   function useBlockProps2({ name, style }) {
-    const hasPositionBlockSupport = (0, import_blocks47.hasBlockSupport)(
+    const hasPositionBlockSupport = (0, import_blocks48.hasBlockSupport)(
       name,
       POSITION_SUPPORT_KEY
     );
@@ -52908,7 +54961,7 @@ var wp;
   }) {
     const selectedBlockElement = useBlockElement(clientId);
     const [toolbarHeight, setToolbarHeight] = (0, import_element149.useState)(0);
-    const { blockIndex, isSticky } = (0, import_data83.useSelect)(
+    const { blockIndex, isSticky } = (0, import_data84.useSelect)(
       (select3) => {
         const { getBlockIndex: getBlockIndex2, getBlockAttributes: getBlockAttributes3 } = select3(store);
         return {
@@ -52983,9 +55036,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-tools/use-selected-block-tool-props.mjs
-  var import_data84 = __toESM(require_data(), 1);
+  var import_data85 = __toESM(require_data(), 1);
   function useSelectedBlockToolProps(clientId) {
-    const selectedBlockProps = (0, import_data84.useSelect)(
+    const selectedBlockProps = (0, import_data85.useSelect)(
       (select3) => {
         const {
           getBlockRootClientId: getBlockRootClientId2,
@@ -53079,13 +55132,13 @@ var wp;
 
   // packages/block-editor/build-module/components/block-mover/index.mjs
   var import_components76 = __toESM(require_components(), 1);
-  var import_data87 = __toESM(require_data(), 1);
+  var import_data88 = __toESM(require_data(), 1);
   var import_i18n74 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/block-draggable/index.mjs
-  var import_blocks48 = __toESM(require_blocks(), 1);
+  var import_blocks49 = __toESM(require_blocks(), 1);
   var import_components74 = __toESM(require_components(), 1);
-  var import_data85 = __toESM(require_data(), 1);
+  var import_data86 = __toESM(require_data(), 1);
   var import_element151 = __toESM(require_element(), 1);
   var import_compose60 = __toESM(require_compose(), 1);
 
@@ -53185,7 +55238,7 @@ var wp;
       icon,
       visibleInserter,
       getBlockType: getBlockType29
-    } = (0, import_data85.useSelect)(
+    } = (0, import_data86.useSelect)(
       (select3) => {
         const {
           canMoveBlocks: canMoveBlocks2,
@@ -53194,7 +55247,7 @@ var wp;
           getBlockAttributes: getBlockAttributes3,
           isBlockInsertionPointVisible: isBlockInsertionPointVisible2
         } = select3(store);
-        const { getBlockType: _getBlockType, getActiveBlockVariation } = select3(import_blocks48.store);
+        const { getBlockType: _getBlockType, getActiveBlockVariation } = select3(import_blocks49.store);
         const rootClientId = getBlockRootClientId22(clientIds[0]);
         const blockName = getBlockName2(clientIds[0]);
         const variation = getActiveBlockVariation(
@@ -53213,8 +55266,8 @@ var wp;
     );
     const isDraggingRef = (0, import_element151.useRef)(false);
     const [startScrolling, scrollOnDragOver, stopScrolling] = useScrollWhenDragging();
-    const { getAllowedBlocks: getAllowedBlocks2, getBlockNamesByClientId: getBlockNamesByClientId2, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data85.useSelect)(store);
-    const { startDraggingBlocks: startDraggingBlocks2, stopDraggingBlocks: stopDraggingBlocks2 } = (0, import_data85.useDispatch)(store);
+    const { getAllowedBlocks: getAllowedBlocks2, getBlockNamesByClientId: getBlockNamesByClientId2, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data86.useSelect)(store);
+    const { startDraggingBlocks: startDraggingBlocks2, stopDraggingBlocks: stopDraggingBlocks2 } = (0, import_data86.useDispatch)(store);
     (0, import_element151.useEffect)(() => {
       return () => {
         if (isDraggingRef.current) {
@@ -53344,10 +55397,10 @@ var wp;
   var block_draggable_default = BlockDraggable;
 
   // packages/block-editor/build-module/components/block-mover/button.mjs
-  var import_blocks49 = __toESM(require_blocks(), 1);
+  var import_blocks50 = __toESM(require_blocks(), 1);
   var import_components75 = __toESM(require_components(), 1);
   var import_compose61 = __toESM(require_compose(), 1);
-  var import_data86 = __toESM(require_data(), 1);
+  var import_data87 = __toESM(require_data(), 1);
   var import_element152 = __toESM(require_element(), 1);
   var import_i18n73 = __toESM(require_i18n(), 1);
   var import_keycodes10 = __toESM(require_keycodes(), 1);
@@ -53662,7 +55715,7 @@ var wp;
         isLast,
         firstIndex,
         orientation = "vertical"
-      } = (0, import_data86.useSelect)(
+      } = (0, import_data87.useSelect)(
         (select3) => {
           const {
             getBlockIndex: getBlockIndex2,
@@ -53683,7 +55736,7 @@ var wp;
           const isLastBlock = lastBlockIndex === blockOrder.length - 1;
           const { orientation: blockListOrientation } = getBlockListSettings2(blockRootClientId) || {};
           return {
-            blockType: block ? (0, import_blocks49.getBlockType)(block.name) : null,
+            blockType: block ? (0, import_blocks50.getBlockType)(block.name) : null,
             isDisabled: direction === "up" ? isFirstBlock : isLastBlock,
             rootClientId: blockRootClientId,
             firstIndex: firstBlockIndex,
@@ -53694,7 +55747,7 @@ var wp;
         },
         [direction, moverOrientation, normalizedClientIds]
       );
-      const { moveBlocksDown: moveBlocksDown2, moveBlocksUp: moveBlocksUp2 } = (0, import_data86.useDispatch)(store);
+      const { moveBlocksDown: moveBlocksDown2, moveBlocksUp: moveBlocksUp2 } = (0, import_data87.useDispatch)(store);
       const moverFunction = direction === "up" ? moveBlocksUp2 : moveBlocksDown2;
       const onClick = (event) => {
         moverFunction(clientIds, rootClientId);
@@ -53756,7 +55809,7 @@ var wp;
       isLast,
       orientation,
       isManualGrid
-    } = (0, import_data87.useSelect)(
+    } = (0, import_data88.useSelect)(
       (select3) => {
         const {
           getBlockIndex: getBlockIndex2,
@@ -53831,12 +55884,12 @@ var wp;
 
   // packages/block-editor/build-module/components/block-parent-selector/index.mjs
   var import_components77 = __toESM(require_components(), 1);
-  var import_data89 = __toESM(require_data(), 1);
+  var import_data90 = __toESM(require_data(), 1);
   var import_i18n75 = __toESM(require_i18n(), 1);
   var import_element154 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-toolbar/utils.mjs
-  var import_data88 = __toESM(require_data(), 1);
+  var import_data89 = __toESM(require_data(), 1);
   var import_element153 = __toESM(require_element(), 1);
   var { clearTimeout: clearTimeout2, setTimeout: setTimeout2 } = window;
   var DEBOUNCE_TIMEOUT = 200;
@@ -53846,10 +55899,10 @@ var wp;
     highlightParent,
     debounceTimeout = DEBOUNCE_TIMEOUT
   }) {
-    const { getSelectedBlockClientId: getSelectedBlockClientId2, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data88.useSelect)(store);
-    const { toggleBlockHighlight: toggleBlockHighlight2 } = (0, import_data88.useDispatch)(store);
+    const { getSelectedBlockClientId: getSelectedBlockClientId2, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data89.useSelect)(store);
+    const { toggleBlockHighlight: toggleBlockHighlight2 } = (0, import_data89.useDispatch)(store);
     const timeoutRef = (0, import_element153.useRef)();
-    const isDistractionFree = (0, import_data88.useSelect)(
+    const isDistractionFree = (0, import_data89.useSelect)(
       (select3) => select3(store).getSettings().isDistractionFree,
       []
     );
@@ -53961,8 +56014,8 @@ var wp;
   // packages/block-editor/build-module/components/block-parent-selector/index.mjs
   var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
   function BlockParentSelector() {
-    const { selectBlock: selectBlock2 } = (0, import_data89.useDispatch)(store);
-    const { parentClientId } = (0, import_data89.useSelect)((select3) => {
+    const { selectBlock: selectBlock2 } = (0, import_data90.useDispatch)(store);
+    const { parentClientId } = (0, import_data90.useSelect)((select3) => {
       const {
         getBlockParents: getBlockParents2,
         getSelectedBlockClientId: getSelectedBlockClientId2,
@@ -54125,27 +56178,27 @@ var wp;
   var import_components97 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-settings-menu/block-settings-dropdown.mjs
-  var import_blocks61 = __toESM(require_blocks(), 1);
+  var import_blocks62 = __toESM(require_blocks(), 1);
   var import_components95 = __toESM(require_components(), 1);
-  var import_data103 = __toESM(require_data(), 1);
+  var import_data104 = __toESM(require_data(), 1);
   var import_element163 = __toESM(require_element(), 1);
   var import_i18n87 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts7 = __toESM(require_keyboard_shortcuts(), 1);
   var import_compose63 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/block-actions/index.mjs
-  var import_data91 = __toESM(require_data(), 1);
-  var import_blocks52 = __toESM(require_blocks(), 1);
+  var import_data92 = __toESM(require_data(), 1);
+  var import_blocks53 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/use-paste-styles/index.mjs
   var import_element156 = __toESM(require_element(), 1);
-  var import_blocks51 = __toESM(require_blocks(), 1);
-  var import_data90 = __toESM(require_data(), 1);
+  var import_blocks52 = __toESM(require_blocks(), 1);
+  var import_data91 = __toESM(require_data(), 1);
   var import_notices8 = __toESM(require_notices(), 1);
   var import_i18n76 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/hooks/supports.mjs
-  var import_blocks50 = __toESM(require_blocks(), 1);
+  var import_blocks51 = __toESM(require_blocks(), 1);
   var ALIGN_SUPPORT_KEY = "align";
   var BORDER_SUPPORT_KEY = "__experimentalBorder";
   var COLOR_SUPPORT_KEY = "color";
@@ -54184,9 +56237,9 @@ var wp;
     COLOR_SUPPORT_KEY,
     SPACING_SUPPORT_KEY
   ];
-  var hasAlignSupport = (nameOrType) => (0, import_blocks50.hasBlockSupport)(nameOrType, ALIGN_SUPPORT_KEY);
+  var hasAlignSupport = (nameOrType) => (0, import_blocks51.hasBlockSupport)(nameOrType, ALIGN_SUPPORT_KEY);
   function hasBorderSupport(nameOrType, feature = "any") {
-    const support = (0, import_blocks50.getBlockSupport)(nameOrType, BORDER_SUPPORT_KEY);
+    const support = (0, import_blocks51.getBlockSupport)(nameOrType, BORDER_SUPPORT_KEY);
     if (support === true) {
       return true;
     }
@@ -54196,28 +56249,28 @@ var wp;
     return !!support?.[feature];
   }
   var hasGradientSupport = (nameOrType) => {
-    const colorSupport = (0, import_blocks50.getBlockSupport)(nameOrType, COLOR_SUPPORT_KEY);
+    const colorSupport = (0, import_blocks51.getBlockSupport)(nameOrType, COLOR_SUPPORT_KEY);
     return colorSupport !== null && typeof colorSupport === "object" && !!colorSupport.gradients;
   };
   var hasBackgroundColorSupport = (nameOrType) => {
-    const colorSupport = (0, import_blocks50.getBlockSupport)(nameOrType, COLOR_SUPPORT_KEY);
+    const colorSupport = (0, import_blocks51.getBlockSupport)(nameOrType, COLOR_SUPPORT_KEY);
     return colorSupport && colorSupport.background !== false;
   };
-  var hasTextAlignSupport = (nameOrType) => (0, import_blocks50.hasBlockSupport)(nameOrType, TEXT_ALIGN_SUPPORT_KEY);
+  var hasTextAlignSupport = (nameOrType) => (0, import_blocks51.hasBlockSupport)(nameOrType, TEXT_ALIGN_SUPPORT_KEY);
   var hasTextColorSupport = (nameOrType) => {
-    const colorSupport = (0, import_blocks50.getBlockSupport)(nameOrType, COLOR_SUPPORT_KEY);
+    const colorSupport = (0, import_blocks51.getBlockSupport)(nameOrType, COLOR_SUPPORT_KEY);
     return colorSupport && colorSupport.text !== false;
   };
-  var hasCustomClassNameSupport = (nameOrType) => (0, import_blocks50.hasBlockSupport)(nameOrType, CUSTOM_CLASS_NAME_SUPPORT_KEY, true);
-  var hasFontFamilySupport = (nameOrType) => (0, import_blocks50.hasBlockSupport)(nameOrType, FONT_FAMILY_SUPPORT_KEY);
-  var hasFontSizeSupport = (nameOrType) => (0, import_blocks50.hasBlockSupport)(nameOrType, FONT_SIZE_SUPPORT_KEY);
-  var hasLayoutSupport = (nameOrType) => (0, import_blocks50.hasBlockSupport)(nameOrType, LAYOUT_SUPPORT_KEY);
-  var hasStyleSupport = (nameOrType) => styleSupportKeys.some((key) => (0, import_blocks50.hasBlockSupport)(nameOrType, key));
+  var hasCustomClassNameSupport = (nameOrType) => (0, import_blocks51.hasBlockSupport)(nameOrType, CUSTOM_CLASS_NAME_SUPPORT_KEY, true);
+  var hasFontFamilySupport = (nameOrType) => (0, import_blocks51.hasBlockSupport)(nameOrType, FONT_FAMILY_SUPPORT_KEY);
+  var hasFontSizeSupport = (nameOrType) => (0, import_blocks51.hasBlockSupport)(nameOrType, FONT_SIZE_SUPPORT_KEY);
+  var hasLayoutSupport = (nameOrType) => (0, import_blocks51.hasBlockSupport)(nameOrType, LAYOUT_SUPPORT_KEY);
+  var hasStyleSupport = (nameOrType) => styleSupportKeys.some((key) => (0, import_blocks51.hasBlockSupport)(nameOrType, key));
 
   // packages/block-editor/build-module/components/use-paste-styles/index.mjs
   function hasSerializedBlocks(text) {
     try {
-      const blocks2 = (0, import_blocks51.parse)(text, {
+      const blocks2 = (0, import_blocks52.parse)(text, {
         __unstableSkipMigrationLogs: true,
         __unstableSkipAutop: true
       });
@@ -54267,9 +56320,9 @@ var wp;
     }
   }
   function usePasteStyles() {
-    const registry = (0, import_data90.useRegistry)();
-    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data90.useDispatch)(store);
-    const { createSuccessNotice, createWarningNotice, createErrorNotice } = (0, import_data90.useDispatch)(import_notices8.store);
+    const registry = (0, import_data91.useRegistry)();
+    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data91.useDispatch)(store);
+    const { createSuccessNotice, createWarningNotice, createErrorNotice } = (0, import_data91.useDispatch)(import_notices8.store);
     return (0, import_element156.useCallback)(
       async (targetBlocks) => {
         let html = "";
@@ -54306,7 +56359,7 @@ var wp;
           );
           return;
         }
-        const copiedBlocks = (0, import_blocks51.parse)(html);
+        const copiedBlocks = (0, import_blocks52.parse)(html);
         if (copiedBlocks.length === 1) {
           registry.batch(() => {
             recursivelyUpdateBlockAttributes(
@@ -54325,7 +56378,7 @@ var wp;
           });
         }
         if (targetBlocks.length === 1) {
-          const title = (0, import_blocks51.getBlockType)(targetBlocks[0].name)?.title;
+          const title = (0, import_blocks52.getBlockType)(targetBlocks[0].name)?.title;
           createSuccessNotice(
             (0, import_i18n76.sprintf)(
               // Translators: %s: Name of the block being pasted, e.g. "Paragraph".
@@ -54361,8 +56414,8 @@ var wp;
     children,
     __experimentalUpdateSelection: updateSelection
   }) {
-    const { getDefaultBlockName: getDefaultBlockName8, getGroupingBlockName } = (0, import_data91.useSelect)(import_blocks52.store);
-    const selected = (0, import_data91.useSelect)(
+    const { getDefaultBlockName: getDefaultBlockName8, getGroupingBlockName } = (0, import_data92.useSelect)(import_blocks53.store);
+    const selected = (0, import_data92.useSelect)(
       (select3) => {
         const {
           canInsertBlockType: canInsertBlockType2,
@@ -54384,16 +56437,16 @@ var wp;
             return (canInsertDefaultBlock || !!directInsertBlock) && canInsertBlockType2(block.name, rootClientId);
           }),
           canCopyStyles: blocks2.every((block) => {
-            return !!block && ((0, import_blocks52.hasBlockSupport)(block.name, "color") || (0, import_blocks52.hasBlockSupport)(block.name, "typography"));
+            return !!block && ((0, import_blocks53.hasBlockSupport)(block.name, "color") || (0, import_blocks53.hasBlockSupport)(block.name, "typography"));
           }),
           canDuplicate: blocks2.every((block) => {
-            return !!block && (0, import_blocks52.hasBlockSupport)(block.name, "multiple", true) && canInsertBlockType2(block.name, rootClientId);
+            return !!block && (0, import_blocks53.hasBlockSupport)(block.name, "multiple", true) && canInsertBlockType2(block.name, rootClientId);
           })
         };
       },
       [clientIds, getDefaultBlockName8]
     );
-    const { getBlocksByClientId: getBlocksByClientId2, getBlocks: getBlocks2 } = (0, import_data91.useSelect)(store);
+    const { getBlocksByClientId: getBlocksByClientId2, getBlocks: getBlocks2 } = (0, import_data92.useSelect)(store);
     const { canRemove, canInsertBlock, canCopyStyles, canDuplicate } = selected;
     const {
       removeBlocks: removeBlocks2,
@@ -54402,7 +56455,7 @@ var wp;
       insertAfterBlock: insertAfterBlock2,
       insertBeforeBlock: insertBeforeBlock2,
       flashBlock: flashBlock2
-    } = (0, import_data91.useDispatch)(store);
+    } = (0, import_data92.useDispatch)(store);
     const pasteStyles = usePasteStyles();
     return children({
       canCopyStyles,
@@ -54426,7 +56479,7 @@ var wp;
           return;
         }
         const groupingBlockName = getGroupingBlockName();
-        const newBlocks = (0, import_blocks52.switchToBlockType)(
+        const newBlocks = (0, import_blocks53.switchToBlockType)(
           getBlocksByClientId2(clientIds),
           groupingBlockName
         );
@@ -54464,15 +56517,15 @@ var wp;
   // packages/block-editor/build-module/components/block-settings-menu/block-html-convert-button.mjs
   var import_i18n77 = __toESM(require_i18n(), 1);
   var import_components83 = __toESM(require_components(), 1);
-  var import_blocks53 = __toESM(require_blocks(), 1);
-  var import_data92 = __toESM(require_data(), 1);
+  var import_blocks54 = __toESM(require_blocks(), 1);
+  var import_data93 = __toESM(require_data(), 1);
   var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
   function BlockHTMLConvertButton({ clientId }) {
-    const block = (0, import_data92.useSelect)(
+    const block = (0, import_data93.useSelect)(
       (select3) => select3(store).getBlock(clientId),
       [clientId]
     );
-    const { replaceBlocks: replaceBlocks2 } = (0, import_data92.useDispatch)(store);
+    const { replaceBlocks: replaceBlocks2 } = (0, import_data93.useDispatch)(store);
     if (!block || block.name !== "core/html") {
       return null;
     }
@@ -54481,7 +56534,7 @@ var wp;
       {
         onClick: () => replaceBlocks2(
           clientId,
-          (0, import_blocks53.rawHandler)({ HTML: (0, import_blocks53.getBlockContent)(block) })
+          (0, import_blocks54.rawHandler)({ HTML: (0, import_blocks54.getBlockContent)(block) })
         ),
         children: (0, import_i18n77.__)("Convert to Blocks")
       }
@@ -54499,21 +56552,21 @@ var wp;
 
   // packages/block-editor/build-module/components/block-settings-menu-controls/index.mjs
   var import_components93 = __toESM(require_components(), 1);
-  var import_blocks60 = __toESM(require_blocks(), 1);
-  var import_data101 = __toESM(require_data(), 1);
+  var import_blocks61 = __toESM(require_blocks(), 1);
+  var import_data102 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/convert-to-group-buttons/index.mjs
   var import_components86 = __toESM(require_components(), 1);
   var import_i18n79 = __toESM(require_i18n(), 1);
-  var import_blocks56 = __toESM(require_blocks(), 1);
-  var import_data95 = __toESM(require_data(), 1);
+  var import_blocks57 = __toESM(require_blocks(), 1);
+  var import_data96 = __toESM(require_data(), 1);
   var import_keycodes11 = __toESM(require_keycodes(), 1);
 
   // packages/block-editor/build-module/components/convert-to-group-buttons/use-convert-to-group-button-props.mjs
-  var import_blocks54 = __toESM(require_blocks(), 1);
-  var import_data93 = __toESM(require_data(), 1);
+  var import_blocks55 = __toESM(require_blocks(), 1);
+  var import_data94 = __toESM(require_data(), 1);
   function useConvertToGroupButtonProps(selectedClientIds) {
-    return (0, import_data93.useSelect)(
+    return (0, import_data94.useSelect)(
       (select3) => {
         const {
           getBlocksByClientId: getBlocksByClientId2,
@@ -54521,7 +56574,7 @@ var wp;
           isUngroupable: isUngroupable2,
           isGroupable: isGroupable2
         } = select3(store);
-        const { getGroupingBlockName, getBlockType: getBlockType29 } = select3(import_blocks54.store);
+        const { getGroupingBlockName, getBlockType: getBlockType29 } = select3(import_blocks55.store);
         const clientIds = selectedClientIds?.length ? selectedClientIds : getSelectedBlockClientIds2();
         const blocksSelection = getBlocksByClientId2(clientIds);
         const [firstSelectedBlock] = blocksSelection;
@@ -54540,8 +56593,8 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/convert-to-group-buttons/toolbar.mjs
-  var import_data94 = __toESM(require_data(), 1);
-  var import_blocks55 = __toESM(require_blocks(), 1);
+  var import_data95 = __toESM(require_data(), 1);
+  var import_blocks56 = __toESM(require_blocks(), 1);
   var import_components85 = __toESM(require_components(), 1);
   var import_i18n78 = __toESM(require_i18n(), 1);
   var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
@@ -54553,11 +56606,11 @@ var wp;
   };
   function BlockGroupToolbar() {
     const { blocksSelection, clientIds, groupingBlockName, isGroupable: isGroupable2 } = useConvertToGroupButtonProps();
-    const { replaceBlocks: replaceBlocks2 } = (0, import_data94.useDispatch)(store);
-    const { canRemove, variations } = (0, import_data94.useSelect)(
+    const { replaceBlocks: replaceBlocks2 } = (0, import_data95.useDispatch)(store);
+    const { canRemove, variations } = (0, import_data95.useSelect)(
       (select3) => {
         const { canRemoveBlocks: canRemoveBlocks2 } = select3(store);
-        const { getBlockVariations: getBlockVariations2 } = select3(import_blocks55.store);
+        const { getBlockVariations: getBlockVariations2 } = select3(import_blocks56.store);
         return {
           canRemove: canRemoveBlocks2(clientIds),
           variations: getBlockVariations2(
@@ -54569,7 +56622,7 @@ var wp;
       [clientIds, groupingBlockName]
     );
     const onConvertToGroup = (layout) => {
-      const newBlocks = (0, import_blocks55.switchToBlockType)(
+      const newBlocks = (0, import_blocks56.switchToBlockType)(
         blocksSelection,
         groupingBlockName
       );
@@ -54645,10 +56698,10 @@ var wp;
     onClose = () => {
     }
   }) {
-    const { getSelectedBlockClientIds: getSelectedBlockClientIds2 } = (0, import_data95.useSelect)(store);
-    const { replaceBlocks: replaceBlocks2 } = (0, import_data95.useDispatch)(store);
+    const { getSelectedBlockClientIds: getSelectedBlockClientIds2 } = (0, import_data96.useSelect)(store);
+    const { replaceBlocks: replaceBlocks2 } = (0, import_data96.useDispatch)(store);
     const onConvertToGroup = () => {
-      const newBlocks = (0, import_blocks56.switchToBlockType)(
+      const newBlocks = (0, import_blocks57.switchToBlockType)(
         blocksSelection,
         groupingBlockName
       );
@@ -54707,9 +56760,9 @@ var wp;
   var import_components88 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-lock/use-block-lock.mjs
-  var import_data96 = __toESM(require_data(), 1);
+  var import_data97 = __toESM(require_data(), 1);
   function useBlockLock(clientId) {
-    return (0, import_data96.useSelect)(
+    return (0, import_data97.useSelect)(
       (select3) => {
         const {
           canLockBlockType: canLockBlockType2,
@@ -54735,27 +56788,27 @@ var wp;
   var import_i18n80 = __toESM(require_i18n(), 1);
   var import_element157 = __toESM(require_element(), 1);
   var import_components87 = __toESM(require_components(), 1);
-  var import_data97 = __toESM(require_data(), 1);
-  var import_blocks57 = __toESM(require_blocks(), 1);
+  var import_data98 = __toESM(require_data(), 1);
+  var import_blocks58 = __toESM(require_blocks(), 1);
   var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
   var ALLOWS_EDIT_LOCKING = ["core/navigation"];
-  function getTemplateLockValue(lock4) {
-    if (lock4.remove && lock4.move) {
+  function getTemplateLockValue(lock5) {
+    if (lock5.remove && lock5.move) {
       return "all";
     }
-    if (lock4.remove && !lock4.move) {
+    if (lock5.remove && !lock5.move) {
       return "insert";
     }
     return false;
   }
   function BlockLockModal({ clientId, onClose }) {
-    const [lock4, setLock] = (0, import_element157.useState)({ move: false, remove: false });
+    const [lock5, setLock] = (0, import_element157.useState)({ move: false, remove: false });
     const { isEditLocked, isMoveLocked, isRemoveLocked } = useBlockLock(clientId);
-    const { allowsEditLocking, templateLock, hasTemplateLock } = (0, import_data97.useSelect)(
+    const { allowsEditLocking, templateLock, hasTemplateLock } = (0, import_data98.useSelect)(
       (select3) => {
         const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3 } = select3(store);
         const blockName = getBlockName2(clientId);
-        const blockType = (0, import_blocks57.getBlockType)(blockName);
+        const blockType = (0, import_blocks58.getBlockType)(blockName);
         return {
           allowsEditLocking: ALLOWS_EDIT_LOCKING.includes(blockName),
           templateLock: getBlockAttributes3(clientId)?.templateLock,
@@ -54767,7 +56820,7 @@ var wp;
     const [applyTemplateLock, setApplyTemplateLock] = (0, import_element157.useState)(
       !!templateLock
     );
-    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data97.useDispatch)(store);
+    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data98.useDispatch)(store);
     const blockInformation = useBlockDisplayInformation(clientId);
     (0, import_element157.useEffect)(() => {
       setLock({
@@ -54776,9 +56829,9 @@ var wp;
         ...allowsEditLocking ? { edit: isEditLocked } : {}
       });
     }, [isEditLocked, isMoveLocked, isRemoveLocked, allowsEditLocking]);
-    const isAllChecked = Object.values(lock4).every(Boolean);
-    const isMixed = Object.values(lock4).some(Boolean) && !isAllChecked;
-    const isDirty = lock4.move !== isMoveLocked || lock4.remove !== isRemoveLocked || allowsEditLocking && lock4.edit !== isEditLocked || hasTemplateLock && applyTemplateLock !== !!templateLock;
+    const isAllChecked = Object.values(lock5).every(Boolean);
+    const isMixed = Object.values(lock5).some(Boolean) && !isAllChecked;
+    const isDirty = lock5.move !== isMoveLocked || lock5.remove !== isRemoveLocked || allowsEditLocking && lock5.edit !== isEditLocked || hasTemplateLock && applyTemplateLock !== !!templateLock;
     return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
       import_components87.Modal,
       {
@@ -54799,8 +56852,8 @@ var wp;
                 return;
               }
               updateBlockAttributes2([clientId], {
-                lock: lock4,
-                templateLock: applyTemplateLock ? getTemplateLockValue(lock4) : void 0
+                lock: lock5,
+                templateLock: applyTemplateLock ? getTemplateLockValue(lock5) : void 0
               });
               onClose();
             },
@@ -54838,7 +56891,7 @@ var wp;
                                 import_components87.CheckboxControl,
                                 {
                                   label: (0, import_i18n80.__)("Lock editing"),
-                                  checked: !!lock4.edit,
+                                  checked: !!lock5.edit,
                                   onChange: (edit) => setLock((prevLock) => ({
                                     ...prevLock,
                                     edit
@@ -54849,7 +56902,7 @@ var wp;
                                 import_components87.Icon,
                                 {
                                   className: "block-editor-block-lock-modal__lock-icon",
-                                  icon: lock4.edit ? lock_default : unlock_default
+                                  icon: lock5.edit ? lock_default : unlock_default
                                 }
                               )
                             ] }),
@@ -54858,7 +56911,7 @@ var wp;
                                 import_components87.CheckboxControl,
                                 {
                                   label: (0, import_i18n80.__)("Lock movement"),
-                                  checked: lock4.move,
+                                  checked: lock5.move,
                                   onChange: (move) => setLock((prevLock) => ({
                                     ...prevLock,
                                     move
@@ -54869,7 +56922,7 @@ var wp;
                                 import_components87.Icon,
                                 {
                                   className: "block-editor-block-lock-modal__lock-icon",
-                                  icon: lock4.move ? lock_default : unlock_default
+                                  icon: lock5.move ? lock_default : unlock_default
                                 }
                               )
                             ] }),
@@ -54878,7 +56931,7 @@ var wp;
                                 import_components87.CheckboxControl,
                                 {
                                   label: (0, import_i18n80.__)("Lock removal"),
-                                  checked: lock4.remove,
+                                  checked: lock5.remove,
                                   onChange: (remove5) => setLock((prevLock) => ({
                                     ...prevLock,
                                     remove: remove5
@@ -54889,7 +56942,7 @@ var wp;
                                 import_components87.Icon,
                                 {
                                   className: "block-editor-block-lock-modal__lock-icon",
-                                  icon: lock4.remove ? lock_default : unlock_default
+                                  icon: lock5.remove ? lock_default : unlock_default
                                 }
                               )
                             ] })
@@ -54905,7 +56958,7 @@ var wp;
                     className: "block-editor-block-lock-modal__template-lock",
                     label: (0, import_i18n80.__)("Apply to all blocks inside"),
                     checked: applyTemplateLock,
-                    disabled: lock4.move && !lock4.remove,
+                    disabled: lock5.move && !lock5.remove,
                     onChange: () => setApplyTemplateLock(!applyTemplateLock)
                   }
                 )
@@ -55017,26 +57070,26 @@ var wp;
   // packages/block-editor/build-module/components/block-settings-menu/block-mode-toggle.mjs
   var import_i18n83 = __toESM(require_i18n(), 1);
   var import_components90 = __toESM(require_components(), 1);
-  var import_blocks58 = __toESM(require_blocks(), 1);
-  var import_data98 = __toESM(require_data(), 1);
+  var import_blocks59 = __toESM(require_blocks(), 1);
+  var import_data99 = __toESM(require_data(), 1);
   var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
   var noop11 = () => {
   };
   function BlockModeToggle({ clientId, onToggle = noop11 }) {
-    const { blockType, mode: mode2, enabled } = (0, import_data98.useSelect)(
+    const { blockType, mode: mode2, enabled } = (0, import_data99.useSelect)(
       (select3) => {
         const { getBlock: getBlock2, getBlockMode: getBlockMode2, getSettings: getSettings7 } = select3(store);
         const block = getBlock2(clientId);
         return {
           mode: getBlockMode2(clientId),
-          blockType: block ? (0, import_blocks58.getBlockType)(block.name) : null,
+          blockType: block ? (0, import_blocks59.getBlockType)(block.name) : null,
           enabled: getSettings7().codeEditingEnabled && !!block?.isValid
         };
       },
       [clientId]
     );
-    const { toggleBlockMode: toggleBlockMode2 } = (0, import_data98.useDispatch)(store);
-    if (!blockType || !(0, import_blocks58.hasBlockSupport)(blockType, "html", true) || !enabled) {
+    const { toggleBlockMode: toggleBlockMode2 } = (0, import_data99.useDispatch)(store);
+    if (!blockType || !(0, import_blocks59.hasBlockSupport)(blockType, "html", true) || !enabled) {
       return null;
     }
     const label = mode2 === "visual" ? (0, import_i18n83.__)("Edit as HTML") : (0, import_i18n83.__)("Edit visually");
@@ -55056,7 +57109,7 @@ var wp;
   var import_components92 = __toESM(require_components(), 1);
   var import_i18n85 = __toESM(require_i18n(), 1);
   var import_element161 = __toESM(require_element(), 1);
-  var import_data100 = __toESM(require_data(), 1);
+  var import_data101 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts6 = __toESM(require_keyboard_shortcuts(), 1);
 
   // packages/block-editor/build-module/components/block-rename/modal.mjs
@@ -55064,7 +57117,7 @@ var wp;
   var import_i18n84 = __toESM(require_i18n(), 1);
   var import_element160 = __toESM(require_element(), 1);
   var import_a11y11 = __toESM(require_a11y(), 1);
-  var import_data99 = __toESM(require_data(), 1);
+  var import_data100 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/block-rename/is-empty-string.mjs
   function isEmptyString(testString) {
@@ -55076,7 +57129,7 @@ var wp;
   function BlockRenameModal({ clientId, onClose }) {
     const [editedBlockName, setEditedBlockName] = (0, import_element160.useState)();
     const blockInformation = useBlockDisplayInformation(clientId);
-    const { metadata } = (0, import_data99.useSelect)(
+    const { metadata } = (0, import_data100.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3 } = select3(store);
         return {
@@ -55085,7 +57138,7 @@ var wp;
       },
       [clientId]
     );
-    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data99.useDispatch)(store);
+    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data100.useDispatch)(store);
     const blockName = metadata?.name || "";
     const originalBlockName = blockInformation?.title;
     const hasOverridesWarning = !!blockName && !!metadata?.bindings && Object.values(metadata.bindings).some(
@@ -55181,7 +57234,7 @@ var wp;
   var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
   function BlockRenameControl({ clientId }) {
     const [renamingBlock, setRenamingBlock] = (0, import_element161.useState)(false);
-    const shortcut = (0, import_data100.useSelect)(
+    const shortcut = (0, import_data101.useSelect)(
       (select3) => select3(import_keyboard_shortcuts6.store).getShortcutRepresentation(
         "core/block-editor/rename"
       ),
@@ -55211,10 +57264,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-rename/use-block-rename.mjs
-  var import_blocks59 = __toESM(require_blocks(), 1);
+  var import_blocks60 = __toESM(require_blocks(), 1);
   function useBlockRename(name) {
     return {
-      canRename: !!name && (0, import_blocks59.getBlockSupport)(name, "renaming", true)
+      canRename: !!name && (0, import_blocks60.getBlockSupport)(name, "renaming", true)
     };
   }
 
@@ -55228,7 +57281,7 @@ var wp;
       isContentOnly,
       canToggleSelectedBlocksVisibility,
       canEdit
-    } = (0, import_data101.useSelect)(
+    } = (0, import_data102.useSelect)(
       (select3) => {
         const {
           getBlocksByClientId: getBlocksByClientId2,
@@ -55245,7 +57298,7 @@ var wp;
           canToggleSelectedBlocksVisibility: getBlocksByClientId2(
             ids
           ).every(
-            (block) => (0, import_blocks60.hasBlockSupport)(block.name, "visibility", true)
+            (block) => (0, import_blocks61.hasBlockSupport)(block.name, "visibility", true)
           ),
           canEdit: canEditBlock2(ids[0])
         };
@@ -55322,7 +57375,7 @@ var wp;
   var import_element162 = __toESM(require_element(), 1);
   var import_components94 = __toESM(require_components(), 1);
   var import_compose62 = __toESM(require_compose(), 1);
-  var import_data102 = __toESM(require_data(), 1);
+  var import_data103 = __toESM(require_data(), 1);
   var import_i18n86 = __toESM(require_i18n(), 1);
   var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
   function BlockParentSelectorMenuItem({
@@ -55330,7 +57383,7 @@ var wp;
     parentBlockType
   }) {
     const isSmallViewport = (0, import_compose62.useViewportMatch)("medium", "<");
-    const { selectBlock: selectBlock2 } = (0, import_data102.useDispatch)(store);
+    const { selectBlock: selectBlock2 } = (0, import_data103.useDispatch)(store);
     const menuItemRef = (0, import_element162.useRef)();
     const gesturesProps = useShowHoveredOrFocusedGestures({
       ref: menuItemRef,
@@ -55369,11 +57422,11 @@ var wp;
     eventType = "copy",
     __experimentalUpdateSelection: updateSelection = false
   }) {
-    const { getBlocksByClientId: getBlocksByClientId2 } = (0, import_data103.useSelect)(store);
-    const { removeBlocks: removeBlocks2 } = (0, import_data103.useDispatch)(store);
+    const { getBlocksByClientId: getBlocksByClientId2 } = (0, import_data104.useSelect)(store);
+    const { removeBlocks: removeBlocks2 } = (0, import_data104.useDispatch)(store);
     const notifyCopy = useNotifyCopy();
     const ref = (0, import_compose63.useCopyToClipboard)(
-      () => (0, import_blocks61.serialize)(getBlocksByClientId2(clientIds)),
+      () => (0, import_blocks62.serialize)(getBlocksByClientId2(clientIds)),
       () => {
         switch (eventType) {
           case "copy":
@@ -55414,7 +57467,7 @@ var wp;
       canMove,
       isFirst,
       isLast
-    } = (0, import_data103.useSelect)(
+    } = (0, import_data104.useSelect)(
       (select3) => {
         const {
           getBlockName: getBlockName2,
@@ -55429,7 +57482,7 @@ var wp;
           getBlockIndex: getBlockIndex2,
           getBlockCount: getBlockCount2
         } = unlock(select3(store));
-        const { getActiveBlockVariation } = select3(import_blocks61.store);
+        const { getActiveBlockVariation } = select3(import_blocks62.store);
         const _firstParentClientId = getBlockRootClientId2(firstBlockClientId);
         const parentBlockName = _firstParentClientId && getBlockName2(_firstParentClientId);
         return {
@@ -55437,7 +57490,7 @@ var wp;
           parentBlockType: _firstParentClientId && (getActiveBlockVariation(
             parentBlockName,
             getBlockAttributes3(_firstParentClientId)
-          ) || (0, import_blocks61.getBlockType)(parentBlockName)),
+          ) || (0, import_blocks62.getBlockType)(parentBlockName)),
           previousBlockClientId: getPreviousBlockClientId2(firstBlockClientId),
           selectedBlockClientIds: getSelectedBlockClientIds22(),
           isContentOnly: getBlockEditingMode2(firstBlockClientId) === "contentOnly",
@@ -55450,9 +57503,9 @@ var wp;
       },
       [firstBlockClientId, clientIds]
     );
-    const { getBlockOrder: getBlockOrder2, getSelectedBlockClientIds: getSelectedBlockClientIds2 } = (0, import_data103.useSelect)(store);
-    const { moveBlocksDown: moveBlocksDown2, moveBlocksUp: moveBlocksUp2 } = (0, import_data103.useDispatch)(store);
-    const shortcuts = (0, import_data103.useSelect)((select3) => {
+    const { getBlockOrder: getBlockOrder2, getSelectedBlockClientIds: getSelectedBlockClientIds2 } = (0, import_data104.useSelect)(store);
+    const { moveBlocksDown: moveBlocksDown2, moveBlocksUp: moveBlocksUp2 } = (0, import_data104.useDispatch)(store);
+    const shortcuts = (0, import_data104.useSelect)((select3) => {
       const { getShortcutRepresentation } = select3(import_keyboard_shortcuts7.store);
       return {
         copy: getShortcutRepresentation("core/block-editor/copy"),
@@ -55713,15 +57766,15 @@ var wp;
   // packages/block-editor/build-module/components/block-edit-visually-button/index.mjs
   var import_components98 = __toESM(require_components(), 1);
   var import_i18n88 = __toESM(require_i18n(), 1);
-  var import_data104 = __toESM(require_data(), 1);
+  var import_data105 = __toESM(require_data(), 1);
   var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
   function BlockEditVisuallyButton({ clientIds }) {
     const clientId = clientIds.length === 1 ? clientIds[0] : void 0;
-    const canEditVisually = (0, import_data104.useSelect)(
+    const canEditVisually = (0, import_data105.useSelect)(
       (select3) => !!clientId && select3(store).getBlockMode(clientId) === "html",
       [clientId]
     );
-    const { toggleBlockMode: toggleBlockMode2 } = (0, import_data104.useDispatch)(store);
+    const { toggleBlockMode: toggleBlockMode2 } = (0, import_data105.useDispatch)(store);
     if (!canEditVisually) {
       return null;
     }
@@ -55739,7 +57792,7 @@ var wp;
   // packages/block-editor/build-module/components/navigable-toolbar/index.mjs
   var import_components99 = __toESM(require_components(), 1);
   var import_element164 = __toESM(require_element(), 1);
-  var import_data105 = __toESM(require_data(), 1);
+  var import_data106 = __toESM(require_data(), 1);
   var import_deprecated12 = __toESM(require_deprecated(), 1);
   var import_dom55 = __toESM(require_dom(), 1);
   var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
@@ -55849,7 +57902,7 @@ var wp;
         onIndexChange(index2);
       };
     }, [initialIndex, initialFocusOnMount, onIndexChange, toolbarRef]);
-    const { getLastFocus: getLastFocus2 } = unlock((0, import_data105.useSelect)(store));
+    const { getLastFocus: getLastFocus2 } = unlock((0, import_data106.useSelect)(store));
     (0, import_element164.useEffect)(() => {
       const navigableToolbarRef = toolbarRef.current;
       if (focusEditorOnEscape) {
@@ -55916,14 +57969,14 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-toolbar/use-has-block-toolbar.mjs
-  var import_data106 = __toESM(require_data(), 1);
-  var import_blocks62 = __toESM(require_blocks(), 1);
+  var import_data107 = __toESM(require_data(), 1);
+  var import_blocks63 = __toESM(require_blocks(), 1);
   function useHasBlockToolbar() {
-    const enabled = (0, import_data106.useSelect)((select3) => {
+    const enabled = (0, import_data107.useSelect)((select3) => {
       const { getBlockEditingMode: getBlockEditingMode2, getBlockName: getBlockName2, getBlockSelectionStart: getBlockSelectionStart2 } = select3(store);
       const selectedBlockClientId = getBlockSelectionStart2();
-      const blockType = selectedBlockClientId && (0, import_blocks62.getBlockType)(getBlockName2(selectedBlockClientId));
-      return blockType && (0, import_blocks62.hasBlockSupport)(blockType, "__experimentalToolbar", true) && getBlockEditingMode2(selectedBlockClientId) !== "disabled";
+      const blockType = selectedBlockClientId && (0, import_blocks63.getBlockType)(getBlockName2(selectedBlockClientId));
+      return blockType && (0, import_blocks63.hasBlockSupport)(blockType, "__experimentalToolbar", true) && getBlockEditingMode2(selectedBlockClientId) !== "disabled";
     }, []);
     return enabled;
   }
@@ -55931,9 +57984,9 @@ var wp;
   // packages/block-editor/build-module/components/block-toolbar/change-design.mjs
   var import_components100 = __toESM(require_components(), 1);
   var import_i18n89 = __toESM(require_i18n(), 1);
-  var import_blocks63 = __toESM(require_blocks(), 1);
+  var import_blocks64 = __toESM(require_blocks(), 1);
   var import_element165 = __toESM(require_element(), 1);
-  var import_data107 = __toESM(require_data(), 1);
+  var import_data108 = __toESM(require_data(), 1);
   var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY9 = [];
   var MAX_PATTERNS_TO_SHOW = 6;
@@ -55941,7 +57994,7 @@ var wp;
     placement: "bottom-start"
   };
   function ChangeDesign({ clientId }) {
-    const { categories, currentPatternName, patterns } = (0, import_data107.useSelect)(
+    const { categories, currentPatternName, patterns } = (0, import_data108.useSelect)(
       (select3) => {
         const {
           getBlockAttributes: getBlockAttributes3,
@@ -55960,7 +58013,7 @@ var wp;
       },
       [clientId]
     );
-    const { replaceBlocks: replaceBlocks2 } = (0, import_data107.useDispatch)(store);
+    const { replaceBlocks: replaceBlocks2 } = (0, import_data108.useDispatch)(store);
     const sameCategoryPatternsWithSingleWrapper = (0, import_element165.useMemo)(() => {
       if (categories.length === 0 || !patterns || patterns.length === 0) {
         return EMPTY_ARRAY9;
@@ -55984,7 +58037,7 @@ var wp;
     }
     const onClickPattern = (pattern) => {
       const newBlocks = (pattern.blocks ?? []).map((block) => {
-        return (0, import_blocks63.cloneBlock)(block);
+        return (0, import_blocks64.cloneBlock)(block);
       });
       newBlocks[0].attributes.metadata = {
         ...newBlocks[0].attributes.metadata,
@@ -56031,8 +58084,8 @@ var wp;
   var import_data111 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/block-styles/use-styles-for-block.mjs
-  var import_data108 = __toESM(require_data(), 1);
-  var import_blocks64 = __toESM(require_blocks(), 1);
+  var import_data109 = __toESM(require_data(), 1);
+  var import_blocks65 = __toESM(require_blocks(), 1);
   var import_element166 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-styles/utils.mjs
@@ -56084,14 +58137,14 @@ var wp;
       const example = type?.example;
       const blockName = type?.name;
       if (example && blockName) {
-        return (0, import_blocks64.getBlockFromExample)(blockName, {
+        return (0, import_blocks65.getBlockFromExample)(blockName, {
           attributes: example.attributes,
           innerBlocks: example.innerBlocks,
           innerContent: example.innerContent
         });
       }
       if (block) {
-        return (0, import_blocks64.cloneBlock)(block);
+        return (0, import_blocks65.cloneBlock)(block);
       }
     }, [block, type?.example, type?.name]);
   }
@@ -56102,8 +58155,8 @@ var wp;
       if (!block2) {
         return {};
       }
-      const blockType2 = (0, import_blocks64.getBlockType)(block2.name);
-      const { getBlockStyles: getBlockStyles2 } = select3(import_blocks64.store);
+      const blockType2 = (0, import_blocks65.getBlockType)(block2.name);
+      const { getBlockStyles: getBlockStyles2 } = select3(import_blocks65.store);
       return {
         block: !blockType2?.example ? block2 : null,
         blockType: blockType2,
@@ -56111,10 +58164,10 @@ var wp;
         className: block2.attributes.className || ""
       };
     };
-    const { styles, block, blockType, className } = (0, import_data108.useSelect)(selector3, [
+    const { styles, block, blockType, className } = (0, import_data109.useSelect)(selector3, [
       clientId
     ]);
-    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data108.useDispatch)(store);
+    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data109.useDispatch)(store);
     const stylesToRender = getRenderedStyles(styles);
     const activeStyle = getActiveStyle(stylesToRender, className);
     const genericPreviewBlock = useGenericPreviewBlock(block, blockType);
@@ -56142,1906 +58195,6 @@ var wp;
   var import_blocks66 = __toESM(require_blocks(), 1);
   var import_data110 = __toESM(require_data(), 1);
   var import_element167 = __toESM(require_element(), 1);
-
-  // packages/global-styles-engine/build-module/utils/object.mjs
-  function setImmutably2(object, path, value) {
-    path = Array.isArray(path) ? [...path] : [path];
-    object = Array.isArray(object) ? [...object] : { ...object };
-    const leaf = path.pop();
-    let prev = object;
-    for (const key of path) {
-      const lvl = prev[key];
-      prev = prev[key] = Array.isArray(lvl) ? [...lvl] : { ...lvl };
-    }
-    prev[leaf] = value;
-    return object;
-  }
-  var getValueFromObjectPath2 = (object, path, defaultValue) => {
-    const arrayPath = Array.isArray(path) ? path : path.split(".");
-    let value = object;
-    arrayPath.forEach((fieldName) => {
-      value = value?.[fieldName];
-    });
-    return value ?? defaultValue;
-  };
-
-  // packages/global-styles-engine/build-module/utils/common.mjs
-  var import_style_engine2 = __toESM(require_style_engine(), 1);
-
-  // packages/global-styles-engine/build-module/utils/fluid.mjs
-  var DEFAULT_MAXIMUM_VIEWPORT_WIDTH2 = "1600px";
-  var DEFAULT_MINIMUM_VIEWPORT_WIDTH2 = "320px";
-  var DEFAULT_SCALE_FACTOR2 = 1;
-  var DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MIN2 = 0.25;
-  var DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MAX2 = 0.75;
-  var DEFAULT_MINIMUM_FONT_SIZE_LIMIT2 = "14px";
-  function getComputedFluidTypographyValue2({
-    minimumFontSize,
-    maximumFontSize,
-    fontSize,
-    minimumViewportWidth = DEFAULT_MINIMUM_VIEWPORT_WIDTH2,
-    maximumViewportWidth = DEFAULT_MAXIMUM_VIEWPORT_WIDTH2,
-    scaleFactor = DEFAULT_SCALE_FACTOR2,
-    minimumFontSizeLimit
-  }) {
-    minimumFontSizeLimit = !!getTypographyValueAndUnit2(minimumFontSizeLimit) ? minimumFontSizeLimit : DEFAULT_MINIMUM_FONT_SIZE_LIMIT2;
-    if (fontSize) {
-      const fontSizeParsed = getTypographyValueAndUnit2(fontSize);
-      if (!fontSizeParsed?.unit || !fontSizeParsed?.value) {
-        return null;
-      }
-      const minimumFontSizeLimitParsed = getTypographyValueAndUnit2(
-        minimumFontSizeLimit,
-        {
-          coerceTo: fontSizeParsed.unit
-        }
-      );
-      if (!!minimumFontSizeLimitParsed?.value && !minimumFontSize && !maximumFontSize) {
-        if (fontSizeParsed?.value <= minimumFontSizeLimitParsed?.value) {
-          return null;
-        }
-      }
-      if (!maximumFontSize) {
-        maximumFontSize = `${fontSizeParsed.value}${fontSizeParsed.unit}`;
-      }
-      if (!minimumFontSize) {
-        const fontSizeValueInPx = fontSizeParsed.unit === "px" ? fontSizeParsed.value : fontSizeParsed.value * 16;
-        const minimumFontSizeFactor = Math.min(
-          Math.max(
-            1 - 0.075 * Math.log2(fontSizeValueInPx),
-            DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MIN2
-          ),
-          DEFAULT_MINIMUM_FONT_SIZE_FACTOR_MAX2
-        );
-        const calculatedMinimumFontSize = roundToPrecision2(
-          fontSizeParsed.value * minimumFontSizeFactor,
-          3
-        );
-        if (!!minimumFontSizeLimitParsed?.value && calculatedMinimumFontSize < minimumFontSizeLimitParsed?.value) {
-          minimumFontSize = `${minimumFontSizeLimitParsed.value}${minimumFontSizeLimitParsed.unit}`;
-        } else {
-          minimumFontSize = `${calculatedMinimumFontSize}${fontSizeParsed.unit}`;
-        }
-      }
-    }
-    const minimumFontSizeParsed = getTypographyValueAndUnit2(minimumFontSize);
-    const fontSizeUnit = minimumFontSizeParsed?.unit || "rem";
-    const maximumFontSizeParsed = getTypographyValueAndUnit2(maximumFontSize, {
-      coerceTo: fontSizeUnit
-    });
-    if (!minimumFontSizeParsed || !maximumFontSizeParsed) {
-      return null;
-    }
-    const minimumFontSizeRem = getTypographyValueAndUnit2(minimumFontSize, {
-      coerceTo: "rem"
-    });
-    const maximumViewportWidthParsed = getTypographyValueAndUnit2(
-      maximumViewportWidth,
-      { coerceTo: fontSizeUnit }
-    );
-    const minimumViewportWidthParsed = getTypographyValueAndUnit2(
-      minimumViewportWidth,
-      { coerceTo: fontSizeUnit }
-    );
-    if (!maximumViewportWidthParsed || !minimumViewportWidthParsed || !minimumFontSizeRem) {
-      return null;
-    }
-    const linearDenominator = maximumViewportWidthParsed.value - minimumViewportWidthParsed.value;
-    if (!linearDenominator) {
-      return null;
-    }
-    const minViewportWidthOffsetValue = roundToPrecision2(
-      minimumViewportWidthParsed.value / 100,
-      3
-    );
-    const viewportWidthOffset = roundToPrecision2(minViewportWidthOffsetValue, 3) + fontSizeUnit;
-    const linearFactor = 100 * ((maximumFontSizeParsed.value - minimumFontSizeParsed.value) / linearDenominator);
-    const linearFactorScaled = roundToPrecision2(
-      (linearFactor || 1) * scaleFactor,
-      3
-    );
-    const fluidTargetFontSize = `${minimumFontSizeRem.value}${minimumFontSizeRem.unit} + ((1vw - ${viewportWidthOffset}) * ${linearFactorScaled})`;
-    return `clamp(${minimumFontSize}, ${fluidTargetFontSize}, ${maximumFontSize})`;
-  }
-  function getTypographyValueAndUnit2(rawValue, options = {}) {
-    if (typeof rawValue !== "string" && typeof rawValue !== "number") {
-      return null;
-    }
-    if (isFinite(rawValue)) {
-      rawValue = `${rawValue}px`;
-    }
-    const { coerceTo, rootSizeValue, acceptableUnits } = {
-      coerceTo: "",
-      // Default browser font size. Later we could inject some JS to compute this `getComputedStyle( document.querySelector( "html" ) ).fontSize`.
-      rootSizeValue: 16,
-      acceptableUnits: ["rem", "px", "em"],
-      ...options
-    };
-    const acceptableUnitsGroup = acceptableUnits?.join("|");
-    const regexUnits = new RegExp(
-      `^(\\d*\\.?\\d+)(${acceptableUnitsGroup}){1,1}$`
-    );
-    const matches = rawValue.toString().match(regexUnits);
-    if (!matches || matches.length < 3) {
-      return null;
-    }
-    let [, value, unit] = matches;
-    let returnValue = parseFloat(value);
-    if ("px" === coerceTo && ("em" === unit || "rem" === unit)) {
-      returnValue = returnValue * rootSizeValue;
-      unit = coerceTo;
-    }
-    if ("px" === unit && ("em" === coerceTo || "rem" === coerceTo)) {
-      returnValue = returnValue / rootSizeValue;
-      unit = coerceTo;
-    }
-    if (("em" === coerceTo || "rem" === coerceTo) && ("em" === unit || "rem" === unit)) {
-      unit = coerceTo;
-    }
-    if (!unit) {
-      return null;
-    }
-    return {
-      value: roundToPrecision2(returnValue, 3),
-      unit
-    };
-  }
-  function roundToPrecision2(value, digits = 3) {
-    const base = Math.pow(10, digits);
-    return Math.round(value * base) / base;
-  }
-
-  // packages/global-styles-engine/build-module/utils/typography.mjs
-  function isFluidTypographyEnabled(typographySettings) {
-    const fluidSettings = typographySettings?.fluid;
-    return true === fluidSettings || fluidSettings && typeof fluidSettings === "object" && Object.keys(fluidSettings).length > 0;
-  }
-  function getFluidTypographyOptionsFromSettings(settings2) {
-    const typographySettings = settings2?.typography ?? {};
-    const layoutSettings = settings2?.layout;
-    const defaultMaxViewportWidth = getTypographyValueAndUnit2(
-      layoutSettings?.wideSize
-    ) ? layoutSettings?.wideSize : null;
-    return isFluidTypographyEnabled(typographySettings) && defaultMaxViewportWidth ? {
-      fluid: {
-        maxViewportWidth: defaultMaxViewportWidth,
-        ...typeof typographySettings.fluid === "object" ? typographySettings.fluid : {}
-      }
-    } : {
-      fluid: typographySettings?.fluid
-    };
-  }
-  function getTypographyFontSizeValue(preset, settings2) {
-    const { size: defaultSize } = preset;
-    if (!defaultSize || "0" === defaultSize || false === preset?.fluid) {
-      return defaultSize;
-    }
-    if (!isFluidTypographyEnabled(settings2?.typography) && !isFluidTypographyEnabled(preset)) {
-      return defaultSize;
-    }
-    const fluidTypographySettings = getFluidTypographyOptionsFromSettings(settings2)?.fluid ?? {};
-    const fluidFontSizeValue = getComputedFluidTypographyValue2({
-      minimumFontSize: typeof preset?.fluid === "boolean" ? void 0 : preset?.fluid?.min,
-      maximumFontSize: typeof preset?.fluid === "boolean" ? void 0 : preset?.fluid?.max,
-      fontSize: defaultSize,
-      minimumFontSizeLimit: typeof fluidTypographySettings === "object" ? fluidTypographySettings?.minFontSize : void 0,
-      maximumViewportWidth: typeof fluidTypographySettings === "object" ? fluidTypographySettings?.maxViewportWidth : void 0,
-      minimumViewportWidth: typeof fluidTypographySettings === "object" ? fluidTypographySettings?.minViewportWidth : void 0
-    });
-    if (!!fluidFontSizeValue) {
-      return fluidFontSizeValue;
-    }
-    return defaultSize;
-  }
-
-  // packages/global-styles-engine/build-module/utils/common.mjs
-  var ROOT_BLOCK_SELECTOR = "body";
-  var ROOT_CSS_PROPERTIES_SELECTOR = ":root";
-  function splitSelectorList(selector3) {
-    if (!selector3.includes(",")) {
-      return [selector3];
-    }
-    const selectors4 = [];
-    let currentSelector = "";
-    let parenthesesDepth = 0;
-    for (const char of selector3) {
-      if (char === "(") {
-        parenthesesDepth++;
-      } else if (char === ")" && parenthesesDepth > 0) {
-        parenthesesDepth--;
-      } else if (char === "," && parenthesesDepth === 0) {
-        selectors4.push(currentSelector);
-        currentSelector = "";
-        continue;
-      }
-      currentSelector += char;
-    }
-    selectors4.push(currentSelector);
-    return selectors4;
-  }
-  var PRESET_METADATA = [
-    {
-      path: ["color", "palette"],
-      valueKey: "color",
-      cssVarInfix: "color",
-      classes: [
-        { classSuffix: "color", propertyName: "color" },
-        {
-          classSuffix: "background-color",
-          propertyName: "background-color"
-        },
-        {
-          classSuffix: "border-color",
-          propertyName: "border-color"
-        }
-      ]
-    },
-    {
-      path: ["color", "gradients"],
-      valueKey: "gradient",
-      cssVarInfix: "gradient",
-      classes: [
-        {
-          classSuffix: "gradient-background",
-          propertyName: "background"
-        }
-      ]
-    },
-    {
-      path: ["color", "duotone"],
-      valueKey: "colors",
-      cssVarInfix: "duotone",
-      valueFunc: ({ slug }) => `url( '#wp-duotone-${slug}' )`,
-      classes: []
-    },
-    {
-      path: ["shadow", "presets"],
-      valueKey: "shadow",
-      cssVarInfix: "shadow",
-      classes: []
-    },
-    {
-      path: ["typography", "fontSizes"],
-      valueFunc: (preset, settings2) => getTypographyFontSizeValue(preset, settings2),
-      valueKey: "size",
-      cssVarInfix: "font-size",
-      classes: [{ classSuffix: "font-size", propertyName: "font-size" }]
-    },
-    {
-      path: ["typography", "fontFamilies"],
-      valueKey: "fontFamily",
-      cssVarInfix: "font-family",
-      classes: [
-        { classSuffix: "font-family", propertyName: "font-family" }
-      ]
-    },
-    {
-      path: ["spacing", "spacingSizes"],
-      valueKey: "size",
-      cssVarInfix: "spacing",
-      valueFunc: ({ size: size4 }) => size4,
-      classes: []
-    },
-    {
-      path: ["border", "radiusSizes"],
-      valueKey: "size",
-      cssVarInfix: "border-radius",
-      classes: []
-    },
-    {
-      path: ["dimensions", "dimensionSizes"],
-      valueKey: "size",
-      cssVarInfix: "dimension",
-      classes: []
-    }
-  ];
-  function scopeSelector2(scope, selector3) {
-    if (!scope || !selector3) {
-      return selector3;
-    }
-    const scopes = splitSelectorList(scope);
-    const selectors4 = splitSelectorList(selector3);
-    const selectorsScoped = [];
-    scopes.forEach((outer) => {
-      selectors4.forEach((inner) => {
-        selectorsScoped.push(`${outer.trim()} ${inner.trim()}`);
-      });
-    });
-    return selectorsScoped.join(", ");
-  }
-  function scopeFeatureSelectors(scope, selectors4) {
-    if (!scope || !selectors4) {
-      return;
-    }
-    const featureSelectors = {};
-    Object.entries(selectors4).forEach(([feature, selector3]) => {
-      if (typeof selector3 === "string") {
-        featureSelectors[feature] = scopeSelector2(scope, selector3);
-      }
-      if (typeof selector3 === "object") {
-        featureSelectors[feature] = {};
-        Object.entries(selector3).forEach(
-          ([subfeature, subfeatureSelector]) => {
-            featureSelectors[feature][subfeature] = scopeSelector2(
-              scope,
-              subfeatureSelector
-            );
-          }
-        );
-      }
-    });
-    return featureSelectors;
-  }
-  function appendToSelector(selector3, toAppend) {
-    if (!selector3.includes(",")) {
-      return selector3 + toAppend;
-    }
-    const selectors4 = splitSelectorList(selector3);
-    const newSelectors = selectors4.map((sel) => sel + toAppend);
-    return newSelectors.join(",");
-  }
-  function getBlockStyleVariationSelector(variation, blockSelector) {
-    const variationClass = `.is-style-${variation}`;
-    if (!blockSelector) {
-      return variationClass;
-    }
-    const ancestorRegex = /[^\s:]+/;
-    const addVariationClass = (match2) => match2 + variationClass;
-    const result = splitSelectorList(blockSelector).map(
-      (part) => part.replace(ancestorRegex, addVariationClass)
-    );
-    return result.join(",");
-  }
-  function getBlockStyleVariationFeatureSelector(variation, featureSelector) {
-    const variationClass = `.is-style-${variation}`;
-    const selectorParts = splitSelectorList(featureSelector).map(
-      (selector3) => {
-        const trimmedSelector = selector3.trim();
-        const prefix2 = `${variationClass} `;
-        if (trimmedSelector.startsWith(prefix2)) {
-          return trimmedSelector.slice(prefix2.length);
-        }
-        return trimmedSelector;
-      }
-    );
-    return getBlockStyleVariationSelector(
-      variation,
-      selectorParts.join(",")
-    );
-  }
-  function getResolvedRefValue(ruleValue, tree) {
-    if (!ruleValue || !tree) {
-      return ruleValue;
-    }
-    if (typeof ruleValue === "object" && "ref" in ruleValue && ruleValue?.ref) {
-      const resolvedRuleValue = (0, import_style_engine2.getCSSValueFromRawStyle)(
-        getValueFromObjectPath2(tree, ruleValue.ref)
-      );
-      if (typeof resolvedRuleValue === "object" && resolvedRuleValue !== null && "ref" in resolvedRuleValue && resolvedRuleValue?.ref) {
-        return void 0;
-      }
-      if (resolvedRuleValue === void 0) {
-        return ruleValue;
-      }
-      return resolvedRuleValue;
-    }
-    return ruleValue;
-  }
-  function getResolvedThemeFilePath(file, themeFileURIs) {
-    if (!file || !themeFileURIs || !Array.isArray(themeFileURIs)) {
-      return file;
-    }
-    const uri = themeFileURIs.find(
-      (themeFileUri) => themeFileUri?.name === file
-    );
-    if (!uri?.href) {
-      return file;
-    }
-    return uri?.href;
-  }
-  function getResolvedValue(ruleValue, tree) {
-    if (!ruleValue || !tree) {
-      return ruleValue;
-    }
-    const resolvedValue = getResolvedRefValue(ruleValue, tree);
-    if (typeof resolvedValue === "object" && resolvedValue !== null && "url" in resolvedValue && resolvedValue?.url) {
-      resolvedValue.url = getResolvedThemeFilePath(
-        resolvedValue.url,
-        tree?._links?.["wp:theme-file"]
-      );
-    }
-    return resolvedValue;
-  }
-  function findInPresetsBy(settings2, blockName, presetPath = [], presetProperty = "slug", presetValueValue) {
-    const orderedPresetsByOrigin = [
-      blockName ? getValueFromObjectPath2(settings2, [
-        "blocks",
-        blockName,
-        ...presetPath
-      ]) : void 0,
-      getValueFromObjectPath2(settings2, presetPath)
-    ].filter(Boolean);
-    for (const presetByOrigin of orderedPresetsByOrigin) {
-      if (presetByOrigin) {
-        const origins = ["custom", "theme", "default"];
-        for (const origin of origins) {
-          const presets = presetByOrigin[origin];
-          if (presets) {
-            const presetObject = presets.find(
-              (preset) => preset[presetProperty] === presetValueValue
-            );
-            if (presetObject) {
-              if (presetProperty === "slug") {
-                return presetObject;
-              }
-              const highestPresetObjectWithSameSlug = findInPresetsBy(
-                settings2,
-                blockName,
-                presetPath,
-                "slug",
-                presetObject.slug
-              );
-              if (highestPresetObjectWithSameSlug[presetProperty] === presetObject[presetProperty]) {
-                return presetObject;
-              }
-              return void 0;
-            }
-          }
-        }
-      }
-    }
-  }
-  function getValueFromPresetVariable(features, blockName, variable, [presetType, slug] = []) {
-    const metadata = PRESET_METADATA.find(
-      (data) => data.cssVarInfix === presetType
-    );
-    if (!metadata || !features.settings) {
-      return variable;
-    }
-    const presetObject = findInPresetsBy(
-      features.settings,
-      blockName,
-      metadata.path,
-      "slug",
-      slug
-    );
-    if (presetObject) {
-      const { valueKey } = metadata;
-      const result = presetObject[valueKey];
-      return getValueFromVariable(features, blockName, result);
-    }
-    return variable;
-  }
-  function getValueFromCustomVariable(features, blockName, variable, path = []) {
-    const result = (blockName ? getValueFromObjectPath2(features?.settings ?? {}, [
-      "blocks",
-      blockName,
-      "custom",
-      ...path
-    ]) : void 0) ?? getValueFromObjectPath2(features?.settings ?? {}, [
-      "custom",
-      ...path
-    ]);
-    if (!result) {
-      return variable;
-    }
-    return getValueFromVariable(features, blockName, result);
-  }
-  function getValueFromVariable(features, blockName, variable) {
-    if (!variable || typeof variable !== "string") {
-      if (typeof variable === "object" && variable !== null && "ref" in variable && typeof variable.ref === "string") {
-        const resolvedVariable = getValueFromObjectPath2(
-          features,
-          variable.ref
-        );
-        if (!resolvedVariable || typeof resolvedVariable === "object" && "ref" in resolvedVariable) {
-          return resolvedVariable;
-        }
-        variable = resolvedVariable;
-      } else {
-        return variable;
-      }
-    }
-    const USER_VALUE_PREFIX = "var:";
-    const THEME_VALUE_PREFIX = "var(--wp--";
-    const THEME_VALUE_SUFFIX = ")";
-    let parsedVar;
-    if (variable.startsWith(USER_VALUE_PREFIX)) {
-      parsedVar = variable.slice(USER_VALUE_PREFIX.length).split("|");
-    } else if (variable.startsWith(THEME_VALUE_PREFIX) && variable.endsWith(THEME_VALUE_SUFFIX)) {
-      parsedVar = variable.slice(THEME_VALUE_PREFIX.length, -THEME_VALUE_SUFFIX.length).split("--");
-    } else {
-      return variable;
-    }
-    const [type, ...path] = parsedVar;
-    if (type === "preset") {
-      return getValueFromPresetVariable(
-        features,
-        blockName,
-        variable,
-        path
-      );
-    }
-    if (type === "custom") {
-      return getValueFromCustomVariable(
-        features,
-        blockName,
-        variable,
-        path
-      );
-    }
-    return variable;
-  }
-
-  // packages/global-styles-engine/build-module/style-state-back-compat.mjs
-  var LEGACY_STYLE_STATE_ALIASES = {
-    "@mobile": "mobile",
-    "@tablet": "tablet",
-    "-current": "@current"
-  };
-  function isObjectRecord(value) {
-    return !!value && typeof value === "object" && !Array.isArray(value);
-  }
-  function normalizeStyleStateNode(node) {
-    if (!isObjectRecord(node)) {
-      return node;
-    }
-    let normalized = node;
-    Object.entries(LEGACY_STYLE_STATE_ALIASES).forEach(
-      ([state, legacyState]) => {
-        if (Object.hasOwn(node, legacyState)) {
-          if (normalized === node) {
-            normalized = { ...node };
-          }
-          if (!Object.hasOwn(node, state)) {
-            normalized[state] = node[legacyState];
-          }
-          delete normalized[legacyState];
-        }
-      }
-    );
-    Object.entries(normalized).forEach(([key, value]) => {
-      if (!isObjectRecord(value)) {
-        return;
-      }
-      const normalizedValue = normalizeStyleStateNode(value);
-      if (normalizedValue !== value) {
-        if (normalized === node) {
-          normalized = { ...node };
-        }
-        normalized[key] = normalizedValue;
-      }
-    });
-    return normalized;
-  }
-  function normalizeStyleStateAliases(globalStyles) {
-    if (false) {
-      return globalStyles;
-    }
-    if (!globalStyles?.styles) {
-      return globalStyles;
-    }
-    const styles = normalizeStyleStateNode(globalStyles.styles);
-    return styles === globalStyles.styles ? globalStyles : { ...globalStyles, styles };
-  }
-
-  // packages/global-styles-engine/build-module/core/merge.mjs
-  var import_deepmerge = __toESM(require_cjs(), 1);
-
-  // node_modules/is-plain-object/dist/is-plain-object.mjs
-  function isObject(o3) {
-    return Object.prototype.toString.call(o3) === "[object Object]";
-  }
-  function isPlainObject(o3) {
-    var ctor, prot;
-    if (isObject(o3) === false) return false;
-    ctor = o3.constructor;
-    if (ctor === void 0) return true;
-    prot = ctor.prototype;
-    if (isObject(prot) === false) return false;
-    if (prot.hasOwnProperty("isPrototypeOf") === false) {
-      return false;
-    }
-    return true;
-  }
-
-  // packages/global-styles-engine/build-module/core/merge.mjs
-  function mergeGlobalStyles(base, user) {
-    return (0, import_deepmerge.default)(
-      normalizeStyleStateAliases(base),
-      normalizeStyleStateAliases(user),
-      {
-        /*
-         * We only pass as arrays the presets,
-         * in which case we want the new array of values
-         * to override the old array (no merging).
-         */
-        isMergeableObject: isPlainObject,
-        /*
-         * Exceptions to the above rule.
-         * Background images should be replaced, not merged,
-         * as they themselves are specific object definitions for the style.
-         */
-        customMerge: (key) => {
-          if (key === "backgroundImage") {
-            return (baseConfig, userConfig) => userConfig ?? baseConfig;
-          }
-          return void 0;
-        }
-      }
-    );
-  }
-
-  // packages/global-styles-engine/build-module/core/render.mjs
-  var import_blocks65 = __toESM(require_blocks(), 1);
-  var import_style_engine3 = __toESM(require_style_engine(), 1);
-  var import_data109 = __toESM(require_data(), 1);
-
-  // packages/global-styles-engine/build-module/core/selectors.mjs
-  function getBlockSelector(blockType, target = "root", options = {}) {
-    if (!target) {
-      return null;
-    }
-    const { fallback = false } = options;
-    const { name, selectors: selectors4, supports } = blockType;
-    const hasSelectors = selectors4 && Object.keys(selectors4).length > 0;
-    const path = Array.isArray(target) ? target.join(".") : target;
-    let rootSelector = null;
-    if (hasSelectors && selectors4.root) {
-      rootSelector = selectors4?.root;
-    } else if (supports?.__experimentalSelector) {
-      rootSelector = supports.__experimentalSelector;
-    } else {
-      rootSelector = ".wp-block-" + name.replace("core/", "").replace("/", "-");
-    }
-    if (path === "root") {
-      return rootSelector;
-    }
-    const pathArray = Array.isArray(target) ? target : target.split(".");
-    if (pathArray.length === 1) {
-      const fallbackSelector = fallback ? rootSelector : null;
-      if (hasSelectors) {
-        const featureSelector2 = getValueFromObjectPath2(
-          selectors4,
-          `${path}.root`,
-          null
-        ) || getValueFromObjectPath2(selectors4, path, null);
-        return featureSelector2 || fallbackSelector;
-      }
-      const featureSelector = supports ? getValueFromObjectPath2(
-        supports,
-        `${path}.__experimentalSelector`,
-        null
-      ) : void 0;
-      if (!featureSelector) {
-        return fallbackSelector;
-      }
-      return scopeSelector2(rootSelector, featureSelector);
-    }
-    let subfeatureSelector;
-    if (hasSelectors) {
-      subfeatureSelector = getValueFromObjectPath2(selectors4, path, null);
-    }
-    if (subfeatureSelector) {
-      return subfeatureSelector;
-    }
-    if (fallback) {
-      return getBlockSelector(blockType, pathArray[0], options);
-    }
-    return null;
-  }
-
-  // packages/global-styles-engine/build-module/utils/string.mjs
-  function kebabCase4(str) {
-    return str.replace(/([a-z])([A-Z])/g, "$1-$2").replace(/([0-9])([a-zA-Z])/g, "$1-$2").replace(/([a-zA-Z])([0-9])/g, "$1-$2").replace(/[\s_]+/g, "-").toLowerCase();
-  }
-
-  // packages/global-styles-engine/build-module/utils/spacing.mjs
-  function getSpacingPresetCssVar2(value) {
-    if (!value) {
-      return;
-    }
-    const slug = value.match(/var:preset\|spacing\|(.+)/);
-    if (!slug) {
-      return value;
-    }
-    return `var(--wp--preset--spacing--${slug[1]})`;
-  }
-
-  // packages/global-styles-engine/build-module/utils/gap.mjs
-  function getGapBoxControlValueFromStyle2(blockGapValue) {
-    if (!blockGapValue) {
-      return null;
-    }
-    const isValueString = typeof blockGapValue === "string";
-    return {
-      top: isValueString ? blockGapValue : blockGapValue?.top,
-      left: isValueString ? blockGapValue : blockGapValue?.left
-    };
-  }
-  function getGapCSSValue2(blockGapValue, defaultValue = "0") {
-    const blockGapBoxControlValue = getGapBoxControlValueFromStyle2(blockGapValue);
-    if (!blockGapBoxControlValue) {
-      return null;
-    }
-    const row = getSpacingPresetCssVar2(blockGapBoxControlValue?.top) || defaultValue;
-    const column = getSpacingPresetCssVar2(blockGapBoxControlValue?.left) || defaultValue;
-    return row === column ? row : `${row} ${column}`;
-  }
-
-  // packages/global-styles-engine/build-module/utils/background.mjs
-  var BACKGROUND_BLOCK_DEFAULT_VALUES = {
-    backgroundSize: "cover",
-    backgroundPosition: "50% 50%"
-    // used only when backgroundSize is 'contain'.
-  };
-  function setBackgroundStyleDefaults(backgroundStyle) {
-    if (!backgroundStyle || // @ts-expect-error
-    !backgroundStyle?.backgroundImage?.url) {
-      return;
-    }
-    let backgroundStylesWithDefaults;
-    if (!backgroundStyle?.backgroundSize) {
-      backgroundStylesWithDefaults = {
-        backgroundSize: BACKGROUND_BLOCK_DEFAULT_VALUES.backgroundSize
-      };
-    }
-    if ("contain" === backgroundStyle?.backgroundSize && !backgroundStyle?.backgroundPosition) {
-      backgroundStylesWithDefaults = {
-        backgroundPosition: BACKGROUND_BLOCK_DEFAULT_VALUES.backgroundPosition
-      };
-    }
-    return backgroundStylesWithDefaults;
-  }
-
-  // packages/global-styles-engine/build-module/utils/layout.mjs
-  var LAYOUT_DEFINITIONS2 = {
-    default: {
-      name: "default",
-      slug: "flow",
-      className: "is-layout-flow",
-      baseStyles: [
-        {
-          selector: " > .alignleft",
-          rules: {
-            float: "left",
-            "margin-inline-start": "0",
-            "margin-inline-end": "2em"
-          }
-        },
-        {
-          selector: " > .alignright",
-          rules: {
-            float: "right",
-            "margin-inline-start": "2em",
-            "margin-inline-end": "0"
-          }
-        },
-        {
-          selector: " > .aligncenter",
-          rules: {
-            "margin-left": "auto !important",
-            "margin-right": "auto !important"
-          }
-        }
-      ],
-      spacingStyles: [
-        {
-          selector: " > :first-child",
-          rules: {
-            "margin-block-start": "0"
-          }
-        },
-        {
-          selector: " > :last-child",
-          rules: {
-            "margin-block-end": "0"
-          }
-        },
-        {
-          selector: " > *",
-          rules: {
-            "margin-block-start": null,
-            "margin-block-end": "0"
-          }
-        }
-      ]
-    },
-    constrained: {
-      name: "constrained",
-      slug: "constrained",
-      className: "is-layout-constrained",
-      baseStyles: [
-        {
-          selector: " > .alignleft",
-          rules: {
-            float: "left",
-            "margin-inline-start": "0",
-            "margin-inline-end": "2em"
-          }
-        },
-        {
-          selector: " > .alignright",
-          rules: {
-            float: "right",
-            "margin-inline-start": "2em",
-            "margin-inline-end": "0"
-          }
-        },
-        {
-          selector: " > .aligncenter",
-          rules: {
-            "margin-left": "auto !important",
-            "margin-right": "auto !important"
-          }
-        },
-        {
-          selector: " > :where(:not(.alignleft):not(.alignright):not(.alignfull))",
-          rules: {
-            "max-width": "var(--wp--style--global--content-size)",
-            "margin-left": "auto !important",
-            "margin-right": "auto !important"
-          }
-        },
-        {
-          selector: " > .alignwide",
-          rules: {
-            "max-width": "var(--wp--style--global--wide-size)"
-          }
-        }
-      ],
-      spacingStyles: [
-        {
-          selector: " > :first-child",
-          rules: {
-            "margin-block-start": "0"
-          }
-        },
-        {
-          selector: " > :last-child",
-          rules: {
-            "margin-block-end": "0"
-          }
-        },
-        {
-          selector: " > *",
-          rules: {
-            "margin-block-start": null,
-            "margin-block-end": "0"
-          }
-        }
-      ]
-    },
-    flex: {
-      name: "flex",
-      slug: "flex",
-      className: "is-layout-flex",
-      displayMode: "flex",
-      baseStyles: [
-        {
-          selector: "",
-          rules: {
-            "flex-wrap": "wrap",
-            "align-items": "center"
-          }
-        },
-        {
-          selector: " > :is(*, div)",
-          // :is(*, div) instead of just * increases the specificity by 001.
-          rules: {
-            margin: "0"
-          }
-        }
-      ],
-      spacingStyles: [
-        {
-          selector: "",
-          rules: {
-            gap: null
-          }
-        }
-      ]
-    },
-    grid: {
-      name: "grid",
-      slug: "grid",
-      className: "is-layout-grid",
-      displayMode: "grid",
-      baseStyles: [
-        {
-          selector: " > :is(*, div)",
-          // :is(*, div) instead of just * increases the specificity by 001.
-          rules: {
-            margin: "0"
-          }
-        }
-      ],
-      spacingStyles: [
-        {
-          selector: "",
-          rules: {
-            gap: null
-          }
-        }
-      ]
-    }
-  };
-
-  // packages/global-styles-engine/build-module/core/render.mjs
-  var ELEMENT_CLASS_NAMES = {
-    button: "wp-element-button",
-    caption: "wp-element-caption"
-  };
-  var BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS = {
-    __experimentalBorder: "border",
-    color: "color",
-    dimensions: "dimensions",
-    spacing: "spacing",
-    typography: "typography"
-  };
-  var VALID_BLOCK_PSEUDO_SELECTORS = {
-    "core/button": [":hover", ":focus", ":focus-visible", ":active"],
-    "core/navigation-link": [":hover", ":focus", ":focus-visible", ":active"]
-  };
-  var VALID_ELEMENT_PSEUDO_SELECTORS = {
-    link: [
-      ":link",
-      ":any-link",
-      ":visited",
-      ":hover",
-      ":focus",
-      ":focus-visible",
-      ":active"
-    ],
-    button: [
-      ":link",
-      ":any-link",
-      ":visited",
-      ":hover",
-      ":focus",
-      ":focus-visible",
-      ":active"
-    ]
-  };
-  var RESPONSIVE_BREAKPOINTS = {
-    "@mobile": "@media (width <= 480px)",
-    "@tablet": "@media (480px < width <= 782px)"
-  };
-  function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
-    return PRESET_METADATA.reduce(
-      (declarations, { path, cssVarInfix, classes }) => {
-        if (!classes) {
-          return declarations;
-        }
-        const presetByOrigin = getValueFromObjectPath2(
-          blockPresets,
-          path,
-          []
-        );
-        ["default", "theme", "custom"].forEach((origin) => {
-          if (presetByOrigin[origin]) {
-            presetByOrigin[origin].forEach(
-              ({ slug }) => {
-                classes.forEach(
-                  ({
-                    classSuffix,
-                    propertyName
-                  }) => {
-                    const classSelectorToUse = `.has-${kebabCase4(
-                      slug
-                    )}-${classSuffix}`;
-                    const selectorToUse = blockSelector.split(",").map(
-                      (selector3) => `${selector3}${classSelectorToUse}`
-                    ).join(",");
-                    const value = `var(--wp--preset--${cssVarInfix}--${kebabCase4(
-                      slug
-                    )})`;
-                    declarations += `${selectorToUse}{${propertyName}: ${value} !important;}`;
-                  }
-                );
-              }
-            );
-          }
-        });
-        return declarations;
-      },
-      ""
-    );
-  }
-  var updateParagraphTextIndentSelector = (featureDeclarations, settings2, blockName) => {
-    if (blockName !== "core/paragraph") {
-      return featureDeclarations;
-    }
-    const blockSettings = settings2?.blocks?.["core/paragraph"];
-    const textIndentSetting = blockSettings?.typography?.textIndent ?? settings2?.typography?.textIndent ?? "subsequent";
-    if (textIndentSetting !== "all") {
-      return featureDeclarations;
-    }
-    const oldSelector = ".wp-block-paragraph + .wp-block-paragraph";
-    const newSelector = ".wp-block-paragraph";
-    if (oldSelector in featureDeclarations) {
-      const declarations = featureDeclarations[oldSelector];
-      const updated = { ...featureDeclarations };
-      delete updated[oldSelector];
-      updated[newSelector] = declarations;
-      return updated;
-    }
-    return featureDeclarations;
-  };
-  var updateButtonWidthDeclarations = (featureDeclarations, settings2) => {
-    const buttonSelector = ".wp-block-button";
-    if (!(buttonSelector in featureDeclarations)) {
-      return featureDeclarations;
-    }
-    const updated = { ...featureDeclarations };
-    updated[buttonSelector] = updated[buttonSelector].map(
-      (declaration) => {
-        const match2 = declaration.match(/^width:\s*(.+)$/);
-        if (!match2) {
-          return declaration;
-        }
-        const value = match2[1];
-        let percentage = null;
-        if (value.endsWith("%")) {
-          percentage = parseFloat(value);
-        }
-        const presetPrefix = "var(--wp--preset--dimension--";
-        if (percentage === null && value.startsWith(presetPrefix) && value.endsWith(")")) {
-          const slug = value.slice(presetPrefix.length, -1);
-          const dimensionSizes = {
-            ...settings2?.dimensions?.dimensionSizes ?? {},
-            ...settings2?.blocks?.["core/button"]?.dimensions?.dimensionSizes ?? {}
-          };
-          for (const origin of Object.values(dimensionSizes)) {
-            if (!Array.isArray(origin)) {
-              continue;
-            }
-            for (const preset of origin) {
-              if (preset.slug === slug && typeof preset.size === "string" && preset.size.endsWith("%")) {
-                percentage = parseFloat(preset.size);
-                break;
-              }
-            }
-            if (percentage !== null) {
-              break;
-            }
-          }
-        }
-        if (percentage === null || isNaN(percentage)) {
-          return declaration;
-        }
-        return `width: calc(${percentage} * 1% - (var(--wp--style--block-gap, 0.5em) * (1 - ${percentage} / 100)))`;
-      }
-    );
-    return updated;
-  };
-  var getFeatureDeclarations = (selectors4, styles) => {
-    const declarations = {};
-    Object.entries(selectors4).forEach(([feature, selector3]) => {
-      if (feature === "root" || !styles?.[feature]) {
-        return;
-      }
-      const isShorthand = typeof selector3 === "string";
-      if (!isShorthand && typeof selector3 === "object" && selector3 !== null) {
-        Object.entries(selector3).forEach(
-          ([subfeature, subfeatureSelector]) => {
-            if (subfeature === "root" || !styles?.[feature][subfeature]) {
-              return;
-            }
-            const subfeatureStyles = {
-              [feature]: {
-                [subfeature]: styles[feature][subfeature]
-              }
-            };
-            const newDeclarations = getStylesDeclarations(subfeatureStyles);
-            declarations[subfeatureSelector] = [
-              ...declarations[subfeatureSelector] || [],
-              ...newDeclarations
-            ];
-            delete styles[feature][subfeature];
-          }
-        );
-      }
-      if (isShorthand || typeof selector3 === "object" && selector3 !== null && "root" in selector3) {
-        const featureSelector = isShorthand ? selector3 : selector3.root;
-        const featureStyles = { [feature]: styles[feature] };
-        const newDeclarations = getStylesDeclarations(featureStyles);
-        declarations[featureSelector] = [
-          ...declarations[featureSelector] || [],
-          ...newDeclarations
-        ];
-        delete styles[feature];
-      }
-    });
-    return declarations;
-  };
-  function getStylesDeclarations(blockStyles = {}, selector3 = "", useRootPaddingAlign, tree = {}, disableRootPadding = false) {
-    const isRoot = ROOT_BLOCK_SELECTOR === selector3;
-    const output = Object.entries(
-      import_blocks65.__EXPERIMENTAL_STYLE_PROPERTY
-    ).reduce(
-      (declarations, [key, { value, properties, useEngine, rootOnly }]) => {
-        if (rootOnly && !isRoot) {
-          return declarations;
-        }
-        const pathToValue = value;
-        if (pathToValue[0] === "elements" || useEngine) {
-          return declarations;
-        }
-        const styleValue = getValueFromObjectPath2(
-          blockStyles,
-          pathToValue
-        );
-        if (key === "--wp--style--root--padding" && (typeof styleValue === "string" || !useRootPaddingAlign)) {
-          return declarations;
-        }
-        if (properties && typeof styleValue !== "string") {
-          Object.entries(properties).forEach((entry) => {
-            const [name, prop] = entry;
-            if (!getValueFromObjectPath2(styleValue, [prop], false)) {
-              return;
-            }
-            const cssProperty = name.startsWith("--") ? name : kebabCase4(name);
-            declarations.push(
-              `${cssProperty}: ${(0, import_style_engine3.getCSSValueFromRawStyle)(
-                getValueFromObjectPath2(styleValue, [prop])
-              )}`
-            );
-          });
-        } else if (getValueFromObjectPath2(blockStyles, pathToValue, false)) {
-          const cssProperty = key.startsWith("--") ? key : kebabCase4(key);
-          declarations.push(
-            `${cssProperty}: ${(0, import_style_engine3.getCSSValueFromRawStyle)(
-              getValueFromObjectPath2(blockStyles, pathToValue)
-            )}`
-          );
-        }
-        return declarations;
-      },
-      []
-    );
-    if (!!blockStyles.background) {
-      if (blockStyles.background?.backgroundImage) {
-        blockStyles.background.backgroundImage = getResolvedValue(
-          blockStyles.background.backgroundImage,
-          tree
-        );
-      }
-      if (!isRoot && !!blockStyles.background?.backgroundImage?.id) {
-        blockStyles = {
-          ...blockStyles,
-          background: {
-            ...blockStyles.background,
-            ...setBackgroundStyleDefaults(blockStyles.background)
-          }
-        };
-      }
-    }
-    const extraRules = (0, import_style_engine3.getCSSRules)(blockStyles);
-    extraRules.forEach((rule) => {
-      if (isRoot && (useRootPaddingAlign || disableRootPadding) && rule.key.startsWith("padding")) {
-        return;
-      }
-      const cssProperty = rule.key.startsWith("--") ? rule.key : kebabCase4(rule.key);
-      let ruleValue = getResolvedValue(rule.value, tree);
-      if (cssProperty === "font-size") {
-        ruleValue = getTypographyFontSizeValue(
-          { name: "", slug: "", size: ruleValue },
-          tree?.settings
-        );
-      }
-      if (cssProperty === "aspect-ratio") {
-        output.push("min-height: unset");
-      }
-      output.push(`${cssProperty}: ${ruleValue}`);
-    });
-    return output;
-  }
-  function getLayoutStyles({
-    layoutDefinitions = LAYOUT_DEFINITIONS2,
-    style,
-    selector: selector3,
-    hasBlockGapSupport,
-    hasFallbackGapSupport,
-    fallbackGapValue
-  }) {
-    let ruleset = "";
-    let gapValue = hasBlockGapSupport ? getGapCSSValue2(style?.spacing?.blockGap) : "";
-    if (hasFallbackGapSupport) {
-      if (selector3 === ROOT_BLOCK_SELECTOR) {
-        gapValue = !gapValue ? "0.5em" : gapValue;
-      } else if (!hasBlockGapSupport && fallbackGapValue) {
-        gapValue = fallbackGapValue;
-      }
-    }
-    if (gapValue && layoutDefinitions) {
-      Object.values(layoutDefinitions).forEach(
-        ({ className, name, spacingStyles }) => {
-          if (!hasBlockGapSupport && "flex" !== name && "grid" !== name) {
-            return;
-          }
-          if (spacingStyles?.length) {
-            spacingStyles.forEach((spacingStyle) => {
-              const declarations = [];
-              if (spacingStyle.rules) {
-                Object.entries(spacingStyle.rules).forEach(
-                  ([cssProperty, cssValue]) => {
-                    declarations.push(
-                      `${cssProperty}: ${cssValue ? cssValue : gapValue}`
-                    );
-                  }
-                );
-              }
-              if (declarations.length) {
-                let combinedSelector = "";
-                if (!hasBlockGapSupport) {
-                  combinedSelector = selector3 === ROOT_BLOCK_SELECTOR ? `:where(.${className}${spacingStyle?.selector || ""})` : `:where(${selector3}.${className}${spacingStyle?.selector || ""})`;
-                } else {
-                  combinedSelector = selector3 === ROOT_BLOCK_SELECTOR ? `:root :where(.${className})${spacingStyle?.selector || ""}` : `:root :where(${selector3}-${className})${spacingStyle?.selector || ""}`;
-                }
-                ruleset += `${combinedSelector} { ${declarations.join(
-                  "; "
-                )}; }`;
-              }
-            });
-          }
-        }
-      );
-      if (selector3 === ROOT_BLOCK_SELECTOR && hasBlockGapSupport) {
-        ruleset += `${ROOT_CSS_PROPERTIES_SELECTOR} { --wp--style--block-gap: ${gapValue}; }`;
-      }
-    }
-    if (selector3 === ROOT_BLOCK_SELECTOR && layoutDefinitions) {
-      const validDisplayModes = ["block", "flex", "grid"];
-      Object.values(layoutDefinitions).forEach(
-        ({ className, displayMode, baseStyles }) => {
-          if (displayMode && validDisplayModes.includes(displayMode)) {
-            ruleset += `${selector3} .${className} { display:${displayMode}; }`;
-          }
-          if (baseStyles?.length) {
-            baseStyles.forEach((baseStyle) => {
-              const declarations = [];
-              if (baseStyle.rules) {
-                Object.entries(baseStyle.rules).forEach(
-                  ([cssProperty, cssValue]) => {
-                    declarations.push(
-                      `${cssProperty}: ${cssValue}`
-                    );
-                  }
-                );
-              }
-              if (declarations.length) {
-                const combinedSelector = `.${className}${baseStyle?.selector || ""}`;
-                ruleset += `${combinedSelector} { ${declarations.join(
-                  "; "
-                )}; }`;
-              }
-            });
-          }
-        }
-      );
-    }
-    return ruleset;
-  }
-  var STYLE_KEYS = [
-    "border",
-    "color",
-    "dimensions",
-    "spacing",
-    "typography",
-    "filter",
-    "outline",
-    "shadow",
-    "background"
-  ];
-  function pickStyleKeys(treeToPickFrom) {
-    return pickStyleAndPseudoKeys(treeToPickFrom);
-  }
-  function pickStyleAndPseudoKeys(treeToPickFrom, blockName) {
-    if (!treeToPickFrom) {
-      return {};
-    }
-    const entries = Object.entries(treeToPickFrom);
-    const allowedPseudoSelectors = blockName ? VALID_BLOCK_PSEUDO_SELECTORS[blockName] ?? [] : [];
-    const pickedEntries = entries.filter(
-      ([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key) || RESPONSIVE_BREAKPOINTS[key]
-    );
-    const clonedEntries = pickedEntries.map(([key, style]) => [
-      key,
-      JSON.parse(JSON.stringify(style))
-    ]);
-    return Object.fromEntries(clonedEntries);
-  }
-  function getPseudoStyleNodes(node) {
-    const {
-      styles,
-      selector: selector3,
-      featureSelectors,
-      name,
-      elementName,
-      mediaQuery,
-      variationName
-    } = node;
-    const pseudoSelectors = name ? VALID_BLOCK_PSEUDO_SELECTORS[name] ?? [] : VALID_ELEMENT_PSEUDO_SELECTORS[elementName ?? ""] ?? [];
-    if (!pseudoSelectors.length) {
-      return [];
-    }
-    return pseudoSelectors.flatMap((pseudoSelector) => {
-      const pseudoStyles = styles?.[pseudoSelector];
-      if (!pseudoStyles || typeof pseudoStyles !== "object") {
-        return [];
-      }
-      return [
-        {
-          styles: JSON.parse(JSON.stringify(pseudoStyles)),
-          selector: selector3,
-          selectorSuffix: pseudoSelector,
-          mediaQuery,
-          featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
-          name,
-          elementName,
-          variationName
-        }
-      ];
-    });
-  }
-  function getResponsiveStyleNodes(node) {
-    const {
-      styles,
-      selector: selector3,
-      featureSelectors,
-      name,
-      elementName,
-      isStyleVariation,
-      variationName
-    } = node;
-    if (!name && !elementName) {
-      return [];
-    }
-    return Object.entries(RESPONSIVE_BREAKPOINTS).flatMap(
-      ([breakpointKey, mediaQuery]) => {
-        const breakpointStyles = styles?.[breakpointKey];
-        if (!breakpointStyles || typeof breakpointStyles !== "object") {
-          return [];
-        }
-        return [
-          {
-            styles: JSON.parse(JSON.stringify(breakpointStyles)),
-            selector: selector3,
-            mediaQuery,
-            featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
-            name,
-            elementName,
-            isStyleVariation,
-            variationName
-          }
-        ];
-      }
-    );
-  }
-  var getNodesWithStyles = (tree, blockSelectors) => {
-    const nodes = [];
-    if (!tree?.styles) {
-      return nodes;
-    }
-    const styles = pickStyleKeys(tree.styles);
-    if (styles) {
-      nodes.push({
-        styles,
-        selector: ROOT_BLOCK_SELECTOR,
-        // Root selector (body) styles should not be wrapped in `:root where()` to keep
-        // specificity at (0,0,1) and maintain backwards compatibility.
-        skipSelectorWrapper: true
-      });
-    }
-    Object.entries(import_blocks65.__EXPERIMENTAL_ELEMENTS).forEach(([name, selector3]) => {
-      if (tree.styles?.elements?.[name]) {
-        nodes.push({
-          styles: tree.styles?.elements?.[name] ?? {},
-          selector: selector3,
-          elementName: name,
-          // Top level elements that don't use a class name should not receive the
-          // `:root :where()` wrapper to maintain backwards compatibility.
-          skipSelectorWrapper: !ELEMENT_CLASS_NAMES[name]
-        });
-      }
-    });
-    Object.entries(tree.styles?.blocks ?? {}).forEach(
-      ([blockName, node]) => {
-        const blockStyles = pickStyleAndPseudoKeys(node, blockName);
-        const typedNode = node;
-        const variationNodesToAdd = [];
-        const variationStyleNodesToAdd = [];
-        if (typedNode?.variations) {
-          Object.entries(typedNode.variations).forEach(
-            ([variationName, variation]) => {
-              const typedVariation = variation;
-              const variationStyles = pickStyleAndPseudoKeys(
-                typedVariation,
-                blockName
-              );
-              if (typedVariation?.css) {
-                variationStyles.css = typedVariation.css;
-              }
-              const variationSelector = typeof blockSelectors !== "string" ? blockSelectors[blockName]?.styleVariationSelectors?.[variationName] : void 0;
-              if (variationSelector && typeof blockSelectors !== "string") {
-                const blockSelector = blockSelectors[blockName];
-                variationStyleNodesToAdd.push({
-                  styles: variationStyles,
-                  selector: variationSelector,
-                  featureSelectors: blockSelector?.featureSelectors,
-                  fallbackGapValue: blockSelector?.fallbackGapValue,
-                  hasLayoutSupport: blockSelector?.hasLayoutSupport,
-                  isStyleVariation: true,
-                  variationName,
-                  layoutSelector: variationSelector + blockSelector.selector,
-                  layoutHasBlockGapSupport: true,
-                  name: blockName
-                });
-              }
-              Object.entries(
-                typedVariation?.elements ?? {}
-              ).forEach(([element, elementStyles]) => {
-                if (elementStyles && import_blocks65.__EXPERIMENTAL_ELEMENTS[element]) {
-                  variationNodesToAdd.push({
-                    styles: elementStyles,
-                    selector: scopeSelector2(
-                      variationSelector,
-                      import_blocks65.__EXPERIMENTAL_ELEMENTS[element]
-                    ),
-                    elementName: element,
-                    isStyleVariation: true
-                  });
-                }
-              });
-              Object.entries(typedVariation?.blocks ?? {}).forEach(
-                ([
-                  variationBlockName,
-                  variationBlockStyles
-                ]) => {
-                  const variationBlockSelector = typeof blockSelectors !== "string" ? scopeSelector2(
-                    variationSelector,
-                    blockSelectors[variationBlockName]?.selector
-                  ) : void 0;
-                  const variationDuotoneSelector = typeof blockSelectors !== "string" ? scopeSelector2(
-                    variationSelector,
-                    blockSelectors[variationBlockName]?.duotoneSelector
-                  ) : void 0;
-                  const variationFeatureSelectors = typeof blockSelectors !== "string" ? scopeFeatureSelectors(
-                    variationSelector,
-                    blockSelectors[variationBlockName]?.featureSelectors ?? {}
-                  ) : void 0;
-                  const variationBlockStyleNodes = pickStyleAndPseudoKeys(
-                    variationBlockStyles,
-                    variationBlockName
-                  );
-                  if (variationBlockStyles?.css) {
-                    variationBlockStyleNodes.css = variationBlockStyles.css;
-                  }
-                  if (!variationBlockSelector || typeof blockSelectors === "string") {
-                    return;
-                  }
-                  variationNodesToAdd.push({
-                    selector: variationBlockSelector,
-                    name: variationBlockName,
-                    isStyleVariation: true,
-                    duotoneSelector: variationDuotoneSelector,
-                    featureSelectors: variationFeatureSelectors,
-                    fallbackGapValue: blockSelectors[variationBlockName]?.fallbackGapValue,
-                    hasLayoutSupport: blockSelectors[variationBlockName]?.hasLayoutSupport,
-                    styles: variationBlockStyleNodes
-                  });
-                  Object.entries(
-                    variationBlockStyles.elements ?? {}
-                  ).forEach(
-                    ([
-                      variationBlockElement,
-                      variationBlockElementStyles
-                    ]) => {
-                      if (variationBlockElementStyles && import_blocks65.__EXPERIMENTAL_ELEMENTS[variationBlockElement]) {
-                        variationNodesToAdd.push({
-                          styles: variationBlockElementStyles,
-                          selector: scopeSelector2(
-                            variationBlockSelector,
-                            import_blocks65.__EXPERIMENTAL_ELEMENTS[variationBlockElement]
-                          ),
-                          elementName: variationBlockElement,
-                          isStyleVariation: true
-                        });
-                      }
-                    }
-                  );
-                }
-              );
-            }
-          );
-        }
-        if (typeof blockSelectors !== "string" && blockSelectors?.[blockName]?.selector) {
-          nodes.push({
-            duotoneSelector: blockSelectors[blockName].duotoneSelector,
-            fallbackGapValue: blockSelectors[blockName].fallbackGapValue,
-            hasLayoutSupport: blockSelectors[blockName].hasLayoutSupport,
-            selector: blockSelectors[blockName].selector,
-            styles: blockStyles,
-            featureSelectors: blockSelectors[blockName].featureSelectors,
-            name: blockName
-          });
-        }
-        nodes.push(...variationStyleNodesToAdd);
-        Object.entries(typedNode?.elements ?? {}).forEach(
-          ([elementName, value]) => {
-            if (typeof blockSelectors !== "string" && value && blockSelectors?.[blockName] && import_blocks65.__EXPERIMENTAL_ELEMENTS[elementName]) {
-              nodes.push({
-                styles: value,
-                selector: blockSelectors[blockName]?.selector.split(",").map((sel) => {
-                  const elementSelectors = import_blocks65.__EXPERIMENTAL_ELEMENTS[elementName].split(",");
-                  return elementSelectors.map(
-                    (elementSelector) => sel + " " + elementSelector
-                  );
-                }).join(","),
-                elementName
-              });
-            }
-          }
-        );
-        nodes.push(...variationNodesToAdd);
-      }
-    );
-    return nodes;
-  };
-  var getNodesWithSettings = (tree, blockSelectors) => {
-    const nodes = [];
-    if (!tree?.settings) {
-      return nodes;
-    }
-    const pickPresets = (treeToPickFrom) => {
-      let presets2 = {};
-      PRESET_METADATA.forEach(({ path }) => {
-        const value = getValueFromObjectPath2(treeToPickFrom, path, false);
-        if (value !== false) {
-          presets2 = setImmutably2(presets2, path, value);
-        }
-      });
-      return presets2;
-    };
-    const presets = pickPresets(tree.settings);
-    const custom = tree.settings?.custom;
-    if (Object.keys(presets).length > 0 || custom) {
-      nodes.push({
-        presets,
-        custom,
-        selector: ROOT_CSS_PROPERTIES_SELECTOR
-      });
-    }
-    Object.entries(tree.settings?.blocks ?? {}).forEach(
-      ([blockName, node]) => {
-        const blockCustom = node.custom;
-        if (typeof blockSelectors === "string" || !blockSelectors[blockName]) {
-          return;
-        }
-        const blockPresets = pickPresets(node);
-        if (Object.keys(blockPresets).length > 0 || blockCustom) {
-          nodes.push({
-            presets: blockPresets,
-            custom: blockCustom,
-            selector: blockSelectors[blockName]?.selector,
-            featureSelectors: blockSelectors[blockName]?.featureSelectors
-          });
-        }
-      }
-    );
-    return nodes;
-  };
-  function renderStylesNode(node, {
-    tree,
-    useRootPaddingAlign,
-    disableLayoutStyles,
-    hasBlockGapSupport,
-    hasFallbackGapSupport,
-    disableRootPadding
-  }) {
-    const {
-      selector: selector3,
-      selectorSuffix,
-      mediaQuery,
-      duotoneSelector,
-      styles,
-      fallbackGapValue,
-      hasLayoutSupport: hasLayoutSupport2,
-      featureSelectors,
-      layoutSelector,
-      layoutHasBlockGapSupport,
-      skipSelectorWrapper,
-      name,
-      variationName
-    } = node;
-    let ruleset = "";
-    const effectiveSelector = selectorSuffix ? appendToSelector(selector3, selectorSuffix) : selector3;
-    if (featureSelectors && typeof featureSelectors !== "string") {
-      let featureDeclarations = getFeatureDeclarations(
-        featureSelectors,
-        styles
-      );
-      featureDeclarations = updateParagraphTextIndentSelector(
-        featureDeclarations,
-        tree.settings,
-        name
-      );
-      featureDeclarations = updateButtonWidthDeclarations(
-        featureDeclarations,
-        tree.settings
-      );
-      Object.entries(featureDeclarations).forEach(
-        ([featureSelector, declarations]) => {
-          if (declarations.length) {
-            let selectorForRule = variationName ? getBlockStyleVariationFeatureSelector(
-              variationName,
-              featureSelector
-            ) : featureSelector;
-            selectorForRule = selectorSuffix ? appendToSelector(selectorForRule, selectorSuffix) : selectorForRule;
-            const rules = declarations.join(";");
-            ruleset += `:root :where(${selectorForRule}){${rules};}`;
-          }
-        }
-      );
-    }
-    if (duotoneSelector) {
-      const duotoneStyles = {};
-      if (styles?.filter) {
-        duotoneStyles.filter = styles.filter;
-        delete styles.filter;
-      }
-      const duotoneDeclarations = getStylesDeclarations(duotoneStyles);
-      if (duotoneDeclarations.length) {
-        ruleset += `${duotoneSelector}{${duotoneDeclarations.join(
-          ";"
-        )};}`;
-      }
-    }
-    const selectorForLayout = layoutSelector ?? effectiveSelector;
-    const hasBlockGapSupportForLayout = layoutHasBlockGapSupport ?? hasBlockGapSupport;
-    if (!disableLayoutStyles && (ROOT_BLOCK_SELECTOR === selectorForLayout || hasLayoutSupport2)) {
-      ruleset += getLayoutStyles({
-        style: styles,
-        selector: selectorForLayout,
-        hasBlockGapSupport: hasBlockGapSupportForLayout,
-        hasFallbackGapSupport,
-        fallbackGapValue
-      });
-    }
-    const styleDeclarations = getStylesDeclarations(
-      styles,
-      effectiveSelector,
-      useRootPaddingAlign,
-      tree,
-      disableRootPadding
-    );
-    if (styleDeclarations?.length) {
-      const generalSelector = skipSelectorWrapper ? effectiveSelector : `:root :where(${effectiveSelector})`;
-      ruleset += `${generalSelector}{${styleDeclarations.join(";")};}`;
-    }
-    if (styles?.css) {
-      ruleset += processCSSNesting(
-        styles.css,
-        `:root :where(${effectiveSelector})`
-      );
-    }
-    if (mediaQuery && ruleset) {
-      return `${mediaQuery}{${ruleset}}`;
-    }
-    return ruleset;
-  }
-  var transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles = false, disableRootPadding = false, styleOptions = {}) => {
-    const options = {
-      blockGap: true,
-      blockStyles: true,
-      layoutStyles: true,
-      marginReset: true,
-      presets: true,
-      rootPadding: true,
-      variationStyles: false,
-      ...styleOptions
-    };
-    const normalizedTree = normalizeStyleStateAliases(tree);
-    const nodesWithStyles = getNodesWithStyles(
-      normalizedTree,
-      blockSelectors
-    );
-    const nodesWithSettings = getNodesWithSettings(
-      normalizedTree,
-      blockSelectors
-    );
-    const useRootPaddingAlign = normalizedTree?.settings?.useRootPaddingAwareAlignments;
-    const { contentSize, wideSize } = normalizedTree?.settings?.layout || {};
-    const hasBodyStyles = options.marginReset || options.rootPadding || options.layoutStyles;
-    let ruleset = "";
-    if (options.presets && (contentSize || wideSize)) {
-      ruleset += `${ROOT_CSS_PROPERTIES_SELECTOR} {`;
-      ruleset = contentSize ? ruleset + ` --wp--style--global--content-size: ${contentSize};` : ruleset;
-      ruleset = wideSize ? ruleset + ` --wp--style--global--wide-size: ${wideSize};` : ruleset;
-      ruleset += "}";
-    }
-    if (hasBodyStyles) {
-      ruleset += ":where(body) {margin: 0;";
-      if (options.rootPadding && useRootPaddingAlign) {
-        ruleset += `padding-right: 0; padding-left: 0; padding-top: var(--wp--style--root--padding-top); padding-bottom: var(--wp--style--root--padding-bottom) }
-				.has-global-padding { padding-right: var(--wp--style--root--padding-right); padding-left: var(--wp--style--root--padding-left); }
-				.has-global-padding > .alignfull { margin-right: calc(var(--wp--style--root--padding-right) * -1); margin-left: calc(var(--wp--style--root--padding-left) * -1); }
-				.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) { padding-right: 0; padding-left: 0; }
-				.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) > .alignfull { margin-left: 0; margin-right: 0;
-				`;
-      }
-      ruleset += "}";
-    }
-    if (options.blockStyles) {
-      nodesWithStyles.forEach((node) => {
-        if (node.isStyleVariation && !options.variationStyles) {
-          return;
-        }
-        const responsiveNodes = getResponsiveStyleNodes(node);
-        [
-          node,
-          ...responsiveNodes,
-          ...getPseudoStyleNodes(node),
-          ...responsiveNodes.flatMap(getPseudoStyleNodes)
-        ].forEach((expandedNode) => {
-          ruleset += renderStylesNode(expandedNode, {
-            tree: normalizedTree,
-            useRootPaddingAlign,
-            disableLayoutStyles,
-            hasBlockGapSupport,
-            hasFallbackGapSupport,
-            disableRootPadding
-          });
-        });
-      });
-    }
-    if (options.layoutStyles) {
-      ruleset = ruleset + ".wp-site-blocks > .alignleft { float: left; margin-right: 2em; }";
-      ruleset = ruleset + ".wp-site-blocks > .alignright { float: right; margin-left: 2em; }";
-      ruleset = ruleset + ".wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }";
-    }
-    if (options.blockGap && hasBlockGapSupport) {
-      const gapValue = getGapCSSValue2(normalizedTree?.styles?.spacing?.blockGap) || "0.5em";
-      ruleset = ruleset + `:root :where(.wp-site-blocks) > * { margin-block-start: ${gapValue}; margin-block-end: 0; }`;
-      ruleset = ruleset + ":root :where(.wp-site-blocks) > :first-child { margin-block-start: 0; }";
-      ruleset = ruleset + ":root :where(.wp-site-blocks) > :last-child { margin-block-end: 0; }";
-    }
-    if (options.presets) {
-      nodesWithSettings.forEach(({ selector: selector3, presets }) => {
-        if (ROOT_BLOCK_SELECTOR === selector3 || ROOT_CSS_PROPERTIES_SELECTOR === selector3) {
-          selector3 = "";
-        }
-        const classes = getPresetsClasses(selector3, presets);
-        if (classes.length > 0) {
-          ruleset += classes;
-        }
-      });
-    }
-    return ruleset;
-  };
-  var getSelectorsConfig = (blockType, rootSelector) => {
-    if (blockType?.selectors && Object.keys(blockType.selectors).length > 0) {
-      return blockType.selectors;
-    }
-    const config2 = {
-      root: rootSelector
-    };
-    Object.entries(BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS).forEach(
-      ([featureKey, featureName]) => {
-        const featureSelector = getBlockSelector(blockType, featureKey);
-        if (featureSelector) {
-          config2[featureName] = featureSelector;
-        }
-      }
-    );
-    return config2;
-  };
-  var getBlockSelectors = (blockTypes, variationInstanceId) => {
-    const { getBlockStyles: getBlockStyles2 } = (0, import_data109.select)(import_blocks65.store);
-    const result = {};
-    blockTypes.forEach((blockType) => {
-      const name = blockType.name;
-      const selector3 = getBlockSelector(blockType);
-      if (!selector3) {
-        return;
-      }
-      let duotoneSelector = getBlockSelector(blockType, "filter.duotone");
-      if (!duotoneSelector) {
-        const rootSelector = getBlockSelector(blockType);
-        const duotoneSupport = (0, import_blocks65.getBlockSupport)(
-          blockType,
-          "color.__experimentalDuotone",
-          false
-        );
-        if (typeof duotoneSupport === "string" && rootSelector) {
-          duotoneSelector = scopeSelector2(rootSelector, duotoneSupport);
-        }
-      }
-      const hasLayoutSupport2 = !!blockType?.supports?.layout || !!blockType?.supports?.__experimentalLayout;
-      const fallbackGapValue = (
-        // @ts-expect-error
-        blockType?.supports?.spacing?.blockGap?.__experimentalDefault
-      );
-      const blockStyleVariations = getBlockStyles2(name);
-      const styleVariationSelectors = {};
-      blockStyleVariations?.forEach((variation) => {
-        const variationSuffix = variationInstanceId ? `-${variationInstanceId}` : "";
-        const variationName = `${variation.name}${variationSuffix}`;
-        const styleVariationSelector = getBlockStyleVariationSelector(
-          variationName,
-          selector3
-        );
-        styleVariationSelectors[variationName] = styleVariationSelector;
-      });
-      const featureSelectors = getSelectorsConfig(blockType, selector3);
-      result[name] = {
-        duotoneSelector: duotoneSelector ?? void 0,
-        fallbackGapValue,
-        featureSelectors: Object.keys(featureSelectors).length ? featureSelectors : void 0,
-        hasLayoutSupport: hasLayoutSupport2,
-        name,
-        selector: selector3,
-        styleVariationSelectors: blockStyleVariations?.length ? styleVariationSelectors : void 0
-      };
-    });
-    return result;
-  };
-  function processCSSNesting(css, blockSelector) {
-    let processedCSS = "";
-    if (!css || css.trim() === "") {
-      return processedCSS;
-    }
-    const parts = css.split("&");
-    parts.forEach((part) => {
-      if (!part || part.trim() === "") {
-        return;
-      }
-      const isRootCss = !part.includes("{");
-      if (isRootCss) {
-        processedCSS += `:root :where(${blockSelector}){${part.trim()}}`;
-      } else {
-        const splitPart = part.replace("}", "").split("{");
-        if (splitPart.length !== 2) {
-          return;
-        }
-        const [nestedSelector, cssValue] = splitPart;
-        const matches = nestedSelector.match(/([>+~\s]*::[a-zA-Z-]+)/);
-        const pseudoPart = matches ? matches[1] : "";
-        const withoutPseudoElement = matches ? nestedSelector.replace(pseudoPart, "").trim() : nestedSelector.trim();
-        let combinedSelector;
-        if (withoutPseudoElement === "") {
-          combinedSelector = blockSelector;
-        } else {
-          combinedSelector = nestedSelector.startsWith(" ") ? scopeSelector2(blockSelector, withoutPseudoElement) : appendToSelector(blockSelector, withoutPseudoElement);
-        }
-        processedCSS += `:root :where(${combinedSelector})${pseudoPart}{${cssValue.trim()}}`;
-      }
-    });
-    return processedCSS;
-  }
-
-  // packages/block-editor/build-module/hooks/block-style-variation.mjs
   var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
   var VARIATION_PREFIX = "is-style-";
   function getVariationMatches(className) {
@@ -58169,7 +58322,7 @@ var wp;
             if (typeof value.ref !== "string" || value.ref.trim() === "") {
               delete variationStyles[key];
             } else {
-              const refValue = getValueFromObjectPath(
+              const refValue = getValueFromObjectPath2(
                 globalStyles,
                 value.ref
               );
@@ -61244,7 +61397,8 @@ var wp;
       blockName,
       blockEditingMode,
       allowRightClickOverrides,
-      editedSection
+      editedSection,
+      viewportSettings
     } = (0, import_data127.useSelect)(
       (select3) => {
         const {
@@ -61254,12 +61408,14 @@ var wp;
           getSettings: getSettings7,
           getEditedContentOnlySection: getEditedContentOnlySection2
         } = unlock(select3(store));
+        const settings2 = getSettings7();
         return {
           block: getBlock2(clientId),
           blockName: getBlockName2(clientId),
           blockEditingMode: getBlockEditingModeForClientId(clientId),
-          allowRightClickOverrides: getSettings7().allowRightClickOverrides,
-          editedSection: getEditedContentOnlySection2()
+          allowRightClickOverrides: settings2.allowRightClickOverrides,
+          editedSection: getEditedContentOnlySection2(),
+          viewportSettings: settings2.__experimentalFeatures?.viewport
         };
       },
       [clientId]
@@ -61535,7 +61691,8 @@ var wp;
       isLocked
     );
     const blockVisibilityDescription = getBlockVisibilityLabel(
-      block?.attributes?.metadata?.blockVisibility
+      block?.attributes?.metadata?.blockVisibility,
+      viewportSettings
     );
     const hasSiblings = siblingBlockCount > 0;
     const canShowBlockActions = showBlockActions && !isDisabled;
@@ -73667,7 +73824,7 @@ var wp;
   var import_blocks102 = __toESM(require_blocks(), 1);
   var import_components222 = __toESM(require_components(), 1);
   var import_data174 = __toESM(require_data(), 1);
-  var import_element267 = __toESM(require_element(), 1);
+  var import_element268 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-inspector/edit-contents.mjs
   var import_components188 = __toESM(require_components(), 1);
@@ -74786,7 +74943,7 @@ var wp;
     const userLinkColor = decodeValue(value?.elements?.link?.color?.text);
     const setLinkColor = (newColor, newSlug) => {
       onChange(
-        setImmutably(
+        setImmutably2(
           value,
           ["elements", "link", "color", "text"],
           encodeColorValueWithPalette(allColors, newColor, newSlug)
@@ -74801,7 +74958,7 @@ var wp;
     );
     const setHoverLinkColor = (newColor, newSlug) => {
       onChange(
-        setImmutably(
+        setImmutably2(
           value,
           ["elements", "link", ":hover", "color", "text"],
           encodeColorValueWithPalette(allColors, newColor, newSlug)
@@ -74810,12 +74967,12 @@ var wp;
     };
     const hasLink = () => !!userLinkColor || !!userHoverLinkColor;
     const resetLink = () => {
-      let newValue = setImmutably(
+      let newValue = setImmutably2(
         value,
         ["elements", "link", ":hover", "color", "text"],
         void 0
       );
-      newValue = setImmutably(
+      newValue = setImmutably2(
         newValue,
         ["elements", "link", "color", "text"],
         void 0
@@ -74961,7 +75118,7 @@ var wp;
       );
       const hasElement = () => !!(elementTextUserColor || elementBackgroundUserColor || elementGradientUserColor);
       const resetElement = () => {
-        const newValue = setImmutably(
+        const newValue = setImmutably2(
           value,
           ["elements", name, "color", "background"],
           void 0
@@ -74972,7 +75129,7 @@ var wp;
       };
       const setElementTextColor = (newTextColor, newSlug) => {
         onChange(
-          setImmutably(
+          setImmutably2(
             value,
             ["elements", name, "color", "text"],
             encodeColorValueWithPalette(
@@ -74984,7 +75141,7 @@ var wp;
         );
       };
       const setElementBackgroundColor = (newBackgroundColor, newSlug) => {
-        const newValue = setImmutably(
+        const newValue = setImmutably2(
           value,
           ["elements", name, "color", "background"],
           encodeColorValueWithPalette(
@@ -74997,7 +75154,7 @@ var wp;
         onChange(newValue);
       };
       const setElementGradient = (newGradient) => {
-        const newValue = setImmutably(
+        const newValue = setImmutably2(
           value,
           ["elements", name, "color", "gradient"],
           encodeGradientValue(newGradient)
@@ -75288,9 +75445,9 @@ var wp;
         newColor,
         newSlug
       );
-      let changedObject = setImmutably(value, ["color", "text"], encoded);
+      let changedObject = setImmutably2(value, ["color", "text"], encoded);
       if (inheritedValue?.color?.text === inheritedValue?.elements?.link?.color?.text) {
-        changedObject = setImmutably(
+        changedObject = setImmutably2(
           changedObject,
           ["elements", "link", "color", "text"],
           encoded
@@ -75308,7 +75465,7 @@ var wp;
       const slug = fontFamilies?.find(
         ({ fontFamily: f2 }) => f2 === newValue
       )?.slug;
-      let updatedValue = setImmutably(
+      let updatedValue = setImmutably2(
         value,
         ["typography", "fontFamily"],
         slug ? `var:preset|font-family|${slug}` : newValue || void 0
@@ -75374,7 +75531,7 @@ var wp;
     const setFontSize = (newValue, metadata) => {
       const actualValue = !!metadata?.slug ? `var:preset|font-size|${metadata?.slug}` : newValue;
       onChange(
-        setImmutably(
+        setImmutably2(
           value,
           ["typography", "fontSize"],
           actualValue || void 0
@@ -75412,7 +75569,7 @@ var wp;
     const lineHeight = decodeValue(inheritedValue?.typography?.lineHeight);
     const setLineHeight = (newValue) => {
       onChange(
-        setImmutably(
+        setImmutably2(
           value,
           ["typography", "lineHeight"],
           newValue || void 0
@@ -75427,7 +75584,7 @@ var wp;
     );
     const setLetterSpacing = (newValue) => {
       onChange(
-        setImmutably(
+        setImmutably2(
           value,
           ["typography", "letterSpacing"],
           newValue || void 0
@@ -75442,7 +75599,7 @@ var wp;
     const isTextIndentAll = textIndentSetting === "all";
     const setTextIndentValue = (newValue) => {
       onChange(
-        setImmutably(
+        setImmutably2(
           value,
           ["typography", "textIndent"],
           newValue || void 0
@@ -75462,7 +75619,7 @@ var wp;
     const hasTextIndent = () => !!value?.typography?.textIndent;
     const resetTextIndent = () => {
       onChange(
-        setImmutably(value, ["typography", "textIndent"], void 0)
+        setImmutably2(value, ["typography", "textIndent"], void 0)
       );
     };
     const textIndentHelp = isTextIndentAll ? (0, import_i18n188.__)("Indents the first line of all paragraphs.") : (0, import_i18n188.__)("Indents the first line of each paragraph after the first one.");
@@ -75470,7 +75627,7 @@ var wp;
     const textColumns = decodeValue(inheritedValue?.typography?.textColumns);
     const setTextColumns = (newValue) => {
       onChange(
-        setImmutably(
+        setImmutably2(
           value,
           ["typography", "textColumns"],
           newValue || void 0
@@ -75485,7 +75642,7 @@ var wp;
     );
     const setTextTransform = (newValue) => {
       onChange(
-        setImmutably(
+        setImmutably2(
           value,
           ["typography", "textTransform"],
           newValue || void 0
@@ -75500,7 +75657,7 @@ var wp;
     );
     const setTextDecoration = (newValue) => {
       onChange(
-        setImmutably(
+        setImmutably2(
           value,
           ["typography", "textDecoration"],
           newValue || void 0
@@ -75513,7 +75670,7 @@ var wp;
     const writingMode = decodeValue(inheritedValue?.typography?.writingMode);
     const setWritingMode = (newValue) => {
       onChange(
-        setImmutably(
+        setImmutably2(
           value,
           ["typography", "writingMode"],
           newValue || void 0
@@ -75526,7 +75683,7 @@ var wp;
     const textAlign = decodeValue(inheritedValue?.typography?.textAlign);
     const setTextAlign = (newValue) => {
       onChange(
-        setImmutably(
+        setImmutably2(
           value,
           ["typography", "textAlign"],
           newValue || void 0
@@ -76517,7 +76674,7 @@ var wp;
     const contentSizeValue = decodeValue(inheritedValue?.layout?.contentSize);
     const setContentSizeValue = (newValue) => {
       onChange(
-        setImmutably(
+        setImmutably2(
           value,
           ["layout", "contentSize"],
           newValue || void 0
@@ -76530,7 +76687,7 @@ var wp;
     const wideSizeValue = decodeValue(inheritedValue?.layout?.wideSize);
     const setWideSizeValue = (newValue) => {
       onChange(
-        setImmutably(
+        setImmutably2(
           value,
           ["layout", "wideSize"],
           newValue || void 0
@@ -76546,7 +76703,7 @@ var wp;
     const isAxialPadding = paddingSides && paddingSides.some((side) => AXIAL_SIDES.includes(side));
     const setPaddingValues = (newPaddingValues) => {
       const padding = filterValuesBySides(newPaddingValues, paddingSides);
-      onChange(setImmutably(value, ["spacing", "padding"], padding));
+      onChange(setImmutably2(value, ["spacing", "padding"], padding));
     };
     const hasPaddingValue = () => !!value?.spacing?.padding && Object.keys(value?.spacing?.padding).length;
     const resetPaddingValue = () => setPaddingValues(void 0);
@@ -76558,7 +76715,7 @@ var wp;
     const isAxialMargin = marginSides && marginSides.some((side) => AXIAL_SIDES.includes(side));
     const setMarginValues = (newMarginValues) => {
       const margin = filterValuesBySides(newMarginValues, marginSides);
-      onChange(setImmutably(value, ["spacing", "margin"], margin));
+      onChange(setImmutably2(value, ["spacing", "margin"], margin));
     };
     const hasMarginValue = () => !!value?.spacing?.margin && Object.keys(value?.spacing?.margin).length;
     const resetMarginValue = () => setMarginValues(void 0);
@@ -76570,7 +76727,7 @@ var wp;
     const gapValues = splitGapValue(gapValue, isAxialGap);
     const setGapValue = (newGapValue) => {
       onChange(
-        setImmutably(value, ["spacing", "blockGap"], newGapValue)
+        setImmutably2(value, ["spacing", "blockGap"], newGapValue)
       );
     };
     const setGapValues = (nextBoxGapValue) => {
@@ -76591,13 +76748,13 @@ var wp;
     const showMinHeightControl = hasMinHeight(settings2);
     const minHeightValue = decodeValue(inheritedValue?.dimensions?.minHeight);
     const setMinHeightValue = (newValue) => {
-      const tempValue = setImmutably(
+      const tempValue = setImmutably2(
         value,
         ["dimensions", "minHeight"],
         newValue
       );
       onChange(
-        setImmutably(
+        setImmutably2(
           tempValue,
           ["dimensions", "aspectRatio"],
           void 0
@@ -76611,13 +76768,13 @@ var wp;
     const showHeightControl = hasHeight(settings2);
     const heightValue = decodeValue(inheritedValue?.dimensions?.height);
     const setHeightValue = (newValue) => {
-      const tempValue = setImmutably(
+      const tempValue = setImmutably2(
         value,
         ["dimensions", "height"],
         newValue
       );
       onChange(
-        setImmutably(
+        setImmutably2(
           tempValue,
           ["dimensions", "aspectRatio"],
           void 0
@@ -76632,7 +76789,7 @@ var wp;
     const minWidthValue = decodeValue(inheritedValue?.dimensions?.minWidth);
     const setMinWidthValue = (newValue) => {
       onChange(
-        setImmutably(value, ["dimensions", "minWidth"], newValue)
+        setImmutably2(value, ["dimensions", "minWidth"], newValue)
       );
     };
     const resetMinWidthValue = () => {
@@ -76642,7 +76799,7 @@ var wp;
     const showWidthControl = hasWidth(settings2);
     const widthValue = decodeValue(inheritedValue?.dimensions?.width);
     const setWidthValue = (newValue) => {
-      onChange(setImmutably(value, ["dimensions", "width"], newValue));
+      onChange(setImmutably2(value, ["dimensions", "width"], newValue));
     };
     const resetWidthValue = () => {
       setWidthValue(void 0);
@@ -76653,13 +76810,13 @@ var wp;
       inheritedValue?.dimensions?.aspectRatio
     );
     const setAspectRatioValue = (newValue) => {
-      const tempValue = setImmutably(
+      const tempValue = setImmutably2(
         value,
         ["dimensions", "aspectRatio"],
         newValue
       );
       onChange(
-        setImmutably(tempValue, ["dimensions", "minHeight"], void 0)
+        setImmutably2(tempValue, ["dimensions", "minHeight"], void 0)
       );
     };
     const hasAspectRatioValue = () => !!value?.dimensions?.aspectRatio;
@@ -77318,7 +77475,7 @@ var wp;
         ({ shadow: shadowName }) => shadowName === newValue
       )?.slug;
       onChange(
-        setImmutably(
+        setImmutably2(
           value,
           ["shadow"],
           slug ? `var:preset|shadow|${slug}` : newValue || void 0
@@ -77573,7 +77730,7 @@ var wp;
       });
       const duotoneValue = duotonePreset ? `var:preset|duotone|${duotonePreset.slug}` : newValue;
       onChange(
-        setImmutably(value, ["filter", "duotone"], duotoneValue)
+        setImmutably2(value, ["filter", "duotone"], duotoneValue)
       );
     };
     const hasDuotone = () => !!value?.filter?.duotone;
@@ -77957,7 +78114,7 @@ var wp;
       setIsUploading(false);
     };
     const resetBackgroundImage = () => onChange(
-      setImmutably(
+      setImmutably2(
         style,
         ["background", "backgroundImage"],
         void 0
@@ -77982,7 +78139,7 @@ var wp;
       const sizeValue = style?.background?.backgroundSize || defaultValues?.backgroundSize;
       const positionValue = style?.background?.backgroundPosition;
       onChange(
-        setImmutably(style, ["background"], {
+        setImmutably2(style, ["background"], {
           ...style?.background,
           backgroundImage: {
             url: media.url,
@@ -78018,7 +78175,7 @@ var wp;
     };
     const hasValue = hasBackgroundImageValue(style);
     const onRemove = () => onChange(
-      setImmutably(style, ["background"], {
+      setImmutably2(style, ["background"], {
         backgroundImage: "none"
       })
     );
@@ -78113,7 +78270,7 @@ var wp;
         next = "auto";
       }
       onChange(
-        setImmutably(style, ["background"], {
+        setImmutably2(style, ["background"], {
           ...style?.background,
           backgroundPosition: nextPosition,
           backgroundRepeat: nextRepeat,
@@ -78123,7 +78280,7 @@ var wp;
     };
     const updateBackgroundPosition = (next) => {
       onChange(
-        setImmutably(
+        setImmutably2(
           style,
           ["background", "backgroundPosition"],
           coordsToBackgroundPosition(next)
@@ -78131,14 +78288,14 @@ var wp;
       );
     };
     const toggleIsRepeated = () => onChange(
-      setImmutably(
+      setImmutably2(
         style,
         ["background", "backgroundRepeat"],
         repeatCheckedValue === true ? "no-repeat" : "repeat"
       )
     );
     const toggleScrollWithPage = () => onChange(
-      setImmutably(
+      setImmutably2(
         style,
         ["background", "backgroundAttachment"],
         attachmentValue === "fixed" ? "scroll" : "fixed"
@@ -78270,7 +78427,7 @@ var wp;
       );
       return resolvedValues;
     }, [globalStyles, _links, inheritedValue]);
-    const resetBackground = () => onChange(setImmutably(value, ["background"], {}));
+    const resetBackground = () => onChange(setImmutably2(value, ["background"], {}));
     const { title, url } = value?.background?.backgroundImage || {
       ...resolvedInheritedValue?.background?.backgroundImage
     };
@@ -78464,25 +78621,25 @@ var wp;
       return null;
     }
     const resetBackground = () => onChange(
-      setImmutably(
+      setImmutably2(
         value,
         ["background", "backgroundImage"],
         void 0
       )
     );
     const resetGradient = () => {
-      let newValue = setImmutably(
+      let newValue = setImmutably2(
         value,
         ["background", "gradient"],
         void 0
       );
-      newValue = setImmutably(newValue, ["color", "gradient"], void 0);
+      newValue = setImmutably2(newValue, ["color", "gradient"], void 0);
       onChange(newValue);
     };
     const backgroundColor = decodeValue(inheritedValue?.color?.background);
     const userBackgroundColor = decodeValue(value?.color?.background);
     const setBackgroundColor = (newColor, newSlug) => {
-      const newValue = setImmutably(
+      const newValue = setImmutably2(
         value,
         ["color", "background"],
         encodeColorValueWithPalette(allColors, newColor, newSlug)
@@ -78493,7 +78650,7 @@ var wp;
       onChange(newValue);
     };
     const resetBackgroundColor = () => {
-      const newValue = setImmutably(
+      const newValue = setImmutably2(
         value,
         ["color", "background"],
         void 0
@@ -78506,7 +78663,7 @@ var wp;
     const legacyColorGradient = decodeValue(inheritedValue?.color?.gradient);
     const userLegacyColorGradient = decodeValue(value?.color?.gradient);
     const setLegacyColorGradient = (newGradient) => {
-      const newValue = setImmutably(
+      const newValue = setImmutably2(
         value,
         ["color", "gradient"],
         encodeGradientValue(newGradient)
@@ -78514,7 +78671,7 @@ var wp;
       newValue.color.background = void 0;
       onChange(newValue);
     };
-    const resetLegacyColorGradient = () => onChange(setImmutably(value, ["color", "gradient"], void 0));
+    const resetLegacyColorGradient = () => onChange(setImmutably2(value, ["color", "gradient"], void 0));
     const currentGradient = decodeValue(
       value?.background?.gradient ?? value?.color?.gradient
     );
@@ -78522,12 +78679,12 @@ var wp;
       inheritedValue?.background?.gradient ?? inheritedValue?.color?.gradient
     );
     const setGradient = (newGradient) => {
-      let newValue = setImmutably(
+      let newValue = setImmutably2(
         value,
         ["background", "gradient"],
         encodeGradientValue(newGradient)
       );
-      newValue = setImmutably(newValue, ["color", "gradient"], void 0);
+      newValue = setImmutably2(newValue, ["color", "gradient"], void 0);
       onChange(newValue);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime433.jsxs)(
@@ -81122,8 +81279,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/states.mjs
+  var import_element267 = __toESM(require_element(), 1);
   var import_i18n209 = __toESM(require_i18n(), 1);
   var import_jsx_runtime450 = __toESM(require_jsx_runtime(), 1);
+  var { getViewportBreakpoints: getViewportBreakpoints5 } = unlock(privateApis);
   var PSEUDO_STATE_LABELS = {
     ":hover": (0, import_i18n209.__)("Hover"),
     ":focus": (0, import_i18n209.__)("Focus"),
@@ -81134,12 +81293,15 @@ var wp;
     "@tablet": (0, import_i18n209.__)("Tablet"),
     "@mobile": (0, import_i18n209.__)("Mobile")
   };
-  var DEVICE_STATE_OPTIONS = Object.entries(RESPONSIVE_STATE_LABELS).map(
-    ([value, label]) => ({
+  function getDeviceStateOptions(viewportSettings) {
+    const breakpoints = getViewportBreakpoints5(viewportSettings);
+    return Object.entries(RESPONSIVE_STATE_LABELS).filter(
+      ([value]) => (value !== "@tablet" || breakpoints.tablet !== void 0) && (value !== "@mobile" || breakpoints.mobile !== void 0)
+    ).map(([value, label]) => ({
       value,
       label
-    })
-  );
+    }));
+  }
   var VALID_BLOCK_PSEUDO_STATES = {
     "core/button": [":hover", ":focus", ":focus-visible", ":active"],
     "core/navigation-link": [":hover", ":focus", ":focus-visible", ":active"]
@@ -81152,8 +81314,12 @@ var wp;
     }));
   }
   var DEFAULT_STATE_VALUE2 = "default";
+  var EMPTY_STATE_OPTIONS = [];
   function BlockStatesControl({ name, value, onChange }) {
-    const pseudoStateOptions = getPseudoStateOptions(name);
+    const pseudoStateOptions = (0, import_element267.useMemo)(
+      () => getPseudoStateOptions(name),
+      [name]
+    );
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     if (!pseudoStateOptions.length) {
       return null;
@@ -81170,14 +81336,22 @@ var wp;
     );
   }
   function BlockStateBadges({ name, value, isResponsiveEditing: isResponsiveEditing3 }) {
-    const pseudoStateOptions = getPseudoStateOptions(name);
+    const pseudoStateOptions = (0, import_element267.useMemo)(
+      () => getPseudoStateOptions(name),
+      [name]
+    );
+    const [viewportSettings] = useSettings("viewport");
+    const deviceStateOptions = (0, import_element267.useMemo)(
+      () => getDeviceStateOptions(viewportSettings),
+      [viewportSettings]
+    );
     if (!pseudoStateOptions.length && !isResponsiveEditing3) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime450.jsx)(
       StateControlBadges,
       {
-        viewportStates: isResponsiveEditing3 ? DEVICE_STATE_OPTIONS : [],
+        viewportStates: isResponsiveEditing3 ? deviceStateOptions : EMPTY_STATE_OPTIONS,
         pseudoStates: pseudoStateOptions,
         viewportValue: value?.viewport ?? DEFAULT_STATE_VALUE2,
         pseudoStateValue: value?.pseudo ?? DEFAULT_STATE_VALUE2
@@ -81494,7 +81668,7 @@ var wp;
     showStateOnCanvas,
     isResponsiveEditing: isResponsiveEditing3
   }) => {
-    const listViewRef = (0, import_element267.useRef)(null);
+    const listViewRef = (0, import_element268.useRef)(null);
     const hasMultipleTabs = availableTabs?.length > 1;
     const hasPseudoState = hasPseudoBlockStyleState(selectedBlockStyleState2);
     const isEditingStyleState = hasViewportBlockStyleState(selectedBlockStyleState2) && isResponsiveEditing3 || hasPseudoBlockStyleState(selectedBlockStyleState2);
@@ -81624,7 +81798,7 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter/library.mjs
   var import_data175 = __toESM(require_data(), 1);
-  var import_element268 = __toESM(require_element(), 1);
+  var import_element269 = __toESM(require_element(), 1);
   var import_jsx_runtime453 = __toESM(require_jsx_runtime(), 1);
   var noop22 = () => {
   };
@@ -81673,7 +81847,7 @@ var wp;
       }
     );
   }
-  var PrivateInserterLibrary = (0, import_element268.forwardRef)(InserterLibrary);
+  var PrivateInserterLibrary = (0, import_element269.forwardRef)(InserterLibrary);
   function PublicInserterLibrary(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(
       PrivateInserterLibrary,
@@ -81684,7 +81858,7 @@ var wp;
       }
     );
   }
-  var library_default = (0, import_element268.forwardRef)(PublicInserterLibrary);
+  var library_default = (0, import_element269.forwardRef)(PublicInserterLibrary);
 
   // packages/block-editor/build-module/components/selection-scroll-into-view/index.mjs
   var import_deprecated31 = __toESM(require_deprecated(), 1);
@@ -81858,10 +82032,10 @@ var wp;
   var typewriter_default = TypewriterOrIEBypass;
 
   // packages/block-editor/build-module/components/recursion-provider/index.mjs
-  var import_element269 = __toESM(require_element(), 1);
+  var import_element270 = __toESM(require_element(), 1);
   var import_deprecated32 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime455 = __toESM(require_jsx_runtime(), 1);
-  var RenderedRefsContext = (0, import_element269.createContext)({});
+  var RenderedRefsContext = (0, import_element270.createContext)({});
   RenderedRefsContext.displayName = "RenderedRefsContext";
   function addToBlockType(renderedBlocks, blockName, uniqueId2) {
     const result = {
@@ -81872,17 +82046,17 @@ var wp;
     return result;
   }
   function RecursionProvider({ children, uniqueId: uniqueId2, blockName = "" }) {
-    const previouslyRenderedBlocks = (0, import_element269.useContext)(RenderedRefsContext);
+    const previouslyRenderedBlocks = (0, import_element270.useContext)(RenderedRefsContext);
     const { name } = useBlockEditContext();
     blockName = blockName || name;
-    const newRenderedBlocks = (0, import_element269.useMemo)(
+    const newRenderedBlocks = (0, import_element270.useMemo)(
       () => addToBlockType(previouslyRenderedBlocks, blockName, uniqueId2),
       [previouslyRenderedBlocks, blockName, uniqueId2]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(RenderedRefsContext.Provider, { value: newRenderedBlocks, children });
   }
   function useHasRecursion(uniqueId2, blockName = "") {
-    const previouslyRenderedBlocks = (0, import_element269.useContext)(RenderedRefsContext);
+    const previouslyRenderedBlocks = (0, import_element270.useContext)(RenderedRefsContext);
     const { name } = useBlockEditContext();
     blockName = blockName || name;
     return Boolean(previouslyRenderedBlocks[blockName]?.has(uniqueId2));
@@ -81905,7 +82079,7 @@ var wp;
   // packages/block-editor/build-module/components/publish-date-time-picker/index.mjs
   var import_components224 = __toESM(require_components(), 1);
   var import_i18n212 = __toESM(require_i18n(), 1);
-  var import_element270 = __toESM(require_element(), 1);
+  var import_element271 = __toESM(require_element(), 1);
   var import_date2 = __toESM(require_date(), 1);
 
   // packages/block-editor/build-module/components/inspector-popover-header/index.mjs
@@ -81994,7 +82168,7 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(DatePickerComponent, { ...datePickerProps })
     ] });
   }
-  var PrivatePublishDateTimePicker = (0, import_element270.forwardRef)(PublishDateTimePicker);
+  var PrivatePublishDateTimePicker = (0, import_element271.forwardRef)(PublishDateTimePicker);
   function PublicPublishDateTimePicker(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(
       PrivatePublishDateTimePicker,
@@ -82006,11 +82180,11 @@ var wp;
       }
     );
   }
-  var publish_date_time_picker_default = (0, import_element270.forwardRef)(PublicPublishDateTimePicker);
+  var publish_date_time_picker_default = (0, import_element271.forwardRef)(PublicPublishDateTimePicker);
 
   // packages/block-editor/build-module/components/tool-selector/index.mjs
   var import_deprecated33 = __toESM(require_deprecated(), 1);
-  var import_element271 = __toESM(require_element(), 1);
+  var import_element272 = __toESM(require_element(), 1);
   function ToolSelector() {
     (0, import_deprecated33.default)("wp.blockEditor.ToolSelector", {
       since: "6.9",
@@ -82018,7 +82192,7 @@ var wp;
     });
     return null;
   }
-  var tool_selector_default = (0, import_element271.forwardRef)(ToolSelector);
+  var tool_selector_default = (0, import_element272.forwardRef)(ToolSelector);
 
   // packages/block-editor/build-module/hooks/utils.mjs
   var import_jsx_runtime458 = __toESM(require_jsx_runtime(), 1);
@@ -82050,14 +82224,14 @@ var wp;
     Object.entries(activeSupports).forEach(([support, isActive]) => {
       if (isActive) {
         migrationPaths[support].forEach((path) => {
-          const styleValue = getValueFromObjectPath(
+          const styleValue = getValueFromObjectPath2(
             referenceBlockAttributes,
             path
           );
           if (styleValue) {
             returnBlock = {
               ...returnBlock,
-              attributes: setImmutably(
+              attributes: setImmutably2(
                 returnBlock.attributes,
                 path,
                 styleValue
@@ -82093,8 +82267,8 @@ var wp;
       (0, import_data177.useDispatch)(store)
     );
     const registry = (0, import_data177.useRegistry)();
-    const fallbackId = (0, import_element272.useId)();
-    (0, import_element272.useEffect)(() => {
+    const fallbackId = (0, import_element273.useId)();
+    (0, import_element273.useEffect)(() => {
       if (!css && !assets) {
         return;
       }
@@ -82275,7 +82449,7 @@ var wp;
       "color.button",
       "shadow"
     );
-    const rawSettings = (0, import_element272.useMemo)(() => {
+    const rawSettings = (0, import_element273.useMemo)(() => {
       return {
         background: {
           backgroundImage,
@@ -82436,7 +82610,7 @@ var wp;
   }
   function createBlockEditFilter(features) {
     features = features.map((settings2) => {
-      return { ...settings2, Edit: (0, import_element272.memo)(settings2.edit) };
+      return { ...settings2, Edit: (0, import_element273.memo)(settings2.edit) };
     });
     const withBlockEditHooks = (0, import_compose102.createHigherOrderComponent)(
       (OriginalBlockEdit) => function WithBlockEditHooks(props) {
@@ -82492,7 +82666,7 @@ var wp;
       nextAll[index2] = next;
       return nextAll;
     });
-    (0, import_element272.useEffect)(() => {
+    (0, import_element273.useEffect)(() => {
       setWrapperProps(wrapperProps);
       return () => {
         setWrapperProps(void 0);
@@ -82500,11 +82674,11 @@ var wp;
     });
     return null;
   }
-  var BlockPropsPure = (0, import_element272.memo)(BlockProps);
+  var BlockPropsPure = (0, import_element273.memo)(BlockProps);
   function createBlockListBlockFilter(features) {
     const withBlockListBlockHooks = (0, import_compose102.createHigherOrderComponent)(
       (BlockListBlock2) => function WithBlockListBlockHooks(props) {
-        const [allWrapperProps, setAllWrapperProps] = (0, import_element272.useState)(
+        const [allWrapperProps, setAllWrapperProps] = (0, import_element273.useState)(
           Array(features.length).fill(void 0)
         );
         return [
@@ -82819,13 +82993,13 @@ var wp;
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.mjs
   var import_components231 = __toESM(require_components(), 1);
   var import_i18n215 = __toESM(require_i18n(), 1);
-  var import_element276 = __toESM(require_element(), 1);
+  var import_element277 = __toESM(require_element(), 1);
   var import_data180 = __toESM(require_data(), 1);
   var import_blocks107 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-allowed-blocks/modal.mjs
   var import_components230 = __toESM(require_components(), 1);
-  var import_element275 = __toESM(require_element(), 1);
+  var import_element276 = __toESM(require_element(), 1);
   var import_i18n214 = __toESM(require_i18n(), 1);
   var import_data179 = __toESM(require_data(), 1);
 
@@ -82834,12 +83008,12 @@ var wp;
   var import_data178 = __toESM(require_data(), 1);
   var import_components229 = __toESM(require_components(), 1);
   var import_i18n213 = __toESM(require_i18n(), 1);
-  var import_element274 = __toESM(require_element(), 1);
+  var import_element275 = __toESM(require_element(), 1);
   var import_compose104 = __toESM(require_compose(), 1);
   var import_a11y21 = __toESM(require_a11y(), 1);
 
   // packages/block-editor/build-module/components/block-manager/category.mjs
-  var import_element273 = __toESM(require_element(), 1);
+  var import_element274 = __toESM(require_element(), 1);
   var import_compose103 = __toESM(require_compose(), 1);
   var import_components228 = __toESM(require_components(), 1);
 
@@ -82877,7 +83051,7 @@ var wp;
     onChange
   }) {
     const instanceId = (0, import_compose103.useInstanceId)(BlockManagerCategory);
-    const toggleVisible = (0, import_element273.useCallback)(
+    const toggleVisible = (0, import_element274.useCallback)(
       (blockType, nextIsChecked) => {
         if (nextIsChecked) {
           onChange([...selectedBlockTypes, blockType]);
@@ -82891,7 +83065,7 @@ var wp;
       },
       [selectedBlockTypes, onChange]
     );
-    const toggleAllVisible = (0, import_element273.useCallback)(
+    const toggleAllVisible = (0, import_element274.useCallback)(
       (nextIsChecked) => {
         if (nextIsChecked) {
           onChange([
@@ -82965,7 +83139,7 @@ var wp;
     showSelectAll = true
   }) {
     const debouncedSpeak = (0, import_compose104.useDebounce)(import_a11y21.speak, 500);
-    const [search, setSearch] = (0, import_element274.useState)("");
+    const [search, setSearch] = (0, import_element275.useState)("");
     const { categories, isMatchingSearchTerm } = (0, import_data178.useSelect)((select3) => {
       return {
         categories: select3(import_blocks106.store).getCategories(),
@@ -82977,7 +83151,7 @@ var wp;
     });
     const isIndeterminate = selectedBlockTypes.length > 0 && selectedBlockTypes.length !== blockTypes.length;
     const isAllChecked = blockTypes.length > 0 && selectedBlockTypes.length === blockTypes.length;
-    (0, import_element274.useEffect)(() => {
+    (0, import_element275.useEffect)(() => {
       if (!search) {
         return;
       }
@@ -83062,7 +83236,7 @@ var wp;
     selectedBlockTypes,
     onClose
   }) {
-    const [currentSelectedBlockTypes, setCurrentSelectedBlockTypes] = (0, import_element275.useState)(selectedBlockTypes);
+    const [currentSelectedBlockTypes, setCurrentSelectedBlockTypes] = (0, import_element276.useState)(selectedBlockTypes);
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data179.useDispatch)(store);
     const handleSubmit = () => {
       const isFullySelected = currentSelectedBlockTypes.length === blockTypes.length;
@@ -83143,7 +83317,7 @@ var wp;
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.mjs
   var import_jsx_runtime464 = __toESM(require_jsx_runtime(), 1);
   function BlockAllowedBlocksControl({ clientId }) {
-    const [isBlockControlOpened, setIsBlockControlOpened] = (0, import_element276.useState)(false);
+    const [isBlockControlOpened, setIsBlockControlOpened] = (0, import_element277.useState)(false);
     const { blockTypes, selectedBlockNames } = (0, import_data180.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3 } = select3(store);
@@ -83430,23 +83604,23 @@ var wp;
   };
 
   // packages/dataviews/build-module/lock-unlock.mjs
-  var import_private_apis3 = __toESM(require_private_apis(), 1);
-  var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  var import_private_apis5 = __toESM(require_private_apis(), 1);
+  var { lock: lock4, unlock: unlock4 } = (0, import_private_apis5.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/dataviews"
   );
 
   // packages/dataviews/build-module/hooks/use-elements.mjs
-  var import_element277 = __toESM(require_element(), 1);
+  var import_element278 = __toESM(require_element(), 1);
   var EMPTY_ARRAY16 = [];
   function useElements({
     elements,
     getElements
   }) {
     const staticElements = Array.isArray(elements) && elements.length > 0 ? elements : EMPTY_ARRAY16;
-    const [records, setRecords] = (0, import_element277.useState)(staticElements);
-    const [isLoading, setIsLoading] = (0, import_element277.useState)(false);
-    (0, import_element277.useEffect)(() => {
+    const [records, setRecords] = (0, import_element278.useState)(staticElements);
+    const [isLoading, setIsLoading] = (0, import_element278.useState)(false);
+    (0, import_element278.useEffect)(() => {
       if (!getElements) {
         setRecords(staticElements);
         return;
@@ -85118,7 +85292,7 @@ var wp;
 
   // packages/dataviews/build-module/utils/operators.mjs
   var import_i18n218 = __toESM(require_i18n(), 1);
-  var import_element278 = __toESM(require_element(), 1);
+  var import_element279 = __toESM(require_element(), 1);
   var import_date3 = __toESM(require_date(), 1);
   var import_jsx_runtime467 = __toESM(require_jsx_runtime(), 1);
   var filterTextWrappers = {
@@ -85142,7 +85316,7 @@ var wp;
   var isNoneOperatorDefinition = {
     /* translators: DataViews operator name */
     label: (0, import_i18n218.__)("Is none of"),
-    filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
       (0, import_i18n218.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
         (0, import_i18n218.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
@@ -85172,7 +85346,7 @@ var wp;
       name: OPERATOR_IS_ANY,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Includes"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
           (0, import_i18n218.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
@@ -85205,7 +85379,7 @@ var wp;
       name: OPERATOR_IS_ALL,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Includes all"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
           (0, import_i18n218.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
@@ -85232,7 +85406,7 @@ var wp;
       name: OPERATOR_BETWEEN,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Between (inc)"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
           (0, import_i18n218.__)(
@@ -85260,7 +85434,7 @@ var wp;
       name: OPERATOR_IN_THE_PAST,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("In the past"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
           (0, import_i18n218.__)(
@@ -85288,7 +85462,7 @@ var wp;
       name: OPERATOR_OVER,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Over"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
           (0, import_i18n218.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
@@ -85314,7 +85488,7 @@ var wp;
       name: OPERATOR_IS,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Is"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
           (0, import_i18n218.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
@@ -85332,7 +85506,7 @@ var wp;
       name: OPERATOR_IS_NOT,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Is not"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
           (0, import_i18n218.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
@@ -85350,7 +85524,7 @@ var wp;
       name: OPERATOR_LESS_THAN,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Less than"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
           (0, import_i18n218.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
@@ -85372,7 +85546,7 @@ var wp;
       name: OPERATOR_GREATER_THAN,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Greater than"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
           (0, import_i18n218.__)(
@@ -85396,7 +85570,7 @@ var wp;
       name: OPERATOR_LESS_THAN_OR_EQUAL,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Less than or equal"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
           (0, import_i18n218.__)(
@@ -85420,7 +85594,7 @@ var wp;
       name: OPERATOR_GREATER_THAN_OR_EQUAL,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Greater than or equal"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
           (0, import_i18n218.__)(
@@ -85444,7 +85618,7 @@ var wp;
       name: OPERATOR_BEFORE,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Before"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
           (0, import_i18n218.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
@@ -85467,7 +85641,7 @@ var wp;
       name: OPERATOR_AFTER,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("After"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
           (0, import_i18n218.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
@@ -85490,7 +85664,7 @@ var wp;
       name: OPERATOR_BEFORE_INC,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Before (inc)"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
           (0, import_i18n218.__)(
@@ -85515,7 +85689,7 @@ var wp;
       name: OPERATOR_AFTER_INC,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("After (inc)"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
           (0, import_i18n218.__)(
@@ -85540,7 +85714,7 @@ var wp;
       name: OPERATOR_CONTAINS,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Contains"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
           (0, import_i18n218.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
@@ -85562,7 +85736,7 @@ var wp;
       name: OPERATOR_NOT_CONTAINS,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Doesn't contain"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
           (0, import_i18n218.__)(
@@ -85586,7 +85760,7 @@ var wp;
       name: OPERATOR_STARTS_WITH,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Starts with"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
           (0, import_i18n218.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
@@ -85608,7 +85782,7 @@ var wp;
       name: OPERATOR_ON,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("On"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
           (0, import_i18n218.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
@@ -85631,7 +85805,7 @@ var wp;
       name: OPERATOR_NOT_ON,
       /* translators: DataViews operator name */
       label: (0, import_i18n218.__)("Not on"),
-      filterText: (filter, activeElements) => (0, import_element278.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element279.createInterpolateElement)(
         (0, import_i18n218.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
           (0, import_i18n218.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
@@ -85656,7 +85830,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
   var import_components234 = __toESM(require_components(), 1);
-  var import_element279 = __toESM(require_element(), 1);
+  var import_element280 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.mjs
   function getCustomValidity(isValid2, validity) {
@@ -85683,7 +85857,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
   var import_jsx_runtime468 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedCheckboxControl } = unlock3(import_components234.privateApis);
+  var { ValidatedCheckboxControl } = unlock4(import_components234.privateApis);
   function Checkbox({
     field,
     onChange,
@@ -85694,7 +85868,7 @@ var wp;
   }) {
     const { getValue, setValue, label, description, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
-    const onChangeControl = (0, import_element279.useCallback)(() => {
+    const onChangeControl = (0, import_element280.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
       );
@@ -85717,9 +85891,9 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/combobox.mjs
   var import_components235 = __toESM(require_components(), 1);
-  var import_element280 = __toESM(require_element(), 1);
+  var import_element281 = __toESM(require_element(), 1);
   var import_jsx_runtime469 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedComboboxControl } = unlock3(import_components235.privateApis);
+  var { ValidatedComboboxControl } = unlock4(import_components235.privateApis);
   function Combobox({
     data,
     field,
@@ -85729,7 +85903,7 @@ var wp;
   }) {
     const { label, description, placeholder, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data }) ?? "";
-    const onChangeControl = (0, import_element280.useCallback)(
+    const onChangeControl = (0, import_element281.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue ?? "" })),
       [data, onChange, setValue]
     );
@@ -85760,13 +85934,13 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
   var import_components237 = __toESM(require_components(), 1);
-  var import_element283 = __toESM(require_element(), 1);
+  var import_element284 = __toESM(require_element(), 1);
   var import_i18n220 = __toESM(require_i18n(), 1);
   var import_date5 = __toESM(require_date(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
   var import_components236 = __toESM(require_components(), 1);
-  var import_element281 = __toESM(require_element(), 1);
+  var import_element282 = __toESM(require_element(), 1);
   var import_i18n219 = __toESM(require_i18n(), 1);
   var import_jsx_runtime470 = __toESM(require_jsx_runtime(), 1);
   var TIME_UNITS_OPTIONS = {
@@ -85796,7 +85970,7 @@ var wp;
     const disabled2 = field.isDisabled({ item: data, field });
     const fieldValue = getValue({ item: data });
     const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
-    const onChangeValue = (0, import_element281.useCallback)(
+    const onChangeValue = (0, import_element282.useCallback)(
       (newValue) => onChange(
         setValue({
           item: data,
@@ -85805,7 +85979,7 @@ var wp;
       ),
       [onChange, setValue, data, unit]
     );
-    const onChangeUnit = (0, import_element281.useCallback)(
+    const onChangeUnit = (0, import_element282.useCallback)(
       (newUnit) => onChange(
         setValue({
           item: data,
@@ -85853,11 +86027,11 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataform-controls/utils/use-disabled-date-matchers.mjs
-  var import_element282 = __toESM(require_element(), 1);
+  var import_element283 = __toESM(require_element(), 1);
   function useDisabledDateMatchers(isValid2, parseDateFn) {
     const minConstraint = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
     const maxConstraint = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
-    const disabledMatchers = (0, import_element282.useMemo)(() => {
+    const disabledMatchers = (0, import_element283.useMemo)(() => {
       const matchers = [];
       if (minConstraint) {
         const minDate = parseDateFn(minConstraint);
@@ -85888,7 +86062,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
   var import_jsx_runtime471 = __toESM(require_jsx_runtime(), 1);
-  var { DateCalendar, ValidatedInputControl: ValidatedInputControl2 } = unlock3(import_components237.privateApis);
+  var { DateCalendar, ValidatedInputControl: ValidatedInputControl2 } = unlock4(import_components237.privateApis);
   var formatDateTime = (value) => {
     if (!value) {
       return "";
@@ -85909,26 +86083,26 @@ var wp;
     const disabled2 = field.isDisabled({ item: data, field });
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
-    const [calendarMonth, setCalendarMonth] = (0, import_element283.useState)(() => {
+    const [calendarMonth, setCalendarMonth] = (0, import_element284.useState)(() => {
       const parsedDate = parseDateTime(value);
       return parsedDate || /* @__PURE__ */ new Date();
     });
-    const inputControlRef = (0, import_element283.useRef)(null);
-    const validationTimeoutRef = (0, import_element283.useRef)(void 0);
-    const previousFocusRef = (0, import_element283.useRef)(null);
+    const inputControlRef = (0, import_element284.useRef)(null);
+    const validationTimeoutRef = (0, import_element284.useRef)(void 0);
+    const previousFocusRef = (0, import_element284.useRef)(null);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
-    const onChangeCallback = (0, import_element283.useCallback)(
+    const onChangeCallback = (0, import_element284.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
-    (0, import_element283.useEffect)(() => {
+    (0, import_element284.useEffect)(() => {
       return () => {
         if (validationTimeoutRef.current) {
           clearTimeout(validationTimeoutRef.current);
         }
       };
     }, []);
-    const onSelectDate = (0, import_element283.useCallback)(
+    const onSelectDate = (0, import_element284.useCallback)(
       (newDate) => {
         let dateTimeValue;
         if (newDate) {
@@ -85962,7 +86136,7 @@ var wp;
       },
       [onChangeCallback, value]
     );
-    const handleManualDateTimeChange = (0, import_element283.useCallback)(
+    const handleManualDateTimeChange = (0, import_element284.useCallback)(
       (newValue) => {
         if (newValue) {
           const dateTime = (0, import_date5.getDate)(newValue);
@@ -86069,11 +86243,11 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/date.mjs
   var import_components238 = __toESM(require_components(), 1);
-  var import_element284 = __toESM(require_element(), 1);
+  var import_element285 = __toESM(require_element(), 1);
   var import_i18n221 = __toESM(require_i18n(), 1);
   var import_date6 = __toESM(require_date(), 1);
   var import_jsx_runtime472 = __toESM(require_jsx_runtime(), 1);
-  var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock3(import_components238.privateApis);
+  var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock4(import_components238.privateApis);
   var DATE_PRESETS = [
     {
       id: "today",
@@ -86169,8 +86343,8 @@ var wp;
     children
   }) {
     const { isValid: isValid2 } = field;
-    const [customValidity, setCustomValidity] = (0, import_element284.useState)(void 0);
-    const validateRefs = (0, import_element284.useCallback)(() => {
+    const [customValidity, setCustomValidity] = (0, import_element285.useState)(void 0);
+    const validateRefs = (0, import_element285.useCallback)(() => {
       const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
       for (const ref of refs) {
         const input = ref.current;
@@ -86184,7 +86358,7 @@ var wp;
       }
       setCustomValidity(void 0);
     }, [inputRefs]);
-    (0, import_element284.useEffect)(() => {
+    (0, import_element285.useEffect)(() => {
       const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
       const result = validity ? getCustomValidity(isValid2, validity) : void 0;
       for (const ref of refs) {
@@ -86196,7 +86370,7 @@ var wp;
         }
       }
     }, [inputRefs, isValid2, validity]);
-    (0, import_element284.useEffect)(() => {
+    (0, import_element285.useEffect)(() => {
       const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
       const handleInvalid = (event) => {
         event.preventDefault();
@@ -86211,7 +86385,7 @@ var wp;
         }
       };
     }, [inputRefs, setIsTouched]);
-    (0, import_element284.useEffect)(() => {
+    (0, import_element285.useEffect)(() => {
       if (!isTouched) {
         return;
       }
@@ -86273,24 +86447,24 @@ var wp;
       format: fieldFormat
     } = field;
     const disabled2 = field.isDisabled({ item: data, field });
-    const [selectedPresetId, setSelectedPresetId] = (0, import_element284.useState)(
+    const [selectedPresetId, setSelectedPresetId] = (0, import_element285.useState)(
       null
     );
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
-    const [calendarMonth, setCalendarMonth] = (0, import_element284.useState)(() => {
+    const [calendarMonth, setCalendarMonth] = (0, import_element285.useState)(() => {
       const parsedDate = parseDate(value);
       return parsedDate || /* @__PURE__ */ new Date();
     });
-    const [isTouched, setIsTouched] = (0, import_element284.useState)(false);
-    const validityTargetRef = (0, import_element284.useRef)(null);
+    const [isTouched, setIsTouched] = (0, import_element285.useState)(false);
+    const validityTargetRef = (0, import_element285.useRef)(null);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
-    const onChangeCallback = (0, import_element284.useCallback)(
+    const onChangeCallback = (0, import_element285.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
-    const onSelectDate = (0, import_element284.useCallback)(
+    const onSelectDate = (0, import_element285.useCallback)(
       (newDate) => {
         const dateValue = newDate ? format(newDate, "yyyy-MM-dd") : void 0;
         onChangeCallback(dateValue);
@@ -86299,7 +86473,7 @@ var wp;
       },
       [onChangeCallback]
     );
-    const handlePresetClick = (0, import_element284.useCallback)(
+    const handlePresetClick = (0, import_element285.useCallback)(
       (preset) => {
         const presetDate = preset.getValue();
         const dateValue = formatDate(presetDate);
@@ -86310,7 +86484,7 @@ var wp;
       },
       [onChangeCallback]
     );
-    const handleManualDateChange = (0, import_element284.useCallback)(
+    const handleManualDateChange = (0, import_element285.useCallback)(
       (newValue) => {
         onChangeCallback(newValue);
         if (newValue) {
@@ -86451,7 +86625,7 @@ var wp;
     }
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
-    const onChangeCallback = (0, import_element284.useCallback)(
+    const onChangeCallback = (0, import_element285.useCallback)(
       (newValue) => {
         onChange(
           setValue({
@@ -86462,10 +86636,10 @@ var wp;
       },
       [data, onChange, setValue]
     );
-    const [selectedPresetId, setSelectedPresetId] = (0, import_element284.useState)(
+    const [selectedPresetId, setSelectedPresetId] = (0, import_element285.useState)(
       null
     );
-    const selectedRange = (0, import_element284.useMemo)(() => {
+    const selectedRange = (0, import_element285.useMemo)(() => {
       if (!value) {
         return { from: void 0, to: void 0 };
       }
@@ -86475,13 +86649,13 @@ var wp;
         to: parseDate(to2) || void 0
       };
     }, [value]);
-    const [calendarMonth, setCalendarMonth] = (0, import_element284.useState)(() => {
+    const [calendarMonth, setCalendarMonth] = (0, import_element285.useState)(() => {
       return selectedRange.from || /* @__PURE__ */ new Date();
     });
-    const [isTouched, setIsTouched] = (0, import_element284.useState)(false);
-    const fromInputRef = (0, import_element284.useRef)(null);
-    const toInputRef = (0, import_element284.useRef)(null);
-    const updateDateRange = (0, import_element284.useCallback)(
+    const [isTouched, setIsTouched] = (0, import_element285.useState)(false);
+    const fromInputRef = (0, import_element285.useRef)(null);
+    const toInputRef = (0, import_element285.useRef)(null);
+    const updateDateRange = (0, import_element285.useCallback)(
       (fromDate, toDate2) => {
         if (fromDate && toDate2) {
           onChangeCallback([
@@ -86494,7 +86668,7 @@ var wp;
       },
       [onChangeCallback]
     );
-    const onSelectCalendarRange = (0, import_element284.useCallback)(
+    const onSelectCalendarRange = (0, import_element285.useCallback)(
       (newRange) => {
         updateDateRange(newRange?.from, newRange?.to);
         setSelectedPresetId(null);
@@ -86502,7 +86676,7 @@ var wp;
       },
       [updateDateRange]
     );
-    const handlePresetClick = (0, import_element284.useCallback)(
+    const handlePresetClick = (0, import_element285.useCallback)(
       (preset) => {
         const [startDate, endDate] = preset.getValue();
         setCalendarMonth(startDate);
@@ -86512,7 +86686,7 @@ var wp;
       },
       [updateDateRange]
     );
-    const handleManualDateChange = (0, import_element284.useCallback)(
+    const handleManualDateChange = (0, import_element285.useCallback)(
       (fromOrTo, newValue) => {
         const [currentFrom, currentTo] = value || [
           void 0,
@@ -86708,9 +86882,9 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/select.mjs
   var import_components239 = __toESM(require_components(), 1);
-  var import_element285 = __toESM(require_element(), 1);
+  var import_element286 = __toESM(require_element(), 1);
   var import_jsx_runtime473 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedSelectControl } = unlock3(import_components239.privateApis);
+  var { ValidatedSelectControl } = unlock4(import_components239.privateApis);
   function Select({
     data,
     field,
@@ -86723,7 +86897,7 @@ var wp;
     const disabled2 = field.isDisabled({ item: data, field });
     const isMultiple = type === "array";
     const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
-    const onChangeControl = (0, import_element285.useCallback)(
+    const onChangeControl = (0, import_element286.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -86772,9 +86946,9 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.mjs
   var import_components240 = __toESM(require_components(), 1);
-  var import_element286 = __toESM(require_element(), 1);
+  var import_element287 = __toESM(require_element(), 1);
   var import_jsx_runtime475 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedInputControl: ValidatedInputControl3 } = unlock3(import_components240.privateApis);
+  var { ValidatedInputControl: ValidatedInputControl3 } = unlock4(import_components240.privateApis);
   function ValidatedText({
     data,
     field,
@@ -86789,7 +86963,7 @@ var wp;
     const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data });
     const disabled2 = field.isDisabled({ item: data, field });
-    const onChangeControl = (0, import_element286.useCallback)(
+    const onChangeControl = (0, import_element287.useCallback)(
       (newValue) => onChange(
         setValue({
           item: data,
@@ -86907,10 +87081,10 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
   var import_components244 = __toESM(require_components(), 1);
-  var import_element287 = __toESM(require_element(), 1);
+  var import_element288 = __toESM(require_element(), 1);
   var import_i18n222 = __toESM(require_i18n(), 1);
   var import_jsx_runtime479 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedNumberControl } = unlock3(import_components244.privateApis);
+  var { ValidatedNumberControl } = unlock4(import_components244.privateApis);
   function toNumberOrEmpty(value) {
     if (value === "" || value === void 0) {
       return "";
@@ -86925,11 +87099,11 @@ var wp;
     step
   }) {
     const [min2 = "", max2 = ""] = value;
-    const onChangeMin = (0, import_element287.useCallback)(
+    const onChangeMin = (0, import_element288.useCallback)(
       (newValue) => onChange([toNumberOrEmpty(newValue), max2]),
       [onChange, max2]
     );
-    const onChangeMax = (0, import_element287.useCallback)(
+    const onChangeMax = (0, import_element288.useCallback)(
       (newValue) => onChange([min2, toNumberOrEmpty(newValue)]),
       [onChange, min2]
     );
@@ -86978,7 +87152,7 @@ var wp;
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data }) ?? "";
     const disabled2 = field.isDisabled({ item: data, field });
-    const onChangeControl = (0, import_element287.useCallback)(
+    const onChangeControl = (0, import_element288.useCallback)(
       (newValue) => {
         onChange(
           setValue({
@@ -86992,7 +87166,7 @@ var wp;
       },
       [data, onChange, setValue]
     );
-    const onChangeBetweenControls = (0, import_element287.useCallback)(
+    const onChangeBetweenControls = (0, import_element288.useCallback)(
       (newValue) => {
         onChange(
           setValue({
@@ -87053,9 +87227,9 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/radio.mjs
   var import_components245 = __toESM(require_components(), 1);
-  var import_element288 = __toESM(require_element(), 1);
+  var import_element289 = __toESM(require_element(), 1);
   var import_jsx_runtime482 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedRadioControl } = unlock3(import_components245.privateApis);
+  var { ValidatedRadioControl } = unlock4(import_components245.privateApis);
   function Radio({
     data,
     field,
@@ -87071,7 +87245,7 @@ var wp;
       getElements: field.getElements
     });
     const value = getValue({ item: data });
-    const onChangeControl = (0, import_element288.useCallback)(
+    const onChangeControl = (0, import_element289.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -87096,7 +87270,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataform-controls/text.mjs
-  var import_element289 = __toESM(require_element(), 1);
+  var import_element290 = __toESM(require_element(), 1);
   var import_jsx_runtime483 = __toESM(require_jsx_runtime(), 1);
   function Text3({
     data,
@@ -87118,8 +87292,8 @@ var wp;
           hideLabelFromVision,
           markWhenOptional,
           validity,
-          prefix: prefix2 ? (0, import_element289.createElement)(prefix2) : void 0,
-          suffix: suffix ? (0, import_element289.createElement)(suffix) : void 0
+          prefix: prefix2 ? (0, import_element290.createElement)(prefix2) : void 0,
+          suffix: suffix ? (0, import_element290.createElement)(suffix) : void 0
         }
       }
     );
@@ -87127,9 +87301,9 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
   var import_components246 = __toESM(require_components(), 1);
-  var import_element290 = __toESM(require_element(), 1);
+  var import_element291 = __toESM(require_element(), 1);
   var import_jsx_runtime484 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedToggleControl } = unlock3(import_components246.privateApis);
+  var { ValidatedToggleControl } = unlock4(import_components246.privateApis);
   function Toggle({
     field,
     onChange,
@@ -87140,7 +87314,7 @@ var wp;
   }) {
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
-    const onChangeControl = (0, import_element290.useCallback)(() => {
+    const onChangeControl = (0, import_element291.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
       );
@@ -87163,9 +87337,9 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
   var import_components247 = __toESM(require_components(), 1);
-  var import_element291 = __toESM(require_element(), 1);
+  var import_element292 = __toESM(require_element(), 1);
   var import_jsx_runtime485 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedTextareaControl } = unlock3(import_components247.privateApis);
+  var { ValidatedTextareaControl } = unlock4(import_components247.privateApis);
   function Textarea({
     data,
     field,
@@ -87179,7 +87353,7 @@ var wp;
     const disabled2 = field.isDisabled({ item: data, field });
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data });
-    const onChangeControl = (0, import_element291.useCallback)(
+    const onChangeControl = (0, import_element292.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -87206,9 +87380,9 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
   var import_components248 = __toESM(require_components(), 1);
-  var import_element292 = __toESM(require_element(), 1);
+  var import_element293 = __toESM(require_element(), 1);
   var import_jsx_runtime486 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedToggleGroupControl } = unlock3(import_components248.privateApis);
+  var { ValidatedToggleGroupControl } = unlock4(import_components248.privateApis);
   function ToggleGroup({
     data,
     field,
@@ -87220,7 +87394,7 @@ var wp;
     const { getValue, setValue, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
     const value = getValue({ item: data });
-    const onChangeControl = (0, import_element292.useCallback)(
+    const onChangeControl = (0, import_element293.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -87262,9 +87436,9 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/array.mjs
   var import_components249 = __toESM(require_components(), 1);
-  var import_element293 = __toESM(require_element(), 1);
+  var import_element294 = __toESM(require_element(), 1);
   var import_jsx_runtime487 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedFormTokenField } = unlock3(import_components249.privateApis);
+  var { ValidatedFormTokenField } = unlock4(import_components249.privateApis);
   function ArrayControl({
     data,
     field,
@@ -87280,7 +87454,7 @@ var wp;
       elements: field.elements,
       getElements: field.getElements
     });
-    const arrayValueAsElements = (0, import_element293.useMemo)(
+    const arrayValueAsElements = (0, import_element294.useMemo)(
       () => Array.isArray(value) ? value.map((token) => {
         const element = elements?.find(
           (suggestion) => suggestion.value === token
@@ -87289,7 +87463,7 @@ var wp;
       }) : [],
       [value, elements]
     );
-    const onChangeControl = (0, import_element293.useCallback)(
+    const onChangeControl = (0, import_element294.useCallback)(
       (tokens) => {
         const valueTokens = tokens.map((token) => {
           if (typeof token === "object" && "value" in token) {
@@ -87353,10 +87527,10 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/color.mjs
   var import_components250 = __toESM(require_components(), 1);
-  var import_element294 = __toESM(require_element(), 1);
+  var import_element295 = __toESM(require_element(), 1);
   var import_i18n223 = __toESM(require_i18n(), 1);
   var import_jsx_runtime488 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedInputControl: ValidatedInputControl4 } = unlock3(import_components250.privateApis);
+  var { ValidatedInputControl: ValidatedInputControl4 } = unlock4(import_components250.privateApis);
   var ColorPickerDropdown = ({
     color,
     onColorChange,
@@ -87401,13 +87575,13 @@ var wp;
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
     const value = field.getValue({ item: data }) || "";
-    const handleColorChange = (0, import_element294.useCallback)(
+    const handleColorChange = (0, import_element295.useCallback)(
       (newColor) => {
         onChange(setValue({ item: data, value: newColor }));
       },
       [data, onChange, setValue]
     );
-    const handleInputChange = (0, import_element294.useCallback)(
+    const handleInputChange = (0, import_element295.useCallback)(
       (newValue) => {
         onChange(setValue({ item: data, value: newValue || "" }));
       },
@@ -87441,7 +87615,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/password.mjs
   var import_components251 = __toESM(require_components(), 1);
-  var import_element295 = __toESM(require_element(), 1);
+  var import_element296 = __toESM(require_element(), 1);
   var import_i18n224 = __toESM(require_i18n(), 1);
   var import_jsx_runtime489 = __toESM(require_jsx_runtime(), 1);
   function Password({
@@ -87452,9 +87626,9 @@ var wp;
     markWhenOptional,
     validity
   }) {
-    const [isVisible, setIsVisible] = (0, import_element295.useState)(false);
+    const [isVisible, setIsVisible] = (0, import_element296.useState)(false);
     const disabled2 = field.isDisabled({ item: data, field });
-    const toggleVisibility = (0, import_element295.useCallback)(() => {
+    const toggleVisibility = (0, import_element296.useCallback)(() => {
       setIsVisible((prev) => !prev);
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime489.jsx)(
@@ -88634,12 +88808,12 @@ var wp;
   }
 
   // packages/dataviews/build-module/dataform/index.mjs
-  var import_element307 = __toESM(require_element(), 1);
+  var import_element308 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-context/index.mjs
-  var import_element296 = __toESM(require_element(), 1);
+  var import_element297 = __toESM(require_element(), 1);
   var import_jsx_runtime493 = __toESM(require_jsx_runtime(), 1);
-  var DataFormContext = (0, import_element296.createContext)({
+  var DataFormContext = (0, import_element297.createContext)({
     fields: []
   });
   DataFormContext.displayName = "DataFormContext";
@@ -88652,10 +88826,10 @@ var wp;
   var dataform_context_default = DataFormContext;
 
   // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-  var import_element306 = __toESM(require_element(), 1);
+  var import_element307 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-  var import_element297 = __toESM(require_element(), 1);
+  var import_element298 = __toESM(require_element(), 1);
   var import_components252 = __toESM(require_components(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
@@ -88797,9 +88971,9 @@ var wp;
     markWhenOptional,
     validity
   }) {
-    const { fields } = (0, import_element297.useContext)(dataform_context_default);
+    const { fields } = (0, import_element298.useContext)(dataform_context_default);
     const layout = field.layout;
-    const form = (0, import_element297.useMemo)(
+    const form = (0, import_element298.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: !!field.children ? field.children : []
@@ -88892,14 +89066,14 @@ var wp;
   // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
   var import_deepmerge3 = __toESM(require_cjs(), 1);
   var import_components255 = __toESM(require_components(), 1);
-  var import_element302 = __toESM(require_element(), 1);
+  var import_element303 = __toESM(require_element(), 1);
   var import_compose106 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
   var import_components254 = __toESM(require_components(), 1);
   var import_i18n232 = __toESM(require_i18n(), 1);
   var import_compose105 = __toESM(require_compose(), 1);
-  var import_element298 = __toESM(require_element(), 1);
+  var import_element299 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
   function getLabelClassName(labelPosition, showError) {
@@ -89008,8 +89182,8 @@ var wp;
       (0, import_i18n232._x)("Edit %s", "field"),
       fieldLabel || ""
     );
-    const rowRef = (0, import_element298.useRef)(null);
-    const editButtonRef = (0, import_element298.useRef)(null);
+    const rowRef = (0, import_element299.useRef)(null);
+    const editButtonRef = (0, import_element299.useRef)(null);
     const handleRowClick = (event) => {
       if (!isOpen && event.detail < 2 && !editButtonRef.current?.contains(event.target) && rowRef.current?.ownerDocument.defaultView?.getSelection()?.toString()) {
         return;
@@ -89109,7 +89283,7 @@ var wp;
   // packages/dataviews/build-module/hooks/use-form-validity.mjs
   var import_deepmerge2 = __toESM(require_cjs(), 1);
   var import_es66 = __toESM(require_es6(), 1);
-  var import_element299 = __toESM(require_element(), 1);
+  var import_element300 = __toESM(require_element(), 1);
   var import_i18n233 = __toESM(require_i18n(), 1);
   function isFormValid(formValidity) {
     if (!formValidity) {
@@ -89531,11 +89705,11 @@ var wp;
     };
   }
   function useFormValidity(item, fields, form) {
-    const [formValidity, setFormValidity] = (0, import_element299.useState)();
-    const customCounterRef = (0, import_element299.useRef)({});
-    const elementsCounterRef = (0, import_element299.useRef)({});
-    const previousValuesRef = (0, import_element299.useRef)({});
-    const validate = (0, import_element299.useCallback)(() => {
+    const [formValidity, setFormValidity] = (0, import_element300.useState)();
+    const customCounterRef = (0, import_element300.useRef)({});
+    const elementsCounterRef = (0, import_element300.useRef)({});
+    const previousValuesRef = (0, import_element300.useRef)({});
+    const validate = (0, import_element300.useCallback)(() => {
       const promiseHandler = {
         customCounterRef,
         elementsCounterRef,
@@ -89593,7 +89767,7 @@ var wp;
         return validity;
       });
     }, [item, fields, form]);
-    (0, import_element299.useEffect)(() => {
+    (0, import_element300.useEffect)(() => {
       validate();
     }, [validate]);
     return {
@@ -89604,9 +89778,9 @@ var wp;
   var use_form_validity_default = useFormValidity;
 
   // packages/dataviews/build-module/hooks/use-report-validity.mjs
-  var import_element300 = __toESM(require_element(), 1);
+  var import_element301 = __toESM(require_element(), 1);
   function useReportValidity(ref, shouldReport) {
-    (0, import_element300.useEffect)(() => {
+    (0, import_element301.useEffect)(() => {
       if (shouldReport && ref.current) {
         const inputs = ref.current.querySelectorAll(
           "input, textarea, select"
@@ -89619,7 +89793,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
-  var import_element301 = __toESM(require_element(), 1);
+  var import_element302 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
   function extractSummaryIds(summary) {
@@ -89660,7 +89834,7 @@ var wp;
     return fieldDefinition;
   };
   function useFieldFromFormField(field) {
-    const { fields } = (0, import_element301.useContext)(dataform_context_default);
+    const { fields } = (0, import_element302.useContext)(dataform_context_default);
     const layout = field.layout;
     const summaryFields = getSummaryFields(layout.summary, fields);
     const fieldDefinition = getFieldDefinition(field, fields);
@@ -89692,14 +89866,14 @@ var wp;
   }) {
     const { openAs } = field.layout;
     const { applyLabel, cancelLabel } = openAs;
-    const { fields } = (0, import_element302.useContext)(dataform_context_default);
-    const [changes, setChanges] = (0, import_element302.useState)({});
-    const modalData = (0, import_element302.useMemo)(() => {
+    const { fields } = (0, import_element303.useContext)(dataform_context_default);
+    const [changes, setChanges] = (0, import_element303.useState)({});
+    const modalData = (0, import_element303.useMemo)(() => {
       return (0, import_deepmerge3.default)(data, changes, {
         arrayMerge: (target, source) => source
       });
     }, [data, changes]);
-    const form = (0, import_element302.useMemo)(
+    const form = (0, import_element303.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: !!field.children ? field.children : (
@@ -89735,7 +89909,7 @@ var wp;
       );
     };
     const focusOnMountRef = (0, import_compose106.useFocusOnMount)("firstInputElement");
-    const contentRef = (0, import_element302.useRef)(null);
+    const contentRef = (0, import_element303.useRef)(null);
     const mergedRef = (0, import_compose106.useMergeRefs)([focusOnMountRef, contentRef]);
     useReportValidity(contentRef, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime497.jsxs)(
@@ -89807,8 +89981,8 @@ var wp;
     onChange,
     validity
   }) {
-    const [touched, setTouched] = (0, import_element302.useState)(false);
-    const [isOpen, setIsOpen] = (0, import_element302.useState)(false);
+    const [touched, setTouched] = (0, import_element303.useState)(false);
+    const [isOpen, setIsOpen] = (0, import_element303.useState)(false);
     const { fieldDefinition, fieldLabel, summaryFields } = use_field_from_form_field_default(field);
     if (!fieldDefinition) {
       return null;
@@ -89850,7 +90024,7 @@ var wp;
   // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
   var import_components256 = __toESM(require_components(), 1);
   var import_i18n234 = __toESM(require_i18n(), 1);
-  var import_element303 = __toESM(require_element(), 1);
+  var import_element304 = __toESM(require_element(), 1);
   var import_compose107 = __toESM(require_compose(), 1);
   var import_jsx_runtime498 = __toESM(require_jsx_runtime(), 1);
   function DropdownHeader({
@@ -89883,7 +90057,7 @@ var wp;
     touched,
     children
   }) {
-    const ref = (0, import_element303.useRef)(null);
+    const ref = (0, import_element304.useRef)(null);
     useReportValidity(ref, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("div", { ref, children });
   }
@@ -89893,11 +90067,11 @@ var wp;
     onChange,
     validity
   }) {
-    const [touched, setTouched] = (0, import_element303.useState)(false);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element303.useState)(
+    const [touched, setTouched] = (0, import_element304.useState)(false);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element304.useState)(
       null
     );
-    const popoverProps3 = (0, import_element303.useMemo)(
+    const popoverProps3 = (0, import_element304.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -89911,7 +90085,7 @@ var wp;
     const [dialogRef, dialogProps] = (0, import_compose107.__experimentalUseDialog)({
       focusOnMount: "firstInputElement"
     });
-    const form = (0, import_element303.useMemo)(
+    const form = (0, import_element304.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: !!field.children ? field.children : (
@@ -89921,7 +90095,7 @@ var wp;
       }),
       [field]
     );
-    const formValidity = (0, import_element303.useMemo)(() => {
+    const formValidity = (0, import_element304.useMemo)(() => {
       if (validity === void 0) {
         return void 0;
       }
@@ -90033,7 +90207,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-  var import_element304 = __toESM(require_element(), 1);
+  var import_element305 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
   var import_i18n235 = __toESM(require_i18n(), 1);
@@ -90190,10 +90364,10 @@ var wp;
     markWhenOptional,
     validity
   }) {
-    const { fields } = (0, import_element304.useContext)(dataform_context_default);
+    const { fields } = (0, import_element305.useContext)(dataform_context_default);
     const layout = field.layout;
-    const contentRef = (0, import_element304.useRef)(null);
-    const form = (0, import_element304.useMemo)(
+    const contentRef = (0, import_element305.useRef)(null);
+    const form = (0, import_element305.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: field.children ?? []
@@ -90201,18 +90375,18 @@ var wp;
       [field]
     );
     const { isOpened, isCollapsible } = layout;
-    const [isOpen, setIsOpen] = (0, import_element304.useState)(isOpened);
-    const [touched, setTouched] = (0, import_element304.useState)(false);
-    (0, import_element304.useEffect)(() => {
+    const [isOpen, setIsOpen] = (0, import_element305.useState)(isOpened);
+    const [touched, setTouched] = (0, import_element305.useState)(false);
+    (0, import_element305.useEffect)(() => {
       setIsOpen(isOpened);
     }, [isOpened]);
-    const handleOpenChange = (0, import_element304.useCallback)((open) => {
+    const handleOpenChange = (0, import_element305.useCallback)((open) => {
       if (!open) {
         setTouched(true);
       }
       setIsOpen(open);
     }, []);
-    const handleBlur = (0, import_element304.useCallback)(() => {
+    const handleBlur = (0, import_element305.useCallback)(() => {
       setTouched(true);
     }, []);
     useReportValidity(
@@ -90364,7 +90538,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
-  var import_element305 = __toESM(require_element(), 1);
+  var import_element306 = __toESM(require_element(), 1);
   var import_i18n236 = __toESM(require_i18n(), 1);
   var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
   function FormDetailsField({
@@ -90373,19 +90547,19 @@ var wp;
     onChange,
     validity
   }) {
-    const { fields } = (0, import_element305.useContext)(dataform_context_default);
-    const detailsRef = (0, import_element305.useRef)(null);
-    const contentRef = (0, import_element305.useRef)(null);
-    const [touched, setTouched] = (0, import_element305.useState)(false);
-    const [isOpen, setIsOpen] = (0, import_element305.useState)(false);
-    const form = (0, import_element305.useMemo)(
+    const { fields } = (0, import_element306.useContext)(dataform_context_default);
+    const detailsRef = (0, import_element306.useRef)(null);
+    const contentRef = (0, import_element306.useRef)(null);
+    const [touched, setTouched] = (0, import_element306.useState)(false);
+    const [isOpen, setIsOpen] = (0, import_element306.useState)(false);
+    const form = (0, import_element306.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: field.children ?? []
       }),
       [field]
     );
-    (0, import_element305.useEffect)(() => {
+    (0, import_element306.useEffect)(() => {
       const details = detailsRef.current;
       if (!details) {
         return;
@@ -90403,7 +90577,7 @@ var wp;
       };
     }, []);
     useReportValidity(contentRef, isOpen && touched);
-    const handleBlur = (0, import_element305.useCallback)(() => {
+    const handleBlur = (0, import_element306.useCallback)(() => {
       setTouched(true);
     }, []);
     if (!field.children) {
@@ -90544,8 +90718,8 @@ var wp;
     children,
     as
   }) {
-    const { fields: fieldDefinitions } = (0, import_element306.useContext)(dataform_context_default);
-    const markWhenOptional = (0, import_element306.useMemo)(() => {
+    const { fields: fieldDefinitions } = (0, import_element307.useContext)(dataform_context_default);
+    const markWhenOptional = (0, import_element307.useMemo)(() => {
       const requiredCount = fieldDefinitions.filter(
         (f2) => !!f2.isValid?.required
       ).length;
@@ -90598,8 +90772,8 @@ var wp;
     onChange,
     validity
   }) {
-    const normalizedForm = (0, import_element307.useMemo)(() => normalize_form_default(form), [form]);
-    const normalizedFields = (0, import_element307.useMemo)(
+    const normalizedForm = (0, import_element308.useMemo)(() => normalize_form_default(form), [form]);
+    const normalizedFields = (0, import_element308.useMemo)(
       () => normalizeFields(fields),
       [fields]
     );
@@ -90618,7 +90792,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/block-fields/index.mjs
-  var import_element311 = __toESM(require_element(), 1);
+  var import_element312 = __toESM(require_element(), 1);
   var import_i18n240 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/hooks/block-fields/fields-dropdown-menu.mjs
@@ -90681,7 +90855,7 @@ var wp;
   var import_components259 = __toESM(require_components(), 1);
   var import_compose109 = __toESM(require_compose(), 1);
   var import_data181 = __toESM(require_data(), 1);
-  var import_element308 = __toESM(require_element(), 1);
+  var import_element309 = __toESM(require_element(), 1);
   var import_rich_text17 = __toESM(require_rich_text(), 1);
   var import_jsx_runtime508 = __toESM(require_jsx_runtime(), 1);
   var { useRichText: useRichText2, KeyboardShortcutContext: KeyboardShortcutContext2, InputEventContext: InputEventContext2 } = unlock(import_rich_text17.privateApis);
@@ -90696,14 +90870,14 @@ var wp;
     const attrValue = field.getValue({ item: data });
     const fieldConfig = field.config || {};
     const { clientId } = config2;
-    const [selection2, setSelection] = (0, import_element308.useState)({
+    const [selection2, setSelection] = (0, import_element309.useState)({
       start: void 0,
       end: void 0
     });
-    const [isSelected, setIsSelected] = (0, import_element308.useState)(false);
-    const anchorRef = (0, import_element308.useRef)();
-    const inputEvents = (0, import_element308.useRef)(/* @__PURE__ */ new Set());
-    const keyboardShortcuts = (0, import_element308.useRef)(/* @__PURE__ */ new Set());
+    const [isSelected, setIsSelected] = (0, import_element309.useState)(false);
+    const anchorRef = (0, import_element309.useRef)();
+    const inputEvents = (0, import_element309.useRef)(/* @__PURE__ */ new Set());
+    const keyboardShortcuts = (0, import_element309.useRef)(/* @__PURE__ */ new Set());
     const adjustedAllowedFormats = getAllowedFormats({
       allowedFormats: fieldConfig?.allowedFormats,
       disableFormats: fieldConfig?.disableFormats
@@ -90731,7 +90905,7 @@ var wp;
       __unstableDisableFormats: fieldConfig?.disableFormats,
       allowedFormats: adjustedAllowedFormats,
       withoutInteractiveFormatting: fieldConfig?.withoutInteractiveFormatting,
-      __unstableFormatTypeHandlerContext: (0, import_element308.useMemo)(
+      __unstableFormatTypeHandlerContext: (0, import_element309.useMemo)(
         () => ({ richTextIdentifier: field.id, blockClientId: clientId }),
         [field.id, clientId]
       )
@@ -90789,7 +90963,7 @@ var wp;
   var import_components260 = __toESM(require_components(), 1);
   var import_data182 = __toESM(require_data(), 1);
   var import_dom68 = __toESM(require_dom(), 1);
-  var import_element309 = __toESM(require_element(), 1);
+  var import_element310 = __toESM(require_element(), 1);
   var import_i18n238 = __toESM(require_i18n(), 1);
   var import_jsx_runtime509 = __toESM(require_jsx_runtime(), 1);
   var focusToggleButton2 = (containerRef) => {
@@ -90880,7 +91054,7 @@ var wp;
     } else {
       chooseItemLabel = (0, import_i18n238.__)("Media");
     }
-    const containerRef = (0, import_element309.useRef)();
+    const containerRef = (0, import_element310.useRef)();
     return /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(check_default2, { children: /* @__PURE__ */ (0, import_jsx_runtime509.jsxs)(
       "div",
       {
@@ -91009,7 +91183,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/block-fields/link/index.mjs
   var import_components261 = __toESM(require_components(), 1);
-  var import_element310 = __toESM(require_element(), 1);
+  var import_element311 = __toESM(require_element(), 1);
   var import_i18n239 = __toESM(require_i18n(), 1);
   var import_url14 = __toESM(require_url(), 1);
   var import_jsx_runtime510 = __toESM(require_jsx_runtime(), 1);
@@ -91044,7 +91218,7 @@ var wp;
     };
   }
   function Link({ data, field, onChange }) {
-    const [isLinkControlOpen, setIsLinkControlOpen] = (0, import_element310.useState)(false);
+    const [isLinkControlOpen, setIsLinkControlOpen] = (0, import_element311.useState)(false);
     const { popoverProps: popoverProps3 } = useInspectorPopoverPlacement2({
       isControl: true
     });
@@ -91054,7 +91228,7 @@ var wp;
     const target = value?.linkTarget;
     const opensInNewTab = target === NEW_TAB_TARGET;
     const nofollow = rel === NOFOLLOW_REL;
-    const linkValue = (0, import_element310.useMemo)(
+    const linkValue = (0, import_element311.useMemo)(
       () => ({ url, opensInNewTab, nofollow }),
       [url, opensInNewTab, nofollow]
     );
@@ -91153,7 +91327,7 @@ var wp;
     });
     const blockInformation = useBlockDisplayInformation(clientId);
     const blockTypeFields = blockType?.[fieldsKey];
-    const blockContext = (0, import_element311.useContext)(block_context_default);
+    const blockContext = (0, import_element312.useContext)(block_context_default);
     const attributes = (0, import_data183.useSelect)(
       (select3) => {
         const _attributes = select3(store).getBlockAttributes(clientId);
@@ -91194,7 +91368,7 @@ var wp;
       toggleBlockHighlight2,
       50
     );
-    const computedForm = (0, import_element311.useMemo)(() => {
+    const computedForm = (0, import_element312.useMemo)(() => {
       if (!isMultiBlock) {
         return blockType?.[formKey];
       }
@@ -91203,8 +91377,8 @@ var wp;
         fields: [blockType?.[formKey]?.fields?.[0]]
       };
     }, [blockType, isMultiBlock]);
-    const [form, setForm] = (0, import_element311.useState)(computedForm);
-    const dataFormFields = (0, import_element311.useMemo)(() => {
+    const [form, setForm] = (0, import_element312.useState)(computedForm);
+    const dataFormFields = (0, import_element312.useMemo)(() => {
       if (!blockTypeFields?.length) {
         return [];
       }
@@ -91295,7 +91469,7 @@ var wp;
     return !!(window?.__experimentalContentOnlyInspectorFields && (0, import_blocks111.getBlockType)(blockName)?.[fieldsKey]);
   }
   function BlockFieldsPanel(props) {
-    const { blockType, isSelectionWithinCurrentSection } = (0, import_element311.useContext)(PrivateBlockContext);
+    const { blockType, isSelectionWithinCurrentSection } = (0, import_element312.useContext)(PrivateBlockContext);
     return /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(InspectorControlsFill, { group: "content", children: /* @__PURE__ */ (0, import_jsx_runtime511.jsx)(
       BlockFields,
       {
@@ -91426,7 +91600,7 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/style.mjs
-  var import_element314 = __toESM(require_element(), 1);
+  var import_element315 = __toESM(require_element(), 1);
   var import_hooks28 = __toESM(require_hooks(), 1);
   var import_data185 = __toESM(require_data(), 1);
   var import_blocks116 = __toESM(require_blocks(), 1);
@@ -91434,26 +91608,26 @@ var wp;
   var import_style_engine4 = __toESM(require_style_engine(), 1);
 
   // packages/block-editor/build-module/hooks/dimensions.mjs
-  var import_element313 = __toESM(require_element(), 1);
+  var import_element314 = __toESM(require_element(), 1);
   var import_data184 = __toESM(require_data(), 1);
   var import_blocks114 = __toESM(require_blocks(), 1);
   var import_deprecated34 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/hooks/spacing-visualizer.mjs
-  var import_element312 = __toESM(require_element(), 1);
+  var import_element313 = __toESM(require_element(), 1);
   var import_is_shallow_equal4 = __toESM(require_is_shallow_equal(), 1);
   var import_jsx_runtime513 = __toESM(require_jsx_runtime(), 1);
   function SpacingVisualizer({ clientId, value, computeStyle, forceShow }) {
     const blockElement = useBlockElement(clientId);
-    const [style, updateStyle] = (0, import_element312.useReducer)(
+    const [style, updateStyle] = (0, import_element313.useReducer)(
       () => computeStyle(blockElement)
     );
-    (0, import_element312.useEffect)(() => {
+    (0, import_element313.useEffect)(() => {
       if (blockElement && forceShow) {
         updateStyle();
       }
     }, [blockElement, forceShow]);
-    (0, import_element312.useEffect)(() => {
+    (0, import_element313.useEffect)(() => {
       if (!blockElement) {
         return;
       }
@@ -91466,9 +91640,9 @@ var wp;
         observer.disconnect();
       };
     }, [blockElement]);
-    const previousValueRef = (0, import_element312.useRef)(value);
-    const [isActive, setIsActive] = (0, import_element312.useState)(false);
-    (0, import_element312.useEffect)(() => {
+    const previousValueRef = (0, import_element313.useRef)(value);
+    const [isActive, setIsActive] = (0, import_element313.useState)(false);
+    (0, import_element313.useEffect)(() => {
       if ((0, import_is_shallow_equal4.isShallowEqual)(value, previousValueRef.current) || forceShow) {
         return;
       }
@@ -91551,11 +91725,11 @@ var wp;
   var DIMENSIONS_SUPPORT_KEY = "dimensions";
   var SPACING_SUPPORT_KEY2 = "spacing";
   function useVisualizer() {
-    const [property, setProperty] = (0, import_element313.useState)(false);
+    const [property, setProperty] = (0, import_element314.useState)(false);
     const { hideBlockInterface: hideBlockInterface2, showBlockInterface: showBlockInterface2 } = unlock(
       (0, import_data184.useDispatch)(store)
     );
-    (0, import_element313.useEffect)(() => {
+    (0, import_element314.useEffect)(() => {
       if (!property) {
         showBlockInterface2();
       } else {
@@ -91565,7 +91739,7 @@ var wp;
     return [property, setProperty];
   }
   function DimensionsInspectorControl({ children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element313.useCallback)(
+    const attributesResetAllFilter = (0, import_element314.useCallback)(
       (attributes) => {
         const existingStyle = attributes.style;
         const updatedStyle = resetAllFilter(existingStyle);
@@ -91740,11 +91914,8 @@ var wp;
 
   // packages/block-editor/build-module/hooks/style.mjs
   var import_jsx_runtime515 = __toESM(require_jsx_runtime(), 1);
+  var { getResponsiveMediaQueries: getResponsiveMediaQueries2 } = unlock(privateApis);
   var BORDER_SIDES = ["Top", "Right", "Bottom", "Left"];
-  var RESPONSIVE_BREAKPOINTS2 = {
-    "@mobile": "@media (width <= 480px)",
-    "@tablet": "@media (480px < width <= 782px)"
-  };
   var styleSupportKeys2 = [
     ...TYPOGRAPHY_SUPPORT_KEYS2,
     BORDER_SUPPORT_KEY2,
@@ -91937,11 +92108,12 @@ var wp;
     });
     return cssRules;
   }
-  function getResponsiveStateCSSRules(style, name, baseSelector) {
+  function getResponsiveStateCSSRules(style, name, baseSelector, viewportSettings) {
     const cssRules = [];
     const validPseudoStates = VALID_BLOCK_PSEUDO_STATES[name] ?? [];
     const nestedStateKeys = ["elements", ...validPseudoStates];
-    Object.entries(RESPONSIVE_BREAKPOINTS2).forEach(
+    const responsiveMediaQueries = getResponsiveMediaQueries2(viewportSettings);
+    Object.entries(responsiveMediaQueries).forEach(
       ([viewport, mediaQuery]) => {
         const viewportStyles = getStyleForState(style, {
           viewport,
@@ -92117,7 +92289,7 @@ var wp;
       [clientId, name]
     );
     const isPseudoSelectorState = hasPseudoBlockStyleState(selectedState);
-    const canvasStateCSS = (0, import_element314.useMemo)(() => {
+    const canvasStateCSS = (0, import_element315.useMemo)(() => {
       if (!showStateOnCanvas || !isPseudoSelectorState) {
         return void 0;
       }
@@ -92214,7 +92386,7 @@ var wp;
       }
       const elementStyles = blockElementStyles?.[elementType];
       if (elementStyles) {
-        const selector3 = scopeSelector(
+        const selector3 = scopeSelector2(
           baseSelector,
           import_blocks116.__EXPERIMENTAL_ELEMENTS[elementType]
         );
@@ -92224,7 +92396,7 @@ var wp;
             if (elementStyles[pseudoSelector]) {
               rules.push(
                 (0, import_style_engine4.compileCSS)(elementStyles[pseudoSelector], {
-                  selector: scopeSelector(
+                  selector: scopeSelector2(
                     baseSelector,
                     `${import_blocks116.__EXPERIMENTAL_ELEMENTS[elementType]}${pseudoSelector}`
                   )
@@ -92239,7 +92411,7 @@ var wp;
           if (blockElementStyles[element]) {
             rules.push(
               (0, import_style_engine4.compileCSS)(blockElementStyles[element], {
-                selector: scopeSelector(
+                selector: scopeSelector2(
                   baseSelector,
                   import_blocks116.__EXPERIMENTAL_ELEMENTS[element]
                 )
@@ -92258,7 +92430,8 @@ var wp;
     );
     const baseElementSelector = `.${blockElementsContainerIdentifier}`;
     const blockElementStyles = style?.elements;
-    const styles = (0, import_element314.useMemo)(() => {
+    const [viewportSettings] = useSettings("viewport");
+    const styles = (0, import_element315.useMemo)(() => {
       const cssRules = [];
       const elementCSS = getElementCSSRules(
         blockElementStyles,
@@ -92272,10 +92445,21 @@ var wp;
         ...getPseudoStateCSSRules(style, name, baseElementSelector)
       );
       cssRules.push(
-        ...getResponsiveStateCSSRules(style, name, baseElementSelector)
+        ...getResponsiveStateCSSRules(
+          style,
+          name,
+          baseElementSelector,
+          viewportSettings
+        )
       );
       return cssRules.length > 0 ? cssRules.join("") : void 0;
-    }, [baseElementSelector, blockElementStyles, name, style]);
+    }, [
+      baseElementSelector,
+      blockElementStyles,
+      name,
+      style,
+      viewportSettings
+    ]);
     useStyleOverride({ css: styles });
     return addSaveProps9(
       { className: blockElementsContainerIdentifier },
@@ -92318,7 +92502,7 @@ var wp;
   var import_blocks118 = __toESM(require_blocks(), 1);
   var import_compose112 = __toESM(require_compose(), 1);
   var import_hooks30 = __toESM(require_hooks(), 1);
-  var import_element315 = __toESM(require_element(), 1);
+  var import_element316 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/duotone/utils.mjs
   function getValuesFromColors(colors2 = []) {
@@ -92384,7 +92568,7 @@ var wp;
       `${presetSetting}.theme`,
       `${presetSetting}.default`
     );
-    return (0, import_element315.useMemo)(
+    return (0, import_element316.useMemo)(
       () => [
         ...userPresets || EMPTY_ARRAY17,
         ...themePresets || EMPTY_ARRAY17,
@@ -92550,7 +92734,7 @@ var wp;
       } : void 0
     );
     const blockElement = useBlockElement(clientId);
-    (0, import_element315.useEffect)(() => {
+    (0, import_element316.useEffect)(() => {
       if (!isValidFilter) {
         return;
       }
@@ -92565,7 +92749,7 @@ var wp;
   var DUOTONE_BLOCK_PROPS_REFERENCE = {};
   function useBlockProps14({ clientId, name, style }) {
     const id = (0, import_compose112.useInstanceId)(DUOTONE_BLOCK_PROPS_REFERENCE);
-    const selector3 = (0, import_element315.useMemo)(() => {
+    const selector3 = (0, import_element316.useMemo)(() => {
       const blockType = (0, import_blocks118.getBlockType)(name);
       if (blockType) {
         const duotoneSupport = (0, import_blocks118.getBlockSupport)(
@@ -92583,7 +92767,7 @@ var wp;
         );
         if (experimentalDuotone) {
           const rootSelector = getBlockSelector(blockType);
-          return typeof experimentalDuotone === "string" ? scopeSelector(rootSelector, experimentalDuotone) : rootSelector;
+          return typeof experimentalDuotone === "string" ? scopeSelector2(rootSelector, experimentalDuotone) : rootSelector;
         }
         return getBlockSelector(blockType, "filter.duotone", {
           fallback: true
@@ -92610,7 +92794,7 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/custom-css.mjs
-  var import_element316 = __toESM(require_element(), 1);
+  var import_element317 = __toESM(require_element(), 1);
   var import_data186 = __toESM(require_data(), 1);
   var import_compose113 = __toESM(require_compose(), 1);
   var import_blocks119 = __toESM(require_blocks(), 1);
@@ -92681,7 +92865,7 @@ var wp;
     );
     const { createWarningNotice } = (0, import_data186.useDispatch)(import_notices13.store);
     const hasCustomCSS = !!customCSS?.trim();
-    (0, import_element316.useEffect)(() => {
+    (0, import_element317.useEffect)(() => {
       if (!canEditCSS && hasCustomCSS) {
         createWarningNotice(
           (0, import_i18n242.__)(
@@ -92699,7 +92883,7 @@ var wp;
       "wp-custom-css"
     );
     const customCSSSelector = `.${customCSSIdentifier}`;
-    const transformedCSS = (0, import_element316.useMemo)(() => {
+    const transformedCSS = (0, import_element317.useMemo)(() => {
       if (!isValidCSS) {
         return void 0;
       }
@@ -92739,7 +92923,7 @@ var wp;
   // packages/block-editor/build-module/hooks/layout.mjs
   var import_compose114 = __toESM(require_compose(), 1);
   var import_hooks31 = __toESM(require_hooks(), 1);
-  var import_element317 = __toESM(require_element(), 1);
+  var import_element318 = __toESM(require_element(), 1);
   var import_blocks120 = __toESM(require_blocks(), 1);
   var import_data187 = __toESM(require_data(), 1);
   var import_components266 = __toESM(require_components(), 1);
@@ -92747,10 +92931,6 @@ var wp;
   var import_jsx_runtime518 = __toESM(require_jsx_runtime(), 1);
   var VARIATION_PREFIX2 = "is-style-";
   var layoutBlockSupportKey = "layout";
-  var RESPONSIVE_BREAKPOINTS3 = {
-    "@mobile": "@media (width <= 480px)",
-    "@tablet": "@media (480px < width <= 782px)"
-  };
   var CHILD_LAYOUT_KEYS = [
     "selfStretch",
     "flexSize",
@@ -92760,6 +92940,7 @@ var wp;
     "rowSpan"
   ];
   var { kebabCase: kebabCase6 } = unlock(import_components266.privateApis);
+  var { getResponsiveMediaQueries: getResponsiveMediaQueries3 } = unlock(privateApis);
   function getDefaultLayout(layoutBlockSupport = {}, blockVariation) {
     const defaultBlockLayout = layoutBlockSupport?.default;
     return blockVariation?.attributes?.layout ?? defaultBlockLayout;
@@ -92802,8 +92983,8 @@ var wp;
     const { default: defaultBlockLayout } = (0, import_blocks120.getBlockSupport)(blockName, layoutBlockSupportKey) || {};
     const usedLayout = layout?.inherit || layout?.contentSize || layout?.wideSize ? { ...layout, type: "constrained" } : layout || defaultBlockLayout || {};
     const layoutClassnames = [];
-    if (LAYOUT_DEFINITIONS[usedLayout?.type || "default"]?.className) {
-      const baseClassName = LAYOUT_DEFINITIONS[usedLayout?.type || "default"]?.className;
+    if (LAYOUT_DEFINITIONS2[usedLayout?.type || "default"]?.className) {
+      const baseClassName = LAYOUT_DEFINITIONS2[usedLayout?.type || "default"]?.className;
       const splitBlockName = blockName.split("/");
       const fullBlockName = splitBlockName[0] === "core" ? splitBlockName.pop() : splitBlockName.join("-");
       const compoundClassName = `wp-block-${fullBlockName}-${baseClassName}`;
@@ -92856,9 +93037,10 @@ var wp;
     selector: selector3,
     layout = {},
     hasBlockGapSupport,
-    globalBlockGapValue
+    globalBlockGapValue,
+    viewportSettings
   }) {
-    return Object.entries(RESPONSIVE_BREAKPOINTS3).map(([viewport, mediaQuery]) => {
+    return Object.entries(getResponsiveMediaQueries3(viewportSettings)).map(([viewport, mediaQuery]) => {
       const viewportStyle = getStyleForState(attributes?.style, {
         viewport,
         pseudo: DEFAULT_BLOCK_STYLE_STATE2.pseudo
@@ -92915,7 +93097,7 @@ var wp;
     );
     const blockEditingMode = useBlockEditingMode();
     const isViewportLayoutState = hasViewportBlockStyleState(selectedState) && !hasPseudoBlockStyleState(selectedState);
-    const resetLayoutFilter = (0, import_element317.useCallback)(
+    const resetLayoutFilter = (0, import_element318.useCallback)(
       (...resetArgs) => {
         const attributes = resetArgs[0] || {};
         const context = resetArgs[1] || {};
@@ -93163,6 +93345,7 @@ var wp;
     props,
     blockGapSupport,
     globalBlockGapValue,
+    viewportSettings,
     layoutClasses
   }) {
     const { name, attributes } = props;
@@ -93188,7 +93371,8 @@ var wp;
       selector: selector3,
       layout: usedLayout,
       hasBlockGapSupport,
-      globalBlockGapValue
+      globalBlockGapValue,
+      viewportSettings
     });
     const css = [baseLayoutCSS, responsiveLayoutCSS].filter(Boolean).join("");
     const layoutClassNames = clsx_default(
@@ -93242,7 +93426,11 @@ var wp;
             variationBlockGapValue = variationName ? globalStyles?.blocks?.[name]?.variations?.[variationName]?.spacing?.blockGap : void 0;
           }
           const globalBlockGapValue = variationBlockGapValue ?? globalStyles?.blocks?.[name]?.spacing?.blockGap ?? globalStyles?.spacing?.blockGap;
-          return { blockGapSupport, globalBlockGapValue };
+          return {
+            blockGapSupport,
+            globalBlockGapValue,
+            viewportSettings: settings2?.__experimentalFeatures?.viewport
+          };
         },
         [blockSupportsLayout, clientId, attributes?.className, name]
       );
@@ -93281,10 +93469,10 @@ var wp;
   // packages/block-editor/build-module/hooks/layout-child.mjs
   var import_compose118 = __toESM(require_compose(), 1);
   var import_data191 = __toESM(require_data(), 1);
-  var import_element321 = __toESM(require_element(), 1);
+  var import_element322 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/grid/grid-visualizer.mjs
-  var import_element318 = __toESM(require_element(), 1);
+  var import_element319 = __toESM(require_element(), 1);
   var import_data188 = __toESM(require_data(), 1);
   var import_compose115 = __toESM(require_compose(), 1);
 
@@ -93455,20 +93643,20 @@ var wp;
       }
     );
   }
-  var GridVisualizerGrid = (0, import_element318.forwardRef)(
+  var GridVisualizerGrid = (0, import_element319.forwardRef)(
     ({ gridClientId, gridElement, isManualGrid, childGridClientId }, ref) => {
-      const [gridInfo, setGridInfo] = (0, import_element318.useState)(
+      const [gridInfo, setGridInfo] = (0, import_element319.useState)(
         () => getGridInfo(gridElement)
       );
-      const [isDroppingAllowed, setIsDroppingAllowed] = (0, import_element318.useState)(false);
+      const [isDroppingAllowed, setIsDroppingAllowed] = (0, import_element319.useState)(false);
       const childGridElement = useBlockElement(childGridClientId);
-      const childGridRect = (0, import_element318.useMemo)(() => {
+      const childGridRect = (0, import_element319.useMemo)(() => {
         if (!childGridElement) {
           return null;
         }
         return getGridItemRect(childGridElement);
       }, [childGridElement]);
-      (0, import_element318.useEffect)(() => {
+      (0, import_element319.useEffect)(() => {
         const resizeCallback = () => setGridInfo(getGridInfo(gridElement));
         const borderBoxSpy = new window.ResizeObserver(resizeCallback);
         borderBoxSpy.observe(gridElement, { box: "border-box" });
@@ -93482,7 +93670,7 @@ var wp;
           contentBoxSpy.disconnect();
         };
       }, [gridElement]);
-      (0, import_element318.useEffect)(() => {
+      (0, import_element319.useEffect)(() => {
         function onGlobalDrag() {
           setIsDroppingAllowed(true);
         }
@@ -93548,7 +93736,7 @@ var wp;
     );
   }
   function ManualGridVisualizer({ gridClientId, gridInfo, childGridRect }) {
-    const [highlightedRect, setHighlightedRect] = (0, import_element318.useState)(null);
+    const [highlightedRect, setHighlightedRect] = (0, import_element319.useState)(null);
     const gridItemStyles = (0, import_data188.useSelect)(
       (select3) => {
         const { getBlockOrder: getBlockOrder2, getBlockStyles: getBlockStyles2 } = unlock(
@@ -93559,7 +93747,7 @@ var wp;
       },
       [gridClientId]
     );
-    const occupiedRects = (0, import_element318.useMemo)(() => {
+    const occupiedRects = (0, import_element319.useMemo)(() => {
       const rects = [];
       for (const style of Object.values(gridItemStyles)) {
         const {
@@ -93816,7 +94004,7 @@ var wp;
 
   // packages/block-editor/build-module/components/grid/grid-item-resizer.mjs
   var import_components268 = __toESM(require_components(), 1);
-  var import_element319 = __toESM(require_element(), 1);
+  var import_element320 = __toESM(require_element(), 1);
   var import_jsx_runtime520 = __toESM(require_jsx_runtime(), 1);
   function GridItemResizer({
     clientId,
@@ -93850,14 +94038,14 @@ var wp;
     onChange,
     isManualGrid
   }) {
-    const [resizeDirection, setResizeDirection] = (0, import_element319.useState)(null);
-    const [enableSide, setEnableSide] = (0, import_element319.useState)({
+    const [resizeDirection, setResizeDirection] = (0, import_element320.useState)(null);
+    const [enableSide, setEnableSide] = (0, import_element320.useState)({
       top: false,
       bottom: false,
       left: false,
       right: false
     });
-    (0, import_element319.useEffect)(() => {
+    (0, import_element320.useEffect)(() => {
       const observer = new window.ResizeObserver(() => {
         const blockClientRect = blockElement.getBoundingClientRect();
         const rootBlockClientRect = rootBlockElement.getBoundingClientRect();
@@ -94132,7 +94320,7 @@ var wp;
 
   // packages/block-editor/build-module/components/grid/use-grid-layout-sync.mjs
   var import_data190 = __toESM(require_data(), 1);
-  var import_element320 = __toESM(require_element(), 1);
+  var import_element321 = __toESM(require_element(), 1);
   var import_compose117 = __toESM(require_compose(), 1);
   function useGridLayoutSync({ clientId: gridClientId }) {
     const { gridLayout, blockOrder, selectedBlockLayout } = (0, import_data190.useSelect)(
@@ -94149,7 +94337,7 @@ var wp;
     );
     const { getBlockAttributes: getBlockAttributes3, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data190.useSelect)(store);
     const { updateBlockAttributes: updateBlockAttributes2, __unstableMarkNextChangeAsNotPersistent: __unstableMarkNextChangeAsNotPersistent2 } = (0, import_data190.useDispatch)(store);
-    const selectedBlockRect = (0, import_element320.useMemo)(
+    const selectedBlockRect = (0, import_element321.useMemo)(
       () => selectedBlockLayout ? new GridRect(selectedBlockLayout) : null,
       [selectedBlockLayout]
     );
@@ -94158,7 +94346,7 @@ var wp;
       gridLayout.isManualPlacement
     );
     const previousBlockOrder = (0, import_compose117.usePrevious)(blockOrder);
-    (0, import_element320.useEffect)(() => {
+    (0, import_element321.useEffect)(() => {
       const updates = {};
       if (gridLayout.isManualPlacement) {
         const occupiedRects = [];
@@ -94250,7 +94438,7 @@ var wp;
             } = attributes.style?.layout ?? {};
             if (columnStart || rowStart || columnSpan || rowSpan) {
               const hasEmptyLayoutAttribute = Object.keys(layout).length === 0;
-              updates[clientId] = setImmutably(
+              updates[clientId] = setImmutably2(
                 attributes,
                 ["style", "layout"],
                 hasEmptyLayoutAttribute ? void 0 : layout
@@ -94265,7 +94453,7 @@ var wp;
             const { columnStart, rowStart, ...layout } = attributes.style?.layout ?? {};
             if (columnStart || rowStart) {
               const hasEmptyLayoutAttribute = Object.keys(layout).length === 0;
-              updates[clientId] = setImmutably(
+              updates[clientId] = setImmutably2(
                 attributes,
                 ["style", "layout"],
                 hasEmptyLayoutAttribute ? void 0 : layout
@@ -94326,11 +94514,8 @@ var wp;
 
   // packages/block-editor/build-module/hooks/layout-child.mjs
   var import_jsx_runtime522 = __toESM(require_jsx_runtime(), 1);
+  var { getResponsiveMediaQueries: getResponsiveMediaQueries4 } = unlock(privateApis);
   var LAYOUT_CHILD_BLOCK_PROPS_REFERENCE = {};
-  var RESPONSIVE_BREAKPOINTS4 = {
-    "@mobile": "@media (width <= 480px)",
-    "@tablet": "@media (480px < width <= 782px)"
-  };
   var FLEX_CHILD_LAYOUT_VALUES2 = {
     fit: "fit",
     grow: "fill",
@@ -94475,10 +94660,11 @@ var wp;
   function getResponsiveChildLayoutStyles({
     style = {},
     selector: selector3,
-    parentLayout = {}
+    parentLayout = {},
+    viewportSettings
   }) {
     const baseLayout = style?.layout ?? {};
-    return Object.entries(RESPONSIVE_BREAKPOINTS4).map(([viewport, mediaQuery]) => {
+    return Object.entries(getResponsiveMediaQueries4(viewportSettings)).map(([viewport, mediaQuery]) => {
       const viewportLayout = getStyleForState(style, {
         viewport,
         pseudo: DEFAULT_BLOCK_STYLE_STATE2.pseudo
@@ -94498,9 +94684,15 @@ var wp;
     }).filter(Boolean).join("");
   }
   function useBlockPropsChildLayoutStyles({ style }) {
-    const shouldRenderChildLayoutStyles = (0, import_data191.useSelect)((select3) => {
-      return !select3(store).getSettings().disableLayoutStyles;
-    });
+    const { shouldRenderChildLayoutStyles, viewportSettings } = (0, import_data191.useSelect)(
+      (select3) => {
+        const settings2 = select3(store).getSettings();
+        return {
+          shouldRenderChildLayoutStyles: !settings2.disableLayoutStyles,
+          viewportSettings: settings2?.__experimentalFeatures?.viewport
+        };
+      }
+    );
     const layout = style?.layout ?? {};
     const { columnStart, rowStart, columnSpan, rowSpan } = layout;
     const parentLayout = useLayout() || {};
@@ -94531,7 +94723,8 @@ var wp;
         getResponsiveChildLayoutStyles({
           style,
           selector: selector3,
-          parentLayout
+          parentLayout,
+          viewportSettings
         })
       ].join("");
     }
@@ -94577,6 +94770,7 @@ var wp;
       parentBlockVisibility,
       blockBlockVisibility,
       deviceType,
+      viewportSettings,
       isChildBlockAGrid
     } = (0, import_data191.useSelect)(
       (select3) => {
@@ -94604,6 +94798,7 @@ var wp;
           parentBlockVisibility: parentAttributes?.metadata?.blockVisibility,
           blockBlockVisibility: blockAttributes?.metadata?.blockVisibility,
           deviceType: currentDeviceType,
+          viewportSettings: settings2?.__experimentalFeatures?.viewport,
           // Check if the selected child block is itself a grid.
           isChildBlockAGrid: blockAttributes?.layout?.type === "grid"
         };
@@ -94619,7 +94814,8 @@ var wp;
     } = useBlockVisibility({
       blockVisibility: parentBlockVisibility,
       deviceType,
-      view: canvasView
+      view: canvasView,
+      viewportSettings
     });
     const isAnyAncestorHidden = (0, import_data191.useSelect)(
       (select3) => {
@@ -94639,9 +94835,10 @@ var wp;
     const { isBlockCurrentlyHidden: isBlockItselfCurrentlyHidden } = useBlockVisibility({
       blockVisibility: blockBlockVisibility,
       deviceType,
-      view: canvasView
+      view: canvasView,
+      viewportSettings
     });
-    const [resizerBounds, setResizerBounds] = (0, import_element321.useState)();
+    const [resizerBounds, setResizerBounds] = (0, import_element322.useState)();
     const childGridClientId = isChildBlockAGrid ? clientId : void 0;
     if (!isVisible || isParentBlockCurrentlyHidden || isAnyAncestorHidden) {
       return null;
@@ -94765,7 +94962,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/block-hooks.mjs
   var import_i18n245 = __toESM(require_i18n(), 1);
-  var import_element322 = __toESM(require_element(), 1);
+  var import_element323 = __toESM(require_element(), 1);
   var import_components270 = __toESM(require_components(), 1);
   var import_blocks122 = __toESM(require_blocks(), 1);
   var import_data192 = __toESM(require_data(), 1);
@@ -94780,7 +94977,7 @@ var wp;
       (select3) => select3(import_blocks122.store).getBlockTypes(),
       []
     );
-    const hookedBlocksForCurrentBlock = (0, import_element322.useMemo)(
+    const hookedBlocksForCurrentBlock = (0, import_element323.useMemo)(
       () => blockTypes?.filter(
         ({ name: blockName, blockHooks }) => blockHooks && name in blockHooks || ignoredHookedBlocks.includes(blockName)
       ),
@@ -94897,7 +95094,7 @@ var wp;
             "Manage the inclusion of blocks added automatically by plugins."
           ) }),
           Object.keys(groupedHookedBlocks).map((vendor) => {
-            return /* @__PURE__ */ (0, import_jsx_runtime523.jsxs)(import_element322.Fragment, { children: [
+            return /* @__PURE__ */ (0, import_jsx_runtime523.jsxs)(import_element323.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime523.jsx)("h3", { children: vendor }),
               groupedHookedBlocks[vendor].map((block) => {
                 const checked = block.name in hookedBlockClientIds;
@@ -94943,7 +95140,7 @@ var wp;
   var import_blocks123 = __toESM(require_blocks(), 1);
   var import_components272 = __toESM(require_components(), 1);
   var import_data193 = __toESM(require_data(), 1);
-  var import_element323 = __toESM(require_element(), 1);
+  var import_element324 = __toESM(require_element(), 1);
   var import_compose119 = __toESM(require_compose(), 1);
   var import_jsx_runtime524 = __toESM(require_jsx_runtime(), 1);
   var useToolsPanelDropdownMenuProps2 = () => {
@@ -94957,7 +95154,7 @@ var wp;
     } : {};
   };
   var BlockBindingsPanel = ({ name: blockName, metadata }) => {
-    const blockContext = (0, import_element323.useContext)(block_context_default);
+    const blockContext = (0, import_element324.useContext)(block_context_default);
     const { removeAllBlockBindings } = useBlockBindingsUtils();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps2();
     const { bindableAttributes, hasCompatibleFields } = (0, import_data193.useSelect)(
@@ -95028,7 +95225,7 @@ var wp;
   var import_components273 = __toESM(require_components(), 1);
   var import_data195 = __toESM(require_data(), 1);
   var import_blocks124 = __toESM(require_blocks(), 1);
-  var import_element324 = __toESM(require_element(), 1);
+  var import_element325 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/use-list-view-panel-state/index.mjs
   var import_data194 = __toESM(require_data(), 1);
@@ -95063,7 +95260,7 @@ var wp;
     return (0, import_blocks124.hasBlockSupport)(nameOrType, LIST_VIEW_SUPPORT_KEY);
   }
   function ListViewPanel({ clientId, name }) {
-    const { isSelectionWithinCurrentSection } = (0, import_element324.useContext)(PrivateBlockContext);
+    const { isSelectionWithinCurrentSection } = (0, import_element325.useContext)(PrivateBlockContext);
     const { isOpened, expandRevision, handleToggle } = useListViewPanelState(clientId);
     const { openListViewContentPanel: openListViewContentPanel2 } = unlock(
       (0, import_data195.useDispatch)(store)
@@ -95161,7 +95358,7 @@ var wp;
     useGridLayoutSync(props);
   }
   function GridTools2({ clientId, layout }) {
-    const { isVisible, blockVisibility: blockVisibility2, deviceType } = (0, import_data196.useSelect)(
+    const { isVisible, blockVisibility: blockVisibility2, deviceType, viewportSettings } = (0, import_data196.useSelect)(
       (select3) => {
         const {
           isBlockSelected: isBlockSelected2,
@@ -95181,7 +95378,8 @@ var wp;
         return {
           isVisible: true,
           blockVisibility: attributes?.metadata?.blockVisibility,
-          deviceType: currentDeviceType
+          deviceType: currentDeviceType,
+          viewportSettings: settings2?.__experimentalFeatures?.viewport
         };
       },
       [clientId]
@@ -95192,7 +95390,8 @@ var wp;
     const { isBlockCurrentlyHidden, currentViewport } = useBlockVisibility({
       blockVisibility: blockVisibility2,
       deviceType,
-      view: canvasView
+      view: canvasView,
+      viewportSettings
     });
     const isAnyAncestorHidden = (0, import_data196.useSelect)(
       (select3) => {
@@ -95245,7 +95444,7 @@ var wp;
   var import_blocks126 = __toESM(require_blocks(), 1);
   var import_components274 = __toESM(require_components(), 1);
   var import_data197 = __toESM(require_data(), 1);
-  var import_element325 = __toESM(require_element(), 1);
+  var import_element326 = __toESM(require_element(), 1);
   var import_i18n248 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/hooks/generate-fields-from-attributes.mjs
@@ -95297,7 +95496,7 @@ var wp;
   }
   function AutoRegisterControls({ name, clientId, setAttributes }) {
     const blockEditingMode = useBlockEditingMode();
-    const blockContext = (0, import_element325.useContext)(block_context_default);
+    const blockContext = (0, import_element326.useContext)(block_context_default);
     const attributes = (0, import_data197.useSelect)(
       (select3) => {
         const _attributes = select3(store).getBlockAttributes(clientId);
@@ -95324,7 +95523,7 @@ var wp;
       [blockContext, clientId]
     );
     const blockType = (0, import_blocks126.getBlockType)(name);
-    const { fields, form } = (0, import_element325.useMemo)(() => {
+    const { fields, form } = (0, import_element326.useMemo)(() => {
       if (!blockType?.attributes) {
         return { fields: [], form: { fields: [] } };
       }
@@ -95398,7 +95597,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/use-color-props.mjs
-  var import_element326 = __toESM(require_element(), 1);
+  var import_element327 = __toESM(require_element(), 1);
   function getColorClassesAndStyles(attributes) {
     const { backgroundColor, textColor, gradient, style } = attributes;
     const backgroundClass = getColorClassName(
@@ -95439,7 +95638,7 @@ var wp;
       "color.gradients.theme",
       "color.gradients.default"
     );
-    const colors2 = (0, import_element326.useMemo)(
+    const colors2 = (0, import_element327.useMemo)(
       () => [
         ...userPalette || [],
         ...themePalette || [],
@@ -95447,7 +95646,7 @@ var wp;
       ],
       [userPalette, themePalette, defaultPalette]
     );
-    const gradients = (0, import_element326.useMemo)(
+    const gradients = (0, import_element327.useMemo)(
       () => [
         ...userGradients || [],
         ...themeGradients || [],
@@ -95516,10 +95715,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/use-cached-truthy.mjs
-  var import_element327 = __toESM(require_element(), 1);
+  var import_element328 = __toESM(require_element(), 1);
   function useCachedTruthy(value) {
-    const [cachedValue, setCachedValue] = (0, import_element327.useState)(value);
-    (0, import_element327.useEffect)(() => {
+    const [cachedValue, setCachedValue] = (0, import_element328.useState)(value);
+    (0, import_element328.useEffect)(() => {
       if (value) {
         setCachedValue(value);
       }
@@ -95594,7 +95793,7 @@ var wp;
   var get_px_from_css_unit_default = () => "";
 
   // packages/block-editor/build-module/components/rich-text/get-rich-text-values.mjs
-  var import_element328 = __toESM(require_element(), 1);
+  var import_element329 = __toESM(require_element(), 1);
   var import_blocks127 = __toESM(require_blocks(), 1);
   var import_rich_text19 = __toESM(require_rich_text(), 1);
   var import_jsx_runtime528 = __toESM(require_jsx_runtime(), 1);
@@ -95612,10 +95811,10 @@ var wp;
     }
     const { type, props } = element;
     switch (type) {
-      case import_element328.StrictMode:
-      case import_element328.Fragment:
+      case import_element329.StrictMode:
+      case import_element329.Fragment:
         return addValuesForElements(props.children, values, innerBlocks);
-      case import_element328.RawHTML:
+      case import_element329.RawHTML:
         return;
       case inner_blocks_default.Content:
         return addValuesForBlocks(values, innerBlocks);
@@ -95688,13 +95887,13 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-removal-warning-modal/index.mjs
-  var import_element329 = __toESM(require_element(), 1);
+  var import_element330 = __toESM(require_element(), 1);
   var import_data198 = __toESM(require_data(), 1);
   var import_components277 = __toESM(require_components(), 1);
   var import_i18n249 = __toESM(require_i18n(), 1);
   var import_jsx_runtime530 = __toESM(require_jsx_runtime(), 1);
   function BlockRemovalWarningModal({ rules }) {
-    const [confirmed, setConfirmed] = (0, import_element329.useState)(false);
+    const [confirmed, setConfirmed] = (0, import_element330.useState)(false);
     const { clientIds, selectPrevious, message: message2 } = (0, import_data198.useSelect)(
       (select3) => unlock(select3(store)).getRemovalPromptData()
     );
@@ -95703,13 +95902,13 @@ var wp;
       setBlockRemovalRules: setBlockRemovalRules2,
       privateRemoveBlocks: privateRemoveBlocks2
     } = unlock((0, import_data198.useDispatch)(store));
-    (0, import_element329.useEffect)(() => {
+    (0, import_element330.useEffect)(() => {
       setBlockRemovalRules2(rules);
       return () => {
         setBlockRemovalRules2();
       };
     }, [rules, setBlockRemovalRules2]);
-    (0, import_element329.useEffect)(() => {
+    (0, import_element330.useEffect)(() => {
       setConfirmed(false);
     }, [clientIds]);
     if (!message2) {
@@ -95779,11 +95978,11 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/dimensions-tool/index.mjs
-  var import_element331 = __toESM(require_element(), 1);
+  var import_element332 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/dimensions-tool/scale-tool.mjs
   var import_components278 = __toESM(require_components(), 1);
-  var import_element330 = __toESM(require_element(), 1);
+  var import_element331 = __toESM(require_element(), 1);
   var import_i18n250 = __toESM(require_i18n(), 1);
   var import_jsx_runtime531 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_SCALE_OPTIONS = [
@@ -95826,7 +96025,7 @@ var wp;
     isShownByDefault = true
   }) {
     const displayValue = value ?? defaultValue;
-    const scaleHelp = (0, import_element330.useMemo)(() => {
+    const scaleHelp = (0, import_element331.useMemo)(() => {
       return options.reduce((acc, option) => {
         acc[option.value] = option.help;
         return acc;
@@ -95956,8 +96155,8 @@ var wp;
     const height = value.height === void 0 || value.height === "auto" ? null : value.height;
     const aspectRatio = value.aspectRatio === void 0 || value.aspectRatio === "auto" ? null : value.aspectRatio;
     const scale = value.scale === void 0 ? null : value.scale;
-    const [lastScale, setLastScale] = (0, import_element331.useState)(scale);
-    const [lastAspectRatio, setLastAspectRatio] = (0, import_element331.useState)(aspectRatio);
+    const [lastScale, setLastScale] = (0, import_element332.useState)(scale);
+    const [lastAspectRatio, setLastAspectRatio] = (0, import_element332.useState)(aspectRatio);
     const hasCustomAspectRatio = !!(width && height);
     const aspectRatioValue = hasCustomAspectRatio ? "custom" : aspectRatio;
     const showScaleControl = aspectRatio || width && height;
@@ -96214,7 +96413,7 @@ var wp;
 
   // packages/block-editor/build-module/components/link-picker/link-picker.mjs
   var import_components283 = __toESM(require_components(), 1);
-  var import_element332 = __toESM(require_element(), 1);
+  var import_element333 = __toESM(require_element(), 1);
   var import_i18n255 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/link-picker/link-preview.mjs
@@ -96287,11 +96486,11 @@ var wp;
     label,
     help
   }) {
-    const [isOpen, setIsOpen] = (0, import_element332.useState)(false);
-    const instanceId = (0, import_element332.useId)();
+    const [isOpen, setIsOpen] = (0, import_element333.useState)(false);
+    const instanceId = (0, import_element333.useId)();
     const dialogTitleId = `link-picker-title-${instanceId}`;
     const dialogDescriptionId = `link-picker-description-${instanceId}`;
-    const anchorRef = (0, import_element332.useRef)(null);
+    const anchorRef = (0, import_element333.useRef)(null);
     const { baseControlProps, controlProps } = (0, import_components283.useBaseControlProps)({
       help
     });
@@ -96379,7 +96578,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/inner-content/index.mjs
-  var import_element333 = __toESM(require_element(), 1);
+  var import_element334 = __toESM(require_element(), 1);
   var import_data200 = __toESM(require_data(), 1);
   var import_dom70 = __toESM(require_dom(), 1);
   var import_jsx_runtime538 = __toESM(require_jsx_runtime(), 1);
@@ -96397,15 +96596,15 @@ var wp;
       },
       [clientId]
     );
-    const html = (0, import_element333.useMemo)(() => {
+    const html = (0, import_element334.useMemo)(() => {
       let slotIndex = 0;
       return (innerContent ?? []).map(
         (item) => item === null ? `<${SLOT_TAG_NAME} data-slot-index="${slotIndex++}" style="display: contents"></${SLOT_TAG_NAME}>` : item
       ).join("");
     }, [innerContent]);
-    const containerRef = (0, import_element333.useRef)();
-    const [slots, setSlots] = (0, import_element333.useState)([]);
-    (0, import_element333.useLayoutEffect)(() => {
+    const containerRef = (0, import_element334.useRef)();
+    const [slots, setSlots] = (0, import_element334.useState)([]);
+    (0, import_element334.useLayoutEffect)(() => {
       const container = containerRef.current;
       container.innerHTML = (0, import_dom70.safeHTML)(html);
       setSlots(
@@ -96424,7 +96623,7 @@ var wp;
         }
       ),
       order.map(
-        (childClientId, index2) => slots[index2] ? (0, import_element333.createPortal)(
+        (childClientId, index2) => slots[index2] ? (0, import_element334.createPortal)(
           // Render the selected block synchronously, as the block list does.
           /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(
             import_data200.AsyncModeProvider,
@@ -96449,8 +96648,8 @@ var wp;
   }
 
   // packages/block-editor/build-module/private-apis.mjs
-  var privateApis13 = {};
-  lock(privateApis13, {
+  var privateApis14 = {};
+  lock(privateApis14, {
     ...global_styles_exports,
     ExperimentalBlockCanvas,
     BlockCanvasCover,
