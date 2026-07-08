@@ -32589,9 +32589,11 @@ ${text}
         if (!urlPath?.toLowerCase().endsWith(".gif")) {
           return null;
         }
-        const { getBlockRootClientId, getBlockName } = select9(import_block_editor116.store);
-        const rootClientId = getBlockRootClientId(clientId);
-        if (rootClientId && getBlockName(rootClientId) === "core/gallery") {
+        const { getBlockRootClientId, canInsertBlockType } = select9(import_block_editor116.store);
+        if (!canInsertBlockType(
+          "core/video",
+          getBlockRootClientId(clientId)
+        )) {
           return null;
         }
         const record = select9(import_core_data25.store).getEntityRecord(
@@ -32645,7 +32647,7 @@ ${text}
         })
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_block_editor116.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_components58.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_components58.ToolbarButton, { icon: video_default, onClick: convertToVideo, children: (0, import_i18n99.__)("Display as video") }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_block_editor116.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_components58.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime280.jsx)(import_components58.ToolbarButton, { onClick: convertToVideo, children: (0, import_i18n99.__)("Display as video") }) }) });
   }
 
   // packages/block-library/build-module/image/image.mjs
@@ -33271,21 +33273,29 @@ ${text}
     const showUrlInput = isSingleSelected && !lockHrefControls && !lockUrlControls && !isDecorative;
     const showCoverControls = isSingleSelected && canInsertCover && !isContentOnlyMode;
     const showBlockControls = showUrlInput || allowCrop || showCoverControls;
-    const mediaReplaceFlow = isSingleSelected && !lockUrlControls && // For contentOnly mode, put this button in its own area so it has borders around it.
-    /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(import_block_editor117.BlockControls, { group: isContentOnlyMode ? "inline" : "other", children: /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
-      import_block_editor117.MediaReplaceFlow,
-      {
-        mediaId: id,
-        mediaURL: url,
-        allowedTypes: ALLOWED_MEDIA_TYPES3,
-        onSelect: onSelectImage,
-        onSelectURL,
-        onError: onUploadError,
-        name: !url ? (0, import_i18n100.__)("Add image") : (0, import_i18n100.__)("Replace"),
-        onReset: () => onSelectImage(void 0),
-        variant: "toolbar"
-      }
-    ) });
+    const mediaControls = isSingleSelected && !lockUrlControls && /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(import_jsx_runtime281.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(import_block_editor117.BlockControls, { group: isContentOnlyMode ? "inline" : "other", children: /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
+        import_block_editor117.MediaReplaceFlow,
+        {
+          mediaId: id,
+          mediaURL: url,
+          allowedTypes: ALLOWED_MEDIA_TYPES3,
+          onSelect: onSelectImage,
+          onSelectURL,
+          onError: onUploadError,
+          name: !url ? (0, import_i18n100.__)("Add image") : (0, import_i18n100.__)("Replace"),
+          onReset: () => onSelectImage(void 0),
+          variant: "toolbar"
+        }
+      ) }),
+      /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
+        AnimatedGifConvertControl,
+        {
+          attributes,
+          clientId
+        }
+      )
+    ] });
     const hasDataFormBlockFields = window?.__experimentalContentOnlyInspectorFields;
     const controls = /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(import_jsx_runtime281.Fragment, { children: [
       showBlockControls && /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(import_block_editor117.BlockControls, { group: "block", children: [
@@ -33682,7 +33692,7 @@ ${text}
     }
     if (!url && !temporaryURL) {
       return /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(import_jsx_runtime281.Fragment, { children: [
-        mediaReplaceFlow,
+        mediaControls,
         controls
       ] });
     }
@@ -33696,14 +33706,7 @@ ${text}
     };
     const featuredImageControl = !isDescendentOfQueryLoop && postId && id ? /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(import_block_editor117.BlockSettingsMenuControls, { children: ({ canEdit, selectedClientIds }) => canEdit && selectedClientIds.length === 1 && clientId === selectedClientIds[0] && /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(import_components59.MenuItem, { onClick: setPostFeatureImage, children: (0, import_i18n100.__)("Set as featured image") }) }) : null;
     return /* @__PURE__ */ (0, import_jsx_runtime281.jsxs)(import_jsx_runtime281.Fragment, { children: [
-      isSingleSelected && !lockUrlControls && /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
-        AnimatedGifConvertControl,
-        {
-          attributes,
-          clientId
-        }
-      ),
-      mediaReplaceFlow,
+      mediaControls,
       controls,
       featuredImageControl,
       img,
@@ -75986,25 +75989,24 @@ ${text}
   function GifRestoreControl({ attributes, clientId }) {
     const { id, caption } = attributes;
     const { replaceBlocks } = (0, import_data171.useDispatch)(import_block_editor297.store);
-    const gif = (0, import_data171.useSelect)(
+    const { gif, canRestoreToImage } = (0, import_data171.useSelect)(
       (select9) => {
-        if (!id) {
-          return null;
-        }
-        const record = select9(import_core_data100.store).getEntityRecord(
-          "postType",
-          "attachment",
-          id,
-          { context: "view" }
-        );
-        if (!record?.mime_type?.startsWith("image/")) {
-          return null;
-        }
-        return record;
+        const { getEntityRecord } = select9(import_core_data100.store);
+        const { canInsertBlockType, getBlockRootClientId } = select9(import_block_editor297.store);
+        const record = id ? getEntityRecord("postType", "attachment", id, {
+          context: "view"
+        }) : null;
+        return {
+          gif: record?.mime_type?.startsWith("image/") ? record : null,
+          canRestoreToImage: canInsertBlockType(
+            "core/image",
+            getBlockRootClientId(clientId)
+          )
+        };
       },
-      [id]
+      [id, clientId]
     );
-    if (!gif?.source_url) {
+    if (!gif?.source_url || !canRestoreToImage) {
       return null;
     }
     function restoreToImage() {
@@ -76019,7 +76021,7 @@ ${text}
         })
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(import_block_editor297.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(import_components184.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(import_components184.ToolbarButton, { icon: image_default, onClick: restoreToImage, children: (0, import_i18n279.__)("Display as GIF") }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(import_block_editor297.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(import_components184.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(import_components184.ToolbarButton, { onClick: restoreToImage, children: (0, import_i18n279.__)("Display as GIF") }) }) });
   }
 
   // packages/block-library/build-module/video/edit.mjs
