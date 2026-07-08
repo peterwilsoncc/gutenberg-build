@@ -8193,8 +8193,6 @@ return array(
 			'core/tab-panels'
 		),
 		'usesContext' => array(
-			'core/tabs-activeTabIndex',
-			'core/tabs-editorActiveTabIndex',
 			'core/tabs-id'
 		),
 		'supports' => array(
@@ -8635,10 +8633,6 @@ return array(
 				'fontSize' => true,
 				'__experimentalFontFamily' => true
 			)
-		),
-		'providesContext' => array(
-			'core/tabs-activeTabIndex' => 'activeTabIndex',
-			'core/tabs-editorActiveTabIndex' => 'editorActiveTabIndex'
 		),
 		'usesContext' => array(
 			'core/tabs-list',
