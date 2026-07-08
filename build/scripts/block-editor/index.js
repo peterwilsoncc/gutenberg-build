@@ -50320,15 +50320,20 @@ var wp;
       refreshKey
     );
     const { createErrorNotice, createSuccessNotice, createWarningNotice } = (0, import_data58.useDispatch)(import_notices7.store);
+    const supportsAttachments = !category.isExternalResource;
+    const attach = supportsAttachments ? category.attach : void 0;
+    const detach = supportsAttachments ? category.detach : void 0;
     const showRefreshing = useDelayedLoading(isLoading);
     const refresh = (0, import_element121.useCallback)(() => {
-      category.invalidate?.(query);
+      if (supportsAttachments) {
+        category.invalidate?.(query);
+      }
       setRefreshKey((key) => key + 1);
-    }, [category, query]);
+    }, [category, query, supportsAttachments]);
     const handleAttach = (0, import_element121.useCallback)(
       async (selectedMedia) => {
         try {
-          const attachedCount = await category.attach(selectedMedia);
+          const attachedCount = await attach(selectedMedia);
           if (!attachedCount) {
             createWarningNotice((0, import_i18n58.__)("No images were attached."), {
               type: "snackbar",
@@ -50366,6 +50371,7 @@ var wp;
         }
       },
       [
+        attach,
         category,
         refresh,
         createErrorNotice,
@@ -50376,7 +50382,7 @@ var wp;
     const handleDetach = (0, import_element121.useCallback)(
       async (media) => {
         try {
-          await category.detach(media);
+          await detach(media);
           refresh();
           createSuccessNotice(
             category.postTypeLabel ? (0, import_i18n58.sprintf)(
@@ -50393,7 +50399,7 @@ var wp;
           });
         }
       },
-      [category, refresh, createErrorNotice, createSuccessNotice]
+      [detach, category, refresh, createErrorNotice, createSuccessNotice]
     );
     const [mediaPendingDetach, setMediaPendingDetach] = (0, import_element121.useState)();
     const confirmDetach = (0, import_element121.useCallback)(() => {
@@ -50409,7 +50415,7 @@ var wp;
         className: clsx_default(baseCssClass, {
           // The attach footer supplies the breathing room beneath the
           // grid, so the list drops its own bottom padding (see styles).
-          "has-attach-footer": !!category.attach
+          "has-attach-footer": !!attach
         }),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
@@ -50445,14 +50451,14 @@ var wp;
                 {
                   rootClientId,
                   onClick: onInsert,
-                  onDetach: category.detach ? setMediaPendingDetach : void 0,
+                  onDetach: detach ? setMediaPendingDetach : void 0,
                   mediaList,
                   category
                 }
               )
             }
           ),
-          category.attach && // Pinned to the bottom of the panel as a fixed footer so it lines
+          attach && // Pinned to the bottom of the panel as a fixed footer so it lines
           // up with the "Open Media Library" button in the adjacent column.
           /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(AttachImagesButton, { onSelect: handleAttach }),
           mediaPendingDetach && // A plain `Modal` (not `ConfirmDialog`) so we can pass
