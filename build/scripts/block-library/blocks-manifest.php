@@ -8124,6 +8124,7 @@ return array(
 		),
 		'supports' => array(
 			'html' => false,
+			'ariaLabel' => true,
 			'visibility' => false,
 			'lock' => false,
 			'color' => array(
