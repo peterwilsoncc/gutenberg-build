@@ -59672,7 +59672,9 @@ var wp;
         getParentSectionBlock: getParentSectionBlock2,
         isZoomOut: isZoomOut2,
         isSectionBlock: isSectionBlock2,
-        isBlockHiddenAtViewport: isBlockHiddenAtViewport2
+        isBlockHiddenAtViewport: isBlockHiddenAtViewport2,
+        getSelectedBlockStyleState: getSelectedBlockStyleState2,
+        isResponsiveEditing: isResponsiveEditing3
       } = unlock(select3(store));
       const selectedBlockClientIds = getSelectedBlockClientIds2();
       const selectedBlockClientId = selectedBlockClientIds[0];
@@ -59704,6 +59706,9 @@ var wp;
       const _areSelectedBlocksHiddenOnViewport = selectedBlockClientIds.length > 0 && selectedBlockClientIds.every(
         (id) => isBlockHiddenAtViewport2(id, _currentDeviceType)
       );
+      const _isEditingResponsiveStyleState = isResponsiveEditing3() && hasViewportBlockStyleState(
+        getSelectedBlockStyleState2(selectedBlockClientId)
+      );
       return {
         blockClientId: selectedBlockClientId,
         blockClientIds: selectedBlockClientIds,
@@ -59720,7 +59725,7 @@ var wp;
         isSectionContainer: _isSectionBlock,
         hasContentOnlyLocking: _hasTemplateLock,
         showShuffleButton: _isZoomOut,
-        showSlots: !_isZoomOut,
+        showSlots: !_isZoomOut && !_isEditingResponsiveStyleState,
         showGroupButtons: !_isZoomOut,
         showLockButtons: !_isZoomOut,
         showBlockVisibilityButton: !_isZoomOut,
