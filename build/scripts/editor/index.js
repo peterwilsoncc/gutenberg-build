@@ -21292,14 +21292,26 @@ var wp;
             // Normalize value for correct first/last detection logic.
             -scrollLeft
           ) : scrollLeft;
-          setOverflow({
+          const next = {
             first: scrollFromStart > SCROLL_EPSILON,
             last: scrollFromStart < maxScroll - SCROLL_EPSILON,
             isScrolling: scrollWidth > clientWidth
-          });
+          };
+          setOverflow(
+            (prev) => prev.first === next.first && prev.last === next.last && prev.isScrolling === next.isScrolling ? prev : next
+          );
         };
         const resizeObserver = new ResizeObserver(measureOverflow);
-        resizeObserver.observe(listEl);
+        const observeTabs = () => {
+          resizeObserver.disconnect();
+          resizeObserver.observe(listEl);
+          listEl.querySelectorAll('[role="tab"]').forEach((tab) => resizeObserver.observe(tab));
+        };
+        const mutationObserver = new MutationObserver(observeTabs);
+        mutationObserver.observe(listEl, {
+          childList: true,
+          subtree: true
+        });
         let scrollTick = false;
         const throttleMeasureOverflowOnScroll = () => {
           if (!scrollTick) {
@@ -21315,6 +21327,7 @@ var wp;
           throttleMeasureOverflowOnScroll,
           { passive: true }
         );
+        observeTabs();
         measureOverflow();
         return () => {
           listEl.removeEventListener(
@@ -21322,6 +21335,7 @@ var wp;
             throttleMeasureOverflowOnScroll
           );
           resizeObserver.disconnect();
+          mutationObserver.disconnect();
         };
       }, [listEl]);
       const mergedListRef = (0, import_compose2.useMergeRefs)([
