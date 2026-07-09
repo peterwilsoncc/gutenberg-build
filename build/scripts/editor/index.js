@@ -7912,6 +7912,7 @@ var wp;
           "date",
           "modified",
           "author",
+          "slug",
           "meta",
           "title.raw",
           "excerpt.raw",
@@ -95441,31 +95442,40 @@ If there's a particular need for this, please submit a feature request at https:
     const date = (0, import_date21.getDate)(value ?? null);
     return dateNowInMs - date.getTime() > DAY_IN_MILLISECONDS2 ? (0, import_date21.dateI18n)((0, import_date21.getSettings)().formats.datetimeAbbreviated, date) : (0, import_date21.humanTimeDiff)(date);
   }
+  function isAutosaveRevision(item) {
+    return item.slug?.endsWith("-autosave-v1") ?? false;
+  }
+  function RevisionBadges({ item }) {
+    if (!isAutosaveRevision(item)) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(Badge, { intent: "none", children: (0, import_i18n320.__)("Autosave") });
+  }
   function PostRevisionsTimeline() {
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data244.useDispatch)(store));
     const [view, setView] = (0, import_element317.useState)(baseView);
-    const { revisions, revisionKey, currentRevisionId, currentRevision } = (0, import_data244.useSelect)((select8) => {
-      const { getCurrentPostType: getCurrentPostType2 } = select8(store);
-      const {
-        getCurrentRevisionId: _getCurrentRevisionId,
-        getCurrentRevision: getCurrentRevision2,
-        getRevisionPage: getRevisionPage2,
-        getPageRevisions: getPageRevisions2
-      } = unlock(select8(store));
-      const { getEntityConfig } = select8(import_core_data132.store);
-      const _postType = getCurrentPostType2();
-      const entityConfig = getEntityConfig("postType", _postType);
-      const _revisionKey = entityConfig?.revisionKey || "id";
-      const _currentRevisionId = _getCurrentRevisionId();
-      return {
-        // Same desc-ordered window the header slider renders (warm cache).
-        revisions: getPageRevisions2(getRevisionPage2()),
-        revisionKey: _revisionKey,
-        currentRevisionId: _currentRevisionId,
-        currentRevision: _currentRevisionId ? getCurrentRevision2() : void 0
-      };
-    }, []);
-    const postContent = currentRevision?.content?.raw;
+    const { revisions, revisionKey, currentRevisionId } = (0, import_data244.useSelect)(
+      (select8) => {
+        const { getCurrentPostType: getCurrentPostType2 } = select8(store);
+        const {
+          getCurrentRevisionId: _getCurrentRevisionId,
+          getRevisionPage: getRevisionPage2,
+          getPageRevisions: getPageRevisions2
+        } = unlock(select8(store));
+        const { getEntityConfig } = select8(import_core_data132.store);
+        const _postType = getCurrentPostType2();
+        const entityConfig = getEntityConfig("postType", _postType);
+        const _revisionKey = entityConfig?.revisionKey || "id";
+        const _currentRevisionId = _getCurrentRevisionId();
+        return {
+          // Same desc-ordered window the header slider renders (warm cache).
+          revisions: getPageRevisions2(getRevisionPage2()),
+          revisionKey: _revisionKey,
+          currentRevisionId: _currentRevisionId
+        };
+      },
+      []
+    );
     const isLoading = !revisions;
     const fields2 = (0, import_element317.useMemo)(
       () => [
@@ -95475,15 +95485,29 @@ If there's a particular need for this, please submit a feature request at https:
           // Return the humanized label the row renders so the picker
           // option's accessible name announces e.g. "5 minutes ago"
           // instead of the raw ISO timestamp.
-          getValue: ({ item }) => getDisplayDate(item.date),
-          render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(
-            Text,
-            {
-              variant: "heading-sm",
-              render: /* @__PURE__ */ (0, import_jsx_runtime528.jsx)("time", { dateTime: item.date }),
-              children: getDisplayDate(item.date)
+          getValue: ({ item }) => {
+            const displayDate = getDisplayDate(item.date);
+            if (!isAutosaveRevision(item)) {
+              return displayDate;
             }
-          ),
+            return (0, import_i18n320.sprintf)(
+              /* translators: 1: revision date, 2: revision type. */
+              (0, import_i18n320.__)("%1$s, %2$s"),
+              displayDate,
+              (0, import_i18n320.__)("Autosave")
+            );
+          },
+          render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime528.jsxs)(Stack, { direction: "row", align: "center", gap: "sm", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(
+              Text,
+              {
+                variant: "heading-sm",
+                render: /* @__PURE__ */ (0, import_jsx_runtime528.jsx)("time", { dateTime: item.date }),
+                children: getDisplayDate(item.date)
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(RevisionBadges, { item })
+          ] }),
           enableSorting: false,
           enableHiding: false
         },
@@ -95495,13 +95519,18 @@ If there's a particular need for this, please submit a feature request at https:
             if (String(item[revisionKey]) !== String(currentRevisionId)) {
               return null;
             }
-            return /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(PostContentInformationUI, { postContent });
+            return /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(
+              PostContentInformationUI,
+              {
+                postContent: item.content?.raw
+              }
+            );
           },
           enableSorting: false,
           enableHiding: false
         }
       ],
-      [revisionKey, currentRevisionId, postContent]
+      [revisionKey, currentRevisionId]
     );
     const { data: shownRevisions, paginationInfo } = (0, import_element317.useMemo)(
       () => filterSortAndPaginate(revisions || EMPTY_ARRAY15, view, fields2),
