@@ -3059,11 +3059,11 @@ return array(
 				'margin' => true,
 				'padding' => true,
 				'blockGap' => array(
-					'horizontal',
-					'vertical'
-				),
-				'__experimentalSkipSerialization' => array(
-					'blockGap'
+					'sides' => array(
+						'horizontal',
+						'vertical'
+					),
+					'__experimentalDefault' => 'var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) )'
 				),
 				'__experimentalDefaultControls' => array(
 					'blockGap' => true,

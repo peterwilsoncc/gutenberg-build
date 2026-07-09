@@ -3050,48 +3050,6 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/upload-media
-  var require_upload_media = __commonJS({
-    "package-external:@wordpress/upload-media"(exports, module) {
-      module.exports = window.wp.uploadMedia;
-    }
-  });
-
-  // package-external:@wordpress/escape-html
-  var require_escape_html = __commonJS({
-    "package-external:@wordpress/escape-html"(exports, module) {
-      module.exports = window.wp.escapeHtml;
-    }
-  });
-
-  // package-external:@wordpress/wordcount
-  var require_wordcount = __commonJS({
-    "package-external:@wordpress/wordcount"(exports, module) {
-      module.exports = window.wp.wordcount;
-    }
-  });
-
-  // package-external:@wordpress/patterns
-  var require_patterns = __commonJS({
-    "package-external:@wordpress/patterns"(exports, module) {
-      module.exports = window.wp.patterns;
-    }
-  });
-
-  // package-external:@wordpress/autop
-  var require_autop = __commonJS({
-    "package-external:@wordpress/autop"(exports, module) {
-      module.exports = window.wp.autop;
-    }
-  });
-
-  // package-external:@wordpress/shortcode
-  var require_shortcode = __commonJS({
-    "package-external:@wordpress/shortcode"(exports, module) {
-      module.exports = window.wp.shortcode;
-    }
-  });
-
   // node_modules/fast-deep-equal/es6/index.js
   var require_es6 = __commonJS({
     "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
@@ -3148,6 +3106,48 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/upload-media
+  var require_upload_media = __commonJS({
+    "package-external:@wordpress/upload-media"(exports, module) {
+      module.exports = window.wp.uploadMedia;
+    }
+  });
+
+  // package-external:@wordpress/escape-html
+  var require_escape_html = __commonJS({
+    "package-external:@wordpress/escape-html"(exports, module) {
+      module.exports = window.wp.escapeHtml;
+    }
+  });
+
+  // package-external:@wordpress/wordcount
+  var require_wordcount = __commonJS({
+    "package-external:@wordpress/wordcount"(exports, module) {
+      module.exports = window.wp.wordcount;
+    }
+  });
+
+  // package-external:@wordpress/patterns
+  var require_patterns = __commonJS({
+    "package-external:@wordpress/patterns"(exports, module) {
+      module.exports = window.wp.patterns;
+    }
+  });
+
+  // package-external:@wordpress/autop
+  var require_autop = __commonJS({
+    "package-external:@wordpress/autop"(exports, module) {
+      module.exports = window.wp.autop;
+    }
+  });
+
+  // package-external:@wordpress/shortcode
+  var require_shortcode = __commonJS({
+    "package-external:@wordpress/shortcode"(exports, module) {
+      module.exports = window.wp.shortcode;
+    }
+  });
+
   // package-external:@wordpress/keyboard-shortcuts
   var require_keyboard_shortcuts = __commonJS({
     "package-external:@wordpress/keyboard-shortcuts"(exports, module) {
@@ -3160,7 +3160,7 @@ var wp;
   __export(index_exports, {
     __experimentalGetCoreBlocks: () => __experimentalGetCoreBlocks,
     __experimentalRegisterExperimentalCoreBlocks: () => __experimentalRegisterExperimentalCoreBlocks,
-    privateApis: () => privateApis3,
+    privateApis: () => privateApis4,
     registerCoreBlocks: () => registerCoreBlocks
   });
   var import_blocks133 = __toESM(require_blocks(), 1);
@@ -26480,20 +26480,129 @@ ${url}
 
   // packages/block-library/build-module/gallery/gap-styles.mjs
   var import_block_editor95 = __toESM(require_block_editor(), 1);
-  function GapStyles({ blockGap, clientId }) {
-    const fallbackValue = `var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) )`;
-    let gapValue = fallbackValue;
-    let column = fallbackValue;
-    let row;
-    if (!!blockGap) {
-      row = typeof blockGap === "string" ? (0, import_block_editor95.__experimentalGetGapCSSValue)(blockGap) : (0, import_block_editor95.__experimentalGetGapCSSValue)(blockGap?.top) || fallbackValue;
-      column = typeof blockGap === "string" ? (0, import_block_editor95.__experimentalGetGapCSSValue)(blockGap) : (0, import_block_editor95.__experimentalGetGapCSSValue)(blockGap?.left) || fallbackValue;
-      gapValue = row === column ? row : `${row} ${column}`;
+
+  // packages/global-styles-engine/build-module/utils/viewport.mjs
+  var DEFAULT_VIEWPORT_BREAKPOINTS = {
+    mobile: "480px",
+    tablet: "782px"
+  };
+  var VIEWPORT_SIZE_REGEXP = /^(\d+|\d*\.\d+)(px|em|rem)$/;
+  var DEFAULT_FONT_SIZE = 16;
+  function isViewportSettings(configOrSettings) {
+    return "mobile" in configOrSettings || "tablet" in configOrSettings;
+  }
+  function getViewportSettings(configOrSettings) {
+    if (!configOrSettings || typeof configOrSettings !== "object") {
+      return {};
     }
-    const gap = `#block-${clientId} {
-		--wp--style--unstable-gallery-gap: ${column === "0" ? "0px" : column};
-		gap: ${gapValue}
+    if (isViewportSettings(configOrSettings)) {
+      return configOrSettings;
+    }
+    return configOrSettings.settings?.viewport ?? {};
+  }
+  function isValidViewportSize(value) {
+    return typeof value === "string" && VIEWPORT_SIZE_REGEXP.test(value.trim());
+  }
+  function getViewportBreakpointValueInPixels(value) {
+    if (typeof value === "number") {
+      return value;
+    }
+    if (typeof value !== "string") {
+      return void 0;
+    }
+    const match = value.trim().match(VIEWPORT_SIZE_REGEXP);
+    if (!match) {
+      return void 0;
+    }
+    const numericValue = Number.parseFloat(match[1]);
+    const unit = match[2];
+    return unit === "px" ? numericValue : numericValue * DEFAULT_FONT_SIZE;
+  }
+  function getViewportBreakpoints(configOrSettings) {
+    const viewportSettings = getViewportSettings(configOrSettings);
+    const breakpoints = {};
+    const breakpointValuesInPixels = {};
+    Object.keys(DEFAULT_VIEWPORT_BREAKPOINTS).forEach((breakpoint) => {
+      const key = breakpoint;
+      const value = viewportSettings[key];
+      const px = getViewportBreakpointValueInPixels(value);
+      if (px !== void 0 && isValidViewportSize(value)) {
+        breakpoints[key] = value.trim();
+        breakpointValuesInPixels[key] = px;
+      }
+    });
+    const breakpointNames = Object.keys(breakpoints);
+    if (!breakpointNames.length) {
+      return { ...DEFAULT_VIEWPORT_BREAKPOINTS };
+    }
+    if (1 === breakpointNames.length) {
+      return breakpoints;
+    }
+    const mobile = breakpoints.mobile;
+    const tablet = breakpoints.tablet;
+    if (breakpointValuesInPixels.mobile >= breakpointValuesInPixels.tablet) {
+      return { mobile };
+    }
+    return { mobile, tablet };
+  }
+  function getResponsiveMediaQueries(configOrSettings) {
+    const breakpoints = getViewportBreakpoints(configOrSettings);
+    const mediaQueries = {};
+    if (breakpoints.mobile) {
+      mediaQueries["@mobile"] = `@media (width <= ${breakpoints.mobile})`;
+    }
+    if (breakpoints.tablet) {
+      mediaQueries["@tablet"] = breakpoints.mobile ? `@media (${breakpoints.mobile} < width <= ${breakpoints.tablet})` : `@media (width <= ${breakpoints.tablet})`;
+    }
+    return mediaQueries;
+  }
+
+  // packages/global-styles-engine/build-module/lock-unlock.mjs
+  var import_private_apis2 = __toESM(require_private_apis(), 1);
+  var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/global-styles-engine"
+  );
+
+  // packages/global-styles-engine/build-module/private-apis.mjs
+  var privateApis = {};
+  lock2(privateApis, {
+    getResponsiveMediaQueries,
+    getViewportBreakpoints,
+    getViewportBreakpointValueInPixels
+  });
+
+  // packages/block-library/build-module/gallery/gap-styles.mjs
+  var { getResponsiveMediaQueries: getResponsiveMediaQueries2 } = unlock(privateApis);
+  var FALLBACK_VALUE = `var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) )`;
+  function getGalleryGapCustomPropertyStyle(selector, blockGap) {
+    let column = FALLBACK_VALUE;
+    if (blockGap) {
+      column = typeof blockGap === "string" ? (0, import_block_editor95.__experimentalGetGapCSSValue)(blockGap) || FALLBACK_VALUE : (0, import_block_editor95.__experimentalGetGapCSSValue)(blockGap?.left) || FALLBACK_VALUE;
+    }
+    return `${selector} {
+		--wp--style--unstable-gallery-gap: ${column === "0" ? "0px" : column}
 	}`;
+  }
+  function GalleryGapCustomProperties({ style: style2, clientId }) {
+    const selector = `#block-${clientId}`;
+    const [viewportSettings] = (0, import_block_editor95.useSettings)("viewport");
+    let gap = getGalleryGapCustomPropertyStyle(
+      selector,
+      style2?.spacing?.blockGap
+    );
+    Object.entries(getResponsiveMediaQueries2(viewportSettings)).forEach(
+      ([viewport, mediaQuery]) => {
+        const viewportBlockGap = style2?.[viewport]?.spacing?.blockGap;
+        if (viewportBlockGap === void 0 || viewportBlockGap === null) {
+          return;
+        }
+        gap += `${mediaQuery}{${getGalleryGapCustomPropertyStyle(
+          selector,
+          viewportBlockGap
+        )}}`;
+      }
+    );
     (0, import_block_editor95.useStyleOverride)({ css: gap });
     return null;
   }
@@ -27644,9 +27753,9 @@ ${url}
           }
         ) }),
         /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(
-          GapStyles,
+          GalleryGapCustomProperties,
           {
-            blockGap: attributes.style?.spacing?.blockGap,
+            style: attributes.style,
             clientId
           }
         )
@@ -27819,8 +27928,10 @@ ${url}
       spacing: {
         margin: true,
         padding: true,
-        blockGap: ["horizontal", "vertical"],
-        __experimentalSkipSerialization: ["blockGap"],
+        blockGap: {
+          sides: ["horizontal", "vertical"],
+          __experimentalDefault: "var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) )"
+        },
         __experimentalDefaultControls: {
           blockGap: true,
           margin: false,
@@ -77043,8 +77154,8 @@ ${text}
   var block_keyboard_shortcuts_default = BlockKeyboardShortcuts;
 
   // packages/block-library/build-module/private-apis.mjs
-  var privateApis3 = {};
-  lock(privateApis3, {
+  var privateApis4 = {};
+  lock(privateApis4, {
     BlockKeyboardShortcuts: block_keyboard_shortcuts_default,
     NAVIGATION_OVERLAY_TEMPLATE_PART_AREA,
     NavigationLinkUI
