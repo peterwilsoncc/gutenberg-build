@@ -3178,17 +3178,23 @@ var wp;
     ALLOWED_SEED_COLOR_SPACES.forEach(
       (space) => ColorSpace.register(space)
     );
-    let spaceId;
+    let parsedColor;
     try {
-      ({ spaceId } = parse(seed));
+      parsedColor = parse(seed);
     } catch {
       throw new Error(
-        `Unsupported seed color "${seed}": expected a hex value, an \`rgb()\`/\`rgba()\` string, or a CSS named color.`
+        `Unsupported seed color "${seed}": expected a fully opaque hex value, an \`rgb()\`/\`rgba()\` string, or a CSS named color.`
       );
     }
+    const { alpha = 1, spaceId } = parsedColor;
     if (!ALLOWED_SEED_COLOR_SPACES.some((space) => space.id === spaceId)) {
       throw new Error(
-        `Unsupported seed color "${seed}": expected a hex value, an \`rgb()\`/\`rgba()\` string, or a CSS named color, but received a \`${spaceId}\` color.`
+        `Unsupported seed color "${seed}": expected a fully opaque hex value, an \`rgb()\`/\`rgba()\` string, or a CSS named color, but received a \`${spaceId}\` color.`
+      );
+    }
+    if (alpha !== 1) {
+      throw new Error(
+        `Unsupported seed color "${seed}": expected a fully opaque color.`
       );
     }
   }
