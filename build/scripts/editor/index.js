@@ -78877,7 +78877,6 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/style-book/index.mjs
   var import_jsx_runtime377 = __toESM(require_jsx_runtime(), 1);
   var { ExperimentalBlockEditorProvider: ExperimentalBlockEditorProvider2 } = unlock(import_block_editor38.privateApis);
-  var { Tabs: Tabs2 } = unlock(import_components157.privateApis);
   function isObjectEmpty(object) {
     return !object || Object.keys(object).length === 0;
   }
@@ -79052,39 +79051,46 @@ If there's a particular need for this, please submit a feature request at https:
           color: textColor,
           background: backgroundColor
         },
-        children: showTabs ? /* @__PURE__ */ (0, import_jsx_runtime377.jsxs)(Tabs2, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime377.jsx)("div", { className: "editor-style-book__tablist-container", children: /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(Tabs2.TabList, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(Tabs2.Tab, { tabId: tab.slug, children: tab.title }, tab.slug)) }) }),
-          tabs.map((tab) => {
-            const categoryDefinition = tab.slug ? getTopLevelStyleBookCategories().find(
-              (_category) => _category.slug === tab.slug
-            ) : null;
-            const filteredExamples = categoryDefinition ? getExamplesByCategory(
-              categoryDefinition,
-              examples
-            ) : { examples };
-            return /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
-              Tabs2.TabPanel,
-              {
-                tabId: tab.slug,
-                focusable: false,
-                className: "editor-style-book__tabpanel",
-                children: /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
-                  StyleBookBody,
+        children: showTabs ? /* @__PURE__ */ (0, import_jsx_runtime377.jsxs)(
+          tabs_exports.Root,
+          {
+            className: "editor-style-book__tabs",
+            defaultValue: tabs[0]?.slug,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime377.jsx)("div", { className: "editor-style-book__tablist-container", children: /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(tabs_exports.List, { children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(tabs_exports.Tab, { value: tab.slug, children: tab.title }, tab.slug)) }) }),
+              tabs.map((tab) => {
+                const categoryDefinition = tab.slug ? getTopLevelStyleBookCategories().find(
+                  (_category) => _category.slug === tab.slug
+                ) : null;
+                const filteredExamples = categoryDefinition ? getExamplesByCategory(
+                  categoryDefinition,
+                  examples
+                ) : { examples };
+                return /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
+                  tabs_exports.Panel,
                   {
-                    category: tab.slug,
-                    examples: filteredExamples,
-                    isSelected: isSelected2,
-                    onSelect,
-                    settings,
-                    title: tab.title,
-                    goTo
-                  }
-                )
-              },
-              tab.slug
-            );
-          })
-        ] }) : /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
+                    value: tab.slug,
+                    tabIndex: -1,
+                    className: "editor-style-book__tabpanel",
+                    children: /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
+                      StyleBookBody,
+                      {
+                        category: tab.slug,
+                        examples: filteredExamples,
+                        isSelected: isSelected2,
+                        onSelect,
+                        settings,
+                        title: tab.title,
+                        goTo
+                      }
+                    )
+                  },
+                  tab.slug
+                );
+              })
+            ]
+          }
+        ) : /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(
           StyleBookBody,
           {
             examples: { examples: examplesForSinglePageUse },
@@ -95853,7 +95859,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element320 = __toESM(require_element(), 1);
   var import_html_entities33 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime533 = __toESM(require_jsx_runtime(), 1);
-  var { Tabs: Tabs3 } = unlock(import_components270.privateApis);
+  var { Tabs: Tabs2 } = unlock(import_components270.privateApis);
   var SidebarHeader = (_, ref) => {
     const { postTypeLabel, isRevisionsMode: isRevisionsMode2 } = (0, import_data249.useSelect)((select8) => {
       const { getPostTypeLabel: getPostTypeLabel2 } = select8(store);
@@ -95873,9 +95879,9 @@ If there's a particular need for this, please submit a feature request at https:
     } else {
       documentLabel = (0, import_i18n324._x)("Document", "noun, panel");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime533.jsxs)(Tabs3.TabList, { ref, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime533.jsxs)(Tabs2.TabList, { ref, children: [
       /* @__PURE__ */ (0, import_jsx_runtime533.jsx)(
-        Tabs3.Tab,
+        Tabs2.Tab,
         {
           tabId: sidebars.document,
           "data-tab-id": sidebars.document,
@@ -95883,7 +95889,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime533.jsx)(
-        Tabs3.Tab,
+        Tabs2.Tab,
         {
           tabId: sidebars.block,
           "data-tab-id": sidebars.block,
@@ -96351,7 +96357,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/sidebar/index.mjs
   var import_jsx_runtime540 = __toESM(require_jsx_runtime(), 1);
-  var { Tabs: Tabs4 } = unlock(import_components275.privateApis);
+  var { Tabs: Tabs3 } = unlock(import_components275.privateApis);
   var SIDEBAR_ACTIVE_BY_DEFAULT = true;
   var SidebarContent = ({
     tabName,
@@ -96360,7 +96366,7 @@ If there's a particular need for this, please submit a feature request at https:
     extraPanels
   }) => {
     const tabListRef = (0, import_element325.useRef)(null);
-    const tabsContextValue = (0, import_element325.useContext)(Tabs4.Context);
+    const tabsContextValue = (0, import_element325.useContext)(Tabs3.Context);
     const isRevisionsMode2 = (0, import_data256.useSelect)((select8) => {
       return unlock(select8(store)).isRevisionsMode();
     });
@@ -96408,7 +96414,7 @@ If there's a particular need for this, please submit a feature request at https:
       PluginSidebar,
       {
         identifier: tabName,
-        header: /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(Tabs4.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(header_default3, { ref: tabListRef }) }),
+        header: /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(Tabs3.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(header_default3, { ref: tabListRef }) }),
         closeLabel: (0, import_i18n330.__)("Close Settings"),
         className: "editor-sidebar__panel",
         headerClassName: "editor-sidebar__panel-tabs",
@@ -96419,9 +96425,9 @@ If there's a particular need for this, please submit a feature request at https:
         toggleShortcut: keyboardShortcut,
         icon: (0, import_i18n330.isRTL)() ? drawer_left_default : drawer_right_default,
         isActiveByDefault: SIDEBAR_ACTIVE_BY_DEFAULT,
-        children: /* @__PURE__ */ (0, import_jsx_runtime540.jsxs)(Tabs4.Context.Provider, { value: tabsContextValue, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(Tabs4.TabPanel, { tabId: sidebars.document, focusable: false, children: tabContent }),
-          /* @__PURE__ */ (0, import_jsx_runtime540.jsxs)(Tabs4.TabPanel, { tabId: sidebars.block, focusable: false, children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime540.jsxs)(Tabs3.Context.Provider, { value: tabsContextValue, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(Tabs3.TabPanel, { tabId: sidebars.document, focusable: false, children: tabContent }),
+          /* @__PURE__ */ (0, import_jsx_runtime540.jsxs)(Tabs3.TabPanel, { tabId: sidebars.block, focusable: false, children: [
             /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(import_block_editor97.BlockInspector, {}),
             isRevisionsMode2 && /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(RevisionBlockDiffPanel, {})
           ] })
@@ -96459,7 +96465,7 @@ If there's a particular need for this, please submit a feature request at https:
       [enableComplementaryArea2]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(
-      Tabs4,
+      Tabs3,
       {
         selectedTabId: tabName,
         onSelect: onTabSelect,
