@@ -71331,8 +71331,13 @@ ${text}
       },
       [clientId]
     );
+    const registry = (0, import_data150.useRegistry)();
     const { isBlockSelected, hasSelectedInnerBlock } = (0, import_data150.useSelect)(import_block_editor268.store);
-    const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = (0, import_data150.useDispatch)(import_block_editor268.store);
+    const {
+      updateBlockAttributes,
+      selectBlock,
+      __unstableMarkNextChangeAsNotPersistent
+    } = (0, import_data150.useDispatch)(import_block_editor268.store);
     const { insertTab, removeTab } = useTabActions(tabsClientId);
     const effectiveActiveIndex = editorActiveTabIndex ?? activeTabIndex;
     const tabsList = (0, import_element132.useMemo)(
@@ -71344,9 +71349,12 @@ ${text}
     );
     function selectTabPanel(tabIndex) {
       if (tabsClientId && tabIndex !== effectiveActiveIndex) {
-        __unstableMarkNextChangeAsNotPersistent();
-        updateBlockAttributes(tabsClientId, {
-          editorActiveTabIndex: tabIndex
+        registry.batch(() => {
+          selectBlock(clientId);
+          __unstableMarkNextChangeAsNotPersistent();
+          updateBlockAttributes(tabsClientId, {
+            editorActiveTabIndex: tabIndex
+          });
         });
       }
     }
