@@ -3109,7 +3109,8 @@ var wp;
     "bg-fgSurface4": [
       "foreground-content-neutral",
       "foreground-interactive-neutral",
-      "foreground-interactive-neutral-active"
+      "foreground-interactive-neutral-active",
+      "foreground-interactive-neutral-weak-active"
     ],
     "bg-fgSurface3": [
       "foreground-content-neutral-weak",
@@ -3135,7 +3136,8 @@ var wp;
       "stroke-interactive-neutral-strong"
     ],
     "bg-stroke2": [
-      "background-thumb-neutral-disabled",
+      "background-thumb-brand-disabled",
+      "background-thumb-neutral-weak-disabled",
       "background-track-neutral",
       "stroke-interactive-brand-disabled",
       "stroke-interactive-error-disabled",
