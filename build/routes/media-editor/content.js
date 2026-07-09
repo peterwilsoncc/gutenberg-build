@@ -25057,8 +25057,169 @@ function useTransformStyle(state, imageSize) {
 // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
 var import_element79 = __toESM(require_element(), 1);
 var import_i18n28 = __toESM(require_i18n(), 1);
+
+// packages/media-editor/build-module/image-editor/core/source-region.mjs
+function getSourceRegion(state, imageSize) {
+  const safeState = sanitizeCropperState(state);
+  if (!isValidSize(imageSize)) {
+    return {
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+      rotation: safeState.rotation,
+      flip: { ...safeState.flip },
+      zoom: safeState.zoom
+    };
+  }
+  const syntheticContainer = { width: 1e3, height: 1e3 };
+  const camera = createCamera(safeState, syntheticContainer, imageSize);
+  const inv = mat2d_exports.create();
+  mat2d_exports.invert(inv, camera);
+  const baseCamera = createCamera(
+    { ...safeState, pan: { x: 0, y: 0 }, zoom: 1 },
+    syntheticContainer,
+    imageSize
+  );
+  const visibleBounds = getVisibleBounds(baseCamera);
+  const cropRect = safeState.cropRect;
+  const cropCenterScreenX = visibleBounds.left + (cropRect.x + cropRect.width / 2) * visibleBounds.width;
+  const cropCenterScreenY = visibleBounds.top + (cropRect.y + cropRect.height / 2) * visibleBounds.height;
+  const srcCenter = vec2_exports.create();
+  vec2_exports.transformMat2d(
+    srcCenter,
+    [cropCenterScreenX, cropCenterScreenY],
+    inv
+  );
+  const snapRotation = Math.round(safeState.rotation / 90) * 90;
+  const { width: rotW, height: rotH } = getRotatedBBox(
+    imageSize.width,
+    imageSize.height,
+    snapRotation
+  );
+  const sourceW = cropRect.width * rotW / safeState.zoom;
+  const sourceH = cropRect.height * rotH / safeState.zoom;
+  return {
+    x: srcCenter[0] * imageSize.width - sourceW / 2,
+    y: srcCenter[1] * imageSize.height - sourceH / 2,
+    width: sourceW,
+    height: sourceH,
+    rotation: safeState.rotation,
+    flip: { ...safeState.flip },
+    zoom: safeState.zoom
+  };
+}
+function getCropRectFromSourceRegion(state, imageSize, region) {
+  if (!isValidSize(imageSize) || region.width <= 0 || region.height <= 0) {
+    return null;
+  }
+  const safeState = sanitizeCropperState(state);
+  const syntheticContainer = { width: 1e3, height: 1e3 };
+  const baseCamera = createCamera(
+    { ...safeState, pan: { x: 0, y: 0 }, zoom: 1 },
+    syntheticContainer,
+    imageSize
+  );
+  const visibleBounds = getVisibleBounds(baseCamera);
+  if (visibleBounds.width <= 0 || visibleBounds.height <= 0) {
+    return null;
+  }
+  const sourceCenter = vec2_exports.fromValues(
+    (region.x + region.width / 2) / imageSize.width,
+    (region.y + region.height / 2) / imageSize.height
+  );
+  const screenCenter = vec2_exports.create();
+  const camera = createCamera(safeState, syntheticContainer, imageSize);
+  vec2_exports.transformMat2d(screenCenter, sourceCenter, camera);
+  const snapRotation = Math.round(safeState.rotation / 90) * 90;
+  const { width: rotW, height: rotH } = getRotatedBBox(
+    imageSize.width,
+    imageSize.height,
+    snapRotation
+  );
+  if (rotW <= 0 || rotH <= 0) {
+    return null;
+  }
+  const width = region.width * safeState.zoom / rotW;
+  const height = region.height * safeState.zoom / rotH;
+  const centerX = (screenCenter[0] - visibleBounds.left) / visibleBounds.width;
+  const centerY = (screenCenter[1] - visibleBounds.top) / visibleBounds.height;
+  return {
+    x: centerX - width / 2,
+    y: centerY - height / 2,
+    width,
+    height
+  };
+}
+var CARDINAL_ROTATION_EPSILON = 1e-6;
+function isCardinalRotation(rotation) {
+  const normalizedRotation = normalizeRotation(rotation);
+  const nearestCardinal = Math.round(normalizedRotation / 90) * 90;
+  return Math.abs(normalizedRotation - nearestCardinal) < CARDINAL_ROTATION_EPSILON;
+}
+function snapCropRectToSourcePixels(state, imageSize, cropRect, handle) {
+  const safeState = sanitizeCropperState(state);
+  if (!isCardinalRotation(safeState.rotation)) {
+    return cropRect;
+  }
+  return snapCropRectEdgesToSourcePixels(safeState, imageSize, cropRect, {
+    left: handle.includes("w"),
+    top: handle.includes("n"),
+    right: handle.includes("e"),
+    bottom: handle.includes("s")
+  });
+}
+function snapCropRectToSourcePixelGrid(state, imageSize, cropRect) {
+  return snapCropRectEdgesToSourcePixels(state, imageSize, cropRect, {
+    left: true,
+    top: true,
+    right: true,
+    bottom: true
+  });
+}
+function snapCropRectEdgesToSourcePixels(state, imageSize, cropRect, edges) {
+  if (!isValidSize(imageSize)) {
+    return cropRect;
+  }
+  const stateWithCrop = sanitizeCropperState({ ...state, cropRect });
+  const region = getSourceRegion(stateWithCrop, imageSize);
+  const shouldSnapX = edges.left || edges.right;
+  const shouldSnapY = edges.top || edges.bottom;
+  const left = edges.left ? Math.round(region.x) : region.x;
+  const top = edges.top ? Math.round(region.y) : region.y;
+  const right = edges.right ? Math.round(region.x + region.width) : region.x + region.width;
+  const bottom = edges.bottom ? Math.round(region.y + region.height) : region.y + region.height;
+  if (right <= left || bottom <= top) {
+    return cropRect;
+  }
+  const snappedCropRect = getCropRectFromSourceRegion(
+    stateWithCrop,
+    imageSize,
+    {
+      ...region,
+      x: left,
+      y: top,
+      width: right - left,
+      height: bottom - top
+    }
+  );
+  if (!snappedCropRect) {
+    return cropRect;
+  }
+  return {
+    x: shouldSnapX ? snappedCropRect.x : cropRect.x,
+    y: shouldSnapY ? snappedCropRect.y : cropRect.y,
+    width: shouldSnapX ? snappedCropRect.width : cropRect.width,
+    height: shouldSnapY ? snappedCropRect.height : cropRect.height
+  };
+}
+
+// packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
 var ARIA_DEBOUNCE_MS = 300;
-function buildFlipAnnouncement(state) {
+function getFlipAnnouncement(state, previousState) {
+  if (!previousState || previousState.flip.horizontal === state.flip.horizontal && previousState.flip.vertical === state.flip.vertical) {
+    return void 0;
+  }
   const { horizontal, vertical } = state.flip;
   if (horizontal && vertical) {
     return (0, import_i18n28.__)("Flipped horizontally and vertically");
@@ -25071,40 +25232,80 @@ function buildFlipAnnouncement(state) {
   }
   return (0, import_i18n28.__)("Flip removed");
 }
-function buildAnnouncement(state, previousState) {
-  if (previousState && (previousState.flip.horizontal !== state.flip.horizontal || previousState.flip.vertical !== state.flip.vertical)) {
-    return buildFlipAnnouncement(state);
+function getRotationAnnouncement(state, previousState) {
+  if (previousState && Math.round(previousState.rotation) === Math.round(state.rotation)) {
+    return void 0;
   }
-  const parts = [];
-  parts.push(
-    (0, import_i18n28.sprintf)(
-      /* translators: %d: zoom level as a percentage. */
-      (0, import_i18n28.__)("Zoom %d%%"),
-      Math.round(state.zoom * 100)
-    )
-  );
-  if (state.rotation !== 0) {
-    parts.push(
-      (0, import_i18n28.sprintf)(
-        /* translators: %d: rotation angle in degrees. */
-        (0, import_i18n28.__)("Rotation %d degrees"),
-        Math.round(state.rotation)
-      )
+  const singleFlip = state.flip.horizontal !== state.flip.vertical;
+  const visualDir = singleFlip ? -1 : 1;
+  let visualRotation = Math.round(state.rotation) * visualDir % 360;
+  if (visualRotation > 180) {
+    visualRotation -= 360;
+  }
+  if (visualRotation <= -180) {
+    visualRotation += 360;
+  }
+  if (visualRotation === 0) {
+    return previousState ? (0, import_i18n28.__)("Rotation 0 degrees") : void 0;
+  }
+  if (visualRotation > 0) {
+    return (0, import_i18n28.sprintf)(
+      /* translators: %d: rotation angle in degrees. */
+      (0, import_i18n28.__)("Rotated %d degrees clockwise"),
+      visualRotation
     );
   }
-  const cropW = Math.round(state.cropRect.width * 100);
-  const cropH = Math.round(state.cropRect.height * 100);
-  parts.push(
-    (0, import_i18n28.sprintf)(
-      /* translators: 1: crop width as a percentage, 2: crop height as a percentage. */
-      (0, import_i18n28.__)("Crop %1$d%% by %2$d%%"),
-      cropW,
-      cropH
-    )
+  return (0, import_i18n28.sprintf)(
+    /* translators: %d: rotation angle in degrees. */
+    (0, import_i18n28.__)("Rotated %d degrees counterclockwise"),
+    Math.abs(visualRotation)
   );
-  if (state.flip.horizontal || state.flip.vertical) {
-    parts.push(buildFlipAnnouncement(state));
+}
+function getCropAnnouncement(state, previousState) {
+  if (!state.image) {
+    return void 0;
   }
+  const imageSize = {
+    width: state.image.naturalWidth,
+    height: state.image.naturalHeight
+  };
+  const region = getSourceRegion(state, imageSize);
+  if (previousState?.image) {
+    const previousRegion = getSourceRegion(
+      { ...state, cropRect: previousState.cropRect },
+      imageSize
+    );
+    if (Math.round(previousRegion.width) === Math.round(region.width) && Math.round(previousRegion.height) === Math.round(region.height)) {
+      return void 0;
+    }
+  }
+  return (0, import_i18n28.sprintf)(
+    /* translators: 1: crop width in pixels, 2: crop height in pixels. */
+    (0, import_i18n28.__)("Crop %1$d by %2$d pixels"),
+    Math.round(region.width),
+    Math.round(region.height)
+  );
+}
+function getZoomAnnouncement(state, previousState) {
+  if (previousState && Math.round(previousState.zoom * 100) === Math.round(state.zoom * 100)) {
+    return void 0;
+  }
+  return (0, import_i18n28.sprintf)(
+    /* translators: %d: zoom level as a percentage. */
+    (0, import_i18n28.__)("Zoom %d%%"),
+    Math.round(state.zoom * 100)
+  );
+}
+function buildAnnouncement(state, previousState) {
+  const flip4 = getFlipAnnouncement(state, previousState);
+  if (flip4) {
+    return flip4;
+  }
+  const parts = [
+    getRotationAnnouncement(state, previousState),
+    getZoomAnnouncement(state, previousState),
+    getCropAnnouncement(state, previousState)
+  ].filter((part) => part !== void 0);
   return parts.join(", ");
 }
 function useAriaAnnouncer(state) {
@@ -25174,21 +25375,21 @@ var ALL_POSITIONS = [
 function getHandleLabel(pos) {
   switch (pos) {
     case "n":
-      return (0, import_i18n29.__)("Resize top edge");
+      return (0, import_i18n29.__)("Resize from top edge");
     case "s":
-      return (0, import_i18n29.__)("Resize bottom edge");
+      return (0, import_i18n29.__)("Resize from bottom edge");
     case "e":
-      return (0, import_i18n29.__)("Resize right edge");
+      return (0, import_i18n29.__)("Resize from right edge");
     case "w":
-      return (0, import_i18n29.__)("Resize left edge");
+      return (0, import_i18n29.__)("Resize from left edge");
     case "nw":
-      return (0, import_i18n29.__)("Resize top-left corner");
+      return (0, import_i18n29.__)("Resize from top-left corner");
     case "ne":
-      return (0, import_i18n29.__)("Resize top-right corner");
+      return (0, import_i18n29.__)("Resize from top-right corner");
     case "sw":
-      return (0, import_i18n29.__)("Resize bottom-left corner");
+      return (0, import_i18n29.__)("Resize from bottom-left corner");
     case "se":
-      return (0, import_i18n29.__)("Resize bottom-right corner");
+      return (0, import_i18n29.__)("Resize from bottom-right corner");
   }
 }
 var KEYBOARD_SETTLE_DELAY = 500;
@@ -25783,162 +25984,6 @@ function DimensionsOverlay({
       )}px`
     }
   );
-}
-
-// packages/media-editor/build-module/image-editor/core/source-region.mjs
-function getSourceRegion(state, imageSize) {
-  const safeState = sanitizeCropperState(state);
-  if (!isValidSize(imageSize)) {
-    return {
-      x: 0,
-      y: 0,
-      width: 0,
-      height: 0,
-      rotation: safeState.rotation,
-      flip: { ...safeState.flip },
-      zoom: safeState.zoom
-    };
-  }
-  const syntheticContainer = { width: 1e3, height: 1e3 };
-  const camera = createCamera(safeState, syntheticContainer, imageSize);
-  const inv = mat2d_exports.create();
-  mat2d_exports.invert(inv, camera);
-  const baseCamera = createCamera(
-    { ...safeState, pan: { x: 0, y: 0 }, zoom: 1 },
-    syntheticContainer,
-    imageSize
-  );
-  const visibleBounds = getVisibleBounds(baseCamera);
-  const cropRect = safeState.cropRect;
-  const cropCenterScreenX = visibleBounds.left + (cropRect.x + cropRect.width / 2) * visibleBounds.width;
-  const cropCenterScreenY = visibleBounds.top + (cropRect.y + cropRect.height / 2) * visibleBounds.height;
-  const srcCenter = vec2_exports.create();
-  vec2_exports.transformMat2d(
-    srcCenter,
-    [cropCenterScreenX, cropCenterScreenY],
-    inv
-  );
-  const snapRotation = Math.round(safeState.rotation / 90) * 90;
-  const { width: rotW, height: rotH } = getRotatedBBox(
-    imageSize.width,
-    imageSize.height,
-    snapRotation
-  );
-  const sourceW = cropRect.width * rotW / safeState.zoom;
-  const sourceH = cropRect.height * rotH / safeState.zoom;
-  return {
-    x: srcCenter[0] * imageSize.width - sourceW / 2,
-    y: srcCenter[1] * imageSize.height - sourceH / 2,
-    width: sourceW,
-    height: sourceH,
-    rotation: safeState.rotation,
-    flip: { ...safeState.flip },
-    zoom: safeState.zoom
-  };
-}
-function getCropRectFromSourceRegion(state, imageSize, region) {
-  if (!isValidSize(imageSize) || region.width <= 0 || region.height <= 0) {
-    return null;
-  }
-  const safeState = sanitizeCropperState(state);
-  const syntheticContainer = { width: 1e3, height: 1e3 };
-  const baseCamera = createCamera(
-    { ...safeState, pan: { x: 0, y: 0 }, zoom: 1 },
-    syntheticContainer,
-    imageSize
-  );
-  const visibleBounds = getVisibleBounds(baseCamera);
-  if (visibleBounds.width <= 0 || visibleBounds.height <= 0) {
-    return null;
-  }
-  const sourceCenter = vec2_exports.fromValues(
-    (region.x + region.width / 2) / imageSize.width,
-    (region.y + region.height / 2) / imageSize.height
-  );
-  const screenCenter = vec2_exports.create();
-  const camera = createCamera(safeState, syntheticContainer, imageSize);
-  vec2_exports.transformMat2d(screenCenter, sourceCenter, camera);
-  const snapRotation = Math.round(safeState.rotation / 90) * 90;
-  const { width: rotW, height: rotH } = getRotatedBBox(
-    imageSize.width,
-    imageSize.height,
-    snapRotation
-  );
-  if (rotW <= 0 || rotH <= 0) {
-    return null;
-  }
-  const width = region.width * safeState.zoom / rotW;
-  const height = region.height * safeState.zoom / rotH;
-  const centerX = (screenCenter[0] - visibleBounds.left) / visibleBounds.width;
-  const centerY = (screenCenter[1] - visibleBounds.top) / visibleBounds.height;
-  return {
-    x: centerX - width / 2,
-    y: centerY - height / 2,
-    width,
-    height
-  };
-}
-var CARDINAL_ROTATION_EPSILON = 1e-6;
-function isCardinalRotation(rotation) {
-  const normalizedRotation = normalizeRotation(rotation);
-  const nearestCardinal = Math.round(normalizedRotation / 90) * 90;
-  return Math.abs(normalizedRotation - nearestCardinal) < CARDINAL_ROTATION_EPSILON;
-}
-function snapCropRectToSourcePixels(state, imageSize, cropRect, handle) {
-  const safeState = sanitizeCropperState(state);
-  if (!isCardinalRotation(safeState.rotation)) {
-    return cropRect;
-  }
-  return snapCropRectEdgesToSourcePixels(safeState, imageSize, cropRect, {
-    left: handle.includes("w"),
-    top: handle.includes("n"),
-    right: handle.includes("e"),
-    bottom: handle.includes("s")
-  });
-}
-function snapCropRectToSourcePixelGrid(state, imageSize, cropRect) {
-  return snapCropRectEdgesToSourcePixels(state, imageSize, cropRect, {
-    left: true,
-    top: true,
-    right: true,
-    bottom: true
-  });
-}
-function snapCropRectEdgesToSourcePixels(state, imageSize, cropRect, edges) {
-  if (!isValidSize(imageSize)) {
-    return cropRect;
-  }
-  const stateWithCrop = sanitizeCropperState({ ...state, cropRect });
-  const region = getSourceRegion(stateWithCrop, imageSize);
-  const shouldSnapX = edges.left || edges.right;
-  const shouldSnapY = edges.top || edges.bottom;
-  const left = edges.left ? Math.round(region.x) : region.x;
-  const top = edges.top ? Math.round(region.y) : region.y;
-  const right = edges.right ? Math.round(region.x + region.width) : region.x + region.width;
-  const bottom = edges.bottom ? Math.round(region.y + region.height) : region.y + region.height;
-  if (right <= left || bottom <= top) {
-    return cropRect;
-  }
-  const snappedCropRect = getCropRectFromSourceRegion(
-    stateWithCrop,
-    imageSize,
-    {
-      ...region,
-      x: left,
-      y: top,
-      width: right - left,
-      height: bottom - top
-    }
-  );
-  if (!snappedCropRect) {
-    return cropRect;
-  }
-  return {
-    x: shouldSnapX ? snappedCropRect.x : cropRect.x,
-    y: shouldSnapY ? snappedCropRect.y : cropRect.y,
-    width: shouldSnapX ? snappedCropRect.width : cropRect.width,
-    height: shouldSnapY ? snappedCropRect.height : cropRect.height
-  };
 }
 
 // packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
