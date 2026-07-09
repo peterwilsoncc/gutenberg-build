@@ -5824,13 +5824,13 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   flex-shrink: 0;
 }
 
-.editor-collab-sidebar-panel__more-reply-separator::before, .editor-collab-sidebar-panel__more-reply-separator::after {
+.editor-collab-sidebar-panel__more-reply-separator::before, .editor-collab-sidebar-panel__more-reply-separator::after,
+.editor-collab-sidebar-panel__status-separator::before,
+.editor-collab-sidebar-panel__status-separator::after {
   content: "";
-  display: block;
-  width: 100%;
+  flex: 1;
   height: 1px;
   background-color: #ddd;
-  flex: 1;
 }
 
 .editor-collab-sidebar-panel__more-reply-button {

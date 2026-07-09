@@ -97677,7 +97677,7 @@ If there's a particular need for this, please submit a feature request at https:
         (thread) => !thread.blockClientId
       );
       return {
-        notes: [...unresolved, ...resolved, ...orphans],
+        notes: [...unresolved, ...orphans, ...resolved],
         unresolvedNotes: unresolved
       };
     }, [clientIds, threads, getBlockAttributes2]);
@@ -98139,6 +98139,9 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     };
+    const firstResolvedIndex = isFloating ? -1 : threads.findIndex(
+      (thread) => thread.status === "approved" && !!thread.blockClientId
+    );
     return /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(
       Stack,
       {
@@ -98162,28 +98165,40 @@ If there's a particular need for this, please submit a feature request at https:
               sidebarRef
             }
           ),
-          threads.map((thread) => /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(
-            NoteThread,
-            {
-              note: thread,
-              onAddReply,
-              onDeleteNote: handleDelete,
-              onEditNote,
-              isSelected: selectedNote2 === thread.id,
-              sidebarRef,
-              floating: isFloating ? {
-                y: notePositions[thread.id],
-                registerThread,
-                unregisterThread
-              } : void 0,
-              onKeyDown: (event) => navigate(
-                event,
-                thread,
-                selectedNote2 === thread.id
-              )
-            },
-            thread.id
-          ))
+          threads.map((thread, index2) => /* @__PURE__ */ (0, import_jsx_runtime549.jsxs)(import_element332.Fragment, { children: [
+            index2 === firstResolvedIndex && /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(
+              Stack,
+              {
+                direction: "row",
+                align: "center",
+                justify: "center",
+                gap: "sm",
+                className: "editor-collab-sidebar-panel__status-separator",
+                children: /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(Text, { variant: "heading-sm", render: /* @__PURE__ */ (0, import_jsx_runtime549.jsx)("p", {}), children: (0, import_i18n338.__)("Resolved") })
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(
+              NoteThread,
+              {
+                note: thread,
+                onAddReply,
+                onDeleteNote: handleDelete,
+                onEditNote,
+                isSelected: selectedNote2 === thread.id,
+                sidebarRef,
+                floating: isFloating ? {
+                  y: notePositions[thread.id],
+                  registerThread,
+                  unregisterThread
+                } : void 0,
+                onKeyDown: (event) => navigate(
+                  event,
+                  thread,
+                  selectedNote2 === thread.id
+                )
+              }
+            )
+          ] }, thread.id))
         ] })
       }
     );
