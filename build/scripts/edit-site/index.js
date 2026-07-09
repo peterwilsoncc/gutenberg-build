@@ -13202,7 +13202,7 @@ var wp;
   var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
   var { useLocation, useHistory } = unlock(import_router.privateApis);
   var SiteHubMobile = (0, import_element36.memo)(
-    (0, import_element36.forwardRef)(({ isTransparent }, ref) => {
+    (0, import_element36.forwardRef)((props, ref) => {
       const { path } = useLocation();
       const history = useHistory();
       const { navigate } = (0, import_element36.useContext)(SidebarNavigationContext);
@@ -13239,37 +13239,16 @@ var wp;
           navigate("back");
         } : void 0
       };
-      return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("div", { className: "edit-site-site-hub", children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_components2.__experimentalHStack, { justify: "flex-start", spacing: "0", children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-        "div",
+      return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("div", { className: "edit-site-site-hub", children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+        import_components2.Button,
         {
-          className: clsx_default(
-            "edit-site-site-hub__view-mode-toggle-container",
-            {
-              "has-transparent-background": isTransparent
-            }
-          ),
-          children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-            import_components2.Button,
-            {
-              __next40pxDefaultSize: true,
-              ref,
-              className: "edit-site-layout__view-mode-toggle",
-              style: {
-                transform: "scale(0.5)",
-                borderRadius: 4
-              },
-              ...backButtonProps,
-              children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-                icon_default,
-                {
-                  icon: (0, import_i18n2.isRTL)() ? chevron_right_default : chevron_left_default,
-                  size: 48
-                }
-              )
-            }
-          )
+          size: "compact",
+          ref,
+          className: "edit-site-site-hub__back-button",
+          icon: (0, import_i18n2.isRTL)() ? chevron_right_default : chevron_left_default,
+          ...backButtonProps
         }
-      ) }) });
+      ) });
     })
   );
 
@@ -17077,8 +17056,7 @@ var wp;
               showMobileSiteHub && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
                 SiteHubMobile,
                 {
-                  ref: mobileToggleRef,
-                  isTransparent: isResizableFrameOversized
+                  ref: mobileToggleRef
                 }
               ),
               areas2.mobileContent ? (
