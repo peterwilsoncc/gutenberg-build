@@ -52504,7 +52504,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation20, useHistory: useHistory13 } = unlock(import_router20.privateApis);
   var { StyleBookPreview } = unlock(import_editor24.privateApis);
-  function StylesPreviewArea() {
+  function StylesPreviewArea({ siteData }) {
     const { path, query } = useLocation20();
     const history = useHistory13();
     const isStylebook = query.preview === "stylebook";
@@ -52521,7 +52521,8 @@ If there's a particular need for this, please submit a feature request at https:
         StyleBookPreview,
         {
           path: section,
-          onPathChange: onChangeSection
+          onPathChange: onChangeSection,
+          settings: siteData.editorSettings
         }
       );
     }
@@ -52533,7 +52534,7 @@ If there's a particular need for this, please submit a feature request at https:
     areas: {
       content: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(SidebarGlobalStyles, {}),
       sidebar: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(SidebarNavigationScreenGlobalStyles, { backPath: "/" }),
-      preview: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(StylesPreviewArea, {}),
+      preview: ({ siteData }) => /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(StylesPreviewArea, { siteData }),
       mobileContent: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(SidebarGlobalStyles, {})
     },
     widths: {
