@@ -26291,11 +26291,12 @@ ${url}
     const [temporaryURL, setTemporaryURL] = (0, import_element39.useState)(attributes.blob);
     const { media } = (0, import_data32.useSelect)(
       (select10) => ({
-        media: id === void 0 ? void 0 : select10(import_core_data18.store).getEntityRecord(
+        media: !!id ? select10(import_core_data18.store).getEntityRecord(
           "postType",
           "attachment",
-          id
-        )
+          id,
+          { context: "view" }
+        ) : void 0
       }),
       [id]
     );
@@ -26759,7 +26760,9 @@ ${url}
             return false;
           }
           const { getEntityRecord } = (0, import_data33.select)(import_core_data19.store);
-          const media = getEntityRecord("postType", "attachment", id);
+          const media = getEntityRecord("postType", "attachment", id, {
+            context: "view"
+          });
           return !!media && media.mime_type.includes("audio");
         },
         transform: (attributes) => {
@@ -26779,7 +26782,9 @@ ${url}
             return false;
           }
           const { getEntityRecord } = (0, import_data33.select)(import_core_data19.store);
-          const media = getEntityRecord("postType", "attachment", id);
+          const media = getEntityRecord("postType", "attachment", id, {
+            context: "view"
+          });
           return !!media && media.mime_type.includes("video");
         },
         transform: (attributes) => {
@@ -26799,7 +26804,9 @@ ${url}
             return false;
           }
           const { getEntityRecord } = (0, import_data33.select)(import_core_data19.store);
-          const media = getEntityRecord("postType", "attachment", id);
+          const media = getEntityRecord("postType", "attachment", id, {
+            context: "view"
+          });
           return !!media && media.mime_type.includes("image");
         },
         transform: (attributes) => {
