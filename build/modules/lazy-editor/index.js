@@ -1741,7 +1741,11 @@ function getResponsiveStyleNodes(node, responsiveMediaQueries) {
   const {
     styles,
     selector,
+    fallbackGapValue,
     featureSelectors,
+    hasLayoutSupport,
+    layoutHasBlockGapSupport,
+    layoutSelector,
     name,
     elementName,
     isStyleVariation,
@@ -1762,10 +1766,14 @@ function getResponsiveStyleNodes(node, responsiveMediaQueries) {
           selector,
           mediaQuery,
           featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
+          fallbackGapValue,
+          hasLayoutSupport,
           name,
           elementName,
           isStyleVariation,
-          variationName
+          variationName,
+          layoutSelector,
+          layoutHasBlockGapSupport
         }
       ];
     }

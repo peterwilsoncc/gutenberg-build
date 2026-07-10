@@ -19879,7 +19879,11 @@ var wp;
     const {
       styles,
       selector: selector2,
+      fallbackGapValue,
       featureSelectors,
+      hasLayoutSupport,
+      layoutHasBlockGapSupport,
+      layoutSelector,
       name: name2,
       elementName,
       isStyleVariation,
@@ -19900,10 +19904,14 @@ var wp;
             selector: selector2,
             mediaQuery,
             featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
+            fallbackGapValue,
+            hasLayoutSupport,
             name: name2,
             elementName,
             isStyleVariation,
-            variationName
+            variationName,
+            layoutSelector,
+            layoutHasBlockGapSupport
           }
         ];
       }
