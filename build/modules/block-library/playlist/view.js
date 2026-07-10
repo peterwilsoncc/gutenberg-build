@@ -1187,7 +1187,7 @@ function createWaveformContainer({
     container.setAttribute("data-title", title);
   }
   if (artist) {
-    container.setAttribute("data-subtitle", artist);
+    container.setAttribute("data-artist", artist);
   }
   if (artwork) {
     container.setAttribute("data-artwork", artwork);

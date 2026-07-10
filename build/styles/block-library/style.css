@@ -3694,7 +3694,7 @@ p.has-text-align-left[style*="writing-mode:vertical-lr"] {
 .wp-block-playlist .waveform-track.waveform-align-bottom .waveform-btn {
   margin-bottom: 0;
 }
-.wp-block-playlist .waveform-subtitle {
+.wp-block-playlist .waveform-artist {
   opacity: 0.7;
 }
 .wp-block-playlist .waveform-info,

@@ -53858,7 +53858,7 @@ ${text}
       container.setAttribute("data-title", title);
     }
     if (artist) {
-      container.setAttribute("data-subtitle", artist);
+      container.setAttribute("data-artist", artist);
     }
     if (artwork) {
       container.setAttribute("data-artwork", artwork);
@@ -53982,9 +53982,9 @@ ${text}
       instance.titleEl.textContent = title ?? "";
     }
     updateSeekControlLabel(instance, title || (0, import_i18n163.__)("Seek"));
-    if (instance.subtitleEl) {
-      instance.subtitleEl.textContent = artist ?? "";
-      instance.subtitleEl.style.display = artist ? "" : "none";
+    if (instance.artistEl) {
+      instance.artistEl.textContent = artist ?? "";
+      instance.artistEl.style.display = artist ? "" : "none";
     }
     if (instance.artworkEl && image) {
       instance.artworkEl.src = image;
