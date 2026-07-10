@@ -7455,7 +7455,7 @@ var wp;
   var import_notices19 = __toESM(require_notices(), 1);
   var import_block_editor35 = __toESM(require_block_editor(), 1);
   var import_preferences9 = __toESM(require_preferences(), 1);
-  var import_url13 = __toESM(require_url(), 1);
+  var import_url14 = __toESM(require_url(), 1);
   var import_api_fetch7 = __toESM(require_api_fetch(), 1);
   var import_blocks19 = __toESM(require_blocks(), 1);
   var import_html_entities12 = __toESM(require_html_entities(), 1);
@@ -29483,6 +29483,7 @@ var wp;
   var import_notices18 = __toESM(require_notices(), 1);
   var import_patterns8 = __toESM(require_patterns(), 1);
   var import_blocks18 = __toESM(require_blocks(), 1);
+  var import_url13 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/provider/with-registry-provider.mjs
   var import_element69 = __toESM(require_element(), 1);
@@ -76624,7 +76625,8 @@ If there's a particular need for this, please submit a feature request at https:
         updateEditorSettings: updateEditorSettings2,
         setCurrentTemplateId: setCurrentTemplateId2,
         setEditedPost: setEditedPost2,
-        setRenderingMode: setRenderingMode2
+        setRenderingMode: setRenderingMode2,
+        setCurrentRevisionId: setCurrentRevisionId2
       } = unlock((0, import_data85.useDispatch)(store));
       const { editEntityRecord } = (0, import_data85.useDispatch)(import_core_data53.store);
       const registry = (0, import_data85.useRegistry)();
@@ -76650,6 +76652,9 @@ If there's a particular need for this, please submit a feature request at https:
           setupEditor2(post2, initialEdits, settings.template);
         }
         if (settings.autosave) {
+          const autosaveId = Number(
+            (0, import_url13.getQueryArg)(settings.autosave.editLink, "revision")
+          );
           createWarningNotice(
             (0, import_i18n200.__)(
               "There is an autosave of this post that is more recent than the version below."
@@ -76659,7 +76664,20 @@ If there's a particular need for this, please submit a feature request at https:
               actions: [
                 {
                   label: (0, import_i18n200.__)("View the autosave"),
-                  url: settings.autosave.editLink
+                  ...autosaveId ? {
+                    onClick: () => {
+                      const {
+                        disableVisualRevisions
+                      } = registry.select(store).getEditorSettings();
+                      if (disableVisualRevisions) {
+                        window.location.href = settings.autosave.editLink;
+                        return;
+                      }
+                      setCurrentRevisionId2(
+                        autosaveId
+                      );
+                    }
+                  } : { url: settings.autosave.editLink }
                 }
               ]
             }
@@ -77146,7 +77164,7 @@ If there's a particular need for this, please submit a feature request at https:
         );
         return;
       }
-      const fileTemplatePath = (0, import_url13.addQueryArgs)(
+      const fileTemplatePath = (0, import_url14.addQueryArgs)(
         `${templateEntityConfig.baseURL}/${template2.id}`,
         { context: "edit", source: template2.origin }
       );
@@ -77438,6 +77456,10 @@ If there's a particular need for this, please submit a feature request at https:
     dispatch8.editPost(edits);
     dispatch8.setCurrentRevisionId(null);
     await dispatch8.savePost();
+    if (select8.didPostSaveRequestFail()) {
+      return;
+    }
+    registry.dispatch(import_notices19.store).removeNotice("autosave-exists");
     registry.dispatch(import_notices19.store).createSuccessNotice(
       (0, import_i18n203.sprintf)(
         /* translators: %s: Date and time of the revision. */
@@ -78131,7 +78153,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/autocompleters/link.mjs
   var import_api_fetch9 = __toESM(require_api_fetch(), 1);
-  var import_url14 = __toESM(require_url(), 1);
+  var import_url15 = __toESM(require_url(), 1);
   var import_html_entities13 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime372 = __toESM(require_jsx_runtime(), 1);
   var SHOWN_SUGGESTIONS = 10;
@@ -78142,7 +78164,7 @@ If there's a particular need for this, please submit a feature request at https:
     isDebounced: true,
     async options(filterValue) {
       const options = await (0, import_api_fetch9.default)({
-        path: (0, import_url14.addQueryArgs)("/wp/v2/search", {
+        path: (0, import_url15.addQueryArgs)("/wp/v2/search", {
           per_page: SHOWN_SUGGESTIONS,
           search: filterValue,
           type: "post"
@@ -81487,7 +81509,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_html_entities18 = __toESM(require_html_entities(), 1);
   var import_core_data71 = __toESM(require_core_data(), 1);
   var import_block_editor47 = __toESM(require_block_editor(), 1);
-  var import_url15 = __toESM(require_url(), 1);
+  var import_url16 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/post-panel-row/index.mjs
   var import_components172 = __toESM(require_components(), 1);
@@ -81759,7 +81781,7 @@ If there's a particular need for this, please submit a feature request at https:
                 (0, import_i18n223.__)(
                   'Child pages inherit characteristics from their parent, such as URL structure. For instance, if "Pricing" is a child of "Services", its URL would be %s<wbr />/services<wbr />/pricing.'
                 ),
-                (0, import_url15.filterURLForDisplay)(homeUrl).replace(
+                (0, import_url16.filterURLForDisplay)(homeUrl).replace(
                   /([/.])/g,
                   "<wbr />$1"
                 )
@@ -84027,7 +84049,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n243 = __toESM(require_i18n(), 1);
   var import_components200 = __toESM(require_components(), 1);
   var import_data144 = __toESM(require_data(), 1);
-  var import_url16 = __toESM(require_url(), 1);
+  var import_url17 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/post-last-revision/check.mjs
   var import_data143 = __toESM(require_data(), 1);
@@ -84067,7 +84089,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { lastRevisionId, revisionsCount, disableVisualRevisions } = usePostLastRevisionInfo();
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data144.useDispatch)(store));
     const buttonProps = disableVisualRevisions ? {
-      href: (0, import_url16.addQueryArgs)("revision.php", {
+      href: (0, import_url17.addQueryArgs)("revision.php", {
         revision: lastRevisionId
       })
     } : { onClick: () => setCurrentRevisionId2(lastRevisionId) };
@@ -84091,7 +84113,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { lastRevisionId, revisionsCount, disableVisualRevisions } = usePostLastRevisionInfo();
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data144.useDispatch)(store));
     const buttonProps = disableVisualRevisions ? {
-      href: (0, import_url16.addQueryArgs)("revision.php", {
+      href: (0, import_url17.addQueryArgs)("revision.php", {
         revision: lastRevisionId
       })
     } : { onClick: () => setCurrentRevisionId2(lastRevisionId) };
@@ -84129,7 +84151,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n245 = __toESM(require_i18n(), 1);
   var import_components202 = __toESM(require_components(), 1);
   var import_data145 = __toESM(require_data(), 1);
-  var import_url17 = __toESM(require_url(), 1);
+  var import_url18 = __toESM(require_url(), 1);
   var import_element250 = __toESM(require_element(), 1);
   var import_hooks50 = __toESM(require_hooks(), 1);
   var import_compose45 = __toESM(require_compose(), 1);
@@ -84317,14 +84339,14 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const userDisplayName = user.name;
     const userAvatar = user.avatar;
-    const unlockUrl = (0, import_url17.addQueryArgs)("post.php", {
+    const unlockUrl = (0, import_url18.addQueryArgs)("post.php", {
       "get-post-lock": "1",
       lockKey: true,
       post: postId2,
       action: "edit",
       _wpnonce: postLockUtils.nonce
     });
-    const allPostsUrl = (0, import_url17.addQueryArgs)("edit.php", {
+    const allPostsUrl = (0, import_url18.addQueryArgs)("edit.php", {
       post_type: postType2?.slug
     });
     const allPostsLabel = (0, import_i18n245.__)("Exit editor");
@@ -84848,7 +84870,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n259 = __toESM(require_i18n(), 1);
   var import_components214 = __toESM(require_components(), 1);
   var import_data162 = __toESM(require_data(), 1);
-  var import_url18 = __toESM(require_url(), 1);
+  var import_url19 = __toESM(require_url(), 1);
   var import_core_data97 = __toESM(require_core_data(), 1);
   var import_html_entities26 = __toESM(require_html_entities(), 1);
 
@@ -86120,7 +86142,7 @@ If there's a particular need for this, please submit a feature request at https:
         ]),
         siteIconUrl: siteData.site_icon_url,
         siteTitle: siteData.name,
-        siteHome: siteData.home && (0, import_url18.filterURLForDisplay)(siteData.home)
+        siteHome: siteData.home && (0, import_url19.filterURLForDisplay)(siteData.home)
       };
     }, []);
     let siteIcon = /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(
@@ -86223,7 +86245,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n260 = __toESM(require_i18n(), 1);
   var import_element259 = __toESM(require_element(), 1);
   var import_data163 = __toESM(require_data(), 1);
-  var import_url19 = __toESM(require_url(), 1);
+  var import_url20 = __toESM(require_url(), 1);
   var import_html_entities27 = __toESM(require_html_entities(), 1);
   var import_compose50 = __toESM(require_compose(), 1);
   var import_core_data98 = __toESM(require_core_data(), 1);
@@ -86282,7 +86304,7 @@ If there's a particular need for this, please submit a feature request at https:
     const viewPostLabel = postType2?.labels?.view_item;
     const addNewPostLabel = postType2?.labels?.add_new_item;
     const link = post2.status === "future" ? getFuturePostUrl(post2) : post2.link;
-    const addLink = (0, import_url19.addQueryArgs)("post-new.php", {
+    const addLink = (0, import_url20.addQueryArgs)("post-new.php", {
       post_type: post2.type
     });
     const postLinkRef = (0, import_element259.useCallback)(
@@ -86318,7 +86340,7 @@ If there's a particular need for this, please submit a feature request at https:
                 (0, import_i18n260.__)("%s address"),
                 postLabel
               ),
-              value: (0, import_url19.safeDecodeURIComponent)(link),
+              value: (0, import_url20.safeDecodeURIComponent)(link),
               onFocus: (event) => event.target.select()
             }
           ),
@@ -87684,7 +87706,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-url/index.mjs
   var import_data183 = __toESM(require_data(), 1);
-  var import_url20 = __toESM(require_url(), 1);
+  var import_url21 = __toESM(require_url(), 1);
   var import_element271 = __toESM(require_element(), 1);
   var import_block_editor61 = __toESM(require_block_editor(), 1);
   var import_i18n272 = __toESM(require_i18n(), 1);
@@ -87709,14 +87731,14 @@ If there's a particular need for this, please submit a feature request at https:
       const hasPublishAction = post2?._links?.["wp:action-publish"] ?? false;
       return {
         isEditable: select8(store).isPermalinkEditable() && hasPublishAction,
-        postSlug: (0, import_url20.safeDecodeURIComponent)(
+        postSlug: (0, import_url21.safeDecodeURIComponent)(
           select8(store).getEditedPostSlug()
         ),
         viewPostLabel: postType2?.labels?.view_item,
         postLink: post2.link,
         permalinkPrefix: permalinkParts?.prefix,
         permalinkSuffix: permalinkParts?.suffix,
-        permalink: (0, import_url20.safeDecodeURIComponent)(
+        permalink: (0, import_url21.safeDecodeURIComponent)(
           select8(store).getPermalink()
         )
       };
@@ -87792,7 +87814,7 @@ If there's a particular need for this, please submit a feature request at https:
                 },
                 onBlur: (event) => {
                   editPost2({
-                    slug: (0, import_url20.cleanForSlug)(
+                    slug: (0, import_url21.cleanForSlug)(
                       event.target.value
                     )
                   });
@@ -87862,7 +87884,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-url/label.mjs
   var import_data185 = __toESM(require_data(), 1);
-  var import_url21 = __toESM(require_url(), 1);
+  var import_url22 = __toESM(require_url(), 1);
   function PostURLLabel() {
     return usePostURLLabel();
   }
@@ -87871,7 +87893,7 @@ If there's a particular need for this, please submit a feature request at https:
       (select8) => select8(store).getPermalink(),
       []
     );
-    return (0, import_url21.filterURLForDisplay)((0, import_url21.safeDecodeURIComponent)(postLink));
+    return (0, import_url22.filterURLForDisplay)((0, import_url22.safeDecodeURIComponent)(postLink));
   }
 
   // packages/editor/build-module/components/post-url/panel.mjs
@@ -87879,7 +87901,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data186 = __toESM(require_data(), 1);
   var import_components226 = __toESM(require_components(), 1);
   var import_i18n273 = __toESM(require_i18n(), 1);
-  var import_url22 = __toESM(require_url(), 1);
+  var import_url23 = __toESM(require_url(), 1);
   var import_core_data107 = __toESM(require_core_data(), 1);
   var import_jsx_runtime468 = __toESM(require_jsx_runtime(), 1);
   function PostURLPanel() {
@@ -87935,7 +87957,7 @@ If there's a particular need for this, please submit a feature request at https:
         slug: select8(store).getEditedPostSlug()
       };
     }, []);
-    const decodedSlug = (0, import_url22.safeDecodeURIComponent)(slug);
+    const decodedSlug = (0, import_url23.safeDecodeURIComponent)(slug);
     return /* @__PURE__ */ (0, import_jsx_runtime468.jsx)(
       import_components226.Button,
       {
@@ -95217,7 +95239,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components266 = __toESM(require_components(), 1);
   var import_data242 = __toESM(require_data(), 1);
   var import_i18n317 = __toESM(require_i18n(), 1);
-  var import_url23 = __toESM(require_url(), 1);
+  var import_url24 = __toESM(require_url(), 1);
   var import_jsx_runtime526 = __toESM(require_jsx_runtime(), 1);
   function RevisionsView() {
     const { lastRevisionId, revisionsCount, disableVisualRevisions } = (0, import_data242.useSelect)((select8) => {
@@ -95238,7 +95260,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data242.useDispatch)(store));
     const buttonProps = disableVisualRevisions ? {
-      href: (0, import_url23.addQueryArgs)("revision.php", {
+      href: (0, import_url24.addQueryArgs)("revision.php", {
         revision: lastRevisionId
       })
     } : { onClick: () => setCurrentRevisionId2(lastRevisionId) };
@@ -95547,7 +95569,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data246 = __toESM(require_data(), 1);
   var import_components268 = __toESM(require_components(), 1);
   var import_i18n322 = __toESM(require_i18n(), 1);
-  var import_url24 = __toESM(require_url(), 1);
+  var import_url25 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/post-revisions-timeline/index.mjs
   var import_data244 = __toESM(require_data(), 1);
@@ -95843,7 +95865,7 @@ If there's a particular need for this, please submit a feature request at https:
         /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(
           import_components268.ExternalLink,
           {
-            href: (0, import_url24.addQueryArgs)("revision.php", {
+            href: (0, import_url25.addQueryArgs)("revision.php", {
               revision: revisionId2
             }),
             children: (0, import_i18n322.__)("Open classic revisions screen")
