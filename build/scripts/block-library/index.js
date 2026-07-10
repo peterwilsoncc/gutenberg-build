@@ -33836,7 +33836,7 @@ ${text}
         if (collectionSlug === null) {
           return { icons: null, hasResolvedIcons: false };
         }
-        const query = collectionSlug === "" ? {} : { namespace: collectionSlug };
+        const query = collectionSlug === "" ? {} : { collection: collectionSlug };
         const { getEntityRecords, hasFinishedResolution } = select10(import_core_data23.store);
         return {
           icons: getEntityRecords("root", "icon", query),
