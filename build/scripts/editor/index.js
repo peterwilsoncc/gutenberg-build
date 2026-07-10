@@ -93045,7 +93045,6 @@ If there's a particular need for this, please submit a feature request at https:
     ]);
     const blockListLayout = postContentAttributes ? postContentLayout : fallbackLayout;
     const postEditorLayout = blockListLayout?.type === "default" && !hasPostContentAtRootLevel ? fallbackLayout : blockListLayout;
-    const observeTypingRef = (0, import_block_editor82.__unstableUseTypingObserver)();
     const titleRef = (0, import_element299.useRef)();
     (0, import_element299.useEffect)(() => {
       if (!autoFocus || !isCleanNewPost2()) {
@@ -93172,7 +93171,6 @@ If there's a particular need for this, please submit a feature request at https:
                       }
                     ),
                     contentEditable: false,
-                    ref: observeTypingRef,
                     style: {
                       // This is using inline styles so it's applied
                       // within the editor iframe.
