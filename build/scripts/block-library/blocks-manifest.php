@@ -5196,6 +5196,12 @@ return array(
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true
+			),
+			'typography' => array(
+				'fontSize' => true,
+				'__experimentalDefaultControls' => array(
+					'fontSize' => true
+				)
 			)
 		),
 		'editorStyle' => 'wp-block-playlist-editor',

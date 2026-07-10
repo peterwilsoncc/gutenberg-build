@@ -466,6 +466,12 @@
 .wp-block-playlist .waveform-subtitle {
   opacity: 0.7;
 }
+.wp-block-playlist .waveform-info,
+.wp-block-playlist .waveform-artist,
+.wp-block-playlist .waveform-title,
+.wp-block-playlist .waveform-time {
+  font-size: inherit;
+}
 .wp-block-playlist .wp-block-playlist__tracklist {
   margin: 0;
   padding-right: 0;

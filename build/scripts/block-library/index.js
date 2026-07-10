@@ -52792,6 +52792,12 @@ ${text}
       spacing: {
         margin: true,
         padding: true
+      },
+      typography: {
+        fontSize: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
       }
     },
     editorStyle: "wp-block-playlist-editor",
