@@ -2681,13 +2681,10 @@ input.components-combobox-control__input[type=text]:focus {
 .components-panel__body-toggle.components-button {
   position: relative;
   padding: 16px 48px 16px 16px;
-  outline: none;
   width: 100%;
   font-weight: 499;
   text-align: left;
   color: #1e1e1e;
-  border: none;
-  box-shadow: none;
 }
 @media not (prefers-reduced-motion) {
   .components-panel__body-toggle.components-button {
@@ -2698,7 +2695,7 @@ input.components-combobox-control__input[type=text]:focus {
   height: auto;
 }
 .components-panel__body-toggle.components-button:focus {
-  box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+  outline-offset: calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) * -1);
   border-radius: 0;
 }
 .components-panel__body-toggle.components-button .components-panel__arrow {
