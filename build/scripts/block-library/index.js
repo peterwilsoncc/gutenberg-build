@@ -51505,12 +51505,14 @@ ${text}
     function onUploadError(message) {
       createErrorNotice(message, { type: "snackbar" });
     }
+    const hasTrackSource = !!src || !!temporaryURL;
     (0, import_element96.useEffect)(() => {
-      if (isSelected && currentTrackClientId !== clientId) {
+      if (isSelected && hasTrackSource && currentTrackClientId !== clientId) {
         setCurrentTrackClientId(clientId);
       }
     }, [
       isSelected,
+      hasTrackSource,
       clientId,
       currentTrackClientId,
       setCurrentTrackClientId
@@ -51560,7 +51562,7 @@ ${text}
       setAttributes({ image: void 0, imageAlt: void 0 });
       imageButton.current.focus();
     }
-    if (!src && !temporaryURL) {
+    if (!hasTrackSource) {
       return /* @__PURE__ */ (0, import_jsx_runtime360.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
         import_block_editor184.MediaPlaceholder,
         {
