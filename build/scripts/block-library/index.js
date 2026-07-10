@@ -54076,7 +54076,7 @@ ${text}
 
   // packages/block-library/build-module/playlist/utils.mjs
   var import_i18n164 = __toESM(require_i18n(), 1);
-  function getAlbumCoverAttributes(image) {
+  function getTrackImageAttributes(image) {
     const imageSrc = image?.src ?? image?.url;
     if (imageSrc?.endsWith("/images/media/audio.svg")) {
       return {
@@ -54099,7 +54099,7 @@ ${text}
       artist: media.artist || media?.meta?.artist || media?.media_details?.artist || (0, import_i18n164.__)("Unknown artist"),
       album: media.album || media?.meta?.album || media?.media_details?.album || (0, import_i18n164.__)("Unknown album"),
       length: media?.fileLength || media?.media_details?.length_formatted,
-      ...getAlbumCoverAttributes(media?.image)
+      ...getTrackImageAttributes(media?.image)
     };
   }
 
@@ -54311,14 +54311,14 @@ ${text}
             /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
               import_components104.__experimentalToolsPanelItem,
               {
-                label: (0, import_i18n165.__)("Show Tracklist"),
+                label: (0, import_i18n165.__)("Show tracklist"),
                 isShownByDefault: true,
                 hasValue: () => showTracklist !== true,
                 onDeselect: () => setAttributes({ showTracklist: true }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
                   import_components104.ToggleControl,
                   {
-                    label: (0, import_i18n165.__)("Show Tracklist"),
+                    label: (0, import_i18n165.__)("Show tracklist"),
                     onChange: toggleAttribute("showTracklist"),
                     checked: showTracklist
                   }
@@ -54329,7 +54329,7 @@ ${text}
               /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
                 import_components104.__experimentalToolsPanelItem,
                 {
-                  label: (0, import_i18n165.__)("Show artist name in Tracklist"),
+                  label: (0, import_i18n165.__)("Show artist name in tracklist"),
                   isShownByDefault: true,
                   hasValue: () => showArtists !== true,
                   onDeselect: () => setAttributes({ showArtists: true }),
@@ -54337,7 +54337,7 @@ ${text}
                     import_components104.ToggleControl,
                     {
                       label: (0, import_i18n165.__)(
-                        "Show artist name in Tracklist"
+                        "Show artist name in tracklist"
                       ),
                       onChange: toggleAttribute(
                         "showArtists"
@@ -54350,14 +54350,18 @@ ${text}
               /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
                 import_components104.__experimentalToolsPanelItem,
                 {
-                  label: (0, import_i18n165.__)("Show number in Tracklist"),
+                  label: (0, import_i18n165.__)(
+                    "Show track numbers in tracklist"
+                  ),
                   isShownByDefault: true,
                   hasValue: () => showNumbers !== true,
                   onDeselect: () => setAttributes({ showNumbers: true }),
                   children: /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
                     import_components104.ToggleControl,
                     {
-                      label: (0, import_i18n165.__)("Show number in Tracklist"),
+                      label: (0, import_i18n165.__)(
+                        "Show track numbers in tracklist"
+                      ),
                       onChange: toggleAttribute(
                         "showNumbers"
                       ),
@@ -54369,7 +54373,9 @@ ${text}
               /* @__PURE__ */ (0, import_jsx_runtime370.jsx)(
                 import_components104.__experimentalToolsPanelItem,
                 {
-                  label: (0, import_i18n165.__)("Show track length in Tracklist"),
+                  label: (0, import_i18n165.__)(
+                    "Show track duration in tracklist"
+                  ),
                   isShownByDefault: true,
                   hasValue: () => showTrackLength !== true,
                   onDeselect: () => setAttributes({ showTrackLength: true }),
@@ -54377,7 +54383,7 @@ ${text}
                     import_components104.ToggleControl,
                     {
                       label: (0, import_i18n165.__)(
-                        "Show track length in Tracklist"
+                        "Show track duration in tracklist"
                       ),
                       onChange: toggleAttribute(
                         "showTrackLength"
@@ -54624,7 +54630,7 @@ ${text}
   var import_dom18 = __toESM(require_dom(), 1);
   var import_jsx_runtime372 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES7 = ["audio"];
-  var ALBUM_COVER_ALLOWED_MEDIA_TYPES = ["image"];
+  var TRACK_IMAGE_ALLOWED_MEDIA_TYPES = ["image"];
   var PlaylistTrackEdit = ({
     attributes,
     setAttributes,
@@ -54683,20 +54689,14 @@ ${text}
       }
       setAttributes({
         blob: void 0,
-        id: media.id,
-        src: media.url,
-        artist: media.artist || media?.meta?.artist || media?.media_details?.artist || (0, import_i18n166.__)("Unknown artist"),
-        album: media.album || media?.meta?.album || media?.media_details?.album || (0, import_i18n166.__)("Unknown album"),
-        ...getAlbumCoverAttributes(media?.image),
-        length: media?.fileLength || media?.media_details?.length_formatted,
-        title: media.title
+        ...getTrackAttributes(media)
       });
       setTemporaryURL();
     }
-    function onSelectAlbumCoverImage(coverImage) {
-      setAttributes(getAlbumCoverAttributes(coverImage));
+    function onSelectTrackImage(trackImage) {
+      setAttributes(getTrackImageAttributes(trackImage));
     }
-    function onRemoveAlbumCoverImage() {
+    function onRemoveTrackImage() {
       setAttributes({ image: void 0, imageAlt: void 0 });
       imageButton.current.focus();
     }
@@ -54764,14 +54764,14 @@ ${text}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_block_editor184.MediaUploadCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)(import_components105.BaseControl, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_components105.BaseControl.VisualLabel, { children: (0, import_i18n166.__)("Album cover image") }),
+          /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_components105.BaseControl.VisualLabel, { children: (0, import_i18n166.__)("Track image") }),
           /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)("div", { className: "editor-video-poster-control", children: [
             !!image && /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
               "img",
               {
                 src: image,
                 alt: (0, import_i18n166.__)(
-                  "Preview of the album cover image"
+                  "Preview of the track image"
                 )
               }
             ),
@@ -54779,8 +54779,8 @@ ${text}
               import_block_editor184.MediaUpload,
               {
                 title: (0, import_i18n166.__)("Select image"),
-                onSelect: onSelectAlbumCoverImage,
-                allowedTypes: ALBUM_COVER_ALLOWED_MEDIA_TYPES,
+                onSelect: onSelectTrackImage,
+                allowedTypes: TRACK_IMAGE_ALLOWED_MEDIA_TYPES,
                 render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
                   import_components105.Button,
                   {
@@ -54797,7 +54797,7 @@ ${text}
               import_components105.Button,
               {
                 __next40pxDefaultSize: true,
-                onClick: onRemoveAlbumCoverImage,
+                onClick: onRemoveTrackImage,
                 variant: "tertiary",
                 children: (0, import_i18n166.__)("Remove")
               }
@@ -54876,8 +54876,8 @@ ${text}
               /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)("span", { className: "wp-block-playlist-track__length", children: [
                 length && /* @__PURE__ */ (0, import_jsx_runtime372.jsx)("span", {
                   className: "screen-reader-text",
-                  /* translators: %s: Visually hidden label for the track length (screen reader text). */
-                  children: (0, import_i18n166.__)("Length:")
+                  /* translators: Visually hidden label for the track duration (screen reader text). */
+                  children: (0, import_i18n166.__)("Duration:")
                 }),
                 length
               ] }),
