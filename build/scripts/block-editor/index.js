@@ -80875,6 +80875,7 @@ var wp;
             className: "background-block-support-panel__inner-wrapper"
           }
         ),
+        /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(inspector_controls_default.Slot, { group: "styles" }),
         /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(inspector_controls_default.Slot, { group: "filter" }),
         /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(
           inspector_controls_default.Slot,
@@ -80905,8 +80906,7 @@ var wp;
             className: "elements-block-support-panel__inner-wrapper"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(position_controls_panel_default, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(inspector_controls_default.Slot, { group: "styles" })
+        /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(position_controls_panel_default, {})
       ] })
     ] });
   };
@@ -81407,6 +81407,7 @@ var wp;
           className: "background-block-support-panel__inner-wrapper"
         }
       ),
+      /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(inspector_controls_default.Slot, { group: "styles" }),
       /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(inspector_controls_default.Slot, { group: "layout", label: (0, import_i18n210.__)("Layout") }),
       /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
         inspector_controls_default.Slot,
@@ -81425,7 +81426,6 @@ var wp;
         }
       ),
       showPositionControls && /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(position_controls_panel_default, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(inspector_controls_default.Slot, { group: "styles" }),
       showBindingsControls && /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(inspector_controls_default.Slot, { group: "bindings" }),
       showAdvancedControls && /* @__PURE__ */ (0, import_jsx_runtime451.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(advanced_controls_panel_default, {}) })
     ] });

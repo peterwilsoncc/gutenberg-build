@@ -49616,6 +49616,11 @@ ${text}
         type: "boolean",
         default: true
       },
+      waveformStyle: {
+        type: "string",
+        enum: ["bars", "mirror", "line", "blocks", "dots", "seekbar"],
+        default: "bars"
+      },
       caption: {
         type: "string"
       }
@@ -49651,14 +49656,6 @@ ${text}
         padding: true
       }
     },
-    styles: [
-      { name: "bars", label: "Bars", isDefault: true },
-      { name: "mirror", label: "Mirror" },
-      { name: "line", label: "Line" },
-      { name: "blocks", label: "Blocks" },
-      { name: "dots", label: "Dots" },
-      { name: "seekbar", label: "Seekbar" }
-    ],
     editorStyle: "wp-block-playlist-editor",
     style: "wp-block-playlist"
   };
@@ -50971,6 +50968,15 @@ ${text}
   // packages/block-library/build-module/playlist/edit.mjs
   var import_jsx_runtime358 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES6 = ["audio"];
+  var DEFAULT_WAVEFORM_STYLE = "bars";
+  var WAVEFORM_STYLE_OPTIONS = [
+    { label: (0, import_i18n165.__)("Bars"), value: "bars" },
+    { label: (0, import_i18n165.__)("Mirror"), value: "mirror" },
+    { label: (0, import_i18n165.__)("Line"), value: "line" },
+    { label: (0, import_i18n165.__)("Blocks"), value: "blocks" },
+    { label: (0, import_i18n165.__)("Dots"), value: "dots" },
+    { label: (0, import_i18n165.__)("Seekbar"), value: "seekbar" }
+  ];
   var PlaylistEdit = ({
     attributes,
     setAttributes,
@@ -50984,10 +50990,11 @@ ${text}
       showNumbers,
       showImages,
       showArtists,
-      showTrackLength
+      showTrackLength,
+      waveformStyle = DEFAULT_WAVEFORM_STYLE
     } = attributes;
-    const waveformStyle = attributes.className?.match(/is-style-([\w-]+)/)?.[1] || "bars";
     const blockProps = (0, import_block_editor182.useBlockProps)();
+    const waveformPanelId = `${clientId}-waveform`;
     const { replaceInnerBlocks } = (0, import_data103.useDispatch)(import_block_editor182.store);
     const { createErrorNotice } = (0, import_data103.useDispatch)(import_notices14.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
@@ -51091,6 +51098,14 @@ ${text}
         setAttributes({ [attribute]: newValue });
       };
     }
+    const onChangeWaveformStyle = (0, import_element95.useCallback)(
+      (newWaveformStyle) => {
+        setAttributes({
+          waveformStyle: newWaveformStyle === DEFAULT_WAVEFORM_STYLE ? void 0 : newWaveformStyle
+        });
+      },
+      [setAttributes]
+    );
     const hasSelectedChild = (0, import_data103.useSelect)(
       (select10) => select10(import_block_editor182.store).hasSelectedInnerBlock(clientId),
       [clientId]
@@ -51274,6 +51289,38 @@ ${text}
               }
             )
           ]
+        }
+      ) }),
+      /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(import_block_editor182.InspectorControls, { group: "styles", children: /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+        import_components104.__experimentalToolsPanel,
+        {
+          label: (0, import_i18n165.__)("Waveform"),
+          resetAll: () => {
+            setAttributes({
+              waveformStyle: void 0
+            });
+          },
+          panelId: waveformPanelId,
+          dropdownMenuProps,
+          children: /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+            import_components104.__experimentalToolsPanelItem,
+            {
+              label: (0, import_i18n165.__)("Shape"),
+              isShownByDefault: true,
+              hasValue: () => waveformStyle !== DEFAULT_WAVEFORM_STYLE,
+              onDeselect: () => onChangeWaveformStyle(DEFAULT_WAVEFORM_STYLE),
+              panelId: waveformPanelId,
+              children: /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
+                import_components104.SelectControl,
+                {
+                  label: (0, import_i18n165.__)("Shape"),
+                  value: waveformStyle,
+                  options: WAVEFORM_STYLE_OPTIONS,
+                  onChange: onChangeWaveformStyle
+                }
+              )
+            }
+          )
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime358.jsxs)("figure", { ...blockProps, children: [
