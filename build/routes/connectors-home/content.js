@@ -11110,6 +11110,7 @@ import {
   __experimentalRegisterConnector as registerConnector,
   __experimentalConnectorItem as ConnectorItem,
   __experimentalDefaultConnectorSettings as DefaultConnectorSettings,
+  __experimentalApplicationPasswordConnectorSettings as ApplicationPasswordConnectorSettings,
   privateApis as connectorsPrivateApis
 } from "@wordpress/connectors";
 
@@ -11138,26 +11139,38 @@ function useConnectorPlugin({
     derivedPluginStatus,
     canManagePlugins,
     currentApiKey,
+    currentUsername,
+    hasStoredCredentials,
+    hasResolvedSettings,
     canInstallPlugins
   } = (0, import_data.useSelect)(
     (select2) => {
       const store2 = select2(import_core_data.store);
       const siteSettings = store2.getEntityRecord("root", "site");
-      const apiKey = siteSettings?.[settingName] ?? "";
+      const settingValue = siteSettings?.[settingName];
+      const apiKey = typeof settingValue === "string" ? settingValue : "";
+      const credentials = typeof settingValue === "object" && settingValue !== null ? settingValue : void 0;
+      const credentialsExist = credentials !== void 0 ? !!credentials.username && !!credentials.password : !!apiKey;
+      const settingsResolved = store2.hasFinishedResolution(
+        "getEntityRecord",
+        ["root", "site"]
+      );
       const canCreate = !!store2.canUser("create", {
         kind: "root",
         name: "plugin"
       });
+      const common = {
+        currentApiKey: apiKey,
+        currentUsername: credentials?.username ?? "",
+        hasStoredCredentials: credentialsExist,
+        hasResolvedSettings: settingsResolved,
+        canInstallPlugins: canCreate
+      };
       if (!pluginFileFromServer) {
-        const hasLoaded = store2.hasFinishedResolution(
-          "getEntityRecord",
-          ["root", "site"]
-        );
         return {
-          derivedPluginStatus: hasLoaded ? "active" : "checking",
-          canManagePlugins: void 0,
-          currentApiKey: apiKey,
-          canInstallPlugins: canCreate
+          ...common,
+          derivedPluginStatus: settingsResolved ? "active" : "checking",
+          canManagePlugins: void 0
         };
       }
       const plugin = store2.getEntityRecord(
@@ -11171,19 +11184,17 @@ function useConnectorPlugin({
       );
       if (!hasFinished) {
         return {
+          ...common,
           derivedPluginStatus: "checking",
-          canManagePlugins: void 0,
-          currentApiKey: apiKey,
-          canInstallPlugins: canCreate
+          canManagePlugins: void 0
         };
       }
       if (plugin) {
         const isPluginActive = plugin.status === "active" || plugin.status === "network-active";
         return {
+          ...common,
           derivedPluginStatus: isPluginActive ? "active" : "inactive",
-          canManagePlugins: true,
-          currentApiKey: apiKey,
-          canInstallPlugins: canCreate
+          canManagePlugins: true
         };
       }
       let status = "not-installed";
@@ -11193,21 +11204,71 @@ function useConnectorPlugin({
         status = "inactive";
       }
       return {
+        ...common,
         derivedPluginStatus: status,
-        canManagePlugins: false,
-        currentApiKey: apiKey,
-        canInstallPlugins: canCreate
+        canManagePlugins: false
       };
     },
-    [pluginBasename, settingName, isInstalled, isActivated]
+    [
+      pluginFileFromServer,
+      pluginBasename,
+      settingName,
+      isInstalled,
+      isActivated
+    ]
   );
   const pluginStatus = pluginStatusOverride ?? derivedPluginStatus;
   const canActivatePlugins = canManagePlugins;
-  const isConnected = pluginStatus === "active" && connectedState || // After install/activate, if settings re-fetch reveals an existing key,
+  const isConnected = pluginStatus === "active" && connectedState || // After install/activate, if settings re-fetch reveals stored credentials,
   // update connected state (mirrors what the server would report on page load).
-  pluginStatusOverride === "active" && !!currentApiKey;
+  pluginStatusOverride === "active" && hasStoredCredentials;
   const { saveEntityRecord, invalidateResolution } = (0, import_data.useDispatch)(import_core_data.store);
   const { createSuccessNotice, createErrorNotice } = (0, import_data.useDispatch)(import_notices.store);
+  const saveConnectorSetting = (value) => saveEntityRecord(
+    "root",
+    "site",
+    { [settingName]: value },
+    { throwOnError: true }
+  );
+  const createConnectedNotice = () => {
+    createSuccessNotice(
+      (0, import_i18n4.sprintf)(
+        /* translators: %s: Name of the connector (e.g. "OpenAI"). */
+        (0, import_i18n4.__)("%s connected successfully."),
+        connectorName
+      ),
+      {
+        id: "connector-connect-success",
+        type: "snackbar"
+      }
+    );
+  };
+  const createDisconnectedNotice = () => {
+    createSuccessNotice(
+      (0, import_i18n4.sprintf)(
+        /* translators: %s: Name of the connector (e.g. "OpenAI"). */
+        (0, import_i18n4.__)("%s disconnected."),
+        connectorName
+      ),
+      {
+        id: "connector-disconnect-success",
+        type: "snackbar"
+      }
+    );
+  };
+  const createDisconnectErrorNotice = () => {
+    createErrorNotice(
+      (0, import_i18n4.sprintf)(
+        /* translators: %s: Name of the connector (e.g. "OpenAI"). */
+        (0, import_i18n4.__)("Failed to disconnect %s."),
+        connectorName
+      ),
+      {
+        id: "connector-disconnect-error",
+        type: "snackbar"
+      }
+    );
+  };
   const installPlugin = async () => {
     if (!pluginSlug) {
       return;
@@ -11334,12 +11395,7 @@ function useConnectorPlugin({
   const saveApiKey = async (apiKey) => {
     const previousApiKey = currentApiKey;
     try {
-      const updatedRecord = await saveEntityRecord(
-        "root",
-        "site",
-        { [settingName]: apiKey },
-        { throwOnError: true }
-      );
+      const updatedRecord = await saveConnectorSetting(apiKey);
       const record = updatedRecord;
       const returnedKey = record?.[settingName];
       if (apiKey && (returnedKey === previousApiKey || !returnedKey)) {
@@ -11348,56 +11404,56 @@ function useConnectorPlugin({
         );
       }
       setConnectedState(true);
-      createSuccessNotice(
-        (0, import_i18n4.sprintf)(
-          /* translators: %s: Name of the connector (e.g. "OpenAI"). */
-          (0, import_i18n4.__)("%s connected successfully."),
-          connectorName
-        ),
-        {
-          id: "connector-connect-success",
-          type: "snackbar"
-        }
-      );
+      createConnectedNotice();
     } catch (error2) {
       console.error("Failed to save API key:", error2);
       throw error2;
     }
   };
+  const saveCredentials = async ({
+    username,
+    applicationPassword
+  }) => {
+    try {
+      const updatedRecord = await saveConnectorSetting({
+        username,
+        password: applicationPassword
+      });
+      const record = updatedRecord;
+      const credentials = record?.[settingName];
+      if (!credentials?.username || !credentials?.password) {
+        throw new Error(
+          (0, import_i18n4.__)("It was not possible to save these credentials.")
+        );
+      }
+      setConnectedState(true);
+      createConnectedNotice();
+    } catch (error2) {
+      console.error("Failed to save credentials:", error2);
+      throw error2;
+    }
+  };
   const removeApiKey = async () => {
     try {
-      await saveEntityRecord(
-        "root",
-        "site",
-        { [settingName]: "" },
-        { throwOnError: true }
-      );
+      await saveConnectorSetting("");
       setConnectedState(false);
-      createSuccessNotice(
-        (0, import_i18n4.sprintf)(
-          /* translators: %s: Name of the connector (e.g. "OpenAI"). */
-          (0, import_i18n4.__)("%s disconnected."),
-          connectorName
-        ),
-        {
-          id: "connector-disconnect-success",
-          type: "snackbar"
-        }
-      );
+      createDisconnectedNotice();
     } catch (error2) {
       console.error("Failed to remove API key:", error2);
-      createErrorNotice(
-        (0, import_i18n4.sprintf)(
-          /* translators: %s: Name of the connector (e.g. "OpenAI"). */
-          (0, import_i18n4.__)("Failed to disconnect %s."),
-          connectorName
-        ),
-        {
-          id: "connector-disconnect-error",
-          type: "snackbar"
-        }
-      );
-      throw error2;
+      createDisconnectErrorNotice();
+    }
+  };
+  const removeCredentials = async () => {
+    try {
+      await saveConnectorSetting({
+        username: "",
+        password: ""
+      });
+      setConnectedState(false);
+      createDisconnectedNotice();
+    } catch (error2) {
+      console.error("Failed to remove credentials:", error2);
+      createDisconnectErrorNotice();
     }
   };
   return {
@@ -11409,11 +11465,15 @@ function useConnectorPlugin({
     isBusy,
     isConnected,
     currentApiKey,
+    currentUsername,
+    hasResolvedSettings,
     keySource,
     handleButtonClick,
     getButtonLabel,
     saveApiKey,
-    removeApiKey
+    removeApiKey,
+    saveCredentials,
+    removeCredentials
   };
 }
 
@@ -11640,6 +11700,35 @@ var PluginDirectoryLink = ({ slug }) => /* @__PURE__ */ React.createElement(
   (0, import_i18n5.__)("Learn more")
 );
 var UnavailableActionBadge = () => /* @__PURE__ */ React.createElement(Badge, null, (0, import_i18n5.__)("Not available"));
+function ConnectorActionArea({
+  isConnected,
+  showUnavailableBadge,
+  pluginSlug,
+  isExpanded,
+  isBusy,
+  pluginStatus,
+  actionButtonRef,
+  handleButtonClick,
+  getButtonLabel
+}) {
+  return /* @__PURE__ */ React.createElement(import_components2.__experimentalHStack, { spacing: 3, expanded: false }, isConnected && /* @__PURE__ */ React.createElement(ConnectedBadge, null), showUnavailableBadge && (pluginSlug ? /* @__PURE__ */ React.createElement(PluginDirectoryLink, { slug: pluginSlug }) : /* @__PURE__ */ React.createElement(UnavailableActionBadge, null)), !showUnavailableBadge && /* @__PURE__ */ React.createElement(
+    import_components2.Button,
+    {
+      ref: actionButtonRef,
+      variant: isExpanded || isConnected ? "tertiary" : "secondary",
+      size: "compact",
+      onClick: handleButtonClick,
+      disabled: pluginStatus === "checking" || isBusy,
+      isBusy,
+      accessibleWhenDisabled: true
+    },
+    getButtonLabel()
+  ));
+}
+function getPluginSlug(pluginFile) {
+  const pluginBasename = pluginFile?.replace(/\.php$/, "");
+  return pluginBasename?.includes("/") ? pluginBasename.split("/")[0] : pluginBasename;
+}
 function ApiKeyConnector({
   name,
   description,
@@ -11650,15 +11739,7 @@ function ApiKeyConnector({
   const auth = authentication?.method === "api_key" ? authentication : void 0;
   const settingName = auth?.settingName ?? "";
   const helpUrl = auth?.credentialsUrl ?? void 0;
-  const pluginFile = plugin?.file?.replace(/\.php$/, "");
-  const pluginSlug = pluginFile?.includes("/") ? pluginFile.split("/")[0] : pluginFile;
-  let helpLabel;
-  try {
-    if (helpUrl) {
-      helpLabel = new URL(helpUrl).hostname;
-    }
-  } catch {
-  }
+  const pluginSlug = getPluginSlug(plugin?.file);
   const {
     pluginStatus,
     canInstallPlugins,
@@ -11668,6 +11749,7 @@ function ApiKeyConnector({
     isBusy,
     isConnected,
     currentApiKey,
+    hasResolvedSettings,
     keySource,
     handleButtonClick,
     getButtonLabel,
@@ -11684,7 +11766,6 @@ function ApiKeyConnector({
   });
   const isExternallyConfigured = keySource === "env" || keySource === "constant";
   const showUnavailableBadge = pluginStatus === "not-installed" && canInstallPlugins === false || pluginStatus === "inactive" && canActivatePlugins === false;
-  const showActionButton = !showUnavailableBadge;
   const actionButtonRef = (0, import_element32.useRef)(null);
   return /* @__PURE__ */ React.createElement(
     ConnectorItem,
@@ -11693,27 +11774,27 @@ function ApiKeyConnector({
       logo,
       name,
       description,
-      actionArea: /* @__PURE__ */ React.createElement(import_components2.__experimentalHStack, { spacing: 3, expanded: false }, isConnected && /* @__PURE__ */ React.createElement(ConnectedBadge, null), showUnavailableBadge && (pluginSlug ? /* @__PURE__ */ React.createElement(PluginDirectoryLink, { slug: pluginSlug }) : /* @__PURE__ */ React.createElement(UnavailableActionBadge, null)), showActionButton && /* @__PURE__ */ React.createElement(
-        import_components2.Button,
+      actionArea: /* @__PURE__ */ React.createElement(
+        ConnectorActionArea,
         {
-          ref: actionButtonRef,
-          variant: isExpanded || isConnected ? "tertiary" : "secondary",
-          size: "compact",
-          onClick: handleButtonClick,
-          disabled: pluginStatus === "checking" || isBusy,
+          isConnected,
+          showUnavailableBadge,
+          pluginSlug,
+          isExpanded,
           isBusy,
-          accessibleWhenDisabled: true
-        },
-        getButtonLabel()
-      ))
+          pluginStatus,
+          actionButtonRef,
+          handleButtonClick,
+          getButtonLabel
+        }
+      )
     },
-    isExpanded && pluginStatus === "active" && /* @__PURE__ */ React.createElement(
+    isExpanded && pluginStatus === "active" && hasResolvedSettings && /* @__PURE__ */ React.createElement(
       DefaultConnectorSettings,
       {
         key: isConnected ? "connected" : "setup",
         initialValue: isExternallyConfigured ? "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022" : currentApiKey,
         helpUrl,
-        helpLabel,
         readOnly: isConnected || isExternallyConfigured,
         keySource,
         onRemove: isExternallyConfigured ? void 0 : async () => {
@@ -11722,6 +11803,87 @@ function ApiKeyConnector({
         },
         onSave: async (apiKey) => {
           await saveApiKey(apiKey);
+          setIsExpanded(false);
+          actionButtonRef.current?.focus();
+        }
+      }
+    )
+  );
+}
+function ApplicationPasswordConnector({
+  name,
+  description,
+  logo,
+  authentication,
+  plugin
+}) {
+  const auth = authentication?.method === "application_password" ? authentication : void 0;
+  const settingName = auth?.settingName ?? "";
+  const helpUrl = auth?.credentialsUrl ?? void 0;
+  const pluginSlug = getPluginSlug(plugin?.file);
+  const {
+    pluginStatus,
+    canInstallPlugins,
+    canActivatePlugins,
+    isExpanded,
+    setIsExpanded,
+    isBusy,
+    isConnected,
+    currentUsername,
+    hasResolvedSettings,
+    keySource,
+    handleButtonClick,
+    getButtonLabel,
+    saveCredentials,
+    removeCredentials
+  } = useConnectorPlugin({
+    file: plugin?.file,
+    settingName,
+    connectorName: name,
+    isInstalled: plugin?.isInstalled,
+    isActivated: plugin?.isActivated,
+    keySource: auth?.keySource,
+    initialIsConnected: auth?.isConnected
+  });
+  const isExternallyConfigured = keySource === "env" || keySource === "constant";
+  const actionButtonRef = (0, import_element32.useRef)(null);
+  const showUnavailableBadge = pluginStatus === "not-installed" && canInstallPlugins === false || pluginStatus === "inactive" && canActivatePlugins === false;
+  return /* @__PURE__ */ React.createElement(
+    ConnectorItem,
+    {
+      className: pluginSlug ? `connector-item--${pluginSlug}` : void 0,
+      logo,
+      name,
+      description,
+      actionArea: /* @__PURE__ */ React.createElement(
+        ConnectorActionArea,
+        {
+          isConnected,
+          showUnavailableBadge,
+          pluginSlug,
+          isExpanded,
+          isBusy,
+          pluginStatus,
+          actionButtonRef,
+          handleButtonClick,
+          getButtonLabel
+        }
+      )
+    },
+    isExpanded && pluginStatus === "active" && hasResolvedSettings && /* @__PURE__ */ React.createElement(
+      ApplicationPasswordConnectorSettings,
+      {
+        key: isConnected ? "connected" : "setup",
+        initialUsername: isExternallyConfigured ? "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022" : currentUsername,
+        helpUrl,
+        readOnly: isConnected || isExternallyConfigured,
+        keySource,
+        onRemove: isExternallyConfigured ? void 0 : async () => {
+          await removeCredentials();
+          actionButtonRef.current?.focus();
+        },
+        onSave: async (credentials) => {
+          await saveCredentials(credentials);
           setIsExpanded(false);
           actionButtonRef.current?.focus();
         }
@@ -11751,6 +11913,8 @@ function registerDefaultConnectors() {
     );
     if (authentication.method === "api_key" && !existing?.render) {
       args.render = ApiKeyConnector;
+    } else if (authentication.method === "application_password" && !existing?.render) {
+      args.render = ApplicationPasswordConnector;
     }
     registerConnector(connectorName, args);
   }
