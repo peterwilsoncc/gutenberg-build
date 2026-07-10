@@ -54897,7 +54897,7 @@ ${text}
                 }),
                 length
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime372.jsx)("span", { className: "screen-reader-text", children: (0, import_i18n166.__)("Select to play this track") })
+              /* @__PURE__ */ (0, import_jsx_runtime372.jsx)("span", { className: "screen-reader-text", children: (0, import_i18n166.__)("Play") })
             ]
           }
         )

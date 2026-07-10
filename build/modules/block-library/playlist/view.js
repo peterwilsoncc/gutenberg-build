@@ -1305,6 +1305,7 @@ function initWaveformPlayer(element, {
 
 // packages/block-library/build-module/playlist/view.mjs
 var playerState = /* @__PURE__ */ new WeakMap();
+var playlistPlayerState = /* @__PURE__ */ new Map();
 var { state } = store(
   "core/playlist",
   {
@@ -1313,11 +1314,32 @@ var { state } = store(
       get isCurrentTrack() {
         const { currentId, trackId } = getContext();
         return currentId === trackId;
+      },
+      get isCurrentTrackPlaying() {
+        const { currentId, isPlaying, trackId } = getContext();
+        return currentId === trackId && !!isPlaying;
+      },
+      get trackButtonActionLabel() {
+        const { labelPauseTrack, labelSelectTrack } = getContext();
+        return state.isCurrentTrackPlaying ? labelPauseTrack : labelSelectTrack;
       }
     },
     actions: {
       changeTrack() {
         const context = getContext();
+        if (context.currentId === context.trackId) {
+          const player = playlistPlayerState.get(
+            context.playlistId
+          )?.instance;
+          if (player?.isPlaying) {
+            context.isPlaying = false;
+            player.pause();
+          } else {
+            player?.play()?.catch(logPlayError);
+          }
+          return;
+        }
+        context.isPlaying = false;
         context.currentId = context.trackId;
       }
     },
@@ -1351,6 +1373,7 @@ function initPlayer(ref, track, shouldAutoPlay, context) {
       existing.destroy?.();
       playerState.delete(ref);
     } else {
+      playlistPlayerState.set(context.playlistId, existing);
       existing.instance.loadTrack(track.url, track.title, track.artist, {
         artwork: track.image
       }).then(() => {
@@ -1394,10 +1417,26 @@ function initPlayer(ref, track, shouldAutoPlay, context) {
       }
     }
   });
-  playerState.set(ref, {
+  const setIsPlaying = (isPlaying) => {
+    context.isPlaying = isPlaying;
+  };
+  const onPlay = () => setIsPlaying(true);
+  const onPause = () => setIsPlaying(false);
+  player.container.addEventListener("waveformplayer:play", onPlay);
+  player.container.addEventListener("waveformplayer:pause", onPause);
+  player.container.addEventListener("waveformplayer:ended", onPause);
+  const destroy = () => {
+    player.container.removeEventListener("waveformplayer:play", onPlay);
+    player.container.removeEventListener("waveformplayer:pause", onPause);
+    player.container.removeEventListener("waveformplayer:ended", onPause);
+    player.destroy();
+  };
+  const nextState = {
     url: track.url,
     instance: player.instance,
-    destroy: player.destroy
-  });
+    destroy
+  };
+  playerState.set(ref, nextState);
+  playlistPlayerState.set(context.playlistId, nextState);
 }
 //# sourceMappingURL=view.js.map
