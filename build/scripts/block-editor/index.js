@@ -45627,7 +45627,7 @@ var wp;
     }
     return anchorNode.childNodes[anchorOffset - 1];
   }
-  function extractSelectionEndNode(selection2) {
+  function extractSelectionEndNode(selection2, isTripleClick) {
     const { focusNode, focusOffset } = selection2;
     if (focusNode.nodeType === focusNode.TEXT_NODE) {
       return focusNode;
@@ -45635,7 +45635,7 @@ var wp;
     if (focusOffset === focusNode.childNodes.length) {
       return focusNode;
     }
-    if (focusOffset === 0 && (0, import_dom41.isSelectionForward)(selection2)) {
+    if (focusOffset === 0 && (0, import_dom41.isSelectionForward)(selection2) && isTripleClick) {
       return focusNode.previousSibling ?? focusNode.parentElement;
     }
     return focusNode.childNodes[focusOffset];
@@ -45666,13 +45666,23 @@ var wp;
       (node) => {
         const { ownerDocument: ownerDocument2 } = node;
         const { defaultView } = ownerDocument2;
+        let isTripleClick = false;
+        function onMouseDown(event) {
+          isTripleClick = event.detail === 3;
+        }
+        function onKeyDown() {
+          isTripleClick = false;
+        }
         function onSelectionChange(event) {
           const selection2 = defaultView.getSelection();
           if (!selection2.rangeCount) {
             return;
           }
           const startNode = extractSelectionStartNode(selection2);
-          const endNode = extractSelectionEndNode(selection2);
+          const endNode = extractSelectionEndNode(
+            selection2,
+            isTripleClick
+          );
           if (!node.contains(startNode) || !node.contains(endNode)) {
             return;
           }
@@ -45730,7 +45740,14 @@ var wp;
                   end: {
                     clientId: startClientId,
                     attributeKey: richTextElement.dataset.wpBlockAttributeKey,
-                    offset: richTextData.end
+                    // Clamp the end offset to the element. A
+                    // forward selection can overshoot past the
+                    // rich text (e.g. a triple click extends
+                    // into the next block at offset 0), leaving
+                    // `end` undefined; that means the selection
+                    // reaches through the end of this element's
+                    // content.
+                    offset: richTextData.end ?? richTextData.text.length
                   }
                 });
               } else {
@@ -45791,12 +45808,16 @@ var wp;
           onSelectionChange
         );
         defaultView.addEventListener("mouseup", onSelectionChange);
+        node.addEventListener("mousedown", onMouseDown);
+        node.addEventListener("keydown", onKeyDown);
         return () => {
           ownerDocument2.removeEventListener(
             "selectionchange",
             onSelectionChange
           );
           defaultView.removeEventListener("mouseup", onSelectionChange);
+          node.removeEventListener("mousedown", onMouseDown);
+          node.removeEventListener("keydown", onKeyDown);
         };
       },
       [multiSelect2, selectBlock2, selectionChange2, getBlockParents2]
