@@ -34218,6 +34218,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/date.mjs
   var import_components51 = __toESM(require_components(), 1);
+  var import_a11y2 = __toESM(require_a11y(), 1);
   var import_element99 = __toESM(require_element(), 1);
   var import_i18n57 = __toESM(require_i18n(), 1);
   var import_date4 = __toESM(require_date(), 1);
@@ -34371,6 +34372,11 @@ If there's a particular need for this, please submit a feature request at https:
         validateRefs();
       }
     }, [isTouched, isValid2, validity, validateRefs]);
+    (0, import_element99.useEffect)(() => {
+      if (isTouched && customValidity?.message) {
+        (0, import_a11y2.speak)(customValidity.message);
+      }
+    }, [isTouched, customValidity?.message]);
     const onBlur = (event) => {
       if (isTouched) {
         return;
@@ -34381,7 +34387,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return /* @__PURE__ */ (0, import_jsx_runtime173.jsxs)("div", { onBlur, children: [
       children,
-      /* @__PURE__ */ (0, import_jsx_runtime173.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime173.jsxs)(
+      customValidity && /* @__PURE__ */ (0, import_jsx_runtime173.jsxs)(
         "p",
         {
           className: clsx_default(
@@ -34401,7 +34407,7 @@ If there's a particular need for this, please submit a feature request at https:
             customValidity.message
           ]
         }
-      ) })
+      )
     ] });
   }
   function CalendarDateControl({
@@ -39430,6 +39436,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data40 = __toESM(require_data(), 1);
   var import_element127 = __toESM(require_element(), 1);
   var import_i18n73 = __toESM(require_i18n(), 1);
+  var import_a11y3 = __toESM(require_a11y(), 1);
   var import_media_utils = __toESM(require_media_utils(), 1);
   var import_notices4 = __toESM(require_notices(), 1);
 
@@ -40114,6 +40121,11 @@ If there's a particular need for this, please submit a feature request at https:
         setCustomValidity(void 0);
       }
     }, [isTouched, field.isValid, validity]);
+    (0, import_element127.useEffect)(() => {
+      if (isTouched && customValidity?.message) {
+        (0, import_a11y3.speak)(customValidity.message);
+      }
+    }, [isTouched, customValidity?.message]);
     const onBlur = (0, import_element127.useCallback)(
       (event) => {
         if (isTouched) {
@@ -40217,7 +40229,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         }
       ) }),
-      customValidity && /* @__PURE__ */ (0, import_jsx_runtime209.jsx)("div", { "aria-live": "polite", children: /* @__PURE__ */ (0, import_jsx_runtime209.jsxs)(
+      customValidity && /* @__PURE__ */ (0, import_jsx_runtime209.jsxs)(
         "p",
         {
           className: clsx_default(
@@ -40240,7 +40252,7 @@ If there's a particular need for this, please submit a feature request at https:
             customValidity.message
           ]
         }
-      ) })
+      )
     ] });
   }
 
@@ -41274,7 +41286,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element133 = __toESM(require_element(), 1);
   var import_block_editor8 = __toESM(require_block_editor(), 1);
   var import_compose22 = __toESM(require_compose(), 1);
-  var import_a11y3 = __toESM(require_a11y(), 1);
+  var import_a11y5 = __toESM(require_a11y(), 1);
 
   // packages/global-styles-ui/build-module/variations/variations-panel.mjs
   var import_blocks4 = __toESM(require_blocks(), 1);
@@ -41364,7 +41376,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function BlockList({ filterValue }) {
     const sortedBlockTypes = useSortedBlockTypes();
-    const debouncedSpeak = (0, import_compose22.useDebounce)(import_a11y3.speak, 500);
+    const debouncedSpeak = (0, import_compose22.useDebounce)(import_a11y5.speak, 500);
     const { isMatchingSearchTerm } = (0, import_data45.useSelect)(import_blocks5.store);
     const filteredBlockTypes = !filterValue ? sortedBlockTypes : sortedBlockTypes.filter(
       (blockType) => isMatchingSearchTerm(blockType, filterValue)

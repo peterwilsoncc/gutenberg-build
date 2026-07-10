@@ -407,12 +407,12 @@ body.js.block-editor-page .media-frame select.attachment-filters:last-of-type {
   }
 }
 
-.edit-post-visual-editor.is-iframed {
+.edit-post-visual-editor {
   box-sizing: border-box;
 }
-.edit-post-visual-editor.is-iframed *,
-.edit-post-visual-editor.is-iframed *::before,
-.edit-post-visual-editor.is-iframed *::after {
+.edit-post-visual-editor *,
+.edit-post-visual-editor *::before,
+.edit-post-visual-editor *::after {
   box-sizing: inherit;
 }
 

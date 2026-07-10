@@ -82,7 +82,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState42({
+        cachedValue = useState41({
           inst: { value, getSnapshot: getSnapshot2 }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot2();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React73 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState42 = React73.useState, useEffect36 = React73.useEffect, useLayoutEffect6 = React73.useLayoutEffect, useDebugValue2 = React73.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React73 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState41 = React73.useState, useEffect36 = React73.useEffect, useLayoutEffect6 = React73.useLayoutEffect, useDebugValue2 = React73.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React73.useSyncExternalStore ? React73.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -16832,6 +16832,7 @@ var import_components7 = __toESM(require_components(), 1);
 var import_element50 = __toESM(require_element(), 1);
 var import_i18n8 = __toESM(require_i18n(), 1);
 var import_date4 = __toESM(require_date(), 1);
+import { speak } from "@wordpress/a11y";
 var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
 var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock2(import_components7.privateApis);
 var DATE_PRESETS = [
@@ -16982,6 +16983,11 @@ function ValidatedDateControl({
       validateRefs();
     }
   }, [isTouched, isValid2, validity, validateRefs]);
+  (0, import_element50.useEffect)(() => {
+    if (isTouched && customValidity?.message) {
+      speak(customValidity.message);
+    }
+  }, [isTouched, customValidity?.message]);
   const onBlur = (event) => {
     if (isTouched) {
       return;
@@ -16992,7 +16998,7 @@ function ValidatedDateControl({
   };
   return /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)("div", { onBlur, children: [
     children,
-    /* @__PURE__ */ (0, import_jsx_runtime75.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(
+    customValidity && /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(
       "p",
       {
         className: clsx_default(
@@ -17012,7 +17018,7 @@ function ValidatedDateControl({
           customValidity.message
         ]
       }
-    ) })
+    )
   ] });
 }
 function CalendarDateControl({
@@ -25066,6 +25072,7 @@ function useTransformStyle(state, imageSize) {
 // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
 var import_element79 = __toESM(require_element(), 1);
 var import_i18n28 = __toESM(require_i18n(), 1);
+import { speak as speak2 } from "@wordpress/a11y";
 
 // packages/media-editor/build-module/image-editor/core/source-region.mjs
 function getSourceRegion(state, imageSize) {
@@ -25318,7 +25325,6 @@ function buildAnnouncement(state, previousState) {
   return parts.join(", ");
 }
 function useAriaAnnouncer(state) {
-  const [ariaMessage, setAriaMessage] = (0, import_element79.useState)("");
   const timerRef = (0, import_element79.useRef)();
   const prevMessageRef = (0, import_element79.useRef)("");
   const prevStateRef = (0, import_element79.useRef)(null);
@@ -25334,7 +25340,7 @@ function useAriaAnnouncer(state) {
       prevStateRef.current = current;
       if (msg !== prevMessageRef.current) {
         prevMessageRef.current = msg;
-        setAriaMessage(msg);
+        speak2(msg);
       }
     }, ARIA_DEBOUNCE_MS);
     return () => {
@@ -25348,7 +25354,6 @@ function useAriaAnnouncer(state) {
     state.flip.horizontal,
     state.flip.vertical
   ]);
-  return ariaMessage;
 }
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
@@ -26168,7 +26173,7 @@ function CropperInner({
   (0, import_element84.useEffect)(() => {
     onStateChange?.(state);
   }, [state, onStateChange]);
-  const ariaMessage = useAriaAnnouncer(state);
+  useAriaAnnouncer(state);
   const naturalWidth = state.image?.naturalWidth ?? 0;
   const naturalHeight = state.image?.naturalHeight ?? 0;
   const { elementSize, visualSize } = (0, import_element84.useMemo)(
@@ -26720,16 +26725,6 @@ function CropperInner({
                     }
                   )
                 ]
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
-              "div",
-              {
-                "aria-live": "polite",
-                "aria-atomic": "true",
-                className: "wp-media-editor-image-editor__aria-live",
-                style: VISUALLY_HIDDEN_STYLE,
-                children: ariaMessage
               }
             )
           ]

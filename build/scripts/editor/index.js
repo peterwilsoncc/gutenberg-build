@@ -433,7 +433,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState159({
+          cachedValue = useState158({
             inst: { value, getSnapshot: getSnapshot2 }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -471,7 +471,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React77 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState159 = React77.useState, useEffect117 = React77.useEffect, useLayoutEffect15 = React77.useLayoutEffect, useDebugValue2 = React77.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React77 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState158 = React77.useState, useEffect117 = React77.useEffect, useLayoutEffect15 = React77.useLayoutEffect, useDebugValue2 = React77.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React77.useSyncExternalStore ? React77.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -7288,7 +7288,7 @@ var wp;
     updatePost: () => updatePost,
     updatePostLock: () => updatePostLock
   });
-  var import_a11y4 = __toESM(require_a11y(), 1);
+  var import_a11y7 = __toESM(require_a11y(), 1);
   var import_api_fetch8 = __toESM(require_api_fetch(), 1);
   var import_deprecated9 = __toESM(require_deprecated(), 1);
   var import_blocks20 = __toESM(require_blocks(), 1);
@@ -21800,6 +21800,7 @@ var wp;
   var import_data9 = __toESM(require_data(), 1);
   var import_element48 = __toESM(require_element(), 1);
   var import_i18n17 = __toESM(require_i18n(), 1);
+  var import_a11y2 = __toESM(require_a11y(), 1);
   var import_media_utils2 = __toESM(require_media_utils(), 1);
   var import_notices2 = __toESM(require_notices(), 1);
 
@@ -25384,6 +25385,11 @@ var wp;
         setCustomValidity(void 0);
       }
     }, [isTouched, field.isValid, validity]);
+    (0, import_element48.useEffect)(() => {
+      if (isTouched && customValidity?.message) {
+        (0, import_a11y2.speak)(customValidity.message);
+      }
+    }, [isTouched, customValidity?.message]);
     const onBlur = (0, import_element48.useCallback)(
       (event) => {
         if (isTouched) {
@@ -25487,7 +25493,7 @@ var wp;
           }
         }
       ) }),
-      customValidity && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("div", { "aria-live": "polite", children: /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
+      customValidity && /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
         "p",
         {
           className: clsx_default(
@@ -25510,7 +25516,7 @@ var wp;
             customValidity.message
           ]
         }
-      ) })
+      )
     ] });
   }
 
@@ -36465,11 +36471,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore2(createStore2, props) {
     const [store4, setStore] = React76.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store4), [store4]);
-    const useState159 = React76.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
+    const useState158 = React76.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
     return [React76.useMemo(() => ({
       ...store4,
-      useState: useState159
-    }), [store4, useState159]), useEvent(() => {
+      useState: useState158
+    }), [store4, useState158]), useEvent(() => {
       setStore((store5) => createStore2({
         ...props,
         ...store5.getState()
@@ -42467,6 +42473,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/date.mjs
   var import_components58 = __toESM(require_components(), 1);
+  var import_a11y3 = __toESM(require_a11y(), 1);
   var import_element113 = __toESM(require_element(), 1);
   var import_i18n112 = __toESM(require_i18n(), 1);
   var import_date9 = __toESM(require_date(), 1);
@@ -42620,6 +42627,11 @@ If there's a particular need for this, please submit a feature request at https:
         validateRefs();
       }
     }, [isTouched, isValid2, validity, validateRefs]);
+    (0, import_element113.useEffect)(() => {
+      if (isTouched && customValidity?.message) {
+        (0, import_a11y3.speak)(customValidity.message);
+      }
+    }, [isTouched, customValidity?.message]);
     const onBlur = (event) => {
       if (isTouched) {
         return;
@@ -42630,7 +42642,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)("div", { onBlur, children: [
       children,
-      /* @__PURE__ */ (0, import_jsx_runtime225.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(
+      customValidity && /* @__PURE__ */ (0, import_jsx_runtime225.jsxs)(
         "p",
         {
           className: clsx_default(
@@ -42650,7 +42662,7 @@ If there's a particular need for this, please submit a feature request at https:
             customValidity.message
           ]
         }
-      ) })
+      )
     ] });
   }
   function CalendarDateControl({
@@ -51231,6 +51243,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
+  var import_a11y4 = __toESM(require_a11y(), 1);
   var import_element147 = __toESM(require_element(), 1);
   var import_i18n132 = __toESM(require_i18n(), 1);
 
@@ -51485,7 +51498,6 @@ If there's a particular need for this, please submit a feature request at https:
     return parts.join(", ");
   }
   function useAriaAnnouncer(state2) {
-    const [ariaMessage, setAriaMessage] = (0, import_element147.useState)("");
     const timerRef = (0, import_element147.useRef)();
     const prevMessageRef = (0, import_element147.useRef)("");
     const prevStateRef = (0, import_element147.useRef)(null);
@@ -51501,7 +51513,7 @@ If there's a particular need for this, please submit a feature request at https:
         prevStateRef.current = current;
         if (msg !== prevMessageRef.current) {
           prevMessageRef.current = msg;
-          setAriaMessage(msg);
+          (0, import_a11y4.speak)(msg);
         }
       }, ARIA_DEBOUNCE_MS);
       return () => {
@@ -51515,7 +51527,6 @@ If there's a particular need for this, please submit a feature request at https:
       state2.flip.horizontal,
       state2.flip.vertical
     ]);
-    return ariaMessage;
   }
 
   // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
@@ -52335,7 +52346,7 @@ If there's a particular need for this, please submit a feature request at https:
     (0, import_element152.useEffect)(() => {
       onStateChange?.(state2);
     }, [state2, onStateChange]);
-    const ariaMessage = useAriaAnnouncer(state2);
+    useAriaAnnouncer(state2);
     const naturalWidth = state2.image?.naturalWidth ?? 0;
     const naturalHeight = state2.image?.naturalHeight ?? 0;
     const { elementSize, visualSize } = (0, import_element152.useMemo)(
@@ -52887,16 +52898,6 @@ If there's a particular need for this, please submit a feature request at https:
                       }
                     )
                   ]
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                "div",
-                {
-                  "aria-live": "polite",
-                  "aria-atomic": "true",
-                  className: "wp-media-editor-image-editor__aria-live",
-                  style: VISUALLY_HIDDEN_STYLE,
-                  children: ariaMessage
                 }
               )
             ]
@@ -56381,7 +56382,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element168 = __toESM(require_element(), 1);
   var import_block_editor7 = __toESM(require_block_editor(), 1);
   var import_compose27 = __toESM(require_compose(), 1);
-  var import_a11y3 = __toESM(require_a11y(), 1);
+  var import_a11y6 = __toESM(require_a11y(), 1);
 
   // packages/global-styles-ui/build-module/variations/variations-panel.mjs
   var import_blocks7 = __toESM(require_blocks(), 1);
@@ -56546,7 +56547,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function BlockList({ filterValue }) {
     const sortedBlockTypes = useSortedBlockTypes();
-    const debouncedSpeak = (0, import_compose27.useDebounce)(import_a11y3.speak, 500);
+    const debouncedSpeak = (0, import_compose27.useDebounce)(import_a11y6.speak, 500);
     const { isMatchingSearchTerm } = (0, import_data53.useSelect)(import_blocks8.store);
     const filteredBlockTypes = !filterValue ? sortedBlockTypes : sortedBlockTypes.filter(
       (blockType) => isMatchingSearchTerm(blockType, filterValue)
@@ -77990,13 +77991,13 @@ If there's a particular need for this, please submit a feature request at https:
       unlock(registry.dispatch(import_block_editor36.store)).resetZoomLevel();
     }
     if (mode === "visual") {
-      (0, import_a11y4.speak)((0, import_i18n204.__)("Visual editor selected"), "assertive");
+      (0, import_a11y7.speak)((0, import_i18n204.__)("Visual editor selected"), "assertive");
     } else if (mode === "text") {
       const isDistractionFree = registry.select(import_preferences10.store).get("core", "distractionFree");
       if (isDistractionFree) {
         dispatch8.toggleDistractionFree();
       }
-      (0, import_a11y4.speak)((0, import_i18n204.__)("Code editor selected"), "assertive");
+      (0, import_a11y7.speak)((0, import_i18n204.__)("Code editor selected"), "assertive");
     }
   };
   function openPublishSidebar() {
@@ -85155,7 +85156,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data156 = __toESM(require_data(), 1);
   var import_core_data92 = __toESM(require_core_data(), 1);
   var import_compose48 = __toESM(require_compose(), 1);
-  var import_a11y5 = __toESM(require_a11y(), 1);
+  var import_a11y8 = __toESM(require_a11y(), 1);
   var import_notices26 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/most-used-terms.mjs
@@ -85373,7 +85374,7 @@ If there's a particular need for this, please submit a feature request at https:
         (0, import_i18n253._x)("%s added", "term"),
         taxonomy?.labels?.singular_name ?? defaultName
       );
-      (0, import_a11y5.speak)(termAddedMessage, "assertive");
+      (0, import_a11y8.speak)(termAddedMessage, "assertive");
       onUpdateTerms(newTermIds);
     }
     const newTermLabel = taxonomy?.labels?.add_new_item ?? (slug === "post_tag" ? (0, import_i18n253.__)("Add Tag") : (0, import_i18n253.__)("Add Term"));
@@ -85557,7 +85558,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data159 = __toESM(require_data(), 1);
   var import_compose49 = __toESM(require_compose(), 1);
   var import_core_data95 = __toESM(require_core_data(), 1);
-  var import_a11y6 = __toESM(require_a11y(), 1);
+  var import_a11y9 = __toESM(require_a11y(), 1);
   var import_html_entities25 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime449 = __toESM(require_jsx_runtime(), 1);
   var { normalizeTextString } = unlock(import_components211.privateApis);
@@ -85630,7 +85631,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [showForm, setShowForm] = (0, import_element256.useState)(false);
     const [filterValue, setFilterValue] = (0, import_element256.useState)("");
     const [filteredTermsTree, setFilteredTermsTree] = (0, import_element256.useState)([]);
-    const debouncedSpeak = (0, import_compose49.useDebounce)(import_a11y6.speak, 500);
+    const debouncedSpeak = (0, import_compose49.useDebounce)(import_a11y9.speak, 500);
     const {
       hasCreateAction,
       hasAssignAction,
@@ -85726,7 +85727,7 @@ If there's a particular need for this, please submit a feature request at https:
         (0, import_i18n256._x)("%s added", "term"),
         taxonomy?.labels?.singular_name ?? defaultName
       );
-      (0, import_a11y6.speak)(termAddedMessage, "assertive");
+      (0, import_a11y9.speak)(termAddedMessage, "assertive");
       setAdding(false);
       setFormName("");
       setFormParent("");
@@ -90141,7 +90142,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collaborators-presence/list.mjs
   var import_i18n292 = __toESM(require_i18n(), 1);
   var import_components245 = __toESM(require_components(), 1);
-  var import_a11y8 = __toESM(require_a11y(), 1);
+  var import_a11y11 = __toESM(require_a11y(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/get-avatar-url.mjs
   function getAvatarUrl(avatarUrls) {
@@ -90475,7 +90476,7 @@ If there's a particular need for this, please submit a feature request at https:
         highlightDuration: 2e3
       });
       if (success) {
-        (0, import_a11y8.speak)((0, import_i18n292.__)("Scrolled to cursor"), "polite");
+        (0, import_a11y11.speak)((0, import_i18n292.__)("Scrolled to cursor"), "polite");
         setIsPopoverVisible(false);
       }
     };
@@ -92890,7 +92891,6 @@ If there's a particular need for this, please submit a feature request at https:
   function VisualEditor({
     // Ideally as we unify post and site editors, we won't need these props.
     autoFocus,
-    disableIframe = false,
     iframeProps,
     contentRef,
     className
@@ -93113,8 +93113,7 @@ If there's a particular need for this, please submit a feature request at https:
             "has-vertical-padding": isFocusedEntity || hasCanvasWidth,
             // Horizontal padding leaves room for the resize handles
             // that appear on the left/right of a resizable canvas.
-            "has-horizontal-padding": isFocusedEntity || enableResizing,
-            "is-iframed": !disableIframe
+            "has-horizontal-padding": isFocusedEntity || enableResizing
           }
         ),
         children: [
@@ -93122,7 +93121,7 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(resizable_editor_default, { enableResizing, height: "100%", children: /* @__PURE__ */ (0, import_jsx_runtime506.jsxs)(
             BlockCanvas,
             {
-              shouldIframe: !disableIframe,
+              shouldIframe: true,
               contentRef,
               styles: iframeStyles,
               height: "100%",
@@ -93170,8 +93169,8 @@ If there's a particular need for this, please submit a feature request at https:
                     contentEditable: false,
                     ref: observeTypingRef,
                     style: {
-                      // This is using inline styles
-                      // so it's applied for both iframed and non iframed editors.
+                      // This is using inline styles so it's applied
+                      // within the editor iframe.
                       marginTop: "4rem"
                     },
                     children: /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(post_title_default, { ref: titleRef })
@@ -93196,9 +93195,10 @@ If there's a particular need for this, please submit a feature request at https:
                           ),
                           layout: blockListLayout,
                           dropZoneElement: (
-                            // When iframed, pass in the html element of the iframe to
-                            // ensure the drop zone extends to the edges of the iframe.
-                            disableIframe ? localRef.current : localRef.current?.parentNode
+                            // Pass in the html element of the iframe to
+                            // ensure the drop zone extends to the edges of
+                            // the iframe.
+                            localRef.current?.parentNode
                           ),
                           __unstableDisableDropZone: (
                             // In template preview mode, disable drop zones at the root of the template.
@@ -93826,7 +93826,6 @@ If there's a particular need for this, please submit a feature request at https:
     children,
     forceIsDirty,
     contentRef,
-    disableIframe,
     autoFocus,
     customSaveButton,
     customSavePanel,
@@ -93958,7 +93957,6 @@ If there's a particular need for this, please submit a feature request at https:
               visual_editor_default,
               {
                 contentRef,
-                disableIframe,
                 autoFocus,
                 iframeProps
               }
@@ -100025,7 +100023,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data273 = __toESM(require_data(), 1);
   var import_element339 = __toESM(require_element(), 1);
   var import_i18n350 = __toESM(require_i18n(), 1);
-  var import_a11y9 = __toESM(require_a11y(), 1);
+  var import_a11y12 = __toESM(require_a11y(), 1);
   var import_upload_media4 = __toESM(require_upload_media(), 1);
   var import_notices38 = __toESM(require_notices(), 1);
   var import_components287 = __toESM(require_components(), 1);
@@ -100085,14 +100083,14 @@ If there's a particular need for this, please submit a feature request at https:
       const isUploading = remaining > 0;
       if (isUploading && !wasUploadingRef.current) {
         dismissedRef.current = false;
-        (0, import_a11y9.speak)((0, import_i18n350.__)("Media upload started"), "polite");
+        (0, import_a11y12.speak)((0, import_i18n350.__)("Media upload started"), "polite");
         if (completionTimeoutRef.current) {
           clearTimeout(completionTimeoutRef.current);
           completionTimeoutRef.current = null;
           setPeak(0);
         }
       } else if (!isUploading && wasUploadingRef.current) {
-        (0, import_a11y9.speak)((0, import_i18n350.__)("Media upload complete"), "polite");
+        (0, import_a11y12.speak)((0, import_i18n350.__)("Media upload complete"), "polite");
         if (!dismissedRef.current) {
           createNotice("info", (0, import_i18n350.__)("Upload complete"), {
             id: NOTICE_ID,

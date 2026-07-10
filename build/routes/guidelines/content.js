@@ -24827,6 +24827,7 @@ var import_components34 = __toESM(require_components(), 1);
 var import_element76 = __toESM(require_element(), 1);
 var import_i18n34 = __toESM(require_i18n(), 1);
 var import_date4 = __toESM(require_date(), 1);
+import { speak } from "@wordpress/a11y";
 var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
 var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock2(import_components34.privateApis);
 var DATE_PRESETS = [
@@ -24977,6 +24978,11 @@ function ValidatedDateControl({
       validateRefs();
     }
   }, [isTouched, isValid2, validity, validateRefs]);
+  (0, import_element76.useEffect)(() => {
+    if (isTouched && customValidity?.message) {
+      speak(customValidity.message);
+    }
+  }, [isTouched, customValidity?.message]);
   const onBlur = (event) => {
     if (isTouched) {
       return;
@@ -24987,7 +24993,7 @@ function ValidatedDateControl({
   };
   return /* @__PURE__ */ (0, import_jsx_runtime106.jsxs)("div", { onBlur, children: [
     children,
-    /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime106.jsxs)(
+    customValidity && /* @__PURE__ */ (0, import_jsx_runtime106.jsxs)(
       "p",
       {
         className: clsx_default(
@@ -25007,7 +25013,7 @@ function ValidatedDateControl({
           customValidity.message
         ]
       }
-    ) })
+    )
   ] });
 }
 function CalendarDateControl({

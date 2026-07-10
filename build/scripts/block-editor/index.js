@@ -86256,6 +86256,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/date.mjs
   var import_components238 = __toESM(require_components(), 1);
+  var import_a11y22 = __toESM(require_a11y(), 1);
   var import_element285 = __toESM(require_element(), 1);
   var import_i18n221 = __toESM(require_i18n(), 1);
   var import_date6 = __toESM(require_date(), 1);
@@ -86409,6 +86410,11 @@ var wp;
         validateRefs();
       }
     }, [isTouched, isValid2, validity, validateRefs]);
+    (0, import_element285.useEffect)(() => {
+      if (isTouched && customValidity?.message) {
+        (0, import_a11y22.speak)(customValidity.message);
+      }
+    }, [isTouched, customValidity?.message]);
     const onBlur = (event) => {
       if (isTouched) {
         return;
@@ -86419,7 +86425,7 @@ var wp;
     };
     return /* @__PURE__ */ (0, import_jsx_runtime472.jsxs)("div", { onBlur, children: [
       children,
-      /* @__PURE__ */ (0, import_jsx_runtime472.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime472.jsxs)(
+      customValidity && /* @__PURE__ */ (0, import_jsx_runtime472.jsxs)(
         "p",
         {
           className: clsx_default(
@@ -86439,7 +86445,7 @@ var wp;
             customValidity.message
           ]
         }
-      ) })
+      )
     ] });
   }
   function CalendarDateControl({

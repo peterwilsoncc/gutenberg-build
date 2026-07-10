@@ -8672,7 +8672,7 @@ textarea.editor-post-text-editor::placeholder {
   padding-left: 24px;
   padding-right: 24px;
 }
-.editor-visual-editor.is-iframed {
+.editor-visual-editor {
   overflow: hidden;
 }
 .editor-visual-editor .components-button {

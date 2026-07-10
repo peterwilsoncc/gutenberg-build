@@ -55145,10 +55145,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       children: [(0, import_element229.cloneElement)(children, {
         label: appendRequiredIndicator(children.props.label, required, markWhenOptional),
         required
-      }), /* @__PURE__ */ (0, import_jsx_runtime312.jsx)("div", {
-        "aria-live": "polite",
-        children: visibleMessage
-      })]
+      }), visibleMessage]
     });
   }
   var ControlWithError = (0, import_element229.forwardRef)(UnforwardedControlWithError);

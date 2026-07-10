@@ -271,6 +271,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/a11y
+  var require_a11y = __commonJS({
+    "package-external:@wordpress/a11y"(exports, module) {
+      module.exports = window.wp.a11y;
+    }
+  });
+
   // package-external:@wordpress/theme
   var require_theme = __commonJS({
     "package-external:@wordpress/theme"(exports, module) {
@@ -23275,6 +23282,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/date.mjs
   var import_components32 = __toESM(require_components(), 1);
+  var import_a11y = __toESM(require_a11y(), 1);
   var import_element60 = __toESM(require_element(), 1);
   var import_i18n41 = __toESM(require_i18n(), 1);
   var import_date4 = __toESM(require_date(), 1);
@@ -23428,6 +23436,11 @@ If there's a particular need for this, please submit a feature request at https:
         validateRefs();
       }
     }, [isTouched, isValid2, validity, validateRefs]);
+    (0, import_element60.useEffect)(() => {
+      if (isTouched && customValidity?.message) {
+        (0, import_a11y.speak)(customValidity.message);
+      }
+    }, [isTouched, customValidity?.message]);
     const onBlur = (event) => {
       if (isTouched) {
         return;
@@ -23438,7 +23451,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)("div", { onBlur, children: [
       children,
-      /* @__PURE__ */ (0, import_jsx_runtime96.jsx)("div", { "aria-live": "polite", children: customValidity && /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(
+      customValidity && /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(
         "p",
         {
           className: clsx_default(
@@ -23458,7 +23471,7 @@ If there's a particular need for this, please submit a feature request at https:
             customValidity.message
           ]
         }
-      ) })
+      )
     ] });
   }
   function CalendarDateControl({
