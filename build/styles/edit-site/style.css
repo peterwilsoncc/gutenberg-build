@@ -5040,6 +5040,7 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
   font-weight: 499;
 }
 .edit-site-sidebar-navigation-item.components-item:focus-visible {
+  --wp-components-color-accent: var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
   transform: translateZ(0);
 }
 .edit-site-sidebar-navigation-item.components-item .edit-site-sidebar-navigation-item__drilldown-indicator {
