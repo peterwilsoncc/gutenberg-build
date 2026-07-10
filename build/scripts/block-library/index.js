@@ -54126,12 +54126,12 @@ ${text}
   var ALLOWED_MEDIA_TYPES6 = ["audio"];
   var DEFAULT_WAVEFORM_STYLE = "bars";
   var WAVEFORM_STYLE_OPTIONS = [
-    { label: (0, import_i18n165.__)("Bars"), value: "bars" },
-    { label: (0, import_i18n165.__)("Mirror"), value: "mirror" },
-    { label: (0, import_i18n165.__)("Line"), value: "line" },
-    { label: (0, import_i18n165.__)("Blocks"), value: "blocks" },
-    { label: (0, import_i18n165.__)("Dots"), value: "dots" },
-    { label: (0, import_i18n165.__)("Seekbar"), value: "seekbar" }
+    { label: (0, import_i18n165._x)("Bars", "waveform style option"), value: "bars" },
+    { label: (0, import_i18n165._x)("Mirror", "waveform style option"), value: "mirror" },
+    { label: (0, import_i18n165._x)("Line", "waveform style option"), value: "line" },
+    { label: (0, import_i18n165._x)("Blocks", "waveform style option"), value: "blocks" },
+    { label: (0, import_i18n165._x)("Dots", "waveform style option"), value: "dots" },
+    { label: (0, import_i18n165._x)("Seekbar", "waveform style option"), value: "seekbar" }
   ];
   var PlaylistEdit = ({
     attributes,
