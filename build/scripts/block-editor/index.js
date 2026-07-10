@@ -71048,7 +71048,6 @@ var wp;
       children: /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
         import_components176.__experimentalInputControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n165.__)("URL"),
           type: "text",
           hideLabelFromVision: true,
@@ -76297,7 +76296,6 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(import_components200.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
               import_components200.__experimentalInputControl,
               {
-                size: "__unstable-large",
                 label: (0, import_i18n189.__)("Column span"),
                 type: "number",
                 onChange: (value) => {
@@ -76318,7 +76316,6 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(import_components200.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
               import_components200.__experimentalInputControl,
               {
-                size: "__unstable-large",
                 label: (0, import_i18n189.__)("Row span"),
                 type: "number",
                 onChange: (value) => {
@@ -76355,7 +76352,6 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(import_components200.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
               import_components200.__experimentalInputControl,
               {
-                size: "__unstable-large",
                 label: (0, import_i18n189.__)("Column"),
                 type: "number",
                 onChange: (value) => {
@@ -76385,7 +76381,6 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(import_components200.FlexItem, { style: { width: "50%" }, children: /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
               import_components200.__experimentalInputControl,
               {
-                size: "__unstable-large",
                 label: (0, import_i18n189.__)("Row"),
                 type: "number",
                 onChange: (value) => {
@@ -86193,7 +86188,6 @@ var wp;
             ValidatedInputControl2,
             {
               ref: inputControlRef,
-              __next40pxDefaultSize: true,
               required: !!isValid2?.required,
               customValidity: getCustomValidity(isValid2, validity),
               type: "datetime-local",
@@ -86586,7 +86580,6 @@ var wp;
               /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
                 import_components238.__experimentalInputControl,
                 {
-                  __next40pxDefaultSize: true,
                   ref: validityTargetRef,
                   type: "date",
                   label: (0, import_i18n221.__)("Date"),
@@ -86800,7 +86793,6 @@ var wp;
                     /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
                       import_components238.__experimentalInputControl,
                       {
-                        __next40pxDefaultSize: true,
                         ref: fromInputRef,
                         type: "date",
                         label: (0, import_i18n221.__)("From"),
@@ -86816,7 +86808,6 @@ var wp;
                     /* @__PURE__ */ (0, import_jsx_runtime472.jsx)(
                       import_components238.__experimentalInputControl,
                       {
-                        __next40pxDefaultSize: true,
                         ref: toInputRef,
                         type: "date",
                         label: (0, import_i18n221.__)("To"),
@@ -87009,8 +87000,7 @@ var wp;
         disabled: disabled2,
         pattern: isValid2.pattern ? isValid2.pattern.constraint : void 0,
         minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
-        maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
-        __next40pxDefaultSize: true
+        maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0
       }
     );
   }

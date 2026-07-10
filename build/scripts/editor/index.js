@@ -8173,7 +8173,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
           import_components.__experimentalInputControl,
           {
-            __next40pxDefaultSize: true,
             prefix: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components.__experimentalInputControlPrefixWrapper, { children: "/" }),
             suffix: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
               import_components.Button,
@@ -27088,7 +27087,6 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
         import_components13.__experimentalInputControl,
         {
-          __next40pxDefaultSize: true,
           label: (0, import_i18n52.__)("Order"),
           type: "number",
           value: typeof item.menu_order === "number" && Number.isInteger(item.menu_order) ? String(item.menu_order) : "",
@@ -27238,7 +27236,6 @@ var wp;
         /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
           import_components14.__experimentalInputControl,
           {
-            __next40pxDefaultSize: true,
             label: (0, import_i18n53.__)("Title"),
             placeholder: (0, import_i18n53.__)("No title"),
             value: getItemTitle(item),
@@ -42401,7 +42398,6 @@ If there's a particular need for this, please submit a feature request at https:
             ValidatedInputControl,
             {
               ref: inputControlRef,
-              __next40pxDefaultSize: true,
               required: !!isValid2?.required,
               customValidity: getCustomValidity(isValid2, validity),
               type: "datetime-local",
@@ -42794,7 +42790,6 @@ If there's a particular need for this, please submit a feature request at https:
               /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
                 import_components58.__experimentalInputControl,
                 {
-                  __next40pxDefaultSize: true,
                   ref: validityTargetRef,
                   type: "date",
                   label: (0, import_i18n112.__)("Date"),
@@ -43008,7 +43003,6 @@ If there's a particular need for this, please submit a feature request at https:
                     /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
                       import_components58.__experimentalInputControl,
                       {
-                        __next40pxDefaultSize: true,
                         ref: fromInputRef,
                         type: "date",
                         label: (0, import_i18n112.__)("From"),
@@ -43024,7 +43018,6 @@ If there's a particular need for this, please submit a feature request at https:
                     /* @__PURE__ */ (0, import_jsx_runtime225.jsx)(
                       import_components58.__experimentalInputControl,
                       {
-                        __next40pxDefaultSize: true,
                         ref: toInputRef,
                         type: "date",
                         label: (0, import_i18n112.__)("To"),
@@ -43217,8 +43210,7 @@ If there's a particular need for this, please submit a feature request at https:
         disabled: disabled2,
         pattern: isValid2.pattern ? isValid2.pattern.constraint : void 0,
         minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
-        maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
-        __next40pxDefaultSize: true
+        maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0
       }
     );
   }
@@ -70869,7 +70861,6 @@ If there's a particular need for this, please submit a feature request at https:
                 /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(
                   import_components135.__experimentalInputControl,
                   {
-                    __next40pxDefaultSize: true,
                     autoComplete: "off",
                     label: (0, import_i18n175.__)("Name"),
                     placeholder: (0, import_i18n175.__)("Shadow name"),
@@ -72295,7 +72286,6 @@ If there's a particular need for this, please submit a feature request at https:
               /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
                 import_components146.__experimentalInputControl,
                 {
-                  __next40pxDefaultSize: true,
                   autoComplete: "off",
                   value: newName,
                   onChange: setNewName,
@@ -87771,7 +87761,6 @@ If there's a particular need for this, please submit a feature request at https:
             /* @__PURE__ */ (0, import_jsx_runtime467.jsx)(
               import_components225.__experimentalInputControl,
               {
-                __next40pxDefaultSize: true,
                 prefix: /* @__PURE__ */ (0, import_jsx_runtime467.jsx)(import_components225.__experimentalInputControlPrefixWrapper, { children: "/" }),
                 suffix: /* @__PURE__ */ (0, import_jsx_runtime467.jsx)(import_components225.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime467.jsx)(
                   import_components225.Button,
@@ -94906,7 +94895,6 @@ If there's a particular need for this, please submit a feature request at https:
             import_components263.__experimentalInputControl,
             {
               placeholder: (0, import_i18n314.__)("No title"),
-              size: "__unstable-large",
               value: postsPageTitle,
               onChange: (0, import_compose78.debounce)(setPostsPageTitle, 300),
               label: (0, import_i18n314.__)("Blog title"),

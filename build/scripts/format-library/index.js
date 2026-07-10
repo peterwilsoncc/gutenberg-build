@@ -4672,8 +4672,7 @@ var wp;
             help: (0, import_i18n6.__)(
               "Separate multiple classes with spaces."
             ),
-            __unstableInputWidth: "100%",
-            __next40pxDefaultSize: true
+            __unstableInputWidth: "100%"
           }
         ) })
       ] })

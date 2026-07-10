@@ -21774,7 +21774,6 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
               import_components39.__experimentalInputControl,
               {
-                __next40pxDefaultSize: true,
                 type: "url",
                 value: value || "",
                 className: "wp-block-embed__placeholder-input",
@@ -63975,7 +63974,6 @@ ${text}
                 /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
                   import_components146.__experimentalInputControl,
                   {
-                    __next40pxDefaultSize: true,
                     label,
                     type: "url",
                     hideLabelFromVision: true,

@@ -34150,7 +34150,6 @@ If there's a particular need for this, please submit a feature request at https:
             ValidatedInputControl,
             {
               ref: inputControlRef,
-              __next40pxDefaultSize: true,
               required: !!isValid2?.required,
               customValidity: getCustomValidity(isValid2, validity),
               type: "datetime-local",
@@ -34543,7 +34542,6 @@ If there's a particular need for this, please submit a feature request at https:
               /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
                 import_components51.__experimentalInputControl,
                 {
-                  __next40pxDefaultSize: true,
                   ref: validityTargetRef,
                   type: "date",
                   label: (0, import_i18n57.__)("Date"),
@@ -34757,7 +34755,6 @@ If there's a particular need for this, please submit a feature request at https:
                     /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
                       import_components51.__experimentalInputControl,
                       {
-                        __next40pxDefaultSize: true,
                         ref: fromInputRef,
                         type: "date",
                         label: (0, import_i18n57.__)("From"),
@@ -34773,7 +34770,6 @@ If there's a particular need for this, please submit a feature request at https:
                     /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
                       import_components51.__experimentalInputControl,
                       {
-                        __next40pxDefaultSize: true,
                         ref: toInputRef,
                         type: "date",
                         label: (0, import_i18n57.__)("To"),
@@ -34966,8 +34962,7 @@ If there's a particular need for this, please submit a feature request at https:
         disabled: disabled2,
         pattern: isValid2.pattern ? isValid2.pattern.constraint : void 0,
         minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
-        maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
-        __next40pxDefaultSize: true
+        maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0
       }
     );
   }

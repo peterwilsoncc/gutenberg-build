@@ -23243,7 +23243,6 @@ function CalendarDateTimeControl({
           ValidatedInputControl,
           {
             ref: inputControlRef,
-            __next40pxDefaultSize: true,
             required: !!isValid2?.required,
             customValidity: getCustomValidity(isValid2, validity),
             type: "datetime-local",
@@ -23636,7 +23635,6 @@ function CalendarDateControl({
             /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
               import_components32.__experimentalInputControl,
               {
-                __next40pxDefaultSize: true,
                 ref: validityTargetRef,
                 type: "date",
                 label: (0, import_i18n35.__)("Date"),
@@ -23850,7 +23848,6 @@ function CalendarDateRangeControl({
                   /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                     import_components32.__experimentalInputControl,
                     {
-                      __next40pxDefaultSize: true,
                       ref: fromInputRef,
                       type: "date",
                       label: (0, import_i18n35.__)("From"),
@@ -23866,7 +23863,6 @@ function CalendarDateRangeControl({
                   /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
                     import_components32.__experimentalInputControl,
                     {
-                      __next40pxDefaultSize: true,
                       ref: toInputRef,
                       type: "date",
                       label: (0, import_i18n35.__)("To"),
@@ -24059,8 +24055,7 @@ function ValidatedText({
       disabled: disabled2,
       pattern: isValid2.pattern ? isValid2.pattern.constraint : void 0,
       minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
-      maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
-      __next40pxDefaultSize: true
+      maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0
     }
   );
 }
