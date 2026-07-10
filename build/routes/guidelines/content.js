@@ -148,14 +148,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React60 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef56 = React60.useRef, useEffect42 = React60.useEffect, useMemo55 = React60.useMemo, useDebugValue2 = React60.useDebugValue;
+      var React60 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef56 = React60.useRef, useEffect42 = React60.useEffect, useMemo54 = React60.useMemo, useDebugValue2 = React60.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef56(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo55(
+        instRef = useMemo54(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -30211,6 +30211,7 @@ var KNOWLEDGE_KIND = "postType";
 var KNOWLEDGE_NAME = "wp_knowledge";
 var SCOPE_PREFIX = "guideline-";
 var BLOCK_PREFIX = "guideline-block-";
+var BLOCKS_SCOPE = "blocks";
 var NO_MATCH_SLUG = "guideline-__none__";
 function scopeSlug(scope) {
   return `${SCOPE_PREFIX}${scope}`;
@@ -30242,9 +30243,11 @@ function useGuidelineData() {
     [scopeRecords]
   );
   const slugs = (0, import_element103.useMemo)(() => {
+    const hasBlocksScope = scopes.some((s2) => s2.slug === BLOCKS_SCOPE);
     const list = [
-      ...scopes.map((s2) => scopeSlug(s2.slug)),
-      ...contentBlocks.map((b2) => blockSlug(b2.name))
+      // The Blocks scope has no single row; its per-block rows are added below.
+      ...scopes.filter((s2) => s2.slug !== BLOCKS_SCOPE).map((s2) => scopeSlug(s2.slug)),
+      ...hasBlocksScope ? contentBlocks.map((b2) => blockSlug(b2.name)) : []
     ];
     return list.length > 0 ? list : [NO_MATCH_SLUG];
   }, [scopes, contentBlocks]);
@@ -30916,6 +30919,9 @@ function readGuidelines(value) {
 function exportGuidelines(scopes, bySlug, contentBlocks) {
   const categories = {};
   for (const scope of scopes) {
+    if (scope.slug === BLOCKS_SCOPE) {
+      continue;
+    }
     categories[scope.slug] = {
       guidelines: bySlug[scopeSlug(scope.slug)]?.content ?? ""
     };
@@ -30957,6 +30963,9 @@ async function importGuidelines(file, scopes, bySlug, contentBlocks, query) {
   }
   const categories = parsed.guideline_categories;
   for (const scope of scopes) {
+    if (scope.slug === BLOCKS_SCOPE) {
+      continue;
+    }
     const slug = scopeSlug(scope.slug);
     const value = readGuidelines(categories[scope.slug]);
     const existingId = bySlug[slug]?.id;
@@ -31178,7 +31187,6 @@ function GuidelineActionsSection({
 }
 
 // routes/guidelines/stage.tsx
-var BLOCKS_ORDER = 40;
 function GuidelinesPage() {
   const { scopes, contentBlocks, bySlug, query, isLoading } = useGuidelineData();
   const [hasLoaded, setHasLoaded] = (0, import_element108.useState)(false);
@@ -31187,21 +31195,6 @@ function GuidelinesPage() {
       setHasLoaded(true);
     }
   }, [isLoading]);
-  const sections = (0, import_element108.useMemo)(() => {
-    const scopeSections = scopes.map((scope) => ({
-      key: scope.slug,
-      order: scope.order,
-      scope
-    }));
-    const blocksSection = {
-      key: "blocks",
-      order: BLOCKS_ORDER,
-      scope: null
-    };
-    return [...scopeSections, blocksSection].sort(
-      (a2, b2) => a2.order - b2.order
-    );
-  }, [scopes]);
   return /* @__PURE__ */ React.createElement(
     page_default,
     {
@@ -31210,60 +31203,37 @@ function GuidelinesPage() {
         "Set content standards that guide your team, inform plugins, and help AI tools generate content that matches your site's voice and requirements."
       )
     },
-    !hasLoaded ? /* @__PURE__ */ React.createElement("div", { className: "guidelines__loading" }, /* @__PURE__ */ React.createElement(import_components59.Spinner, null)) : /* @__PURE__ */ React.createElement(import_components59.__experimentalVStack, { className: "guidelines__content" }, /* @__PURE__ */ React.createElement("ul", { role: "list", className: "guidelines__list" }, sections.map(
-      (section) => section.scope ? /* @__PURE__ */ React.createElement(
-        "li",
+    !hasLoaded ? /* @__PURE__ */ React.createElement("div", { className: "guidelines__loading" }, /* @__PURE__ */ React.createElement(import_components59.Spinner, null)) : /* @__PURE__ */ React.createElement(import_components59.__experimentalVStack, { className: "guidelines__content" }, /* @__PURE__ */ React.createElement("ul", { role: "list", className: "guidelines__list" }, scopes.map((scope) => /* @__PURE__ */ React.createElement(
+      "li",
+      {
+        key: scope.slug,
+        className: "guidelines__list-item",
+        "data-slug": scope.slug
+      },
+      /* @__PURE__ */ React.createElement(
+        GuidelineAccordion,
         {
-          key: section.key,
-          className: "guidelines__list-item",
-          "data-slug": section.key
+          title: scope.title,
+          description: scope.description
         },
-        /* @__PURE__ */ React.createElement(
-          GuidelineAccordion,
+        scope.slug === BLOCKS_SCOPE ? /* @__PURE__ */ React.createElement(
+          BlockGuidelines,
           {
-            title: section.scope.title,
-            description: section.scope.description
-          },
-          /* @__PURE__ */ React.createElement(
-            GuidelineAccordionForm,
-            {
-              scope: section.scope,
-              existingId: bySlug[scopeSlug(
-                section.scope.slug
-              )]?.id,
-              content: bySlug[scopeSlug(
-                section.scope.slug
-              )]?.content ?? "",
-              query
-            }
-          )
-        )
-      ) : /* @__PURE__ */ React.createElement(
-        "li",
-        {
-          key: section.key,
-          className: "guidelines__list-item",
-          "data-slug": "blocks"
-        },
-        /* @__PURE__ */ React.createElement(
-          GuidelineAccordion,
+            contentBlocks,
+            bySlug,
+            query
+          }
+        ) : /* @__PURE__ */ React.createElement(
+          GuidelineAccordionForm,
           {
-            title: (0, import_i18n55.__)("Blocks"),
-            description: (0, import_i18n55.__)(
-              "Create tailored guidelines for specific block types."
-            )
-          },
-          /* @__PURE__ */ React.createElement(
-            BlockGuidelines,
-            {
-              contentBlocks,
-              bySlug,
-              query
-            }
-          )
+            scope,
+            existingId: bySlug[scopeSlug(scope.slug)]?.id,
+            content: bySlug[scopeSlug(scope.slug)]?.content ?? "",
+            query
+          }
         )
       )
-    )), /* @__PURE__ */ React.createElement(
+    ))), /* @__PURE__ */ React.createElement(
       GuidelineActionsSection,
       {
         scopes,
