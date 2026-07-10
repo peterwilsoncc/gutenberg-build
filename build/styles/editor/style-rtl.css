@@ -6889,7 +6889,6 @@ mark.wp-note {
   justify-content: center;
   align-items: center;
   min-width: 0;
-  clip-path: inset(-2px);
 }
 @media (max-width: 479px) {
   .editor-header__center > :first-child {
@@ -6898,9 +6897,6 @@ mark.wp-note {
   .editor-header__center > :last-child {
     margin-inline-end: 8px;
   }
-}
-.editor-revisions-header .editor-header__center {
-  clip-path: none;
 }
 
 /**
