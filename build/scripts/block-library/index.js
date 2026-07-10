@@ -54865,7 +54865,7 @@ ${text}
               ),
               /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)("span", { className: "wp-block-playlist-track__content", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-                  import_block_editor184.RichText,
+                  import_block_editor184.PlainText,
                   {
                     tagName: "span",
                     className: "wp-block-playlist-track__title",
@@ -54874,20 +54874,18 @@ ${text}
                     onChange: (value) => {
                       setAttributes({ title: value });
                     },
-                    allowedFormats: [],
-                    withoutInteractiveFormatting: true
+                    __experimentalVersion: 2
                   }
                 ),
                 showArtists && /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-                  import_block_editor184.RichText,
+                  import_block_editor184.PlainText,
                   {
                     tagName: "span",
                     className: "wp-block-playlist-track__artist",
                     value: artist,
                     placeholder: (0, import_i18n166.__)("Add artist"),
                     onChange: (value) => setAttributes({ artist: value }),
-                    allowedFormats: [],
-                    withoutInteractiveFormatting: true
+                    __experimentalVersion: 2
                   }
                 )
               ] }),
