@@ -1181,7 +1181,7 @@ iframe[name=editor-canvas] {
 }
 .block-editor-block-styles__variants button.components-button.block-editor-block-styles__item {
   color: #1e1e1e;
-  box-shadow: inset 0 0 0 1px #ddd;
+  border-color: #ddd;
   display: inline-block;
   width: calc(50% - 4px);
 }
@@ -1197,8 +1197,11 @@ iframe[name=editor-canvas] {
   color: #fff;
 }
 .block-editor-block-styles__variants button.components-button.block-editor-block-styles__item:focus, .block-editor-block-styles__variants button.components-button.block-editor-block-styles__item.is-active:focus {
-  box-shadow: inset 0 0 0 1px #fff, 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
-  outline: 2px solid transparent;
+  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
+  outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
+}
+.block-editor-block-styles__variants button.components-button.block-editor-block-styles__item:focus:is(a), .block-editor-block-styles__variants button.components-button.block-editor-block-styles__item.is-active:focus:is(a) {
+  box-shadow: none;
 }
 .block-editor-block-styles__variants .block-editor-block-styles__item-text {
   word-break: break-all;
@@ -2490,7 +2493,6 @@ iframe[name=editor-canvas] {
   width: 100%;
   height: auto;
   padding: 12px;
-  box-shadow: inset 0 0 0 1px #949494;
   border-color: #949494;
 }
 
@@ -3462,10 +3464,7 @@ iframe[name=editor-canvas] {
 
 .block-editor-content-only-controls__link {
   width: 100%;
-  box-shadow: inset 0 0 0 1px #ccc;
-}
-.block-editor-content-only-controls__link:focus:not(:disabled) {
-  box-shadow: 0 0 0 currentColor inset, 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
+  border-color: #ccc;
 }
 
 .block-editor-content-only-controls__link-row {
@@ -3481,11 +3480,8 @@ iframe[name=editor-canvas] {
 
 .block-editor-content-only-controls__media {
   width: 100%;
-  box-shadow: inset 0 0 0 1px #ccc;
+  border-color: #ccc;
   padding-right: 32px;
-}
-.block-editor-content-only-controls__media:focus:not(:disabled) {
-  box-shadow: 0 0 0 currentColor inset, 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
 }
 
 .block-editor-content-only-controls__media-replace-flow {
