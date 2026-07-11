@@ -2857,6 +2857,32 @@ var wp;
     return null;
   }
 
+  // packages/rich-text/build-module/event-listeners.mjs
+  var shortcutsListener = (props) => (element) => {
+    const { keyboardShortcuts } = props.current;
+    function onKeyDown(event) {
+      for (const keyboardShortcut of keyboardShortcuts.current) {
+        keyboardShortcut(event);
+      }
+    }
+    element.addEventListener("keydown", onKeyDown);
+    return () => {
+      element.removeEventListener("keydown", onKeyDown);
+    };
+  };
+  var inputEventsListener = (props) => (element) => {
+    const { inputEvents } = props.current;
+    function onInput(event) {
+      for (const inputEventHandler of inputEvents.current) {
+        inputEventHandler(event);
+      }
+    }
+    element.addEventListener("input", onInput);
+    return () => {
+      element.removeEventListener("input", onInput);
+    };
+  };
+
   // packages/rich-text/build-module/private-apis.mjs
   var privateApis = {};
   lock(privateApis, {
@@ -2864,7 +2890,9 @@ var wp;
     KeyboardShortcutContext,
     InputEventContext,
     RichTextShortcut,
-    RichTextInputEvent
+    RichTextInputEvent,
+    shortcutsListener,
+    inputEventsListener
   });
 
   // packages/rich-text/build-module/hook/use-anchor-ref.mjs

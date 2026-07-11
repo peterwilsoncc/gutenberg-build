@@ -82,7 +82,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState41({
+        cachedValue = useState42({
           inst: { value, getSnapshot: getSnapshot2 }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -94,7 +94,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot2]
         );
-        useEffect36(
+        useEffect37(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot2();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React73 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState41 = React73.useState, useEffect36 = React73.useEffect, useLayoutEffect6 = React73.useLayoutEffect, useDebugValue2 = React73.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React73 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState42 = React73.useState, useEffect37 = React73.useEffect, useLayoutEffect6 = React73.useLayoutEffect, useDebugValue2 = React73.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React73.useSyncExternalStore ? React73.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -148,14 +148,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React73 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef51 = React73.useRef, useEffect36 = React73.useEffect, useMemo45 = React73.useMemo, useDebugValue2 = React73.useDebugValue;
+      var React73 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef52 = React73.useRef, useEffect37 = React73.useEffect, useMemo46 = React73.useMemo, useDebugValue2 = React73.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot2, getServerSnapshot2, selector, isEqual) {
-        var instRef = useRef51(null);
+        var instRef = useRef52(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo45(
+        instRef = useMemo46(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -191,7 +191,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot2, getServerSnapshot2, selector, isEqual]
         );
         var value = useSyncExternalStore3(subscribe2, instRef[0], instRef[1]);
-        useEffect36(
+        useEffect37(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -348,6 +348,13 @@ var require_es6 = __commonJS({
 var require_date = __commonJS({
   "package-external:@wordpress/date"(exports, module) {
     module.exports = window.wp.date;
+  }
+});
+
+// package-external:@wordpress/rich-text
+var require_rich_text = __commonJS({
+  "package-external:@wordpress/rich-text"(exports, module) {
+    module.exports = window.wp.richText;
   }
 });
 
@@ -17971,11 +17978,416 @@ function Textarea({
   );
 }
 
-// packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
+// packages/dataviews/build-module/components/dataform-controls/richtext/index.mjs
+var import_element59 = __toESM(require_element(), 1);
+
+// packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
 var import_components17 = __toESM(require_components(), 1);
+var import_compose2 = __toESM(require_compose(), 1);
 var import_element58 = __toESM(require_element(), 1);
+var import_rich_text2 = __toESM(require_rich_text(), 1);
+
+// packages/dataviews/build-module/components/dataform-controls/richtext/utils.mjs
+var EMPTY_ARRAY4 = [];
+function getAllowedFormats({
+  allowedFormats,
+  disableFormats
+}) {
+  if (disableFormats) {
+    return EMPTY_ARRAY4;
+  }
+  return allowedFormats;
+}
+
+// packages/dataviews/build-module/components/dataform-controls/richtext/format-edit.mjs
+var import_rich_text = __toESM(require_rich_text(), 1);
 var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedToggleGroupControl } = unlock2(import_components17.privateApis);
+var import_react12 = __toESM(require_react(), 1);
+var EMPTY_CONTEXT = {};
+function Edit({
+  onChange,
+  onFocus,
+  value,
+  forwardedRef,
+  settings,
+  isVisible
+}) {
+  const { name, edit: EditFunction } = settings;
+  if (!EditFunction) {
+    return null;
+  }
+  const activeFormat = (0, import_rich_text.getActiveFormat)(value, name);
+  const isActive = activeFormat !== void 0;
+  const activeObject = (0, import_rich_text.getActiveObject)(value);
+  const isObjectActive = activeObject !== void 0 && activeObject.type === name;
+  return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
+    EditFunction,
+    {
+      isActive,
+      isVisible,
+      activeAttributes: isActive ? activeFormat.attributes || {} : {},
+      isObjectActive,
+      activeObjectAttributes: isObjectActive ? activeObject.attributes || {} : {},
+      value,
+      onChange,
+      onFocus,
+      contentRef: forwardedRef,
+      context: EMPTY_CONTEXT
+    },
+    name
+  );
+}
+function FormatEdit({
+  formatTypes,
+  ...props
+}) {
+  return formatTypes.map((settings) => /* @__PURE__ */ (0, import_react12.createElement)(Edit, { settings, ...props, key: settings.name }));
+}
+
+// packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
+var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
+var {
+  ValidatedContentEditableControl: RichTextControlShell,
+  withIgnoreIMEEvents
+} = unlock2(import_components17.privateApis);
+var {
+  useRichText,
+  KeyboardShortcutContext,
+  InputEventContext,
+  shortcutsListener,
+  inputEventsListener
+} = unlock2(import_rich_text2.privateApis);
+function RichTextControl({
+  label,
+  value: attrValue,
+  onChange,
+  placeholder,
+  id,
+  clientId,
+  className,
+  hideLabelFromVision,
+  help,
+  disabled: disabled2,
+  required,
+  markWhenOptional,
+  customValidity,
+  allowedFormats,
+  disableFormats,
+  withoutInteractiveFormatting,
+  preserveWhiteSpace,
+  disableLineBreaks,
+  focusOnMount
+}) {
+  const [selection, setSelection] = (0, import_element58.useState)({
+    start: void 0,
+    end: void 0
+  });
+  const [isSelected, setIsSelected] = (0, import_element58.useState)(false);
+  const anchorRef = (0, import_element58.useRef)(void 0);
+  const inputEvents = (0, import_element58.useRef)(/* @__PURE__ */ new Set());
+  const keyboardShortcuts = (0, import_element58.useRef)(
+    /* @__PURE__ */ new Set()
+  );
+  const popoverSlotRef = (0, import_element58.useRef)(null);
+  const [popoverContainer, setPopoverContainer] = (0, import_element58.useState)(null);
+  const popoverContainerRef = (0, import_compose2.useRefEffect)((element) => {
+    setPopoverContainer(element.ownerDocument.body);
+  }, []);
+  const blurDeselectTimeoutRef = (0, import_element58.useRef)();
+  const stopPopoverFocusTrackingRef = (0, import_element58.useRef)(
+    void 0
+  );
+  (0, import_element58.useEffect)(
+    () => () => {
+      clearTimeout(blurDeselectTimeoutRef.current);
+      stopPopoverFocusTrackingRef.current?.();
+    },
+    []
+  );
+  function isFocusInField(ownerDocument2) {
+    const active = ownerDocument2.activeElement;
+    return !!(active && (anchorRef.current?.contains(active) || popoverSlotRef.current?.contains(active)));
+  }
+  function trackPopoverFocusOut(ownerDocument2) {
+    stopPopoverFocusTrackingRef.current?.();
+    function onDocumentFocusOut() {
+      clearTimeout(blurDeselectTimeoutRef.current);
+      blurDeselectTimeoutRef.current = setTimeout(() => {
+        if (isFocusInField(ownerDocument2)) {
+          return;
+        }
+        stopPopoverFocusTrackingRef.current?.();
+        setIsSelected(false);
+      }, 0);
+    }
+    ownerDocument2.addEventListener("focusout", onDocumentFocusOut);
+    stopPopoverFocusTrackingRef.current = () => {
+      ownerDocument2.removeEventListener("focusout", onDocumentFocusOut);
+      stopPopoverFocusTrackingRef.current = void 0;
+    };
+  }
+  function onEditableFocus() {
+    clearTimeout(blurDeselectTimeoutRef.current);
+    stopPopoverFocusTrackingRef.current?.();
+    setIsSelected(true);
+  }
+  function onEditableBlur(event) {
+    clearTimeout(blurDeselectTimeoutRef.current);
+    const { ownerDocument: ownerDocument2 } = event.currentTarget;
+    blurDeselectTimeoutRef.current = setTimeout(() => {
+      if (isFocusInField(ownerDocument2)) {
+        trackPopoverFocusOut(ownerDocument2);
+        return;
+      }
+      setIsSelected(false);
+    }, 0);
+  }
+  const adjustedAllowedFormats = getAllowedFormats({
+    allowedFormats,
+    disableFormats
+  });
+  const {
+    value,
+    onChange: onRichTextChange,
+    ref: richTextRef,
+    formatTypes,
+    getValue
+  } = useRichText({
+    value: attrValue,
+    onChange,
+    selectionStart: selection.start,
+    selectionEnd: selection.end,
+    onSelectionChange: (start, end) => setSelection({ start, end }),
+    __unstableIsSelected: isSelected,
+    preserveWhiteSpace: !!preserveWhiteSpace,
+    placeholder,
+    __unstableDisableFormats: disableFormats,
+    allowedFormats: adjustedAllowedFormats,
+    withoutInteractiveFormatting,
+    __unstableFormatTypeHandlerContext: (0, import_element58.useMemo)(
+      () => ({
+        richTextIdentifier: id,
+        blockClientId: clientId
+      }),
+      [id, clientId]
+    )
+  });
+  function onFocus() {
+    anchorRef.current?.focus();
+  }
+  const eventListenersPropsRef = (0, import_element58.useRef)({
+    keyboardShortcuts,
+    inputEvents
+  });
+  const inputRulePropsRef = (0, import_element58.useRef)({
+    formatTypes,
+    getValue,
+    onChange: onRichTextChange
+  });
+  (0, import_element58.useInsertionEffect)(() => {
+    inputRulePropsRef.current = {
+      formatTypes,
+      getValue,
+      onChange: onRichTextChange
+    };
+  });
+  const enterRef = (0, import_compose2.useRefEffect)(
+    (element) => {
+      if (disabled2) {
+        return;
+      }
+      const onKeyDown = withIgnoreIMEEvents((event) => {
+        if (event.key !== "Enter" || event.defaultPrevented || event.metaKey || event.ctrlKey) {
+          return;
+        }
+        event.preventDefault();
+        if (disableLineBreaks) {
+          return;
+        }
+        const { getValue: getCurrentValue, onChange: handleChange } = inputRulePropsRef.current;
+        const current = getCurrentValue();
+        handleChange(
+          (0, import_rich_text2.insert)(
+            current,
+            "\n",
+            current.start ?? current.text.length,
+            current.end ?? current.text.length
+          )
+        );
+      });
+      element.addEventListener("keydown", onKeyDown);
+      return () => element.removeEventListener("keydown", onKeyDown);
+    },
+    [disableLineBreaks, disabled2]
+  );
+  const eventListenersRef = (0, import_compose2.useRefEffect)(
+    (element) => {
+      if (!isSelected) {
+        return;
+      }
+      const cleanupShortcuts = shortcutsListener(
+        eventListenersPropsRef
+      )(element);
+      const cleanupInputEvents = inputEventsListener(
+        eventListenersPropsRef
+      )(element);
+      function onFormatInput(event) {
+        if (event.inputType !== "insertText" && event.type !== "compositionend") {
+          return;
+        }
+        const {
+          formatTypes: types,
+          getValue: getCurrentValue,
+          onChange: handleChange
+        } = inputRulePropsRef.current;
+        const current = getCurrentValue();
+        const transformed = types.reduce(
+          (accumulator, {
+            __unstableInputRule
+          }) => __unstableInputRule ? __unstableInputRule(accumulator) : accumulator,
+          current
+        );
+        if (transformed !== current) {
+          handleChange({
+            ...transformed,
+            activeFormats: current.activeFormats
+          });
+        }
+      }
+      element.addEventListener("input", onFormatInput);
+      element.addEventListener("compositionend", onFormatInput);
+      return () => {
+        cleanupShortcuts();
+        cleanupInputEvents();
+        element.removeEventListener("input", onFormatInput);
+        element.removeEventListener("compositionend", onFormatInput);
+      };
+    },
+    [isSelected]
+  );
+  const focusOnMountRef = (0, import_compose2.useRefEffect)(
+    (element) => {
+      if (focusOnMount && !disabled2) {
+        element.focus();
+      }
+    },
+    [focusOnMount, disabled2]
+  );
+  const editableRef = (0, import_compose2.useMergeRefs)([
+    richTextRef,
+    anchorRef,
+    eventListenersRef,
+    enterRef,
+    focusOnMountRef,
+    popoverContainerRef
+  ]);
+  return (
+    /*
+     * The provider scopes every slot/fill rendered by this field — most
+     * importantly the format popovers, which land in the `Popover.Slot`
+     * below. That containment is what the blur handling above checks to
+     * decide whether focus is still within the field's own UI. A format
+     * popover using a custom `__unstableSlotName` would portal to the
+     * body-level fallback container instead and deselect the field;
+     * `core/link` (and every other core format) uses the default slot.
+     */
+    /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)(import_components17.SlotFillProvider, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+        RichTextControlShell,
+        {
+          label,
+          id,
+          className: clsx_default("dataviews-controls__richtext", className),
+          placeholder,
+          hideLabelFromVision,
+          help,
+          disabled: disabled2,
+          required,
+          markWhenOptional,
+          customValidity,
+          value: value.text,
+          "aria-multiline": !disableLineBreaks,
+          ref: editableRef,
+          onFocus: onEditableFocus,
+          onBlur: onEditableBlur
+        }
+      ),
+      isSelected && !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(KeyboardShortcutContext.Provider, { value: keyboardShortcuts, children: /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(InputEventContext.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+        FormatEdit,
+        {
+          value,
+          onChange: onRichTextChange,
+          onFocus,
+          formatTypes,
+          forwardedRef: anchorRef,
+          isVisible: true
+        }
+      ) }) }),
+      popoverContainer && (0, import_element58.createPortal)(
+        /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(import_components17.Popover.Slot, { ref: popoverSlotRef }),
+        popoverContainer
+      )
+    ] })
+  );
+}
+
+// packages/dataviews/build-module/components/dataform-controls/richtext/index.mjs
+var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
+function RichText({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision,
+  markWhenOptional,
+  config,
+  validity
+}) {
+  const {
+    className,
+    clientId,
+    allowedFormats,
+    disableFormats,
+    withoutInteractiveFormatting,
+    preserveWhiteSpace,
+    disableLineBreaks
+  } = config || {};
+  const disabled2 = field.isDisabled({ item: data, field });
+  const { label, placeholder, description, id, setValue, isValid: isValid2 } = field;
+  const value = field.getValue({ item: data }) ?? "";
+  const onChangeControl = (0, import_element59.useCallback)(
+    (newValue) => onChange(setValue({ item: data, value: newValue })),
+    [data, onChange, setValue]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+    RichTextControl,
+    {
+      label,
+      value,
+      onChange: onChangeControl,
+      placeholder,
+      id,
+      hideLabelFromVision,
+      help: description,
+      disabled: disabled2,
+      required: !!isValid2.required,
+      markWhenOptional,
+      customValidity: getCustomValidity(isValid2, validity),
+      className,
+      clientId,
+      allowedFormats,
+      disableFormats,
+      withoutInteractiveFormatting,
+      preserveWhiteSpace,
+      disableLineBreaks
+    }
+  );
+}
+
+// packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
+var import_components18 = __toESM(require_components(), 1);
+var import_element60 = __toESM(require_element(), 1);
+var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedToggleGroupControl } = unlock2(import_components18.privateApis);
 function ToggleGroup({
   data,
   field,
@@ -17987,7 +18399,7 @@ function ToggleGroup({
   const { getValue, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element58.useCallback)(
+  const onChangeControl = (0, import_element60.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -17996,13 +18408,13 @@ function ToggleGroup({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(import_components17.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components18.Spinner, {});
   }
   if (elements.length === 0) {
     return null;
   }
   const selectedOption = elements.find((el) => el.value === value);
-  return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
     ValidatedToggleGroupControl,
     {
       required: !!field.isValid?.required,
@@ -18014,8 +18426,8 @@ function ToggleGroup({
       onChange: onChangeControl,
       value,
       hideLabelFromVision,
-      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
-        import_components17.__experimentalToggleGroupControlOption,
+      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+        import_components18.__experimentalToggleGroupControlOption,
         {
           label: el.label,
           value: el.value,
@@ -18028,10 +18440,10 @@ function ToggleGroup({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/array.mjs
-var import_components18 = __toESM(require_components(), 1);
-var import_element59 = __toESM(require_element(), 1);
-var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedFormTokenField } = unlock2(import_components18.privateApis);
+var import_components19 = __toESM(require_components(), 1);
+var import_element61 = __toESM(require_element(), 1);
+var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedFormTokenField } = unlock2(import_components19.privateApis);
 function ArrayControl({
   data,
   field,
@@ -18047,7 +18459,7 @@ function ArrayControl({
     elements: field.elements,
     getElements: field.getElements
   });
-  const arrayValueAsElements = (0, import_element59.useMemo)(
+  const arrayValueAsElements = (0, import_element61.useMemo)(
     () => Array.isArray(value) ? value.map((token) => {
       const element = elements?.find(
         (suggestion) => suggestion.value === token
@@ -18056,7 +18468,7 @@ function ArrayControl({
     }) : [],
     [value, elements]
   );
-  const onChangeControl = (0, import_element59.useCallback)(
+  const onChangeControl = (0, import_element61.useCallback)(
     (tokens) => {
       const valueTokens = tokens.map((token) => {
         if (typeof token === "object" && "value" in token) {
@@ -18069,9 +18481,9 @@ function ArrayControl({
     [onChange, setValue, data]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(import_components18.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(import_components19.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
     ValidatedFormTokenField,
     {
       required: !!isValid2?.required,
@@ -18110,9 +18522,9 @@ function ArrayControl({
           const element = elements.find(
             (el) => el.value === item
           );
-          return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)("span", { children: element?.label || item });
+          return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("span", { children: element?.label || item });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)("span", { children: item });
+        return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("span", { children: item });
       }
     }
   );
@@ -18277,35 +18689,35 @@ var w = function(r3) {
 };
 
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
-var import_components19 = __toESM(require_components(), 1);
-var import_element60 = __toESM(require_element(), 1);
+var import_components20 = __toESM(require_components(), 1);
+var import_element62 = __toESM(require_element(), 1);
 var import_i18n10 = __toESM(require_i18n(), 1);
-var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components19.privateApis);
+var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components20.privateApis);
 var ColorPickerDropdown = ({
   color,
   onColorChange,
   disabled: disabled2
 }) => {
   const validColor = color && w(color).isValid() ? color : "#ffffff";
-  return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
-    import_components19.Dropdown,
+  return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+    import_components20.Dropdown,
     {
       className: "dataviews-controls__color-picker-dropdown",
       popoverProps: { resize: false },
-      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
-        import_components19.Button,
+      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+        import_components20.Button,
         {
           onClick: onToggle,
           "aria-label": (0, import_i18n10.__)("Open color picker"),
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
-          icon: () => /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components19.ColorIndicator, { colorValue: validColor })
+          icon: () => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components20.ColorIndicator, { colorValue: validColor })
         }
       ),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components19.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
-        import_components19.ColorPicker,
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components20.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+        import_components20.ColorPicker,
         {
           color: validColor,
           onChange: onColorChange,
@@ -18326,19 +18738,19 @@ function Color({
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = field.getValue({ item: data }) || "";
-  const handleColorChange = (0, import_element60.useCallback)(
+  const handleColorChange = (0, import_element62.useCallback)(
     (newColor) => {
       onChange(setValue({ item: data, value: newColor }));
     },
     [data, onChange, setValue]
   );
-  const handleInputChange = (0, import_element60.useCallback)(
+  const handleInputChange = (0, import_element62.useCallback)(
     (newValue) => {
       onChange(setValue({ item: data, value: newValue || "" }));
     },
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
     ValidatedInputControl3,
     {
       required: !!field.isValid?.required,
@@ -18352,7 +18764,7 @@ function Color({
       hideLabelFromVision,
       type: "text",
       disabled: disabled2,
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components19.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components20.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
         ColorPickerDropdown,
         {
           color: value,
@@ -18365,10 +18777,10 @@ function Color({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
-var import_components20 = __toESM(require_components(), 1);
-var import_element61 = __toESM(require_element(), 1);
+var import_components21 = __toESM(require_components(), 1);
+var import_element63 = __toESM(require_element(), 1);
 var import_i18n11 = __toESM(require_i18n(), 1);
-var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
   field,
@@ -18377,12 +18789,12 @@ function Password({
   markWhenOptional,
   validity
 }) {
-  const [isVisible, setIsVisible] = (0, import_element61.useState)(false);
+  const [isVisible, setIsVisible] = (0, import_element63.useState)(false);
   const disabled2 = field.isDisabled({ item: data, field });
-  const toggleVisibility = (0, import_element61.useCallback)(() => {
+  const toggleVisibility = (0, import_element63.useCallback)(() => {
     setIsVisible((prev) => !prev);
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
     ValidatedText,
     {
       ...{
@@ -18393,8 +18805,8 @@ function Password({
         markWhenOptional,
         validity,
         type: isVisible ? "text" : "password",
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components20.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
-          import_components20.Button,
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components21.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+          import_components21.Button,
           {
             icon: isVisible ? unseen_default : seen_default,
             onClick: toggleVisibility,
@@ -18415,7 +18827,7 @@ function hasElements(field) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/index.mjs
-var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 var FORM_CONTROLS = {
   adaptiveSelect: AdaptiveSelect,
   array: ArrayControl,
@@ -18435,6 +18847,7 @@ var FORM_CONTROLS = {
   text: Text3,
   toggle: Toggle,
   textarea: Textarea,
+  richtext: RichText,
   toggleGroup: ToggleGroup
 };
 function isEditConfig(value) {
@@ -18447,7 +18860,7 @@ function createConfiguredControl(config) {
     return null;
   }
   return function ConfiguredControl(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(BaseControlType, { ...props, config: controlConfig });
+    return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(BaseControlType, { ...props, config: controlConfig });
   };
 }
 function getControl(field, fallback) {
@@ -18545,13 +18958,13 @@ function RenderFromElements({
 }
 
 // packages/dataviews/build-module/field-types/utils/render-default.mjs
-var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 function render({
   item,
   field
 }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(RenderFromElements, { item, field });
   }
   return field.getValueFormatted({ item, field });
 }
@@ -19268,17 +19681,17 @@ var telephone_default = {
 
 // packages/dataviews/build-module/field-types/color.mjs
 var import_i18n17 = __toESM(require_i18n(), 1);
-var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(RenderFromElements, { item, field });
   }
   const value = get_value_formatted_default_default({ item, field });
   if (!value || !w(value).isValid()) {
     return value;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
       "div",
       {
         style: {
@@ -19291,7 +19704,7 @@ function render3({ item, field }) {
         }
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("span", { children: value })
+    /* @__PURE__ */ (0, import_jsx_runtime98.jsx)("span", { children: value })
   ] });
 }
 function isValidCustom6(item, field) {
@@ -19559,12 +19972,12 @@ function normalizeFields(fields) {
 }
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_element73 = __toESM(require_element(), 1);
+var import_element75 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-context/index.mjs
-var import_element62 = __toESM(require_element(), 1);
-var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
-var DataFormContext = (0, import_element62.createContext)({
+var import_element64 = __toESM(require_element(), 1);
+var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+var DataFormContext = (0, import_element64.createContext)({
   fields: []
 });
 DataFormContext.displayName = "DataFormContext";
@@ -19572,16 +19985,16 @@ function DataFormProvider({
   fields,
   children
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(DataFormContext.Provider, { value: { fields }, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(DataFormContext.Provider, { value: { fields }, children });
 }
 var dataform_context_default = DataFormContext;
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_element72 = __toESM(require_element(), 1);
+var import_element74 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-var import_element63 = __toESM(require_element(), 1);
-var import_components21 = __toESM(require_components(), 1);
+var import_element65 = __toESM(require_element(), 1);
+var import_components22 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
 var import_i18n18 = __toESM(require_i18n(), 1);
@@ -19702,15 +20115,15 @@ function normalizeForm(form) {
 var normalize_form_default = normalizeForm;
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
 function Header4({ title }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-regular__header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components21.__experimentalHeading, { level: 2, size: 13, children: title }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components22.__experimentalHeading, { level: 2, size: 13, children: title }) })
     }
   );
 }
@@ -19722,9 +20135,9 @@ function FormRegularField({
   markWhenOptional,
   validity
 }) {
-  const { fields } = (0, import_element63.useContext)(dataform_context_default);
+  const { fields } = (0, import_element65.useContext)(dataform_context_default);
   const layout = field.layout;
-  const form = (0, import_element63.useMemo)(
+  const form = (0, import_element65.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : []
@@ -19732,9 +20145,9 @@ function FormRegularField({
     [field]
   );
   if (!!field.children) {
-    return /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_jsx_runtime97.Fragment, { children: [
-      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Header4, { title: field.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(import_jsx_runtime100.Fragment, { children: [
+      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(Header4, { title: field.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
         DataFormLayout,
         {
           data,
@@ -19753,30 +20166,30 @@ function FormRegularField({
     return null;
   }
   if (labelPosition === "side") {
-    return /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(
       Stack,
       {
         direction: "row",
         className: "dataforms-layouts-regular__field",
         gap: "sm",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
             "div",
             {
               className: clsx_default(
                 "dataforms-layouts-regular__field-label",
                 `dataforms-layouts-regular__field-label--label-position-${labelPosition}`
               ),
-              children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components21.BaseControl.VisualLabel, { children: fieldDefinition.label })
+              children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components22.BaseControl.VisualLabel, { children: fieldDefinition.label })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
             fieldDefinition.render,
             {
               item: data,
               field: fieldDefinition
             }
-          ) : /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+          ) : /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
             fieldDefinition.Edit,
             {
               data,
@@ -19792,16 +20205,16 @@ function FormRegularField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_jsx_runtime97.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_jsx_runtime97.Fragment, { children: [
-    !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components21.BaseControl.VisualLabel, { children: fieldDefinition.label }),
-    /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_jsx_runtime100.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(import_jsx_runtime100.Fragment, { children: [
+    !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components22.BaseControl.VisualLabel, { children: fieldDefinition.label }),
+    /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
       fieldDefinition.render,
       {
         item: data,
         field: fieldDefinition
       }
     )
-  ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+  ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
     fieldDefinition.Edit,
     {
       data,
@@ -19816,15 +20229,15 @@ function FormRegularField({
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
 var import_deepmerge2 = __toESM(require_cjs(), 1);
-var import_components24 = __toESM(require_components(), 1);
-var import_element68 = __toESM(require_element(), 1);
-var import_compose3 = __toESM(require_compose(), 1);
+var import_components25 = __toESM(require_components(), 1);
+var import_element70 = __toESM(require_element(), 1);
+var import_compose4 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
-var import_components23 = __toESM(require_components(), 1);
+var import_components24 = __toESM(require_components(), 1);
 var import_i18n19 = __toESM(require_i18n(), 1);
-var import_compose2 = __toESM(require_compose(), 1);
-var import_element64 = __toESM(require_element(), 1);
+var import_compose3 = __toESM(require_compose(), 1);
+var import_element66 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
 function getLabelClassName(labelPosition, showError) {
@@ -19837,16 +20250,16 @@ function getLabelClassName(labelPosition, showError) {
 var get_label_classname_default = getLabelClassName;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-content.mjs
-var import_components22 = __toESM(require_components(), 1);
-var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+var import_components23 = __toESM(require_components(), 1);
+var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
 function getLabelContent(showError, errorMessage, fieldLabel) {
-  return showError ? /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(tooltip_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+  return showError ? /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(tooltip_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
       tooltip_exports.Trigger,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(import_components22.Icon, { icon: error_default, size: 16 }),
-          /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(VisuallyHidden, { children: [
+        render: /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components23.Icon, { icon: error_default, size: 16 }),
+          /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(VisuallyHidden, { children: [
             errorMessage,
             ": "
           ] }),
@@ -19854,7 +20267,7 @@ function getLabelContent(showError, errorMessage, fieldLabel) {
         ] })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(tooltip_exports.Popup, { children: errorMessage })
+    /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(tooltip_exports.Popup, { children: errorMessage })
   ] }) : fieldLabel;
 }
 var get_label_content_default = getLabelContent;
@@ -19895,7 +20308,7 @@ function getFirstValidationError(validity) {
 var get_first_validation_error_default = getFirstValidationError;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
-var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
 function SummaryButton({
   data,
   field,
@@ -19920,7 +20333,7 @@ function SummaryButton({
       "dataforms-layouts-panel__field-trigger--edit-always": editVisibility === "always"
     }
   );
-  const controlId = (0, import_compose2.useInstanceId)(
+  const controlId = (0, import_compose3.useInstanceId)(
     SummaryButton,
     "dataforms-layouts-panel__field-control"
   );
@@ -19933,8 +20346,8 @@ function SummaryButton({
     (0, import_i18n19._x)("Edit %s", "field"),
     fieldLabel || ""
   );
-  const rowRef = (0, import_element64.useRef)(null);
-  const editButtonRef = (0, import_element64.useRef)(null);
+  const rowRef = (0, import_element66.useRef)(null);
+  const editButtonRef = (0, import_element66.useRef)(null);
   const handleRowClick = (event) => {
     if (!isOpen2 && event.detail < 2 && !editButtonRef.current?.contains(event.target) && rowRef.current?.ownerDocument.defaultView?.getSelection()?.toString()) {
       return;
@@ -19947,7 +20360,7 @@ function SummaryButton({
       onClick();
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(
     "div",
     {
       ref: rowRef,
@@ -19955,30 +20368,30 @@ function SummaryButton({
       onClick: !disabled2 ? handleRowClick : void 0,
       onKeyDown: !disabled2 ? handleKeyDown : void 0,
       children: [
-        labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("span", { className: labelClassName, children: labelContent }),
-        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(tooltip_exports.Root, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+        labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime102.jsx)("span", { className: labelClassName, children: labelContent }),
+        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(tooltip_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
             tooltip_exports.Trigger,
             {
-              render: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+              render: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
                 "span",
                 {
                   className: "dataforms-layouts-panel__field-label-error-content",
                   role: "img",
                   "aria-label": errorMessage,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_components23.Icon, { icon: error_default, size: 16 })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_components24.Icon, { icon: error_default, size: 16 })
                 }
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(tooltip_exports.Popup, { children: errorMessage })
+          /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(tooltip_exports.Popup, { children: errorMessage })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
           "span",
           {
             id: `${controlId}`,
             className: "dataforms-layouts-panel__field-control",
-            children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+            children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
               "span",
               {
                 style: {
@@ -19988,11 +20401,11 @@ function SummaryButton({
                   width: "100%",
                   gap: "2px"
                 },
-                children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+                children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
                   "span",
                   {
                     style: { width: "100%" },
-                    children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+                    children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
                       summaryField.render,
                       {
                         item: data,
@@ -20003,7 +20416,7 @@ function SummaryButton({
                   summaryField.id
                 ))
               }
-            ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+            ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
               summaryField.render,
               {
                 item: data,
@@ -20013,8 +20426,8 @@ function SummaryButton({
             ))
           }
         ),
-        !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-          import_components23.Button,
+        !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+          import_components24.Button,
           {
             ref: editButtonRef,
             className: "dataforms-layouts-panel__field-trigger-icon",
@@ -20034,7 +20447,7 @@ function SummaryButton({
 // packages/dataviews/build-module/hooks/use-form-validity.mjs
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es6 = __toESM(require_es6(), 1);
-var import_element65 = __toESM(require_element(), 1);
+var import_element67 = __toESM(require_element(), 1);
 var import_i18n20 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
@@ -20456,11 +20869,11 @@ function getFormFieldValue(formField, item) {
   };
 }
 function useFormValidity(item, fields, form) {
-  const [formValidity, setFormValidity] = (0, import_element65.useState)();
-  const customCounterRef = (0, import_element65.useRef)({});
-  const elementsCounterRef = (0, import_element65.useRef)({});
-  const previousValuesRef = (0, import_element65.useRef)({});
-  const validate = (0, import_element65.useCallback)(() => {
+  const [formValidity, setFormValidity] = (0, import_element67.useState)();
+  const customCounterRef = (0, import_element67.useRef)({});
+  const elementsCounterRef = (0, import_element67.useRef)({});
+  const previousValuesRef = (0, import_element67.useRef)({});
+  const validate = (0, import_element67.useCallback)(() => {
     const promiseHandler = {
       customCounterRef,
       elementsCounterRef,
@@ -20518,7 +20931,7 @@ function useFormValidity(item, fields, form) {
       return validity;
     });
   }, [item, fields, form]);
-  (0, import_element65.useEffect)(() => {
+  (0, import_element67.useEffect)(() => {
     validate();
   }, [validate]);
   return {
@@ -20529,9 +20942,9 @@ function useFormValidity(item, fields, form) {
 var use_form_validity_default = useFormValidity;
 
 // packages/dataviews/build-module/hooks/use-report-validity.mjs
-var import_element66 = __toESM(require_element(), 1);
+var import_element68 = __toESM(require_element(), 1);
 function useReportValidity(ref, shouldReport) {
-  (0, import_element66.useEffect)(() => {
+  (0, import_element68.useEffect)(() => {
     if (shouldReport && ref.current) {
       const inputs = ref.current.querySelectorAll(
         "input, textarea, select"
@@ -20544,7 +20957,7 @@ function useReportValidity(ref, shouldReport) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
-var import_element67 = __toESM(require_element(), 1);
+var import_element69 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
 function extractSummaryIds(summary) {
@@ -20585,7 +20998,7 @@ var getFieldDefinition = (field, fields) => {
   return fieldDefinition;
 };
 function useFieldFromFormField(field) {
-  const { fields } = (0, import_element67.useContext)(dataform_context_default);
+  const { fields } = (0, import_element69.useContext)(dataform_context_default);
   const layout = field.layout;
   const summaryFields = getSummaryFields(layout.summary, fields);
   const fieldDefinition = getFieldDefinition(field, fields);
@@ -20606,7 +21019,7 @@ function useFieldFromFormField(field) {
 var use_field_from_form_field_default = useFieldFromFormField;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
-var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
 function ModalContent({
   data,
   field,
@@ -20617,14 +21030,14 @@ function ModalContent({
 }) {
   const { openAs } = field.layout;
   const { applyLabel, cancelLabel } = openAs;
-  const { fields } = (0, import_element68.useContext)(dataform_context_default);
-  const [changes, setChanges] = (0, import_element68.useState)({});
-  const modalData = (0, import_element68.useMemo)(() => {
+  const { fields } = (0, import_element70.useContext)(dataform_context_default);
+  const [changes, setChanges] = (0, import_element70.useState)({});
+  const modalData = (0, import_element70.useMemo)(() => {
     return (0, import_deepmerge2.default)(data, changes, {
       arrayMerge: (target, source) => source
     });
   }, [data, changes]);
-  const form = (0, import_element68.useMemo)(
+  const form = (0, import_element70.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -20659,12 +21072,12 @@ function ModalContent({
       })
     );
   };
-  const focusOnMountRef = (0, import_compose3.useFocusOnMount)("firstInputElement");
-  const contentRef = (0, import_element68.useRef)(null);
-  const mergedRef = (0, import_compose3.useMergeRefs)([focusOnMountRef, contentRef]);
+  const focusOnMountRef = (0, import_compose4.useFocusOnMount)("firstInputElement");
+  const contentRef = (0, import_element70.useRef)(null);
+  const mergedRef = (0, import_compose4.useMergeRefs)([focusOnMountRef, contentRef]);
   useReportValidity(contentRef, touched);
-  return /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(
-    import_components24.Modal,
+  return /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(
+    import_components25.Modal,
     {
       className: "dataforms-layouts-panel__modal",
       onRequestClose: onClose,
@@ -20672,14 +21085,14 @@ function ModalContent({
       title: fieldLabel,
       size: "medium",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("div", { ref: mergedRef, children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime103.jsx)("div", { ref: mergedRef, children: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
           DataFormLayout,
           {
             data: modalData,
             form,
             onChange: handleOnChange,
             validity,
-            children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+            children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
               FieldLayout,
               {
                 data: modalData,
@@ -20693,16 +21106,16 @@ function ModalContent({
             )
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(
           Stack,
           {
             direction: "row",
             className: "dataforms-layouts-panel__modal-footer",
             gap: "md",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components24.__experimentalSpacer, { style: { flex: 1 } }),
-              /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
-                import_components24.Button,
+              /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components25.__experimentalSpacer, { style: { flex: 1 } }),
+              /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+                import_components25.Button,
                 {
                   variant: "tertiary",
                   onClick: onClose,
@@ -20710,8 +21123,8 @@ function ModalContent({
                   children: cancelLabel
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
-                import_components24.Button,
+              /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
+                import_components25.Button,
                 {
                   variant: "primary",
                   onClick: onApply,
@@ -20732,8 +21145,8 @@ function PanelModal({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element68.useState)(false);
-  const [isOpen2, setIsOpen] = (0, import_element68.useState)(false);
+  const [touched, setTouched] = (0, import_element70.useState)(false);
+  const [isOpen2, setIsOpen] = (0, import_element70.useState)(false);
   const { fieldDefinition, fieldLabel, summaryFields } = use_field_from_form_field_default(field);
   if (!fieldDefinition) {
     return null;
@@ -20742,8 +21155,8 @@ function PanelModal({
     setIsOpen(false);
     setTouched(true);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(import_jsx_runtime100.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(import_jsx_runtime103.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
       SummaryButton,
       {
         data,
@@ -20757,7 +21170,7 @@ function PanelModal({
         isOpen: isOpen2
       }
     ),
-    isOpen2 && /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+    isOpen2 && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
       ModalContent,
       {
         data,
@@ -20773,26 +21186,26 @@ function PanelModal({
 var modal_default = PanelModal;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
-var import_components25 = __toESM(require_components(), 1);
+var import_components26 = __toESM(require_components(), 1);
 var import_i18n21 = __toESM(require_i18n(), 1);
-var import_element69 = __toESM(require_element(), 1);
-var import_compose4 = __toESM(require_compose(), 1);
-var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
+var import_element71 = __toESM(require_element(), 1);
+var import_compose5 = __toESM(require_compose(), 1);
+var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
   title,
   onClose
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-panel__dropdown-header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
-        title && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components25.__experimentalHeading, { level: 2, size: 13, children: title }),
-        /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components25.__experimentalSpacer, { style: { flex: 1 } }),
-        onClose && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
-          import_components25.Button,
+      children: /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
+        title && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components26.__experimentalHeading, { level: 2, size: 13, children: title }),
+        /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components26.__experimentalSpacer, { style: { flex: 1 } }),
+        onClose && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+          import_components26.Button,
           {
             label: (0, import_i18n21.__)("Close"),
             icon: close_small_default,
@@ -20808,9 +21221,9 @@ function DropdownContentWithValidation({
   touched,
   children
 }) {
-  const ref = (0, import_element69.useRef)(null);
+  const ref = (0, import_element71.useRef)(null);
   useReportValidity(ref, touched);
-  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("div", { ref, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("div", { ref, children });
 }
 function PanelDropdown({
   data,
@@ -20818,11 +21231,11 @@ function PanelDropdown({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element69.useState)(false);
-  const [popoverAnchor, setPopoverAnchor] = (0, import_element69.useState)(
+  const [touched, setTouched] = (0, import_element71.useState)(false);
+  const [popoverAnchor, setPopoverAnchor] = (0, import_element71.useState)(
     null
   );
-  const popoverProps = (0, import_element69.useMemo)(
+  const popoverProps = (0, import_element71.useMemo)(
     () => ({
       // Anchor the popover to the middle of the entire row so that it doesn't
       // move around when the label changes.
@@ -20833,10 +21246,10 @@ function PanelDropdown({
     }),
     [popoverAnchor]
   );
-  const [dialogRef, dialogProps] = (0, import_compose4.__experimentalUseDialog)({
+  const [dialogRef, dialogProps] = (0, import_compose5.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
-  const form = (0, import_element69.useMemo)(
+  const form = (0, import_element71.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -20846,7 +21259,7 @@ function PanelDropdown({
     }),
     [field]
   );
-  const formValidity = (0, import_element69.useMemo)(() => {
+  const formValidity = (0, import_element71.useMemo)(() => {
     if (validity === void 0) {
       return void 0;
     }
@@ -20859,13 +21272,13 @@ function PanelDropdown({
   if (!fieldDefinition) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
     "div",
     {
       ref: setPopoverAnchor,
       className: "dataforms-layouts-panel__field-dropdown-anchor",
-      children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
-        import_components25.Dropdown,
+      children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+        import_components26.Dropdown,
         {
           contentClassName: "dataforms-layouts-panel__field-dropdown",
           popoverProps,
@@ -20875,7 +21288,7 @@ function PanelDropdown({
               setTouched(true);
             }
           },
-          renderToggle: ({ isOpen: isOpen2, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+          renderToggle: ({ isOpen: isOpen2, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
             SummaryButton,
             {
               data,
@@ -20889,22 +21302,22 @@ function PanelDropdown({
               onClick: onToggle
             }
           ),
-          renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+          renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
               DropdownHeader,
               {
                 title: fieldLabel,
                 onClose
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
               DataFormLayout,
               {
                 data,
                 form,
                 onChange,
                 validity: formValidity,
-                children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+                children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
                   FieldLayout,
                   {
                     data,
@@ -20927,7 +21340,7 @@ function PanelDropdown({
 var dropdown_default = PanelDropdown;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/index.mjs
-var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
 function FormPanelField({
   data,
   field,
@@ -20936,7 +21349,7 @@ function FormPanelField({
 }) {
   const layout = field.layout;
   if (layout.openAs.type === "modal") {
-    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
       modal_default,
       {
         data,
@@ -20946,7 +21359,7 @@ function FormPanelField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
     dropdown_default,
     {
       data,
@@ -20958,11 +21371,11 @@ function FormPanelField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_element70 = __toESM(require_element(), 1);
+var import_element72 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
 var import_i18n22 = __toESM(require_i18n(), 1);
-var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
 function countInvalidFields(validity) {
   if (!validity) {
     return 0;
@@ -20991,7 +21404,7 @@ function ValidationBadge({
   if (invalidCount === 0) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(Badge, { intent: "high", children: (0, import_i18n22.sprintf)(
+  return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(Badge, { intent: "high", children: (0, import_i18n22.sprintf)(
     /* translators: %d: Number of fields that need attention */
     (0, import_i18n22._n)(
       "%d field needs attention",
@@ -21003,7 +21416,7 @@ function ValidationBadge({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
 function isSummaryFieldVisible(summaryField, summaryConfig, isOpen2) {
   if (!summaryConfig || Array.isArray(summaryConfig) && summaryConfig.length === 0) {
     return false;
@@ -21044,17 +21457,17 @@ function HeaderContent({
   );
   const hasBadge = touched && layout.isCollapsible;
   const hasSummary = visibleSummaryFields.length > 0 && layout.withHeader;
-  return /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(
     Stack,
     {
       align: "center",
       justify: "space-between",
       className: "dataforms-layouts-card__field-header-content",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(card_exports.Title, { children: label }),
-        (hasBadge || hasSummary) && /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(collapsible_card_exports.HeaderDescription, { className: "dataforms-layouts-card__field-header-content-description", children: [
-          hasBadge && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(ValidationBadge, { validity }),
-          hasSummary && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(card_exports.Title, { children: label }),
+        (hasBadge || hasSummary) && /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(collapsible_card_exports.HeaderDescription, { className: "dataforms-layouts-card__field-header-content-description", children: [
+          hasBadge && /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(ValidationBadge, { validity }),
+          hasSummary && /* @__PURE__ */ (0, import_jsx_runtime107.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
             summaryField.render,
             {
               item: data,
@@ -21078,9 +21491,9 @@ function BodyContent({
   withHeader
 }) {
   if (field.children) {
-    return /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(import_jsx_runtime104.Fragment, { children: [
-      field.description && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
-      /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(import_jsx_runtime107.Fragment, { children: [
+      field.description && /* @__PURE__ */ (0, import_jsx_runtime107.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
+      /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
         DataFormLayout,
         {
           data,
@@ -21095,7 +21508,7 @@ function BodyContent({
   if (!SingleFieldLayout) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
     SingleFieldLayout,
     {
       data,
@@ -21115,10 +21528,10 @@ function FormCardField({
   markWhenOptional,
   validity
 }) {
-  const { fields } = (0, import_element70.useContext)(dataform_context_default);
+  const { fields } = (0, import_element72.useContext)(dataform_context_default);
   const layout = field.layout;
-  const contentRef = (0, import_element70.useRef)(null);
-  const form = (0, import_element70.useMemo)(
+  const contentRef = (0, import_element72.useRef)(null);
+  const form = (0, import_element72.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
@@ -21126,18 +21539,18 @@ function FormCardField({
     [field]
   );
   const { isOpened, isCollapsible } = layout;
-  const [isOpen2, setIsOpen] = (0, import_element70.useState)(isOpened);
-  const [touched, setTouched] = (0, import_element70.useState)(false);
-  (0, import_element70.useEffect)(() => {
+  const [isOpen2, setIsOpen] = (0, import_element72.useState)(isOpened);
+  const [touched, setTouched] = (0, import_element72.useState)(false);
+  (0, import_element72.useEffect)(() => {
     setIsOpen(isOpened);
   }, [isOpened]);
-  const handleOpenChange = (0, import_element70.useCallback)((open) => {
+  const handleOpenChange = (0, import_element72.useCallback)((open) => {
     if (!open) {
       setTouched(true);
     }
     setIsOpen(open);
   }, []);
-  const handleBlur = (0, import_element70.useCallback)(() => {
+  const handleBlur = (0, import_element72.useCallback)(() => {
     setTouched(true);
   }, []);
   useReportValidity(
@@ -21158,7 +21571,7 @@ function FormCardField({
     label = fieldDefinition.label;
     withHeader = !!label && layout.withHeader;
   }
-  const bodyContent = /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+  const bodyContent = /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
     BodyContent,
     {
       data,
@@ -21171,7 +21584,7 @@ function FormCardField({
       withHeader
     }
   );
-  const headerContent = /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+  const headerContent = /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
     HeaderContent,
     {
       data,
@@ -21184,15 +21597,15 @@ function FormCardField({
     }
   );
   if (withHeader && isCollapsible) {
-    return /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(
       collapsible_card_exports.Root,
       {
         className: "dataforms-layouts-card__field",
         open: isOpen2,
         onOpenChange: handleOpenChange,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(collapsible_card_exports.Header, { children: headerContent }),
-          /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(collapsible_card_exports.Header, { children: headerContent }),
+          /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
             collapsible_card_exports.Content,
             {
               ref: contentRef,
@@ -21204,27 +21617,27 @@ function FormCardField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(card_exports.Root, { className: "dataforms-layouts-card__field", children: [
-    withHeader && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(card_exports.Header, { children: headerContent }),
-    /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(card_exports.Content, { ref: contentRef, onBlur: handleBlur, children: bodyContent })
+  return /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(card_exports.Root, { className: "dataforms-layouts-card__field", children: [
+    withHeader && /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(card_exports.Header, { children: headerContent }),
+    /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(card_exports.Content, { ref: contentRef, onBlur: handleBlur, children: bodyContent })
   ] });
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/row/index.mjs
-var import_components26 = __toESM(require_components(), 1);
-var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
+var import_components27 = __toESM(require_components(), 1);
+var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
 function Header5({ title }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-row__header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(import_components26.__experimentalHeading, { level: 2, size: 13, children: title }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_components27.__experimentalHeading, { level: 2, size: 13, children: title }) })
     }
   );
 }
-var EMPTY_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(import_jsx_runtime105.Fragment, { children });
+var EMPTY_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_jsx_runtime108.Fragment, { children });
 function FormRowField({
   data,
   field,
@@ -21239,9 +21652,9 @@ function FormRowField({
       layout: DEFAULT_LAYOUT,
       fields: field.children
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime105.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
-      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(Header5, { title: field.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(Stack, { direction: "row", align: layout.alignment, gap: "lg", children: /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
+      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(Header5, { title: field.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(Stack, { direction: "row", align: layout.alignment, gap: "lg", children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
         DataFormLayout,
         {
           data,
@@ -21249,12 +21662,12 @@ function FormRowField({
           onChange,
           validity: validity?.children,
           as: EMPTY_WRAPPER,
-          children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+          children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
             "div",
             {
               className: "dataforms-layouts-row__field-control",
               style: layout.styles[childField.id],
-              children: /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
                 FieldLayout,
                 {
                   data,
@@ -21276,7 +21689,7 @@ function FormRowField({
   if (!RegularLayout) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(import_jsx_runtime105.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime105.jsx)("div", { className: "dataforms-layouts-row__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_jsx_runtime108.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)("div", { className: "dataforms-layouts-row__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
     RegularLayout,
     {
       data,
@@ -21289,28 +21702,28 @@ function FormRowField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
-var import_element71 = __toESM(require_element(), 1);
+var import_element73 = __toESM(require_element(), 1);
 var import_i18n23 = __toESM(require_i18n(), 1);
-var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
 function FormDetailsField({
   data,
   field,
   onChange,
   validity
 }) {
-  const { fields } = (0, import_element71.useContext)(dataform_context_default);
-  const detailsRef = (0, import_element71.useRef)(null);
-  const contentRef = (0, import_element71.useRef)(null);
-  const [touched, setTouched] = (0, import_element71.useState)(false);
-  const [isOpen2, setIsOpen] = (0, import_element71.useState)(false);
-  const form = (0, import_element71.useMemo)(
+  const { fields } = (0, import_element73.useContext)(dataform_context_default);
+  const detailsRef = (0, import_element73.useRef)(null);
+  const contentRef = (0, import_element73.useRef)(null);
+  const [touched, setTouched] = (0, import_element73.useState)(false);
+  const [isOpen2, setIsOpen] = (0, import_element73.useState)(false);
+  const form = (0, import_element73.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
     }),
     [field]
   );
-  (0, import_element71.useEffect)(() => {
+  (0, import_element73.useEffect)(() => {
     const details = detailsRef.current;
     if (!details) {
       return;
@@ -21328,7 +21741,7 @@ function FormDetailsField({
     };
   }, []);
   useReportValidity(contentRef, isOpen2 && touched);
-  const handleBlur = (0, import_element71.useCallback)(() => {
+  const handleBlur = (0, import_element73.useCallback)(() => {
     setTouched(true);
   }, []);
   if (!field.children) {
@@ -21338,17 +21751,17 @@ function FormDetailsField({
   const summaryField = summaryFieldId ? fields.find((fieldDef) => fieldDef.id === summaryFieldId) : void 0;
   let summaryContent;
   if (summaryField && summaryField.render) {
-    summaryContent = /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(summaryField.render, { item: data, field: summaryField });
+    summaryContent = /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(summaryField.render, { item: data, field: summaryField });
   } else {
     summaryContent = field.label || (0, import_i18n23.__)("More details");
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime106.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(
     "details",
     {
       ref: detailsRef,
       className: "dataforms-layouts-details__details",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime106.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(
           Stack,
           {
             direction: "row",
@@ -21357,17 +21770,17 @@ function FormDetailsField({
             className: "dataforms-layouts-details__summary-content",
             children: [
               summaryContent,
-              touched && /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(ValidationBadge, { validity })
+              touched && /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(ValidationBadge, { validity })
             ]
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
           "div",
           {
             ref: contentRef,
             className: "dataforms-layouts-details__content",
             onBlur: handleBlur,
-            children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
               DataFormLayout,
               {
                 data,
@@ -21384,12 +21797,12 @@ function FormDetailsField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/index.mjs
-var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
 var FORM_FIELD_LAYOUTS = [
   {
     type: "regular",
     component: FormRegularField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
       Stack,
       {
         direction: "column",
@@ -21402,7 +21815,7 @@ var FORM_FIELD_LAYOUTS = [
   {
     type: "panel",
     component: FormPanelField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
       Stack,
       {
         direction: "column",
@@ -21415,7 +21828,7 @@ var FORM_FIELD_LAYOUTS = [
   {
     type: "card",
     component: FormCardField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
       Stack,
       {
         direction: "column",
@@ -21431,13 +21844,13 @@ var FORM_FIELD_LAYOUTS = [
     wrapper: ({
       children,
       layout
-    }) => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+    }) => /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
       Stack,
       {
         direction: "column",
         className: "dataforms-layouts__wrapper",
         gap: "lg",
-        children: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
           Stack,
           {
             direction: "row",
@@ -21459,8 +21872,8 @@ function getFormFieldLayout(type) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
-var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "lg", children });
+var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
+var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "lg", children });
 function DataFormLayout({
   data,
   form,
@@ -21469,8 +21882,8 @@ function DataFormLayout({
   children,
   as
 }) {
-  const { fields: fieldDefinitions } = (0, import_element72.useContext)(dataform_context_default);
-  const markWhenOptional = (0, import_element72.useMemo)(() => {
+  const { fields: fieldDefinitions } = (0, import_element74.useContext)(dataform_context_default);
+  const markWhenOptional = (0, import_element74.useMemo)(() => {
     const requiredCount = fieldDefinitions.filter(
       (f2) => !!f2.isValid?.required
     ).length;
@@ -21483,7 +21896,7 @@ function DataFormLayout({
     );
   }
   const Wrapper = as ?? getFormFieldLayout(form.layout.type)?.wrapper ?? DEFAULT_WRAPPER;
-  return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
     const FieldLayout = getFormFieldLayout(formField.layout.type)?.component;
     if (!FieldLayout) {
       return null;
@@ -21500,7 +21913,7 @@ function DataFormLayout({
         markWhenOptional
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
       FieldLayout,
       {
         data,
@@ -21515,7 +21928,7 @@ function DataFormLayout({
 }
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
 function DataForm({
   data,
   form,
@@ -21523,15 +21936,15 @@ function DataForm({
   onChange,
   validity
 }) {
-  const normalizedForm = (0, import_element73.useMemo)(() => normalize_form_default(form), [form]);
-  const normalizedFields = (0, import_element73.useMemo)(
+  const normalizedForm = (0, import_element75.useMemo)(() => normalize_form_default(form), [form]);
+  const normalizedFields = (0, import_element75.useMemo)(
     () => normalizeFields(fields),
     [fields]
   );
   if (!form.fields) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
     DataFormLayout,
     {
       data,
@@ -21543,16 +21956,16 @@ function DataForm({
 }
 
 // packages/media-editor/build-module/components/media-form/index.mjs
-var import_components27 = __toESM(require_components(), 1);
+var import_components28 = __toESM(require_components(), 1);
 var import_i18n24 = __toESM(require_i18n(), 1);
-var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
 function MediaForm({
   form: formOverrides,
   header
 }) {
   const { media, fields, onChange } = useMediaEditorContext();
   if (!media || !onChange) {
-    return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("div", { className: "media-editor-form media-editor-form--loading", children: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(import_components27.Spinner, {}) });
+    return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { className: "media-editor-form media-editor-form--loading", children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_components28.Spinner, {}) });
   }
   const regularFieldIds = ["title", "alt_text", "caption", "description"];
   const sortedFields = [
@@ -21581,10 +21994,10 @@ function MediaForm({
     })
   };
   const form = formOverrides || defaultForm;
-  return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)(import_components27.__experimentalVStack, { spacing: 4, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("h2", {}), children: (0, import_i18n24.__)("Media details") }),
+  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(import_components28.__experimentalVStack, { spacing: 4, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("h2", {}), children: (0, import_i18n24.__)("Media details") }),
     header,
-    /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
       DataForm,
       {
         data: media,
@@ -21685,34 +22098,34 @@ var store = (0, import_data.createReduxStore)(STORE_NAME, {
 (0, import_data.register)(store);
 
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
-var import_components40 = __toESM(require_components(), 1);
+var import_components41 = __toESM(require_components(), 1);
 var import_data9 = __toESM(require_data(), 1);
 var import_i18n38 = __toESM(require_i18n(), 1);
 var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
 var import_notices3 = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
-var import_components39 = __toESM(require_components(), 1);
-var import_compose7 = __toESM(require_compose(), 1);
+var import_components40 = __toESM(require_components(), 1);
+var import_compose8 = __toESM(require_compose(), 1);
 var import_data8 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
-var import_element94 = __toESM(require_element(), 1);
+var import_element96 = __toESM(require_element(), 1);
 var import_i18n37 = __toESM(require_i18n(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
 var import_notices2 = __toESM(require_notices(), 1);
 
 // packages/interface/build-module/components/complementary-area/index.mjs
-var import_components32 = __toESM(require_components(), 1);
+var import_components33 = __toESM(require_components(), 1);
 var import_data6 = __toESM(require_data(), 1);
 var import_i18n25 = __toESM(require_i18n(), 1);
-var import_element75 = __toESM(require_element(), 1);
+var import_element77 = __toESM(require_element(), 1);
 var import_viewport = __toESM(require_viewport(), 1);
 var import_preferences3 = __toESM(require_preferences(), 1);
-var import_compose5 = __toESM(require_compose(), 1);
+var import_compose6 = __toESM(require_compose(), 1);
 var import_plugins2 = __toESM(require_plugins(), 1);
 
 // packages/interface/build-module/components/complementary-area-toggle/index.mjs
-var import_components28 = __toESM(require_components(), 1);
+var import_components29 = __toESM(require_components(), 1);
 var import_data5 = __toESM(require_data(), 1);
 var import_plugins = __toESM(require_plugins(), 1);
 
@@ -21982,7 +22395,7 @@ var store2 = (0, import_data4.createReduxStore)(STORE_NAME2, {
 (0, import_data4.register)(store2);
 
 // packages/interface/build-module/components/complementary-area-toggle/index.mjs
-var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
 function roleSupportsCheckedState(role) {
   return [
     "checkbox",
@@ -21995,7 +22408,7 @@ function roleSupportsCheckedState(role) {
   ].includes(role);
 }
 function ComplementaryAreaToggle({
-  as = import_components28.Button,
+  as = import_components29.Button,
   scope,
   identifier: identifierProp,
   icon: iconProp,
@@ -22013,7 +22426,7 @@ function ComplementaryAreaToggle({
     [identifier, scope]
   );
   const { enableComplementaryArea: enableComplementaryArea2, disableComplementaryArea: disableComplementaryArea2 } = (0, import_data5.useDispatch)(store2);
-  return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
     ComponentToUse,
     {
       icon: selectedIcon && isSelected ? selectedIcon : icon,
@@ -22033,14 +22446,14 @@ function ComplementaryAreaToggle({
 }
 
 // packages/interface/build-module/components/complementary-area-header/index.mjs
-var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
 var ComplementaryAreaHeader = ({
   children,
   className,
   toggleButtonProps
 }) => {
-  const toggleButton = /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(ComplementaryAreaToggle, { icon: close_small_default, ...toggleButtonProps });
-  return /* @__PURE__ */ (0, import_jsx_runtime112.jsxs)(
+  const toggleButton = /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(ComplementaryAreaToggle, { icon: close_small_default, ...toggleButtonProps });
+  return /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)(
     "div",
     {
       className: clsx_default(
@@ -22059,33 +22472,33 @@ var ComplementaryAreaHeader = ({
 var complementary_area_header_default = ComplementaryAreaHeader;
 
 // packages/interface/build-module/components/complementary-area-more-menu-item/index.mjs
-var import_components30 = __toESM(require_components(), 1);
+var import_components31 = __toESM(require_components(), 1);
 
 // packages/interface/build-module/components/action-item/index.mjs
-var import_components29 = __toESM(require_components(), 1);
-var import_element74 = __toESM(require_element(), 1);
-var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
+var import_components30 = __toESM(require_components(), 1);
+var import_element76 = __toESM(require_element(), 1);
+var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
 var noop4 = () => {
 };
 function ActionItemSlot({
   name,
-  as: Component = import_components29.MenuGroup,
+  as: Component = import_components30.MenuGroup,
   fillProps = {},
   bubblesVirtually,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
-    import_components29.Slot,
+  return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+    import_components30.Slot,
     {
       name,
       bubblesVirtually,
       fillProps,
       children: (fills) => {
-        if (!import_element74.Children.toArray(fills).length) {
+        if (!import_element76.Children.toArray(fills).length) {
           return null;
         }
         const initializedByPlugins = [];
-        import_element74.Children.forEach(
+        import_element76.Children.forEach(
           fills,
           ({
             props: { __unstableExplicitMenuItem, __unstableTarget }
@@ -22095,7 +22508,7 @@ function ActionItemSlot({
             }
           }
         );
-        const children = import_element74.Children.map(fills, (child) => {
+        const children = import_element76.Children.map(fills, (child) => {
           if (!child.props.__unstableExplicitMenuItem && initializedByPlugins.includes(
             child.props.__unstableTarget
           )) {
@@ -22103,14 +22516,14 @@ function ActionItemSlot({
           }
           return child;
         });
-        return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(Component, { ...props, children });
+        return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(Component, { ...props, children });
       }
     }
   );
 }
-function ActionItem({ name, as: Component = import_components29.Button, onClick, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_components29.Fill, { name, children: ({ onClick: fpOnClick }) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+function ActionItem({ name, as: Component = import_components30.Button, onClick, ...props }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_components30.Fill, { name, children: ({ onClick: fpOnClick }) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
       Component,
       {
         onClick: onClick || fpOnClick ? (...args) => {
@@ -22126,7 +22539,7 @@ ActionItem.Slot = ActionItemSlot;
 var action_item_default = ActionItem;
 
 // packages/interface/build-module/components/complementary-area-more-menu-item/index.mjs
-var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
 var PluginsMenuItem = ({
   // Menu item is marked with unstable prop for backward compatibility.
   // They are removed so they don't leak to DOM elements.
@@ -22134,18 +22547,18 @@ var PluginsMenuItem = ({
   __unstableExplicitMenuItem,
   __unstableTarget,
   ...restProps
-}) => /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components30.MenuItem, { ...restProps });
+}) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components31.MenuItem, { ...restProps });
 function ComplementaryAreaMoreMenuItem({
   scope,
   target,
   __unstableExplicitMenuItem,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
     ComplementaryAreaToggle,
     {
       as: (toggleProps) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
           action_item_default,
           {
             __unstableExplicitMenuItem,
@@ -22166,13 +22579,13 @@ function ComplementaryAreaMoreMenuItem({
 }
 
 // packages/interface/build-module/components/pinned-items/index.mjs
-var import_components31 = __toESM(require_components(), 1);
-var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
+var import_components32 = __toESM(require_components(), 1);
+var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
 function PinnedItems({ scope, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_components31.Fill, { name: `PinnedItems/${scope}`, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(import_components32.Fill, { name: `PinnedItems/${scope}`, ...props });
 }
 function PinnedItemsSlot({ scope, className, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_components31.Slot, { name: `PinnedItems/${scope}`, ...props, children: (fills) => fills?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(import_components32.Slot, { name: `PinnedItems/${scope}`, ...props, children: (fills) => fills?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
     "div",
     {
       className: clsx_default(
@@ -22187,10 +22600,10 @@ PinnedItems.Slot = PinnedItemsSlot;
 var pinned_items_default = PinnedItems;
 
 // packages/interface/build-module/components/complementary-area/index.mjs
-var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
 var ANIMATION_DURATION = 0.3;
 function ComplementaryAreaSlot({ scope, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_components32.Slot, { name: `ComplementaryArea/${scope}`, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(import_components33.Slot, { name: `ComplementaryArea/${scope}`, ...props });
 }
 var SIDEBAR_WIDTH = 280;
 var variants = {
@@ -22206,12 +22619,12 @@ function ComplementaryAreaFill({
   className,
   id
 }) {
-  const disableMotion = (0, import_compose5.useReducedMotion)();
-  const isMobileViewport = (0, import_compose5.useViewportMatch)("medium", "<");
-  const previousActiveArea = (0, import_compose5.usePrevious)(activeArea);
-  const previousIsActive = (0, import_compose5.usePrevious)(isActive);
-  const [, setState] = (0, import_element75.useState)({});
-  (0, import_element75.useEffect)(() => {
+  const disableMotion = (0, import_compose6.useReducedMotion)();
+  const isMobileViewport = (0, import_compose6.useViewportMatch)("medium", "<");
+  const previousActiveArea = (0, import_compose6.usePrevious)(activeArea);
+  const previousIsActive = (0, import_compose6.usePrevious)(isActive);
+  const [, setState] = (0, import_element77.useState)({});
+  (0, import_element77.useEffect)(() => {
     setState({});
   }, [isActive]);
   const transition = {
@@ -22219,8 +22632,8 @@ function ComplementaryAreaFill({
     duration: disableMotion || isMobileViewport || !!previousActiveArea && !!activeArea && activeArea !== previousActiveArea ? 0 : ANIMATION_DURATION,
     ease: [0.6, 0, 0.4, 1]
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_components32.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_components32.__unstableAnimatePresence, { initial: false, children: (previousIsActive || isActive) && /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
-    import_components32.__unstableMotion.div,
+  return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(import_components33.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(import_components33.__unstableAnimatePresence, { initial: false, children: (previousIsActive || isActive) && /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+    import_components33.__unstableMotion.div,
     {
       variants,
       initial: "closed",
@@ -22228,7 +22641,7 @@ function ComplementaryAreaFill({
       exit: "closed",
       transition,
       className: "interface-complementary-area__fill",
-      children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
         "div",
         {
           id,
@@ -22243,10 +22656,10 @@ function ComplementaryAreaFill({
   ) }) });
 }
 function useAdjustComplementaryListener(scope, identifier, activeArea, isActive, isSmall) {
-  const previousIsSmallRef = (0, import_element75.useRef)(false);
-  const shouldOpenWhenNotSmallRef = (0, import_element75.useRef)(false);
+  const previousIsSmallRef = (0, import_element77.useRef)(false);
+  const shouldOpenWhenNotSmallRef = (0, import_element77.useRef)(false);
   const { enableComplementaryArea: enableComplementaryArea2, disableComplementaryArea: disableComplementaryArea2 } = (0, import_data6.useDispatch)(store2);
-  (0, import_element75.useEffect)(() => {
+  (0, import_element77.useEffect)(() => {
     if (isActive && isSmall && !previousIsSmallRef.current) {
       disableComplementaryArea2(scope);
       shouldOpenWhenNotSmallRef.current = true;
@@ -22298,7 +22711,7 @@ function ComplementaryArea({
   const context = (0, import_plugins2.usePluginContext)();
   const icon = iconProp || context.icon;
   const identifier = identifierProp || `${context.name}/${name}`;
-  const [isReady, setIsReady] = (0, import_element75.useState)(false);
+  const [isReady, setIsReady] = (0, import_element77.useState)(false);
   const {
     isLoading,
     isActive,
@@ -22328,7 +22741,7 @@ function ComplementaryArea({
     },
     [identifier, scope]
   );
-  const isMobileViewport = (0, import_compose5.useViewportMatch)("medium", "<");
+  const isMobileViewport = (0, import_compose6.useViewportMatch)("medium", "<");
   useAdjustComplementaryListener(
     scope,
     identifier,
@@ -22342,7 +22755,7 @@ function ComplementaryArea({
     pinItem: pinItem2,
     unpinItem: unpinItem2
   } = (0, import_data6.useDispatch)(store2);
-  (0, import_element75.useEffect)(() => {
+  (0, import_element77.useEffect)(() => {
     if (isActiveByDefault && activeArea === void 0 && !isSmall) {
       enableComplementaryArea2(scope, identifier);
     } else if (activeArea === void 0 && isSmall) {
@@ -22361,8 +22774,8 @@ function ComplementaryArea({
   if (!isReady) {
     return;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(import_jsx_runtime116.Fragment, { children: [
-    isPinnable && /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(pinned_items_default, { scope, children: isPinned && /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(import_jsx_runtime119.Fragment, { children: [
+    isPinnable && /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(pinned_items_default, { scope, children: isPinned && /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
       ComplementaryAreaToggle,
       {
         scope,
@@ -22378,7 +22791,7 @@ function ComplementaryArea({
         shortcut: toggleShortcut
       }
     ) }),
-    name && isPinnable && /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+    name && isPinnable && /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
       ComplementaryAreaMoreMenuItem,
       {
         target: name,
@@ -22388,7 +22801,7 @@ function ComplementaryArea({
         children: title
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(
       ComplementaryAreaFill,
       {
         activeArea,
@@ -22397,7 +22810,7 @@ function ComplementaryArea({
         scope,
         id: identifier.replace("/", ":"),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
             complementary_area_header_default,
             {
               className: headerClassName,
@@ -22410,10 +22823,10 @@ function ComplementaryArea({
                 scope,
                 identifier
               },
-              children: header || /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(import_jsx_runtime116.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("h2", { className: "interface-complementary-area-header__title", children: title }),
-                isPinnable && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
-                  import_components32.Button,
+              children: header || /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(import_jsx_runtime119.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime119.jsx)("h2", { className: "interface-complementary-area-header__title", children: title }),
+                isPinnable && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+                  import_components33.Button,
                   {
                     className: "interface-complementary-area__pin-unpin-item",
                     icon: isPinned ? star_filled_default : star_empty_default,
@@ -22430,7 +22843,7 @@ function ComplementaryArea({
               ] })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_components32.Panel, { className: panelClassName, children })
+          /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(import_components33.Panel, { className: panelClassName, children })
         ]
       }
     )
@@ -22440,11 +22853,11 @@ ComplementaryArea.Slot = ComplementaryAreaSlot;
 var complementary_area_default = ComplementaryArea;
 
 // packages/interface/build-module/components/interface-skeleton/index.mjs
-var import_element76 = __toESM(require_element(), 1);
-var import_components33 = __toESM(require_components(), 1);
+var import_element78 = __toESM(require_element(), 1);
+var import_components34 = __toESM(require_components(), 1);
 var import_i18n26 = __toESM(require_i18n(), 1);
-var import_compose6 = __toESM(require_compose(), 1);
-var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
+var import_compose7 = __toESM(require_compose(), 1);
+var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
 var ANIMATION_DURATION2 = 0.25;
 var commonTransition = {
   type: "tween",
@@ -22452,7 +22865,7 @@ var commonTransition = {
   ease: [0.6, 0, 0.4, 1]
 };
 function useHTMLClass(className) {
-  (0, import_element76.useEffect)(() => {
+  (0, import_element78.useEffect)(() => {
     const element = document && document.querySelector(`html:not(.${className})`);
     if (!element) {
       return;
@@ -22501,9 +22914,9 @@ function InterfaceSkeleton({
   labels,
   className
 }, ref) {
-  const [secondarySidebarResizeListener, secondarySidebarSize] = (0, import_compose6.useResizeObserver)();
-  const isMobileViewport = (0, import_compose6.useViewportMatch)("medium", "<");
-  const disableMotion = (0, import_compose6.useReducedMotion)();
+  const [secondarySidebarResizeListener, secondarySidebarSize] = (0, import_compose7.useResizeObserver)();
+  const isMobileViewport = (0, import_compose7.useViewportMatch)("medium", "<");
+  const disableMotion = (0, import_compose7.useReducedMotion)();
   const defaultTransition = {
     type: "tween",
     duration: disableMotion ? 0 : ANIMATION_DURATION2,
@@ -22525,7 +22938,7 @@ function InterfaceSkeleton({
     footer: (0, import_i18n26.__)("Footer")
   };
   const mergedLabels = { ...defaultLabels, ...labels };
-  return /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
     "div",
     {
       ref,
@@ -22535,11 +22948,11 @@ function InterfaceSkeleton({
         !!footer && "has-footer"
       ),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)("div", { className: "interface-interface-skeleton__editor", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components33.__unstableAnimatePresence, { initial: false, children: !!header && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)("div", { className: "interface-interface-skeleton__editor", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(import_components34.__unstableAnimatePresence, { initial: false, children: !!header && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
             navigable_region_default,
             {
-              as: import_components33.__unstableMotion.div,
+              as: import_components34.__unstableMotion.div,
               className: "interface-interface-skeleton__header",
               ariaLabel: mergedLabels.header,
               initial: isDistractionFree && !isMobileViewport ? "distractionFreeHidden" : "hidden",
@@ -22551,14 +22964,14 @@ function InterfaceSkeleton({
               children: header
             }
           ) }),
-          isDistractionFree && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { className: "interface-interface-skeleton__header", children: editorNotices }),
-          /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)("div", { className: "interface-interface-skeleton__body", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components33.__unstableAnimatePresence, { initial: false, children: !!secondarySidebar && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+          isDistractionFree && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { className: "interface-interface-skeleton__header", children: editorNotices }),
+          /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)("div", { className: "interface-interface-skeleton__body", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(import_components34.__unstableAnimatePresence, { initial: false, children: !!secondarySidebar && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__secondary-sidebar",
                 ariaLabel: mergedLabels.secondarySidebar,
-                as: import_components33.__unstableMotion.div,
+                as: import_components34.__unstableMotion.div,
                 initial: "closed",
                 animate: "open",
                 exit: "closed",
@@ -22567,8 +22980,8 @@ function InterfaceSkeleton({
                   closed: { width: 0 }
                 },
                 transition: defaultTransition,
-                children: /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(
-                  import_components33.__unstableMotion.div,
+                children: /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
+                  import_components34.__unstableMotion.div,
                   {
                     style: {
                       position: "absolute",
@@ -22589,7 +23002,7 @@ function InterfaceSkeleton({
                 )
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__content",
@@ -22597,7 +23010,7 @@ function InterfaceSkeleton({
                 children: content
               }
             ),
-            !!sidebar && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+            !!sidebar && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__sidebar",
@@ -22605,7 +23018,7 @@ function InterfaceSkeleton({
                 children: sidebar
               }
             ),
-            !!actions && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+            !!actions && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__actions",
@@ -22615,7 +23028,7 @@ function InterfaceSkeleton({
             )
           ] })
         ] }),
-        !!footer && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+        !!footer && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
           navigable_region_default,
           {
             className: "interface-interface-skeleton__footer",
@@ -22627,11 +23040,11 @@ function InterfaceSkeleton({
     }
   );
 }
-var interface_skeleton_default = (0, import_element76.forwardRef)(InterfaceSkeleton);
+var interface_skeleton_default = (0, import_element78.forwardRef)(InterfaceSkeleton);
 
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
-var import_element87 = __toESM(require_element(), 1);
-var import_components35 = __toESM(require_components(), 1);
+var import_element89 = __toESM(require_element(), 1);
+var import_components36 = __toESM(require_components(), 1);
 var import_i18n31 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/constants.mjs
@@ -24068,7 +24481,7 @@ function buildCropperSetters(dispatchCropperAction, getCropperState) {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
-var import_element84 = __toESM(require_element(), 1);
+var import_element86 = __toESM(require_element(), 1);
 var import_i18n30 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/crop-rect.mjs
@@ -24271,7 +24684,7 @@ function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-interaction.mjs
-var import_element77 = __toESM(require_element(), 1);
+var import_element79 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/interaction-controller.mjs
 var DOUBLE_TAP_TIME = 300;
@@ -24914,30 +25327,30 @@ function isHandledKeyboardZoom(event) {
   }
 }
 function useInteraction(state, actions, containerSize, imageSize, options) {
-  const [isDragging, setIsDragging] = (0, import_element77.useState)(false);
-  const [isZooming, setIsZooming] = (0, import_element77.useState)(false);
-  const [isGestureActive, setIsGestureActive] = (0, import_element77.useState)(false);
-  const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element77.useState)(false);
-  const keyboardInteractionTimerRef = (0, import_element77.useRef)();
-  const isKeyboardGestureActiveRef = (0, import_element77.useRef)(false);
-  const stateRef = (0, import_element77.useRef)(state);
+  const [isDragging, setIsDragging] = (0, import_element79.useState)(false);
+  const [isZooming, setIsZooming] = (0, import_element79.useState)(false);
+  const [isGestureActive, setIsGestureActive] = (0, import_element79.useState)(false);
+  const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element79.useState)(false);
+  const keyboardInteractionTimerRef = (0, import_element79.useRef)();
+  const isKeyboardGestureActiveRef = (0, import_element79.useRef)(false);
+  const stateRef = (0, import_element79.useRef)(state);
   stateRef.current = state;
-  const containerSizeRef = (0, import_element77.useRef)(containerSize);
+  const containerSizeRef = (0, import_element79.useRef)(containerSize);
   containerSizeRef.current = containerSize;
-  const imageSizeRef = (0, import_element77.useRef)(imageSize);
+  const imageSizeRef = (0, import_element79.useRef)(imageSize);
   imageSizeRef.current = imageSize;
-  const optionsRef = (0, import_element77.useRef)(options);
+  const optionsRef = (0, import_element79.useRef)(options);
   optionsRef.current = options;
-  const actionsRef = (0, import_element77.useRef)(actions);
+  const actionsRef = (0, import_element79.useRef)(actions);
   actionsRef.current = actions;
-  const controllerRef = (0, import_element77.useRef)(null);
-  const startPlacementGesture = (0, import_element77.useCallback)(() => {
+  const controllerRef = (0, import_element79.useRef)(null);
+  const startPlacementGesture = (0, import_element79.useCallback)(() => {
     setIsGestureActive(true);
   }, []);
-  const stopPlacementGesture = (0, import_element77.useCallback)(() => {
+  const stopPlacementGesture = (0, import_element79.useCallback)(() => {
     setIsGestureActive(false);
   }, []);
-  const signalKeyboardGesture = (0, import_element77.useCallback)(() => {
+  const signalKeyboardGesture = (0, import_element79.useCallback)(() => {
     if (!isKeyboardGestureActiveRef.current) {
       isKeyboardGestureActiveRef.current = true;
       optionsRef.current?.onGestureStart?.();
@@ -24949,12 +25362,12 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       optionsRef.current?.onGestureEnd?.();
     }, KEYBOARD_INTERACTION_IDLE_MS);
   }, []);
-  (0, import_element77.useEffect)(() => {
+  (0, import_element79.useEffect)(() => {
     return () => {
       clearTimeout(keyboardInteractionTimerRef.current);
     };
   }, []);
-  (0, import_element77.useEffect)(() => {
+  (0, import_element79.useEffect)(() => {
     const controller = new InteractionController({
       getState: () => stateRef.current,
       actions: {
@@ -25000,11 +25413,11 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       controllerRef.current = null;
     };
   }, [startPlacementGesture, stopPlacementGesture]);
-  const onPointerDown = (0, import_element77.useCallback)((e2) => {
+  const onPointerDown = (0, import_element79.useCallback)((e2) => {
     const el = e2.currentTarget;
     controllerRef.current?.handlePointerDown(e2.nativeEvent, el);
   }, []);
-  const onTouchStart = (0, import_element77.useCallback)((e2) => {
+  const onTouchStart = (0, import_element79.useCallback)((e2) => {
     const el = e2.currentTarget;
     const rect = el.getBoundingClientRect();
     controllerRef.current?.handleTouchStart(
@@ -25013,7 +25426,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       el.ownerDocument
     );
   }, []);
-  const onKeyDown = (0, import_element77.useCallback)(
+  const onKeyDown = (0, import_element79.useCallback)(
     (e2) => {
       if (isHandledKeyboardPan(e2.nativeEvent)) {
         setIsKeyboardPanning(true);
@@ -25025,7 +25438,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
     },
     [signalKeyboardGesture]
   );
-  const onWheelNative = (0, import_element77.useCallback)((e2) => {
+  const onWheelNative = (0, import_element79.useCallback)((e2) => {
     controllerRef.current?.handleWheel(e2);
   }, []);
   return {
@@ -25042,7 +25455,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-transform-style.mjs
-var import_element78 = __toESM(require_element(), 1);
+var import_element80 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/transform-style.mjs
 var IDENTITY_MATRIX_STYLE = "matrix(1, 0, 0, 1, 0, 0)";
@@ -25068,14 +25481,14 @@ function computeTransformStyle(state, imageSize) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-transform-style.mjs
 function useTransformStyle(state, imageSize) {
-  return (0, import_element78.useMemo)(
+  return (0, import_element80.useMemo)(
     () => computeTransformStyle(state, imageSize),
     [state, imageSize]
   );
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
-var import_element79 = __toESM(require_element(), 1);
+var import_element81 = __toESM(require_element(), 1);
 var import_i18n28 = __toESM(require_i18n(), 1);
 import { speak as speak2 } from "@wordpress/a11y";
 
@@ -25330,14 +25743,14 @@ function buildAnnouncement(state, previousState) {
   return parts.join(", ");
 }
 function useAriaAnnouncer(state) {
-  const timerRef = (0, import_element79.useRef)();
-  const prevMessageRef = (0, import_element79.useRef)("");
-  const prevStateRef = (0, import_element79.useRef)(null);
-  const latestStateRef = (0, import_element79.useRef)(state);
-  (0, import_element79.useLayoutEffect)(() => {
+  const timerRef = (0, import_element81.useRef)();
+  const prevMessageRef = (0, import_element81.useRef)("");
+  const prevStateRef = (0, import_element81.useRef)(null);
+  const latestStateRef = (0, import_element81.useRef)(state);
+  (0, import_element81.useLayoutEffect)(() => {
     latestStateRef.current = state;
   }, [state]);
-  (0, import_element79.useEffect)(() => {
+  (0, import_element81.useEffect)(() => {
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       const current = latestStateRef.current;
@@ -25362,7 +25775,7 @@ function useAriaAnnouncer(state) {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
-var import_element80 = __toESM(require_element(), 1);
+var import_element82 = __toESM(require_element(), 1);
 var import_i18n29 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/react/visually-hidden-style.mjs
@@ -25379,7 +25792,7 @@ var VISUALLY_HIDDEN_STYLE = {
 };
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
-var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
 var CORNER_POSITIONS = ["nw", "ne", "se", "sw"];
 var ALL_POSITIONS = [
   "nw",
@@ -25433,7 +25846,7 @@ function RectangleStencil({
   const boundsMinY = cropBounds?.minY ?? 0;
   const boundsMaxX = cropBounds?.maxX ?? 1;
   const boundsMaxY = cropBounds?.maxY ?? 1;
-  const bounds = (0, import_element80.useMemo)(
+  const bounds = (0, import_element82.useMemo)(
     () => ({
       minX: boundsMinX,
       minY: boundsMinY,
@@ -25442,25 +25855,25 @@ function RectangleStencil({
     }),
     [boundsMinX, boundsMinY, boundsMaxX, boundsMaxY]
   );
-  const keyboardSettleTimerRef = (0, import_element80.useRef)();
-  const keyboardResizeActiveRef = (0, import_element80.useRef)(false);
-  const resizeHandleDescriptionId = (0, import_element80.useId)();
+  const keyboardSettleTimerRef = (0, import_element82.useRef)();
+  const keyboardResizeActiveRef = (0, import_element82.useRef)(false);
+  const resizeHandleDescriptionId = (0, import_element82.useId)();
   const hasLockedRatio = !!(aspectRatio && aspectRatio > 0);
-  const activePointerResizeRef = (0, import_element80.useRef)(null);
-  (0, import_element80.useEffect)(() => {
+  const activePointerResizeRef = (0, import_element82.useRef)(null);
+  (0, import_element82.useEffect)(() => {
     return () => {
       clearTimeout(keyboardSettleTimerRef.current);
       keyboardResizeActiveRef.current = false;
       activePointerResizeRef.current?.cancel(false);
     };
   }, []);
-  (0, import_element80.useEffect)(() => {
+  (0, import_element82.useEffect)(() => {
     if (isResizeDisabled) {
       activePointerResizeRef.current?.cancel();
     }
   }, [isResizeDisabled]);
-  const latestHandlersRef = (0, import_element80.useRef)(null);
-  const normalizedRatio = (0, import_element80.useMemo)(() => {
+  const latestHandlersRef = (0, import_element82.useRef)(null);
+  const normalizedRatio = (0, import_element82.useMemo)(() => {
     if (!hasLockedRatio || imageSize.width === 0) {
       return 0;
     }
@@ -25472,7 +25885,7 @@ function RectangleStencil({
   const top = offsetY + cropRect.y * imageSize.height;
   const width = cropRect.width * imageSize.width;
   const height = cropRect.height * imageSize.height;
-  const handlePointerDown = (0, import_element80.useCallback)(
+  const handlePointerDown = (0, import_element82.useCallback)(
     (handle, event) => {
       if (isResizeDisabled || event.pointerType === "touch" && event.isPrimary === false) {
         event.preventDefault();
@@ -25563,7 +25976,7 @@ function RectangleStencil({
     },
     [cropRect, isResizeDisabled, onResizeStart]
   );
-  const computeFreeRect = (0, import_element80.useCallback)(
+  const computeFreeRect = (0, import_element82.useCallback)(
     (drag2, clientX, clientY) => computeFreeResizeRect(
       drag2,
       clientX,
@@ -25574,7 +25987,7 @@ function RectangleStencil({
     ),
     [imageSize, bounds, minCropSize]
   );
-  const computeLockedRect = (0, import_element80.useCallback)(
+  const computeLockedRect = (0, import_element82.useCallback)(
     (drag2, clientX, clientY, driverAxis) => computeLockedResizeRect(
       drag2,
       clientX,
@@ -25587,7 +26000,7 @@ function RectangleStencil({
     ),
     [imageSize, bounds, normalizedRatio, minCropSize]
   );
-  const computeShiftLockedRect = (0, import_element80.useCallback)(
+  const computeShiftLockedRect = (0, import_element82.useCallback)(
     (drag2, clientX, clientY) => computeShiftLockedResizeRect(
       drag2,
       clientX,
@@ -25607,7 +26020,7 @@ function RectangleStencil({
     onResizeEnd,
     snapCropRect
   };
-  const handleKeyDown = (0, import_element80.useCallback)(
+  const handleKeyDown = (0, import_element82.useCallback)(
     (handle, event) => {
       const key = event.key;
       if (isResizeDisabled) {
@@ -25707,7 +26120,7 @@ function RectangleStencil({
     return null;
   }
   const handles = hasLockedRatio ? CORNER_POSITIONS : ALL_POSITIONS;
-  return /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(
     "div",
     {
       className: "wp-media-editor-image-editor__stencil",
@@ -25720,7 +26133,7 @@ function RectangleStencil({
         transition: stencilTransition
       },
       children: [
-        freeformCrop && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+        freeformCrop && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
           "div",
           {
             id: resizeHandleDescriptionId,
@@ -25730,7 +26143,7 @@ function RectangleStencil({
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__stencil-rect",
@@ -25742,7 +26155,7 @@ function RectangleStencil({
             }
           }
         ),
-        freeformCrop && handles.map((pos) => /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+        freeformCrop && handles.map((pos) => /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
           "button",
           {
             type: "button",
@@ -25765,7 +26178,7 @@ function RectangleStencil({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/dimming-overlay.mjs
-var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
 function DimmingOverlay({
   cropRect,
   containerSize,
@@ -25782,7 +26195,7 @@ function DimmingOverlay({
   const width = cropRect.width * imageSize.width;
   const height = cropRect.height * imageSize.height;
   const composedTransition = transition ? `${transition}, box-shadow 0.15s ease` : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
     "div",
     {
       className: "wp-media-editor-image-editor__dimming",
@@ -25799,7 +26212,7 @@ function DimmingOverlay({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/grid-overlay.mjs
-var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
 function GridOverlay({
   cropRect,
   containerSize,
@@ -25816,7 +26229,7 @@ function GridOverlay({
   const height = cropRect.height * imageSize.height;
   const thirdW = width / 3;
   const thirdH = height / 3;
-  return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(
     "div",
     {
       className: "wp-media-editor-image-editor__grid",
@@ -25828,28 +26241,28 @@ function GridOverlay({
         height
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--horizontal",
             style: { top: thirdH }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--horizontal",
             style: { top: thirdH * 2 }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--vertical",
             style: { left: thirdW }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--vertical",
@@ -25862,8 +26275,8 @@ function GridOverlay({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/dimensions-overlay.mjs
-var import_element81 = __toESM(require_element(), 1);
-var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
+var import_element83 = __toESM(require_element(), 1);
+var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
 var HANDLE_GAP_PX = 12;
 var TRANSLATE_PERCENT = {
   before: "-100%",
@@ -25936,9 +26349,9 @@ function DimensionsOverlay({
   outputWidth,
   outputHeight
 }) {
-  const tooltipRef = (0, import_element81.useRef)(null);
-  const [tooltipSize, setTooltipSize] = (0, import_element81.useState)(null);
-  (0, import_element81.useLayoutEffect)(() => {
+  const tooltipRef = (0, import_element83.useRef)(null);
+  const [tooltipSize, setTooltipSize] = (0, import_element83.useState)(null);
+  (0, import_element83.useLayoutEffect)(() => {
     if (!tooltipRef.current) {
       return;
     }
@@ -25986,7 +26399,7 @@ function DimensionsOverlay({
       containerSize.height
     )
   } : preferred;
-  return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
     "div",
     {
       ref: tooltipRef,
@@ -26006,10 +26419,10 @@ function DimensionsOverlay({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
-var import_element83 = __toESM(require_element(), 1);
+var import_element85 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-viewport-state.mjs
-var import_element82 = __toESM(require_element(), 1);
+var import_element84 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/viewport-state.mjs
 var DEFAULT_VIEWPORT_STATE = {
@@ -26033,36 +26446,36 @@ function viewportReducer(state, action) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-viewport-state.mjs
 function useViewportState() {
-  const [viewport, dispatch] = (0, import_element82.useReducer)(
+  const [viewport, dispatch] = (0, import_element84.useReducer)(
     viewportReducer,
     DEFAULT_VIEWPORT_STATE
   );
-  const setViewportZoom = (0, import_element82.useCallback)((zoom) => {
+  const setViewportZoom = (0, import_element84.useCallback)((zoom) => {
     dispatch({ type: "SET_VIEWPORT_ZOOM", payload: zoom });
   }, []);
-  const setViewportPan = (0, import_element82.useCallback)((pan) => {
+  const setViewportPan = (0, import_element84.useCallback)((pan) => {
     dispatch({ type: "SET_VIEWPORT_PAN", payload: pan });
   }, []);
-  const resetViewport = (0, import_element82.useCallback)(() => {
+  const resetViewport = (0, import_element84.useCallback)(() => {
     dispatch({ type: "RESET_VIEWPORT" });
   }, []);
-  return (0, import_element82.useMemo)(
+  return (0, import_element84.useMemo)(
     () => ({ viewport, setViewportZoom, setViewportPan, resetViewport }),
     [viewport, setViewportZoom, setViewportPan, resetViewport]
   );
 }
 
 // packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
-var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
-var ViewportContext = (0, import_element83.createContext)(null);
+var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
+var ViewportContext = (0, import_element85.createContext)(null);
 function ViewportProvider({
   children
 }) {
   const viewportState = useViewportState();
-  return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(ViewportContext.Provider, { value: viewportState, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(ViewportContext.Provider, { value: viewportState, children });
 }
 function useViewport() {
-  const context = (0, import_element83.useContext)(ViewportContext);
+  const context = (0, import_element85.useContext)(ViewportContext);
   if (!context) {
     throw new Error(
       "useViewport must be used within a ViewportProvider."
@@ -26072,7 +26485,7 @@ function useViewport() {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
-var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
 var CROP_RECT_EPSILON = 1e-6;
 var CARDINAL_ROTATION_EPSILON2 = 1e-6;
 var SETTLE_TRANSITION_DURATION_MS = 200;
@@ -26116,20 +26529,20 @@ function CropperInner({
     setViewportPan,
     resetViewport
   } = useViewport();
-  const canvasRef = (0, import_element84.useRef)(null);
-  const cropAreaDescriptionId = (0, import_element84.useId)();
-  const [isCropAreaFocused, setIsCropAreaFocused] = (0, import_element84.useState)(focusOnMount);
-  const [isFocusVisible, setIsFocusVisible] = (0, import_element84.useState)(false);
-  const [canvasSize, setCanvasSize] = (0, import_element84.useState)({
+  const canvasRef = (0, import_element86.useRef)(null);
+  const cropAreaDescriptionId = (0, import_element86.useId)();
+  const [isCropAreaFocused, setIsCropAreaFocused] = (0, import_element86.useState)(focusOnMount);
+  const [isFocusVisible, setIsFocusVisible] = (0, import_element86.useState)(false);
+  const [canvasSize, setCanvasSize] = (0, import_element86.useState)({
     width: 0,
     height: 0
   });
-  (0, import_element84.useLayoutEffect)(() => {
+  (0, import_element86.useLayoutEffect)(() => {
     if (focusOnMount) {
       canvasRef.current?.focus({ preventScroll: true });
     }
   }, [focusOnMount]);
-  const handleCropAreaFocus = (0, import_element84.useCallback)(
+  const handleCropAreaFocus = (0, import_element86.useCallback)(
     (event) => {
       const target = event.target;
       if (target === event.currentTarget) {
@@ -26141,7 +26554,7 @@ function CropperInner({
     },
     []
   );
-  const handleCropAreaBlur = (0, import_element84.useCallback)(
+  const handleCropAreaBlur = (0, import_element86.useCallback)(
     (event) => {
       if (event.target === event.currentTarget) {
         setIsCropAreaFocused(false);
@@ -26154,7 +26567,7 @@ function CropperInner({
     },
     []
   );
-  (0, import_element84.useEffect)(() => {
+  (0, import_element86.useEffect)(() => {
     const element = canvasRef.current;
     if (!element) {
       return;
@@ -26175,13 +26588,13 @@ function CropperInner({
       observer.disconnect();
     };
   }, []);
-  (0, import_element84.useEffect)(() => {
+  (0, import_element86.useEffect)(() => {
     onStateChange?.(state);
   }, [state, onStateChange]);
   useAriaAnnouncer(state);
   const naturalWidth = state.image?.naturalWidth ?? 0;
   const naturalHeight = state.image?.naturalHeight ?? 0;
-  const { elementSize, visualSize } = (0, import_element84.useMemo)(
+  const { elementSize, visualSize } = (0, import_element86.useMemo)(
     () => getImageFit(
       canvasSize,
       { width: naturalWidth, height: naturalHeight },
@@ -26189,10 +26602,10 @@ function CropperInner({
     ),
     [canvasSize, naturalWidth, naturalHeight, state.rotation]
   );
-  (0, import_element84.useEffect)(() => {
+  (0, import_element86.useEffect)(() => {
     setVisualSize(visualSize);
   }, [visualSize, setVisualSize]);
-  (0, import_element84.useEffect)(() => {
+  (0, import_element86.useEffect)(() => {
     if (freeformCrop || visualSize.width === 0 || visualSize.height === 0 || !aspectRatio || aspectRatio <= 0) {
       return;
     }
@@ -26209,8 +26622,8 @@ function CropperInner({
     adjustCropRectForViewport,
     state.cropRect
   ]);
-  const prevAspectRatioRef = (0, import_element84.useRef)(aspectRatio);
-  (0, import_element84.useEffect)(() => {
+  const prevAspectRatioRef = (0, import_element86.useRef)(aspectRatio);
+  (0, import_element86.useEffect)(() => {
     if (prevAspectRatioRef.current === aspectRatio) {
       return;
     }
@@ -26231,26 +26644,26 @@ function CropperInner({
     adjustCropRectForViewport,
     state.cropRect
   ]);
-  const cropBounds = (0, import_element84.useMemo)(() => {
+  const cropBounds = (0, import_element86.useMemo)(() => {
     if (!state.image || elementSize.width === 0) {
       return void 0;
     }
     return getImageCropBounds(state, elementSize, visualSize);
   }, [state, elementSize, visualSize]);
   const effectiveMinZoom = minZoom !== void 0 ? minZoom : getMinZoom(state);
-  const [isResizing, setIsResizing] = (0, import_element84.useState)(false);
-  const isResizingRef = (0, import_element84.useRef)(false);
-  const isSettlingRef = (0, import_element84.useRef)(false);
-  const [isTouchPinching, setIsTouchPinchingState] = (0, import_element84.useState)(false);
-  const isTouchPinchingRef = (0, import_element84.useRef)(false);
-  const setTouchPinching = (0, import_element84.useCallback)((isPinching) => {
+  const [isResizing, setIsResizing] = (0, import_element86.useState)(false);
+  const isResizingRef = (0, import_element86.useRef)(false);
+  const isSettlingRef = (0, import_element86.useRef)(false);
+  const [isTouchPinching, setIsTouchPinchingState] = (0, import_element86.useState)(false);
+  const isTouchPinchingRef = (0, import_element86.useRef)(false);
+  const setTouchPinching = (0, import_element86.useCallback)((isPinching) => {
     isTouchPinchingRef.current = isPinching;
     setIsTouchPinchingState(isPinching);
   }, []);
-  const [activeHandle, setActiveHandle] = (0, import_element84.useState)(
+  const [activeHandle, setActiveHandle] = (0, import_element86.useState)(
     null
   );
-  const viewScaleRest = (0, import_element84.useMemo)(
+  const viewScaleRest = (0, import_element86.useMemo)(
     () => getViewScale(
       state.cropRect,
       canvasSize,
@@ -26260,9 +26673,9 @@ function CropperInner({
     ),
     [state.cropRect, canvasSize, visualSize]
   );
-  const [frozenViewScale, setFrozenViewScale] = (0, import_element84.useState)(1);
+  const [frozenViewScale, setFrozenViewScale] = (0, import_element86.useState)(1);
   const viewScale = isResizing ? frozenViewScale : viewScaleRest;
-  const scaledVisualSize = (0, import_element84.useMemo)(
+  const scaledVisualSize = (0, import_element86.useMemo)(
     () => ({
       width: visualSize.width * viewScale,
       height: visualSize.height * viewScale
@@ -26270,7 +26683,7 @@ function CropperInner({
     [visualSize.width, visualSize.height, viewScale]
   );
   const displayScale = naturalWidth > 0 ? elementSize.width / naturalWidth * state.zoom * viewScale : 0;
-  const keyboardResizeStep = (0, import_element84.useMemo)(() => {
+  const keyboardResizeStep = (0, import_element86.useMemo)(() => {
     if (displayScale < PIXEL_SNAP_DISPLAY_SCALE || aspectRatio && aspectRatio > 0 || naturalWidth <= 0 || naturalHeight <= 0) {
       return void 0;
     }
@@ -26298,7 +26711,7 @@ function CropperInner({
     state.rotation,
     state.zoom
   ]);
-  const minCropSize = (0, import_element84.useMemo)(() => {
+  const minCropSize = (0, import_element86.useMemo)(() => {
     if (naturalWidth <= 0 || naturalHeight <= 0) {
       return void 0;
     }
@@ -26320,7 +26733,7 @@ function CropperInner({
     state.zoom,
     displayScale
   ]);
-  const snapCropRect = (0, import_element84.useCallback)(
+  const snapCropRect = (0, import_element86.useCallback)(
     (rect, handle) => {
       if (displayScale < PIXEL_SNAP_DISPLAY_SCALE || naturalWidth <= 0 || naturalHeight <= 0) {
         return rect;
@@ -26334,8 +26747,8 @@ function CropperInner({
     },
     [displayScale, naturalWidth, naturalHeight, state]
   );
-  const wasPixelSnapEnabledRef = (0, import_element84.useRef)(false);
-  (0, import_element84.useEffect)(() => {
+  const wasPixelSnapEnabledRef = (0, import_element86.useRef)(false);
+  (0, import_element86.useEffect)(() => {
     const isPixelSnapEnabled = freeformCrop && (!aspectRatio || aspectRatio <= 0) && displayScale >= PIXEL_SNAP_DISPLAY_SCALE && naturalWidth > 0 && naturalHeight > 0;
     const wasPixelSnapEnabled = wasPixelSnapEnabledRef.current;
     wasPixelSnapEnabledRef.current = isPixelSnapEnabled;
@@ -26412,7 +26825,7 @@ function CropperInner({
       setIsFocusVisible(false);
     }
   };
-  (0, import_element84.useEffect)(() => {
+  (0, import_element86.useEffect)(() => {
     const el = canvasRef.current;
     if (!el) {
       return;
@@ -26432,7 +26845,7 @@ function CropperInner({
     };
   }, [onWheelNative]);
   const transformString = useTransformStyle(state, visualSize);
-  const handleImageLoad = (0, import_element84.useCallback)(
+  const handleImageLoad = (0, import_element86.useCallback)(
     (event) => {
       const img = event.currentTarget;
       const size4 = {
@@ -26448,7 +26861,7 @@ function CropperInner({
     },
     [src, setImage, onImageLoaded]
   );
-  const handleCropChange = (0, import_element84.useCallback)(
+  const handleCropChange = (0, import_element86.useCallback)(
     (rect) => {
       if (isTouchPinchingRef.current) {
         return;
@@ -26481,21 +26894,21 @@ function CropperInner({
     },
     [setCropRect, setViewportPan, canvasSize, scaledVisualSize]
   );
-  const [settling, setSettling] = (0, import_element84.useState)(false);
-  const settleTimerRef = (0, import_element84.useRef)();
-  const finishSettling = (0, import_element84.useCallback)(() => {
+  const [settling, setSettling] = (0, import_element86.useState)(false);
+  const settleTimerRef = (0, import_element86.useRef)();
+  const finishSettling = (0, import_element86.useCallback)(() => {
     clearTimeout(settleTimerRef.current);
     isSettlingRef.current = false;
     setSettling(false);
   }, []);
-  (0, import_element84.useEffect)(() => {
+  (0, import_element86.useEffect)(() => {
     return () => {
       clearTimeout(settleTimerRef.current);
     };
   }, []);
   const isInteractiveGrid = showGrid === "interactive";
   const showInteractiveGrid = isInteractiveGrid && (isInteractionPlacementActive || isResizing || isPlacementActive);
-  const outputSize = (0, import_element84.useMemo)(() => {
+  const outputSize = (0, import_element86.useMemo)(() => {
     if (!showDimensions || !activeHandle || !state.image) {
       return null;
     }
@@ -26505,11 +26918,11 @@ function CropperInner({
     });
     return { width: region.width, height: region.height };
   }, [showDimensions, activeHandle, state]);
-  const handleEscape = (0, import_element84.useCallback)(() => {
+  const handleEscape = (0, import_element86.useCallback)(() => {
     setIsFocusVisible(true);
     canvasRef.current?.focus({ preventScroll: true });
   }, []);
-  const handleResizeStart = (0, import_element84.useCallback)(
+  const handleResizeStart = (0, import_element86.useCallback)(
     (handle) => {
       if (isTouchPinchingRef.current) {
         return;
@@ -26524,7 +26937,7 @@ function CropperInner({
     },
     [finishSettling, onGestureStart, resetViewport, viewScaleRest]
   );
-  const handleResizeEnd = (0, import_element84.useCallback)(() => {
+  const handleResizeEnd = (0, import_element86.useCallback)(() => {
     const isCancellingForPinch = isTouchPinchingRef.current;
     isResizingRef.current = false;
     setIsResizing(false);
@@ -26545,7 +26958,7 @@ function CropperInner({
       SETTLE_TRANSITION_FALLBACK_MS
     );
   }, [finishSettling, settleCrop, onGestureEnd, resetViewport]);
-  const handleSettleTransitionEnd = (0, import_element84.useCallback)(
+  const handleSettleTransitionEnd = (0, import_element86.useCallback)(
     (event) => {
       if (!isSettlingRef.current || event.propertyName !== "transform") {
         return;
@@ -26561,7 +26974,7 @@ function CropperInner({
     imageTransition = "transform 150ms linear";
   }
   const settleStencilTransition = settling ? SETTLE_STENCIL_TRANSITION : void 0;
-  const imageStyle = (0, import_element84.useMemo)(() => {
+  const imageStyle = (0, import_element86.useMemo)(() => {
     if (elementSize.width === 0 || elementSize.height === 0) {
       return {};
     }
@@ -26608,7 +27021,7 @@ function CropperInner({
       willChange
     };
   }
-  const setContainerRef = (0, import_element84.useCallback)(
+  const setContainerRef = (0, import_element86.useCallback)(
     (element) => {
       if (typeof ref === "function") {
         ref(element);
@@ -26618,7 +27031,7 @@ function CropperInner({
     },
     [ref]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
     "div",
     {
       ref: setContainerRef,
@@ -26627,7 +27040,7 @@ function CropperInner({
         isDragging && "wp-media-editor-image-editor--dragging",
         className
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(
         "div",
         {
           ref: canvasRef,
@@ -26651,7 +27064,7 @@ function CropperInner({
           onBlur: handleCropAreaBlur,
           ...canvasHandlers,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
               "div",
               {
                 id: cropAreaDescriptionId,
@@ -26661,7 +27074,7 @@ function CropperInner({
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(
               "div",
               {
                 className: "wp-media-editor-image-editor__stage",
@@ -26669,7 +27082,7 @@ function CropperInner({
                 style: stageStyle,
                 onTransitionEnd: handleSettleTransitionEnd,
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
                     "img",
                     {
                       className: "wp-media-editor-image-editor__image",
@@ -26681,7 +27094,7 @@ function CropperInner({
                       draggable: false
                     }
                   ),
-                  showDimming && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+                  showDimming && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
                     DimmingOverlay,
                     {
                       cropRect: state.cropRect,
@@ -26690,7 +27103,7 @@ function CropperInner({
                       transition: settleStencilTransition
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
                     StencilComponent,
                     {
                       cropRect: state.cropRect,
@@ -26710,7 +27123,7 @@ function CropperInner({
                       keyboardResizeStep
                     }
                   ),
-                  (showGrid === true || isInteractiveGrid) && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+                  (showGrid === true || isInteractiveGrid) && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
                     GridOverlay,
                     {
                       cropRect: state.cropRect,
@@ -26718,7 +27131,7 @@ function CropperInner({
                       imageSize: scaledVisualSize
                     }
                   ),
-                  activeHandle && outputSize && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+                  activeHandle && outputSize && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
                     DimensionsOverlay,
                     {
                       cropRect: state.cropRect,
@@ -26738,15 +27151,15 @@ function CropperInner({
     }
   );
 }
-var CropperInnerWithRef = (0, import_element84.forwardRef)(
+var CropperInnerWithRef = (0, import_element86.forwardRef)(
   CropperInner
 );
-var Cropper = (0, import_element84.forwardRef)(
-  (props, ref) => /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(ViewportProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(CropperInnerWithRef, { ...props, ref }) })
+var Cropper = (0, import_element86.forwardRef)(
+  (props, ref) => /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(ViewportProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(CropperInnerWithRef, { ...props, ref }) })
 );
 
 // packages/media-editor/build-module/state/use-media-editor-state.mjs
-var import_element85 = __toESM(require_element(), 1);
+var import_element87 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/state/types.mjs
 var DEFAULT_CROP_OPTIONS = {
@@ -26843,7 +27256,7 @@ function areCropperImagesEqual(a2, b2) {
   return a2?.src === b2?.src && a2?.naturalWidth === b2?.naturalWidth && a2?.naturalHeight === b2?.naturalHeight;
 }
 function useMediaEditorState(initialState) {
-  const [state, dispatch] = (0, import_element85.useReducer)(
+  const [state, dispatch] = (0, import_element87.useReducer)(
     mediaEditorReducer,
     null,
     () => buildInitialMediaEditorState(
@@ -26854,16 +27267,16 @@ function useMediaEditorState(initialState) {
       initialState?.cropOptions
     )
   );
-  const [initialBaseline, setInitialBaseline] = (0, import_element85.useState)(() => state);
-  const stateRef = (0, import_element85.useRef)(state);
-  const visualSizeRef = (0, import_element85.useRef)({ width: 0, height: 0 });
-  const historyRef = (0, import_element85.useRef)([]);
-  const redoStackRef = (0, import_element85.useRef)([]);
-  const [hasUndo, setHasUndo] = (0, import_element85.useState)(false);
-  const [hasRedo, setHasRedo] = (0, import_element85.useState)(false);
-  const isGestureOpenRef = (0, import_element85.useRef)(false);
-  const gestureSnapshotRef = (0, import_element85.useRef)(null);
-  const pushSnapshot = (0, import_element85.useCallback)((snapshot) => {
+  const [initialBaseline, setInitialBaseline] = (0, import_element87.useState)(() => state);
+  const stateRef = (0, import_element87.useRef)(state);
+  const visualSizeRef = (0, import_element87.useRef)({ width: 0, height: 0 });
+  const historyRef = (0, import_element87.useRef)([]);
+  const redoStackRef = (0, import_element87.useRef)([]);
+  const [hasUndo, setHasUndo] = (0, import_element87.useState)(false);
+  const [hasRedo, setHasRedo] = (0, import_element87.useState)(false);
+  const isGestureOpenRef = (0, import_element87.useRef)(false);
+  const gestureSnapshotRef = (0, import_element87.useRef)(null);
+  const pushSnapshot = (0, import_element87.useCallback)((snapshot) => {
     const last = historyRef.current[historyRef.current.length - 1];
     if (last && areMediaEditorStatesEqual(last, snapshot)) {
       return;
@@ -26873,7 +27286,7 @@ function useMediaEditorState(initialState) {
     setHasUndo(true);
     setHasRedo(false);
   }, []);
-  const dispatchWithHistory = (0, import_element85.useCallback)(
+  const dispatchWithHistory = (0, import_element87.useCallback)(
     (action, recordHistory = true) => {
       const preState = stateRef.current;
       const postState = mediaEditorReducer(preState, action);
@@ -26893,14 +27306,14 @@ function useMediaEditorState(initialState) {
     },
     [pushSnapshot]
   );
-  const beginGesture = (0, import_element85.useCallback)(() => {
+  const beginGesture = (0, import_element87.useCallback)(() => {
     if (isGestureOpenRef.current) {
       return;
     }
     isGestureOpenRef.current = true;
     gestureSnapshotRef.current = null;
   }, []);
-  const endGesture = (0, import_element85.useCallback)(() => {
+  const endGesture = (0, import_element87.useCallback)(() => {
     const snapshot = gestureSnapshotRef.current;
     if (snapshot && !areMediaEditorStatesEqual(snapshot, stateRef.current)) {
       pushSnapshot(snapshot);
@@ -26908,20 +27321,20 @@ function useMediaEditorState(initialState) {
     gestureSnapshotRef.current = null;
     isGestureOpenRef.current = false;
   }, [pushSnapshot]);
-  const dispatchCropperAction = (0, import_element85.useCallback)(
+  const dispatchCropperAction = (0, import_element87.useCallback)(
     (action) => {
       dispatchWithHistory({ type: "CROPPER", action });
     },
     [dispatchWithHistory]
   );
-  const cropperSetters = (0, import_element85.useMemo)(
+  const cropperSetters = (0, import_element87.useMemo)(
     () => buildCropperSetters(
       dispatchCropperAction,
       () => stateRef.current.cropper
     ),
     [dispatchCropperAction]
   );
-  const setImage = (0, import_element85.useCallback)((image) => {
+  const setImage = (0, import_element87.useCallback)((image) => {
     if (areCropperImagesEqual(stateRef.current.cropper.image, image)) {
       return;
     }
@@ -26940,7 +27353,7 @@ function useMediaEditorState(initialState) {
     setHasUndo(false);
     setHasRedo(false);
   }, []);
-  const reset = (0, import_element85.useCallback)(
+  const reset = (0, import_element87.useCallback)(
     (resetState) => {
       dispatchWithHistory({
         type: "CROPPER",
@@ -26949,7 +27362,7 @@ function useMediaEditorState(initialState) {
     },
     [dispatchWithHistory]
   );
-  const setAspectRatioValue = (0, import_element85.useCallback)(
+  const setAspectRatioValue = (0, import_element87.useCallback)(
     (presetKey) => {
       const resolved = resolveAspectRatio(
         presetKey,
@@ -26966,10 +27379,10 @@ function useMediaEditorState(initialState) {
     },
     [dispatchWithHistory]
   );
-  const resetCropOptions = (0, import_element85.useCallback)(() => {
+  const resetCropOptions = (0, import_element87.useCallback)(() => {
     dispatchWithHistory({ type: "RESET_CROP_OPTIONS" });
   }, [dispatchWithHistory]);
-  const undo = (0, import_element85.useCallback)(() => {
+  const undo = (0, import_element87.useCallback)(() => {
     endGesture();
     const prev = historyRef.current[historyRef.current.length - 1];
     if (!prev) {
@@ -26982,7 +27395,7 @@ function useMediaEditorState(initialState) {
     stateRef.current = prev;
     dispatch({ type: "RESTORE_SNAPSHOT", payload: prev });
   }, [endGesture]);
-  const redo = (0, import_element85.useCallback)(() => {
+  const redo = (0, import_element87.useCallback)(() => {
     endGesture();
     const next = redoStackRef.current[0];
     if (!next) {
@@ -26995,10 +27408,10 @@ function useMediaEditorState(initialState) {
     stateRef.current = next;
     dispatch({ type: "RESTORE_SNAPSHOT", payload: next });
   }, [endGesture]);
-  const setVisualSize = (0, import_element85.useCallback)((size4) => {
+  const setVisualSize = (0, import_element87.useCallback)((size4) => {
     visualSizeRef.current = size4;
   }, []);
-  const adjustCropRectForViewport = (0, import_element85.useCallback)(
+  const adjustCropRectForViewport = (0, import_element87.useCallback)(
     (rect) => {
       dispatchWithHistory(
         { type: "VIEWPORT_ADJUST_CROP_RECT", payload: rect },
@@ -27012,7 +27425,7 @@ function useMediaEditorState(initialState) {
     state.cropper,
     initialBaseline.cropper
   );
-  const getCroppedImage = (0, import_element85.useCallback)(
+  const getCroppedImage = (0, import_element87.useCallback)(
     (mimeType, quality) => {
       if (!state.cropper.image) {
         return Promise.reject(
@@ -27028,7 +27441,7 @@ function useMediaEditorState(initialState) {
     },
     [state.cropper]
   );
-  const controller = (0, import_element85.useMemo)(
+  const controller = (0, import_element87.useMemo)(
     () => ({
       // CropperController surface (state is the cropper slice so a
       // <Cropper> takes this controller as-is).
@@ -27077,9 +27490,9 @@ function useMediaEditorState(initialState) {
 }
 
 // packages/media-editor/build-module/state/media-editor-state-provider.mjs
-var import_element86 = __toESM(require_element(), 1);
-var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
-var MediaEditorStateContext = (0, import_element86.createContext)(
+var import_element88 = __toESM(require_element(), 1);
+var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
+var MediaEditorStateContext = (0, import_element88.createContext)(
   null
 );
 function MediaEditorStateProvider({
@@ -27091,10 +27504,10 @@ function MediaEditorStateProvider({
     cropper: initialCropperState,
     cropOptions: initialCropOptions
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(MediaEditorStateContext.Provider, { value: controller, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(MediaEditorStateContext.Provider, { value: controller, children });
 }
 function useMediaEditor() {
-  const context = (0, import_element86.useContext)(MediaEditorStateContext);
+  const context = (0, import_element88.useContext)(MediaEditorStateContext);
   if (!context) {
     throw new Error(
       "useMediaEditor must be used within a MediaEditorStateProvider."
@@ -27104,7 +27517,7 @@ function useMediaEditor() {
 }
 
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
-var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCanvas({
   focusOnMount,
   isPlacementActive = false,
@@ -27116,18 +27529,18 @@ function MediaEditorCanvas({
   const { aspectRatioValue } = controller.cropOptions;
   const cropperImage = controller.state.image;
   const { beginGesture, endGesture, setImage } = controller;
-  const [status, setStatus] = (0, import_element87.useState)(
+  const [status, setStatus] = (0, import_element89.useState)(
     "loading"
   );
-  const aspectRatio = (0, import_element87.useMemo)(
+  const aspectRatio = (0, import_element89.useMemo)(
     () => resolveAspectRatio(aspectRatioValue, cropperImage),
     [aspectRatioValue, cropperImage]
   );
-  const handleGestureStart = (0, import_element87.useCallback)(() => {
+  const handleGestureStart = (0, import_element89.useCallback)(() => {
     beginGesture();
     onGestureStart?.();
   }, [beginGesture, onGestureStart]);
-  const handleGestureEnd = (0, import_element87.useCallback)(() => {
+  const handleGestureEnd = (0, import_element89.useCallback)(() => {
     endGesture();
     onGestureEnd?.();
   }, [endGesture, onGestureEnd]);
@@ -27135,7 +27548,7 @@ function MediaEditorCanvas({
   const mediaType = getMediaTypeFromMimeType(media?.mime_type);
   const mediaWidth = Number(media?.media_details?.width);
   const mediaHeight = Number(media?.media_details?.height);
-  (0, import_element87.useEffect)(() => {
+  (0, import_element89.useEffect)(() => {
     if (cropperImage || !mediaUrl || !Number.isFinite(mediaWidth) || !Number.isFinite(mediaHeight) || mediaWidth <= 0 || mediaHeight <= 0) {
       return;
     }
@@ -27146,7 +27559,7 @@ function MediaEditorCanvas({
     });
   }, [cropperImage, mediaUrl, mediaWidth, mediaHeight, setImage]);
   const isImage = mediaType.type === "image";
-  (0, import_element87.useEffect)(() => {
+  (0, import_element89.useEffect)(() => {
     if (!mediaUrl || !isImage) {
       return;
     }
@@ -27167,17 +27580,17 @@ function MediaEditorCanvas({
     return null;
   }
   if (status === "error") {
-    return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)("div", { className: "media-editor-canvas__error", role: "alert", children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)("p", { children: (0, import_i18n31.__)("Failed to load image.") }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("div", { className: "media-editor-canvas__error", role: "alert", children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("p", { children: (0, import_i18n31.__)("Failed to load image.") }) }) });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)("div", { className: "media-editor-canvas", children: [
-    status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime125.jsx)("div", { className: "media-editor-canvas__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(import_components35.Spinner, {}) }),
-    /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)("div", { className: "media-editor-canvas", children: [
+    status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("div", { className: "media-editor-canvas__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(import_components36.Spinner, {}) }),
+    /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
       "div",
       {
         className: clsx_default("media-editor-canvas__cropper", {
           "is-loaded": status === "loaded"
         }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
           Cropper,
           {
             src: mediaUrl,
@@ -27200,38 +27613,38 @@ function MediaEditorCanvas({
 var import_i18n32 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/hooks/use-crop-gesture-handlers.mjs
-var import_element88 = __toESM(require_element(), 1);
+var import_element90 = __toESM(require_element(), 1);
 var CROP_CONTROL_ATTR = "data-crop-control";
 var KEYBOARD_GESTURE_IDLE_MS = 300;
 function useCropGestureHandlers(options = {}) {
   const { commitOnKeyUp = true } = options;
   const { beginGesture, endGesture } = useMediaEditor();
-  const keyboardTimerRef = (0, import_element88.useRef)();
-  const clearKeyboardTimer = (0, import_element88.useCallback)(() => {
+  const keyboardTimerRef = (0, import_element90.useRef)();
+  const clearKeyboardTimer = (0, import_element90.useCallback)(() => {
     clearTimeout(keyboardTimerRef.current);
   }, []);
-  const scheduleKeyboardEnd = (0, import_element88.useCallback)(() => {
+  const scheduleKeyboardEnd = (0, import_element90.useCallback)(() => {
     clearKeyboardTimer();
     keyboardTimerRef.current = setTimeout(() => {
       endGesture();
     }, KEYBOARD_GESTURE_IDLE_MS);
   }, [clearKeyboardTimer, endGesture]);
-  (0, import_element88.useEffect)(() => clearKeyboardTimer, [clearKeyboardTimer]);
-  const handlePointerDownCapture = (0, import_element88.useCallback)(() => {
+  (0, import_element90.useEffect)(() => clearKeyboardTimer, [clearKeyboardTimer]);
+  const handlePointerDownCapture = (0, import_element90.useCallback)(() => {
     clearKeyboardTimer();
     beginGesture();
   }, [beginGesture, clearKeyboardTimer]);
-  const handlePointerEnd = (0, import_element88.useCallback)(() => {
+  const handlePointerEnd = (0, import_element90.useCallback)(() => {
     clearKeyboardTimer();
     endGesture();
   }, [clearKeyboardTimer, endGesture]);
-  const handleKeyDownCapture = (0, import_element88.useCallback)(() => {
+  const handleKeyDownCapture = (0, import_element90.useCallback)(() => {
     beginGesture();
     if (!commitOnKeyUp) {
       scheduleKeyboardEnd();
     }
   }, [beginGesture, commitOnKeyUp, scheduleKeyboardEnd]);
-  const handleKeyUp = (0, import_element88.useCallback)(() => {
+  const handleKeyUp = (0, import_element90.useCallback)(() => {
     if (commitOnKeyUp) {
       endGesture();
       return;
@@ -27249,10 +27662,10 @@ function useCropGestureHandlers(options = {}) {
 }
 
 // packages/media-editor/build-module/components/rotation-ruler/index.mjs
-var import_element90 = __toESM(require_element(), 1);
+var import_element92 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/components/rotation-ruler/use-ruler-drag.mjs
-var import_element89 = __toESM(require_element(), 1);
+var import_element91 = __toESM(require_element(), 1);
 function pxToValueDelta(deltaPx, pixelsPerStep, step) {
   return -deltaPx / pixelsPerStep * step;
 }
@@ -27279,7 +27692,7 @@ function useRulerDrag(options) {
     disabled: disabled2,
     onPointerDownStart
   } = options;
-  const latestRef = (0, import_element89.useRef)({
+  const latestRef = (0, import_element91.useRef)({
     value,
     startX: 0,
     startValue: 0,
@@ -27289,10 +27702,10 @@ function useRulerDrag(options) {
     capturePointerId: 0,
     windowPointerUp: null
   });
-  (0, import_element89.useEffect)(() => {
+  (0, import_element91.useEffect)(() => {
     latestRef.current.value = value;
   }, [value]);
-  const endDrag = (0, import_element89.useCallback)(() => {
+  const endDrag = (0, import_element91.useCallback)(() => {
     const state = latestRef.current;
     if (!state.dragging) {
       return;
@@ -27313,8 +27726,8 @@ function useRulerDrag(options) {
       state.windowPointerUp = null;
     }
   }, []);
-  (0, import_element89.useEffect)(() => endDrag, [endDrag]);
-  const onPointerDown = (0, import_element89.useCallback)(
+  (0, import_element91.useEffect)(() => endDrag, [endDrag]);
+  const onPointerDown = (0, import_element91.useCallback)(
     (event) => {
       if (disabled2 || event.button !== 0) {
         return;
@@ -27335,7 +27748,7 @@ function useRulerDrag(options) {
     },
     [disabled2, onPointerDownStart, endDrag, step]
   );
-  const onPointerMove = (0, import_element89.useCallback)(
+  const onPointerMove = (0, import_element91.useCallback)(
     (event) => {
       const state = latestRef.current;
       if (!state.dragging) {
@@ -27372,7 +27785,7 @@ function useRulerDrag(options) {
 }
 
 // packages/media-editor/build-module/components/rotation-ruler/index.mjs
-var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
 var STRIP_HEIGHT = 32;
 var LABEL_BASELINE_Y = 11;
 var MAJOR_INTERVAL = 15;
@@ -27380,7 +27793,7 @@ var TICK_HEIGHT_MINOR = 4;
 var TICK_HEIGHT_MID = 8;
 var TICK_HEIGHT_MAJOR = 14;
 function useTicks(min3, max3) {
-  return (0, import_element90.useMemo)(() => {
+  return (0, import_element92.useMemo)(() => {
     const out = [];
     for (let v2 = Math.ceil(min3); v2 <= Math.floor(max3); v2 += 1) {
       let kind = "minor";
@@ -27415,8 +27828,8 @@ function RotationRuler(props) {
     id,
     disabled: disabled2 = false
   } = props;
-  const inputRef = (0, import_element90.useRef)(null);
-  const generatedId = (0, import_element90.useId)();
+  const inputRef = (0, import_element92.useRef)(null);
+  const generatedId = (0, import_element92.useId)();
   const inputId = id ?? generatedId;
   const dragHandlers = useRulerDrag({
     value,
@@ -27448,7 +27861,7 @@ function RotationRuler(props) {
   const display = `${formatValue(value)}${unit}`;
   const ticks = useTicks(min3, max3);
   const pxPerUnit = pixelsPerStep / step;
-  const stripStyle = (0, import_element90.useMemo)(() => {
+  const stripStyle = (0, import_element92.useMemo)(() => {
     const offset4 = -value * pxPerUnit;
     return {
       transform: `translateX(calc(-50% + ${offset4}px))`
@@ -27460,7 +27873,7 @@ function RotationRuler(props) {
   const isNegative = numberText.startsWith("-");
   const digits = isNegative ? numberText.slice(1) : numberText;
   const majorTicks = ticks.filter((tick) => tick.kind === "major");
-  return /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)(
     "div",
     {
       className: clsx_default("rotation-ruler", className),
@@ -27468,7 +27881,7 @@ function RotationRuler(props) {
       "data-disabled": disabled2 || void 0,
       ...dragHandlers,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
           "input",
           {
             ref: inputRef,
@@ -27488,7 +27901,7 @@ function RotationRuler(props) {
             onKeyDown: handleKeyDown
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { className: "rotation-ruler__strip", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime129.jsx)("div", { className: "rotation-ruler__strip", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)(
           "svg",
           {
             className: "rotation-ruler__ticks",
@@ -27498,7 +27911,7 @@ function RotationRuler(props) {
             viewBox: `${min3 * pxPerUnit} 0 ${(max3 - min3) * pxPerUnit} ${STRIP_HEIGHT}`,
             preserveAspectRatio: "xMidYMid meet",
             children: [
-              ticks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+              ticks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
                 "line",
                 {
                   x1: tick.value * pxPerUnit,
@@ -27509,7 +27922,7 @@ function RotationRuler(props) {
                 },
                 tick.value
               )),
-              majorTicks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(
+              majorTicks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)(
                 "text",
                 {
                   x: tick.value * pxPerUnit,
@@ -27526,19 +27939,19 @@ function RotationRuler(props) {
             ]
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { className: "rotation-ruler__active-label", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)("span", { className: "rotation-ruler__active-label-number", children: [
-          isNegative && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("span", { className: "rotation-ruler__active-label-sign", children: "-" }),
+        /* @__PURE__ */ (0, import_jsx_runtime129.jsx)("div", { className: "rotation-ruler__active-label", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)("span", { className: "rotation-ruler__active-label-number", children: [
+          isNegative && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)("span", { className: "rotation-ruler__active-label-sign", children: "-" }),
           digits,
-          /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("span", { className: "rotation-ruler__active-label-unit", children: unit })
+          /* @__PURE__ */ (0, import_jsx_runtime129.jsx)("span", { className: "rotation-ruler__active-label-unit", children: unit })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { className: "rotation-ruler__pointer", "aria-hidden": "true" })
+        /* @__PURE__ */ (0, import_jsx_runtime129.jsx)("div", { className: "rotation-ruler__pointer", "aria-hidden": "true" })
       ]
     }
   );
 }
 
 // packages/media-editor/build-module/components/media-editor-fine-rotation/index.mjs
-var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorFineRotation({
   onPlacementControlInteraction
 }) {
@@ -27559,13 +27972,13 @@ function MediaEditorFineRotation({
     onPlacementControlInteraction?.();
     setRotation(baseAngle + clamped * visualDir);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
     "div",
     {
       role: "presentation",
       className: "media-editor-fine-rotation",
       ...rotationGestureHandlers,
-      children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
         RotationRuler,
         {
           label: (0, import_i18n32.__)("Fine rotation"),
@@ -27580,11 +27993,11 @@ function MediaEditorFineRotation({
 }
 
 // packages/media-editor/build-module/components/media-editor-image-controls/index.mjs
-var import_components36 = __toESM(require_components(), 1);
+var import_components37 = __toESM(require_components(), 1);
 var import_i18n33 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/components/media-editor/use-crop-options.mjs
-var import_element91 = __toESM(require_element(), 1);
+var import_element93 = __toESM(require_element(), 1);
 function getAspectRatioOptions(aspectRatioPresets) {
   return [
     ...DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value <= 0),
@@ -27597,11 +28010,11 @@ function useCropOptions({
   const controller = useMediaEditor();
   const { aspectRatioValue } = controller.cropOptions;
   const cropperImage = controller.state.image;
-  const aspectRatioOptions = (0, import_element91.useMemo)(
+  const aspectRatioOptions = (0, import_element93.useMemo)(
     () => getAspectRatioOptions(aspectRatioPresets),
     [aspectRatioPresets]
   );
-  const resolvedAspectRatio = (0, import_element91.useMemo)(
+  const resolvedAspectRatio = (0, import_element93.useMemo)(
     () => resolveAspectRatio(aspectRatioValue, cropperImage),
     [aspectRatioValue, cropperImage]
   );
@@ -27615,7 +28028,7 @@ function useCropOptions({
 }
 
 // packages/media-editor/build-module/components/media-editor-image-controls/index.mjs
-var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
 var DEFAULT_ZOOM_FACTOR = 1.2;
 function MediaEditorImageControls({
   withLabels = false,
@@ -27632,9 +28045,9 @@ function MediaEditorImageControls({
       Math.min(MAX_ZOOM, Math.max(minZoom, state.zoom * factor))
     );
   };
-  const rotateButtons = /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(import_jsx_runtime128.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
-      import_components36.Button,
+  const rotateButtons = /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_jsx_runtime131.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+      import_components37.Button,
       {
         size: "compact",
         icon: rotate_left_default,
@@ -27643,8 +28056,8 @@ function MediaEditorImageControls({
         onClick: () => snapRotate90(-1)
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
-      import_components36.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+      import_components37.Button,
       {
         size: "compact",
         icon: rotate_right_default,
@@ -27654,9 +28067,9 @@ function MediaEditorImageControls({
       }
     )
   ] });
-  const flipButtons = /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(import_jsx_runtime128.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
-      import_components36.Button,
+  const flipButtons = /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_jsx_runtime131.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+      import_components37.Button,
       {
         size: "compact",
         icon: flip_horizontal_default,
@@ -27669,8 +28082,8 @@ function MediaEditorImageControls({
         })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
-      import_components36.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+      import_components37.Button,
       {
         size: "compact",
         icon: flip_vertical_default,
@@ -27684,9 +28097,9 @@ function MediaEditorImageControls({
       }
     )
   ] });
-  const zoomButtons = /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(import_jsx_runtime128.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
-      import_components36.Button,
+  const zoomButtons = /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_jsx_runtime131.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+      import_components37.Button,
       {
         size: "compact",
         icon: plus_default,
@@ -27697,8 +28110,8 @@ function MediaEditorImageControls({
         onClick: () => zoomByFactor(zoomFactor)
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
-      import_components36.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+      import_components37.Button,
       {
         size: "compact",
         icon: line_solid_default,
@@ -27710,18 +28123,18 @@ function MediaEditorImageControls({
       }
     )
   ] });
-  const aspectRatioDropdown = hasAspectRatioControl ? /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
-    import_components36.DropdownMenu,
+  const aspectRatioDropdown = hasAspectRatioControl ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+    import_components37.DropdownMenu,
     {
       icon: aspect_ratio_default,
       label: (0, import_i18n33.__)("Aspect ratio"),
       popoverProps: { placement: "top" },
       toggleProps: { size: "compact" },
-      children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(import_components36.MenuGroup, { label: (0, import_i18n33.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
+      children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components37.MenuGroup, { label: (0, import_i18n33.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
         const value = preset.value.toString();
         const isSelected = value === aspectRatioValue;
-        return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
-          import_components36.MenuItem,
+        return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+          import_components37.MenuItem,
           {
             role: "menuitemradio",
             isSelected,
@@ -27738,16 +28151,16 @@ function MediaEditorImageControls({
     }
   ) : null;
   if (withLabels) {
-    return /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)("div", { className: "media-editor-image-controls is-stacked", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)("div", { className: "media-editor-image-controls__transforms", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)("div", { className: "media-editor-image-controls is-stacked", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)("div", { className: "media-editor-image-controls__transforms", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
           "div",
           {
             className: "media-editor-image-controls__group",
             role: "group",
             "aria-label": (0, import_i18n33.__)("Rotate"),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
                 "span",
                 {
                   className: "media-editor-image-controls__label",
@@ -27755,18 +28168,18 @@ function MediaEditorImageControls({
                   children: (0, import_i18n33.__)("Rotate")
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("div", { className: "media-editor-image-controls__buttons", children: rotateButtons })
+              /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "media-editor-image-controls__buttons", children: rotateButtons })
             ]
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
           "div",
           {
             className: "media-editor-image-controls__group",
             role: "group",
             "aria-label": (0, import_i18n33.__)("Flip"),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
                 "span",
                 {
                   className: "media-editor-image-controls__label",
@@ -27774,19 +28187,19 @@ function MediaEditorImageControls({
                   children: (0, import_i18n33.__)("Flip")
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("div", { className: "media-editor-image-controls__buttons", children: flipButtons })
+              /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "media-editor-image-controls__buttons", children: flipButtons })
             ]
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
         "div",
         {
           className: "media-editor-image-controls__group",
           role: "group",
           "aria-label": (0, import_i18n33.__)("Zoom"),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
               "span",
               {
                 className: "media-editor-image-controls__label",
@@ -27794,13 +28207,13 @@ function MediaEditorImageControls({
                 children: (0, import_i18n33.__)("Zoom")
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("div", { className: "media-editor-image-controls__buttons", children: zoomButtons })
+            /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "media-editor-image-controls__buttons", children: zoomButtons })
           ]
         }
       )
     ] });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)("div", { className: "media-editor-image-controls", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)("div", { className: "media-editor-image-controls", children: [
     rotateButtons,
     flipButtons,
     zoomButtons,
@@ -27809,9 +28222,9 @@ function MediaEditorImageControls({
 }
 
 // packages/media-editor/build-module/components/media-editor-crop-panel/index.mjs
-var import_components37 = __toESM(require_components(), 1);
+var import_components38 = __toESM(require_components(), 1);
 var import_i18n34 = __toESM(require_i18n(), 1);
-var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCropPanel({
   aspectRatioValue,
   onAspectRatioChange,
@@ -27822,17 +28235,17 @@ function MediaEditorCropPanel({
     // Tag the whole panel as a crop-control region so the modal's
     // Cmd+Z handler doesn't mistake the SelectControl input for a
     // metadata field (which would suppress undo).
-    /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
       Stack,
       {
         direction: "column",
         gap: "xl",
         ...{ [CROP_CONTROL_ATTR]: true },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)("h2", {}), children: (0, import_i18n34.__)("Crop options") }),
-          showTransformControls && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(MediaEditorImageControls, { withLabels: true }),
-          /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
-            import_components37.SelectControl,
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("h2", {}), children: (0, import_i18n34.__)("Crop options") }),
+          showTransformControls && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(MediaEditorImageControls, { withLabels: true }),
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+            import_components38.SelectControl,
             {
               label: (0, import_i18n34.__)("Aspect ratio"),
               value: aspectRatioValue,
@@ -27850,11 +28263,11 @@ function MediaEditorCropPanel({
 }
 
 // packages/media-editor/build-module/components/media-editor-keyboard-shortcuts-modal/index.mjs
-var import_components38 = __toESM(require_components(), 1);
-var import_element92 = __toESM(require_element(), 1);
+var import_components39 = __toESM(require_components(), 1);
+var import_element94 = __toESM(require_element(), 1);
 var import_i18n35 = __toESM(require_i18n(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
-var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
 var SHORTCUTS = [
   {
     description: (0, import_i18n35.__)("Undo"),
@@ -27928,13 +28341,13 @@ function KeyCombinationDisplay({
   } else {
     label = charString;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
     "kbd",
     {
       className: "media-editor-keyboard-shortcuts-modal__shortcut-term",
       "aria-label": label,
       children: keys.map(
-        (key, index2) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_element92.Fragment, { children: key }, index2) : /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+        (key, index2) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_element94.Fragment, { children: key }, index2) : /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
           "kbd",
           {
             className: "media-editor-keyboard-shortcuts-modal__shortcut-key",
@@ -27949,28 +28362,28 @@ function KeyCombinationDisplay({
 function MediaEditorKeyboardShortcutsModal({
   onClose
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
-    import_components38.Modal,
+  return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
+    import_components39.Modal,
     {
       className: "media-editor-keyboard-shortcuts-modal",
       title: (0, import_i18n35.__)("Keyboard shortcuts"),
       onRequestClose: onClose,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n35.__)(
+        /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n35.__)(
           "These shortcuts work when the image editor has focus."
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
           "ul",
           {
             className: "media-editor-keyboard-shortcuts-modal__shortcut-list",
             role: "list",
-            children: SHORTCUTS.map(({ description, keyCombination }, index2) => /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
+            children: SHORTCUTS.map(({ description, keyCombination }, index2) => /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
               "li",
               {
                 className: "media-editor-keyboard-shortcuts-modal__shortcut",
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("span", { className: "media-editor-keyboard-shortcuts-modal__shortcut-description", children: description }),
-                  /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { className: "media-editor-keyboard-shortcuts-modal__shortcut-description", children: description }),
+                  /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
                     KeyCombinationDisplay,
                     {
                       keyCombination
@@ -27991,7 +28404,7 @@ function MediaEditorKeyboardShortcutsModal({
 var import_api_fetch = __toESM(require_api_fetch(), 1);
 var import_data7 = __toESM(require_data(), 1);
 var import_core_data = __toESM(require_core_data(), 1);
-var import_element93 = __toESM(require_element(), 1);
+var import_element95 = __toESM(require_element(), 1);
 var import_i18n36 = __toESM(require_i18n(), 1);
 var import_notices = __toESM(require_notices(), 1);
 
@@ -28101,8 +28514,8 @@ function useSaveMediaEditor({
     saveEditedEntityRecord
   } = (0, import_data7.useDispatch)(import_core_data.store);
   const { createErrorNotice, removeAllNotices } = (0, import_data7.useDispatch)(import_notices.store);
-  const [isSaving, setIsSaving] = (0, import_element93.useState)(false);
-  const save = (0, import_element93.useCallback)(async () => {
+  const [isSaving, setIsSaving] = (0, import_element95.useState)(false);
+  const save = (0, import_element95.useCallback)(async () => {
     removeAllNotices("snackbar", MEDIA_EDITOR_NOTICES_CONTEXT);
     setIsSaving(true);
     try {
@@ -28196,11 +28609,11 @@ function useSaveMediaEditor({
 }
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
-var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
 var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
 var PLACEMENT_CONTROL_IDLE_MS = 300;
 function MediaEditorSidebar({ tabs }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
     complementary_area_default,
     {
       scope: "media-editor",
@@ -28212,8 +28625,8 @@ function MediaEditorSidebar({ tabs }) {
       panelClassName: "media-editor__sidebar-panel",
       headerClassName: "media-editor__sidebar-header",
       closeLabel: (0, import_i18n37.__)("Close media panel"),
-      header: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(tabs_exports.List, { variant: "minimal", children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(tabs_exports.Tab, { value: tab.id, children: tab.title }, tab.id)) }),
-      children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(tabs_exports.Panel, { value: tab.id, tabIndex: -1, children: tab.panel }, tab.id))
+      header: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(tabs_exports.List, { variant: "minimal", children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(tabs_exports.Tab, { value: tab.id, children: tab.title }, tab.id)) }),
+      children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(tabs_exports.Panel, { value: tab.id, tabIndex: -1, children: tab.panel }, tab.id))
     }
   );
 }
@@ -28223,17 +28636,17 @@ function HeaderActions({
   showCloseButton = false,
   onCancel
 }) {
-  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element94.useState)(false);
-  return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
-    import_components39.Flex,
+  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element96.useState)(false);
+  return /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(
+    import_components40.Flex,
     {
       className: "media-editor__header-actions",
       justify: "flex-end",
       expanded: false,
       gap: 2,
       children: [
-        isImage && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-          import_components39.Button,
+        isImage && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
+          import_components40.Button,
           {
             size: "compact",
             icon: keyboard_default,
@@ -28241,9 +28654,9 @@ function HeaderActions({
             onClick: () => setIsShortcutsModalOpen(true)
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
-        showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-          import_components39.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
+        showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
+          import_components40.Button,
           {
             size: "compact",
             icon: close_default,
@@ -28253,7 +28666,7 @@ function HeaderActions({
             accessibleWhenDisabled: true
           }
         ),
-        isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+        isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
           MediaEditorKeyboardShortcutsModal,
           {
             onClose: () => setIsShortcutsModalOpen(false)
@@ -28295,15 +28708,15 @@ function HistoryActions({
     onReset();
     endGesture();
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
-    import_components39.Flex,
+  return /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(
+    import_components40.Flex,
     {
       className: "media-editor__history-actions",
       expanded: false,
       gap: 2,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-          import_components39.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
+          import_components40.Button,
           {
             size: "compact",
             variant: "tertiary",
@@ -28313,8 +28726,8 @@ function HistoryActions({
             children: (0, import_i18n37.__)("Reset")
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-          import_components39.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
+          import_components40.Button,
           {
             size: "compact",
             icon: undo_default,
@@ -28326,8 +28739,8 @@ function HistoryActions({
             onClick: handleUndo
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-          import_components39.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
+          import_components40.Button,
           {
             size: "compact",
             icon: redo_default,
@@ -28351,16 +28764,16 @@ function FooterActions({
   onSave
 }) {
   const saveDisabled = isSaving || !hasMedia || !hasChanges;
-  return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
-    import_components39.Flex,
+  return /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(
+    import_components40.Flex,
     {
       className: "media-editor__footer-actions",
       justify: "flex-end",
       expanded: false,
       gap: 2,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-          import_components39.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
+          import_components40.Button,
           {
             __next40pxDefaultSize: true,
             variant: "tertiary",
@@ -28370,8 +28783,8 @@ function FooterActions({
             children: (0, import_i18n37.__)("Cancel")
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-          import_components39.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
+          import_components40.Button,
           {
             __next40pxDefaultSize: true,
             variant: "primary",
@@ -28399,7 +28812,7 @@ function MediaEditorContent({
   shouldCloseOnEsc = false
 }) {
   const cropper = useMediaEditor();
-  const isPanelLayout = (0, import_compose7.useViewportMatch)("small");
+  const isPanelLayout = (0, import_compose8.useViewportMatch)("small");
   const footerLayout = isPanelLayout ? "wide" : "narrow";
   const { media, hasEdits } = (0, import_data8.useSelect)(
     (select) => {
@@ -28432,34 +28845,34 @@ function MediaEditorContent({
   const hasChanges = cropper.isCropperDirty || hasEdits;
   const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, import_data8.useDispatch)(import_core_data2.store);
   const { removeAllNotices } = (0, import_data8.useDispatch)(import_notices2.store);
-  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element94.useState)(false);
-  const [isPlacementActive, setIsPlacementActive] = (0, import_element94.useState)(false);
-  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element94.useState)(false);
-  const placementControlTimerRef = (0, import_element94.useRef)();
-  const signalPlacementControlInteraction = (0, import_element94.useCallback)(() => {
+  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element96.useState)(false);
+  const [isPlacementActive, setIsPlacementActive] = (0, import_element96.useState)(false);
+  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element96.useState)(false);
+  const placementControlTimerRef = (0, import_element96.useRef)();
+  const signalPlacementControlInteraction = (0, import_element96.useCallback)(() => {
     setIsPlacementActive(true);
     clearTimeout(placementControlTimerRef.current);
     placementControlTimerRef.current = setTimeout(() => {
       setIsPlacementActive(false);
     }, PLACEMENT_CONTROL_IDLE_MS);
   }, []);
-  const handleCanvasGestureStart = (0, import_element94.useCallback)(() => {
+  const handleCanvasGestureStart = (0, import_element96.useCallback)(() => {
     setIsCanvasGestureActive(true);
   }, []);
-  const handleCanvasGestureEnd = (0, import_element94.useCallback)(() => {
+  const handleCanvasGestureEnd = (0, import_element96.useCallback)(() => {
     setIsCanvasGestureActive(false);
   }, []);
   const isCropInteractionActive = isPlacementActive || isCanvasGestureActive;
-  (0, import_element94.useEffect)(() => {
+  (0, import_element96.useEffect)(() => {
     return () => {
       clearTimeout(placementControlTimerRef.current);
     };
   }, []);
-  (0, import_element94.useEffect)(() => {
+  (0, import_element96.useEffect)(() => {
     setIsPlacementActive(false);
     setIsCanvasGestureActive(false);
   }, [id]);
-  (0, import_element94.useEffect)(() => {
+  (0, import_element96.useEffect)(() => {
     invalidateResolution("getEntityRecord", [
       "postType",
       "attachment",
@@ -28484,17 +28897,17 @@ function MediaEditorContent({
     media,
     onSaved
   });
-  const tabs = (0, import_element94.useMemo)(() => {
+  const tabs = (0, import_element96.useMemo)(() => {
     const detailsTab = {
       id: "details",
       title: (0, import_i18n37.__)("Details"),
-      panel: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+      panel: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
         Stack,
         {
           className: "media-editor__panel",
           direction: "column",
           gap: "lg",
-          children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(MediaForm, {})
+          children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(MediaForm, {})
         }
       )
     };
@@ -28505,13 +28918,13 @@ function MediaEditorContent({
       {
         id: "crop",
         title: (0, import_i18n37.__)("Crop"),
-        panel: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+        panel: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
           Stack,
           {
             className: "media-editor__panel",
             direction: "column",
             gap: "lg",
-            children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
               MediaEditorCropPanel,
               {
                 aspectRatioValue,
@@ -28532,7 +28945,7 @@ function MediaEditorContent({
     aspectRatioOptions,
     isPanelLayout
   ]);
-  const [selectedTabId, setSelectedTabId] = (0, import_element94.useState)();
+  const [selectedTabId, setSelectedTabId] = (0, import_element96.useState)();
   const activeTabId = selectedTabId ?? tabs[0]?.id;
   const handleChange = (updates) => {
     editEntityRecord("postType", "attachment", id, updates);
@@ -28584,35 +28997,35 @@ function MediaEditorContent({
       }
     }
   };
-  const snackbar = /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+  const snackbar = /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
     import_notices2.SnackbarNotices,
     {
       className: noticesClassName,
       context: MEDIA_EDITOR_NOTICES_CONTEXT
     }
   );
-  const ruler = isImage ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+  const ruler = isImage ? /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
     MediaEditorFineRotation,
     {
       onPlacementControlInteraction: signalPlacementControlInteraction
     }
   ) : null;
-  const children = /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
+  const children = /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(
     MediaEditorProvider,
     {
       value: media ?? void 0,
       onChange: handleChange,
       settings: { fields },
       children: [
-        !media ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "media-editor", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components39.Spinner, {}) }) }) : /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
+        !media ? /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { className: "media-editor", children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(import_components40.Spinner, {}) }) }) : /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(
           tabs_exports.Root,
           {
             className: "media-editor",
             value: activeTabId,
             onValueChange: (value) => setSelectedTabId(value),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(MediaEditorSidebar, { tabs }),
-              /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(MediaEditorSidebar, { tabs }),
+              /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
                 interface_skeleton_default,
                 {
                   className: "media-editor__skeleton",
@@ -28620,8 +29033,8 @@ function MediaEditorContent({
                     body: isImage ? (0, import_i18n37.__)("Image editor") : (0, import_i18n37.__)("Media preview"),
                     sidebar: (0, import_i18n37.__)("Media details")
                   },
-                  content: /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)("div", { className: "media-editor__content", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                  content: /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)("div", { className: "media-editor__content", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
                       MediaEditorCanvas,
                       {
                         focusOnMount: true,
@@ -28629,17 +29042,17 @@ function MediaEditorContent({
                         onGestureStart: handleCanvasGestureStart,
                         onGestureEnd: handleCanvasGestureEnd
                       }
-                    ) : /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(MediaPreview, {}) }),
-                    isImage && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "media-editor__canvas-toolbar", children: ruler })
+                    ) : /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(MediaPreview, {}) }),
+                    isImage && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { className: "media-editor__canvas-toolbar", children: ruler })
                   ] }),
-                  sidebar: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
+                  sidebar: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
                 }
               )
             ]
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-          import_components39.__experimentalConfirmDialog,
+        /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
+          import_components40.__experimentalConfirmDialog,
           {
             isOpen: isDiscardDialogOpen,
             confirmButtonText: (0, import_i18n37.__)("Discard"),
@@ -28654,25 +29067,25 @@ function MediaEditorContent({
             )
           }
         ),
-        noticesPortalElement ? (0, import_element94.createPortal)(snackbar, noticesPortalElement) : snackbar
+        noticesPortalElement ? (0, import_element96.createPortal)(snackbar, noticesPortalElement) : snackbar
       ]
     }
   );
-  const history = isImage ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+  const history = isImage ? /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
     HistoryActions,
     {
       isUndoRedoDisabled: isCropInteractionActive,
       onReset: resetCropOptions
     }
   ) : null;
-  const imageControls = isImage ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+  const imageControls = isImage ? /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
     MediaEditorImageControls,
     {
       showAspectRatioControl: true,
       aspectRatioPresets
     }
   ) : null;
-  const actions = /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+  const actions = /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
     FooterActions,
     {
       isSaving,
@@ -28684,14 +29097,14 @@ function MediaEditorContent({
   );
   let footerActions;
   if (footerLayout === "wide") {
-    footerActions = /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_jsx_runtime131.Fragment, { children: [
+    footerActions = /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(import_jsx_runtime134.Fragment, { children: [
       history,
       actions
     ] });
   } else {
-    footerActions = /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_jsx_runtime131.Fragment, { children: [
+    footerActions = /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(import_jsx_runtime134.Fragment, { children: [
       imageControls,
-      /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)("div", { className: "media-editor-modal__footer-row", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)("div", { className: "media-editor-modal__footer-row", children: [
         history,
         actions
       ] })
@@ -28699,7 +29112,7 @@ function MediaEditorContent({
   }
   return renderFrame({
     children,
-    headerActions: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+    headerActions: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
       HeaderActions,
       {
         isSaving,
@@ -28719,12 +29132,12 @@ function MediaEditorContent({
   });
 }
 function MediaEditor(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(MediaEditorStateProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(MediaEditorContent, { ...props }) }, props.id);
+  return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(MediaEditorStateProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(MediaEditorContent, { ...props }) }, props.id);
 }
 var media_editor_default = MediaEditor;
 
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
-var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorModal({
   fields = [],
   aspectRatioPresets
@@ -28751,7 +29164,7 @@ function MediaEditorModal({
     closeMediaEditorModal2();
     onClose?.();
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
     media_editor_default,
     {
       id,
@@ -28796,13 +29209,13 @@ function MediaEditorModal({
         onRequestClose,
         onKeyDown,
         shouldCloseOnClickOutside
-      }) => /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+      }) => /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
         import_keyboard_shortcuts.ShortcutProvider,
         {
           className: "media-editor-modal__shortcut-scope",
           onKeyDown: stopKeyDownPropagation,
-          children: /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
-            import_components40.Modal,
+          children: /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)(
+            import_components41.Modal,
             {
               className: "media-editor-modal",
               title: (0, import_i18n38.__)("Edit media"),
@@ -28814,7 +29227,7 @@ function MediaEditorModal({
               headerActions,
               children: [
                 children,
-                /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
                   "div",
                   {
                     className: `media-editor-modal__footer is-${footerLayout}`,

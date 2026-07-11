@@ -3860,6 +3860,11 @@ div.dataviews-view-list {
   align-self: flex-end;
 }
 
+.dataviews-controls__richtext [data-rich-text-placeholder]::after {
+  content: attr(data-rich-text-placeholder);
+  color: color-mix(in srgb, currentColor, transparent 38%);
+}
+
 .dataviews-controls__datetime {
   border: none;
   padding: 0;
