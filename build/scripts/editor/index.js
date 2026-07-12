@@ -2518,7 +2518,7 @@ var wp;
     getTemplatePartIcon: () => getTemplatePartIcon,
     linkAutocompleter: () => link_default2,
     mediaUpload: () => mediaUpload,
-    privateApis: () => privateApis20,
+    privateApis: () => privateApis21,
     registerEntityAction: () => registerEntityAction2,
     registerEntityField: () => registerEntityField2,
     store: () => store,
@@ -48056,6 +48056,12 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
 
+  // packages/dataviews/build-module/private-apis.mjs
+  var privateApis13 = {};
+  lock5(privateApis13, {
+    RichTextControl
+  });
+
   // packages/media-editor/build-module/components/media-form/index.mjs
   var import_components79 = __toESM(require_components(), 1);
   var import_i18n128 = __toESM(require_i18n(), 1);
@@ -48111,8 +48117,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-editor/build-module/lock-unlock.mjs
-  var import_private_apis7 = __toESM(require_private_apis(), 1);
-  var { lock: lock6, unlock: unlock6 } = (0, import_private_apis7.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  var import_private_apis8 = __toESM(require_private_apis(), 1);
+  var { lock: lock6, unlock: unlock6 } = (0, import_private_apis8.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/media-editor"
   );
@@ -55412,8 +55418,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-editor/build-module/private-apis.mjs
-  var privateApis13 = {};
-  lock6(privateApis13, {
+  var privateApis14 = {};
+  lock6(privateApis14, {
     store: store2,
     MediaEditor,
     MediaEditorModal
@@ -55926,8 +55932,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n144 = __toESM(require_i18n(), 1);
 
   // packages/global-styles-ui/build-module/lock-unlock.mjs
-  var import_private_apis9 = __toESM(require_private_apis(), 1);
-  var { lock: lock7, unlock: unlock7 } = (0, import_private_apis9.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  var import_private_apis10 = __toESM(require_private_apis(), 1);
+  var { lock: lock7, unlock: unlock7 } = (0, import_private_apis10.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/global-styles-ui"
   );
@@ -73535,7 +73541,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/provider/use-block-editor-settings.mjs
-  var { store: mediaEditorStore } = unlock(privateApis13);
+  var { store: mediaEditorStore } = unlock(privateApis14);
   var EMPTY_OBJECT4 = {};
   function __experimentalReusableBlocksSelect(select9) {
     const { RECEIVE_INTERMEDIATE_RESULTS: RECEIVE_INTERMEDIATE_RESULTS2 } = unlock(import_core_data45.privateApis);
@@ -76845,7 +76851,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/media/media-editor-modal.mjs
   var import_jsx_runtime371 = __toESM(require_jsx_runtime(), 1);
   var { MediaEditorModal: MediaEditorModal2, store: mediaEditorStore2 } = unlock(
-    privateApis13
+    privateApis14
   );
   function ratioToNumber(ratio) {
     if (ratio === void 0 || ratio === null) {
@@ -95649,8 +95655,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data130 = __toESM(require_core_data(), 1);
 
   // packages/views/build-module/lock-unlock.mjs
-  var import_private_apis10 = __toESM(require_private_apis(), 1);
-  var { lock: lock8, unlock: unlock8 } = (0, import_private_apis10.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  var import_private_apis11 = __toESM(require_private_apis(), 1);
+  var { lock: lock8, unlock: unlock8 } = (0, import_private_apis11.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
     "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
     "@wordpress/views"
   );
@@ -97135,7 +97141,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose81 = __toESM(require_compose(), 1);
   var import_i18n335 = __toESM(require_i18n(), 1);
   var import_data259 = __toESM(require_data(), 1);
-  var import_dom27 = __toESM(require_dom(), 1);
+  var import_dom28 = __toESM(require_dom(), 1);
   var import_block_editor100 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
@@ -97262,19 +97268,46 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collab-sidebar/note-form.mjs
-  var import_react_autosize_textarea2 = __toESM(require_lib(), 1);
   var import_element329 = __toESM(require_element(), 1);
   var import_components278 = __toESM(require_components(), 1);
   var import_i18n332 = __toESM(require_i18n(), 1);
   var import_compose80 = __toESM(require_compose(), 1);
   var import_keycodes21 = __toESM(require_keycodes(), 1);
+  var import_dom27 = __toESM(require_dom(), 1);
   var import_jsx_runtime546 = __toESM(require_jsx_runtime(), 1);
+  var { RichTextControl: RichTextControl2 } = unlock(privateApis13);
+  var ALLOWED_NOTE_FORMATS = [
+    "core/bold",
+    "core/italic",
+    "core/link",
+    "core/code"
+  ];
   function NoteForm({ onSubmit, onCancel, note, labels }) {
     const [inputComment, setInputComment] = (0, import_element329.useState)(
       note?.content?.raw ?? ""
     );
+    const [isSubmitting, setIsSubmitting] = (0, import_element329.useState)(false);
     const inputId = (0, import_compose80.useInstanceId)(NoteForm, "comment-input");
-    const isDisabled = inputComment === note?.content?.raw || !sanitizeNoteContent(inputComment).length;
+    const trimmedPlainText = sanitizeNoteContent((0, import_dom27.__unstableStripHTML)(inputComment));
+    const isDisabled = isSubmitting || inputComment === note?.content?.raw || !trimmedPlainText.length;
+    async function submit() {
+      if (isDisabled) {
+        return;
+      }
+      setIsSubmitting(true);
+      const submitted = inputComment;
+      try {
+        const result = await onSubmit(submitted);
+        if (result !== void 0) {
+          setInputComment(
+            (current) => current === submitted ? "" : current
+          );
+        }
+      } catch {
+      } finally {
+        setIsSubmitting(false);
+      }
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime546.jsxs)(
       Stack,
       {
@@ -97284,28 +97317,29 @@ If there's a particular need for this, please submit a feature request at https:
         render: /* @__PURE__ */ (0, import_jsx_runtime546.jsx)("form", {}),
         onSubmit: (event) => {
           event.preventDefault();
-          onSubmit(inputComment);
-          setInputComment("");
+          submit();
+        },
+        onKeyDown: (event) => {
+          if (import_keycodes21.isKeyboardEvent.primary(event, "Enter")) {
+            event.preventDefault();
+            submit();
+            return;
+          }
+          if (event.key === "Escape") {
+            event.preventDefault();
+            onCancel(event);
+          }
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime546.jsx)("label", { htmlFor: inputId }), children: labels?.input ?? (0, import_i18n332.__)("Note") }),
           /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(
-            import_react_autosize_textarea2.default,
+            RichTextControl2,
             {
               id: inputId,
-              value: inputComment ?? "",
-              onChange: (comment) => setInputComment(comment.target.value),
-              rows: 1,
-              maxRows: 20,
-              onKeyDown: (event) => {
-                if (import_keycodes21.isKeyboardEvent.primary(event, "Enter") && !isDisabled) {
-                  event.target.parentNode.requestSubmit();
-                }
-                if (event.key === "Escape") {
-                  event.preventDefault();
-                  onCancel(event);
-                }
-              }
+              label: labels?.input ?? (0, import_i18n332.__)("Note"),
+              hideLabelFromVision: true,
+              value: inputComment,
+              onChange: setInputComment,
+              allowedFormats: ALLOWED_NOTE_FORMATS
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime546.jsxs)(
@@ -97403,22 +97437,57 @@ If there's a particular need for this, please submit a feature request at https:
           if (isSubmittingRef.current) {
             return;
           }
-          if (event.currentTarget.contains(event.relatedTarget)) {
+          const container = event.currentTarget;
+          const dismiss = () => {
+            toggleBlockSpotlight(clientId, false);
+            selectNote2(void 0);
+          };
+          if (event.relatedTarget) {
+            if (container.contains(event.relatedTarget)) {
+              return;
+            }
+            if (event.relatedTarget.closest(".components-popover")) {
+              return;
+            }
+            dismiss();
             return;
           }
-          toggleBlockSpotlight(clientId, false);
-          selectNote2(void 0);
+          container.ownerDocument.defaultView.requestAnimationFrame(
+            () => {
+              if (isSubmittingRef.current) {
+                return;
+              }
+              const active = container.ownerDocument.activeElement;
+              if (active && container.contains(active)) {
+                return;
+              }
+              if (active && active.closest(".components-popover")) {
+                return;
+              }
+              dismiss();
+            }
+          );
         },
         children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(NoteCard, { children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(
           NoteForm,
           {
             onSubmit: async (inputComment) => {
               isSubmittingRef.current = true;
-              const { id } = await onSubmit({
-                content: inputComment
-              });
-              selectNote2(id);
-              focusNoteThread(id, sidebarRef.current);
+              try {
+                const savedRecord = await onSubmit({
+                  content: inputComment
+                });
+                if (savedRecord) {
+                  selectNote2(savedRecord.id);
+                  focusNoteThread(
+                    savedRecord.id,
+                    sidebarRef.current
+                  );
+                }
+                return savedRecord;
+              } finally {
+                isSubmittingRef.current = false;
+              }
             },
             onCancel: unselectNote,
             labels: { input: (0, import_i18n333.__)("New note") }
@@ -97679,12 +97748,14 @@ If there's a particular need for this, please submit a feature request at https:
       const isNoteFocused2 = event.relatedTarget?.closest(
         ".editor-collab-sidebar-panel__thread"
       );
-      const isDialogFocused = event.relatedTarget?.closest('[role="dialog"]');
+      const isDialogOrPopoverFocused = event.relatedTarget?.closest(
+        '[role="dialog"], .components-popover'
+      );
       const isTabbing = isKeyboardTabbingRef.current;
       if (isNoteFocused2 && !isTabbing) {
         return;
       }
-      if (isDialogFocused) {
+      if (isDialogOrPopoverFocused) {
         return;
       }
       if (isTabbing && event.currentTarget.contains(event.relatedTarget)) {
@@ -97721,7 +97792,7 @@ If there's a particular need for this, please submit a feature request at https:
     const lastReply = allReplies.length > 0 ? allReplies[allReplies.length - 1] : void 0;
     const restReplies = allReplies.length > 0 ? allReplies.slice(0, -1) : [];
     const noteExcerpt = getNoteExcerpt(
-      (0, import_dom27.__unstableStripHTML)(note.content?.rendered),
+      (0, import_dom28.__unstableStripHTML)(note.content?.rendered),
       10
     );
     const ariaLabel = !!note.blockClientId ? (0, import_i18n335.sprintf)(
@@ -97781,7 +97852,11 @@ If there's a particular need for this, please submit a feature request at https:
               variant: "secondary",
               size: "compact",
               onClick: () => {
-                focusNoteThread(note.id, sidebarRef.current, "textarea");
+                focusNoteThread(
+                  note.id,
+                  sidebarRef.current,
+                  '[role="textbox"]'
+                );
               },
               children: (0, import_i18n335.__)("Add new reply")
             }
@@ -97853,17 +97928,16 @@ If there's a particular need for this, please submit a feature request at https:
             {
               onSubmit: (inputComment) => {
                 if ("approved" === note.status) {
-                  onEditNote({
+                  return onEditNote({
                     id: note.id,
                     status: "hold",
                     content: inputComment
                   });
-                } else {
-                  onAddReply({
-                    content: inputComment,
-                    parent: note.id
-                  });
                 }
+                return onAddReply({
+                  content: inputComment,
+                  parent: note.id
+                });
               },
               onCancel: (event) => {
                 event.stopPropagation();
@@ -97907,7 +97981,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data261 = __toESM(require_data(), 1);
   var import_block_editor102 = __toESM(require_block_editor(), 1);
   var import_notices37 = __toESM(require_notices(), 1);
-  var import_dom28 = __toESM(require_dom(), 1);
+  var import_dom29 = __toESM(require_dom(), 1);
   var import_html_entities36 = __toESM(require_html_entities(), 1);
   var import_rich_text9 = __toESM(require_rich_text(), 1);
 
@@ -98392,7 +98466,7 @@ If there's a particular need for this, please submit a feature request at https:
       const panel = sidebarRef.current;
       const blockEl = store4.getFirstBlockElement();
       const rootEl = blockEl?.closest(".is-root-container") ?? blockEl;
-      const canvas = rootEl ? (0, import_dom28.getScrollContainer)(rootEl) : null;
+      const canvas = rootEl ? (0, import_dom29.getScrollContainer)(rootEl) : null;
       const applyScroll = () => {
         panel.style.setProperty(
           "--canvas-scroll",
@@ -98535,7 +98609,7 @@ If there's a particular need for this, please submit a feature request at https:
         focusNoteThread(
           selectedNote2,
           sidebarRef.current,
-          selectedNote2 === "new" ? "textarea" : void 0
+          selectedNote2 === "new" ? '[role="textbox"]' : void 0
         );
         selectNote2(selectedNote2);
       }
@@ -100586,8 +100660,8 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/private-apis.mjs
   var { store: interfaceStore, ...remainingInterfaceApis } = build_module_exports;
-  var privateApis20 = {};
-  lock(privateApis20, {
+  var privateApis21 = {};
+  lock(privateApis21, {
     CreateTemplatePartModal,
     patternTitleField: pattern_title_default,
     templateTitleField: template_title_default,

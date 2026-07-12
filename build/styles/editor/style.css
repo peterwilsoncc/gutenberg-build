@@ -5854,44 +5854,23 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   font-style: italic;
 }
 
-.editor-collab-sidebar-panel__note-form textarea {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  padding: 6px 8px;
-  /* Fonts smaller than 16px causes mobile safari to zoom. */
-  font-size: 16px;
-  /* Override core line-height. To be reviewed. */
-  line-height: normal;
-  box-shadow: 0 0 0 transparent;
+.editor-collab-sidebar-panel__note-form [role=textbox] {
+  line-height: 20px;
+  max-height: 418px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.editor-collab-sidebar-panel__note-form [role=textbox] code {
+  font-family: Menlo, Consolas, monaco, monospace;
+  font-size: 0.9em;
+  padding: 0 2px;
+  background: #f0f0f0;
   border-radius: 2px;
-  border: 1px solid #949494;
 }
-@media not (prefers-reduced-motion) {
-  .editor-collab-sidebar-panel__note-form textarea {
-    transition: box-shadow 0.1s linear;
-  }
-}
-@media (min-width: 600px) {
-  .editor-collab-sidebar-panel__note-form textarea {
-    font-size: 13px;
-    /* Override core line-height. To be reviewed. */
-    line-height: normal;
-  }
-}
-.editor-collab-sidebar-panel__note-form textarea:focus {
-  border-color: var(--wp-admin-theme-color);
-  box-shadow: 0 0 0 0.5px var(--wp-admin-theme-color);
-  outline: 2px solid transparent;
-}
-.editor-collab-sidebar-panel__note-form textarea::-moz-placeholder {
-  color: rgba(30, 30, 30, 0.62);
-}
-.editor-collab-sidebar-panel__note-form textarea::placeholder {
-  color: rgba(30, 30, 30, 0.62);
-}
-.editor-collab-sidebar-panel__note-form textarea {
-  padding: 9px 11px;
-  line-height: 20px !important;
-  display: block;
+.editor-collab-sidebar-panel__note-form [role=textbox] a {
+  color: var(--wp-admin-theme-color);
+  text-decoration: underline;
 }
 
 .editor-collab-sidebar-panel__skip-to-note,
