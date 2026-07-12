@@ -97900,6 +97900,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collab-sidebar/hooks.mjs
+  var import_a11y12 = __toESM(require_a11y(), 1);
   var import_i18n337 = __toESM(require_i18n(), 1);
   var import_element333 = __toESM(require_element(), 1);
   var import_core_data138 = __toESM(require_core_data(), 1);
@@ -98257,12 +98258,6 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
     const onEdit = async ({ id, content, status }) => {
-      const messageType = status ? status : "updated";
-      const messages = {
-        approved: (0, import_i18n337.__)("Note marked as resolved."),
-        hold: (0, import_i18n337.__)("Note reopened."),
-        updated: (0, import_i18n337.__)("Note updated.")
-      };
       try {
         if (status === "approved" || status === "hold") {
           await saveEntityRecord(
@@ -98298,6 +98293,9 @@ If there's a particular need for this, please submit a feature request at https:
               updateBlockAttributes2
             );
           }
+          (0, import_a11y12.speak)(
+            status === "approved" ? (0, import_i18n337.__)("Note marked as resolved.") : (0, import_i18n337.__)("Note reopened.")
+          );
         } else {
           const updateData = {
             id,
@@ -98307,15 +98305,11 @@ If there's a particular need for this, please submit a feature request at https:
           await saveEntityRecord("root", "comment", updateData, {
             throwOnError: true
           });
-        }
-        createNotice(
-          "snackbar",
-          messages[messageType] ?? (0, import_i18n337.__)("Note updated."),
-          {
+          createNotice("snackbar", (0, import_i18n337.__)("Note updated."), {
             type: "snackbar",
             isDismissible: true
-          }
-        );
+          });
+        }
       } catch (error2) {
         onError(error2);
       }
@@ -100466,7 +100460,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data273 = __toESM(require_data(), 1);
   var import_element341 = __toESM(require_element(), 1);
   var import_i18n350 = __toESM(require_i18n(), 1);
-  var import_a11y12 = __toESM(require_a11y(), 1);
+  var import_a11y13 = __toESM(require_a11y(), 1);
   var import_upload_media4 = __toESM(require_upload_media(), 1);
   var import_notices38 = __toESM(require_notices(), 1);
   var import_components288 = __toESM(require_components(), 1);
@@ -100526,14 +100520,14 @@ If there's a particular need for this, please submit a feature request at https:
       const isUploading = remaining > 0;
       if (isUploading && !wasUploadingRef.current) {
         dismissedRef.current = false;
-        (0, import_a11y12.speak)((0, import_i18n350.__)("Media upload started"), "polite");
+        (0, import_a11y13.speak)((0, import_i18n350.__)("Media upload started"), "polite");
         if (completionTimeoutRef.current) {
           clearTimeout(completionTimeoutRef.current);
           completionTimeoutRef.current = null;
           setPeak(0);
         }
       } else if (!isUploading && wasUploadingRef.current) {
-        (0, import_a11y12.speak)((0, import_i18n350.__)("Media upload complete"), "polite");
+        (0, import_a11y13.speak)((0, import_i18n350.__)("Media upload complete"), "polite");
         if (!dismissedRef.current) {
           createNotice("info", (0, import_i18n350.__)("Upload complete"), {
             id: NOTICE_ID,
