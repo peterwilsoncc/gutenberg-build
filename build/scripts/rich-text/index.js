@@ -1969,7 +1969,7 @@ var wp;
   var { subscribeDelegatedListener } = unlock(import_compose.privateApis);
   var copy_handler_default = (props) => (element) => {
     function onCopy(event) {
-      const { record } = props.current;
+      const { record, handleChange } = props.current;
       const { ownerDocument } = element;
       if (isCollapsed(record.current) || !element.contains(ownerDocument.activeElement)) {
         return;
@@ -1982,7 +1982,7 @@ var wp;
       event.clipboardData.setData("rich-text", "true");
       event.preventDefault();
       if (event.type === "cut") {
-        ownerDocument.execCommand("delete");
+        handleChange(remove2(record.current));
       }
     }
     const { defaultView } = element.ownerDocument;
