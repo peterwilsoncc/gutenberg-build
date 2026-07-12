@@ -26691,6 +26691,28 @@ ${url}
   var import_i18n66 = __toESM(require_i18n(), 1);
   var import_url9 = __toESM(require_url(), 1);
   var downloadButtonText = (0, import_i18n66._x)("Download", "button label");
+  var toMediaTransform = (blockName, mediaType, srcAttribute) => ({
+    type: "block",
+    blocks: [blockName],
+    isMatch: ({ id }) => {
+      if (!id) {
+        return false;
+      }
+      const { getEntityRecord } = (0, import_data33.select)(import_core_data19.store);
+      const media = getEntityRecord("postType", "attachment", id, {
+        context: "view"
+      });
+      return !!media && media.mime_type.includes(mediaType);
+    },
+    transform: (attributes) => {
+      return (0, import_blocks26.createBlock)(blockName, {
+        [srcAttribute]: attributes.href,
+        caption: attributes.fileName,
+        id: attributes.id,
+        anchor: attributes.anchor
+      });
+    }
+  });
   var transforms8 = {
     from: [
       {
@@ -26753,72 +26775,9 @@ ${url}
       }
     ],
     to: [
-      {
-        type: "block",
-        blocks: ["core/audio"],
-        isMatch: ({ id }) => {
-          if (!id) {
-            return false;
-          }
-          const { getEntityRecord } = (0, import_data33.select)(import_core_data19.store);
-          const media = getEntityRecord("postType", "attachment", id, {
-            context: "view"
-          });
-          return !!media && media.mime_type.includes("audio");
-        },
-        transform: (attributes) => {
-          return (0, import_blocks26.createBlock)("core/audio", {
-            src: attributes.href,
-            caption: attributes.fileName,
-            id: attributes.id,
-            anchor: attributes.anchor
-          });
-        }
-      },
-      {
-        type: "block",
-        blocks: ["core/video"],
-        isMatch: ({ id }) => {
-          if (!id) {
-            return false;
-          }
-          const { getEntityRecord } = (0, import_data33.select)(import_core_data19.store);
-          const media = getEntityRecord("postType", "attachment", id, {
-            context: "view"
-          });
-          return !!media && media.mime_type.includes("video");
-        },
-        transform: (attributes) => {
-          return (0, import_blocks26.createBlock)("core/video", {
-            src: attributes.href,
-            caption: attributes.fileName,
-            id: attributes.id,
-            anchor: attributes.anchor
-          });
-        }
-      },
-      {
-        type: "block",
-        blocks: ["core/image"],
-        isMatch: ({ id }) => {
-          if (!id) {
-            return false;
-          }
-          const { getEntityRecord } = (0, import_data33.select)(import_core_data19.store);
-          const media = getEntityRecord("postType", "attachment", id, {
-            context: "view"
-          });
-          return !!media && media.mime_type.includes("image");
-        },
-        transform: (attributes) => {
-          return (0, import_blocks26.createBlock)("core/image", {
-            url: attributes.href,
-            caption: attributes.fileName,
-            id: attributes.id,
-            anchor: attributes.anchor
-          });
-        }
-      }
+      toMediaTransform("core/audio", "audio", "src"),
+      toMediaTransform("core/video", "video", "src"),
+      toMediaTransform("core/image", "image", "url")
     ]
   };
   var transforms_default9 = transforms8;
