@@ -2220,6 +2220,7 @@ var wp;
       });
       handleChange(change);
     }
+    let selectionSnapshot;
     function handleSelectionChange() {
       const { record, applyRecord, createRecord, onSelectionChange } = props.current;
       if (element.contentEditable !== "true") {
@@ -2231,8 +2232,20 @@ var wp;
       if (isComposing) {
         return;
       }
+      const selection = defaultView.getSelection();
+      if (selectionSnapshot && selectionSnapshot.anchorNode === selection.anchorNode && selectionSnapshot.anchorOffset === selection.anchorOffset && selectionSnapshot.focusNode === selection.focusNode && selectionSnapshot.focusOffset === selection.focusOffset && selectionSnapshot.processedStart === record.current.start && selectionSnapshot.processedEnd === record.current.end) {
+        return;
+      }
       const { start, end, text } = createRecord();
       const oldRecord = record.current;
+      selectionSnapshot = {
+        anchorNode: selection.anchorNode,
+        anchorOffset: selection.anchorOffset,
+        focusNode: selection.focusNode,
+        focusOffset: selection.focusOffset,
+        processedStart: start,
+        processedEnd: end
+      };
       if (text !== oldRecord.text) {
         onInput();
         return;
@@ -2289,6 +2302,7 @@ var wp;
           end: index,
           activeFormats: EMPTY_ACTIVE_FORMATS2
         };
+        selectionSnapshot = void 0;
       } else {
         applyRecord(record.current, { domOnly: true });
       }
@@ -2322,12 +2336,29 @@ var wp;
       "selectionchange",
       handleSelectionChange
     );
+    const unsubscribeEnsureSelectionSync = [
+      "keydown",
+      "beforeinput",
+      "copy",
+      "cut",
+      "paste"
+    ].map(
+      (eventType) => subscribeDelegatedListener5(
+        ownerDocument,
+        eventType,
+        handleSelectionChange,
+        true
+      )
+    );
     return () => {
       unsubscribeInput();
       unsubscribeCompositionStart();
       unsubscribeCompositionEnd();
       unsubscribeFocus();
       unsubscribeSelectionChange();
+      unsubscribeEnsureSelectionSync.forEach(
+        (unsubscribe) => unsubscribe()
+      );
     };
   };
 
