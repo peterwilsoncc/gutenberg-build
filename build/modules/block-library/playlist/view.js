@@ -1273,6 +1273,18 @@ function updateSeekControlLabel(instance, label) {
     seekControl.setAttribute("aria-label", seekLabel);
   }
 }
+function setupPlayButtonArtwork(container, artworkUrl) {
+  if (!artworkUrl) {
+    container.classList.remove("has-play-button-artwork");
+    container.style.removeProperty("--wp--playlist--play-button-artwork");
+    return;
+  }
+  container.classList.add("has-play-button-artwork");
+  container.style.setProperty(
+    "--wp--playlist--play-button-artwork",
+    `url(${JSON.stringify(artworkUrl)})`
+  );
+}
 function logPlayError(error) {
   if (error.name === "AbortError") {
     return;
@@ -1288,14 +1300,16 @@ function initWaveformPlayer(element, {
   autoPlay,
   onEnded,
   labels,
-  waveformStyle
+  waveformStyle,
+  showPlayButtonArtwork = false
 }) {
+  const playerArtwork = showPlayButtonArtwork ? void 0 : image;
   const { textColor, waveformColor, progressColor } = getWaveformColors(element);
   const container = createWaveformContainer({
     url: src,
     title,
     artist,
-    artwork: image,
+    artwork: playerArtwork,
     waveformColor,
     progressColor,
     buttonColor: textColor,
@@ -1312,6 +1326,9 @@ function initWaveformPlayer(element, {
   const handlers = {
     ready: () => {
       styleSvgIcons(container, textColor);
+      if (showPlayButtonArtwork) {
+        setupPlayButtonArtwork(container, image);
+      }
       cleanupPlayButtonAccessibility = setupPlayButtonAccessibility(
         container,
         labels
@@ -1407,22 +1424,39 @@ var { state } = store(
 );
 function initPlayer(ref, track, shouldAutoPlay, context) {
   const existing = playerState.get(ref);
+  const showPlayButtonArtwork = context.showPlayButtonArtwork === true;
+  const playerArtwork = showPlayButtonArtwork ? "" : track.image;
   if (existing?.instance) {
-    playlistPlayerState.set(context.playlistId, existing);
-    existing.instance.loadTrack(track.url, track.title, track.artist, {
-      artwork: track.image,
-      artworkAlt: track.imageAlt
-    }).then(() => {
-      existing.url = track.url;
-      updateSeekControlLabel(
-        existing.instance,
-        track.title || ref.dataset.labelSeek
-      );
-      if (shouldAutoPlay) {
-        existing.instance.play()?.catch(logPlayError);
-      }
-    }).catch(logPlayError);
-    return;
+    const shouldRecreatePlayer = !!existing.instance.artworkEl !== !!playerArtwork;
+    if (shouldRecreatePlayer) {
+      existing.destroy?.();
+      playerState.delete(ref);
+    } else {
+      playlistPlayerState.set(context.playlistId, existing);
+      existing.instance.loadTrack(track.url, track.title, track.artist, {
+        artwork: playerArtwork,
+        artworkAlt: playerArtwork ? track.imageAlt : ""
+      }).then(() => {
+        existing.url = track.url;
+        if (existing.instance.artworkEl) {
+          existing.instance.artworkEl.alt = track.imageAlt || "";
+        }
+        updateSeekControlLabel(
+          existing.instance,
+          track.title || ref.dataset.labelSeek
+        );
+        if (showPlayButtonArtwork) {
+          setupPlayButtonArtwork(
+            existing.container,
+            track.image
+          );
+        }
+        if (shouldAutoPlay) {
+          existing.instance.play()?.catch(logPlayError);
+        }
+      }).catch(logPlayError);
+      return;
+    }
   }
   const labels = {
     play: ref.dataset.labelPlay,
@@ -1439,6 +1473,7 @@ function initPlayer(ref, track, shouldAutoPlay, context) {
     autoPlay: shouldAutoPlay,
     labels,
     waveformStyle: context.waveformStyle,
+    showPlayButtonArtwork,
     onEnded: () => {
       const currentIndex = context.tracks.findIndex(
         (trackId) => trackId === context.currentId
@@ -1466,6 +1501,7 @@ function initPlayer(ref, track, shouldAutoPlay, context) {
   const nextState = {
     url: track.url,
     instance: player.instance,
+    container: player.container,
     destroy
   };
   playerState.set(ref, nextState);

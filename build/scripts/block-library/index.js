@@ -52745,6 +52745,10 @@ ${text}
         type: "boolean",
         default: true
       },
+      showPlayButtonArtwork: {
+        type: "boolean",
+        default: false
+      },
       showArtists: {
         type: "boolean",
         default: true
@@ -53935,6 +53939,18 @@ ${text}
       seekControl.setAttribute("aria-label", seekLabel);
     }
   }
+  function setupPlayButtonArtwork(container, artworkUrl) {
+    if (!artworkUrl) {
+      container.classList.remove("has-play-button-artwork");
+      container.style.removeProperty("--wp--playlist--play-button-artwork");
+      return;
+    }
+    container.classList.add("has-play-button-artwork");
+    container.style.setProperty(
+      "--wp--playlist--play-button-artwork",
+      `url(${JSON.stringify(artworkUrl)})`
+    );
+  }
   function logPlayError(error2) {
     if (error2.name === "AbortError") {
       return;
@@ -53950,14 +53966,16 @@ ${text}
     autoPlay,
     onEnded,
     labels,
-    waveformStyle
+    waveformStyle,
+    showPlayButtonArtwork = false
   }) {
+    const playerArtwork = showPlayButtonArtwork ? void 0 : image;
     const { textColor, waveformColor, progressColor } = getWaveformColors(element);
     const container = createWaveformContainer({
       url: src,
       title,
       artist,
-      artwork: image,
+      artwork: playerArtwork,
       waveformColor,
       progressColor,
       buttonColor: textColor,
@@ -53974,6 +53992,9 @@ ${text}
     const handlers = {
       ready: () => {
         styleSvgIcons(container, textColor);
+        if (showPlayButtonArtwork) {
+          setupPlayButtonArtwork(container, image);
+        }
         cleanupPlayButtonAccessibility = setupPlayButtonAccessibility(
           container,
           labels
@@ -54007,7 +54028,9 @@ ${text}
 
   // packages/block-library/build-module/utils/waveform-player.mjs
   var import_jsx_runtime370 = __toESM(require_jsx_runtime(), 1);
-  function updatePlayerMetadata(instance, { title, artist, image, imageAlt }) {
+  function updatePlayerMetadata(player, { title, artist, image, imageAlt }, showPlayButtonArtwork) {
+    const { instance, container } = player;
+    const playerArtwork = showPlayButtonArtwork ? void 0 : image;
     if (instance.titleEl) {
       instance.titleEl.textContent = title ?? "";
     }
@@ -54019,10 +54042,16 @@ ${text}
       instance.artistEl.style.display = artist ? "" : "none";
     }
     if (typeof instance.syncArtwork === "function") {
-      instance.syncArtwork(image || null, imageAlt || "");
-    } else if (instance.artworkEl && image) {
-      instance.artworkEl.src = image;
+      instance.syncArtwork(
+        playerArtwork || null,
+        playerArtwork ? imageAlt || "" : ""
+      );
+    } else if (instance.artworkEl && playerArtwork) {
+      instance.artworkEl.src = playerArtwork;
       instance.artworkEl.alt = imageAlt || "";
+    }
+    if (showPlayButtonArtwork) {
+      setupPlayButtonArtwork(container, image);
     }
   }
   function WaveformPlayer({
@@ -54032,7 +54061,8 @@ ${text}
     image,
     imageAlt,
     waveformStyle,
-    onEnded
+    onEnded,
+    showPlayButtonArtwork = false
   }) {
     const onEndedEvent = (0, import_compose44.useEvent)(onEnded);
     const playerRef = (0, import_element101.useRef)();
@@ -54067,7 +54097,8 @@ ${text}
                 "audio current time of total duration"
               )
             },
-            onEnded: () => onEndedEvent?.()
+            onEnded: () => onEndedEvent?.(),
+            showPlayButtonArtwork
           });
           playerRef.current = player;
           const { destroy } = player;
@@ -54081,21 +54112,25 @@ ${text}
           playerDestroy?.();
         };
       },
-      [onEndedEvent, hasSrc, waveformStyle]
+      [onEndedEvent, hasSrc, waveformStyle, showPlayButtonArtwork]
     );
     (0, import_element101.useEffect)(() => {
       if (playerRef.current?.instance) {
-        const instance = playerRef.current?.instance;
-        if (instance) {
-          updatePlayerMetadata(instance, {
-            title,
-            artist,
-            image,
-            imageAlt
-          });
+        const player = playerRef.current;
+        if (player) {
+          updatePlayerMetadata(
+            player,
+            {
+              title,
+              artist,
+              image,
+              imageAlt
+            },
+            showPlayButtonArtwork
+          );
         }
       }
-    }, [title, artist, image, imageAlt]);
+    }, [title, artist, image, imageAlt, showPlayButtonArtwork]);
     (0, import_element101.useEffect)(() => {
       if (src && playerRef.current?.instance) {
         const wasPlaying = playerRef.current.instance.isPlaying;
@@ -54104,17 +54139,23 @@ ${text}
           metadataRef.current.title,
           metadataRef.current.artist,
           {
-            artwork: metadataRef.current.image,
-            artworkAlt: metadataRef.current.imageAlt
+            artwork: showPlayButtonArtwork ? void 0 : metadataRef.current.image,
+            artworkAlt: showPlayButtonArtwork ? "" : metadataRef.current.imageAlt
           }
         );
-        if (!wasPlaying) {
-          promise.then(() => {
-            playerRef.current.instance.pause();
-          });
-        }
+        promise.then(() => {
+          if (showPlayButtonArtwork && playerRef.current?.container) {
+            setupPlayButtonArtwork(
+              playerRef.current.container,
+              metadataRef.current.image
+            );
+          }
+          if (!wasPlaying) {
+            playerRef.current?.instance.pause();
+          }
+        });
       }
-    }, [src]);
+    }, [src, showPlayButtonArtwork]);
     return /* @__PURE__ */ (0, import_jsx_runtime370.jsx)("div", { ref, className: "wp-block-playlist__waveform-player" });
   }
 
@@ -54179,6 +54220,7 @@ ${text}
       showTracklist,
       showNumbers,
       showImages,
+      showPlayButtonArtwork,
       showArtists,
       showTrackLength,
       waveformStyle = DEFAULT_WAVEFORM_STYLE
@@ -54355,6 +54397,7 @@ ${text}
               showNumbers: true,
               showTrackLength: true,
               showImages: true,
+              showPlayButtonArtwork: false,
               order: "asc"
             });
           },
@@ -54449,16 +54492,35 @@ ${text}
             /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
               import_components104.__experimentalToolsPanelItem,
               {
-                label: (0, import_i18n165.__)("Show images"),
+                label: (0, import_i18n165.__)("Show tracklist images"),
                 isShownByDefault: true,
                 hasValue: () => showImages !== true,
                 onDeselect: () => setAttributes({ showImages: true }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
                   import_components104.ToggleControl,
                   {
-                    label: (0, import_i18n165.__)("Show images"),
+                    label: (0, import_i18n165.__)("Show tracklist images"),
                     onChange: toggleAttribute("showImages"),
                     checked: showImages
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+              import_components104.__experimentalToolsPanelItem,
+              {
+                label: (0, import_i18n165.__)("Show track image on play button"),
+                isShownByDefault: true,
+                hasValue: () => showPlayButtonArtwork === true,
+                onDeselect: () => setAttributes({ showPlayButtonArtwork: false }),
+                children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+                  import_components104.ToggleControl,
+                  {
+                    label: (0, import_i18n165.__)("Show track image on play button"),
+                    onChange: toggleAttribute(
+                      "showPlayButtonArtwork"
+                    ),
+                    checked: showPlayButtonArtwork === true
                   }
                 )
               }
@@ -54526,10 +54588,11 @@ ${text}
             src: currentTrackData?.src,
             title: currentTrackData?.title,
             artist: currentTrackData?.artist,
-            image: showImages !== false ? currentTrackData?.image : void 0,
-            imageAlt: showImages !== false ? currentTrackData?.imageAlt : void 0,
+            image: currentTrackData?.image,
+            imageAlt: currentTrackData?.imageAlt,
             waveformStyle,
-            onEnded: onTrackEnded
+            onEnded: onTrackEnded,
+            showPlayButtonArtwork: showPlayButtonArtwork === true
           }
         ) }),
         showTracklist && /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(

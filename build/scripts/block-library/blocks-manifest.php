@@ -5151,6 +5151,10 @@ return array(
 				'type' => 'boolean',
 				'default' => true
 			),
+			'showPlayButtonArtwork' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
 			'showArtists' => array(
 				'type' => 'boolean',
 				'default' => true
