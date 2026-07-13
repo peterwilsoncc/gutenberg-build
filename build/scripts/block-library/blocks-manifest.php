@@ -8161,7 +8161,7 @@ return array(
 			'layout' => array(
 				'default' => array(
 					'type' => 'flex',
-					'flexWrap' => 'nowrap'
+					'flexWrap' => 'wrap'
 				),
 				'allowVerticalAlignment' => false,
 				'allowOrientation' => false,

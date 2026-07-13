@@ -74767,7 +74767,7 @@ ${text}
       layout: {
         default: {
           type: "flex",
-          flexWrap: "nowrap"
+          flexWrap: "wrap"
         },
         allowVerticalAlignment: false,
         allowOrientation: false,
