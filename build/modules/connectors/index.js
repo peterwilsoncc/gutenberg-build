@@ -172,7 +172,7 @@ function ConnectorItem({
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
           import_components.__experimentalText,
           {
-            weight: 600,
+            weight: "var(--wpds-typography-font-weight-emphasis, 600)",
             size: 15,
             id: headingId,
             as: "h2",

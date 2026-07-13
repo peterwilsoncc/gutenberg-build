@@ -252,7 +252,7 @@
 
 .interface-complementary-area h2 {
   font-size: 13px;
-  font-weight: 499;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   color: #1e1e1e;
   margin-bottom: 1.5em;
 }
@@ -260,7 +260,7 @@
 .interface-complementary-area h3 {
   font-size: 11px;
   text-transform: uppercase;
-  font-weight: 499;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   color: #1e1e1e;
   margin-bottom: 1.5em;
 }
@@ -653,7 +653,7 @@ body.is-fullscreen-mode .interface-interface-skeleton {
 
 .font-library-modal .font-library__subtitle {
   text-transform: uppercase;
-  font-weight: 499;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   font-size: 11px;
 }
 
@@ -704,20 +704,20 @@ body.is-fullscreen-mode .interface-interface-skeleton {
 
 .font-library__page-selection {
   font-size: 11px;
-  font-weight: 499;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   text-transform: uppercase;
 }
 
 @media (min-width: 600px) {
   .font-library__page-selection .font-library__page-selection-trigger {
     font-size: 11px !important;
-    font-weight: 499;
+    font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   }
 }
 .font-library__fonts-title {
   text-transform: uppercase;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -954,7 +954,7 @@ button.font-library__upload-area {
 
 .global-styles-ui-screen-revisions__description .global-styles-ui-screen-revisions__date {
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   font-size: 12px;
 }
 
@@ -1139,13 +1139,13 @@ button.font-library__upload-area {
 .global-styles-ui-subtitle {
   margin-bottom: 0 !important;
   text-transform: uppercase;
-  font-weight: 499 !important;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600) !important;
   font-size: 11px !important;
 }
 
 .global-styles-ui-section-title {
   color: #2f2f2f;
-  font-weight: 600;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   line-height: 1.2;
   padding: 16px 16px 0;
   margin: 0;
@@ -1502,7 +1502,7 @@ button.font-library__upload-area {
 }
 .dataviews-title-field {
   font-size: var(--wpds-typography-font-size-md, 13px);
-  font-weight: var(--wpds-typography-font-weight-medium, 499);
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   color: var(--wpds-color-foreground-content-neutral, #1e1e1e);
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1702,7 +1702,7 @@ button.font-library__upload-area {
 }
 
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip .dataviews-filters-__summary-filter-text-name {
-  font-weight: var(--wpds-typography-font-weight-medium, 499);
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 
 .dataviews-filters__summary-chip-container .dataviews-filters__summary-chip-remove {
@@ -1755,7 +1755,7 @@ button.font-library__upload-area {
 }
 
 .dataviews-filters__search-widget-filter-combobox-list .dataviews-filters__search-widget-filter-combobox-item-value [data-user-value] {
-  font-weight: 600;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 
 .dataviews-filters__search-widget-listbox {
@@ -1772,8 +1772,8 @@ button.font-library__upload-area {
   padding: var(--wpds-dimension-padding-xs, 4px) var(--wpds-dimension-padding-md, 12px);
   cursor: default;
   min-height: var(--wpds-dimension-size-md, 32px);
-  font-family: -apple-system, "system-ui", "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-weight: 400;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-weight: var(--wpds-typography-font-weight-default, 400);
   font-size: 13px;
   line-height: 20px;
 }
@@ -1914,7 +1914,7 @@ button.font-library__upload-area {
   margin-right: 12px;
   transition: none;
   border-radius: 2px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   padding: 6px 8px;
   /* Fonts smaller than 16px causes mobile safari to zoom. */
   font-size: 16px;
@@ -2049,7 +2049,7 @@ button.font-library__upload-area {
 }
 
 .dataviews-filters__search-widget-filter-combobox__wrapper .dataviews-filters__search-widget-filter-combobox__input {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   padding: 6px 8px;
   /* Fonts smaller than 16px causes mobile safari to zoom. */
   font-size: 16px;
@@ -2224,14 +2224,14 @@ button.font-library__upload-area {
 }
 .dataviews-pagination__page-select {
   font-size: 11px;
-  font-weight: var(--wpds-typography-font-weight-medium, 499);
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   text-transform: uppercase;
 }
 
 @media (min-width: 600px) {
   .dataviews-pagination__page-select .components-select-control__input {
     font-size: 11px !important;
-    font-weight: var(--wpds-typography-font-weight-medium, 499);
+    font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   }
 }
 .dataviews-action-modal {
@@ -2636,7 +2636,7 @@ button.font-library__upload-area {
 
 .dataviews-view-grid__group-header {
   font-size: var(--wpds-typography-font-size-lg, 15px);
-  font-weight: var(--wpds-typography-font-weight-medium, 499);
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   color: var(--wpds-color-foreground-content-neutral, #1e1e1e);
   margin: 0 0 var(--wpds-dimension-gap-sm, 8px) 0;
   padding: 0 var(--wpds-dimension-padding-2xl, 24px);
@@ -2930,7 +2930,7 @@ div.dataviews-view-list {
 }
 .dataviews-view-list__group-header {
   font-size: var(--wpds-typography-font-size-lg, 15px);
-  font-weight: var(--wpds-typography-font-weight-medium, 499);
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   color: var(--wpds-color-foreground-content-neutral, #1e1e1e);
   margin: 0 0 var(--wpds-dimension-gap-sm, 8px) 0;
   padding: 0 var(--wpds-dimension-padding-2xl, 24px);
@@ -3075,7 +3075,7 @@ div.dataviews-view-list {
   padding-bottom: var(--wpds-dimension-padding-sm, 8px);
   font-size: 11px;
   text-transform: uppercase;
-  font-weight: var(--wpds-typography-font-weight-medium, 499);
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 
 .dataviews-view-table thead th:has(.dataviews-view-table-header-button) {
@@ -3123,7 +3123,7 @@ div.dataviews-view-list {
   padding: var(--wpds-dimension-padding-xs, 4px) var(--wpds-dimension-padding-sm, 8px);
   font-size: 11px;
   text-transform: uppercase;
-  font-weight: var(--wpds-typography-font-weight-medium, 499);
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 
 .dataviews-view-table .dataviews-view-table-header-button:not(:hover) {
@@ -3216,7 +3216,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-table__group-header-row .dataviews-view-table__group-header-cell {
-  font-weight: var(--wpds-typography-font-weight-medium, 499);
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   padding: var(--wpds-dimension-padding-md, 12px) var(--wpds-dimension-padding-2xl, 24px);
   color: var(--wpds-color-foreground-content-neutral, #1e1e1e);
 }
@@ -3397,7 +3397,7 @@ div.dataviews-view-list {
 
 .dataviews-view-picker-grid-group__header {
   font-size: var(--wpds-typography-font-size-lg, 15px);
-  font-weight: var(--wpds-typography-font-weight-medium, 499);
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   color: var(--wpds-color-foreground-content-neutral, #1e1e1e);
   margin: 0 0 var(--wpds-dimension-gap-sm, 8px) 0;
   padding: 0 48px;
@@ -3447,7 +3447,7 @@ div.dataviews-view-list {
 
 .dataviews-view-activity .dataviews-view-activity__group-header {
   font-size: var(--wpds-typography-font-size-lg, 15px);
-  font-weight: var(--wpds-typography-font-weight-medium, 499);
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   color: var(--wpds-color-foreground-content-neutral-weak, #707070);
   margin: 0 0 var(--wpds-dimension-gap-sm, 8px) 0;
   padding: 0;
@@ -3818,7 +3818,7 @@ div.dataviews-view-list {
 
 .dataviews-view-picker-activity .dataviews-view-picker-activity-group__header {
   font-size: var(--wpds-typography-font-size-lg, 15px);
-  font-weight: var(--wpds-typography-font-weight-medium, 499);
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   color: var(--wpds-color-foreground-content-neutral-weak, #707070);
   margin: 0 0 var(--wpds-dimension-gap-sm, 8px) 0;
   padding: 0;
@@ -3943,7 +3943,7 @@ div.dataviews-view-list {
 
 .dataforms-layouts-panel__field-trigger.is-disabled .dataforms-layouts-panel__field-control {
   color: var(--wpds-color-foreground-content-neutral-weak, #707070);
-  font-weight: var(--wpds-typography-font-weight-regular, 400);
+  font-weight: var(--wpds-typography-font-weight-default, 400);
 }
 
 .dataforms-layouts-panel__field-trigger--edit-always .dataforms-layouts-panel__field-trigger-icon {
@@ -4019,7 +4019,7 @@ div.dataviews-view-list {
   padding-inline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
   margin-inline: calc(-1 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
   word-break: break-word;
-  font-weight: var(--wpds-typography-font-weight-medium, 499);
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 
 .dataforms-layouts-panel__field-control > * {
@@ -4138,8 +4138,8 @@ div.dataviews-view-list {
 }
 
 .dataforms-layouts__wrapper {
-  font-family: -apple-system, "system-ui", "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-weight: 400;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-weight: var(--wpds-typography-font-weight-default, 400);
   font-size: 13px;
   line-height: 20px;
 }
@@ -4684,7 +4684,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 }
 
 .fields-controls__slug .fields-controls__slug-help .fields-controls__slug-help-slug {
-  font-weight: 600;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 
 .fields-controls__featured-image-image,
@@ -4850,7 +4850,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 }
 
 .media-editor-preview__file-name {
-  font-weight: 600;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   margin-bottom: 8px;
 }
 
@@ -5479,7 +5479,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 
 .media-editor-image-controls__label {
   font-size: 11px;
-  font-weight: 500;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   line-height: 1.4;
   text-transform: uppercase;
 }
@@ -5525,7 +5525,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 
 .media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-term {
   background: none;
-  font-weight: 600;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   margin: 0 0 0 1rem;
   padding: 0;
   text-align: right;
@@ -5548,7 +5548,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   padding: 0 8px;
   box-sizing: border-box;
   color: #1e1e1e;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
@@ -5641,7 +5641,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   height: 14px;
   transform: translateX(-50%);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   line-height: 14px;
   color: #1e1e1e;
   pointer-events: none;
@@ -5842,11 +5842,11 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 }
 
 .editor-collab-sidebar-panel__more-reply-button {
-  font-weight: 499;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 
 .editor-collab-sidebar-panel__deleted-block-notice {
-  font-weight: 499;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   color: #757575;
 }
 
@@ -5915,7 +5915,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 }
 
 .editor-note-indicator__overflow {
-  font-weight: 499;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 
 .show-icon-labels .editor-note-indicator {
@@ -5994,7 +5994,7 @@ mark.wp-note {
   align-items: center;
   justify-content: center;
   font-size: 11px;
-  font-weight: 499;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   border: 0;
   background-clip: border-box;
 }
@@ -6008,7 +6008,7 @@ mark.wp-note {
 
 .editor-avatar__name {
   font-size: 13px;
-  font-weight: 499;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   line-height: 20px;
   color: var(--editor-avatar-name-color, #fff);
   min-width: 0;
@@ -6154,7 +6154,7 @@ mark.wp-note {
 }
 .editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-header-title {
   font-size: 13px;
-  font-weight: 499;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   line-height: 20px;
   display: flex;
   gap: 4px;
@@ -6208,7 +6208,7 @@ mark.wp-note {
 }
 .editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-item-name {
   font-size: 13px;
-  font-weight: 499;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   line-height: 20px;
   color: #1e1e1e;
   overflow: hidden;
@@ -6675,7 +6675,7 @@ mark.wp-note {
 }
 
 .editor-error-boundary {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   margin: auto;
   max-width: 780px;
   padding: 1em;
@@ -6768,7 +6768,7 @@ mark.wp-note {
      object-fit: cover;
 }
 .editor-welcome-guide__heading {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size: 24px;
   line-height: 1.4;
   margin: 16px 0 16px 0;
@@ -7077,7 +7077,7 @@ mark.wp-note {
 }
 .editor-keyboard-shortcut-help-modal__section-title {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 .editor-keyboard-shortcut-help-modal__shortcut {
   display: flex;
@@ -7093,7 +7093,7 @@ mark.wp-note {
   display: none;
 }
 .editor-keyboard-shortcut-help-modal__shortcut-term {
-  font-weight: 600;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   margin: 0 0 0 1rem;
   text-align: right;
 }
@@ -7260,8 +7260,8 @@ mark.wp-note {
   width: 100%;
 }
 .editor-post-card-panel__title.editor-post-card-panel__title {
-  font-family: -apple-system, "system-ui", "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-weight: 499;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   font-size: 13px;
   line-height: 20px;
   margin: 0;
@@ -7426,7 +7426,7 @@ mark.wp-note {
 
 .editor-post-last-revision__title {
   width: 100%;
-  font-weight: 499;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 
 .editor-post-last-revision__title.components-button.has-icon {
@@ -7492,7 +7492,7 @@ mark.wp-note {
   text-wrap: pretty;
   height: auto;
   min-height: 32px;
-  font-weight: 400;
+  font-weight: var(--wpds-typography-font-weight-default, 400);
 }
 .editor-post-panel__row-control .components-dropdown {
   max-width: 100%;
@@ -7665,7 +7665,7 @@ mark.wp-note {
 }
 
 .post-publish-panel__postpublish-header {
-  font-weight: 499;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 
 .post-publish-panel__postpublish-subheader {
@@ -8131,7 +8131,7 @@ textarea.editor-post-text-editor::placeholder {
 }
 
 .editor-post-url__link-slug {
-  font-weight: 600;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 
 .editor-post-url__input input.components-input-control__input {
@@ -8524,7 +8524,7 @@ textarea.editor-post-text-editor::placeholder {
   display: block;
   margin-top: 20px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 
 .editor-text-editor {
@@ -8653,7 +8653,7 @@ textarea.editor-post-text-editor::placeholder {
   overflow: hidden;
 }
 .editor-visual-editor .components-button {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size: 13px;
   padding: 6px 12px;
 }
