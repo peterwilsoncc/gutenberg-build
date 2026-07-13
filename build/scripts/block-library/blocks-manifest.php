@@ -8901,9 +8901,6 @@ return array(
 			'taxonomy'
 		),
 		'attributes' => array(
-			'textAlign' => array(
-				'type' => 'string'
-			),
 			'level' => array(
 				'type' => 'number',
 				'default' => 0
@@ -8938,6 +8935,7 @@ return array(
 			'typography' => array(
 				'fontSize' => true,
 				'lineHeight' => true,
+				'textAlign' => true,
 				'__experimentalFontFamily' => true,
 				'__experimentalFontWeight' => true,
 				'__experimentalFontStyle' => true,

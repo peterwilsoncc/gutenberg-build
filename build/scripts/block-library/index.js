@@ -76910,9 +76910,6 @@ ${text}
     textdomain: "default",
     usesContext: ["termId", "taxonomy"],
     attributes: {
-      textAlign: {
-        type: "string"
-      },
       level: {
         type: "number",
         default: 0
@@ -76944,6 +76941,7 @@ ${text}
       typography: {
         fontSize: true,
         lineHeight: true,
+        textAlign: true,
         __experimentalFontFamily: true,
         __experimentalFontWeight: true,
         __experimentalFontStyle: true,
@@ -77051,14 +77049,10 @@ ${text}
     setAttributes,
     context: { termId, taxonomy }
   }) {
-    const { textAlign, level = 0, isLink, levelOptions } = attributes;
+    const { level = 0, isLink, levelOptions } = attributes;
     const { term } = useTermName(termId, taxonomy);
     const termName2 = term?.name ? (0, import_html_entities15.decodeEntities)(term.name) : (0, import_i18n264.__)("Term Name");
-    const blockProps = (0, import_block_editor280.useBlockProps)({
-      className: clsx_default({
-        [`has-text-align-${textAlign}`]: textAlign
-      })
-    });
+    const blockProps = (0, import_block_editor280.useBlockProps)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const TagName2 = level === 0 ? "p" : `h${level}`;
     let termNameDisplay = termName2;
@@ -77073,27 +77067,16 @@ ${text}
       );
     }
     return /* @__PURE__ */ (0, import_jsx_runtime531.jsxs)(import_jsx_runtime531.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime531.jsxs)(import_block_editor280.BlockControls, { group: "block", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(
-          import_block_editor280.HeadingLevelDropdown,
-          {
-            value: level,
-            options: levelOptions,
-            onChange: (newLevel) => {
-              setAttributes({ level: newLevel });
-            }
+      /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_block_editor280.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(
+        import_block_editor280.HeadingLevelDropdown,
+        {
+          value: level,
+          options: levelOptions,
+          onChange: (newLevel) => {
+            setAttributes({ level: newLevel });
           }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(
-          import_block_editor280.AlignmentControl,
-          {
-            value: textAlign,
-            onChange: (nextAlign) => {
-              setAttributes({ textAlign: nextAlign });
-            }
-          }
-        )
-      ] }),
+        }
+      ) }),
       /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_block_editor280.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(
         import_components170.__experimentalToolsPanel,
         {
@@ -77127,12 +77110,83 @@ ${text}
     ] });
   }
 
+  // packages/block-library/build-module/term-name/deprecated.mjs
+  var v149 = {
+    attributes: {
+      textAlign: {
+        type: "string"
+      },
+      level: {
+        type: "number",
+        default: 0
+      },
+      isLink: {
+        type: "boolean",
+        default: false
+      },
+      levelOptions: {
+        type: "array"
+      }
+    },
+    supports: {
+      anchor: true,
+      align: ["wide", "full"],
+      html: false,
+      color: {
+        gradients: true,
+        link: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true,
+          link: true
+        }
+      },
+      spacing: {
+        padding: true
+      },
+      typography: {
+        fontSize: true,
+        lineHeight: true,
+        __experimentalFontFamily: true,
+        __experimentalFontWeight: true,
+        __experimentalFontStyle: true,
+        __experimentalTextTransform: true,
+        __experimentalTextDecoration: true,
+        __experimentalLetterSpacing: true,
+        __experimentalDefaultControls: {
+          fontSize: true
+        }
+      },
+      interactivity: {
+        clientNavigation: true
+      },
+      __experimentalBorder: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true,
+        __experimentalDefaultControls: {
+          color: true,
+          width: true,
+          style: true
+        }
+      }
+    },
+    migrate: migrate_text_align_default,
+    isEligible(attributes) {
+      return !!attributes.textAlign;
+    },
+    save: () => null
+  };
+  var deprecated_default54 = [v149];
+
   // packages/block-library/build-module/term-name/index.mjs
   var { name: name115 } = block_default114;
   var settings114 = {
     icon: term_name_default,
     example: {},
-    edit: TermNameEdit
+    edit: TermNameEdit,
+    deprecated: deprecated_default54
   };
   var init114 = () => initBlock({ name: name115, metadata: block_default114, settings: settings114 });
 
@@ -78160,11 +78214,11 @@ ${text}
   var import_i18n272 = __toESM(require_i18n(), 1);
   var import_components181 = __toESM(require_components(), 1);
   var import_block_editor289 = __toESM(require_block_editor(), 1);
-  var import_deprecated60 = __toESM(require_deprecated(), 1);
+  var import_deprecated61 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime548 = __toESM(require_jsx_runtime(), 1);
   function TextColumnsEdit({ attributes, setAttributes }) {
     const { width, content, columns } = attributes;
-    (0, import_deprecated60.default)("The Text Columns block", {
+    (0, import_deprecated61.default)("The Text Columns block", {
       since: "5.3",
       alternative: "the Columns block"
     });
@@ -78349,7 +78403,7 @@ ${text}
   // packages/block-library/build-module/verse/deprecated.mjs
   var import_block_editor291 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime550 = __toESM(require_jsx_runtime(), 1);
-  var v149 = {
+  var v150 = {
     attributes: {
       content: {
         type: "string",
@@ -78481,7 +78535,7 @@ ${text}
       );
     }
   };
-  var deprecated_default54 = [v314, v223, v149];
+  var deprecated_default55 = [v314, v223, v150];
 
   // packages/block-library/build-module/verse/edit.mjs
   var import_i18n273 = __toESM(require_i18n(), 1);
@@ -78648,7 +78702,7 @@ ${text}
       }
     },
     transforms: transforms_default38,
-    deprecated: deprecated_default54,
+    deprecated: deprecated_default55,
     merge(attributes, attributesToMerge) {
       return {
         content: attributes.content + "\n\n" + attributesToMerge.content
@@ -78809,7 +78863,7 @@ ${text}
   // packages/block-library/build-module/video/deprecated.mjs
   var import_jsx_runtime554 = __toESM(require_jsx_runtime(), 1);
   var { attributes: blockAttributes7 } = block_default119;
-  var v150 = {
+  var v151 = {
     attributes: blockAttributes7,
     save({ attributes }) {
       const {
@@ -78843,8 +78897,8 @@ ${text}
       ] });
     }
   };
-  var deprecated21 = [v150];
-  var deprecated_default55 = deprecated21;
+  var deprecated21 = [v151];
+  var deprecated_default56 = deprecated21;
 
   // packages/block-library/build-module/video/edit.mjs
   var import_blob19 = __toESM(require_blob(), 1);
@@ -79771,7 +79825,7 @@ ${text}
     },
     transforms: transforms_default39,
     variations: variations_default21,
-    deprecated: deprecated_default55,
+    deprecated: deprecated_default56,
     edit: edit_default40,
     save: save57
   };
