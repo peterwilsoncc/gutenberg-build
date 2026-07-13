@@ -39311,6 +39311,7 @@ var {
   shortcutsListener,
   inputEventsListener
 } = unlock3(import_rich_text2.privateApis);
+var EMPTY_COMPLETERS = [];
 function RichTextControl({
   label,
   value: attrValue,
@@ -39330,7 +39331,8 @@ function RichTextControl({
   withoutInteractiveFormatting,
   preserveWhiteSpace,
   disableLineBreaks,
-  focusOnMount
+  focusOnMount,
+  completers = EMPTY_COMPLETERS
 }) {
   const [selection, setSelection] = (0, import_element152.useState)({
     start: void 0,
@@ -39519,6 +39521,28 @@ function RichTextControl({
     },
     [isSelected2]
   );
+  const unusedContentRef = (0, import_element152.useRef)(null);
+  const {
+    ref: autocompleteRef,
+    "aria-activedescendant": autocompleteActiveDescendant,
+    "aria-autocomplete": autocompleteAriaAutocomplete,
+    ...autocompleteRest
+  } = (0, import_components45.__unstableUseAutocompleteProps)({
+    completers,
+    record: value,
+    onChange: onRichTextChange,
+    // This control's completers insert their completion into the value;
+    // none replace the whole value, so the required `onReplace` is a
+    // no-op here.
+    onReplace: () => {
+    },
+    contentRef: unusedContentRef
+  });
+  const autocompleteProps = {
+    ...autocompleteRest,
+    "aria-activedescendant": autocompleteActiveDescendant ?? void 0,
+    "aria-autocomplete": autocompleteAriaAutocomplete
+  };
   const focusOnMountRef = (0, import_compose23.useRefEffect)(
     (element) => {
       if (focusOnMount && !disabled2) {
@@ -39533,7 +39557,8 @@ function RichTextControl({
     eventListenersRef,
     enterRef,
     focusOnMountRef,
-    popoverContainerRef
+    popoverContainerRef,
+    autocompleteRef
   ]);
   return (
     /*
@@ -39561,6 +39586,7 @@ function RichTextControl({
           customValidity,
           value: value.text,
           "aria-multiline": !disableLineBreaks,
+          ...autocompleteProps,
           ref: editableRef,
           onFocus: onEditableFocus,
           onBlur: onEditableBlur

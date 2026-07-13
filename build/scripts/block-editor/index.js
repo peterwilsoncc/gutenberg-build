@@ -87648,6 +87648,7 @@ var wp;
     shortcutsListener,
     inputEventsListener
   } = unlock4(import_rich_text18.privateApis);
+  var EMPTY_COMPLETERS = [];
   function RichTextControl({
     label,
     value: attrValue,
@@ -87667,7 +87668,8 @@ var wp;
     withoutInteractiveFormatting,
     preserveWhiteSpace,
     disableLineBreaks,
-    focusOnMount
+    focusOnMount,
+    completers = EMPTY_COMPLETERS
   }) {
     const [selection2, setSelection] = (0, import_element293.useState)({
       start: void 0,
@@ -87856,6 +87858,28 @@ var wp;
       },
       [isSelected]
     );
+    const unusedContentRef = (0, import_element293.useRef)(null);
+    const {
+      ref: autocompleteRef,
+      "aria-activedescendant": autocompleteActiveDescendant,
+      "aria-autocomplete": autocompleteAriaAutocomplete,
+      ...autocompleteRest
+    } = (0, import_components248.__unstableUseAutocompleteProps)({
+      completers,
+      record: value,
+      onChange: onRichTextChange,
+      // This control's completers insert their completion into the value;
+      // none replace the whole value, so the required `onReplace` is a
+      // no-op here.
+      onReplace: () => {
+      },
+      contentRef: unusedContentRef
+    });
+    const autocompleteProps = {
+      ...autocompleteRest,
+      "aria-activedescendant": autocompleteActiveDescendant ?? void 0,
+      "aria-autocomplete": autocompleteAriaAutocomplete
+    };
     const focusOnMountRef = (0, import_compose105.useRefEffect)(
       (element) => {
         if (focusOnMount && !disabled2) {
@@ -87870,7 +87894,8 @@ var wp;
       eventListenersRef,
       enterRef,
       focusOnMountRef,
-      popoverContainerRef
+      popoverContainerRef,
+      autocompleteRef
     ]);
     return (
       /*
@@ -87898,6 +87923,7 @@ var wp;
             customValidity,
             value: value.text,
             "aria-multiline": !disableLineBreaks,
+            ...autocompleteProps,
             ref: editableRef,
             onFocus: onEditableFocus,
             onBlur: onEditableBlur
