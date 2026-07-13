@@ -52830,7 +52830,7 @@ ${text}
   function P(e3) {
     return String(e3 ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
-  function U(e3) {
+  function N2(e3) {
     if (typeof e3 != "string" || e3 === "") return false;
     try {
       let t2 = new URL(e3, "http://localhost/");
@@ -52845,7 +52845,7 @@ ${text}
   function ot(e3) {
     return e3 === void 0 ? void 0 : e3 === "true";
   }
-  function q(e3) {
+  function U(e3) {
     if (typeof e3 == "string" && e3.trim().startsWith("[")) try {
       return JSON.parse(e3);
     } catch {
@@ -52871,9 +52871,9 @@ ${text}
       let a2 = e3.dataset.buttonSize;
       t2.buttonSize = /^\d+(\.\d+)?$/.test(a2.trim()) ? parseFloat(a2) : a2;
     }
-    return e3.dataset.colorPreset && (t2.colorPreset = e3.dataset.colorPreset), e3.dataset.waveformColor && (t2.waveformColor = q(e3.dataset.waveformColor)), e3.dataset.progressColor && (t2.progressColor = q(e3.dataset.progressColor)), e3.dataset.color && (t2.waveformColor = e3.dataset.color), e3.dataset.theme && (t2.colorPreset = e3.dataset.theme), i2("autoplay"), i2("showControls"), i2("showInfo"), i2("showTime"), i2("showHoverTime"), i2("seekHandle"), i2("showBPM", "showBpm"), s2("bpm"), i2("singlePlay"), i2("playOnSeek"), e3.dataset.title && (t2.title = e3.dataset.title), e3.dataset.artist && (t2.artist = e3.dataset.artist), e3.dataset.album && (t2.album = e3.dataset.album), e3.dataset.artwork && (t2.artwork = e3.dataset.artwork), e3.dataset.waveform && (t2.waveform = e3.dataset.waveform), r3("markers"), s2("playbackRate", "playbackRate", true), i2("showPlaybackSpeed"), r3("playbackRates"), i2("enableMediaSession"), i2("showMarkers"), i2("accessibleSeek"), e3.dataset.seekLabel && (t2.seekLabel = e3.dataset.seekLabel), e3.dataset.seekValueText && (t2.seekValueText = e3.dataset.seekValueText), e3.dataset.errorText && (t2.errorText = e3.dataset.errorText), e3.dataset.playPauseLabel && (t2.playPauseLabel = e3.dataset.playPauseLabel), e3.dataset.speedLabel && (t2.speedLabel = e3.dataset.speedLabel), e3.dataset.artworkAlt && (t2.artworkAlt = e3.dataset.artworkAlt), e3.dataset.unknownTrackText && (t2.unknownTrackText = e3.dataset.unknownTrackText), e3.dataset.playIcon && (t2.playIcon = e3.dataset.playIcon), e3.dataset.pauseIcon && (t2.pauseIcon = e3.dataset.pauseIcon), t2;
+    return e3.dataset.colorPreset && (t2.colorPreset = e3.dataset.colorPreset), e3.dataset.waveformColor && (t2.waveformColor = U(e3.dataset.waveformColor)), e3.dataset.progressColor && (t2.progressColor = U(e3.dataset.progressColor)), e3.dataset.color && (t2.waveformColor = e3.dataset.color), e3.dataset.theme && (t2.colorPreset = e3.dataset.theme), i2("autoplay"), i2("showControls"), i2("showInfo"), i2("showTime"), i2("showHoverTime"), i2("seekHandle"), i2("showBPM", "showBpm"), s2("bpm"), i2("singlePlay"), i2("playOnSeek"), e3.dataset.title && (t2.title = e3.dataset.title), e3.dataset.artist && (t2.artist = e3.dataset.artist), e3.dataset.album && (t2.album = e3.dataset.album), e3.dataset.artwork && (t2.artwork = e3.dataset.artwork), e3.dataset.waveform && (t2.waveform = e3.dataset.waveform), r3("markers"), s2("playbackRate", "playbackRate", true), i2("showPlaybackSpeed"), r3("playbackRates"), i2("enableMediaSession"), i2("showMarkers"), i2("accessibleSeek"), e3.dataset.seekLabel && (t2.seekLabel = e3.dataset.seekLabel), e3.dataset.seekValueText && (t2.seekValueText = e3.dataset.seekValueText), e3.dataset.errorText && (t2.errorText = e3.dataset.errorText), e3.dataset.playPauseLabel && (t2.playPauseLabel = e3.dataset.playPauseLabel), e3.dataset.speedLabel && (t2.speedLabel = e3.dataset.speedLabel), e3.dataset.artworkAlt && (t2.artworkAlt = e3.dataset.artworkAlt), e3.dataset.unknownTrackText && (t2.unknownTrackText = e3.dataset.unknownTrackText), e3.dataset.playIcon && (t2.playIcon = e3.dataset.playIcon), e3.dataset.pauseIcon && (t2.pauseIcon = e3.dataset.pauseIcon), t2;
   }
-  function N2(e3, ...t2) {
+  function V(e3, ...t2) {
     let i2 = 0;
     return e3.replace(/%(?:(\d+)\$)?s/g, (s2, r3) => {
       let a2 = r3 ? Number(r3) - 1 : i2++;
@@ -52886,7 +52886,7 @@ ${text}
     return t2 > 0 ? `${t2}:${i2.toString().padStart(2, "0")}:${s2.toString().padStart(2, "0")}` : `${i2}:${s2.toString().padStart(2, "0")}`;
   }
   var nt = 0;
-  function V(e3) {
+  function j2(e3) {
     let t2 = e3 || "audio", i2 = 5381;
     for (let s2 = 0; s2 < t2.length; s2++) i2 = (i2 << 5) + i2 + t2.charCodeAt(s2) | 0;
     return `wp_${(i2 >>> 0).toString(36)}_${(nt++).toString(36)}`;
@@ -52896,7 +52896,7 @@ ${text}
     let t2 = e3.split("/");
     return t2[t2.length - 1].split(".")[0].replace(/[-_]/g, " ").replace(/\b\w/g, (r3) => r3.toUpperCase());
   }
-  function j2(e3) {
+  function G2(e3) {
     let t2 = typeof e3 == "string" ? e3.match(/\d+/g) : null;
     if (!t2 || t2.length < 3) return null;
     let [i2, s2, r3] = t2.map(Number);
@@ -52907,7 +52907,7 @@ ${text}
     for (let i2 of e3) for (let s2 in i2) i2[s2] !== null && i2[s2] !== void 0 && (t2[s2] = i2[s2]);
     return t2;
   }
-  function G2(e3, t2) {
+  function J(e3, t2) {
     let i2;
     return function(...r3) {
       let a2 = () => {
@@ -52948,10 +52948,10 @@ ${text}
   function E(e3, t2, i2, s2) {
     if (!Array.isArray(t2)) return t2;
     if (t2.length < 2) return t2[0];
-    let r3 = i2.width, a2 = i2.height, o2 = s2 && s2.waveformGradient, [n2, l2, h2, d2] = o2 === "horizontal" ? [0, 0, r3, 0] : o2 === "diagonal" ? [0, 0, r3, a2] : [0, 0, 0, a2];
+    let r3 = i2.width, a2 = i2.height, o2 = s2 && s2.waveformGradient, [n2, l2, h2, c2] = o2 === "horizontal" ? [0, 0, r3, 0] : o2 === "diagonal" ? [0, 0, r3, a2] : [0, 0, 0, a2];
     try {
-      let u2 = e3.createLinearGradient(n2, l2, h2, d2);
-      return t2.forEach((v20, g2) => u2.addColorStop(g2 / (t2.length - 1), v20)), u2;
+      let u2 = e3.createLinearGradient(n2, l2, h2, c2);
+      return t2.forEach((w2, y2) => u2.addColorStop(y2 / (t2.length - 1), w2)), u2;
     } catch {
       return t2[0];
     }
@@ -52962,113 +52962,113 @@ ${text}
       e3.beginPath(), e3.roundRect(t2, i2, s2, r3, Array.isArray(a2) ? a2.map(l2) : l2(a2)), e3.fill();
     } else e3.fillRect(t2, i2, s2, r3);
   }
-  function X(e3, t2) {
+  function Q(e3, t2) {
     return (e3.barRadius || 0) * t2;
   }
   function lt(e3, t2) {
-    let i2 = X(e3, t2);
+    let i2 = Q(e3, t2);
     return [i2, i2, 0, 0];
   }
-  function J(e3, t2, i2, s2, r3) {
+  function K(e3, t2, i2, s2, r3) {
     let a2 = r3 / 2;
     e3.beginPath(), e3.moveTo(t2, s2 - a2), e3.lineTo(i2 - a2, s2 - a2), e3.arc(i2 - a2, s2, a2, -Math.PI / 2, Math.PI / 2), e3.lineTo(t2, s2 + a2), e3.arc(t2, s2, a2, Math.PI / 2, -Math.PI / 2), e3.closePath();
   }
   function I(e3, t2, i2, s2, r3) {
-    let a2 = window.devicePixelRatio || 1, o2 = r3.barWidth * a2, n2 = r3.barSpacing * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = x2(i2, l2), d2 = t2.height, u2 = s2 * t2.width, v20 = lt(r3, a2), g2 = E(e3, r3.color, t2, r3), b2 = E(e3, r3.progressColor, t2, r3);
-    e3.clearRect(0, 0, t2.width, t2.height), e3.fillStyle = g2;
+    let a2 = window.devicePixelRatio || 1, o2 = r3.barWidth * a2, n2 = r3.barSpacing * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = x2(i2, l2), c2 = t2.height, u2 = s2 * t2.width, w2 = lt(r3, a2), y2 = E(e3, r3.color, t2, r3), v20 = E(e3, r3.progressColor, t2, r3);
+    e3.clearRect(0, 0, t2.width, t2.height), e3.fillStyle = y2;
     for (let f2 = 0; f2 < h2.length; f2++) {
       let p2 = f2 * (o2 + n2);
       if (p2 + o2 > t2.width) break;
-      let y2 = h2[f2] * d2 * 0.9, c2 = d2 - y2;
-      _(e3, p2, c2, o2, y2, v20);
+      let g2 = h2[f2] * c2 * 0.9, d2 = c2 - g2;
+      _(e3, p2, d2, o2, g2, w2);
     }
-    e3.save(), e3.beginPath(), e3.rect(0, 0, u2, d2), e3.clip(), e3.fillStyle = b2;
+    e3.save(), e3.beginPath(), e3.rect(0, 0, u2, c2), e3.clip(), e3.fillStyle = v20;
     for (let f2 = 0; f2 < h2.length; f2++) {
       let p2 = f2 * (o2 + n2);
       if (p2 > u2) break;
-      let y2 = h2[f2] * d2 * 0.9, c2 = d2 - y2;
-      _(e3, p2, c2, o2, y2, v20);
+      let g2 = h2[f2] * c2 * 0.9, d2 = c2 - g2;
+      _(e3, p2, d2, o2, g2, w2);
     }
     e3.restore();
   }
   function ht(e3, t2, i2, s2, r3) {
-    let a2 = window.devicePixelRatio || 1, o2 = r3.barWidth * a2, n2 = r3.barSpacing * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = x2(i2, l2), d2 = t2.height, u2 = d2 / 2, v20 = s2 * t2.width, g2 = X(r3, a2), b2 = [g2, g2, 0, 0], f2 = [0, 0, g2, g2], p2 = E(e3, r3.color, t2, r3), y2 = E(e3, r3.progressColor, t2, r3);
+    let a2 = window.devicePixelRatio || 1, o2 = r3.barWidth * a2, n2 = r3.barSpacing * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = x2(i2, l2), c2 = t2.height, u2 = c2 / 2, w2 = s2 * t2.width, y2 = Q(r3, a2), v20 = [y2, y2, 0, 0], f2 = [0, 0, y2, y2], p2 = E(e3, r3.color, t2, r3), g2 = E(e3, r3.progressColor, t2, r3);
     e3.clearRect(0, 0, t2.width, t2.height), e3.fillStyle = p2;
-    for (let c2 = 0; c2 < h2.length; c2++) {
-      let w2 = c2 * (o2 + n2);
-      if (w2 + o2 > t2.width) break;
-      let k2 = h2[c2] * d2 * 0.45;
-      _(e3, w2, u2 - k2, o2, k2, b2), _(e3, w2, u2, o2, k2, f2);
+    for (let d2 = 0; d2 < h2.length; d2++) {
+      let k2 = d2 * (o2 + n2);
+      if (k2 + o2 > t2.width) break;
+      let b2 = h2[d2] * c2 * 0.45;
+      _(e3, k2, u2 - b2, o2, b2, v20), _(e3, k2, u2, o2, b2, f2);
     }
-    e3.save(), e3.beginPath(), e3.rect(0, 0, v20, d2), e3.clip(), e3.fillStyle = y2;
-    for (let c2 = 0; c2 < h2.length; c2++) {
-      let w2 = c2 * (o2 + n2);
-      if (w2 > v20) break;
-      let k2 = h2[c2] * d2 * 0.45;
-      _(e3, w2, u2 - k2, o2, k2, b2), _(e3, w2, u2, o2, k2, f2);
+    e3.save(), e3.beginPath(), e3.rect(0, 0, w2, c2), e3.clip(), e3.fillStyle = g2;
+    for (let d2 = 0; d2 < h2.length; d2++) {
+      let k2 = d2 * (o2 + n2);
+      if (k2 > w2) break;
+      let b2 = h2[d2] * c2 * 0.45;
+      _(e3, k2, u2 - b2, o2, b2, v20), _(e3, k2, u2, o2, b2, f2);
     }
     e3.restore();
   }
-  function dt(e3, t2, i2, s2, r3) {
+  function ct(e3, t2, i2, s2, r3) {
     let a2 = t2.width, o2 = t2.height, n2 = o2 / 2, l2 = o2 * 0.35;
     e3.clearRect(0, 0, a2, o2);
-    let h2 = (d2, u2, v20 = 1, g2 = false) => {
-      let b2 = E(e3, d2, t2, r3), f2 = Array.isArray(d2) ? d2[d2.length - 1] : d2;
-      g2 && (e3.shadowBlur = 12, e3.shadowColor = f2), e3.strokeStyle = b2, e3.lineWidth = u2, e3.lineCap = "round", e3.lineJoin = "round", e3.beginPath(), e3.moveTo(0, n2);
-      let p2 = [], y2 = Math.floor(i2.length * v20);
-      for (let c2 = 0; c2 < y2; c2++) {
-        let w2 = c2 / (i2.length - 1) * a2, k2 = i2[c2], T = Math.sin(c2 * 0.1) * k2, C = n2 + T * l2;
-        p2.push({ x: w2, y: C });
+    let h2 = (c2, u2, w2 = 1, y2 = false) => {
+      let v20 = E(e3, c2, t2, r3), f2 = Array.isArray(c2) ? c2[c2.length - 1] : c2;
+      y2 && (e3.shadowBlur = 12, e3.shadowColor = f2), e3.strokeStyle = v20, e3.lineWidth = u2, e3.lineCap = "round", e3.lineJoin = "round", e3.beginPath(), e3.moveTo(0, n2);
+      let p2 = [], g2 = Math.floor(i2.length * w2);
+      for (let d2 = 0; d2 < g2; d2++) {
+        let k2 = d2 / (i2.length - 1) * a2, b2 = i2[d2], T = Math.sin(d2 * 0.1) * b2, C = n2 + T * l2;
+        p2.push({ x: k2, y: C });
       }
-      for (let c2 = 0; c2 < p2.length - 1; c2++) {
-        let w2 = p2[c2].x + (p2[c2 + 1].x - p2[c2].x) * 0.5, k2 = p2[c2].y, T = p2[c2 + 1].x - (p2[c2 + 1].x - p2[c2].x) * 0.5, C = p2[c2 + 1].y;
-        e3.bezierCurveTo(w2, k2, T, C, p2[c2 + 1].x, p2[c2 + 1].y);
+      for (let d2 = 0; d2 < p2.length - 1; d2++) {
+        let k2 = p2[d2].x + (p2[d2 + 1].x - p2[d2].x) * 0.5, b2 = p2[d2].y, T = p2[d2 + 1].x - (p2[d2 + 1].x - p2[d2].x) * 0.5, C = p2[d2 + 1].y;
+        e3.bezierCurveTo(k2, b2, T, C, p2[d2 + 1].x, p2[d2 + 1].y);
       }
-      e3.stroke(), g2 && (e3.shadowBlur = 0);
+      e3.stroke(), y2 && (e3.shadowBlur = 0);
     };
     e3.strokeStyle = "rgba(255, 255, 255, 0.03)", e3.lineWidth = 0.5, e3.beginPath(), e3.moveTo(0, n2), e3.lineTo(a2, n2), e3.stroke();
-    for (let d2 = 0; d2 <= 10; d2++) {
-      let u2 = a2 / 10 * d2;
+    for (let c2 = 0; c2 <= 10; c2++) {
+      let u2 = a2 / 10 * c2;
       e3.beginPath(), e3.moveTo(u2, 0), e3.lineTo(u2, o2), e3.stroke();
     }
     h2(r3.color, 2, 1, false), s2 > 0 && h2(r3.progressColor, 3, s2, true);
   }
-  function K(e3, t2, i2, s2, r3) {
-    let a2 = window.devicePixelRatio || 1, o2 = (r3.barWidth || 3) * a2, n2 = (r3.barSpacing || 1) * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = x2(i2, l2), d2 = t2.height, u2 = 4 * a2, v20 = 2 * a2, g2 = s2 * t2.width, b2 = d2 / 2, f2 = E(e3, r3.color, t2, r3), p2 = E(e3, r3.progressColor, t2, r3);
+  function Y(e3, t2, i2, s2, r3) {
+    let a2 = window.devicePixelRatio || 1, o2 = (r3.barWidth || 3) * a2, n2 = (r3.barSpacing || 1) * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = x2(i2, l2), c2 = t2.height, u2 = 4 * a2, w2 = 2 * a2, y2 = s2 * t2.width, v20 = c2 / 2, f2 = E(e3, r3.color, t2, r3), p2 = E(e3, r3.progressColor, t2, r3);
     e3.clearRect(0, 0, t2.width, t2.height);
-    for (let y2 = 0; y2 < h2.length; y2++) {
-      let c2 = y2 * (o2 + n2);
-      if (c2 + o2 > t2.width) break;
-      let w2 = h2[y2] * d2 * 0.9, k2 = Math.floor(w2 / (u2 + v20));
-      e3.fillStyle = c2 < g2 ? p2 : f2;
-      for (let T = 0; T < k2; T++) {
-        let C = T * (u2 + v20);
-        e3.fillRect(c2, b2 - C - u2, o2, u2), T > 0 && e3.fillRect(c2, b2 + C, o2, u2);
+    for (let g2 = 0; g2 < h2.length; g2++) {
+      let d2 = g2 * (o2 + n2);
+      if (d2 + o2 > t2.width) break;
+      let k2 = h2[g2] * c2 * 0.9, b2 = Math.floor(k2 / (u2 + w2));
+      e3.fillStyle = d2 < y2 ? p2 : f2;
+      for (let T = 0; T < b2; T++) {
+        let C = T * (u2 + w2);
+        e3.fillRect(d2, v20 - C - u2, o2, u2), T > 0 && e3.fillRect(d2, v20 + C, o2, u2);
       }
     }
   }
-  function Y(e3, t2, i2, s2, r3) {
-    let a2 = window.devicePixelRatio || 1, o2 = (r3.barWidth || 2) * a2, n2 = (r3.barSpacing || 3) * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = x2(i2, l2), d2 = t2.height, u2 = Math.max(1.5 * a2, o2 / 2), v20 = s2 * t2.width, g2 = d2 / 2, b2 = E(e3, r3.color, t2, r3), f2 = E(e3, r3.progressColor, t2, r3);
+  function X(e3, t2, i2, s2, r3) {
+    let a2 = window.devicePixelRatio || 1, o2 = (r3.barWidth || 2) * a2, n2 = (r3.barSpacing || 3) * a2, l2 = Math.floor(t2.width / (o2 + n2)), h2 = x2(i2, l2), c2 = t2.height, u2 = Math.max(1.5 * a2, o2 / 2), w2 = s2 * t2.width, y2 = c2 / 2, v20 = E(e3, r3.color, t2, r3), f2 = E(e3, r3.progressColor, t2, r3);
     e3.clearRect(0, 0, t2.width, t2.height);
     for (let p2 = 0; p2 < h2.length; p2++) {
-      let y2 = p2 * (o2 + n2) + o2 / 2;
-      if (y2 > t2.width) break;
-      let c2 = h2[p2] * d2 * 0.9;
-      e3.fillStyle = y2 < v20 ? f2 : b2, e3.beginPath(), e3.arc(y2, g2 - c2 / 2, u2, 0, Math.PI * 2), e3.fill(), e3.beginPath(), e3.arc(y2, g2 + c2 / 2, u2, 0, Math.PI * 2), e3.fill();
+      let g2 = p2 * (o2 + n2) + o2 / 2;
+      if (g2 > t2.width) break;
+      let d2 = h2[p2] * c2 * 0.9;
+      e3.fillStyle = g2 < w2 ? f2 : v20, e3.beginPath(), e3.arc(g2, y2 - d2 / 2, u2, 0, Math.PI * 2), e3.fill(), e3.beginPath(), e3.arc(g2, y2 + d2 / 2, u2, 0, Math.PI * 2), e3.fill();
     }
   }
-  function ct(e3, t2, i2, s2, r3) {
-    let a2 = t2.width, o2 = t2.height, n2 = o2 / 2, l2 = 4, h2 = l2 / 2, d2 = !!r3.seekActive;
-    if (e3.clearRect(0, 0, a2, o2), e3.fillStyle = E(e3, r3.color, t2, r3) || "rgba(255, 255, 255, 0.2)", J(e3, h2, a2, n2, l2), e3.fill(), s2 > 0) {
+  function dt(e3, t2, i2, s2, r3) {
+    let a2 = t2.width, o2 = t2.height, n2 = o2 / 2, l2 = 4, h2 = l2 / 2, c2 = !!r3.seekActive;
+    if (e3.clearRect(0, 0, a2, o2), e3.fillStyle = E(e3, r3.color, t2, r3) || "rgba(255, 255, 255, 0.2)", K(e3, h2, a2, n2, l2), e3.fill(), s2 > 0) {
       let u2 = Math.max(h2 * 2, s2 * a2);
-      e3.save(), e3.globalAlpha = r3.seekHandle && !d2 ? 0.7 : 1, e3.fillStyle = E(e3, r3.progressColor, t2, r3) || "rgba(255, 255, 255, 0.9)", J(e3, h2, u2, n2, l2), e3.fill(), e3.restore();
+      e3.save(), e3.globalAlpha = r3.seekHandle && !c2 ? 0.7 : 1, e3.fillStyle = E(e3, r3.progressColor, t2, r3) || "rgba(255, 255, 255, 0.9)", K(e3, h2, u2, n2, l2), e3.fill(), e3.restore();
     }
   }
-  var ut = { bars: I, bar: I, mirror: ht, line: dt, blocks: K, block: K, dots: Y, dot: Y, seekbar: ct };
-  function Q(e3, t2, i2, s2, r3) {
+  var ut = { bars: I, bar: I, mirror: ht, line: ct, blocks: Y, block: Y, dots: X, dot: X, seekbar: dt };
+  function Z(e3, t2, i2, s2, r3) {
     (ut[r3.waveformStyle] || I)(e3, t2, i2, s2, r3);
   }
-  function Z(e3) {
+  function tt(e3) {
     try {
       let t2 = e3.getChannelData(0), i2 = e3.sampleRate, s2 = pt(t2, i2);
       if (s2.length < 2) return 120;
@@ -53076,8 +53076,8 @@ ${text}
       for (let l2 = 1; l2 < s2.length; l2++) r3.push((s2[l2] - s2[l2 - 1]) / i2);
       let a2 = {};
       r3.forEach((l2) => {
-        let h2 = 60 / l2, d2 = Math.round(h2 / 3) * 3;
-        d2 > 60 && d2 < 200 && (a2[d2] = (a2[d2] || 0) + 1);
+        let h2 = 60 / l2, c2 = Math.round(h2 / 3) * 3;
+        c2 > 60 && c2 < 200 && (a2[c2] = (a2[c2] || 0) + 1);
       });
       let o2 = 0, n2 = 120;
       for (let [l2, h2] of Object.entries(a2)) h2 > o2 && (o2 = h2, n2 = parseInt(l2));
@@ -53090,12 +53090,12 @@ ${text}
     let r3 = [], a2 = 0;
     for (let o2 = 0; o2 < e3.length - 2048; o2 += 1024) {
       let n2 = 0;
-      for (let d2 = o2; d2 < o2 + 2048; d2++) n2 += e3[d2] * e3[d2];
+      for (let c2 = o2; c2 < o2 + 2048; c2++) n2 += e3[c2] * e3[c2];
       n2 = n2 / 2048;
       let l2 = n2 - a2, h2 = a2 * 1.8 + 0.01;
       if (l2 > h2 && n2 > 0.01) {
-        let d2 = r3[r3.length - 1] || 0, u2 = t2 * 0.15;
-        o2 - d2 > u2 && r3.push(o2);
+        let c2 = r3[r3.length - 1] || 0, u2 = t2 * 0.15;
+        o2 - c2 > u2 && r3.push(o2);
       }
       a2 = n2 * 0.8 + a2 * 0.2;
     }
@@ -53106,19 +53106,19 @@ ${text}
     for (let o2 = 0; o2 < s2; o2++) {
       let n2 = e3.getChannelData(o2);
       for (let l2 = 0; l2 < t2; l2++) {
-        let h2 = ~~(l2 * i2), d2 = ~~(h2 + i2), u2 = 0, v20 = 0;
-        for (let b2 = h2; b2 < d2; b2++) {
-          let f2 = n2[b2];
-          f2 > v20 && (v20 = f2), f2 < u2 && (u2 = f2);
+        let h2 = ~~(l2 * i2), c2 = ~~(h2 + i2), u2 = 0, w2 = 0;
+        for (let v20 = h2; v20 < c2; v20++) {
+          let f2 = n2[v20];
+          f2 > w2 && (w2 = f2), f2 < u2 && (u2 = f2);
         }
-        let g2 = Math.max(Math.abs(v20), Math.abs(u2));
-        (o2 === 0 || g2 > r3[l2]) && (r3[l2] = g2);
+        let y2 = Math.max(Math.abs(w2), Math.abs(u2));
+        (o2 === 0 || y2 > r3[l2]) && (r3[l2] = y2);
       }
     }
     let a2 = W(r3);
     return a2 > 0 ? r3.map((o2) => o2 / a2) : r3;
   }
-  async function z(e3, t2 = 1800, i2 = false) {
+  async function O(e3, t2 = 1800, i2 = false) {
     let s2;
     try {
       let r3 = window.AudioContext || window.webkitAudioContext;
@@ -53126,12 +53126,12 @@ ${text}
       let o2 = await (await fetch(e3)).arrayBuffer(), n2 = await s2.decodeAudioData(o2), l2 = ft(n2, t2);
       l2 = mt(l2);
       let h2 = null;
-      return i2 && (h2 = Z(n2)), { peaks: l2, bpm: h2 };
+      return i2 && (h2 = tt(n2)), { peaks: l2, bpm: h2 };
     } finally {
       s2 && s2.close();
     }
   }
-  function tt(e3 = 1800) {
+  function et(e3 = 1800) {
     let t2 = [];
     for (let i2 = 0; i2 < e3; i2++) {
       let s2 = Math.random() * 0.5 + 0.3, r3 = Math.sin(i2 / e3 * Math.PI * 4) * 0.2;
@@ -53145,15 +53145,15 @@ ${text}
     let s2 = t2 / i2;
     return e3.map((r3) => r3 * s2);
   }
-  function et(e3) {
+  function it(e3) {
     let t2 = document.documentElement, i2 = document.body;
     return t2.classList.contains(e3) || t2.classList.contains(`${e3}-mode`) || t2.classList.contains(`theme-${e3}`) || t2.getAttribute("data-theme") === e3 || t2.getAttribute("data-color-scheme") === e3 || i2.classList.contains(e3) || i2.classList.contains(`${e3}-mode`) || i2.getAttribute("data-theme") === e3;
   }
   function R() {
-    if (et("dark")) return "dark";
-    if (et("light")) return "light";
+    if (it("dark")) return "dark";
+    if (it("light")) return "light";
     try {
-      let e3 = getComputedStyle(document.body).backgroundColor, t2 = j2(e3);
+      let e3 = getComputedStyle(document.body).backgroundColor, t2 = G2(e3);
       if (t2 !== null) {
         if (t2 > 128) return "light";
         if (t2 < 128) return "dark";
@@ -53167,29 +53167,29 @@ ${text}
     return "dark";
   }
   var L = { dark: { waveformColor: "rgba(255, 255, 255, 0.3)", progressColor: "rgba(255, 255, 255, 0.9)" }, light: { waveformColor: "rgba(0, 0, 0, 0.2)", progressColor: "rgba(0, 0, 0, 0.8)" } };
-  function F(e3) {
+  function z(e3) {
     if (e3 && L[e3]) return L[e3];
     let t2 = R();
     return L[t2];
   }
-  var it = { url: "", height: 64, samples: 1800, preload: "metadata", audioMode: "self", playbackRate: 1, showPlaybackSpeed: false, playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2], buttonAlign: "auto", layout: "default", buttonStyle: "circle", buttonSize: null, waveformStyle: "mirror", barWidth: 2, barSpacing: 0, barRadius: 1, waveformGradient: "vertical", colorPreset: null, waveformColor: null, progressColor: null, autoplay: false, showControls: true, showInfo: true, showTime: true, showHoverTime: false, seekHandle: false, showBPM: false, bpm: null, singlePlay: true, playOnSeek: true, enableMediaSession: true, markers: [], showMarkers: true, accessibleSeek: true, seekLabel: null, seekValueText: null, title: null, artist: null, artwork: null, album: "", errorText: "Unable to load audio", playPauseLabel: "Play/Pause", speedLabel: "Playback speed", artworkAlt: "Album artwork", unknownTrackText: "Unknown Track", playIcon: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>', pauseIcon: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>', onLoad: null, onPlay: null, onPause: null, onEnd: null, onError: null, onTimeUpdate: null, onNextTrack: null, onPreviousTrack: null };
+  var F = { url: "", height: 64, samples: 1800, preload: "metadata", audioMode: "self", playbackRate: 1, showPlaybackSpeed: false, playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2], buttonAlign: "auto", layout: "default", buttonStyle: "circle", buttonSize: null, waveformStyle: "mirror", barWidth: 2, barSpacing: 0, barRadius: 1, waveformGradient: "vertical", colorPreset: null, waveformColor: null, progressColor: null, autoplay: false, showControls: true, showInfo: true, showTime: true, showHoverTime: false, seekHandle: false, showBPM: false, bpm: null, singlePlay: true, playOnSeek: true, enableMediaSession: true, markers: [], showMarkers: true, accessibleSeek: true, seekLabel: null, seekValueText: null, title: null, artist: null, artwork: null, album: "", errorText: "Unable to load audio", playPauseLabel: "Play/Pause", speedLabel: "Playback speed", artworkAlt: "Album artwork", unknownTrackText: "Unknown Track", playIcon: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>', pauseIcon: '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>', onLoad: null, onPlay: null, onPause: null, onEnd: null, onError: null, onTimeUpdate: null, onNextTrack: null, onPreviousTrack: null };
   var st = { bars: { barWidth: 3, barSpacing: 1 }, mirror: { barWidth: 2, barSpacing: 2 }, line: { barWidth: 2, barSpacing: 0 }, blocks: { barWidth: 4, barSpacing: 2 }, dots: { barWidth: 3, barSpacing: 3 }, seekbar: { barWidth: 1, barSpacing: 0 } };
-  var gt = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#71717a" fill-opacity="0.15"/><g fill="none" stroke="#a1a1aa" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="17" r="2.2"/><circle cx="17" cy="15" r="2.2"/><path d="M10.2 17V7l9-1.6v9"/></g></svg>');
+  var yt = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#71717a" fill-opacity="0.15"/><g fill="none" stroke="#a1a1aa" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="17" r="2.2"/><circle cx="17" cy="15" r="2.2"/><path d="M10.2 17V7l9-1.6v9"/></g></svg>');
   var rt = 5;
   var at = 10;
-  var yt = 'button, a[href], input, [role="slider"]';
+  var gt = 'button, a[href], input, [role="slider"]';
   var A = class e2 {
     static instances = /* @__PURE__ */ new Map();
     static currentlyPlaying = null;
     constructor(t2, i2 = {}) {
       if (this.container = typeof t2 == "string" ? document.querySelector(t2) : t2, !this.container) throw new Error("[WaveformPlayer] Container element not found");
       let s2 = D(this.container), r3 = { ...i2 };
-      r3.style && !r3.waveformStyle && (r3.waveformStyle = r3.style), r3.src && !r3.url && (r3.url = r3.src), this.options = B(it, s2, r3);
-      let a2 = F(this.options.colorPreset);
+      r3.style && !r3.waveformStyle && (r3.waveformStyle = r3.style), r3.src && !r3.url && (r3.url = r3.src), this.options = B(F, s2, r3);
+      let a2 = z(this.options.colorPreset);
       this._autoTheme = this.options.colorPreset == null || !L[this.options.colorPreset], this._presetKeys = [], this._scheme = this.options.colorPreset && L[this.options.colorPreset] ? this.options.colorPreset : R();
       for (let [n2, l2] of Object.entries(a2)) (this.options[n2] === null || this.options[n2] === void 0) && (this.options[n2] = l2, this._presetKeys.push(n2));
       let o2 = st[this.options.waveformStyle];
-      o2 && (s2.barWidth === void 0 && i2.barWidth === void 0 && (this.options.barWidth = o2.barWidth), s2.barSpacing === void 0 && i2.barSpacing === void 0 && (this.options.barSpacing = o2.barSpacing)), this.audio = null, this.canvas = null, this.ctx = null, this.waveformData = [], this.progress = 0, this._activeMarkerIndex = -1, this._markerLabelTimer = null, this.isPlaying = false, this.isLoading = false, this.hasError = false, this.updateTimer = null, this.resizeObserver = null, this._ac = new AbortController(), this.id = this.container.id || V(this.options.url), e2.instances.set(this.id, this), e2._watchTheme(), this.init(), setTimeout(() => {
+      o2 && (s2.barWidth === void 0 && i2.barWidth === void 0 && (this.options.barWidth = o2.barWidth), s2.barSpacing === void 0 && i2.barSpacing === void 0 && (this.options.barSpacing = o2.barSpacing)), this.audio = null, this.canvas = null, this.ctx = null, this.waveformData = [], this.progress = 0, this._activeMarkerIndex = -1, this._markerLabelTimer = null, this.isPlaying = false, this.isLoading = false, this.hasError = false, this.updateTimer = null, this.resizeObserver = null, this._ac = new AbortController(), this.id = this.container.id || j2(this.options.url), e2.instances.set(this.id, this), e2._watchTheme(), this.init(), setTimeout(() => {
         this._emit("waveformplayer:ready", { player: this, url: this.options.url });
       }, 100);
     }
@@ -53277,9 +53277,48 @@ ${text}
       ${r3}
     </div>
   </div>
-`, this.playBtn = this.container.querySelector(".waveform-btn"), this.canvas = this.container.querySelector("canvas"), this.ctx = this.canvas.getContext("2d"), this.titleEl = this.container.querySelector(".waveform-title"), this.artistEl = this.container.querySelector(".waveform-artist"), this.artworkEl = this.container.querySelector(".waveform-artwork"), this.artworkEl && this.artworkEl.addEventListener("error", () => {
-        this.artworkEl.src.startsWith("data:") || (this.artworkEl.src = gt);
-      }), this.currentTimeEl = this.container.querySelector(".time-current"), this.totalTimeEl = this.container.querySelector(".time-total"), this.bpmEl = this.container.querySelector(".waveform-bpm"), this.bpmValueEl = this.container.querySelector(".bpm-value"), this.loadingEl = this.container.querySelector(".waveform-loading"), this.errorEl = this.container.querySelector(".waveform-error"), this.markersContainer = this.container.querySelector(".waveform-markers"), this.speedBtn = this.container.querySelector(".speed-btn"), this.speedMenu = this.container.querySelector(".speed-menu"), this.resizeCanvas(), this.updateBPMDisplay();
+`, this.playBtn = this.container.querySelector(".waveform-btn"), this.canvas = this.container.querySelector("canvas"), this.ctx = this.canvas.getContext("2d"), this.titleEl = this.container.querySelector(".waveform-title"), this.artistEl = this.container.querySelector(".waveform-artist"), this.artworkEl = this.container.querySelector(".waveform-artwork"), this.bindArtworkFallback(this.artworkEl), this.currentTimeEl = this.container.querySelector(".time-current"), this.totalTimeEl = this.container.querySelector(".time-total"), this.bpmEl = this.container.querySelector(".waveform-bpm"), this.bpmValueEl = this.container.querySelector(".bpm-value"), this.loadingEl = this.container.querySelector(".waveform-loading"), this.errorEl = this.container.querySelector(".waveform-error"), this.markersContainer = this.container.querySelector(".waveform-markers"), this.speedBtn = this.container.querySelector(".speed-btn"), this.speedMenu = this.container.querySelector(".speed-menu"), this.resizeCanvas(), this.updateBPMDisplay();
+    }
+    bindArtworkFallback(t2) {
+      t2 && t2.addEventListener("error", () => {
+        t2.src.startsWith("data:") || (t2.src = yt);
+      }, { signal: this._ac.signal });
+    }
+    createArtworkElement() {
+      let t2 = document.createElement("img");
+      return t2.className = "waveform-artwork", t2.style.width = "40px", t2.style.height = "40px", t2.style.borderRadius = "4px", t2.style.objectFit = "cover", t2.style.flexShrink = "0", this.bindArtworkFallback(t2), t2;
+    }
+    createArtistElement() {
+      let t2 = document.createElement("span");
+      return t2.className = "waveform-artist", t2;
+    }
+    syncArtist(t2) {
+      if (this.options.artist = t2 || null, !!this.options.showInfo) {
+        if (!t2) {
+          this.artistEl?.remove(), this.artistEl = null;
+          return;
+        }
+        if (!this.artistEl) {
+          let i2 = this.container.querySelector(".waveform-title");
+          if (!i2) return;
+          this.artistEl = this.createArtistElement(), i2.after(this.artistEl);
+        }
+        this.artistEl.textContent = t2, this.artistEl.style.display = "";
+      }
+    }
+    syncArtwork(t2, i2 = "") {
+      if (this.options.artwork = t2 || null, this.options.artworkAlt = i2 || "", !!this.options.showInfo) {
+        if (!t2) {
+          this.artworkEl?.remove(), this.artworkEl = null;
+          return;
+        }
+        if (!this.artworkEl) {
+          let s2 = this.container.querySelector(".waveform-text");
+          if (!s2) return;
+          this.artworkEl = this.createArtworkElement(), s2.before(this.artworkEl);
+        }
+        this.artworkEl.src = t2, this.artworkEl.alt = i2 || "";
+      }
     }
     createAudio() {
       if (this.options.audioMode === "external") {
@@ -53297,7 +53336,7 @@ ${text}
       let s2 = () => Array.from(i2.querySelectorAll(".speed-option")), r3 = () => i2.style.display !== "none", a2 = (l2) => {
         if (i2.style.display = l2 ? "block" : "none", t2.setAttribute("aria-expanded", l2 ? "true" : "false"), l2) {
           let h2 = s2();
-          (h2.find((d2) => d2.getAttribute("aria-checked") === "true") || h2[0])?.focus();
+          (h2.find((c2) => c2.getAttribute("aria-checked") === "true") || h2[0])?.focus();
         }
       }, o2 = (l2) => {
         let h2 = s2();
@@ -53312,17 +53351,17 @@ ${text}
         let h2 = l2.target.closest(".speed-option");
         h2 && n2(h2);
       }, { signal: this._ac.signal }), t2.closest(".waveform-speed")?.addEventListener("keydown", (l2) => {
-        let h2 = s2(), d2 = h2.indexOf(document.activeElement);
+        let h2 = s2(), c2 = h2.indexOf(document.activeElement);
         if (!r3()) {
           (l2.key === "ArrowDown" || l2.key === "ArrowUp") && document.activeElement === t2 && (l2.preventDefault(), a2(true));
           return;
         }
         switch (l2.key) {
           case "ArrowDown":
-            l2.preventDefault(), o2(d2 < 0 ? 0 : d2 + 1);
+            l2.preventDefault(), o2(c2 < 0 ? 0 : c2 + 1);
             break;
           case "ArrowUp":
-            l2.preventDefault(), o2(d2 < 0 ? h2.length - 1 : d2 - 1);
+            l2.preventDefault(), o2(c2 < 0 ? h2.length - 1 : c2 - 1);
             break;
           case "Home":
             l2.preventDefault(), o2(0);
@@ -53341,7 +53380,7 @@ ${text}
     }
     initKeyboardControls() {
       this.container.setAttribute("tabindex", "-1"), this.container.addEventListener("click", (t2) => {
-        t2.target.closest(yt) || (e2.getAllInstances().forEach((i2) => {
+        t2.target.closest(gt) || (e2.getAllInstances().forEach((i2) => {
           i2 !== this && i2.container.setAttribute("tabindex", "-1");
         }), this.container.setAttribute("tabindex", "0"), this.container.focus());
       }, { signal: this._ac.signal }), this.container.addEventListener("keydown", (t2) => {
@@ -53415,7 +53454,7 @@ ${text}
     updateSeekAccessibility() {
       if (!this.seekEl) return;
       let t2 = this.getSeekDuration(), i2 = Math.min(this.getSeekCurrentTime(), t2);
-      this.seekEl.setAttribute("aria-valuemax", String(Math.round(t2))), this.seekEl.setAttribute("aria-valuenow", String(Math.round(i2))), this.seekEl.setAttribute("aria-valuetext", N2(this.options.seekValueText || "%1$s of %2$s", S2(i2), S2(t2)));
+      this.seekEl.setAttribute("aria-valuemax", String(Math.round(t2))), this.seekEl.setAttribute("aria-valuenow", String(Math.round(i2))), this.seekEl.setAttribute("aria-valuetext", V(this.options.seekValueText || "%1$s of %2$s", S2(i2), S2(t2)));
     }
     initMediaSession() {
       if (!("mediaSession" in navigator) || !this.options.enableMediaSession || !this.audio) return;
@@ -53479,7 +53518,7 @@ ${text}
           this._seekFromPointer(i2.clientX), !this._seekHover && !this.options.showHoverTime && this._hideHoverTip(), this._updateSeekHandle();
         }
       };
-      this.canvas.addEventListener("pointerup", t2), this.canvas.addEventListener("pointercancel", t2), this.setupHoverTime(), this.setupSeekHandle(), this.resizeHandler = G2(() => this.resizeCanvas(), 100), window.addEventListener("resize", this.resizeHandler);
+      this.canvas.addEventListener("pointerup", t2), this.canvas.addEventListener("pointercancel", t2), this.setupHoverTime(), this.setupSeekHandle(), this.resizeHandler = J(() => this.resizeCanvas(), 100), window.addEventListener("resize", this.resizeHandler);
     }
     setupResizeObserver() {
       "ResizeObserver" in window && (this.resizeObserver = new ResizeObserver(() => {
@@ -53499,10 +53538,10 @@ ${text}
         let i2 = this.options.title || H2(t2);
         if (this.titleEl && (this.titleEl.textContent = i2), this.applySeekLabel(i2), this.options.waveform) this.setWaveformData(this.options.waveform);
         else try {
-          let s2 = await z(t2, this.options.samples, this.options.showBPM);
+          let s2 = await O(t2, this.options.samples, this.options.showBPM);
           this.waveformData = s2.peaks, s2.bpm && (this.detectedBPM = s2.bpm, this.updateBPMDisplay());
         } catch (s2) {
-          console.warn("[WaveformPlayer] Using placeholder waveform:", s2), this.waveformData = tt(this.options.samples);
+          console.warn("[WaveformPlayer] Using placeholder waveform:", s2), this.waveformData = et(this.options.samples);
         }
         this.drawWaveform(), this.renderMarkers(), this.options.onLoad && this.options.onLoad(this);
       } catch (i2) {
@@ -53512,7 +53551,8 @@ ${text}
       }
     }
     async loadTrack(t2, i2 = null, s2 = null, r3 = {}) {
-      this.isPlaying && this.pause(), this.audio && (this.audio.src = "", this.audio.load()), this.hasError = false, this.errorEl && (this.errorEl.style.display = "none"), this.canvas && (this.canvas.style.opacity = "1"), this.playBtn && (this.playBtn.disabled = false), this.progress = 0, this.waveformData = [], this.options = B(this.options, { url: t2, title: i2 || this.options.title, artist: s2 || this.options.artist, ...r3 }), r3.preload && this.audio && (this.audio.preload = r3.preload), this.artistEl && (s2 ? (this.artistEl.textContent = s2, this.artistEl.style.display = "") : s2 === "" && (this.artistEl.style.display = "none")), r3.artwork && this.artworkEl && (this.artworkEl.src = r3.artwork), this.options.markers = r3.markers || [], this.options.waveform = r3.waveform || null, await this.load(t2), r3.autoplay !== false && this.play()?.catch(() => {
+      let a2 = Object.prototype.hasOwnProperty.call(r3, "artwork"), o2 = Object.prototype.hasOwnProperty.call(r3, "artworkAlt");
+      this.isPlaying && this.pause(), this.audio && (this.audio.src = "", this.audio.load()), this.hasError = false, this.errorEl && (this.errorEl.style.display = "none"), this.canvas && (this.canvas.style.opacity = "1"), this.playBtn && (this.playBtn.disabled = false), this.progress = 0, this.waveformData = [], this.options = B(this.options, { url: t2, title: i2 === null ? this.options.title : i2, artist: s2 === null ? this.options.artist : s2, ...r3 }), a2 && (this.options.artwork = r3.artwork || null), o2 ? this.options.artworkAlt = r3.artworkAlt || "" : a2 && (this.options.artworkAlt = this.options.artwork ? F.artworkAlt : ""), r3.preload && this.audio && (this.audio.preload = r3.preload), s2 !== null && this.syncArtist(s2), (a2 || o2) && this.syncArtwork(a2 ? r3.artwork : this.options.artwork, o2 ? r3.artworkAlt : this.options.artworkAlt), this.options.markers = r3.markers || [], this.options.waveform = r3.waveform || null, await this.load(t2), r3.autoplay !== false && this.play()?.catch(() => {
       });
     }
     setWaveformData(t2) {
@@ -53533,7 +53573,7 @@ ${text}
       this.drawWaveform();
     }
     drawWaveform() {
-      !this.ctx || this.waveformData.length === 0 || Q(this.ctx, this.canvas, this.waveformData, this.progress, { ...this.options, waveformStyle: this.options.waveformStyle || "bars", color: this.options.waveformColor, progressColor: this.options.progressColor, seekActive: this._seekHover || this._dragging });
+      !this.ctx || this.waveformData.length === 0 || Z(this.ctx, this.canvas, this.waveformData, this.progress, { ...this.options, waveformStyle: this.options.waveformStyle || "bars", color: this.options.waveformColor, progressColor: this.options.progressColor, seekActive: this._seekHover || this._dragging });
     }
     resizeCanvas() {
       if (!this.canvas || this.isDestroying) return;
@@ -53676,7 +53716,7 @@ ${text}
     refreshTheme() {
       if (!this._autoTheme) return;
       this._scheme = R();
-      let t2 = F(this.options.colorPreset);
+      let t2 = z(this.options.colorPreset);
       for (let i2 of this._presetKeys || []) i2 in t2 && (this.options[i2] = t2[i2]);
       this._applyThemeColors();
     }
@@ -53775,7 +53815,7 @@ ${text}
     }
     static async generateWaveformData(t2, i2 = 1800) {
       try {
-        return (await z(t2, i2)).peaks;
+        return (await O(t2, i2)).peaks;
       } catch (s2) {
         throw console.error("[WaveformPlayer] Failed to generate waveform:", s2), s2;
       }
@@ -53786,10 +53826,10 @@ ${text}
       return i2 === t2 ? void 0 : i2;
     }
   };
-  A.utils = { formatTime: S2, extractTitleFromUrl: H2, escapeHtml: P, isSafeHref: U, parseDataAttributes: D };
-  var O = () => typeof window < "u" && typeof document < "u";
+  A.utils = { formatTime: S2, extractTitleFromUrl: H2, escapeHtml: P, isSafeHref: N2, parseDataAttributes: D };
+  var q = () => typeof window < "u" && typeof document < "u";
   function $2() {
-    if (!O()) return;
+    if (!q()) return;
     document.querySelectorAll("[data-waveform-player]").forEach((t2) => {
       if (t2.dataset.waveformInitialized !== "true") try {
         new A(t2), t2.dataset.waveformInitialized = "true";
@@ -53798,9 +53838,9 @@ ${text}
       }
     });
   }
-  O() && (document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", $2) : $2());
+  q() && (document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", $2) : $2());
   A.init = $2;
-  O() && (window.WaveformPlayer = A);
+  q() && (window.WaveformPlayer = A);
   var Rt = A;
 
   // packages/block-library/build-module/utils/waveform-utils.mjs
@@ -53967,17 +54007,20 @@ ${text}
 
   // packages/block-library/build-module/utils/waveform-player.mjs
   var import_jsx_runtime370 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARTIST_PLACEHOLDER = "\xA0";
   function updatePlayerMetadata(instance, { title, artist, image, imageAlt }) {
     if (instance.titleEl) {
       instance.titleEl.textContent = title ?? "";
     }
     updateSeekControlLabel(instance, title || (0, import_i18n163.__)("Seek"));
-    if (instance.artistEl) {
+    if (typeof instance.syncArtist === "function") {
+      instance.syncArtist(artist || "");
+    } else if (instance.artistEl) {
       instance.artistEl.textContent = artist ?? "";
       instance.artistEl.style.display = artist ? "" : "none";
     }
-    if (instance.artworkEl && image) {
+    if (typeof instance.syncArtwork === "function") {
+      instance.syncArtwork(image || null, imageAlt || "");
+    } else if (instance.artworkEl && image) {
       instance.artworkEl.src = image;
       instance.artworkEl.alt = imageAlt || "";
     }
@@ -53993,7 +54036,6 @@ ${text}
   }) {
     const onEndedEvent = (0, import_compose44.useEvent)(onEnded);
     const playerRef = (0, import_element101.useRef)();
-    const hasImage = !!image;
     const hasSrc = !!src;
     const metadataRef = (0, import_element101.useRef)({ src, title, artist, image, imageAlt });
     (0, import_element101.useEffect)(() => {
@@ -54013,7 +54055,7 @@ ${text}
           const player = initWaveformPlayer(element, {
             src: metadataRef.current.src,
             title: metadataRef.current.title,
-            artist: metadataRef.current.artist || EMPTY_ARTIST_PLACEHOLDER,
+            artist: metadataRef.current.artist,
             image: metadataRef.current.image,
             imageAlt: metadataRef.current.imageAlt,
             waveformStyle,
@@ -54039,7 +54081,7 @@ ${text}
           playerDestroy?.();
         };
       },
-      [onEndedEvent, hasSrc, waveformStyle, hasImage]
+      [onEndedEvent, hasSrc, waveformStyle]
     );
     (0, import_element101.useEffect)(() => {
       if (playerRef.current?.instance) {
@@ -54062,7 +54104,8 @@ ${text}
           metadataRef.current.title,
           metadataRef.current.artist,
           {
-            artwork: metadataRef.current.image
+            artwork: metadataRef.current.image,
+            artworkAlt: metadataRef.current.imageAlt
           }
         );
         if (!wasPlaying) {
