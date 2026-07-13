@@ -4443,6 +4443,7 @@ var wp;
       background: {
         backgroundImage: true,
         backgroundSize: true,
+        gradient: true,
         __experimentalDefaultControls: {
           backgroundImage: true
         }
