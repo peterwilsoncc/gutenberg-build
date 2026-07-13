@@ -23225,7 +23225,7 @@ var wp;
     };
     const onClearMedia = () => {
       let newOverlayColor = overlayColor.color;
-      if (!isUserOverlayColor) {
+      if (!isUserOverlayColor && overlayColor.color) {
         newOverlayColor = DEFAULT_OVERLAY_COLOR;
         setOverlayColor(void 0);
         __unstableMarkNextChangeAsNotPersistent();
