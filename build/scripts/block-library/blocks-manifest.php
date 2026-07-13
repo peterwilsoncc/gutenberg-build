@@ -3629,7 +3629,7 @@ return array(
 			)
 		),
 		'selectors' => array(
-			'dimensions' => '.wp-block-image img',
+			'dimensions' => '.wp-block-image img, .wp-block-image .components-placeholder',
 			'border' => '.wp-block-image img, .wp-block-image .wp-block-image__crop-area, .wp-block-image .components-placeholder',
 			'shadow' => '.wp-block-image img, .wp-block-image .wp-block-image__crop-area, .wp-block-image .components-placeholder',
 			'filter' => array(
