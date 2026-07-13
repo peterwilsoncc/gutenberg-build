@@ -21947,7 +21947,7 @@ var wp;
   // packages/block-library/build-module/cover/embed-video-utils.mjs
   var import_blocks20 = __toESM(require_blocks(), 1);
   var DEFAULT_EMBED_BLOCK2 = "core/embed";
-  var VIDEO_PROVIDERS = [
+  var DEFAULT_VIDEO_PROVIDERS = [
     "youtube",
     "vimeo",
     "videopress",
@@ -21955,14 +21955,22 @@ var wp;
     "tiktok",
     "wordpress-tv"
   ];
-  function isValidVideoEmbedUrl(url) {
+  function getAllowedVideoProviders(allowedVideoProviders) {
+    if (!Array.isArray(allowedVideoProviders)) {
+      return [];
+    }
+    return DEFAULT_VIDEO_PROVIDERS.filter(
+      (provider) => allowedVideoProviders.includes(provider)
+    );
+  }
+  function isValidVideoEmbedUrl(url, allowedProviders) {
     if (!url) {
       return false;
     }
-    const embedBlock = findVideoEmbedProvider(url);
+    const embedBlock = findVideoEmbedProvider(url, allowedProviders);
     return embedBlock !== null;
   }
-  function findVideoEmbedProvider(url) {
+  function findVideoEmbedProvider(url, allowedProviders = DEFAULT_VIDEO_PROVIDERS) {
     const embedVariations = (0, import_blocks20.getBlockVariations)(DEFAULT_EMBED_BLOCK2);
     if (!embedVariations) {
       return null;
@@ -21970,7 +21978,7 @@ var wp;
     const matchingVariation = embedVariations.find(
       ({ patterns }) => matchesPatterns(url, patterns)
     );
-    if (!matchingVariation || !VIDEO_PROVIDERS.includes(matchingVariation.name)) {
+    if (!matchingVariation || !allowedProviders.includes(matchingVariation.name)) {
       return null;
     }
     return matchingVariation;
@@ -22061,7 +22069,8 @@ var wp;
   function EmbedVideoUrlInput({
     onSubmit,
     onClose,
-    initialUrl = ""
+    initialUrl = "",
+    allowedVideoProviders
   }) {
     const [url, setUrl] = (0, import_element31.useState)(initialUrl);
     const [error2, setError] = (0, import_element31.useState)("");
@@ -22070,7 +22079,7 @@ var wp;
         setError((0, import_i18n50.__)("Please enter a URL."));
         return;
       }
-      if (!isValidVideoEmbedUrl(url)) {
+      if (!isValidVideoEmbedUrl(url, allowedVideoProviders)) {
         setError(
           (0, import_i18n50.__)(
             "This URL is not supported. Please enter a valid video link from a supported provider."
@@ -22089,7 +22098,7 @@ var wp;
         onCancel: onClose,
         confirmButtonText: (0, import_i18n50.__)("Add video"),
         size: "medium",
-        children: /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)(import_components32.__experimentalVStack, { spacing: 4, children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime235.jsxs)(Stack, { direction: "column", gap: "lg", children: [
           error2 && /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(import_components32.Notice, { status: "error", isDismissible: false, children: error2 }),
           /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(
             import_components32.TextControl,
@@ -22136,9 +22145,14 @@ var wp;
       useFeaturedImage,
       minHeight,
       minHeightUnit,
-      backgroundType
+      backgroundType,
+      allowedVideoProviders
     } = attributes;
     const { hasInnerBlocks, url } = currentSettings;
+    const filteredVideoProviders = getAllowedVideoProviders(
+      allowedVideoProviders
+    );
+    const hasAllowedVideoProviders = filteredVideoProviders.length > 0;
     const [prevMinHeightValue, setPrevMinHeightValue] = (0, import_element32.useState)(minHeight);
     const [prevMinHeightUnit, setPrevMinHeightUnit] = (0, import_element32.useState)(minHeightUnit);
     const [isEmbedUrlInputOpen, setIsEmbedUrlInputOpen] = (0, import_element32.useState)(false);
@@ -22216,7 +22230,7 @@ var wp;
           name: !url ? (0, import_i18n51.__)("Add media") : (0, import_i18n51.__)("Replace"),
           onReset: onClearMedia,
           variant: "toolbar",
-          children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+          children: ({ onClose }) => hasAllowedVideoProviders ? /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
             import_components33.MenuItem,
             {
               icon: link_default,
@@ -22226,7 +22240,7 @@ var wp;
               },
               children: (0, import_i18n51.__)("Embed video from URL")
             }
-          )
+          ) : null
         }
       ) }),
       isEmbedUrlInputOpen && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
@@ -22236,7 +22250,8 @@ var wp;
             onSelectEmbedUrl(embedUrl);
           },
           onClose: () => setIsEmbedUrlInputOpen(false),
-          initialUrl: backgroundType === EMBED_VIDEO_BACKGROUND_TYPE ? url : ""
+          initialUrl: backgroundType === EMBED_VIDEO_BACKGROUND_TYPE ? url : "",
+          allowedVideoProviders: filteredVideoProviders
         }
       )
     ] });
@@ -23738,6 +23753,17 @@ var wp;
         source: "attribute",
         selector: "video",
         attribute: "poster"
+      },
+      allowedVideoProviders: {
+        type: "array",
+        default: [
+          "youtube",
+          "vimeo",
+          "videopress",
+          "animoto",
+          "tiktok",
+          "wordpress-tv"
+        ]
       }
     },
     usesContext: ["postId", "postType"],

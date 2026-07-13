@@ -2268,6 +2268,17 @@ return array(
 				'source' => 'attribute',
 				'selector' => 'video',
 				'attribute' => 'poster'
+			),
+			'allowedVideoProviders' => array(
+				'type' => 'array',
+				'default' => array(
+					'youtube',
+					'vimeo',
+					'videopress',
+					'animoto',
+					'tiktok',
+					'wordpress-tv'
+				)
 			)
 		),
 		'usesContext' => array(
