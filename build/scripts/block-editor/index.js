@@ -25386,6 +25386,7 @@ var wp;
   var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
   function BlockVisibilityViewportToolbar({ clientIds }) {
     const hasBlockVisibilityButtonShownRef = (0, import_element29.useRef)(false);
+    const [blockVisibility2] = useSettings("blockVisibility.allowEditing");
     const { canToggleBlockVisibility, areBlocksHiddenAnywhere } = (0, import_data27.useSelect)(
       (select3) => {
         const { getBlocksByClientId: getBlocksByClientId2, getBlockName: getBlockName2, isBlockHiddenAnywhere: isBlockHiddenAnywhere2 } = unlock(select3(store));
@@ -25411,6 +25412,9 @@ var wp;
         hasBlockVisibilityButtonShownRef.current = true;
       }
     }, [areBlocksHiddenAnywhere]);
+    if (blockVisibility2 === false) {
+      return null;
+    }
     if (!areBlocksHiddenAnywhere && !hasBlockVisibilityButtonShownRef.current) {
       return null;
     }
@@ -25434,6 +25438,7 @@ var wp;
   var import_keyboard_shortcuts2 = __toESM(require_keyboard_shortcuts(), 1);
   var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
   function BlockVisibilityViewportMenuItem({ clientIds }) {
+    const [blockVisibility2] = useSettings("blockVisibility.allowEditing");
     const { areBlocksHiddenAnywhere, shortcut } = (0, import_data28.useSelect)(
       (select3) => {
         const { isBlockHiddenAnywhere: isBlockHiddenAnywhere2 } = unlock(
@@ -25452,7 +25457,11 @@ var wp;
       },
       [clientIds]
     );
-    const { showViewportModal: showViewportModal2 } = unlock((0, import_data28.useDispatch)(store));
+    const dispatch = (0, import_data28.useDispatch)(store);
+    if (blockVisibility2 === false) {
+      return null;
+    }
+    const { showViewportModal: showViewportModal2 } = unlock(dispatch);
     return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
       import_components26.MenuItem,
       {
@@ -44558,7 +44567,10 @@ var wp;
     return null;
   }
   function KeyboardShortcutsRegister() {
-    const { registerShortcut } = (0, import_data34.useDispatch)(import_keyboard_shortcuts3.store);
+    const { registerShortcut, unregisterShortcut } = (0, import_data34.useDispatch)(
+      import_keyboard_shortcuts3.store
+    );
+    const [blockVisibility2] = useSettings("blockVisibility.allowEditing");
     (0, import_element88.useEffect)(() => {
       registerShortcut({
         name: "core/block-editor/copy",
@@ -44735,15 +44747,19 @@ var wp;
           character: "g"
         }
       });
-      registerShortcut({
-        name: "core/block-editor/toggle-block-visibility",
-        category: "block",
-        description: (0, import_i18n35.__)("Show or hide the selected block(s)."),
-        keyCombination: {
-          modifier: "primaryShift",
-          character: "h"
-        }
-      });
+      if (blockVisibility2 === false) {
+        unregisterShortcut("core/block-editor/toggle-block-visibility");
+      } else {
+        registerShortcut({
+          name: "core/block-editor/toggle-block-visibility",
+          category: "block",
+          description: (0, import_i18n35.__)("Show or hide the selected block(s)."),
+          keyCombination: {
+            modifier: "primaryShift",
+            character: "h"
+          }
+        });
+      }
       registerShortcut({
         name: "core/block-editor/rename",
         category: "block",
@@ -44753,7 +44769,7 @@ var wp;
           character: "r"
         }
       });
-    }, [registerShortcut]);
+    }, [registerShortcut, unregisterShortcut, blockVisibility2]);
     return null;
   }
   KeyboardShortcuts.Register = KeyboardShortcutsRegister;
@@ -60065,7 +60081,8 @@ var wp;
       isTyping: isTyping3(),
       isZoomOutMode: isZoomOut2(),
       isDragging: isDragging3(),
-      viewportModalClientIds: getViewportModalClientIds2()
+      viewportModalClientIds: getViewportModalClientIds2(),
+      blockVisibilitySetting: select3(store).getSettings().__experimentalFeatures?.blockVisibility?.allowEditing
     };
   }
   function BlockTools({
@@ -60079,7 +60096,8 @@ var wp;
       isTyping: isTyping3,
       isZoomOutMode,
       isDragging: isDragging3,
-      viewportModalClientIds: viewportModalClientIds2
+      viewportModalClientIds: viewportModalClientIds2,
+      blockVisibilitySetting
     } = (0, import_data121.useSelect)(selector2, []);
     const isMatch = (0, import_keyboard_shortcuts10.__unstableUseShortcutEventMatch)();
     const {
@@ -60212,6 +60230,9 @@ var wp;
           }
         }
       } else if (isMatch("core/block-editor/toggle-block-visibility", event)) {
+        if (blockVisibilitySetting === false) {
+          return;
+        }
         const clientIds = getSelectedBlockClientIds2();
         if (clientIds.length) {
           event.preventDefault();
@@ -60536,22 +60557,26 @@ var wp;
     return { isLoading: false, commands };
   };
   var getQuickActionsCommands = () => function useQuickActionsCommands() {
-    const { clientIds, isUngroupable: isUngroupable2, isGroupable: isGroupable2 } = (0, import_data123.useSelect)(
-      (select3) => {
-        const {
-          getSelectedBlockClientIds: getSelectedBlockClientIds2,
-          isUngroupable: _isUngroupable,
-          isGroupable: _isGroupable
-        } = select3(store);
-        const selectedBlockClientIds = getSelectedBlockClientIds2();
-        return {
-          clientIds: selectedBlockClientIds,
-          isUngroupable: _isUngroupable(),
-          isGroupable: _isGroupable()
-        };
-      },
-      []
-    );
+    const {
+      clientIds,
+      isUngroupable: isUngroupable2,
+      isGroupable: isGroupable2,
+      blockVisibilitySetting
+    } = (0, import_data123.useSelect)((select3) => {
+      const {
+        getSelectedBlockClientIds: getSelectedBlockClientIds2,
+        getSettings: getSettings7,
+        isUngroupable: _isUngroupable,
+        isGroupable: _isGroupable
+      } = select3(store);
+      const selectedBlockClientIds = getSelectedBlockClientIds2();
+      return {
+        clientIds: selectedBlockClientIds,
+        isUngroupable: _isUngroupable(),
+        isGroupable: _isGroupable(),
+        blockVisibilitySetting: getSettings7().__experimentalFeatures?.blockVisibility?.allowEditing
+      };
+    }, []);
     const {
       canInsertBlockType: canInsertBlockType2,
       getBlockRootClientId: getBlockRootClientId2,
@@ -60665,7 +60690,7 @@ var wp;
     const allBlocksDefaultMode = clientIds.every(
       (id) => getBlockEditingMode2(id) === "default"
     );
-    if (supportsVisibility && allBlocksDefaultMode) {
+    if (supportsVisibility && allBlocksDefaultMode && blockVisibilitySetting !== false) {
       const hasHiddenBlock = clientIds.some(
         (id) => isBlockHiddenAnywhere2(id)
       );
@@ -61554,7 +61579,8 @@ var wp;
       blockEditingMode,
       allowRightClickOverrides,
       editedSection,
-      viewportSettings
+      viewportSettings,
+      blockVisibilitySetting
     } = (0, import_data127.useSelect)(
       (select3) => {
         const {
@@ -61571,7 +61597,8 @@ var wp;
           blockEditingMode: getBlockEditingModeForClientId(clientId),
           allowRightClickOverrides: settings2.allowRightClickOverrides,
           editedSection: getEditedContentOnlySection2(),
-          viewportSettings: settings2.__experimentalFeatures?.viewport
+          viewportSettings: settings2.__experimentalFeatures?.viewport,
+          blockVisibilitySetting: settings2.__experimentalFeatures?.blockVisibility?.allowEditing
         };
       },
       [clientId]
@@ -61729,6 +61756,9 @@ var wp;
           updateFocusAndSelection(newlySelectedBlocks[0], false);
         }
       } else if (isMatch("core/block-editor/toggle-block-visibility", event)) {
+        if (blockVisibilitySetting === false) {
+          return;
+        }
         event.preventDefault();
         const { blocksToUpdate } = getBlocksToUpdate();
         const blocks2 = getBlocksByClientId2(blocksToUpdate);
