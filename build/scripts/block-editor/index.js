@@ -93689,12 +93689,12 @@ var wp;
       isResponsiveEditing: isResponsiveEditing3
     } = (0, import_data187.useSelect)(
       (select3) => {
-        const blockEditorSelect = select3(store);
-        const { getBlockAttributes: getBlockAttributes3, getSettings: getSettings7 } = blockEditorSelect;
         const {
+          getBlockAttributes: getBlockAttributes3,
+          getSettings: getSettings7,
           getSelectedBlockStyleState: getSelectedBlockStyleState2,
           isResponsiveEditing: getIsResponsiveEditing
-        } = unlock(blockEditorSelect);
+        } = unlock(select3(store));
         return {
           activeBlockVariation: select3(
             import_blocks120.store
