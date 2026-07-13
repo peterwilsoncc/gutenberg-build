@@ -29234,8 +29234,8 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/autocomplete/index.mjs
   var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
   var {
-    subscribeDelegatedListener
-  } = unlock(import_compose18.privateApis);
+    subscribeOwnedListener
+  } = unlock(import_rich_text2.privateApis);
   var EMPTY_FILTERED_OPTIONS = [];
   var AUTOCOMPLETE_HOOK_REFERENCE = {};
   function getCompletionObject(completion) {
@@ -29501,7 +29501,7 @@ This message will only show in development mode. It won't appear in production. 
       function _onKeyDown(event) {
         onKeyDownRef.current?.(event);
       }
-      return subscribeDelegatedListener(element, "keydown", _onKeyDown, true);
+      return subscribeOwnedListener(element, "keydown", _onKeyDown, true);
     }, [])]);
     const didUserInput = record.text !== previousRecord?.text;
     if (!didUserInput) {

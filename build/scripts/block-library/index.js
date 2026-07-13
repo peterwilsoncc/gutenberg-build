@@ -40489,10 +40489,11 @@ ${text}
   // packages/block-library/build-module/list-item/hooks/use-enter.mjs
   var import_blocks47 = __toESM(require_blocks(), 1);
   var import_compose29 = __toESM(require_compose(), 1);
+  var import_rich_text5 = __toESM(require_rich_text(), 1);
   var import_keycodes2 = __toESM(require_keycodes(), 1);
   var import_data59 = __toESM(require_data(), 1);
   var import_block_editor130 = __toESM(require_block_editor(), 1);
-  var { subscribeDelegatedListener: subscribeDelegatedListener2 } = unlock(import_compose29.privateApis);
+  var { subscribeOwnedListener } = unlock(import_rich_text5.privateApis);
   function useEnter2(clientId) {
     const { replaceBlocks, selectionChange } = (0, import_data59.useDispatch)(import_block_editor130.store);
     const {
@@ -40549,21 +40550,17 @@ ${text}
         );
         selectionChange(middle.clientId);
       }
-      return subscribeDelegatedListener2(
-        element,
-        "keydown",
-        onKeyDown,
-        true
-      );
+      return subscribeOwnedListener(element, "keydown", onKeyDown, true);
     }, []);
   }
 
   // packages/block-library/build-module/list-item/hooks/use-space.mjs
   var import_compose30 = __toESM(require_compose(), 1);
+  var import_rich_text6 = __toESM(require_rich_text(), 1);
   var import_keycodes3 = __toESM(require_keycodes(), 1);
   var import_block_editor131 = __toESM(require_block_editor(), 1);
   var import_data60 = __toESM(require_data(), 1);
-  var { subscribeDelegatedListener: subscribeDelegatedListener3 } = unlock(import_compose30.privateApis);
+  var { subscribeOwnedListener: subscribeOwnedListener2 } = unlock(import_rich_text6.privateApis);
   function useSpace(clientId) {
     const { getSelectionStart, getSelectionEnd, getBlockIndex } = (0, import_data60.useSelect)(import_block_editor131.store);
     const indentListItem = useIndentListItem(clientId);
@@ -40592,7 +40589,7 @@ ${text}
             }
           }
         }
-        return subscribeDelegatedListener3(
+        return subscribeOwnedListener2(
           element,
           "keydown",
           onKeyDown,
@@ -52261,11 +52258,12 @@ ${text}
   // packages/block-library/build-module/paragraph/use-enter.mjs
   var import_element99 = __toESM(require_element(), 1);
   var import_compose42 = __toESM(require_compose(), 1);
+  var import_rich_text7 = __toESM(require_rich_text(), 1);
   var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_data101 = __toESM(require_data(), 1);
   var import_block_editor178 = __toESM(require_block_editor(), 1);
   var import_blocks74 = __toESM(require_blocks(), 1);
-  var { subscribeDelegatedListener: subscribeDelegatedListener4 } = unlock(import_compose42.privateApis);
+  var { subscribeOwnedListener: subscribeOwnedListener3 } = unlock(import_rich_text7.privateApis);
   function useOnEnter(props) {
     const { batch } = (0, import_data101.useRegistry)();
     const { moveBlocksToPosition, replaceBlocks, selectionChange } = (0, import_data101.useDispatch)(import_block_editor178.store);
@@ -52342,12 +52340,7 @@ ${text}
           selectionChange(middle.clientId);
         });
       }
-      return subscribeDelegatedListener4(
-        element,
-        "keydown",
-        onKeyDown,
-        true
-      );
+      return subscribeOwnedListener3(element, "keydown", onKeyDown, true);
     }, []);
   }
 
@@ -52547,6 +52540,7 @@ ${text}
     supports: {
       align: ["wide", "full"],
       splitting: true,
+      editableRoot: true,
       anchor: true,
       className: false,
       __experimentalBorder: {
@@ -62118,7 +62112,7 @@ ${text}
 
   // packages/block-library/build-module/pullquote/transforms.mjs
   var import_blocks94 = __toESM(require_blocks(), 1);
-  var import_rich_text5 = __toESM(require_rich_text(), 1);
+  var import_rich_text8 = __toESM(require_rich_text(), 1);
   var transforms27 = {
     from: [
       {
@@ -62127,10 +62121,10 @@ ${text}
         blocks: ["core/paragraph"],
         transform: (attributes) => {
           return (0, import_blocks94.createBlock)("core/pullquote", {
-            value: (0, import_rich_text5.toHTMLString)({
-              value: (0, import_rich_text5.join)(
+            value: (0, import_rich_text8.toHTMLString)({
+              value: (0, import_rich_text8.join)(
                 attributes.map(
-                  ({ content }) => (0, import_rich_text5.create)({ html: content })
+                  ({ content }) => (0, import_rich_text8.create)({ html: content })
                 ),
                 "\n"
               )
@@ -80431,7 +80425,7 @@ ${text}
     name: () => name121,
     settings: () => settings120
   });
-  var import_rich_text7 = __toESM(require_rich_text(), 1);
+  var import_rich_text10 = __toESM(require_rich_text(), 1);
 
   // packages/block-library/build-module/footnotes/edit.mjs
   var import_block_editor298 = __toESM(require_block_editor(), 1);
@@ -80634,7 +80628,7 @@ ${text}
 
   // packages/block-library/build-module/footnotes/format.mjs
   var import_i18n281 = __toESM(require_i18n(), 1);
-  var import_rich_text6 = __toESM(require_rich_text(), 1);
+  var import_rich_text9 = __toESM(require_rich_text(), 1);
   var import_block_editor299 = __toESM(require_block_editor(), 1);
   var import_data174 = __toESM(require_data(), 1);
   var import_core_data102 = __toESM(require_core_data(), 1);
@@ -80717,7 +80711,7 @@ ${text}
             id = object?.attributes?.["data-fn"];
           } else {
             id = v4_default();
-            const newValue = (0, import_rich_text6.insertObject)(
+            const newValue = (0, import_rich_text9.insertObject)(
               value,
               {
                 type: formatName,
@@ -80780,7 +80774,7 @@ ${text}
     edit: FootnotesEdit
   };
   var init120 = () => {
-    (0, import_rich_text7.registerFormatType)(formatName, format2);
+    (0, import_rich_text10.registerFormatType)(formatName, format2);
     initBlock({ name: name121, metadata: block_default120, settings: settings120 });
   };
 

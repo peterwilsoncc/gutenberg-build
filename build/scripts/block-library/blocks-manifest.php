@@ -5038,6 +5038,7 @@ return array(
 				'full'
 			),
 			'splitting' => true,
+			'editableRoot' => true,
 			'anchor' => true,
 			'className' => false,
 			'__experimentalBorder' => array(
