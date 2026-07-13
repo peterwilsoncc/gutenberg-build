@@ -66175,8 +66175,10 @@ ${text}
       background: {
         backgroundImage: true,
         backgroundSize: true,
+        gradient: true,
         __experimentalDefaultControls: {
-          backgroundImage: true
+          backgroundImage: true,
+          gradient: true
         }
       },
       __experimentalBorder: {
