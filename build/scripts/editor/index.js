@@ -90236,14 +90236,14 @@ If there's a particular need for this, please submit a feature request at https:
         value: "Desktop",
         label: (0, import_i18n288.__)("Desktop"),
         icon: desktop_default,
-        info: isResponsiveEditing ? (0, import_i18n288.__)("Edit across all breakpoints.") : (0, import_i18n288.__)("Preview desktop viewport.")
+        info: isResponsiveEditing ? (0, import_i18n288.__)("Style all viewports.") : (0, import_i18n288.__)("Preview desktop viewport.")
       },
       ...hasTabletViewport ? [
         {
           value: "Tablet",
           label: (0, import_i18n288.__)("Tablet"),
           icon: tablet_default,
-          info: isResponsiveEditing ? (0, import_i18n288.__)("Make tablet exclusive style changes.") : (0, import_i18n288.__)("Preview tablet viewport.")
+          info: isResponsiveEditing ? (0, import_i18n288.__)("Style tablet only.") : (0, import_i18n288.__)("Preview tablet viewport.")
         }
       ] : [],
       ...hasMobileViewport ? [
@@ -90251,7 +90251,7 @@ If there's a particular need for this, please submit a feature request at https:
           value: "Mobile",
           label: (0, import_i18n288.__)("Mobile"),
           icon: mobile_default,
-          info: isResponsiveEditing ? (0, import_i18n288.__)("Make mobile exclusive style changes.") : (0, import_i18n288.__)("Preview mobile viewport.")
+          info: isResponsiveEditing ? (0, import_i18n288.__)("Style mobile only.") : (0, import_i18n288.__)("Preview mobile viewport.")
         }
       ] : []
     ];
@@ -90285,7 +90285,7 @@ If there's a particular need for this, please submit a feature request at https:
               role: "menuitemcheckbox",
               onClick: handleResponsiveEditingChange,
               info: (0, import_i18n288.__)(
-                "Style changes apply only to the current viewport."
+                "Style changes apply only to the selected viewport."
               ),
               children: (0, import_i18n288.__)("Responsive editing")
             }
