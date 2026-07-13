@@ -443,12 +443,16 @@
   margin: var(--wp--preset--spacing--20, 0.625em) 0;
   position: relative;
 }
+.wp-block-playlist .wp-block-playlist__waveform-player:focus-visible {
+  outline: revert;
+  outline-offset: revert;
+}
 .wp-block-playlist .waveform-track {
   height: 100px;
   gap: 0;
 }
 .wp-block-playlist .waveform-btn {
-  border: 0;
+  border: none;
   border-radius: 0;
   border-end-start-radius: 0.125rem;
   border-start-start-radius: 0.125rem;
@@ -479,6 +483,11 @@
 }
 .wp-block-playlist .waveform-track.waveform-align-bottom .waveform-btn {
   margin-bottom: 0;
+}
+.wp-block-playlist .waveform-btn:focus-visible,
+.wp-block-playlist .waveform-container:focus-visible {
+  outline: revert;
+  outline-offset: revert;
 }
 .wp-block-playlist .waveform-artist {
   opacity: 0.7;

@@ -52766,6 +52766,18 @@ ${text}
         enum: ["bars", "mirror", "line", "blocks", "dots", "seekbar"],
         default: "bars"
       },
+      waveformColor: {
+        type: "string"
+      },
+      waveformGradient: {
+        type: "string"
+      },
+      waveformBackgroundColor: {
+        type: "string"
+      },
+      waveformBackgroundGradient: {
+        type: "string"
+      },
       caption: {
         type: "string"
       }
@@ -53853,11 +53865,164 @@ ${text}
   function getComputedStyle4(element) {
     return element.ownerDocument.defaultView.getComputedStyle(element);
   }
-  function getWaveformColors(element) {
-    const textColor = getComputedStyle4(element).color;
-    const waveformColor = w(textColor).alpha(0.3).toRgbString();
-    const progressColor = w(textColor).alpha(0.6).toRgbString();
-    return { textColor, waveformColor, progressColor };
+  function getTopLevelGradientParts(gradientValue) {
+    const match = gradientValue?.trim().match(/^[\w-]+-gradient\((.*)\)$/i);
+    if (!match) {
+      return [];
+    }
+    const parts = [];
+    let depth = 0;
+    let current = "";
+    for (const character of match[1]) {
+      if (character === "(") {
+        ++depth;
+      } else if (character === ")") {
+        --depth;
+      }
+      if (character === "," && depth === 0) {
+        parts.push(current.trim());
+        current = "";
+        continue;
+      }
+      current += character;
+    }
+    if (current.trim()) {
+      parts.push(current.trim());
+    }
+    return parts;
+  }
+  function getLeadingColorFunction(value) {
+    const match = value.match(/^([\w-]+)\(/);
+    if (!match) {
+      return;
+    }
+    const supportedFunctions = [
+      "color",
+      "color-mix",
+      "hsl",
+      "hsla",
+      "hwb",
+      "lab",
+      "lch",
+      "oklab",
+      "oklch",
+      "rgb",
+      "rgba",
+      "var"
+    ];
+    if (!supportedFunctions.includes(match[1].toLowerCase())) {
+      return;
+    }
+    let depth = 0;
+    let foundOpeningParenthesis = false;
+    for (let index = 0; index < value.length; index++) {
+      const character = value[index];
+      if (character === "(") {
+        foundOpeningParenthesis = true;
+        ++depth;
+      } else if (character === ")") {
+        --depth;
+      }
+      if (foundOpeningParenthesis && depth === 0) {
+        return value.slice(0, index + 1);
+      }
+    }
+  }
+  function getColorStopValue(gradientPart) {
+    const colorFunction = getLeadingColorFunction(gradientPart);
+    if (colorFunction) {
+      return colorFunction;
+    }
+    const [possibleColor] = gradientPart.split(/\s+/);
+    if (w(possibleColor).isValid()) {
+      return possibleColor;
+    }
+  }
+  function getWaveformGradientDirection(gradientValue) {
+    const parts = getTopLevelGradientParts(gradientValue);
+    const direction = parts[0];
+    const angleMatch = direction?.match(/^(-?\d+(?:\.\d+)?)deg$/i);
+    if (angleMatch) {
+      const angle = (Number(angleMatch[1]) % 360 + 360) % 360;
+      if (angle === 90 || angle === 270) {
+        return "horizontal";
+      }
+      if (angle === 0 || angle === 180) {
+        return "vertical";
+      }
+      return "diagonal";
+    }
+    if (!direction?.startsWith("to ")) {
+      return void 0;
+    }
+    const sideOrCorner = direction.toLowerCase().replace(/^to\s+/, "");
+    const hasHorizontalSide = sideOrCorner.includes("left") || sideOrCorner.includes("right");
+    const hasVerticalSide = sideOrCorner.includes("top") || sideOrCorner.includes("bottom");
+    if (hasHorizontalSide && hasVerticalSide) {
+      return "diagonal";
+    }
+    if (hasHorizontalSide) {
+      return "horizontal";
+    }
+    if (hasVerticalSide) {
+      return "vertical";
+    }
+  }
+  function resolveColorValue(element, colorValue) {
+    if (!colorValue || w(colorValue).isValid()) {
+      return colorValue;
+    }
+    const colorResolver = element.ownerDocument.createElement("span");
+    colorResolver.style.color = colorValue;
+    if (!colorResolver.style.color) {
+      return colorValue;
+    }
+    element.appendChild(colorResolver);
+    const resolvedColor = getComputedStyle4(colorResolver).color;
+    colorResolver.remove();
+    return resolvedColor && w(resolvedColor).isValid() ? resolvedColor : colorValue;
+  }
+  function getResolvedGradientStops(element, gradientValue) {
+    const stops = getWaveformGradientStops(gradientValue)?.map((colorValue) => resolveColorValue(element, colorValue)).filter((colorValue) => w(colorValue).isValid());
+    return stops?.length > 1 ? stops : void 0;
+  }
+  function applyAlpha(colorValue, alpha) {
+    if (Array.isArray(colorValue)) {
+      return colorValue.map(
+        (color) => w(color).alpha(alpha).toRgbString()
+      );
+    }
+    return w(colorValue).alpha(alpha).toRgbString();
+  }
+  function getRepresentativeColor(colorValue) {
+    if (Array.isArray(colorValue)) {
+      return colorValue[colorValue.length - 1];
+    }
+    return colorValue;
+  }
+  function getWaveformGradientStops(gradientValue) {
+    const stops = getTopLevelGradientParts(gradientValue).map(getColorStopValue).filter(Boolean);
+    return stops.length > 1 ? stops : void 0;
+  }
+  function serializeColorValue(colorValue) {
+    return Array.isArray(colorValue) ? JSON.stringify(colorValue) : colorValue;
+  }
+  function getWaveformColors(element, waveformColorValue, textColorValue, waveformGradientValue) {
+    const textColor = textColorValue || getComputedStyle4(element).color;
+    const waveformGradientStops = getResolvedGradientStops(
+      element,
+      waveformGradientValue
+    );
+    const waveformBaseColor = waveformGradientStops || waveformColorValue || textColor;
+    const waveformColor = applyAlpha(waveformBaseColor, 0.3);
+    const progressColor = applyAlpha(waveformBaseColor, 0.6);
+    const waveformGradient = waveformGradientStops ? getWaveformGradientDirection(waveformGradientValue) : void 0;
+    return {
+      textColor,
+      waveformColor,
+      progressColor,
+      ...waveformGradient && { waveformGradient }
+    };
   }
   function createWaveformContainer({
     url,
@@ -53866,6 +54031,7 @@ ${text}
     artwork,
     waveformColor,
     progressColor,
+    waveformGradient,
     buttonColor,
     seekLabel,
     seekValueText,
@@ -53877,8 +54043,17 @@ ${text}
     container.setAttribute("data-url", url);
     container.setAttribute("data-height", String(height));
     container.setAttribute("data-waveform-style", waveformStyle);
-    container.setAttribute("data-waveform-color", waveformColor);
-    container.setAttribute("data-progress-color", progressColor);
+    container.setAttribute(
+      "data-waveform-color",
+      serializeColorValue(waveformColor)
+    );
+    container.setAttribute(
+      "data-progress-color",
+      serializeColorValue(progressColor)
+    );
+    if (waveformGradient) {
+      container.setAttribute("data-waveform-gradient", waveformGradient);
+    }
     container.setAttribute("data-button-color", buttonColor);
     container.setAttribute(
       "data-seek-label",
@@ -53899,6 +54074,52 @@ ${text}
       container.setAttribute("data-artwork", artwork);
     }
     return container;
+  }
+  function applyWaveformPlayerStyles(container, {
+    backgroundColor,
+    backgroundGradient,
+    textColor,
+    playButtonColor,
+    playButtonGradient
+  } = {}) {
+    const waveformContainer = container.querySelector(".waveform-container");
+    const playButton = container.querySelector(".waveform-btn");
+    const playButtonBaseColor = getRepresentativeColor(
+      getResolvedGradientStops(container, playButtonGradient) || playButtonColor
+    );
+    if (playButtonBaseColor) {
+      container.style.setProperty(
+        "--wfp-button-color",
+        playButtonBaseColor
+      );
+    } else {
+      container.style.removeProperty("--wfp-button-color");
+    }
+    if (textColor) {
+      container.style.setProperty("--wfp-text-color", textColor);
+      container.style.setProperty("--wfp-text-secondary-color", textColor);
+    } else {
+      container.style.removeProperty("--wfp-text-color");
+      container.style.removeProperty("--wfp-text-secondary-color");
+    }
+    if (playButton) {
+      if (playButtonGradient) {
+        playButton.style.background = playButtonGradient;
+      } else {
+        playButton.style.removeProperty("background");
+      }
+    }
+    if (waveformContainer) {
+      if (backgroundGradient) {
+        waveformContainer.style.background = backgroundGradient;
+      } else if (backgroundColor) {
+        waveformContainer.style.removeProperty("background");
+        waveformContainer.style.backgroundColor = backgroundColor;
+      } else {
+        waveformContainer.style.removeProperty("background");
+        waveformContainer.style.removeProperty("background-color");
+      }
+    }
   }
   function styleSvgIcons(container, buttonColor) {
     const isButtonDark = w(buttonColor).isDark();
@@ -53963,6 +54184,11 @@ ${text}
     artist,
     image,
     imageAlt,
+    waveformColor: waveformColorValue,
+    waveformGradient: waveformGradientValue,
+    textColor: textColorValue,
+    backgroundColor,
+    backgroundGradient,
     autoPlay,
     onEnded,
     labels,
@@ -53970,7 +54196,19 @@ ${text}
     showPlayButtonArtwork = false
   }) {
     const playerArtwork = showPlayButtonArtwork ? void 0 : image;
-    const { textColor, waveformColor, progressColor } = getWaveformColors(element);
+    const { textColor, waveformColor, progressColor, waveformGradient } = getWaveformColors(
+      element,
+      waveformColorValue,
+      textColorValue,
+      waveformGradientValue
+    );
+    const waveformGradientStops = getResolvedGradientStops(
+      element,
+      waveformGradientValue
+    );
+    const waveformButtonColor = getRepresentativeColor(
+      waveformGradientStops || waveformColorValue
+    );
     const container = createWaveformContainer({
       url: src,
       title,
@@ -53978,6 +54216,7 @@ ${text}
       artwork: playerArtwork,
       waveformColor,
       progressColor,
+      waveformGradient,
       buttonColor: textColor,
       seekLabel: title || labels?.seek,
       seekValueText: labels?.seekValueText,
@@ -53988,10 +54227,17 @@ ${text}
     if (instance.artworkEl) {
       instance.artworkEl.alt = imageAlt || "";
     }
+    applyWaveformPlayerStyles(container, {
+      backgroundColor,
+      backgroundGradient,
+      textColor,
+      playButtonColor: showPlayButtonArtwork ? void 0 : waveformButtonColor,
+      playButtonGradient: showPlayButtonArtwork ? void 0 : waveformGradientValue
+    });
     let cleanupPlayButtonAccessibility;
     const handlers = {
       ready: () => {
-        styleSvgIcons(container, textColor);
+        styleSvgIcons(container, waveformButtonColor || textColor);
         if (showPlayButtonArtwork) {
           setupPlayButtonArtwork(container, image);
         }
@@ -54060,6 +54306,11 @@ ${text}
     artist,
     image,
     imageAlt,
+    color,
+    gradient,
+    backgroundColor,
+    backgroundGradient,
+    textColor,
     waveformStyle,
     onEnded,
     showPlayButtonArtwork = false
@@ -54068,9 +54319,43 @@ ${text}
     const playerRef = (0, import_element101.useRef)();
     const hasSrc = !!src;
     const metadataRef = (0, import_element101.useRef)({ src, title, artist, image, imageAlt });
+    const stylesRef = (0, import_element101.useRef)({
+      color,
+      gradient,
+      backgroundColor,
+      backgroundGradient,
+      textColor
+    });
     (0, import_element101.useEffect)(() => {
       metadataRef.current = { src, title, artist, image, imageAlt };
     }, [src, title, artist, image, imageAlt]);
+    (0, import_element101.useEffect)(() => {
+      stylesRef.current = {
+        color,
+        gradient,
+        backgroundColor,
+        backgroundGradient,
+        textColor
+      };
+    }, [color, gradient, backgroundColor, backgroundGradient, textColor]);
+    (0, import_element101.useEffect)(() => {
+      if (playerRef.current?.container) {
+        applyWaveformPlayerStyles(playerRef.current.container, {
+          backgroundColor,
+          backgroundGradient,
+          textColor,
+          playButtonColor: showPlayButtonArtwork ? void 0 : color,
+          playButtonGradient: showPlayButtonArtwork ? void 0 : gradient
+        });
+      }
+    }, [
+      backgroundColor,
+      backgroundGradient,
+      color,
+      gradient,
+      showPlayButtonArtwork,
+      textColor
+    ]);
     const ref = (0, import_compose44.useRefEffect)(
       (element) => {
         if (!hasSrc) {
@@ -54088,6 +54373,11 @@ ${text}
             artist: metadataRef.current.artist,
             image: metadataRef.current.image,
             imageAlt: metadataRef.current.imageAlt,
+            waveformColor: stylesRef.current.color,
+            waveformGradient: stylesRef.current.gradient,
+            backgroundColor: stylesRef.current.backgroundColor,
+            backgroundGradient: stylesRef.current.backgroundGradient,
+            textColor: stylesRef.current.textColor,
             waveformStyle,
             labels: {
               seek: (0, import_i18n163.__)("Seek"),
@@ -54112,7 +54402,15 @@ ${text}
           playerDestroy?.();
         };
       },
-      [onEndedEvent, hasSrc, waveformStyle, showPlayButtonArtwork]
+      [
+        onEndedEvent,
+        hasSrc,
+        waveformStyle,
+        color,
+        gradient,
+        textColor,
+        showPlayButtonArtwork
+      ]
     );
     (0, import_element101.useEffect)(() => {
       if (playerRef.current?.instance) {
@@ -54223,13 +54521,36 @@ ${text}
       showPlayButtonArtwork,
       showArtists,
       showTrackLength,
-      waveformStyle = DEFAULT_WAVEFORM_STYLE
+      waveformStyle = DEFAULT_WAVEFORM_STYLE,
+      waveformColor,
+      waveformGradient,
+      waveformBackgroundColor,
+      waveformBackgroundGradient
     } = attributes;
     const blockProps = (0, import_block_editor182.useBlockProps)();
     const waveformPanelId = `${clientId}-waveform`;
     const { replaceInnerBlocks } = (0, import_data104.useDispatch)(import_block_editor182.store);
     const { createErrorNotice } = (0, import_data104.useDispatch)(import_notices14.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+    const colorGradientSettings = (0, import_block_editor182.__experimentalUseMultipleOriginColorsAndGradients)();
+    const colors = (0, import_element103.useMemo)(
+      () => colorGradientSettings.colors.flatMap(
+        (origin) => origin?.colors ?? []
+      ),
+      [colorGradientSettings.colors]
+    );
+    const gradients = (0, import_element103.useMemo)(
+      () => colorGradientSettings.gradients.flatMap(
+        (origin) => origin?.gradients ?? []
+      ),
+      [colorGradientSettings.gradients]
+    );
+    const hasColors = colors.length > 0 || !colorGradientSettings.disableCustomColors;
+    const hasGradients = gradients.length > 0 || !colorGradientSettings.disableCustomGradients;
+    const waveformGradientValue = waveformGradient;
+    const waveformBackgroundGradientValue = waveformBackgroundGradient;
+    let waveformColorGradientChange;
+    let waveformBackgroundColorGradientChange;
     function onUploadError(message) {
       createErrorNotice(message, { type: "snackbar" });
     }
@@ -54338,11 +54659,92 @@ ${text}
       },
       [setAttributes]
     );
+    function updateWaveformColor(colorValue) {
+      const isSettingColor = colorValue !== void 0;
+      if (!isSettingColor && waveformColorGradientChange === "gradient") {
+        waveformColorGradientChange = void 0;
+        return;
+      }
+      waveformColorGradientChange = "color";
+      setAttributes({
+        waveformColor: colorValue,
+        waveformGradient: void 0
+      });
+    }
+    function updateWaveformGradient(gradientValue) {
+      const isSettingGradient = gradientValue !== void 0;
+      if (!isSettingGradient && waveformColorGradientChange === "color") {
+        waveformColorGradientChange = void 0;
+        return;
+      }
+      waveformColorGradientChange = "gradient";
+      setAttributes({
+        waveformGradient: gradientValue,
+        waveformColor: void 0
+      });
+    }
+    function updateWaveformBackgroundColor(colorValue) {
+      const isSettingColor = colorValue !== void 0;
+      if (!isSettingColor && waveformBackgroundColorGradientChange === "gradient") {
+        waveformBackgroundColorGradientChange = void 0;
+        return;
+      }
+      waveformBackgroundColorGradientChange = "color";
+      setAttributes({
+        waveformBackgroundColor: colorValue,
+        waveformBackgroundGradient: void 0
+      });
+    }
+    function updateWaveformBackgroundGradient(gradientValue) {
+      const isSettingGradient = gradientValue !== void 0;
+      if (!isSettingGradient && waveformBackgroundColorGradientChange === "color") {
+        waveformBackgroundColorGradientChange = void 0;
+        return;
+      }
+      waveformBackgroundColorGradientChange = "gradient";
+      setAttributes({
+        waveformBackgroundGradient: gradientValue,
+        waveformBackgroundColor: void 0
+      });
+    }
     const hasSelectedChild = (0, import_data104.useSelect)(
       (select10) => select10(import_block_editor182.store).hasSelectedInnerBlock(clientId),
       [clientId]
     );
     const hasAnySelected = isSelected || hasSelectedChild;
+    const colorSettings = [];
+    if (hasColors || hasGradients) {
+      colorSettings.push(
+        {
+          colorValue: hasColors ? waveformColor : void 0,
+          gradientValue: hasGradients ? waveformGradientValue : void 0,
+          label: (0, import_i18n165.__)("Waveform & Play button"),
+          onColorChange: hasColors ? updateWaveformColor : void 0,
+          onGradientChange: hasGradients ? updateWaveformGradient : void 0,
+          isShownByDefault: true,
+          clearable: true,
+          enableAlpha: true,
+          resetAllFilter: () => ({
+            waveformColor: void 0,
+            waveformGradient: void 0
+          })
+        },
+        {
+          colorValue: hasColors ? waveformBackgroundColor : void 0,
+          gradientValue: hasGradients ? waveformBackgroundGradientValue : void 0,
+          label: (0, import_i18n165.__)("Waveform background"),
+          onColorChange: hasColors ? updateWaveformBackgroundColor : void 0,
+          onGradientChange: hasGradients ? updateWaveformBackgroundGradient : void 0,
+          isShownByDefault: true,
+          clearable: true,
+          enableAlpha: true,
+          resetAllFilter: () => ({
+            waveformBackgroundColor: void 0,
+            waveformBackgroundGradient: void 0
+          })
+        }
+      );
+    }
     const innerBlocksProps = (0, import_block_editor182.useInnerBlocksProps)(blockProps, {
       __experimentalAppenderTagName: "li",
       renderAppender: hasAnySelected && import_block_editor182.InnerBlocks.ButtonBlockAppender
@@ -54549,36 +54951,51 @@ ${text}
           ]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(import_block_editor182.InspectorControls, { group: "styles", children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(import_block_editor182.InspectorControls, { group: "styles", children: /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)(
         import_components104.__experimentalToolsPanel,
         {
           label: (0, import_i18n165.__)("Waveform"),
           resetAll: () => {
             setAttributes({
-              waveformStyle: void 0
+              waveformStyle: void 0,
+              waveformColor: void 0,
+              waveformGradient: void 0,
+              waveformBackgroundColor: void 0,
+              waveformBackgroundGradient: void 0
             });
           },
           panelId: waveformPanelId,
           dropdownMenuProps,
-          children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
-            import_components104.__experimentalToolsPanelItem,
-            {
-              label: (0, import_i18n165.__)("Shape"),
-              isShownByDefault: true,
-              hasValue: () => waveformStyle !== DEFAULT_WAVEFORM_STYLE,
-              onDeselect: () => onChangeWaveformStyle(DEFAULT_WAVEFORM_STYLE),
-              panelId: waveformPanelId,
-              children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
-                import_components104.SelectControl,
-                {
-                  label: (0, import_i18n165.__)("Shape"),
-                  value: waveformStyle,
-                  options: WAVEFORM_STYLE_OPTIONS,
-                  onChange: onChangeWaveformStyle
-                }
-              )
-            }
-          )
+          children: [
+            colorSettings.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime371.jsx)("div", { className: "wp-block-playlist__waveform-color-controls", children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+              import_block_editor182.__experimentalColorGradientSettingsDropdown,
+              {
+                __experimentalIsRenderedInSidebar: true,
+                settings: colorSettings,
+                panelId: waveformPanelId,
+                ...colorGradientSettings
+              }
+            ) }),
+            /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+              import_components104.__experimentalToolsPanelItem,
+              {
+                label: (0, import_i18n165.__)("Shape"),
+                isShownByDefault: true,
+                hasValue: () => waveformStyle !== DEFAULT_WAVEFORM_STYLE,
+                onDeselect: () => onChangeWaveformStyle(DEFAULT_WAVEFORM_STYLE),
+                panelId: waveformPanelId,
+                children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(
+                  import_components104.SelectControl,
+                  {
+                    label: (0, import_i18n165.__)("Shape"),
+                    value: waveformStyle,
+                    options: WAVEFORM_STYLE_OPTIONS,
+                    onChange: onChangeWaveformStyle
+                  }
+                )
+              }
+            )
+          ]
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)("figure", { ...blockProps, children: [
@@ -54591,6 +55008,10 @@ ${text}
             image: currentTrackData?.image,
             imageAlt: currentTrackData?.imageAlt,
             waveformStyle,
+            color: waveformColor,
+            gradient: waveformGradientValue,
+            backgroundColor: waveformBackgroundColor,
+            backgroundGradient: waveformBackgroundGradientValue,
             onEnded: onTrackEnded,
             showPlayButtonArtwork: showPlayButtonArtwork === true
           }

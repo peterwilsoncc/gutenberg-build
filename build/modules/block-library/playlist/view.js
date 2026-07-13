@@ -1187,11 +1187,164 @@ var DEFAULT_SEEK_LABEL = "Seek";
 function getComputedStyle2(element) {
   return element.ownerDocument.defaultView.getComputedStyle(element);
 }
-function getWaveformColors(element) {
-  const textColor = getComputedStyle2(element).color;
-  const waveformColor = w(textColor).alpha(0.3).toRgbString();
-  const progressColor = w(textColor).alpha(0.6).toRgbString();
-  return { textColor, waveformColor, progressColor };
+function getTopLevelGradientParts(gradientValue) {
+  const match = gradientValue?.trim().match(/^[\w-]+-gradient\((.*)\)$/i);
+  if (!match) {
+    return [];
+  }
+  const parts = [];
+  let depth = 0;
+  let current = "";
+  for (const character of match[1]) {
+    if (character === "(") {
+      ++depth;
+    } else if (character === ")") {
+      --depth;
+    }
+    if (character === "," && depth === 0) {
+      parts.push(current.trim());
+      current = "";
+      continue;
+    }
+    current += character;
+  }
+  if (current.trim()) {
+    parts.push(current.trim());
+  }
+  return parts;
+}
+function getLeadingColorFunction(value) {
+  const match = value.match(/^([\w-]+)\(/);
+  if (!match) {
+    return;
+  }
+  const supportedFunctions = [
+    "color",
+    "color-mix",
+    "hsl",
+    "hsla",
+    "hwb",
+    "lab",
+    "lch",
+    "oklab",
+    "oklch",
+    "rgb",
+    "rgba",
+    "var"
+  ];
+  if (!supportedFunctions.includes(match[1].toLowerCase())) {
+    return;
+  }
+  let depth = 0;
+  let foundOpeningParenthesis = false;
+  for (let index = 0; index < value.length; index++) {
+    const character = value[index];
+    if (character === "(") {
+      foundOpeningParenthesis = true;
+      ++depth;
+    } else if (character === ")") {
+      --depth;
+    }
+    if (foundOpeningParenthesis && depth === 0) {
+      return value.slice(0, index + 1);
+    }
+  }
+}
+function getColorStopValue(gradientPart) {
+  const colorFunction = getLeadingColorFunction(gradientPart);
+  if (colorFunction) {
+    return colorFunction;
+  }
+  const [possibleColor] = gradientPart.split(/\s+/);
+  if (w(possibleColor).isValid()) {
+    return possibleColor;
+  }
+}
+function getWaveformGradientDirection(gradientValue) {
+  const parts = getTopLevelGradientParts(gradientValue);
+  const direction = parts[0];
+  const angleMatch = direction?.match(/^(-?\d+(?:\.\d+)?)deg$/i);
+  if (angleMatch) {
+    const angle = (Number(angleMatch[1]) % 360 + 360) % 360;
+    if (angle === 90 || angle === 270) {
+      return "horizontal";
+    }
+    if (angle === 0 || angle === 180) {
+      return "vertical";
+    }
+    return "diagonal";
+  }
+  if (!direction?.startsWith("to ")) {
+    return void 0;
+  }
+  const sideOrCorner = direction.toLowerCase().replace(/^to\s+/, "");
+  const hasHorizontalSide = sideOrCorner.includes("left") || sideOrCorner.includes("right");
+  const hasVerticalSide = sideOrCorner.includes("top") || sideOrCorner.includes("bottom");
+  if (hasHorizontalSide && hasVerticalSide) {
+    return "diagonal";
+  }
+  if (hasHorizontalSide) {
+    return "horizontal";
+  }
+  if (hasVerticalSide) {
+    return "vertical";
+  }
+}
+function resolveColorValue(element, colorValue) {
+  if (!colorValue || w(colorValue).isValid()) {
+    return colorValue;
+  }
+  const colorResolver = element.ownerDocument.createElement("span");
+  colorResolver.style.color = colorValue;
+  if (!colorResolver.style.color) {
+    return colorValue;
+  }
+  element.appendChild(colorResolver);
+  const resolvedColor = getComputedStyle2(colorResolver).color;
+  colorResolver.remove();
+  return resolvedColor && w(resolvedColor).isValid() ? resolvedColor : colorValue;
+}
+function getResolvedGradientStops(element, gradientValue) {
+  const stops = getWaveformGradientStops(gradientValue)?.map((colorValue) => resolveColorValue(element, colorValue)).filter((colorValue) => w(colorValue).isValid());
+  return stops?.length > 1 ? stops : void 0;
+}
+function applyAlpha(colorValue, alpha) {
+  if (Array.isArray(colorValue)) {
+    return colorValue.map(
+      (color) => w(color).alpha(alpha).toRgbString()
+    );
+  }
+  return w(colorValue).alpha(alpha).toRgbString();
+}
+function getRepresentativeColor(colorValue) {
+  if (Array.isArray(colorValue)) {
+    return colorValue[colorValue.length - 1];
+  }
+  return colorValue;
+}
+function getWaveformGradientStops(gradientValue) {
+  const stops = getTopLevelGradientParts(gradientValue).map(getColorStopValue).filter(Boolean);
+  return stops.length > 1 ? stops : void 0;
+}
+function serializeColorValue(colorValue) {
+  return Array.isArray(colorValue) ? JSON.stringify(colorValue) : colorValue;
+}
+function getWaveformColors(element, waveformColorValue, textColorValue, waveformGradientValue) {
+  const textColor = textColorValue || getComputedStyle2(element).color;
+  const waveformGradientStops = getResolvedGradientStops(
+    element,
+    waveformGradientValue
+  );
+  const waveformBaseColor = waveformGradientStops || waveformColorValue || textColor;
+  const waveformColor = applyAlpha(waveformBaseColor, 0.3);
+  const progressColor = applyAlpha(waveformBaseColor, 0.6);
+  const waveformGradient = waveformGradientStops ? getWaveformGradientDirection(waveformGradientValue) : void 0;
+  return {
+    textColor,
+    waveformColor,
+    progressColor,
+    ...waveformGradient && { waveformGradient }
+  };
 }
 function createWaveformContainer({
   url,
@@ -1200,6 +1353,7 @@ function createWaveformContainer({
   artwork,
   waveformColor,
   progressColor,
+  waveformGradient,
   buttonColor,
   seekLabel,
   seekValueText,
@@ -1211,8 +1365,17 @@ function createWaveformContainer({
   container.setAttribute("data-url", url);
   container.setAttribute("data-height", String(height));
   container.setAttribute("data-waveform-style", waveformStyle);
-  container.setAttribute("data-waveform-color", waveformColor);
-  container.setAttribute("data-progress-color", progressColor);
+  container.setAttribute(
+    "data-waveform-color",
+    serializeColorValue(waveformColor)
+  );
+  container.setAttribute(
+    "data-progress-color",
+    serializeColorValue(progressColor)
+  );
+  if (waveformGradient) {
+    container.setAttribute("data-waveform-gradient", waveformGradient);
+  }
   container.setAttribute("data-button-color", buttonColor);
   container.setAttribute(
     "data-seek-label",
@@ -1233,6 +1396,52 @@ function createWaveformContainer({
     container.setAttribute("data-artwork", artwork);
   }
   return container;
+}
+function applyWaveformPlayerStyles(container, {
+  backgroundColor,
+  backgroundGradient,
+  textColor,
+  playButtonColor,
+  playButtonGradient
+} = {}) {
+  const waveformContainer = container.querySelector(".waveform-container");
+  const playButton = container.querySelector(".waveform-btn");
+  const playButtonBaseColor = getRepresentativeColor(
+    getResolvedGradientStops(container, playButtonGradient) || playButtonColor
+  );
+  if (playButtonBaseColor) {
+    container.style.setProperty(
+      "--wfp-button-color",
+      playButtonBaseColor
+    );
+  } else {
+    container.style.removeProperty("--wfp-button-color");
+  }
+  if (textColor) {
+    container.style.setProperty("--wfp-text-color", textColor);
+    container.style.setProperty("--wfp-text-secondary-color", textColor);
+  } else {
+    container.style.removeProperty("--wfp-text-color");
+    container.style.removeProperty("--wfp-text-secondary-color");
+  }
+  if (playButton) {
+    if (playButtonGradient) {
+      playButton.style.background = playButtonGradient;
+    } else {
+      playButton.style.removeProperty("background");
+    }
+  }
+  if (waveformContainer) {
+    if (backgroundGradient) {
+      waveformContainer.style.background = backgroundGradient;
+    } else if (backgroundColor) {
+      waveformContainer.style.removeProperty("background");
+      waveformContainer.style.backgroundColor = backgroundColor;
+    } else {
+      waveformContainer.style.removeProperty("background");
+      waveformContainer.style.removeProperty("background-color");
+    }
+  }
 }
 function styleSvgIcons(container, buttonColor) {
   const isButtonDark = w(buttonColor).isDark();
@@ -1297,6 +1506,11 @@ function initWaveformPlayer(element, {
   artist,
   image,
   imageAlt,
+  waveformColor: waveformColorValue,
+  waveformGradient: waveformGradientValue,
+  textColor: textColorValue,
+  backgroundColor,
+  backgroundGradient,
   autoPlay,
   onEnded,
   labels,
@@ -1304,7 +1518,19 @@ function initWaveformPlayer(element, {
   showPlayButtonArtwork = false
 }) {
   const playerArtwork = showPlayButtonArtwork ? void 0 : image;
-  const { textColor, waveformColor, progressColor } = getWaveformColors(element);
+  const { textColor, waveformColor, progressColor, waveformGradient } = getWaveformColors(
+    element,
+    waveformColorValue,
+    textColorValue,
+    waveformGradientValue
+  );
+  const waveformGradientStops = getResolvedGradientStops(
+    element,
+    waveformGradientValue
+  );
+  const waveformButtonColor = getRepresentativeColor(
+    waveformGradientStops || waveformColorValue
+  );
   const container = createWaveformContainer({
     url: src,
     title,
@@ -1312,6 +1538,7 @@ function initWaveformPlayer(element, {
     artwork: playerArtwork,
     waveformColor,
     progressColor,
+    waveformGradient,
     buttonColor: textColor,
     seekLabel: title || labels?.seek,
     seekValueText: labels?.seekValueText,
@@ -1322,10 +1549,17 @@ function initWaveformPlayer(element, {
   if (instance.artworkEl) {
     instance.artworkEl.alt = imageAlt || "";
   }
+  applyWaveformPlayerStyles(container, {
+    backgroundColor,
+    backgroundGradient,
+    textColor,
+    playButtonColor: showPlayButtonArtwork ? void 0 : waveformButtonColor,
+    playButtonGradient: showPlayButtonArtwork ? void 0 : waveformGradientValue
+  });
   let cleanupPlayButtonAccessibility;
   const handlers = {
     ready: () => {
-      styleSvgIcons(container, textColor);
+      styleSvgIcons(container, waveformButtonColor || textColor);
       if (showPlayButtonArtwork) {
         setupPlayButtonArtwork(container, image);
       }
@@ -1470,6 +1704,10 @@ function initPlayer(ref, track, shouldAutoPlay, context) {
     artist: track.artist,
     image: track.image,
     imageAlt: track.imageAlt,
+    waveformColor: ref.dataset.waveformPlayerColor,
+    waveformGradient: ref.dataset.waveformPlayerGradient,
+    backgroundColor: ref.dataset.waveformPlayerBackgroundColor,
+    backgroundGradient: ref.dataset.waveformPlayerBackgroundGradient,
     autoPlay: shouldAutoPlay,
     labels,
     waveformStyle: context.waveformStyle,

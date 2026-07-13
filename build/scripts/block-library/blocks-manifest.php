@@ -5179,6 +5179,18 @@ return array(
 				),
 				'default' => 'bars'
 			),
+			'waveformColor' => array(
+				'type' => 'string'
+			),
+			'waveformGradient' => array(
+				'type' => 'string'
+			),
+			'waveformBackgroundColor' => array(
+				'type' => 'string'
+			),
+			'waveformBackgroundGradient' => array(
+				'type' => 'string'
+			),
 			'caption' => array(
 				'type' => 'string'
 			)
