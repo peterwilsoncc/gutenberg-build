@@ -1200,9 +1200,6 @@ iframe[name=editor-canvas] {
   outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
   outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
 }
-.block-editor-block-styles__variants button.components-button.block-editor-block-styles__item:focus:is(a), .block-editor-block-styles__variants button.components-button.block-editor-block-styles__item.is-active:focus:is(a) {
-  box-shadow: none;
-}
 .block-editor-block-styles__variants .block-editor-block-styles__item-text {
   word-break: break-all;
   white-space: normal;
