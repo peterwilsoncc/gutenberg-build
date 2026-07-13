@@ -6173,7 +6173,8 @@ return array(
 			'templateSlug',
 			'previewPostType',
 			'enhancedPagination',
-			'postType'
+			'postType',
+			'postId'
 		),
 		'supports' => array(
 			'anchor' => true,
@@ -6671,7 +6672,8 @@ return array(
 					),
 					'format' => array(
 						
-					)
+					),
+					'excludeCurrent' => null
 				)
 			),
 			'tagName' => array(
@@ -6687,7 +6689,8 @@ return array(
 			)
 		),
 		'usesContext' => array(
-			'templateSlug'
+			'templateSlug',
+			'postType'
 		),
 		'providesContext' => array(
 			'queryId' => 'queryId',

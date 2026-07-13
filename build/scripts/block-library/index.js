@@ -59114,7 +59114,8 @@ ${text}
       "templateSlug",
       "previewPostType",
       "enhancedPagination",
-      "postType"
+      "postType",
+      "postId"
     ],
     supports: {
       anchor: true,
@@ -59252,6 +59253,7 @@ ${text}
         parents,
         pages,
         format: format3,
+        excludeCurrent,
         // We gather extra query args to pass to the REST API call.
         // This way extenders of Query Loop can add their own query args,
         // and have accurate previews in the editor.
@@ -59260,7 +59262,8 @@ ${text}
         ...restQueryArgs
       } = {},
       templateSlug,
-      previewPostType
+      previewPostType,
+      postId
     },
     attributes: { layout },
     __unstableLayoutClassNames
@@ -59340,6 +59343,13 @@ ${text}
         }
         if (format3?.length) {
           query.format = format3;
+        }
+        if (excludeCurrent && postId) {
+          if (query.exclude) {
+            query.exclude = [...query.exclude, postId];
+          } else {
+            query.exclude = [postId];
+          }
         }
         if (["exclude", "only"].includes(sticky)) {
           query.sticky = sticky === "only";
@@ -61761,7 +61771,8 @@ ${text}
           inherit: true,
           taxQuery: null,
           parents: [],
-          format: []
+          format: [],
+          excludeCurrent: null
         }
       },
       tagName: {
@@ -61776,7 +61787,7 @@ ${text}
         default: false
       }
     },
-    usesContext: ["templateSlug"],
+    usesContext: ["templateSlug", "postType"],
     providesContext: {
       queryId: "queryId",
       query: "query",
@@ -62734,7 +62745,7 @@ ${text}
   // packages/block-library/build-module/query/edit/inspector-controls/index.mjs
   var import_jsx_runtime409 = __toESM(require_jsx_runtime(), 1);
   function QueryInspectorControls(props) {
-    const { attributes, setQuery, isSingular } = props;
+    const { attributes, setQuery, isSingular, shouldExcludeCurrentPost } = props;
     const { query } = attributes;
     const {
       order,
@@ -62748,7 +62759,8 @@ ${text}
       inherit,
       taxQuery,
       parents,
-      format: format3
+      format: format3,
+      excludeCurrent
     } = query;
     const allowedControls = useAllowedControls(attributes);
     const showSticky = postType === "post";
@@ -62826,7 +62838,12 @@ ${text}
       },
       [allowedControls, postTypeHasFormatSupport]
     );
-    const showFiltersPanel = showTaxControl || showAuthorControl || showSearchControl || showParentControl || showFormatControl;
+    const showExcludeCurrentControl = shouldExcludeCurrentPost && isControlAllowed(allowedControls, "excludeCurrent");
+    const postTypeSingularName = (0, import_data125.useSelect)(
+      (select10) => select10(import_core_data77.store).getPostType(postType)?.labels.singular_name,
+      [postType]
+    );
+    const showFiltersPanel = showTaxControl || showAuthorControl || showSearchControl || showParentControl || showFormatControl || showExcludeCurrentControl;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const showPostCountControl = isControlAllowed(
       allowedControls,
@@ -63046,7 +63063,8 @@ ${text}
               parents: [],
               search: "",
               taxQuery: null,
-              format: []
+              format: [],
+              excludeCurrent: null
             });
             setQuerySearch("");
           },
@@ -63135,6 +63153,33 @@ ${text}
                   {
                     onChange: setQuery,
                     query
+                  }
+                )
+              }
+            ),
+            showExcludeCurrentControl && /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
+              import_components129.__experimentalToolsPanelItem,
+              {
+                label: (0, import_i18n205.__)("Exclude"),
+                hasValue: () => excludeCurrent !== null,
+                onDeselect: () => setQuery({ excludeCurrent: null }),
+                children: /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
+                  import_components129.ToggleControl,
+                  {
+                    label: (0, import_i18n205.__)("Exclude current"),
+                    help: (0, import_i18n205.sprintf)(
+                      /* translators: %s: the post type singular name */
+                      (0, import_i18n205.__)(
+                        "Exclude the current %s from the query."
+                      ),
+                      postTypeSingularName
+                    ),
+                    checked: !!excludeCurrent,
+                    onChange: (value) => {
+                      setQuery({
+                        excludeCurrent: !!value
+                      });
+                    }
                   }
                 )
               }
@@ -63369,8 +63414,8 @@ ${text}
       tagName: TagName2 = "div",
       query: { inherit } = {}
     } = attributes;
-    const { templateSlug } = context;
-    const { isSingular } = getQueryContextFromTemplate(templateSlug);
+    const { templateSlug, postType } = context;
+    const { isSingular, templateType } = getQueryContextFromTemplate(templateSlug);
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data129.useDispatch)(import_block_editor216.store);
     const instanceId = (0, import_compose52.useInstanceId)(QueryContent);
     const blockProps = (0, import_block_editor216.useBlockProps)();
@@ -63389,6 +63434,7 @@ ${text}
         postsPerPage: editedSettingPerPage || settingPerPage || DEFAULTS_POSTS_PER_PAGE
       };
     }, []);
+    const shouldExcludeCurrentPost = isSingular && !inherit && (query.postType === postType || query.postType === templateType);
     const updateQuery = (0, import_element122.useCallback)(
       (newQuery) => setAttributes((prevAttributes) => ({
         query: { ...prevAttributes.query, ...newQuery }
@@ -63402,14 +63448,19 @@ ${text}
       } else if (!query.perPage && postsPerPage) {
         newQuery.perPage = postsPerPage;
       }
+      if (!shouldExcludeCurrentPost && query.excludeCurrent !== null) {
+        newQuery.excludeCurrent = null;
+      }
       if (!!Object.keys(newQuery).length) {
         __unstableMarkNextChangeAsNotPersistent();
         updateQuery(newQuery);
       }
     }, [
       query.perPage,
+      query.excludeCurrent,
       inherit,
       postsPerPage,
+      shouldExcludeCurrentPost,
       __unstableMarkNextChangeAsNotPersistent,
       updateQuery
     ]);
@@ -63449,7 +63500,8 @@ ${text}
           setQuery: updateQuery,
           setAttributes,
           clientId,
-          isSingular
+          isSingular,
+          shouldExcludeCurrentPost
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime413.jsxs)(import_block_editor216.InspectorControls, { group: "advanced", children: [
@@ -64254,7 +64306,8 @@ ${text}
           author: "",
           search: "",
           sticky: "exclude",
-          inherit: false
+          inherit: false,
+          excludeCurrent: null
         }
       },
       innerBlocks: [
