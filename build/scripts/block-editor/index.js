@@ -2110,7 +2110,7 @@ var wp;
             },
             [subscribe, value, getSnapshot]
           );
-          useEffect92(
+          useEffect93(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe(function() {
@@ -2136,7 +2136,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React118 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState122 = React118.useState, useEffect92 = React118.useEffect, useLayoutEffect18 = React118.useLayoutEffect, useDebugValue2 = React118.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React118 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState122 = React118.useState, useEffect93 = React118.useEffect, useLayoutEffect18 = React118.useLayoutEffect, useDebugValue2 = React118.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React118.useSyncExternalStore ? React118.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -2164,7 +2164,7 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React118 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef107 = React118.useRef, useEffect92 = React118.useEffect, useMemo154 = React118.useMemo, useDebugValue2 = React118.useDebugValue;
+        var React118 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef107 = React118.useRef, useEffect93 = React118.useEffect, useMemo154 = React118.useMemo, useDebugValue2 = React118.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector3, isEqual2) {
           var instRef = useRef107(null);
           if (null === instRef.current) {
@@ -2207,7 +2207,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector3, isEqual2]
           );
           var value = useSyncExternalStore2(subscribe, instRef[0], instRef[1]);
-          useEffect92(
+          useEffect93(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -50352,6 +50352,7 @@ var wp;
     const supportsAttachments = !category.isExternalResource;
     const attach = supportsAttachments ? category.attach : void 0;
     const detach = supportsAttachments ? category.detach : void 0;
+    const subscribe = supportsAttachments ? category.subscribe : void 0;
     const showRefreshing = useDelayedLoading(isLoading);
     const refresh = (0, import_element121.useCallback)(() => {
       if (supportsAttachments) {
@@ -50359,6 +50360,12 @@ var wp;
       }
       setRefreshKey((key) => key + 1);
     }, [category, query, supportsAttachments]);
+    (0, import_element121.useEffect)(() => {
+      if (!subscribe) {
+        return;
+      }
+      return subscribe(() => setRefreshKey((key) => key + 1), query);
+    }, [subscribe, query]);
     const handleAttach = (0, import_element121.useCallback)(
       async (selectedMedia) => {
         try {
