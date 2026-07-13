@@ -2164,9 +2164,9 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React118 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef107 = React118.useRef, useEffect93 = React118.useEffect, useMemo154 = React118.useMemo, useDebugValue2 = React118.useDebugValue;
+        var React118 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef108 = React118.useRef, useEffect93 = React118.useEffect, useMemo154 = React118.useMemo, useDebugValue2 = React118.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector3, isEqual2) {
-          var instRef = useRef107(null);
+          var instRef = useRef108(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -16896,7 +16896,7 @@ var wp;
     }
     if (!category.fetch || typeof category.fetch !== "function") {
       console.error(
-        "Category should have a `fetch` function defined with the following signature `(InserterMediaRequest) => Promise<InserterMediaItem[]>`."
+        "Category should have a `fetch` function defined with the following signature `(InserterMediaRequest) => Promise<InserterMediaItem[]|InserterMediaResponse>`."
       );
       return;
     }
@@ -49824,6 +49824,7 @@ var wp;
   var import_element121 = __toESM(require_element(), 1);
   var import_compose41 = __toESM(require_compose(), 1);
   var import_data58 = __toESM(require_data(), 1);
+  var import_dom48 = __toESM(require_dom(), 1);
   var import_notices7 = __toESM(require_notices(), 1);
 
   // packages/block-editor/build-module/components/inserter/media-tab/media-list.mjs
@@ -50184,12 +50185,24 @@ var wp;
   // packages/block-editor/build-module/components/inserter/media-tab/hooks.mjs
   var import_element120 = __toESM(require_element(), 1);
   var import_data57 = __toESM(require_data(), 1);
+  function normalizeFetchResult(result) {
+    if (Array.isArray(result)) {
+      return { mediaItems: result };
+    }
+    return {
+      mediaItems: result?.mediaItems ?? [],
+      totalItems: result?.totalItems,
+      totalPages: result?.totalPages
+    };
+  }
   function useMediaResults(category, query = {}, refreshKey) {
     const [mediaList, setMediaList] = (0, import_element120.useState)();
+    const [totals, setTotals] = (0, import_element120.useState)({});
     const [isLoading, setIsLoading] = (0, import_element120.useState)(false);
     const lastRequestRef = (0, import_element120.useRef)();
     const lastQueryKeyRef = (0, import_element120.useRef)();
     const lastFetchRef = (0, import_element120.useRef)();
+    const lastSourceRef = (0, import_element120.useRef)();
     (0, import_element120.useEffect)(() => {
       (async () => {
         const key = JSON.stringify({
@@ -50202,11 +50215,18 @@ var wp;
         if (lastQueryKeyRef.current !== key || lastFetchRef.current !== category.fetch) {
           setMediaList([]);
         }
+        if (lastSourceRef.current !== category.name || lastFetchRef.current !== category.fetch) {
+          setTotals({});
+        }
         lastQueryKeyRef.current = key;
         lastFetchRef.current = category.fetch;
-        const _media = await category.fetch?.(query);
+        lastSourceRef.current = category.name;
+        const { mediaItems, totalItems, totalPages } = normalizeFetchResult(
+          await category.fetch?.(query)
+        );
         if (request === lastRequestRef.current) {
-          setMediaList(_media);
+          setMediaList(mediaItems);
+          setTotals({ totalItems, totalPages });
           setIsLoading(false);
         }
       })();
@@ -50216,7 +50236,12 @@ var wp;
       ...Object.values(query),
       refreshKey
     ]);
-    return { mediaList, isLoading };
+    return {
+      mediaList,
+      isLoading,
+      totalItems: totals.totalItems,
+      totalPages: totals.totalPages
+    };
   }
   function useDelayedLoading(isLoading, delay = 400) {
     const [showLoading, setShowLoading] = (0, import_element120.useState)(false);
@@ -50272,9 +50297,10 @@ var wp;
               }
               let results = [];
               try {
-                results = await category.fetch({
-                  per_page: 1
-                });
+                const { mediaItems } = normalizeFetchResult(
+                  await category.fetch({ per_page: 1 })
+                );
+                results = mediaItems;
               } catch {
               }
               return [category.name, !!results.length];
@@ -50306,7 +50332,7 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter/media-tab/media-panel.mjs
   var import_jsx_runtime249 = __toESM(require_jsx_runtime(), 1);
-  var INITIAL_MEDIA_ITEMS_PER_PAGE = 10;
+  var MEDIA_ITEMS_PER_PAGE = 20;
   var ATTACH_ALLOWED_TYPES = ["image"];
   function AttachImagesButton({ onSelect }) {
     return /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(check_default2, { children: /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
@@ -50335,24 +50361,45 @@ var wp;
   }
   function MediaCategoryPanel({ rootClientId, onInsert, category }) {
     const [search, setSearch, debouncedSearch] = (0, import_compose41.useDebouncedInput)();
+    const [page, setPage] = (0, import_element121.useState)(1);
+    const previousCategory = (0, import_compose41.usePrevious)(category.name);
+    const previousSearch = (0, import_compose41.usePrevious)(debouncedSearch);
+    if ((previousCategory !== category.name || previousSearch !== debouncedSearch) && page !== 1) {
+      setPage(1);
+    }
     const query = (0, import_element121.useMemo)(
       () => ({
-        per_page: !!debouncedSearch ? 20 : INITIAL_MEDIA_ITEMS_PER_PAGE,
+        per_page: MEDIA_ITEMS_PER_PAGE,
+        page,
         search: debouncedSearch
       }),
-      [debouncedSearch]
+      [page, debouncedSearch]
     );
     const [refreshKey, setRefreshKey] = (0, import_element121.useState)(0);
-    const { mediaList, isLoading } = useMediaResults(
+    const { mediaList, isLoading, totalItems, totalPages } = useMediaResults(
       category,
       query,
       refreshKey
     );
-    const { createErrorNotice, createSuccessNotice, createWarningNotice } = (0, import_data58.useDispatch)(import_notices7.store);
+    const numPages = totalPages || 1;
+    if (typeof totalPages === "number" && page > numPages) {
+      setPage(numPages);
+    }
     const supportsAttachments = !category.isExternalResource;
     const attach = supportsAttachments ? category.attach : void 0;
     const detach = supportsAttachments ? category.detach : void 0;
     const subscribe = supportsAttachments ? category.subscribe : void 0;
+    const showPagination = numPages > 1;
+    const hasFooter = showPagination || !!attach;
+    const scrollContainerRef = (0, import_element121.useRef)();
+    const changePage = (0, import_element121.useCallback)((nextPage) => {
+      const scrollContainer = (0, import_dom48.getScrollContainer)(
+        scrollContainerRef.current
+      );
+      scrollContainer?.scrollTo(0, 0);
+      setPage(nextPage);
+    }, []);
+    const { createErrorNotice, createSuccessNotice, createWarningNotice } = (0, import_data58.useDispatch)(import_notices7.store);
     const showRefreshing = useDelayedLoading(isLoading);
     const refresh = (0, import_element121.useCallback)(() => {
       if (supportsAttachments) {
@@ -50448,10 +50495,11 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)(
       "div",
       {
+        ref: scrollContainerRef,
         className: clsx_default(baseCssClass, {
-          // The attach footer supplies the breathing room beneath the
-          // grid, so the list drops its own bottom padding (see styles).
-          "has-attach-footer": !!attach
+          // The footer supplies the breathing room beneath the grid, so the
+          // list drops its own bottom padding (see styles).
+          "has-footer": hasFooter
         }),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
@@ -50494,9 +50542,33 @@ var wp;
               )
             }
           ),
-          attach && // Pinned to the bottom of the panel as a fixed footer so it lines
-          // up with the "Open Media Library" button in the adjacent column.
-          /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(AttachImagesButton, { onSelect: handleAttach }),
+          hasFooter && // A single footer wrapper owns the top and horizontal breathing
+          // room, so the pager and attach button don't span the full width
+          // and sit clear of the grid above (see styles).
+          /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)(
+            Stack,
+            {
+              direction: "column",
+              gap: "sm",
+              className: `${baseCssClass}-footer`,
+              children: [
+                showPagination && // Reuse the Patterns tab pager (presentational only); only
+                // rendered for multi-page sources (see `showPagination`).
+                /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
+                  Pagination,
+                  {
+                    currentPage: page,
+                    numPages,
+                    changePage,
+                    totalItems
+                  }
+                ),
+                attach && // Lines up with the "Open Media Library" button in the
+                // adjacent column.
+                /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(AttachImagesButton, { onSelect: handleAttach })
+              ]
+            }
+          ),
           mediaPendingDetach && // A plain `Modal` (not `ConfirmDialog`) so we can pass
           // `overlayClassName` and stack it above the options dropdown that
           // opened it (see the z-index entry in `_z-index.scss`).
@@ -51904,7 +51976,7 @@ var wp;
 
   // packages/block-editor/build-module/components/block-popover/use-popover-scroll.mjs
   var import_compose45 = __toESM(require_compose(), 1);
-  var import_dom48 = __toESM(require_dom(), 1);
+  var import_dom49 = __toESM(require_dom(), 1);
   var scrollContainerCache = /* @__PURE__ */ new WeakMap();
   function usePopoverScroll(contentRef) {
     const effect = (0, import_compose45.useRefEffect)(
@@ -51914,10 +51986,10 @@ var wp;
           const contentEl = contentRef.current;
           let scrollContainer = scrollContainerCache.get(contentEl);
           if (!scrollContainer) {
-            scrollContainer = (0, import_dom48.getScrollContainer)(contentEl);
+            scrollContainer = (0, import_dom49.getScrollContainer)(contentEl);
             scrollContainerCache.set(contentEl, scrollContainer);
           }
-          const eventScrollContainer = (0, import_dom48.getScrollContainer)(target);
+          const eventScrollContainer = (0, import_dom49.getScrollContainer)(target);
           if (!node.contains(eventScrollContainer)) {
             scrollContainer.scrollBy(deltaX, deltaY);
           }
@@ -52922,7 +52994,7 @@ var wp;
   var import_element137 = __toESM(require_element(), 1);
   var import_blocks43 = __toESM(require_blocks(), 1);
   var import_data74 = __toESM(require_data(), 1);
-  var import_dom50 = __toESM(require_dom(), 1);
+  var import_dom51 = __toESM(require_dom(), 1);
   function parseDropEvent(event) {
     let result = {
       srcRootClientId: null,
@@ -53156,7 +53228,7 @@ var wp;
     );
     const _onHTMLDrop = onHTMLDrop(insertOrReplaceBlocks);
     return (event) => {
-      const files = (0, import_dom50.getFilesFromDataTransfer)(event.dataTransfer);
+      const files = (0, import_dom51.getFilesFromDataTransfer)(event.dataTransfer);
       const html = event.dataTransfer.getData("text/html");
       if (html) {
         _onHTMLDrop(html);
@@ -54075,7 +54147,7 @@ var wp;
 
   // packages/block-editor/build-module/components/block-tools/index.mjs
   var import_data121 = __toESM(require_data(), 1);
-  var import_dom55 = __toESM(require_dom(), 1);
+  var import_dom56 = __toESM(require_dom(), 1);
   var import_components115 = __toESM(require_components(), 1);
   var import_keyboard_shortcuts10 = __toESM(require_keyboard_shortcuts(), 1);
   var import_element177 = __toESM(require_element(), 1);
@@ -54086,7 +54158,7 @@ var wp;
   // packages/block-editor/build-module/components/block-tools/use-block-toolbar-popover-props.mjs
   var import_compose58 = __toESM(require_compose(), 1);
   var import_data83 = __toESM(require_data(), 1);
-  var import_dom51 = __toESM(require_dom(), 1);
+  var import_dom52 = __toESM(require_dom(), 1);
   var import_element149 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/hooks/position.mjs
@@ -54885,7 +54957,7 @@ var wp;
       if (!contentElement) {
         return;
       }
-      return (0, import_dom51.getScrollContainer)(contentElement);
+      return (0, import_dom52.getScrollContainer)(contentElement);
     }, [contentElement]);
     const [props, setProps] = (0, import_element149.useState)(
       () => getProps(
@@ -55051,7 +55123,7 @@ var wp;
   var import_compose59 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/block-draggable/use-scroll-when-dragging.mjs
-  var import_dom53 = __toESM(require_dom(), 1);
+  var import_dom54 = __toESM(require_dom(), 1);
   var import_element150 = __toESM(require_element(), 1);
   var SCROLL_INACTIVE_DISTANCE_PX = 50;
   var SCROLL_INTERVAL_MS = 25;
@@ -55073,7 +55145,7 @@ var wp;
     );
     const startScrolling = (0, import_element150.useCallback)((event) => {
       dragStartYRef.current = event.clientY;
-      scrollParentYRef.current = (0, import_dom53.getScrollContainer)(event.target);
+      scrollParentYRef.current = (0, import_dom54.getScrollContainer)(event.target);
       scrollEditorIntervalRef.current = setInterval(() => {
         if (scrollParentYRef.current && velocityYRef.current) {
           const newTop = scrollParentYRef.current.scrollTop + velocityYRef.current;
@@ -57702,7 +57774,7 @@ var wp;
   var import_element164 = __toESM(require_element(), 1);
   var import_data105 = __toESM(require_data(), 1);
   var import_deprecated12 = __toESM(require_deprecated(), 1);
-  var import_dom54 = __toESM(require_dom(), 1);
+  var import_dom55 = __toESM(require_dom(), 1);
   var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
   var import_keycodes11 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
@@ -57719,7 +57791,7 @@ var wp;
     return container.contains(container.ownerDocument.activeElement);
   }
   function focusFirstTabbableIn(container) {
-    const [firstTabbable] = import_dom54.focus.tabbable.find(container);
+    const [firstTabbable] = import_dom55.focus.tabbable.find(container);
     if (firstTabbable) {
       firstTabbable.focus({
         // When focusing newly mounted toolbars,
@@ -57735,7 +57807,7 @@ var wp;
       initialAccessibleToolbarState
     );
     const determineIsAccessibleToolbar = (0, import_element164.useCallback)(() => {
-      const tabbables = import_dom54.focus.tabbable.find(toolbarRef.current);
+      const tabbables = import_dom55.focus.tabbable.find(toolbarRef.current);
       const onlyToolbarItem = hasOnlyToolbarItem(tabbables);
       if (!onlyToolbarItem) {
         (0, import_deprecated12.default)("Using custom components as toolbar controls", {
@@ -60076,7 +60148,7 @@ var wp;
           selectBlock2(clientIds[0]);
         }
       } else if (isMatch("core/block-editor/collapse-list-view", event)) {
-        if ((0, import_dom55.isTextField)(event.target) || (0, import_dom55.isTextField)(
+        if ((0, import_dom56.isTextField)(event.target) || (0, import_dom56.isTextField)(
           event.target?.contentWindow?.document?.activeElement
         )) {
           return;
@@ -60211,7 +60283,7 @@ var wp;
   // packages/block-editor/build-module/components/observe-typing/index.mjs
   var import_compose66 = __toESM(require_compose(), 1);
   var import_data122 = __toESM(require_data(), 1);
-  var import_dom56 = __toESM(require_dom(), 1);
+  var import_dom57 = __toESM(require_dom(), 1);
   var import_keycodes12 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
   var KEY_DOWN_ELIGIBLE_KEY_CODES = /* @__PURE__ */ new Set([
@@ -60275,7 +60347,7 @@ var wp;
           let stopTypingOnNonTextField2 = function(event) {
             const { target } = event;
             timerId = defaultView.setTimeout(() => {
-              if (!(0, import_dom56.isTextField)(target)) {
+              if (!(0, import_dom57.isTextField)(target)) {
                 stopTyping2();
               }
             });
@@ -60317,7 +60389,7 @@ var wp;
         }
         function startTypingInTextField(event) {
           const { type, target } = event;
-          if (!(0, import_dom56.isTextField)(target) || !node.contains(target)) {
+          if (!(0, import_dom57.isTextField)(target) || !node.contains(target)) {
             return;
           }
           if (type === "keydown" && !isKeyDownEligibleForStartTyping(event)) {
@@ -60942,7 +61014,7 @@ var wp;
   var leaf_default = ListViewLeaf;
 
   // packages/block-editor/build-module/components/list-view/use-list-view-scroll-into-view.mjs
-  var import_dom57 = __toESM(require_dom(), 1);
+  var import_dom58 = __toESM(require_dom(), 1);
   var import_element183 = __toESM(require_element(), 1);
   function useListViewScrollIntoView({
     isSelected,
@@ -60954,7 +61026,7 @@ var wp;
       if (!isSelected || !isSingleSelection || !rowItemRef.current) {
         return;
       }
-      const scrollContainer = (0, import_dom57.getScrollContainer)(rowItemRef.current);
+      const scrollContainer = (0, import_dom58.getScrollContainer)(rowItemRef.current);
       const { ownerDocument: ownerDocument2 } = rowItemRef.current;
       const windowScroll = scrollContainer === ownerDocument2.body || scrollContainer === ownerDocument2.documentElement;
       if (windowScroll || !scrollContainer) {
@@ -61271,7 +61343,7 @@ var wp;
 
   // packages/block-editor/build-module/components/list-view/utils.mjs
   var import_i18n107 = __toESM(require_i18n(), 1);
-  var import_dom58 = __toESM(require_dom(), 1);
+  var import_dom59 = __toESM(require_dom(), 1);
   var getBlockPositionDescription = (position, siblingCount, level) => (0, import_i18n107.sprintf)(
     /* translators: 1: The numerical position of the block. 2: The total number of blocks. 3. The level of nesting for the block. */
     (0, import_i18n107.__)("Block %1$d of %2$d, Level %3$d."),
@@ -61326,7 +61398,7 @@ var wp;
       }, 3e3);
     }).then((element) => {
       if (element && element.isConnected) {
-        import_dom58.focus.focusable.find(element)?.[0]?.focus();
+        import_dom59.focus.focusable.find(element)?.[0]?.focus();
       }
     });
   }
@@ -62106,7 +62178,7 @@ var wp;
 
   // packages/block-editor/build-module/components/list-view/drop-indicator.mjs
   var import_components122 = __toESM(require_components(), 1);
-  var import_dom59 = __toESM(require_dom(), 1);
+  var import_dom60 = __toESM(require_dom(), 1);
   var import_element189 = __toESM(require_element(), 1);
   var import_i18n109 = __toESM(require_i18n(), 1);
   var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
@@ -62141,7 +62213,7 @@ var wp;
           return 0;
         }
         let width = targetElement.offsetWidth;
-        const scrollContainer = (0, import_dom59.getScrollContainer)(
+        const scrollContainer = (0, import_dom60.getScrollContainer)(
           targetElement,
           "horizontal"
         );
@@ -62180,7 +62252,7 @@ var wp;
       if (!targetElement) {
         return {};
       }
-      const scrollContainer = (0, import_dom59.getScrollContainer)(targetElement);
+      const scrollContainer = (0, import_dom60.getScrollContainer)(targetElement);
       const ownerDocument2 = targetElement.ownerDocument;
       const windowScroll = scrollContainer === ownerDocument2.body || scrollContainer === ownerDocument2.documentElement;
       if (scrollContainer && !windowScroll) {
@@ -62227,7 +62299,7 @@ var wp;
           const rect = targetElement.getBoundingClientRect();
           let left = rect.left;
           let top = 0;
-          const scrollContainer = (0, import_dom59.getScrollContainer)(
+          const scrollContainer = (0, import_dom60.getScrollContainer)(
             targetElement,
             "horizontal"
           );
@@ -67769,7 +67841,7 @@ var wp;
   var import_element211 = __toESM(require_element(), 1);
   var import_i18n142 = __toESM(require_i18n(), 1);
   var import_notices9 = __toESM(require_notices(), 1);
-  var import_dom60 = __toESM(require_dom(), 1);
+  var import_dom61 = __toESM(require_dom(), 1);
   var messages = {
     crop: (0, import_i18n142.__)("Image cropped."),
     rotate: (0, import_i18n142.__)("Image rotated."),
@@ -67868,7 +67940,7 @@ var wp;
           (0, import_i18n142.sprintf)(
             /* translators: %s: Error message. */
             (0, import_i18n142.__)("Could not edit image. %s"),
-            (0, import_dom60.__unstableStripHTML)(error2.message)
+            (0, import_dom61.__unstableStripHTML)(error2.message)
           ),
           {
             id: "image-editing-error",
@@ -68604,7 +68676,7 @@ var wp;
   var import_i18n158 = __toESM(require_i18n(), 1);
   var import_element222 = __toESM(require_element(), 1);
   var import_compose84 = __toESM(require_compose(), 1);
-  var import_dom63 = __toESM(require_dom(), 1);
+  var import_dom64 = __toESM(require_dom(), 1);
   var import_keycodes18 = __toESM(require_keycodes(), 1);
   var import_is_shallow_equal3 = __toESM(require_is_shallow_equal(), 1);
   var import_data146 = __toESM(require_data(), 1);
@@ -68713,7 +68785,7 @@ var wp;
   // packages/block-editor/build-module/components/link-control/search-item.mjs
   var import_i18n151 = __toESM(require_i18n(), 1);
   var import_components163 = __toESM(require_components(), 1);
-  var import_dom61 = __toESM(require_dom(), 1);
+  var import_dom62 = __toESM(require_dom(), 1);
   var import_url3 = __toESM(require_url(), 1);
   var import_compose82 = __toESM(require_compose(), 1);
   var import_deprecated18 = __toESM(require_deprecated(), 1);
@@ -68819,7 +68891,7 @@ var wp;
         children: /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
           import_components163.TextHighlight,
           {
-            text: (0, import_dom61.__unstableStripHTML)(suggestion.title),
+            text: (0, import_dom62.__unstableStripHTML)(suggestion.title),
             highlight: searchTerm
           }
         )
@@ -69185,7 +69257,7 @@ var wp;
   var import_components166 = __toESM(require_components(), 1);
   var import_compose83 = __toESM(require_compose(), 1);
   var import_url5 = __toESM(require_url(), 1);
-  var import_dom62 = __toESM(require_dom(), 1);
+  var import_dom63 = __toESM(require_dom(), 1);
   var import_data145 = __toESM(require_data(), 1);
   var import_notices10 = __toESM(require_notices(), 1);
   var import_preferences3 = __toESM(require_preferences(), 1);
@@ -69282,7 +69354,7 @@ var wp;
     const hasRichData = richData && Object.keys(richData).length;
     const displayURL = value && (0, import_url5.filterURLForDisplay)((0, import_url5.safeDecodeURI)(value.url), 24) || "";
     const isEmptyURL = !value?.url?.length;
-    const displayTitle = !isEmptyURL && (0, import_dom62.__unstableStripHTML)(
+    const displayTitle = !isEmptyURL && (0, import_dom63.__unstableStripHTML)(
       value?.entityTitle || richData?.title || value?.title || displayURL
     );
     let icon;
@@ -69667,7 +69739,7 @@ var wp;
       if (isMountingRef.current) {
         return;
       }
-      const nextFocusTarget = import_dom63.focus.focusable.find(wrapperNode.current)[0] || wrapperNode.current;
+      const nextFocusTarget = import_dom64.focus.focusable.find(wrapperNode.current)[0] || wrapperNode.current;
       nextFocusTarget.focus();
     }, [isEditingLink, isCreatingPage]);
     (0, import_element222.useEffect)(() => {
@@ -70154,7 +70226,7 @@ var wp;
   var import_data147 = __toESM(require_data(), 1);
   var import_keycodes19 = __toESM(require_keycodes(), 1);
   var import_compose85 = __toESM(require_compose(), 1);
-  var import_dom64 = __toESM(require_dom(), 1);
+  var import_dom65 = __toESM(require_dom(), 1);
   var import_notices11 = __toESM(require_notices(), 1);
   var import_element223 = __toESM(require_element(), 1);
 
@@ -70238,7 +70310,7 @@ var wp;
       [allowedTypes, allowedMimeTypes, accept]
     );
     const onUploadError = (message2) => {
-      const safeMessage = (0, import_dom64.__unstableStripHTML)(message2);
+      const safeMessage = (0, import_dom65.__unstableStripHTML)(message2);
       if (onError) {
         onError(safeMessage);
         return;
@@ -73138,7 +73210,7 @@ var wp;
   // packages/block-editor/build-module/components/url-popover/image-url-input-ui.mjs
   var import_i18n172 = __toESM(require_i18n(), 1);
   var import_element239 = __toESM(require_element(), 1);
-  var import_dom65 = __toESM(require_dom(), 1);
+  var import_dom66 = __toESM(require_dom(), 1);
   var import_components184 = __toESM(require_components(), 1);
   var import_url10 = __toESM(require_url(), 1);
   var import_jsx_runtime406 = __toESM(require_jsx_runtime(), 1);
@@ -73175,7 +73247,7 @@ var wp;
       if (!wrapperRef.current) {
         return;
       }
-      const nextFocusTarget = import_dom65.focus.focusable.find(wrapperRef.current)[0] || wrapperRef.current;
+      const nextFocusTarget = import_dom66.focus.focusable.find(wrapperRef.current)[0] || wrapperRef.current;
       nextFocusTarget.focus();
     }, [isEditingLink, url, lightboxEnabled]);
     const startEditLink = () => {
@@ -77975,7 +78047,7 @@ var wp;
   var import_url11 = __toESM(require_url(), 1);
   var import_element255 = __toESM(require_element(), 1);
   var import_data161 = __toESM(require_data(), 1);
-  var import_dom66 = __toESM(require_dom(), 1);
+  var import_dom67 = __toESM(require_dom(), 1);
   var import_blob2 = __toESM(require_blob(), 1);
   var import_jsx_runtime432 = __toESM(require_jsx_runtime(), 1);
   var IMAGE_BACKGROUND_TYPE = "image";
@@ -77989,7 +78061,7 @@ var wp;
   };
   var focusToggleButton = (containerRef) => {
     window.requestAnimationFrame(() => {
-      const [toggleButton] = import_dom66.focus.tabbable.find(containerRef?.current);
+      const [toggleButton] = import_dom67.focus.tabbable.find(containerRef?.current);
       if (!toggleButton) {
         return;
       }
@@ -81918,7 +81990,7 @@ var wp;
 
   // packages/block-editor/build-module/components/typewriter/index.mjs
   var import_compose101 = __toESM(require_compose(), 1);
-  var import_dom67 = __toESM(require_dom(), 1);
+  var import_dom68 = __toESM(require_dom(), 1);
   var import_keycodes27 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime454 = __toESM(require_jsx_runtime(), 1);
   var isIE = window.navigator.userAgent.indexOf("Trident") !== -1;
@@ -81953,7 +82025,7 @@ var wp;
         if (!isSelectionEligibleForScroll()) {
           return;
         }
-        const currentCaretRect = (0, import_dom67.computeCaretRect)(defaultView);
+        const currentCaretRect = (0, import_dom68.computeCaretRect)(defaultView);
         if (!currentCaretRect) {
           return;
         }
@@ -81969,7 +82041,7 @@ var wp;
         if (diff === 0) {
           return;
         }
-        const scrollContainer = (0, import_dom67.getScrollContainer)(node);
+        const scrollContainer = (0, import_dom68.getScrollContainer)(node);
         if (!scrollContainer) {
           return;
         }
@@ -82011,7 +82083,7 @@ var wp;
       }
       function computeCaretRectangle() {
         if (isSelectionEligibleForScroll()) {
-          caretRect = (0, import_dom67.computeCaretRect)(defaultView);
+          caretRect = (0, import_dom68.computeCaretRect)(defaultView);
         }
       }
       function isSelectionEligibleForScroll() {
@@ -91393,13 +91465,13 @@ var wp;
   // packages/block-editor/build-module/hooks/block-fields/media/index.mjs
   var import_components261 = __toESM(require_components(), 1);
   var import_data181 = __toESM(require_data(), 1);
-  var import_dom68 = __toESM(require_dom(), 1);
+  var import_dom69 = __toESM(require_dom(), 1);
   var import_element312 = __toESM(require_element(), 1);
   var import_i18n238 = __toESM(require_i18n(), 1);
   var import_jsx_runtime512 = __toESM(require_jsx_runtime(), 1);
   var focusToggleButton2 = (containerRef) => {
     window.requestAnimationFrame(() => {
-      const [toggleButton] = import_dom68.focus.tabbable.find(containerRef?.current);
+      const [toggleButton] = import_dom69.focus.tabbable.find(containerRef?.current);
       if (!toggleButton) {
         return;
       }
@@ -96849,7 +96921,7 @@ var wp;
 
   // packages/block-editor/build-module/components/link-picker/link-preview.mjs
   var import_components283 = __toESM(require_components(), 1);
-  var import_dom69 = __toESM(require_dom(), 1);
+  var import_dom70 = __toESM(require_dom(), 1);
   var import_jsx_runtime539 = __toESM(require_jsx_runtime(), 1);
   var { Badge: WCBadge6 } = unlock(import_components283.privateApis);
   function LinkPreview2({ title, url, image, badges }) {
@@ -96874,7 +96946,7 @@ var wp;
                 {
                   numberOfLines: 1,
                   className: "link-preview-button__title",
-                  children: (0, import_dom69.__unstableStripHTML)(title)
+                  children: (0, import_dom70.__unstableStripHTML)(title)
                 }
               ),
               url && /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(
@@ -97011,7 +97083,7 @@ var wp;
   // packages/block-editor/build-module/components/inner-content/index.mjs
   var import_element336 = __toESM(require_element(), 1);
   var import_data199 = __toESM(require_data(), 1);
-  var import_dom70 = __toESM(require_dom(), 1);
+  var import_dom71 = __toESM(require_dom(), 1);
   var import_jsx_runtime541 = __toESM(require_jsx_runtime(), 1);
   var SLOT_TAG_NAME = "wp-inner-block-slot";
   var LAYOUT = { type: "default", alignments: [] };
@@ -97037,7 +97109,7 @@ var wp;
     const [slots, setSlots] = (0, import_element336.useState)([]);
     (0, import_element336.useLayoutEffect)(() => {
       const container = containerRef.current;
-      container.innerHTML = (0, import_dom70.safeHTML)(html);
+      container.innerHTML = (0, import_dom71.safeHTML)(html);
       setSlots(
         Array.from(container.querySelectorAll(SLOT_TAG_NAME)).sort(
           (a2, b2) => Number(a2.dataset.slotIndex) - Number(b2.dataset.slotIndex)

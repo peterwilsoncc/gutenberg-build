@@ -55504,18 +55504,33 @@ If there's a particular need for this, please submit a feature request at https:
     orderBy: !!query?.search ? "relevance" : "date"
   });
   var coreMediaFetch = async (query = {}) => {
-    const mediaItems = await (0, import_data47.resolveSelect)(import_core_data30.store).getEntityRecords(
+    const finalQuery = getCoreMediaQuery(query);
+    const records = await (0, import_data47.resolveSelect)(import_core_data30.store).getEntityRecords(
       "postType",
       "attachment",
-      getCoreMediaQuery(query)
+      finalQuery
     );
-    return mediaItems.map((mediaItem) => ({
-      ...mediaItem,
-      alt: mediaItem.alt_text,
-      url: mediaItem.source_url,
-      previewUrl: mediaItem.media_details?.sizes?.medium?.source_url,
-      caption: mediaItem.caption?.raw
-    }));
+    const totalItems = (0, import_data47.select)(import_core_data30.store).getEntityRecordsTotalItems(
+      "postType",
+      "attachment",
+      finalQuery
+    );
+    const totalPages = (0, import_data47.select)(import_core_data30.store).getEntityRecordsTotalPages(
+      "postType",
+      "attachment",
+      finalQuery
+    );
+    return {
+      mediaItems: records.map((record) => ({
+        ...record,
+        alt: record.alt_text,
+        url: record.source_url,
+        previewUrl: record.media_details?.sizes?.medium?.source_url,
+        caption: record.caption?.raw
+      })),
+      totalItems,
+      totalPages
+    };
   };
   var getAttachedImagesQuery = (postId2, query = {}) => ({
     ...query,
