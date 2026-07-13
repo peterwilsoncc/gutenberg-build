@@ -3670,6 +3670,10 @@ p.has-text-align-left[style*="writing-mode:vertical-lr"] {
   width: 3rem;
   height: 3rem;
 }
+.wp-block-playlist .waveform-btn .waveform-icon-pause svg {
+  width: 2.625rem;
+  height: 2.625rem;
+}
 .wp-block-playlist .waveform-player.has-play-button-artwork .waveform-btn {
   background-image: var(--wp--playlist--play-button-artwork);
   background-position: center;
