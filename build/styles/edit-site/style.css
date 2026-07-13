@@ -5023,6 +5023,9 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
   color: var(--wpds-color-foreground-interactive-neutral, #1e1e1e);
   flex-shrink: 0;
 }
+.edit-site-sidebar-button:focus:not(:focus-visible) {
+  outline: none;
+}
 .edit-site-sidebar-button:hover:not(:disabled, [aria-disabled=true]), .edit-site-sidebar-button:focus-visible, .edit-site-sidebar-button:focus, .edit-site-sidebar-button:not(:disabled, [aria-disabled=true]):active, .edit-site-sidebar-button[aria-expanded=true] {
   color: var(--wpds-color-foreground-interactive-neutral-active, #1e1e1e);
 }
