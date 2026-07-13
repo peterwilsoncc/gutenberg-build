@@ -38564,13 +38564,10 @@ ${text}
       value: slug,
       label: name122
     }));
-    const categorySuggestions = categoriesList?.reduce(
-      (accumulator, category) => ({
-        ...accumulator,
-        [category.name]: category
-      }),
-      {}
-    ) ?? {};
+    const categorySuggestions = categoriesList?.reduce((accumulator, category) => {
+      accumulator[category.name] = category;
+      return accumulator;
+    }, {}) ?? {};
     const selectCategories = (tokens) => {
       const hasNoSuggestion = tokens.some(
         (token) => typeof token === "string" && !categorySuggestions[token]
