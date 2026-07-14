@@ -97400,7 +97400,7 @@ If there's a particular need for this, please submit a feature request at https:
             submit();
             return;
           }
-          if (event.key === "Escape") {
+          if (event.key === "Escape" && !event.defaultPrevented) {
             event.preventDefault();
             onCancel(event);
           }
