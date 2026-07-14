@@ -76443,7 +76443,6 @@ var wp;
                 {
                   value: textDecoration,
                   onChange: setTextDecoration,
-                  size: "__unstable-large",
                   __unstableInputWidth: "auto"
                 }
               )
@@ -76462,8 +76461,7 @@ var wp;
                 WritingModeControl,
                 {
                   value: writingMode,
-                  onChange: setWritingMode,
-                  size: "__unstable-large"
+                  onChange: setWritingMode
                 }
               )
             }
@@ -76482,8 +76480,7 @@ var wp;
                   value: textTransform,
                   onChange: setTextTransform,
                   showNone: true,
-                  isBlock: true,
-                  size: "__unstable-large"
+                  isBlock: true
                 }
               )
             }
@@ -76502,8 +76499,7 @@ var wp;
                   {
                     value: textAlign,
                     onChange: setTextAlign,
-                    options: ["left", "center", "right", "justify"],
-                    size: "__unstable-large"
+                    options: ["left", "center", "right", "justify"]
                   }
                 ),
                 textAlign === "justify" && /* @__PURE__ */ (0, import_jsx_runtime423.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(import_components199.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n189.__)(
