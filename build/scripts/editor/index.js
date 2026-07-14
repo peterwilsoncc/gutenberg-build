@@ -90341,7 +90341,7 @@ If there's a particular need for this, please submit a feature request at https:
               info: (0, import_i18n288.__)(
                 "Style changes apply only to the selected viewport."
               ),
-              children: (0, import_i18n288.__)("Responsive editing")
+              children: (0, import_i18n288.__)("Responsive styles")
             }
           ) }),
           isTemplate2 && /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(import_components243.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime493.jsxs)(
