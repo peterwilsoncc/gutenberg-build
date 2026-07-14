@@ -3436,9 +3436,11 @@ return array(
 			),
 			'html' => false,
 			'color' => array(
-				'background' => true,
-				'text' => true,
-				'__experimentalSkipSerialization' => true
+				'__experimentalSkipSerialization' => true,
+				'__experimentalDefaultControls' => array(
+					'background' => true,
+					'text' => true
+				)
 			),
 			'interactivity' => array(
 				'clientNavigation' => true
