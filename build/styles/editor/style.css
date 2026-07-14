@@ -8185,12 +8185,6 @@ textarea.editor-post-text-editor::placeholder {
   padding-left: 6px;
 }
 
-.editor-preview-dropdown__button-external {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .editor-resizable-editor:not(.is-resizing) {
     transition: width 0.2s ease-out;

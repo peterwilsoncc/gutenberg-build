@@ -85086,13 +85086,7 @@ If there's a particular need for this, please submit a feature request at https:
       writeInterstitialMessage(previewDocument, buildInterstitialMarkup());
     }
   }
-  function PostPreviewButton({
-    className,
-    textContent,
-    forceIsAutosaveable,
-    role,
-    onPreview
-  }) {
+  function usePostPreviewProps({ forceIsAutosaveable, onPreview }) {
     const { postId: postId2, currentPostLink, previewLink, isSaveable, isViewable } = (0, import_data148.useSelect)((select9) => {
       const editor = select9(store);
       const core = select9(import_core_data89.store);
@@ -85115,10 +85109,10 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isViewable) {
       return null;
     }
-    const targetId = `wp-preview-${postId2}`;
-    const openPreviewWindow = async (event) => {
+    const target = `wp-preview-${postId2}`;
+    const handlePreviewClick = async (event) => {
       event.preventDefault();
-      const previewWindow = window.open("", targetId);
+      const previewWindow = window.open("", target);
       previewWindow.focus();
       await writeInterstitialIntoPreviewWindow(previewWindow);
       const link = await __unstableSaveForPreview2({ forceIsAutosaveable });
@@ -85126,18 +85120,46 @@ If there's a particular need for this, please submit a feature request at https:
       onPreview?.();
     };
     const href = previewLink || currentPostLink;
+    return {
+      href,
+      target,
+      disabled: !isSaveable,
+      onClick: handlePreviewClick
+    };
+  }
+  function PostPreviewMenuItem({ forceIsAutosaveable, onPreview }) {
+    const previewProps = usePostPreviewProps({
+      forceIsAutosaveable,
+      onPreview
+    });
+    if (!previewProps) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(import_components205.MenuItem, { icon: external_default, ...previewProps, children: (0, import_i18n247.__)("Preview in new tab") });
+  }
+  function PostPreviewButton({
+    className,
+    textContent,
+    forceIsAutosaveable,
+    role,
+    onPreview
+  }) {
+    const previewProps = usePostPreviewProps({
+      forceIsAutosaveable,
+      onPreview
+    });
+    if (!previewProps) {
+      return null;
+    }
     return /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
       import_components205.Button,
       {
         variant: !className ? "tertiary" : void 0,
         className: className || "editor-post-preview",
-        href,
-        target: targetId,
-        accessibleWhenDisabled: true,
-        disabled: !isSaveable,
-        onClick: openPreviewWindow,
         role,
         size: "compact",
+        accessibleWhenDisabled: true,
+        ...previewProps,
         children: textContent || /* @__PURE__ */ (0, import_jsx_runtime444.jsxs)(import_jsx_runtime444.Fragment, { children: [
           (0, import_i18n247._x)("Preview", "imperative verb"),
           /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(VisuallyHidden, {
@@ -90355,16 +90377,9 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ) }),
           isViewable && /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(import_components243.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(
-            PostPreviewButton,
+            PostPreviewMenuItem,
             {
-              className: "editor-preview-dropdown__button-external",
-              role: "menuitem",
               forceIsAutosaveable,
-              "aria-label": (0, import_i18n288.__)("Preview in new tab"),
-              textContent: /* @__PURE__ */ (0, import_jsx_runtime493.jsxs)(import_jsx_runtime493.Fragment, { children: [
-                (0, import_i18n288.__)("Preview in new tab"),
-                /* @__PURE__ */ (0, import_jsx_runtime493.jsx)(import_components243.Icon, { icon: external_default })
-              ] }),
               onPreview: onClose
             }
           ) }),
