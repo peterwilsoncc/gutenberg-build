@@ -72518,7 +72518,6 @@ ${text}
   // packages/block-library/build-module/tab-panel/block.json
   var block_default104 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
-    __experimental: true,
     apiVersion: 3,
     name: "core/tab-panel",
     title: "Tab Panel",
@@ -72622,7 +72621,6 @@ ${text}
   // packages/block-library/build-module/tab-panels/block.json
   var block_default105 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
-    __experimental: true,
     apiVersion: 3,
     name: "core/tab-panels",
     title: "Tab Panels",
@@ -75231,7 +75229,6 @@ ${text}
   // packages/block-library/build-module/tab-list/block.json
   var block_default108 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
-    __experimental: true,
     apiVersion: 3,
     name: "core/tab-list",
     title: "Tab List",
@@ -75412,7 +75409,6 @@ ${text}
   // packages/block-library/build-module/tabs/block.json
   var block_default109 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
-    __experimental: true,
     apiVersion: 3,
     name: "core/tabs",
     title: "Tabs",
@@ -80953,6 +80949,10 @@ ${text}
       social_links_exports,
       spacer_exports,
       table_exports,
+      tabs_exports2,
+      tab_list_exports,
+      tab_panels_exports,
+      tab_panel_exports,
       tag_cloud_exports,
       text_columns_exports,
       verse_exports,
@@ -81023,10 +81023,6 @@ ${text}
       blocks.push(form_submission_notification_exports);
     }
     if (window?.__experimentalEnableBlockExperiments) {
-      blocks.push(tab_list_exports);
-      blocks.push(tabs_exports2);
-      blocks.push(tab_panel_exports);
-      blocks.push(tab_panels_exports);
     }
     blocks.push(freeform_exports);
     return blocks.filter(Boolean);
