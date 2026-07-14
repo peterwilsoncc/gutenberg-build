@@ -80042,7 +80042,8 @@ var wp;
         }
       }
     };
-    const enableContrastChecking = !isStateSelected && !styleValue?.color?.gradient && !styleValue?.background?.gradient && !!styleValue?.color?.background && (settings2?.color?.text || settings2?.color?.link) && false !== (0, import_blocks93.getBlockSupport)(name, ["color", "enableContrastChecker"]);
+    const value = isStateSelected ? getStyleForState(style, selectedState) : styleValue;
+    const enableContrastChecking = !value?.color?.gradient && !value?.background?.gradient && !!value?.color?.background && (settings2?.color?.text || settings2?.color?.link) && false !== (0, import_blocks93.getBlockSupport)(name, ["color", "enableContrastChecker"]);
     const contrastWarning = useBlockColorContrastWarning({
       clientId,
       name,
@@ -80136,7 +80137,7 @@ var wp;
         settings: updatedSettings,
         onChange,
         defaultControls,
-        value: isStateSelected ? getStyleForState(style, selectedState) : styleValue,
+        value,
         contrastWarning
       }
     );
@@ -80374,7 +80375,7 @@ var wp;
     } : (newStyle) => {
       setAttributes({ style: cleanEmptyObject(newStyle) });
     };
-    const enableContrastChecking = !isStateSelected && !!value?.elements?.link?.color?.text && settings2?.color?.link && false !== (0, import_blocks95.getBlockSupport)(name, [
+    const enableContrastChecking = !!value?.elements?.link?.color?.text && settings2?.color?.link && false !== (0, import_blocks95.getBlockSupport)(name, [
       COLOR_SUPPORT_KEY2,
       "enableContrastChecker"
     ]);
@@ -81289,7 +81290,7 @@ var wp;
       }
       setAttributes(newAttributes);
     };
-    const enableContrastChecking = !isStateSelected && !value?.color?.gradient && !!value?.color?.text && settings2?.color?.text && false !== (0, import_blocks101.getBlockSupport)(name, ["color", "enableContrastChecker"]);
+    const enableContrastChecking = !value?.color?.gradient && !!value?.color?.text && settings2?.color?.text && false !== (0, import_blocks101.getBlockSupport)(name, ["color", "enableContrastChecker"]);
     const contrastWarning = useBlockColorContrastWarning({
       clientId,
       name,
