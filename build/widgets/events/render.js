@@ -13505,6 +13505,18 @@ function ViewList(props) {
   const dataByGroup = hasData && groupField ? getDataByGroup(data, groupField) : null;
   const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   const hasMoreItems = isInfiniteScroll && (view.startPosition ?? 1) + (view.perPage ?? 0) < paginationInfo.totalItems;
+  const listClassName = clsx_default("dataviews-view-list", className, {
+    [`has-${view.layout?.density}-density`]: view.layout?.density && ["compact", "comfortable"].includes(view.layout.density),
+    "is-refreshing": !isInfiniteScroll && isDelayedLoading
+  });
+  const compositeProps = {
+    ref: compositeRef,
+    id: baseId,
+    render: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)("div", {}),
+    activeId: activeCompositeId,
+    setActiveId: setActiveCompositeId,
+    inert: !isInfiniteScroll && !!isLoading ? "true" : void 0
+  };
   if (!hasData) {
     return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
       "div",
@@ -13520,51 +13532,39 @@ function ViewList(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
       import_components10.Composite,
       {
-        ref: compositeRef,
-        id: `${baseId}`,
-        render: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)("div", {}),
+        ...compositeProps,
         className: "dataviews-view-list__group",
         role: "grid",
-        activeId: activeCompositeId,
-        setActiveId: setActiveCompositeId,
-        children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
-          Stack,
-          {
-            direction: "column",
-            gap: "lg",
-            className: clsx_default("dataviews-view-list", className),
-            children: Array.from(dataByGroup.entries()).map(
-              ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime61.jsxs)(Stack, { direction: "column", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime61.jsx)("h3", { className: "dataviews-view-list__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n14.sprintf)(
-                  // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
-                  (0, import_i18n14.__)("%1$s: %2$s"),
-                  groupField.label,
-                  groupName
-                ) }),
-                groupItems.map((item) => {
-                  const id = generateCompositeItemIdPrefix(item);
-                  return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
-                    ListItem,
-                    {
-                      view,
-                      idPrefix: id,
-                      actions,
-                      item,
-                      isSelected: item === selectedItem,
-                      onSelect,
-                      mediaField,
-                      titleField,
-                      descriptionField,
-                      otherFields,
-                      onDropdownTriggerKeyDown
-                    },
-                    id
-                  );
-                })
-              ] }, groupName)
-            )
-          }
-        )
+        children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Stack, { direction: "column", gap: "lg", className: listClassName, children: Array.from(dataByGroup.entries()).map(
+          ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime61.jsxs)(Stack, { direction: "column", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime61.jsx)("h3", { className: "dataviews-view-list__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n14.sprintf)(
+              // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
+              (0, import_i18n14.__)("%1$s: %2$s"),
+              groupField.label,
+              groupName
+            ) }),
+            groupItems.map((item) => {
+              const id = generateCompositeItemIdPrefix(item);
+              return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
+                ListItem,
+                {
+                  view,
+                  idPrefix: id,
+                  actions,
+                  item,
+                  isSelected: item === selectedItem,
+                  onSelect,
+                  mediaField,
+                  titleField,
+                  descriptionField,
+                  otherFields,
+                  onDropdownTriggerKeyDown
+                },
+                id
+              );
+            })
+          ] }, groupName)
+        ) })
       }
     );
   }
@@ -13572,19 +13572,9 @@ function ViewList(props) {
     /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
       import_components10.Composite,
       {
-        ref: compositeRef,
-        id: baseId,
-        render: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)("div", {}),
-        className: clsx_default("dataviews-view-list", className, {
-          [`has-${view.layout?.density}-density`]: view.layout?.density && ["compact", "comfortable"].includes(
-            view.layout.density
-          ),
-          "is-refreshing": !isInfiniteScroll && isDelayedLoading
-        }),
+        ...compositeProps,
+        className: listClassName,
         role: view.infiniteScrollEnabled ? "feed" : "grid",
-        activeId: activeCompositeId,
-        setActiveId: setActiveCompositeId,
-        inert: !isInfiniteScroll && !!isLoading ? "true" : void 0,
         children: data.map((item, index2) => {
           const id = generateCompositeItemIdPrefix(item);
           return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
