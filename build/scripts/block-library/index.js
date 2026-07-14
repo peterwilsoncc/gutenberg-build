@@ -34179,9 +34179,11 @@ ${text}
       align: ["left", "center", "right"],
       html: false,
       color: {
-        background: true,
-        text: true,
-        __experimentalSkipSerialization: true
+        __experimentalSkipSerialization: true,
+        __experimentalDefaultControls: {
+          background: true,
+          text: true
+        }
       },
       interactivity: {
         clientNavigation: true
