@@ -110,7 +110,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState39({
+        cachedValue = useState38({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -122,7 +122,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot]
         );
-        useEffect34(
+        useEffect33(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -148,7 +148,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React49 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState39 = React49.useState, useEffect34 = React49.useEffect, useLayoutEffect5 = React49.useLayoutEffect, useDebugValue2 = React49.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React49 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState38 = React49.useState, useEffect33 = React49.useEffect, useLayoutEffect5 = React49.useLayoutEffect, useDebugValue2 = React49.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React49.useSyncExternalStore ? React49.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -176,7 +176,7 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React49 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef47 = React49.useRef, useEffect34 = React49.useEffect, useMemo41 = React49.useMemo, useDebugValue2 = React49.useDebugValue;
+      var React49 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef47 = React49.useRef, useEffect33 = React49.useEffect, useMemo41 = React49.useMemo, useDebugValue2 = React49.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
         var instRef = useRef47(null);
         if (null === instRef.current) {
@@ -219,7 +219,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector2, isEqual]
         );
         var value = useSyncExternalStore3(subscribe2, instRef[0], instRef[1]);
-        useEffect34(
+        useEffect33(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -834,11 +834,11 @@ var require_rich_text = __commonJS({
 });
 
 // widgets/events/render.tsx
-var import_element88 = __toESM(require_element());
+var import_element86 = __toESM(require_element());
 var import_data6 = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
 var import_components47 = __toESM(require_components());
-var import_i18n47 = __toESM(require_i18n());
+var import_i18n46 = __toESM(require_i18n());
 
 // packages/icons/build-module/library/arrow-down.mjs
 var import_primitives = __toESM(require_primitives(), 1);
@@ -17468,11 +17468,11 @@ function useStoreProps(store, props, key, setKey) {
 function useStore2(createStore2, props) {
   const [store, setStore] = React48.useState(() => createStore2(props));
   useSafeLayoutEffect(() => init(store), [store]);
-  const useState39 = React48.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+  const useState38 = React48.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
   return [React48.useMemo(() => ({
     ...store,
-    useState: useState39
-  }), [store, useState39]), useEvent(() => {
+    useState: useState38
+  }), [store, useState38]), useEvent(() => {
     setStore((store2) => createStore2({
       ...props,
       ...store2.getState()
@@ -27371,24 +27371,6 @@ function EventsList({
   ] });
 }
 
-// widgets/events/components/location-setting-control/location-setting-control.tsx
-var import_element87 = __toESM(require_element());
-
-// widgets/events/components/location-picker/location-picker.tsx
-var import_element86 = __toESM(require_element());
-var import_i18n46 = __toESM(require_i18n());
-
-// widgets/events/components/location-picker/location-picker.module.css
-if (typeof process === "undefined" || true) {
-  registerStyle14("278b6f4aa5", "._6c0e74a3d3d754d1__locationInput{flex:1;min-inline-size:120px}");
-}
-
-// widgets/events/components/location-picker/location-picker.tsx
-var import_jsx_runtime124 = __toESM(require_jsx_runtime());
-
-// widgets/events/components/location-setting-control/location-setting-control.tsx
-var import_jsx_runtime125 = __toESM(require_jsx_runtime());
-
 // widgets/events/style.module.css
 if (typeof process === "undefined" || true) {
   registerStyle14("10b6071c70", "._8eae235c5e84e11a__container{block-size:100%;min-height:200px}.a8467f8a7e71416b__locationPickerInWidget{flex-grow:1;padding:var(--wpds-dimension-padding-2xl,24px)}.dc172eb76cf854ff__footer{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);padding-block:var(--wpds-dimension-padding-lg,16px);padding-inline:var(--wpds-dimension-padding-2xl,24px)}._8035a0c4b6216adf__statusText{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0;padding-inline:var(--wpds-dimension-padding-2xl,24px)}.a55a5460581ee126__noLocationSelected{flex-grow:1}");
@@ -27396,7 +27378,7 @@ if (typeof process === "undefined" || true) {
 var style_default13 = { "container": "_8eae235c5e84e11a__container", "locationPickerInWidget": "a8467f8a7e71416b__locationPickerInWidget", "footer": "dc172eb76cf854ff__footer", "statusText": "_8035a0c4b6216adf__statusText", "noLocationSelected": "a55a5460581ee126__noLocationSelected" };
 
 // widgets/events/render.tsx
-var import_jsx_runtime126 = __toESM(require_jsx_runtime());
+var import_jsx_runtime124 = __toESM(require_jsx_runtime());
 var EVENTS_API = "https://api.wordpress.org/events/1.0/";
 function EventsListSection({
   events,
@@ -27406,9 +27388,9 @@ function EventsListSection({
   location
 }) {
   if (error) {
-    return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("p", { className: style_default13.statusText, children: (0, import_i18n47.__)("An error occurred. Please try again.") });
+    return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("p", { className: style_default13.statusText, children: (0, import_i18n46.__)("An error occurred. Please try again.") });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
     EventsList,
     {
       events,
@@ -27426,16 +27408,16 @@ function WordPressEvents({
     []
   );
   const persistedLocation = typeof attributes.location === "string" ? attributes.location.trim() : "";
-  const [activeLocation, setActiveLocation] = (0, import_element88.useState)(persistedLocation);
-  const [locationLabel, setLocationLabel] = (0, import_element88.useState)("");
-  (0, import_element88.useEffect)(() => {
+  const [activeLocation, setActiveLocation] = (0, import_element86.useState)(persistedLocation);
+  const [locationLabel, setLocationLabel] = (0, import_element86.useState)("");
+  (0, import_element86.useEffect)(() => {
     setActiveLocation(persistedLocation);
   }, [persistedLocation]);
-  const [events, setEvents] = (0, import_element88.useState)([]);
-  const [eventsLoading, setEventsLoading] = (0, import_element88.useState)(false);
-  const [eventsError, setEventsError] = (0, import_element88.useState)(false);
+  const [events, setEvents] = (0, import_element86.useState)([]);
+  const [eventsLoading, setEventsLoading] = (0, import_element86.useState)(false);
+  const [eventsError, setEventsError] = (0, import_element86.useState)(false);
   const hasSelectedLocation = Boolean(activeLocation.trim());
-  (0, import_element88.useEffect)(() => {
+  (0, import_element86.useEffect)(() => {
     if (!hasSelectedLocation) {
       setLocationLabel("");
       return;
@@ -27463,37 +27445,37 @@ function WordPressEvents({
     });
     return () => controller.abort();
   }, [activeLocation, hasSelectedLocation, userLocale]);
-  return /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)(
     Stack,
     {
       direction: "column",
       justify: "space-between",
       className: style_default13.container,
       children: [
-        !hasSelectedLocation && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+        !hasSelectedLocation && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
           Stack,
           {
             align: "center",
             justify: "center",
             className: style_default13.noLocationSelected,
-            children: /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(empty_state_exports.Root, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(empty_state_exports.Visual, { children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(Icon, { icon: map_marker_default }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(empty_state_exports.Title, { children: (0, import_i18n47.__)("Attend an upcoming event near you.") }),
-              /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(empty_state_exports.Description, { children: (0, import_i18n47.__)("Select a city to view events.") })
+            children: /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)(empty_state_exports.Root, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(empty_state_exports.Visual, { children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Icon, { icon: map_marker_default }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(empty_state_exports.Title, { children: (0, import_i18n46.__)("Attend an upcoming event near you.") }),
+              /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(empty_state_exports.Description, { children: (0, import_i18n46.__)("Select a city to view events.") })
             ] })
           }
         ),
-        hasSelectedLocation && eventsLoading && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+        hasSelectedLocation && eventsLoading && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
           Stack,
           {
             className: style_default13.locationPickerInWidget,
             direction: "column",
             align: "center",
             justify: "center",
-            children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components47.Spinner, {})
+            children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components47.Spinner, {})
           }
         ),
-        hasSelectedLocation && !eventsLoading && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+        hasSelectedLocation && !eventsLoading && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
           EventsListSection,
           {
             events,
@@ -27503,21 +27485,21 @@ function WordPressEvents({
             location: locationLabel || activeLocation
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { className: style_default13.footer, children: /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(Stack, { direction: "row", align: "center", gap: "sm", wrap: "wrap", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("div", { className: style_default13.footer, children: /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)(Stack, { direction: "row", align: "center", gap: "sm", wrap: "wrap", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
             Link,
             {
               href: "https://make.wordpress.org/community/meetups-landing-page",
               openInNewTab: true,
-              children: (0, import_i18n47.__)("Meetups")
+              children: (0, import_i18n46.__)("Meetups")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
             Link,
             {
               href: "https://central.wordcamp.org/schedule/",
               openInNewTab: true,
-              children: (0, import_i18n47.__)("WordCamps")
+              children: (0, import_i18n46.__)("WordCamps")
             }
           )
         ] }) })
