@@ -34089,7 +34089,7 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime289.jsxs)(import_jsx_runtime289.Fragment, { children: [
       blockControls,
       inspectorControls,
-      /* @__PURE__ */ (0, import_jsx_runtime289.jsx)("div", { ...(0, import_block_editor112.useBlockProps)(), children: icon4 ? /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime289.jsx)("div", { ...(0, import_block_editor112.useBlockProps)(), children: iconToDisplay ? /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
         html_renderer_default,
         {
           html: iconToDisplay,
@@ -52711,7 +52711,6 @@ ${text}
   var block_default63 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
     apiVersion: 3,
-    __experimental: true,
     name: "core/playlist",
     title: "Playlist",
     category: "media",
@@ -55093,7 +55092,6 @@ ${text}
   var block_default64 = {
     $schema: "https://schemas.wp.org/trunk/block.json",
     apiVersion: 3,
-    __experimental: true,
     name: "core/playlist-track",
     title: "Playlist track",
     category: "media",
@@ -80942,6 +80940,8 @@ ${text}
       page_list_exports,
       page_list_item_exports,
       pattern_exports,
+      playlist_exports,
+      playlist_track_exports,
       preformatted_exports,
       pullquote_exports,
       block_exports,
@@ -81027,8 +81027,6 @@ ${text}
       blocks.push(tabs_exports2);
       blocks.push(tab_panel_exports);
       blocks.push(tab_panels_exports);
-      blocks.push(playlist_exports);
-      blocks.push(playlist_track_exports);
     }
     blocks.push(freeform_exports);
     return blocks.filter(Boolean);

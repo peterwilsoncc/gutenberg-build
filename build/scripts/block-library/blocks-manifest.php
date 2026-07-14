@@ -5122,7 +5122,6 @@ return array(
 	'playlist' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
-		'__experimental' => true,
 		'name' => 'core/playlist',
 		'title' => 'Playlist',
 		'category' => 'media',
@@ -5239,7 +5238,6 @@ return array(
 	'playlist-track' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
-		'__experimental' => true,
 		'name' => 'core/playlist-track',
 		'title' => 'Playlist track',
 		'category' => 'media',
