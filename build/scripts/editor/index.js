@@ -84969,7 +84969,15 @@ If there's a particular need for this, please submit a feature request at https:
         (0, import_hooks50.removeAction)("heartbeat.tick", hookName);
         window.removeEventListener("beforeunload", releasePostLock);
       };
-    }, []);
+    }, [
+      hookName,
+      isLocked,
+      activePostLock,
+      postId2,
+      postLockUtils,
+      autosave2,
+      updatePostLock2
+    ]);
     if (!isLocked) {
       return null;
     }
