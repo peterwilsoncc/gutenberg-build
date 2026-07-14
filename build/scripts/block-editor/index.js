@@ -50237,8 +50237,10 @@ var wp;
         lastQueryKeyRef.current = key;
         lastFetchRef.current = category.fetch;
         lastSourceRef.current = category.name;
+        const { page, ...queryWithoutPage } = query;
+        const fetchQuery = page > 1 ? query : queryWithoutPage;
         const { mediaItems, totalItems, totalPages } = normalizeFetchResult(
-          await category.fetch?.(query)
+          await category.fetch?.(fetchQuery)
         );
         if (request === lastRequestRef.current) {
           setMediaList(mediaItems);
