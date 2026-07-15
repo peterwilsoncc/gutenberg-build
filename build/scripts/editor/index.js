@@ -445,7 +445,7 @@ var wp;
             },
             [subscribe5, value, getSnapshot2]
           );
-          useEffect120(
+          useEffect119(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe5(function() {
@@ -471,7 +471,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React77 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState159 = React77.useState, useEffect120 = React77.useEffect, useLayoutEffect15 = React77.useLayoutEffect, useDebugValue2 = React77.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React77 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState159 = React77.useState, useEffect119 = React77.useEffect, useLayoutEffect15 = React77.useLayoutEffect, useDebugValue2 = React77.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React77.useSyncExternalStore ? React77.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -499,7 +499,7 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React77 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore6 = shim.useSyncExternalStore, useRef118 = React77.useRef, useEffect120 = React77.useEffect, useMemo151 = React77.useMemo, useDebugValue2 = React77.useDebugValue;
+        var React77 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore6 = shim.useSyncExternalStore, useRef118 = React77.useRef, useEffect119 = React77.useEffect, useMemo151 = React77.useMemo, useDebugValue2 = React77.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe5, getSnapshot2, getServerSnapshot2, selector2, isEqual2) {
           var instRef = useRef118(null);
           if (null === instRef.current) {
@@ -542,7 +542,7 @@ var wp;
             [getSnapshot2, getServerSnapshot2, selector2, isEqual2]
           );
           var value = useSyncExternalStore6(subscribe5, instRef[0], instRef[1]);
-          useEffect120(
+          useEffect119(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -97320,7 +97320,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n341 = __toESM(require_i18n(), 1);
   var import_data266 = __toESM(require_data(), 1);
   var import_element339 = __toESM(require_element(), 1);
-  var import_compose82 = __toESM(require_compose(), 1);
+  var import_compose83 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts13 = __toESM(require_keyboard_shortcuts(), 1);
   var import_block_editor107 = __toESM(require_block_editor(), 1);
   var import_preferences30 = __toESM(require_preferences(), 1);
@@ -97340,7 +97340,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
   var import_element334 = __toESM(require_element(), 1);
   var import_components280 = __toESM(require_components(), 1);
-  var import_compose81 = __toESM(require_compose(), 1);
+  var import_compose82 = __toESM(require_compose(), 1);
   var import_i18n335 = __toESM(require_i18n(), 1);
   var import_data260 = __toESM(require_data(), 1);
   var import_dom28 = __toESM(require_dom(), 1);
@@ -97349,6 +97349,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_i18n333 = __toESM(require_i18n(), 1);
   var import_element332 = __toESM(require_element(), 1);
+  var import_compose81 = __toESM(require_compose(), 1);
   var import_data259 = __toESM(require_data(), 1);
   var import_block_editor99 = __toESM(require_block_editor(), 1);
 
@@ -97663,9 +97664,22 @@ If there's a particular need for this, please submit a feature request at https:
     const blockElement = useBlockElement(clientId);
     const { toggleBlockSpotlight } = unlock((0, import_data259.useDispatch)(import_block_editor99.store));
     const { selectNote: selectNote2 } = unlock((0, import_data259.useDispatch)(store));
+    const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data259.useSelect)(store));
     const isSubmittingRef = (0, import_element332.useRef)(false);
-    const cancelPendingDismissRef = (0, import_element332.useRef)(void 0);
-    (0, import_element332.useEffect)(() => () => cancelPendingDismissRef.current?.(), []);
+    const focusOutside = (0, import_compose81.__experimentalUseFocusOutside)((event) => {
+      if (event.relatedTarget?.closest(
+        ".editor-collab-sidebar-panel__add-note"
+      )) {
+        return;
+      }
+      if (isSubmittingRef.current) {
+        return;
+      }
+      if (getSelectedNote2() === "new") {
+        toggleBlockSpotlight(clientId, false);
+        selectNote2(void 0);
+      }
+    });
     const unselectNote = () => {
       selectNote2(void 0);
       blockElement?.focus();
@@ -97678,45 +97692,13 @@ If there's a particular need for this, please submit a feature request at https:
       FloatingContainer,
       {
         floating,
-        className: "editor-collab-sidebar-panel__thread is-selected",
+        className: "editor-collab-sidebar-panel__add-note is-selected",
         gap: "md",
         tabIndex: 0,
         "aria-label": (0, import_i18n333.__)("New note"),
         role: "treeitem",
         style: floating ? { opacity: !floating.y ? 0 : void 0 } : void 0,
-        onFocus: () => {
-          cancelPendingDismissRef.current?.();
-        },
-        onBlur: (event) => {
-          if (!document.hasFocus()) {
-            return;
-          }
-          if (isSubmittingRef.current) {
-            return;
-          }
-          const container = event.currentTarget;
-          if (event.relatedTarget && container.contains(event.relatedTarget)) {
-            return;
-          }
-          const { defaultView } = container.ownerDocument;
-          cancelPendingDismissRef.current?.();
-          const frame = defaultView.requestAnimationFrame(() => {
-            cancelPendingDismissRef.current = void 0;
-            if (isSubmittingRef.current) {
-              return;
-            }
-            const active = container.ownerDocument.activeElement;
-            if (active && container.contains(active)) {
-              return;
-            }
-            toggleBlockSpotlight(clientId, false);
-            selectNote2(void 0);
-          });
-          cancelPendingDismissRef.current = () => {
-            defaultView.cancelAnimationFrame(frame);
-            cancelPendingDismissRef.current = void 0;
-          };
-        },
+        ...focusOutside,
         children: /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(NoteCard, { children: /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(
           NoteForm,
           {
@@ -97959,16 +97941,14 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_data260.useDispatch)(import_block_editor100.store)
     );
     const { selectNote: selectNote2 } = unlock((0, import_data260.useDispatch)(store));
-    const registry = (0, import_data260.useRegistry)();
+    const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data260.useSelect)(store));
     const relatedBlockElement = useBlockElement2(note.blockClientId);
-    const debouncedToggleBlockHighlight = (0, import_compose81.useDebounce)(
+    const debouncedToggleBlockHighlight = (0, import_compose82.useDebounce)(
       toggleBlockHighlight,
       50
     );
     const floatingRef = (0, import_element334.useRef)(null);
     const isKeyboardTabbingRef = (0, import_element334.useRef)(false);
-    const blurDeselectTimeoutRef = (0, import_element334.useRef)();
-    (0, import_element334.useEffect)(() => () => clearTimeout(blurDeselectTimeoutRef.current), []);
     const registerThread = floating?.registerThread;
     const unregisterThread = floating?.unregisterThread;
     (0, import_element334.useEffect)(() => {
@@ -97984,42 +97964,31 @@ If there's a particular need for this, please submit a feature request at https:
       }
       scrollNoteThreadIntoView(note.id, sidebarRef.current);
     }, [isSelected2, floating?.y, note.id, sidebarRef]);
-    const onMouseEnter = () => {
-      debouncedToggleBlockHighlight(note.blockClientId, true);
-    };
-    const onMouseLeave = () => {
-      debouncedToggleBlockHighlight(note.blockClientId, false);
-    };
-    const onFocus = () => {
-      clearTimeout(blurDeselectTimeoutRef.current);
-      toggleBlockHighlight(note.blockClientId, true);
-    };
-    const onBlur = (event) => {
-      if (!document.hasFocus()) {
-        return;
-      }
+    const focusOutside = (0, import_compose82.__experimentalUseFocusOutside)((event) => {
       const isNoteFocused2 = event.relatedTarget?.closest(
         ".editor-collab-sidebar-panel__thread"
       );
-      const isTabbing = isKeyboardTabbingRef.current;
-      if (isNoteFocused2 && !isTabbing) {
+      if (isNoteFocused2 && !isKeyboardTabbingRef.current) {
         return;
       }
-      if (isTabbing && event.currentTarget.contains(event.relatedTarget)) {
-        return;
-      }
-      clearTimeout(blurDeselectTimeoutRef.current);
-      blurDeselectTimeoutRef.current = setTimeout(() => {
+      if (!isNoteFocused2) {
         toggleBlockHighlight(note.blockClientId, false);
-        const selectedNoteId = unlock(
-          registry.select(store)
-        ).getSelectedNote();
-        if (selectedNoteId === note.id) {
-          onDeselectNote();
-        }
-      }, 0);
-    };
-    const onSelectNote = () => {
+      }
+      if (getSelectedNote2() === note.id) {
+        onDeselectNote();
+      }
+    });
+    function onMouseEnter() {
+      debouncedToggleBlockHighlight(note.blockClientId, true);
+    }
+    function onMouseLeave() {
+      debouncedToggleBlockHighlight(note.blockClientId, false);
+    }
+    function onFocus(event) {
+      focusOutside.onFocus(event);
+      toggleBlockHighlight(note.blockClientId, true);
+    }
+    function onSelectNote() {
       if (isSelected2) {
         return;
       }
@@ -98029,12 +97998,12 @@ If there's a particular need for this, please submit a feature request at https:
       if (!!note.blockClientId) {
         selectBlock2(note.blockClientId, null);
       }
-    };
-    const onDeselectNote = () => {
+    }
+    function onDeselectNote() {
       selectNote2(void 0);
       toggleBlockSpotlight(note.blockClientId, false);
-    };
-    const handleResolve = () => {
+    }
+    function handleResolve() {
       onEditNote({ id: note.id, status: "approved" });
       onDeselectNote();
       if (isFloating) {
@@ -98042,7 +98011,7 @@ If there's a particular need for this, please submit a feature request at https:
       } else {
         focusNoteThread(note.id, sidebarRef.current);
       }
-    };
+    }
     const allReplies = note?.reply || [];
     const lastReply = allReplies.length > 0 ? allReplies[allReplies.length - 1] : void 0;
     const restReplies = allReplies.length > 0 ? allReplies.slice(0, -1) : [];
@@ -98081,8 +98050,8 @@ If there's a particular need for this, please submit a feature request at https:
         onClick: onSelectNote,
         onMouseEnter,
         onMouseLeave,
+        ...focusOutside,
         onFocus,
-        onBlur,
         onKeyUp: (event) => {
           if (event.key === "Tab") {
             isKeyboardTabbingRef.current = false;
@@ -99166,7 +99135,7 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_data266.useDispatch)(import_block_editor107.store)
     );
     const { selectNote: selectNote2 } = unlock((0, import_data266.useDispatch)(store));
-    const isLargeViewport = (0, import_compose82.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose83.useViewportMatch)("medium");
     const sidebarRef = (0, import_element339.useRef)(null);
     const { clientId, noteId, isClassicBlock } = (0, import_data266.useSelect)((select9) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select9(import_block_editor107.store);
@@ -99335,7 +99304,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data269 = __toESM(require_data(), 1);
   var import_element340 = __toESM(require_element(), 1);
   var import_preferences33 = __toESM(require_preferences(), 1);
-  var import_compose83 = __toESM(require_compose(), 1);
+  var import_compose84 = __toESM(require_compose(), 1);
   var import_core_data141 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/global-styles/menu.mjs
@@ -99611,10 +99580,10 @@ If there's a particular need for this, please submit a feature request at https:
     const { setStylesPath: setStylesPath2, setShowStylebook: setShowStylebook2, resetStylesNavigation: resetStylesNavigation2 } = unlock(
       (0, import_data269.useDispatch)(store)
     );
-    const isMobileViewport = (0, import_compose83.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose84.useViewportMatch)("medium", "<");
     const isRevisionsOpened = stylesPath2.startsWith("/revisions") && !showStylebook2;
     const isRevisionsStyleBookOpened = stylesPath2.startsWith("/revisions") && showStylebook2;
-    const previousActiveArea = (0, import_compose83.usePrevious)(activeComplementaryArea);
+    const previousActiveArea = (0, import_compose84.usePrevious)(activeComplementaryArea);
     (0, import_element340.useEffect)(() => {
       if (activeComplementaryArea === "edit-site/global-styles" && previousActiveArea !== "edit-site/global-styles") {
         resetStylesNavigation2();
@@ -99816,7 +99785,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/preferences-modal/index.mjs
   var import_i18n347 = __toESM(require_i18n(), 1);
-  var import_compose84 = __toESM(require_compose(), 1);
+  var import_compose85 = __toESM(require_compose(), 1);
   var import_data273 = __toESM(require_data(), 1);
   var import_element342 = __toESM(require_element(), 1);
   var import_preferences36 = __toESM(require_preferences(), 1);
@@ -99959,7 +99928,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime565.jsx)(PreferencesModal, { closeModal: closeModal2, children: /* @__PURE__ */ (0, import_jsx_runtime565.jsx)(PreferencesModalContents, { extraSections }) });
   }
   function PreferencesModalContents({ extraSections = {} }) {
-    const isLargeViewport = (0, import_compose84.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose85.useViewportMatch)("medium");
     const { showBlockBreadcrumbsOption, showCollaborationOptions } = (0, import_data273.useSelect)(
       (select9) => {
         const { getEditorSettings: getEditorSettings2, isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2 } = unlock(select9(store));
