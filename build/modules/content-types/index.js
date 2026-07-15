@@ -16008,8 +16008,15 @@ var PopoverValidationProvider = popoverTitleValidation.ValidationProvider;
 var import_element52 = __toESM(require_element(), 1);
 var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
 var Portal2 = (0, import_element52.forwardRef)(
-  function PopoverPortal3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(index_parts_exports2.Portal, { ref, ...props });
+  function PopoverPortal3({ container, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+      index_parts_exports2.Portal,
+      {
+        container: container ?? getWpCompatOverlaySlot(),
+        ...restProps,
+        ref
+      }
+    );
   }
 );
 
