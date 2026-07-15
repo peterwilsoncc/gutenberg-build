@@ -52838,6 +52838,7 @@ ${text}
   var import_notices14 = __toESM(require_notices(), 1);
   var import_i18n165 = __toESM(require_i18n(), 1);
   var import_blocks78 = __toESM(require_blocks(), 1);
+  var import_blob16 = __toESM(require_blob(), 1);
 
   // packages/block-library/build-module/utils/waveform-player.mjs
   var import_element101 = __toESM(require_element(), 1);
@@ -54469,7 +54470,8 @@ ${text}
   var PlaylistContext = (0, import_element102.createContext)({
     currentTrackClientId: null,
     setCurrentTrackClientId: () => {
-    }
+    },
+    addTracks: void 0
   });
 
   // packages/block-library/build-module/playlist/utils.mjs
@@ -54504,7 +54506,9 @@ ${text}
   // packages/block-library/build-module/playlist/edit.mjs
   var import_jsx_runtime372 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES6 = ["audio"];
+  var AUDIO_FILE_EXTENSION = /\.(aac|aif|aiff|flac|m4a|m4b|mp3|oga|ogg|opus|wav|weba)$/i;
   var DEFAULT_WAVEFORM_STYLE = "bars";
+  var FILE_LIST_OBJECT_NAME = "[object FileList]";
   var WAVEFORM_STYLE_OPTIONS = [
     { label: (0, import_i18n165._x)("Bars", "waveform style option"), value: "bars" },
     { label: (0, import_i18n165._x)("Mirror", "waveform style option"), value: "mirror" },
@@ -54513,6 +54517,15 @@ ${text}
     { label: (0, import_i18n165._x)("Dots", "waveform style option"), value: "dots" },
     { label: (0, import_i18n165._x)("Seekbar", "waveform style option"), value: "seekbar" }
   ];
+  function isFile(value) {
+    return Object.prototype.toString.call(value) === "[object File]" || typeof File !== "undefined" && value instanceof File;
+  }
+  function isAudioFile(file) {
+    return file.type ? file.type.startsWith("audio/") : AUDIO_FILE_EXTENSION.test(file.name);
+  }
+  function getTrackIdentifier(track) {
+    return track.id ?? track.src ?? track.blob;
+  }
   var PlaylistEdit = ({
     attributes,
     setAttributes,
@@ -54536,7 +54549,7 @@ ${text}
     } = attributes;
     const blockProps = (0, import_block_editor182.useBlockProps)();
     const waveformPanelId = `${clientId}-waveform`;
-    const { replaceInnerBlocks } = (0, import_data104.useDispatch)(import_block_editor182.store);
+    const { replaceInnerBlocks, selectBlock } = (0, import_data104.useDispatch)(import_block_editor182.store);
     const { createErrorNotice } = (0, import_data104.useDispatch)(import_notices14.store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const colorGradientSettings = (0, import_block_editor182.__experimentalUseMultipleOriginColorsAndGradients)();
@@ -54558,9 +54571,12 @@ ${text}
     const waveformBackgroundGradientValue = waveformBackgroundGradient;
     let waveformColorGradientChange;
     let waveformBackgroundColorGradientChange;
-    function onUploadError(message) {
-      createErrorNotice(message, { type: "snackbar" });
-    }
+    const onUploadError = (0, import_element103.useCallback)(
+      (message) => {
+        createErrorNotice(message, { type: "snackbar" });
+      },
+      [createErrorNotice]
+    );
     const [currentTrackClientId, setCurrentTrackClientId] = (0, import_element103.useState)(null);
     const { innerBlockTracks } = (0, import_data104.useSelect)(
       (select10) => {
@@ -54598,26 +54614,89 @@ ${text}
         setCurrentTrackClientId(validTracks[0].clientId);
       }
     }, [currentTrackClientId, setCurrentTrackClientId, validTracks]);
-    const playlistContext = (0, import_element103.useMemo)(
-      () => ({ currentTrackClientId, setCurrentTrackClientId }),
-      [currentTrackClientId, setCurrentTrackClientId]
+    const createTrackBlocks = (0, import_element103.useCallback)(
+      (media) => {
+        if (!media) {
+          return [];
+        }
+        let mediaItems = [media];
+        if (Object.prototype.toString.call(media) === FILE_LIST_OBJECT_NAME) {
+          mediaItems = Array.from(media);
+        } else if (Array.isArray(media)) {
+          mediaItems = media;
+        }
+        let hasInvalidFile = false;
+        const blocks = mediaItems.map((mediaItem) => {
+          if (isFile(mediaItem)) {
+            if (!isAudioFile(mediaItem)) {
+              hasInvalidFile = true;
+              return null;
+            }
+            return (0, import_blocks78.createBlock)("core/playlist-track", {
+              blob: (0, import_blob16.createBlobURL)(mediaItem),
+              title: mediaItem.name
+            });
+          }
+          const track = getTrackAttributes(mediaItem);
+          return track.src ? (0, import_blocks78.createBlock)("core/playlist-track", track) : null;
+        }).filter(Boolean);
+        if (hasInvalidFile) {
+          onUploadError(
+            (0, import_i18n165.__)("Only audio files can be added to a playlist.")
+          );
+        }
+        return blocks;
+      },
+      [onUploadError]
     );
     const onSelectTracks = (0, import_element103.useCallback)(
       (media) => {
-        if (!media) {
+        const newBlocks = createTrackBlocks(media);
+        if (newBlocks.length === 0) {
           return;
         }
-        if (!Array.isArray(media)) {
-          media = [media];
-        }
-        const trackList = media.map(getTrackAttributes);
-        const newBlocks = trackList.map(
-          (track) => (0, import_blocks78.createBlock)("core/playlist-track", track)
-        );
         setCurrentTrackClientId(newBlocks[0]?.clientId ?? null);
         replaceInnerBlocks(clientId, newBlocks);
       },
-      [replaceInnerBlocks, clientId, setCurrentTrackClientId]
+      [
+        clientId,
+        createTrackBlocks,
+        replaceInnerBlocks,
+        setCurrentTrackClientId
+      ]
+    );
+    const onAddTracks = (0, import_element103.useCallback)(
+      (media) => {
+        const existingIds = new Set(
+          validTracks.map((block) => getTrackIdentifier(block.attributes)).filter(Boolean)
+        );
+        const newBlocks = createTrackBlocks(media).filter(
+          (block) => !existingIds.has(getTrackIdentifier(block.attributes))
+        );
+        if (newBlocks.length === 0) {
+          return;
+        }
+        const nextBlocks = [...validTracks, ...newBlocks];
+        setCurrentTrackClientId(newBlocks[0].clientId);
+        replaceInnerBlocks(clientId, nextBlocks);
+        selectBlock(newBlocks[0].clientId);
+      },
+      [
+        clientId,
+        createTrackBlocks,
+        replaceInnerBlocks,
+        selectBlock,
+        setCurrentTrackClientId,
+        validTracks
+      ]
+    );
+    const playlistContext = (0, import_element103.useMemo)(
+      () => ({
+        currentTrackClientId,
+        setCurrentTrackClientId,
+        addTracks: onAddTracks
+      }),
+      [currentTrackClientId, onAddTracks, setCurrentTrackClientId]
     );
     const currentTrackData = tracks.find((track) => track.clientId === currentTrackClientId) ?? tracks[0];
     const onTrackEnded = (0, import_element103.useCallback)(() => {
@@ -54714,11 +54793,6 @@ ${text}
         waveformBackgroundColor: void 0
       });
     }
-    const hasSelectedChild = (0, import_data104.useSelect)(
-      (select10) => select10(import_block_editor182.store).hasSelectedInnerBlock(clientId),
-      [clientId]
-    );
-    const hasAnySelected = isSelected || hasSelectedChild;
     const colorSettings = [];
     if (hasColors || hasGradients) {
       colorSettings.push(
@@ -54754,7 +54828,7 @@ ${text}
     }
     const innerBlocksProps = (0, import_block_editor182.useInnerBlocksProps)(blockProps, {
       __experimentalAppenderTagName: "li",
-      renderAppender: hasAnySelected && import_block_editor182.InnerBlocks.ButtonBlockAppender
+      renderAppender: false
     });
     if (tracks.length === 0) {
       return /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
@@ -54775,6 +54849,7 @@ ${text}
               onSelect: onSelectTracks,
               accept: "audio/*",
               multiple: true,
+              handleUpload: false,
               allowedTypes: ALLOWED_MEDIA_TYPES6,
               onError: onUploadError
             }
@@ -54786,11 +54861,11 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_block_editor182.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
         import_block_editor182.MediaReplaceFlow,
         {
-          name: (0, import_i18n165.__)("Edit"),
-          onSelect: onSelectTracks,
+          name: (0, import_i18n165.__)("Add"),
+          onSelect: onAddTracks,
           accept: "audio/*",
           multiple: true,
-          mediaIds: tracks.filter((track) => track.id).map((track) => track.id),
+          handleUpload: false,
           allowedTypes: ALLOWED_MEDIA_TYPES6,
           onError: onUploadError
         }
@@ -55006,6 +55081,18 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)("figure", { ...blockProps, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
+          import_block_editor182.MediaPlaceholder,
+          {
+            onSelect: onAddTracks,
+            accept: "audio/*",
+            multiple: true,
+            handleUpload: false,
+            disableMediaButtons: true,
+            allowedTypes: ALLOWED_MEDIA_TYPES6,
+            onError: onUploadError
+          }
+        ),
         /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_components104.Disabled, { isDisabled: !isSelected, children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
           WaveformPlayer,
           {
@@ -55023,10 +55110,11 @@ ${text}
             showPlayButtonArtwork: showPlayButtonArtwork === true
           }
         ) }),
-        showTracklist && /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
           "ol",
           {
             className: clsx_default("wp-block-playlist__tracklist", {
+              "wp-block-playlist__tracklist-is-hidden": !showTracklist,
               "wp-block-playlist__tracklist-show-numbers": showNumbers,
               "wp-block-playlist__tracklist-length-is-hidden": !showTrackLength
             }),
@@ -55162,7 +55250,7 @@ ${text}
   };
 
   // packages/block-library/build-module/playlist-track/edit.mjs
-  var import_blob16 = __toESM(require_blob(), 1);
+  var import_blob17 = __toESM(require_blob(), 1);
   var import_element104 = __toESM(require_element(), 1);
   var import_block_editor184 = __toESM(require_block_editor(), 1);
   var import_components105 = __toESM(require_components(), 1);
@@ -55186,7 +55274,7 @@ ${text}
     const showImages = context?.showImages ?? true;
     const imageButton = (0, import_element104.useRef)();
     const blockProps = (0, import_block_editor184.useBlockProps)();
-    const { currentTrackClientId, setCurrentTrackClientId } = (0, import_element104.useContext)(PlaylistContext);
+    const { currentTrackClientId, setCurrentTrackClientId, addTracks } = (0, import_element104.useContext)(PlaylistContext);
     const { createErrorNotice } = (0, import_data105.useDispatch)(import_notices15.store);
     function onUploadError(message) {
       createErrorNotice(message, { type: "snackbar" });
@@ -55204,7 +55292,7 @@ ${text}
       setCurrentTrackClientId
     ]);
     useUploadMediaFromBlobURL({
-      src: temporaryURL,
+      url: temporaryURL,
       allowedTypes: ALLOWED_MEDIA_TYPES7,
       onChange: onSelectTrack,
       onError: onUploadError
@@ -55225,7 +55313,7 @@ ${text}
         setTemporaryURL();
         return;
       }
-      if ((0, import_blob16.isBlobURL)(media.url)) {
+      if ((0, import_blob17.isBlobURL)(media.url)) {
         setTemporaryURL(media.url);
         return;
       }
@@ -55271,7 +55359,21 @@ ${text}
           mediaId: id,
           mediaURL: src,
           allowedTypes: ALLOWED_MEDIA_TYPES7,
-          onError: onUploadError
+          onError: onUploadError,
+          variant: "toolbar"
+        }
+      ) }),
+      !!addTracks && /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_block_editor184.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
+        import_block_editor184.MediaReplaceFlow,
+        {
+          name: (0, import_i18n166.__)("Add"),
+          onSelect: addTracks,
+          accept: "audio/*",
+          multiple: true,
+          handleUpload: false,
+          allowedTypes: ALLOWED_MEDIA_TYPES7,
+          onError: onUploadError,
+          variant: "toolbar"
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_block_editor184.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime374.jsxs)(import_components105.PanelBody, { title: (0, import_i18n166.__)("Settings"), children: [
@@ -58547,7 +58649,7 @@ ${text}
   };
 
   // packages/block-library/build-module/post-featured-image/edit.mjs
-  var import_blob17 = __toESM(require_blob(), 1);
+  var import_blob18 = __toESM(require_blob(), 1);
   var import_core_data65 = __toESM(require_core_data(), 1);
   var import_data113 = __toESM(require_data(), 1);
   var import_components113 = __toESM(require_components(), 1);
@@ -58917,7 +59019,7 @@ ${text}
       if (value?.id) {
         setFeaturedImage(value.id);
       }
-      if (value?.url && (0, import_blob17.isBlobURL)(value.url)) {
+      if (value?.url && (0, import_blob18.isBlobURL)(value.url)) {
         setTemporaryURL(value.url);
       }
     };
@@ -69101,7 +69203,7 @@ ${text}
   };
 
   // packages/block-library/build-module/site-logo/edit.mjs
-  var import_blob18 = __toESM(require_blob(), 1);
+  var import_blob19 = __toESM(require_blob(), 1);
   var import_element132 = __toESM(require_element(), 1);
   var import_i18n234 = __toESM(require_i18n(), 1);
   var import_components149 = __toESM(require_components(), 1);
@@ -69189,7 +69291,7 @@ ${text}
           }
         }
       ),
-      (0, import_blob18.isBlobURL)(logoUrl) && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_components149.Spinner, {})
+      (0, import_blob19.isBlobURL)(logoUrl) && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_components149.Spinner, {})
     ] });
     let imgWrapper = img;
     if (isLink) {
@@ -69495,7 +69597,7 @@ ${text}
         allowedTypes: ALLOWED_MEDIA_TYPES9,
         filesList,
         onFileChange([image]) {
-          if ((0, import_blob18.isBlobURL)(image?.url)) {
+          if ((0, import_blob19.isBlobURL)(image?.url)) {
             setTemporaryURL(image.url);
             return;
           }
@@ -79544,7 +79646,7 @@ ${text}
   var deprecated_default56 = deprecated21;
 
   // packages/block-library/build-module/video/edit.mjs
-  var import_blob19 = __toESM(require_blob(), 1);
+  var import_blob20 = __toESM(require_blob(), 1);
   var import_components185 = __toESM(require_components(), 1);
   var import_block_editor297 = __toESM(require_block_editor(), 1);
   var import_element155 = __toESM(require_element(), 1);
@@ -80154,7 +80256,7 @@ ${text}
         setTemporaryURL();
         return;
       }
-      if ((0, import_blob19.isBlobURL)(media.url)) {
+      if ((0, import_blob20.isBlobURL)(media.url)) {
         setTemporaryURL(media.url);
         return;
       }
@@ -80373,7 +80475,7 @@ ${text}
   }
 
   // packages/block-library/build-module/video/transforms.mjs
-  var import_blob20 = __toESM(require_blob(), 1);
+  var import_blob21 = __toESM(require_blob(), 1);
   var import_blocks127 = __toESM(require_blocks(), 1);
   var transforms38 = {
     from: [
@@ -80385,7 +80487,7 @@ ${text}
         transform(files) {
           const file = files[0];
           const block = (0, import_blocks127.createBlock)("core/video", {
-            blob: (0, import_blob20.createBlobURL)(file)
+            blob: (0, import_blob21.createBlobURL)(file)
           });
           return block;
         }
@@ -80443,7 +80545,7 @@ ${text}
             poster: videoElement.getAttribute("poster") || void 0,
             src: videoElement.getAttribute("src") || void 0
           };
-          if ((0, import_blob20.isBlobURL)(attributes.src)) {
+          if ((0, import_blob21.isBlobURL)(attributes.src)) {
             attributes.blob = attributes.src;
             delete attributes.src;
           }
