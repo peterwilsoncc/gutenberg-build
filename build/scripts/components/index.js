@@ -42571,6 +42571,10 @@ This message will only show in development mode. It won't appear in production. 
     return typeof wp?.components === "object" && wp.components !== null;
   }
   var cachedSlot = null;
+  function ensureSlotIsAccessible(element) {
+    element.setAttribute("aria-hidden", "false");
+    return element;
+  }
   function createSlot(ownerDocument) {
     const element = ownerDocument.createElement("div");
     element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
@@ -42592,19 +42596,19 @@ This message will only show in development mode. It won't appear in production. 
       return void 0;
     }
     if (cachedSlot && cachedSlot.ownerDocument === ownerDocument && cachedSlot.isConnected) {
-      return cachedSlot;
+      return ensureSlotIsAccessible(cachedSlot);
     }
     const existing = ownerDocument.querySelector(
       `[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`
     );
     if (existing instanceof HTMLDivElement) {
-      cachedSlot = existing;
-      return existing;
+      cachedSlot = ensureSlotIsAccessible(existing);
+      return cachedSlot;
     }
     if (cachedSlot?.isConnected) {
       cachedSlot.remove();
     }
-    cachedSlot = createSlot(ownerDocument);
+    cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument));
     return cachedSlot;
   }
 
