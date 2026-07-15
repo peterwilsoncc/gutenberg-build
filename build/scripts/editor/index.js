@@ -90820,19 +90820,19 @@ If there's a particular need for this, please submit a feature request at https:
   var THREAD_GAP = 16;
   var OVERLAP_MARGIN = 20;
   var AVATAR_BORDER_COLORS = [
-    "#C36EFF",
+    "#6F42C1",
     // Purple
     "#D94145",
     // Red
-    "#E4780A",
+    "#FBBF24",
     // Orange
     "#FF35EE",
     // Magenta
     "#879F11",
     // Olive
-    "#46A494",
+    "#0F766E",
     // Teal
-    "#00A2C3"
+    "#00CFFF"
     // Cyan
   ];
   function getAvatarBorderColor(userId) {
