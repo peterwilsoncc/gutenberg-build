@@ -2370,6 +2370,13 @@ html[dir=rtl] .has-drop-cap:not(:focus)::first-letter {
   height: 100% !important;
 }
 
+@media (min-width: 600px) {
+  .wp-block-tab-list__mover-button {
+    width: 24px;
+    min-width: 0 !important;
+  }
+}
+
 .wp-block[data-align=left] > .wp-block-table, .wp-block[data-align=right] > .wp-block-table, .wp-block[data-align=center] > .wp-block-table {
   height: auto;
 }
