@@ -2110,7 +2110,7 @@ var wp;
             },
             [subscribe, value, getSnapshot]
           );
-          useEffect94(
+          useEffect93(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe(function() {
@@ -2136,7 +2136,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React118 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState122 = React118.useState, useEffect94 = React118.useEffect, useLayoutEffect18 = React118.useLayoutEffect, useDebugValue2 = React118.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React118 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState122 = React118.useState, useEffect93 = React118.useEffect, useLayoutEffect18 = React118.useLayoutEffect, useDebugValue2 = React118.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React118.useSyncExternalStore ? React118.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -2164,7 +2164,7 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React118 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef108 = React118.useRef, useEffect94 = React118.useEffect, useMemo154 = React118.useMemo, useDebugValue2 = React118.useDebugValue;
+        var React118 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef108 = React118.useRef, useEffect93 = React118.useEffect, useMemo154 = React118.useMemo, useDebugValue2 = React118.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector3, isEqual2) {
           var instRef = useRef108(null);
           if (null === instRef.current) {
@@ -2207,7 +2207,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector3, isEqual2]
           );
           var value = useSyncExternalStore2(subscribe, instRef[0], instRef[1]);
-          useEffect94(
+          useEffect93(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -88101,60 +88101,7 @@ var wp;
     const keyboardShortcuts = (0, import_element293.useRef)(
       /* @__PURE__ */ new Set()
     );
-    const popoverSlotRef = (0, import_element293.useRef)(null);
-    const [popoverContainer, setPopoverContainer] = (0, import_element293.useState)(null);
-    const popoverContainerRef = (0, import_compose99.useRefEffect)((element) => {
-      setPopoverContainer(element.ownerDocument.body);
-    }, []);
-    const blurDeselectTimeoutRef = (0, import_element293.useRef)();
-    const stopPopoverFocusTrackingRef = (0, import_element293.useRef)(
-      void 0
-    );
-    (0, import_element293.useEffect)(
-      () => () => {
-        clearTimeout(blurDeselectTimeoutRef.current);
-        stopPopoverFocusTrackingRef.current?.();
-      },
-      []
-    );
-    function isFocusInField(ownerDocument2) {
-      const active = ownerDocument2.activeElement;
-      return !!(active && (anchorRef.current?.contains(active) || popoverSlotRef.current?.contains(active)));
-    }
-    function trackPopoverFocusOut(ownerDocument2) {
-      stopPopoverFocusTrackingRef.current?.();
-      function onDocumentFocusOut() {
-        clearTimeout(blurDeselectTimeoutRef.current);
-        blurDeselectTimeoutRef.current = setTimeout(() => {
-          if (isFocusInField(ownerDocument2)) {
-            return;
-          }
-          stopPopoverFocusTrackingRef.current?.();
-          setIsSelected(false);
-        }, 0);
-      }
-      ownerDocument2.addEventListener("focusout", onDocumentFocusOut);
-      stopPopoverFocusTrackingRef.current = () => {
-        ownerDocument2.removeEventListener("focusout", onDocumentFocusOut);
-        stopPopoverFocusTrackingRef.current = void 0;
-      };
-    }
-    function onEditableFocus() {
-      clearTimeout(blurDeselectTimeoutRef.current);
-      stopPopoverFocusTrackingRef.current?.();
-      setIsSelected(true);
-    }
-    function onEditableBlur(event) {
-      clearTimeout(blurDeselectTimeoutRef.current);
-      const { ownerDocument: ownerDocument2 } = event.currentTarget;
-      blurDeselectTimeoutRef.current = setTimeout(() => {
-        if (isFocusInField(ownerDocument2)) {
-          trackPopoverFocusOut(ownerDocument2);
-          return;
-        }
-        setIsSelected(false);
-      }, 0);
-    }
+    const focusOutside = (0, import_compose99.__experimentalUseFocusOutside)(() => setIsSelected(false));
     const adjustedAllowedFormats = getAllowedFormats2({
       allowedFormats,
       disableFormats
@@ -88314,57 +88261,62 @@ var wp;
       eventListenersRef,
       enterRef,
       focusOnMountRef,
-      popoverContainerRef,
       autocompleteRef
     ]);
     return (
-      /*
-       * The provider scopes every slot/fill rendered by this field — most
-       * importantly the format popovers, which land in the `Popover.Slot`
-       * below. That containment is what the blur handling above checks to
-       * decide whether focus is still within the field's own UI. A format
-       * popover using a custom `__unstableSlotName` would portal to the
-       * body-level fallback container instead and deselect the field;
-       * `core/link` (and every other core format) uses the default slot.
-       */
-      /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(import_components248.SlotFillProvider, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-          RichTextControlShell,
-          {
-            label,
-            id,
-            className: clsx_default("dataviews-controls__richtext", className),
-            placeholder,
-            hideLabelFromVision,
-            help,
-            disabled: disabled2,
-            required,
-            markWhenOptional,
-            customValidity,
-            value: value.text,
-            "aria-multiline": !disableLineBreaks,
-            ...autocompleteProps,
-            ref: editableRef,
-            onFocus: onEditableFocus,
-            onBlur: onEditableBlur
-          }
-        ),
-        isSelected && !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(KeyboardShortcutContext2.Provider, { value: keyboardShortcuts, children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(InputEventContext2.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
-          FormatEdit2,
-          {
-            value,
-            onChange: onRichTextChange,
-            onFocus,
-            formatTypes,
-            forwardedRef: anchorRef,
-            isVisible: true
-          }
-        ) }) }),
-        popoverContainer && (0, import_element293.createPortal)(
-          /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(import_components248.Popover.Slot, { ref: popoverSlotRef }),
-          popoverContainer
-        )
-      ] })
+      // Focus boundary for the field's selection: `onFocus` selects on entry;
+      // the spread `useFocusOutside` handlers deselect once focus leaves.
+      /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+        "div",
+        {
+          ...focusOutside,
+          onFocus: (event) => {
+            setIsSelected(true);
+            focusOutside.onFocus(event);
+          },
+          children: /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(import_components248.SlotFillProvider, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+              RichTextControlShell,
+              {
+                label,
+                id,
+                className: clsx_default(
+                  "dataviews-controls__richtext",
+                  className
+                ),
+                placeholder,
+                hideLabelFromVision,
+                help,
+                disabled: disabled2,
+                required,
+                markWhenOptional,
+                customValidity,
+                value: value.text,
+                "aria-multiline": !disableLineBreaks,
+                ...autocompleteProps,
+                ref: editableRef
+              }
+            ),
+            isSelected && !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+              KeyboardShortcutContext2.Provider,
+              {
+                value: keyboardShortcuts,
+                children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(InputEventContext2.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
+                  FormatEdit2,
+                  {
+                    value,
+                    onChange: onRichTextChange,
+                    onFocus,
+                    formatTypes,
+                    forwardedRef: anchorRef,
+                    isVisible: true
+                  }
+                ) })
+              }
+            )
+          ] })
+        }
+      )
     );
   }
 
