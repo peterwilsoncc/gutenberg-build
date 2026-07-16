@@ -90838,6 +90838,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data111 = __toESM(require_core_data(), 1);
   var import_preferences18 = __toESM(require_preferences(), 1);
   var import_block_editor71 = __toESM(require_block_editor(), 1);
+
+  // packages/editor/build-module/components/sidebar/constants.mjs
+  var sidebars = {
+    document: "edit-post/document",
+    block: "edit-post/block"
+  };
+
+  // packages/editor/build-module/components/preview-dropdown/index.mjs
   var import_jsx_runtime494 = __toESM(require_jsx_runtime(), 1);
   var { getViewportBreakpoints: getViewportBreakpoints5 } = unlock(privateApis);
   function PreviewDropdown({ forceIsAutosaveable, disabled: disabled2 }) {
@@ -90851,7 +90859,8 @@ If there's a particular need for this, please submit a feature request at https:
       showIconLabels,
       isTemplateHidden,
       templateId: templateId2,
-      isResponsiveEditing
+      isResponsiveEditing,
+      hasBlockSelection
     } = (0, import_data205.useSelect)((select9) => {
       const {
         getCurrentPostType: getCurrentPostType2,
@@ -90859,15 +90868,16 @@ If there's a particular need for this, please submit a feature request at https:
         getRenderingMode: getRenderingMode2,
         getDeviceType: getDeviceType2
       } = unlock(select9(store));
-      const { isResponsiveEditing: _isResponsiveEditing } = unlock(
-        select9(import_block_editor71.store)
-      );
-      const blockEditorSettings = select9(import_block_editor71.store).getSettings();
+      const {
+        isResponsiveEditing: _isResponsiveEditing,
+        getBlockSelectionStart: getBlockSelectionStart2,
+        getSettings: getSettings10
+      } = unlock(select9(import_block_editor71.store));
       const { getEntityRecord, getPostType } = select9(import_core_data111.store);
       const { get } = select9(import_preferences18.store);
       const _currentPostType = getCurrentPostType2();
       const viewportBreakpoints = getViewportBreakpoints5(
-        blockEditorSettings.__experimentalFeatures?.viewport
+        getSettings10().__experimentalFeatures?.viewport
       );
       return {
         deviceType: getDeviceType2(),
@@ -90879,13 +90889,15 @@ If there's a particular need for this, please submit a feature request at https:
         showIconLabels: get("core", "showIconLabels"),
         isTemplateHidden: getRenderingMode2() === "post-only",
         templateId: getCurrentTemplateId2(),
-        isResponsiveEditing: _isResponsiveEditing()
+        isResponsiveEditing: _isResponsiveEditing(),
+        hasBlockSelection: !!getBlockSelectionStart2()
       };
     }, []);
     const { setDeviceType: setDeviceType2, setRenderingMode: setRenderingMode2, setDefaultRenderingMode: setDefaultRenderingMode2 } = unlock(
       (0, import_data205.useDispatch)(store)
     );
     const { resetZoomLevel, setStyleStateViewport, setResponsiveEditing } = unlock((0, import_data205.useDispatch)(import_block_editor71.store));
+    const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data205.useDispatch)(store3);
     const handleDevicePreviewChange = (newDeviceType) => {
       setDeviceType2(newDeviceType);
       resetZoomLevel();
@@ -90896,6 +90908,9 @@ If there's a particular need for this, please submit a feature request at https:
       setStyleStateViewport(
         newIsResponsiveEditing ? VIEWPORT_STATE_BY_DEVICE_TYPE[deviceType] ?? "default" : "default"
       );
+      if (newIsResponsiveEditing && hasBlockSelection) {
+        enableComplementaryArea2("core", sidebars.block);
+      }
     };
     const isMobile = (0, import_compose65.useViewportMatch)("medium", "<");
     if (isMobile) {
@@ -93405,12 +93420,6 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
   var revisions_slider_default = RevisionsSlider;
-
-  // packages/editor/build-module/components/sidebar/constants.mjs
-  var sidebars = {
-    document: "edit-post/document",
-    block: "edit-post/block"
-  };
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-header.mjs
   var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
