@@ -54942,7 +54942,7 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_block_editor183.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
         import_block_editor183.MediaReplaceFlow,
         {
-          name: (0, import_i18n165.__)("Add"),
+          name: (0, import_i18n165.__)("Add track"),
           onSelect: onAddTracks,
           accept: "audio/*",
           multiple: true,
@@ -55447,7 +55447,7 @@ ${text}
       !!addTracks && /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_block_editor185.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
         import_block_editor185.MediaReplaceFlow,
         {
-          name: (0, import_i18n166.__)("Add"),
+          name: (0, import_i18n166.__)("Add track"),
           onSelect: addTracks,
           accept: "audio/*",
           multiple: true,
