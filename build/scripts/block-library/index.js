@@ -54557,8 +54557,22 @@ ${text}
 
   // packages/block-library/build-module/playlist/utils.mjs
   var import_i18n164 = __toESM(require_i18n(), 1);
+  var import_html_entities8 = __toESM(require_html_entities(), 1);
+  function getMediaUrl(media) {
+    return media?.url ?? media?.source_url;
+  }
+  function getMediaTitle(media) {
+    const title = media?.title;
+    if (title === void 0) {
+      return void 0;
+    }
+    if (typeof title === "string") {
+      return title;
+    }
+    return (0, import_html_entities8.decodeEntities)(title?.raw || title?.rendered || "");
+  }
   function getTrackImageAttributes(image) {
-    const imageSrc = image?.src ?? image?.url;
+    const imageSrc = image?.src ?? getMediaUrl(image);
     if (imageSrc?.endsWith("/images/media/audio.svg")) {
       return {
         image: "",
@@ -54572,11 +54586,12 @@ ${text}
     };
   }
   function getTrackAttributes(media) {
+    const mediaUrl = getMediaUrl(media);
     return {
-      id: media.id || media.url,
+      id: media.id || mediaUrl,
       // Attachment ID or URL.
-      src: media.url,
-      title: media.title,
+      src: mediaUrl,
+      title: getMediaTitle(media),
       artist: media.artist || media?.meta?.artist || media?.media_details?.artist || (0, import_i18n164.__)("Unknown artist"),
       album: media.album || media?.meta?.album || media?.media_details?.album || (0, import_i18n164.__)("Unknown album"),
       length: media?.fileLength || media?.media_details?.length_formatted,
@@ -55379,7 +55394,8 @@ ${text}
       onError: onUploadError
     });
     function onSelectTrack(media) {
-      if (!media || !media.url) {
+      const mediaUrl = media?.url ?? media?.source_url;
+      if (!media || !mediaUrl) {
         setAttributes({
           blob: void 0,
           id: void 0,
@@ -55394,8 +55410,8 @@ ${text}
         setTemporaryURL();
         return;
       }
-      if ((0, import_blob17.isBlobURL)(media.url)) {
-        setTemporaryURL(media.url);
+      if ((0, import_blob17.isBlobURL)(mediaUrl)) {
+        setTemporaryURL(mediaUrl);
         return;
       }
       setAttributes({
@@ -55734,7 +55750,7 @@ ${text}
   var import_core_data58 = __toESM(require_core_data(), 1);
   var import_data106 = __toESM(require_data(), 1);
   var import_element105 = __toESM(require_element(), 1);
-  var import_html_entities8 = __toESM(require_html_entities(), 1);
+  var import_html_entities9 = __toESM(require_html_entities(), 1);
   var import_i18n168 = __toESM(require_i18n(), 1);
   var import_blocks81 = __toESM(require_blocks(), 1);
 
@@ -55880,7 +55896,7 @@ ${text}
       const fetchedAuthors = (authors ?? []).map((author) => {
         return {
           value: author.id,
-          label: (0, import_html_entities8.decodeEntities)(author.name)
+          label: (0, import_html_entities9.decodeEntities)(author.name)
         };
       });
       const foundAuthor = fetchedAuthors.findIndex(
@@ -55891,7 +55907,7 @@ ${text}
         currentAuthor = [
           {
             value: value.id,
-            label: (0, import_html_entities8.decodeEntities)(value.name)
+            label: (0, import_html_entities9.decodeEntities)(value.name)
           }
         ];
       } else if (foundAuthor < 0 && !value) {
@@ -60297,7 +60313,7 @@ ${text}
   var import_blocks88 = __toESM(require_blocks(), 1);
   var import_components116 = __toESM(require_components(), 1);
   var import_data117 = __toESM(require_data(), 1);
-  var import_html_entities9 = __toESM(require_html_entities(), 1);
+  var import_html_entities10 = __toESM(require_html_entities(), 1);
   var import_i18n186 = __toESM(require_i18n(), 1);
   var import_core_data69 = __toESM(require_core_data(), 1);
 
@@ -60413,7 +60429,7 @@ ${text}
             href: postTerm.link,
             onClick: (event) => event.preventDefault(),
             rel: "tag",
-            children: (0, import_html_entities9.decodeEntities)(postTerm.name)
+            children: (0, import_html_entities10.decodeEntities)(postTerm.name)
           },
           postTerm.id
         )).reduce((prev, curr) => /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(import_jsx_runtime393.Fragment, { children: [
@@ -62535,7 +62551,7 @@ ${text}
   var import_element116 = __toESM(require_element(), 1);
   var import_core_data72 = __toESM(require_core_data(), 1);
   var import_block_editor213 = __toESM(require_block_editor(), 1);
-  var import_html_entities10 = __toESM(require_html_entities(), 1);
+  var import_html_entities11 = __toESM(require_html_entities(), 1);
   var import_i18n194 = __toESM(require_i18n(), 1);
   var import_blocks97 = __toESM(require_blocks(), 1);
   var getEntitiesInfo = (entities) => {
@@ -62565,7 +62581,7 @@ ${text}
   var mapToIHasNameAndId = (entities, path) => {
     return (entities || []).map((entity) => ({
       ...entity,
-      name: (0, import_html_entities10.decodeEntities)(getValueFromObjectPath(entity, path))
+      name: (0, import_html_entities11.decodeEntities)(getValueFromObjectPath(entity, path))
     }));
   };
   var usePostTypes = () => {
@@ -63108,7 +63124,7 @@ ${text}
   var import_core_data75 = __toESM(require_core_data(), 1);
   var import_element118 = __toESM(require_element(), 1);
   var import_compose50 = __toESM(require_compose(), 1);
-  var import_html_entities11 = __toESM(require_html_entities(), 1);
+  var import_html_entities12 = __toESM(require_html_entities(), 1);
   var import_i18n199 = __toESM(require_i18n(), 1);
   var import_jsx_runtime405 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY8 = [];
@@ -63278,7 +63294,7 @@ ${text}
         value,
         onInputChange: debouncedSearch,
         suggestions,
-        displayTransform: import_html_entities11.decodeEntities,
+        displayTransform: import_html_entities12.decodeEntities,
         onChange: onTermsChange,
         help: ""
       }
@@ -67254,7 +67270,7 @@ ${text}
   });
   var import_core_data82 = __toESM(require_core_data(), 1);
   var import_data137 = __toESM(require_data(), 1);
-  var import_html_entities12 = __toESM(require_html_entities(), 1);
+  var import_html_entities13 = __toESM(require_html_entities(), 1);
 
   // packages/block-library/build-module/block/block.json
   var block_default92 = {
@@ -67578,7 +67594,7 @@ ${text}
       if (!entity?.title) {
         return;
       }
-      return (0, import_html_entities12.decodeEntities)(entity.title);
+      return (0, import_html_entities13.decodeEntities)(entity.title);
     }
   };
   var init92 = () => initBlock({ name: name93, metadata: block_default92, settings: settings92 });
@@ -70229,7 +70245,7 @@ ${text}
   var import_block_editor246 = __toESM(require_block_editor(), 1);
   var import_components151 = __toESM(require_components(), 1);
   var import_blocks109 = __toESM(require_blocks(), 1);
-  var import_html_entities13 = __toESM(require_html_entities(), 1);
+  var import_html_entities14 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime449 = __toESM(require_jsx_runtime(), 1);
   function SiteTitleEdit(props) {
     useDeprecatedTextAlign(props);
@@ -70278,9 +70294,9 @@ ${text}
       {
         href: "#site-title-pseudo-link",
         onClick: (event) => event.preventDefault(),
-        children: (0, import_html_entities13.decodeEntities)(title) || (0, import_i18n236.__)("Site Title placeholder")
+        children: (0, import_html_entities14.decodeEntities)(title) || (0, import_i18n236.__)("Site Title placeholder")
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime449.jsx)("span", { children: (0, import_html_entities13.decodeEntities)(title) || (0, import_i18n236.__)("Site Title placeholder") }) });
+    ) : /* @__PURE__ */ (0, import_jsx_runtime449.jsx)("span", { children: (0, import_html_entities14.decodeEntities)(title) || (0, import_i18n236.__)("Site Title placeholder") }) });
     return /* @__PURE__ */ (0, import_jsx_runtime449.jsxs)(import_jsx_runtime449.Fragment, { children: [
       blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(import_block_editor246.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
         import_block_editor246.HeadingLevelDropdown,
@@ -76107,7 +76123,7 @@ ${text}
   var import_core_data94 = __toESM(require_core_data(), 1);
   var import_data164 = __toESM(require_data(), 1);
   var import_hooks83 = __toESM(require_hooks(), 1);
-  var import_html_entities14 = __toESM(require_html_entities(), 1);
+  var import_html_entities15 = __toESM(require_html_entities(), 1);
 
   // packages/block-library/build-module/template-part/block.json
   var block_default111 = {
@@ -77249,7 +77265,7 @@ ${text}
       if (!entity) {
         return;
       }
-      return (0, import_html_entities14.decodeEntities)(entity.title) || capitalCase(entity.slug || "");
+      return (0, import_html_entities15.decodeEntities)(entity.title) || capitalCase(entity.slug || "");
     },
     edit: TemplatePartEdit
   };
@@ -77800,7 +77816,7 @@ ${text}
   var import_i18n265 = __toESM(require_i18n(), 1);
   var import_block_editor282 = __toESM(require_block_editor(), 1);
   var import_components171 = __toESM(require_components(), 1);
-  var import_html_entities15 = __toESM(require_html_entities(), 1);
+  var import_html_entities16 = __toESM(require_html_entities(), 1);
 
   // packages/block-library/build-module/term-name/use-term-name.mjs
   var import_core_data97 = __toESM(require_core_data(), 1);
@@ -77877,7 +77893,7 @@ ${text}
   }) {
     const { level = 0, isLink, levelOptions } = attributes;
     const { term } = useTermName(termId, taxonomy);
-    const termName2 = term?.name ? (0, import_html_entities15.decodeEntities)(term.name) : (0, import_i18n265.__)("Term Name");
+    const termName2 = term?.name ? (0, import_html_entities16.decodeEntities)(term.name) : (0, import_i18n265.__)("Term Name");
     const blockProps = (0, import_block_editor282.useBlockProps)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const TagName2 = level === 0 ? "p" : `h${level}`;
@@ -78258,7 +78274,7 @@ ${text}
   var import_core_data99 = __toESM(require_core_data(), 1);
   var import_element150 = __toESM(require_element(), 1);
   var import_compose63 = __toESM(require_compose(), 1);
-  var import_html_entities16 = __toESM(require_html_entities(), 1);
+  var import_html_entities17 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime542 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY11 = [];
   var BASE_QUERY3 = {
@@ -78329,7 +78345,7 @@ ${text}
         if (entity) {
           accumulator.push({
             id,
-            value: (0, import_html_entities16.decodeEntities)(entity.name)
+            value: (0, import_html_entities17.decodeEntities)(entity.name)
           });
         }
         return accumulator;
@@ -78343,7 +78359,7 @@ ${text}
       const names = [];
       const mapByName = {};
       searchResults.forEach((result) => {
-        const decodedName = (0, import_html_entities16.decodeEntities)(result.name);
+        const decodedName = (0, import_html_entities17.decodeEntities)(result.name);
         names.push(decodedName);
         mapByName[decodedName] = result;
       });
