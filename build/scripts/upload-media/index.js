@@ -668,7 +668,7 @@ var wp;
     }
     return vipsModulePromise;
   }
-  async function vipsConvertImageFormat(id, file, type, quality, interlaced) {
+  async function vipsConvertImageFormat(id, file, type, quality, interlaced, stripMeta, maxBitDepth) {
     const { vipsConvertImageFormat: convertImageFormat } = await loadVipsModule();
     const buffer = await convertImageFormat(
       id,
@@ -676,7 +676,9 @@ var wp;
       file.type,
       type,
       quality,
-      interlaced
+      interlaced,
+      stripMeta,
+      maxBitDepth
     );
     const ext = type.split("/")[1];
     const fileName = `${getFileBasename(file.name)}.${ext}`;
@@ -696,7 +698,7 @@ var wp;
     const { vipsGetUltraHdrInfo: getUltraHdrInfo } = await loadVipsModule();
     return getUltraHdrInfo(buffer);
   }
-  async function vipsResizeImage(id, file, resize, smartCrop, addSuffix, signal, scaledSuffix, quality) {
+  async function vipsResizeImage(id, file, resize, smartCrop, addSuffix, signal, scaledSuffix, quality, stripMeta, maxBitDepth) {
     if (signal?.aborted) {
       throw new Error("Operation aborted");
     }
@@ -707,7 +709,9 @@ var wp;
       file.type,
       resize,
       smartCrop,
-      quality
+      quality,
+      stripMeta,
+      maxBitDepth
     );
     let fileName = file.name;
     const wasResized = originalWidth > width || originalHeight > height;
@@ -2816,6 +2820,7 @@ var wp;
       const startTime = performance.now();
       const addSuffix = Boolean(item.parentId);
       const scaledSuffix = Boolean(args.isThresholdResize);
+      const { imageStripMeta, imageMaxBitDepth } = select2.getSettings();
       try {
         const file = await vipsResizeImage(
           item.id,
@@ -2826,7 +2831,9 @@ var wp;
           addSuffix,
           item.abortController?.signal,
           scaledSuffix,
-          args.quality
+          args.quality,
+          imageStripMeta,
+          imageMaxBitDepth
         );
         measure({
           measureName: `ResizeCrop ${item.file.name}`,
@@ -2936,13 +2943,16 @@ var wp;
       const outputMimeType = `image/${args.outputFormat}`;
       const quality = args.outputQuality ?? DEFAULT_OUTPUT_QUALITY;
       const interlaced = args.interlaced ?? false;
+      const { imageStripMeta, imageMaxBitDepth } = select2.getSettings();
       try {
         const file = await vipsConvertImageFormat(
           item.id,
           item.file,
           outputMimeType,
           quality,
-          interlaced
+          interlaced,
+          imageStripMeta,
+          imageMaxBitDepth
         );
         measure({
           measureName: `Transcode ${item.file.name}`,
