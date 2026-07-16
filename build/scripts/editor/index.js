@@ -2523,7 +2523,7 @@ var wp;
     registerEntityField: () => registerEntityField2,
     store: () => store,
     storeConfig: () => storeConfig,
-    transformStyles: () => import_block_editor112.transformStyles,
+    transformStyles: () => import_block_editor113.transformStyles,
     unregisterEntityAction: () => unregisterEntityAction2,
     unregisterEntityField: () => unregisterEntityField2,
     useEntitiesSavedStatesIsDirty: () => useIsDirty,
@@ -57096,7 +57096,8 @@ If there's a particular need for this, please submit a feature request at https:
     selectedViewport = "default",
     selectedPseudoState = "default",
     onChangeViewport,
-    onChangePseudoState
+    onChangePseudoState,
+    showResponsiveStateControls = true
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(import_components101.__experimentalVStack, { spacing: 0, children: /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(import_components101.__experimentalView, { children: /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(import_components101.__experimentalSpacer, { marginBottom: 0, paddingX: 4, paddingY: 3, children: /* @__PURE__ */ (0, import_jsx_runtime298.jsxs)(import_components101.__experimentalVStack, { spacing: 2, children: [
       /* @__PURE__ */ (0, import_jsx_runtime298.jsxs)(import_components101.__experimentalHStack, { spacing: 2, alignment: "top", children: [
@@ -57123,7 +57124,7 @@ If there's a particular need for this, please submit a feature request at https:
             /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(
               StateControl,
               {
-                viewportStates,
+                viewportStates: showResponsiveStateControls ? viewportStates : [],
                 pseudoStates,
                 viewportValue: selectedViewport,
                 pseudoStateValue: selectedPseudoState,
@@ -57456,7 +57457,12 @@ If there's a particular need for this, please submit a feature request at https:
     ImageSettingsPanel,
     AdvancedPanel: StylesAdvancedPanel
   } = unlock7(import_block_editor9.privateApis);
-  function ScreenBlock({ name: name2, variation }) {
+  function ScreenBlock({
+    name: name2,
+    variation,
+    selectedViewport: controlledSelectedViewport,
+    showResponsiveStateControls = true
+  }) {
     const {
       user: userConfig,
       merged: mergedConfig,
@@ -57467,8 +57473,9 @@ If there's a particular need for this, please submit a feature request at https:
       prefixParts = ["variations", variation].concat(prefixParts);
     }
     const prefix2 = prefixParts.join(".");
-    const [selectedViewport, setSelectedViewport] = (0, import_element173.useState)("default");
+    const [localSelectedViewport, setSelectedViewport] = (0, import_element173.useState)("default");
     const [selectedPseudoState, setSelectedPseudoState] = (0, import_element173.useState)("default");
+    const selectedViewport = controlledSelectedViewport ?? localSelectedViewport;
     const viewportSettings = mergedConfig.settings?.viewport;
     const validViewportStates = (0, import_element173.useMemo)(
       () => getValidViewportStates(viewportSettings),
@@ -57639,8 +57646,9 @@ If there's a particular need for this, please submit a feature request at https:
           pseudoStates: validPseudoStates,
           selectedViewport: effectiveSelectedViewport,
           selectedPseudoState,
-          onChangeViewport: setSelectedViewport,
-          onChangePseudoState: setSelectedPseudoState
+          onChangeViewport: showResponsiveStateControls ? setSelectedViewport : void 0,
+          onChangePseudoState: setSelectedPseudoState,
+          showResponsiveStateControls
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
@@ -73255,18 +73263,33 @@ If there's a particular need for this, please submit a feature request at https:
   function BlockStylesNavigationScreens({
     parentMenu,
     blockStyles,
-    blockName
+    blockName,
+    selectedViewport,
+    showResponsiveStateControls
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(import_jsx_runtime356.Fragment, { children: blockStyles.map((style, index2) => /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
       import_components150.Navigator.Screen,
       {
         path: parentMenu + "/variations/" + style.name,
-        children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(screen_block_default, { name: blockName, variation: style.name })
+        children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+          screen_block_default,
+          {
+            name: blockName,
+            variation: style.name,
+            selectedViewport,
+            showResponsiveStateControls
+          }
+        )
       },
       index2
     )) });
   }
-  function ContextScreens({ name: name2, parentMenu = "" }) {
+  function ContextScreens({
+    name: name2,
+    parentMenu = "",
+    selectedViewport,
+    showResponsiveStateControls
+  }) {
     const blockStyleVariations = (0, import_data61.useSelect)(
       (select9) => {
         if (!name2) {
@@ -73285,7 +73308,9 @@ If there's a particular need for this, please submit a feature request at https:
       {
         parentMenu,
         blockStyles: blockStyleVariations,
-        blockName: name2 || ""
+        blockName: name2 || "",
+        selectedViewport,
+        showResponsiveStateControls
       }
     );
   }
@@ -73297,7 +73322,9 @@ If there's a particular need for this, please submit a feature request at https:
     onPathChange,
     fontLibraryEnabled = false,
     serverCSS,
-    serverSettings
+    serverSettings,
+    selectedViewport,
+    showResponsiveStateControls = true
   }) {
     const blocks = (0, import_blocks11.getBlockTypes)();
     const mergedValue = (0, import_element197.useMemo)(() => {
@@ -73365,14 +73392,23 @@ If there's a particular need for this, please submit a feature request at https:
                   GlobalStylesNavigationScreen,
                   {
                     path: "/blocks/" + encodeURIComponent(block.name),
-                    children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(screen_block_default, { name: block.name })
+                    children: /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
+                      screen_block_default,
+                      {
+                        name: block.name,
+                        selectedViewport,
+                        showResponsiveStateControls
+                      }
+                    )
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime356.jsx)(
                   ContextScreens,
                   {
                     name: block.name,
-                    parentMenu: "/blocks/" + encodeURIComponent(block.name)
+                    parentMenu: "/blocks/" + encodeURIComponent(block.name),
+                    selectedViewport,
+                    showResponsiveStateControls
                   }
                 )
               ] }, block.name))
@@ -73711,7 +73747,9 @@ If there's a particular need for this, please submit a feature request at https:
   function GlobalStylesUIWrapper({
     path,
     onPathChange,
-    settings
+    settings,
+    selectedViewport,
+    showResponsiveStateControls
   }) {
     const {
       user: userConfig,
@@ -73734,7 +73772,9 @@ If there's a particular need for this, please submit a feature request at https:
           onPathChange,
           fontLibraryEnabled,
           serverCSS,
-          serverSettings
+          serverSettings,
+          selectedViewport,
+          showResponsiveStateControls
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
@@ -90868,7 +90908,8 @@ If there's a particular need for this, please submit a feature request at https:
       isTemplateHidden,
       templateId: templateId2,
       isResponsiveEditing,
-      hasBlockSelection
+      hasBlockSelection,
+      activeComplementaryArea
     } = (0, import_data205.useSelect)((select9) => {
       const {
         getCurrentPostType: getCurrentPostType2,
@@ -90898,7 +90939,8 @@ If there's a particular need for this, please submit a feature request at https:
         isTemplateHidden: getRenderingMode2() === "post-only",
         templateId: getCurrentTemplateId2(),
         isResponsiveEditing: _isResponsiveEditing(),
-        hasBlockSelection: !!getBlockSelectionStart2()
+        hasBlockSelection: !!getBlockSelectionStart2(),
+        activeComplementaryArea: select9(store3).getActiveComplementaryArea("core")
       };
     }, []);
     const { setDeviceType: setDeviceType2, setRenderingMode: setRenderingMode2, setDefaultRenderingMode: setDefaultRenderingMode2 } = unlock(
@@ -90916,7 +90958,7 @@ If there's a particular need for this, please submit a feature request at https:
       setStyleStateViewport(
         newIsResponsiveEditing ? VIEWPORT_STATE_BY_DEVICE_TYPE[deviceType] ?? "default" : "default"
       );
-      if (newIsResponsiveEditing && hasBlockSelection) {
+      if (newIsResponsiveEditing && hasBlockSelection && !activeComplementaryArea) {
         enableComplementaryArea2("core", sidebars.block);
       }
     };
@@ -99797,6 +99839,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_preferences33 = __toESM(require_preferences(), 1);
   var import_compose84 = __toESM(require_compose(), 1);
   var import_core_data141 = __toESM(require_core_data(), 1);
+  var import_block_editor108 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/global-styles/menu.mjs
   var import_components284 = __toESM(require_components(), 1);
@@ -100044,7 +100087,8 @@ If there's a particular need for this, please submit a feature request at https:
       showListViewByDefault,
       hasRevisions,
       activeComplementaryArea,
-      editorSettings: editorSettings2
+      editorSettings: editorSettings2,
+      styleStateViewport
     } = (0, import_data269.useSelect)((select9) => {
       const { getActiveComplementaryArea: getActiveComplementaryArea2 } = select9(store3);
       const { getStylesPath: getStylesPath2, getShowStylebook: getShowStylebook2 } = unlock(
@@ -100065,7 +100109,10 @@ If there's a particular need for this, please submit a feature request at https:
         showListViewByDefault: _showListViewByDefault,
         hasRevisions: !!globalStyles?._links?.["version-history"]?.[0]?.count,
         activeComplementaryArea: select9(store3).getActiveComplementaryArea("core"),
-        editorSettings: select9(store).getEditorSettings()
+        editorSettings: select9(store).getEditorSettings(),
+        styleStateViewport: unlock(
+          select9(import_block_editor108.store)
+        ).getStyleStateViewport()
       };
     }, []);
     const { setStylesPath: setStylesPath2, setShowStylebook: setShowStylebook2, resetStylesNavigation: resetStylesNavigation2 } = unlock(
@@ -100163,7 +100210,9 @@ If there's a particular need for this, please submit a feature request at https:
             {
               path: stylesPath2,
               onPathChange: setStylesPath2,
-              settings: editorSettings2
+              settings: editorSettings2,
+              selectedViewport: styleStateViewport,
+              showResponsiveStateControls: false
             }
           )
         }
@@ -100308,9 +100357,9 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element343 = __toESM(require_element(), 1);
   var import_components288 = __toESM(require_components(), 1);
   var import_i18n348 = __toESM(require_i18n(), 1);
-  var import_block_editor108 = __toESM(require_block_editor(), 1);
+  var import_block_editor109 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime565 = __toESM(require_jsx_runtime(), 1);
-  var { BlockManager } = unlock(import_block_editor108.privateApis);
+  var { BlockManager } = unlock(import_block_editor109.privateApis);
   var EMPTY_ARRAY17 = [];
   function BlockVisibility() {
     const { showBlockTypes: showBlockTypes2, hideBlockTypes: hideBlockTypes2 } = unlock(
@@ -100817,13 +100866,13 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks39 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/bindings/pattern-overrides.mjs
-  var import_block_editor109 = __toESM(require_block_editor(), 1);
+  var import_block_editor110 = __toESM(require_block_editor(), 1);
   var CONTENT = "content";
   var pattern_overrides_default = {
     name: "core/pattern-overrides",
     getValues({ select: select9, clientId, context, bindings }) {
       const patternOverridesContent = context["pattern/overrides"];
-      const { getBlockAttributes: getBlockAttributes2 } = select9(import_block_editor109.store);
+      const { getBlockAttributes: getBlockAttributes2 } = select9(import_block_editor110.store);
       const currentBlockAttributes = getBlockAttributes2(clientId);
       const overridesValues = {};
       for (const attributeName of Object.keys(bindings)) {
@@ -100838,7 +100887,7 @@ If there's a particular need for this, please submit a feature request at https:
       return overridesValues;
     },
     setValues({ select: select9, dispatch: dispatch8, clientId, bindings }) {
-      const { getBlockAttributes: getBlockAttributes2, getBlockParentsByBlockName, getBlocks: getBlocks2 } = select9(import_block_editor109.store);
+      const { getBlockAttributes: getBlockAttributes2, getBlockParentsByBlockName, getBlocks: getBlocks2 } = select9(import_block_editor110.store);
       const currentBlockAttributes = getBlockAttributes2(clientId);
       const blockName = currentBlockAttributes?.metadata?.name;
       if (!blockName) {
@@ -100860,7 +100909,7 @@ If there's a particular need for this, please submit a feature request at https:
         const syncBlocksWithSameName = (blocks) => {
           for (const block of blocks) {
             if (block.attributes?.metadata?.name === blockName) {
-              dispatch8(import_block_editor109.store).updateBlockAttributes(
+              dispatch8(import_block_editor110.store).updateBlockAttributes(
                 block.clientId,
                 attributes
               );
@@ -100872,7 +100921,7 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       const currentBindingValue = getBlockAttributes2(patternClientId)?.[CONTENT];
-      dispatch8(import_block_editor109.store).updateBlockAttributes(patternClientId, {
+      dispatch8(import_block_editor110.store).updateBlockAttributes(patternClientId, {
         [CONTENT]: {
           ...currentBindingValue,
           [blockName]: {
@@ -100894,7 +100943,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/bindings/post-data.mjs
   var import_i18n350 = __toESM(require_i18n(), 1);
   var import_core_data143 = __toESM(require_core_data(), 1);
-  var import_block_editor110 = __toESM(require_block_editor(), 1);
+  var import_block_editor111 = __toESM(require_block_editor(), 1);
   var NAVIGATION_BLOCK_TYPES = [
     "core/navigation-link",
     "core/navigation-submenu"
@@ -100919,7 +100968,7 @@ If there's a particular need for this, please submit a feature request at https:
   var post_data_default = {
     name: "core/post-data",
     getValues({ select: select9, context, bindings, clientId }) {
-      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select9(import_block_editor110.store);
+      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select9(import_block_editor111.store);
       const blockName = getBlockName2(clientId);
       const isNavigationBlock = NAVIGATION_BLOCK_TYPES.includes(blockName);
       let postId2, postType2;
@@ -100953,7 +101002,7 @@ If there's a particular need for this, please submit a feature request at https:
       return newValues;
     },
     setValues({ dispatch: dispatch8, context, bindings, clientId, select: select9 }) {
-      const { getBlockName: getBlockName2 } = select9(import_block_editor110.store);
+      const { getBlockName: getBlockName2 } = select9(import_block_editor111.store);
       const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES.includes(blockName)) {
         return false;
@@ -100970,7 +101019,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
     },
     canUserEditValue({ select: select9, context }) {
-      const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor110.store);
+      const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor111.store);
       const clientId = getSelectedBlockClientId2();
       const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES.includes(blockName)) {
@@ -100993,7 +101042,7 @@ If there's a particular need for this, please submit a feature request at https:
       return true;
     },
     getFieldsList({ context, select: select9 }) {
-      const selectedBlock = select9(import_block_editor110.store).getSelectedBlock();
+      const selectedBlock = select9(import_block_editor111.store).getSelectedBlock();
       if (selectedBlock?.name !== "core/post-date") {
         return [];
       }
@@ -101110,7 +101159,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/bindings/term-data.mjs
   var import_i18n351 = __toESM(require_i18n(), 1);
   var import_core_data145 = __toESM(require_core_data(), 1);
-  var import_block_editor111 = __toESM(require_block_editor(), 1);
+  var import_block_editor112 = __toESM(require_block_editor(), 1);
   var NAVIGATION_BLOCK_TYPES2 = [
     "core/navigation-link",
     "core/navigation-submenu"
@@ -101157,7 +101206,7 @@ If there's a particular need for this, please submit a feature request at https:
     usesContext: ["taxonomy", "termId", "termData"],
     getValues({ select: select9, context, bindings, clientId }) {
       const { getEntityRecord } = select9(import_core_data145.store);
-      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select9(import_block_editor111.store);
+      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select9(import_block_editor112.store);
       const blockName = getBlockName2(clientId);
       const isNavigationBlock = NAVIGATION_BLOCK_TYPES2.includes(blockName);
       let termDataValues;
@@ -101202,7 +101251,7 @@ If there's a particular need for this, please submit a feature request at https:
       return false;
     },
     canUserEditValue({ select: select9, context }) {
-      const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor111.store);
+      const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor112.store);
       const clientId = getSelectedBlockClientId2();
       const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES2.includes(blockName)) {
@@ -101217,7 +101266,7 @@ If there's a particular need for this, please submit a feature request at https:
       return false;
     },
     getFieldsList({ context, select: select9 }) {
-      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor111.store);
+      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor112.store);
       const clientId = getSelectedBlockClientId2();
       const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES2.includes(blockName)) {
@@ -101448,7 +101497,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/index.mjs
-  var import_block_editor112 = __toESM(require_block_editor(), 1);
+  var import_block_editor113 = __toESM(require_block_editor(), 1);
   return __toCommonJS(index_exports);
 })();
 /*! Bundled license information:
