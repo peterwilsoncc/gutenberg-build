@@ -78876,7 +78876,7 @@ If there's a particular need for this, please submit a feature request at https:
           const { getUsers } = select9(import_core_data59.store);
           return getUsers({
             context: "view",
-            search: encodeURIComponent(filterValue)
+            search: filterValue
           });
         },
         [filterValue]
@@ -97987,7 +97987,7 @@ If there's a particular need for this, please submit a feature request at https:
           const { getUsers } = select9(import_core_data138.store);
           return getUsers({
             context: "view",
-            search: encodeURIComponent(filterValue)
+            search: filterValue
           });
         },
         [filterValue]
