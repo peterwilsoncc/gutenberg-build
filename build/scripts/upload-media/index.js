@@ -795,8 +795,17 @@ var wp;
 
   // packages/upload-media/build-module/store/utils/video-conversion.mjs
   var UNSUPPORTED_ERROR_PREFIX = "Unsupported";
+  var SIZE_LIMIT_ERROR_PREFIX = `${UNSUPPORTED_ERROR_PREFIX}: GIF exceeds maximum conversion size`;
+  var CONVERSION_TIMEOUT_ERROR_PREFIX = "GIF to video conversion timed out";
+  var DEFAULT_CONVERSION_TIMEOUT = 3e4;
   function isUnsupportedConversionError(error) {
     return error instanceof Error && error.message.startsWith(UNSUPPORTED_ERROR_PREFIX);
+  }
+  function isSizeLimitConversionError(error) {
+    return error instanceof Error && error.message.startsWith(SIZE_LIMIT_ERROR_PREFIX);
+  }
+  function isConversionTimeoutError(error) {
+    return error instanceof Error && error.message.startsWith(CONVERSION_TIMEOUT_ERROR_PREFIX);
   }
   var videoConversionModulePromise;
   var videoConversionModule;
@@ -812,9 +821,49 @@ var wp;
     }
     return videoConversionModulePromise;
   }
-  async function convertGifToVideo(id, file, outputMimeType, maxDimensions) {
-    const { convertGifToVideo: convert } = await loadVideoConversionModule();
-    const buffer = await convert(id, file, outputMimeType, maxDimensions);
+  async function convertGifToVideo(id, file, outputMimeType, {
+    maxDimensions,
+    timeout = DEFAULT_CONVERSION_TIMEOUT,
+    maxTotalPixels
+  } = {}) {
+    const mod = await loadVideoConversionModule();
+    const conversion = mod.convertGifToVideo(
+      id,
+      file,
+      outputMimeType,
+      maxDimensions,
+      maxTotalPixels
+    );
+    let buffer;
+    if (timeout > 0) {
+      let timer;
+      try {
+        buffer = await Promise.race([
+          conversion,
+          new Promise((_, reject) => {
+            timer = setTimeout(() => {
+              reject(
+                new Error(
+                  `${CONVERSION_TIMEOUT_ERROR_PREFIX} after ${timeout}ms`
+                )
+              );
+            }, timeout);
+          })
+        ]);
+      } catch (error) {
+        if (isConversionTimeoutError(error)) {
+          conversion.catch(() => {
+          });
+          mod.cancelGifToVideoOperations(id).catch(() => {
+          });
+        }
+        throw error;
+      } finally {
+        clearTimeout(timer);
+      }
+    } else {
+      buffer = await conversion;
+    }
     const ext = outputMimeType === "video/webm" ? "webm" : "mp4";
     const fileName = `${getFileBasename(file.name)}.${ext}`;
     return new File(
@@ -1072,9 +1121,9 @@ var wp;
         }
       }
       item.abortController?.abort();
-      await vipsCancelOperations(id).catch(() => {
+      vipsCancelOperations(id).catch(() => {
       });
-      await cancelGifToVideoOperations(id).catch(() => {
+      cancelGifToVideoOperations(id).catch(() => {
       });
       if (!silent) {
         const { onError } = item;
@@ -2422,6 +2471,9 @@ var wp;
         id,
         operation
       });
+      debug(
+        `Starting operation ${operation} for ${item.file.name} (item ${item.id})`
+      );
       switch (operation) {
         case OperationType.Prepare:
           dispatch.prepareItem(item.id);
@@ -3008,7 +3060,11 @@ var wp;
         const file = await convertGifToVideo(
           item.id,
           gifFile,
-          outputMimeType
+          outputMimeType,
+          {
+            timeout: args?.timeout,
+            maxTotalPixels: args?.maxTotalPixels
+          }
         );
         dispatch.finishOperation(id, { file });
         dispatch.addSideloadItem({
@@ -3034,9 +3090,25 @@ var wp;
         });
       } catch (error) {
         if (isUnsupportedConversionError(error)) {
+          if (isSizeLimitConversionError(error)) {
+            debug(
+              `Skipping GIF to video conversion: ${error instanceof Error ? error.message : error}`
+            );
+          }
           dispatch.cancelItem(
             id,
             new Error("Animated GIF conversion unsupported"),
+            true
+          );
+          return;
+        }
+        if (isConversionTimeoutError(error)) {
+          debug(
+            `GIF to video conversion timed out; keeping the original GIF only: ${error instanceof Error ? error.message : error}`
+          );
+          dispatch.cancelItem(
+            id,
+            new Error("Animated GIF conversion timed out"),
             true
           );
           return;
