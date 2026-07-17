@@ -8212,6 +8212,10 @@ textarea.editor-post-text-editor::placeholder {
   padding-left: 6px;
 }
 
+.editor-preview-dropdown.is-responsive-editing .editor-preview-dropdown__toggle {
+  color: var(--wp-block-synced-color);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .editor-resizable-editor:not(.is-resizing) {
     transition: width 0.2s ease-out;
