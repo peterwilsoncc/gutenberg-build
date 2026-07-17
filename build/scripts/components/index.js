@@ -55538,6 +55538,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element238 = __toESM(require_element(), 1);
 
   // packages/components/build-module/content-editable-control/index.mjs
+  var import_compose91 = __toESM(require_compose(), 1);
   var import_element237 = __toESM(require_element(), 1);
   var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
@@ -55636,26 +55637,34 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = useBaseControlProps({
       id: id3,
       className: className2,
-      help,
-      hideLabelFromVision,
-      label
+      help
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(base_control_default, {
+    const labelId = `${controlProps.id}__label`;
+    const editableRef = (0, import_element237.useRef)(null);
+    const mergedRefs = (0, import_compose91.useMergeRefs)([editableRef, forwardedRef]);
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)(base_control_default, {
       ...baseControlProps,
-      children: /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("div", {
+      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(component_default2, {
+        id: labelId,
+        children: label
+      }) : /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(base_control_default.VisualLabel, {
+        id: labelId,
+        onClick: () => editableRef.current?.focus(),
+        children: label
+      }), /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("div", {
         className: style_module_default15.editable,
         role: "textbox",
         "aria-multiline": true,
-        "aria-label": label,
+        "aria-labelledby": labelId,
         "aria-placeholder": placeholder || void 0,
         "aria-disabled": disabled || void 0,
         "aria-required": required || void 0,
-        ref: forwardedRef,
+        ref: mergedRefs,
         contentEditable: !disabled,
         suppressContentEditableWarning: true,
         ...additionalProps,
         ...controlProps
-      })
+      })]
     });
   }
   var ContentEditableControl = (0, import_element237.forwardRef)(UnforwardedContentEditableControl);
@@ -55705,7 +55714,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/select-control.mjs
   var import_element239 = __toESM(require_element(), 1);
-  var import_compose91 = __toESM(require_compose(), 1);
+  var import_compose92 = __toESM(require_compose(), 1);
   var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedSelectControl = ({
     required,
@@ -55714,7 +55723,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element239.useRef)(null);
-    const mergedRefs = (0, import_compose91.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose92.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(ControlWithError, {
       required,
       markWhenOptional,
@@ -55730,7 +55739,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   ValidatedSelectControl.displayName = "ValidatedSelectControl";
 
   // packages/components/build-module/validated-form-controls/components/text-control.mjs
-  var import_compose92 = __toESM(require_compose(), 1);
+  var import_compose93 = __toESM(require_compose(), 1);
   var import_element240 = __toESM(require_element(), 1);
   var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextControl = ({
@@ -55740,7 +55749,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element240.useRef)(null);
-    const mergedRefs = (0, import_compose92.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose93.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(ControlWithError, {
       required,
       markWhenOptional,
@@ -55757,7 +55766,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
   var import_element241 = __toESM(require_element(), 1);
-  var import_compose93 = __toESM(require_compose(), 1);
+  var import_compose94 = __toESM(require_compose(), 1);
   var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
     required,
@@ -55766,7 +55775,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element241.useRef)(null);
-    const mergedRefs = (0, import_compose93.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose94.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(ControlWithError, {
       required,
       markWhenOptional,
@@ -55783,7 +55792,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/toggle-control.mjs
   var import_element242 = __toESM(require_element(), 1);
-  var import_compose94 = __toESM(require_compose(), 1);
+  var import_compose95 = __toESM(require_compose(), 1);
   var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedToggleControl = ({
     required,
@@ -55792,7 +55801,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ...restProps
   }, forwardedRef) => {
     const validityTargetRef = (0, import_element242.useRef)(null);
-    const mergedRefs = (0, import_compose94.useMergeRefs)([forwardedRef, validityTargetRef]);
+    const mergedRefs = (0, import_compose95.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ControlWithError, {
       required,
       markWhenOptional,
