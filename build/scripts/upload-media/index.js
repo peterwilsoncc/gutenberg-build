@@ -668,17 +668,14 @@ var wp;
     }
     return vipsModulePromise;
   }
-  async function vipsConvertImageFormat(id, file, type, quality, interlaced, stripMeta, maxBitDepth) {
+  async function vipsConvertImageFormat(id, file, type, options = {}) {
     const { vipsConvertImageFormat: convertImageFormat } = await loadVipsModule();
     const buffer = await convertImageFormat(
       id,
       await file.arrayBuffer(),
       file.type,
       type,
-      quality,
-      interlaced,
-      stripMeta,
-      maxBitDepth
+      options
     );
     const ext = type.split("/")[1];
     const fileName = `${getFileBasename(file.name)}.${ext}`;
@@ -698,21 +695,26 @@ var wp;
     const { vipsGetUltraHdrInfo: getUltraHdrInfo } = await loadVipsModule();
     return getUltraHdrInfo(buffer);
   }
-  async function vipsResizeImage(id, file, resize, smartCrop, addSuffix, signal, scaledSuffix, quality, stripMeta, maxBitDepth) {
+  async function vipsResizeImage(id, file, resize, options = {}) {
+    const {
+      smartCrop = false,
+      addSuffix = false,
+      signal,
+      scaledSuffix,
+      quality,
+      stripMeta,
+      maxBitdepth
+    } = options;
     if (signal?.aborted) {
       throw new Error("Operation aborted");
     }
     const { vipsResizeImage: resizeImage } = await loadVipsModule();
-    const { buffer, width, height, originalWidth, originalHeight } = await resizeImage(
-      id,
-      await file.arrayBuffer(),
-      file.type,
-      resize,
+    const { buffer, width, height, originalWidth, originalHeight } = await resizeImage(id, await file.arrayBuffer(), file.type, resize, {
       smartCrop,
       quality,
       stripMeta,
-      maxBitDepth
-    );
+      maxBitdepth
+    });
     let fileName = file.name;
     const wasResized = originalWidth > width || originalHeight > height;
     if (wasResized) {
@@ -2826,14 +2828,15 @@ var wp;
           item.id,
           item.file,
           args.resize,
-          false,
-          // smartCrop
-          addSuffix,
-          item.abortController?.signal,
-          scaledSuffix,
-          args.quality,
-          imageStripMeta,
-          imageMaxBitDepth
+          {
+            smartCrop: false,
+            addSuffix,
+            signal: item.abortController?.signal,
+            scaledSuffix,
+            quality: args.quality,
+            stripMeta: imageStripMeta,
+            maxBitdepth: imageMaxBitDepth
+          }
         );
         measure({
           measureName: `ResizeCrop ${item.file.name}`,
@@ -2949,10 +2952,12 @@ var wp;
           item.id,
           item.file,
           outputMimeType,
-          quality,
-          interlaced,
-          imageStripMeta,
-          imageMaxBitDepth
+          {
+            quality,
+            interlaced,
+            stripMeta: imageStripMeta,
+            maxBitdepth: imageMaxBitDepth
+          }
         );
         measure({
           measureName: `Transcode ${item.file.name}`,
