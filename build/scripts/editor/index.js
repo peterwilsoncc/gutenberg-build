@@ -90966,7 +90966,8 @@ If there's a particular need for this, please submit a feature request at https:
       {
         className: clsx_default(
           "editor-preview-dropdown",
-          `editor-preview-dropdown--${deviceType.toLowerCase()}`
+          `editor-preview-dropdown--${deviceType.toLowerCase()}`,
+          { "is-responsive-editing": isResponsiveEditing }
         ),
         popoverProps,
         toggleProps,
