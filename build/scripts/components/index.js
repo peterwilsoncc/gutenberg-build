@@ -48751,6 +48751,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = restProps;
     const searchRef = (0, import_element172.useRef)(null);
     const instanceId = (0, import_compose69.useInstanceId)(SearchControl, "components-search-control");
+    const hasSuffix = !!onClose || !!value;
     return /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(StyledInputControl, {
       id: instanceId,
       hideLabelFromVision,
@@ -48770,7 +48771,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           fill: "currentColor"
         })
       }),
-      suffix: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(SuffixItem, {
+      suffix: hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(SuffixItem, {
         searchRef,
         value,
         onChange,
