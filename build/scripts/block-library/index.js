@@ -59044,6 +59044,7 @@ ${text}
     const borderProps = (0, import_block_editor201.__experimentalUseBorderProps)(attributes);
     const shadowProps = (0, import_block_editor201.__experimentalGetShadowClassesAndStyles)(attributes);
     const blockEditingMode = (0, import_block_editor201.useBlockEditingMode)();
+    const aspectRatioStyle = aspectRatio === "auto" ? void 0 : aspectRatio;
     const placeholder2 = (content) => {
       return /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
         import_components113.Placeholder,
@@ -59054,7 +59055,7 @@ ${text}
           ),
           withIllustration: true,
           style: {
-            aspectRatio,
+            aspectRatio: aspectRatioStyle,
             height: hasDimensionValue(height) ? height : hasDimensionValue(width) && "auto",
             width: hasDimensionValue(width) ? width : !!aspectRatio && "100%",
             ...borderProps.style,
@@ -59250,7 +59251,7 @@ ${text}
     const imageStyles = {
       ...borderProps.style,
       ...shadowProps.style,
-      aspectRatio,
+      aspectRatio: aspectRatioStyle,
       height: hasDimensionValue(height) ? height : hasDimensionValue(width) && "auto",
       width: hasDimensionValue(width) ? width : !!aspectRatio && "100%",
       objectFit: !!(height || aspectRatio) && scale
