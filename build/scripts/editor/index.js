@@ -445,7 +445,7 @@ var wp;
             },
             [subscribe5, value, getSnapshot2]
           );
-          useEffect118(
+          useEffect119(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe5(function() {
@@ -471,7 +471,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React77 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState160 = React77.useState, useEffect118 = React77.useEffect, useLayoutEffect15 = React77.useLayoutEffect, useDebugValue2 = React77.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React77 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState160 = React77.useState, useEffect119 = React77.useEffect, useLayoutEffect15 = React77.useLayoutEffect, useDebugValue2 = React77.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React77.useSyncExternalStore ? React77.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -499,7 +499,7 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React77 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore6 = shim.useSyncExternalStore, useRef118 = React77.useRef, useEffect118 = React77.useEffect, useMemo153 = React77.useMemo, useDebugValue2 = React77.useDebugValue;
+        var React77 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore6 = shim.useSyncExternalStore, useRef118 = React77.useRef, useEffect119 = React77.useEffect, useMemo153 = React77.useMemo, useDebugValue2 = React77.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe5, getSnapshot2, getServerSnapshot2, selector2, isEqual2) {
           var instRef = useRef118(null);
           if (null === instRef.current) {
@@ -542,7 +542,7 @@ var wp;
             [getSnapshot2, getServerSnapshot2, selector2, isEqual2]
           );
           var value = useSyncExternalStore6(subscribe5, instRef[0], instRef[1]);
-          useEffect118(
+          useEffect119(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -92047,6 +92047,27 @@ If there's a particular need for this, please submit a feature request at https:
     }, [delayMs]);
     return [recomputeToken, rerenderAfterDelay];
   }
+  function useRequestAnimationFrameRecompute() {
+    const [recomputeToken, setRecomputeToken] = (0, import_element292.useState)(0);
+    const requestAnimationFrameRef = (0, import_element292.useRef)(null);
+    (0, import_element292.useEffect)(() => {
+      return () => {
+        if (requestAnimationFrameRef.current !== null) {
+          cancelAnimationFrame(requestAnimationFrameRef.current);
+        }
+      };
+    }, []);
+    const rerenderOnNextFrame = (0, import_element292.useCallback)(() => {
+      if (requestAnimationFrameRef.current !== null) {
+        cancelAnimationFrame(requestAnimationFrameRef.current);
+      }
+      requestAnimationFrameRef.current = requestAnimationFrame(() => {
+        requestAnimationFrameRef.current = null;
+        setRecomputeToken((t4) => t4 + 1);
+      });
+    }, []);
+    return [recomputeToken, rerenderOnNextFrame];
+  }
 
   // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
   var { useActiveCollaborators, useResolvedSelection } = unlock(import_core_data112.privateApis);
@@ -92065,6 +92086,7 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const [recomputeToken, rerenderHighlightsAfterDelay] = useDebouncedRecompute(delayMs);
+    const [resizeToken, rerenderHighlightsOnResize] = useRequestAnimationFrameRecompute();
     (0, import_element293.useEffect)(() => {
       if (!blockEditorDocument) {
         setHighlights([]);
@@ -92168,9 +92190,14 @@ If there's a particular need for this, please submit a feature request at https:
       blockEditorDocument,
       overlayElement,
       recomputeToken,
+      resizeToken,
       resolveSelection
     ]);
-    return { highlights, rerenderHighlightsAfterDelay };
+    return {
+      highlights,
+      rerenderHighlightsAfterDelay,
+      rerenderHighlightsOnResize
+    };
   }
   var getBlockElementById = (blockEditorDocument, blockId) => {
     return blockEditorDocument.querySelector(`[data-block="${blockId}"]`);
@@ -92584,6 +92611,7 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const [recomputeToken, rerenderCursorsAfterDelay] = useDebouncedRecompute(delayMs);
+    const [resizeToken, rerenderCursorsOnResize] = useRequestAnimationFrameRecompute();
     (0, import_element294.useEffect)(() => {
       if (!overlayElement || !blockEditorDocument) {
         setCursorPositions([]);
@@ -92663,9 +92691,14 @@ If there's a particular need for this, please submit a feature request at https:
       overlayElement,
       sortedUsers,
       showOwnCursor,
-      recomputeToken
+      recomputeToken,
+      resizeToken
     ]);
-    return { cursors: cursorPositions, rerenderCursorsAfterDelay };
+    return {
+      cursors: cursorPositions,
+      rerenderCursorsAfterDelay,
+      rerenderCursorsOnResize
+    };
   }
 
   // packages/editor/build-module/components/collaborators-overlay/overlay.mjs
@@ -92679,14 +92712,18 @@ If there's a particular need for this, please submit a feature request at https:
     cursorRegistry
   }) {
     const [overlayElement, setOverlayElement] = (0, import_element295.useState)(null);
-    const { cursors, rerenderCursorsAfterDelay } = useRenderCursors(
+    const { cursors, rerenderCursorsAfterDelay, rerenderCursorsOnResize } = useRenderCursors(
       overlayElement,
       blockEditorDocument ?? null,
       postId2 ?? null,
       postType2 ?? null,
       RERENDER_DELAY_MS
     );
-    const { highlights, rerenderHighlightsAfterDelay } = useBlockHighlighting(
+    const {
+      highlights,
+      rerenderHighlightsAfterDelay,
+      rerenderHighlightsOnResize
+    } = useBlockHighlighting(
       overlayElement,
       blockEditorDocument ?? null,
       postId2 ?? null,
@@ -92694,9 +92731,9 @@ If there's a particular need for this, please submit a feature request at https:
       RERENDER_DELAY_MS
     );
     const onResize = (0, import_element295.useCallback)(() => {
-      rerenderCursorsAfterDelay();
-      rerenderHighlightsAfterDelay();
-    }, [rerenderCursorsAfterDelay, rerenderHighlightsAfterDelay]);
+      rerenderCursorsOnResize();
+      rerenderHighlightsOnResize();
+    }, [rerenderCursorsOnResize, rerenderHighlightsOnResize]);
     const resizeObserverRef = (0, import_compose66.useResizeObserver)(onResize);
     (0, import_element295.useEffect)(() => {
       const cleanupCursors = rerenderCursorsAfterDelay();
