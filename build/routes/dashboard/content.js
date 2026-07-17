@@ -31479,7 +31479,7 @@ var page_default = Page;
 var import_core_data = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
 var import_element222 = __toESM(require_element());
-var import_i18n74 = __toESM(require_i18n());
+var import_i18n75 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_viewport2 = __toESM(require_viewport());
 
@@ -58971,12 +58971,8 @@ function useDashboardContainerColumnCount(forwardedRef) {
   return { containerRef, columnCount };
 }
 
-// packages/widget-dashboard/build-module/components/widget-attribute-controls/widget-attribute-controls.mjs
-var import_compose37 = __toESM(require_compose(), 1);
-var import_element217 = __toESM(require_element(), 1);
-
-// packages/widget-dashboard/build-module/components/widget-attribute-controls/attribute-controls-dropdown.mjs
-var import_element215 = __toESM(require_element(), 1);
+// packages/widget-dashboard/build-module/components/widget-actions/widget-actions.mjs
+var import_components56 = __toESM(require_components(), 1);
 var import_i18n71 = __toESM(require_i18n(), 1);
 var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE79 = "data-wp-hash";
@@ -59060,31 +59056,26 @@ function registerStyle79(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle79("b2d4615265", "._0ccf75074d9ee123__inline-controls{flex-shrink:0}.ef80cc620a424209__persistent-controls{display:inline-flex}._9842ba0da69e2b19__dropdown-area{display:contents}._8138148fd3f1a109__dropdown-popup{max-width:300px}");
+  registerStyle79("dd3e2a4cde", "._6f36f52bf42ffca5__widget-action-items ._7709b6f02b1ef5de__widget-action-link{display:inline-flex}");
 }
-var widget_attribute_controls_default = { "inline-controls": "_0ccf75074d9ee123__inline-controls", "persistent-controls": "ef80cc620a424209__persistent-controls", "dropdown-area": "_9842ba0da69e2b19__dropdown-area", "dropdown-popup": "_8138148fd3f1a109__dropdown-popup" };
-function AttributeControlsDropdown({
-  fields: fields2,
-  data,
-  onChange,
-  onOpenChange
+var widget_actions_default = { "widget-action-items": "_6f36f52bf42ffca5__widget-action-items", "widget-action-link": "_7709b6f02b1ef5de__widget-action-link" };
+var { Menu: Menu7 } = unlock2(import_components56.privateApis);
+function WidgetActions({
+  widgetType
 }) {
-  const form = (0, import_element215.useMemo)(
-    () => ({
-      layout: { type: "regular", labelPosition: "top" },
-      fields: fields2.map((field) => field.id)
-    }),
-    [fields2]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)(popover_exports.Root, { onOpenChange, children: [
+  const actions = widgetType.actions ?? [];
+  if (actions.length === 0) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)(Menu7, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-      popover_exports.Trigger,
+      Menu7.TriggerButton,
       {
         render: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
           IconButton,
           {
-            icon: settings_default,
-            label: (0, import_i18n71.__)("Widget controls"),
+            icon: more_vertical_default,
+            label: (0, import_i18n71.__)("More"),
             variant: "minimal",
             tone: "neutral",
             size: "compact"
@@ -59092,48 +59083,32 @@ function AttributeControlsDropdown({
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-      popover_exports.Popup,
+    /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(Menu7.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(Menu7.Group, { className: widget_actions_default["widget-action-items"], children: actions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+      Menu7.Item,
       {
-        className: widget_attribute_controls_default["dropdown-popup"],
-        positioner: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(popover_exports.Positioner, { side: "bottom", align: "end" }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)(Stack, { direction: "column", gap: "lg", align: "flex-end", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(popover_exports.Title, {}), children: (0, import_i18n71.__)("Widget controls") }),
-          /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-            DataForm,
-            {
-              data,
-              fields: fields2,
-              form,
-              onChange
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(popover_exports.Close, { render: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(Button4, { variant: "solid" }), children: (0, import_i18n71.__)("Close") })
-        ] })
-      }
-    )
+        render: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+          Link,
+          {
+            href: action.href,
+            download: action.download,
+            openInNewTab: action.openInNewTab,
+            className: widget_actions_default["widget-action-link"]
+          }
+        ),
+        children: action.label
+      },
+      action.id
+    )) }) })
   ] });
 }
 
-// packages/widget-dashboard/build-module/components/widget-attribute-controls/use-inline-controls-fit.mjs
-var import_compose36 = __toESM(require_compose(), 1);
-var import_element216 = __toESM(require_element(), 1);
-function useInlineControlsFit(options = {}) {
-  const { reservedSize = 0, locked = false } = options;
-  const availableSize = useWidgetHeaderAvailableSize();
-  const [naturalSize, setNaturalSize] = (0, import_element216.useState)(0);
-  const measureRef = (0, import_compose36.useResizeObserver)(
-    ([entry]) => setNaturalSize(entry.contentRect.width)
-  );
-  const computed = availableSize !== null && naturalSize > 0 && naturalSize > availableSize - reservedSize;
-  const [held, setHeld] = (0, import_element216.useState)(computed);
-  if (!locked && held !== computed) {
-    setHeld(computed);
-  }
-  return { measureRef, collapsed: locked ? held : computed };
-}
-
 // packages/widget-dashboard/build-module/components/widget-attribute-controls/widget-attribute-controls.mjs
+var import_compose37 = __toESM(require_compose(), 1);
+var import_element217 = __toESM(require_element(), 1);
+
+// packages/widget-dashboard/build-module/components/widget-attribute-controls/attribute-controls-dropdown.mjs
+var import_element215 = __toESM(require_element(), 1);
+var import_i18n72 = __toESM(require_i18n(), 1);
 var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE80 = "data-wp-hash";
 function getRuntime80() {
@@ -59218,231 +59193,79 @@ function registerStyle80(hash, css) {
 if (typeof process === "undefined" || true) {
   registerStyle80("b2d4615265", "._0ccf75074d9ee123__inline-controls{flex-shrink:0}.ef80cc620a424209__persistent-controls{display:inline-flex}._9842ba0da69e2b19__dropdown-area{display:contents}._8138148fd3f1a109__dropdown-popup{max-width:300px}");
 }
-var widget_attribute_controls_default2 = { "inline-controls": "_0ccf75074d9ee123__inline-controls", "persistent-controls": "ef80cc620a424209__persistent-controls", "dropdown-area": "_9842ba0da69e2b19__dropdown-area", "dropdown-popup": "_8138148fd3f1a109__dropdown-popup" };
-function WidgetAttributeControls({
-  widget,
-  widgetType
+var widget_attribute_controls_default = { "inline-controls": "_0ccf75074d9ee123__inline-controls", "persistent-controls": "ef80cc620a424209__persistent-controls", "dropdown-area": "_9842ba0da69e2b19__dropdown-area", "dropdown-popup": "_8138148fd3f1a109__dropdown-popup" };
+function AttributeControlsDropdown({
+  fields: fields2,
+  data,
+  onChange,
+  onOpenChange
 }) {
-  const { layout, onLayoutChange, scheduleAutoSave } = useDashboardInternalContext();
-  const hasSettingsSurface = !!widgetType.attributes?.some(
-    (attribute) => attribute.relevance !== "high"
-  );
-  const [triggerReserve, setTriggerReserve] = (0, import_element217.useState)(0);
-  const triggerReserveRef = (0, import_compose37.useResizeObserver)(
-    ([entry]) => {
-      const { columnGap } = getComputedStyle(
-        entry.target.parentElement
-      );
-      setTriggerReserve(
-        entry.contentRect.width + (parseFloat(columnGap) || 0)
-      );
-    }
-  );
-  (0, import_element217.useEffect)(() => {
-    if (!hasSettingsSurface) {
-      setTriggerReserve(0);
-    }
-  }, [hasSettingsSurface]);
-  const [dropdownOpen, setDropdownOpen] = (0, import_element217.useState)(false);
-  const [inlineHasFocus, setInlineHasFocus] = (0, import_element217.useState)(false);
-  const [dropdownTriggerHasFocus, setDropdownTriggerHasFocus] = (0, import_element217.useState)(false);
-  const { measureRef, collapsed } = useInlineControlsFit({
-    reservedSize: triggerReserve,
-    locked: dropdownOpen || inlineHasFocus || dropdownTriggerHasFocus
-  });
-  (0, import_element217.useEffect)(() => {
-    if (collapsed) {
-      setInlineHasFocus(false);
-    } else {
-      setDropdownTriggerHasFocus(false);
-    }
-  }, [collapsed]);
-  const fields2 = (0, import_element217.useMemo)(
-    () => (widgetType.attributes ?? []).filter(
-      (attribute) => attribute.relevance === "high"
-    ),
-    [widgetType.attributes]
-  );
-  const form = (0, import_element217.useMemo)(
+  const form = (0, import_element215.useMemo)(
     () => ({
-      layout: { type: "row", alignment: "center" },
-      fields: fields2.map((field) => ({
-        id: field.id,
-        layout: { type: "regular", labelPosition: "none" }
-      }))
+      layout: { type: "regular", labelPosition: "top" },
+      fields: fields2.map((field) => field.id)
     }),
     [fields2]
   );
-  const handleChange = (0, import_element217.useCallback)(
-    (edits) => {
-      onLayoutChange(
-        layout.map(
-          (instance) => instance.uuid === widget.uuid ? {
-            ...instance,
-            attributes: {
-              ...instance.attributes,
-              ...edits
-            }
-          } : instance
-        )
-      );
-      scheduleAutoSave();
-    },
-    [layout, onLayoutChange, widget.uuid, scheduleAutoSave]
-  );
-  const data = widget.attributes ?? widgetType.example?.attributes ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(import_jsx_runtime287.Fragment, { children: [
-    !collapsed ? fields2.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-      Stack,
+  return /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(popover_exports.Root, { onOpenChange, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
+      popover_exports.Trigger,
       {
-        direction: "row",
-        align: "center",
-        gap: "xs",
-        ref: measureRef,
-        className: widget_attribute_controls_default2["inline-controls"],
-        onFocus: () => setInlineHasFocus(true),
-        onBlur: (event) => {
-          if (!event.currentTarget.contains(
-            event.relatedTarget
-          )) {
-            setInlineHasFocus(false);
-          }
-        },
-        children: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-          DataForm,
+        render: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
+          IconButton,
           {
-            data,
-            fields: fields2,
-            form,
-            onChange: handleChange
-          }
-        )
-      }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-      "span",
-      {
-        className: widget_attribute_controls_default2["dropdown-area"],
-        onFocus: () => setDropdownTriggerHasFocus(true),
-        onBlur: (event) => {
-          if (!event.currentTarget.contains(
-            event.relatedTarget
-          )) {
-            setDropdownTriggerHasFocus(false);
-          }
-        },
-        children: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-          AttributeControlsDropdown,
-          {
-            fields: fields2,
-            data,
-            onChange: handleChange,
-            onOpenChange: setDropdownOpen
+            icon: settings_default,
+            label: (0, import_i18n72.__)("Widget controls"),
+            variant: "minimal",
+            tone: "neutral",
+            size: "compact"
           }
         )
       }
     ),
-    hasSettingsSurface && /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-      "span",
+    /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
+      popover_exports.Popup,
       {
-        ref: triggerReserveRef,
-        className: widget_attribute_controls_default2["persistent-controls"],
-        children: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-          WidgetSettingsTrigger,
-          {
-            widget,
-            widgetType
-          }
-        )
-      }
-    )
-  ] });
-}
-
-// packages/widget-dashboard/build-module/components/widget-layout-controls/widget-layout-controls.mjs
-var import_components56 = __toESM(require_components(), 1);
-var import_i18n72 = __toESM(require_i18n(), 1);
-var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu7 } = unlock2(import_components56.privateApis);
-function WidgetLayoutControls({
-  widget
-}) {
-  const { layout, onLayoutChange } = useDashboardInternalContext();
-  const width = widget.placement?.width;
-  const updateWidth = (nextWidth) => {
-    const nextLayout = layout.map(
-      (currentWidget) => currentWidget.uuid === widget.uuid ? {
-        ...currentWidget,
-        placement: {
-          ...currentWidget.placement,
-          width: nextWidth
-        }
-      } : currentWidget
-    );
-    onLayoutChange(nextLayout);
-  };
-  const onNamedWidthChange = (nextWidth) => {
-    updateWidth(nextWidth);
-  };
-  const onRemove = () => {
-    onLayoutChange(
-      layout.filter(
-        (currentWidget) => currentWidget.uuid !== widget.uuid
-      )
-    );
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)(import_jsx_runtime288.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)(Menu7, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
-        Menu7.TriggerButton,
-        {
-          render: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
-            IconButton,
+        className: widget_attribute_controls_default["dropdown-popup"],
+        positioner: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(popover_exports.Positioner, { side: "bottom", align: "end" }),
+        children: /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(Stack, { direction: "column", gap: "lg", align: "flex-end", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(popover_exports.Title, {}), children: (0, import_i18n72.__)("Widget controls") }),
+          /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
+            DataForm,
             {
-              icon: more_vertical_default,
-              label: (0, import_i18n72.__)("Widget options"),
-              size: "compact",
-              variant: "minimal",
-              tone: "neutral"
+              data,
+              fields: fields2,
+              form,
+              onChange
             }
-          )
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(Menu7.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)(Menu7.Group, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(Menu7.GroupLabel, { children: (0, import_i18n72.__)("Width") }),
-        /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
-          Menu7.Item,
-          {
-            disabled: width === "fill",
-            onClick: () => onNamedWidthChange("fill"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(Menu7.ItemLabel, { children: (0, import_i18n72.__)("Use available width") })
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
-          Menu7.Item,
-          {
-            disabled: width === "full",
-            onClick: () => onNamedWidthChange("full"),
-            children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(Menu7.ItemLabel, { children: (0, import_i18n72.__)("Make full width") })
-          }
-        )
-      ] }) })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
-      IconButton,
-      {
-        icon: trash_default,
-        label: (0, import_i18n72.__)("Remove"),
-        size: "compact",
-        variant: "minimal",
-        tone: "neutral",
-        onClick: onRemove
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(popover_exports.Close, { render: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(Button4, { variant: "solid" }), children: (0, import_i18n72.__)("Close") })
+        ] })
       }
     )
   ] });
 }
 
-// packages/widget-dashboard/build-module/components/widget-toolbar/widget-toolbar.mjs
-var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
+// packages/widget-dashboard/build-module/components/widget-attribute-controls/use-inline-controls-fit.mjs
+var import_compose36 = __toESM(require_compose(), 1);
+var import_element216 = __toESM(require_element(), 1);
+function useInlineControlsFit(options = {}) {
+  const { reservedSize = 0, locked = false } = options;
+  const availableSize = useWidgetHeaderAvailableSize();
+  const [naturalSize, setNaturalSize] = (0, import_element216.useState)(0);
+  const measureRef = (0, import_compose36.useResizeObserver)(
+    ([entry]) => setNaturalSize(entry.contentRect.width)
+  );
+  const computed = availableSize !== null && naturalSize > 0 && naturalSize > availableSize - reservedSize;
+  const [held, setHeld] = (0, import_element216.useState)(computed);
+  if (!locked && held !== computed) {
+    setHeld(computed);
+  }
+  return { measureRef, collapsed: locked ? held : computed };
+}
+
+// packages/widget-dashboard/build-module/components/widget-attribute-controls/widget-attribute-controls.mjs
+var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE81 = "data-wp-hash";
 function getRuntime81() {
   const globalScope = globalThis;
@@ -59524,30 +59347,232 @@ function registerStyle81(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle81("f4590a6094", "._5574cf78010b3231__widget-toolbar{background:var(--wpds-color-background-surface-neutral-strong,#fff);padding:var(--wpds-dimension-padding-xs,4px);position:relative}._78bb9900d58f945e__elevated{--_wp-widget-dashboard-elevation-xs:0 1px 1px rgba(0,0,0,.03),0 1px 2px rgba(0,0,0,.02),0 3px 3px rgba(0,0,0,.02),0 4px 4px rgba(0,0,0,.01);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);box-shadow:var(--_wp-widget-dashboard-elevation-xs)}");
+  registerStyle81("b2d4615265", "._0ccf75074d9ee123__inline-controls{flex-shrink:0}.ef80cc620a424209__persistent-controls{display:inline-flex}._9842ba0da69e2b19__dropdown-area{display:contents}._8138148fd3f1a109__dropdown-popup{max-width:300px}");
 }
-var widget_toolbar_default = { "widget-toolbar": "_5574cf78010b3231__widget-toolbar", "elevated": "_78bb9900d58f945e__elevated" };
-function WidgetToolbar({
-  children,
-  editMode = false
+var widget_attribute_controls_default2 = { "inline-controls": "_0ccf75074d9ee123__inline-controls", "persistent-controls": "ef80cc620a424209__persistent-controls", "dropdown-area": "_9842ba0da69e2b19__dropdown-area", "dropdown-popup": "_8138148fd3f1a109__dropdown-popup" };
+function WidgetAttributeControls({
+  widget,
+  widgetType
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
-    Stack,
-    {
-      direction: "row",
-      align: "center",
-      gap: "xs",
-      className: clsx_default(
-        widget_toolbar_default["widget-toolbar"],
-        editMode && widget_toolbar_default.elevated
-      ),
-      children
+  const { layout, onLayoutChange, scheduleAutoSave } = useDashboardInternalContext();
+  const hasSettingsSurface = !!widgetType.attributes?.some(
+    (attribute) => attribute.relevance !== "high"
+  );
+  const [triggerReserve, setTriggerReserve] = (0, import_element217.useState)(0);
+  const triggerReserveRef = (0, import_compose37.useResizeObserver)(
+    ([entry]) => {
+      const { columnGap } = getComputedStyle(
+        entry.target.parentElement
+      );
+      setTriggerReserve(
+        entry.contentRect.width + (parseFloat(columnGap) || 0)
+      );
     }
   );
+  (0, import_element217.useEffect)(() => {
+    if (!hasSettingsSurface) {
+      setTriggerReserve(0);
+    }
+  }, [hasSettingsSurface]);
+  const [dropdownOpen, setDropdownOpen] = (0, import_element217.useState)(false);
+  const [inlineHasFocus, setInlineHasFocus] = (0, import_element217.useState)(false);
+  const [dropdownTriggerHasFocus, setDropdownTriggerHasFocus] = (0, import_element217.useState)(false);
+  const { measureRef, collapsed } = useInlineControlsFit({
+    reservedSize: triggerReserve,
+    locked: dropdownOpen || inlineHasFocus || dropdownTriggerHasFocus
+  });
+  (0, import_element217.useEffect)(() => {
+    if (collapsed) {
+      setInlineHasFocus(false);
+    } else {
+      setDropdownTriggerHasFocus(false);
+    }
+  }, [collapsed]);
+  const fields2 = (0, import_element217.useMemo)(
+    () => (widgetType.attributes ?? []).filter(
+      (attribute) => attribute.relevance === "high"
+    ),
+    [widgetType.attributes]
+  );
+  const form = (0, import_element217.useMemo)(
+    () => ({
+      layout: { type: "row", alignment: "center" },
+      fields: fields2.map((field) => ({
+        id: field.id,
+        layout: { type: "regular", labelPosition: "none" }
+      }))
+    }),
+    [fields2]
+  );
+  const handleChange = (0, import_element217.useCallback)(
+    (edits) => {
+      onLayoutChange(
+        layout.map(
+          (instance) => instance.uuid === widget.uuid ? {
+            ...instance,
+            attributes: {
+              ...instance.attributes,
+              ...edits
+            }
+          } : instance
+        )
+      );
+      scheduleAutoSave();
+    },
+    [layout, onLayoutChange, widget.uuid, scheduleAutoSave]
+  );
+  const data = widget.attributes ?? widgetType.example?.attributes ?? {};
+  return /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)(import_jsx_runtime288.Fragment, { children: [
+    !collapsed ? fields2.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+      Stack,
+      {
+        direction: "row",
+        align: "center",
+        gap: "xs",
+        ref: measureRef,
+        className: widget_attribute_controls_default2["inline-controls"],
+        onFocus: () => setInlineHasFocus(true),
+        onBlur: (event) => {
+          if (!event.currentTarget.contains(
+            event.relatedTarget
+          )) {
+            setInlineHasFocus(false);
+          }
+        },
+        children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+          DataForm,
+          {
+            data,
+            fields: fields2,
+            form,
+            onChange: handleChange
+          }
+        )
+      }
+    ) : /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+      "span",
+      {
+        className: widget_attribute_controls_default2["dropdown-area"],
+        onFocus: () => setDropdownTriggerHasFocus(true),
+        onBlur: (event) => {
+          if (!event.currentTarget.contains(
+            event.relatedTarget
+          )) {
+            setDropdownTriggerHasFocus(false);
+          }
+        },
+        children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+          AttributeControlsDropdown,
+          {
+            fields: fields2,
+            data,
+            onChange: handleChange,
+            onOpenChange: setDropdownOpen
+          }
+        )
+      }
+    ),
+    hasSettingsSurface && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+      "span",
+      {
+        ref: triggerReserveRef,
+        className: widget_attribute_controls_default2["persistent-controls"],
+        children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+          WidgetSettingsTrigger,
+          {
+            widget,
+            widgetType
+          }
+        )
+      }
+    )
+  ] });
 }
 
-// packages/widget-dashboard/build-module/components/widgets/widget-resize-handle.mjs
-var import_element218 = __toESM(require_element(), 1);
+// packages/widget-dashboard/build-module/components/widget-layout-controls/widget-layout-controls.mjs
+var import_components57 = __toESM(require_components(), 1);
+var import_i18n73 = __toESM(require_i18n(), 1);
+var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
+var { Menu: Menu8 } = unlock2(import_components57.privateApis);
+function WidgetLayoutControls({
+  widget
+}) {
+  const { layout, onLayoutChange } = useDashboardInternalContext();
+  const width = widget.placement?.width;
+  const updateWidth = (nextWidth) => {
+    const nextLayout = layout.map(
+      (currentWidget) => currentWidget.uuid === widget.uuid ? {
+        ...currentWidget,
+        placement: {
+          ...currentWidget.placement,
+          width: nextWidth
+        }
+      } : currentWidget
+    );
+    onLayoutChange(nextLayout);
+  };
+  const onNamedWidthChange = (nextWidth) => {
+    updateWidth(nextWidth);
+  };
+  const onRemove = () => {
+    onLayoutChange(
+      layout.filter(
+        (currentWidget) => currentWidget.uuid !== widget.uuid
+      )
+    );
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime289.jsxs)(import_jsx_runtime289.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime289.jsxs)(Menu8, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
+        Menu8.TriggerButton,
+        {
+          render: /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
+            IconButton,
+            {
+              icon: more_vertical_default,
+              label: (0, import_i18n73.__)("Widget options"),
+              size: "compact",
+              variant: "minimal",
+              tone: "neutral"
+            }
+          )
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(Menu8.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime289.jsxs)(Menu8.Group, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(Menu8.GroupLabel, { children: (0, import_i18n73.__)("Width") }),
+        /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
+          Menu8.Item,
+          {
+            disabled: width === "fill",
+            onClick: () => onNamedWidthChange("fill"),
+            children: /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(Menu8.ItemLabel, { children: (0, import_i18n73.__)("Use available width") })
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
+          Menu8.Item,
+          {
+            disabled: width === "full",
+            onClick: () => onNamedWidthChange("full"),
+            children: /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(Menu8.ItemLabel, { children: (0, import_i18n73.__)("Make full width") })
+          }
+        )
+      ] }) })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
+      IconButton,
+      {
+        icon: trash_default,
+        label: (0, import_i18n73.__)("Remove"),
+        size: "compact",
+        variant: "minimal",
+        tone: "neutral",
+        onClick: onRemove
+      }
+    )
+  ] });
+}
+
+// packages/widget-dashboard/build-module/components/widget-toolbar/widget-toolbar.mjs
 var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE82 = "data-wp-hash";
 function getRuntime82() {
@@ -59630,41 +59655,30 @@ function registerStyle82(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle82("415a4244a3", '.a70c7d5347a2f54b__handle{--widget-resize-handle-visual-inset:var(--wpds-dimension-padding-xs,4px);--widget-resize-handle-hover-scale:1.18;background:transparent;bottom:0;box-sizing:border-box;inset-inline-end:0;padding:0;position:absolute;z-index:1}.a70c7d5347a2f54b__handle:focus-visible{border-radius:var(--wpds-border-radius-sm,2px);outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa1d4aafe4d24e03__resizing{opacity:.72}._000e7ddc64fb1ac6__handle-corner{cursor:nwse-resize;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px)}._000e7ddc64fb1ac6__handle-corner:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-block-start:none;border-end-end-radius:var(--wpds-border-radius-md,4px);border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:none;bottom:var(--widget-resize-handle-visual-inset);box-sizing:border-box;content:"";height:var(--wpds-dimension-size-4xs,8px);inset-inline-end:var(--widget-resize-handle-visual-inset);position:absolute;transform:scale(1);transform-origin:100% 100%;width:var(--wpds-dimension-size-4xs,8px)}[dir=rtl] ._000e7ddc64fb1ac6__handle-corner:after{transform-origin:0 100%}._000e7ddc64fb1ac6__handle-corner.aa1d4aafe4d24e03__resizing:after,._000e7ddc64fb1ac6__handle-corner:focus-visible:after,._000e7ddc64fb1ac6__handle-corner:hover:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}.f227b7c826e4b495__handle-horizontal{align-items:center;border:none;cursor:ew-resize;display:flex;height:var(--wpds-dimension-size-lg,40px);justify-content:center;padding-inline-end:var(--widget-resize-handle-visual-inset);width:var(--wpds-dimension-size-sm,24px)}@media not (prefers-reduced-motion){._000e7ddc64fb1ac6__handle-corner:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-block-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-inline-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}.f227b7c826e4b495__handle-horizontal:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),background-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}}.f227b7c826e4b495__handle-horizontal:after{background-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));content:"";height:var(--wpds-dimension-size-3xs,12px);transform:scale(1);transform-origin:50% 100%;width:var(--wpds-border-width-sm,2px)}.f227b7c826e4b495__handle-horizontal.aa1d4aafe4d24e03__resizing:after,.f227b7c826e4b495__handle-horizontal:focus-visible:after,.f227b7c826e4b495__handle-horizontal:hover:after{background-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}@media (forced-colors:active){._000e7ddc64fb1ac6__handle-corner.aa1d4aafe4d24e03__resizing:after,._000e7ddc64fb1ac6__handle-corner:after,._000e7ddc64fb1ac6__handle-corner:focus-visible:after,._000e7ddc64fb1ac6__handle-corner:hover:after{border-block-end-color:Highlight;border-inline-end-color:Highlight}.f227b7c826e4b495__handle-horizontal.aa1d4aafe4d24e03__resizing:after,.f227b7c826e4b495__handle-horizontal:after,.f227b7c826e4b495__handle-horizontal:focus-visible:after,.f227b7c826e4b495__handle-horizontal:hover:after{background-color:Highlight}}');
+  registerStyle82("f4590a6094", "._5574cf78010b3231__widget-toolbar{background:var(--wpds-color-background-surface-neutral-strong,#fff);padding:var(--wpds-dimension-padding-xs,4px);position:relative}._78bb9900d58f945e__elevated{--_wp-widget-dashboard-elevation-xs:0 1px 1px rgba(0,0,0,.03),0 1px 2px rgba(0,0,0,.02),0 3px 3px rgba(0,0,0,.02),0 4px 4px rgba(0,0,0,.01);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);box-shadow:var(--_wp-widget-dashboard-elevation-xs)}");
 }
-var widget_resize_handle_default = { "handle": "a70c7d5347a2f54b__handle", "resizing": "aa1d4aafe4d24e03__resizing", "handle-corner": "_000e7ddc64fb1ac6__handle-corner", "handle-horizontal": "f227b7c826e4b495__handle-horizontal" };
-var WidgetResizeHandle = (0, import_element218.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
-  if (!verticalResizable) {
-    return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-      "div",
-      {
-        ref,
-        className: clsx_default(
-          widget_resize_handle_default.handle,
-          widget_resize_handle_default["handle-horizontal"],
-          isResizing && widget_resize_handle_default.resizing
-        ),
-        ...listeners,
-        ...attributes
-      }
-    );
-  }
+var widget_toolbar_default = { "widget-toolbar": "_5574cf78010b3231__widget-toolbar", "elevated": "_78bb9900d58f945e__elevated" };
+function WidgetToolbar({
+  children,
+  editMode = false
+}) {
   return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-    "div",
+    Stack,
     {
-      ref,
+      direction: "row",
+      align: "center",
+      gap: "xs",
       className: clsx_default(
-        widget_resize_handle_default.handle,
-        widget_resize_handle_default["handle-corner"],
-        isResizing && widget_resize_handle_default.resizing
+        widget_toolbar_default["widget-toolbar"],
+        editMode && widget_toolbar_default.elevated
       ),
-      ...listeners,
-      ...attributes
+      children
     }
   );
-});
+}
 
-// packages/widget-dashboard/build-module/components/widgets/widgets.mjs
+// packages/widget-dashboard/build-module/components/widgets/widget-resize-handle.mjs
+var import_element218 = __toESM(require_element(), 1);
 var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE83 = "data-wp-hash";
 function getRuntime83() {
@@ -59747,212 +59761,42 @@ function registerStyle83(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle83("a52fa1ece1", "._942bbd7b48da810c__grid{--wp-grid-placeholder-radius:var(--wpds-border-radius-lg,8px);--wp-grid-drag-preview-radius:var(--wpds-border-radius-lg,8px);--wp-widget-dashboard-tile-focus-offset:2px;--wp-widget-dashboard-focus-ring-reserve:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) + var(--wp-widget-dashboard-tile-focus-offset));container-name:widget-dashboard;container-type:inline-size;padding-block-start:var(--wp-widget-dashboard-focus-ring-reserve);width:100%}.a87790b3d11e7d7d__tile{border-radius:var(--wpds-border-radius-lg,8px);height:100%}.b97c9541af3255f3__tile-edit-mode{--_wp-widget-dashboard-elevation-xs:0 1px 1px rgba(0,0,0,.03),0 1px 2px rgba(0,0,0,.02),0 3px 3px rgba(0,0,0,.02),0 4px 4px rgba(0,0,0,.01);box-shadow:var(--_wp-widget-dashboard-elevation-xs)}.b97c9541af3255f3__tile-edit-mode:focus-visible{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wp-widget-dashboard-tile-focus-offset,2px)}._1b97ff991d2fb77e__drag-preview{height:100%}._1b97ff991d2fb77e__drag-preview .a87790b3d11e7d7d__tile{box-shadow:none}");
+  registerStyle83("415a4244a3", '.a70c7d5347a2f54b__handle{--widget-resize-handle-visual-inset:var(--wpds-dimension-padding-xs,4px);--widget-resize-handle-hover-scale:1.18;background:transparent;bottom:0;box-sizing:border-box;inset-inline-end:0;padding:0;position:absolute;z-index:1}.a70c7d5347a2f54b__handle:focus-visible{border-radius:var(--wpds-border-radius-sm,2px);outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa1d4aafe4d24e03__resizing{opacity:.72}._000e7ddc64fb1ac6__handle-corner{cursor:nwse-resize;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px)}._000e7ddc64fb1ac6__handle-corner:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-block-start:none;border-end-end-radius:var(--wpds-border-radius-md,4px);border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:none;bottom:var(--widget-resize-handle-visual-inset);box-sizing:border-box;content:"";height:var(--wpds-dimension-size-4xs,8px);inset-inline-end:var(--widget-resize-handle-visual-inset);position:absolute;transform:scale(1);transform-origin:100% 100%;width:var(--wpds-dimension-size-4xs,8px)}[dir=rtl] ._000e7ddc64fb1ac6__handle-corner:after{transform-origin:0 100%}._000e7ddc64fb1ac6__handle-corner.aa1d4aafe4d24e03__resizing:after,._000e7ddc64fb1ac6__handle-corner:focus-visible:after,._000e7ddc64fb1ac6__handle-corner:hover:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}.f227b7c826e4b495__handle-horizontal{align-items:center;border:none;cursor:ew-resize;display:flex;height:var(--wpds-dimension-size-lg,40px);justify-content:center;padding-inline-end:var(--widget-resize-handle-visual-inset);width:var(--wpds-dimension-size-sm,24px)}@media not (prefers-reduced-motion){._000e7ddc64fb1ac6__handle-corner:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-block-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-inline-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}.f227b7c826e4b495__handle-horizontal:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),background-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}}.f227b7c826e4b495__handle-horizontal:after{background-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));content:"";height:var(--wpds-dimension-size-3xs,12px);transform:scale(1);transform-origin:50% 100%;width:var(--wpds-border-width-sm,2px)}.f227b7c826e4b495__handle-horizontal.aa1d4aafe4d24e03__resizing:after,.f227b7c826e4b495__handle-horizontal:focus-visible:after,.f227b7c826e4b495__handle-horizontal:hover:after{background-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}@media (forced-colors:active){._000e7ddc64fb1ac6__handle-corner.aa1d4aafe4d24e03__resizing:after,._000e7ddc64fb1ac6__handle-corner:after,._000e7ddc64fb1ac6__handle-corner:focus-visible:after,._000e7ddc64fb1ac6__handle-corner:hover:after{border-block-end-color:Highlight;border-inline-end-color:Highlight}.f227b7c826e4b495__handle-horizontal.aa1d4aafe4d24e03__resizing:after,.f227b7c826e4b495__handle-horizontal:after,.f227b7c826e4b495__handle-horizontal:focus-visible:after,.f227b7c826e4b495__handle-horizontal:hover:after{background-color:Highlight}}');
 }
-var widgets_default = { "grid": "_942bbd7b48da810c__grid", "tile": "a87790b3d11e7d7d__tile", "tile-edit-mode": "b97c9541af3255f3__tile-edit-mode", "drag-preview": "_1b97ff991d2fb77e__drag-preview" };
-function toGridLayout(widgets) {
-  return widgets.map((w2) => ({
-    key: w2.uuid,
-    ...w2.placement
-  }));
-}
-function toMasonryLayout(widgets) {
-  return widgets.map((w2) => ({
-    key: w2.uuid,
-    ...w2.placement
-  }));
-}
-function applyGridChange(widgets, gridLayout) {
-  return gridLayout.map(({ key: key2, ...placement }) => {
-    const existing = widgets.find((w2) => w2.uuid === key2);
-    if (!existing) {
-      return {
-        uuid: key2,
-        type: "",
-        placement
-      };
-    }
-    return {
-      ...existing,
-      placement
-    };
-  });
-}
-function applyMasonryChange(widgets, masonryLayout) {
-  return masonryLayout.map(({ key: key2, ...placement }) => {
-    const existing = widgets.find((w2) => w2.uuid === key2);
-    if (!existing) {
-      return {
-        uuid: key2,
-        type: "",
-        placement
-      };
-    }
-    return {
-      ...existing,
-      placement
-    };
-  });
-}
-var Widgets = (0, import_element219.forwardRef)(
-  function Widgets2({ className }, ref) {
-    const { layout, onLayoutChange, editMode, gridSettings, widgetTypes } = useDashboardInternalContext();
-    const { containerRef, columnCount } = useDashboardContainerColumnCount(ref);
-    const isMasonry = gridSettings.model === "masonry";
-    const gridLayout = (0, import_element219.useMemo)(
-      () => isMasonry ? toMasonryLayout(layout) : toGridLayout(layout),
-      [layout, isMasonry]
-    );
-    const handleGridChange = (0, import_element219.useCallback)(
-      (newGridLayout) => {
-        onLayoutChange(applyGridChange(layout, newGridLayout));
-      },
-      [layout, onLayoutChange]
-    );
-    const handleMasonryChange = (0, import_element219.useCallback)(
-      (newMasonryLayout) => {
-        onLayoutChange(
-          applyMasonryChange(layout, newMasonryLayout)
-        );
-      },
-      [layout, onLayoutChange]
-    );
-    const children = layout.map((widget, index2) => {
-      const widgetType = widgetTypes.find(
-        (type) => type.name === widget.type
-      );
-      const hasSettings = !!widgetType?.attributes?.length;
-      const isFullBleed = widgetType?.presentation === "full-bleed";
-      let controls;
-      if (editMode) {
-        controls = /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(WidgetLayoutControls, { widget });
-      } else if (hasSettings && widgetType) {
-        controls = /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-          WidgetAttributeControls,
-          {
-            widget,
-            widgetType
-          }
-        );
-      }
-      const toolbar = controls ? /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(WidgetToolbar, { editMode, children: controls }) : void 0;
-      const inSlot = editMode || isFullBleed;
-      const actionableArea = inSlot && toolbar ? /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(WidgetHeader, { overlay: true, children: toolbar }) : void 0;
-      return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-        WidgetChrome,
-        {
-          widget,
-          index: index2,
-          className: clsx_default(widgets_default.tile, {
-            [widgets_default["tile-edit-mode"]]: editMode
-          }),
-          actionableArea,
-          headerToolbar: !inSlot ? toolbar : void 0
-        },
-        widget.uuid
-      );
-    });
-    const renderDragPreview = (0, import_element219.useCallback)(
-      ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime291.jsx)("div", { className: widgets_default["drag-preview"], children: clone }),
-      []
-    );
-    const sharedRenderProps = {
-      editMode,
-      renderDragPreview,
-      renderResizeHandle: WidgetResizeHandle
-    };
-    const surface = isMasonry ? /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-      DashboardLanes,
-      {
-        layout: gridLayout,
-        columns: columnCount,
-        flowTolerance: gridSettings.flowTolerance,
-        onChangeLayout: handleMasonryChange,
-        ...sharedRenderProps,
-        children
-      }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-      DashboardGrid,
-      {
-        layout: gridLayout,
-        columns: columnCount,
-        rowHeight: gridSettings.rowHeight,
-        onChangeLayout: handleGridChange,
-        ...sharedRenderProps,
-        children
-      }
-    );
+var widget_resize_handle_default = { "handle": "a70c7d5347a2f54b__handle", "resizing": "aa1d4aafe4d24e03__resizing", "handle-corner": "_000e7ddc64fb1ac6__handle-corner", "handle-horizontal": "f227b7c826e4b495__handle-horizontal" };
+var WidgetResizeHandle = (0, import_element218.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
+  if (!verticalResizable) {
     return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
       "div",
       {
-        ref: containerRef,
-        className: clsx_default(widgets_default.grid, className),
-        children: surface
+        ref,
+        className: clsx_default(
+          widget_resize_handle_default.handle,
+          widget_resize_handle_default["handle-horizontal"],
+          isResizing && widget_resize_handle_default.resizing
+        ),
+        ...listeners,
+        ...attributes
       }
     );
   }
-);
+  return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
+    "div",
+    {
+      ref,
+      className: clsx_default(
+        widget_resize_handle_default.handle,
+        widget_resize_handle_default["handle-corner"],
+        isResizing && widget_resize_handle_default.resizing
+      ),
+      ...listeners,
+      ...attributes
+    }
+  );
+});
 
-// packages/widget-dashboard/build-module/widget-dashboard.mjs
+// packages/widget-dashboard/build-module/components/widgets/widgets.mjs
 var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
-var WidgetDashboard = Object.assign(
-  function WidgetDashboard2({
-    layout,
-    onLayoutChange,
-    onLayoutReset,
-    widgetTypes,
-    isResolvingWidgetTypes,
-    editMode,
-    onEditChange,
-    resolveWidgetModule,
-    gridSettings,
-    children
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
-      WidgetDashboardProvider,
-      {
-        layout,
-        onLayoutChange,
-        onLayoutReset,
-        widgetTypes,
-        isResolvingWidgetTypes,
-        editMode,
-        onEditChange,
-        resolveWidgetModule,
-        gridSettings,
-        children: /* @__PURE__ */ (0, import_jsx_runtime292.jsxs)(WidgetDashboardUIProvider, { children: [
-          children ?? /* @__PURE__ */ (0, import_jsx_runtime292.jsxs)(import_jsx_runtime292.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(NoWidgetsState, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(Actions3, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(Widgets, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(Commands, {})
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(WidgetInserter, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(WidgetSettings, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(ResetConfirmation, {})
-        ] })
-      }
-    );
-  },
-  { Actions: Actions3, Widgets, WidgetChrome, NoWidgetsState, Commands }
-);
-
-// routes/dashboard/stage.tsx
-import {
-  useWidgetTypes
-} from "@wordpress/widget-primitives";
-
-// routes/dashboard/field-types/index.ts
-import { registerFieldType } from "@wordpress/widget-primitives";
-
-// routes/dashboard/field-types/location-control/location-control.tsx
-var import_element221 = __toESM(require_element());
-
-// routes/dashboard/field-types/location-picker/location-picker.tsx
-var import_element220 = __toESM(require_element());
-var import_i18n73 = __toESM(require_i18n());
-
-// packages/style-runtime/src/index.ts
 var STYLE_HASH_ATTRIBUTE84 = "data-wp-hash";
 function getRuntime84() {
   const globalScope = globalThis;
@@ -60033,15 +59877,306 @@ function registerStyle84(hash, css) {
     injectStyle84(targetDocument, hash, css);
   }
 }
+if (typeof process === "undefined" || true) {
+  registerStyle84("a52fa1ece1", "._942bbd7b48da810c__grid{--wp-grid-placeholder-radius:var(--wpds-border-radius-lg,8px);--wp-grid-drag-preview-radius:var(--wpds-border-radius-lg,8px);--wp-widget-dashboard-tile-focus-offset:2px;--wp-widget-dashboard-focus-ring-reserve:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) + var(--wp-widget-dashboard-tile-focus-offset));container-name:widget-dashboard;container-type:inline-size;padding-block-start:var(--wp-widget-dashboard-focus-ring-reserve);width:100%}.a87790b3d11e7d7d__tile{border-radius:var(--wpds-border-radius-lg,8px);height:100%}.b97c9541af3255f3__tile-edit-mode{--_wp-widget-dashboard-elevation-xs:0 1px 1px rgba(0,0,0,.03),0 1px 2px rgba(0,0,0,.02),0 3px 3px rgba(0,0,0,.02),0 4px 4px rgba(0,0,0,.01);box-shadow:var(--_wp-widget-dashboard-elevation-xs)}.b97c9541af3255f3__tile-edit-mode:focus-visible{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wp-widget-dashboard-tile-focus-offset,2px)}._1b97ff991d2fb77e__drag-preview{height:100%}._1b97ff991d2fb77e__drag-preview .a87790b3d11e7d7d__tile{box-shadow:none}");
+}
+var widgets_default = { "grid": "_942bbd7b48da810c__grid", "tile": "a87790b3d11e7d7d__tile", "tile-edit-mode": "b97c9541af3255f3__tile-edit-mode", "drag-preview": "_1b97ff991d2fb77e__drag-preview" };
+function toGridLayout(widgets) {
+  return widgets.map((w2) => ({
+    key: w2.uuid,
+    ...w2.placement
+  }));
+}
+function toMasonryLayout(widgets) {
+  return widgets.map((w2) => ({
+    key: w2.uuid,
+    ...w2.placement
+  }));
+}
+function applyGridChange(widgets, gridLayout) {
+  return gridLayout.map(({ key: key2, ...placement }) => {
+    const existing = widgets.find((w2) => w2.uuid === key2);
+    if (!existing) {
+      return {
+        uuid: key2,
+        type: "",
+        placement
+      };
+    }
+    return {
+      ...existing,
+      placement
+    };
+  });
+}
+function applyMasonryChange(widgets, masonryLayout) {
+  return masonryLayout.map(({ key: key2, ...placement }) => {
+    const existing = widgets.find((w2) => w2.uuid === key2);
+    if (!existing) {
+      return {
+        uuid: key2,
+        type: "",
+        placement
+      };
+    }
+    return {
+      ...existing,
+      placement
+    };
+  });
+}
+var Widgets = (0, import_element219.forwardRef)(
+  function Widgets2({ className }, ref) {
+    const { layout, onLayoutChange, editMode, gridSettings, widgetTypes } = useDashboardInternalContext();
+    const { containerRef, columnCount } = useDashboardContainerColumnCount(ref);
+    const isMasonry = gridSettings.model === "masonry";
+    const gridLayout = (0, import_element219.useMemo)(
+      () => isMasonry ? toMasonryLayout(layout) : toGridLayout(layout),
+      [layout, isMasonry]
+    );
+    const handleGridChange = (0, import_element219.useCallback)(
+      (newGridLayout) => {
+        onLayoutChange(applyGridChange(layout, newGridLayout));
+      },
+      [layout, onLayoutChange]
+    );
+    const handleMasonryChange = (0, import_element219.useCallback)(
+      (newMasonryLayout) => {
+        onLayoutChange(
+          applyMasonryChange(layout, newMasonryLayout)
+        );
+      },
+      [layout, onLayoutChange]
+    );
+    const children = layout.map((widget, index2) => {
+      const widgetType = widgetTypes.find(
+        (type) => type.name === widget.type
+      );
+      const hasSettings = !!widgetType?.attributes?.length;
+      const hasActions = !!widgetType?.actions?.length;
+      const isFullBleed = widgetType?.presentation === "full-bleed";
+      let controls;
+      if (editMode) {
+        controls = /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(WidgetLayoutControls, { widget });
+      } else if ((hasSettings || hasActions) && widgetType) {
+        controls = /* @__PURE__ */ (0, import_jsx_runtime292.jsxs)(import_jsx_runtime292.Fragment, { children: [
+          hasSettings && /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
+            WidgetAttributeControls,
+            {
+              widget,
+              widgetType
+            }
+          ),
+          hasActions && /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(WidgetActions, { widgetType })
+        ] });
+      }
+      const toolbar = controls ? /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(WidgetToolbar, { editMode, children: controls }) : void 0;
+      const inSlot = editMode || isFullBleed;
+      const actionableArea = inSlot && toolbar ? /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(WidgetHeader, { overlay: true, children: toolbar }) : void 0;
+      return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
+        WidgetChrome,
+        {
+          widget,
+          index: index2,
+          className: clsx_default(widgets_default.tile, {
+            [widgets_default["tile-edit-mode"]]: editMode
+          }),
+          actionableArea,
+          headerToolbar: !inSlot ? toolbar : void 0
+        },
+        widget.uuid
+      );
+    });
+    const renderDragPreview = (0, import_element219.useCallback)(
+      ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime292.jsx)("div", { className: widgets_default["drag-preview"], children: clone }),
+      []
+    );
+    const sharedRenderProps = {
+      editMode,
+      renderDragPreview,
+      renderResizeHandle: WidgetResizeHandle
+    };
+    const surface = isMasonry ? /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
+      DashboardLanes,
+      {
+        layout: gridLayout,
+        columns: columnCount,
+        flowTolerance: gridSettings.flowTolerance,
+        onChangeLayout: handleMasonryChange,
+        ...sharedRenderProps,
+        children
+      }
+    ) : /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
+      DashboardGrid,
+      {
+        layout: gridLayout,
+        columns: columnCount,
+        rowHeight: gridSettings.rowHeight,
+        onChangeLayout: handleGridChange,
+        ...sharedRenderProps,
+        children
+      }
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
+      "div",
+      {
+        ref: containerRef,
+        className: clsx_default(widgets_default.grid, className),
+        children: surface
+      }
+    );
+  }
+);
+
+// packages/widget-dashboard/build-module/widget-dashboard.mjs
+var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
+var WidgetDashboard = Object.assign(
+  function WidgetDashboard2({
+    layout,
+    onLayoutChange,
+    onLayoutReset,
+    widgetTypes,
+    isResolvingWidgetTypes,
+    editMode,
+    onEditChange,
+    resolveWidgetModule,
+    gridSettings,
+    children
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+      WidgetDashboardProvider,
+      {
+        layout,
+        onLayoutChange,
+        onLayoutReset,
+        widgetTypes,
+        isResolvingWidgetTypes,
+        editMode,
+        onEditChange,
+        resolveWidgetModule,
+        gridSettings,
+        children: /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(WidgetDashboardUIProvider, { children: [
+          children ?? /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(import_jsx_runtime293.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(NoWidgetsState, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(Actions3, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(Widgets, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(Commands, {})
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(WidgetInserter, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(WidgetSettings, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(ResetConfirmation, {})
+        ] })
+      }
+    );
+  },
+  { Actions: Actions3, Widgets, WidgetChrome, NoWidgetsState, Commands }
+);
+
+// routes/dashboard/stage.tsx
+import {
+  useWidgetTypes
+} from "@wordpress/widget-primitives";
+
+// routes/dashboard/field-types/index.ts
+import { registerFieldType } from "@wordpress/widget-primitives";
+
+// routes/dashboard/field-types/location-control/location-control.tsx
+var import_element221 = __toESM(require_element());
+
+// routes/dashboard/field-types/location-picker/location-picker.tsx
+var import_element220 = __toESM(require_element());
+var import_i18n74 = __toESM(require_i18n());
+
+// packages/style-runtime/src/index.ts
+var STYLE_HASH_ATTRIBUTE85 = "data-wp-hash";
+function getRuntime85() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument85(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash85(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE85}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE85) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle85(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime85();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash85(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE85, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument85(targetDocument) {
+  const runtime = getRuntime85();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle85(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle85(hash, css) {
+  const runtime = getRuntime85();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle85(targetDocument, hash, css);
+  }
+}
 
 // routes/dashboard/field-types/location-picker/location-picker.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle84("8d5b1e29cf", "._9913e6cb32c68468__location-input{flex:1;min-inline-size:120px}");
+  registerStyle85("8d5b1e29cf", "._9913e6cb32c68468__location-input{flex:1;min-inline-size:120px}");
 }
 var location_picker_default = { "location-input": "_9913e6cb32c68468__location-input" };
 
 // routes/dashboard/field-types/location-picker/location-picker.tsx
-var import_jsx_runtime293 = __toESM(require_jsx_runtime());
+var import_jsx_runtime294 = __toESM(require_jsx_runtime());
 var SEARCH_DEBOUNCE_MS = 500;
 function LocationPicker({
   onSubmit = () => {
@@ -60143,7 +60278,7 @@ function LocationPicker({
       controller.abort();
     };
   }, [locationInput]);
-  return /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
     "form",
     {
       onSubmit: (e2) => {
@@ -60152,8 +60287,8 @@ function LocationPicker({
           onSubmit(locationInput);
         }
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(Stack, { direction: "row", align: "start", wrap: "wrap", gap: "sm", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(Stack, { direction: "row", align: "start", wrap: "wrap", gap: "sm", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(
           autocomplete_exports.Root,
           {
             items: locationOptions,
@@ -60166,30 +60301,30 @@ function LocationPicker({
               }
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
                 autocomplete_exports.Input,
                 {
                   id: locationInputId,
                   className: location_picker_default["location-input"],
-                  render: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+                  render: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
                     InputControl,
                     {
                       autoComplete: "off",
-                      label: (0, import_i18n73.__)("City"),
+                      label: (0, import_i18n74.__)("City"),
                       hideLabelFromVision,
                       size: "compact",
-                      description: showDescription ? (0, import_i18n73.__)(
+                      description: showDescription ? (0, import_i18n74.__)(
                         "Select a city to view upcoming events."
                       ) : void 0,
                       onValueChange: () => {
                       },
-                      suffix: /* @__PURE__ */ (0, import_jsx_runtime293.jsxs)(InputLayout3.Slot, { padding: "minimal", children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(autocomplete_exports.Clear, {}),
-                        /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+                      suffix: /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(InputLayout3.Slot, { padding: "minimal", children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(autocomplete_exports.Clear, {}),
+                        /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
                           IconButton,
                           {
                             icon: map_marker_default,
-                            label: (0, import_i18n73.__)(
+                            label: (0, import_i18n74.__)(
                               "Use current location"
                             ),
                             onClick: fillCityFromGeolocation,
@@ -60201,10 +60336,10 @@ function LocationPicker({
                       ] })
                     }
                   ),
-                  placeholder: (0, import_i18n73.__)("Select city\u2026")
+                  placeholder: (0, import_i18n74.__)("Select city\u2026")
                 }
               ),
-              locationOptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(autocomplete_exports.Popup, { children: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(autocomplete_exports.List, { children: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(autocomplete_exports.ListBody, { children: /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(autocomplete_exports.Collection, { children: (item) => /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+              locationOptions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(autocomplete_exports.Popup, { children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(autocomplete_exports.List, { children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(autocomplete_exports.ListBody, { children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(autocomplete_exports.Collection, { children: (item) => /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
                 autocomplete_exports.Item,
                 {
                   value: item,
@@ -60215,14 +60350,14 @@ function LocationPicker({
             ]
           }
         ),
-        selectButton && /* @__PURE__ */ (0, import_jsx_runtime293.jsx)(
+        selectButton && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
           Button4,
           {
             variant: "outline",
             size: "compact",
             type: "submit",
             disabled: !locationInput.trim(),
-            children: (0, import_i18n73.__)("Select")
+            children: (0, import_i18n74.__)("Select")
           }
         )
       ] })
@@ -60231,7 +60366,7 @@ function LocationPicker({
 }
 
 // routes/dashboard/field-types/location-control/location-control.tsx
-var import_jsx_runtime294 = __toESM(require_jsx_runtime());
+var import_jsx_runtime295 = __toESM(require_jsx_runtime());
 function LocationControl({
   data,
   field,
@@ -60250,7 +60385,7 @@ function LocationControl({
     },
     [data, field, onChange]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
     LocationPicker,
     {
       seedInput: value ?? "",
@@ -60314,7 +60449,7 @@ function useDashboardGridSettings() {
 }
 
 // routes/dashboard/stage.tsx
-var import_jsx_runtime295 = __toESM(require_jsx_runtime());
+var import_jsx_runtime296 = __toESM(require_jsx_runtime());
 registerDashboardFieldTypes();
 function Dashboard() {
   const [layout, setLayout, resetLayout] = useDashboardLayout(
@@ -60334,12 +60469,12 @@ function Dashboard() {
   const { createSuccessNotice } = (0, import_data9.useDispatch)(import_notices.store);
   const handleLayoutChange = (next) => {
     setLayout(next);
-    void createSuccessNotice((0, import_i18n74.__)("Dashboard saved."), {
+    void createSuccessNotice((0, import_i18n75.__)("Dashboard saved."), {
       type: "snackbar"
     });
   };
-  const pageTitle = editMode ? (0, import_i18n74.__)("Customize Dashboard") : (0, import_i18n74.__)("Dashboard");
-  return /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(
+  const pageTitle = editMode ? (0, import_i18n75.__)("Customize Dashboard") : (0, import_i18n75.__)("Dashboard");
+  return /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)(
     WidgetDashboard,
     {
       widgetTypes,
@@ -60351,20 +60486,20 @@ function Dashboard() {
       editMode,
       onEditChange: setEditMode,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime296.jsxs)(
           page_default,
           {
             title: editMode && isMobileViewport ? void 0 : pageTitle,
             ariaLabel: pageTitle,
-            actions: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(WidgetDashboard.Actions, {}),
+            actions: /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(WidgetDashboard.Actions, {}),
             hasPadding: true,
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(WidgetDashboard.NoWidgetsState, {}),
-              /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(WidgetDashboard.Widgets, {})
+              /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(WidgetDashboard.NoWidgetsState, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(WidgetDashboard.Widgets, {})
             ]
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(WidgetDashboard.Commands, {})
+        /* @__PURE__ */ (0, import_jsx_runtime296.jsx)(WidgetDashboard.Commands, {})
       ]
     }
   );

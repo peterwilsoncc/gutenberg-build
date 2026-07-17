@@ -161,7 +161,8 @@ function useWidgetTypes(records) {
             ...record.category ? { category: record.category } : {},
             ...record.description ? { description: record.description } : {},
             ...record.help ? { help: record.help } : {},
-            ...record.keywords ? { keywords: record.keywords } : {}
+            ...record.keywords ? { keywords: record.keywords } : {},
+            ...record.actions ? { actions: record.actions } : {}
           };
         } catch {
           return null;
