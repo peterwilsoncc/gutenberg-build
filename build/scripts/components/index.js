@@ -48770,13 +48770,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
   function SuffixItem({
     searchRef,
-    value,
     onChange,
     onClose
   }) {
-    if (!onClose && !value) {
-      return null;
-    }
     if (onClose) {
       (0, import_deprecated22.default)("`onClose` prop in wp.components.SearchControl", {
         since: "6.8"
@@ -48838,7 +48834,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }),
       suffix: hasSuffix && /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(SuffixItem, {
         searchRef,
-        value,
         onChange,
         onClose
       }),
