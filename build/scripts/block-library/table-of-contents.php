@@ -246,6 +246,8 @@ function gutenberg_block_core_table_of_contents_get_headings_from_content( $cont
 /**
  * Gets the current page number for paginated post content.
  *
+ * @global int $page Current page number of the content.
+ *
  * @return int Current page number.
  */
 function gutenberg_block_core_table_of_contents_get_current_page_number() {
