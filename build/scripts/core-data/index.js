@@ -5037,6 +5037,7 @@ var wp;
     saveEntityRecord: () => saveEntityRecord,
     undo: () => undo
   });
+  var import_es66 = __toESM(require_es6(), 1);
   var import_api_fetch4 = __toESM(require_api_fetch(), 1);
   var import_url3 = __toESM(require_url(), 1);
   var import_deprecated3 = __toESM(require_deprecated(), 1);
@@ -5225,6 +5226,37 @@ var wp;
   // packages/core-data/build-module/actions.mjs
   function addTitleToAutoDraft(record) {
     return record.status === "auto-draft" ? { ...record, title: "" } : record;
+  }
+  function getServerMutatedMetaFields(updatedMeta, persistedMeta, syncedMeta) {
+    const baseline = { ...persistedMeta, ...syncedMeta };
+    return Object.fromEntries(
+      Object.entries(updatedMeta ?? {}).filter(([key, value]) => {
+        if (key === POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE) {
+          return false;
+        }
+        return !(0, import_es66.default)(value, baseline[key]);
+      })
+    );
+  }
+  function getServerMutatedFields(updatedRecord, persistedRecord, syncedChanges) {
+    return Object.fromEntries(
+      Object.entries(updatedRecord).flatMap(([key, value]) => {
+        if (key === "meta") {
+          const serverMutatedMeta = getServerMutatedMetaFields(
+            value,
+            persistedRecord.meta,
+            syncedChanges.meta
+          );
+          return Object.keys(serverMutatedMeta).length ? [[key, serverMutatedMeta]] : [];
+        }
+        const baseline = key in syncedChanges ? syncedChanges[key] : persistedRecord[key];
+        const wasServerMutated = !(0, import_es66.default)(
+          getRawValue(value) ?? value,
+          getRawValue(baseline) ?? baseline
+        );
+        return wasServerMutated ? [[key, value]] : [];
+      })
+    );
   }
   function receiveUserQuery(queryID, users2) {
     return {
@@ -5618,6 +5650,14 @@ var wp;
             );
           }
         } else {
+          if (entityConfig.syncConfig && !__unstableSkipSyncUpdate && !isNewRecord && persistedRecord) {
+            getSyncManager()?.update(
+              `${kind}/${name}`,
+              recordId,
+              record,
+              LOCAL_UNDO_IGNORED_ORIGIN
+            );
+          }
           let edits = record;
           if (entityConfig.__unstablePrePersist) {
             edits = {
@@ -5642,10 +5682,22 @@ var wp;
             edits
           );
           if (entityConfig.syncConfig) {
+            let syncChanges;
+            if (__unstableSkipSyncUpdate) {
+              syncChanges = {};
+            } else if (isNewRecord || !persistedRecord) {
+              syncChanges = updatedRecord;
+            } else {
+              syncChanges = getServerMutatedFields(
+                updatedRecord,
+                persistedRecord,
+                record
+              );
+            }
             getSyncManager()?.update(
               `${kind}/${name}`,
               recordId,
-              __unstableSkipSyncUpdate ? {} : updatedRecord,
+              syncChanges,
               LOCAL_UNDO_IGNORED_ORIGIN,
               { isSave: true }
             );
