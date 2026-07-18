@@ -2750,6 +2750,11 @@ var wp;
         filesList: [item.file],
         additionalData: item.additionalData,
         signal: item.abortController?.signal,
+        // The queue's own items drive upload progress UI and save
+        // locking; without this, consumers that track uploads themselves
+        // (e.g. the editor's progress snackbar) would count this file a
+        // second time.
+        isTransportOnly: true,
         onFileChange: ([attachment]) => {
           if (attachment && !(0, import_blob.isBlobURL)(attachment.url)) {
             finishUpload(attachment);

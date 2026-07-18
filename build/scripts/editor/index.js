@@ -379,13 +379,6 @@ var wp;
     }
   });
 
-  // package-external:@wordpress/upload-media
-  var require_upload_media = __commonJS({
-    "package-external:@wordpress/upload-media"(exports, module) {
-      module.exports = window.wp.uploadMedia;
-    }
-  });
-
   // package-external:@wordpress/components
   var require_components = __commonJS({
     "package-external:@wordpress/components"(exports, module) {
@@ -1125,6 +1118,13 @@ var wp;
   var require_commands = __commonJS({
     "package-external:@wordpress/commands"(exports, module) {
       module.exports = window.wp.commands;
+    }
+  });
+
+  // package-external:@wordpress/upload-media
+  var require_upload_media = __commonJS({
+    "package-external:@wordpress/upload-media"(exports, module) {
+      module.exports = window.wp.uploadMedia;
     }
   });
 
@@ -7564,7 +7564,6 @@ var wp;
   var import_data5 = __toESM(require_data(), 1);
   var import_core_data2 = __toESM(require_core_data(), 1);
   var import_media_utils = __toESM(require_media_utils(), 1);
-  var import_upload_media = __toESM(require_upload_media(), 1);
 
   // packages/editor/build-module/components/upload-progress-snackbar/tracker.mjs
   var import_element2 = __toESM(require_element(), 1);
@@ -7624,7 +7623,8 @@ var wp;
     onError = noop,
     onFileChange,
     onSuccess,
-    multiple = true
+    multiple = true,
+    isTransportOnly = false
   }) {
     const { receiveEntityRecords } = (0, import_data5.dispatch)(import_core_data2.store);
     const { getCurrentPost: getCurrentPost2, getEditorSettings: getEditorSettings2 } = (0, import_data5.select)(store);
@@ -7635,7 +7635,6 @@ var wp;
       unlockPostSaving: unlockPostSaving2
     } = (0, import_data5.dispatch)(store);
     const wpAllowedMimeTypes = getEditorSettings2().allowedMimeTypes;
-    const isClientSideMediaActive = window.__clientSideMediaProcessing && (0, import_upload_media.isClientSideMediaSupported)();
     const lockKey = `image-upload-${v4_default()}`;
     maxUploadFileSize = maxUploadFileSize || getEditorSettings2().maxUploadFileSize;
     const currentPost = getCurrentPost2();
@@ -7644,12 +7643,12 @@ var wp;
       unlockPostSaving2(lockKey);
       unlockPostAutosaving2(lockKey);
     };
-    if (!isClientSideMediaActive) {
+    if (!isTransportOnly) {
       lockPostSaving2(lockKey);
       lockPostAutosaving2(lockKey);
     }
     const postData = currentPostId ? { post: currentPostId } : {};
-    if (!isClientSideMediaActive) {
+    if (!isTransportOnly) {
       const trackingFiles = Array.from(filesList).map(
         (f3) => f3?.name || ""
       );
@@ -7672,10 +7671,10 @@ var wp;
             invalidateCache
           );
         }
-        if (!isClientSideMediaActive && entityFiles.length === files.length) {
+        if (!isTransportOnly && entityFiles.length === files.length) {
           clearSaveLock();
         }
-        if (!isClientSideMediaActive) {
+        if (!isTransportOnly) {
           const completedCount = entityFiles.length;
           if (completedCount > lastCompletedCount) {
             advance(completedCount - lastCompletedCount);
@@ -7690,7 +7689,7 @@ var wp;
       },
       maxUploadFileSize,
       onError: ({ message: message2 }) => {
-        if (!isClientSideMediaActive) {
+        if (!isTransportOnly) {
           clearSaveLock();
           advance(1);
         }
@@ -75991,11 +75990,11 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/provider/use-upload-save-lock.mjs
   var import_data72 = __toESM(require_data(), 1);
   var import_element207 = __toESM(require_element(), 1);
-  var import_upload_media2 = __toESM(require_upload_media(), 1);
+  var import_upload_media = __toESM(require_upload_media(), 1);
   var LOCK_NAME = "upload-in-progress";
   function useUploadSaveLock() {
     const isUploading = (0, import_data72.useSelect)(
-      (select9) => select9(import_upload_media2.store).isUploading(),
+      (select9) => select9(import_upload_media.store).isUploading(),
       []
     );
     const {
@@ -76028,7 +76027,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/provider/use-network-reconnect.mjs
   var import_element208 = __toESM(require_element(), 1);
   var import_data73 = __toESM(require_data(), 1);
-  var import_upload_media3 = __toESM(require_upload_media(), 1);
+  var import_upload_media2 = __toESM(require_upload_media(), 1);
   function useNetworkReconnect() {
     const isEnabled = window.__clientSideMediaProcessing;
     const registry = (0, import_data73.useRegistry)();
@@ -76037,10 +76036,10 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       const handleOffline = () => {
-        unlock(registry.dispatch(import_upload_media3.store)).pauseQueue();
+        unlock(registry.dispatch(import_upload_media2.store)).pauseQueue();
       };
       const handleOnline = () => {
-        unlock(registry.dispatch(import_upload_media3.store)).resumeQueue();
+        unlock(registry.dispatch(import_upload_media2.store)).resumeQueue();
       };
       window.addEventListener("offline", handleOffline);
       window.addEventListener("online", handleOnline);
@@ -101257,7 +101256,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element345 = __toESM(require_element(), 1);
   var import_i18n352 = __toESM(require_i18n(), 1);
   var import_a11y13 = __toESM(require_a11y(), 1);
-  var import_upload_media4 = __toESM(require_upload_media(), 1);
+  var import_upload_media3 = __toESM(require_upload_media(), 1);
   var import_notices38 = __toESM(require_notices(), 1);
   var import_components289 = __toESM(require_components(), 1);
   var import_jsx_runtime567 = __toESM(require_jsx_runtime(), 1);
@@ -101285,7 +101284,7 @@ If there's a particular need for this, please submit a feature request at https:
   var UPLOAD_DONE = /* @__PURE__ */ (0, import_jsx_runtime567.jsx)("span", { className: "editor-upload-progress-snackbar__check", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime567.jsx)(import_components289.Icon, { icon: check_default }) });
   function UploadProgressSnackbar() {
     const items = (0, import_data274.useSelect)(
-      (select9) => select9(import_upload_media4.store).getItems(),
+      (select9) => select9(import_upload_media3.store).getItems(),
       []
     );
     const tracker = useTracker();
