@@ -26649,7 +26649,6 @@ This message will only show in development mode. It won't appear in production. 
       // Prevent passing legacy props to internal components.
       __next40pxDefaultSize: _next40pxDefaultSize,
       __next36pxDefaultSize: _next36pxDefaultSize,
-      __shouldNotWarnDeprecated36pxSize: _shouldNotWarnDeprecated36pxSize,
       __unstableStateReducer: stateReducer = (state) => state,
       __unstableInputWidth,
       className: className2,
@@ -30043,7 +30042,6 @@ This message will only show in development mode. It won't appear in production. 
       __nextHasNoMarginBottom: _2,
       size: _size,
       __next40pxDefaultSize: _next40pxDefaultSize,
-      __shouldNotWarnDeprecated36pxSize: _shouldNotWarnDeprecated36pxSize,
       className: className2,
       isAdaptiveWidth = false,
       isBlock = false,
@@ -30685,7 +30683,6 @@ This message will only show in development mode. It won't appear in production. 
       __nextHasNoMarginBottom: _2,
       __next40pxDefaultSize: _next40pxDefaultSize,
       __next36pxDefaultSize: _next36pxDefaultSize,
-      __shouldNotWarnDeprecated36pxSize: _shouldNotWarnDeprecated36pxSize,
       className: className2,
       disabled = false,
       help,
@@ -31236,7 +31233,6 @@ This message will only show in development mode. It won't appear in production. 
       // Prevent passing legacy props to internal component.
       __nextHasNoMarginBottom: _2,
       __next40pxDefaultSize: _next40pxDefaultSize,
-      __shouldNotWarnDeprecated36pxSize: _shouldNotWarnDeprecated36pxSize,
       afterIcon,
       allowReset = false,
       beforeIcon,
@@ -39506,7 +39502,6 @@ This message will only show in development mode. It won't appear in production. 
     const {
       // Prevent passing legacy props to internal component.
       __next40pxDefaultSize: _next40pxDefaultSize,
-      __shouldNotWarnDeprecated36pxSize: _shouldNotWarnDeprecated36pxSize,
       describedBy,
       options: options2,
       onChange,
