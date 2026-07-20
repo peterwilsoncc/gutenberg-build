@@ -57469,6 +57469,23 @@ ${text}
       }
     );
   }
+  function EditableContentLoaded({
+    blockProps,
+    blocks,
+    onInput,
+    onChange,
+    tagName: TagName2 = "div"
+  }) {
+    const props = (0, import_block_editor195.useInnerBlocksProps)(blockProps, {
+      value: blocks,
+      onInput,
+      onChange,
+      // Show a writing prompt for empty content, even when the block
+      // is not selected, so the content area remains discoverable.
+      renderAppender: blocks?.length ? void 0 : import_block_editor195.InnerBlocks.DefaultBlockAppender
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(TagName2, { ...props });
+  }
   function EditableContent({ context = {}, tagName: TagName2 = "div" }) {
     const { postType, postId } = context;
     const [blocks, onInput, onChange] = (0, import_core_data62.useEntityBlockEditor)(
@@ -57476,28 +57493,32 @@ ${text}
       postType,
       { id: postId }
     );
-    const entityRecord = (0, import_data110.useSelect)(
-      (select10) => {
-        return select10(import_core_data62.store).getEntityRecord(
-          "postType",
-          postType,
-          postId
-        );
-      },
+    const hasLoadedRecord = (0, import_data110.useSelect)(
+      (select10) => select10(import_core_data62.store).getEntityRecord(
+        "postType",
+        postType,
+        postId
+      ) !== void 0 || select10(import_core_data62.store).hasFinishedResolution("getEntityRecord", [
+        "postType",
+        postType,
+        postId
+      ]),
       [postType, postId]
     );
-    const hasInnerBlocks = !!entityRecord?.content?.raw || blocks?.length;
-    const initialInnerBlocks = [["core/paragraph"]];
-    const props = (0, import_block_editor195.useInnerBlocksProps)(
-      (0, import_block_editor195.useBlockProps)({ className: "entry-content" }),
+    const blockProps = (0, import_block_editor195.useBlockProps)({ className: "entry-content" });
+    if (!hasLoadedRecord) {
+      return /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(TagName2, { ...blockProps });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(
+      EditableContentLoaded,
       {
-        value: blocks,
+        blockProps,
+        blocks,
         onInput,
         onChange,
-        template: !hasInnerBlocks ? initialInnerBlocks : void 0
+        tagName: TagName2
       }
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(TagName2, { ...props });
   }
   function Content(props) {
     const {
