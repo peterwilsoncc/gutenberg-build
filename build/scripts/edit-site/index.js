@@ -53174,11 +53174,11 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/site-editor-routes/styles.mjs
   var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation20, useHistory: useHistory13 } = unlock(import_router20.privateApis);
-  var { StyleBookPreview } = unlock(import_editor24.privateApis);
-  function StylesPreviewArea({ siteData }) {
+  var { StyleBookPreview, useGlobalStyles: useGlobalStyles3 } = unlock(import_editor24.privateApis);
+  function StyleBookPreviewArea({ siteData }) {
     const { path, query } = useLocation20();
     const history = useHistory13();
-    const isStylebook = query.preview === "stylebook";
+    const { user: userConfig } = useGlobalStyles3();
     const section = query.section ?? "/";
     const onChangeSection = (updatedSection) => {
       history.navigate(
@@ -53187,15 +53187,20 @@ If there's a particular need for this, please submit a feature request at https:
         })
       );
     };
-    if (isStylebook) {
-      return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
-        StyleBookPreview,
-        {
-          path: section,
-          onPathChange: onChangeSection,
-          settings: siteData.editorSettings
-        }
-      );
+    return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
+      StyleBookPreview,
+      {
+        path: section,
+        onPathChange: onChangeSection,
+        settings: siteData.editorSettings,
+        userConfig
+      }
+    );
+  }
+  function StylesPreviewArea({ siteData }) {
+    const { query } = useLocation20();
+    if (query.preview === "stylebook") {
+      return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(StyleBookPreviewArea, { siteData });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(EditSiteEditor, {});
   }
@@ -55136,10 +55141,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element175 = __toESM(require_element(), 1);
   var import_block_editor24 = __toESM(require_block_editor(), 1);
   var import_editor29 = __toESM(require_editor(), 1);
-  var { useGlobalStyles: useGlobalStyles3 } = unlock(import_editor29.privateApis);
+  var { useGlobalStyles: useGlobalStyles4 } = unlock(import_editor29.privateApis);
   var { globalStylesDataKey } = unlock(import_block_editor24.privateApis);
   function usePatternSettings() {
-    const { merged: mergedConfig } = useGlobalStyles3();
+    const { merged: mergedConfig } = useGlobalStyles4();
     const storedSettings = (0, import_data69.useSelect)((select4) => {
       const { getSettings: getSettings7 } = unlock(select4(store));
       return getSettings7();
