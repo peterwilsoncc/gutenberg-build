@@ -37595,7 +37595,7 @@ ${text}
     const src = isExternal ? url : void 0;
     const isSideloading = (0, import_data52.useSelect)(
       (select10) => {
-        if (!window.__clientSideMediaProcessing && !window.__heicUploadSupport || !id) {
+        if (!window.__clientSideMediaProcessing || !id) {
           return false;
         }
         return select10(import_upload_media.store).isUploadingById(id);

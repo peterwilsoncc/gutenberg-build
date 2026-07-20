@@ -45225,7 +45225,7 @@ var wp;
       isHeicCanvasEnabledCache = false;
       return false;
     }
-    if (!window.__heicUploadSupport) {
+    if (!window.__clientSideMediaProcessing) {
       isHeicCanvasEnabledCache = false;
       return false;
     }
