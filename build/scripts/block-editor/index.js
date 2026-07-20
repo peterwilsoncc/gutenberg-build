@@ -14438,6 +14438,21 @@ var wp;
   function getSelectedBlocksInitialCaretPosition(state) {
     return state.initialPosition;
   }
+  function getSelectionNestingAncestor(state) {
+    const { selectionStart, selectionEnd } = state.selection;
+    const startClientId = selectionStart.clientId;
+    const endClientId = selectionEnd.clientId;
+    if (!startClientId || !endClientId || startClientId === endClientId) {
+      return void 0;
+    }
+    if (getBlockParents(state, endClientId).includes(startClientId)) {
+      return startClientId;
+    }
+    if (getBlockParents(state, startClientId).includes(endClientId)) {
+      return endClientId;
+    }
+    return void 0;
+  }
   var getSelectedBlockClientIds = (0, import_data5.createSelector)(
     (state) => {
       const { selectionStart, selectionEnd } = state.selection;
@@ -14446,6 +14461,10 @@ var wp;
       }
       if (selectionStart.clientId === selectionEnd.clientId) {
         return [selectionStart.clientId];
+      }
+      const nestingAncestorClientId = getSelectionNestingAncestor(state);
+      if (nestingAncestorClientId) {
+        return [nestingAncestorClientId];
       }
       const rootClientId = getBlockRootClientId(
         state,
@@ -14464,6 +14483,7 @@ var wp;
     },
     (state) => [
       state.blocks.order,
+      state.blocks.parents,
       state.selection.selectionStart.clientId,
       state.selection.selectionEnd.clientId
     ]
@@ -14536,6 +14556,9 @@ var wp;
     return selectionEnd.clientId || null;
   }
   function __unstableIsFullySelected(state) {
+    if (getSelectionNestingAncestor(state)) {
+      return true;
+    }
     const selectionAnchor = getSelectionStart(state);
     const selectionFocus = getSelectionEnd(state);
     return !selectionAnchor.attributeKey && !selectionFocus.attributeKey && typeof selectionAnchor.offset === "undefined" && typeof selectionFocus.offset === "undefined";
@@ -46503,7 +46526,8 @@ var wp;
               endClientId
             ];
             const depth = findDepth(startPath, endPath);
-            if (startPath[depth] !== startClientId || endPath[depth] !== endClientId) {
+            const isAncestorDescendant = depth >= startPath.length || depth >= endPath.length;
+            if (!isAncestorDescendant && (startPath[depth] !== startClientId || endPath[depth] !== endClientId)) {
               multiSelect2(startPath[depth], endPath[depth]);
               return;
             }
@@ -56695,10 +56719,10 @@ var wp;
     const { parentClientId } = (0, import_data91.useSelect)((select3) => {
       const {
         getBlockParents: getBlockParents2,
-        getSelectedBlockClientId: getSelectedBlockClientId2,
+        getSelectedBlockClientIds: getSelectedBlockClientIds2,
         getParentSectionBlock: getParentSectionBlock2
       } = unlock(select3(store));
-      const selectedBlockClientId = getSelectedBlockClientId2();
+      const [selectedBlockClientId] = getSelectedBlockClientIds2();
       const parentSection = getParentSectionBlock2(selectedBlockClientId);
       const parents = getBlockParents2(selectedBlockClientId);
       const _parentClientId = parentSection ?? parents[parents.length - 1];
