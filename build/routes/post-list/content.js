@@ -14997,42 +14997,34 @@ function ViewList(props) {
             gap: "lg",
             className: clsx_default("dataviews-view-list", className),
             children: Array.from(dataByGroup.entries()).map(
-              ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(
-                Stack,
-                {
-                  direction: "column",
-                  gap: "sm",
-                  children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime66.jsx)("h3", { className: "dataviews-view-list__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n13.sprintf)(
-                      // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
-                      (0, import_i18n13.__)("%1$s: %2$s"),
-                      groupField.label,
-                      groupName
-                    ) }),
-                    groupItems.map((item) => {
-                      const id = generateCompositeItemIdPrefix(item);
-                      return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
-                        ListItem,
-                        {
-                          view,
-                          idPrefix: id,
-                          actions,
-                          item,
-                          isSelected: item === selectedItem,
-                          onSelect,
-                          mediaField,
-                          titleField,
-                          descriptionField,
-                          otherFields,
-                          onDropdownTriggerKeyDown
-                        },
-                        id
-                      );
-                    })
-                  ]
-                },
-                groupName
-              )
+              ([groupName, groupItems]) => /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(Stack, { direction: "column", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime66.jsx)("h3", { className: "dataviews-view-list__group-header", children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n13.sprintf)(
+                  // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
+                  (0, import_i18n13.__)("%1$s: %2$s"),
+                  groupField.label,
+                  groupName
+                ) }),
+                groupItems.map((item) => {
+                  const id = generateCompositeItemIdPrefix(item);
+                  return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
+                    ListItem,
+                    {
+                      view,
+                      idPrefix: id,
+                      actions,
+                      item,
+                      isSelected: item === selectedItem,
+                      onSelect,
+                      mediaField,
+                      titleField,
+                      descriptionField,
+                      otherFields,
+                      onDropdownTriggerKeyDown
+                    },
+                    id
+                  );
+                })
+              ] }, groupName)
             )
           }
         )
