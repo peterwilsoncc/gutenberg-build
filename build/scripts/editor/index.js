@@ -7900,9 +7900,14 @@ var wp;
   function getShowStylebook(state2) {
     return state2.showStylebook ?? false;
   }
-  function getCanvasWidth(state2) {
-    return state2.canvasWidth;
-  }
+  var getCanvasWidth = (0, import_data6.createRegistrySelector)(
+    (select9) => (state2) => {
+      if (unlock(select9(import_block_editor3.store)).isZoomOut()) {
+        return void 0;
+      }
+      return state2.canvasWidth;
+    }
+  );
   function getRevisionPage(state2) {
     return state2.revisionPage;
   }
