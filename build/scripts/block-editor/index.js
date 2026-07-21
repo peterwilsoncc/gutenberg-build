@@ -47715,7 +47715,15 @@ var wp;
     );
     const [transformedStyles, transformedSvgs] = (0, import_element96.useMemo)(() => {
       const _styles = Object.values(styles ?? []);
-      for (const [id, override] of overrides) {
+      const orderedOverrides = [
+        ...overrides.filter(
+          ([, override]) => override?.__unstableType !== "custom-css"
+        ),
+        ...overrides.filter(
+          ([, override]) => override?.__unstableType === "custom-css"
+        )
+      ];
+      for (const [id, override] of orderedOverrides) {
         const index2 = _styles.findIndex(({ id: _id }) => id === _id);
         const overrideWithId = { ...override, id };
         if (index2 === -1) {
@@ -93866,7 +93874,7 @@ var wp;
       }
     );
   }
-  function useBlockProps15({ style }) {
+  function useBlockProps15({ style, clientId }) {
     const customCSS = style?.css;
     const isValidCSS = typeof customCSS === "string" && customCSS.trim().length > 0 && validateCSS(customCSS);
     const canEditCSS = (0, import_data188.useSelect)(
@@ -93899,7 +93907,11 @@ var wp;
       }
       return processCSSNesting(customCSS, customCSSSelector);
     }, [customCSS, customCSSSelector, isValidCSS]);
-    useStyleOverride({ css: transformedCSS });
+    usePrivateStyleOverride({
+      css: transformedCSS,
+      clientId,
+      __unstableType: "custom-css"
+    });
     if (!isValidCSS) {
       return {};
     }
