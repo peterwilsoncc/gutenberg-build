@@ -1072,8 +1072,10 @@ var wp;
         }
       }
       item.abortController?.abort();
-      await vipsCancelOperations(id);
-      await cancelGifToVideoOperations(id);
+      await vipsCancelOperations(id).catch(() => {
+      });
+      await cancelGifToVideoOperations(id).catch(() => {
+      });
       if (!silent) {
         const { onError } = item;
         onError?.(error ?? new Error("Upload cancelled"));
