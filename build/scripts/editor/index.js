@@ -57537,7 +57537,7 @@ If there's a particular need for this, please submit a feature request at https:
       userSettings,
       settings
     );
-    const hasVariationsPanel = !!blockVariations?.length && !variation;
+    const hasVariationsPanel = !!blockVariations?.length && !variation && !hasSelectedState;
     const { canEditCSS } = (0, import_data54.useSelect)((select9) => {
       const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data34.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
