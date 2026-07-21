@@ -47099,28 +47099,18 @@ function RichTextControl({
     },
     [isSelected2]
   );
-  const unusedContentRef = (0, import_element179.useRef)(null);
-  const {
-    ref: autocompleteRef,
-    "aria-activedescendant": autocompleteActiveDescendant,
-    "aria-autocomplete": autocompleteAriaAutocomplete,
-    ...autocompleteRest
-  } = (0, import_components45.__unstableUseAutocompleteProps)({
-    completers,
-    record: value,
-    onChange: onRichTextChange,
-    // This control's completers insert their completion into the value;
-    // none replace the whole value, so the required `onReplace` is a
-    // no-op here.
-    onReplace: () => {
-    },
-    contentRef: unusedContentRef
-  });
-  const autocompleteProps = {
-    ...autocompleteRest,
-    "aria-activedescendant": autocompleteActiveDescendant ?? void 0,
-    "aria-autocomplete": autocompleteAriaAutocomplete
-  };
+  const { ref: autocompleteRef, ...autocompleteProps } = (0, import_components45.__unstableUseAutocompleteProps)(
+    {
+      completers,
+      record: value,
+      onChange: onRichTextChange,
+      // This control's completers insert their completion into the value;
+      // none replace the whole value, so the required `onReplace` is a
+      // no-op here.
+      onReplace: () => {
+      }
+    }
+  );
   const focusOnMountRef = (0, import_compose24.useRefEffect)(
     (element) => {
       if (focusOnMount && !disabled2) {

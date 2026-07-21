@@ -29504,8 +29504,10 @@ This message will only show in development mode. It won't appear in production. 
       ref: mergedRefs,
       children: popover,
       "aria-autocomplete": listBoxId ? "list" : void 0,
+      "aria-haspopup": listBoxId ? "listbox" : void 0,
+      "aria-controls": listBoxId,
       "aria-owns": listBoxId,
-      "aria-activedescendant": activeId
+      "aria-activedescendant": activeId ?? void 0
     };
   }
   function Autocomplete({
