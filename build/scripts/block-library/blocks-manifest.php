@@ -8205,7 +8205,8 @@ return array(
 				'padding' => '.wp-block-tab-list button'
 			)
 		),
-		'style' => 'wp-block-tab-list'
+		'style' => 'wp-block-tab-list',
+		'editorStyle' => 'wp-block-tab-list-editor'
 	),
 	'tab-panel' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
