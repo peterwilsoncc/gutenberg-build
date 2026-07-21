@@ -3669,6 +3669,9 @@ p.has-text-align-left[style*="writing-mode:vertical-lr"] {
     animation-iteration-count: 1 !important;
   }
 }
+.wp-block-playlist {
+  box-sizing: border-box;
+}
 .wp-block-playlist .wp-block-playlist__waveform-player {
   width: 100%;
   margin: var(--wp--preset--spacing--20, 0.625em) 0;
