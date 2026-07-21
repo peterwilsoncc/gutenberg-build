@@ -98076,6 +98076,7 @@ If there's a particular need for this, please submit a feature request at https:
               hideLabelFromVision: true,
               value: inputComment,
               onChange: setInputComment,
+              placeholder: labels?.placeholder,
               allowedFormats: ALLOWED_NOTE_FORMATS,
               completers: NOTE_COMPLETERS
             }
@@ -98206,7 +98207,10 @@ If there's a particular need for this, please submit a feature request at https:
               }
             },
             onCancel: unselectNote,
-            labels: { input: (0, import_i18n335.__)("New note") }
+            labels: {
+              input: (0, import_i18n335.__)("New note"),
+              placeholder: (0, import_i18n335.__)("Add a note or @ mention")
+            }
           }
         ) })
       }
@@ -98660,7 +98664,8 @@ If there's a particular need for this, please submit a feature request at https:
                   (0, import_i18n337.__)("Reply to note %1$s by %2$s"),
                   note.id,
                   note.author_name
-                )
+                ),
+                placeholder: (0, import_i18n337.__)("Reply or @ mention")
               }
             }
           ) }),
