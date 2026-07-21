@@ -47975,21 +47975,29 @@ ${text}
       isPreviewMode,
       onNavigateToEntityRecord,
       currentTheme,
-      editorDisabledResponsive
-    } = (0, import_data92.useSelect)((select10) => {
-      const { getSettings: getSettings2 } = select10(import_block_editor163.store);
-      const settings121 = getSettings2();
-      return {
-        isPreviewMode: settings121.isPreviewMode,
-        onNavigateToEntityRecord: settings121?.onNavigateToEntityRecord,
-        // Needed to construct the template part ID for the overlay preview.
-        currentTheme: select10(import_core_data53.store).getCurrentTheme()?.stylesheet,
-        // When editing a navigation post directly in an isolated editor,
-        // always show navigation expanded (no hamburger) so users can see
-        // and interact with all menu items.
-        editorDisabledResponsive: !!settings121?.[isNavigationPostEditorKey]
-      };
-    }, []);
+      editorDisabledResponsive,
+      hasSelectedStyleState
+    } = (0, import_data92.useSelect)(
+      (select10) => {
+        const {
+          getSettings: getSettings2,
+          hasSelectedStyleState: hasSelectedBlockStyleState
+        } = unlock(select10(import_block_editor163.store));
+        const settings121 = getSettings2();
+        return {
+          isPreviewMode: settings121.isPreviewMode,
+          onNavigateToEntityRecord: settings121?.onNavigateToEntityRecord,
+          // Needed to construct the template part ID for the overlay preview.
+          currentTheme: select10(import_core_data53.store).getCurrentTheme()?.stylesheet,
+          // When editing a navigation post directly in an isolated editor,
+          // always show navigation expanded (no hamburger) so users can see
+          // and interact with all menu items.
+          editorDisabledResponsive: !!settings121?.[isNavigationPostEditorKey],
+          hasSelectedStyleState: hasSelectedBlockStyleState(clientId)
+        };
+      },
+      [clientId]
+    );
     const hasAlreadyRendered = isPreviewMode ? false : recursionDetected;
     const blockEditingMode = (0, import_block_editor163.useBlockEditingMode)();
     const { records: classicMenus } = (0, import_core_data53.useEntityRecords)("root", "menu", {
@@ -48440,7 +48448,7 @@ ${text}
           hasOverlays
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(import_block_editor163.InspectorControls, { group: "color", children: /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
+      !hasSelectedStyleState && /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(import_block_editor163.InspectorControls, { group: "color", children: /* @__PURE__ */ (0, import_jsx_runtime350.jsx)(
         ColorTools,
         {
           textColor,
@@ -71356,12 +71364,17 @@ ${text}
       showLabels,
       size
     } = attributes;
-    const { hasSocialIcons, hasSelectedChild } = (0, import_data143.useSelect)(
+    const { hasSocialIcons, hasSelectedChild, hasSelectedStyleState } = (0, import_data143.useSelect)(
       (select10) => {
-        const { getBlockCount, hasSelectedInnerBlock } = select10(import_block_editor248.store);
+        const {
+          getBlockCount,
+          hasSelectedInnerBlock,
+          hasSelectedStyleState: hasSelectedBlockStyleState
+        } = unlock(select10(import_block_editor248.store));
         return {
           hasSocialIcons: getBlockCount(clientId) > 0,
-          hasSelectedChild: hasSelectedInnerBlock(clientId)
+          hasSelectedChild: hasSelectedInnerBlock(clientId),
+          hasSelectedStyleState: hasSelectedBlockStyleState(clientId)
         };
       },
       [clientId]
@@ -71434,6 +71447,7 @@ ${text}
       });
     }
     const colorGradientSettings = (0, import_block_editor248.__experimentalUseMultipleOriginColorsAndGradients)();
+    const showColorControls = colorGradientSettings.hasColorsOrGradients && !hasSelectedStyleState;
     return /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(import_jsx_runtime500.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(import_block_editor248.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(
         import_components153.__experimentalToolsPanel,
@@ -71509,7 +71523,7 @@ ${text}
           ]
         }
       ) }),
-      colorGradientSettings.hasColorsOrGradients && /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(import_block_editor248.InspectorControls, { group: "color", children: [
+      showColorControls && /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(import_block_editor248.InspectorControls, { group: "color", children: [
         colorSettings.map(
           ({ onChange, label, value, resetAllFilter }) => /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
             import_block_editor248.__experimentalColorGradientSettingsDropdown,
