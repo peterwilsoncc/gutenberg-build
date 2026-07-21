@@ -6412,6 +6412,363 @@ var wp;
     return [styles, updatedConfig.settings];
   }
 
+  // packages/global-styles-engine/build-module/variation.mjs
+  function getVariationStyle(globalStyles, name2, variation, { resolveRefs = true } = {}) {
+    if (!globalStyles?.styles?.blocks?.[name2]?.variations?.[variation]) {
+      return void 0;
+    }
+    const replaceRefs = (variationStyles) => {
+      Object.keys(variationStyles).forEach((key) => {
+        const value = variationStyles[key];
+        if (typeof value === "object" && value !== null) {
+          if (value.ref !== void 0) {
+            if (typeof value.ref !== "string" || value.ref.trim() === "") {
+              delete variationStyles[key];
+            } else {
+              const refValue = getValueFromObjectPath(
+                globalStyles,
+                value.ref
+              );
+              if (refValue !== void 0 && refValue !== null) {
+                variationStyles[key] = refValue;
+              } else {
+                delete variationStyles[key];
+              }
+            }
+          } else {
+            replaceRefs(value);
+            if (Object.keys(value).length === 0) {
+              delete variationStyles[key];
+            }
+          }
+        }
+      });
+    };
+    const styles = JSON.parse(
+      JSON.stringify(
+        globalStyles.styles.blocks[name2].variations[variation]
+      )
+    );
+    if (resolveRefs) {
+      replaceRefs(styles);
+    }
+    return styles;
+  }
+
+  // packages/global-styles-engine/build-module/resolve-style.mjs
+  var DEFAULT_STATE_VALUE = "default";
+  function isDefaultBlockStyleState(selectedState) {
+    const viewport = selectedState?.viewport;
+    const pseudoState = selectedState?.pseudoState;
+    return (!viewport || viewport === DEFAULT_STATE_VALUE) && (!pseudoState || pseudoState === DEFAULT_STATE_VALUE);
+  }
+  function getStyleStatePath(selectedState) {
+    if (isDefaultBlockStyleState(selectedState)) {
+      return [];
+    }
+    return [selectedState.viewport, selectedState.pseudoState].filter(
+      (state2) => !!state2 && state2 !== DEFAULT_STATE_VALUE
+    );
+  }
+  function getStyleForState(style, selectedState) {
+    const path = getStyleStatePath(selectedState);
+    if (!path.length) {
+      return style;
+    }
+    return getValueFromObjectPath(style, path);
+  }
+  var TREE_STRUCTURAL_KEYS = /* @__PURE__ */ new Set(["blocks", "variations", "css"]);
+  var EMPTY_INHERITANCE = Object.freeze({
+    value: {},
+    sources: {}
+  });
+  var SOURCE_DESCRIPTORS = {
+    root: { layer: "root" },
+    element: { layer: "element" },
+    block: { layer: "block" },
+    blockVariation: { layer: "blockVariation" }
+  };
+  var BLOCK_TO_ROOT_ELEMENT = {
+    "core/button": "button",
+    "core/heading": "heading"
+  };
+  function createSourceDescriptor(type) {
+    const descriptor = SOURCE_DESCRIPTORS[type];
+    if (!descriptor) {
+      return null;
+    }
+    return { ...descriptor };
+  }
+  function createContribution(styles, source) {
+    if (!styles || !source) {
+      return null;
+    }
+    return { styles, source };
+  }
+  function getPathKey(path) {
+    return path.join(".");
+  }
+  function getSourceForPath(source) {
+    return { ...source };
+  }
+  function isExplicitEmpty(value) {
+    if (value === "" || value === null) {
+      return true;
+    }
+    if (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0) {
+      return true;
+    }
+    return false;
+  }
+  function isRefObject(value) {
+    return value !== null && typeof value === "object" && !Array.isArray(value) && typeof value.ref === "string";
+  }
+  function pickLayerRootContribution(layer) {
+    if (!layer || typeof layer !== "object" || Array.isArray(layer)) {
+      return null;
+    }
+    const contribution = {};
+    for (const key of Object.keys(layer)) {
+      if (TREE_STRUCTURAL_KEYS.has(key)) {
+        continue;
+      }
+      if (key === "elements") {
+        if (layer.elements && typeof layer.elements === "object") {
+          contribution.elements = layer.elements;
+        }
+        continue;
+      }
+      if (isExplicitEmpty(layer[key])) {
+        continue;
+      }
+      contribution[key] = layer[key];
+    }
+    return Object.keys(contribution).length === 0 ? null : contribution;
+  }
+  var ATOMIC_OBJECT_KEYS = /* @__PURE__ */ new Set(["backgroundImage"]);
+  function deepMergeDroppingEmpties(target, source, globalStyles, sourceMetadata, sources, path = []) {
+    if (!source || typeof source !== "object" || Array.isArray(source)) {
+      return target;
+    }
+    for (const key of Object.keys(source)) {
+      let sourceValue = source[key];
+      if (isExplicitEmpty(sourceValue)) {
+        continue;
+      }
+      if (isRefObject(sourceValue)) {
+        if (sourceValue.ref.trim() === "") {
+          continue;
+        }
+        const resolved = getValueFromObjectPath(
+          globalStyles,
+          sourceValue.ref
+        );
+        if (resolved === void 0 || resolved === null || isRefObject(resolved)) {
+          continue;
+        }
+        sourceValue = resolved;
+      }
+      const nextPath = [...path, key];
+      if (!ATOMIC_OBJECT_KEYS.has(key) && sourceValue !== null && typeof sourceValue === "object" && !Array.isArray(sourceValue) && !isRefObject(sourceValue)) {
+        const existing = target[key] && typeof target[key] === "object" && !Array.isArray(target[key]) ? target[key] : {};
+        target[key] = deepMergeDroppingEmpties(
+          { ...existing },
+          sourceValue,
+          globalStyles,
+          sourceMetadata,
+          sources,
+          nextPath
+        );
+      } else {
+        target[key] = ATOMIC_OBJECT_KEYS.has(key) && sourceValue !== null && typeof sourceValue === "object" && !Array.isArray(sourceValue) ? { ...sourceValue } : sourceValue;
+        if (sourceMetadata && sources) {
+          sources[getPathKey(nextPath)] = getSourceForPath(sourceMetadata);
+        }
+      }
+    }
+    return target;
+  }
+  function getStateSlice(layerObject, selectedState) {
+    if (!layerObject) {
+      return null;
+    }
+    const slice2 = getStyleForState(layerObject, selectedState);
+    return slice2 && typeof slice2 === "object" && !Array.isArray(slice2) ? slice2 : null;
+  }
+  var NON_CASCADING_ROOT_PREFIXES = [
+    "color.background",
+    "color.gradient",
+    "background",
+    "spacing",
+    "dimensions",
+    "border",
+    "shadow",
+    "filter"
+  ];
+  function isNonCascadingRootPath(pathKey) {
+    if (pathKey.startsWith("elements.")) {
+      return false;
+    }
+    return NON_CASCADING_ROOT_PREFIXES.some(
+      (prefix2) => pathKey === prefix2 || pathKey.startsWith(`${prefix2}.`)
+    );
+  }
+  function deleteAtPath(target, pathSegments) {
+    if (!target || typeof target !== "object") {
+      return;
+    }
+    const [head2, ...rest] = pathSegments;
+    if (rest.length === 0) {
+      delete target[head2];
+      return;
+    }
+    const child = target[head2];
+    if (child && typeof child === "object") {
+      deleteAtPath(child, rest);
+      if (Object.keys(child).length === 0) {
+        delete target[head2];
+      }
+    }
+  }
+  function dropNonCascadingRootLeaves(value, sources) {
+    for (const pathKey of Object.keys(sources)) {
+      if (sources[pathKey].layer === "root" && isNonCascadingRootPath(pathKey)) {
+        deleteAtPath(value, pathKey.split("."));
+        delete sources[pathKey];
+      }
+    }
+  }
+  function resolveThemeFileBackgroundImage(value, globalStyles, links) {
+    const image = value?.background?.backgroundImage;
+    if (!image) {
+      return;
+    }
+    const resolved = getResolvedValue(image, {
+      ...globalStyles,
+      _links: links ?? void 0
+    });
+    if (resolved !== void 0) {
+      value.background.backgroundImage = resolved;
+    }
+  }
+  function computeResolvedStyle(globalStyles, {
+    blockName,
+    variationName = null,
+    viewport = null,
+    pseudoState = null
+  } = {}) {
+    if (!globalStyles || !globalStyles.styles) {
+      return EMPTY_INHERITANCE;
+    }
+    if (!blockName) {
+      return EMPTY_INHERITANCE;
+    }
+    const styles = globalStyles.styles;
+    const selectedState = { viewport, pseudoState };
+    const root = styles;
+    const block = styles.blocks?.[blockName] ?? null;
+    const rootElement = BLOCK_TO_ROOT_ELEMENT[blockName] ?? null;
+    const element = rootElement ? styles.elements?.[rootElement] ?? null : null;
+    const variation = variationName ? getVariationStyle(globalStyles, blockName, variationName) ?? null : null;
+    const contributions = [
+      createContribution(
+        pickLayerRootContribution(root),
+        createSourceDescriptor("root")
+      ),
+      element ? createContribution(
+        pickLayerRootContribution(element),
+        createSourceDescriptor("element")
+      ) : null,
+      block ? createContribution(
+        pickLayerRootContribution(block),
+        createSourceDescriptor("block")
+      ) : null,
+      variation ? createContribution(
+        pickLayerRootContribution(variation),
+        createSourceDescriptor("blockVariation")
+      ) : null
+    ];
+    if (!isDefaultBlockStyleState(selectedState)) {
+      contributions.push(
+        createContribution(
+          pickLayerRootContribution(
+            getStateSlice(root, selectedState)
+          ),
+          createSourceDescriptor("root")
+        ),
+        element ? createContribution(
+          pickLayerRootContribution(
+            getStateSlice(element, selectedState)
+          ),
+          createSourceDescriptor("element")
+        ) : null,
+        block ? createContribution(
+          pickLayerRootContribution(
+            getStateSlice(block, selectedState)
+          ),
+          createSourceDescriptor("block")
+        ) : null,
+        variation ? createContribution(
+          pickLayerRootContribution(
+            getStateSlice(variation, selectedState)
+          ),
+          createSourceDescriptor("blockVariation")
+        ) : null
+      );
+    }
+    const filteredContributions = contributions.filter(
+      Boolean
+    );
+    if (filteredContributions.length === 0) {
+      return EMPTY_INHERITANCE;
+    }
+    const sources = {};
+    const value = filteredContributions.reduce(
+      (mergedValue, contribution) => deepMergeDroppingEmpties(
+        mergedValue,
+        contribution.styles,
+        globalStyles,
+        contribution.source,
+        sources
+      ),
+      {}
+    );
+    dropNonCascadingRootLeaves(value, sources);
+    resolveThemeFileBackgroundImage(
+      value,
+      globalStyles,
+      globalStyles._links ?? null
+    );
+    return { value, sources };
+  }
+  var NO_LINKS = {};
+  var memo = /* @__PURE__ */ new WeakMap();
+  function resolveStyle(globalStyles, context = {}) {
+    const styleData = globalStyles?.styles;
+    if (!styleData || typeof styleData !== "object") {
+      return computeResolvedStyle(globalStyles, context);
+    }
+    let byLinks = memo.get(styleData);
+    if (!byLinks) {
+      byLinks = /* @__PURE__ */ new WeakMap();
+      memo.set(styleData, byLinks);
+    }
+    const linksKey = globalStyles?._links ?? NO_LINKS;
+    let inner = byLinks.get(linksKey);
+    if (!inner) {
+      inner = /* @__PURE__ */ new Map();
+      byLinks.set(linksKey, inner);
+    }
+    const stateKey = `${context.viewport ?? ""}:${context.pseudoState ?? ""}`;
+    const key = (context.blockName || "") + "" + (context.variationName || "") + "" + stateKey;
+    if (inner.has(key)) {
+      return inner.get(key);
+    }
+    const result = computeResolvedStyle(globalStyles, context);
+    inner.set(key, result);
+    return result;
+  }
+
   // packages/global-styles-engine/build-module/lock-unlock.mjs
   var import_private_apis2 = __toESM(require_private_apis(), 1);
   var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
@@ -6424,7 +6781,9 @@ var wp;
   lock2(privateApis, {
     getResponsiveMediaQueries,
     getViewportBreakpoints,
-    getViewportBreakpointValueInPixels
+    getViewportBreakpointValueInPixels,
+    resolveStyle,
+    getVariationStyle
   });
 
   // packages/global-styles-engine/build-module/preview-state-styles.mjs
@@ -8897,7 +9256,7 @@ var wp;
   }
 
   // node_modules/@base-ui/react/utils/resolveStyle.mjs
-  function resolveStyle(style, state2) {
+  function resolveStyle2(style, state2) {
     return typeof style === "function" ? style(state2) : style;
   }
 
@@ -9081,7 +9440,7 @@ var wp;
       enabled = true
     } = params;
     const className = enabled ? resolveClassName(classNameProp, state2) : void 0;
-    const style = enabled ? resolveStyle(styleProp, state2) : void 0;
+    const style = enabled ? resolveStyle2(styleProp, state2) : void 0;
     const stateProps = enabled ? getStateAttributesProps(state2, stateAttributesMapping6) : EMPTY_OBJECT3;
     const resolvedProps = enabled && props ? resolveRenderFunctionProps(props) : void 0;
     const outProps = enabled ? mergeObjects(stateProps, resolvedProps) ?? {} : EMPTY_OBJECT3;
@@ -16597,7 +16956,7 @@ var wp;
       ...state2,
       transitionStatus: panelTransitionStatus
     };
-    const resolvedStyle = resolveStyle(style, panelState);
+    const resolvedStyle = resolveStyle2(style, panelState);
     const element = useRenderElement("div", {
       ...componentProps,
       style: void 0
@@ -35263,7 +35622,7 @@ var wp;
     Role.displayName = render5.displayName || render5.name;
     return Role;
   }
-  function memo3(Component3, propsAreEqual) {
+  function memo4(Component3, propsAreEqual) {
     return React75.memo(Component3, propsAreEqual);
   }
   function createElement5(Type, props) {
@@ -36967,7 +37326,7 @@ If there's a particular need for this, please submit a feature request at https:
       "aria-posinset": ariaPosInSet
     });
   });
-  var CompositeItem = memo3(forwardRef54(function CompositeItem2(props) {
+  var CompositeItem = memo4(forwardRef54(function CompositeItem2(props) {
     return createElement5(TagName4, useCompositeItem2(props));
   }));
 
@@ -37036,7 +37395,7 @@ If there's a particular need for this, please submit a feature request at https:
     ]);
     return schedule2;
   }
-  var CompositeFocusOnMove = memo3(function CompositeFocusOnMove2({ store: store4, focusOnMove, previousElementRef }) {
+  var CompositeFocusOnMove = memo4(function CompositeFocusOnMove2({ store: store4, focusOnMove, previousElementRef }) {
     const moves = useStoreState(store4, "moves");
     const baseElement = useStoreState(store4, "baseElement");
     (0, import_react24.useEffect)(() => {
@@ -37610,7 +37969,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return removeUndefinedValues(props);
   });
-  var CompositeHover = memo3(forwardRef54(function CompositeHover2(props) {
+  var CompositeHover = memo4(forwardRef54(function CompositeHover2(props) {
     return createElement5(TagName8, useCompositeHover(props));
   }));
 
@@ -38094,7 +38453,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     return props;
   });
-  var ComboboxItem = memo3(forwardRef54(function ComboboxItem2(props) {
+  var ComboboxItem = memo4(forwardRef54(function ComboboxItem2(props) {
     return createElement5(TagName10, useComboboxItem(props));
   }));
 
@@ -38228,7 +38587,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return removeUndefinedValues(props);
   });
-  var ComboboxLabel = memo3(forwardRef54(function ComboboxLabel2(props) {
+  var ComboboxLabel = memo4(forwardRef54(function ComboboxLabel2(props) {
     return createElement5(TagName12, useComboboxLabel(props));
   }));
 
@@ -57656,7 +58015,8 @@ If there's a particular need for this, please submit a feature request at https:
           value: style,
           onChange: onChangeTypography,
           settings,
-          isGlobalStyles: !hasSelectedState
+          isGlobalStyles: !hasSelectedState,
+          showInheritanceLabelIndicators: false
         }
       ),
       hasBackgroundPanel && /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
@@ -57666,7 +58026,8 @@ If there's a particular need for this, please submit a feature request at https:
           value: style,
           onChange: setStyle2,
           settings,
-          defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES2
+          defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES2,
+          showInheritanceLabelIndicators: false
         }
       ),
       shouldShowFiltersPanel && /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
@@ -57676,7 +58037,8 @@ If there's a particular need for this, please submit a feature request at https:
           value: styleWithLayout,
           onChange: setStyle2,
           settings,
-          includeLayoutControls: true
+          includeLayoutControls: true,
+          showInheritanceLabelIndicators: false
         }
       ),
       hasDimensionsPanel && /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
@@ -57686,7 +58048,8 @@ If there's a particular need for this, please submit a feature request at https:
           value: styleWithLayout,
           onChange: onChangeDimensions,
           settings,
-          includeLayoutControls: true
+          includeLayoutControls: true,
+          showInheritanceLabelIndicators: false
         }
       ),
       hasBorderPanel && /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
@@ -57695,7 +58058,8 @@ If there's a particular need for this, please submit a feature request at https:
           inheritedValue: inheritedStyle,
           value: style,
           onChange: onChangeBorders,
-          settings
+          settings,
+          showInheritanceLabelIndicators: false
         }
       ),
       hasColorPanel && /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
@@ -57704,7 +58068,8 @@ If there's a particular need for this, please submit a feature request at https:
           inheritedValue: inheritedStyle,
           value: style,
           onChange: setStyle2,
-          settings
+          settings,
+          showInheritanceLabelIndicators: false
         }
       ),
       hasImageSettingsPanel && !hasSelectedState && /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
@@ -70397,7 +70762,8 @@ If there's a particular need for this, please submit a feature request at https:
         inheritedValue: inheritedStyle,
         value: style,
         onChange: setStyle2,
-        settings
+        settings,
+        showInheritanceLabelIndicators: false
       }
     );
   }
@@ -70698,7 +71064,8 @@ If there's a particular need for this, please submit a feature request at https:
           inheritedValue: inheritedStyle,
           value: style,
           onChange: setStyle2,
-          settings
+          settings,
+          showInheritanceLabelIndicators: false
         }
       )
     ] });
@@ -71063,7 +71430,8 @@ If there's a particular need for this, please submit a feature request at https:
         value: style,
         onChange: setStyle2,
         settings,
-        defaultValues: BACKGROUND_DEFAULT_VALUES
+        defaultValues: BACKGROUND_DEFAULT_VALUES,
+        showInheritanceLabelIndicators: false
       }
     );
   }
@@ -71880,7 +72248,8 @@ If there's a particular need for this, please submit a feature request at https:
         onChange,
         settings,
         includeLayoutControls: true,
-        defaultControls: DEFAULT_CONTROLS
+        defaultControls: DEFAULT_CONTROLS,
+        showInheritanceLabelIndicators: false
       }
     );
   }
