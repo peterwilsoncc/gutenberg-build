@@ -7473,6 +7473,7 @@ var wp;
   var private_selectors_exports = {};
   __export(private_selectors_exports, {
     buildRevisionsPageQuery: () => buildRevisionsPageQuery,
+    getCanvasHeight: () => getCanvasHeight,
     getCanvasWidth: () => getCanvasWidth,
     getCurrentRevision: () => getCurrentRevision,
     getCurrentRevisionId: () => getCurrentRevisionId,
@@ -7713,6 +7714,10 @@ var wp;
   }
 
   // packages/editor/build-module/store/private-selectors.mjs
+  var DEVICE_ASPECT_RATIO_BY_DEVICE_TYPE = {
+    Mobile: 8 / 5,
+    Tablet: 4 / 3
+  };
   var EMPTY_INSERTION_POINT = {
     rootClientId: void 0,
     insertionIndex: void 0,
@@ -7906,6 +7911,28 @@ var wp;
         return void 0;
       }
       return state2.canvasWidth;
+    }
+  );
+  var getCanvasHeight = (0, import_data6.createRegistrySelector)(
+    (select9) => (state2) => {
+      const blockEditorSelect = unlock(select9(import_block_editor3.store));
+      if (blockEditorSelect.isZoomOut()) {
+        return void 0;
+      }
+      const canvasWidth2 = state2.canvasWidth;
+      const viewportSettings = blockEditorSelect.getSettings().__experimentalFeatures?.viewport;
+      const deviceType = getDeviceTypeByCanvasWidth(
+        canvasWidth2,
+        viewportSettings
+      );
+      if (canvasWidth2 !== getCanvasWidthByDeviceType(deviceType, viewportSettings)) {
+        return void 0;
+      }
+      const ratio = DEVICE_ASPECT_RATIO_BY_DEVICE_TYPE[deviceType];
+      if (ratio && canvasWidth2 > 0) {
+        return Math.round(canvasWidth2 * ratio);
+      }
+      return void 0;
     }
   );
   function getRevisionPage(state2) {
@@ -80527,13 +80554,18 @@ If there's a particular need for this, please submit a feature request at https:
   function ResizableEditor({ className, enableResizing, height, children }) {
     const [isResizing, setIsResizing] = (0, import_element226.useState)(false);
     const { setCanvasWidth: setCanvasWidth2 } = unlock((0, import_data96.useDispatch)(store));
-    const canvasWidth2 = (0, import_data96.useSelect)(
+    const { canvasWidth: canvasWidth2, canvasHeight } = (0, import_data96.useSelect)(
       (select9) => {
         if (!enableResizing) {
-          return void 0;
+          return { canvasWidth: void 0, canvasHeight: void 0 };
         }
-        const { getCanvasWidth: getCanvasWidth2 } = unlock(select9(store));
-        return getCanvasWidth2();
+        const { getCanvasWidth: getCanvasWidth2, getCanvasHeight: getCanvasHeight2 } = unlock(
+          select9(store)
+        );
+        return {
+          canvasWidth: getCanvasWidth2(),
+          canvasHeight: getCanvasHeight2()
+        };
       },
       [enableResizing]
     );
@@ -80575,7 +80607,7 @@ If there's a particular need for this, please submit a feature request at https:
         },
         size: {
           width: enableResizing && canvasWidth2 ? canvasWidth2 + "px" : "100%",
-          height: enableResizing && height ? height : "100%"
+          height: enableResizing && canvasHeight ? canvasHeight + "px" : height || "100%"
         },
         onResizeStart: () => {
           setIsResizing(true);
