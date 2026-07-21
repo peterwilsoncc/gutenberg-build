@@ -8946,14 +8946,14 @@ var wp;
           selectionEnd: selectionEnd2
         };
       case "MULTI_SELECT":
-        const { start: start2, end } = action;
-        if (start2 === state.selectionStart?.clientId && end === state.selectionEnd?.clientId) {
+        const nextSelection = {
+          selectionStart: { clientId: action.start },
+          selectionEnd: { clientId: action.end }
+        };
+        if ((0, import_es6.default)(state, nextSelection)) {
           return state;
         }
-        return {
-          selectionStart: { clientId: start2 },
-          selectionEnd: { clientId: end }
-        };
+        return nextSelection;
       case "RESET_BLOCKS":
         const startClientId = state?.selectionStart?.clientId;
         const endClientId = state?.selectionEnd?.clientId;
