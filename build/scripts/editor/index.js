@@ -73820,6 +73820,8 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       allImageSizes,
       bigImageSizeThreshold,
+      imageStripMeta,
+      imageMaxBitDepth,
       allowRightClickOverrides,
       blockTypes,
       focusMode,
@@ -73873,6 +73875,8 @@ If there's a particular need for this, please submit a feature request at https:
         return {
           allImageSizes: baseData?.image_sizes,
           bigImageSizeThreshold: baseData?.image_size_threshold,
+          imageStripMeta: baseData?.image_strip_meta,
+          imageMaxBitDepth: baseData?.image_max_bit_depth,
           allowRightClickOverrides: get(
             "core",
             "allowRightClickOverrides"
@@ -73983,6 +73987,8 @@ If there's a particular need for this, please submit a feature request at https:
         [globalStylesLinksDataKey]: globalStylesLinksData,
         allImageSizes,
         bigImageSizeThreshold,
+        imageStripMeta,
+        imageMaxBitDepth,
         allowedBlockTypes,
         allowRightClickOverrides,
         focusMode: focusMode && !forceDisableFocusMode,
@@ -74084,6 +74090,8 @@ If there's a particular need for this, please submit a feature request at https:
       deviceType,
       allImageSizes,
       bigImageSizeThreshold,
+      imageStripMeta,
+      imageMaxBitDepth,
       isNavigationOverlayContext
     ]);
   }

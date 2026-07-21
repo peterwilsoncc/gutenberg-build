@@ -44966,7 +44966,9 @@ var wp;
         maxUploadFileSize: settings2.maxUploadFileSize,
         allowedMimeTypes: settings2.allowedMimeTypes,
         allImageSizes: settings2.allImageSizes,
-        bigImageSizeThreshold: settings2.bigImageSizeThreshold
+        bigImageSizeThreshold: settings2.bigImageSizeThreshold,
+        imageStripMeta: settings2.imageStripMeta,
+        imageMaxBitDepth: settings2.imageMaxBitDepth
       }),
       [settings2]
     );
