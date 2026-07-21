@@ -80293,7 +80293,7 @@ var wp;
     }
     const currentStateLabel = activeStates.length ? activeStates.map((state) => state.label).join(", ") : (0, import_i18n201.__)("Default");
     const icon = showText ? chevron_down_default : more_vertical_default;
-    const toggleProps = showText ? { size: "compact", variant: "tertiary", iconPosition: "right" } : { size: "compact", variant: "tertiary" };
+    const toggleProps = showText ? { size: "compact", iconPosition: "right" } : { size: "small" };
     return /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
       Stack,
       {
