@@ -18564,7 +18564,7 @@ var wp;
     return value;
   }
   function getSpacingPresetCssVar2(value) {
-    if (!value) {
+    if (!value || typeof value !== "string") {
       return;
     }
     const slug = value.match(/var:preset\|spacing\|(.+)/);
