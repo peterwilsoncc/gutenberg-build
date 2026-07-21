@@ -433,7 +433,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState161({
+          cachedValue = useState160({
             inst: { value, getSnapshot: getSnapshot2 }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -471,7 +471,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React77 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState161 = React77.useState, useEffect119 = React77.useEffect, useLayoutEffect15 = React77.useLayoutEffect, useDebugValue2 = React77.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React77 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState160 = React77.useState, useEffect119 = React77.useEffect, useLayoutEffect15 = React77.useLayoutEffect, useDebugValue2 = React77.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React77.useSyncExternalStore ? React77.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -36657,11 +36657,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore2(createStore2, props) {
     const [store4, setStore] = React76.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store4), [store4]);
-    const useState161 = React76.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
+    const useState160 = React76.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
     return [React76.useMemo(() => ({
       ...store4,
-      useState: useState161
-    }), [store4, useState161]), useEvent(() => {
+      useState: useState160
+    }), [store4, useState160]), useEvent(() => {
       setStore((store5) => createStore2({
         ...props,
         ...store5.getState()
@@ -101289,11 +101289,8 @@ If there's a particular need for this, please submit a feature request at https:
     const csmRemaining = csmOriginals.length;
     const trackedRemaining = tracker ? tracker.total - tracker.completed : 0;
     const remaining = csmRemaining + trackedRemaining;
-    const [peak, setPeak] = (0, import_element345.useState)(0);
     const sessionTotal = csmRemaining + (tracker ? tracker.total : 0);
-    if (sessionTotal > peak) {
-      setPeak(sessionTotal);
-    }
+    const peakRef = (0, import_element345.useRef)(0);
     const { createNotice, removeNotice } = (0, import_data274.useDispatch)(import_notices38.store);
     const dismissedRef = (0, import_element345.useRef)(false);
     const wasUploadingRef = (0, import_element345.useRef)(false);
@@ -101313,7 +101310,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (completionTimeoutRef.current) {
           clearTimeout(completionTimeoutRef.current);
           completionTimeoutRef.current = null;
-          setPeak(0);
+          peakRef.current = 0;
         }
       } else if (!isUploading && wasUploadingRef.current) {
         (0, import_a11y13.speak)((0, import_i18n352.__)("Media upload complete"), "polite");
@@ -101332,17 +101329,20 @@ If there's a particular need for this, please submit a feature request at https:
           completionTimeoutRef.current = setTimeout(() => {
             removeNotice(NOTICE_ID);
             completionTimeoutRef.current = null;
-            setPeak(0);
+            peakRef.current = 0;
           }, COMPLETION_DISPLAY_MS);
         } else {
-          setPeak(0);
+          peakRef.current = 0;
         }
       }
       wasUploadingRef.current = isUploading;
       if (!isUploading || dismissedRef.current) {
         return;
       }
-      const total = peak;
+      if (sessionTotal > peakRef.current) {
+        peakRef.current = sessionTotal;
+      }
+      const total = peakRef.current;
       const current = total - remaining + 1;
       const filename = truncateFilename(
         csmOriginals[0]?.sourceFile?.name || tracker?.pending[0] || (0, import_i18n352.__)("Uploading")
@@ -101369,7 +101369,14 @@ If there's a particular need for this, please submit a feature request at https:
           dismissedRef.current = true;
         }
       });
-    }, [remaining, peak, csmOriginals, tracker, createNotice, removeNotice]);
+    }, [
+      remaining,
+      sessionTotal,
+      csmOriginals,
+      tracker,
+      createNotice,
+      removeNotice
+    ]);
     return null;
   }
 
