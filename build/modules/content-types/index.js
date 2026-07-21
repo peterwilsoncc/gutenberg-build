@@ -14258,6 +14258,10 @@ function isInWordPressEnvironment() {
   return typeof wp?.components === "object" && wp.components !== null;
 }
 var cachedSlot = null;
+function ensureSlotIsAccessible(element) {
+  element.setAttribute("aria-hidden", "false");
+  return element;
+}
 function createSlot(ownerDocument2) {
   const element = ownerDocument2.createElement("div");
   element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
@@ -14279,19 +14283,19 @@ function getWpCompatOverlaySlot() {
     return void 0;
   }
   if (cachedSlot && cachedSlot.ownerDocument === ownerDocument2 && cachedSlot.isConnected) {
-    return cachedSlot;
+    return ensureSlotIsAccessible(cachedSlot);
   }
   const existing = ownerDocument2.querySelector(
     `[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`
   );
   if (existing instanceof HTMLDivElement) {
-    cachedSlot = existing;
-    return existing;
+    cachedSlot = ensureSlotIsAccessible(existing);
+    return cachedSlot;
   }
   if (cachedSlot?.isConnected) {
     cachedSlot.remove();
   }
-  cachedSlot = createSlot(ownerDocument2);
+  cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument2));
   return cachedSlot;
 }
 
@@ -16008,8 +16012,15 @@ var PopoverValidationProvider = popoverTitleValidation.ValidationProvider;
 var import_element52 = __toESM(require_element(), 1);
 var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
 var Portal2 = (0, import_element52.forwardRef)(
-  function PopoverPortal3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(index_parts_exports2.Portal, { ref, ...props });
+  function PopoverPortal3({ container, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+      index_parts_exports2.Portal,
+      {
+        container: container ?? getWpCompatOverlaySlot(),
+        ...restProps,
+        ref
+      }
+    );
   }
 );
 
