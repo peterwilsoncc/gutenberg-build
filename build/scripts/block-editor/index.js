@@ -45696,7 +45696,7 @@ var wp;
         if (event.metaKey || event.ctrlKey || event.altKey) {
           return;
         }
-        if (node.contentEditable !== "true" || node.ownerDocument.activeElement !== node || hasMultiSelection2()) {
+        if (!event.target.isContentEditable || hasMultiSelection2()) {
           return;
         }
         const selection2 = node.ownerDocument.defaultView.getSelection();
