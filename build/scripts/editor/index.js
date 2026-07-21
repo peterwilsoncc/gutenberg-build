@@ -60029,6 +60029,7 @@ If there's a particular need for this, please submit a feature request at https:
                   /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(
                     import_components117.SearchControl,
                     {
+                      className: "font-library__search",
                       value: filters.search,
                       placeholder: (0, import_i18n159.__)("Font name\u2026"),
                       label: (0, import_i18n159.__)("Search"),

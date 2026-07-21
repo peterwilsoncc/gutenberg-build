@@ -714,6 +714,10 @@ body.is-fullscreen-mode .interface-interface-skeleton {
     font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   }
 }
+.font-library__search {
+  width: 240px;
+}
+
 .font-library__fonts-title {
   text-transform: uppercase;
   font-size: 11px;
@@ -1452,6 +1456,10 @@ button.font-library__upload-area {
     transition: padding ease-out 0.1s;
   }
 }
+.dataviews__search {
+  flex-grow: 1;
+}
+
 .dataviews-no-results,
 .dataviews-loading {
   padding: 0 var(--wpds-dimension-padding-2xl, 24px);
@@ -2164,8 +2172,7 @@ button.font-library__upload-area {
 }
 
 .dataviews-search {
-  width: -moz-fit-content;
-  width: fit-content;
+  flex-basis: 210px;
 }
 
 .dataviews-filters__user-input-widget {
