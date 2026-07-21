@@ -47299,8 +47299,8 @@ ${text}
                           setAddingPage: () => {
                             setAddingPage(true);
                           },
-                          canAddPage: permissions?.canCreate && type === "page",
-                          canAddBlock: blockEditingMode === "default"
+                          canAddPage: blockEditingMode !== "disabled" && permissions?.canCreate && type === "page",
+                          canAddBlock: blockEditingMode !== "disabled"
                         }
                       );
                     }
