@@ -2238,10 +2238,10 @@ var wp;
         };
         return function(d3, b3) {
           extendStatics(d3, b3);
-          function __336() {
+          function __337() {
             this.constructor = d3;
           }
-          d3.prototype = b3 === null ? Object.create(b3) : (__336.prototype = b3.prototype, new __336());
+          d3.prototype = b3 === null ? Object.create(b3) : (__337.prototype = b3.prototype, new __337());
         };
       })();
       var __assign2 = exports && exports.__assign || Object.assign || function(t4) {
@@ -7656,7 +7656,7 @@ var wp;
   var import_block_editor36 = __toESM(require_block_editor(), 1);
   var import_hooks39 = __toESM(require_hooks(), 1);
   var import_preferences10 = __toESM(require_preferences(), 1);
-  var import_i18n204 = __toESM(require_i18n(), 1);
+  var import_i18n205 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/store/local-autosave.mjs
   function postKey(postId2, isPostNew) {
@@ -7810,7 +7810,7 @@ var wp;
     unregisterEntityField: () => unregisterEntityField
   });
   var import_core_data56 = __toESM(require_core_data(), 1);
-  var import_i18n203 = __toESM(require_i18n(), 1);
+  var import_i18n204 = __toESM(require_i18n(), 1);
   var import_notices19 = __toESM(require_notices(), 1);
   var import_block_editor35 = __toESM(require_block_editor(), 1);
   var import_preferences9 = __toESM(require_preferences(), 1);
@@ -29887,10 +29887,10 @@ var wp;
   var mime_type_default = mimeTypeField;
 
   // packages/editor/build-module/dataviews/fields/content-preview/index.mjs
-  var import_i18n202 = __toESM(require_i18n(), 1);
+  var import_i18n203 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/dataviews/fields/content-preview/content-preview-view.mjs
-  var import_i18n201 = __toESM(require_i18n(), 1);
+  var import_i18n202 = __toESM(require_i18n(), 1);
   var import_block_editor34 = __toESM(require_block_editor(), 1);
   var import_data86 = __toESM(require_data(), 1);
   var import_core_data54 = __toESM(require_core_data(), 1);
@@ -29898,7 +29898,7 @@ var wp;
   // packages/editor/build-module/components/provider/index.mjs
   var import_element217 = __toESM(require_element(), 1);
   var import_data85 = __toESM(require_data(), 1);
-  var import_i18n200 = __toESM(require_i18n(), 1);
+  var import_i18n201 = __toESM(require_i18n(), 1);
   var import_core_data53 = __toESM(require_core_data(), 1);
   var import_block_editor33 = __toESM(require_block_editor(), 1);
   var import_notices18 = __toESM(require_notices(), 1);
@@ -64102,12 +64102,12 @@ If there's a particular need for this, please submit a feature request at https:
             var STR_APPLY_UIA_OK = true;
             try {
               String.fromCharCode.apply(null, [0]);
-            } catch (__336) {
+            } catch (__337) {
               STR_APPLY_OK = false;
             }
             try {
               String.fromCharCode.apply(null, new Uint8Array(1));
-            } catch (__336) {
+            } catch (__337) {
               STR_APPLY_UIA_OK = false;
             }
             var _utf8len = new utils.Buf8(256);
@@ -75238,8 +75238,67 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-revisions-preview/block-diff.mjs
   var import_block_serialization_default_parser = __toESM(require_block_serialization_default_parser(), 1);
   var import_blocks13 = __toESM(require_blocks(), 1);
-  var import_rich_text3 = __toESM(require_rich_text(), 1);
+  var import_rich_text4 = __toESM(require_rich_text(), 1);
+  var import_i18n192 = __toESM(require_i18n(), 1);
+
+  // packages/editor/build-module/components/post-revisions-preview/diff-format-types.mjs
   var import_i18n191 = __toESM(require_i18n(), 1);
+  var import_rich_text3 = __toESM(require_rich_text(), 1);
+  var DIFF_DESCRIPTION_IDS = {
+    removed: "revision-diff-removed-desc",
+    added: "revision-diff-added-desc",
+    formatAdded: "revision-diff-format-added-desc",
+    formatRemoved: "revision-diff-format-removed-desc",
+    formatChanged: "revision-diff-format-changed-desc"
+  };
+  var DIFF_FORMAT_TYPES = [
+    {
+      name: "revision/diff-removed",
+      title: (0, import_i18n191.__)("Removed"),
+      tagName: "del",
+      className: "revision-diff-removed"
+    },
+    {
+      name: "revision/diff-added",
+      title: (0, import_i18n191.__)("Added"),
+      tagName: "ins",
+      className: "revision-diff-added"
+    },
+    {
+      name: "revision/diff-format-added",
+      title: (0, import_i18n191.__)("Format added"),
+      tagName: "mark",
+      className: "revision-diff-format-added"
+    },
+    {
+      name: "revision/diff-format-removed",
+      title: (0, import_i18n191.__)("Format removed"),
+      tagName: "mark",
+      className: "revision-diff-format-removed"
+    },
+    {
+      name: "revision/diff-format-changed",
+      title: (0, import_i18n191.__)("Format changed"),
+      tagName: "mark",
+      className: "revision-diff-format-changed"
+    }
+  ];
+  function registerDiffFormatTypes() {
+    for (const formatType of DIFF_FORMAT_TYPES) {
+      (0, import_rich_text3.registerFormatType)(formatType.name, {
+        ...formatType,
+        attributes: { "aria-describedby": "aria-describedby" },
+        edit: () => null
+      });
+    }
+  }
+  function unregisterDiffFormatTypes() {
+    for (const formatType of DIFF_FORMAT_TYPES) {
+      (0, import_rich_text3.unregisterFormatType)(formatType.name);
+    }
+  }
+
+  // packages/editor/build-module/components/post-revisions-preview/block-diff.mjs
   var { parseRawBlock } = unlock(import_blocks13.privateApis);
   function isWhitespaceRawBlock(rawBlock) {
     return rawBlock.blockName === null && (!rawBlock.innerHTML || !rawBlock.innerHTML.trim());
@@ -75483,9 +75542,9 @@ If there's a particular need for this, please submit a feature request at https:
     if (addedCount > 0 && removedCount === 0 && changedCount === 0) {
       return {
         type: "added",
-        description: (0, import_i18n191.sprintf)(
+        description: (0, import_i18n192.sprintf)(
           /* translators: %d: number of formats added */
-          (0, import_i18n191._n)("%d format added", "%d formats added", addedCount),
+          (0, import_i18n192._n)("%d format added", "%d formats added", addedCount),
           addedCount
         )
       };
@@ -75493,9 +75552,9 @@ If there's a particular need for this, please submit a feature request at https:
     if (removedCount > 0 && addedCount === 0 && changedCount === 0) {
       return {
         type: "removed",
-        description: (0, import_i18n191.sprintf)(
+        description: (0, import_i18n192.sprintf)(
           /* translators: %d: number of formats removed */
-          (0, import_i18n191._n)("%d format removed", "%d formats removed", removedCount),
+          (0, import_i18n192._n)("%d format removed", "%d formats removed", removedCount),
           removedCount
         )
       };
@@ -75503,77 +75562,81 @@ If there's a particular need for this, please submit a feature request at https:
     const parts = [];
     if (addedCount > 0) {
       parts.push(
-        (0, import_i18n191.sprintf)(
+        (0, import_i18n192.sprintf)(
           /* translators: %d: number of formats added */
-          (0, import_i18n191._n)("%d format added", "%d formats added", addedCount),
+          (0, import_i18n192._n)("%d format added", "%d formats added", addedCount),
           addedCount
         )
       );
     }
     if (removedCount > 0) {
       parts.push(
-        (0, import_i18n191.sprintf)(
+        (0, import_i18n192.sprintf)(
           /* translators: %d: number of formats removed */
-          (0, import_i18n191._n)("%d format removed", "%d formats removed", removedCount),
+          (0, import_i18n192._n)("%d format removed", "%d formats removed", removedCount),
           removedCount
         )
       );
     }
     if (changedCount > 0) {
       parts.push(
-        (0, import_i18n191.sprintf)(
+        (0, import_i18n192.sprintf)(
           /* translators: %d: number of formats changed */
-          (0, import_i18n191._n)("%d format changed", "%d formats changed", changedCount),
+          (0, import_i18n192._n)("%d format changed", "%d formats changed", changedCount),
           changedCount
         )
       );
     }
     return {
       type: "changed",
-      description: parts.join(", ") || (0, import_i18n191.__)("Formatting changed")
+      description: parts.join(", ") || (0, import_i18n192.__)("Formatting changed")
     };
   }
   function applyRichTextDiff(currentRichText, previousRichText) {
     const currentText = currentRichText.toPlainText();
     const previousText = previousRichText.toPlainText();
     const textDiff = diffWordsWithSpace(previousText, currentText);
-    let result = (0, import_rich_text3.create)({ text: "" });
+    let result = (0, import_rich_text4.create)({ text: "" });
     let currentIdx = 0;
     let previousIdx = 0;
     for (const part of textDiff) {
       if (part.removed) {
-        const removedSlice = (0, import_rich_text3.slice)(
+        const removedSlice = (0, import_rich_text4.slice)(
           previousRichText,
           previousIdx,
           previousIdx + part.value.length
         );
-        const formatted = (0, import_rich_text3.applyFormat)(
+        const formatted = (0, import_rich_text4.applyFormat)(
           removedSlice,
           {
             type: "revision/diff-removed",
-            attributes: { title: (0, import_i18n191.__)("Removed") }
+            attributes: {
+              "aria-describedby": DIFF_DESCRIPTION_IDS.removed
+            }
           },
           0,
           part.value.length
         );
-        result = (0, import_rich_text3.concat)(result, formatted);
+        result = (0, import_rich_text4.concat)(result, formatted);
         previousIdx += part.value.length;
       } else if (part.added) {
-        const addedSlice = (0, import_rich_text3.slice)(
+        const addedSlice = (0, import_rich_text4.slice)(
           currentRichText,
           currentIdx,
           currentIdx + part.value.length
         );
-        const formatted = (0, import_rich_text3.applyFormat)(
+        const formatted = (0, import_rich_text4.applyFormat)(
           addedSlice,
           {
             type: "revision/diff-added",
-            attributes: { title: (0, import_i18n191.__)("Added") }
+            attributes: {
+              "aria-describedby": DIFF_DESCRIPTION_IDS.added
+            }
           },
           0,
           part.value.length
         );
-        result = (0, import_rich_text3.concat)(result, formatted);
+        result = (0, import_rich_text4.concat)(result, formatted);
         currentIdx += part.value.length;
       } else {
         const currentFormats = currentRichText.formats || [];
@@ -75590,13 +75653,13 @@ If there's a particular need for this, please submit a feature request at https:
         for (let i3 = 1; i3 <= len2; i3++) {
           const formatChanged = i3 < len2 && checkFormatChanged(i3);
           if (i3 === len2 || formatChanged !== rangeFormatChanged) {
-            const rangeSlice = (0, import_rich_text3.slice)(
+            const rangeSlice = (0, import_rich_text4.slice)(
               currentRichText,
               currentIdx + rangeStart,
               currentIdx + i3
             );
             if (rangeFormatChanged) {
-              const { type, description } = describeFormatChange(
+              const { type } = describeFormatChange(
                 currentFormats,
                 previousFormats,
                 currentIdx + rangeStart,
@@ -75607,18 +75670,25 @@ If there's a particular need for this, please submit a feature request at https:
                 removed: "revision/diff-format-removed",
                 changed: "revision/diff-format-changed"
               }[type];
-              const marked = (0, import_rich_text3.applyFormat)(
+              const descriptionId = {
+                added: DIFF_DESCRIPTION_IDS.formatAdded,
+                removed: DIFF_DESCRIPTION_IDS.formatRemoved,
+                changed: DIFF_DESCRIPTION_IDS.formatChanged
+              }[type];
+              const marked = (0, import_rich_text4.applyFormat)(
                 rangeSlice,
                 {
                   type: formatType,
-                  attributes: { title: description }
+                  attributes: {
+                    "aria-describedby": descriptionId
+                  }
                 },
                 0,
                 i3 - rangeStart
               );
-              result = (0, import_rich_text3.concat)(result, marked);
+              result = (0, import_rich_text4.concat)(result, marked);
             } else {
-              result = (0, import_rich_text3.concat)(result, rangeSlice);
+              result = (0, import_rich_text4.concat)(result, rangeSlice);
             }
             rangeStart = i3;
             rangeFormatChanged = formatChanged;
@@ -75628,7 +75698,7 @@ If there's a particular need for this, please submit a feature request at https:
         previousIdx += part.value.length;
       }
     }
-    return new import_rich_text3.RichTextData(result);
+    return new import_rich_text4.RichTextData(result);
   }
   function applyDiffToBlock(currentBlock, previousBlock, diffStatus) {
     const blockType = (0, import_blocks13.getBlockType)(currentBlock.name);
@@ -75642,7 +75712,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (attrDef.source === "rich-text") {
         const currentRichText = currentBlock.attributes[attrName];
         const previousRichText = previousBlock.attributes[attrName];
-        if (currentRichText instanceof import_rich_text3.RichTextData && previousRichText instanceof import_rich_text3.RichTextData) {
+        if (currentRichText instanceof import_rich_text4.RichTextData && previousRichText instanceof import_rich_text4.RichTextData) {
           currentBlock.attributes[attrName] = applyRichTextDiff(
             currentRichText,
             previousRichText
@@ -75814,7 +75884,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/commands/index.mjs
   var import_data71 = __toESM(require_data(), 1);
-  var import_i18n192 = __toESM(require_i18n(), 1);
+  var import_i18n193 = __toESM(require_i18n(), 1);
   var import_commands = __toESM(require_commands(), 1);
   var import_preferences7 = __toESM(require_preferences(), 1);
   var import_notices16 = __toESM(require_notices(), 1);
@@ -75911,7 +75981,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     return {
       name: "core/toggle-pattern-editing",
-      label: disableContentOnlyForPatternsAndTemplateParts ? (0, import_i18n192.__)("Disable editing all patterns") : (0, import_i18n192.__)("Enable editing all patterns"),
+      label: disableContentOnlyForPatternsAndTemplateParts ? (0, import_i18n193.__)("Disable editing all patterns") : (0, import_i18n193.__)("Enable editing all patterns"),
       icon: symbol_default,
       category: "command",
       callback: ({ close }) => {
@@ -75987,7 +76057,7 @@ If there's a particular need for this, please submit a feature request at https:
     const disableContentOnlyForPatternsAndTemplateParts = disableContentOnlyForUnsyncedPatterns && disableContentOnlyForTemplateParts;
     commands.push({
       name: "core/open-shortcut-help",
-      label: (0, import_i18n192.__)("Keyboard shortcuts"),
+      label: (0, import_i18n193.__)("Keyboard shortcuts"),
       icon: keyboard_default,
       category: "view",
       callback: ({ close }) => {
@@ -75997,7 +76067,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     commands.push({
       name: "core/toggle-distraction-free",
-      label: isDistractionFree ? (0, import_i18n192.__)("Exit Distraction free") : (0, import_i18n192.__)("Enter Distraction free"),
+      label: isDistractionFree ? (0, import_i18n193.__)("Exit Distraction free") : (0, import_i18n193.__)("Enter Distraction free"),
       category: "command",
       callback: ({ close }) => {
         toggleDistractionFree2();
@@ -76006,7 +76076,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     commands.push({
       name: "core/open-preferences",
-      label: (0, import_i18n192.__)("Editor preferences"),
+      label: (0, import_i18n193.__)("Editor preferences"),
       category: "view",
       callback: ({ close }) => {
         close();
@@ -76015,7 +76085,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     commands.push({
       name: "core/toggle-spotlight-mode",
-      label: isFocusMode ? (0, import_i18n192.__)("Exit Spotlight mode") : (0, import_i18n192.__)("Enter Spotlight mode"),
+      label: isFocusMode ? (0, import_i18n193.__)("Exit Spotlight mode") : (0, import_i18n193.__)("Enter Spotlight mode"),
       category: "command",
       callback: ({ close }) => {
         toggleSpotlightMode2();
@@ -76024,14 +76094,14 @@ If there's a particular need for this, please submit a feature request at https:
     });
     commands.push({
       name: "core/toggle-list-view",
-      label: isListViewOpen ? (0, import_i18n192.__)("Close List View") : (0, import_i18n192.__)("Open List View"),
+      label: isListViewOpen ? (0, import_i18n193.__)("Close List View") : (0, import_i18n193.__)("Open List View"),
       icon: list_view_default,
       category: "command",
       callback: ({ close }) => {
         setIsListViewOpened2(!isListViewOpen);
         close();
         createInfoNotice(
-          isListViewOpen ? (0, import_i18n192.__)("List View off.") : (0, import_i18n192.__)("List View on."),
+          isListViewOpen ? (0, import_i18n193.__)("List View off.") : (0, import_i18n193.__)("List View on."),
           {
             id: "core/editor/toggle-list-view/notice",
             type: "snackbar"
@@ -76041,7 +76111,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     commands.push({
       name: "core/toggle-top-toolbar",
-      label: (0, import_i18n192.__)("Top toolbar"),
+      label: (0, import_i18n193.__)("Top toolbar"),
       category: "command",
       callback: ({ close }) => {
         toggleTopToolbar2();
@@ -76058,7 +76128,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (allowSwitchEditorMode) {
       commands.push({
         name: "core/toggle-code-editor",
-        label: editorMode === "visual" ? (0, import_i18n192.__)("Open code editor") : (0, import_i18n192.__)("Exit code editor"),
+        label: editorMode === "visual" ? (0, import_i18n193.__)("Open code editor") : (0, import_i18n193.__)("Exit code editor"),
         icon: code_default,
         category: "command",
         callback: ({ close }) => {
@@ -76071,13 +76141,13 @@ If there's a particular need for this, please submit a feature request at https:
     }
     commands.push({
       name: "core/toggle-breadcrumbs",
-      label: showBlockBreadcrumbs ? (0, import_i18n192.__)("Hide block breadcrumbs") : (0, import_i18n192.__)("Show block breadcrumbs"),
+      label: showBlockBreadcrumbs ? (0, import_i18n193.__)("Hide block breadcrumbs") : (0, import_i18n193.__)("Show block breadcrumbs"),
       category: "command",
       callback: ({ close }) => {
         toggle("core", "showBlockBreadcrumbs");
         close();
         createInfoNotice(
-          showBlockBreadcrumbs ? (0, import_i18n192.__)("Breadcrumbs hidden.") : (0, import_i18n192.__)("Breadcrumbs visible."),
+          showBlockBreadcrumbs ? (0, import_i18n193.__)("Breadcrumbs hidden.") : (0, import_i18n193.__)("Breadcrumbs visible."),
           {
             id: "core/editor/toggle-breadcrumbs/notice",
             type: "snackbar"
@@ -76087,8 +76157,8 @@ If there's a particular need for this, please submit a feature request at https:
     });
     commands.push({
       name: "core/open-settings-sidebar",
-      label: (0, import_i18n192.__)("Show or hide the Settings panel"),
-      icon: (0, import_i18n192.isRTL)() ? drawer_left_default : drawer_right_default,
+      label: (0, import_i18n193.__)("Show or hide the Settings panel"),
+      icon: (0, import_i18n193.isRTL)() ? drawer_left_default : drawer_right_default,
       category: "command",
       callback: ({ close }) => {
         const activeSidebar = getActiveComplementaryArea2("core");
@@ -76102,7 +76172,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     commands.push({
       name: "core/open-block-inspector",
-      label: (0, import_i18n192.__)("Show or hide the Block settings panel"),
+      label: (0, import_i18n193.__)("Show or hide the Block settings panel"),
       icon: block_default_default,
       category: "command",
       callback: ({ close }) => {
@@ -76117,14 +76187,14 @@ If there's a particular need for this, please submit a feature request at https:
     });
     commands.push({
       name: "core/toggle-publish-sidebar",
-      label: isPublishSidebarEnabled2 ? (0, import_i18n192.__)("Disable pre-publish checks") : (0, import_i18n192.__)("Enable pre-publish checks"),
+      label: isPublishSidebarEnabled2 ? (0, import_i18n193.__)("Disable pre-publish checks") : (0, import_i18n193.__)("Enable pre-publish checks"),
       icon: format_list_bullets_default,
       category: "command",
       callback: ({ close }) => {
         close();
         toggle("core", "isPublishSidebarEnabled");
         createInfoNotice(
-          isPublishSidebarEnabled2 ? (0, import_i18n192.__)("Pre-publish checks disabled.") : (0, import_i18n192.__)("Pre-publish checks enabled."),
+          isPublishSidebarEnabled2 ? (0, import_i18n193.__)("Pre-publish checks disabled.") : (0, import_i18n193.__)("Pre-publish checks enabled."),
           {
             id: "core/editor/publish-sidebar/notice",
             type: "snackbar"
@@ -76135,7 +76205,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (isViewable) {
       commands.push({
         name: "core/preview-link",
-        label: (0, import_i18n192.__)("Preview in a new tab"),
+        label: (0, import_i18n193.__)("Preview in a new tab"),
         icon: external_default,
         category: "view",
         callback: async ({ close }) => {
@@ -76214,7 +76284,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (postType2 === PATTERN_POST_TYPE) {
       commands.push({
         name: "core/rename-pattern",
-        label: (0, import_i18n192.__)("Rename pattern"),
+        label: (0, import_i18n193.__)("Rename pattern"),
         icon: pencil_default,
         category: "edit",
         callback: ({ close }) => {
@@ -76224,7 +76294,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
       commands.push({
         name: "core/duplicate-pattern",
-        label: (0, import_i18n192.__)("Duplicate pattern"),
+        label: (0, import_i18n193.__)("Duplicate pattern"),
         icon: symbol_default,
         category: "command",
         callback: ({ close }) => {
@@ -76276,9 +76346,9 @@ If there's a particular need for this, please submit a feature request at https:
     if (templateId2 && hasResolved && canEditTemplate) {
       commands.push({
         name: "core/switch-to-template-focus",
-        label: (0, import_i18n192.sprintf)(
+        label: (0, import_i18n193.sprintf)(
           /* translators: %s: template title */
-          (0, import_i18n192.__)("Edit template: %s"),
+          (0, import_i18n193.__)("Edit template: %s"),
           (0, import_html_entities10.decodeEntities)(template2.title)
         ),
         icon: layout_default,
@@ -76295,7 +76365,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!!goBack) {
       commands.push({
         name: "core/switch-to-previous-entity",
-        label: (0, import_i18n192.__)("Go back"),
+        label: (0, import_i18n193.__)("Go back"),
         icon: page_default,
         category: "view",
         callback: ({ close }) => {
@@ -76327,19 +76397,19 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const commands = [];
     if (isTemplateRevertable(template2)) {
-      const label = template2.type === TEMPLATE_POST_TYPE ? (0, import_i18n192.sprintf)(
+      const label = template2.type === TEMPLATE_POST_TYPE ? (0, import_i18n193.sprintf)(
         /* translators: %s: template title */
-        (0, import_i18n192.__)("Reset template: %s"),
+        (0, import_i18n193.__)("Reset template: %s"),
         (0, import_html_entities10.decodeEntities)(template2.title)
-      ) : (0, import_i18n192.sprintf)(
+      ) : (0, import_i18n193.sprintf)(
         /* translators: %s: template part title */
-        (0, import_i18n192.__)("Reset template part: %s"),
+        (0, import_i18n193.__)("Reset template part: %s"),
         (0, import_html_entities10.decodeEntities)(template2.title)
       );
       commands.push({
         name: "core/reset-template",
         label,
-        icon: (0, import_i18n192.isRTL)() ? rotate_right_default : rotate_left_default,
+        icon: (0, import_i18n193.isRTL)() ? rotate_right_default : rotate_left_default,
         category: "command",
         callback: ({ close }) => {
           revertTemplate3(template2);
@@ -76442,7 +76512,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/block-removal-warnings/index.mjs
-  var import_i18n193 = __toESM(require_i18n(), 1);
+  var import_i18n194 = __toESM(require_i18n(), 1);
   var import_block_editor25 = __toESM(require_block_editor(), 1);
   var import_data74 = __toESM(require_data(), 1);
   var import_element209 = __toESM(require_element(), 1);
@@ -76464,13 +76534,13 @@ If there's a particular need for this, please submit a feature request at https:
         );
         if (removedPostContentBlocks.length) {
           return {
-            description: (0, import_i18n193.__)(
+            description: (0, import_i18n194.__)(
               "This block displays the content of posts and pages using this template."
             ),
-            warning: (0, import_i18n193.__)(
+            warning: (0, import_i18n194.__)(
               "If you delete it, posts or pages using this template will not display any content."
             ),
-            subtext: (0, import_i18n193.__)("Visitors will see blank pages."),
+            subtext: (0, import_i18n194.__)("Visitors will see blank pages."),
             requireConfirmation: true
           };
         }
@@ -76478,7 +76548,7 @@ If there's a particular need for this, please submit a feature request at https:
           ({ name: name2 }) => TEMPLATE_BLOCKS.includes(name2)
         );
         if (removedTemplateBlocks.length) {
-          return (0, import_i18n193._n)(
+          return (0, import_i18n194._n)(
             "Deleting this block will stop your post or page content from displaying on this template. It is not recommended.",
             "Some of the deleted blocks will stop your post or page content from displaying on this template. It is not recommended.",
             removedBlocks.length
@@ -76497,7 +76567,7 @@ If there's a particular need for this, please submit a feature request at https:
           )
         );
         if (removedBlocksWithOverrides.length) {
-          return (0, import_i18n193._n)(
+          return (0, import_i18n194._n)(
             "The deleted block allows instance overrides. Removing it may result in content not displaying where this pattern is used. Are you sure you want to proceed?",
             "Some of the deleted blocks allow instance overrides. Removing them may result in content not displaying where this pattern is used. Are you sure you want to proceed?",
             removedBlocks.length
@@ -76525,7 +76595,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/start-page-options/index.mjs
   var import_components151 = __toESM(require_components(), 1);
-  var import_i18n194 = __toESM(require_i18n(), 1);
+  var import_i18n195 = __toESM(require_i18n(), 1);
   var import_element210 = __toESM(require_element(), 1);
   var import_block_editor26 = __toESM(require_block_editor(), 1);
   var import_data75 = __toESM(require_data(), 1);
@@ -76597,7 +76667,7 @@ If there's a particular need for this, please submit a feature request at https:
       import_components151.Modal,
       {
         className: "editor-start-page-options__modal",
-        title: (0, import_i18n194.__)("Choose a pattern"),
+        title: (0, import_i18n195.__)("Choose a pattern"),
         isFullScreen: true,
         onRequestClose: handleClose,
         children: [
@@ -76618,7 +76688,7 @@ If there's a particular need for this, please submit a feature request at https:
                 import_components151.CheckboxControl,
                 {
                   checked: showStartPatterns,
-                  label: (0, import_i18n194.__)(
+                  label: (0, import_i18n195.__)(
                     "Always show starter patterns for new pages"
                   ),
                   onChange: (newValue) => {
@@ -76680,44 +76750,44 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/keyboard-shortcut-help-modal/index.mjs
   var import_components152 = __toESM(require_components(), 1);
-  var import_i18n196 = __toESM(require_i18n(), 1);
+  var import_i18n197 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts3 = __toESM(require_keyboard_shortcuts(), 1);
   var import_data77 = __toESM(require_data(), 1);
 
   // packages/editor/build-module/components/keyboard-shortcut-help-modal/config.mjs
-  var import_i18n195 = __toESM(require_i18n(), 1);
+  var import_i18n196 = __toESM(require_i18n(), 1);
   var textFormattingShortcuts = [
     {
       keyCombination: { modifier: "primary", character: "b" },
-      description: (0, import_i18n195.__)("Make the selected text bold.")
+      description: (0, import_i18n196.__)("Make the selected text bold.")
     },
     {
       keyCombination: { modifier: "primary", character: "i" },
-      description: (0, import_i18n195.__)("Make the selected text italic.")
+      description: (0, import_i18n196.__)("Make the selected text italic.")
     },
     {
       keyCombination: { modifier: "primary", character: "k" },
-      description: (0, import_i18n195.__)("Convert the selected text into a link.")
+      description: (0, import_i18n196.__)("Convert the selected text into a link.")
     },
     {
       keyCombination: { modifier: "primaryShift", character: "k" },
-      description: (0, import_i18n195.__)("Remove a link.")
+      description: (0, import_i18n196.__)("Remove a link.")
     },
     {
       keyCombination: { character: "[[" },
-      description: (0, import_i18n195.__)("Insert a link to a post or page.")
+      description: (0, import_i18n196.__)("Insert a link to a post or page.")
     },
     {
       keyCombination: { modifier: "primary", character: "u" },
-      description: (0, import_i18n195.__)("Underline the selected text.")
+      description: (0, import_i18n196.__)("Underline the selected text.")
     },
     {
       keyCombination: { modifier: "access", character: "d" },
-      description: (0, import_i18n195.__)("Strikethrough the selected text.")
+      description: (0, import_i18n196.__)("Strikethrough the selected text.")
     },
     {
       keyCombination: { modifier: "access", character: "x" },
-      description: (0, import_i18n195.__)("Make the selected text inline code.")
+      description: (0, import_i18n196.__)("Make the selected text inline code.")
     },
     {
       keyCombination: {
@@ -76730,17 +76800,17 @@ If there's a particular need for this, please submit a feature request at https:
           character: "7"
         }
       ],
-      description: (0, import_i18n195.__)("Convert the current heading to a paragraph.")
+      description: (0, import_i18n196.__)("Convert the current heading to a paragraph.")
     },
     {
       keyCombination: { modifier: "access", character: "1-6" },
-      description: (0, import_i18n195.__)(
+      description: (0, import_i18n196.__)(
         "Convert the current paragraph or heading to a heading of level 1 to 6."
       )
     },
     {
       keyCombination: { modifier: "primaryShift", character: "SPACE" },
-      description: (0, import_i18n195.__)("Add non breaking space.")
+      description: (0, import_i18n196.__)("Add non breaking space.")
     }
   ];
 
@@ -76918,8 +76988,8 @@ If there's a particular need for this, please submit a feature request at https:
       import_components152.Modal,
       {
         className: "editor-keyboard-shortcut-help-modal",
-        title: (0, import_i18n196.__)("Keyboard shortcuts"),
-        closeButtonLabel: (0, import_i18n196.__)("Close"),
+        title: (0, import_i18n197.__)("Keyboard shortcuts"),
+        closeButtonLabel: (0, import_i18n197.__)("Close"),
         onRequestClose: toggleModal,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
@@ -76932,30 +77002,30 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
             ShortcutCategorySection,
             {
-              title: (0, import_i18n196.__)("Global shortcuts"),
+              title: (0, import_i18n197.__)("Global shortcuts"),
               categoryName: "global"
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
             ShortcutCategorySection,
             {
-              title: (0, import_i18n196.__)("Selection shortcuts"),
+              title: (0, import_i18n197.__)("Selection shortcuts"),
               categoryName: "selection"
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
             ShortcutCategorySection,
             {
-              title: (0, import_i18n196.__)("Block shortcuts"),
+              title: (0, import_i18n197.__)("Block shortcuts"),
               categoryName: "block",
               additionalShortcuts: [
                 {
                   keyCombination: { character: "/" },
-                  description: (0, import_i18n196.__)(
+                  description: (0, import_i18n197.__)(
                     "Change the block type after adding a new paragraph."
                   ),
                   /* translators: The forward-slash character. e.g. '/'. */
-                  ariaLabel: (0, import_i18n196.__)("Forward-slash")
+                  ariaLabel: (0, import_i18n197.__)("Forward-slash")
                 }
               ]
             }
@@ -76963,14 +77033,14 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
             ShortcutSection,
             {
-              title: (0, import_i18n196.__)("Text formatting"),
+              title: (0, import_i18n197.__)("Text formatting"),
               shortcuts: textFormattingShortcuts
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
             ShortcutCategorySection,
             {
-              title: (0, import_i18n196.__)("List View shortcuts"),
+              title: (0, import_i18n197.__)("List View shortcuts"),
               categoryName: "list-view"
             }
           )
@@ -76982,7 +77052,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/start-template-options/index.mjs
   var import_components153 = __toESM(require_components(), 1);
-  var import_i18n197 = __toESM(require_i18n(), 1);
+  var import_i18n198 = __toESM(require_i18n(), 1);
   var import_element212 = __toESM(require_element(), 1);
   var import_block_editor27 = __toESM(require_block_editor(), 1);
   var import_data78 = __toESM(require_data(), 1);
@@ -77039,7 +77109,7 @@ If there's a particular need for this, please submit a feature request at https:
         {
           name: "fallback",
           blocks: (0, import_blocks16.parse)(fallbackContent),
-          title: (0, import_i18n197.__)("Fallback content")
+          title: (0, import_i18n198.__)("Fallback content")
         },
         ...patterns2.filter((pattern) => {
           return Array.isArray(pattern.templateTypes) && pattern.templateTypes.some(
@@ -77079,8 +77149,8 @@ If there's a particular need for this, please submit a feature request at https:
       import_components153.Modal,
       {
         className: "editor-start-template-options__modal",
-        title: (0, import_i18n197.__)("Choose a pattern"),
-        closeLabel: (0, import_i18n197.__)("Cancel"),
+        title: (0, import_i18n198.__)("Choose a pattern"),
+        closeLabel: (0, import_i18n198.__)("Cancel"),
         focusOnMount: "firstElement",
         onRequestClose: onClose,
         isFullScreen: true,
@@ -77109,7 +77179,7 @@ If there's a particular need for this, please submit a feature request at https:
                   __next40pxDefaultSize: true,
                   variant: "tertiary",
                   onClick: onClose,
-                  children: (0, import_i18n197.__)("Skip")
+                  children: (0, import_i18n198.__)("Skip")
                 }
               ) })
             }
@@ -77255,7 +77325,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor29 = __toESM(require_block_editor(), 1);
   var import_core_data51 = __toESM(require_core_data(), 1);
   var import_components154 = __toESM(require_components(), 1);
-  var import_i18n198 = __toESM(require_i18n(), 1);
+  var import_i18n199 = __toESM(require_i18n(), 1);
   var import_html_entities11 = __toESM(require_html_entities(), 1);
   var import_element213 = __toESM(require_element(), 1);
   var import_jsx_runtime368 = __toESM(require_jsx_runtime(), 1);
@@ -77286,22 +77356,22 @@ If there's a particular need for this, please submit a feature request at https:
     if (!canRemove) {
       return null;
     }
-    const title = templatePartTitle ? (0, import_i18n198.sprintf)(
+    const title = templatePartTitle ? (0, import_i18n199.sprintf)(
       /* translators: %s: template part title, e.g. "Header" */
-      (0, import_i18n198.__)("Detach %s?"),
+      (0, import_i18n199.__)("Detach %s?"),
       templatePartTitle
-    ) : (0, import_i18n198.__)("Detach template part?");
-    const message2 = templatePartTitle ? (0, import_i18n198.sprintf)(
+    ) : (0, import_i18n199.__)("Detach template part?");
+    const message2 = templatePartTitle ? (0, import_i18n199.sprintf)(
       /* translators: %s: template part title, e.g. "Header" */
-      (0, import_i18n198.__)(
+      (0, import_i18n199.__)(
         "The blocks will be separated from the original template part and will be fully editable. Future changes to the %s template part will not apply here."
       ),
       templatePartTitle
-    ) : (0, import_i18n198.__)(
+    ) : (0, import_i18n199.__)(
       "The blocks will be separated from the original template part and will be fully editable. Future changes to the template part will not apply here."
     );
     return /* @__PURE__ */ (0, import_jsx_runtime368.jsxs)(import_jsx_runtime368.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime368.jsx)(import_components154.MenuItem, { onClick: () => setShowConfirmDialog(true), children: (0, import_i18n198.__)("Detach") }),
+      /* @__PURE__ */ (0, import_jsx_runtime368.jsx)(import_components154.MenuItem, { onClick: () => setShowConfirmDialog(true), children: (0, import_i18n199.__)("Detach") }),
       /* @__PURE__ */ (0, import_jsx_runtime368.jsx)(
         import_components154.__experimentalConfirmDialog,
         {
@@ -77311,7 +77381,7 @@ If there's a particular need for this, please submit a feature request at https:
             onClose();
           },
           onCancel: () => setShowConfirmDialog(false),
-          confirmButtonText: (0, import_i18n198.__)("Detach"),
+          confirmButtonText: (0, import_i18n199.__)("Detach"),
           size: "medium",
           title,
           __experimentalHideHeader: false,
@@ -77326,7 +77396,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor30 = __toESM(require_block_editor(), 1);
   var import_components155 = __toESM(require_components(), 1);
   var import_blocks17 = __toESM(require_blocks(), 1);
-  var import_i18n199 = __toESM(require_i18n(), 1);
+  var import_i18n200 = __toESM(require_i18n(), 1);
   var import_element214 = __toESM(require_element(), 1);
   var import_notices17 = __toESM(require_notices(), 1);
   var import_core_data52 = __toESM(require_core_data(), 1);
@@ -77354,7 +77424,7 @@ If there's a particular need for this, please submit a feature request at https:
           theme: templatePart.theme
         })
       );
-      createSuccessNotice((0, import_i18n199.__)("Template part created."), {
+      createSuccessNotice((0, import_i18n200.__)("Template part created."), {
         type: "snackbar"
       });
     };
@@ -77368,7 +77438,7 @@ If there's a particular need for this, please submit a feature request at https:
           },
           "aria-expanded": isModalOpen,
           "aria-haspopup": "dialog",
-          children: (0, import_i18n199.__)("Create template part")
+          children: (0, import_i18n200.__)("Create template part")
         }
       ),
       isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
@@ -77705,14 +77775,14 @@ If there's a particular need for this, please submit a feature request at https:
             (0, import_url13.getQueryArg)(settings.autosave.editLink, "revision")
           );
           createWarningNotice(
-            (0, import_i18n200.__)(
+            (0, import_i18n201.__)(
               "There is an autosave of this post that is more recent than the version below."
             ),
             {
               id: "autosave-exists",
               actions: [
                 {
-                  label: (0, import_i18n200.__)("View the autosave"),
+                  label: (0, import_i18n201.__)("View the autosave"),
                   ...autosaveId ? {
                     onClick: () => {
                       const {
@@ -77837,7 +77907,7 @@ If there's a particular need for this, please submit a feature request at https:
           backgroundColor
         },
         children: [
-          isEmpty2 && /* @__PURE__ */ (0, import_jsx_runtime373.jsx)("span", { className: "editor-fields-content-preview__empty", children: (0, import_i18n201.__)("Empty content") }),
+          isEmpty2 && /* @__PURE__ */ (0, import_jsx_runtime373.jsx)("span", { className: "editor-fields-content-preview__empty", children: (0, import_i18n202.__)("Empty content") }),
           !isEmpty2 && /* @__PURE__ */ (0, import_jsx_runtime373.jsx)(import_block_editor34.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime373.jsx)(import_block_editor34.BlockPreview, { blocks }) })
         ]
       }
@@ -77877,7 +77947,7 @@ If there's a particular need for this, please submit a feature request at https:
   var postPreviewField = {
     type: "media",
     id: "content-preview",
-    label: (0, import_i18n202.__)("Content preview"),
+    label: (0, import_i18n203.__)("Content preview"),
     render: PostPreviewView,
     enableSorting: false
   };
@@ -78083,12 +78153,12 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
     registry.dispatch(import_notices19.store).createSuccessNotice(
-      (0, import_i18n203.__)("Custom template created. You're in template mode now."),
+      (0, import_i18n204.__)("Custom template created. You're in template mode now."),
       {
         type: "snackbar",
         actions: [
           {
-            label: (0, import_i18n203.__)("Go back"),
+            label: (0, import_i18n204.__)("Go back"),
             onClick: () => dispatch8.setRenderingMode(
               select9.getEditorSettings().defaultRenderingMode
             )
@@ -78170,16 +78240,16 @@ If there's a particular need for this, please submit a feature request at https:
       return values;
     }).then((values) => {
       if (values.some((value) => typeof value === "undefined")) {
-        registry.dispatch(import_notices19.store).createErrorNotice((0, import_i18n203.__)("Saving failed."));
+        registry.dispatch(import_notices19.store).createErrorNotice((0, import_i18n204.__)("Saving failed."));
       } else {
         registry.dispatch(import_notices19.store).createSuccessNotice(
-          successNoticeContent || (0, import_i18n203.__)("Site updated."),
+          successNoticeContent || (0, import_i18n204.__)("Site updated."),
           {
             type: "snackbar",
             id: saveNoticeId,
             actions: [
               {
-                label: (0, import_i18n203.__)("View site"),
+                label: (0, import_i18n204.__)("View site"),
                 url: homeUrl,
                 openInNewTab: true
               }
@@ -78189,7 +78259,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }).catch(
       (error2) => registry.dispatch(import_notices19.store).createErrorNotice(
-        `${(0, import_i18n203.__)("Saving failed.")} ${error2}`
+        `${(0, import_i18n204.__)("Saving failed.")} ${error2}`
       )
     );
   };
@@ -78197,7 +78267,7 @@ If there's a particular need for this, please submit a feature request at https:
     const noticeId = "edit-site-template-reverted";
     registry.dispatch(import_notices19.store).removeNotice(noticeId);
     if (!isTemplateRevertable(template2)) {
-      registry.dispatch(import_notices19.store).createErrorNotice((0, import_i18n203.__)("This template is not revertable."), {
+      registry.dispatch(import_notices19.store).createErrorNotice((0, import_i18n204.__)("This template is not revertable."), {
         type: "snackbar"
       });
       return;
@@ -78206,7 +78276,7 @@ If there's a particular need for this, please submit a feature request at https:
       const templateEntityConfig = registry.select(import_core_data56.store).getEntityConfig("postType", template2.type);
       if (!templateEntityConfig) {
         registry.dispatch(import_notices19.store).createErrorNotice(
-          (0, import_i18n203.__)(
+          (0, import_i18n204.__)(
             "The editor has encountered an unexpected error. Please reload."
           ),
           { type: "snackbar" }
@@ -78220,7 +78290,7 @@ If there's a particular need for this, please submit a feature request at https:
       const fileTemplate = await (0, import_api_fetch7.default)({ path: fileTemplatePath });
       if (!fileTemplate) {
         registry.dispatch(import_notices19.store).createErrorNotice(
-          (0, import_i18n203.__)(
+          (0, import_i18n204.__)(
             "The editor has encountered an unexpected error. Please reload."
           ),
           { type: "snackbar" }
@@ -78271,19 +78341,19 @@ If there's a particular need for this, please submit a feature request at https:
             }
           );
         };
-        registry.dispatch(import_notices19.store).createSuccessNotice((0, import_i18n203.__)("Template reset."), {
+        registry.dispatch(import_notices19.store).createSuccessNotice((0, import_i18n204.__)("Template reset."), {
           type: "snackbar",
           id: noticeId,
           actions: [
             {
-              label: (0, import_i18n203.__)("Undo"),
+              label: (0, import_i18n204.__)("Undo"),
               onClick: undoRevert
             }
           ]
         });
       }
     } catch (error2) {
-      const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n203.__)("Template revert failed. Please reload.");
+      const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n204.__)("Template revert failed. Please reload.");
       registry.dispatch(import_notices19.store).createErrorNotice(errorMessage, { type: "snackbar" });
     }
   };
@@ -78311,17 +78381,17 @@ If there's a particular need for this, please submit a feature request at https:
         } else if (typeof items[0].title?.raw === "string") {
           title = items[0].title?.raw;
         }
-        successMessage = isResetting ? (0, import_i18n203.sprintf)(
+        successMessage = isResetting ? (0, import_i18n204.sprintf)(
           /* translators: %s: The template/part's name. */
-          (0, import_i18n203.__)('"%s" reset.'),
+          (0, import_i18n204.__)('"%s" reset.'),
           (0, import_html_entities12.decodeEntities)(title)
-        ) : (0, import_i18n203.sprintf)(
+        ) : (0, import_i18n204.sprintf)(
           /* translators: %s: The template/part's name. */
-          (0, import_i18n203._x)('"%s" deleted.', "template part"),
+          (0, import_i18n204._x)('"%s" deleted.', "template part"),
           (0, import_html_entities12.decodeEntities)(title)
         );
       } else {
-        successMessage = isResetting ? (0, import_i18n203.__)("Items reset.") : (0, import_i18n203.__)("Items deleted.");
+        successMessage = isResetting ? (0, import_i18n204.__)("Items reset.") : (0, import_i18n204.__)("Items deleted.");
       }
       registry.dispatch(import_notices19.store).createSuccessNotice(successMessage, {
         type: "snackbar",
@@ -78333,7 +78403,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (promiseResult[0].reason?.message) {
           errorMessage = promiseResult[0].reason.message;
         } else {
-          errorMessage = isResetting ? (0, import_i18n203.__)("An error occurred while reverting the item.") : (0, import_i18n203.__)("An error occurred while deleting the item.");
+          errorMessage = isResetting ? (0, import_i18n204.__)("An error occurred while reverting the item.") : (0, import_i18n204.__)("An error occurred while deleting the item.");
         }
       } else {
         const errorMessages = /* @__PURE__ */ new Set();
@@ -78346,33 +78416,33 @@ If there's a particular need for this, please submit a feature request at https:
           }
         }
         if (errorMessages.size === 0) {
-          errorMessage = (0, import_i18n203.__)(
+          errorMessage = (0, import_i18n204.__)(
             "An error occurred while deleting the items."
           );
         } else if (errorMessages.size === 1) {
-          errorMessage = isResetting ? (0, import_i18n203.sprintf)(
+          errorMessage = isResetting ? (0, import_i18n204.sprintf)(
             /* translators: %s: an error message */
-            (0, import_i18n203.__)(
+            (0, import_i18n204.__)(
               "An error occurred while reverting the items: %s"
             ),
             [...errorMessages][0]
-          ) : (0, import_i18n203.sprintf)(
+          ) : (0, import_i18n204.sprintf)(
             /* translators: %s: an error message */
-            (0, import_i18n203.__)(
+            (0, import_i18n204.__)(
               "An error occurred while deleting the items: %s"
             ),
             [...errorMessages][0]
           );
         } else {
-          errorMessage = isResetting ? (0, import_i18n203.sprintf)(
+          errorMessage = isResetting ? (0, import_i18n204.sprintf)(
             /* translators: %s: a list of comma separated error messages */
-            (0, import_i18n203.__)(
+            (0, import_i18n204.__)(
               "Some errors occurred while reverting the items: %s"
             ),
             [...errorMessages].join(",")
-          ) : (0, import_i18n203.sprintf)(
+          ) : (0, import_i18n204.sprintf)(
             /* translators: %s: a list of comma separated error messages */
-            (0, import_i18n203.__)(
+            (0, import_i18n204.__)(
               "Some errors occurred while deleting the items: %s"
             ),
             [...errorMessages].join(",")
@@ -78510,9 +78580,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     registry.dispatch(import_notices19.store).removeNotice("autosave-exists");
     registry.dispatch(import_notices19.store).createSuccessNotice(
-      (0, import_i18n203.sprintf)(
+      (0, import_i18n204.sprintf)(
         /* translators: %s: Date and time of the revision. */
-        (0, import_i18n203.__)("Restored to revision from %s."),
+        (0, import_i18n204.__)("Restored to revision from %s."),
         (0, import_date16.dateI18n)((0, import_date16.getSettings)().formats.datetime, revision.date)
       ),
       {
@@ -78632,7 +78702,7 @@ If there's a particular need for this, please submit a feature request at https:
           options
         );
       } catch (err) {
-        error2 = err.message && err.code !== "unknown_error" ? err.message : (0, import_i18n204.__)("An error occurred while updating.");
+        error2 = err.message && err.code !== "unknown_error" ? err.message : (0, import_i18n205.__)("An error occurred while updating.");
       }
     }
     if (!error2) {
@@ -78709,20 +78779,20 @@ If there's a particular need for this, please submit a feature request at https:
     );
     await registry.dispatch(import_notices20.store).createNotice(
       "info",
-      (0, import_i18n204.sprintf)(
+      (0, import_i18n205.sprintf)(
         // translators: %s: The name (or slug) of the type of template.
-        (0, import_i18n204.__)('Do you want to activate this "%s" template?'),
+        (0, import_i18n205.__)('Do you want to activate this "%s" template?'),
         templateType?.title ?? slug
       ),
       {
         id: "template-activate-notice",
         actions: [
           {
-            label: (0, import_i18n204.__)("Activate"),
+            label: (0, import_i18n205.__)("Activate"),
             onClick: async () => {
               await registry.dispatch(import_notices20.store).createNotice(
                 "info",
-                (0, import_i18n204.__)("Activating template\u2026"),
+                (0, import_i18n205.__)("Activating template\u2026"),
                 { id: "template-activate-notice" }
               );
               try {
@@ -78739,12 +78809,12 @@ If there's a particular need for this, please submit a feature request at https:
                   { throwOnError: true }
                 );
                 await registry.dispatch(import_notices20.store).createSuccessNotice(
-                  (0, import_i18n204.__)("Template activated."),
+                  (0, import_i18n205.__)("Template activated."),
                   { id: "template-activate-notice" }
                 );
               } catch (error2) {
                 await registry.dispatch(import_notices20.store).createErrorNotice(
-                  (0, import_i18n204.__)("Template activation failed."),
+                  (0, import_i18n205.__)("Template activation failed."),
                   { id: "template-activate-notice" }
                 );
                 throw error2;
@@ -78967,13 +79037,13 @@ If there's a particular need for this, please submit a feature request at https:
       registry.dispatch(import_preferences10.store).set("core", "distractionFree", !isDistractionFree);
       if (createNotice) {
         registry.dispatch(import_notices20.store).createInfoNotice(
-          isDistractionFree ? (0, import_i18n204.__)("Distraction free mode deactivated.") : (0, import_i18n204.__)("Distraction free mode activated."),
+          isDistractionFree ? (0, import_i18n205.__)("Distraction free mode deactivated.") : (0, import_i18n205.__)("Distraction free mode activated."),
           {
             id: "core/editor/distraction-free-mode/notice",
             type: "snackbar",
             actions: [
               {
-                label: (0, import_i18n204.__)("Undo"),
+                label: (0, import_i18n205.__)("Undo"),
                 onClick: () => {
                   registry.batch(() => {
                     registry.dispatch(import_preferences10.store).set(
@@ -78998,13 +79068,13 @@ If there's a particular need for this, please submit a feature request at https:
     registry.dispatch(import_preferences10.store).toggle("core", "focusMode");
     const isFocusMode = registry.select(import_preferences10.store).get("core", "focusMode");
     registry.dispatch(import_notices20.store).createInfoNotice(
-      isFocusMode ? (0, import_i18n204.__)("Spotlight mode activated.") : (0, import_i18n204.__)("Spotlight mode deactivated."),
+      isFocusMode ? (0, import_i18n205.__)("Spotlight mode activated.") : (0, import_i18n205.__)("Spotlight mode deactivated."),
       {
         id: "core/editor/toggle-spotlight-mode/notice",
         type: "snackbar",
         actions: [
           {
-            label: (0, import_i18n204.__)("Undo"),
+            label: (0, import_i18n205.__)("Undo"),
             onClick: () => {
               registry.dispatch(import_preferences10.store).toggle("core", "focusMode");
             }
@@ -79017,13 +79087,13 @@ If there's a particular need for this, please submit a feature request at https:
     registry.dispatch(import_preferences10.store).toggle("core", "fixedToolbar");
     const isTopToolbar = registry.select(import_preferences10.store).get("core", "fixedToolbar");
     registry.dispatch(import_notices20.store).createInfoNotice(
-      isTopToolbar ? (0, import_i18n204.__)("Top toolbar activated.") : (0, import_i18n204.__)("Top toolbar deactivated."),
+      isTopToolbar ? (0, import_i18n205.__)("Top toolbar activated.") : (0, import_i18n205.__)("Top toolbar deactivated."),
       {
         id: "core/editor/toggle-top-toolbar/notice",
         type: "snackbar",
         actions: [
           {
-            label: (0, import_i18n204.__)("Undo"),
+            label: (0, import_i18n205.__)("Undo"),
             onClick: () => {
               registry.dispatch(import_preferences10.store).toggle("core", "fixedToolbar");
             }
@@ -79039,13 +79109,13 @@ If there's a particular need for this, please submit a feature request at https:
       unlock(registry.dispatch(import_block_editor36.store)).resetZoomLevel();
     }
     if (mode === "visual") {
-      (0, import_a11y7.speak)((0, import_i18n204.__)("Visual editor selected"), "assertive");
+      (0, import_a11y7.speak)((0, import_i18n205.__)("Visual editor selected"), "assertive");
     } else if (mode === "text") {
       const isDistractionFree = registry.select(import_preferences10.store).get("core", "distractionFree");
       if (isDistractionFree) {
         dispatch8.toggleDistractionFree();
       }
-      (0, import_a11y7.speak)((0, import_i18n204.__)("Code editor selected"), "assertive");
+      (0, import_a11y7.speak)((0, import_i18n205.__)("Code editor selected"), "assertive");
     }
   };
   function openPublishSidebar() {
@@ -79336,7 +79406,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/document-bar/index.mjs
-  var import_i18n211 = __toESM(require_i18n(), 1);
+  var import_i18n212 = __toESM(require_i18n(), 1);
   var import_data99 = __toESM(require_data(), 1);
   var import_components163 = __toESM(require_components(), 1);
   var import_block_editor41 = __toESM(require_block_editor(), 1);
@@ -79348,7 +79418,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_dom23 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/utils/pageTypeBadge.mjs
-  var import_i18n205 = __toESM(require_i18n(), 1);
+  var import_i18n206 = __toESM(require_i18n(), 1);
   var import_data91 = __toESM(require_data(), 1);
   var import_core_data61 = __toESM(require_core_data(), 1);
   function usePageTypeBadge(postId2) {
@@ -79365,9 +79435,9 @@ If there's a particular need for this, please submit a feature request at https:
       };
     });
     if (isFrontPage) {
-      return (0, import_i18n205.__)("Homepage");
+      return (0, import_i18n206.__)("Homepage");
     } else if (isPostsPage) {
-      return (0, import_i18n205.__)("Posts Page");
+      return (0, import_i18n206.__)("Posts Page");
     }
     return false;
   }
@@ -79375,7 +79445,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/styles-canvas/index.mjs
   var import_components162 = __toESM(require_components(), 1);
   var import_keycodes10 = __toESM(require_keycodes(), 1);
-  var import_i18n210 = __toESM(require_i18n(), 1);
+  var import_i18n211 = __toESM(require_i18n(), 1);
   var import_data97 = __toESM(require_data(), 1);
   var import_compose36 = __toESM(require_compose(), 1);
   var import_preferences11 = __toESM(require_preferences(), 1);
@@ -79385,7 +79455,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/style-book/index.mjs
   var import_components158 = __toESM(require_components(), 1);
-  var import_i18n208 = __toESM(require_i18n(), 1);
+  var import_i18n209 = __toESM(require_i18n(), 1);
   var import_block_editor38 = __toESM(require_block_editor(), 1);
   var import_data94 = __toESM(require_data(), 1);
   var import_element223 = __toESM(require_element(), 1);
@@ -79394,48 +79464,48 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data62 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/style-book/constants.mjs
-  var import_i18n206 = __toESM(require_i18n(), 1);
+  var import_i18n207 = __toESM(require_i18n(), 1);
   var STYLE_BOOK_COLOR_GROUPS = [
     {
       slug: "theme-colors",
-      title: (0, import_i18n206.__)("Theme Colors"),
+      title: (0, import_i18n207.__)("Theme Colors"),
       origin: "theme",
       type: "colors"
     },
     {
       slug: "theme-gradients",
-      title: (0, import_i18n206.__)("Theme Gradients"),
+      title: (0, import_i18n207.__)("Theme Gradients"),
       origin: "theme",
       type: "gradients"
     },
     {
       slug: "custom-colors",
-      title: (0, import_i18n206.__)("Custom Colors"),
+      title: (0, import_i18n207.__)("Custom Colors"),
       origin: "custom",
       type: "colors"
     },
     {
       slug: "custom-gradients",
-      title: (0, import_i18n206.__)("Custom Gradients"),
+      title: (0, import_i18n207.__)("Custom Gradients"),
       origin: "custom",
       // User.
       type: "gradients"
     },
     {
       slug: "duotones",
-      title: (0, import_i18n206.__)("Duotones"),
+      title: (0, import_i18n207.__)("Duotones"),
       origin: "theme",
       type: "duotones"
     },
     {
       slug: "default-colors",
-      title: (0, import_i18n206.__)("Default Colors"),
+      title: (0, import_i18n207.__)("Default Colors"),
       origin: "default",
       type: "colors"
     },
     {
       slug: "default-gradients",
-      title: (0, import_i18n206.__)("Default Gradients"),
+      title: (0, import_i18n207.__)("Default Gradients"),
       origin: "default",
       type: "gradients"
     }
@@ -79443,18 +79513,18 @@ If there's a particular need for this, please submit a feature request at https:
   var STYLE_BOOK_THEME_SUBCATEGORIES = [
     {
       slug: "site-identity",
-      title: (0, import_i18n206.__)("Site Identity"),
+      title: (0, import_i18n207.__)("Site Identity"),
       blocks: ["core/site-logo", "core/site-title", "core/site-tagline"]
     },
     {
       slug: "design",
-      title: (0, import_i18n206.__)("Design"),
+      title: (0, import_i18n207.__)("Design"),
       blocks: ["core/navigation", "core/avatar", "core/post-time-to-read"],
       exclude: ["core/home-link", "core/navigation-link"]
     },
     {
       slug: "posts",
-      title: (0, import_i18n206.__)("Posts"),
+      title: (0, import_i18n207.__)("Posts"),
       blocks: [
         "core/post-title",
         "core/post-excerpt",
@@ -79472,7 +79542,7 @@ If there's a particular need for this, please submit a feature request at https:
     },
     {
       slug: "comments",
-      title: (0, import_i18n206.__)("Comments"),
+      title: (0, import_i18n207.__)("Comments"),
       blocks: [
         "core/comments-title",
         "core/comments-pagination",
@@ -79492,12 +79562,12 @@ If there's a particular need for this, please submit a feature request at https:
   var STYLE_BOOK_CATEGORIES = [
     {
       slug: "overview",
-      title: (0, import_i18n206.__)("Overview"),
+      title: (0, import_i18n207.__)("Overview"),
       blocks: []
     },
     {
       slug: "text",
-      title: (0, import_i18n206.__)("Text"),
+      title: (0, import_i18n207.__)("Text"),
       blocks: [
         "core/post-content",
         "core/home-link",
@@ -79506,27 +79576,27 @@ If there's a particular need for this, please submit a feature request at https:
     },
     {
       slug: "colors",
-      title: (0, import_i18n206.__)("Colors"),
+      title: (0, import_i18n207.__)("Colors"),
       blocks: []
     },
     {
       slug: "theme",
-      title: (0, import_i18n206.__)("Theme"),
+      title: (0, import_i18n207.__)("Theme"),
       subcategories: STYLE_BOOK_THEME_SUBCATEGORIES
     },
     {
       slug: "media",
-      title: (0, import_i18n206.__)("Media"),
+      title: (0, import_i18n207.__)("Media"),
       blocks: ["core/post-featured-image"]
     },
     {
       slug: "widgets",
-      title: (0, import_i18n206.__)("Widgets"),
+      title: (0, import_i18n207.__)("Widgets"),
       blocks: []
     },
     {
       slug: "embed",
-      title: (0, import_i18n206.__)("Embeds"),
+      title: (0, import_i18n207.__)("Embeds"),
       include: []
     }
   ];
@@ -79534,29 +79604,29 @@ If there's a particular need for this, please submit a feature request at https:
     ...STYLE_BOOK_THEME_SUBCATEGORIES,
     {
       slug: "media",
-      title: (0, import_i18n206.__)("Media"),
+      title: (0, import_i18n207.__)("Media"),
       blocks: ["core/post-featured-image"]
     },
     {
       slug: "widgets",
-      title: (0, import_i18n206.__)("Widgets"),
+      title: (0, import_i18n207.__)("Widgets"),
       blocks: []
     },
     {
       slug: "embed",
-      title: (0, import_i18n206.__)("Embeds"),
+      title: (0, import_i18n207.__)("Embeds"),
       include: []
     }
   ];
   var STYLE_BOOK_PREVIEW_CATEGORIES = [
     {
       slug: "overview",
-      title: (0, import_i18n206.__)("Overview"),
+      title: (0, import_i18n207.__)("Overview"),
       blocks: []
     },
     {
       slug: "text",
-      title: (0, import_i18n206.__)("Text"),
+      title: (0, import_i18n207.__)("Text"),
       blocks: [
         "core/post-content",
         "core/home-link",
@@ -79565,12 +79635,12 @@ If there's a particular need for this, please submit a feature request at https:
     },
     {
       slug: "colors",
-      title: (0, import_i18n206.__)("Colors"),
+      title: (0, import_i18n207.__)("Colors"),
       blocks: []
     },
     {
       slug: "blocks",
-      title: (0, import_i18n206.__)("All Blocks"),
+      title: (0, import_i18n207.__)("All Blocks"),
       blocks: [],
       subcategories: STYLE_BOOK_ALL_BLOCKS_SUBCATEGORIES
     }
@@ -79734,7 +79804,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/style-book/examples.mjs
-  var import_i18n207 = __toESM(require_i18n(), 1);
+  var import_i18n208 = __toESM(require_i18n(), 1);
   var import_blocks22 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/components/style-book/color-examples.mjs
@@ -79860,7 +79930,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (themePalette) {
       const themeColorexample = {
         name: "theme-colors",
-        title: (0, import_i18n207.__)("Colors"),
+        title: (0, import_i18n208.__)("Colors"),
         category: "overview",
         content: /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
           color_examples_default,
@@ -79878,7 +79948,7 @@ If there's a particular need for this, please submit a feature request at https:
     if ((0, import_blocks22.getBlockType)("core/heading")) {
       const headingBlock = (0, import_blocks22.createBlock)("core/heading", {
         // translators: Typography example. Your local alphabet, numbers and some common special characters.
-        content: (0, import_i18n207.__)(
+        content: (0, import_i18n208.__)(
           `AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789X{(\u2026)},.-<>?!*&:/A@HELFO\u2122\xA9`
         ),
         level: 1
@@ -79887,12 +79957,12 @@ If there's a particular need for this, please submit a feature request at https:
     }
     if ((0, import_blocks22.getBlockType)("core/paragraph")) {
       const firstParagraphBlock = (0, import_blocks22.createBlock)("core/paragraph", {
-        content: (0, import_i18n207.__)(
+        content: (0, import_i18n208.__)(
           `A paragraph in a website refers to a distinct block of text that is used to present and organize information. It is a fundamental unit of content in web design and is typically composed of a group of related sentences or thoughts focused on a particular topic or idea. Paragraphs play a crucial role in improving the readability and user experience of a website. They break down the text into smaller, manageable chunks, allowing readers to scan the content more easily.`
         )
       });
       const secondParagraphBlock = (0, import_blocks22.createBlock)("core/paragraph", {
-        content: (0, import_i18n207.__)(
+        content: (0, import_i18n208.__)(
           `Additionally, paragraphs help structure the flow of information and provide logical breaks between different concepts or pieces of information. In terms of formatting, paragraphs in websites are commonly denoted by a vertical gap or indentation between each block of text. This visual separation helps visually distinguish one paragraph from another, creating a clear and organized layout that guides the reader through the content smoothly.`
         )
       });
@@ -79921,7 +79991,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!!typographyBlockExamples.length) {
       examples.push({
         name: "typography",
-        title: (0, import_i18n207.__)("Typography"),
+        title: (0, import_i18n208.__)("Typography"),
         category: "overview",
         blocks: typographyBlockExamples
       });
@@ -79985,13 +80055,13 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const headingsExample = {
       name: "core/heading",
-      title: (0, import_i18n207.__)("Headings"),
+      title: (0, import_i18n208.__)("Headings"),
       category: "text",
       blocks: [1, 2, 3, 4, 5, 6].map((level) => {
         return (0, import_blocks22.createBlock)("core/heading", {
-          content: (0, import_i18n207.sprintf)(
+          content: (0, import_i18n208.sprintf)(
             // translators: %d: heading level e.g: "1", "2", "3"
-            (0, import_i18n207.__)("Heading %d"),
+            (0, import_i18n208.__)("Heading %d"),
             level
           ),
           level
@@ -80124,7 +80194,7 @@ If there's a particular need for this, please submit a feature request at https:
       const result = { colors: colors2, gradients, duotones: [] };
       if (themeDuotones && themeDuotones.length) {
         result.duotones.push({
-          name: (0, import_i18n208._x)(
+          name: (0, import_i18n209._x)(
             "Theme",
             "Indicates these duotone filters come from the theme."
           ),
@@ -80134,7 +80204,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       if (shouldDisplayDefaultDuotones && defaultDuotones && defaultDuotones.length) {
         result.duotones.push({
-          name: (0, import_i18n208._x)(
+          name: (0, import_i18n209._x)(
             "Default",
             "Indicates these duotone filters come from WordPress."
           ),
@@ -80144,7 +80214,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       if (customDuotones && customDuotones.length) {
         result.duotones.push({
-          name: (0, import_i18n208._x)(
+          name: (0, import_i18n209._x)(
             "Custom",
             "Indicates these doutone filters are created by the user."
           ),
@@ -80510,11 +80580,11 @@ If there's a particular need for this, please submit a feature request at https:
             {
               className: "editor-style-book__examples",
               filteredExamples: examples,
-              label: title ? (0, import_i18n208.sprintf)(
+              label: title ? (0, import_i18n209.sprintf)(
                 // translators: %s: Category of blocks, e.g. Text.
-                (0, import_i18n208.__)("Examples of blocks in the %s category"),
+                (0, import_i18n209.__)("Examples of blocks in the %s category"),
                 title
-              ) : (0, import_i18n208.__)("Examples of blocks"),
+              ) : (0, import_i18n209.__)("Examples of blocks"),
               isSelected: isSelected2,
               onSelect
             },
@@ -80617,9 +80687,9 @@ If there's a particular need for this, please submit a feature request at https:
           "is-disabled-example": !!disabledProps?.disabled
         }),
         id,
-        "aria-label": !!onClick ? (0, import_i18n208.sprintf)(
+        "aria-label": !!onClick ? (0, import_i18n209.sprintf)(
           // translators: %s: Title of a block, e.g. Heading.
-          (0, import_i18n208.__)("Open %s styles in Styles panel"),
+          (0, import_i18n209.__)("Open %s styles in Styles panel"),
           title
         ) : void 0,
         render: /* @__PURE__ */ (0, import_jsx_runtime380.jsx)("div", {}),
@@ -80840,7 +80910,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components161 = __toESM(require_components(), 1);
 
   // packages/editor/build-module/components/resizable-editor/resize-handle.mjs
-  var import_i18n209 = __toESM(require_i18n(), 1);
+  var import_i18n210 = __toESM(require_i18n(), 1);
   var import_keycodes9 = __toESM(require_keycodes(), 1);
   var import_components160 = __toESM(require_components(), 1);
   var import_jsx_runtime383 = __toESM(require_jsx_runtime(), 1);
@@ -80874,7 +80944,7 @@ If there's a particular need for this, please submit a feature request at https:
               import_components160.__unstableMotion.button,
               {
                 className: `editor-resizable-editor__resize-handle is-${direction}`,
-                "aria-label": (0, import_i18n209.__)("Drag to resize"),
+                "aria-label": (0, import_i18n210.__)("Drag to resize"),
                 "aria-describedby": resizableHandleHelpId,
                 onKeyDown: handleKeyDown,
                 variants: resizeHandleVariants,
@@ -80888,9 +80958,9 @@ If there's a particular need for this, please submit a feature request at https:
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(tooltip_exports.Popup, { children: (0, import_i18n209.__)("Drag to resize") })
+        /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(tooltip_exports.Popup, { children: (0, import_i18n210.__)("Drag to resize") })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(VisuallyHidden, { id: resizableHandleHelpId, children: (0, import_i18n209.__)("Use left and right arrow keys to resize the canvas.") })
+      /* @__PURE__ */ (0, import_jsx_runtime383.jsx)(VisuallyHidden, { id: resizableHandleHelpId, children: (0, import_i18n210.__)("Use left and right arrow keys to resize the canvas.") })
     ] });
   }
 
@@ -81018,10 +81088,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime385 = __toESM(require_jsx_runtime(), 1);
   function getStylesCanvasTitle(path, showStylebook2) {
     if (showStylebook2) {
-      return (0, import_i18n210.__)("Style Book");
+      return (0, import_i18n211.__)("Style Book");
     }
     if (path?.startsWith("/revisions")) {
-      return (0, import_i18n210.__)("Style Revisions");
+      return (0, import_i18n211.__)("Style Revisions");
     }
     return "";
   }
@@ -81093,7 +81163,7 @@ If there's a particular need for this, please submit a feature request at https:
               size: "compact",
               className: "editor-styles-canvas__close-button",
               icon: close_small_default,
-              label: (0, import_i18n210.__)("Close"),
+              label: (0, import_i18n211.__)("Close"),
               onClick: onCloseCanvas
             }
           ),
@@ -81271,14 +81341,14 @@ If there's a particular need for this, please submit a feature request at https:
             MotionButton,
             {
               className: "editor-document-bar__back",
-              icon: (0, import_i18n211.isRTL)() ? chevron_right_small_default : chevron_left_small_default,
+              icon: (0, import_i18n212.isRTL)() ? chevron_right_small_default : chevron_left_small_default,
               onClick: handleBackClick,
               size: "compact",
               initial: mountedRef.current ? { opacity: 0, transform: "translateX(15%)" } : false,
               animate: { opacity: 1, transform: "translateX(0%)" },
               exit: { opacity: 0, transform: "translateX(15%)" },
               transition: isReducedMotion ? { duration: 0 } : void 0,
-              children: (0, import_i18n211.__)("Back")
+              children: (0, import_i18n212.__)("Back")
             }
           ) }),
           !isTemplate2 && isTemplatePreview && !hasBackButton && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
@@ -81288,7 +81358,7 @@ If there's a particular need for this, please submit a feature request at https:
               className: "editor-document-bar__icon-layout"
             }
           ),
-          isNotFound ? /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(import_components163.__experimentalText, { children: (0, import_i18n211.__)("Document not found") }) : /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
+          isNotFound ? /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(import_components163.__experimentalText, { children: (0, import_i18n212.__)("Document not found") }) : /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(
             import_components163.Button,
             {
               className: "editor-document-bar__command",
@@ -81310,8 +81380,8 @@ If there's a particular need for this, please submit a feature request at https:
                   children: [
                     icon && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(import_block_editor41.BlockIcon, { icon }),
                     /* @__PURE__ */ (0, import_jsx_runtime386.jsxs)(import_components163.__experimentalText, { size: "body", as: "h1", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime386.jsx)("span", { className: "editor-document-bar__post-title", children: title ? (0, import_dom23.__unstableStripHTML)(title) : (0, import_i18n211.__)("No title") }),
-                      unlockedPatternInfo && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)("span", { className: "editor-document-bar__post-type-label", children: unlockedPatternInfo.type === "template-part" ? `\xB7 ${(0, import_i18n211.__)("Template Part")}` : `\xB7 ${(0, import_i18n211.__)("Pattern")}` }),
+                      /* @__PURE__ */ (0, import_jsx_runtime386.jsx)("span", { className: "editor-document-bar__post-title", children: title ? (0, import_dom23.__unstableStripHTML)(title) : (0, import_i18n212.__)("No title") }),
+                      unlockedPatternInfo && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)("span", { className: "editor-document-bar__post-type-label", children: unlockedPatternInfo.type === "template-part" ? `\xB7 ${(0, import_i18n212.__)("Template Part")}` : `\xB7 ${(0, import_i18n212.__)("Pattern")}` }),
                       !unlockedPatternInfo && pageTypeBadge && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)("span", { className: "editor-document-bar__post-type-label", children: `\xB7 ${pageTypeBadge}` }),
                       !unlockedPatternInfo && postTypeLabel && !props.title && !pageTypeBadge && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)("span", { className: "editor-document-bar__post-type-label", children: `\xB7 ${(0, import_html_entities15.decodeEntities)(
                         postTypeLabel
@@ -81329,10 +81399,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/document-outline/index.mjs
-  var import_i18n212 = __toESM(require_i18n(), 1);
+  var import_i18n213 = __toESM(require_i18n(), 1);
   var import_data100 = __toESM(require_data(), 1);
   var import_element228 = __toESM(require_element(), 1);
-  var import_rich_text4 = __toESM(require_rich_text(), 1);
+  var import_rich_text5 = __toESM(require_rich_text(), 1);
   var import_block_editor42 = __toESM(require_block_editor(), 1);
   var import_core_data65 = __toESM(require_core_data(), 1);
   var import_components164 = __toESM(require_components(), 1);
@@ -81392,18 +81462,18 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/document-outline/index.mjs
   var import_jsx_runtime388 = __toESM(require_jsx_runtime(), 1);
-  var emptyHeadingContent = /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("em", { children: (0, import_i18n212.__)("(Empty heading)") });
+  var emptyHeadingContent = /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("em", { children: (0, import_i18n213.__)("(Empty heading)") });
   var incorrectLevelContent = [
     /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("br", {}, "incorrect-break"),
-    /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("em", { children: (0, import_i18n212.__)("(Incorrect heading level)") }, "incorrect-message")
+    /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("em", { children: (0, import_i18n213.__)("(Incorrect heading level)") }, "incorrect-message")
   ];
   var singleH1Headings = [
     /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("br", {}, "incorrect-break-h1"),
-    /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("em", { children: (0, import_i18n212.__)("(Your theme may already use a H1 for the post title)") }, "incorrect-message-h1")
+    /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("em", { children: (0, import_i18n213.__)("(Your theme may already use a H1 for the post title)") }, "incorrect-message-h1")
   ];
   var multipleH1Headings = [
     /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("br", {}, "incorrect-break-multiple-h1"),
-    /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("em", { children: (0, import_i18n212.__)("(Multiple H1 headings are not recommended)") }, "incorrect-message-multiple-h1")
+    /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("em", { children: (0, import_i18n213.__)("(Multiple H1 headings are not recommended)") }, "incorrect-message-multiple-h1")
   ];
   function EmptyOutlineIllustration() {
     return /* @__PURE__ */ (0, import_jsx_runtime388.jsxs)(
@@ -81502,7 +81572,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (headings.length < 1) {
       return /* @__PURE__ */ (0, import_jsx_runtime388.jsxs)("div", { className: "editor-document-outline has-no-headings", children: [
         /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(EmptyOutlineIllustration, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("p", { children: (0, import_i18n212.__)(
+        /* @__PURE__ */ (0, import_jsx_runtime388.jsx)("p", { children: (0, import_i18n213.__)(
           "Navigate the structure of your document and address issues like empty or incorrect heading levels."
         ) })
       ] });
@@ -81524,7 +81594,7 @@ If there's a particular need for this, please submit a feature request at https:
       hasTitle && /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
         item_default,
         {
-          level: (0, import_i18n212.__)("Title"),
+          level: (0, import_i18n213.__)("Title"),
           isValid: true,
           onSelect,
           href: `#${titleNode.id}`,
@@ -81548,8 +81618,8 @@ If there's a particular need for this, please submit a feature request at https:
               onSelect?.();
             },
             children: [
-              item.isEmpty ? emptyHeadingContent : (0, import_rich_text4.getTextContent)(
-                (0, import_rich_text4.create)({
+              item.isEmpty ? emptyHeadingContent : (0, import_rich_text5.getTextContent)(
+                (0, import_rich_text5.create)({
                   html: item.attributes.content
                 })
               ),
@@ -81581,7 +81651,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/global-keyboard-shortcuts/register-shortcuts.mjs
   var import_element229 = __toESM(require_element(), 1);
   var import_data102 = __toESM(require_data(), 1);
-  var import_i18n213 = __toESM(require_i18n(), 1);
+  var import_i18n214 = __toESM(require_i18n(), 1);
   var import_block_editor44 = __toESM(require_block_editor(), 1);
   var import_keyboard_shortcuts5 = __toESM(require_keyboard_shortcuts(), 1);
   var import_keycodes11 = __toESM(require_keycodes(), 1);
@@ -81592,7 +81662,7 @@ If there's a particular need for this, please submit a feature request at https:
       registerShortcut({
         name: "core/editor/toggle-mode",
         category: "global",
-        description: (0, import_i18n213.__)("Switch between visual editor and code editor."),
+        description: (0, import_i18n214.__)("Switch between visual editor and code editor."),
         keyCombination: {
           modifier: "secondary",
           character: "m"
@@ -81601,7 +81671,7 @@ If there's a particular need for this, please submit a feature request at https:
       registerShortcut({
         name: "core/editor/save",
         category: "global",
-        description: (0, import_i18n213.__)("Save your changes."),
+        description: (0, import_i18n214.__)("Save your changes."),
         keyCombination: {
           modifier: "primary",
           character: "s"
@@ -81610,7 +81680,7 @@ If there's a particular need for this, please submit a feature request at https:
       registerShortcut({
         name: "core/editor/undo",
         category: "global",
-        description: (0, import_i18n213.__)("Undo your last changes."),
+        description: (0, import_i18n214.__)("Undo your last changes."),
         keyCombination: {
           modifier: "primary",
           character: "z"
@@ -81619,7 +81689,7 @@ If there's a particular need for this, please submit a feature request at https:
       registerShortcut({
         name: "core/editor/redo",
         category: "global",
-        description: (0, import_i18n213.__)("Redo your last undo."),
+        description: (0, import_i18n214.__)("Redo your last undo."),
         keyCombination: {
           modifier: "primaryShift",
           character: "z"
@@ -81638,7 +81708,7 @@ If there's a particular need for this, please submit a feature request at https:
       registerShortcut({
         name: "core/editor/toggle-list-view",
         category: "global",
-        description: (0, import_i18n213.__)("Show or hide the List View."),
+        description: (0, import_i18n214.__)("Show or hide the List View."),
         keyCombination: {
           modifier: "access",
           character: "o"
@@ -81647,7 +81717,7 @@ If there's a particular need for this, please submit a feature request at https:
       registerShortcut({
         name: "core/editor/toggle-distraction-free",
         category: "global",
-        description: (0, import_i18n213.__)("Enter or exit distraction free mode."),
+        description: (0, import_i18n214.__)("Enter or exit distraction free mode."),
         keyCombination: {
           modifier: "primaryShift",
           character: "\\"
@@ -81656,7 +81726,7 @@ If there's a particular need for this, please submit a feature request at https:
       registerShortcut({
         name: "core/editor/toggle-sidebar",
         category: "global",
-        description: (0, import_i18n213.__)("Show or hide the Settings panel."),
+        description: (0, import_i18n214.__)("Show or hide the Settings panel."),
         keyCombination: {
           modifier: "primaryShift",
           character: ","
@@ -81665,7 +81735,7 @@ If there's a particular need for this, please submit a feature request at https:
       registerShortcut({
         name: "core/editor/keyboard-shortcuts",
         category: "main",
-        description: (0, import_i18n213.__)("Display these keyboard shortcuts."),
+        description: (0, import_i18n214.__)("Display these keyboard shortcuts."),
         keyCombination: {
           modifier: "access",
           character: "h"
@@ -81674,7 +81744,7 @@ If there's a particular need for this, please submit a feature request at https:
       registerShortcut({
         name: "core/editor/new-note",
         category: "block",
-        description: (0, import_i18n213.__)("Add a new note."),
+        description: (0, import_i18n214.__)("Add a new note."),
         keyCombination: {
           modifier: "primaryAlt",
           character: "m"
@@ -81683,7 +81753,7 @@ If there's a particular need for this, please submit a feature request at https:
       registerShortcut({
         name: "core/editor/next-region",
         category: "global",
-        description: (0, import_i18n213.__)("Navigate to the next part of the editor."),
+        description: (0, import_i18n214.__)("Navigate to the next part of the editor."),
         keyCombination: {
           modifier: "ctrl",
           character: "`"
@@ -81698,7 +81768,7 @@ If there's a particular need for this, please submit a feature request at https:
       registerShortcut({
         name: "core/editor/previous-region",
         category: "global",
-        description: (0, import_i18n213.__)("Navigate to the previous part of the editor."),
+        description: (0, import_i18n214.__)("Navigate to the previous part of the editor."),
         keyCombination: {
           modifier: "ctrlShift",
           character: "`"
@@ -81720,7 +81790,7 @@ If there's a particular need for this, please submit a feature request at https:
   var register_shortcuts_default = EditorKeyboardShortcutsRegister;
 
   // packages/editor/build-module/components/editor-history/redo.mjs
-  var import_i18n214 = __toESM(require_i18n(), 1);
+  var import_i18n215 = __toESM(require_i18n(), 1);
   var import_components165 = __toESM(require_components(), 1);
   var import_data103 = __toESM(require_data(), 1);
   var import_keycodes12 = __toESM(require_keycodes(), 1);
@@ -81739,8 +81809,8 @@ If there's a particular need for this, please submit a feature request at https:
         __next40pxDefaultSize: true,
         ...props,
         ref,
-        icon: !(0, import_i18n214.isRTL)() ? redo_default : undo_default,
-        label: (0, import_i18n214.__)("Redo"),
+        icon: !(0, import_i18n215.isRTL)() ? redo_default : undo_default,
+        label: (0, import_i18n215.__)("Redo"),
         shortcut,
         "aria-disabled": !hasRedo,
         onClick: hasRedo ? redo2 : void 0,
@@ -81751,7 +81821,7 @@ If there's a particular need for this, please submit a feature request at https:
   var redo_default2 = (0, import_element230.forwardRef)(EditorHistoryRedo);
 
   // packages/editor/build-module/components/editor-history/undo.mjs
-  var import_i18n215 = __toESM(require_i18n(), 1);
+  var import_i18n216 = __toESM(require_i18n(), 1);
   var import_components166 = __toESM(require_components(), 1);
   var import_data104 = __toESM(require_data(), 1);
   var import_keycodes13 = __toESM(require_keycodes(), 1);
@@ -81769,8 +81839,8 @@ If there's a particular need for this, please submit a feature request at https:
         __next40pxDefaultSize: true,
         ...props,
         ref,
-        icon: !(0, import_i18n215.isRTL)() ? undo_default : redo_default,
-        label: (0, import_i18n215.__)("Undo"),
+        icon: !(0, import_i18n216.isRTL)() ? undo_default : redo_default,
+        label: (0, import_i18n216.__)("Undo"),
         shortcut: import_keycodes13.displayShortcut.primary("z"),
         "aria-disabled": !hasUndo,
         onClick: hasUndo ? undo2 : void 0,
@@ -81788,7 +81858,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/template-validation-notice/index.mjs
   var import_components167 = __toESM(require_components(), 1);
-  var import_i18n216 = __toESM(require_i18n(), 1);
+  var import_i18n217 = __toESM(require_i18n(), 1);
   var import_data105 = __toESM(require_data(), 1);
   var import_element232 = __toESM(require_element(), 1);
   var import_block_editor45 = __toESM(require_block_editor(), 1);
@@ -81811,15 +81881,15 @@ If there's a particular need for this, please submit a feature request at https:
           status: "warning",
           actions: [
             {
-              label: (0, import_i18n216.__)("Keep it as is"),
+              label: (0, import_i18n217.__)("Keep it as is"),
               onClick: () => setTemplateValidity2(true)
             },
             {
-              label: (0, import_i18n216.__)("Reset the template"),
+              label: (0, import_i18n217.__)("Reset the template"),
               onClick: () => setShowConfirmDialog(true)
             }
           ],
-          children: (0, import_i18n216.__)(
+          children: (0, import_i18n217.__)(
             "The content of your post doesn\u2019t match the template assigned to your post type."
           )
         }
@@ -81828,14 +81898,14 @@ If there's a particular need for this, please submit a feature request at https:
         import_components167.__experimentalConfirmDialog,
         {
           isOpen: showConfirmDialog,
-          confirmButtonText: (0, import_i18n216.__)("Reset"),
+          confirmButtonText: (0, import_i18n217.__)("Reset"),
           onConfirm: () => {
             setShowConfirmDialog(false);
             synchronizeTemplate2();
           },
           onCancel: () => setShowConfirmDialog(false),
           size: "medium",
-          children: (0, import_i18n216.__)(
+          children: (0, import_i18n217.__)(
             "Resetting the template may result in loss of content, do you want to continue?"
           )
         }
@@ -81880,20 +81950,20 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/entities-saved-states/index.mjs
   var import_components170 = __toESM(require_components(), 1);
-  var import_i18n219 = __toESM(require_i18n(), 1);
+  var import_i18n220 = __toESM(require_i18n(), 1);
   var import_element234 = __toESM(require_element(), 1);
   var import_compose38 = __toESM(require_compose(), 1);
   var import_data110 = __toESM(require_data(), 1);
 
   // packages/editor/build-module/components/entities-saved-states/entity-type-list.mjs
-  var import_i18n218 = __toESM(require_i18n(), 1);
+  var import_i18n219 = __toESM(require_i18n(), 1);
   var import_data108 = __toESM(require_data(), 1);
   var import_components169 = __toESM(require_components(), 1);
   var import_core_data67 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/entities-saved-states/entity-record-item.mjs
   var import_components168 = __toESM(require_components(), 1);
-  var import_i18n217 = __toESM(require_i18n(), 1);
+  var import_i18n218 = __toESM(require_i18n(), 1);
   var import_data107 = __toESM(require_data(), 1);
   var import_core_data66 = __toESM(require_core_data(), 1);
   var import_html_entities16 = __toESM(require_html_entities(), 1);
@@ -81932,13 +82002,13 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(import_components168.PanelRow, { children: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
         import_components168.CheckboxControl,
         {
-          label: (0, import_html_entities16.decodeEntities)(entityRecordTitle) || (0, import_i18n217.__)("Untitled"),
+          label: (0, import_html_entities16.decodeEntities)(entityRecordTitle) || (0, import_i18n218.__)("Untitled"),
           checked,
           onChange,
           className: "entities-saved-states__change-control"
         }
       ) }),
-      hasPostMetaChanges2 && /* @__PURE__ */ (0, import_jsx_runtime395.jsx)("ul", { className: "entities-saved-states__changes", children: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)("li", { children: (0, import_i18n217.__)("Post Meta.") }) })
+      hasPostMetaChanges2 && /* @__PURE__ */ (0, import_jsx_runtime395.jsx)("ul", { className: "entities-saved-states__changes", children: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)("li", { children: (0, import_i18n218.__)("Post Meta.") }) })
     ] });
   }
 
@@ -81947,14 +82017,14 @@ If there's a particular need for this, please submit a feature request at https:
   function getEntityDescription(entity, count) {
     switch (entity) {
       case "site":
-        return 1 === count ? (0, import_i18n218.__)("This change will affect your whole site.") : (0, import_i18n218.__)("These changes will affect your whole site.");
+        return 1 === count ? (0, import_i18n219.__)("This change will affect your whole site.") : (0, import_i18n219.__)("These changes will affect your whole site.");
       case "wp_template":
-        return (0, import_i18n218.__)(
+        return (0, import_i18n219.__)(
           "This change will affect other parts of your site that use this template."
         );
       case "page":
       case "post":
-        return (0, import_i18n218.__)("The following has been modified.");
+        return (0, import_i18n219.__)("The following has been modified.");
     }
   }
   function GlobalStylesDescription({ record }) {
@@ -82008,7 +82078,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     let entityLabel = entityConfig.label;
     if (firstRecord?.name === "wp_template_part") {
-      entityLabel = 1 === count ? (0, import_i18n218.__)("Template Part") : (0, import_i18n218.__)("Template Parts");
+      entityLabel = 1 === count ? (0, import_i18n219.__)("Template Part") : (0, import_i18n219.__)("Template Parts");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime396.jsxs)(
       import_components169.PanelBody,
@@ -82129,7 +82199,7 @@ If there's a particular need for this, please submit a feature request at https:
     close,
     onSave = void 0,
     saveEnabled: saveEnabledProp = void 0,
-    saveLabel = (0, import_i18n219.__)("Save"),
+    saveLabel = (0, import_i18n220.__)("Save"),
     renderDialog,
     dirtyEntityRecords,
     isDirty,
@@ -82173,7 +82243,7 @@ If there's a particular need for this, please submit a feature request at https:
       EntitiesSavedStatesExtensible,
       "entities-saved-states__panel-description"
     );
-    const selectItemsToSaveDescription = !!dirtyEntityRecords.length ? (0, import_i18n219.__)("Select the items you want to save.") : void 0;
+    const selectItemsToSaveDescription = !!dirtyEntityRecords.length ? (0, import_i18n220.__)("Select the items you want to save.") : void 0;
     const isInline = variant === "inline";
     const actionButtons = /* @__PURE__ */ (0, import_jsx_runtime397.jsxs)(import_jsx_runtime397.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
@@ -82184,7 +82254,7 @@ If there's a particular need for this, please submit a feature request at https:
           variant: isInline ? "tertiary" : "secondary",
           size: isInline ? void 0 : "compact",
           onClick: dismissPanel,
-          children: (0, import_i18n219.__)("Cancel")
+          children: (0, import_i18n220.__)("Cancel")
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(
@@ -82228,15 +82298,15 @@ If there's a particular need for this, please submit a feature request at https:
               {
                 id: renderDialog ? dialogLabelId : void 0,
                 className: "entities-saved-states__text-prompt--header",
-                children: (0, import_i18n219.__)("Are you ready to save?")
+                children: (0, import_i18n220.__)("Are you ready to save?")
               }
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime397.jsxs)("div", { id: renderDialog ? dialogDescriptionId : void 0, children: [
               additionalPrompt,
               /* @__PURE__ */ (0, import_jsx_runtime397.jsx)("p", { className: "entities-saved-states__text-prompt--changes-count", children: isDirty ? (0, import_element234.createInterpolateElement)(
-                (0, import_i18n219.sprintf)(
+                (0, import_i18n220.sprintf)(
                   /* translators: %d: number of site changes waiting to be saved. */
-                  (0, import_i18n219._n)(
+                  (0, import_i18n220._n)(
                     "There is <strong>%d site change</strong> waiting to be saved.",
                     "There are <strong>%d site changes</strong> waiting to be saved.",
                     dirtyEntityRecords.length
@@ -82274,7 +82344,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/error-boundary/index.mjs
   var import_element235 = __toESM(require_element(), 1);
-  var import_i18n220 = __toESM(require_i18n(), 1);
+  var import_i18n221 = __toESM(require_i18n(), 1);
   var import_components171 = __toESM(require_components(), 1);
   var import_data111 = __toESM(require_data(), 1);
   var import_compose39 = __toESM(require_compose(), 1);
@@ -82319,10 +82389,10 @@ If there's a particular need for this, please submit a feature request at https:
           expanded: false,
           wrap: true,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(import_components171.__experimentalText, { as: "p", children: (0, import_i18n220.__)("The editor has encountered an unexpected error.") }),
+            /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(import_components171.__experimentalText, { as: "p", children: (0, import_i18n221.__)("The editor has encountered an unexpected error.") }),
             /* @__PURE__ */ (0, import_jsx_runtime398.jsxs)(import_components171.__experimentalHStack, { expanded: false, children: [
-              canCopyContent && /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(CopyButton, { text: getContent, children: (0, import_i18n220.__)("Copy contents") }),
-              /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(CopyButton, { variant: "primary", text: error2?.stack, children: (0, import_i18n220.__)("Copy error") })
+              canCopyContent && /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(CopyButton, { text: getContent, children: (0, import_i18n221.__)("Copy contents") }),
+              /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(CopyButton, { variant: "primary", text: error2?.stack, children: (0, import_i18n221.__)("Copy error") })
             ] })
           ]
         }
@@ -82335,7 +82405,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element236 = __toESM(require_element(), 1);
   var import_compose40 = __toESM(require_compose(), 1);
   var import_data112 = __toESM(require_data(), 1);
-  var import_i18n221 = __toESM(require_i18n(), 1);
+  var import_i18n222 = __toESM(require_i18n(), 1);
   var import_blocks24 = __toESM(require_blocks(), 1);
   var import_notices23 = __toESM(require_notices(), 1);
   var import_jsx_runtime399 = __toESM(require_jsx_runtime(), 1);
@@ -82391,14 +82461,14 @@ If there's a particular need for this, please submit a feature request at https:
       const { editPost: editPost2, resetEditorBlocks: resetEditorBlocks2 } = registry.dispatch(store);
       const id = "wpEditorAutosaveRestore";
       createWarningNotice(
-        (0, import_i18n221.__)(
+        (0, import_i18n222.__)(
           "The backup of this post in your browser is different from the version below."
         ),
         {
           id,
           actions: [
             {
-              label: (0, import_i18n221.__)("Restore the backup"),
+              label: (0, import_i18n222.__)("Restore the backup"),
               onClick() {
                 const {
                   content: editsContent,
@@ -82481,7 +82551,7 @@ If there's a particular need for this, please submit a feature request at https:
   var check_default2 = PageAttributesCheck;
 
   // packages/editor/build-module/components/page-attributes/order.mjs
-  var import_i18n222 = __toESM(require_i18n(), 1);
+  var import_i18n223 = __toESM(require_i18n(), 1);
   var import_components172 = __toESM(require_components(), 1);
   var import_data115 = __toESM(require_data(), 1);
   var import_element237 = __toESM(require_element(), 1);
@@ -82534,8 +82604,8 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(import_components172.Flex, { children: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(import_components172.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime400.jsx)(
       import_components172.__experimentalNumberControl,
       {
-        label: (0, import_i18n222.__)("Order"),
-        help: (0, import_i18n222.__)("Set the page order."),
+        label: (0, import_i18n223.__)("Order"),
+        help: (0, import_i18n223.__)("Set the page order."),
         value,
         onChange: setUpdatedOrder,
         hideLabelFromVision: true,
@@ -82555,7 +82625,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/page-attributes/parent.mjs
   var import_remove_accents4 = __toESM(require_remove_accents(), 1);
-  var import_i18n223 = __toESM(require_i18n(), 1);
+  var import_i18n224 = __toESM(require_i18n(), 1);
   var import_components174 = __toESM(require_components(), 1);
   var import_compose41 = __toESM(require_compose(), 1);
   var import_element239 = __toESM(require_element(), 1);
@@ -82637,7 +82707,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/page-attributes/parent.mjs
   var import_jsx_runtime402 = __toESM(require_jsx_runtime(), 1);
   function getTitle(post2) {
-    return post2?.title?.rendered ? (0, import_html_entities18.decodeEntities)(post2.title.rendered) : `#${post2.id} (${(0, import_i18n223.__)("no title")})`;
+    return post2?.title?.rendered ? (0, import_html_entities18.decodeEntities)(post2.title.rendered) : `#${post2.id} (${(0, import_i18n224.__)("no title")})`;
   }
   var getItemPriority2 = (name2, searchValue) => {
     const normalizedName = (0, import_remove_accents4.default)(name2 || "").toLowerCase();
@@ -82754,8 +82824,8 @@ If there's a particular need for this, please submit a feature request at https:
       import_components174.ComboboxControl,
       {
         className: "editor-page-attributes__parent",
-        label: (0, import_i18n223.__)("Parent"),
-        help: (0, import_i18n223.__)("Choose a parent page."),
+        label: (0, import_i18n224.__)("Parent"),
+        help: (0, import_i18n224.__)("Choose a parent page."),
         value: parentPostId,
         options: parentOptions,
         onFilterValueChange: (0, import_compose41.debounce)(handleKeydown, 300),
@@ -82777,7 +82847,7 @@ If there's a particular need for this, please submit a feature request at https:
       return getEntityRecord("postType", postTypeSlug, parentPostId);
     }, []);
     const parentTitle = (0, import_element239.useMemo)(
-      () => !parentPost ? (0, import_i18n223.__)("None") : getTitle(parentPost),
+      () => !parentPost ? (0, import_i18n224.__)("None") : getTitle(parentPost),
       [parentPost]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
@@ -82789,7 +82859,7 @@ If there's a particular need for this, please submit a feature request at https:
         "aria-expanded": isOpen2,
         "aria-label": (
           // translators: %s: Current post parent.
-          (0, import_i18n223.sprintf)((0, import_i18n223.__)("Change parent: %s"), parentTitle)
+          (0, import_i18n224.sprintf)((0, import_i18n224.__)("Change parent: %s"), parentTitle)
         ),
         onClick,
         children: parentTitle
@@ -82812,7 +82882,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [popoverAnchor]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(post_panel_row_default, { label: (0, import_i18n223.__)("Parent"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(post_panel_row_default, { label: (0, import_i18n224.__)("Parent"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
       import_components174.Dropdown,
       {
         popoverProps,
@@ -82824,15 +82894,15 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
             import_block_editor47.__experimentalInspectorPopoverHeader,
             {
-              title: (0, import_i18n223.__)("Parent"),
+              title: (0, import_i18n224.__)("Parent"),
               onClose
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime402.jsxs)("div", { children: [
             (0, import_element239.createInterpolateElement)(
-              (0, import_i18n223.sprintf)(
+              (0, import_i18n224.sprintf)(
                 /* translators: %s: The home URL of the WordPress installation without the scheme. */
-                (0, import_i18n223.__)(
+                (0, import_i18n224.__)(
                   'Child pages inherit characteristics from their parent, such as URL structure. For instance, if "Pricing" is a child of "Services", its URL would be %s<wbr />/services<wbr />/pricing.'
                 ),
                 (0, import_url16.filterURLForDisplay)(homeUrl).replace(
@@ -82845,14 +82915,14 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime402.jsx)("p", { children: (0, import_element239.createInterpolateElement)(
-              (0, import_i18n223.__)(
+              (0, import_i18n224.__)(
                 "They also show up as sub-items in the default navigation menu. <a>Learn more.</a>"
               ),
               {
                 a: /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
                   import_components174.ExternalLink,
                   {
-                    href: (0, import_i18n223.__)(
+                    href: (0, import_i18n224.__)(
                       "https://wordpress.org/documentation/article/page-post-settings-sidebar/#page-attributes"
                     )
                   }
@@ -82889,7 +82959,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-template/classic-theme.mjs
-  var import_i18n226 = __toESM(require_i18n(), 1);
+  var import_i18n227 = __toESM(require_i18n(), 1);
   var import_components176 = __toESM(require_components(), 1);
   var import_data120 = __toESM(require_data(), 1);
   var import_core_data74 = __toESM(require_core_data(), 1);
@@ -82902,9 +82972,9 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element240 = __toESM(require_element(), 1);
   var import_blocks25 = __toESM(require_blocks(), 1);
   var import_components175 = __toESM(require_components(), 1);
-  var import_i18n224 = __toESM(require_i18n(), 1);
+  var import_i18n225 = __toESM(require_i18n(), 1);
   var import_jsx_runtime404 = __toESM(require_jsx_runtime(), 1);
-  var DEFAULT_TITLE = (0, import_i18n224.__)("Custom Template");
+  var DEFAULT_TITLE = (0, import_i18n225.__)("Custom Template");
   function CreateNewTemplateModal({ onClose }) {
     const { defaultBlockTemplate, onNavigateToEntityRecord } = (0, import_data118.useSelect)(
       (select9) => {
@@ -82977,7 +83047,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
       import_components175.Modal,
       {
-        title: (0, import_i18n224.__)("Create custom template"),
+        title: (0, import_i18n225.__)("Create custom template"),
         onRequestClose: cancel,
         focusOnMount: "firstContentElement",
         size: "small",
@@ -82986,12 +83056,12 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
             import_components175.TextControl,
             {
-              label: (0, import_i18n224.__)("Name"),
+              label: (0, import_i18n225.__)("Name"),
               value: title,
               onChange: setTitle,
               placeholder: DEFAULT_TITLE,
               disabled: isBusy,
-              help: (0, import_i18n224.__)(
+              help: (0, import_i18n225.__)(
                 // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
                 'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.'
               )
@@ -83004,7 +83074,7 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: cancel,
-                children: (0, import_i18n224.__)("Cancel")
+                children: (0, import_i18n225.__)("Cancel")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
@@ -83015,7 +83085,7 @@ If there's a particular need for this, please submit a feature request at https:
                 type: "submit",
                 isBusy,
                 "aria-disabled": isBusy,
-                children: (0, import_i18n224.__)("Create")
+                children: (0, import_i18n225.__)("Create")
               }
             )
           ] })
@@ -83028,7 +83098,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data119 = __toESM(require_data(), 1);
   var import_element241 = __toESM(require_element(), 1);
   var import_core_data73 = __toESM(require_core_data(), 1);
-  var import_i18n225 = __toESM(require_i18n(), 1);
+  var import_i18n226 = __toESM(require_i18n(), 1);
   function useEditedPostContext() {
     return (0, import_data119.useSelect)((select9) => {
       const { getCurrentPostId: getCurrentPostId2, getCurrentPostType: getCurrentPostType2 } = select9(store);
@@ -83107,9 +83177,9 @@ If there's a particular need for this, please submit a feature request at https:
         defaultTemplate && {
           ...defaultTemplate,
           title: {
-            rendered: (0, import_i18n225.sprintf)(
+            rendered: (0, import_i18n226.sprintf)(
               // translators: %s: Template name
-              (0, import_i18n225.__)("%s (default)"),
+              (0, import_i18n226.__)("%s (default)"),
               defaultTemplate.title.rendered
             )
           },
@@ -83202,9 +83272,9 @@ If there's a particular need for this, please submit a feature request at https:
         __next40pxDefaultSize: true,
         variant: "tertiary",
         "aria-expanded": isOpen2,
-        "aria-label": (0, import_i18n226.__)("Template options"),
+        "aria-label": (0, import_i18n227.__)("Template options"),
         onClick,
-        children: templateTitle ?? (0, import_i18n226.__)("Default template")
+        children: templateTitle ?? (0, import_i18n227.__)("Default template")
       }
     );
   }
@@ -83264,25 +83334,25 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
         import_block_editor48.__experimentalInspectorPopoverHeader,
         {
-          title: (0, import_i18n226.__)("Template"),
-          help: (0, import_i18n226.__)(
+          title: (0, import_i18n227.__)("Template"),
+          help: (0, import_i18n227.__)(
             "Templates define the way content is displayed when viewing your site."
           ),
           actions: canCreate ? [
             {
               icon: add_template_default,
-              label: (0, import_i18n226.__)("Add template"),
+              label: (0, import_i18n227.__)("Add template"),
               onClick: () => setIsCreateModalOpen(true)
             }
           ] : [],
           onClose
         }
       ),
-      !allowSwitchingTemplate ? /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(import_components176.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n226.__)("The posts page template cannot be changed.") }) : /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
+      !allowSwitchingTemplate ? /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(import_components176.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n227.__)("The posts page template cannot be changed.") }) : /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
         import_components176.SelectControl,
         {
           hideLabelFromVision: true,
-          label: (0, import_i18n226.__)("Template"),
+          label: (0, import_i18n227.__)("Template"),
           value: selectedOption?.value ?? "",
           options,
           onChange: (slug) => editPost2({ template: slug || "" })
@@ -83300,21 +83370,21 @@ If there's a particular need for this, please submit a feature request at https:
             });
             onClose();
             createSuccessNotice(
-              (0, import_i18n226.__)(
+              (0, import_i18n227.__)(
                 "Editing template. Changes made here affect all posts and pages that use the template."
               ),
               {
                 type: "snackbar",
                 actions: [
                   {
-                    label: (0, import_i18n226.__)("Go back"),
+                    label: (0, import_i18n227.__)("Go back"),
                     onClick: () => getEditorSettings2().onNavigateToPreviousEntityRecord()
                   }
                 ]
               }
             );
           },
-          children: (0, import_i18n226.__)("Edit template")
+          children: (0, import_i18n227.__)("Edit template")
         }
       ) }),
       isCreateModalOpen && /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
@@ -83339,7 +83409,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [popoverAnchor]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(post_panel_row_default, { label: (0, import_i18n226.__)("Template"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(post_panel_row_default, { label: (0, import_i18n227.__)("Template"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
       import_components176.Dropdown,
       {
         popoverProps,
@@ -83614,7 +83684,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_html_entities20 = __toESM(require_html_entities(), 1);
   var import_components188 = __toESM(require_components(), 1);
   var import_element245 = __toESM(require_element(), 1);
-  var import_i18n230 = __toESM(require_i18n(), 1);
+  var import_i18n231 = __toESM(require_i18n(), 1);
   var import_core_data78 = __toESM(require_core_data(), 1);
   var import_notices25 = __toESM(require_notices(), 1);
   var import_preferences13 = __toESM(require_preferences(), 1);
@@ -83624,7 +83694,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_html_entities19 = __toESM(require_html_entities(), 1);
   var import_block_editor50 = __toESM(require_block_editor(), 1);
   var import_components185 = __toESM(require_components(), 1);
-  var import_i18n227 = __toESM(require_i18n(), 1);
+  var import_i18n228 = __toESM(require_i18n(), 1);
   var import_data123 = __toESM(require_data(), 1);
   var import_core_data75 = __toESM(require_core_data(), 1);
   var import_blocks26 = __toESM(require_blocks(), 1);
@@ -83687,7 +83757,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
       import_components185.Modal,
       {
-        title: (0, import_i18n227.__)("Choose a template"),
+        title: (0, import_i18n228.__)("Choose a template"),
         onRequestClose,
         overlayClassName: "editor-post-template__swap-template-modal",
         isFullScreen: true,
@@ -83705,7 +83775,7 @@ If there's a particular need for this, please submit a feature request at https:
           disabled: !availableTemplates?.length,
           accessibleWhenDisabled: true,
           onClick: () => setShowModal(true),
-          children: (0, import_i18n227.__)("Change template")
+          children: (0, import_i18n228.__)("Change template")
         }
       ),
       showModal && /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
@@ -83739,15 +83809,15 @@ If there's a particular need for this, please submit a feature request at https:
         {
           onChange: setSearchValue,
           value: searchValue,
-          label: (0, import_i18n227.__)("Search"),
-          placeholder: (0, import_i18n227.__)("Search"),
+          label: (0, import_i18n228.__)("Search"),
+          placeholder: (0, import_i18n228.__)("Search"),
           className: "editor-post-template__swap-template-search"
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime417.jsx)(
         import_block_editor50.__experimentalBlockPatternsList,
         {
-          label: (0, import_i18n227.__)("Templates"),
+          label: (0, import_i18n228.__)("Templates"),
           blockPatterns: filteredBlockTemplates,
           onClickPattern: onSelect
         }
@@ -83757,7 +83827,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-template/reset-default-template.mjs
   var import_components186 = __toESM(require_components(), 1);
-  var import_i18n228 = __toESM(require_i18n(), 1);
+  var import_i18n229 = __toESM(require_i18n(), 1);
   var import_data124 = __toESM(require_data(), 1);
   var import_core_data76 = __toESM(require_core_data(), 1);
   var import_jsx_runtime418 = __toESM(require_jsx_runtime(), 1);
@@ -83782,14 +83852,14 @@ If there's a particular need for this, please submit a feature request at https:
           );
           onClick();
         },
-        children: (0, import_i18n228.__)("Use default template")
+        children: (0, import_i18n229.__)("Use default template")
       }
     );
   }
 
   // packages/editor/build-module/components/post-template/create-new-template.mjs
   var import_components187 = __toESM(require_components(), 1);
-  var import_i18n229 = __toESM(require_i18n(), 1);
+  var import_i18n230 = __toESM(require_i18n(), 1);
   var import_data125 = __toESM(require_data(), 1);
   var import_core_data77 = __toESM(require_core_data(), 1);
   var import_element244 = __toESM(require_element(), 1);
@@ -83816,7 +83886,7 @@ If there's a particular need for this, please submit a feature request at https:
           onClick: () => {
             setIsCreateModalOpen(true);
           },
-          children: (0, import_i18n229.__)("Create new template")
+          children: (0, import_i18n230.__)("Create new template")
         }
       ),
       isCreateModalOpen && /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(
@@ -83897,21 +83967,21 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const notificationAction = hasGoBack ? [
       {
-        label: (0, import_i18n230.__)("Go back"),
+        label: (0, import_i18n231.__)("Go back"),
         onClick: () => getEditorSettings2().onNavigateToPreviousEntityRecord()
       }
     ] : void 0;
     const mayShowTemplateEditNotice = () => {
       if (!getPreference("core/edit-site", "welcomeGuideTemplate")) {
         createSuccessNotice(
-          (0, import_i18n230.__)(
+          (0, import_i18n231.__)(
             "Editing template. Changes made here affect all posts and pages that use the template."
           ),
           { type: "snackbar", actions: notificationAction }
         );
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(post_panel_row_default, { label: (0, import_i18n230.__)("Template"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(post_panel_row_default, { label: (0, import_i18n231.__)("Template"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(
       import_components188.DropdownMenu,
       {
         popoverProps,
@@ -83921,7 +83991,7 @@ If there's a particular need for this, please submit a feature request at https:
           variant: "tertiary",
           tooltipPosition: "middle left"
         },
-        label: (0, import_i18n230.__)("Template options"),
+        label: (0, import_i18n231.__)("Template options"),
         text: (0, import_html_entities20.decodeEntities)(template2.title),
         icon: null,
         children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(import_jsx_runtime420.Fragment, { children: [
@@ -83956,7 +84026,7 @@ If there's a particular need for this, please submit a feature request at https:
                   onClose();
                   mayShowTemplateEditNotice();
                 },
-                children: (0, import_i18n230.__)("Edit template")
+                children: (0, import_i18n231.__)("Edit template")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime420.jsx)(SwapTemplateButton, { onClick: onClose }),
@@ -83974,7 +84044,7 @@ If there's a particular need for this, please submit a feature request at https:
                 setRenderingMode2(newRenderingMode);
                 setDefaultRenderingMode2(newRenderingMode);
               },
-              children: (0, import_i18n230.__)("Show template")
+              children: (0, import_i18n231.__)("Show template")
             }
           ) })
         ] })
@@ -84003,11 +84073,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose43 = __toESM(require_compose(), 1);
   var import_element247 = __toESM(require_element(), 1);
   var import_data128 = __toESM(require_data(), 1);
-  var import_i18n232 = __toESM(require_i18n(), 1);
+  var import_i18n233 = __toESM(require_i18n(), 1);
   var import_components189 = __toESM(require_components(), 1);
 
   // packages/editor/build-module/components/post-author/hook.mjs
-  var import_i18n231 = __toESM(require_i18n(), 1);
+  var import_i18n232 = __toESM(require_i18n(), 1);
   var import_element246 = __toESM(require_element(), 1);
   var import_data127 = __toESM(require_data(), 1);
   var import_html_entities21 = __toESM(require_html_entities(), 1);
@@ -84068,7 +84138,7 @@ If there's a particular need for this, please submit a feature request at https:
         currentAuthor = [
           {
             value: 0,
-            label: (0, import_i18n231.__)("(No author)")
+            label: (0, import_i18n232.__)("(No author)")
           }
         ];
       }
@@ -84092,7 +84162,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime422.jsx)(
       import_components189.ComboboxControl,
       {
-        label: (0, import_i18n232.__)("Author"),
+        label: (0, import_i18n233.__)("Author"),
         options: authorOptions,
         value: authorId,
         onFilterValueChange: (0, import_compose43.debounce)(setFieldValue, 300),
@@ -84105,7 +84175,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-author/select.mjs
-  var import_i18n233 = __toESM(require_i18n(), 1);
+  var import_i18n234 = __toESM(require_i18n(), 1);
   var import_data129 = __toESM(require_data(), 1);
   var import_components190 = __toESM(require_components(), 1);
   var import_jsx_runtime423 = __toESM(require_jsx_runtime(), 1);
@@ -84120,7 +84190,7 @@ If there's a particular need for this, please submit a feature request at https:
       import_components190.SelectControl,
       {
         className: "post-author-selector",
-        label: (0, import_i18n233.__)("Author"),
+        label: (0, import_i18n234.__)("Author"),
         options: authorOptions,
         onChange: setAuthorId,
         value: authorId,
@@ -84162,7 +84232,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-author/panel.mjs
-  var import_i18n234 = __toESM(require_i18n(), 1);
+  var import_i18n235 = __toESM(require_i18n(), 1);
   var import_components191 = __toESM(require_components(), 1);
   var import_element248 = __toESM(require_element(), 1);
   var import_html_entities22 = __toESM(require_html_entities(), 1);
@@ -84177,7 +84247,7 @@ If there's a particular need for this, please submit a feature request at https:
         postAuthor: select9(import_core_data81.store).getUser(id, BASE_QUERY)
       };
     }, []);
-    const authorName = (0, import_html_entities22.decodeEntities)(postAuthor?.name) || (0, import_i18n234.__)("(No author)");
+    const authorName = (0, import_html_entities22.decodeEntities)(postAuthor?.name) || (0, import_i18n235.__)("(No author)");
     return /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
       import_components191.Button,
       {
@@ -84186,7 +84256,7 @@ If there's a particular need for this, please submit a feature request at https:
         "aria-expanded": isOpen2,
         "aria-label": (
           // translators: %s: Author name.
-          (0, import_i18n234.sprintf)((0, import_i18n234.__)("Change author: %s"), authorName)
+          (0, import_i18n235.sprintf)((0, import_i18n235.__)("Change author: %s"), authorName)
         ),
         onClick,
         children: authorName
@@ -84206,7 +84276,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [popoverAnchor]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(PostAuthorCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(post_panel_row_default, { label: (0, import_i18n234.__)("Author"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(PostAuthorCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(post_panel_row_default, { label: (0, import_i18n235.__)("Author"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
       import_components191.Dropdown,
       {
         popoverProps,
@@ -84223,7 +84293,7 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
             import_block_editor51.__experimentalInspectorPopoverHeader,
             {
-              title: (0, import_i18n234.__)("Author"),
+              title: (0, import_i18n235.__)("Author"),
               onClose
             }
           ),
@@ -84235,22 +84305,22 @@ If there's a particular need for this, please submit a feature request at https:
   var panel_default = PostAuthor2;
 
   // packages/editor/build-module/components/post-comments/index.mjs
-  var import_i18n235 = __toESM(require_i18n(), 1);
+  var import_i18n236 = __toESM(require_i18n(), 1);
   var import_components192 = __toESM(require_components(), 1);
   var import_data133 = __toESM(require_data(), 1);
   var import_jsx_runtime427 = __toESM(require_jsx_runtime(), 1);
   var COMMENT_OPTIONS = [
     {
-      label: (0, import_i18n235._x)("Open", 'Adjective: e.g. "Comments are open"'),
+      label: (0, import_i18n236._x)("Open", 'Adjective: e.g. "Comments are open"'),
       value: "open",
-      description: (0, import_i18n235.__)("Visitors can add new comments and replies.")
+      description: (0, import_i18n236.__)("Visitors can add new comments and replies.")
     },
     {
-      label: (0, import_i18n235.__)("Closed"),
+      label: (0, import_i18n236.__)("Closed"),
       value: "closed",
       description: [
-        (0, import_i18n235.__)("Visitors cannot add new comments or replies."),
-        (0, import_i18n235.__)("Existing comments remain visible.")
+        (0, import_i18n236.__)("Visitors cannot add new comments or replies."),
+        (0, import_i18n236.__)("Existing comments remain visible.")
       ].join(" ")
     }
   ];
@@ -84268,7 +84338,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         className: "editor-change-status__options",
         hideLabelFromVision: true,
-        label: (0, import_i18n235.__)("Comment status"),
+        label: (0, import_i18n236.__)("Comment status"),
         options: COMMENT_OPTIONS,
         onChange: handleStatus,
         selected: commentStatus
@@ -84278,7 +84348,7 @@ If there's a particular need for this, please submit a feature request at https:
   var post_comments_default = PostComments;
 
   // packages/editor/build-module/components/post-discussion/panel.mjs
-  var import_i18n237 = __toESM(require_i18n(), 1);
+  var import_i18n238 = __toESM(require_i18n(), 1);
   var import_components194 = __toESM(require_components(), 1);
   var import_data135 = __toESM(require_data(), 1);
   var import_element249 = __toESM(require_element(), 1);
@@ -84286,7 +84356,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data82 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-pingbacks/index.mjs
-  var import_i18n236 = __toESM(require_i18n(), 1);
+  var import_i18n237 = __toESM(require_i18n(), 1);
   var import_components193 = __toESM(require_components(), 1);
   var import_data134 = __toESM(require_data(), 1);
   var import_jsx_runtime428 = __toESM(require_jsx_runtime(), 1);
@@ -84302,16 +84372,16 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(
       import_components193.CheckboxControl,
       {
-        label: (0, import_i18n236.__)("Enable pingbacks & trackbacks"),
+        label: (0, import_i18n237.__)("Enable pingbacks & trackbacks"),
         checked: pingStatus === "open",
         onChange: onTogglePingback,
         help: /* @__PURE__ */ (0, import_jsx_runtime428.jsx)(
           import_components193.ExternalLink,
           {
-            href: (0, import_i18n236.__)(
+            href: (0, import_i18n237.__)(
               "https://wordpress.org/documentation/article/trackbacks-and-pingbacks/"
             ),
-            children: (0, import_i18n236.__)("Learn more about pingbacks & trackbacks")
+            children: (0, import_i18n237.__)("Learn more about pingbacks & trackbacks")
           }
         )
       }
@@ -84327,7 +84397,7 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
         import_block_editor52.__experimentalInspectorPopoverHeader,
         {
-          title: (0, import_i18n237.__)("Discussion"),
+          title: (0, import_i18n238.__)("Discussion"),
           onClose
         }
       ),
@@ -84357,14 +84427,14 @@ If there's a particular need for this, please submit a feature request at https:
     let label;
     if (commentStatus === "open") {
       if (pingStatus === "open") {
-        label = (0, import_i18n237._x)("Open", 'Adjective: e.g. "Comments are open"');
+        label = (0, import_i18n238._x)("Open", 'Adjective: e.g. "Comments are open"');
       } else {
-        label = trackbacksSupported ? (0, import_i18n237.__)("Comments only") : (0, import_i18n237._x)("Open", 'Adjective: e.g. "Comments are open"');
+        label = trackbacksSupported ? (0, import_i18n238.__)("Comments only") : (0, import_i18n238._x)("Open", 'Adjective: e.g. "Comments are open"');
       }
     } else if (pingStatus === "open") {
-      label = commentsSupported ? (0, import_i18n237.__)("Pings only") : (0, import_i18n237.__)("Pings enabled");
+      label = commentsSupported ? (0, import_i18n238.__)("Pings only") : (0, import_i18n238.__)("Pings enabled");
     } else {
-      label = (0, import_i18n237.__)("Closed");
+      label = (0, import_i18n238.__)("Closed");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
       import_components194.Button,
@@ -84372,7 +84442,7 @@ If there's a particular need for this, please submit a feature request at https:
         size: "compact",
         className: "editor-post-discussion__panel-toggle",
         variant: "tertiary",
-        "aria-label": (0, import_i18n237.__)("Change discussion options"),
+        "aria-label": (0, import_i18n238.__)("Change discussion options"),
         "aria-expanded": isOpen2,
         onClick,
         children: label
@@ -84401,7 +84471,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isEnabled) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(post_type_support_check_default, { supportKeys: ["comments", "trackbacks"], children: /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(post_panel_row_default, { label: (0, import_i18n237.__)("Discussion"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(post_type_support_check_default, { supportKeys: ["comments", "trackbacks"], children: /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(post_panel_row_default, { label: (0, import_i18n238.__)("Discussion"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
       import_components194.Dropdown,
       {
         popoverProps,
@@ -84421,7 +84491,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-excerpt/index.mjs
-  var import_i18n238 = __toESM(require_i18n(), 1);
+  var import_i18n239 = __toESM(require_i18n(), 1);
   var import_components195 = __toESM(require_components(), 1);
   var import_data136 = __toESM(require_data(), 1);
   var import_element250 = __toESM(require_element(), 1);
@@ -84459,7 +84529,7 @@ If there's a particular need for this, please submit a feature request at https:
     const updatePost2 = (value) => {
       editPost2({ [usedAttribute]: value });
     };
-    const label = shouldUseDescriptionLabel ? (0, import_i18n238.__)("Write a description (optional)") : (0, import_i18n238.__)("Write an excerpt (optional)");
+    const label = shouldUseDescriptionLabel ? (0, import_i18n239.__)("Write a description (optional)") : (0, import_i18n239.__)("Write an excerpt (optional)");
     return /* @__PURE__ */ (0, import_jsx_runtime430.jsx)("div", { className: "editor-post-excerpt", children: /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
       import_components195.TextareaControl,
       {
@@ -84472,12 +84542,12 @@ If there's a particular need for this, please submit a feature request at https:
         help: !shouldUseDescriptionLabel ? /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(
           import_components195.ExternalLink,
           {
-            href: (0, import_i18n238.__)(
+            href: (0, import_i18n239.__)(
               "https://wordpress.org/documentation/article/page-post-settings-sidebar/#excerpt"
             ),
-            children: (0, import_i18n238.__)("Learn more about manual excerpts")
+            children: (0, import_i18n239.__)("Learn more about manual excerpts")
           }
-        ) : (0, import_i18n238.__)("Write a description")
+        ) : (0, import_i18n239.__)("Write a description")
       }
     ) });
   }
@@ -84490,7 +84560,7 @@ If there's a particular need for this, please submit a feature request at https:
   var check_default3 = PostExcerptCheck;
 
   // packages/editor/build-module/components/post-excerpt/panel.mjs
-  var import_i18n239 = __toESM(require_i18n(), 1);
+  var import_i18n240 = __toESM(require_i18n(), 1);
   var import_components197 = __toESM(require_components(), 1);
   var import_data137 = __toESM(require_data(), 1);
   var import_element251 = __toESM(require_element(), 1);
@@ -84537,7 +84607,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(
       import_components197.PanelBody,
       {
-        title: shouldUseDescriptionLabel ? (0, import_i18n239.__)("Description") : (0, import_i18n239.__)("Excerpt"),
+        title: shouldUseDescriptionLabel ? (0, import_i18n240.__)("Description") : (0, import_i18n240.__)("Excerpt"),
         opened: isOpened,
         onToggle: toggleExcerptPanel,
         children: /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(plugin_default.Slot, { children: (fills) => /* @__PURE__ */ (0, import_jsx_runtime433.jsxs)(import_jsx_runtime433.Fragment, { children: [
@@ -84590,7 +84660,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const [popoverAnchor, setPopoverAnchor] = (0, import_element251.useState)(null);
-    const label = shouldBeUsedAsDescription ? (0, import_i18n239.__)("Description") : (0, import_i18n239.__)("Excerpt");
+    const label = shouldBeUsedAsDescription ? (0, import_i18n240.__)("Description") : (0, import_i18n240.__)("Excerpt");
     const popoverProps = (0, import_element251.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
@@ -84611,8 +84681,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (!allowEditing) {
       return excerptText;
     }
-    const excerptPlaceholder = shouldBeUsedAsDescription ? (0, import_i18n239.__)("Add a description\u2026") : (0, import_i18n239.__)("Add an excerpt\u2026");
-    const triggerEditLabel = shouldBeUsedAsDescription ? (0, import_i18n239.__)("Edit description") : (0, import_i18n239.__)("Edit excerpt");
+    const excerptPlaceholder = shouldBeUsedAsDescription ? (0, import_i18n240.__)("Add a description\u2026") : (0, import_i18n240.__)("Add an excerpt\u2026");
+    const triggerEditLabel = shouldBeUsedAsDescription ? (0, import_i18n240.__)("Edit description") : (0, import_i18n240.__)("Edit excerpt");
     return /* @__PURE__ */ (0, import_jsx_runtime433.jsxs)(import_components197.__experimentalVStack, { children: [
       excerptText,
       /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(
@@ -84657,7 +84727,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-featured-image/index.mjs
-  var import_i18n240 = __toESM(require_i18n(), 1);
+  var import_i18n241 = __toESM(require_i18n(), 1);
   var import_hooks49 = __toESM(require_hooks(), 1);
   var import_components198 = __toESM(require_components(), 1);
   var import_blob3 = __toESM(require_blob(), 1);
@@ -84700,9 +84770,9 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-featured-image/index.mjs
   var import_jsx_runtime435 = __toESM(require_jsx_runtime(), 1);
   var ALLOWED_MEDIA_TYPES = ["image"];
-  var DEFAULT_FEATURE_IMAGE_LABEL = (0, import_i18n240.__)("Featured image");
-  var DEFAULT_SET_FEATURE_IMAGE_LABEL = (0, import_i18n240.__)("Add a featured image");
-  var instructions = /* @__PURE__ */ (0, import_jsx_runtime435.jsx)("p", { children: (0, import_i18n240.__)(
+  var DEFAULT_FEATURE_IMAGE_LABEL = (0, import_i18n241.__)("Featured image");
+  var DEFAULT_SET_FEATURE_IMAGE_LABEL = (0, import_i18n241.__)("Add a featured image");
+  var instructions = /* @__PURE__ */ (0, import_jsx_runtime435.jsx)("p", { children: (0, import_i18n241.__)(
     "To edit the featured image, you need permission to upload media."
   ) });
   function getMediaDetails(media, postId2) {
@@ -84779,15 +84849,15 @@ If there's a particular need for this, please submit a feature request at https:
     }
     function getImageDescription(imageMedia) {
       if (imageMedia.alt_text) {
-        return (0, import_i18n240.sprintf)(
+        return (0, import_i18n241.sprintf)(
           // Translators: %s: The selected image alt text.
-          (0, import_i18n240.__)("Current image: %s"),
+          (0, import_i18n241.__)("Current image: %s"),
           imageMedia.alt_text
         );
       }
-      return (0, import_i18n240.sprintf)(
+      return (0, import_i18n241.sprintf)(
         // Translators: %s: The selected image filename.
-        (0, import_i18n240.__)(
+        (0, import_i18n241.__)(
           "The current image has no alternative text. The file name is: %s"
         ),
         imageMedia.media_details.sizes?.full?.file || imageMedia.slug
@@ -84825,7 +84895,7 @@ If there's a particular need for this, please submit a feature request at https:
                 {
                   status: "warning",
                   isDismissible: false,
-                  children: (0, import_i18n240.__)(
+                  children: (0, import_i18n241.__)(
                     "Could not retrieve the featured image data."
                   )
                 }
@@ -84836,7 +84906,7 @@ If there's a particular need for this, please submit a feature request at https:
                   ref: returnFocus,
                   className: !featuredImageId ? "editor-post-featured-image__toggle" : "editor-post-featured-image__preview",
                   onClick: open,
-                  "aria-label": !featuredImageId ? null : (0, import_i18n240.__)(
+                  "aria-label": !featuredImageId ? null : (0, import_i18n241.__)(
                     "Edit or replace the featured image"
                   ),
                   "aria-describedby": !featuredImageId ? null : `editor-post-featured-image-${featuredImageId}-describedby`,
@@ -84878,7 +84948,7 @@ If there's a particular need for this, please submit a feature request at https:
                         onClick: open,
                         "aria-haspopup": "dialog",
                         variant: isMissingMedia ? "secondary" : void 0,
-                        children: (0, import_i18n240.__)("Replace")
+                        children: (0, import_i18n241.__)("Replace")
                       }
                     ),
                     /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
@@ -84892,7 +84962,7 @@ If there's a particular need for this, please submit a feature request at https:
                         },
                         variant: isMissingMedia ? "secondary" : void 0,
                         isDestructive: isMissingMedia,
-                        children: (0, import_i18n240.__)("Remove")
+                        children: (0, import_i18n241.__)("Remove")
                       }
                     )
                   ]
@@ -84960,7 +85030,7 @@ If there's a particular need for this, please submit a feature request at https:
   )(PostFeaturedImage);
 
   // packages/editor/build-module/components/post-featured-image/panel.mjs
-  var import_i18n241 = __toESM(require_i18n(), 1);
+  var import_i18n242 = __toESM(require_i18n(), 1);
   var import_components199 = __toESM(require_components(), 1);
   var import_data140 = __toESM(require_data(), 1);
   var import_core_data86 = __toESM(require_core_data(), 1);
@@ -84990,7 +85060,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(check_default4, { children: /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(
       import_components199.PanelBody,
       {
-        title: postType2?.labels?.featured_image ?? (0, import_i18n241.__)("Featured image"),
+        title: postType2?.labels?.featured_image ?? (0, import_i18n242.__)("Featured image"),
         opened: isOpened,
         onToggle: () => toggleEditorPanelOpened2(PANEL_NAME4),
         children: /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(post_featured_image_default, {})
@@ -84999,7 +85069,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-format/index.mjs
-  var import_i18n242 = __toESM(require_i18n(), 1);
+  var import_i18n243 = __toESM(require_i18n(), 1);
   var import_components200 = __toESM(require_components(), 1);
   var import_data142 = __toESM(require_data(), 1);
   var import_compose45 = __toESM(require_compose(), 1);
@@ -85022,16 +85092,16 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-format/index.mjs
   var import_jsx_runtime438 = __toESM(require_jsx_runtime(), 1);
   var POST_FORMATS2 = [
-    { id: "aside", caption: (0, import_i18n242.__)("Aside") },
-    { id: "audio", caption: (0, import_i18n242.__)("Audio") },
-    { id: "chat", caption: (0, import_i18n242.__)("Chat") },
-    { id: "gallery", caption: (0, import_i18n242.__)("Gallery") },
-    { id: "image", caption: (0, import_i18n242.__)("Image") },
-    { id: "link", caption: (0, import_i18n242.__)("Link") },
-    { id: "quote", caption: (0, import_i18n242.__)("Quote") },
-    { id: "standard", caption: (0, import_i18n242.__)("Standard") },
-    { id: "status", caption: (0, import_i18n242.__)("Status") },
-    { id: "video", caption: (0, import_i18n242.__)("Video") }
+    { id: "aside", caption: (0, import_i18n243.__)("Aside") },
+    { id: "audio", caption: (0, import_i18n243.__)("Audio") },
+    { id: "chat", caption: (0, import_i18n243.__)("Chat") },
+    { id: "gallery", caption: (0, import_i18n243.__)("Gallery") },
+    { id: "image", caption: (0, import_i18n243.__)("Image") },
+    { id: "link", caption: (0, import_i18n243.__)("Link") },
+    { id: "quote", caption: (0, import_i18n243.__)("Quote") },
+    { id: "standard", caption: (0, import_i18n243.__)("Standard") },
+    { id: "status", caption: (0, import_i18n243.__)("Status") },
+    { id: "video", caption: (0, import_i18n243.__)("Video") }
   ].sort((a3, b3) => {
     const normalizedA = a3.caption.toUpperCase();
     const normalizedB = b3.caption.toUpperCase();
@@ -85072,7 +85142,7 @@ If there's a particular need for this, please submit a feature request at https:
         import_components200.RadioControl,
         {
           className: "editor-post-format__options",
-          label: (0, import_i18n242.__)("Post Format"),
+          label: (0, import_i18n243.__)("Post Format"),
           selected: postFormat,
           onChange: (format6) => onUpdatePostFormat(format6),
           id: postFormatSelectorId,
@@ -85089,9 +85159,9 @@ If there's a particular need for this, please submit a feature request at https:
           __next40pxDefaultSize: true,
           variant: "link",
           onClick: () => onUpdatePostFormat(suggestion.id),
-          children: (0, import_i18n242.sprintf)(
+          children: (0, import_i18n243.sprintf)(
             /* translators: %s: post format */
-            (0, import_i18n242.__)("Apply suggested format: %s"),
+            (0, import_i18n243.__)("Apply suggested format: %s"),
             suggestion.caption
           )
         }
@@ -85100,7 +85170,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-last-revision/index.mjs
-  var import_i18n243 = __toESM(require_i18n(), 1);
+  var import_i18n244 = __toESM(require_i18n(), 1);
   var import_components201 = __toESM(require_components(), 1);
   var import_data144 = __toESM(require_data(), 1);
   var import_url17 = __toESM(require_url(), 1);
@@ -85155,9 +85225,9 @@ If there's a particular need for this, please submit a feature request at https:
         className: "editor-post-last-revision__title",
         icon: backup_default,
         iconPosition: "right",
-        text: (0, import_i18n243.sprintf)(
+        text: (0, import_i18n244.sprintf)(
           /* translators: %s: number of revisions. */
-          (0, import_i18n243.__)("Revisions (%s)"),
+          (0, import_i18n244.__)("Revisions (%s)"),
           revisionsCount
         )
       }
@@ -85171,15 +85241,15 @@ If there's a particular need for this, please submit a feature request at https:
         revision: lastRevisionId
       })
     } : { onClick: () => setCurrentRevisionId2(lastRevisionId) };
-    return /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(check_default5, { children: /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(post_panel_row_default, { label: (0, import_i18n243.__)("Revisions"), children: /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(check_default5, { children: /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(post_panel_row_default, { label: (0, import_i18n244.__)("Revisions"), children: /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
       import_components201.Button,
       {
         ...buttonProps,
         className: "editor-private-post-last-revision__button",
         text: revisionsCount,
-        "aria-label": (0, import_i18n243.sprintf)(
+        "aria-label": (0, import_i18n244.sprintf)(
           /* translators: %d: number of revisions. */
-          (0, import_i18n243._n)(
+          (0, import_i18n244._n)(
             "Open revisions screen: %d revision",
             "Open revisions screen: %d revisions",
             revisionsCount
@@ -85202,7 +85272,7 @@ If there's a particular need for this, please submit a feature request at https:
   var panel_default2 = PostLastRevisionPanel;
 
   // packages/editor/build-module/components/post-locked-modal/index.mjs
-  var import_i18n245 = __toESM(require_i18n(), 1);
+  var import_i18n246 = __toESM(require_i18n(), 1);
   var import_components203 = __toESM(require_components(), 1);
   var import_data145 = __toESM(require_data(), 1);
   var import_url18 = __toESM(require_url(), 1);
@@ -85212,7 +85282,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data88 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/utils/sync-error-messages.mjs
-  var import_i18n244 = __toESM(require_i18n(), 1);
+  var import_i18n245 = __toESM(require_i18n(), 1);
   var AUTHENTICATION_FAILED = "authentication-failed";
   var CONNECTION_EXPIRED = "connection-expired";
   var CONNECTION_LIMIT_EXCEEDED = "connection-limit-exceeded";
@@ -85221,34 +85291,34 @@ If there's a particular need for this, please submit a feature request at https:
   var UNKNOWN_ERROR = "unknown-error";
   var ERROR_MESSAGES = {
     [AUTHENTICATION_FAILED]: {
-      title: (0, import_i18n244.__)("Unable to connect"),
-      description: (0, import_i18n244.__)(
+      title: (0, import_i18n245.__)("Unable to connect"),
+      description: (0, import_i18n245.__)(
         "Real-time collaboration couldn't verify your permissions. Check that you have access to edit this post or contact your site administrator."
       )
     },
     [CONNECTION_EXPIRED]: {
-      title: (0, import_i18n244.__)("Connection expired"),
-      description: (0, import_i18n244.__)(
+      title: (0, import_i18n245.__)("Connection expired"),
+      description: (0, import_i18n245.__)(
         "Your connection to real-time collaboration has timed out. Editing is paused to prevent conflicts with other editors."
       )
     },
     [CONNECTION_LIMIT_EXCEEDED]: {
-      title: (0, import_i18n244.__)("Too many editors connected"),
-      description: (0, import_i18n244.__)(
+      title: (0, import_i18n245.__)("Too many editors connected"),
+      description: (0, import_i18n245.__)(
         "Real-time collaboration has reached its connection limit. Try again later or contact your site administrator."
       )
     },
     [PROTOCOL_MISMATCH]: {
-      title: (0, import_i18n244.__)("Protocol update"),
-      description: (0, import_i18n244.__)(
+      title: (0, import_i18n245.__)("Protocol update"),
+      description: (0, import_i18n245.__)(
         "Real-time collaboration has been updated. Please refresh the page to continue editing."
       )
     },
     // DOCUMENT_SIZE_LIMIT_EXCEEDED is not included here because it results in
     // collaboration being disabled entirely.
     [UNKNOWN_ERROR]: {
-      title: (0, import_i18n244.__)("Connection lost"),
-      description: (0, import_i18n244.__)(
+      title: (0, import_i18n245.__)("Connection lost"),
+      description: (0, import_i18n245.__)(
         "The connection to real-time collaboration was interrupted. Editing is paused to prevent conflicts with other editors."
       )
     }
@@ -85280,11 +85350,11 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     if (DOCUMENT_SIZE_LIMIT_EXCEEDED === syncConnectionStatus?.error?.code) {
-      return /* @__PURE__ */ (0, import_jsx_runtime442.jsx)("p", { children: (0, import_i18n245.__)(
+      return /* @__PURE__ */ (0, import_jsx_runtime442.jsx)("p", { children: (0, import_i18n246.__)(
         "Because this post is too large for real-time collaboration, only one person can edit at a time."
       ) });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime442.jsx)("p", { children: (0, import_i18n245.__)(
+    return /* @__PURE__ */ (0, import_jsx_runtime442.jsx)("p", { children: (0, import_i18n246.__)(
       "Because this post uses plugins that aren\u2019t compatible with real-time collaboration, only one person can edit at a time."
     ) });
   }
@@ -85411,11 +85481,11 @@ If there's a particular need for this, please submit a feature request at https:
     const allPostsUrl = (0, import_url18.addQueryArgs)("edit.php", {
       post_type: postType2?.slug
     });
-    const allPostsLabel = (0, import_i18n245.__)("Exit editor");
+    const allPostsLabel = (0, import_i18n246.__)("Exit editor");
     return /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
       import_components203.Modal,
       {
-        title: isTakeover ? (0, import_i18n245.__)("Someone else has taken over this post") : (0, import_i18n245.__)("This post is already being edited"),
+        title: isTakeover ? (0, import_i18n246.__)("Someone else has taken over this post") : (0, import_i18n246.__)("This post is already being edited"),
         focusOnMount: true,
         shouldCloseOnClickOutside: false,
         shouldCloseOnEsc: false,
@@ -85427,7 +85497,7 @@ If there's a particular need for this, please submit a feature request at https:
             "img",
             {
               src: userAvatar,
-              alt: (0, import_i18n245.__)("Avatar"),
+              alt: (0, import_i18n246.__)("Avatar"),
               className: "editor-post-locked-modal__avatar",
               width: 64,
               height: 64
@@ -85436,40 +85506,40 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime442.jsxs)("div", { children: [
             !!isTakeover && /* @__PURE__ */ (0, import_jsx_runtime442.jsxs)(import_jsx_runtime442.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime442.jsx)("p", { children: (0, import_element253.createInterpolateElement)(
-                userDisplayName ? (0, import_i18n245.sprintf)(
+                userDisplayName ? (0, import_i18n246.sprintf)(
                   /* translators: %s: user's display name */
-                  (0, import_i18n245.__)(
+                  (0, import_i18n246.__)(
                     "<strong>%s</strong> now has editing control of this post (<PreviewLink />). Don\u2019t worry, your changes up to this moment have been saved."
                   ),
                   userDisplayName
-                ) : (0, import_i18n245.__)(
+                ) : (0, import_i18n246.__)(
                   "Another user now has editing control of this post (<PreviewLink />). Don\u2019t worry, your changes up to this moment have been saved."
                 ),
                 {
                   strong: /* @__PURE__ */ (0, import_jsx_runtime442.jsx)("strong", {}),
-                  PreviewLink: /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(import_components203.ExternalLink, { href: previewLink, children: (0, import_i18n245.__)("preview") })
+                  PreviewLink: /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(import_components203.ExternalLink, { href: previewLink, children: (0, import_i18n246.__)("preview") })
                 }
               ) }),
               /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(CollaborationContext, {})
             ] }),
             !isTakeover && /* @__PURE__ */ (0, import_jsx_runtime442.jsxs)(import_jsx_runtime442.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime442.jsx)("p", { children: (0, import_element253.createInterpolateElement)(
-                userDisplayName ? (0, import_i18n245.sprintf)(
+                userDisplayName ? (0, import_i18n246.sprintf)(
                   /* translators: %s: user's display name */
-                  (0, import_i18n245.__)(
+                  (0, import_i18n246.__)(
                     "<strong>%s</strong> is currently working on this post (<PreviewLink />), which means you cannot make changes, unless you take over."
                   ),
                   userDisplayName
-                ) : (0, import_i18n245.__)(
+                ) : (0, import_i18n246.__)(
                   "Another user is currently working on this post (<PreviewLink />), which means you cannot make changes, unless you take over."
                 ),
                 {
                   strong: /* @__PURE__ */ (0, import_jsx_runtime442.jsx)("strong", {}),
-                  PreviewLink: /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(import_components203.ExternalLink, { href: previewLink, children: (0, import_i18n245.__)("preview") })
+                  PreviewLink: /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(import_components203.ExternalLink, { href: previewLink, children: (0, import_i18n246.__)("preview") })
                 }
               ) }),
               /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(CollaborationContext, {}),
-              /* @__PURE__ */ (0, import_jsx_runtime442.jsx)("p", { children: (0, import_i18n245.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime442.jsx)("p", { children: (0, import_i18n246.__)(
                 "If you take over, the other user will lose editing control to the post, but their changes will be saved."
               ) })
             ] }),
@@ -85485,7 +85555,7 @@ If there's a particular need for this, please submit a feature request at https:
                       __next40pxDefaultSize: true,
                       variant: "tertiary",
                       href: unlockUrl,
-                      children: (0, import_i18n245.__)("Take over")
+                      children: (0, import_i18n246.__)("Take over")
                     }
                   ),
                   /* @__PURE__ */ (0, import_jsx_runtime442.jsx)(
@@ -85508,7 +85578,7 @@ If there's a particular need for this, please submit a feature request at https:
   var post_locked_modal_default = true ? (0, import_components203.withFilters)("editor.PostLockedModal")(PostLockedModal) : PostLockedModal;
 
   // packages/editor/build-module/components/post-pending-status/index.mjs
-  var import_i18n246 = __toESM(require_i18n(), 1);
+  var import_i18n247 = __toESM(require_i18n(), 1);
   var import_components204 = __toESM(require_components(), 1);
   var import_data147 = __toESM(require_data(), 1);
 
@@ -85544,7 +85614,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(check_default6, { children: /* @__PURE__ */ (0, import_jsx_runtime443.jsx)(
       import_components204.CheckboxControl,
       {
-        label: (0, import_i18n246.__)("Pending review"),
+        label: (0, import_i18n247.__)("Pending review"),
         checked: status === "pending",
         onChange: togglePendingStatus
       }
@@ -85555,7 +85625,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-preview-button/index.mjs
   var import_element254 = __toESM(require_element(), 1);
   var import_components205 = __toESM(require_components(), 1);
-  var import_i18n247 = __toESM(require_i18n(), 1);
+  var import_i18n248 = __toESM(require_i18n(), 1);
   var import_data148 = __toESM(require_data(), 1);
   var import_hooks51 = __toESM(require_hooks(), 1);
   var import_core_data89 = __toESM(require_core_data(), 1);
@@ -85581,7 +85651,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           )
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime444.jsx)("p", { children: (0, import_i18n247.__)("Generating preview\u2026") })
+        /* @__PURE__ */ (0, import_jsx_runtime444.jsx)("p", { children: (0, import_i18n248.__)("Generating preview\u2026") })
       ] })
     );
     markup += `
@@ -85643,7 +85713,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function writeInterstitialMessage(targetDocument, markup) {
     targetDocument.write(markup);
-    targetDocument.title = (0, import_i18n247.__)("Generating preview\u2026");
+    targetDocument.title = (0, import_i18n248.__)("Generating preview\u2026");
     targetDocument.close();
   }
   async function getPreviewDocument(previewWindow) {
@@ -85719,7 +85789,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!previewProps) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(import_components205.MenuItem, { icon: external_default, ...previewProps, children: (0, import_i18n247.__)("Preview in new tab") });
+    return /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(import_components205.MenuItem, { icon: external_default, ...previewProps, children: (0, import_i18n248.__)("Preview in new tab") });
   }
   function PostPreviewButton({
     className,
@@ -85745,11 +85815,11 @@ If there's a particular need for this, please submit a feature request at https:
         accessibleWhenDisabled: true,
         ...previewProps,
         children: textContent || /* @__PURE__ */ (0, import_jsx_runtime444.jsxs)(import_jsx_runtime444.Fragment, { children: [
-          (0, import_i18n247._x)("Preview", "imperative verb"),
+          (0, import_i18n248._x)("Preview", "imperative verb"),
           /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(VisuallyHidden, {
             render: /* @__PURE__ */ (0, import_jsx_runtime444.jsx)("span", {}),
             /* translators: accessibility text */
-            children: (0, import_i18n247.__)("(opens in a new tab)")
+            children: (0, import_i18n248.__)("(opens in a new tab)")
           })
         ] })
       }
@@ -85761,7 +85831,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data150 = __toESM(require_data(), 1);
 
   // packages/editor/build-module/components/post-publish-button/label.mjs
-  var import_i18n248 = __toESM(require_i18n(), 1);
+  var import_i18n249 = __toESM(require_i18n(), 1);
   var import_data149 = __toESM(require_data(), 1);
   var import_compose47 = __toESM(require_compose(), 1);
   function PublishButtonLabel() {
@@ -85802,20 +85872,20 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     if (isPublishing) {
-      return (0, import_i18n248.__)("Publishing\u2026");
+      return (0, import_i18n249.__)("Publishing\u2026");
     } else if ((isPublished || isBeingScheduled) && isSaving && !isAutosaving) {
-      return (0, import_i18n248.__)("Saving\u2026");
+      return (0, import_i18n249.__)("Saving\u2026");
     }
     if (!hasPublishAction) {
-      return isSmallerThanMediumViewport ? (0, import_i18n248.__)("Publish") : (0, import_i18n248.__)("Submit for Review");
+      return isSmallerThanMediumViewport ? (0, import_i18n249.__)("Publish") : (0, import_i18n249.__)("Submit for Review");
     }
     if (hasNonPostEntityChanges2 && !isPostSavingLocked2 || isPublished || postStatusHasChanged && !["future", "publish"].includes(postStatus) || !postStatusHasChanged && postStatus === "future") {
-      return (0, import_i18n248.__)("Save");
+      return (0, import_i18n249.__)("Save");
     }
     if (isBeingScheduled) {
-      return (0, import_i18n248.__)("Schedule");
+      return (0, import_i18n249.__)("Schedule");
     }
-    return (0, import_i18n248.__)("Publish");
+    return (0, import_i18n249.__)("Publish");
   }
 
   // packages/editor/build-module/components/post-publish-button/index.mjs
@@ -85943,7 +86013,7 @@ If there's a particular need for this, please submit a feature request at https:
   var post_publish_button_default = PostPublishButton;
 
   // packages/editor/build-module/components/post-publish-panel/index.mjs
-  var import_i18n261 = __toESM(require_i18n(), 1);
+  var import_i18n262 = __toESM(require_i18n(), 1);
   var import_element263 = __toESM(require_element(), 1);
   var import_components217 = __toESM(require_components(), 1);
   var import_data164 = __toESM(require_data(), 1);
@@ -85951,7 +86021,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data99 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-publish-panel/prepublish.mjs
-  var import_i18n259 = __toESM(require_i18n(), 1);
+  var import_i18n260 = __toESM(require_i18n(), 1);
   var import_components215 = __toESM(require_components(), 1);
   var import_data162 = __toESM(require_data(), 1);
   var import_url19 = __toESM(require_url(), 1);
@@ -85959,7 +86029,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_html_entities26 = __toESM(require_html_entities(), 1);
 
   // packages/editor/build-module/components/post-visibility/index.mjs
-  var import_i18n250 = __toESM(require_i18n(), 1);
+  var import_i18n251 = __toESM(require_i18n(), 1);
   var import_element255 = __toESM(require_element(), 1);
   var import_components207 = __toESM(require_components(), 1);
   var import_compose48 = __toESM(require_compose(), 1);
@@ -85967,22 +86037,22 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor55 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/post-visibility/utils.mjs
-  var import_i18n249 = __toESM(require_i18n(), 1);
+  var import_i18n250 = __toESM(require_i18n(), 1);
   var VISIBILITY_OPTIONS = [
     {
-      label: (0, import_i18n249.__)("Public"),
+      label: (0, import_i18n250.__)("Public"),
       value: "public",
-      description: (0, import_i18n249.__)("Visible to everyone.")
+      description: (0, import_i18n250.__)("Visible to everyone.")
     },
     {
-      label: (0, import_i18n249.__)("Private"),
+      label: (0, import_i18n250.__)("Private"),
       value: "private",
-      description: (0, import_i18n249.__)("Only visible to site admins and editors.")
+      description: (0, import_i18n250.__)("Only visible to site admins and editors.")
     },
     {
-      label: (0, import_i18n249.__)("Password protected"),
+      label: (0, import_i18n250.__)("Password protected"),
       value: "password",
-      description: (0, import_i18n249.__)("Only visible to those who know the password.")
+      description: (0, import_i18n250.__)("Only visible to those who know the password.")
     }
   ];
 
@@ -86019,8 +86089,8 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
         import_block_editor55.__experimentalInspectorPopoverHeader,
         {
-          title: (0, import_i18n250.__)("Visibility"),
-          help: (0, import_i18n250.__)("Control how this post is viewed."),
+          title: (0, import_i18n251.__)("Visibility"),
+          help: (0, import_i18n251.__)("Control how this post is viewed."),
           onClose
         }
       ),
@@ -86028,7 +86098,7 @@ If there's a particular need for this, please submit a feature request at https:
         /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
           import_components207.RadioControl,
           {
-            label: (0, import_i18n250.__)("Visibility"),
+            label: (0, import_i18n251.__)("Visibility"),
             hideLabelFromVision: true,
             options: VISIBILITY_OPTIONS,
             selected: hasPassword ? "password" : visibility,
@@ -86038,10 +86108,10 @@ If there's a particular need for this, please submit a feature request at https:
         hasPassword && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
           import_components207.TextControl,
           {
-            label: (0, import_i18n250.__)("Password"),
+            label: (0, import_i18n251.__)("Password"),
             onChange: updatePassword,
             value: password,
-            placeholder: (0, import_i18n250.__)("Use a secure password"),
+            placeholder: (0, import_i18n251.__)("Use a secure password"),
             type: "text",
             id: `editor-post-visibility__password-input-${instanceId}`,
             maxLength: 255
@@ -86066,7 +86136,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-schedule/index.mjs
   var import_date17 = __toESM(require_date(), 1);
-  var import_i18n251 = __toESM(require_i18n(), 1);
+  var import_i18n252 = __toESM(require_i18n(), 1);
   var import_data153 = __toESM(require_data(), 1);
   var import_block_editor56 = __toESM(require_block_editor(), 1);
   var import_element256 = __toESM(require_element(), 1);
@@ -86130,7 +86200,7 @@ If there's a particular need for this, please submit a feature request at https:
         is12Hour: is12HourTime,
         dateOrder: (
           /* translators: Order of day, month, and year. Available formats are 'dmy', 'mdy', and 'ymd'. */
-          (0, import_i18n251._x)("dmy", "date order")
+          (0, import_i18n252._x)("dmy", "date order")
         ),
         events,
         onMonthPreviewed: (date) => setPreviewedMonth(parseISO(date)),
@@ -86142,7 +86212,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-schedule/label.mjs
-  var import_i18n252 = __toESM(require_i18n(), 1);
+  var import_i18n253 = __toESM(require_i18n(), 1);
   var import_date18 = __toESM(require_date(), 1);
   var import_data154 = __toESM(require_data(), 1);
   function PostScheduleLabel(props) {
@@ -86163,47 +86233,47 @@ If there's a particular need for this, please submit a feature request at https:
     const timezoneAbbreviation = getTimezoneAbbreviation();
     const formattedDate = (0, import_date18.dateI18n)(
       // translators: Use a non-breaking space between 'g:i' and 'a' if appropriate.
-      (0, import_i18n252._x)("F j, Y g:i\xA0a", "post schedule full date format"),
+      (0, import_i18n253._x)("F j, Y g:i\xA0a", "post schedule full date format"),
       date
     );
-    return (0, import_i18n252.isRTL)() ? `${timezoneAbbreviation} ${formattedDate}` : `${formattedDate} ${timezoneAbbreviation}`;
+    return (0, import_i18n253.isRTL)() ? `${timezoneAbbreviation} ${formattedDate}` : `${formattedDate} ${timezoneAbbreviation}`;
   }
   function getPostScheduleLabel(dateAttribute, { isFloating = false, now = /* @__PURE__ */ new Date() } = {}) {
     if (!dateAttribute || isFloating) {
-      return (0, import_i18n252.__)("Immediately");
+      return (0, import_i18n253.__)("Immediately");
     }
     if (!isTimezoneSameAsSiteTimezone(now)) {
       return getFullPostScheduleLabel(dateAttribute);
     }
     const date = (0, import_date18.getDate)(dateAttribute);
     if (isSameDay(date, now)) {
-      return (0, import_i18n252.sprintf)(
+      return (0, import_i18n253.sprintf)(
         // translators: %s: Time of day the post is scheduled for.
-        (0, import_i18n252.__)("Today at %s"),
+        (0, import_i18n253.__)("Today at %s"),
         // translators: If using a space between 'g:i' and 'a', use a non-breaking space.
-        (0, import_date18.dateI18n)((0, import_i18n252._x)("g:i\xA0a", "post schedule time format"), date)
+        (0, import_date18.dateI18n)((0, import_i18n253._x)("g:i\xA0a", "post schedule time format"), date)
       );
     }
     const tomorrow = new Date(now);
     tomorrow.setDate(tomorrow.getDate() + 1);
     if (isSameDay(date, tomorrow)) {
-      return (0, import_i18n252.sprintf)(
+      return (0, import_i18n253.sprintf)(
         // translators: %s: Time of day the post is scheduled for.
-        (0, import_i18n252.__)("Tomorrow at %s"),
+        (0, import_i18n253.__)("Tomorrow at %s"),
         // translators: If using a space between 'g:i' and 'a', use a non-breaking space.
-        (0, import_date18.dateI18n)((0, import_i18n252._x)("g:i\xA0a", "post schedule time format"), date)
+        (0, import_date18.dateI18n)((0, import_i18n253._x)("g:i\xA0a", "post schedule time format"), date)
       );
     }
     if (date.getFullYear() === now.getFullYear()) {
       return (0, import_date18.dateI18n)(
         // translators: If using a space between 'g:i' and 'a', use a non-breaking space.
-        (0, import_i18n252._x)("F j g:i\xA0a", "post schedule date format without year"),
+        (0, import_i18n253._x)("F j g:i\xA0a", "post schedule date format without year"),
         date
       );
     }
     return (0, import_date18.dateI18n)(
       // translators: Use a non-breaking space between 'g:i' and 'a' if appropriate.
-      (0, import_i18n252._x)("F j, Y g:i\xA0a", "post schedule full date format"),
+      (0, import_i18n253._x)("F j, Y g:i\xA0a", "post schedule full date format"),
       date
     );
   }
@@ -86226,14 +86296,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-publish-panel/maybe-tags-panel.mjs
-  var import_i18n254 = __toESM(require_i18n(), 1);
+  var import_i18n255 = __toESM(require_i18n(), 1);
   var import_element258 = __toESM(require_element(), 1);
   var import_data157 = __toESM(require_data(), 1);
   var import_components210 = __toESM(require_components(), 1);
   var import_core_data93 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/flat-term-selector.mjs
-  var import_i18n253 = __toESM(require_i18n(), 1);
+  var import_i18n254 = __toESM(require_i18n(), 1);
   var import_element257 = __toESM(require_element(), 1);
   var import_components209 = __toESM(require_components(), 1);
   var import_data156 = __toESM(require_data(), 1);
@@ -86451,30 +86521,30 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       const newTermIds = [...termIds, newTerm.id];
-      const defaultName = slug === "post_tag" ? (0, import_i18n253.__)("Tag") : (0, import_i18n253.__)("Term");
-      const termAddedMessage = (0, import_i18n253.sprintf)(
+      const defaultName = slug === "post_tag" ? (0, import_i18n254.__)("Tag") : (0, import_i18n254.__)("Term");
+      const termAddedMessage = (0, import_i18n254.sprintf)(
         /* translators: %s: term name. */
-        (0, import_i18n253._x)("%s added", "term"),
+        (0, import_i18n254._x)("%s added", "term"),
         taxonomy?.labels?.singular_name ?? defaultName
       );
       (0, import_a11y8.speak)(termAddedMessage, "assertive");
       onUpdateTerms(newTermIds);
     }
-    const newTermLabel = taxonomy?.labels?.add_new_item ?? (slug === "post_tag" ? (0, import_i18n253.__)("Add Tag") : (0, import_i18n253.__)("Add Term"));
-    const singularName = taxonomy?.labels?.singular_name ?? (slug === "post_tag" ? (0, import_i18n253.__)("Tag") : (0, import_i18n253.__)("Term"));
-    const termAddedLabel = (0, import_i18n253.sprintf)(
+    const newTermLabel = taxonomy?.labels?.add_new_item ?? (slug === "post_tag" ? (0, import_i18n254.__)("Add Tag") : (0, import_i18n254.__)("Add Term"));
+    const singularName = taxonomy?.labels?.singular_name ?? (slug === "post_tag" ? (0, import_i18n254.__)("Tag") : (0, import_i18n254.__)("Term"));
+    const termAddedLabel = (0, import_i18n254.sprintf)(
       /* translators: %s: term name. */
-      (0, import_i18n253._x)("%s added", "term"),
+      (0, import_i18n254._x)("%s added", "term"),
       singularName
     );
-    const termRemovedLabel = (0, import_i18n253.sprintf)(
+    const termRemovedLabel = (0, import_i18n254.sprintf)(
       /* translators: %s: term name. */
-      (0, import_i18n253._x)("%s removed", "term"),
+      (0, import_i18n254._x)("%s removed", "term"),
       singularName
     );
-    const removeTermLabel = (0, import_i18n253.sprintf)(
+    const removeTermLabel = (0, import_i18n254.sprintf)(
       /* translators: %s: term name. */
-      (0, import_i18n253._x)("Remove %s", "term"),
+      (0, import_i18n254._x)("Remove %s", "term"),
       singularName
     );
     return /* @__PURE__ */ (0, import_jsx_runtime449.jsxs)(Stack, { direction: "column", gap: "lg", children: [
@@ -86506,16 +86576,16 @@ If there's a particular need for this, please submit a feature request at https:
       const taxonomy = select9(import_core_data93.store).getTaxonomy("post_tag");
       return taxonomy?.labels;
     }, []);
-    const addNewItem = tagLabels?.add_new_item ?? (0, import_i18n254.__)("Add tag");
-    const tagLabel = tagLabels?.name ?? (0, import_i18n254.__)("Tags");
+    const addNewItem = tagLabels?.add_new_item ?? (0, import_i18n255.__)("Add tag");
+    const tagLabel = tagLabels?.name ?? (0, import_i18n255.__)("Tags");
     const panelBodyTitle = [
-      (0, import_i18n254.__)("Suggestion:"),
+      (0, import_i18n255.__)("Suggestion:"),
       /* @__PURE__ */ (0, import_jsx_runtime450.jsx)("span", { className: "editor-post-publish-panel__link", children: addNewItem }, "label")
     ];
     return /* @__PURE__ */ (0, import_jsx_runtime450.jsxs)(import_components210.PanelBody, { initialOpen: false, title: panelBodyTitle, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime450.jsx)("p", { children: (0, import_i18n254.sprintf)(
+      /* @__PURE__ */ (0, import_jsx_runtime450.jsx)("p", { children: (0, import_i18n255.sprintf)(
         // translators: %s is the taxonomy name (e.g., "Tags").
-        (0, import_i18n254.__)(
+        (0, import_i18n255.__)(
           "%s help users and search engines navigate your site and find your content. Add a few keywords to describe your post."
         ),
         tagLabel
@@ -86564,7 +86634,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-publish-panel/maybe-post-format-panel.mjs
   var import_components211 = __toESM(require_components(), 1);
   var import_data158 = __toESM(require_data(), 1);
-  var import_i18n255 = __toESM(require_i18n(), 1);
+  var import_i18n256 = __toESM(require_i18n(), 1);
   var import_core_data94 = __toESM(require_core_data(), 1);
   var import_jsx_runtime451 = __toESM(require_jsx_runtime(), 1);
   var getSuggestion = (supportedFormats, suggestedPostFormat) => {
@@ -86601,14 +86671,14 @@ If there's a particular need for this, please submit a feature request at https:
     const { editPost: editPost2 } = (0, import_data158.useDispatch)(store);
     const onUpdatePostFormat = (format6) => editPost2({ format: format6 });
     const panelBodyTitle = [
-      (0, import_i18n255.__)("Suggestion:"),
-      /* @__PURE__ */ (0, import_jsx_runtime451.jsx)("span", { className: "editor-post-publish-panel__link", children: (0, import_i18n255.__)("Use a post format") }, "label")
+      (0, import_i18n256.__)("Suggestion:"),
+      /* @__PURE__ */ (0, import_jsx_runtime451.jsx)("span", { className: "editor-post-publish-panel__link", children: (0, import_i18n256.__)("Use a post format") }, "label")
     ];
     if (!suggestion || suggestion.id === currentPostFormat) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime451.jsxs)(import_components211.PanelBody, { initialOpen: false, title: panelBodyTitle, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime451.jsx)("p", { children: (0, import_i18n255.__)(
+      /* @__PURE__ */ (0, import_jsx_runtime451.jsx)("p", { children: (0, import_i18n256.__)(
         "Your theme uses post formats to highlight different kinds of content, like images or videos. Apply a post format to see this special styling."
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime451.jsx)("p", { children: /* @__PURE__ */ (0, import_jsx_runtime451.jsx)(
@@ -86616,9 +86686,9 @@ If there's a particular need for this, please submit a feature request at https:
         {
           onUpdatePostFormat,
           suggestedPostFormat: suggestion.id,
-          suggestionText: (0, import_i18n255.sprintf)(
+          suggestionText: (0, import_i18n256.sprintf)(
             /* translators: %1s: post format */
-            (0, import_i18n255.__)('Apply the "%1$s" format.'),
+            (0, import_i18n256.__)('Apply the "%1$s" format.'),
             suggestion.caption
           )
         }
@@ -86627,14 +86697,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-publish-panel/maybe-category-panel.mjs
-  var import_i18n257 = __toESM(require_i18n(), 1);
+  var import_i18n258 = __toESM(require_i18n(), 1);
   var import_data160 = __toESM(require_data(), 1);
   var import_components213 = __toESM(require_components(), 1);
   var import_core_data96 = __toESM(require_core_data(), 1);
   var import_element260 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/hierarchical-term-selector.mjs
-  var import_i18n256 = __toESM(require_i18n(), 1);
+  var import_i18n257 = __toESM(require_i18n(), 1);
   var import_element259 = __toESM(require_element(), 1);
   var import_notices27 = __toESM(require_notices(), 1);
   var import_components212 = __toESM(require_components(), 1);
@@ -86804,10 +86874,10 @@ If there's a particular need for this, please submit a feature request at https:
         });
         return;
       }
-      const defaultName = slug === "category" ? (0, import_i18n256.__)("Category") : (0, import_i18n256.__)("Term");
-      const termAddedMessage = (0, import_i18n256.sprintf)(
+      const defaultName = slug === "category" ? (0, import_i18n257.__)("Category") : (0, import_i18n257.__)("Term");
+      const termAddedMessage = (0, import_i18n257.sprintf)(
         /* translators: %s: term name. */
-        (0, import_i18n256._x)("%s added", "term"),
+        (0, import_i18n257._x)("%s added", "term"),
         taxonomy?.labels?.singular_name ?? defaultName
       );
       (0, import_a11y9.speak)(termAddedMessage, "assertive");
@@ -86831,9 +86901,9 @@ If there's a particular need for this, please submit a feature request at https:
       setFilterValue(value);
       setFilteredTermsTree(newFilteredTermsTree);
       const resultCount = getResultCount(newFilteredTermsTree);
-      const resultsFoundMessage = (0, import_i18n256.sprintf)(
+      const resultsFoundMessage = (0, import_i18n257.sprintf)(
         /* translators: %d: number of results. */
-        (0, import_i18n256._n)("%d result found.", "%d results found.", resultCount),
+        (0, import_i18n257._n)("%d result found.", "%d results found.", resultCount),
         resultCount
       );
       debouncedSpeak(resultsFoundMessage, "assertive");
@@ -86866,23 +86936,23 @@ If there's a particular need for this, please submit a feature request at https:
     const labelWithFallback = (labelProperty, fallbackIsCategory, fallbackIsNotCategory) => taxonomy?.labels?.[labelProperty] ?? (slug === "category" ? fallbackIsCategory : fallbackIsNotCategory);
     const newTermButtonLabel = labelWithFallback(
       "add_new_item",
-      (0, import_i18n256.__)("Add Category"),
-      (0, import_i18n256.__)("Add Term")
+      (0, import_i18n257.__)("Add Category"),
+      (0, import_i18n257.__)("Add Term")
     );
     const newTermLabel = labelWithFallback(
       "new_item_name",
-      (0, import_i18n256.__)("Add Category"),
-      (0, import_i18n256.__)("Add Term")
+      (0, import_i18n257.__)("Add Category"),
+      (0, import_i18n257.__)("Add Term")
     );
     const parentSelectLabel = labelWithFallback(
       "parent_item",
-      (0, import_i18n256.__)("Parent Category"),
-      (0, import_i18n256.__)("Parent Term")
+      (0, import_i18n257.__)("Parent Category"),
+      (0, import_i18n257.__)("Parent Term")
     );
     const noParentOption = `\u2014 ${parentSelectLabel} \u2014`;
     const newTermSubmitLabel = newTermButtonLabel;
-    const filterLabel = taxonomy?.labels?.search_items ?? (0, import_i18n256.__)("Search Terms");
-    const groupLabel = taxonomy?.name ?? (0, import_i18n256.__)("Terms");
+    const filterLabel = taxonomy?.labels?.search_items ?? (0, import_i18n257.__)("Search Terms");
+    const groupLabel = taxonomy?.name ?? (0, import_i18n257.__)("Terms");
     const showFilter = availableTerms.length >= MIN_TERMS_COUNT_FOR_FILTER;
     return /* @__PURE__ */ (0, import_jsx_runtime452.jsxs)(import_components212.Flex, { direction: "column", gap: "4", children: [
       showFilter && !loading && /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(
@@ -87006,11 +87076,11 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     const panelBodyTitle = [
-      (0, import_i18n257.__)("Suggestion:"),
-      /* @__PURE__ */ (0, import_jsx_runtime453.jsx)("span", { className: "editor-post-publish-panel__link", children: (0, import_i18n257.__)("Assign a category") }, "label")
+      (0, import_i18n258.__)("Suggestion:"),
+      /* @__PURE__ */ (0, import_jsx_runtime453.jsx)("span", { className: "editor-post-publish-panel__link", children: (0, import_i18n258.__)("Assign a category") }, "label")
     ];
     return /* @__PURE__ */ (0, import_jsx_runtime453.jsxs)(import_components213.PanelBody, { initialOpen: false, title: panelBodyTitle, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime453.jsx)("p", { children: (0, import_i18n257.__)(
+      /* @__PURE__ */ (0, import_jsx_runtime453.jsx)("p", { children: (0, import_i18n258.__)(
         "Categories provide a helpful way to group related posts together and to quickly tell readers what a post is about."
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(hierarchical_term_selector_default, { slug: "category" })
@@ -87021,7 +87091,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-publish-panel/maybe-upload-media.mjs
   var import_components214 = __toESM(require_components(), 1);
   var import_data161 = __toESM(require_data(), 1);
-  var import_i18n258 = __toESM(require_i18n(), 1);
+  var import_i18n259 = __toESM(require_i18n(), 1);
   var import_block_editor57 = __toESM(require_block_editor(), 1);
   var import_element261 = __toESM(require_element(), 1);
   var import_jsx_runtime454 = __toESM(require_jsx_runtime(), 1);
@@ -87061,7 +87131,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         tabIndex: 0,
         role: "button",
-        "aria-label": (0, import_i18n258.__)("Select image block."),
+        "aria-label": (0, import_i18n259.__)("Select image block."),
         onClick: () => {
           selectBlock2(clientId);
         },
@@ -87106,8 +87176,8 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     const panelBodyTitle = [
-      (0, import_i18n258.__)("Suggestion:"),
-      /* @__PURE__ */ (0, import_jsx_runtime454.jsx)("span", { className: "editor-post-publish-panel__link", children: (0, import_i18n258.__)("External media") }, "label")
+      (0, import_i18n259.__)("Suggestion:"),
+      /* @__PURE__ */ (0, import_jsx_runtime454.jsx)("span", { className: "editor-post-publish-panel__link", children: (0, import_i18n259.__)("External media") }, "label")
     ];
     function updateBlockWithUploadedMedia(block, media) {
       if (block.name === "core/image" || block.name === "core/cover") {
@@ -87156,7 +87226,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime454.jsxs)(import_components214.PanelBody, { initialOpen: true, title: panelBodyTitle, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime454.jsx)("p", { children: (0, import_i18n258.__)(
+      /* @__PURE__ */ (0, import_jsx_runtime454.jsx)("p", { children: (0, import_i18n259.__)(
         "Upload external images to the Media Library. Images from different domains may load slowly, display incorrectly, or be removed unexpectedly."
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime454.jsxs)(
@@ -87192,13 +87262,13 @@ If there's a particular need for this, please submit a feature request at https:
                 size: "compact",
                 variant: "primary",
                 onClick: uploadImages,
-                children: (0, import_i18n258._x)("Upload", "verb")
+                children: (0, import_i18n259._x)("Upload", "verb")
               }
             )
           ]
         }
       ),
-      hadUploadError && /* @__PURE__ */ (0, import_jsx_runtime454.jsx)("p", { children: (0, import_i18n258.__)("Upload failed, try again.") })
+      hadUploadError && /* @__PURE__ */ (0, import_jsx_runtime454.jsx)("p", { children: (0, import_i18n259.__)("Upload failed, try again.") })
     ] });
   }
 
@@ -87241,7 +87311,7 @@ If there's a particular need for this, please submit a feature request at https:
       siteIcon = /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(
         "img",
         {
-          alt: (0, import_i18n259.__)("Site Icon"),
+          alt: (0, import_i18n260.__)("Site Icon"),
           className: "components-site-icon",
           src: siteIconUrl
         }
@@ -87252,18 +87322,18 @@ If there's a particular need for this, please submit a feature request at https:
     }
     let prePublishTitle, prePublishBodyText;
     if (!hasPublishAction) {
-      prePublishTitle = (0, import_i18n259.__)("Are you ready to submit for review?");
-      prePublishBodyText = (0, import_i18n259.__)(
+      prePublishTitle = (0, import_i18n260.__)("Are you ready to submit for review?");
+      prePublishBodyText = (0, import_i18n260.__)(
         "Your work will be reviewed and then approved."
       );
     } else if (isBeingScheduled) {
-      prePublishTitle = (0, import_i18n259.__)("Are you ready to schedule?");
-      prePublishBodyText = (0, import_i18n259.__)(
+      prePublishTitle = (0, import_i18n260.__)("Are you ready to schedule?");
+      prePublishBodyText = (0, import_i18n260.__)(
         "Your work will be published at the specified date and time."
       );
     } else {
-      prePublishTitle = (0, import_i18n259.__)("Are you ready to publish?");
-      prePublishBodyText = (0, import_i18n259.__)(
+      prePublishTitle = (0, import_i18n260.__)("Are you ready to publish?");
+      prePublishBodyText = (0, import_i18n260.__)(
         "Double-check your settings before publishing."
       );
     }
@@ -87273,7 +87343,7 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime455.jsxs)("div", { className: "components-site-card", children: [
         siteIcon,
         /* @__PURE__ */ (0, import_jsx_runtime455.jsxs)("div", { className: "components-site-info", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime455.jsx)("span", { className: "components-site-name", children: (0, import_html_entities26.decodeEntities)(siteTitle) || (0, import_i18n259.__)("(Untitled)") }),
+          /* @__PURE__ */ (0, import_jsx_runtime455.jsx)("span", { className: "components-site-name", children: (0, import_html_entities26.decodeEntities)(siteTitle) || (0, import_i18n260.__)("(Untitled)") }),
           /* @__PURE__ */ (0, import_jsx_runtime455.jsx)("span", { className: "components-site-home", children: siteHome })
         ] })
       ] }),
@@ -87284,7 +87354,7 @@ If there's a particular need for this, please submit a feature request at https:
           {
             initialOpen: false,
             title: [
-              (0, import_i18n259.__)("Visibility:"),
+              (0, import_i18n260.__)("Visibility:"),
               /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(
                 "span",
                 {
@@ -87302,7 +87372,7 @@ If there's a particular need for this, please submit a feature request at https:
           {
             initialOpen: false,
             title: [
-              (0, import_i18n259.__)("Publish:"),
+              (0, import_i18n260.__)("Publish:"),
               /* @__PURE__ */ (0, import_jsx_runtime455.jsx)(
                 "span",
                 {
@@ -87326,7 +87396,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-publish-panel/postpublish.mjs
   var import_components216 = __toESM(require_components(), 1);
-  var import_i18n260 = __toESM(require_i18n(), 1);
+  var import_i18n261 = __toESM(require_i18n(), 1);
   var import_element262 = __toESM(require_element(), 1);
   var import_data163 = __toESM(require_data(), 1);
   var import_url20 = __toESM(require_url(), 1);
@@ -87365,7 +87435,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(import_components216.Button, { __next40pxDefaultSize: true, variant: "secondary", ref, children: showCopyConfirmation ? (0, import_i18n260.__)("Copied!") : (0, import_i18n260.__)("Copy") });
+    return /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(import_components216.Button, { __next40pxDefaultSize: true, variant: "secondary", ref, children: showCopyConfirmation ? (0, import_i18n261.__)("Copied!") : (0, import_i18n261.__)("Copy") });
   }
   function PostPublishPanelPostpublish({
     focusOnMount,
@@ -87400,28 +87470,28 @@ If there's a particular need for this, please submit a feature request at https:
       [focusOnMount]
     );
     const postPublishNonLinkHeader = isScheduled ? /* @__PURE__ */ (0, import_jsx_runtime456.jsxs)(import_jsx_runtime456.Fragment, { children: [
-      (0, import_i18n260.__)("is now scheduled. It will go live on"),
+      (0, import_i18n261.__)("is now scheduled. It will go live on"),
       " ",
       /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(PostScheduleLabel, {}),
       "."
-    ] }) : (0, import_i18n260.__)("is now live.");
+    ] }) : (0, import_i18n261.__)("is now live.");
     return /* @__PURE__ */ (0, import_jsx_runtime456.jsxs)("div", { className: "post-publish-panel__postpublish", children: [
       /* @__PURE__ */ (0, import_jsx_runtime456.jsxs)(import_components216.PanelBody, { className: "post-publish-panel__postpublish-header", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(import_components216.ExternalLink, { ref: postLinkRef, href: link, children: (0, import_html_entities27.decodeEntities)(post2.title) || (0, import_i18n260.__)("(no title)") }),
+        /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(import_components216.ExternalLink, { ref: postLinkRef, href: link, children: (0, import_html_entities27.decodeEntities)(post2.title) || (0, import_i18n261.__)("(no title)") }),
         " ",
         postPublishNonLinkHeader
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime456.jsxs)(import_components216.PanelBody, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime456.jsx)("p", { className: "post-publish-panel__postpublish-subheader", children: /* @__PURE__ */ (0, import_jsx_runtime456.jsx)("strong", { children: (0, import_i18n260.__)("What\u2019s next?") }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime456.jsx)("p", { className: "post-publish-panel__postpublish-subheader", children: /* @__PURE__ */ (0, import_jsx_runtime456.jsx)("strong", { children: (0, import_i18n261.__)("What\u2019s next?") }) }),
         /* @__PURE__ */ (0, import_jsx_runtime456.jsxs)("div", { className: "post-publish-panel__postpublish-post-address-container", children: [
           /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(
             import_components216.TextControl,
             {
               className: "post-publish-panel__postpublish-post-address",
               readOnly: true,
-              label: (0, import_i18n260.sprintf)(
+              label: (0, import_i18n261.sprintf)(
                 /* translators: %s: post type singular name */
-                (0, import_i18n260.__)("%s address"),
+                (0, import_i18n261.__)("%s address"),
                 postLabel
               ),
               value: (0, import_url20.safeDecodeURIComponent)(link),
@@ -87445,7 +87515,7 @@ If there's a particular need for this, please submit a feature request at https:
                 /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(VisuallyHidden, {
                   render: /* @__PURE__ */ (0, import_jsx_runtime456.jsx)("span", {}),
                   /* translators: accessibility text */
-                  children: (0, import_i18n260.__)("(opens in a new tab)")
+                  children: (0, import_i18n261.__)("(opens in a new tab)")
                 })
               ]
             }
@@ -87561,7 +87631,7 @@ If there's a particular need for this, please submit a feature request at https:
               size: "compact",
               onClick: onClose,
               icon: close_small_default,
-              label: (0, import_i18n261.__)("Close panel")
+              label: (0, import_i18n262.__)("Close panel")
             }
           ) : /* @__PURE__ */ (0, import_jsx_runtime457.jsxs)(import_jsx_runtime457.Fragment, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime457.jsx)("div", { className: "editor-post-publish-panel__header-cancel-button", children: /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(
@@ -87573,7 +87643,7 @@ If there's a particular need for this, please submit a feature request at https:
                 onClick: onClose,
                 variant: "secondary",
                 size: "compact",
-                children: (0, import_i18n261.__)("Cancel")
+                children: (0, import_i18n262.__)("Cancel")
               }
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime457.jsx)("div", { className: "editor-post-publish-panel__header-publish-button", children: /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(
@@ -87592,7 +87662,7 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime457.jsx)("div", { className: "editor-post-publish-panel__footer", children: /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(
             import_components217.CheckboxControl,
             {
-              label: (0, import_i18n261.__)("Always show pre-publish checks."),
+              label: (0, import_i18n262.__)("Always show pre-publish checks."),
               checked: isPublishSidebarEnabled2,
               onChange: onTogglePublishSidebar
             }
@@ -87607,13 +87677,13 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose54 = __toESM(require_compose(), 1);
   var import_data168 = __toESM(require_data(), 1);
   var import_element265 = __toESM(require_element(), 1);
-  var import_i18n264 = __toESM(require_i18n(), 1);
+  var import_i18n265 = __toESM(require_i18n(), 1);
   var import_keycodes14 = __toESM(require_keycodes(), 1);
   var import_preferences14 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/post-status/index.mjs
   var import_components219 = __toESM(require_components(), 1);
-  var import_i18n263 = __toESM(require_i18n(), 1);
+  var import_i18n264 = __toESM(require_i18n(), 1);
   var import_data167 = __toESM(require_data(), 1);
   var import_element264 = __toESM(require_element(), 1);
   var import_core_data100 = __toESM(require_core_data(), 1);
@@ -87621,7 +87691,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose53 = __toESM(require_compose(), 1);
 
   // packages/editor/build-module/components/post-sticky/index.mjs
-  var import_i18n262 = __toESM(require_i18n(), 1);
+  var import_i18n263 = __toESM(require_i18n(), 1);
   var import_components218 = __toESM(require_components(), 1);
   var import_data166 = __toESM(require_data(), 1);
 
@@ -87652,8 +87722,8 @@ If there's a particular need for this, please submit a feature request at https:
       import_components218.CheckboxControl,
       {
         className: "editor-post-sticky__checkbox-control",
-        label: (0, import_i18n262.__)("Sticky"),
-        help: (0, import_i18n262.__)("Pin this post to the top of the blog."),
+        label: (0, import_i18n263.__)("Sticky"),
+        help: (0, import_i18n263.__)("Pin this post to the top of the blog."),
         checked: postSticky,
         onChange: () => editPost2({ sticky: !postSticky })
       }
@@ -87663,38 +87733,38 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-status/index.mjs
   var import_jsx_runtime459 = __toESM(require_jsx_runtime(), 1);
   var postStatusesInfo = {
-    "auto-draft": { label: (0, import_i18n263.__)("Draft"), icon: drafts_default },
-    draft: { label: (0, import_i18n263.__)("Draft"), icon: drafts_default },
-    pending: { label: (0, import_i18n263.__)("Pending"), icon: pending_default },
-    private: { label: (0, import_i18n263.__)("Private"), icon: not_allowed_default },
-    future: { label: (0, import_i18n263.__)("Scheduled"), icon: scheduled_default },
-    publish: { label: (0, import_i18n263.__)("Published"), icon: published_default }
+    "auto-draft": { label: (0, import_i18n264.__)("Draft"), icon: drafts_default },
+    draft: { label: (0, import_i18n264.__)("Draft"), icon: drafts_default },
+    pending: { label: (0, import_i18n264.__)("Pending"), icon: pending_default },
+    private: { label: (0, import_i18n264.__)("Private"), icon: not_allowed_default },
+    future: { label: (0, import_i18n264.__)("Scheduled"), icon: scheduled_default },
+    publish: { label: (0, import_i18n264.__)("Published"), icon: published_default }
   };
   var STATUS_OPTIONS = [
     {
-      label: (0, import_i18n263.__)("Draft"),
+      label: (0, import_i18n264.__)("Draft"),
       value: "draft",
-      description: (0, import_i18n263.__)("Not ready to publish.")
+      description: (0, import_i18n264.__)("Not ready to publish.")
     },
     {
-      label: (0, import_i18n263.__)("Pending"),
+      label: (0, import_i18n264.__)("Pending"),
       value: "pending",
-      description: (0, import_i18n263.__)("Waiting for review before publishing.")
+      description: (0, import_i18n264.__)("Waiting for review before publishing.")
     },
     {
-      label: (0, import_i18n263.__)("Private"),
+      label: (0, import_i18n264.__)("Private"),
       value: "private",
-      description: (0, import_i18n263.__)("Only visible to site admins and editors.")
+      description: (0, import_i18n264.__)("Only visible to site admins and editors.")
     },
     {
-      label: (0, import_i18n263.__)("Scheduled"),
+      label: (0, import_i18n264.__)("Scheduled"),
       value: "future",
-      description: (0, import_i18n263.__)("Publish automatically on a chosen date.")
+      description: (0, import_i18n264.__)("Publish automatically on a chosen date.")
     },
     {
-      label: (0, import_i18n263.__)("Published"),
+      label: (0, import_i18n264.__)("Published"),
       value: "publish",
-      description: (0, import_i18n263.__)("Visible to everyone.")
+      description: (0, import_i18n264.__)("Visible to everyone.")
     }
   ];
   function PostStatus() {
@@ -87729,8 +87799,8 @@ If there's a particular need for this, please submit a feature request at https:
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
         anchor: popoverAnchor,
-        "aria-label": (0, import_i18n263.__)("Status & visibility"),
-        headerTitle: (0, import_i18n263.__)("Status & visibility"),
+        "aria-label": (0, import_i18n264.__)("Status & visibility"),
+        headerTitle: (0, import_i18n264.__)("Status & visibility"),
         placement: "left-start",
         offset: 36,
         shift: true
@@ -87772,7 +87842,7 @@ If there's a particular need for this, please submit a feature request at https:
         password: newPassword
       });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(post_panel_row_default, { label: (0, import_i18n263.__)("Status"), ref: setPopoverAnchor, children: canEdit ? /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(post_panel_row_default, { label: (0, import_i18n264.__)("Status"), ref: setPopoverAnchor, children: canEdit ? /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
       import_components219.Dropdown,
       {
         className: "editor-post-status",
@@ -87787,9 +87857,9 @@ If there's a particular need for this, please submit a feature request at https:
             size: "compact",
             onClick: onToggle,
             icon: postStatusesInfo[status]?.icon,
-            "aria-label": (0, import_i18n263.sprintf)(
+            "aria-label": (0, import_i18n264.sprintf)(
               // translators: %s: Current post status.
-              (0, import_i18n263.__)("Change status: %s"),
+              (0, import_i18n264.__)("Change status: %s"),
               postStatusesInfo[status]?.label
             ),
             "aria-expanded": isOpen2,
@@ -87800,7 +87870,7 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
             import_block_editor58.__experimentalInspectorPopoverHeader,
             {
-              title: (0, import_i18n263.__)("Status & visibility"),
+              title: (0, import_i18n264.__)("Status & visibility"),
               onClose
             }
           ),
@@ -87817,7 +87887,7 @@ If there's a particular need for this, please submit a feature request at https:
                   {
                     className: "editor-change-status__options",
                     hideLabelFromVision: true,
-                    label: (0, import_i18n263.__)("Status"),
+                    label: (0, import_i18n264.__)("Status"),
                     options: STATUS_OPTIONS,
                     onChange: handleStatus,
                     selected: status === "auto-draft" ? "draft" : status
@@ -87840,10 +87910,10 @@ If there's a particular need for this, please submit a feature request at https:
                       /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
                         import_components219.CheckboxControl,
                         {
-                          label: (0, import_i18n263.__)(
+                          label: (0, import_i18n264.__)(
                             "Password protected"
                           ),
-                          help: (0, import_i18n263.__)(
+                          help: (0, import_i18n264.__)(
                             "Only visible to those who know the password."
                           ),
                           checked: showPassword,
@@ -87853,14 +87923,14 @@ If there's a particular need for this, please submit a feature request at https:
                       showPassword && /* @__PURE__ */ (0, import_jsx_runtime459.jsx)("div", { className: "editor-change-status__password-input", children: /* @__PURE__ */ (0, import_jsx_runtime459.jsx)(
                         import_components219.TextControl,
                         {
-                          label: (0, import_i18n263.__)(
+                          label: (0, import_i18n264.__)(
                             "Password"
                           ),
                           onChange: (value) => updatePost2({
                             password: value
                           }),
                           value: password,
-                          placeholder: (0, import_i18n263.__)(
+                          placeholder: (0, import_i18n264.__)(
                             "Use a secure password"
                           ),
                           type: "text",
@@ -87946,17 +88016,17 @@ If there's a particular need for this, please submit a feature request at https:
     if (isPublished || isScheduled || isIneligibleStatus || postStatusHasChanged && ["pending", "draft"].includes(postStatus)) {
       return null;
     }
-    const label = isPending ? (0, import_i18n264.__)("Save as pending") : (0, import_i18n264.__)("Save draft");
-    const shortLabel = (0, import_i18n264.__)("Save");
+    const label = isPending ? (0, import_i18n265.__)("Save as pending") : (0, import_i18n265.__)("Save draft");
+    const shortLabel = (0, import_i18n265.__)("Save");
     const isSaved = forceSavedMessage || !isNew && !isDirty;
     const isSavedState = isSaving || isSaved;
     const isDisabled = isSaving || isSaved || !isSaveable || isSavingLocked || // Disable while a non-post entity (e.g. a newly created term) is mid-save.
     isSavingNonPostEntityChanges2;
     let text;
     if (isSaving) {
-      text = isAutosaving ? (0, import_i18n264.__)("Autosaving") : (0, import_i18n264.__)("Saving");
+      text = isAutosaving ? (0, import_i18n265.__)("Autosaving") : (0, import_i18n265.__)("Saving");
     } else if (isSaved) {
-      text = (0, import_i18n264.__)("Saved");
+      text = (0, import_i18n265.__)("Saved");
     } else if (isLargeViewport) {
       text = label;
     } else if (showIconLabels) {
@@ -88004,7 +88074,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-schedule/panel.mjs
   var import_components221 = __toESM(require_components(), 1);
-  var import_i18n265 = __toESM(require_i18n(), 1);
+  var import_i18n266 = __toESM(require_i18n(), 1);
   var import_element266 = __toESM(require_element(), 1);
   var import_data170 = __toESM(require_data(), 1);
   var import_jsx_runtime461 = __toESM(require_jsx_runtime(), 1);
@@ -88019,7 +88089,7 @@ If there's a particular need for this, please submit a feature request at https:
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
         anchor: popoverAnchor,
-        "aria-label": (0, import_i18n265.__)("Change publish date"),
+        "aria-label": (0, import_i18n266.__)("Change publish date"),
         placement: "left-start",
         offset: 36,
         shift: true
@@ -88031,7 +88101,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (DESIGN_POST_TYPES.includes(postType2)) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(PostScheduleCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(post_panel_row_default, { label: (0, import_i18n265.__)("Publish"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(PostScheduleCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(post_panel_row_default, { label: (0, import_i18n266.__)("Publish"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(
       import_components221.Dropdown,
       {
         popoverProps,
@@ -88046,9 +88116,9 @@ If there's a particular need for this, please submit a feature request at https:
             variant: "tertiary",
             tooltipPosition: "middle left",
             onClick: onToggle,
-            "aria-label": (0, import_i18n265.sprintf)(
+            "aria-label": (0, import_i18n266.sprintf)(
               // translators: %s: Current post date.
-              (0, import_i18n265.__)("Change date: %s"),
+              (0, import_i18n266.__)("Change date: %s"),
               label
             ),
             label: fullLabel,
@@ -88064,7 +88134,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-switch-to-draft-button/index.mjs
   var import_components222 = __toESM(require_components(), 1);
-  var import_i18n266 = __toESM(require_i18n(), 1);
+  var import_i18n267 = __toESM(require_i18n(), 1);
   var import_data171 = __toESM(require_data(), 1);
   var import_element267 = __toESM(require_element(), 1);
   var import_deprecated12 = __toESM(require_deprecated(), 1);
@@ -88088,11 +88158,11 @@ If there's a particular need for this, please submit a feature request at https:
     let alertMessage;
     let confirmButtonText;
     if (isPublished) {
-      alertMessage = (0, import_i18n266.__)("Are you sure you want to unpublish this post?");
-      confirmButtonText = (0, import_i18n266.__)("Unpublish");
+      alertMessage = (0, import_i18n267.__)("Are you sure you want to unpublish this post?");
+      confirmButtonText = (0, import_i18n267.__)("Unpublish");
     } else if (isScheduled) {
-      alertMessage = (0, import_i18n266.__)("Are you sure you want to unschedule this post?");
-      confirmButtonText = (0, import_i18n266.__)("Unschedule");
+      alertMessage = (0, import_i18n267.__)("Are you sure you want to unschedule this post?");
+      confirmButtonText = (0, import_i18n267.__)("Unschedule");
     }
     const handleConfirm = () => {
       setShowConfirmDialog(false);
@@ -88113,7 +88183,7 @@ If there's a particular need for this, please submit a feature request at https:
           "aria-disabled": isDisabled,
           variant: "secondary",
           style: { flexGrow: "1", justifyContent: "center" },
-          children: (0, import_i18n266.__)("Switch to draft")
+          children: (0, import_i18n267.__)("Switch to draft")
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime462.jsx)(
@@ -88131,7 +88201,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-sync-status/index.mjs
   var import_data172 = __toESM(require_data(), 1);
-  var import_i18n267 = __toESM(require_i18n(), 1);
+  var import_i18n268 = __toESM(require_i18n(), 1);
   var import_jsx_runtime463 = __toESM(require_jsx_runtime(), 1);
   function PostSyncStatus() {
     const { syncStatus, postType: postType2 } = (0, import_data172.useSelect)((select9) => {
@@ -88146,7 +88216,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (postType2 !== "wp_block") {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(post_panel_row_default, { label: (0, import_i18n267.__)("Sync status"), children: /* @__PURE__ */ (0, import_jsx_runtime463.jsx)("div", { className: "editor-post-sync-status__value", children: syncStatus === "unsynced" ? (0, import_i18n267._x)("Not synced", "pattern (singular)") : (0, import_i18n267._x)("Synced", "pattern (singular)") }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime463.jsx)(post_panel_row_default, { label: (0, import_i18n268.__)("Sync status"), children: /* @__PURE__ */ (0, import_jsx_runtime463.jsx)("div", { className: "editor-post-sync-status__value", children: syncStatus === "unsynced" ? (0, import_i18n268._x)("Not synced", "pattern (singular)") : (0, import_i18n268._x)("Synced", "pattern (singular)") }) });
   }
 
   // packages/editor/build-module/components/post-taxonomies/index.mjs
@@ -88251,7 +88321,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-text-editor/index.mjs
   var import_react_autosize_textarea = __toESM(require_lib(), 1);
   var import_element269 = __toESM(require_element(), 1);
-  var import_i18n268 = __toESM(require_i18n(), 1);
+  var import_i18n269 = __toESM(require_i18n(), 1);
   var import_core_data103 = __toESM(require_core_data(), 1);
   var import_data176 = __toESM(require_data(), 1);
   var import_compose55 = __toESM(require_compose(), 1);
@@ -88425,7 +88495,7 @@ If there's a particular need for this, please submit a feature request at https:
         VisuallyHidden,
         {
           render: /* @__PURE__ */ (0, import_jsx_runtime466.jsx)("label", { htmlFor: `post-content-${instanceId}` }),
-          children: (0, import_i18n268.__)("Type text or HTML")
+          children: (0, import_i18n269.__)("Type text or HTML")
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime466.jsx)(
@@ -88449,21 +88519,21 @@ If there's a particular need for this, please submit a feature request at https:
           onKeyUp: updateSelection,
           className: "editor-post-text-editor",
           id: `post-content-${instanceId}`,
-          placeholder: (0, import_i18n268.__)("Start writing with text or HTML")
+          placeholder: (0, import_i18n269.__)("Start writing with text or HTML")
         }
       )
     ] });
   }
 
   // packages/editor/build-module/components/post-title/index.mjs
-  var import_i18n269 = __toESM(require_i18n(), 1);
+  var import_i18n270 = __toESM(require_i18n(), 1);
   var import_element271 = __toESM(require_element(), 1);
   var import_html_entities28 = __toESM(require_html_entities(), 1);
   var import_data179 = __toESM(require_data(), 1);
   var import_block_editor59 = __toESM(require_block_editor(), 1);
   var import_keycodes15 = __toESM(require_keycodes(), 1);
   var import_blocks27 = __toESM(require_blocks(), 1);
-  var import_rich_text5 = __toESM(require_rich_text(), 1);
+  var import_rich_text6 = __toESM(require_rich_text(), 1);
   var import_compose56 = __toESM(require_compose(), 1);
   var import_dom24 = __toESM(require_dom(), 1);
 
@@ -88520,7 +88590,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-title/index.mjs
   var import_jsx_runtime467 = __toESM(require_jsx_runtime(), 1);
-  var { useRichText: useRichText2 } = unlock(import_rich_text5.privateApis);
+  var { useRichText: useRichText2 } = unlock(import_rich_text6.privateApis);
   var PostTitle = (0, import_element271.forwardRef)((_, forwardedRef) => {
     const { placeholder, isEditingContentOnlySection, isPreview } = (0, import_data179.useSelect)(
       (select9) => {
@@ -88541,7 +88611,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { title, setTitle: onUpdate } = usePostTitle();
     const [selection, setSelection] = (0, import_element271.useState)({});
     const { clearSelectedBlock: clearSelectedBlock2, insertBlocks: insertBlocks2, insertDefaultBlock: insertDefaultBlock2 } = (0, import_data179.useDispatch)(import_block_editor59.store);
-    const decodedPlaceholder = (0, import_html_entities28.decodeEntities)(placeholder) || (0, import_i18n269.__)("Add title");
+    const decodedPlaceholder = (0, import_html_entities28.decodeEntities)(placeholder) || (0, import_i18n270.__)("Add title");
     const {
       value,
       onChange,
@@ -88619,7 +88689,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       } else {
         const contentNoHTML = (0, import_dom24.__unstableStripHTML)(content);
-        onChange((0, import_rich_text5.insert)(value, (0, import_rich_text5.create)({ html: contentNoHTML })));
+        onChange((0, import_rich_text6.insert)(value, (0, import_rich_text6.create)({ html: contentNoHTML })));
       }
     }
     const className = clsx_default(DEFAULT_CLASSNAMES, {
@@ -88650,7 +88720,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-title/post-title-raw.mjs
   var import_components224 = __toESM(require_components(), 1);
-  var import_i18n270 = __toESM(require_i18n(), 1);
+  var import_i18n271 = __toESM(require_i18n(), 1);
   var import_html_entities29 = __toESM(require_html_entities(), 1);
   var import_data180 = __toESM(require_data(), 1);
   var import_block_editor60 = __toESM(require_block_editor(), 1);
@@ -88680,7 +88750,7 @@ If there's a particular need for this, please submit a feature request at https:
       "is-selected": isSelected2,
       "is-raw-text": true
     });
-    const decodedPlaceholder = (0, import_html_entities29.decodeEntities)(placeholder) || (0, import_i18n270.__)("Add title");
+    const decodedPlaceholder = (0, import_html_entities29.decodeEntities)(placeholder) || (0, import_i18n271.__)("Add title");
     return /* @__PURE__ */ (0, import_jsx_runtime468.jsx)(
       import_components224.TextareaControl,
       {
@@ -88702,7 +88772,7 @@ If there's a particular need for this, please submit a feature request at https:
   var post_title_raw_default = (0, import_element272.forwardRef)(PostTitleRaw);
 
   // packages/editor/build-module/components/post-trash/index.mjs
-  var import_i18n271 = __toESM(require_i18n(), 1);
+  var import_i18n272 = __toESM(require_i18n(), 1);
   var import_components225 = __toESM(require_components(), 1);
   var import_data182 = __toESM(require_data(), 1);
   var import_element273 = __toESM(require_element(), 1);
@@ -88767,7 +88837,7 @@ If there's a particular need for this, please submit a feature request at https:
           isBusy: isDeleting,
           "aria-disabled": isDeleting,
           onClick: isDeleting ? void 0 : () => setShowConfirmDialog(true),
-          children: (0, import_i18n271.__)("Move to trash")
+          children: (0, import_i18n272.__)("Move to trash")
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime469.jsx)(
@@ -88776,11 +88846,11 @@ If there's a particular need for this, please submit a feature request at https:
           isOpen: showConfirmDialog,
           onConfirm: handleConfirm,
           onCancel: () => setShowConfirmDialog(false),
-          confirmButtonText: (0, import_i18n271.__)("Move to trash"),
+          confirmButtonText: (0, import_i18n272.__)("Move to trash"),
           size: "small",
-          children: (0, import_i18n271.sprintf)(
+          children: (0, import_i18n272.sprintf)(
             // translators: %s: The item's title.
-            (0, import_i18n271.__)('Are you sure you want to move "%s" to the trash?'),
+            (0, import_i18n272.__)('Are you sure you want to move "%s" to the trash?'),
             title
           )
         }
@@ -88793,7 +88863,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url21 = __toESM(require_url(), 1);
   var import_element274 = __toESM(require_element(), 1);
   var import_block_editor61 = __toESM(require_block_editor(), 1);
-  var import_i18n272 = __toESM(require_i18n(), 1);
+  var import_i18n273 = __toESM(require_i18n(), 1);
   var import_components226 = __toESM(require_components(), 1);
   var import_notices28 = __toESM(require_notices(), 1);
   var import_core_data105 = __toESM(require_core_data(), 1);
@@ -88831,7 +88901,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { createNotice } = (0, import_data183.useDispatch)(import_notices28.store);
     const [forceEmptyField, setForceEmptyField] = (0, import_element274.useState)(false);
     const copyButtonRef = (0, import_compose57.useCopyToClipboard)(permalink, () => {
-      createNotice("info", (0, import_i18n272.__)("Copied Permalink to clipboard."), {
+      createNotice("info", (0, import_i18n273.__)("Copied Permalink to clipboard."), {
         isDismissible: true,
         type: "snackbar"
       });
@@ -88841,13 +88911,13 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime470.jsx)(
         import_block_editor61.__experimentalInspectorPopoverHeader,
         {
-          title: (0, import_i18n272.__)("Slug"),
+          title: (0, import_i18n273.__)("Slug"),
           onClose
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime470.jsxs)(import_components226.__experimentalVStack, { spacing: 3, children: [
         isEditable && /* @__PURE__ */ (0, import_jsx_runtime470.jsx)("p", { className: "editor-post-url__intro", children: (0, import_element274.createInterpolateElement)(
-          (0, import_i18n272.__)(
+          (0, import_i18n273.__)(
             "<span>Customize the last part of the Permalink.</span> <a>Learn more.</a>"
           ),
           {
@@ -88855,7 +88925,7 @@ If there's a particular need for this, please submit a feature request at https:
             a: /* @__PURE__ */ (0, import_jsx_runtime470.jsx)(
               import_components226.ExternalLink,
               {
-                href: (0, import_i18n272.__)(
+                href: (0, import_i18n273.__)(
                   "https://wordpress.org/documentation/article/page-post-settings-sidebar/#permalink"
                 )
               }
@@ -88877,7 +88947,7 @@ If there's a particular need for this, please submit a feature request at https:
                     label: "Copy"
                   }
                 ) }),
-                label: (0, import_i18n272.__)("Slug"),
+                label: (0, import_i18n273.__)("Slug"),
                 hideLabelFromVision: true,
                 value: forceEmptyField ? "" : postSlug,
                 autoComplete: "off",
@@ -88910,7 +88980,7 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime470.jsxs)("p", { className: "editor-post-url__permalink", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime470.jsx)("span", { className: "editor-post-url__permalink-visual-label", children: (0, import_i18n272.__)("Permalink:") }),
+              /* @__PURE__ */ (0, import_jsx_runtime470.jsx)("span", { className: "editor-post-url__permalink-visual-label", children: (0, import_i18n273.__)("Permalink:") }),
               /* @__PURE__ */ (0, import_jsx_runtime470.jsxs)(
                 import_components226.ExternalLink,
                 {
@@ -88984,7 +89054,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element275 = __toESM(require_element(), 1);
   var import_data186 = __toESM(require_data(), 1);
   var import_components227 = __toESM(require_components(), 1);
-  var import_i18n273 = __toESM(require_i18n(), 1);
+  var import_i18n274 = __toESM(require_i18n(), 1);
   var import_url23 = __toESM(require_url(), 1);
   var import_core_data107 = __toESM(require_core_data(), 1);
   var import_jsx_runtime471 = __toESM(require_jsx_runtime(), 1);
@@ -89013,7 +89083,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [popoverAnchor]
     );
-    const label = isFrontPage ? (0, import_i18n273.__)("Link") : (0, import_i18n273.__)("Slug");
+    const label = isFrontPage ? (0, import_i18n274.__)("Link") : (0, import_i18n274.__)("Slug");
     return /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(PostURLCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime471.jsxs)(post_panel_row_default, { label, ref: setPopoverAnchor, children: [
       !isFrontPage && /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(
         import_components227.Dropdown,
@@ -89051,7 +89121,7 @@ If there's a particular need for this, please submit a feature request at https:
         "aria-expanded": isOpen2,
         "aria-label": (
           // translators: %s: Current post link.
-          (0, import_i18n273.sprintf)((0, import_i18n273.__)("Change link: %s"), decodedSlug)
+          (0, import_i18n274.sprintf)((0, import_i18n274.__)("Change link: %s"), decodedSlug)
         ),
         onClick,
         children: /* @__PURE__ */ (0, import_jsx_runtime471.jsx)(import_jsx_runtime471.Fragment, { children: decodedSlug })
@@ -89086,20 +89156,20 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/table-of-contents/index.mjs
-  var import_i18n277 = __toESM(require_i18n(), 1);
+  var import_i18n278 = __toESM(require_i18n(), 1);
   var import_components228 = __toESM(require_components(), 1);
   var import_data192 = __toESM(require_data(), 1);
   var import_element277 = __toESM(require_element(), 1);
   var import_block_editor63 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/table-of-contents/panel.mjs
-  var import_i18n276 = __toESM(require_i18n(), 1);
+  var import_i18n277 = __toESM(require_i18n(), 1);
   var import_data191 = __toESM(require_data(), 1);
   var import_block_editor62 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/word-count/index.mjs
   var import_data188 = __toESM(require_data(), 1);
-  var import_i18n274 = __toESM(require_i18n(), 1);
+  var import_i18n275 = __toESM(require_i18n(), 1);
   var import_wordcount2 = __toESM(require_wordcount(), 1);
   var import_jsx_runtime472 = __toESM(require_jsx_runtime(), 1);
   function WordCount() {
@@ -89107,13 +89177,13 @@ If there's a particular need for this, please submit a feature request at https:
       (select9) => select9(store).getEditedPostAttribute("content"),
       []
     );
-    const wordCountType = (0, import_i18n274._x)("words", "Word count type. Do not translate!");
+    const wordCountType = (0, import_i18n275._x)("words", "Word count type. Do not translate!");
     return /* @__PURE__ */ (0, import_jsx_runtime472.jsx)("span", { className: "word-count", children: (0, import_wordcount2.count)(content, wordCountType) });
   }
 
   // packages/editor/build-module/components/time-to-read/index.mjs
   var import_data189 = __toESM(require_data(), 1);
-  var import_i18n275 = __toESM(require_i18n(), 1);
+  var import_i18n276 = __toESM(require_i18n(), 1);
   var import_wordcount3 = __toESM(require_wordcount(), 1);
   var import_element276 = __toESM(require_element(), 1);
   var import_jsx_runtime473 = __toESM(require_jsx_runtime(), 1);
@@ -89123,16 +89193,16 @@ If there's a particular need for this, please submit a feature request at https:
       (select9) => select9(store).getEditedPostAttribute("content"),
       []
     );
-    const wordCountType = (0, import_i18n275._x)("words", "Word count type. Do not translate!");
+    const wordCountType = (0, import_i18n276._x)("words", "Word count type. Do not translate!");
     const minutesToRead = Math.round(
       (0, import_wordcount3.count)(content, wordCountType) / AVERAGE_READING_RATE2
     );
-    const minutesToReadString = minutesToRead === 0 ? (0, import_element276.createInterpolateElement)((0, import_i18n275.__)("<span>< 1</span> minute"), {
+    const minutesToReadString = minutesToRead === 0 ? (0, import_element276.createInterpolateElement)((0, import_i18n276.__)("<span>< 1</span> minute"), {
       span: /* @__PURE__ */ (0, import_jsx_runtime473.jsx)("span", {})
     }) : (0, import_element276.createInterpolateElement)(
-      (0, import_i18n275.sprintf)(
+      (0, import_i18n276.sprintf)(
         /* translators: %s: the number of minutes to read the post. */
-        (0, import_i18n275._n)(
+        (0, import_i18n276._n)(
           "<span>%s</span> minute",
           "<span>%s</span> minutes",
           minutesToRead
@@ -89183,31 +89253,31 @@ If there's a particular need for this, please submit a feature request at https:
           {
             className: "table-of-contents__wrapper",
             role: "note",
-            "aria-label": (0, import_i18n276.__)("Document Statistics"),
+            "aria-label": (0, import_i18n277.__)("Document Statistics"),
             tabIndex: "0",
             children: /* @__PURE__ */ (0, import_jsx_runtime474.jsxs)("ul", { role: "list", className: "table-of-contents__counts", children: [
               /* @__PURE__ */ (0, import_jsx_runtime474.jsxs)("li", { className: "table-of-contents__count", children: [
-                (0, import_i18n276.__)("Words"),
+                (0, import_i18n277.__)("Words"),
                 /* @__PURE__ */ (0, import_jsx_runtime474.jsx)(WordCount, {})
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime474.jsxs)("li", { className: "table-of-contents__count", children: [
-                (0, import_i18n276.__)("Characters"),
+                (0, import_i18n277.__)("Characters"),
                 /* @__PURE__ */ (0, import_jsx_runtime474.jsx)("span", { className: "table-of-contents__number", children: /* @__PURE__ */ (0, import_jsx_runtime474.jsx)(CharacterCount, {}) })
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime474.jsxs)("li", { className: "table-of-contents__count", children: [
-                (0, import_i18n276.__)("Time to read"),
+                (0, import_i18n277.__)("Time to read"),
                 /* @__PURE__ */ (0, import_jsx_runtime474.jsx)(TimeToRead, {})
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime474.jsxs)("li", { className: "table-of-contents__count", children: [
-                (0, import_i18n276.__)("Headings"),
+                (0, import_i18n277.__)("Headings"),
                 /* @__PURE__ */ (0, import_jsx_runtime474.jsx)("span", { className: "table-of-contents__number", children: headingCount })
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime474.jsxs)("li", { className: "table-of-contents__count", children: [
-                (0, import_i18n276.__)("Paragraphs"),
+                (0, import_i18n277.__)("Paragraphs"),
                 /* @__PURE__ */ (0, import_jsx_runtime474.jsx)("span", { className: "table-of-contents__number", children: paragraphCount })
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime474.jsxs)("li", { className: "table-of-contents__count", children: [
-                (0, import_i18n276.__)("Blocks"),
+                (0, import_i18n277.__)("Blocks"),
                 /* @__PURE__ */ (0, import_jsx_runtime474.jsx)("span", { className: "table-of-contents__number", children: numberOfBlocks })
               ] })
             ] })
@@ -89215,7 +89285,7 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         headingCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime474.jsxs)(import_jsx_runtime474.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime474.jsx)("hr", {}),
-          /* @__PURE__ */ (0, import_jsx_runtime474.jsx)("h2", { className: "table-of-contents__title", children: (0, import_i18n276.__)("Document Outline") }),
+          /* @__PURE__ */ (0, import_jsx_runtime474.jsx)("h2", { className: "table-of-contents__title", children: (0, import_i18n277.__)("Document Outline") }),
           /* @__PURE__ */ (0, import_jsx_runtime474.jsx)(
             DocumentOutline,
             {
@@ -89254,7 +89324,7 @@ If there's a particular need for this, please submit a feature request at https:
             icon: info_default,
             "aria-expanded": isOpen2,
             "aria-haspopup": "true",
-            label: (0, import_i18n277.__)("Details"),
+            label: (0, import_i18n278.__)("Details"),
             tooltipPosition: "bottom",
             "aria-disabled": !hasBlocks
           }
@@ -89272,7 +89342,7 @@ If there's a particular need for this, please submit a feature request at https:
   var table_of_contents_default = (0, import_element277.forwardRef)(TableOfContents);
 
   // packages/editor/build-module/components/unsaved-changes-warning/index.mjs
-  var import_i18n278 = __toESM(require_i18n(), 1);
+  var import_i18n279 = __toESM(require_i18n(), 1);
   var import_element278 = __toESM(require_element(), 1);
   var import_data193 = __toESM(require_data(), 1);
   var import_core_data108 = __toESM(require_core_data(), 1);
@@ -89282,7 +89352,7 @@ If there's a particular need for this, please submit a feature request at https:
       const warnIfUnsavedChanges = (event) => {
         const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
         if (dirtyEntityRecords.length > 0) {
-          event.returnValue = (0, import_i18n278.__)(
+          event.returnValue = (0, import_i18n279.__)(
             "You have unsaved changes. If you proceed, they will be lost."
           );
           return event.returnValue;
@@ -89663,7 +89733,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_hooks55 = __toESM(require_hooks(), 1);
   var import_compose59 = __toESM(require_compose(), 1);
   var import_element281 = __toESM(require_element(), 1);
-  var import_i18n279 = __toESM(require_i18n(), 1);
+  var import_i18n280 = __toESM(require_i18n(), 1);
   var import_block_editor66 = __toESM(require_block_editor(), 1);
   var import_components230 = __toESM(require_components(), 1);
   var import_data195 = __toESM(require_data(), 1);
@@ -89691,9 +89761,9 @@ If there's a particular need for this, please submit a feature request at https:
       import_components230.ToolbarButton,
       {
         name: "view",
-        title: (0, import_i18n279.__)("View"),
+        title: (0, import_i18n280.__)("View"),
         onClick: onViewPage,
-        children: (0, import_i18n279.__)("View")
+        children: (0, import_i18n280.__)("View")
       }
     ) }) });
   }
@@ -89717,7 +89787,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_hooks56 = __toESM(require_hooks(), 1);
   var import_compose60 = __toESM(require_compose(), 1);
   var import_element282 = __toESM(require_element(), 1);
-  var import_i18n280 = __toESM(require_i18n(), 1);
+  var import_i18n281 = __toESM(require_i18n(), 1);
   var import_block_editor67 = __toESM(require_block_editor(), 1);
   var import_components231 = __toESM(require_components(), 1);
   var import_data196 = __toESM(require_data(), 1);
@@ -89782,9 +89852,9 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(import_block_editor67.__unstableBlockToolbarLastItem, { children: /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(import_components231.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
       import_components231.ToolbarButton,
       {
-        label: (0, import_i18n280.__)("Edit navigation"),
+        label: (0, import_i18n281.__)("Edit navigation"),
         onClick: onEditNavigation,
-        children: (0, import_i18n280.__)("Edit navigation")
+        children: (0, import_i18n281.__)("Edit navigation")
       }
     ) }) });
   }
@@ -89814,7 +89884,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose61 = __toESM(require_compose(), 1);
   var import_block_editor68 = __toESM(require_block_editor(), 1);
   var import_components233 = __toESM(require_components(), 1);
-  var import_i18n283 = __toESM(require_i18n(), 1);
+  var import_i18n284 = __toESM(require_i18n(), 1);
   var import_blocks30 = __toESM(require_blocks(), 1);
   var import_element285 = __toESM(require_element(), 1);
   var import_data197 = __toESM(require_data(), 1);
@@ -89844,7 +89914,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/hooks/push-changes-to-global-styles/apply-globally-modal.mjs
   var import_components232 = __toESM(require_components(), 1);
-  var import_i18n282 = __toESM(require_i18n(), 1);
+  var import_i18n283 = __toESM(require_i18n(), 1);
   var import_blocks29 = __toESM(require_blocks(), 1);
   var import_element284 = __toESM(require_element(), 1);
 
@@ -89852,41 +89922,41 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element283 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/hooks/push-changes-to-global-styles/style-labels.mjs
-  var import_i18n281 = __toESM(require_i18n(), 1);
+  var import_i18n282 = __toESM(require_i18n(), 1);
   var STYLE_LABELS = {
     // Typography.
-    "typography.fontFamily": (0, import_i18n281.__)("Font family"),
-    "typography.fontSize": (0, import_i18n281.__)("Font size"),
-    "typography.fontStyle": (0, import_i18n281.__)("Font style"),
-    "typography.fontWeight": (0, import_i18n281.__)("Font weight"),
-    "typography.lineHeight": (0, import_i18n281.__)("Line height"),
-    "typography.letterSpacing": (0, import_i18n281.__)("Letter spacing"),
-    "typography.textDecoration": (0, import_i18n281.__)("Text decoration"),
-    "typography.textTransform": (0, import_i18n281.__)("Letter case"),
-    "typography.textColumns": (0, import_i18n281.__)("Text columns"),
-    "typography.writingMode": (0, import_i18n281.__)("Orientation"),
+    "typography.fontFamily": (0, import_i18n282.__)("Font family"),
+    "typography.fontSize": (0, import_i18n282.__)("Font size"),
+    "typography.fontStyle": (0, import_i18n282.__)("Font style"),
+    "typography.fontWeight": (0, import_i18n282.__)("Font weight"),
+    "typography.lineHeight": (0, import_i18n282.__)("Line height"),
+    "typography.letterSpacing": (0, import_i18n282.__)("Letter spacing"),
+    "typography.textDecoration": (0, import_i18n282.__)("Text decoration"),
+    "typography.textTransform": (0, import_i18n282.__)("Letter case"),
+    "typography.textColumns": (0, import_i18n282.__)("Text columns"),
+    "typography.writingMode": (0, import_i18n282.__)("Orientation"),
     // Color.
-    "color.text": (0, import_i18n281.__)("Text color"),
-    "color.background": (0, import_i18n281.__)("Background color"),
-    "color.gradient": (0, import_i18n281.__)("Gradient"),
-    "elements.link.color.text": (0, import_i18n281.__)("Link color"),
+    "color.text": (0, import_i18n282.__)("Text color"),
+    "color.background": (0, import_i18n282.__)("Background color"),
+    "color.gradient": (0, import_i18n282.__)("Gradient"),
+    "elements.link.color.text": (0, import_i18n282.__)("Link color"),
     // Spacing.
-    "spacing.padding": (0, import_i18n281.__)("Padding"),
-    "spacing.margin": (0, import_i18n281.__)("Margin"),
-    "spacing.blockGap": (0, import_i18n281.__)("Block spacing"),
+    "spacing.padding": (0, import_i18n282.__)("Padding"),
+    "spacing.margin": (0, import_i18n282.__)("Margin"),
+    "spacing.blockGap": (0, import_i18n282.__)("Block spacing"),
     // Border.
-    border: (0, import_i18n281.__)("Border"),
-    "border.top": (0, import_i18n281.__)("Border top"),
-    "border.right": (0, import_i18n281.__)("Border right"),
-    "border.bottom": (0, import_i18n281.__)("Border bottom"),
-    "border.left": (0, import_i18n281.__)("Border left"),
-    "border.color": (0, import_i18n281.__)("Border color"),
-    "border.width": (0, import_i18n281.__)("Border width"),
-    "border.style": (0, import_i18n281.__)("Border style"),
-    "border.radius": (0, import_i18n281.__)("Border radius"),
+    border: (0, import_i18n282.__)("Border"),
+    "border.top": (0, import_i18n282.__)("Border top"),
+    "border.right": (0, import_i18n282.__)("Border right"),
+    "border.bottom": (0, import_i18n282.__)("Border bottom"),
+    "border.left": (0, import_i18n282.__)("Border left"),
+    "border.color": (0, import_i18n282.__)("Border color"),
+    "border.width": (0, import_i18n282.__)("Border width"),
+    "border.style": (0, import_i18n282.__)("Border style"),
+    "border.radius": (0, import_i18n282.__)("Border radius"),
     // Dimensions.
-    "dimensions.minHeight": (0, import_i18n281.__)("Minimum height"),
-    "dimensions.aspectRatio": (0, import_i18n281.__)("Aspect ratio")
+    "dimensions.minHeight": (0, import_i18n282.__)("Minimum height"),
+    "dimensions.aspectRatio": (0, import_i18n282.__)("Aspect ratio")
   };
   function getStyleLabel(path) {
     const key = path.join(".");
@@ -90084,7 +90154,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => [
         {
           id: "label",
-          label: (0, import_i18n282.__)("Style"),
+          label: (0, import_i18n283.__)("Style"),
           enableSorting: false,
           enableHiding: false,
           filterBy: false,
@@ -90093,7 +90163,7 @@ If there's a particular need for this, please submit a feature request at https:
         },
         {
           id: "current",
-          label: (0, import_i18n282.__)("Current"),
+          label: (0, import_i18n283.__)("Current"),
           enableSorting: false,
           enableHiding: false,
           filterBy: false,
@@ -90102,7 +90172,7 @@ If there's a particular need for this, please submit a feature request at https:
         },
         {
           id: "new",
-          label: (0, import_i18n282.__)("New"),
+          label: (0, import_i18n283.__)("New"),
           enableSorting: false,
           enableHiding: false,
           filterBy: false,
@@ -90116,7 +90186,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => [
         {
           id: "apply",
-          label: (0, import_i18n282.__)("Apply"),
+          label: (0, import_i18n283.__)("Apply"),
           isPrimary: true,
           supportsBulk: true,
           callback(items) {
@@ -90131,18 +90201,18 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime481.jsxs)(
       import_components232.Modal,
       {
-        title: (0, import_i18n282.sprintf)(
+        title: (0, import_i18n283.sprintf)(
           // translators: %s: Title of the block e.g. 'Heading'.
-          (0, import_i18n282.__)("Apply %s styles globally"),
+          (0, import_i18n283.__)("Apply %s styles globally"),
           blockTitle
         ),
         onRequestClose,
         size: "large",
         className: "editor-push-changes-to-global-styles-modal",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime481.jsx)("p", { children: (0, import_i18n282.sprintf)(
+          /* @__PURE__ */ (0, import_jsx_runtime481.jsx)("p", { children: (0, import_i18n283.sprintf)(
             // translators: %s: Title of the block e.g. 'Heading'.
-            (0, import_i18n282.__)(
+            (0, import_i18n283.__)(
               "Choose which styles to make default for all %s blocks."
             ),
             blockTitle
@@ -90164,7 +90234,7 @@ If there's a particular need for this, please submit a feature request at https:
               },
               defaultLayouts: DEFAULT_LAYOUTS,
               search: false,
-              itemListLabel: (0, import_i18n282.__)("Styles to apply"),
+              itemListLabel: (0, import_i18n283.__)("Styles to apply"),
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime481.jsx)(dataviews_picker_default.Layout, {}),
                 /* @__PURE__ */ (0, import_jsx_runtime481.jsx)(dataviews_picker_default.Footer, {})
@@ -90486,16 +90556,16 @@ If there's a particular need for this, please submit a feature request at https:
         setAttributes(newBlockAttributes);
         setUserConfig(newUserConfig, { undoIgnore: true });
         createSuccessNotice(
-          (0, import_i18n283.sprintf)(
+          (0, import_i18n284.sprintf)(
             // translators: %s: Title of the block e.g. 'Heading'.
-            (0, import_i18n283.__)("%s styles applied."),
+            (0, import_i18n284.__)("%s styles applied."),
             (0, import_blocks30.getBlockType)(name2).title
           ),
           {
             type: "snackbar",
             actions: [
               {
-                label: (0, import_i18n283.__)("Undo"),
+                label: (0, import_i18n284.__)("Undo"),
                 onClick() {
                   __unstableMarkNextChangeAsNotPersistent();
                   setAttributes(attributes);
@@ -90522,15 +90592,15 @@ If there's a particular need for this, please submit a feature request at https:
       import_components233.BaseControl,
       {
         className: "editor-push-changes-to-global-styles-control",
-        help: (0, import_i18n283.sprintf)(
+        help: (0, import_i18n284.sprintf)(
           // translators: %s: Title of the block e.g. 'Heading'.
-          (0, import_i18n283.__)(
+          (0, import_i18n284.__)(
             "Review and apply this block\u2019s typography, spacing, dimensions, and color styles to all %s blocks."
           ),
           (0, import_blocks30.getBlockType)(name2).title
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(import_components233.BaseControl.VisualLabel, { children: (0, import_i18n283.__)("Styles") }),
+          /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(import_components233.BaseControl.VisualLabel, { children: (0, import_i18n284.__)("Styles") }),
           /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(
             import_components233.Button,
             {
@@ -90539,7 +90609,7 @@ If there's a particular need for this, please submit a feature request at https:
               accessibleWhenDisabled: true,
               disabled: rows.length === 0,
               onClick: () => setIsModalOpen(true),
-              children: (0, import_i18n283.__)("Apply globally")
+              children: (0, import_i18n284.__)("Apply globally")
             }
           ),
           isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime482.jsx)(
@@ -90609,11 +90679,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data270 = __toESM(require_data(), 1);
   var import_core_data142 = __toESM(require_core_data(), 1);
   var import_components287 = __toESM(require_components(), 1);
-  var import_i18n347 = __toESM(require_i18n(), 1);
+  var import_i18n348 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/editor-interface/index.mjs
   var import_data225 = __toESM(require_data(), 1);
-  var import_i18n308 = __toESM(require_i18n(), 1);
+  var import_i18n309 = __toESM(require_i18n(), 1);
   var import_preferences24 = __toESM(require_preferences(), 1);
   var import_block_editor85 = __toESM(require_block_editor(), 1);
   var import_compose78 = __toESM(require_compose(), 1);
@@ -90632,7 +90702,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor69 = __toESM(require_block_editor(), 1);
   var import_element286 = __toESM(require_element(), 1);
   var import_components235 = __toESM(require_components(), 1);
-  var import_i18n284 = __toESM(require_i18n(), 1);
+  var import_i18n285 = __toESM(require_i18n(), 1);
   var import_data198 = __toESM(require_data(), 1);
   var import_jsx_runtime484 = __toESM(require_jsx_runtime(), 1);
   var { useHasBlockToolbar } = unlock(import_block_editor69.privateApis);
@@ -90671,7 +90741,7 @@ If there's a particular need for this, please submit a feature request at https:
           onClick: () => {
             onToggle(!isCollapsed2);
           },
-          label: isCollapsed2 ? (0, import_i18n284.__)("Show block tools") : (0, import_i18n284.__)("Hide block tools"),
+          label: isCollapsed2 ? (0, import_i18n285.__)("Show block tools") : (0, import_i18n285.__)("Hide block tools"),
           size: "compact"
         }
       )
@@ -90681,7 +90751,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/document-tools/index.mjs
   var import_compose62 = __toESM(require_compose(), 1);
   var import_data199 = __toESM(require_data(), 1);
-  var import_i18n285 = __toESM(require_i18n(), 1);
+  var import_i18n286 = __toESM(require_i18n(), 1);
   var import_block_editor70 = __toESM(require_block_editor(), 1);
   var import_components236 = __toESM(require_components(), 1);
   var import_element287 = __toESM(require_element(), 1);
@@ -90726,7 +90796,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     };
     const isWideViewport = (0, import_compose62.useViewportMatch)("wide");
-    const toolbarAriaLabel = (0, import_i18n285.__)("Document tools");
+    const toolbarAriaLabel = (0, import_i18n286.__)("Document tools");
     const toggleListView = (0, import_element287.useCallback)(
       () => setIsListViewOpened2(!isListViewOpen),
       [setIsListViewOpened2, isListViewOpen]
@@ -90735,11 +90805,11 @@ If there's a particular need for this, please submit a feature request at https:
       () => setIsInserterOpened2(!isInserterOpened2),
       [isInserterOpened2, setIsInserterOpened2]
     );
-    const longLabel = (0, import_i18n285._x)(
+    const longLabel = (0, import_i18n286._x)(
       "Block Inserter",
       "Generic label for block inserter button"
     );
-    const shortLabel = !isInserterOpened2 ? (0, import_i18n285.__)("Add") : (0, import_i18n285.__)("Close");
+    const shortLabel = !isInserterOpened2 ? (0, import_i18n286.__)("Add") : (0, import_i18n286.__)("Close");
     return (
       // Some plugins expect and use the `edit-post-header-toolbar` CSS class to
       // find the toolbar and inject UI elements into it. This is not officially
@@ -90798,7 +90868,7 @@ If there's a particular need for this, please submit a feature request at https:
                   icon: list_view_default,
                   disabled: disableBlockTools,
                   isPressed: isListViewOpen,
-                  label: (0, import_i18n285.__)("Document Overview"),
+                  label: (0, import_i18n286.__)("Document Overview"),
                   onClick: toggleListView,
                   shortcut: listViewShortcut,
                   showTooltip: !showIconLabels,
@@ -90880,7 +90950,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/more-menu/index.mjs
-  var import_i18n288 = __toESM(require_i18n(), 1);
+  var import_i18n289 = __toESM(require_i18n(), 1);
   var import_data202 = __toESM(require_data(), 1);
   var import_keycodes16 = __toESM(require_keycodes(), 1);
   var import_components242 = __toESM(require_components(), 1);
@@ -90889,7 +90959,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/more-menu/copy-content-menu-item.mjs
   var import_components238 = __toESM(require_components(), 1);
   var import_data200 = __toESM(require_data(), 1);
-  var import_i18n286 = __toESM(require_i18n(), 1);
+  var import_i18n287 = __toESM(require_i18n(), 1);
   var import_compose63 = __toESM(require_compose(), 1);
   var import_notices30 = __toESM(require_notices(), 1);
   var import_jsx_runtime487 = __toESM(require_jsx_runtime(), 1);
@@ -90900,17 +90970,17 @@ If there's a particular need for this, please submit a feature request at https:
       return getEditedPostContent2();
     }
     function onSuccess() {
-      createNotice("info", (0, import_i18n286.__)("All content copied."), {
+      createNotice("info", (0, import_i18n287.__)("All content copied."), {
         isDismissible: true,
         type: "snackbar"
       });
     }
     const ref = (0, import_compose63.useCopyToClipboard)(getText, onSuccess);
-    return /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(import_components238.MenuItem, { ref, children: (0, import_i18n286.__)("Copy all blocks") });
+    return /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(import_components238.MenuItem, { ref, children: (0, import_i18n287.__)("Copy all blocks") });
   }
 
   // packages/editor/build-module/components/mode-switcher/index.mjs
-  var import_i18n287 = __toESM(require_i18n(), 1);
+  var import_i18n288 = __toESM(require_i18n(), 1);
   var import_components239 = __toESM(require_components(), 1);
   var import_data201 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts7 = __toESM(require_keyboard_shortcuts(), 1);
@@ -90918,11 +90988,11 @@ If there's a particular need for this, please submit a feature request at https:
   var MODES = [
     {
       value: "visual",
-      label: (0, import_i18n287.__)("Visual editor")
+      label: (0, import_i18n288.__)("Visual editor")
     },
     {
       value: "text",
-      label: (0, import_i18n287.__)("Code editor")
+      label: (0, import_i18n288.__)("Code editor")
     }
   ];
   function ModeSwitcher() {
@@ -90956,7 +91026,7 @@ If there's a particular need for this, please submit a feature request at https:
         choice = {
           ...choice,
           disabled: true,
-          info: (0, import_i18n287.__)(
+          info: (0, import_i18n288.__)(
             "You can enable the visual editor in your profile settings."
           )
         };
@@ -90966,7 +91036,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return choice;
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(import_components239.MenuGroup, { label: (0, import_i18n287.__)("Editor"), children: /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(import_components239.MenuGroup, { label: (0, import_i18n288.__)("Editor"), children: /* @__PURE__ */ (0, import_jsx_runtime488.jsx)(
       import_components239.MenuItemsChoice,
       {
         choices,
@@ -91010,7 +91080,7 @@ If there's a particular need for this, please submit a feature request at https:
       import_components242.DropdownMenu,
       {
         icon: more_vertical_default,
-        label: (0, import_i18n288.__)("Options"),
+        label: (0, import_i18n289.__)("Options"),
         popoverProps: {
           placement: "bottom-end",
           className: "more-menu-dropdown__content"
@@ -91023,21 +91093,21 @@ If there's a particular need for this, please submit a feature request at https:
           disabled: disabled2
         },
         children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_jsx_runtime491.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_components242.MenuGroup, { label: (0, import_i18n288._x)("View", "noun"), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_components242.MenuGroup, { label: (0, import_i18n289._x)("View", "noun"), children: [
             /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
               import_preferences16.PreferenceToggleMenuItem,
               {
                 scope: "core",
                 name: "fixedToolbar",
                 onToggle: turnOffDistractionFree,
-                label: (0, import_i18n288.__)("Top toolbar"),
-                info: (0, import_i18n288.__)(
+                label: (0, import_i18n289.__)("Top toolbar"),
+                info: (0, import_i18n289.__)(
                   "Access all block and document tools in a single place"
                 ),
-                messageActivated: (0, import_i18n288.__)(
+                messageActivated: (0, import_i18n289.__)(
                   "Top toolbar activated."
                 ),
-                messageDeactivated: (0, import_i18n288.__)(
+                messageDeactivated: (0, import_i18n289.__)(
                   "Top toolbar deactivated."
                 )
               }
@@ -91047,16 +91117,16 @@ If there's a particular need for this, please submit a feature request at https:
               {
                 scope: "core",
                 name: "distractionFree",
-                label: (0, import_i18n288.__)("Distraction free"),
-                info: (0, import_i18n288.__)("Write with calmness"),
+                label: (0, import_i18n289.__)("Distraction free"),
+                info: (0, import_i18n289.__)("Write with calmness"),
                 handleToggling: false,
                 onToggle: () => toggleDistractionFree2({
                   createNotice: false
                 }),
-                messageActivated: (0, import_i18n288.__)(
+                messageActivated: (0, import_i18n289.__)(
                   "Distraction free mode activated."
                 ),
-                messageDeactivated: (0, import_i18n288.__)(
+                messageDeactivated: (0, import_i18n289.__)(
                   "Distraction free mode deactivated."
                 ),
                 shortcut: import_keycodes16.displayShortcut.primaryShift(
@@ -91069,12 +91139,12 @@ If there's a particular need for this, please submit a feature request at https:
               {
                 scope: "core",
                 name: "focusMode",
-                label: (0, import_i18n288.__)("Spotlight mode"),
-                info: (0, import_i18n288.__)("Focus on one block at a time"),
-                messageActivated: (0, import_i18n288.__)(
+                label: (0, import_i18n289.__)("Spotlight mode"),
+                info: (0, import_i18n289.__)("Focus on one block at a time"),
+                messageActivated: (0, import_i18n289.__)(
                   "Spotlight mode activated."
                 ),
-                messageDeactivated: (0, import_i18n288.__)(
+                messageDeactivated: (0, import_i18n289.__)(
                   "Spotlight mode deactivated."
                 )
               }
@@ -91086,17 +91156,17 @@ If there's a particular need for this, please submit a feature request at https:
             action_item_default.Slot,
             {
               name: "core/plugin-more-menu",
-              label: (0, import_i18n288.__)("Panels"),
+              label: (0, import_i18n289.__)("Panels"),
               fillProps: { onClick: onClose }
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_components242.MenuGroup, { label: (0, import_i18n288.__)("Tools"), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_components242.MenuGroup, { label: (0, import_i18n289.__)("Tools"), children: [
             /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
               import_components242.MenuItem,
               {
                 onClick: () => openModal2("editor/keyboard-shortcut-help"),
                 shortcut: import_keycodes16.displayShortcut.access("h"),
-                children: (0, import_i18n288.__)("Keyboard shortcuts")
+                children: (0, import_i18n289.__)("Keyboard shortcuts")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(CopyContentMenuItem, {}),
@@ -91104,17 +91174,17 @@ If there's a particular need for this, please submit a feature request at https:
               import_components242.MenuItem,
               {
                 icon: external_default,
-                href: (0, import_i18n288.__)(
+                href: (0, import_i18n289.__)(
                   "https://wordpress.org/documentation/article/wordpress-block-editor/"
                 ),
                 target: "_blank",
                 rel: "noopener",
                 children: [
-                  (0, import_i18n288.__)("Help"),
+                  (0, import_i18n289.__)("Help"),
                   /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(VisuallyHidden, {
                     render: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)("span", {}),
                     /* translators: accessibility text */
-                    children: (0, import_i18n288.__)("(opens in a new tab)")
+                    children: (0, import_i18n289.__)("(opens in a new tab)")
                   })
                 ]
               }
@@ -91130,7 +91200,7 @@ If there's a particular need for this, please submit a feature request at https:
             import_components242.MenuItem,
             {
               onClick: () => openModal2("editor/preferences"),
-              children: (0, import_i18n288.__)("Preferences")
+              children: (0, import_i18n289.__)("Preferences")
             }
           ) })
         ] })
@@ -91198,7 +91268,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-view-link/index.mjs
-  var import_i18n289 = __toESM(require_i18n(), 1);
+  var import_i18n290 = __toESM(require_i18n(), 1);
   var import_components243 = __toESM(require_components(), 1);
   var import_core_data110 = __toESM(require_core_data(), 1);
   var import_data204 = __toESM(require_data(), 1);
@@ -91224,7 +91294,7 @@ If there's a particular need for this, please submit a feature request at https:
       import_components243.Button,
       {
         icon: external_default,
-        label: label || (0, import_i18n289.__)("View post"),
+        label: label || (0, import_i18n290.__)("View post"),
         href: permalink,
         target: "_blank",
         showTooltip: !showIconLabels,
@@ -91236,7 +91306,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/preview-dropdown/index.mjs
   var import_compose65 = __toESM(require_compose(), 1);
   var import_components244 = __toESM(require_components(), 1);
-  var import_i18n290 = __toESM(require_i18n(), 1);
+  var import_i18n291 = __toESM(require_i18n(), 1);
   var import_data205 = __toESM(require_data(), 1);
   var import_core_data111 = __toESM(require_core_data(), 1);
   var import_preferences18 = __toESM(require_preferences(), 1);
@@ -91333,7 +91403,7 @@ If there's a particular need for this, please submit a feature request at https:
       accessibleWhenDisabled: disabled2
     };
     const menuProps = {
-      "aria-label": (0, import_i18n290.__)("View options")
+      "aria-label": (0, import_i18n291.__)("View options")
     };
     const deviceIcons = {
       desktop: desktop_default,
@@ -91343,24 +91413,24 @@ If there's a particular need for this, please submit a feature request at https:
     const choices = [
       {
         value: "Desktop",
-        label: (0, import_i18n290.__)("Desktop"),
+        label: (0, import_i18n291.__)("Desktop"),
         icon: desktop_default,
-        info: isResponsiveEditing ? (0, import_i18n290.__)("Style all viewports.") : (0, import_i18n290.__)("Preview desktop viewport.")
+        info: isResponsiveEditing ? (0, import_i18n291.__)("Style all viewports.") : (0, import_i18n291.__)("Preview desktop viewport.")
       },
       ...hasTabletViewport ? [
         {
           value: "Tablet",
-          label: (0, import_i18n290.__)("Tablet"),
+          label: (0, import_i18n291.__)("Tablet"),
           icon: tablet_default,
-          info: isResponsiveEditing ? (0, import_i18n290.__)("Style tablet only.") : (0, import_i18n290.__)("Preview tablet viewport.")
+          info: isResponsiveEditing ? (0, import_i18n291.__)("Style tablet only.") : (0, import_i18n291.__)("Preview tablet viewport.")
         }
       ] : [],
       ...hasMobileViewport ? [
         {
           value: "Mobile",
-          label: (0, import_i18n290.__)("Mobile"),
+          label: (0, import_i18n291.__)("Mobile"),
           icon: mobile_default,
-          info: isResponsiveEditing ? (0, import_i18n290.__)("Style mobile only.") : (0, import_i18n290.__)("Preview mobile viewport.")
+          info: isResponsiveEditing ? (0, import_i18n291.__)("Style mobile only.") : (0, import_i18n291.__)("Preview mobile viewport.")
         }
       ] : []
     ];
@@ -91376,7 +91446,7 @@ If there's a particular need for this, please submit a feature request at https:
         toggleProps,
         menuProps,
         icon: deviceIcons[deviceType.toLowerCase()],
-        label: (0, import_i18n290.__)("View"),
+        label: (0, import_i18n291.__)("View"),
         disableOpenOnArrowDown: disabled2,
         children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime494.jsxs)(import_jsx_runtime494.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_components244.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
@@ -91394,10 +91464,10 @@ If there's a particular need for this, please submit a feature request at https:
               isSelected: isResponsiveEditing,
               role: "menuitemcheckbox",
               onClick: handleResponsiveEditingChange,
-              info: (0, import_i18n290.__)(
+              info: (0, import_i18n291.__)(
                 "Style changes apply only to the selected viewport."
               ),
-              children: (0, import_i18n290.__)("Responsive styles")
+              children: (0, import_i18n291.__)("Responsive styles")
             }
           ) }),
           isTemplate2 && /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_components244.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime494.jsxs)(
@@ -91408,11 +91478,11 @@ If there's a particular need for this, please submit a feature request at https:
               icon: external_default,
               onClick: onClose,
               children: [
-                (0, import_i18n290.__)("View site"),
+                (0, import_i18n291.__)("View site"),
                 /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(VisuallyHidden, {
                   render: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)("span", {}),
                   /* translators: accessibility text */
-                  children: (0, import_i18n290.__)("(opens in a new tab)")
+                  children: (0, import_i18n291.__)("(opens in a new tab)")
                 })
               ]
             }
@@ -91429,7 +91499,7 @@ If there's a particular need for this, please submit a feature request at https:
                 setDefaultRenderingMode2(newRenderingMode);
                 resetZoomLevel();
               },
-              children: (0, import_i18n290.__)("Show template")
+              children: (0, import_i18n291.__)("Show template")
             }
           ) }),
           isViewable && /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_components244.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
@@ -91453,7 +91523,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/zoom-out-toggle/index.mjs
   var import_components245 = __toESM(require_components(), 1);
-  var import_i18n291 = __toESM(require_i18n(), 1);
+  var import_i18n292 = __toESM(require_i18n(), 1);
   var import_element288 = __toESM(require_element(), 1);
   var import_data206 = __toESM(require_data(), 1);
   var import_block_editor72 = __toESM(require_block_editor(), 1);
@@ -91485,7 +91555,7 @@ If there's a particular need for this, please submit a feature request at https:
       registerShortcut({
         name: "core/editor/zoom",
         category: "global",
-        description: (0, import_i18n291.__)("Enter or exit zoom out."),
+        description: (0, import_i18n292.__)("Enter or exit zoom out."),
         keyCombination: {
           // `primaryShift+0` (`ctrl+shift+0`) is the shortcut for switching
           // to input mode in Windows, so apply a different key combination.
@@ -91524,7 +91594,7 @@ If there's a particular need for this, please submit a feature request at https:
         disabled: disabled2,
         onClick: handleZoomOut,
         icon: square_default,
-        label: (0, import_i18n291.__)("Zoom Out"),
+        label: (0, import_i18n292.__)("Zoom Out"),
         isPressed: isZoomOut,
         size: "compact",
         showTooltip: !showIconLabels,
@@ -91538,7 +91608,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components248 = __toESM(require_components(), 1);
   var import_element296 = __toESM(require_element(), 1);
   var import_core_data115 = __toESM(require_core_data(), 1);
-  var import_i18n296 = __toESM(require_i18n(), 1);
+  var import_i18n297 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/collaborators-presence/avatar/component.mjs
   var import_components246 = __toESM(require_components(), 1);
@@ -91646,7 +91716,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collaborators-presence/avatar-group/component.mjs
   var import_element291 = __toESM(require_element(), 1);
-  var import_i18n292 = __toESM(require_i18n(), 1);
+  var import_i18n293 = __toESM(require_i18n(), 1);
   var import_jsx_runtime497 = __toESM(require_jsx_runtime(), 1);
   function AvatarGroup({
     className,
@@ -91669,9 +91739,9 @@ If there's a particular need for this, please submit a feature request at https:
             "span",
             {
               className: "editor-avatar-group__overflow",
-              "aria-label": (0, import_i18n292.sprintf)(
+              "aria-label": (0, import_i18n293.sprintf)(
                 /* translators: %d: number of additional collaborators not shown */
-                (0, import_i18n292._n)(
+                (0, import_i18n293._n)(
                   "%d more collaborator",
                   "%d more collaborators",
                   overflowCount
@@ -91688,7 +91758,7 @@ If there's a particular need for this, please submit a feature request at https:
   var component_default2 = AvatarGroup;
 
   // packages/editor/build-module/components/collaborators-presence/list.mjs
-  var import_i18n294 = __toESM(require_i18n(), 1);
+  var import_i18n295 = __toESM(require_i18n(), 1);
   var import_components247 = __toESM(require_components(), 1);
   var import_a11y11 = __toESM(require_a11y(), 1);
 
@@ -91698,8 +91768,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collab-sidebar/utils.mjs
-  var import_i18n293 = __toESM(require_i18n(), 1);
-  var import_rich_text6 = __toESM(require_rich_text(), 1);
+  var import_i18n294 = __toESM(require_i18n(), 1);
+  var import_rich_text7 = __toESM(require_rich_text(), 1);
   function sanitizeNoteContent(str3) {
     return str3.trim();
   }
@@ -91729,7 +91799,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!text) {
       return "";
     }
-    const wordCountType = (0, import_i18n293._x)("words", "Word count type. Do not translate!");
+    const wordCountType = (0, import_i18n294._x)("words", "Word count type. Do not translate!");
     const rawText = text.trim();
     let trimmedExcerpt = "";
     if (wordCountType === "words") {
@@ -91771,7 +91841,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     let html = null;
-    if (value instanceof import_rich_text6.RichTextData) {
+    if (value instanceof import_rich_text7.RichTextData) {
       html = value.toHTMLString();
     } else if (typeof value === "string") {
       html = value;
@@ -91780,7 +91850,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     const target = String(noteId);
-    const record = (0, import_rich_text6.create)({ html });
+    const record = (0, import_rich_text7.create)({ html });
     const formats = record.formats;
     let start2 = -1;
     for (let i3 = 0; i3 < formats.length; i3++) {
@@ -91868,11 +91938,11 @@ If there's a particular need for this, please submit a feature request at https:
     return { ...record, formats };
   }
   function removeNoteFormat(value, noteId) {
-    if (!(value instanceof import_rich_text6.RichTextData)) {
+    if (!(value instanceof import_rich_text7.RichTextData)) {
       return null;
     }
     const target = String(noteId);
-    const record = (0, import_rich_text6.create)({ html: value.toHTMLString() });
+    const record = (0, import_rich_text7.create)({ html: value.toHTMLString() });
     let changed = false;
     const formats = record.formats.map((stack) => {
       if (!stack) {
@@ -91887,8 +91957,8 @@ If there's a particular need for this, please submit a feature request at https:
       changed = true;
       return filtered.length ? filtered : void 0;
     });
-    return changed ? import_rich_text6.RichTextData.fromHTMLString(
-      new import_rich_text6.RichTextData({ ...record, formats }).toHTMLString()
+    return changed ? import_rich_text7.RichTextData.fromHTMLString(
+      new import_rich_text7.RichTextData({ ...record, formats }).toHTMLString()
     ) : null;
   }
   function pickPrimaryNote(threads) {
@@ -92024,7 +92094,7 @@ If there's a particular need for this, please submit a feature request at https:
         highlightDuration: 2e3
       });
       if (success) {
-        (0, import_a11y11.speak)((0, import_i18n294.__)("Scrolled to cursor"), "polite");
+        (0, import_a11y11.speak)((0, import_i18n295.__)("Scrolled to cursor"), "polite");
         setIsPopoverVisible(false);
       }
     };
@@ -92039,7 +92109,7 @@ If there's a particular need for this, please submit a feature request at https:
         children: /* @__PURE__ */ (0, import_jsx_runtime498.jsxs)("div", { className: "editor-collaborators-presence__list-content", children: [
           /* @__PURE__ */ (0, import_jsx_runtime498.jsxs)("div", { className: "editor-collaborators-presence__list-header", children: [
             /* @__PURE__ */ (0, import_jsx_runtime498.jsxs)("div", { className: "editor-collaborators-presence__list-header-title", children: [
-              (0, import_i18n294.__)("Collaborators"),
+              (0, import_i18n295.__)("Collaborators"),
               /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("span", { children: activeCollaborators.length })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("div", { className: "editor-collaborators-presence__list-header-action", children: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
@@ -92048,7 +92118,7 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 icon: close_small_default,
                 iconSize: 24,
-                label: (0, import_i18n294.__)("Close Collaborators List"),
+                label: (0, import_i18n295.__)("Close Collaborators List"),
                 onClick: () => setIsPopoverVisible(false)
               }
             ) })
@@ -92077,7 +92147,7 @@ If there's a particular need for this, please submit a feature request at https:
                       dimmed: !collaboratorState.isConnected
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("div", { className: "editor-collaborators-presence__list-item-info", children: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("div", { className: "editor-collaborators-presence__list-item-name", children: isCurrentUser ? (0, import_i18n294.__)("You") : collaboratorState.collaboratorInfo.name }) })
+                  /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("div", { className: "editor-collaborators-presence__list-item-info", children: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)("div", { className: "editor-collaborators-presence__list-item-name", children: isCurrentUser ? (0, import_i18n295.__)("You") : collaboratorState.collaboratorInfo.name }) })
                 ]
               },
               collaboratorState.clientId
@@ -92152,7 +92222,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collaborators-overlay/overlay.mjs
   var import_compose66 = __toESM(require_compose(), 1);
   var import_element295 = __toESM(require_element(), 1);
-  var import_i18n295 = __toESM(require_i18n(), 1);
+  var import_i18n296 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/collaborator-styles.mjs
   var ELEVATION_X_SMALL = "0 1px 1px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02), 0 3px 3px rgba(0, 0, 0, 0.02), 0 4px 4px rgba(0, 0, 0, 0.01)";
@@ -93224,7 +93294,7 @@ If there's a particular need for this, please submit a feature request at https:
                   size: "small",
                   src: cursor.avatarUrl,
                   name: cursor.userName,
-                  label: cursor.isMe ? (0, import_i18n295.__)("You") : void 0,
+                  label: cursor.isMe ? (0, import_i18n296.__)("You") : void 0,
                   borderColor: cursor.color
                 }
               )
@@ -93316,9 +93386,9 @@ If there's a particular need for this, please submit a feature request at https:
             onClick: () => setIsPopoverVisible(!isPopoverVisible),
             isPressed: isPopoverVisible,
             ref: setPopoverAnchor,
-            "aria-label": (0, import_i18n296.sprintf)(
+            "aria-label": (0, import_i18n297.sprintf)(
               // translators: %d: number of online collaborators.
-              (0, import_i18n296.__)("Collaborators list, %d online"),
+              (0, import_i18n297.__)("Collaborators list, %d online"),
               collaboratorsForList.length
             ),
             children: /* @__PURE__ */ (0, import_jsx_runtime501.jsxs)(component_default2, { max: 4, children: [
@@ -93587,27 +93657,27 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data210 = __toESM(require_data(), 1);
   var import_dom25 = __toESM(require_dom(), 1);
   var import_element299 = __toESM(require_element(), 1);
-  var import_i18n298 = __toESM(require_i18n(), 1);
+  var import_i18n299 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts9 = __toESM(require_keyboard_shortcuts(), 1);
   var import_keycodes19 = __toESM(require_keycodes(), 1);
 
   // packages/editor/build-module/components/list-view-sidebar/list-view-outline.mjs
   var import_components249 = __toESM(require_components(), 1);
-  var import_i18n297 = __toESM(require_i18n(), 1);
+  var import_i18n298 = __toESM(require_i18n(), 1);
   var import_jsx_runtime504 = __toESM(require_jsx_runtime(), 1);
   function ListViewOutline() {
     return /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)(import_jsx_runtime504.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)("div", { className: "editor-list-view-sidebar__outline", children: [
         /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(import_components249.__experimentalText, { children: (0, import_i18n297.__)("Characters:") }),
+          /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(import_components249.__experimentalText, { children: (0, import_i18n298.__)("Characters:") }),
           /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(import_components249.__experimentalText, { children: /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(CharacterCount, {}) })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(import_components249.__experimentalText, { children: (0, import_i18n297.__)("Words:") }),
+          /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(import_components249.__experimentalText, { children: (0, import_i18n298.__)("Words:") }),
           /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(WordCount, {})
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime504.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(import_components249.__experimentalText, { children: (0, import_i18n297.__)("Time to read:") }),
+          /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(import_components249.__experimentalText, { children: (0, import_i18n298.__)("Time to read:") }),
           /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(TimeToRead, {})
         ] })
       ] }),
@@ -93683,7 +93753,7 @@ If there's a particular need for this, please submit a feature request at https:
               tabs: [
                 {
                   name: "list-view",
-                  title: (0, import_i18n298._x)("List View", "Post overview"),
+                  title: (0, import_i18n299._x)("List View", "Post overview"),
                   panel: /* @__PURE__ */ (0, import_jsx_runtime505.jsx)("div", { className: "editor-list-view-sidebar__list-view-container", children: /* @__PURE__ */ (0, import_jsx_runtime505.jsx)("div", { className: "editor-list-view-sidebar__list-view-panel-content", children: /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(
                     import_block_editor76.__experimentalListView,
                     {
@@ -93694,7 +93764,7 @@ If there's a particular need for this, please submit a feature request at https:
                 },
                 {
                   name: "outline",
-                  title: (0, import_i18n298._x)("Outline", "Post overview"),
+                  title: (0, import_i18n299._x)("Outline", "Post overview"),
                   panel: /* @__PURE__ */ (0, import_jsx_runtime505.jsx)("div", { className: "editor-list-view-sidebar__list-view-container", children: /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(ListViewOutline, {}) })
                 }
               ],
@@ -93702,7 +93772,7 @@ If there's a particular need for this, please submit a feature request at https:
               onSelect: (tabName) => setTab(tabName),
               defaultTabId: "list-view",
               ref: tabsRef,
-              closeButtonLabel: (0, import_i18n298.__)("Close")
+              closeButtonLabel: (0, import_i18n299.__)("Close")
             }
           )
         }
@@ -93713,13 +93783,13 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-revisions-preview/revisions-header.mjs
   var import_data212 = __toESM(require_data(), 1);
   var import_components251 = __toESM(require_components(), 1);
-  var import_i18n300 = __toESM(require_i18n(), 1);
+  var import_i18n301 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-slider.mjs
   var import_data211 = __toESM(require_data(), 1);
   var import_components250 = __toESM(require_components(), 1);
   var import_core_data116 = __toESM(require_core_data(), 1);
-  var import_i18n299 = __toESM(require_i18n(), 1);
+  var import_i18n300 = __toESM(require_i18n(), 1);
   var import_date19 = __toESM(require_date(), 1);
   var import_element300 = __toESM(require_element(), 1);
   var import_compose70 = __toESM(require_compose(), 1);
@@ -93790,17 +93860,17 @@ If there's a particular need for this, please submit a feature request at https:
       return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(import_components250.Spinner, {});
     }
     if (!isLoading && !revisions?.length) {
-      return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)("span", { className: "editor-revisions-header__no-revisions", children: (0, import_i18n299.__)("No revisions found.") });
+      return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)("span", { className: "editor-revisions-header__no-revisions", children: (0, import_i18n300.__)("No revisions found.") });
     }
     if (totalRevisions <= 1) {
-      return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)("span", { className: "editor-revisions-header__no-revisions", children: (0, import_i18n299.__)("Only one revision found.") });
+      return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)("span", { className: "editor-revisions-header__no-revisions", children: (0, import_i18n300.__)("Only one revision found.") });
     }
     const getPageRangeLabel = (page) => {
       const end = totalRevisions - (page - 1) * perPage;
       const start2 = Math.max(1, end - perPage + 1);
-      return (0, import_i18n299.sprintf)(
+      return (0, import_i18n300.sprintf)(
         /* translators: 1: first revision number, 2: last revision number */
-        (0, import_i18n299.__)("Revisions %1$s\u2013%2$s"),
+        (0, import_i18n300.__)("Revisions %1$s\u2013%2$s"),
         start2,
         end
       );
@@ -93812,7 +93882,7 @@ If there's a particular need for this, please submit a feature request at https:
         "aria-valuetext": renderTooltipContent(selectedIndex),
         className: "editor-revisions-header__slider",
         hideLabelFromVision: true,
-        label: (0, import_i18n299.__)("Revision"),
+        label: (0, import_i18n300.__)("Revision"),
         max: revisions?.length - 1,
         min: 0,
         marks: true,
@@ -93830,7 +93900,7 @@ If there's a particular need for this, please submit a feature request at https:
         import_components250.Button,
         {
           icon: chevron_left_default,
-          label: revisionPage2 < totalPages ? getPageRangeLabel(revisionPage2 + 1) : (0, import_i18n299.__)("No older revisions"),
+          label: revisionPage2 < totalPages ? getPageRangeLabel(revisionPage2 + 1) : (0, import_i18n300.__)("No older revisions"),
           onClick: () => setRevisionPage2(revisionPage2 + 1),
           disabled: isLoading || revisionPage2 >= totalPages,
           size: "compact",
@@ -93853,7 +93923,7 @@ If there's a particular need for this, please submit a feature request at https:
         import_components250.Button,
         {
           icon: chevron_right_default,
-          label: revisionPage2 > 1 ? getPageRangeLabel(revisionPage2 - 1) : (0, import_i18n299.__)("No newer revisions"),
+          label: revisionPage2 > 1 ? getPageRangeLabel(revisionPage2 - 1) : (0, import_i18n300.__)("No newer revisions"),
           onClick: () => setRevisionPage2(revisionPage2 - 1),
           disabled: isLoading || revisionPage2 <= 1,
           size: "compact",
@@ -93897,7 +93967,7 @@ If there's a particular need for this, please submit a feature request at https:
             __next40pxDefaultSize: true,
             size: "compact",
             icon: seen_default,
-            label: (0, import_i18n300._x)("Show changes", "revisions"),
+            label: (0, import_i18n301._x)("Show changes", "revisions"),
             isPressed: showDiff,
             onClick: onToggleDiff
           }
@@ -93909,8 +93979,8 @@ If there's a particular need for this, please submit a feature request at https:
             import_components251.Button,
             {
               __next40pxDefaultSize: true,
-              icon: (0, import_i18n300.isRTL)() ? drawer_left_default : drawer_right_default,
-              label: (0, import_i18n300._x)("Settings", "panel button label"),
+              icon: (0, import_i18n301.isRTL)() ? drawer_left_default : drawer_right_default,
+              label: (0, import_i18n301._x)("Settings", "panel button label"),
               isPressed: sidebarIsOpened,
               "aria-expanded": sidebarIsOpened,
               onClick: () => {
@@ -93933,7 +94003,7 @@ If there's a particular need for this, please submit a feature request at https:
               variant: "secondary",
               size: "compact",
               onClick: () => setCurrentRevisionId2(null),
-              children: (0, import_i18n300.__)("Exit")
+              children: (0, import_i18n301.__)("Exit")
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(
@@ -93946,7 +94016,7 @@ If there's a particular need for this, please submit a feature request at https:
               className: "editor-revisions-header__restore-button",
               disabled: !canRestore,
               onClick: handleRestore,
-              children: (0, import_i18n300.__)("Restore")
+              children: (0, import_i18n301.__)("Restore")
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(MoreMenu, { disabled: true })
@@ -93962,6 +94032,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data221 = __toESM(require_data(), 1);
   var import_element306 = __toESM(require_element(), 1);
   var import_hooks61 = __toESM(require_hooks(), 1);
+  var import_i18n305 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/visual-editor/index.mjs
   var import_block_editor82 = __toESM(require_block_editor(), 1);
@@ -93975,7 +94046,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data213 = __toESM(require_data(), 1);
   var import_core_data117 = __toESM(require_core_data(), 1);
   var import_element301 = __toESM(require_element(), 1);
-  var import_i18n301 = __toESM(require_i18n(), 1);
+  var import_i18n302 = __toESM(require_i18n(), 1);
   var import_components252 = __toESM(require_components(), 1);
   var import_jsx_runtime508 = __toESM(require_jsx_runtime(), 1);
   function EditTemplateBlocksNotification({ contentRef }) {
@@ -94020,7 +94091,7 @@ If there's a particular need for this, please submit a feature request at https:
       import_components252.__experimentalConfirmDialog,
       {
         isOpen: isDialogOpen,
-        confirmButtonText: (0, import_i18n301.__)("Edit template"),
+        confirmButtonText: (0, import_i18n302.__)("Edit template"),
         onConfirm: () => {
           setIsDialogOpen(false);
           onNavigateToEntityRecord({
@@ -94030,7 +94101,7 @@ If there's a particular need for this, please submit a feature request at https:
         },
         onCancel: () => setIsDialogOpen(false),
         size: "medium",
-        children: (0, import_i18n301.__)(
+        children: (0, import_i18n302.__)(
           "You\u2019ve tried to select a block that is part of a template that may be used elsewhere on your site. Would you like to edit the template?"
         )
       }
@@ -94230,7 +94301,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components253 = __toESM(require_components(), 1);
   var import_hooks60 = __toESM(require_hooks(), 1);
   var import_element303 = __toESM(require_element(), 1);
-  var import_i18n302 = __toESM(require_i18n(), 1);
+  var import_i18n303 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/sync-connection-error-modal/use-retry-countdown.mjs
   var import_element302 = __toESM(require_element(), 1);
@@ -94361,9 +94432,9 @@ If there's a particular need for this, please submit a feature request at https:
     let retryCountdownText = "";
     let isRetrying = false;
     if (secondsRemaining && secondsRemaining > 0) {
-      retryCountdownText = (0, import_i18n302.sprintf)(
+      retryCountdownText = (0, import_i18n303.sprintf)(
         /* translators: %d: number of seconds until retry */
-        (0, import_i18n302._n)(
+        (0, import_i18n303._n)(
           "Retrying connection in %d second\u2026",
           "Retrying connection in %d seconds\u2026",
           secondsRemaining
@@ -94372,7 +94443,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
     } else if (0 === secondsRemaining) {
       isRetrying = true;
-      retryCountdownText = (0, import_i18n302.__)("Retrying\u2026");
+      retryCountdownText = (0, import_i18n303.__)("Retrying\u2026");
     }
     let editPostHref = "edit.php";
     if (postType2?.slug) {
@@ -94400,10 +94471,10 @@ If there's a particular need for this, please submit a feature request at https:
                 href: editPostHref,
                 isDestructive: true,
                 variant: "tertiary",
-                children: (0, import_i18n302.sprintf)(
+                children: (0, import_i18n303.sprintf)(
                   /* translators: %s: Post type name (e.g., "Posts", "Pages"). */
-                  (0, import_i18n302.__)("Back to %s"),
-                  postType2?.labels?.name ?? (0, import_i18n302.__)("Posts")
+                  (0, import_i18n303.__)("Back to %s"),
+                  postType2?.labels?.name ?? (0, import_i18n303.__)("Posts")
                 )
               }
             ),
@@ -94413,7 +94484,7 @@ If there's a particular need for this, please submit a feature request at https:
                 __next40pxDefaultSize: true,
                 ref: copyButtonRef,
                 variant: manualRetry ? "secondary" : "primary",
-                children: (0, import_i18n302.__)("Copy Post Content")
+                children: (0, import_i18n303.__)("Copy Post Content")
               }
             ),
             manualRetry && /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(
@@ -94426,7 +94497,7 @@ If there's a particular need for this, please submit a feature request at https:
                 isBusy: isRetrying,
                 variant: "primary",
                 onClick: manualRetry,
-                children: (0, import_i18n302.__)("Retry")
+                children: (0, import_i18n303.__)("Retry")
               }
             )
           ] })
@@ -94801,56 +94872,6 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var visual_editor_default = VisualEditor;
 
-  // packages/editor/build-module/components/post-revisions-preview/diff-format-types.mjs
-  var import_i18n303 = __toESM(require_i18n(), 1);
-  var import_rich_text7 = __toESM(require_rich_text(), 1);
-  var DIFF_FORMAT_TYPES = [
-    {
-      name: "revision/diff-removed",
-      title: (0, import_i18n303.__)("Removed"),
-      tagName: "del",
-      className: "revision-diff-removed"
-    },
-    {
-      name: "revision/diff-added",
-      title: (0, import_i18n303.__)("Added"),
-      tagName: "ins",
-      className: "revision-diff-added"
-    },
-    {
-      name: "revision/diff-format-added",
-      title: (0, import_i18n303.__)("Format added"),
-      tagName: "span",
-      className: "revision-diff-format-added"
-    },
-    {
-      name: "revision/diff-format-removed",
-      title: (0, import_i18n303.__)("Format removed"),
-      tagName: "span",
-      className: "revision-diff-format-removed"
-    },
-    {
-      name: "revision/diff-format-changed",
-      title: (0, import_i18n303.__)("Format changed"),
-      tagName: "span",
-      className: "revision-diff-format-changed"
-    }
-  ];
-  function registerDiffFormatTypes() {
-    for (const formatType of DIFF_FORMAT_TYPES) {
-      (0, import_rich_text7.registerFormatType)(formatType.name, {
-        ...formatType,
-        attributes: { title: "title" },
-        edit: () => null
-      });
-    }
-  }
-  function unregisterDiffFormatTypes() {
-    for (const formatType of DIFF_FORMAT_TYPES) {
-      (0, import_rich_text7.unregisterFormatType)(formatType.name);
-    }
-  }
-
   // packages/editor/build-module/components/post-revisions-preview/diff-markers.mjs
   var import_element305 = __toESM(require_element(), 1);
   var import_compose77 = __toESM(require_compose(), 1);
@@ -95026,6 +95047,14 @@ If there's a particular need for this, please submit a feature request at https:
 		background-color: color-mix(in srgb, currentColor 5%, #00a32a 15%);
 		text-decoration: none;
 	}
+	/* Reset UA <mark> styles so format markers keep the same look as before. */
+	mark.revision-diff-format-added,
+	mark.revision-diff-format-removed,
+	mark.revision-diff-format-changed {
+		background: transparent;
+		color: inherit;
+		padding: 0;
+	}
 	.revision-diff-format-added {
 		text-decoration: underline wavy color-mix(in srgb, currentColor 30%, #00a32a 70%);
 		text-decoration-thickness: 2px;
@@ -95063,9 +95092,19 @@ If there's a particular need for this, please submit a feature request at https:
     });
     return null;
   }
+  function DiffDescriptions() {
+    return /* @__PURE__ */ (0, import_jsx_runtime512.jsxs)(VisuallyHidden, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime512.jsx)("span", { id: DIFF_DESCRIPTION_IDS.removed, children: (0, import_i18n305.__)("Removed") }),
+      /* @__PURE__ */ (0, import_jsx_runtime512.jsx)("span", { id: DIFF_DESCRIPTION_IDS.added, children: (0, import_i18n305.__)("Added") }),
+      /* @__PURE__ */ (0, import_jsx_runtime512.jsx)("span", { id: DIFF_DESCRIPTION_IDS.formatAdded, children: (0, import_i18n305.__)("Format added") }),
+      /* @__PURE__ */ (0, import_jsx_runtime512.jsx)("span", { id: DIFF_DESCRIPTION_IDS.formatRemoved, children: (0, import_i18n305.__)("Format removed") }),
+      /* @__PURE__ */ (0, import_jsx_runtime512.jsx)("span", { id: DIFF_DESCRIPTION_IDS.formatChanged, children: (0, import_i18n305.__)("Format changed") })
+    ] });
+  }
   function CanvasContent({ showDiff }) {
     const [contentRef, diffMarkers] = useDiffMarkers();
     return /* @__PURE__ */ (0, import_jsx_runtime512.jsxs)(import_jsx_runtime512.Fragment, { children: [
+      showDiff && /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(DiffDescriptions, {}),
       /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(visual_editor_default, { contentRef }),
       showDiff && diffMarkers
     ] });
@@ -95095,7 +95134,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collaborators-presence/use-collaborator-notifications.mjs
   var import_data222 = __toESM(require_data(), 1);
   var import_element307 = __toESM(require_element(), 1);
-  var import_i18n305 = __toESM(require_i18n(), 1);
+  var import_i18n306 = __toESM(require_i18n(), 1);
   var import_notices31 = __toESM(require_notices(), 1);
   var import_core_data120 = __toESM(require_core_data(), 1);
   var import_preferences23 = __toESM(require_preferences(), 1);
@@ -95108,12 +95147,12 @@ If there's a particular need for this, please submit a feature request at https:
   var PUBLISHED_STATUSES = ["publish", "private", "future"];
   function getPostUpdatedMessage(name2, status, isFirstPublish) {
     if (isFirstPublish) {
-      return (0, import_i18n305.sprintf)((0, import_i18n305.__)("Post published by %s."), name2);
+      return (0, import_i18n306.sprintf)((0, import_i18n306.__)("Post published by %s."), name2);
     }
     if (PUBLISHED_STATUSES.includes(status)) {
-      return (0, import_i18n305.sprintf)((0, import_i18n305.__)("Post updated by %s."), name2);
+      return (0, import_i18n306.sprintf)((0, import_i18n306.__)("Post updated by %s."), name2);
     }
-    return (0, import_i18n305.sprintf)((0, import_i18n305.__)("Draft saved by %s."), name2);
+    return (0, import_i18n306.sprintf)((0, import_i18n306.__)("Draft saved by %s."), name2);
   }
   function useCollaboratorNotifications(postId2, postType2) {
     const {
@@ -95169,9 +95208,9 @@ If there's a particular need for this, please submit a feature request at https:
           }
           void createNotice(
             "info",
-            (0, import_i18n305.sprintf)(
+            (0, import_i18n306.sprintf)(
               /* translators: %s: collaborator display name */
-              (0, import_i18n305.__)("%s has joined the post."),
+              (0, import_i18n306.__)("%s has joined the post."),
               collaborator.collaboratorInfo.name
             ),
             {
@@ -95194,9 +95233,9 @@ If there's a particular need for this, please submit a feature request at https:
           }
           void createNotice(
             "info",
-            (0, import_i18n305.sprintf)(
+            (0, import_i18n306.sprintf)(
               /* translators: %s: collaborator display name */
-              (0, import_i18n305.__)("%s has left the post."),
+              (0, import_i18n306.__)("%s has left the post."),
               collaborator.collaboratorInfo.name
             ),
             {
@@ -95239,7 +95278,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/save-publish-panels/index.mjs
   var import_data223 = __toESM(require_data(), 1);
   var import_components255 = __toESM(require_components(), 1);
-  var import_i18n306 = __toESM(require_i18n(), 1);
+  var import_i18n307 = __toESM(require_i18n(), 1);
   var import_element308 = __toESM(require_element(), 1);
   var import_jsx_runtime513 = __toESM(require_jsx_runtime(), 1);
   var { Fill: Fill11, Slot: Slot13 } = (0, import_components255.createSlotFill)("ActionsPanel");
@@ -95294,7 +95333,7 @@ If there's a particular need for this, please submit a feature request at https:
           variant: "secondary",
           onClick: togglePublishSidebar2,
           "aria-expanded": false,
-          children: (0, import_i18n306.__)("Open publish panel")
+          children: (0, import_i18n307.__)("Open publish panel")
         }
       ) });
     } else {
@@ -95308,7 +95347,7 @@ If there's a particular need for this, please submit a feature request at https:
           "aria-haspopup": "dialog",
           disabled: !isDirty,
           accessibleWhenDisabled: true,
-          children: (0, import_i18n306.__)("Open save panel")
+          children: (0, import_i18n307.__)("Open save panel")
         }
       ) });
     }
@@ -95328,7 +95367,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/text-editor/index.mjs
   var import_components256 = __toESM(require_components(), 1);
   var import_data224 = __toESM(require_data(), 1);
-  var import_i18n307 = __toESM(require_i18n(), 1);
+  var import_i18n308 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts10 = __toESM(require_keyboard_shortcuts(), 1);
   var import_element309 = __toESM(require_element(), 1);
   var import_jsx_runtime514 = __toESM(require_jsx_runtime(), 1);
@@ -95351,7 +95390,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [autoFocus]);
     return /* @__PURE__ */ (0, import_jsx_runtime514.jsxs)("div", { className: "editor-text-editor", children: [
       isRichEditingEnabled && /* @__PURE__ */ (0, import_jsx_runtime514.jsxs)("div", { className: "editor-text-editor__toolbar", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime514.jsx)("h2", { children: (0, import_i18n307.__)("Editing code") }),
+        /* @__PURE__ */ (0, import_jsx_runtime514.jsx)("h2", { children: (0, import_i18n308.__)("Editing code") }),
         /* @__PURE__ */ (0, import_jsx_runtime514.jsx)(
           import_components256.Button,
           {
@@ -95359,7 +95398,7 @@ If there's a particular need for this, please submit a feature request at https:
             variant: "tertiary",
             onClick: () => switchEditorMode2("visual"),
             shortcut,
-            children: (0, import_i18n307.__)("Exit code editor")
+            children: (0, import_i18n308.__)("Exit code editor")
           }
         )
       ] }),
@@ -95374,15 +95413,15 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime515 = __toESM(require_jsx_runtime(), 1);
   var interfaceLabels = {
     /* translators: accessibility text for the editor top bar landmark region. */
-    header: (0, import_i18n308.__)("Editor top bar"),
+    header: (0, import_i18n309.__)("Editor top bar"),
     /* translators: accessibility text for the editor content landmark region. */
-    body: (0, import_i18n308.__)("Editor content"),
+    body: (0, import_i18n309.__)("Editor content"),
     /* translators: accessibility text for the editor settings landmark region. */
-    sidebar: (0, import_i18n308.__)("Editor settings"),
+    sidebar: (0, import_i18n309.__)("Editor settings"),
     /* translators: accessibility text for the editor publish landmark region. */
-    actions: (0, import_i18n308.__)("Editor publish"),
+    actions: (0, import_i18n309.__)("Editor publish"),
     /* translators: accessibility text for the editor footer landmark region. */
-    footer: (0, import_i18n308.__)("Editor footer")
+    footer: (0, import_i18n309.__)("Editor footer")
   };
   function Notices() {
     const isValidTemplate2 = (0, import_data225.useSelect)((select9) => {
@@ -95464,7 +95503,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { setShowRevisionDiff: setShowRevisionDiff2 } = unlock((0, import_data225.useDispatch)(store));
     useCollaboratorNotifications(postId2, postType2);
     const isLargeViewport = (0, import_compose78.useViewportMatch)("medium");
-    const secondarySidebarLabel = isListViewOpened2 ? (0, import_i18n308.__)("Document Overview") : (0, import_i18n308.__)("Block Library");
+    const secondarySidebarLabel = isListViewOpened2 ? (0, import_i18n309.__)("Document Overview") : (0, import_i18n309.__)("Block Library");
     const shouldShowStylesCanvas = showStylebook2 || stylesPath2?.startsWith("/revisions");
     const shouldShowBlockEditor = !shouldShowStylesCanvas;
     const [entitiesSavedStatesCallback, setEntitiesSavedStatesCallback] = (0, import_element310.useState)(false);
@@ -95571,7 +95610,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor97 = __toESM(require_block_editor(), 1);
   var import_data256 = __toESM(require_data(), 1);
   var import_element331 = __toESM(require_element(), 1);
-  var import_i18n332 = __toESM(require_i18n(), 1);
+  var import_i18n333 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts11 = __toESM(require_keyboard_shortcuts(), 1);
   var import_components277 = __toESM(require_components(), 1);
 
@@ -95599,13 +95638,13 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data125 = __toESM(require_core_data(), 1);
   var import_data231 = __toESM(require_data(), 1);
   var import_element315 = __toESM(require_element(), 1);
-  var import_i18n312 = __toESM(require_i18n(), 1);
+  var import_i18n313 = __toESM(require_i18n(), 1);
   var import_dom26 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/post-actions/index.mjs
   var import_data230 = __toESM(require_data(), 1);
   var import_element314 = __toESM(require_element(), 1);
-  var import_i18n311 = __toESM(require_i18n(), 1);
+  var import_i18n312 = __toESM(require_i18n(), 1);
   var import_components259 = __toESM(require_components(), 1);
   var import_core_data124 = __toESM(require_core_data(), 1);
 
@@ -95615,7 +95654,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data123 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-actions/set-as-homepage.mjs
-  var import_i18n309 = __toESM(require_i18n(), 1);
+  var import_i18n310 = __toESM(require_i18n(), 1);
   var import_element311 = __toESM(require_element(), 1);
   var import_components257 = __toESM(require_components(), 1);
   var import_data227 = __toESM(require_data(), 1);
@@ -95667,11 +95706,11 @@ If there's a particular need for this, please submit a feature request at https:
           page_on_front: item.id,
           show_on_front: "page"
         });
-        createSuccessNotice((0, import_i18n309.__)("Homepage updated."), {
+        createSuccessNotice((0, import_i18n310.__)("Homepage updated."), {
           type: "snackbar"
         });
       } catch (error2) {
-        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n309.__)("An error occurred while setting the homepage.");
+        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n310.__)("An error occurred while setting the homepage.");
         createErrorNotice(errorMessage, { type: "snackbar" });
       } finally {
         closeModal2?.();
@@ -95679,23 +95718,23 @@ If there's a particular need for this, please submit a feature request at https:
     }
     let modalWarning = "";
     if ("posts" === showOnFront) {
-      modalWarning = (0, import_i18n309.__)(
+      modalWarning = (0, import_i18n310.__)(
         "This will replace the current homepage which is set to display latest posts."
       );
     } else if (currentHomePage) {
-      modalWarning = (0, import_i18n309.sprintf)(
+      modalWarning = (0, import_i18n310.sprintf)(
         // translators: %s: title of the current home page.
-        (0, import_i18n309.__)('This will replace the current homepage: "%s"'),
+        (0, import_i18n310.__)('This will replace the current homepage: "%s"'),
         getItemTitle2(currentHomePage)
       );
     }
-    const modalText = (0, import_i18n309.sprintf)(
+    const modalText = (0, import_i18n310.sprintf)(
       // translators: %1$s: title of the page to be set as the homepage, %2$s: homepage replacement warning message.
-      (0, import_i18n309.__)('Set "%1$s" as the site homepage? %2$s'),
+      (0, import_i18n310.__)('Set "%1$s" as the site homepage? %2$s'),
       pageTitle,
       modalWarning
     ).trim();
-    const modalButtonLabel = (0, import_i18n309.__)("Set homepage");
+    const modalButtonLabel = (0, import_i18n310.__)("Set homepage");
     return /* @__PURE__ */ (0, import_jsx_runtime517.jsx)("form", { onSubmit: onSetPageAsHomepage, children: /* @__PURE__ */ (0, import_jsx_runtime517.jsxs)(import_components257.__experimentalVStack, { spacing: "5", children: [
       /* @__PURE__ */ (0, import_jsx_runtime517.jsx)(import_components257.__experimentalText, { children: modalText }),
       /* @__PURE__ */ (0, import_jsx_runtime517.jsxs)(import_components257.__experimentalHStack, { justify: "right", children: [
@@ -95709,7 +95748,7 @@ If there's a particular need for this, please submit a feature request at https:
             },
             disabled: isSaving,
             accessibleWhenDisabled: true,
-            children: (0, import_i18n309.__)("Cancel")
+            children: (0, import_i18n310.__)("Cancel")
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime517.jsx)(
@@ -95741,7 +95780,7 @@ If there's a particular need for this, please submit a feature request at https:
     return (0, import_element311.useMemo)(
       () => ({
         id: "set-as-homepage",
-        label: (0, import_i18n309.__)("Set as homepage"),
+        label: (0, import_i18n310.__)("Set as homepage"),
         isEligible(post2) {
           if (post2.status !== "publish") {
             return false;
@@ -95765,7 +95804,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/editor/build-module/components/post-actions/set-as-posts-page.mjs
-  var import_i18n310 = __toESM(require_i18n(), 1);
+  var import_i18n311 = __toESM(require_i18n(), 1);
   var import_element312 = __toESM(require_element(), 1);
   var import_components258 = __toESM(require_components(), 1);
   var import_data228 = __toESM(require_data(), 1);
@@ -95800,28 +95839,28 @@ If there's a particular need for this, please submit a feature request at https:
           page_for_posts: item.id,
           show_on_front: "page"
         });
-        createSuccessNotice((0, import_i18n310.__)("Posts page updated."), {
+        createSuccessNotice((0, import_i18n311.__)("Posts page updated."), {
           type: "snackbar"
         });
       } catch (error2) {
-        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n310.__)("An error occurred while setting the posts page.");
+        const errorMessage = error2.message && error2.code !== "unknown_error" ? error2.message : (0, import_i18n311.__)("An error occurred while setting the posts page.");
         createErrorNotice(errorMessage, { type: "snackbar" });
       } finally {
         closeModal2?.();
       }
     }
-    const modalWarning = isPageForPostsSet && currentPostsPage ? (0, import_i18n310.sprintf)(
+    const modalWarning = isPageForPostsSet && currentPostsPage ? (0, import_i18n311.sprintf)(
       // translators: %s: title of the current posts page.
-      (0, import_i18n310.__)('This will replace the current posts page: "%s"'),
+      (0, import_i18n311.__)('This will replace the current posts page: "%s"'),
       getItemTitle2(currentPostsPage)
-    ) : (0, import_i18n310.__)("This page will show the latest posts.");
-    const modalText = (0, import_i18n310.sprintf)(
+    ) : (0, import_i18n311.__)("This page will show the latest posts.");
+    const modalText = (0, import_i18n311.sprintf)(
       // translators: %1$s: title of the page to be set as the posts page, %2$s: posts page replacement warning message.
-      (0, import_i18n310.__)('Set "%1$s" as the posts page? %2$s'),
+      (0, import_i18n311.__)('Set "%1$s" as the posts page? %2$s'),
       pageTitle,
       modalWarning
     );
-    const modalButtonLabel = (0, import_i18n310.__)("Set posts page");
+    const modalButtonLabel = (0, import_i18n311.__)("Set posts page");
     return /* @__PURE__ */ (0, import_jsx_runtime518.jsx)("form", { onSubmit: onSetPageAsPostsPage, children: /* @__PURE__ */ (0, import_jsx_runtime518.jsxs)(import_components258.__experimentalVStack, { spacing: "5", children: [
       /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(import_components258.__experimentalText, { children: modalText }),
       /* @__PURE__ */ (0, import_jsx_runtime518.jsxs)(import_components258.__experimentalHStack, { justify: "right", children: [
@@ -95835,7 +95874,7 @@ If there's a particular need for this, please submit a feature request at https:
             },
             disabled: isSaving,
             accessibleWhenDisabled: true,
-            children: (0, import_i18n310.__)("Cancel")
+            children: (0, import_i18n311.__)("Cancel")
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
@@ -95867,7 +95906,7 @@ If there's a particular need for this, please submit a feature request at https:
     return (0, import_element312.useMemo)(
       () => ({
         id: "set-as-posts-page",
-        label: (0, import_i18n310.__)("Set as posts page"),
+        label: (0, import_i18n311.__)("Set as posts page"),
         isEligible(post2) {
           if (post2.status !== "publish") {
             return false;
@@ -96052,7 +96091,7 @@ If there's a particular need for this, please submit a feature request at https:
               {
                 size: "small",
                 icon: more_vertical_default,
-                label: (0, import_i18n311.__)("Actions"),
+                label: (0, import_i18n312.__)("Actions"),
                 disabled: !actions2.length,
                 accessibleWhenDisabled: true,
                 className: "editor-all-actions-button"
@@ -96185,11 +96224,11 @@ If there's a particular need for this, please submit a feature request at https:
       [postIds, postType2]
     );
     const pageTypeBadge = usePageTypeBadge(postId2);
-    let title = (0, import_i18n312.__)("No title");
+    let title = (0, import_i18n313.__)("No title");
     if (labels?.name && postIds.length > 1) {
-      title = (0, import_i18n312.sprintf)(
+      title = (0, import_i18n313.sprintf)(
         // translators: %1$d number of selected items %2$s: Name of the plural post type e.g: "Posts".
-        (0, import_i18n312.__)("%1$d %2$s"),
+        (0, import_i18n313.__)("%1$d %2$s"),
         postIds.length,
         labels?.name
       );
@@ -96237,16 +96276,16 @@ If there's a particular need for this, please submit a feature request at https:
               {
                 size: "small",
                 icon: close_default,
-                label: (0, import_i18n312.__)("Close"),
+                label: (0, import_i18n313.__)("Close"),
                 onClick: onClose
               }
             )
           ]
         }
       ),
-      postIds.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(import_components260.__experimentalText, { className: "editor-post-card-panel__description", children: (0, import_i18n312.sprintf)(
+      postIds.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(import_components260.__experimentalText, { className: "editor-post-card-panel__description", children: (0, import_i18n313.sprintf)(
         // translators: %s: Name of the plural post type e.g: "Posts".
-        (0, import_i18n312.__)("Changes will be applied to all selected %s."),
+        (0, import_i18n313.__)("Changes will be applied to all selected %s."),
         labels?.name?.toLowerCase()
       ) })
     ] });
@@ -96255,7 +96294,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-content-information/index.mjs
   var import_components261 = __toESM(require_components(), 1);
   var import_data232 = __toESM(require_data(), 1);
-  var import_i18n313 = __toESM(require_i18n(), 1);
+  var import_i18n314 = __toESM(require_i18n(), 1);
   var import_wordcount5 = __toESM(require_wordcount(), 1);
   var import_element316 = __toESM(require_element(), 1);
   var import_core_data126 = __toESM(require_core_data(), 1);
@@ -96281,7 +96320,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(PostContentInformationUI, { postContent });
   }
   function PostContentInformationUI({ postContent }) {
-    const wordCountType = (0, import_i18n313._x)("words", "Word count type. Do not translate!");
+    const wordCountType = (0, import_i18n314._x)("words", "Word count type. Do not translate!");
     const wordsCounted = (0, import_element316.useMemo)(
       () => postContent ? (0, import_wordcount5.count)(postContent, wordCountType) : 0,
       [postContent, wordCountType]
@@ -96290,19 +96329,19 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     const readingTime = Math.round(wordsCounted / AVERAGE_READING_RATE3);
-    const wordsCountText = (0, import_i18n313.sprintf)(
+    const wordsCountText = (0, import_i18n314.sprintf)(
       // translators: %s: the number of words in the post.
-      (0, import_i18n313._n)("%s word", "%s words", wordsCounted),
+      (0, import_i18n314._n)("%s word", "%s words", wordsCounted),
       wordsCounted.toLocaleString()
     );
-    const minutesText = readingTime <= 1 ? (0, import_i18n313.__)("1 minute") : (0, import_i18n313.sprintf)(
+    const minutesText = readingTime <= 1 ? (0, import_i18n314.__)("1 minute") : (0, import_i18n314.sprintf)(
       /* translators: %s: the number of minutes to read the post. */
-      (0, import_i18n313._n)("%s minute", "%s minutes", readingTime),
+      (0, import_i18n314._n)("%s minute", "%s minutes", readingTime),
       readingTime.toLocaleString()
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime522.jsx)("div", { className: "editor-post-content-information", children: /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(import_components261.__experimentalText, { children: (0, import_i18n313.sprintf)(
+    return /* @__PURE__ */ (0, import_jsx_runtime522.jsx)("div", { className: "editor-post-content-information", children: /* @__PURE__ */ (0, import_jsx_runtime522.jsx)(import_components261.__experimentalText, { children: (0, import_i18n314.sprintf)(
       /* translators: 1: How many words a post has. 2: the number of minutes to read the post (e.g. 130 words, 2 minutes read time.) */
-      (0, import_i18n313.__)("%1$s, %2$s read time."),
+      (0, import_i18n314.__)("%1$s, %2$s read time."),
       wordsCountText,
       minutesText
     ) }) });
@@ -96310,7 +96349,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-format/panel.mjs
   var import_components262 = __toESM(require_components(), 1);
-  var import_i18n314 = __toESM(require_i18n(), 1);
+  var import_i18n315 = __toESM(require_i18n(), 1);
   var import_data233 = __toESM(require_data(), 1);
   var import_element317 = __toESM(require_element(), 1);
   var import_block_editor86 = __toESM(require_block_editor(), 1);
@@ -96338,7 +96377,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [popoverAnchor]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(PostFormatCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(post_panel_row_default, { label: (0, import_i18n314.__)("Format"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(PostFormatCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(post_panel_row_default, { label: (0, import_i18n315.__)("Format"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
       import_components262.Dropdown,
       {
         popoverProps,
@@ -96350,9 +96389,9 @@ If there's a particular need for this, please submit a feature request at https:
             size: "compact",
             variant: "tertiary",
             "aria-expanded": isOpen2,
-            "aria-label": (0, import_i18n314.sprintf)(
+            "aria-label": (0, import_i18n315.sprintf)(
               // translators: %s: Current post format.
-              (0, import_i18n314.__)("Change format: %s"),
+              (0, import_i18n315.__)("Change format: %s"),
               activeFormat?.caption
             ),
             onClick: onToggle,
@@ -96363,7 +96402,7 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
             import_block_editor86.__experimentalInspectorPopoverHeader,
             {
-              title: (0, import_i18n314.__)("Format"),
+              title: (0, import_i18n315.__)("Format"),
               onClose
             }
           ),
@@ -96377,7 +96416,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-last-edited-panel/index.mjs
   var import_components263 = __toESM(require_components(), 1);
   var import_data234 = __toESM(require_data(), 1);
-  var import_i18n315 = __toESM(require_i18n(), 1);
+  var import_i18n316 = __toESM(require_i18n(), 1);
   var import_date20 = __toESM(require_date(), 1);
   var import_jsx_runtime524 = __toESM(require_jsx_runtime(), 1);
   function PostLastEditedPanel() {
@@ -96388,9 +96427,9 @@ If there's a particular need for this, please submit a feature request at https:
     if (!modified) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime524.jsx)("div", { className: "editor-post-last-edited-panel", children: /* @__PURE__ */ (0, import_jsx_runtime524.jsx)(import_components263.__experimentalText, { children: (0, import_i18n315.sprintf)(
+    return /* @__PURE__ */ (0, import_jsx_runtime524.jsx)("div", { className: "editor-post-last-edited-panel", children: /* @__PURE__ */ (0, import_jsx_runtime524.jsx)(import_components263.__experimentalText, { children: (0, import_i18n316.sprintf)(
       // translators: %s: Human-readable time difference, e.g. "2 days ago".
-      (0, import_i18n315.__)("Last edited %s."),
+      (0, import_i18n316.__)("Last edited %s."),
       (0, import_date20.humanTimeDiff)(modified)
     ) }) });
   }
@@ -96404,7 +96443,7 @@ If there's a particular need for this, please submit a feature request at https:
   var post_panel_section_default = PostPanelSection;
 
   // packages/editor/build-module/components/blog-title/index.mjs
-  var import_i18n316 = __toESM(require_i18n(), 1);
+  var import_i18n317 = __toESM(require_i18n(), 1);
   var import_compose79 = __toESM(require_compose(), 1);
   var import_data235 = __toESM(require_data(), 1);
   var import_core_data127 = __toESM(require_core_data(), 1);
@@ -96459,7 +96498,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
     };
     const decodedTitle = (0, import_html_entities32.decodeEntities)(postsPageTitle);
-    return /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(post_panel_row_default, { label: (0, import_i18n316.__)("Blog title"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(post_panel_row_default, { label: (0, import_i18n317.__)("Blog title"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(
       import_components265.Dropdown,
       {
         popoverProps,
@@ -96471,9 +96510,9 @@ If there's a particular need for this, please submit a feature request at https:
             size: "compact",
             variant: "tertiary",
             "aria-expanded": isOpen2,
-            "aria-label": (0, import_i18n316.sprintf)(
+            "aria-label": (0, import_i18n317.sprintf)(
               // translators: %s: Current post link.
-              (0, import_i18n316.__)("Change blog title: %s"),
+              (0, import_i18n317.__)("Change blog title: %s"),
               decodedTitle
             ),
             onClick: onToggle,
@@ -96484,18 +96523,18 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(
             import_block_editor87.__experimentalInspectorPopoverHeader,
             {
-              title: (0, import_i18n316.__)("Blog title"),
+              title: (0, import_i18n317.__)("Blog title"),
               onClose
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(
             import_components265.__experimentalInputControl,
             {
-              placeholder: (0, import_i18n316.__)("No title"),
+              placeholder: (0, import_i18n317.__)("No title"),
               value: postsPageTitle,
               onChange: (0, import_compose79.debounce)(setPostsPageTitle, 300),
-              label: (0, import_i18n316.__)("Blog title"),
-              help: (0, import_i18n316.__)(
+              label: (0, import_i18n317.__)("Blog title"),
+              help: (0, import_i18n317.__)(
                 "Set the Posts Page title. Appears in search results, and when the page is shared on social media."
               ),
               hideLabelFromVision: true
@@ -96507,7 +96546,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/posts-per-page/index.mjs
-  var import_i18n317 = __toESM(require_i18n(), 1);
+  var import_i18n318 = __toESM(require_i18n(), 1);
   var import_data236 = __toESM(require_data(), 1);
   var import_core_data128 = __toESM(require_core_data(), 1);
   var import_components266 = __toESM(require_components(), 1);
@@ -96549,7 +96588,7 @@ If there's a particular need for this, please submit a feature request at https:
         posts_per_page: newValue
       });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(post_panel_row_default, { label: (0, import_i18n317.__)("Posts per page"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(post_panel_row_default, { label: (0, import_i18n318.__)("Posts per page"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
       import_components266.Dropdown,
       {
         popoverProps,
@@ -96561,7 +96600,7 @@ If there's a particular need for this, please submit a feature request at https:
             size: "compact",
             variant: "tertiary",
             "aria-expanded": isOpen2,
-            "aria-label": (0, import_i18n317.__)("Change posts per page"),
+            "aria-label": (0, import_i18n318.__)("Change posts per page"),
             onClick: onToggle,
             children: postsPerPage
           }
@@ -96570,7 +96609,7 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
             import_block_editor88.__experimentalInspectorPopoverHeader,
             {
-              title: (0, import_i18n317.__)("Posts per page"),
+              title: (0, import_i18n318.__)("Posts per page"),
               onClose
             }
           ),
@@ -96583,8 +96622,8 @@ If there's a particular need for this, please submit a feature request at https:
               step: "1",
               min: "1",
               onChange: setPostsPerPage,
-              label: (0, import_i18n317.__)("Posts per page"),
-              help: (0, import_i18n317.__)(
+              label: (0, import_i18n318.__)("Posts per page"),
+              help: (0, import_i18n318.__)(
                 "Set the default number of posts to display on blog pages, including categories and tags. Some templates may override this setting."
               ),
               hideLabelFromVision: true
@@ -96596,7 +96635,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/site-discussion/index.mjs
-  var import_i18n318 = __toESM(require_i18n(), 1);
+  var import_i18n319 = __toESM(require_i18n(), 1);
   var import_data237 = __toESM(require_data(), 1);
   var import_core_data129 = __toESM(require_core_data(), 1);
   var import_components267 = __toESM(require_components(), 1);
@@ -96605,16 +96644,16 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime528 = __toESM(require_jsx_runtime(), 1);
   var COMMENT_OPTIONS2 = [
     {
-      label: (0, import_i18n318._x)("Open", 'Adjective: e.g. "Comments are open"'),
+      label: (0, import_i18n319._x)("Open", 'Adjective: e.g. "Comments are open"'),
       value: "open",
-      description: (0, import_i18n318.__)("Visitors can add new comments and replies.")
+      description: (0, import_i18n319.__)("Visitors can add new comments and replies.")
     },
     {
-      label: (0, import_i18n318.__)("Closed"),
+      label: (0, import_i18n319.__)("Closed"),
       value: "",
       description: [
-        (0, import_i18n318.__)("Visitors cannot add new comments or replies."),
-        (0, import_i18n318.__)("Existing comments remain visible.")
+        (0, import_i18n319.__)("Visitors cannot add new comments or replies."),
+        (0, import_i18n319.__)("Existing comments remain visible.")
       ].join(" ")
     }
   ];
@@ -96656,7 +96695,7 @@ If there's a particular need for this, please submit a feature request at https:
         default_comment_status: newValue ? "open" : null
       });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(post_panel_row_default, { label: (0, import_i18n318.__)("Discussion"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(post_panel_row_default, { label: (0, import_i18n319.__)("Discussion"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(
       import_components267.Dropdown,
       {
         popoverProps,
@@ -96668,21 +96707,21 @@ If there's a particular need for this, please submit a feature request at https:
             size: "compact",
             variant: "tertiary",
             "aria-expanded": isOpen2,
-            "aria-label": (0, import_i18n318.__)("Change discussion settings"),
+            "aria-label": (0, import_i18n319.__)("Change discussion settings"),
             onClick: onToggle,
-            children: allowCommentsOnNewPosts ? (0, import_i18n318.__)("Comments open") : (0, import_i18n318.__)("Comments closed")
+            children: allowCommentsOnNewPosts ? (0, import_i18n319.__)("Comments open") : (0, import_i18n319.__)("Comments closed")
           }
         ),
         renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime528.jsxs)(import_jsx_runtime528.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(
             import_block_editor89.__experimentalInspectorPopoverHeader,
             {
-              title: (0, import_i18n318.__)("Discussion"),
+              title: (0, import_i18n319.__)("Discussion"),
               onClose
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime528.jsxs)(import_components267.__experimentalVStack, { spacing: 3, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(import_components267.__experimentalText, { children: (0, import_i18n318.__)(
+            /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(import_components267.__experimentalText, { children: (0, import_i18n319.__)(
               "Changes will apply to new posts only. Individual posts may override these settings."
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(
@@ -96690,7 +96729,7 @@ If there's a particular need for this, please submit a feature request at https:
               {
                 className: "editor-site-discussion__options",
                 hideLabelFromVision: true,
-                label: (0, import_i18n318.__)("Comment status"),
+                label: (0, import_i18n319.__)("Comment status"),
                 options: COMMENT_OPTIONS2,
                 onChange: setAllowCommentsOnNewPosts,
                 selected: allowCommentsOnNewPosts
@@ -96764,7 +96803,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/sidebar/dataform-post-summary.mjs
-  var import_i18n321 = __toESM(require_i18n(), 1);
+  var import_i18n322 = __toESM(require_i18n(), 1);
   var import_data243 = __toESM(require_data(), 1);
   var import_core_data131 = __toESM(require_core_data(), 1);
   var import_element322 = __toESM(require_element(), 1);
@@ -96808,12 +96847,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/dataviews/fields/revisions/index.mjs
-  var import_i18n320 = __toESM(require_i18n(), 1);
+  var import_i18n321 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/dataviews/fields/revisions/revisions-view.mjs
   var import_components268 = __toESM(require_components(), 1);
   var import_data242 = __toESM(require_data(), 1);
-  var import_i18n319 = __toESM(require_i18n(), 1);
+  var import_i18n320 = __toESM(require_i18n(), 1);
   var import_url24 = __toESM(require_url(), 1);
   var import_jsx_runtime530 = __toESM(require_jsx_runtime(), 1);
   function RevisionsView() {
@@ -96845,9 +96884,9 @@ If there's a particular need for this, please submit a feature request at https:
         ...buttonProps,
         variant: "link",
         text: String(revisionsCount),
-        "aria-label": (0, import_i18n319.sprintf)(
+        "aria-label": (0, import_i18n320.sprintf)(
           /* translators: %d: number of revisions. */
-          (0, import_i18n319._n)(
+          (0, import_i18n320._n)(
             "Open revisions screen: %d revision",
             "Open revisions screen: %d revisions",
             revisionsCount
@@ -96861,7 +96900,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/dataviews/fields/revisions/index.mjs
   var revisionsField = {
     id: "revisions",
-    label: (0, import_i18n320.__)("Revisions"),
+    label: (0, import_i18n321.__)("Revisions"),
     readOnly: true,
     enableSorting: false,
     render: RevisionsView,
@@ -97077,7 +97116,7 @@ If there's a particular need for this, please submit a feature request at https:
             return {
               ...field,
               readOnly: true,
-              render: () => (0, import_i18n321.__)("Default template")
+              render: () => (0, import_i18n322.__)("Default template")
             };
           }
           return field;
@@ -97143,7 +97182,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/sidebar/post-revision-summary.mjs
   var import_data246 = __toESM(require_data(), 1);
   var import_components270 = __toESM(require_components(), 1);
-  var import_i18n324 = __toESM(require_i18n(), 1);
+  var import_i18n325 = __toESM(require_i18n(), 1);
   var import_url25 = __toESM(require_url(), 1);
 
   // packages/editor/build-module/components/post-revisions-timeline/index.mjs
@@ -97151,7 +97190,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data132 = __toESM(require_core_data(), 1);
   var import_date21 = __toESM(require_date(), 1);
   var import_element323 = __toESM(require_element(), 1);
-  var import_i18n322 = __toESM(require_i18n(), 1);
+  var import_i18n323 = __toESM(require_i18n(), 1);
   var import_jsx_runtime532 = __toESM(require_jsx_runtime(), 1);
   var PAGE_SIZE2 = 10;
   var EMPTY_ARRAY16 = [];
@@ -97178,7 +97217,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isAutosaveRevision(item)) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime532.jsx)(Badge, { intent: "none", children: (0, import_i18n322.__)("Autosave") });
+    return /* @__PURE__ */ (0, import_jsx_runtime532.jsx)(Badge, { intent: "none", children: (0, import_i18n323.__)("Autosave") });
   }
   function PostRevisionsTimeline() {
     const { setCurrentRevisionId: setCurrentRevisionId2 } = unlock((0, import_data244.useDispatch)(store));
@@ -97210,7 +97249,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => [
         {
           id: "date",
-          label: (0, import_i18n322.__)("Date"),
+          label: (0, import_i18n323.__)("Date"),
           // Return the humanized label the row renders so the picker
           // option's accessible name announces e.g. "5 minutes ago"
           // instead of the raw ISO timestamp.
@@ -97219,11 +97258,11 @@ If there's a particular need for this, please submit a feature request at https:
             if (!isAutosaveRevision(item)) {
               return displayDate;
             }
-            return (0, import_i18n322.sprintf)(
+            return (0, import_i18n323.sprintf)(
               /* translators: 1: revision date, 2: revision type. */
-              (0, import_i18n322.__)("%1$s, %2$s"),
+              (0, import_i18n323.__)("%1$s, %2$s"),
               displayDate,
-              (0, import_i18n322.__)("Autosave")
+              (0, import_i18n323.__)("Autosave")
             );
           },
           render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime532.jsxs)(Stack, { direction: "row", align: "center", gap: "sm", children: [
@@ -97243,7 +97282,7 @@ If there's a particular need for this, please submit a feature request at https:
         author_default,
         {
           id: "details",
-          label: (0, import_i18n322.__)("Details"),
+          label: (0, import_i18n323.__)("Details"),
           render: ({ item }) => {
             if (String(item[revisionKey]) !== String(currentRevisionId)) {
               return null;
@@ -97320,7 +97359,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/revision-fields-diff/index.mjs
   var import_data245 = __toESM(require_data(), 1);
   var import_element324 = __toESM(require_element(), 1);
-  var import_i18n323 = __toESM(require_i18n(), 1);
+  var import_i18n324 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/revision-diff-panel/index.mjs
   var import_components269 = __toESM(require_components(), 1);
@@ -97411,7 +97450,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(
       RevisionDiffPanel,
       {
-        title: (0, import_i18n323.__)("Meta"),
+        title: (0, import_i18n324.__)("Meta"),
         entries,
         initialOpen: false,
         className: "editor-revision-meta-diff__content"
@@ -97443,7 +97482,7 @@ If there's a particular need for this, please submit a feature request at https:
             href: (0, import_url25.addQueryArgs)("revision.php", {
               revision: revisionId2
             }),
-            children: (0, import_i18n324.__)("Open classic revisions screen")
+            children: (0, import_i18n325.__)("Open classic revisions screen")
           }
         )
       ] }) }),
@@ -97456,7 +97495,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data248 = __toESM(require_data(), 1);
   var import_core_data134 = __toESM(require_core_data(), 1);
   var import_components271 = __toESM(require_components(), 1);
-  var import_i18n325 = __toESM(require_i18n(), 1);
+  var import_i18n326 = __toESM(require_i18n(), 1);
   var import_block_editor90 = __toESM(require_block_editor(), 1);
   var import_blocks35 = __toESM(require_blocks(), 1);
 
@@ -97549,7 +97588,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
       import_block_editor90.__experimentalBlockPatternsList,
       {
-        label: (0, import_i18n325.__)("Templates"),
+        label: (0, import_i18n326.__)("Templates"),
         blockPatterns: availableTemplates,
         onClickPattern: onSelect,
         showTitlesAsTooltip: true
@@ -97585,7 +97624,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
       import_components271.PanelBody,
       {
-        title: (0, import_i18n325.__)("Design"),
+        title: (0, import_i18n326.__)("Design"),
         initialOpen: postType2 === TEMPLATE_PART_POST_TYPE,
         children: /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
           TemplatesList2,
@@ -97612,7 +97651,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/sidebar/header.mjs
   var import_components272 = __toESM(require_components(), 1);
-  var import_i18n326 = __toESM(require_i18n(), 1);
+  var import_i18n327 = __toESM(require_i18n(), 1);
   var import_data249 = __toESM(require_data(), 1);
   var import_element326 = __toESM(require_element(), 1);
   var import_html_entities33 = __toESM(require_html_entities(), 1);
@@ -97631,11 +97670,11 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     let documentLabel;
     if (isRevisionsMode2) {
-      documentLabel = (0, import_i18n326.__)("Revision");
+      documentLabel = (0, import_i18n327.__)("Revision");
     } else if (postTypeLabel) {
       documentLabel = (0, import_html_entities33.decodeEntities)(postTypeLabel);
     } else {
-      documentLabel = (0, import_i18n326._x)("Document", "noun, panel");
+      documentLabel = (0, import_i18n327._x)("Document", "noun, panel");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime537.jsxs)(Tabs2.TabList, { ref, children: [
       /* @__PURE__ */ (0, import_jsx_runtime537.jsx)(
@@ -97651,7 +97690,7 @@ If there's a particular need for this, please submit a feature request at https:
         {
           tabId: sidebars.block,
           "data-tab-id": sidebars.block,
-          children: (0, import_i18n326.__)("Block")
+          children: (0, import_i18n327.__)("Block")
         }
       )
     ] });
@@ -97664,7 +97703,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor91 = __toESM(require_block_editor(), 1);
   var import_components273 = __toESM(require_components(), 1);
   var import_element327 = __toESM(require_element(), 1);
-  var import_i18n327 = __toESM(require_i18n(), 1);
+  var import_i18n328 = __toESM(require_i18n(), 1);
   var import_html_entities34 = __toESM(require_html_entities(), 1);
   var import_keycodes20 = __toESM(require_keycodes(), 1);
   var import_notices35 = __toESM(require_notices(), 1);
@@ -97714,14 +97753,14 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const notificationAction = hasGoBack ? [
       {
-        label: (0, import_i18n327.__)("Go back"),
+        label: (0, import_i18n328.__)("Go back"),
         onClick: () => getEditorSettings2().onNavigateToPreviousEntityRecord()
       }
     ] : void 0;
     const mayShowTemplateEditNotice = () => {
       if (!getPreference("core/edit-site", "welcomeGuideTemplate")) {
         createSuccessNotice(
-          (0, import_i18n327.__)(
+          (0, import_i18n328.__)(
             "Editing template. Changes made here affect all posts and pages that use the template."
           ),
           { type: "snackbar", actions: notificationAction }
@@ -97735,7 +97774,7 @@ If there's a particular need for this, please submit a feature request at https:
         return null;
       }
       if (hasSwapTargets) {
-        const tooltipText = (0, import_i18n327.__)("Change template");
+        const tooltipText = (0, import_i18n328.__)("Change template");
         return /* @__PURE__ */ (0, import_jsx_runtime538.jsxs)(tooltip_exports.Root, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(
             tooltip_exports.Trigger,
@@ -97768,9 +97807,9 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(
         import_components273.PanelBody,
         {
-          title: (0, import_i18n327.sprintf)(
+          title: (0, import_i18n328.sprintf)(
             /* translators: %s: template name */
-            (0, import_i18n327.__)("Template: %s"),
+            (0, import_i18n328.__)("Template: %s"),
             templateName
           ),
           initialOpen: false,
@@ -97790,7 +97829,7 @@ If there's a particular need for this, please submit a feature request at https:
                     });
                     mayShowTemplateEditNotice();
                   },
-                  children: (0, import_i18n327.__)("Edit")
+                  children: (0, import_i18n328.__)("Edit")
                 }
               ),
               canCreateTemplate && /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(
@@ -97800,7 +97839,7 @@ If there's a particular need for this, please submit a feature request at https:
                   __next40pxDefaultSize: true,
                   variant: "secondary",
                   onClick: () => setIsCreateModalOpen(true),
-                  children: (0, import_i18n327.__)("Create new")
+                  children: (0, import_i18n328.__)("Create new")
                 }
               )
             ] })
@@ -97828,7 +97867,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor92 = __toESM(require_block_editor(), 1);
   var import_components274 = __toESM(require_components(), 1);
   var import_element328 = __toESM(require_element(), 1);
-  var import_i18n328 = __toESM(require_i18n(), 1);
+  var import_i18n329 = __toESM(require_i18n(), 1);
   var import_html_entities35 = __toESM(require_html_entities(), 1);
   var import_notices36 = __toESM(require_notices(), 1);
   var import_preferences28 = __toESM(require_preferences(), 1);
@@ -97874,14 +97913,14 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const notificationAction = hasGoBack ? [
       {
-        label: (0, import_i18n328.__)("Go back"),
+        label: (0, import_i18n329.__)("Go back"),
         onClick: () => getEditorSettings2().onNavigateToPreviousEntityRecord()
       }
     ] : void 0;
     const mayShowTemplateEditNotice = () => {
       if (!getPreference("core/edit-site", "welcomeGuideTemplate")) {
         createSuccessNotice(
-          (0, import_i18n328.__)(
+          (0, import_i18n329.__)(
             "Editing template. Changes made here affect all posts and pages that use the template."
           ),
           { type: "snackbar", actions: notificationAction }
@@ -97894,14 +97933,14 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(
         import_components274.PanelBody,
         {
-          title: template2 ? (0, import_i18n328.sprintf)(
+          title: template2 ? (0, import_i18n329.sprintf)(
             /* translators: %s: template name */
-            (0, import_i18n328.__)("Template: %s"),
+            (0, import_i18n329.__)("Template: %s"),
             templateName
-          ) : (0, import_i18n328.__)("Template"),
+          ) : (0, import_i18n329.__)("Template"),
           initialOpen: false,
           children: /* @__PURE__ */ (0, import_jsx_runtime539.jsxs)(import_components274.__experimentalVStack, { children: [
-            !templateId2 && /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(import_components274.__experimentalText, { children: (0, import_i18n328.__)(
+            !templateId2 && /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(import_components274.__experimentalText, { children: (0, import_i18n329.__)(
               "This page uses a classic template. To edit this template with blocks, create a block template."
             ) }),
             template2 && previewContent && /* @__PURE__ */ (0, import_jsx_runtime539.jsx)("div", { className: "editor-template-actions-panel__preview", children: previewContent }),
@@ -97919,7 +97958,7 @@ If there's a particular need for this, please submit a feature request at https:
                     });
                     mayShowTemplateEditNotice();
                   },
-                  children: (0, import_i18n328.__)("Edit")
+                  children: (0, import_i18n329.__)("Edit")
                 }
               ),
               canCreateTemplate && /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(
@@ -97929,7 +97968,7 @@ If there's a particular need for this, please submit a feature request at https:
                   __next40pxDefaultSize: true,
                   variant: "secondary",
                   onClick: () => setIsCreateModalOpen(true),
-                  children: !templateId2 ? (0, import_i18n328.__)("Create block template") : (0, import_i18n328.__)("Create new")
+                  children: !templateId2 ? (0, import_i18n329.__)("Create block template") : (0, import_i18n329.__)("Create new")
                 }
               )
             ] })
@@ -97962,7 +98001,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data252 = __toESM(require_data(), 1);
   var import_block_editor93 = __toESM(require_block_editor(), 1);
   var import_components275 = __toESM(require_components(), 1);
-  var import_i18n329 = __toESM(require_i18n(), 1);
+  var import_i18n330 = __toESM(require_i18n(), 1);
   var import_jsx_runtime541 = __toESM(require_jsx_runtime(), 1);
   var { BlockQuickNavigation } = unlock(import_block_editor93.privateApis);
   var TEMPLATE_PART_BLOCK = "core/template-part";
@@ -97981,7 +98020,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (clientIds.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(import_components275.PanelBody, { title: (0, import_i18n329.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(import_components275.PanelBody, { title: (0, import_i18n330.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(
       BlockQuickNavigation,
       {
         clientIds,
@@ -98013,7 +98052,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks36 = __toESM(require_blocks(), 1);
   var import_block_editor94 = __toESM(require_block_editor(), 1);
   var import_components276 = __toESM(require_components(), 1);
-  var import_i18n330 = __toESM(require_i18n(), 1);
+  var import_i18n331 = __toESM(require_i18n(), 1);
   var import_jsx_runtime542 = __toESM(require_jsx_runtime(), 1);
   var { BlockQuickNavigation: BlockQuickNavigation2 } = unlock(import_block_editor94.privateApis);
   function TemplatePartContentPanelInner() {
@@ -98036,7 +98075,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (themeBlocks.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(import_components276.PanelBody, { title: (0, import_i18n330.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(BlockQuickNavigation2, { clientIds: themeBlocks }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(import_components276.PanelBody, { title: (0, import_i18n331.__)("Content"), children: /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(BlockQuickNavigation2, { clientIds: themeBlocks }) });
   }
   function TemplatePartContentPanel() {
     const postType2 = (0, import_data253.useSelect)((select9) => {
@@ -98052,7 +98091,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/revision-block-diff/index.mjs
   var import_block_editor95 = __toESM(require_block_editor(), 1);
   var import_data254 = __toESM(require_data(), 1);
-  var import_i18n331 = __toESM(require_i18n(), 1);
+  var import_i18n332 = __toESM(require_i18n(), 1);
   var import_jsx_runtime543 = __toESM(require_jsx_runtime(), 1);
   function RevisionBlockDiffPanel() {
     const { block } = (0, import_data254.useSelect)((select9) => {
@@ -98068,7 +98107,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(
       RevisionDiffPanel,
       {
-        title: (0, import_i18n331.__)("Changed attributes"),
+        title: (0, import_i18n332.__)("Changed attributes"),
         entries: changedAttributes,
         initialOpen: true
       }
@@ -98173,15 +98212,15 @@ If there's a particular need for this, please submit a feature request at https:
       {
         identifier: tabName,
         header: /* @__PURE__ */ (0, import_jsx_runtime544.jsx)(Tabs3.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime544.jsx)(header_default3, { ref: tabListRef }) }),
-        closeLabel: (0, import_i18n332.__)("Close Settings"),
+        closeLabel: (0, import_i18n333.__)("Close Settings"),
         className: "editor-sidebar__panel",
         headerClassName: "editor-sidebar__panel-tabs",
         title: (
           /* translators: button label text should, if possible, be under 16 characters. */
-          (0, import_i18n332._x)("Settings", "panel button label")
+          (0, import_i18n333._x)("Settings", "panel button label")
         ),
         toggleShortcut: keyboardShortcut,
-        icon: (0, import_i18n332.isRTL)() ? drawer_left_default : drawer_right_default,
+        icon: (0, import_i18n333.isRTL)() ? drawer_left_default : drawer_right_default,
         isActiveByDefault: SIDEBAR_ACTIVE_BY_DEFAULT,
         children: /* @__PURE__ */ (0, import_jsx_runtime544.jsxs)(Tabs3.Context.Provider, { value: tabsContextValue, children: [
           /* @__PURE__ */ (0, import_jsx_runtime544.jsx)(Tabs3.TabPanel, { tabId: sidebars.document, focusable: false, children: tabContent }),
@@ -98243,7 +98282,7 @@ If there's a particular need for this, please submit a feature request at https:
   var sidebar_default2 = Sidebar;
 
   // packages/editor/build-module/components/collab-sidebar/index.mjs
-  var import_i18n343 = __toESM(require_i18n(), 1);
+  var import_i18n344 = __toESM(require_i18n(), 1);
   var import_data266 = __toESM(require_data(), 1);
   var import_element341 = __toESM(require_element(), 1);
   var import_compose83 = __toESM(require_compose(), 1);
@@ -98259,7 +98298,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/notes.mjs
   var import_element338 = __toESM(require_element(), 1);
-  var import_i18n340 = __toESM(require_i18n(), 1);
+  var import_i18n341 = __toESM(require_i18n(), 1);
   var import_data263 = __toESM(require_data(), 1);
   var import_block_editor103 = __toESM(require_block_editor(), 1);
 
@@ -98267,13 +98306,13 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element336 = __toESM(require_element(), 1);
   var import_components281 = __toESM(require_components(), 1);
   var import_compose82 = __toESM(require_compose(), 1);
-  var import_i18n337 = __toESM(require_i18n(), 1);
+  var import_i18n338 = __toESM(require_i18n(), 1);
   var import_data260 = __toESM(require_data(), 1);
   var import_dom28 = __toESM(require_dom(), 1);
   var import_block_editor100 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
-  var import_i18n335 = __toESM(require_i18n(), 1);
+  var import_i18n336 = __toESM(require_i18n(), 1);
   var import_element334 = __toESM(require_element(), 1);
   var import_compose81 = __toESM(require_compose(), 1);
   var import_data259 = __toESM(require_data(), 1);
@@ -98283,7 +98322,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components278 = __toESM(require_components(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-byline.mjs
-  var import_i18n333 = __toESM(require_i18n(), 1);
+  var import_i18n334 = __toESM(require_i18n(), 1);
   var import_date22 = __toESM(require_date(), 1);
   var import_core_data137 = __toESM(require_core_data(), 1);
   var import_data257 = __toESM(require_data(), 1);
@@ -98328,7 +98367,7 @@ If there's a particular need for this, please submit a feature request at https:
     const commentDateText = shouldShowHumanTimeDiff ? (0, import_date22.humanTimeDiff)(commentDate) : (0, import_date22.dateI18n)(dateFormat, commentDate);
     const tooltipText = (0, import_date22.dateI18n)(
       // translators: Use a non-breaking space between 'g:i' and 'a' if appropriate.
-      (0, import_i18n333._x)("F j, Y g:i\xA0a", "Note date full date format"),
+      (0, import_i18n334._x)("F j, Y g:i\xA0a", "Note date full date format"),
       date
     );
     return /* @__PURE__ */ (0, import_jsx_runtime545.jsxs)(import_jsx_runtime545.Fragment, { children: [
@@ -98337,7 +98376,7 @@ If there's a particular need for this, please submit a feature request at https:
         {
           src: avatar || currentUserAvatar,
           className: "editor-collab-sidebar-panel__user-avatar",
-          alt: (0, import_i18n333.__)("User avatar"),
+          alt: (0, import_i18n334.__)("User avatar"),
           width: 32,
           height: 32,
           style: {
@@ -98399,7 +98438,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/note-form.mjs
   var import_element333 = __toESM(require_element(), 1);
   var import_components279 = __toESM(require_components(), 1);
-  var import_i18n334 = __toESM(require_i18n(), 1);
+  var import_i18n335 = __toESM(require_i18n(), 1);
   var import_compose80 = __toESM(require_compose(), 1);
   var import_keycodes21 = __toESM(require_keycodes(), 1);
   var import_dom27 = __toESM(require_dom(), 1);
@@ -98513,7 +98552,7 @@ If there's a particular need for this, please submit a feature request at https:
             RichTextControl2,
             {
               id: inputId,
-              label: labels?.input ?? (0, import_i18n334.__)("Note"),
+              label: labels?.input ?? (0, import_i18n335.__)("Note"),
               hideLabelFromVision: true,
               value: inputComment,
               onChange: setInputComment,
@@ -98531,7 +98570,7 @@ If there's a particular need for this, please submit a feature request at https:
               gap: "sm",
               wrap: "wrap",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components279.Button, { size: "compact", variant: "tertiary", onClick: onCancel, children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components279.__experimentalTruncate, { children: (0, import_i18n334.__)("Cancel") }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components279.Button, { size: "compact", variant: "tertiary", onClick: onCancel, children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components279.__experimentalTruncate, { children: (0, import_i18n335.__)("Cancel") }) }),
                 /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(
                   import_components279.Button,
                   {
@@ -98540,7 +98579,7 @@ If there's a particular need for this, please submit a feature request at https:
                     variant: "primary",
                     type: "submit",
                     disabled: isDisabled,
-                    children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components279.__experimentalTruncate, { children: labels?.submit ?? (0, import_i18n334.__)("Add note") })
+                    children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components279.__experimentalTruncate, { children: labels?.submit ?? (0, import_i18n335.__)("Add note") })
                   }
                 )
               ]
@@ -98622,7 +98661,7 @@ If there's a particular need for this, please submit a feature request at https:
         className: "editor-collab-sidebar-panel__add-note is-selected",
         gap: "md",
         tabIndex: 0,
-        "aria-label": (0, import_i18n335.__)("New note"),
+        "aria-label": (0, import_i18n336.__)("New note"),
         role: "treeitem",
         style: floating ? { opacity: !floating.y ? 0 : void 0 } : void 0,
         ...focusOutside,
@@ -98649,8 +98688,8 @@ If there's a particular need for this, please submit a feature request at https:
             },
             onCancel: unselectNote,
             labels: {
-              input: (0, import_i18n335.__)("New note"),
-              placeholder: (0, import_i18n335.__)("Add a note or @ mention")
+              input: (0, import_i18n336.__)("New note"),
+              placeholder: (0, import_i18n336.__)("Add a note or @ mention")
             }
           }
         ) })
@@ -98661,7 +98700,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/note.mjs
   var import_element335 = __toESM(require_element(), 1);
   var import_components280 = __toESM(require_components(), 1);
-  var import_i18n336 = __toESM(require_i18n(), 1);
+  var import_i18n337 = __toESM(require_i18n(), 1);
   var import_jsx_runtime551 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu11 } = unlock(import_components280.privateApis);
   function NoteActionsMenu({ items, buttonRef }) {
@@ -98675,7 +98714,7 @@ If there's a particular need for this, please submit a feature request at https:
               ref: buttonRef,
               size: "small",
               icon: more_vertical_default,
-              label: (0, import_i18n336.__)("Actions"),
+              label: (0, import_i18n337.__)("Actions"),
               disabled: !items.length,
               accessibleWhenDisabled: true
             }
@@ -98723,27 +98762,27 @@ If there's a particular need for this, please submit a feature request at https:
     const menuItems = [
       {
         id: "edit",
-        title: (0, import_i18n336.__)("Edit"),
+        title: (0, import_i18n337.__)("Edit"),
         isEligible: ({ status }) => status !== "approved",
         onClick: () => setActionState("edit")
       },
       {
         id: "reopen",
-        title: (0, import_i18n336._x)("Reopen", "Reopen note"),
+        title: (0, import_i18n337._x)("Reopen", "Reopen note"),
         isEligible: ({ status }) => status === "approved",
         onClick: () => onEditNote({ id: note.id, status: "hold" })
       },
       {
         id: "delete",
-        title: (0, import_i18n336.__)("Delete"),
+        title: (0, import_i18n337.__)("Delete"),
         isEligible: () => true,
         onClick: () => setActionState("delete")
       }
     ];
     const availableItems = parentNote?.status !== "approved" ? menuItems.filter((item) => item.isEligible(note)) : [];
-    const deleteConfirmMessage = note.parent === 0 ? (0, import_i18n336.__)(
+    const deleteConfirmMessage = note.parent === 0 ? (0, import_i18n337.__)(
       "Are you sure you want to delete this note? This will also delete all of this note's replies."
-    ) : (0, import_i18n336.__)("Are you sure you want to delete this reply?");
+    ) : (0, import_i18n337.__)("Are you sure you want to delete this reply?");
     const handleCancel = () => {
       setActionState(null);
       actionButtonRef.current?.focus();
@@ -98761,10 +98800,10 @@ If there's a particular need for this, please submit a feature request at https:
           onCancel: handleCancel,
           note,
           labels: {
-            submit: (0, import_i18n336._x)("Update", "verb"),
-            input: (0, import_i18n336.sprintf)(
+            submit: (0, import_i18n337._x)("Update", "verb"),
+            input: (0, import_i18n337.sprintf)(
               // translators: %1$s: note identifier, %2$s: author name.
-              (0, import_i18n336.__)("Edit note %1$s by %2$s"),
+              (0, import_i18n337.__)("Edit note %1$s by %2$s"),
               note.id,
               note.author_name
             )
@@ -98774,11 +98813,11 @@ If there's a particular need for this, please submit a feature request at https:
     } else {
       let content;
       if (isResolutionNote) {
-        const actionText = note.meta._wp_note_status === "resolved" ? (0, import_i18n336.__)("Marked as resolved") : (0, import_i18n336.__)("Reopened");
+        const actionText = note.meta._wp_note_status === "resolved" ? (0, import_i18n337.__)("Marked as resolved") : (0, import_i18n337.__)("Reopened");
         const raw = note?.content?.raw;
-        content = raw && typeof raw === "string" && raw.trim() !== "" ? (0, import_i18n336.sprintf)(
+        content = raw && typeof raw === "string" && raw.trim() !== "" ? (0, import_i18n337.sprintf)(
           // translators: %1$s: action label ("Marked as resolved" or "Reopened"); %2$s: note text.
-          (0, import_i18n336.__)("%1$s: %2$s"),
+          (0, import_i18n337.__)("%1$s: %2$s"),
           actionText,
           raw
         ) : actionText;
@@ -98801,7 +98840,7 @@ If there's a particular need for this, please submit a feature request at https:
       canResolve && onResolve && /* @__PURE__ */ (0, import_jsx_runtime551.jsx)(
         import_components280.Button,
         {
-          label: (0, import_i18n336._x)("Resolve", "Mark note as resolved"),
+          label: (0, import_i18n337._x)("Resolve", "Mark note as resolved"),
           size: "small",
           icon: published_default,
           disabled: note.status === "approved",
@@ -98834,7 +98873,7 @@ If there's a particular need for this, please submit a feature request at https:
                 setActionState(null);
               },
               onCancel: handleCancel,
-              confirmButtonText: (0, import_i18n336.__)("Delete"),
+              confirmButtonText: (0, import_i18n337.__)("Delete"),
               children: deleteConfirmMessage
             }
           ),
@@ -98845,7 +98884,7 @@ If there's a particular need for this, please submit a feature request at https:
               variant: "unstyled",
               size: "small",
               onClick: () => setIsExpanded(!isExpanded),
-              children: !isExpanded ? (0, import_i18n336.__)("Show more") : (0, import_i18n336.__)("Show less")
+              children: !isExpanded ? (0, import_i18n337.__)("Show more") : (0, import_i18n337.__)("Show less")
             }
           )
         ]
@@ -98949,13 +98988,13 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_dom28.__unstableStripHTML)(note.content?.rendered),
       10
     );
-    const ariaLabel = !!note.blockClientId ? (0, import_i18n337.sprintf)(
+    const ariaLabel = !!note.blockClientId ? (0, import_i18n338.sprintf)(
       // translators: %s: note excerpt
-      (0, import_i18n337.__)("Note: %s"),
+      (0, import_i18n338.__)("Note: %s"),
       noteExcerpt
-    ) : (0, import_i18n337.sprintf)(
+    ) : (0, import_i18n338.sprintf)(
       // translators: %s: note excerpt
-      (0, import_i18n337.__)("Original block deleted. Note: %s"),
+      (0, import_i18n338.__)("Original block deleted. Note: %s"),
       noteExcerpt
     );
     if (isFloating && note.id === "new") {
@@ -99012,10 +99051,10 @@ If there's a particular need for this, please submit a feature request at https:
                   '[role="textbox"]'
                 );
               },
-              children: (0, import_i18n337.__)("Add new reply")
+              children: (0, import_i18n338.__)("Add new reply")
             }
           ),
-          !note.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime552.jsx)("p", { className: "editor-collab-sidebar-panel__deleted-block-notice", children: (0, import_i18n337.__)("Original block deleted.") }),
+          !note.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime552.jsx)("p", { className: "editor-collab-sidebar-panel__deleted-block-notice", children: (0, import_i18n338.__)("Original block deleted.") }),
           /* @__PURE__ */ (0, import_jsx_runtime552.jsx)(
             Note,
             {
@@ -99054,9 +99093,9 @@ If there's a particular need for this, please submit a feature request at https:
                     event.stopPropagation();
                     onSelectNote();
                   },
-                  children: (0, import_i18n337.sprintf)(
+                  children: (0, import_i18n338.sprintf)(
                     // translators: %s: number of replies.
-                    (0, import_i18n337._n)(
+                    (0, import_i18n338._n)(
                       "%s more reply",
                       "%s more replies",
                       restReplies.length
@@ -99099,14 +99138,14 @@ If there's a particular need for this, please submit a feature request at https:
                 focusNoteThread(note.id, sidebarRef.current);
               },
               labels: {
-                submit: "approved" === note.status ? (0, import_i18n337.__)("Reopen & Reply") : (0, import_i18n337.__)("Reply"),
-                input: (0, import_i18n337.sprintf)(
+                submit: "approved" === note.status ? (0, import_i18n338.__)("Reopen & Reply") : (0, import_i18n338.__)("Reply"),
+                input: (0, import_i18n338.sprintf)(
                   // translators: %1$s: note identifier, %2$s: author name
-                  (0, import_i18n337.__)("Reply to note %1$s by %2$s"),
+                  (0, import_i18n338.__)("Reply to note %1$s by %2$s"),
                   note.id,
                   note.author_name
                 ),
-                placeholder: (0, import_i18n337.__)("Reply or @ mention")
+                placeholder: (0, import_i18n338.__)("Reply or @ mention")
               }
             }
           ) }),
@@ -99120,7 +99159,7 @@ If there's a particular need for this, please submit a feature request at https:
                 event.stopPropagation();
                 relatedBlockElement?.focus();
               },
-              children: (0, import_i18n337.__)("Back to block")
+              children: (0, import_i18n338.__)("Back to block")
             }
           )
         ]
@@ -99130,7 +99169,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/hooks.mjs
   var import_a11y12 = __toESM(require_a11y(), 1);
-  var import_i18n339 = __toESM(require_i18n(), 1);
+  var import_i18n340 = __toESM(require_i18n(), 1);
   var import_element337 = __toESM(require_element(), 1);
   var import_core_data139 = __toESM(require_core_data(), 1);
   var import_data262 = __toESM(require_data(), 1);
@@ -99219,14 +99258,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collab-sidebar/format.mjs
-  var import_i18n338 = __toESM(require_i18n(), 1);
+  var import_i18n339 = __toESM(require_i18n(), 1);
   var import_block_editor101 = __toESM(require_block_editor(), 1);
   var import_data261 = __toESM(require_data(), 1);
   var import_rich_text8 = __toESM(require_rich_text(), 1);
   var import_jsx_runtime553 = __toESM(require_jsx_runtime(), 1);
   var NOTE_FORMAT_NAME = "core/note";
   var noteFormat = {
-    title: (0, import_i18n338.__)("Add note"),
+    title: (0, import_i18n339.__)("Add note"),
     tagName: "mark",
     className: "wp-note",
     attributes: {
@@ -99259,7 +99298,7 @@ If there's a particular need for this, please submit a feature request at https:
       import_block_editor101.RichTextToolbarButton,
       {
         icon: comment_default,
-        title: (0, import_i18n338.__)("Add note"),
+        title: (0, import_i18n339.__)("Add note"),
         onClick,
         isActive
       }
@@ -99425,7 +99464,7 @@ If there's a particular need for this, please submit a feature request at https:
     } = (0, import_data262.useSelect)(import_block_editor102.store);
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data262.useDispatch)(import_block_editor102.store);
     const onError = (error2) => {
-      const errorMessage = error2.message && error2.code !== "unknown_error" ? (0, import_html_entities36.decodeEntities)(error2.message) : (0, import_i18n339.__)("An error occurred while performing an update.");
+      const errorMessage = error2.message && error2.code !== "unknown_error" ? (0, import_html_entities36.decodeEntities)(error2.message) : (0, import_i18n340.__)("An error occurred while performing an update.");
       createNotice("error", errorMessage, {
         type: "snackbar",
         isDismissible: true
@@ -99475,7 +99514,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
         createNotice(
           "snackbar",
-          parent ? (0, import_i18n339.__)("Reply added.") : (0, import_i18n339.__)("Note added."),
+          parent ? (0, import_i18n340.__)("Reply added.") : (0, import_i18n340.__)("Note added."),
           {
             type: "snackbar",
             isDismissible: true
@@ -99523,7 +99562,7 @@ If there's a particular need for this, please submit a feature request at https:
             );
           }
           (0, import_a11y12.speak)(
-            status === "approved" ? (0, import_i18n339.__)("Note marked as resolved.") : (0, import_i18n339.__)("Note reopened.")
+            status === "approved" ? (0, import_i18n340.__)("Note marked as resolved.") : (0, import_i18n340.__)("Note reopened.")
           );
         } else {
           const updateData = {
@@ -99534,7 +99573,7 @@ If there's a particular need for this, please submit a feature request at https:
           await saveEntityRecord("root", "comment", updateData, {
             throwOnError: true
           });
-          createNotice("snackbar", (0, import_i18n339.__)("Note updated."), {
+          createNotice("snackbar", (0, import_i18n340.__)("Note updated."), {
             type: "snackbar",
             isDismissible: true
           });
@@ -99574,7 +99613,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
           updateBlockAttributes2(clientId, newAttributes);
         }
-        createNotice("snackbar", (0, import_i18n339.__)("Note deleted."), {
+        createNotice("snackbar", (0, import_i18n340.__)("Note deleted."), {
           type: "snackbar",
           isDismissible: true
         });
@@ -99830,7 +99869,7 @@ If there's a particular need for this, please submit a feature request at https:
             sidebarRef.current = node;
           }
         },
-        "aria-label": isFloating ? (0, import_i18n340.__)("Unresolved notes") : (0, import_i18n340.__)("All notes"),
+        "aria-label": isFloating ? (0, import_i18n341.__)("Unresolved notes") : (0, import_i18n341.__)("All notes"),
         children: !hasThreads && !isFloating ? /* @__PURE__ */ (0, import_jsx_runtime554.jsx)(AddNote, { onSubmit: onAddReply, sidebarRef }) : /* @__PURE__ */ (0, import_jsx_runtime554.jsxs)(import_jsx_runtime554.Fragment, { children: [
           !isFloating && selectedNote2 === "new" && /* @__PURE__ */ (0, import_jsx_runtime554.jsx)(
             AddNote,
@@ -99848,7 +99887,7 @@ If there's a particular need for this, please submit a feature request at https:
                 justify: "center",
                 gap: "sm",
                 className: "editor-collab-sidebar-panel__status-separator",
-                children: /* @__PURE__ */ (0, import_jsx_runtime554.jsx)(Text, { variant: "heading-sm", render: /* @__PURE__ */ (0, import_jsx_runtime554.jsx)("p", {}), children: (0, import_i18n340.__)("Resolved") })
+                children: /* @__PURE__ */ (0, import_jsx_runtime554.jsx)(Text, { variant: "heading-sm", render: /* @__PURE__ */ (0, import_jsx_runtime554.jsx)("p", {}), children: (0, import_i18n341.__)("Resolved") })
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime554.jsx)(
@@ -99880,7 +99919,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/add-note-menu-item.mjs
   var import_components282 = __toESM(require_components(), 1);
-  var import_i18n341 = __toESM(require_i18n(), 1);
+  var import_i18n342 = __toESM(require_i18n(), 1);
   var import_block_editor104 = __toESM(require_block_editor(), 1);
   var import_data264 = __toESM(require_data(), 1);
   var import_blocks37 = __toESM(require_blocks(), 1);
@@ -99906,9 +99945,9 @@ If there's a particular need for this, please submit a feature request at https:
     const isDisabled = isDistractionFree || block?.name === "core/freeform";
     let infoText;
     if (isDistractionFree) {
-      infoText = (0, import_i18n341.__)("Notes are disabled in distraction free mode.");
+      infoText = (0, import_i18n342.__)("Notes are disabled in distraction free mode.");
     } else if (block?.name === "core/freeform") {
-      infoText = (0, import_i18n341.__)("Convert to blocks to add notes.");
+      infoText = (0, import_i18n342.__)("Convert to blocks to add notes.");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime555.jsx)(
       import_components282.MenuItem,
@@ -99918,7 +99957,7 @@ If there's a particular need for this, please submit a feature request at https:
         disabled: isDisabled,
         info: infoText,
         shortcut,
-        children: (0, import_i18n341.__)("Add note")
+        children: (0, import_i18n342.__)("Add note")
       }
     );
   }
@@ -99938,7 +99977,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/note-indicator-toolbar.mjs
   var import_components283 = __toESM(require_components(), 1);
-  var import_i18n342 = __toESM(require_i18n(), 1);
+  var import_i18n343 = __toESM(require_i18n(), 1);
   var import_element339 = __toESM(require_element(), 1);
   var import_block_editor105 = __toESM(require_block_editor(), 1);
   var import_data265 = __toESM(require_data(), 1);
@@ -99958,9 +99997,9 @@ If there's a particular need for this, please submit a feature request at https:
       participants.length - visibleParticipants.length
     );
     const threadHasMoreParticipants = participants.length > 100;
-    const overflowText = threadHasMoreParticipants && overflowCount > 0 ? (0, import_i18n342.__)("100+") : (0, import_i18n342.sprintf)(
+    const overflowText = threadHasMoreParticipants && overflowCount > 0 ? (0, import_i18n343.__)("100+") : (0, import_i18n343.sprintf)(
       // translators: %s: Number of participants.
-      (0, import_i18n342.__)("+%s"),
+      (0, import_i18n343.__)("+%s"),
       overflowCount
     );
     return /* @__PURE__ */ (0, import_jsx_runtime556.jsxs)(Stack, { direction: "row", align: "center", gap: "xs", children: [
@@ -100007,7 +100046,7 @@ If there's a particular need for this, please submit a feature request at https:
       import_components283.ToolbarButton,
       {
         className: "editor-note-indicator",
-        label: (0, import_i18n342.__)("View notes"),
+        label: (0, import_i18n343.__)("View notes"),
         onClick: () => onClick(),
         showTooltip: true,
         children: /* @__PURE__ */ (0, import_jsx_runtime556.jsx)(ThreadParticipants, { participants: threadParticipants })
@@ -100180,10 +100219,10 @@ If there's a particular need for this, please submit a feature request at https:
         {
           identifier: ALL_NOTES_SIDEBAR,
           name: ALL_NOTES_SIDEBAR,
-          title: (0, import_i18n343.__)("All notes"),
-          header: /* @__PURE__ */ (0, import_jsx_runtime557.jsx)("h2", { className: "interface-complementary-area-header__title", children: (0, import_i18n343.__)("All notes") }),
+          title: (0, import_i18n344.__)("All notes"),
+          header: /* @__PURE__ */ (0, import_jsx_runtime557.jsx)("h2", { className: "interface-complementary-area-header__title", children: (0, import_i18n344.__)("All notes") }),
           icon: comment_default,
-          closeLabel: (0, import_i18n343.__)("Close Notes"),
+          closeLabel: (0, import_i18n344.__)("Close Notes"),
           children: /* @__PURE__ */ (0, import_jsx_runtime557.jsx)(Notes, { notes, sidebarRef })
         }
       ),
@@ -100231,7 +100270,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/global-styles-sidebar/index.mjs
   var import_components286 = __toESM(require_components(), 1);
-  var import_i18n346 = __toESM(require_i18n(), 1);
+  var import_i18n347 = __toESM(require_i18n(), 1);
   var import_data269 = __toESM(require_data(), 1);
   var import_element342 = __toESM(require_element(), 1);
   var import_preferences33 = __toESM(require_preferences(), 1);
@@ -100242,7 +100281,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/global-styles/menu.mjs
   var import_components284 = __toESM(require_components(), 1);
   var import_data267 = __toESM(require_data(), 1);
-  var import_i18n344 = __toESM(require_i18n(), 1);
+  var import_i18n345 = __toESM(require_i18n(), 1);
   var import_preferences31 = __toESM(require_preferences(), 1);
   var import_core_data140 = __toESM(require_core_data(), 1);
   var import_jsx_runtime558 = __toESM(require_jsx_runtime(), 1);
@@ -100271,11 +100310,11 @@ If there's a particular need for this, please submit a feature request at https:
       import_components284.DropdownMenu,
       {
         icon: more_vertical_default,
-        label: (0, import_i18n344.__)("More"),
+        label: (0, import_i18n345.__)("More"),
         toggleProps: { size: "compact" },
         children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime558.jsxs)(import_jsx_runtime558.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime558.jsxs)(import_components284.MenuGroup, { children: [
-            canEditCSS && /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(import_components284.MenuItem, { onClick: loadCustomCSS, children: (0, import_i18n344.__)("Additional CSS") }),
+            canEditCSS && /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(import_components284.MenuItem, { onClick: loadCustomCSS, children: (0, import_i18n345.__)("Additional CSS") }),
             !hideWelcomeGuide && /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
               import_components284.MenuItem,
               {
@@ -100286,7 +100325,7 @@ If there's a particular need for this, please submit a feature request at https:
                   );
                   onClose();
                 },
-                children: (0, import_i18n344.__)("Welcome Guide")
+                children: (0, import_i18n345.__)("Welcome Guide")
               }
             )
           ] }),
@@ -100298,7 +100337,7 @@ If there's a particular need for this, please submit a feature request at https:
                 onClose();
               },
               disabled: !canReset,
-              children: (0, import_i18n344.__)("Reset styles")
+              children: (0, import_i18n345.__)("Reset styles")
             }
           ) })
         ] })
@@ -100352,7 +100391,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
   var import_data268 = __toESM(require_data(), 1);
   var import_components285 = __toESM(require_components(), 1);
-  var import_i18n345 = __toESM(require_i18n(), 1);
+  var import_i18n346 = __toESM(require_i18n(), 1);
   var import_preferences32 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide-image.mjs
@@ -100387,13 +100426,13 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isActive || !isStylesOpen) {
       return null;
     }
-    const welcomeLabel = (0, import_i18n345.__)("Welcome to Styles");
+    const welcomeLabel = (0, import_i18n346.__)("Welcome to Styles");
     return /* @__PURE__ */ (0, import_jsx_runtime561.jsx)(
       import_components285.Guide,
       {
         className: "editor-welcome-guide guide-styles",
         contentLabel: welcomeLabel,
-        finishButtonText: (0, import_i18n345.__)("Get started"),
+        finishButtonText: (0, import_i18n346.__)("Get started"),
         onFinish: () => toggle("core/edit-site", "welcomeGuideStyles"),
         pages: [
           {
@@ -100406,7 +100445,7 @@ If there's a particular need for this, please submit a feature request at https:
             ),
             content: /* @__PURE__ */ (0, import_jsx_runtime561.jsxs)(import_jsx_runtime561.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime561.jsx)("h1", { className: "editor-welcome-guide__heading", children: welcomeLabel }),
-              /* @__PURE__ */ (0, import_jsx_runtime561.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n345.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime561.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n346.__)(
                 "Tweak your site, or give it a whole new look! Get creative \u2014 how about a new color palette for your buttons, or choosing a new font? Take a look at what you can do here."
               ) })
             ] })
@@ -100420,8 +100459,8 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             content: /* @__PURE__ */ (0, import_jsx_runtime561.jsxs)(import_jsx_runtime561.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime561.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n345.__)("Set the design") }),
-              /* @__PURE__ */ (0, import_jsx_runtime561.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n345.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime561.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n346.__)("Set the design") }),
+              /* @__PURE__ */ (0, import_jsx_runtime561.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n346.__)(
                 "You can customize your site as much as you like with different colors, typography, and layouts. Or if you prefer, just leave it up to your theme to handle!"
               ) })
             ] })
@@ -100435,8 +100474,8 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             content: /* @__PURE__ */ (0, import_jsx_runtime561.jsxs)(import_jsx_runtime561.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime561.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n345.__)("Personalize blocks") }),
-              /* @__PURE__ */ (0, import_jsx_runtime561.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n345.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime561.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n346.__)("Personalize blocks") }),
+              /* @__PURE__ */ (0, import_jsx_runtime561.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n346.__)(
                 "You can adjust your blocks to ensure a cohesive experience across your site \u2014 add your unique colors to a branded Button block, or adjust the Heading block to your preferred size."
               ) })
             ] })
@@ -100450,19 +100489,19 @@ If there's a particular need for this, please submit a feature request at https:
               }
             ),
             content: /* @__PURE__ */ (0, import_jsx_runtime561.jsxs)(import_jsx_runtime561.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime561.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n345.__)("Learn more") }),
+              /* @__PURE__ */ (0, import_jsx_runtime561.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n346.__)("Learn more") }),
               /* @__PURE__ */ (0, import_jsx_runtime561.jsxs)("p", { className: "editor-welcome-guide__text", children: [
-                (0, import_i18n345.__)(
+                (0, import_i18n346.__)(
                   "New to block themes and styling your site?"
                 ),
                 " ",
                 /* @__PURE__ */ (0, import_jsx_runtime561.jsx)(
                   import_components285.ExternalLink,
                   {
-                    href: (0, import_i18n345.__)(
+                    href: (0, import_i18n346.__)(
                       "https://wordpress.org/documentation/article/styles-overview/"
                     ),
-                    children: (0, import_i18n345.__)(
+                    children: (0, import_i18n346.__)(
                       "Here\u2019s a detailed guide to learn how to make the most of it."
                     )
                   }
@@ -100549,9 +100588,9 @@ If there's a particular need for this, please submit a feature request at https:
         {
           className: "editor-global-styles-sidebar",
           identifier: "edit-site/global-styles",
-          title: (0, import_i18n346.__)("Styles"),
+          title: (0, import_i18n347.__)("Styles"),
           icon: styles_default,
-          closeLabel: (0, import_i18n346.__)("Close Styles"),
+          closeLabel: (0, import_i18n347.__)("Close Styles"),
           panelClassName: "editor-global-styles-sidebar__panel",
           header: /* @__PURE__ */ (0, import_jsx_runtime562.jsxs)(
             import_components286.Flex,
@@ -100559,7 +100598,7 @@ If there's a particular need for this, please submit a feature request at https:
               className: "editor-global-styles-sidebar__header",
               gap: 1,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(import_components286.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime562.jsx)("h2", { className: "editor-global-styles-sidebar__header-title", children: (0, import_i18n346.__)("Styles") }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(import_components286.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime562.jsx)("h2", { className: "editor-global-styles-sidebar__header-title", children: (0, import_i18n347.__)("Styles") }) }),
                 /* @__PURE__ */ (0, import_jsx_runtime562.jsxs)(
                   import_components286.Flex,
                   {
@@ -100571,7 +100610,7 @@ If there's a particular need for this, please submit a feature request at https:
                         import_components286.Button,
                         {
                           icon: seen_default,
-                          label: (0, import_i18n346.__)("Style Book"),
+                          label: (0, import_i18n347.__)("Style Book"),
                           isPressed: showStylebook2,
                           accessibleWhenDisabled: true,
                           disabled: shouldResetNavigation,
@@ -100582,7 +100621,7 @@ If there's a particular need for this, please submit a feature request at https:
                       /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(import_components286.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(
                         import_components286.Button,
                         {
-                          label: (0, import_i18n346.__)("Revisions"),
+                          label: (0, import_i18n347.__)("Revisions"),
                           icon: backup_default,
                           onClick: toggleRevisions,
                           accessibleWhenDisabled: true,
@@ -100688,7 +100727,7 @@ If there's a particular need for this, please submit a feature request at https:
         {
           status: !!error2 ? "error" : "warning",
           isDismissible: false,
-          children: !error2 ? (0, import_i18n347.__)(
+          children: !error2 ? (0, import_i18n348.__)(
             "You attempted to edit an item that doesn't exist. Perhaps it was deleted?"
           ) : error2
         }
@@ -100722,7 +100761,7 @@ If there's a particular need for this, please submit a feature request at https:
   var editor_default = Editor;
 
   // packages/editor/build-module/components/preferences-modal/index.mjs
-  var import_i18n349 = __toESM(require_i18n(), 1);
+  var import_i18n350 = __toESM(require_i18n(), 1);
   var import_compose85 = __toESM(require_compose(), 1);
   var import_data273 = __toESM(require_data(), 1);
   var import_element344 = __toESM(require_element(), 1);
@@ -100754,7 +100793,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks38 = __toESM(require_blocks(), 1);
   var import_element343 = __toESM(require_element(), 1);
   var import_components288 = __toESM(require_components(), 1);
-  var import_i18n348 = __toESM(require_i18n(), 1);
+  var import_i18n349 = __toESM(require_i18n(), 1);
   var import_block_editor109 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime565 = __toESM(require_jsx_runtime(), 1);
   var { BlockManager } = unlock(import_block_editor109.privateApis);
@@ -100816,9 +100855,9 @@ If there's a particular need for this, please submit a feature request at https:
     };
     return /* @__PURE__ */ (0, import_jsx_runtime565.jsxs)("div", { className: "editor-block-visibility", children: [
       !!numberOfHiddenBlocks && /* @__PURE__ */ (0, import_jsx_runtime565.jsxs)("div", { className: "editor-block-visibility__disabled-blocks-count", children: [
-        (0, import_i18n348.sprintf)(
+        (0, import_i18n349.sprintf)(
           /* translators: %d: number of blocks. */
-          (0, import_i18n348._n)(
+          (0, import_i18n349._n)(
             "%d block is hidden.",
             "%d blocks are hidden.",
             numberOfHiddenBlocks
@@ -100831,7 +100870,7 @@ If there's a particular need for this, please submit a feature request at https:
             __next40pxDefaultSize: true,
             variant: "link",
             onClick: enableAllBlockTypes,
-            children: (0, import_i18n348.__)("Reset")
+            children: (0, import_i18n349.__)("Reset")
           }
         )
       ] }),
@@ -100886,22 +100925,22 @@ If there's a particular need for this, please submit a feature request at https:
       () => [
         {
           name: "general",
-          tabLabel: (0, import_i18n349.__)("General"),
+          tabLabel: (0, import_i18n350.__)("General"),
           content: /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(import_jsx_runtime566.Fragment, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(
               PreferencesModalSection,
               {
-                title: (0, import_i18n349.__)("Interface"),
+                title: (0, import_i18n350.__)("Interface"),
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
                     PreferenceToggleControl,
                     {
                       scope: "core",
                       featureName: "showListViewByDefault",
-                      help: (0, import_i18n349.__)(
+                      help: (0, import_i18n350.__)(
                         "Opens the List View panel by default."
                       ),
-                      label: (0, import_i18n349.__)("Always open List View")
+                      label: (0, import_i18n350.__)("Always open List View")
                     }
                   ),
                   showBlockBreadcrumbsOption && /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
@@ -100909,10 +100948,10 @@ If there's a particular need for this, please submit a feature request at https:
                     {
                       scope: "core",
                       featureName: "showBlockBreadcrumbs",
-                      help: (0, import_i18n349.__)(
+                      help: (0, import_i18n350.__)(
                         "Display the block hierarchy trail at the bottom of the editor."
                       ),
-                      label: (0, import_i18n349.__)("Show block breadcrumbs")
+                      label: (0, import_i18n350.__)("Show block breadcrumbs")
                     }
                   ),
                   /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
@@ -100920,10 +100959,10 @@ If there's a particular need for this, please submit a feature request at https:
                     {
                       scope: "core",
                       featureName: "allowRightClickOverrides",
-                      help: (0, import_i18n349.__)(
+                      help: (0, import_i18n350.__)(
                         "Allows contextual List View menus via right-click, overriding browser defaults."
                       ),
-                      label: (0, import_i18n349.__)(
+                      label: (0, import_i18n350.__)(
                         "Allow right-click contextual menus"
                       )
                     }
@@ -100933,10 +100972,10 @@ If there's a particular need for this, please submit a feature request at https:
                     {
                       scope: "core",
                       featureName: "enableChoosePatternModal",
-                      help: (0, import_i18n349.__)(
+                      help: (0, import_i18n350.__)(
                         "Pick from starter content when creating a new page."
                       ),
-                      label: (0, import_i18n349.__)("Show starter patterns")
+                      label: (0, import_i18n350.__)("Show starter patterns")
                     }
                   ),
                   showCollaborationOptions && /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
@@ -100944,10 +100983,10 @@ If there's a particular need for this, please submit a feature request at https:
                     {
                       scope: "core",
                       featureName: "showCollaborationCursor",
-                      help: (0, import_i18n349.__)(
+                      help: (0, import_i18n350.__)(
                         "Show your own avatar inside blocks during collaborative editing sessions."
                       ),
-                      label: (0, import_i18n349.__)("Show avatar in blocks")
+                      label: (0, import_i18n350.__)("Show avatar in blocks")
                     }
                   )
                 ]
@@ -100956,7 +100995,7 @@ If there's a particular need for this, please submit a feature request at https:
             showCollaborationOptions && /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(
               PreferencesModalSection,
               {
-                title: (0, import_i18n349.__)(
+                title: (0, import_i18n350.__)(
                   "Collaboration notifications"
                 ),
                 children: [
@@ -100965,10 +101004,10 @@ If there's a particular need for this, please submit a feature request at https:
                     {
                       scope: "core",
                       featureName: "showCollaborationJoinNotifications",
-                      help: (0, import_i18n349.__)(
+                      help: (0, import_i18n350.__)(
                         "Show notifications when collaborators join the post."
                       ),
-                      label: (0, import_i18n349.__)("Collaborator joined")
+                      label: (0, import_i18n350.__)("Collaborator joined")
                     }
                   ),
                   /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
@@ -100976,10 +101015,10 @@ If there's a particular need for this, please submit a feature request at https:
                     {
                       scope: "core",
                       featureName: "showCollaborationLeaveNotifications",
-                      help: (0, import_i18n349.__)(
+                      help: (0, import_i18n350.__)(
                         "Show notifications when collaborators leave the post."
                       ),
-                      label: (0, import_i18n349.__)("Collaborator left")
+                      label: (0, import_i18n350.__)("Collaborator left")
                     }
                   ),
                   /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
@@ -100987,10 +101026,10 @@ If there's a particular need for this, please submit a feature request at https:
                     {
                       scope: "core",
                       featureName: "showCollaborationPostSaveNotifications",
-                      help: (0, import_i18n349.__)(
+                      help: (0, import_i18n350.__)(
                         "Show notifications when collaborators save, update, or publish the post."
                       ),
-                      label: (0, import_i18n349.__)("Post updated")
+                      label: (0, import_i18n350.__)("Post updated")
                     }
                   )
                 ]
@@ -100999,8 +101038,8 @@ If there's a particular need for this, please submit a feature request at https:
             /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(
               PreferencesModalSection,
               {
-                title: (0, import_i18n349.__)("Document settings"),
-                description: (0, import_i18n349.__)(
+                title: (0, import_i18n350.__)("Document settings"),
+                description: (0, import_i18n350.__)(
                   "Select what settings are shown in the document panel."
                 ),
                 children: [
@@ -101020,14 +101059,14 @@ If there's a particular need for this, please submit a feature request at https:
                   /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(check_default4, { children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
                     EnablePanelOption,
                     {
-                      label: (0, import_i18n349.__)("Featured image"),
+                      label: (0, import_i18n350.__)("Featured image"),
                       panelName: "featured-image"
                     }
                   ) }),
                   /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(check_default3, { children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
                     EnablePanelOption,
                     {
-                      label: (0, import_i18n349.__)("Excerpt"),
+                      label: (0, import_i18n350.__)("Excerpt"),
                       panelName: "post-excerpt"
                     }
                   ) }),
@@ -101038,7 +101077,7 @@ If there's a particular need for this, please submit a feature request at https:
                       children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
                         EnablePanelOption,
                         {
-                          label: (0, import_i18n349.__)("Discussion"),
+                          label: (0, import_i18n350.__)("Discussion"),
                           panelName: "discussion-panel"
                         }
                       )
@@ -101047,7 +101086,7 @@ If there's a particular need for this, please submit a feature request at https:
                   /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(check_default2, { children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
                     EnablePanelOption,
                     {
-                      label: (0, import_i18n349.__)("Page attributes"),
+                      label: (0, import_i18n350.__)("Page attributes"),
                       panelName: "page-attributes"
                     }
                   ) })
@@ -101057,14 +101096,14 @@ If there's a particular need for this, please submit a feature request at https:
             isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
               PreferencesModalSection,
               {
-                title: (0, import_i18n349.__)("Publishing"),
+                title: (0, import_i18n350.__)("Publishing"),
                 children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
                   EnablePublishSidebarOption,
                   {
-                    help: (0, import_i18n349.__)(
+                    help: (0, import_i18n350.__)(
                       "Review settings, such as visibility and tags."
                     ),
-                    label: (0, import_i18n349.__)(
+                    label: (0, import_i18n350.__)(
                       "Enable pre-publish checks"
                     )
                   }
@@ -101076,12 +101115,12 @@ If there's a particular need for this, please submit a feature request at https:
         },
         {
           name: "appearance",
-          tabLabel: (0, import_i18n349.__)("Appearance"),
+          tabLabel: (0, import_i18n350.__)("Appearance"),
           content: /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(
             PreferencesModalSection,
             {
-              title: (0, import_i18n349.__)("Appearance"),
-              description: (0, import_i18n349.__)(
+              title: (0, import_i18n350.__)("Appearance"),
+              description: (0, import_i18n350.__)(
                 "Customize the editor interface to suit your needs."
               ),
               children: [
@@ -101095,10 +101134,10 @@ If there's a particular need for this, please submit a feature request at https:
                       "distractionFree",
                       false
                     ),
-                    help: (0, import_i18n349.__)(
+                    help: (0, import_i18n350.__)(
                       "Access all block and document tools in a single place."
                     ),
-                    label: (0, import_i18n349.__)("Top toolbar")
+                    label: (0, import_i18n350.__)("Top toolbar")
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
@@ -101115,10 +101154,10 @@ If there's a particular need for this, please submit a feature request at https:
                       setIsInserterOpened2(false);
                       setIsListViewOpened2(false);
                     },
-                    help: (0, import_i18n349.__)(
+                    help: (0, import_i18n350.__)(
                       "Reduce visual distractions by hiding the toolbar and other elements to focus on writing."
                     ),
-                    label: (0, import_i18n349.__)("Distraction free")
+                    label: (0, import_i18n350.__)("Distraction free")
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
@@ -101126,10 +101165,10 @@ If there's a particular need for this, please submit a feature request at https:
                   {
                     scope: "core",
                     featureName: "focusMode",
-                    help: (0, import_i18n349.__)(
+                    help: (0, import_i18n350.__)(
                       "Highlights the current block and fades other content."
                     ),
-                    label: (0, import_i18n349.__)("Spotlight mode")
+                    label: (0, import_i18n350.__)("Spotlight mode")
                   }
                 ),
                 extraSections?.appearance
@@ -101139,13 +101178,13 @@ If there's a particular need for this, please submit a feature request at https:
         },
         {
           name: "accessibility",
-          tabLabel: (0, import_i18n349.__)("Accessibility"),
+          tabLabel: (0, import_i18n350.__)("Accessibility"),
           content: /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(import_jsx_runtime566.Fragment, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
               PreferencesModalSection,
               {
-                title: (0, import_i18n349.__)("Navigation"),
-                description: (0, import_i18n349.__)(
+                title: (0, import_i18n350.__)("Navigation"),
+                description: (0, import_i18n350.__)(
                   "Optimize the editing experience for enhanced control."
                 ),
                 children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
@@ -101153,10 +101192,10 @@ If there's a particular need for this, please submit a feature request at https:
                   {
                     scope: "core",
                     featureName: "keepCaretInsideBlock",
-                    help: (0, import_i18n349.__)(
+                    help: (0, import_i18n350.__)(
                       "Keeps the text cursor within blocks while navigating with arrow keys, preventing it from moving to other blocks and enhancing accessibility for keyboard users."
                     ),
-                    label: (0, import_i18n349.__)(
+                    label: (0, import_i18n350.__)(
                       "Contain text cursor inside block"
                     )
                   }
@@ -101166,14 +101205,14 @@ If there's a particular need for this, please submit a feature request at https:
             /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
               PreferencesModalSection,
               {
-                title: (0, import_i18n349.__)("Interface"),
+                title: (0, import_i18n350.__)("Interface"),
                 children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core",
                     featureName: "showIconLabels",
-                    label: (0, import_i18n349.__)("Show button text labels"),
-                    help: (0, import_i18n349.__)(
+                    label: (0, import_i18n350.__)("Show button text labels"),
+                    help: (0, import_i18n350.__)(
                       "Show text instead of icons on buttons across the interface."
                     )
                   }
@@ -101184,24 +101223,24 @@ If there's a particular need for this, please submit a feature request at https:
         },
         {
           name: "blocks",
-          tabLabel: (0, import_i18n349.__)("Blocks"),
+          tabLabel: (0, import_i18n350.__)("Blocks"),
           content: /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(import_jsx_runtime566.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(PreferencesModalSection, { title: (0, import_i18n349.__)("Inserter"), children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(PreferencesModalSection, { title: (0, import_i18n350.__)("Inserter"), children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
               PreferenceToggleControl,
               {
                 scope: "core",
                 featureName: "mostUsedBlocks",
-                help: (0, import_i18n349.__)(
+                help: (0, import_i18n350.__)(
                   "Adds a category with the most frequently used blocks in the inserter."
                 ),
-                label: (0, import_i18n349.__)("Show most used blocks")
+                label: (0, import_i18n350.__)("Show most used blocks")
               }
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
               PreferencesModalSection,
               {
-                title: (0, import_i18n349.__)("Manage block visibility"),
-                description: (0, import_i18n349.__)(
+                title: (0, import_i18n350.__)("Manage block visibility"),
+                description: (0, import_i18n350.__)(
                   "Disable blocks that you don't want to appear in the inserter. They can always be toggled back on later."
                 ),
                 children: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(BlockVisibility, {})
@@ -101211,12 +101250,12 @@ If there's a particular need for this, please submit a feature request at https:
         },
         window.__clientSideMediaProcessing && {
           name: "media",
-          tabLabel: (0, import_i18n349.__)("Media"),
+          tabLabel: (0, import_i18n350.__)("Media"),
           content: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(import_jsx_runtime566.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(
             PreferencesModalSection,
             {
-              title: (0, import_i18n349.__)("General"),
-              description: (0, import_i18n349.__)(
+              title: (0, import_i18n350.__)("General"),
+              description: (0, import_i18n350.__)(
                 "Customize options related to the media upload flow."
               ),
               children: [
@@ -101225,10 +101264,10 @@ If there's a particular need for this, please submit a feature request at https:
                   {
                     scope: "core/media",
                     featureName: "optimizeOnUpload",
-                    help: (0, import_i18n349.__)(
+                    help: (0, import_i18n350.__)(
                       "Compress media items before uploading to the server."
                     ),
-                    label: (0, import_i18n349.__)("Pre-upload compression")
+                    label: (0, import_i18n350.__)("Pre-upload compression")
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
@@ -101236,10 +101275,10 @@ If there's a particular need for this, please submit a feature request at https:
                   {
                     scope: "core/media",
                     featureName: "requireApproval",
-                    help: (0, import_i18n349.__)(
+                    help: (0, import_i18n350.__)(
                       "Require approval step when optimizing existing media."
                     ),
-                    label: (0, import_i18n349.__)("Approval step")
+                    label: (0, import_i18n350.__)("Approval step")
                   }
                 )
               ]
@@ -101339,7 +101378,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/editor/build-module/bindings/post-data.mjs
-  var import_i18n350 = __toESM(require_i18n(), 1);
+  var import_i18n351 = __toESM(require_i18n(), 1);
   var import_core_data143 = __toESM(require_core_data(), 1);
   var import_block_editor111 = __toESM(require_block_editor(), 1);
   var NAVIGATION_BLOCK_TYPES = [
@@ -101348,17 +101387,17 @@ If there's a particular need for this, please submit a feature request at https:
   ];
   var postDataFields = [
     {
-      label: (0, import_i18n350.__)("Post Date"),
+      label: (0, import_i18n351.__)("Post Date"),
       args: { field: "date" },
       type: "string"
     },
     {
-      label: (0, import_i18n350.__)("Post Modified Date"),
+      label: (0, import_i18n351.__)("Post Modified Date"),
       args: { field: "modified" },
       type: "string"
     },
     {
-      label: (0, import_i18n350.__)("Post Link"),
+      label: (0, import_i18n351.__)("Post Link"),
       args: { field: "link" },
       type: "string"
     }
@@ -101555,7 +101594,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/editor/build-module/bindings/term-data.mjs
-  var import_i18n351 = __toESM(require_i18n(), 1);
+  var import_i18n352 = __toESM(require_i18n(), 1);
   var import_core_data145 = __toESM(require_core_data(), 1);
   var import_block_editor112 = __toESM(require_block_editor(), 1);
   var NAVIGATION_BLOCK_TYPES2 = [
@@ -101564,37 +101603,37 @@ If there's a particular need for this, please submit a feature request at https:
   ];
   var termDataFields = [
     {
-      label: (0, import_i18n351.__)("Term ID"),
+      label: (0, import_i18n352.__)("Term ID"),
       args: { field: "id" },
       type: "string"
     },
     {
-      label: (0, import_i18n351.__)("Name"),
+      label: (0, import_i18n352.__)("Name"),
       args: { field: "name" },
       type: "string"
     },
     {
-      label: (0, import_i18n351.__)("Slug"),
+      label: (0, import_i18n352.__)("Slug"),
       args: { field: "slug" },
       type: "string"
     },
     {
-      label: (0, import_i18n351.__)("Link"),
+      label: (0, import_i18n352.__)("Link"),
       args: { field: "link" },
       type: "string"
     },
     {
-      label: (0, import_i18n351.__)("Description"),
+      label: (0, import_i18n352.__)("Description"),
       args: { field: "description" },
       type: "string"
     },
     {
-      label: (0, import_i18n351.__)("Parent ID"),
+      label: (0, import_i18n352.__)("Parent ID"),
       args: { field: "parent" },
       type: "string"
     },
     {
-      label: (0, import_i18n351.__)("Count"),
+      label: (0, import_i18n352.__)("Count"),
       args: { field: "count" },
       type: "string"
     }
@@ -101695,7 +101734,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/upload-progress-snackbar/index.mjs
   var import_data274 = __toESM(require_data(), 1);
   var import_element345 = __toESM(require_element(), 1);
-  var import_i18n352 = __toESM(require_i18n(), 1);
+  var import_i18n353 = __toESM(require_i18n(), 1);
   var import_a11y13 = __toESM(require_a11y(), 1);
   var import_upload_media3 = __toESM(require_upload_media(), 1);
   var import_notices38 = __toESM(require_notices(), 1);
@@ -101753,16 +101792,16 @@ If there's a particular need for this, please submit a feature request at https:
       const isUploading = remaining > 0;
       if (isUploading && !wasUploadingRef.current) {
         dismissedRef.current = false;
-        (0, import_a11y13.speak)((0, import_i18n352.__)("Media upload started"), "polite");
+        (0, import_a11y13.speak)((0, import_i18n353.__)("Media upload started"), "polite");
         if (completionTimeoutRef.current) {
           clearTimeout(completionTimeoutRef.current);
           completionTimeoutRef.current = null;
           peakRef.current = 0;
         }
       } else if (!isUploading && wasUploadingRef.current) {
-        (0, import_a11y13.speak)((0, import_i18n352.__)("Media upload complete"), "polite");
+        (0, import_a11y13.speak)((0, import_i18n353.__)("Media upload complete"), "polite");
         if (!dismissedRef.current) {
-          createNotice("info", (0, import_i18n352.__)("Upload complete"), {
+          createNotice("info", (0, import_i18n353.__)("Upload complete"), {
             id: NOTICE_ID,
             type: "snackbar",
             isDismissible: false,
@@ -101792,15 +101831,15 @@ If there's a particular need for this, please submit a feature request at https:
       const total = peakRef.current;
       const current = total - remaining + 1;
       const filename = truncateFilename(
-        csmOriginals[0]?.sourceFile?.name || tracker?.pending[0] || (0, import_i18n352.__)("Uploading")
+        csmOriginals[0]?.sourceFile?.name || tracker?.pending[0] || (0, import_i18n353.__)("Uploading")
       );
-      const content = total === 1 ? (0, import_i18n352.sprintf)(
+      const content = total === 1 ? (0, import_i18n353.sprintf)(
         /* translators: %s: filename. */
-        (0, import_i18n352.__)("Uploading \u2014 %s"),
+        (0, import_i18n353.__)("Uploading \u2014 %s"),
         filename
-      ) : (0, import_i18n352.sprintf)(
+      ) : (0, import_i18n353.sprintf)(
         /* translators: 1: current upload number, 2: total uploads, 3: filename. */
-        (0, import_i18n352.__)("Uploading %1$d of %2$d \u2014 %3$s"),
+        (0, import_i18n353.__)("Uploading %1$d of %2$d \u2014 %3$s"),
         current,
         total,
         filename
