@@ -6679,9 +6679,9 @@ var wp;
           value: caption,
           onChange: (value) => setAttributes({ [attributeKey]: value }),
           inlineToolbar: true,
-          __unstableOnSplitAtEnd: () => insertBlocksAfter(
+          __unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter(
             (0, import_blocks4.createBlock)((0, import_blocks4.getDefaultBlockName)())
-          ),
+          ) : void 0,
           readOnly,
           ...props
         }
@@ -14967,7 +14967,9 @@ var wp;
         "aria-label": (0, import_i18n23.__)("Code"),
         preserveWhiteSpace: true,
         __unstablePastePlainText: true,
-        __unstableOnSplitAtDoubleLineEnd: () => insertBlocksAfter((0, import_blocks13.createBlock)((0, import_blocks13.getDefaultBlockName)())),
+        __unstableOnSplitAtDoubleLineEnd: insertBlocksAfter ? () => insertBlocksAfter(
+          (0, import_blocks13.createBlock)((0, import_blocks13.getDefaultBlockName)())
+        ) : void 0,
         style: { whiteSpace: "break-spaces" }
       }
     ) });
@@ -24920,7 +24922,7 @@ var wp;
                       children: (0, import_i18n59._x)("Try again", "button label")
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
+                  fallback2 && /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(
                     import_components39.Button,
                     {
                       __next40pxDefaultSize: true,
@@ -25221,7 +25223,7 @@ var wp;
           value: url,
           cannotEmbed,
           onChange: (value) => setURL(value),
-          fallback: () => fallback(url, onReplace),
+          fallback: onReplace ? () => fallback(url, onReplace) : void 0,
           tryAgain: () => {
             invalidateResolution("getEmbedPreview", [url]);
           }
@@ -33028,7 +33030,7 @@ ${url}
         onChange: onContentChange,
         onMerge: mergeBlocks,
         onReplace,
-        onRemove: () => onReplace([]),
+        onRemove: onReplace ? () => onReplace([]) : void 0,
         placeholder: placeholder2 || (0, import_i18n86.__)("Heading"),
         ...blockProps
       }
@@ -36583,7 +36585,7 @@ ${text}
     function onImageError() {
       setHasImageErrored(true);
       const embedBlock = createUpgradedEmbedBlock({ attributes: { url } });
-      if (void 0 !== embedBlock) {
+      if (void 0 !== embedBlock && onReplace) {
         onReplace(embedBlock);
       }
     }
@@ -43809,9 +43811,9 @@ ${text}
           placeholder: DEFAULT_TEXT,
           onChange: (value) => setAttributes({ customText: value }),
           disableLineBreaks: true,
-          __unstableOnSplitAtEnd: () => insertBlocksAfter(
+          __unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter(
             (0, import_blocks55.createBlock)((0, import_blocks55.getDefaultBlockName)())
-          )
+          ) : void 0
         }
       ) })
     ] });
@@ -50258,11 +50260,11 @@ ${text}
                   }),
                   onMerge: mergeBlocks,
                   onReplace,
-                  __unstableOnSplitAtEnd: () => insertBlocksAfter(
+                  __unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter(
                     (0, import_blocks64.createBlock)(
                       "core/navigation-link"
                     )
-                  ),
+                  ) : void 0,
                   "aria-label": (0, import_i18n150.__)(
                     "Navigation link text"
                   ),
@@ -50295,7 +50297,7 @@ ${text}
               },
               onClose: () => {
                 setIsLinkOpen(false);
-                if (!url && !hasUrlBinding) {
+                if (!url && !hasUrlBinding && onReplace) {
                   onReplace([]);
                   return;
                 }
@@ -60824,9 +60826,9 @@ ${text}
             value: suffix,
             onChange: (value) => setAttributes({ suffix: value }),
             tagName: "span",
-            __unstableOnSplitAtEnd: () => insertBlocksAfter(
+            __unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter(
               (0, import_blocks87.createBlock)((0, import_blocks87.getDefaultBlockName)())
-            )
+            ) : void 0
           }
         )
       ] })
@@ -61393,9 +61395,9 @@ ${text}
       postId
     );
     const [link] = (0, import_core_data71.useEntityProp)("postType", postType, "link", postId);
-    const onSplitAtEnd = () => {
+    const onSplitAtEnd = insertBlocksAfter ? () => {
       insertBlocksAfter((0, import_blocks89.createBlock)((0, import_blocks89.getDefaultBlockName)()));
-    };
+    } : void 0;
     const blockProps = (0, import_block_editor207.useBlockProps)();
     const blockEditingMode = (0, import_block_editor207.useBlockEditingMode)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
@@ -61731,7 +61733,9 @@ ${text}
         onMerge: mergeBlocks,
         ...blockProps,
         __unstablePastePlainText: true,
-        __unstableOnSplitAtDoubleLineEnd: () => insertBlocksAfter((0, import_blocks90.createBlock)((0, import_blocks90.getDefaultBlockName)()))
+        __unstableOnSplitAtDoubleLineEnd: insertBlocksAfter ? () => insertBlocksAfter(
+          (0, import_blocks90.createBlock)((0, import_blocks90.getDefaultBlockName)())
+        ) : void 0
       }
     );
   }
@@ -62587,9 +62591,11 @@ ${text}
             citation: nextCitation
           }),
           className: "wp-block-pullquote__citation",
-          __unstableOnSplitAtEnd: () => insertBlocksAfter(
-            (0, import_blocks93.createBlock)((0, import_blocks93.getDefaultBlockName)())
-          )
+          __unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter(
+            (0, import_blocks93.createBlock)(
+              (0, import_blocks93.getDefaultBlockName)()
+            )
+          ) : void 0
         }
       )
     ] }) }) });
@@ -68097,7 +68103,9 @@ ${text}
           placeholder: (0, import_i18n226.__)("Read more"),
           value: content,
           onChange: (newValue) => setAttributes({ content: newValue }),
-          __unstableOnSplitAtEnd: () => insertBlocksAfter((0, import_blocks102.createBlock)((0, import_blocks102.getDefaultBlockName)())),
+          __unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter(
+            (0, import_blocks102.createBlock)((0, import_blocks102.getDefaultBlockName)())
+          ) : void 0,
           withoutInteractiveFormatting: true,
           ...blockProps
         }
@@ -70389,7 +70397,9 @@ ${text}
         tagName: TagName2,
         value: tagline,
         disableLineBreaks: true,
-        __unstableOnSplitAtEnd: () => insertBlocksAfter((0, import_blocks107.createBlock)((0, import_blocks107.getDefaultBlockName)())),
+        __unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter(
+          (0, import_blocks107.createBlock)((0, import_blocks107.getDefaultBlockName)())
+        ) : void 0,
         ...blockProps
       }
     ) : /* @__PURE__ */ (0, import_jsx_runtime447.jsx)(TagName2, { ...blockProps, children: tagline || (0, import_i18n235.__)("Site Tagline placeholder") });
@@ -70662,7 +70672,9 @@ ${text}
         onChange: setTitle,
         allowedFormats: [],
         disableLineBreaks: true,
-        __unstableOnSplitAtEnd: () => insertBlocksAfter((0, import_blocks108.createBlock)((0, import_blocks108.getDefaultBlockName)()))
+        __unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter(
+          (0, import_blocks108.createBlock)((0, import_blocks108.getDefaultBlockName)())
+        ) : void 0
       }
     ) }) : /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(TagName2, { ...blockProps, children: isLink ? /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
       "a",
@@ -79789,7 +79801,9 @@ ${text}
         onMerge: mergeBlocks,
         ...blockProps,
         __unstablePastePlainText: true,
-        __unstableOnSplitAtDoubleLineEnd: () => insertBlocksAfter((0, import_blocks124.createBlock)((0, import_blocks124.getDefaultBlockName)()))
+        __unstableOnSplitAtDoubleLineEnd: insertBlocksAfter ? () => insertBlocksAfter(
+          (0, import_blocks124.createBlock)((0, import_blocks124.getDefaultBlockName)())
+        ) : void 0
       }
     );
   }
