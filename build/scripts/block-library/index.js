@@ -40542,7 +40542,6 @@ ${text}
             /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
               import_components64.TextareaControl,
               {
-                __next40pxDefaultSize: true,
                 label: (0, import_i18n107.__)("LaTeX math syntax"),
                 hideLabelFromVision: true,
                 value: latex,
@@ -80535,7 +80534,6 @@ ${text}
             /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
               import_components184.ToggleControl,
               {
-                __next40pxDefaultSize: true,
                 label: (0, import_i18n277.__)("Set as default track"),
                 checked: isDefaultTrack,
                 disabled: !allowSettingDefault,

@@ -17976,7 +17976,6 @@ function Textarea({
       disabled: disabled2,
       minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
       maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
-      __next40pxDefaultSize: true,
       hideLabelFromVision
     }
   );

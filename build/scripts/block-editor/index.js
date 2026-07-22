@@ -71438,8 +71438,7 @@ var wp;
           MaybeValidatedInputControl,
           {
             ...inputProps,
-            ...this.hasRenderedValidation.current ? validationProps : {},
-            __next40pxDefaultSize: true
+            ...this.hasRenderedValidation.current ? validationProps : {}
           }
         ),
         loading && /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(import_components173.Spinner, {})
@@ -89172,7 +89171,6 @@ var wp;
         disabled: disabled2,
         minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
         maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
-        __next40pxDefaultSize: true,
         hideLabelFromVision
       }
     );

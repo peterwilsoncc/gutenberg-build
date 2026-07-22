@@ -35880,7 +35880,6 @@ If there's a particular need for this, please submit a feature request at https:
         disabled: disabled2,
         minLength: isValid2.minLength ? isValid2.minLength.constraint : void 0,
         maxLength: isValid2.maxLength ? isValid2.maxLength.constraint : void 0,
-        __next40pxDefaultSize: true,
         hideLabelFromVision
       }
     );
