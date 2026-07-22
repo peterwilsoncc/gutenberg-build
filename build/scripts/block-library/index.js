@@ -131,10 +131,10 @@ var wp;
           if (typeof b2 !== "function" && b2 !== null)
             throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
           extendStatics(d2, b2);
-          function __276() {
+          function __275() {
             this.constructor = d2;
           }
-          d2.prototype = b2 === null ? Object.create(b2) : (__276.prototype = b2.prototype, new __276());
+          d2.prototype = b2 === null ? Object.create(b2) : (__275.prototype = b2.prototype, new __275());
         };
       })();
       var __assign2 = exports && exports.__assign || function() {
@@ -63903,7 +63903,7 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
       import_components127.__experimentalNumberControl,
       {
-        label: (0, import_i18n203.__)("Offset"),
+        label: (0, import_i18n203._x)("Offset", "Number of posts to skip in a query"),
         value: offset,
         min: MIN_OFFSET,
         onChange: (newOffset) => {
@@ -64228,7 +64228,10 @@ ${text}
             /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
               import_components129.__experimentalToolsPanelItem,
               {
-                label: (0, import_i18n205.__)("Offset"),
+                label: (0, import_i18n205._x)(
+                  "Offset",
+                  "Number of posts to skip in a query"
+                ),
                 hasValue: () => offset > 0,
                 onDeselect: () => setQuery({ offset: 0 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
