@@ -75507,6 +75507,7 @@ var wp;
   var import_components197 = __toESM(require_components(), 1);
   var import_i18n187 = __toESM(require_i18n(), 1);
   var import_jsx_runtime420 = __toESM(require_jsx_runtime(), 1);
+  var ENABLE_GLOBAL_STYLES_INHERITANCE = true ? true : false;
   function getInheritanceProps(isInherited, hasLocalOverride, baseClassName) {
     const inheritedOnly = !!isInherited && !hasLocalOverride;
     const className = clsx_default(baseClassName, {
@@ -75925,7 +75926,7 @@ var wp;
     label,
     children,
     contrastWarning,
-    showInheritanceLabelIndicators = true
+    showInheritanceLabelIndicators = ENABLE_GLOBAL_STYLES_INHERITANCE
   }) {
     const {
       colors: colors2,
@@ -76488,7 +76489,7 @@ var wp;
     panelId,
     defaultControls = DEFAULT_CONTROLS4,
     isGlobalStyles = false,
-    showInheritanceLabelIndicators = true,
+    showInheritanceLabelIndicators = ENABLE_GLOBAL_STYLES_INHERITANCE,
     contrastWarning
   }) {
     const { colors: colors2, allColors, areCustomSolidsEnabled, decodeValue } = useColorGradientSettings(settings2);
@@ -76508,7 +76509,8 @@ var wp;
         newSlug
       );
       let changedObject = setImmutably2(value, ["color", "text"], encoded);
-      if (shouldSyncLinkColor(value, inheritedValue)) {
+      const syncLinkColor = ENABLE_GLOBAL_STYLES_INHERITANCE ? shouldSyncLinkColor(value, inheritedValue) : inheritedValue?.color?.text === inheritedValue?.elements?.link?.color?.text;
+      if (syncLinkColor) {
         changedObject = setImmutably2(
           changedObject,
           ["elements", "link", "color", "text"],
@@ -77897,7 +77899,7 @@ var wp;
     // in global styles but not in block inspector.
     includeLayoutControls = false,
     styleState = DEFAULT_BLOCK_STYLE_STATE2,
-    showInheritanceLabelIndicators = true
+    showInheritanceLabelIndicators = ENABLE_GLOBAL_STYLES_INHERITANCE
   }) {
     const { dimensions, spacing } = settings2;
     const decodeValue = (rawValue) => {
@@ -78835,7 +78837,7 @@ var wp;
     panelId,
     name,
     defaultControls = DEFAULT_CONTROLS6,
-    showInheritanceLabelIndicators = true
+    showInheritanceLabelIndicators = ENABLE_GLOBAL_STYLES_INHERITANCE
   }) {
     const colors2 = useColorsPerOrigin(settings2);
     const areCustomSolidsEnabled = settings2?.color?.custom;
@@ -79250,7 +79252,7 @@ var wp;
     settings: settings2,
     panelId,
     defaultControls = DEFAULT_CONTROLS7,
-    showInheritanceLabelIndicators = true
+    showInheritanceLabelIndicators = ENABLE_GLOBAL_STYLES_INHERITANCE
   }) {
     const decodeValue = (rawValue) => getValueFromVariable({ settings: settings2 }, "", rawValue);
     const inheritanceProps = (isInherited, hasLocalOverride, className) => getInheritanceProps(
@@ -80163,7 +80165,7 @@ var wp;
     defaultValues = {},
     headerLabel = (0, import_i18n200.__)("Background"),
     contrastWarning,
-    showInheritanceLabelIndicators = true
+    showInheritanceLabelIndicators = ENABLE_GLOBAL_STYLES_INHERITANCE
   }) {
     const {
       colors: colors2,
@@ -80848,6 +80850,7 @@ var wp;
 
   // packages/block-editor/build-module/components/global-styles/inherited-value-context.mjs
   var { resolveStyle: resolveStyle3 } = unlock(privateApis);
+  var NO_RESOLVED_STYLE = { value: void 0, sources: void 0 };
   function useRawGlobalStyles() {
     const { rawGlobalStylesData, links } = (0, import_data165.useSelect)((select3) => {
       const settings2 = select3(store).getSettings();
@@ -80928,6 +80931,9 @@ var wp;
     );
     const globalStyles = useRawGlobalStyles();
     return (0, import_element259.useMemo)(() => {
+      if (!ENABLE_GLOBAL_STYLES_INHERITANCE) {
+        return NO_RESOLVED_STYLE;
+      }
       if (!blockName) {
         return { value: {}, sources: {} };
       }
