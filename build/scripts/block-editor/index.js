@@ -26323,7 +26323,8 @@ var wp;
       canMove,
       blockVisibility: blockVisibility2,
       deviceType,
-      viewportSettings
+      viewportSettings,
+      ariaLabel
     } = (0, import_element32.useContext)(PrivateBlockContext);
     useRegisterBlockEventHandlers(clientId, wrapperProps);
     const defaultViewRef = (0, import_compose17.useRefEffect)((element) => {
@@ -26384,7 +26385,7 @@ var wp;
       ref: mergedRefs,
       id: `block-${clientId}${htmlSuffix}`,
       role: "document",
-      "aria-label": blockLabel,
+      "aria-label": ariaLabel ?? blockLabel,
       "data-block": clientId,
       "data-type": name,
       "data-title": blockTitle,

@@ -35650,16 +35650,16 @@ var wp;
   function createStoreContext(providers = [], scopedProviders = []) {
     const context = React75.createContext(void 0);
     const scopedContext = React75.createContext(void 0);
-    const useContext71 = () => React75.useContext(context);
+    const useContext72 = () => React75.useContext(context);
     const useScopedContext = (onlyScoped = false) => {
       const scoped = React75.useContext(scopedContext);
-      const store4 = useContext71();
+      const store4 = useContext72();
       if (onlyScoped) return scoped;
       return scoped || store4;
     };
     const useProviderContext = () => {
       const scoped = React75.useContext(scopedContext);
-      const store4 = useContext71();
+      const store4 = useContext72();
       if (scoped && scoped === store4) return;
       return store4;
     };
@@ -35681,7 +35681,7 @@ var wp;
     return {
       context,
       scopedContext,
-      useContext: useContext71,
+      useContext: useContext72,
       useScopedContext,
       useProviderContext,
       ContextProvider,
@@ -93987,6 +93987,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data221 = __toESM(require_data(), 1);
   var import_element306 = __toESM(require_element(), 1);
   var import_hooks61 = __toESM(require_hooks(), 1);
+  var import_blocks34 = __toESM(require_blocks(), 1);
   var import_i18n305 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/visual-editor/index.mjs
@@ -94955,7 +94956,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-canvas.mjs
   var import_jsx_runtime512 = __toESM(require_jsx_runtime(), 1);
-  var { usePrivateStyleOverride } = unlock(import_block_editor84.privateApis);
+  var { usePrivateStyleOverride, PrivateBlockContext } = unlock(
+    import_block_editor84.privateApis
+  );
   var REVISION_REMOVED_FILTER_SVG = `
 <svg
 	xmlns="http://www.w3.org/2000/svg"
@@ -95023,16 +95026,57 @@ If there's a particular need for this, please submit a feature request at https:
 		text-decoration-thickness: 2px;
 	}
 `;
+  function getDiffStatusLabel(status, blockTitle) {
+    switch (status) {
+      case "added":
+        return (0, import_i18n305.sprintf)((0, import_i18n305.__)("Added block: %s"), blockTitle);
+      case "removed":
+        return (0, import_i18n305.sprintf)((0, import_i18n305.__)("Removed block: %s"), blockTitle);
+      case "modified":
+        return (0, import_i18n305.sprintf)((0, import_i18n305.__)("Modified block: %s"), blockTitle);
+    }
+  }
+  function BlockDiffLabelProvider({ status, name: name2, attributes, children }) {
+    const context = (0, import_element306.useContext)(PrivateBlockContext);
+    const blockTitle = (0, import_data221.useSelect)(
+      (select9) => {
+        const { getActiveBlockVariation, getBlockType: getBlockType7 } = select9(import_blocks34.store);
+        return getActiveBlockVariation(name2, attributes)?.title ?? getBlockType7(name2)?.title;
+      },
+      [name2, attributes]
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(
+      PrivateBlockContext.Provider,
+      {
+        value: {
+          ...context,
+          ariaLabel: blockTitle ? getDiffStatusLabel(status, blockTitle) : void 0
+        },
+        children
+      }
+    );
+  }
   function withRevisionDiffClasses(BlockListBlock) {
-    return (props) => {
-      const { block, className } = props;
+    return function WithRevisionDiffClasses(props) {
+      const { block, className, name: name2, attributes } = props;
       const diffStatus = block?.__revisionDiffStatus?.status;
       const enhancedClassName = clsx_default(className, {
         "is-revision-added": diffStatus === "added",
         "is-revision-removed": diffStatus === "removed",
         "is-revision-modified": diffStatus === "modified"
       });
-      return /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(BlockListBlock, { ...props, className: enhancedClassName });
+      if (!diffStatus) {
+        return /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(BlockListBlock, { ...props, className: enhancedClassName });
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(
+        BlockDiffLabelProvider,
+        {
+          status: diffStatus,
+          name: name2,
+          attributes,
+          children: /* @__PURE__ */ (0, import_jsx_runtime512.jsx)(BlockListBlock, { ...props, className: enhancedClassName })
+        }
+      );
     };
   }
   var FILTER_NAME = "editor/revisions-canvas/withRevisionDiffClasses";
@@ -97452,13 +97496,13 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components271 = __toESM(require_components(), 1);
   var import_i18n326 = __toESM(require_i18n(), 1);
   var import_block_editor90 = __toESM(require_block_editor(), 1);
-  var import_blocks35 = __toESM(require_blocks(), 1);
+  var import_blocks36 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/components/post-transform-panel/hooks.mjs
   var import_data247 = __toESM(require_data(), 1);
   var import_element325 = __toESM(require_element(), 1);
   var import_core_data133 = __toESM(require_core_data(), 1);
-  var import_blocks34 = __toESM(require_blocks(), 1);
+  var import_blocks35 = __toESM(require_blocks(), 1);
   var import_patterns11 = __toESM(require_patterns(), 1);
   var { EXCLUDED_PATTERN_SOURCES, PATTERN_TYPES: PATTERN_TYPES6 } = unlock(import_patterns11.privateApis);
   function injectThemeAttributeInBlockTemplateContent(block, currentThemeStylesheet) {
@@ -97493,7 +97537,7 @@ If there's a particular need for this, please submit a feature request at https:
       ...pattern,
       keywords: pattern.keywords || [],
       type: PATTERN_TYPES6.theme,
-      blocks: (0, import_blocks34.parse)(pattern.content, {
+      blocks: (0, import_blocks35.parse)(pattern.content, {
         __unstableSkipMigrationLogs: true
       }).map(
         (block) => injectThemeAttributeInBlockTemplateContent(
@@ -97570,7 +97614,7 @@ If there's a particular need for this, please submit a feature request at https:
     const onTemplateSelect = async (selectedTemplate) => {
       await editEntityRecord("postType", postType2, postId2, {
         blocks: selectedTemplate.blocks,
-        content: (0, import_blocks35.serialize)(selectedTemplate.blocks)
+        content: (0, import_blocks36.serialize)(selectedTemplate.blocks)
       });
     };
     if (!availablePatterns?.length) {
@@ -98004,7 +98048,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/template-part-content-panel/index.mjs
   var import_data253 = __toESM(require_data(), 1);
   var import_element329 = __toESM(require_element(), 1);
-  var import_blocks36 = __toESM(require_blocks(), 1);
+  var import_blocks37 = __toESM(require_blocks(), 1);
   var import_block_editor94 = __toESM(require_block_editor(), 1);
   var import_components276 = __toESM(require_components(), 1);
   var import_i18n331 = __toESM(require_i18n(), 1);
@@ -98012,7 +98056,7 @@ If there's a particular need for this, please submit a feature request at https:
   var { BlockQuickNavigation: BlockQuickNavigation2 } = unlock(import_block_editor94.privateApis);
   function TemplatePartContentPanelInner() {
     const blockTypes = (0, import_data253.useSelect)((select9) => {
-      const { getBlockTypes: getBlockTypes6 } = select9(import_blocks36.store);
+      const { getBlockTypes: getBlockTypes6 } = select9(import_blocks37.store);
       return getBlockTypes6();
     }, []);
     const themeBlockNames = (0, import_element329.useMemo)(() => {
@@ -99877,7 +99921,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n342 = __toESM(require_i18n(), 1);
   var import_block_editor104 = __toESM(require_block_editor(), 1);
   var import_data264 = __toESM(require_data(), 1);
-  var import_blocks37 = __toESM(require_blocks(), 1);
+  var import_blocks38 = __toESM(require_blocks(), 1);
   var import_keyboard_shortcuts12 = __toESM(require_keyboard_shortcuts(), 1);
   var import_jsx_runtime555 = __toESM(require_jsx_runtime(), 1);
   var { NoteIconSlotFill } = unlock(import_block_editor104.privateApis);
@@ -99894,7 +99938,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       []
     );
-    if (!block?.isValid || block?.name === (0, import_blocks37.getUnregisteredTypeHandlerName)()) {
+    if (!block?.isValid || block?.name === (0, import_blocks38.getUnregisteredTypeHandlerName)()) {
       return null;
     }
     const isDisabled = isDistractionFree || block?.name === "core/freeform";
@@ -100745,7 +100789,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/block-visibility/index.mjs
   var import_data272 = __toESM(require_data(), 1);
   var import_preferences35 = __toESM(require_preferences(), 1);
-  var import_blocks38 = __toESM(require_blocks(), 1);
+  var import_blocks39 = __toESM(require_blocks(), 1);
   var import_element343 = __toESM(require_element(), 1);
   var import_components288 = __toESM(require_components(), 1);
   var import_i18n349 = __toESM(require_i18n(), 1);
@@ -100763,7 +100807,7 @@ If there's a particular need for this, please submit a feature request at https:
       hiddenBlockTypes: _hiddenBlockTypes
     } = (0, import_data272.useSelect)((select9) => {
       return {
-        blockTypes: select9(import_blocks38.store).getBlockTypes(),
+        blockTypes: select9(import_blocks39.store).getBlockTypes(),
         allowedBlockTypes: select9(store).getEditorSettings().allowedBlockTypes,
         hiddenBlockTypes: select9(import_preferences35.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY17
       };
@@ -100777,7 +100821,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
     }, [_allowedBlockTypes, blockTypes]);
     const filteredBlockTypes = allowedBlockTypes.filter(
-      (blockType) => (0, import_blocks38.hasBlockSupport)(blockType, "inserter", true) && (!blockType.parent || blockType.parent.includes("core/post-content"))
+      (blockType) => (0, import_blocks39.hasBlockSupport)(blockType, "inserter", true) && (!blockType.parent || blockType.parent.includes("core/post-content"))
     );
     const hiddenBlockTypes = _hiddenBlockTypes.filter((hiddenBlock) => {
       return filteredBlockTypes.some(
@@ -101255,7 +101299,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/bindings/api.mjs
-  var import_blocks39 = __toESM(require_blocks(), 1);
+  var import_blocks40 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/bindings/pattern-overrides.mjs
   var import_block_editor110 = __toESM(require_block_editor(), 1);
@@ -101680,10 +101724,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/bindings/api.mjs
   function registerCoreBlockBindingsSources() {
-    (0, import_blocks39.registerBlockBindingsSource)(pattern_overrides_default);
-    (0, import_blocks39.registerBlockBindingsSource)(post_data_default);
-    (0, import_blocks39.registerBlockBindingsSource)(post_meta_default);
-    (0, import_blocks39.registerBlockBindingsSource)(term_data_default);
+    (0, import_blocks40.registerBlockBindingsSource)(pattern_overrides_default);
+    (0, import_blocks40.registerBlockBindingsSource)(post_data_default);
+    (0, import_blocks40.registerBlockBindingsSource)(post_meta_default);
+    (0, import_blocks40.registerBlockBindingsSource)(term_data_default);
   }
 
   // packages/editor/build-module/components/upload-progress-snackbar/index.mjs
