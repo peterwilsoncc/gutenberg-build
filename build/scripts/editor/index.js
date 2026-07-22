@@ -6488,10 +6488,6 @@ var wp;
     block: { layer: "block" },
     blockVariation: { layer: "blockVariation" }
   };
-  var BLOCK_TO_ROOT_ELEMENT = {
-    "core/button": "button",
-    "core/heading": "heading"
-  };
   function createSourceDescriptor(type) {
     const descriptor = SOURCE_DESCRIPTORS[type];
     if (!descriptor) {
@@ -6654,6 +6650,7 @@ var wp;
   function computeResolvedStyle(globalStyles, {
     blockName,
     variationName = null,
+    elements: elements2 = null,
     viewport = null,
     pseudoState = null
   } = {}) {
@@ -6667,18 +6664,19 @@ var wp;
     const selectedState = { viewport, pseudoState };
     const root = styles;
     const block = styles.blocks?.[blockName] ?? null;
-    const rootElement = BLOCK_TO_ROOT_ELEMENT[blockName] ?? null;
-    const element = rootElement ? styles.elements?.[rootElement] ?? null : null;
+    const elementLayers = (elements2 ?? []).map((elementName) => styles.elements?.[elementName] ?? null).filter((layer) => !!layer);
     const variation = variationName ? getVariationStyle(globalStyles, blockName, variationName) ?? null : null;
     const contributions = [
       createContribution(
         pickLayerRootContribution(root),
         createSourceDescriptor("root")
       ),
-      element ? createContribution(
-        pickLayerRootContribution(element),
-        createSourceDescriptor("element")
-      ) : null,
+      ...elementLayers.map(
+        (layer) => createContribution(
+          pickLayerRootContribution(layer),
+          createSourceDescriptor("element")
+        )
+      ),
       block ? createContribution(
         pickLayerRootContribution(block),
         createSourceDescriptor("block")
@@ -6696,12 +6694,14 @@ var wp;
           ),
           createSourceDescriptor("root")
         ),
-        element ? createContribution(
-          pickLayerRootContribution(
-            getStateSlice(element, selectedState)
-          ),
-          createSourceDescriptor("element")
-        ) : null,
+        ...elementLayers.map(
+          (layer) => createContribution(
+            pickLayerRootContribution(
+              getStateSlice(layer, selectedState)
+            ),
+            createSourceDescriptor("element")
+          )
+        ),
         block ? createContribution(
           pickLayerRootContribution(
             getStateSlice(block, selectedState)
@@ -6759,8 +6759,8 @@ var wp;
       inner = /* @__PURE__ */ new Map();
       byLinks.set(linksKey, inner);
     }
-    const stateKey = `${context.viewport ?? ""}:${context.pseudoState ?? ""}`;
-    const key = (context.blockName || "") + "" + (context.variationName || "") + "" + stateKey;
+    const sliceKey = `${context.elements?.join(",") ?? ""}:${context.viewport ?? ""}:${context.pseudoState ?? ""}`;
+    const key = (context.blockName || "") + "" + (context.variationName || "") + "" + sliceKey;
     if (inner.has(key)) {
       return inner.get(key);
     }
