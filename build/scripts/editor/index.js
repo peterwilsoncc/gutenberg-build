@@ -91758,6 +91758,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/utils.mjs
   var import_i18n294 = __toESM(require_i18n(), 1);
   var import_rich_text7 = __toESM(require_rich_text(), 1);
+  var import_dom25 = __toESM(require_dom(), 1);
   function sanitizeNoteContent(str3) {
     return str3.trim();
   }
@@ -91871,6 +91872,31 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return null;
   }
+  function getNoteMarkerSelector(noteId) {
+    const escapedId = String(noteId).replace(
+      /["\\\n\r\f]/g,
+      (char) => char === '"' || char === "\\" ? `\\${char}` : `\\${char.codePointAt(0).toString(16)} `
+    );
+    return `mark.wp-note[data-id="${escapedId}"]`;
+  }
+  function getSelectionRect(blockEl) {
+    const selection = blockEl.ownerDocument.defaultView?.getSelection();
+    if (!selection || selection.rangeCount === 0 || selection.isCollapsed) {
+      return null;
+    }
+    const range = selection.getRangeAt(0);
+    if (range.collapsed) {
+      return null;
+    }
+    if (!blockEl.contains(range.commonAncestorContainer)) {
+      return null;
+    }
+    const rect = (0, import_dom25.getRectangleFromRange)(range);
+    if (!rect || rect.width === 0 && rect.height === 0) {
+      return null;
+    }
+    return rect;
+  }
   var BLOCK_LEVEL_NOTE_START = -1;
   function getInlineMarkerStart(thread, attributes) {
     const found = findNoteInBlock(attributes, thread?.id);
@@ -91968,11 +91994,14 @@ If there's a particular need for this, please submit a feature request at https:
     scrollTop = 0
   }) {
     const offsets = {};
+    const orderedThreads = [...threads].sort(
+      (a3, b3) => (blockRects[a3.id]?.top ?? Number.MAX_VALUE) - (blockRects[b3.id]?.top ?? Number.MAX_VALUE)
+    );
     const anchorIndex = Math.max(
       0,
-      threads.findIndex((thread) => thread.id === selectedNoteId)
+      orderedThreads.findIndex((thread) => thread.id === selectedNoteId)
     );
-    const anchorThread = threads[anchorIndex];
+    const anchorThread = orderedThreads[anchorIndex];
     if (!anchorThread || !blockRects[anchorThread.id]) {
       return { positions: {} };
     }
@@ -91982,8 +92011,8 @@ If there's a particular need for this, please submit a feature request at https:
     offsets[anchorThread.id] = THREAD_ALIGN_OFFSET;
     let prevAdjustedTop = anchorTop + THREAD_ALIGN_OFFSET;
     let prevHeight = anchorHeight;
-    for (let i3 = anchorIndex + 1; i3 < threads.length; i3++) {
-      const thread = threads[i3];
+    for (let i3 = anchorIndex + 1; i3 < orderedThreads.length; i3++) {
+      const thread = orderedThreads[i3];
       const threadRect = blockRects[thread.id];
       if (!threadRect) {
         continue;
@@ -92001,7 +92030,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     let belowAdjustedTop = anchorTop + THREAD_ALIGN_OFFSET;
     for (let i3 = anchorIndex - 1; i3 >= 0; i3--) {
-      const thread = threads[i3];
+      const thread = orderedThreads[i3];
       const threadRect = blockRects[thread.id];
       if (!threadRect) {
         continue;
@@ -92017,7 +92046,7 @@ If there's a particular need for this, please submit a feature request at https:
       belowAdjustedTop = threadTop + offset4;
     }
     const positions = {};
-    for (const thread of threads) {
+    for (const thread of orderedThreads) {
       const blockRect = blockRects[thread.id];
       if (blockRect && offsets[thread.id] !== void 0) {
         positions[thread.id] = blockRect.top + scrollTop + offsets[thread.id];
@@ -93606,7 +93635,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor76 = __toESM(require_block_editor(), 1);
   var import_compose69 = __toESM(require_compose(), 1);
   var import_data210 = __toESM(require_data(), 1);
-  var import_dom25 = __toESM(require_dom(), 1);
+  var import_dom26 = __toESM(require_dom(), 1);
   var import_element299 = __toESM(require_element(), 1);
   var import_i18n299 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts9 = __toESM(require_keyboard_shortcuts(), 1);
@@ -93667,9 +93696,9 @@ If there's a particular need for this, please submit a feature request at https:
       setDropZoneElement
     ]);
     function handleSidebarFocus(currentTab) {
-      const tabPanelFocus = import_dom25.focus.tabbable.find(tabsRef.current)[0];
+      const tabPanelFocus = import_dom26.focus.tabbable.find(tabsRef.current)[0];
       if (currentTab === "list-view") {
-        const listViewApplicationFocus = import_dom25.focus.tabbable.find(
+        const listViewApplicationFocus = import_dom26.focus.tabbable.find(
           listViewRef.current
         )[0];
         const listViewFocusArea = sidebarRef.current.contains(
@@ -95661,7 +95690,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data231 = __toESM(require_data(), 1);
   var import_element315 = __toESM(require_element(), 1);
   var import_i18n313 = __toESM(require_i18n(), 1);
-  var import_dom26 = __toESM(require_dom(), 1);
+  var import_dom27 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/post-actions/index.mjs
   var import_data230 = __toESM(require_data(), 1);
@@ -96255,7 +96284,7 @@ If there's a particular need for this, please submit a feature request at https:
         labels?.name
       );
     } else if (postTitle) {
-      title = (0, import_dom26.__unstableStripHTML)(postTitle);
+      title = (0, import_dom27.__unstableStripHTML)(postTitle);
     }
     return /* @__PURE__ */ (0, import_jsx_runtime521.jsxs)(import_components260.__experimentalVStack, { spacing: 1, className: "editor-post-card-panel", children: [
       /* @__PURE__ */ (0, import_jsx_runtime521.jsxs)(
@@ -98330,7 +98359,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose82 = __toESM(require_compose(), 1);
   var import_i18n338 = __toESM(require_i18n(), 1);
   var import_data260 = __toESM(require_data(), 1);
-  var import_dom28 = __toESM(require_dom(), 1);
+  var import_dom29 = __toESM(require_dom(), 1);
   var import_block_editor100 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
@@ -98463,7 +98492,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n335 = __toESM(require_i18n(), 1);
   var import_compose80 = __toESM(require_compose(), 1);
   var import_keycodes21 = __toESM(require_keycodes(), 1);
-  var import_dom27 = __toESM(require_dom(), 1);
+  var import_dom28 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-mention-completer.mjs
   var import_element332 = __toESM(require_element(), 1);
@@ -98520,7 +98549,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const [isSubmitting, setIsSubmitting] = (0, import_element333.useState)(false);
     const inputId = (0, import_compose80.useInstanceId)(NoteForm, "comment-input");
-    const trimmedPlainText = sanitizeNoteContent((0, import_dom27.__unstableStripHTML)(inputComment));
+    const trimmedPlainText = sanitizeNoteContent((0, import_dom28.__unstableStripHTML)(inputComment));
     const isDisabled = isSubmitting || inputComment === note?.content?.raw || !trimmedPlainText.length;
     async function submit() {
       if (isDisabled) {
@@ -99000,7 +99029,7 @@ If there's a particular need for this, please submit a feature request at https:
     const lastReply = allReplies.length > 0 ? allReplies[allReplies.length - 1] : void 0;
     const restReplies = allReplies.length > 0 ? allReplies.slice(0, -1) : [];
     const noteExcerpt = getNoteExcerpt(
-      (0, import_dom28.__unstableStripHTML)(note.content?.rendered),
+      (0, import_dom29.__unstableStripHTML)(note.content?.rendered),
       10
     );
     const ariaLabel = !!note.blockClientId ? (0, import_i18n338.sprintf)(
@@ -99190,7 +99219,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data261 = __toESM(require_data(), 1);
   var import_block_editor101 = __toESM(require_block_editor(), 1);
   var import_notices37 = __toESM(require_notices(), 1);
-  var import_dom29 = __toESM(require_dom(), 1);
+  var import_dom30 = __toESM(require_dom(), 1);
   var import_html_entities36 = __toESM(require_html_entities(), 1);
   var import_rich_text8 = __toESM(require_rich_text(), 1);
 
@@ -99259,11 +99288,19 @@ If there's a particular need for this, please submit a feature request at https:
         }
         delete heights[id];
       },
-      getBlockRects() {
+      getAnchorRects() {
         return Object.fromEntries(
-          Array.from(blockRefs).flatMap(
-            ([id, el]) => el ? [[id, el.getBoundingClientRect()]] : []
-          )
+          Array.from(blockRefs).flatMap(([id, el]) => {
+            if (!el) {
+              return [];
+            }
+            if (id === "new") {
+              const rect = getSelectionRect(el) ?? el.getBoundingClientRect();
+              return [[id, rect]];
+            }
+            const anchor = el.querySelector(getNoteMarkerSelector(id)) ?? el;
+            return [[id, anchor.getBoundingClientRect()]];
+          })
         );
       },
       getFirstBlockElement() {
@@ -99639,29 +99676,39 @@ If there's a particular need for this, please submit a feature request at https:
       const panel = sidebarRef.current;
       const blockEl = store4.getFirstBlockElement();
       const rootEl = blockEl?.closest(".is-root-container") ?? blockEl;
-      const canvas = rootEl ? (0, import_dom29.getScrollContainer)(rootEl) : null;
+      const canvas = rootEl ? (0, import_dom30.getScrollContainer)(rootEl) : null;
       const applyScroll = () => {
         panel.style.setProperty(
           "--canvas-scroll",
           `${-(canvas?.scrollTop ?? 0)}px`
         );
       };
-      const rafId = window.requestAnimationFrame(() => {
-        const result = calculateNotePositions({
-          threads,
-          selectedNoteId,
-          blockRects: store4.getBlockRects(),
-          heights,
-          scrollTop: canvas?.scrollTop ?? 0
+      let rafId;
+      const schedule2 = () => {
+        window.cancelAnimationFrame(rafId);
+        rafId = window.requestAnimationFrame(() => {
+          const result = calculateNotePositions({
+            threads,
+            selectedNoteId,
+            blockRects: store4.getAnchorRects(),
+            heights,
+            scrollTop: canvas?.scrollTop ?? 0
+          });
+          setNotePositions(result.positions);
+          applyScroll();
         });
-        setNotePositions(result.positions);
-        applyScroll();
-      });
+      };
+      schedule2();
+      const contentObserver = new window.ResizeObserver(schedule2);
+      if (rootEl) {
+        contentObserver.observe(rootEl);
+      }
       const view = canvas?.ownerDocument?.defaultView;
       const listenerOptions = { passive: true, capture: true };
       view?.addEventListener("scroll", applyScroll, listenerOptions);
       return () => {
         window.cancelAnimationFrame(rafId);
+        contentObserver.disconnect();
         view?.removeEventListener("scroll", applyScroll, listenerOptions);
       };
     }, [sidebarRef, heights, isFloating, selectedNoteId, store4, threads]);
@@ -100046,8 +100093,7 @@ If there's a particular need for this, please submit a feature request at https:
         continue;
       }
       const color = getAvatarBorderColor(thread.author ?? 0);
-      const escapedId = String(thread.id).replace(/["\\]/g, "\\$&");
-      const sel = `mark.wp-note[data-id="${escapedId}"]`;
+      const sel = getNoteMarkerSelector(thread.id);
       rules.push(`${sel}{background-color:${color}${REST_ALPHA};}`);
       rules.push(
         `${sel}:hover,${sel}:focus-within{background-color:${color}${ACTIVE_ALPHA};}`
