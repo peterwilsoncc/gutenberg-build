@@ -75656,6 +75656,7 @@ var wp;
     isGradient,
     inheritedValue,
     inheritedSlug,
+    userSlug,
     userValue,
     setValue,
     isPlaceholder,
@@ -75663,9 +75664,10 @@ var wp;
     contrastWarning
   }) {
     const displayed = userValue ?? inheritedValue;
+    const displayedSlug = userValue !== void 0 ? userSlug : inheritedSlug;
     const onChange = (newValue, newSlug) => {
       if (isPlaceholder && newValue === void 0) {
-        setValue(inheritedValue);
+        setValue(inheritedValue, inheritedSlug);
         return;
       }
       setValue(newValue, newSlug);
@@ -75678,7 +75680,7 @@ var wp;
         enableAlpha: true,
         __experimentalIsRenderedInSidebar: true,
         colorValue: isGradient ? void 0 : displayed,
-        colorSlug: isGradient || userValue !== void 0 ? void 0 : inheritedSlug,
+        colorSlug: isGradient ? void 0 : displayedSlug,
         gradientValue: isGradient ? displayed : void 0,
         onColorChange: isGradient ? void 0 : onChange,
         onGradientChange: isGradient ? onChange : void 0,
@@ -76081,6 +76083,10 @@ var wp;
               inheritedValue?.elements?.link?.color?.text,
               "color"
             ),
+            userSlug: extractPresetSlug(
+              value?.elements?.link?.color?.text,
+              "color"
+            ),
             setValue: setLinkColor,
             userValue: userLinkColor,
             isPlaceholder: userLinkColor === void 0 && linkColor !== void 0
@@ -76091,6 +76097,10 @@ var wp;
             inheritedValue: hoverLinkColor,
             inheritedSlug: extractPresetSlug(
               inheritedValue?.elements?.link?.[":hover"]?.color?.text,
+              "color"
+            ),
+            userSlug: extractPresetSlug(
+              value?.elements?.link?.[":hover"]?.color?.text,
               "color"
             ),
             setValue: setHoverLinkColor,
@@ -76195,6 +76205,10 @@ var wp;
               inheritedValue?.elements?.[name]?.color?.text,
               "color"
             ),
+            userSlug: extractPresetSlug(
+              value?.elements?.[name]?.color?.text,
+              "color"
+            ),
             setValue: setElementTextColor,
             userValue: elementTextUserColor,
             isPlaceholder: isElementTextPlaceholder
@@ -76205,6 +76219,10 @@ var wp;
             inheritedValue: elementBackgroundColor,
             inheritedSlug: extractPresetSlug(
               inheritedValue?.elements?.[name]?.color?.background,
+              "color"
+            ),
+            userSlug: extractPresetSlug(
+              value?.elements?.[name]?.color?.background,
               "color"
             ),
             setValue: setElementBackgroundColor,
@@ -76886,10 +76904,11 @@ var wp;
                   label: (0, import_i18n190.__)("Color"),
                   inheritedValue: textColor,
                   inheritedSlug: extractPresetSlug(
-                    value?.color?.text,
-                    "color"
-                  ) ?? extractPresetSlug(
                     inheritedValue?.color?.text,
+                    "color"
+                  ),
+                  userSlug: extractPresetSlug(
+                    value?.color?.text,
                     "color"
                   ),
                   setValue: setTextColor,
@@ -80317,18 +80336,16 @@ var wp;
                   key: "background",
                   label: (0, import_i18n200.__)("Color"),
                   inheritedValue: backgroundColor,
-                  // Resolve the slug from the same source as the
-                  // displayed value (user value first, then the
-                  // inherited fallback). For a block instance the
-                  // selection lives in `value` while `inheritedValue`
-                  // only holds the global styles fallback, so reading
-                  // the slug from `inheritedValue` alone would miss it
-                  // and two same-hex presets would both appear selected.
+                  // The picker selects by slug: `userSlug` when the
+                  // block has its own value, otherwise
+                  // `inheritedSlug`. Hex matching would mark two
+                  // same-hex presets as both selected.
                   inheritedSlug: extractPresetSlug(
-                    value?.color?.background,
-                    "color"
-                  ) ?? extractPresetSlug(
                     inheritedValue?.color?.background,
+                    "color"
+                  ),
+                  userSlug: extractPresetSlug(
+                    value?.color?.background,
                     "color"
                   ),
                   setValue: setBackgroundColor,
