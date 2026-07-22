@@ -90685,6 +90685,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element310 = __toESM(require_element(), 1);
   var import_html_entities30 = __toESM(require_html_entities(), 1);
   var import_notices32 = __toESM(require_notices(), 1);
+  var import_theme = __toESM(require_theme(), 1);
 
   // packages/editor/build-module/components/header/index.mjs
   var import_block_editor74 = __toESM(require_block_editor(), 1);
@@ -95493,7 +95494,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isValidTemplate2 = (0, import_data225.useSelect)((select9) => {
       return select9(import_block_editor85.store).isValidTemplate();
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(import_theme.ThemeProvider, { cornerRadius: "none", children: /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(
       import_notices32.InlineNotices,
       {
         className: "editor-notices",
@@ -95501,7 +95502,7 @@ If there's a particular need for this, please submit a feature request at https:
         dismissibleNoticesClassName: "editor-notices__dismissible",
         children: !isValidTemplate2 && /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(TemplateValidationNotice, {})
       }
-    );
+    ) });
   }
   function EditorInterface({
     className,
