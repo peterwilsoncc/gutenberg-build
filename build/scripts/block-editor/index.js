@@ -7040,7 +7040,7 @@ var wp;
     getColorObjectByAttributeValues: () => getColorObjectByAttributeValues,
     getColorObjectByColorValue: () => getColorObjectByColorValue,
     getComputedFluidTypographyValue: () => getComputedFluidTypographyValue2,
-    getCustomValueFromPreset: () => getCustomValueFromPreset,
+    getCustomValueFromPreset: () => getCustomValueFromPreset2,
     getDimensionsClassesAndStyles: () => getDimensionsClassesAndStyles,
     getFontSize: () => getFontSize,
     getFontSizeClass: () => getFontSizeClass,
@@ -18877,6 +18877,59 @@ var wp;
 
   // packages/block-editor/build-module/components/spacing-sizes-control/utils.mjs
   var import_i18n11 = __toESM(require_i18n(), 1);
+
+  // packages/block-editor/build-module/components/preset-input-control/utils.mjs
+  var isValuePreset = (value, slug) => {
+    if (!value?.includes) {
+      return false;
+    }
+    return value === "0" || value.includes(`var:preset|${slug}|`);
+  };
+  function getPresetSlug(value, presetType) {
+    if (!value) {
+      return;
+    }
+    if (value === "0" || value === "default") {
+      return value;
+    }
+    const slug = value.match(
+      new RegExp(`var:preset\\|${presetType}\\|(.+)`)
+    );
+    return slug ? slug[1] : void 0;
+  }
+  function getSliderValueFromPreset(presetValue, presets, presetType) {
+    if (presetValue === void 0) {
+      return 0;
+    }
+    const slug = parseFloat(presetValue, 10) === 0 ? "0" : getPresetSlug(presetValue, presetType);
+    const sliderValue = presets.findIndex((size4) => {
+      return String(size4.slug) === slug;
+    });
+    return sliderValue !== -1 ? sliderValue : NaN;
+  }
+  function getCustomValueFromPreset(value, presets, presetType) {
+    if (!isValuePreset(value, presetType)) {
+      return value;
+    }
+    const slug = parseFloat(value, 10) === 0 ? "0" : getPresetSlug(value, presetType);
+    const preset = presets.find((size4) => String(size4.slug) === slug);
+    return preset?.size;
+  }
+  function getPresetValueFromCustomValue(value, spacingSizes, presetType) {
+    if (!value || isValuePreset(value, presetType) || value === "0") {
+      return value;
+    }
+    const spacingMatch = spacingSizes.find(
+      (size4) => String(size4.size) === String(value)
+    );
+    if (spacingMatch?.slug) {
+      return `var:preset|${presetType}|${spacingMatch.slug}`;
+    }
+    return value;
+  }
+
+  // packages/block-editor/build-module/components/spacing-sizes-control/utils.mjs
+  var SPACING_PRESET_TYPE = "spacing";
   var RANGE_CONTROL_MAX_SIZE = 8;
   var ALL_SIDES = ["top", "bottom", "left", "right"];
   var DEFAULT_VALUES = {
@@ -18916,22 +18969,19 @@ var wp;
     custom: "custom"
   };
   function isValueSpacingPreset(value) {
-    if (!value?.includes) {
-      return false;
-    }
-    return value === "0" || value.includes("var:preset|spacing|");
+    return isValuePreset(value, SPACING_PRESET_TYPE);
   }
-  function getCustomValueFromPreset(value, spacingSizes) {
+  function getCustomValueFromPreset2(value, spacingSizes) {
     if (!isValueSpacingPreset(value)) {
       return value;
     }
-    const slug = getSpacingPresetSlug(value);
+    const slug = getPresetSlug(value, SPACING_PRESET_TYPE);
     const spacingSize = spacingSizes.find(
       (size4) => String(size4.slug) === slug
     );
     return spacingSize?.size;
   }
-  function getPresetValueFromCustomValue(value, spacingSizes) {
+  function getPresetValueFromCustomValue2(value, spacingSizes) {
     if (!value || isValueSpacingPreset(value) || value === "0") {
       return value;
     }
@@ -18952,16 +19002,6 @@ var wp;
       return value;
     }
     return `var(--wp--preset--spacing--${slug[1]})`;
-  }
-  function getSpacingPresetSlug(value) {
-    if (!value) {
-      return;
-    }
-    if (value === "0" || value === "default") {
-      return value;
-    }
-    const slug = value.match(/var:preset\|spacing\|(.+)/);
-    return slug ? slug[1] : void 0;
   }
   function hasAxisSupport(sides2, axis) {
     if (!sides2 || !sides2.length) {
@@ -64978,56 +65018,6 @@ var wp;
     dvmax: { max: 100, steps: 1 }
   };
 
-  // packages/block-editor/build-module/components/preset-input-control/utils.mjs
-  var isValuePreset = (value, slug) => {
-    if (!value?.includes) {
-      return false;
-    }
-    return value === "0" || value.includes(`var:preset|${slug}|`);
-  };
-  function getPresetSlug(value, presetType) {
-    if (!value) {
-      return;
-    }
-    if (value === "0" || value === "default") {
-      return value;
-    }
-    const slug = value.match(
-      new RegExp(`var:preset\\|${presetType}\\|(.+)`)
-    );
-    return slug ? slug[1] : void 0;
-  }
-  function getSliderValueFromPreset(presetValue, presets, presetType) {
-    if (presetValue === void 0) {
-      return 0;
-    }
-    const slug = parseFloat(presetValue, 10) === 0 ? "0" : getPresetSlug(presetValue, presetType);
-    const sliderValue = presets.findIndex((size4) => {
-      return String(size4.slug) === slug;
-    });
-    return sliderValue !== -1 ? sliderValue : NaN;
-  }
-  function getCustomValueFromPreset2(value, presets, presetType) {
-    if (!isValuePreset(value, presetType)) {
-      return value;
-    }
-    const slug = parseFloat(value, 10) === 0 ? "0" : getPresetSlug(value, presetType);
-    const preset = presets.find((size4) => String(size4.slug) === slug);
-    return preset?.size;
-  }
-  function getPresetValueFromCustomValue2(value, spacingSizes, presetType) {
-    if (!value || isValuePreset(value, presetType) || value === "0") {
-      return value;
-    }
-    const spacingMatch = spacingSizes.find(
-      (size4) => String(size4.size) === String(value)
-    );
-    if (spacingMatch?.slug) {
-      return `var:preset|${presetType}|${spacingMatch.slug}`;
-    }
-    return value;
-  }
-
   // packages/block-editor/build-module/components/preset-input-control/custom-value-controls.mjs
   var import_components135 = __toESM(require_components(), 1);
   var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
@@ -65143,7 +65133,7 @@ var wp;
     units: units2
   }) {
     const value = (0, import_element201.useMemo)(
-      () => getPresetValueFromCustomValue2(valueProp, presets, presetType),
+      () => getPresetValueFromCustomValue(valueProp, presets, presetType),
       [valueProp, presets, presetType]
     );
     const className = classNameProp ?? "preset-input-control";
@@ -65181,13 +65171,13 @@ var wp;
       ];
       currentValue = selectListOptions.length - 1;
     } else if (!isMixed) {
-      currentValue = !showCustomValueControl ? getSliderValueFromPreset(value, presets, presetType) : getCustomValueFromPreset2(value, presets, presetType);
+      currentValue = !showCustomValueControl ? getSliderValueFromPreset(value, presets, presetType) : getCustomValueFromPreset(value, presets, presetType);
     }
     const options = selectListOptions.map((size4, index2) => ({
       key: index2,
       name: size4.name
     }));
-    const resolvedPresetValue = isValuePreset(value, presetType) ? getCustomValueFromPreset2(value, presets, presetType) : value;
+    const resolvedPresetValue = isValuePreset(value, presetType) ? getCustomValueFromPreset(value, presets, presetType) : value;
     const [parsedQuantity, parsedUnit] = (0, import_components136.__experimentalParseQuantityAndUnitFromRawValue)(resolvedPresetValue);
     const computedUnit = parsedUnit || selectedUnit || "px";
     const unitConfig = units2?.find((item) => item.value === computedUnit);
@@ -74432,7 +74422,7 @@ var wp;
       }
       const nextValues = {
         ...Object.keys(values).reduce((acc, key) => {
-          acc[key] = getPresetValueFromCustomValue(
+          acc[key] = getPresetValueFromCustomValue2(
             values[key],
             spacingSizes
           );
@@ -74488,7 +74478,7 @@ var wp;
     const createHandleOnChange = (side) => (next) => {
       const nextValues = {
         ...Object.keys(values).reduce((acc, key) => {
-          acc[key] = getPresetValueFromCustomValue(
+          acc[key] = getPresetValueFromCustomValue2(
             values[key],
             spacingSizes
           );
@@ -74535,7 +74525,7 @@ var wp;
     const createHandleOnChange = (currentSide) => (next) => {
       const nextValues = {
         ...Object.keys(values).reduce((acc, key) => {
-          acc[key] = getPresetValueFromCustomValue(
+          acc[key] = getPresetValueFromCustomValue2(
             values[key],
             spacingSizes
           );
