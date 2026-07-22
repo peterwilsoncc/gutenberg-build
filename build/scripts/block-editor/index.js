@@ -12910,10 +12910,6 @@ var wp;
     block: { layer: "block" },
     blockVariation: { layer: "blockVariation" }
   };
-  var BLOCK_TO_ROOT_ELEMENT = {
-    "core/button": "button",
-    "core/heading": "heading"
-  };
   function createSourceDescriptor(type) {
     const descriptor = SOURCE_DESCRIPTORS[type];
     if (!descriptor) {
@@ -13076,6 +13072,7 @@ var wp;
   function computeResolvedStyle(globalStyles, {
     blockName,
     variationName = null,
+    elements = null,
     viewport = null,
     pseudoState = null
   } = {}) {
@@ -13089,18 +13086,19 @@ var wp;
     const selectedState = { viewport, pseudoState };
     const root = styles;
     const block = styles.blocks?.[blockName] ?? null;
-    const rootElement = BLOCK_TO_ROOT_ELEMENT[blockName] ?? null;
-    const element = rootElement ? styles.elements?.[rootElement] ?? null : null;
+    const elementLayers = (elements ?? []).map((elementName) => styles.elements?.[elementName] ?? null).filter((layer) => !!layer);
     const variation = variationName ? getVariationStyle(globalStyles, blockName, variationName) ?? null : null;
     const contributions = [
       createContribution(
         pickLayerRootContribution(root),
         createSourceDescriptor("root")
       ),
-      element ? createContribution(
-        pickLayerRootContribution(element),
-        createSourceDescriptor("element")
-      ) : null,
+      ...elementLayers.map(
+        (layer) => createContribution(
+          pickLayerRootContribution(layer),
+          createSourceDescriptor("element")
+        )
+      ),
       block ? createContribution(
         pickLayerRootContribution(block),
         createSourceDescriptor("block")
@@ -13118,12 +13116,14 @@ var wp;
           ),
           createSourceDescriptor("root")
         ),
-        element ? createContribution(
-          pickLayerRootContribution(
-            getStateSlice(element, selectedState)
-          ),
-          createSourceDescriptor("element")
-        ) : null,
+        ...elementLayers.map(
+          (layer) => createContribution(
+            pickLayerRootContribution(
+              getStateSlice(layer, selectedState)
+            ),
+            createSourceDescriptor("element")
+          )
+        ),
         block ? createContribution(
           pickLayerRootContribution(
             getStateSlice(block, selectedState)
@@ -13181,8 +13181,8 @@ var wp;
       inner = /* @__PURE__ */ new Map();
       byLinks.set(linksKey, inner);
     }
-    const stateKey = `${context.viewport ?? ""}:${context.pseudoState ?? ""}`;
-    const key = (context.blockName || "") + "" + (context.variationName || "") + "" + stateKey;
+    const sliceKey = `${context.elements?.join(",") ?? ""}:${context.viewport ?? ""}:${context.pseudoState ?? ""}`;
+    const key = (context.blockName || "") + "" + (context.variationName || "") + "" + sliceKey;
     if (inner.has(key)) {
       return inner.get(key);
     }
@@ -80844,20 +80844,71 @@ var wp;
       [rawGlobalStylesData, links]
     );
   }
-  function useOwnVariation(blockName, className) {
+  var CONTEXT_HEADING_LEVEL_BLOCKS = {
+    "core/accordion-heading": {
+      contextKey: "core/accordion-heading-level",
+      fallbackLevel: 3
+    }
+  };
+  function getHeadingLevel(blockName, levelAttribute, contextLevel) {
+    const contextOwned = CONTEXT_HEADING_LEVEL_BLOCKS[blockName];
+    if (!contextOwned) {
+      return levelAttribute;
+    }
+    return levelAttribute || contextLevel || contextOwned.fallbackLevel;
+  }
+  function useContextHeadingLevel(blockName) {
+    const blockContext = (0, import_element259.useContext)(block_context_default);
+    const contextKey = CONTEXT_HEADING_LEVEL_BLOCKS[blockName]?.contextKey;
+    return contextKey ? blockContext[contextKey] : void 0;
+  }
+  function getElementLayers(blockName, headingLevel) {
+    switch (blockName) {
+      case "core/button":
+        return ["button"];
+      case "core/accordion-heading":
+      case "core/heading":
+      case "core/post-title":
+      case "core/site-title":
+      case "core/query-title":
+      case "core/comments-title":
+      case "core/term-name":
+      case "core/site-tagline":
+        if (headingLevel === 0) {
+          return [];
+        }
+        return headingLevel ? ["heading", `h${headingLevel}`] : ["heading"];
+      default:
+        return [];
+    }
+  }
+  function useVariationAndElements(blockName, className) {
+    const { clientId } = useBlockEditContext();
+    const contextHeadingLevel = useContextHeadingLevel(blockName);
     return (0, import_data165.useSelect)(
       (select3) => {
-        if (!blockName || !className) {
-          return null;
+        if (!blockName) {
+          return { variationName: null, headingLevel: void 0 };
         }
         const registeredStyles = select3(import_blocks91.store).getBlockStyles(blockName);
-        return getVariationNameFromClass(className, registeredStyles);
+        const { level } = select3(store).getBlockAttributes(clientId) || {};
+        return {
+          variationName: className ? getVariationNameFromClass(className, registeredStyles) : null,
+          headingLevel: getHeadingLevel(
+            blockName,
+            level,
+            contextHeadingLevel
+          )
+        };
       },
-      [blockName, className]
+      [blockName, className, clientId, contextHeadingLevel]
     );
   }
   function useResolvedStyle(blockName, className, selectedState = null) {
-    const variationName = useOwnVariation(blockName, className);
+    const { variationName, headingLevel } = useVariationAndElements(
+      blockName,
+      className
+    );
     const globalStyles = useRawGlobalStyles();
     return (0, import_element259.useMemo)(() => {
       if (!blockName) {
@@ -80866,10 +80917,17 @@ var wp;
       return resolveStyle3(globalStyles, {
         blockName,
         variationName,
+        elements: getElementLayers(blockName, headingLevel),
         viewport: selectedState?.viewport ?? null,
         pseudoState: selectedState?.pseudo ?? null
       });
-    }, [blockName, variationName, globalStyles, selectedState]);
+    }, [
+      blockName,
+      variationName,
+      headingLevel,
+      globalStyles,
+      selectedState
+    ]);
   }
 
   // packages/block-editor/build-module/hooks/border.mjs
