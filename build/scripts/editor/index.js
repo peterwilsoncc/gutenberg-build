@@ -426,7 +426,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState160({
+          cachedValue = useState161({
             inst: { value, getSnapshot: getSnapshot2 }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -464,7 +464,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React77 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState160 = React77.useState, useEffect118 = React77.useEffect, useLayoutEffect15 = React77.useLayoutEffect, useDebugValue2 = React77.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React77 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState161 = React77.useState, useEffect118 = React77.useEffect, useLayoutEffect15 = React77.useLayoutEffect, useDebugValue2 = React77.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React77.useSyncExternalStore ? React77.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -37047,11 +37047,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore2(createStore2, props) {
     const [store4, setStore] = React76.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store4), [store4]);
-    const useState160 = React76.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
+    const useState161 = React76.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
     return [React76.useMemo(() => ({
       ...store4,
-      useState: useState160
-    }), [store4, useState160]), useEvent(() => {
+      useState: useState161
+    }), [store4, useState161]), useEvent(() => {
       setStore((store5) => createStore2({
         ...props,
         ...store5.getState()
@@ -80980,24 +80980,17 @@ If there's a particular need for this, please submit a feature request at https:
   function isAtMaxWidth(currentWidth, containerWidth, tolerance = 0) {
     return containerWidth > 0 && currentWidth >= containerWidth - tolerance;
   }
-  function ResizableEditor({ className, enableResizing, height, children }) {
+  function ResizableEditor({
+    className,
+    enableResizing,
+    width = "100%",
+    height = "100%",
+    onResizeStart,
+    onResizeStop,
+    children
+  }) {
     const [isResizing, setIsResizing] = (0, import_element226.useState)(false);
     const { setCanvasWidth: setCanvasWidth2 } = unlock((0, import_data96.useDispatch)(store));
-    const { canvasWidth: canvasWidth2, canvasHeight } = (0, import_data96.useSelect)(
-      (select9) => {
-        if (!enableResizing) {
-          return { canvasWidth: void 0, canvasHeight: void 0 };
-        }
-        const { getCanvasWidth: getCanvasWidth2, getCanvasHeight: getCanvasHeight2 } = unlock(
-          select9(store)
-        );
-        return {
-          canvasWidth: getCanvasWidth2(),
-          canvasHeight: getCanvasHeight2()
-        };
-      },
-      [enableResizing]
-    );
     const resizableRef = (0, import_element226.useRef)();
     const resizeWidthBy = (0, import_element226.useCallback)(
       (deltaPixels) => {
@@ -81035,18 +81028,20 @@ If there's a particular need for this, please submit a feature request at https:
           resizableRef.current = api?.resizable;
         },
         size: {
-          width: enableResizing && canvasWidth2 ? canvasWidth2 + "px" : "100%",
-          height: enableResizing && canvasHeight ? canvasHeight + "px" : height || "100%"
+          width,
+          height
         },
         onResizeStart: () => {
           setIsResizing(true);
+          onResizeStart?.();
         },
         onResize: (event, direction, element) => {
           updateCanvasWidth(element);
         },
         onResizeStop: (event, direction, element) => {
-          setIsResizing(false);
           updateCanvasWidth(element);
+          setIsResizing(false);
+          onResizeStop?.();
         },
         minWidth: 300,
         maxWidth: "100%",
@@ -94514,7 +94509,9 @@ If there's a particular need for this, please submit a feature request at https:
       postType: postType2,
       isPreview,
       styles,
-      hasCanvasWidth
+      hasCanvasWidth,
+      canvasWidth: canvasWidth2,
+      canvasHeight
     } = (0, import_data219.useSelect)((select9) => {
       const {
         getCurrentPostId: getCurrentPostId2,
@@ -94523,7 +94520,8 @@ If there's a particular need for this, please submit a feature request at https:
         getEditorSettings: getEditorSettings2,
         getRenderingMode: getRenderingMode2,
         getDeviceType: getDeviceType2,
-        getCanvasWidth: getCanvasWidth2
+        getCanvasWidth: getCanvasWidth2,
+        getCanvasHeight: getCanvasHeight2
       } = unlock(select9(store));
       const { getPostType, getEditedEntityRecord } = select9(import_core_data119.store);
       const postTypeSlug = getCurrentPostType2();
@@ -94538,6 +94536,7 @@ If there's a particular need for this, please submit a feature request at https:
       const supportsTemplateMode = editorSettings2.supportsTemplateMode;
       const postTypeObject = getPostType(postTypeSlug);
       const currentTemplateId = getCurrentTemplateId2();
+      const _canvasWidth = getCanvasWidth2();
       const template2 = currentTemplateId ? getEditedEntityRecord(
         "postType",
         TEMPLATE_POST_TYPE,
@@ -94557,7 +94556,9 @@ If there's a particular need for this, please submit a feature request at https:
         postType: postTypeSlug,
         isPreview: editorSettings2.isPreviewMode,
         styles: editorSettings2.styles,
-        hasCanvasWidth: getCanvasWidth2() !== void 0
+        hasCanvasWidth: _canvasWidth !== void 0,
+        canvasWidth: _canvasWidth,
+        canvasHeight: getCanvasHeight2()
       };
     }, []);
     const { isCleanNewPost: isCleanNewPost2 } = (0, import_data219.useSelect)(store);
@@ -94579,6 +94580,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const localRef = (0, import_element304.useRef)();
+    const [isResizingCanvas, setIsResizingCanvas] = (0, import_element304.useState)(false);
     const [globalLayoutSettings] = (0, import_block_editor82.useSettings)("layout");
     const fallbackLayout = (0, import_element304.useMemo)(() => {
       if (renderingMode2 !== "post-only" || isDesignPostType) {
@@ -94657,11 +94659,12 @@ If there's a particular need for this, please submit a feature request at https:
 		.is-root-container.alignwide:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: var(--wp--style--global--wide-size);}
 		.is-root-container.alignfull { max-width: none; margin-left: auto; margin-right: auto;}
 		.is-root-container.alignfull:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: none;}`;
-    const enableResizing = [
+    const isResizablePostType = [
       NAVIGATION_POST_TYPE,
       TEMPLATE_PART_POST_TYPE,
       PATTERN_POST_TYPE
-    ].includes(postType2) && // Disable in previews / view mode.
+    ].includes(postType2);
+    const enableResizing = isResizablePostType && // Disable in previews / view mode.
     !isPreview && // Disable resizing in mobile viewport.
     !isMobileViewport && // Disable resizing in zoomed-out mode.
     !isZoomedOut || // When the canvas has an explicit width, always allow resizing.
@@ -94671,6 +94674,8 @@ If there's a particular need for this, please submit a feature request at https:
       !isPreview && renderingMode2 === "post-only" && !isDesignPostType
     );
     const centerContentCSS = `display:flex;align-items:center;justify-content:center;`;
+    const shouldExpandIframeBody = canvasHeight !== void 0 && !isResizablePostType && !isResizingCanvas;
+    const iframeBodyMinHeightCSS = shouldExpandIframeBody ? "min-height:100vh;" : "";
     const iframeStyles = (0, import_element304.useMemo)(() => {
       return [
         ...styles ?? [],
@@ -94682,13 +94687,20 @@ If there's a particular need for this, please submit a feature request at https:
           // which isn't a requirement in auto resize mode.
           enableResizing || isNavigationPreview ? "min-height:0!important;" : ""}}
 				${paddingStyle ? paddingStyle : ""}
-				${enableResizing ? `.block-editor-iframe__html{background:var(--wp-editor-canvas-background);min-height:100vh;${centerContentCSS}}.block-editor-iframe__body{width:100%;}` : ""}${isNavigationPreview ? `.block-editor-iframe__body{${centerContentCSS}padding:var(--wp--style--block-gap,2em);}` : ""}`
+				${enableResizing ? `.block-editor-iframe__html{background:var(--wp-editor-canvas-background);min-height:100vh;${centerContentCSS}}.block-editor-iframe__body{width:100%;${iframeBodyMinHeightCSS}}` : ""}${isNavigationPreview ? `.block-editor-iframe__body{${centerContentCSS}padding:var(--wp--style--block-gap,2em);}` : ""}`
           // The CSS for enableResizing centers the body content vertically when resizing is enabled and applies a background
           // color to the iframe HTML element to match the background color of the editor canvas.
           // The CSS for isNavigationPreview centers the body content vertically and horizontally when the navigation is in preview mode.
         }
       ];
-    }, [styles, enableResizing, isNavigationPreview, paddingStyle]);
+    }, [
+      styles,
+      enableResizing,
+      centerContentCSS,
+      iframeBodyMinHeightCSS,
+      isNavigationPreview,
+      paddingStyle
+    ]);
     const typewriterRef = (0, import_block_editor82.__unstableUseTypewriter)();
     contentRef = (0, import_compose76.useMergeRefs)([
       localRef,
@@ -94723,105 +94735,115 @@ If there's a particular need for this, please submit a feature request at https:
         ),
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(SyncConnectionErrorModal, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(resizable_editor_default, { enableResizing, height: "100%", children: /* @__PURE__ */ (0, import_jsx_runtime510.jsxs)(
-            BlockCanvas,
+          /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
+            resizable_editor_default,
             {
-              shouldIframe: true,
-              contentRef,
-              styles: iframeStyles,
-              height: "100%",
-              iframeProps: {
-                ...iframeProps,
-                style: iframeProps?.style
-              },
-              children: [
-                themeSupportsLayout && !themeHasDisabledLayoutStyles && renderingMode2 === "post-only" && !isDesignPostType && /* @__PURE__ */ (0, import_jsx_runtime510.jsxs)(import_jsx_runtime510.Fragment, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                    LayoutStyle,
-                    {
-                      selector: ".editor-visual-editor__post-title-wrapper",
-                      layout: fallbackLayout
-                    }
-                  ),
-                  /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                    LayoutStyle,
-                    {
-                      selector: ".block-editor-block-list__layout.is-root-container",
-                      layout: postEditorLayout
-                    }
-                  ),
-                  align && /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(LayoutStyle, { css: alignCSS }),
-                  postContentLayoutStyles && /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                    LayoutStyle,
-                    {
-                      layout: postContentLayout,
-                      css: postContentLayoutStyles
-                    }
-                  )
-                ] }),
-                renderingMode2 === "post-only" && !isDesignPostType && /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                  "div",
-                  {
-                    className: clsx_default(
-                      "editor-visual-editor__post-title-wrapper",
-                      // The following class is only here for backward compatibility
-                      // some themes might be using it to style the post title.
-                      "edit-post-visual-editor__post-title-wrapper",
-                      {
-                        "has-global-padding": hasRootPaddingAwareAlignments
-                      }
-                    ),
-                    contentEditable: false,
-                    style: {
-                      // This is using inline styles so it's applied
-                      // within the editor iframe.
-                      marginTop: "4rem"
-                    },
-                    children: /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(post_title_default, { ref: titleRef })
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime510.jsxs)(
-                  import_block_editor82.RecursionProvider,
-                  {
-                    blockName: wrapperBlockName,
-                    uniqueId: wrapperUniqueId,
-                    children: [
+              enableResizing,
+              width: enableResizing && canvasWidth2 ? canvasWidth2 + "px" : "100%",
+              height: enableResizing && canvasHeight && !isResizingCanvas ? canvasHeight + "px" : "100%",
+              onResizeStart: () => setIsResizingCanvas(true),
+              onResizeStop: () => setIsResizingCanvas(false),
+              children: /* @__PURE__ */ (0, import_jsx_runtime510.jsxs)(
+                BlockCanvas,
+                {
+                  shouldIframe: true,
+                  contentRef,
+                  styles: iframeStyles,
+                  height: "100%",
+                  iframeProps: {
+                    ...iframeProps,
+                    style: iframeProps?.style
+                  },
+                  children: [
+                    themeSupportsLayout && !themeHasDisabledLayoutStyles && renderingMode2 === "post-only" && !isDesignPostType && /* @__PURE__ */ (0, import_jsx_runtime510.jsxs)(import_jsx_runtime510.Fragment, { children: [
                       /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                        import_block_editor82.BlockList,
+                        LayoutStyle,
                         {
-                          className: clsx_default(
-                            "is-" + deviceType.toLowerCase() + "-preview",
-                            renderingMode2 !== "post-only" || isDesignPostType ? "wp-site-blocks" : `${blockListLayoutClass} wp-block-post-content`,
-                            // Ensure root level blocks receive default/flow blockGap styling rules.
-                            {
-                              "has-global-padding": renderingMode2 === "post-only" && !isDesignPostType && hasRootPaddingAwareAlignments
-                            }
-                          ),
-                          layout: blockListLayout,
-                          dropZoneElement: (
-                            // Pass in the html element of the iframe to
-                            // ensure the drop zone extends to the edges of
-                            // the iframe.
-                            localRef.current?.parentNode
-                          ),
-                          __unstableDisableDropZone: (
-                            // In template preview mode, disable drop zones at the root of the template.
-                            renderingMode2 === "template-locked" ? true : false
-                          )
+                          selector: ".editor-visual-editor__post-title-wrapper",
+                          layout: fallbackLayout
                         }
                       ),
-                      renderingMode2 === "template-locked" && /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
-                        EditTemplateBlocksNotification,
+                      /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
+                        LayoutStyle,
                         {
-                          contentRef: localRef
+                          selector: ".block-editor-block-list__layout.is-root-container",
+                          layout: postEditorLayout
+                        }
+                      ),
+                      align && /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(LayoutStyle, { css: alignCSS }),
+                      postContentLayoutStyles && /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
+                        LayoutStyle,
+                        {
+                          layout: postContentLayout,
+                          css: postContentLayoutStyles
                         }
                       )
-                    ]
-                  }
-                )
-              ]
+                    ] }),
+                    renderingMode2 === "post-only" && !isDesignPostType && /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
+                      "div",
+                      {
+                        className: clsx_default(
+                          "editor-visual-editor__post-title-wrapper",
+                          // The following class is only here for backward compatibility
+                          // some themes might be using it to style the post title.
+                          "edit-post-visual-editor__post-title-wrapper",
+                          {
+                            "has-global-padding": hasRootPaddingAwareAlignments
+                          }
+                        ),
+                        contentEditable: false,
+                        style: {
+                          // This is using inline styles so it's applied
+                          // within the editor iframe.
+                          marginTop: "4rem"
+                        },
+                        children: /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(post_title_default, { ref: titleRef })
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime510.jsxs)(
+                      import_block_editor82.RecursionProvider,
+                      {
+                        blockName: wrapperBlockName,
+                        uniqueId: wrapperUniqueId,
+                        children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
+                            import_block_editor82.BlockList,
+                            {
+                              className: clsx_default(
+                                "is-" + deviceType.toLowerCase() + "-preview",
+                                renderingMode2 !== "post-only" || isDesignPostType ? "wp-site-blocks" : `${blockListLayoutClass} wp-block-post-content`,
+                                // Ensure root level blocks receive default/flow blockGap styling rules.
+                                {
+                                  "has-global-padding": renderingMode2 === "post-only" && !isDesignPostType && hasRootPaddingAwareAlignments
+                                }
+                              ),
+                              layout: blockListLayout,
+                              dropZoneElement: (
+                                // Pass in the html element of the iframe to
+                                // ensure the drop zone extends to the edges of
+                                // the iframe.
+                                localRef.current?.parentNode
+                              ),
+                              __unstableDisableDropZone: (
+                                // In template preview mode, disable drop zones at the root of the template.
+                                renderingMode2 === "template-locked" ? true : false
+                              )
+                            }
+                          ),
+                          renderingMode2 === "template-locked" && /* @__PURE__ */ (0, import_jsx_runtime510.jsx)(
+                            EditTemplateBlocksNotification,
+                            {
+                              contentRef: localRef
+                            }
+                          )
+                        ]
+                      }
+                    )
+                  ]
+                }
+              )
             }
-          ) })
+          )
         ]
       }
     );
