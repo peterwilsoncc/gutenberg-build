@@ -98475,14 +98475,7 @@ If there's a particular need for this, please submit a feature request at https:
     getOptionCompletion(user) {
       return {
         action: "insert-at-caret",
-        value: /* @__PURE__ */ (0, import_jsx_runtime547.jsx)(
-          "a",
-          {
-            className: `wp-note-mention user-${user.id}`,
-            href: user.link,
-            children: "@" + user.name
-          }
-        )
+        value: /* @__PURE__ */ (0, import_jsx_runtime547.jsx)("span", { className: `wp-note-mention user-${user.id}`, children: "@" + user.name })
       };
     }
   };
