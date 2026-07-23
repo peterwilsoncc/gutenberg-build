@@ -65591,6 +65591,7 @@ var wp;
     colorValue,
     colorSlug,
     gradientValue,
+    gradientSlug,
     clearable,
     showTitle = true,
     enableAlpha,
@@ -65634,10 +65635,11 @@ var wp;
         import_components139.GradientPicker,
         {
           value: gradientValue,
-          onChange: canChooseAColor ? (newGradient) => {
-            onGradientChange(newGradient);
+          selectedSlug: gradientSlug,
+          onChange: canChooseAColor ? (newGradient, _index, newSlug) => {
+            onGradientChange(newGradient, newSlug);
             onColorChange();
-          } : onGradientChange,
+          } : (newGradient, _index, newSlug) => onGradientChange(newGradient, newSlug),
           ...{ gradients, disableCustomGradients },
           __experimentalIsRenderedInSidebar,
           clearable,
@@ -75306,7 +75308,10 @@ var wp;
       [colors2]
     );
     const decodeValue = (rawValue) => getValueFromVariable({ settings: settings2 }, "", rawValue);
-    const encodeGradientValue = (gradientValue) => {
+    const encodeGradientValue = (gradientValue, slug) => {
+      if (slug) {
+        return "var:preset|gradient|" + slug;
+      }
       const allGradients = gradients.flatMap(
         ({ gradients: originGradients }) => originGradients
       );
@@ -75685,6 +75690,7 @@ var wp;
         colorValue: isGradient ? void 0 : displayed,
         colorSlug: isGradient ? void 0 : displayedSlug,
         gradientValue: isGradient ? displayed : void 0,
+        gradientSlug: isGradient ? displayedSlug : void 0,
         onColorChange: isGradient ? void 0 : onChange,
         onGradientChange: isGradient ? onChange : void 0,
         clearable: userValue !== void 0,
@@ -76172,11 +76178,11 @@ var wp;
         newValue.elements[name].color.gradient = void 0;
         onChange(newValue);
       };
-      const setElementGradient = (newGradient) => {
+      const setElementGradient = (newGradient, newSlug) => {
         const newValue = setImmutably2(
           value,
           ["elements", name, "color", "gradient"],
-          encodeGradientValue(newGradient)
+          encodeGradientValue(newGradient, newSlug)
         );
         newValue.elements[name].color.background = void 0;
         onChange(newValue);
@@ -76236,6 +76242,14 @@ var wp;
             key: "gradient",
             label: (0, import_i18n189.__)("Gradient"),
             inheritedValue: elementGradient,
+            inheritedSlug: extractPresetSlug(
+              inheritedValue?.elements?.[name]?.color?.gradient,
+              "gradient"
+            ),
+            userSlug: extractPresetSlug(
+              value?.elements?.[name]?.color?.gradient,
+              "gradient"
+            ),
             setValue: setElementGradient,
             userValue: elementGradientUserColor,
             isGradient: true,
@@ -80258,11 +80272,11 @@ var wp;
     };
     const legacyColorGradient = decodeValue(inheritedValue?.color?.gradient);
     const userLegacyColorGradient = decodeValue(value?.color?.gradient);
-    const setLegacyColorGradient = (newGradient) => {
+    const setLegacyColorGradient = (newGradient, newSlug) => {
       const newValue = setImmutably2(
         value,
         ["color", "gradient"],
-        encodeGradientValue(newGradient)
+        encodeGradientValue(newGradient, newSlug)
       );
       newValue.color.background = void 0;
       onChange(newValue);
@@ -80274,11 +80288,11 @@ var wp;
     const inheritedGradient = decodeValue(
       inheritedValue?.background?.gradient ?? inheritedValue?.color?.gradient
     );
-    const setGradient = (newGradient) => {
+    const setGradient = (newGradient, newSlug) => {
       let newValue = setImmutably2(
         value,
         ["background", "gradient"],
-        encodeGradientValue(newGradient)
+        encodeGradientValue(newGradient, newSlug)
       );
       newValue = setImmutably2(newValue, ["color", "gradient"], void 0);
       onChange(newValue);
@@ -80384,6 +80398,14 @@ var wp;
                   key: "gradient",
                   label: (0, import_i18n200.__)("Gradient"),
                   inheritedValue: inheritedGradient,
+                  inheritedSlug: extractPresetSlug(
+                    inheritedValue?.background?.gradient ?? inheritedValue?.color?.gradient,
+                    "gradient"
+                  ),
+                  userSlug: extractPresetSlug(
+                    value?.background?.gradient ?? value?.color?.gradient,
+                    "gradient"
+                  ),
                   setValue: setGradient,
                   userValue: currentGradient,
                   isGradient: true,
@@ -80415,6 +80437,14 @@ var wp;
                   key: "gradient",
                   label: (0, import_i18n200.__)("Gradient"),
                   inheritedValue: legacyColorGradient,
+                  inheritedSlug: extractPresetSlug(
+                    inheritedValue?.color?.gradient,
+                    "gradient"
+                  ),
+                  userSlug: extractPresetSlug(
+                    value?.color?.gradient,
+                    "gradient"
+                  ),
                   setValue: setLegacyColorGradient,
                   userValue: userLegacyColorGradient,
                   isGradient: true,

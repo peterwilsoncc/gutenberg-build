@@ -37260,6 +37260,7 @@ This message will only show in development mode. It won't appear in production. 
     gradients,
     onChange,
     value,
+    selectedSlug,
     ...additionalProps
   }) {
     const gradientOptions = (0, import_element109.useMemo)(() => {
@@ -37267,25 +37268,28 @@ This message will only show in development mode. It won't appear in production. 
         gradient,
         name,
         slug
-      }, index2) => /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(circular_option_picker_default2.Option, {
-        value: gradient,
-        isSelected: value === gradient,
-        tooltipText: name || // translators: %s: gradient code e.g: "linear-gradient(90deg, rgba(98,16,153,1) 0%, rgba(172,110,22,1) 100%);".
-        (0, import_i18n34.sprintf)((0, import_i18n34.__)("Gradient code: %s"), gradient),
-        style: {
-          color: "rgba( 0,0,0,0 )",
-          background: gradient
-        },
-        onClick: value === gradient ? clearGradient : () => onChange(gradient, index2),
-        "aria-label": name ? (
-          // translators: %s: The name of the gradient e.g: "Angular red to blue".
-          (0, import_i18n34.sprintf)((0, import_i18n34.__)("Gradient: %s"), name)
-        ) : (
-          // translators: %s: gradient code e.g: "linear-gradient(90deg, rgba(98,16,153,1) 0%, rgba(172,110,22,1) 100%);".
-          (0, import_i18n34.sprintf)((0, import_i18n34.__)("Gradient code: %s"), gradient)
-        )
-      }, slug));
-    }, [gradients, value, onChange, clearGradient]);
+      }, index2) => {
+        const isSelected2 = selectedSlug ? slug === selectedSlug : value === gradient;
+        return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(circular_option_picker_default2.Option, {
+          value: gradient,
+          isSelected: isSelected2,
+          tooltipText: name || // translators: %s: gradient code e.g: "linear-gradient(90deg, rgba(98,16,153,1) 0%, rgba(172,110,22,1) 100%);".
+          (0, import_i18n34.sprintf)((0, import_i18n34.__)("Gradient code: %s"), gradient),
+          style: {
+            color: "rgba( 0,0,0,0 )",
+            background: gradient
+          },
+          onClick: isSelected2 ? clearGradient : () => onChange(gradient, index2, slug),
+          "aria-label": name ? (
+            // translators: %s: The name of the gradient e.g: "Angular red to blue".
+            (0, import_i18n34.sprintf)((0, import_i18n34.__)("Gradient: %s"), name)
+          ) : (
+            // translators: %s: gradient code e.g: "linear-gradient(90deg, rgba(98,16,153,1) 0%, rgba(172,110,22,1) 100%);".
+            (0, import_i18n34.sprintf)((0, import_i18n34.__)("Gradient code: %s"), gradient)
+          )
+        }, slug);
+      });
+    }, [gradients, value, onChange, clearGradient, selectedSlug]);
     return /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(circular_option_picker_default2.OptionGroup, {
       className: className2,
       options: gradientOptions,
@@ -37298,6 +37302,7 @@ This message will only show in development mode. It won't appear in production. 
     gradients,
     onChange,
     value,
+    selectedSlug,
     headingLevel
   }) {
     const instanceId = (0, import_compose42.useInstanceId)(MultipleOrigin);
@@ -37318,8 +37323,9 @@ This message will only show in development mode. It won't appear in production. 
           }), /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(SingleOrigin, {
             clearGradient,
             gradients: gradientSet,
-            onChange: (gradient) => onChange(gradient, index2),
+            onChange: (gradient, _index, slug) => onChange(gradient, index2, slug),
             value,
+            selectedSlug,
             "aria-labelledby": id3
           })]
         }, index2);
