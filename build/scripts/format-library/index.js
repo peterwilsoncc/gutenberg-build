@@ -5712,7 +5712,6 @@ var wp;
   var import_rich_text16 = __toESM(require_rich_text(), 1);
   var import_block_editor16 = __toESM(require_block_editor(), 1);
   var import_components6 = __toESM(require_components(), 1);
-  var import_a11y3 = __toESM(require_a11y(), 1);
 
   // packages/format-library/build-module/lock-unlock.mjs
   var import_private_apis = __toESM(require_private_apis(), 1);
@@ -5723,7 +5722,7 @@ var wp;
 
   // packages/format-library/build-module/math/index.mjs
   var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge } = unlock(import_components6.privateApis);
+  var { ValidatedTextControl } = unlock(import_components6.privateApis);
   var name14 = "core/math";
   var title14 = (0, import_i18n18.__)("Math");
   function InlineUI2({
@@ -5737,28 +5736,23 @@ var wp;
       activeAttributes?.["data-latex"] || ""
     );
     const [error2, setError] = (0, import_element19.useState)(null);
+    const formRef = (0, import_element19.useRef)();
     const popoverAnchor = (0, import_rich_text16.useAnchor)({
       editableContentElement: contentRef.current,
       settings: math
     });
     const handleLatexChange = (newLatex) => {
-      let mathML = "";
       setLatex(newLatex);
-      if (newLatex) {
+      let mathML = "";
+      if (newLatex && latexToMathML) {
         try {
           mathML = latexToMathML(newLatex, { displayMode: false });
           setError(null);
         } catch (err) {
           setError(err.message);
-          (0, import_a11y3.speak)(
-            (0, import_i18n18.sprintf)(
-              /* translators: %s: error message returned when parsing LaTeX. */
-              (0, import_i18n18.__)("Error parsing mathematical expression: %s"),
-              err.message
-            )
-          );
-          return;
         }
+      } else {
+        setError(null);
       }
       const newReplacements = value.replacements.slice();
       newReplacements[value.start] = {
@@ -5780,36 +5774,29 @@ var wp;
         offset: 8,
         focusOnMount: false,
         anchor: popoverAnchor,
+        onFocusOutside: () => formRef.current?.reportValidity(),
         className: "block-editor-format-toolbar__math-popover",
-        children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { style: { minWidth: "300px", padding: "4px" }, children: /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(Stack, { direction: "column", gap: "xs", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
-            import_components6.TextControl,
-            {
-              hideLabelFromVision: true,
-              label: (0, import_i18n18.__)("LaTeX math syntax"),
-              value: latex,
-              onChange: handleLatexChange,
-              placeholder: (0, import_i18n18.__)("e.g., x^2, \\frac{a}{b}"),
-              autoComplete: "off",
-              className: "block-editor-format-toolbar__math-input"
-            }
-          ),
-          error2 && /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(import_jsx_runtime43.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
-              WCBadge,
+        children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+          "form",
+          {
+            ref: formRef,
+            style: { minWidth: "300px", padding: "4px" },
+            onSubmit: (event) => event.preventDefault(),
+            children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+              ValidatedTextControl,
               {
-                intent: "error",
-                className: "wp-block-math__error",
-                children: (0, import_i18n18.sprintf)(
-                  /* translators: %s: error message returned when parsing LaTeX. */
-                  (0, import_i18n18.__)("Error: %s"),
-                  error2
-                )
+                hideLabelFromVision: true,
+                label: (0, import_i18n18.__)("LaTeX math syntax"),
+                value: latex,
+                customValidity: error2 ? { type: "invalid", message: error2 } : void 0,
+                onChange: handleLatexChange,
+                placeholder: (0, import_i18n18.__)("e.g., x^2, \\frac{a}{b}"),
+                autoComplete: "off",
+                className: "block-editor-format-toolbar__math-input"
               }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("style", { children: ".wp-block-math__error .components-badge__content{white-space:normal}" })
-          ] })
-        ] }) })
+            )
+          }
+        )
       }
     );
   }

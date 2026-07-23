@@ -40524,15 +40524,15 @@ ${text}
   var import_components64 = __toESM(require_components(), 1);
   var import_element63 = __toESM(require_element(), 1);
   var import_data56 = __toESM(require_data(), 1);
-  var import_a11y = __toESM(require_a11y(), 1);
   var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge } = unlock(import_components64.privateApis);
+  var { ValidatedTextareaControl } = unlock(import_components64.privateApis);
   function MathEdit({ attributes, setAttributes, isSelected }) {
     const { latex, mathML } = attributes;
     const [blockRef, setBlockRef] = (0, import_element63.useState)();
     const [error2, setError] = (0, import_element63.useState)(null);
     const [latexToMathML, setLatexToMathML] = (0, import_element63.useState)();
     const initialLatex = (0, import_element63.useRef)(latex);
+    const formRef = (0, import_element63.useRef)();
     const { __unstableMarkNextChangeAsNotPersistent } = (0, import_data56.useDispatch)(import_block_editor125.store);
     (0, import_element63.useEffect)(() => {
       import("@wordpress/latex-to-mathml").then((module) => {
@@ -40570,62 +40570,46 @@ ${text}
           offset: 8,
           anchor: blockRef,
           focusOnMount: false,
+          onFocusOutside: () => formRef.current?.reportValidity(),
           __unstableSlotName: "__unstable-block-tools-after",
-          children: /* @__PURE__ */ (0, import_jsx_runtime305.jsx)("div", { style: { padding: "4px", minWidth: "300px" }, children: /* @__PURE__ */ (0, import_jsx_runtime305.jsxs)(import_components64.__experimentalVStack, { spacing: 1, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
-              import_components64.TextareaControl,
-              {
-                label: (0, import_i18n107.__)("LaTeX math syntax"),
-                hideLabelFromVision: true,
-                value: latex,
-                className: "wp-block-math__textarea-control",
-                onChange: (newLatex) => {
-                  if (!latexToMathML) {
-                    setAttributes({ latex: newLatex });
-                    return;
-                  }
-                  let newMathML = "";
-                  try {
-                    newMathML = latexToMathML(newLatex, {
-                      displayMode: true
-                    });
-                    setError(null);
-                  } catch (err) {
-                    setError(err.message);
-                    (0, import_a11y.speak)(
-                      (0, import_i18n107.sprintf)(
-                        /* translators: %s: error message returned when parsing LaTeX. */
-                        (0, import_i18n107.__)(
-                          "Error parsing mathematical expression: %s"
-                        ),
-                        err.message
-                      )
-                    );
-                  }
-                  setAttributes({
-                    mathML: newMathML,
-                    latex: newLatex
-                  });
-                },
-                placeholder: (0, import_i18n107.__)("e.g., x^2, \\frac{a}{b}")
-              }
-            ),
-            error2 && /* @__PURE__ */ (0, import_jsx_runtime305.jsxs)(import_jsx_runtime305.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
-                WCBadge,
+          children: /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
+            "form",
+            {
+              ref: formRef,
+              style: { padding: "4px", minWidth: "300px" },
+              onSubmit: (event) => event.preventDefault(),
+              children: /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
+                ValidatedTextareaControl,
                 {
-                  intent: "error",
-                  className: "wp-block-math__error",
-                  children: (0, import_i18n107.sprintf)(
-                    /* translators: %s: error message returned when parsing LaTeX. */
-                    (0, import_i18n107.__)("Error: %s"),
-                    error2
-                  )
+                  label: (0, import_i18n107.__)("LaTeX math syntax"),
+                  hideLabelFromVision: true,
+                  value: latex,
+                  className: "wp-block-math__textarea-control",
+                  customValidity: error2 ? { type: "invalid", message: error2 } : void 0,
+                  onChange: (newLatex) => {
+                    if (!latexToMathML) {
+                      setAttributes({ latex: newLatex });
+                      return;
+                    }
+                    let newMathML = "";
+                    try {
+                      newMathML = latexToMathML(newLatex, {
+                        displayMode: true
+                      });
+                      setError(null);
+                    } catch (err) {
+                      setError(err.message);
+                    }
+                    setAttributes({
+                      mathML: newMathML,
+                      latex: newLatex
+                    });
+                  },
+                  placeholder: (0, import_i18n107.__)("e.g., x^2, \\frac{a}{b}")
                 }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime305.jsx)("style", { children: ".wp-block-math__error .components-badge__content{white-space:normal}" })
-            ] })
-          ] }) })
+              )
+            }
+          )
         }
       )
     ] });
@@ -44164,7 +44148,7 @@ ${text}
   var import_data92 = __toESM(require_data(), 1);
   var import_components95 = __toESM(require_components(), 1);
   var import_i18n148 = __toESM(require_i18n(), 1);
-  var import_a11y3 = __toESM(require_a11y(), 1);
+  var import_a11y2 = __toESM(require_a11y(), 1);
   var import_blocks64 = __toESM(require_blocks(), 1);
   var import_compose37 = __toESM(require_compose(), 1);
 
@@ -44279,7 +44263,7 @@ ${text}
   // packages/block-library/build-module/navigation/edit/placeholder/index.mjs
   var import_components72 = __toESM(require_components(), 1);
   var import_i18n120 = __toESM(require_i18n(), 1);
-  var import_a11y2 = __toESM(require_a11y(), 1);
+  var import_a11y = __toESM(require_a11y(), 1);
   var import_element72 = __toESM(require_element(), 1);
   var import_core_data32 = __toESM(require_core_data(), 1);
 
@@ -44480,10 +44464,10 @@ ${text}
         return;
       }
       if (isResolvingMenus) {
-        (0, import_a11y2.speak)((0, import_i18n120.__)("Loading navigation block setup options\u2026"));
+        (0, import_a11y.speak)((0, import_i18n120.__)("Loading navigation block setup options\u2026"));
       }
       if (hasResolvedMenus) {
-        (0, import_a11y2.speak)((0, import_i18n120.__)("Navigation block setup options ready."));
+        (0, import_a11y.speak)((0, import_i18n120.__)("Navigation block setup options ready."));
       }
     }, [hasResolvedMenus, isResolvingMenus, isSelected]);
     const isResolvingActions = isResolvingMenus && isResolvingCanUserCreateNavigationMenus;
@@ -48757,7 +48741,7 @@ ${text}
     (0, import_element92.useEffect)(() => {
       hideNavigationMenuStatusNotice();
       if (isCreatingNavigationMenu) {
-        (0, import_a11y3.speak)((0, import_i18n148.__)(`Creating Navigation Menu.`));
+        (0, import_a11y2.speak)((0, import_i18n148.__)(`Creating Navigation Menu.`));
       }
       if (createNavigationMenuIsSuccess) {
         handleUpdateMenu(createNavigationMenuPost?.id, {
@@ -48786,7 +48770,7 @@ ${text}
     (0, import_element92.useEffect)(() => {
       hideClassicMenuConversionNotice();
       if (classicMenuConversionStatus === CLASSIC_MENU_CONVERSION_PENDING) {
-        (0, import_a11y3.speak)((0, import_i18n148.__)("Classic menu importing."));
+        (0, import_a11y2.speak)((0, import_i18n148.__)("Classic menu importing."));
       }
       if (classicMenuConversionStatus === CLASSIC_MENU_CONVERSION_SUCCESS) {
         showClassicMenuConversionNotice(
@@ -48852,7 +48836,7 @@ ${text}
     const isFirstRender = (0, import_element92.useRef)(true);
     (0, import_element92.useEffect)(() => {
       if (!isFirstRender.current && submenuAccessibilityNotice) {
-        (0, import_a11y3.speak)(submenuAccessibilityNotice);
+        (0, import_a11y2.speak)(submenuAccessibilityNotice);
       }
       isFirstRender.current = false;
     }, [submenuAccessibilityNotice]);
@@ -50792,7 +50776,7 @@ ${text}
   var import_block_editor170 = __toESM(require_block_editor(), 1);
   var import_url18 = __toESM(require_url(), 1);
   var import_element94 = __toESM(require_element(), 1);
-  var import_a11y4 = __toESM(require_a11y(), 1);
+  var import_a11y3 = __toESM(require_a11y(), 1);
   var import_blocks68 = __toESM(require_blocks(), 1);
   var import_compose40 = __toESM(require_compose(), 1);
 
@@ -51064,7 +51048,7 @@ ${text}
               anchor: popoverAnchor,
               onRemove: () => {
                 setAttributes({ url: "" });
-                (0, import_a11y4.speak)((0, import_i18n152.__)("Link removed."), "assertive");
+                (0, import_a11y3.speak)((0, import_i18n152.__)("Link removed."), "assertive");
               },
               onChange: handleLinkChange
             }
@@ -68767,7 +68751,7 @@ ${text}
   var import_compose55 = __toESM(require_compose(), 1);
   var import_i18n229 = __toESM(require_i18n(), 1);
   var import_dom19 = __toESM(require_dom(), 1);
-  var import_a11y5 = __toESM(require_a11y(), 1);
+  var import_a11y4 = __toESM(require_a11y(), 1);
 
   // packages/block-library/build-module/search/utils.mjs
   var PC_WIDTH_DEFAULT = 50;
@@ -69165,7 +69149,7 @@ ${text}
           ],
           onChange: (value) => {
             setAttributes({ tagName: value });
-            (0, import_a11y5.speak)(
+            (0, import_a11y4.speak)(
               TAG_NAME_MESSAGES[value].replace(/[<>]/g, "")
             );
           },
@@ -80442,7 +80426,7 @@ ${text}
   var import_element155 = __toESM(require_element(), 1);
   var import_url23 = __toESM(require_url(), 1);
   var import_jsx_runtime559 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge2 } = unlock(import_components184.privateApis);
+  var { Badge: WCBadge } = unlock(import_components184.privateApis);
   var ALLOWED_TYPES = ["text/vtt"];
   var DEFAULT_KIND = "subtitles";
   var KIND_OPTIONS = [
@@ -80468,7 +80452,7 @@ ${text}
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime559.jsx)("span", { children: track.label }),
             /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(import_components184.__experimentalHStack, { justify: "flex-end", children: [
-              track.default && /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(WCBadge2, { children: (0, import_i18n276.__)("Default") }),
+              track.default && /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(WCBadge, { children: (0, import_i18n276.__)("Default") }),
               /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
                 import_components184.Button,
                 {
