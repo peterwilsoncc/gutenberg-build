@@ -2045,6 +2045,10 @@ html[dir=rtl] .has-drop-cap:not(:focus)::first-letter {
   color: inherit;
 }
 
+.wp-block-pullquote[style*=line-height] :where(p) {
+  line-height: inherit;
+}
+
 .wp-block-rss li a > div {
   display: inline;
 }
