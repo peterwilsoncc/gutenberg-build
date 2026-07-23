@@ -46026,7 +46026,7 @@ var wp;
     node.setAttribute("aria-multiline", "true");
     node.setAttribute("aria-label", (0, import_i18n36.__)("Editor canvas"));
     if (focus10) {
-      node.focus();
+      node.focus({ preventScroll: true });
     }
     return true;
   }
@@ -47072,7 +47072,12 @@ var wp;
   var import_compose29 = __toESM(require_compose(), 1);
   function useClickSelection() {
     const { selectBlock: selectBlock2 } = (0, import_data46.useDispatch)(store);
-    const { isSelectionEnabled: isSelectionEnabled3, getBlockSelectionStart: getBlockSelectionStart2, hasMultiSelection: hasMultiSelection2 } = (0, import_data46.useSelect)(store);
+    const {
+      isSelectionEnabled: isSelectionEnabled3,
+      getBlockSelectionStart: getBlockSelectionStart2,
+      getSelectionStart: getSelectionStart2,
+      hasMultiSelection: hasMultiSelection2
+    } = (0, import_data46.useSelect)(store);
     return (0, import_compose29.useRefEffect)(
       (node) => {
         function onMouseDown(event) {
@@ -47083,7 +47088,27 @@ var wp;
           const clickedClientId = getBlockClientId(event.target);
           if (event.shiftKey) {
             if (startClientId && startClientId !== clickedClientId) {
-              setContentEditableWrapper(node, true);
+              const { clientId, attributeKey } = getSelectionStart2();
+              setContentEditableWrapper(node, true, {
+                focus: !!attributeKey
+              });
+              const { ownerDocument: ownerDocument2 } = node;
+              const selection2 = ownerDocument2.defaultView.getSelection();
+              const blockElement = !attributeKey && ownerDocument2.getElementById(
+                `block-${clientId}`
+              );
+              if (blockElement && !(selection2.anchorNode && blockElement.contains(selection2.anchorNode))) {
+                const isForward = (
+                  // eslint-disable-next-line no-bitwise
+                  blockElement.compareDocumentPosition(
+                    event.target
+                  ) & node.DOCUMENT_POSITION_FOLLOWING
+                );
+                selection2.setPosition(
+                  blockElement,
+                  isForward ? 0 : blockElement.childNodes.length
+                );
+              }
             }
           } else if (hasMultiSelection2()) {
             selectBlock2(clickedClientId);
@@ -47098,6 +47123,7 @@ var wp;
         selectBlock2,
         isSelectionEnabled3,
         getBlockSelectionStart2,
+        getSelectionStart2,
         hasMultiSelection2
       ]
     );
@@ -73769,7 +73795,7 @@ var wp;
     if (!shouldDisableEditing) {
       if (hasEditableRoot && hasDefaultEditingMode && isBlockSelected2) {
         tabIndex = props.tabIndex ?? 0;
-      } else if (hasEditableRoot && props.tabIndex === 0) {
+      } else if (props.tabIndex === 0) {
         tabIndex = null;
       }
     }
