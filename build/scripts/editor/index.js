@@ -85840,7 +85840,8 @@ If there's a particular need for this, please submit a feature request at https:
         const _termIds = _taxonomy ? getEditedPostAttribute2(_taxonomy.rest_base) : EMPTY_ARRAY14;
         const query = {
           ...DEFAULT_QUERY3,
-          include: _termIds?.join(","),
+          // Sort ids so reordering alone doesn't produce a new query key and re-fetch.
+          include: _termIds?.length ? [..._termIds].sort((a3, b3) => a3 - b3).join(",") : void 0,
           per_page: -1
         };
         return {
@@ -85925,6 +85926,7 @@ If there's a particular need for this, please submit a feature request at https:
         )
       );
       setValues(uniqueTerms);
+      setSearch("");
       if (newTermNames.length === 0) {
         onUpdateTerms(termNamesToIds(uniqueTerms, availableTerms));
         return;
