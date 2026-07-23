@@ -56216,12 +56216,7 @@ var wp;
     clientId,
     __unstableContentRef
   }) {
-    const {
-      capturingClientId,
-      isInsertionPointVisible,
-      lastClientId,
-      rootClientId
-    } = useSelectedBlockToolProps(clientId);
+    const { isInsertionPointVisible, lastClientId, rootClientId } = useSelectedBlockToolProps(clientId);
     const popoverProps3 = useBlockToolbarPopoverProps({
       contentElement: __unstableContentRef?.current,
       clientId
@@ -56229,7 +56224,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(
       cover_default,
       {
-        clientId: capturingClientId || clientId,
+        clientId,
         bottomClientId: lastClientId,
         className: clsx_default(
           "block-editor-block-list__block-side-inserter-popover",
