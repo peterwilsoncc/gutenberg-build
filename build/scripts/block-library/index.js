@@ -131,10 +131,10 @@ var wp;
           if (typeof b2 !== "function" && b2 !== null)
             throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
           extendStatics(d2, b2);
-          function __276() {
+          function __275() {
             this.constructor = d2;
           }
-          d2.prototype = b2 === null ? Object.create(b2) : (__276.prototype = b2.prototype, new __276());
+          d2.prototype = b2 === null ? Object.create(b2) : (__275.prototype = b2.prototype, new __275());
         };
       })();
       var __assign2 = exports && exports.__assign || function() {
@@ -3258,7 +3258,7 @@ var wp;
   var import_data177 = __toESM(require_data(), 1);
   var import_block_editor303 = __toESM(require_block_editor(), 1);
   var import_server_side_render7 = __toESM(require_server_side_render(), 1);
-  var import_i18n284 = __toESM(require_i18n(), 1);
+  var import_i18n283 = __toESM(require_i18n(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
   function r(e3) {
@@ -72944,7 +72944,6 @@ ${text}
   });
 
   // packages/block-library/build-module/tab-panel/edit.mjs
-  var import_i18n246 = __toESM(require_i18n(), 1);
   var import_block_editor258 = __toESM(require_block_editor(), 1);
   var import_data148 = __toESM(require_data(), 1);
   var import_element137 = __toESM(require_element(), 1);
@@ -73130,14 +73129,7 @@ ${text}
 
   // packages/block-library/build-module/tab-panel/edit.mjs
   var import_jsx_runtime508 = __toESM(require_jsx_runtime(), 1);
-  var TEMPLATE17 = [
-    [
-      "core/paragraph",
-      {
-        placeholder: (0, import_i18n246.__)("Type / to choose a block")
-      }
-    ]
-  ];
+  var TEMPLATE17 = [["core/paragraph"]];
   function Edit19({ clientId, isSelected }) {
     const {
       activeTabIndex,
@@ -73295,11 +73287,11 @@ ${text}
   // packages/block-library/build-module/tab-panels/edit.mjs
   var import_block_editor260 = __toESM(require_block_editor(), 1);
   var import_data149 = __toESM(require_data(), 1);
-  var import_i18n247 = __toESM(require_i18n(), 1);
+  var import_i18n246 = __toESM(require_i18n(), 1);
   var import_jsx_runtime510 = __toESM(require_jsx_runtime(), 1);
   var TAB_PANELS_TEMPLATE = [
-    ["core/tab-panel", { label: (0, import_i18n247.__)("Tab") }],
-    ["core/tab-panel", { label: (0, import_i18n247.__)("Tab") }]
+    ["core/tab-panel", { label: (0, import_i18n246.__)("Tab") }],
+    ["core/tab-panel", { label: (0, import_i18n246.__)("Tab") }]
   ];
   function Edit20({ clientId }) {
     const blockProps = (0, import_block_editor260.useBlockProps)();
@@ -73386,7 +73378,7 @@ ${text}
     name: () => name107,
     settings: () => settings106
   });
-  var import_i18n249 = __toESM(require_i18n(), 1);
+  var import_i18n248 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/table/deprecated.mjs
   var import_block_editor262 = __toESM(require_block_editor(), 1);
@@ -74046,7 +74038,7 @@ ${text}
   // packages/block-library/build-module/table/edit.mjs
   var import_element138 = __toESM(require_element(), 1);
   var import_block_editor263 = __toESM(require_block_editor(), 1);
-  var import_i18n248 = __toESM(require_i18n(), 1);
+  var import_i18n247 = __toESM(require_i18n(), 1);
   var import_components158 = __toESM(require_components(), 1);
 
   // packages/block-library/build-module/table/state.mjs
@@ -74238,28 +74230,28 @@ ${text}
   var ALIGNMENT_CONTROLS = [
     {
       icon: align_left_default,
-      title: (0, import_i18n248.__)("Align column left"),
+      title: (0, import_i18n247.__)("Align column left"),
       align: "left"
     },
     {
       icon: align_center_default,
-      title: (0, import_i18n248.__)("Align column center"),
+      title: (0, import_i18n247.__)("Align column center"),
       align: "center"
     },
     {
       icon: align_right_default,
-      title: (0, import_i18n248.__)("Align column right"),
+      title: (0, import_i18n247.__)("Align column right"),
       align: "right"
     }
   ];
   var cellAriaLabel = {
-    head: (0, import_i18n248.__)("Header cell text"),
-    body: (0, import_i18n248.__)("Body cell text"),
-    foot: (0, import_i18n248.__)("Footer cell text")
+    head: (0, import_i18n247.__)("Header cell text"),
+    body: (0, import_i18n247.__)("Body cell text"),
+    foot: (0, import_i18n247.__)("Footer cell text")
   };
   var placeholder = {
-    head: (0, import_i18n248._x)("Header label", "table header"),
-    foot: (0, import_i18n248._x)("Footer label", "table footer")
+    head: (0, import_i18n247._x)("Header label", "table header"),
+    foot: (0, import_i18n247._x)("Footer label", "table footer")
   };
   function TSection({ name: name122, ...props }) {
     const TagName2 = `t${name122}`;
@@ -74431,37 +74423,37 @@ ${text}
     const tableControls = [
       {
         icon: table_row_before_default,
-        title: (0, import_i18n248.__)("Insert row before"),
+        title: (0, import_i18n247.__)("Insert row before"),
         isDisabled: !selectedCell,
         onClick: onInsertRowBefore
       },
       {
         icon: table_row_after_default,
-        title: (0, import_i18n248.__)("Insert row after"),
+        title: (0, import_i18n247.__)("Insert row after"),
         isDisabled: !selectedCell,
         onClick: onInsertRowAfter
       },
       {
         icon: table_row_delete_default,
-        title: (0, import_i18n248.__)("Delete row"),
+        title: (0, import_i18n247.__)("Delete row"),
         isDisabled: !selectedCell,
         onClick: onDeleteRow
       },
       {
         icon: table_column_before_default,
-        title: (0, import_i18n248.__)("Insert column before"),
+        title: (0, import_i18n247.__)("Insert column before"),
         isDisabled: !selectedCell,
         onClick: onInsertColumnBefore
       },
       {
         icon: table_column_after_default,
-        title: (0, import_i18n248.__)("Insert column after"),
+        title: (0, import_i18n247.__)("Insert column after"),
         isDisabled: !selectedCell,
         onClick: onInsertColumnAfter
       },
       {
         icon: table_column_delete_default,
-        title: (0, import_i18n248.__)("Delete column"),
+        title: (0, import_i18n247.__)("Delete column"),
         isDisabled: !selectedCell,
         onClick: onDeleteColumn
       }
@@ -74493,7 +74485,7 @@ ${text}
         /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(import_block_editor263.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
           import_block_editor263.AlignmentControl,
           {
-            label: (0, import_i18n248.__)("Change column alignment"),
+            label: (0, import_i18n247.__)("Change column alignment"),
             alignmentControls: ALIGNMENT_CONTROLS,
             value: getCellAlignment(),
             onChange: (nextAlign) => onChangeColumnAlignment(nextAlign)
@@ -74503,7 +74495,7 @@ ${text}
           import_components158.ToolbarDropdownMenu,
           {
             icon: table_default,
-            label: (0, import_i18n248.__)("Edit table"),
+            label: (0, import_i18n247.__)("Edit table"),
             controls: tableControls
           }
         ) })
@@ -74511,7 +74503,7 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(import_block_editor263.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime513.jsxs)(
         import_components158.__experimentalToolsPanel,
         {
-          label: (0, import_i18n248.__)("Settings"),
+          label: (0, import_i18n247.__)("Settings"),
           resetAll: () => {
             setAttributes({
               hasFixedLayout: true,
@@ -74525,13 +74517,13 @@ ${text}
               import_components158.__experimentalToolsPanelItem,
               {
                 hasValue: () => hasFixedLayout !== true,
-                label: (0, import_i18n248.__)("Fixed width table cells"),
+                label: (0, import_i18n247.__)("Fixed width table cells"),
                 onDeselect: () => setAttributes({ hasFixedLayout: true }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
                   import_components158.ToggleControl,
                   {
-                    label: (0, import_i18n248.__)("Fixed width table cells"),
+                    label: (0, import_i18n247.__)("Fixed width table cells"),
                     checked: !!hasFixedLayout,
                     onChange: onChangeFixedLayout
                   }
@@ -74543,13 +74535,13 @@ ${text}
                 import_components158.__experimentalToolsPanelItem,
                 {
                   hasValue: () => head && head.length,
-                  label: (0, import_i18n248.__)("Header section"),
+                  label: (0, import_i18n247.__)("Header section"),
                   onDeselect: () => setAttributes({ head: [] }),
                   isShownByDefault: true,
                   children: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
                     import_components158.ToggleControl,
                     {
-                      label: (0, import_i18n248.__)("Header section"),
+                      label: (0, import_i18n247.__)("Header section"),
                       checked: !!(head && head.length),
                       onChange: onToggleHeaderSection
                     }
@@ -74560,13 +74552,13 @@ ${text}
                 import_components158.__experimentalToolsPanelItem,
                 {
                   hasValue: () => foot && foot.length,
-                  label: (0, import_i18n248.__)("Footer section"),
+                  label: (0, import_i18n247.__)("Footer section"),
                   onDeselect: () => setAttributes({ foot: [] }),
                   isShownByDefault: true,
                   children: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
                     import_components158.ToggleControl,
                     {
-                      label: (0, import_i18n248.__)("Footer section"),
+                      label: (0, import_i18n247.__)("Footer section"),
                       checked: !!(foot && foot.length),
                       onChange: onToggleFooterSection
                     }
@@ -74600,9 +74592,9 @@ ${text}
       isEmpty ? /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
         import_components158.Placeholder,
         {
-          label: (0, import_i18n248.__)("Table"),
+          label: (0, import_i18n247.__)("Table"),
           icon: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(import_block_editor263.BlockIcon, { icon: block_table_default, showColors: true }),
-          instructions: (0, import_i18n248.__)("Insert a table for sharing data."),
+          instructions: (0, import_i18n247.__)("Insert a table for sharing data."),
           children: /* @__PURE__ */ (0, import_jsx_runtime513.jsxs)(
             "form",
             {
@@ -74613,7 +74605,7 @@ ${text}
                   import_components158.TextControl,
                   {
                     type: "number",
-                    label: (0, import_i18n248.__)("Column count"),
+                    label: (0, import_i18n247.__)("Column count"),
                     value: initialColumnCount,
                     onChange: onChangeInitialColumnCount,
                     min: "1",
@@ -74624,7 +74616,7 @@ ${text}
                   import_components158.TextControl,
                   {
                     type: "number",
-                    label: (0, import_i18n248.__)("Row count"),
+                    label: (0, import_i18n247.__)("Row count"),
                     value: initialRowCount,
                     onChange: onChangeInitialRowCount,
                     min: "1",
@@ -74637,7 +74629,7 @@ ${text}
                     __next40pxDefaultSize: true,
                     variant: "primary",
                     type: "submit",
-                    children: (0, import_i18n248.__)("Create Table")
+                    children: (0, import_i18n247.__)("Create Table")
                   }
                 )
               ]
@@ -74651,7 +74643,7 @@ ${text}
           setAttributes,
           isSelected: isSingleSelected,
           insertBlocksAfter,
-          label: (0, import_i18n248.__)("Table caption text"),
+          label: (0, import_i18n247.__)("Table caption text"),
           showToolbarButton: isSingleSelected && blockEditingMode === "default"
         }
       )
@@ -75116,15 +75108,15 @@ ${text}
           {
             cells: [
               {
-                content: (0, import_i18n249.__)("Version"),
+                content: (0, import_i18n248.__)("Version"),
                 tag: "th"
               },
               {
-                content: (0, import_i18n249.__)("Jazz Musician"),
+                content: (0, import_i18n248.__)("Jazz Musician"),
                 tag: "th"
               },
               {
-                content: (0, import_i18n249.__)("Release Date"),
+                content: (0, import_i18n248.__)("Release Date"),
                 tag: "th"
               }
             ]
@@ -75138,11 +75130,11 @@ ${text}
                 tag: "td"
               },
               {
-                content: (0, import_i18n249.__)("Jaco Pastorius"),
+                content: (0, import_i18n248.__)("Jaco Pastorius"),
                 tag: "td"
               },
               {
-                content: (0, import_i18n249.__)("May 7, 2019"),
+                content: (0, import_i18n248.__)("May 7, 2019"),
                 tag: "td"
               }
             ]
@@ -75154,11 +75146,11 @@ ${text}
                 tag: "td"
               },
               {
-                content: (0, import_i18n249.__)("Betty Carter"),
+                content: (0, import_i18n248.__)("Betty Carter"),
                 tag: "td"
               },
               {
-                content: (0, import_i18n249.__)("February 21, 2019"),
+                content: (0, import_i18n248.__)("February 21, 2019"),
                 tag: "td"
               }
             ]
@@ -75170,11 +75162,11 @@ ${text}
                 tag: "td"
               },
               {
-                content: (0, import_i18n249.__)("Bebo Vald\xE9s"),
+                content: (0, import_i18n248.__)("Bebo Vald\xE9s"),
                 tag: "td"
               },
               {
-                content: (0, import_i18n249.__)("December 6, 2018"),
+                content: (0, import_i18n248.__)("December 6, 2018"),
                 tag: "td"
               }
             ]
@@ -75198,7 +75190,7 @@ ${text}
     name: () => name108,
     settings: () => settings107
   });
-  var import_i18n251 = __toESM(require_i18n(), 1);
+  var import_i18n250 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/table-of-contents/block.json
   var block_default107 = {
@@ -75283,7 +75275,7 @@ ${text}
   var import_components159 = __toESM(require_components(), 1);
   var import_data151 = __toESM(require_data(), 1);
   var import_element140 = __toESM(require_element(), 1);
-  var import_i18n250 = __toESM(require_i18n(), 1);
+  var import_i18n249 = __toESM(require_i18n(), 1);
   var import_compose61 = __toESM(require_compose(), 1);
   var import_notices18 = __toESM(require_notices(), 1);
 
@@ -75478,7 +75470,7 @@ ${text}
     const { createWarningNotice } = (0, import_data151.useDispatch)(import_notices18.store);
     const showRedirectionPreventedNotice = (event) => {
       event.preventDefault();
-      createWarningNotice((0, import_i18n250.__)("Links are disabled in the editor."), {
+      createWarningNotice((0, import_i18n249.__)("Links are disabled in the editor."), {
         id: `block-library/core/table-of-contents/redirection-prevented/${instanceId}`,
         type: "snackbar"
       });
@@ -75499,9 +75491,9 @@ ${text}
         /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
           import_components159.ToolbarButton,
           {
-            icon: (0, import_i18n250.isRTL)() ? format_list_bullets_rtl_default : format_list_bullets_default,
-            title: (0, import_i18n250.__)("Unordered"),
-            description: (0, import_i18n250.__)("Convert to unordered list"),
+            icon: (0, import_i18n249.isRTL)() ? format_list_bullets_rtl_default : format_list_bullets_default,
+            title: (0, import_i18n249.__)("Unordered"),
+            description: (0, import_i18n249.__)("Convert to unordered list"),
             onClick: () => setAttributes({ ordered: false }),
             isActive: ordered === false
           }
@@ -75509,9 +75501,9 @@ ${text}
         /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
           import_components159.ToolbarButton,
           {
-            icon: (0, import_i18n250.isRTL)() ? format_list_numbered_rtl_default : format_list_numbered_default,
-            title: (0, import_i18n250.__)("Ordered"),
-            description: (0, import_i18n250.__)("Convert to ordered list"),
+            icon: (0, import_i18n249.isRTL)() ? format_list_numbered_rtl_default : format_list_numbered_default,
+            title: (0, import_i18n249.__)("Ordered"),
+            description: (0, import_i18n249.__)("Convert to ordered list"),
             onClick: () => setAttributes({ ordered: true }),
             isActive: ordered === true
           }
@@ -75535,14 +75527,14 @@ ${text}
               )
             })
           ),
-          children: (0, import_i18n250.__)("Convert to static list")
+          children: (0, import_i18n249.__)("Convert to static list")
         }
       ) })
     ] });
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(import_block_editor266.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime516.jsxs)(
       import_components159.__experimentalToolsPanel,
       {
-        label: (0, import_i18n250.__)("Settings"),
+        label: (0, import_i18n249.__)("Settings"),
         resetAll: () => {
           setAttributes({
             onlyIncludeCurrentPage: false,
@@ -75556,18 +75548,18 @@ ${text}
             import_components159.__experimentalToolsPanelItem,
             {
               hasValue: () => !!onlyIncludeCurrentPage,
-              label: (0, import_i18n250.__)("Only include current page"),
+              label: (0, import_i18n249.__)("Only include current page"),
               onDeselect: () => setAttributes({ onlyIncludeCurrentPage: false }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
                 import_components159.ToggleControl,
                 {
-                  label: (0, import_i18n250.__)("Only include current page"),
+                  label: (0, import_i18n249.__)("Only include current page"),
                   checked: onlyIncludeCurrentPage,
                   onChange: (value) => setAttributes({ onlyIncludeCurrentPage: value }),
-                  help: onlyIncludeCurrentPage ? (0, import_i18n250.__)(
+                  help: onlyIncludeCurrentPage ? (0, import_i18n249.__)(
                     "Only including headings from the current page (if the post is paginated)."
-                  ) : (0, import_i18n250.__)(
+                  ) : (0, import_i18n249.__)(
                     "Include headings from all pages (if the post is paginated)."
                   )
                 }
@@ -75578,29 +75570,29 @@ ${text}
             import_components159.__experimentalToolsPanelItem,
             {
               hasValue: () => !!maxLevel,
-              label: (0, import_i18n250.__)("Limit heading levels"),
+              label: (0, import_i18n249.__)("Limit heading levels"),
               onDeselect: () => setAttributes({ maxLevel: void 0 }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
                 import_components159.SelectControl,
                 {
-                  label: (0, import_i18n250.__)("Include headings down to level"),
+                  label: (0, import_i18n249.__)("Include headings down to level"),
                   value: maxLevel || "",
                   options: [
-                    { value: "", label: (0, import_i18n250.__)("All levels") },
-                    { value: "1", label: (0, import_i18n250.__)("Heading 1") },
-                    { value: "2", label: (0, import_i18n250.__)("Heading 2") },
-                    { value: "3", label: (0, import_i18n250.__)("Heading 3") },
-                    { value: "4", label: (0, import_i18n250.__)("Heading 4") },
-                    { value: "5", label: (0, import_i18n250.__)("Heading 5") },
-                    { value: "6", label: (0, import_i18n250.__)("Heading 6") }
+                    { value: "", label: (0, import_i18n249.__)("All levels") },
+                    { value: "1", label: (0, import_i18n249.__)("Heading 1") },
+                    { value: "2", label: (0, import_i18n249.__)("Heading 2") },
+                    { value: "3", label: (0, import_i18n249.__)("Heading 3") },
+                    { value: "4", label: (0, import_i18n249.__)("Heading 4") },
+                    { value: "5", label: (0, import_i18n249.__)("Heading 5") },
+                    { value: "6", label: (0, import_i18n249.__)("Heading 6") }
                   ],
                   onChange: (value) => setAttributes({
                     maxLevel: value ? parseInt(value) : void 0
                   }),
-                  help: !maxLevel ? (0, import_i18n250.__)(
+                  help: !maxLevel ? (0, import_i18n249.__)(
                     "Including all heading levels in the table of contents."
-                  ) : (0, import_i18n250.__)(
+                  ) : (0, import_i18n249.__)(
                     "Only include headings up to and including this level."
                   )
                 }
@@ -75616,8 +75608,8 @@ ${text}
           import_components159.Placeholder,
           {
             icon: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(import_block_editor266.BlockIcon, { icon: table_of_contents_default }),
-            label: (0, import_i18n250.__)("Table of Contents"),
-            instructions: (0, import_i18n250.__)(
+            label: (0, import_i18n249.__)("Table of Contents"),
+            instructions: (0, import_i18n249.__)(
               "Start adding Heading blocks to create a table of contents. Headings with HTML anchors will be linked here."
             )
           }
@@ -75672,47 +75664,47 @@ ${text}
           name: "core/heading",
           attributes: {
             level: 2,
-            content: (0, import_i18n251.__)("Heading")
+            content: (0, import_i18n250.__)("Heading")
           }
         },
         {
           name: "core/heading",
           attributes: {
             level: 3,
-            content: (0, import_i18n251.__)("Subheading")
+            content: (0, import_i18n250.__)("Subheading")
           }
         },
         {
           name: "core/heading",
           attributes: {
             level: 2,
-            content: (0, import_i18n251.__)("Heading")
+            content: (0, import_i18n250.__)("Heading")
           }
         },
         {
           name: "core/heading",
           attributes: {
             level: 3,
-            content: (0, import_i18n251.__)("Subheading")
+            content: (0, import_i18n250.__)("Subheading")
           }
         }
       ],
       attributes: {
         headings: [
           {
-            content: (0, import_i18n251.__)("Heading"),
+            content: (0, import_i18n250.__)("Heading"),
             level: 2
           },
           {
-            content: (0, import_i18n251.__)("Subheading"),
+            content: (0, import_i18n250.__)("Subheading"),
             level: 3
           },
           {
-            content: (0, import_i18n251.__)("Heading"),
+            content: (0, import_i18n250.__)("Heading"),
             level: 2
           },
           {
-            content: (0, import_i18n251.__)("Subheading"),
+            content: (0, import_i18n250.__)("Subheading"),
             level: 3
           }
         ]
@@ -75731,14 +75723,14 @@ ${text}
   });
 
   // packages/block-library/build-module/tab-list/edit.mjs
-  var import_i18n253 = __toESM(require_i18n(), 1);
+  var import_i18n252 = __toESM(require_i18n(), 1);
   var import_block_editor269 = __toESM(require_block_editor(), 1);
   var import_components161 = __toESM(require_components(), 1);
   var import_data153 = __toESM(require_data(), 1);
   var import_element141 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/tab-list/tab-movers.mjs
-  var import_i18n252 = __toESM(require_i18n(), 1);
+  var import_i18n251 = __toESM(require_i18n(), 1);
   var import_block_editor268 = __toESM(require_block_editor(), 1);
   var import_components160 = __toESM(require_components(), 1);
   var import_data152 = __toESM(require_data(), 1);
@@ -75767,8 +75759,8 @@ ${text}
         import_components160.ToolbarButton,
         {
           className: "wp-block-tab-list__mover-button",
-          icon: (0, import_i18n252.isRTL)() ? chevron_right_default : chevron_left_default,
-          label: (0, import_i18n252.__)("Move tab before"),
+          icon: (0, import_i18n251.isRTL)() ? chevron_right_default : chevron_left_default,
+          label: (0, import_i18n251.__)("Move tab before"),
           onClick: () => moveTab(-1),
           disabled: activeIndex <= 0,
           accessibleWhenDisabled: true
@@ -75778,8 +75770,8 @@ ${text}
         import_components160.ToolbarButton,
         {
           className: "wp-block-tab-list__mover-button",
-          icon: (0, import_i18n252.isRTL)() ? chevron_left_default : chevron_right_default,
-          label: (0, import_i18n252.__)("Move tab after"),
+          icon: (0, import_i18n251.isRTL)() ? chevron_left_default : chevron_right_default,
+          label: (0, import_i18n251.__)("Move tab after"),
           onClick: () => moveTab(1),
           disabled: activeIndex >= tabCount - 1,
           accessibleWhenDisabled: true
@@ -75894,7 +75886,7 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(import_block_editor269.InspectorControls, { group: "settings", children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
         import_components161.__experimentalToolsPanel,
         {
-          label: (0, import_i18n253.__)("Settings"),
+          label: (0, import_i18n252.__)("Settings"),
           resetAll: () => setAttributes({
             ariaLabel: void 0
           }),
@@ -75902,15 +75894,15 @@ ${text}
           children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
             import_components161.__experimentalToolsPanelItem,
             {
-              label: (0, import_i18n253.__)("Label"),
+              label: (0, import_i18n252.__)("Label"),
               isShownByDefault: true,
               hasValue: () => !!ariaLabel,
               onDeselect: () => setAttributes({ ariaLabel: void 0 }),
               children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
                 import_components161.TextControl,
                 {
-                  label: (0, import_i18n253.__)("Label"),
-                  help: (0, import_i18n253.__)(
+                  label: (0, import_i18n252.__)("Label"),
+                  help: (0, import_i18n252.__)(
                     "Briefly describe this tab section for screen reader users. Examples: Event information, Product details, and Account settings."
                   ),
                   value: ariaLabel || "",
@@ -75944,7 +75936,7 @@ ${text}
               {
                 tagName: "span",
                 withoutInteractiveFormatting: true,
-                placeholder: (0, import_i18n253.__)("Tab title"),
+                placeholder: (0, import_i18n252.__)("Tab title"),
                 value: tab.label,
                 onChange: (newLabel) => handleLabelChange(index, newLabel),
                 __unstableOnSplitAtEnd: () => insertTab(index + 1),
@@ -76091,7 +76083,7 @@ ${text}
     name: () => name110,
     settings: () => settings109
   });
-  var import_i18n254 = __toESM(require_i18n(), 1);
+  var import_i18n253 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/tabs/edit.mjs
   var import_block_editor272 = __toESM(require_block_editor(), 1);
@@ -76232,8 +76224,8 @@ ${text}
           name: "core/tab-list",
           attributes: {
             tabs: [
-              { label: (0, import_i18n254.__)("Tab 1") },
-              { label: (0, import_i18n254.__)("Tab 2") }
+              { label: (0, import_i18n253.__)("Tab 1") },
+              { label: (0, import_i18n253.__)("Tab 2") }
             ]
           }
         },
@@ -76243,9 +76235,9 @@ ${text}
             name: "core/tab-panel",
             attributes: {
               anchor: `tab-${index}`,
-              label: (0, import_i18n254.sprintf)(
+              label: (0, import_i18n253.sprintf)(
                 /** translators: %s: tab index number */
-                (0, import_i18n254.__)("Tab %s"),
+                (0, import_i18n253.__)("Tab %s"),
                 index
               )
             },
@@ -76253,7 +76245,7 @@ ${text}
               {
                 name: "core/paragraph",
                 attributes: {
-                  content: (0, import_i18n254.__)(
+                  content: (0, import_i18n253.__)(
                     "In a village of La Mancha, the name of which I have no desire to call to mind, there lived not long since one of those gentlemen that keep a lance in the lance-rack, an old buckler, a lean hack, and a greyhound for coursing."
                   )
                 }
@@ -76371,7 +76363,7 @@ ${text}
   // packages/block-library/build-module/tag-cloud/edit.mjs
   var import_components162 = __toESM(require_components(), 1);
   var import_data155 = __toESM(require_data(), 1);
-  var import_i18n255 = __toESM(require_i18n(), 1);
+  var import_i18n254 = __toESM(require_i18n(), 1);
   var import_block_editor274 = __toESM(require_block_editor(), 1);
   var import_core_data86 = __toESM(require_core_data(), 1);
   var import_server_side_render6 = __toESM(require_server_side_render(), 1);
@@ -76400,7 +76392,7 @@ ${text}
     );
     const getTaxonomyOptions = () => {
       const selectOption = {
-        label: (0, import_i18n255.__)("- Select -"),
+        label: (0, import_i18n254.__)("- Select -"),
         value: "",
         disabled: true
       };
@@ -76432,7 +76424,7 @@ ${text}
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_block_editor274.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime523.jsxs)(
       import_components162.__experimentalToolsPanel,
       {
-        label: (0, import_i18n255.__)("Settings"),
+        label: (0, import_i18n254.__)("Settings"),
         resetAll: () => {
           setAttributes({
             taxonomy: "post_tag",
@@ -76448,13 +76440,13 @@ ${text}
             import_components162.__experimentalToolsPanelItem,
             {
               hasValue: () => taxonomy !== "post_tag",
-              label: (0, import_i18n255.__)("Taxonomy"),
+              label: (0, import_i18n254.__)("Taxonomy"),
               onDeselect: () => setAttributes({ taxonomy: "post_tag" }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
                 import_components162.SelectControl,
                 {
-                  label: (0, import_i18n255.__)("Taxonomy"),
+                  label: (0, import_i18n254.__)("Taxonomy"),
                   options: getTaxonomyOptions(),
                   value: taxonomy,
                   onChange: (selectedTaxonomy) => setAttributes({ taxonomy: selectedTaxonomy })
@@ -76466,7 +76458,7 @@ ${text}
             import_components162.__experimentalToolsPanelItem,
             {
               hasValue: () => smallestFontSize !== "8pt" || largestFontSize !== "22pt",
-              label: (0, import_i18n255.__)("Font size"),
+              label: (0, import_i18n254.__)("Font size"),
               onDeselect: () => setAttributes({
                 smallestFontSize: "8pt",
                 largestFontSize: "22pt"
@@ -76476,7 +76468,7 @@ ${text}
                 /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_components162.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
                   import_components162.__experimentalUnitControl,
                   {
-                    label: (0, import_i18n255.__)("Smallest size"),
+                    label: (0, import_i18n254.__)("Smallest size"),
                     value: smallestFontSize,
                     onChange: (value) => {
                       onFontSizeChange(
@@ -76492,7 +76484,7 @@ ${text}
                 /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_components162.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
                   import_components162.__experimentalUnitControl,
                   {
-                    label: (0, import_i18n255.__)("Largest size"),
+                    label: (0, import_i18n254.__)("Largest size"),
                     value: largestFontSize,
                     onChange: (value) => {
                       onFontSizeChange(
@@ -76512,13 +76504,13 @@ ${text}
             import_components162.__experimentalToolsPanelItem,
             {
               hasValue: () => numberOfTags !== 45,
-              label: (0, import_i18n255.__)("Number of tags"),
+              label: (0, import_i18n254.__)("Number of tags"),
               onDeselect: () => setAttributes({ numberOfTags: 45 }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
                 import_components162.RangeControl,
                 {
-                  label: (0, import_i18n255.__)("Number of tags"),
+                  label: (0, import_i18n254.__)("Number of tags"),
                   value: numberOfTags,
                   onChange: (value) => setAttributes({ numberOfTags: value }),
                   min: MIN_TAGS,
@@ -76532,13 +76524,13 @@ ${text}
             import_components162.__experimentalToolsPanelItem,
             {
               hasValue: () => showTagCounts !== false,
-              label: (0, import_i18n255.__)("Show tag counts"),
+              label: (0, import_i18n254.__)("Show tag counts"),
               onDeselect: () => setAttributes({ showTagCounts: false }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
                 import_components162.ToggleControl,
                 {
-                  label: (0, import_i18n255.__)("Show tag counts"),
+                  label: (0, import_i18n254.__)("Show tag counts"),
                   checked: showTagCounts,
                   onChange: () => setAttributes({ showTagCounts: !showTagCounts })
                 }
@@ -76558,9 +76550,9 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime523.jsxs)(import_jsx_runtime523.Fragment, { children: [
       inspectorControls,
       status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime523.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_components162.Spinner, {}) }),
-      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime523.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)("p", { children: (0, import_i18n255.sprintf)(
+      status === "error" && /* @__PURE__ */ (0, import_jsx_runtime523.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)("p", { children: (0, import_i18n254.sprintf)(
         /* translators: %s: error message returned when rendering the block. */
-        (0, import_i18n255.__)("Error: %s"),
+        (0, import_i18n254.__)("Error: %s"),
         error2
       ) }) }),
       status === "success" && /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(html_renderer_default, { wrapperProps: blockProps, html: content })
@@ -76631,13 +76623,13 @@ ${text}
   var import_data162 = __toESM(require_data(), 1);
   var import_block_editor279 = __toESM(require_block_editor(), 1);
   var import_components168 = __toESM(require_components(), 1);
-  var import_i18n262 = __toESM(require_i18n(), 1);
+  var import_i18n261 = __toESM(require_i18n(), 1);
   var import_core_data92 = __toESM(require_core_data(), 1);
   var import_element149 = __toESM(require_element(), 1);
   var import_notices21 = __toESM(require_notices(), 1);
 
   // packages/block-library/build-module/template-part/edit/placeholder.mjs
-  var import_i18n258 = __toESM(require_i18n(), 1);
+  var import_i18n257 = __toESM(require_i18n(), 1);
   var import_components164 = __toESM(require_components(), 1);
   var import_element145 = __toESM(require_element(), 1);
   var import_data157 = __toESM(require_data(), 1);
@@ -76649,7 +76641,7 @@ ${text}
   var import_block_editor275 = __toESM(require_block_editor(), 1);
   var import_element143 = __toESM(require_element(), 1);
   var import_blocks117 = __toESM(require_blocks(), 1);
-  var import_i18n256 = __toESM(require_i18n(), 1);
+  var import_i18n255 = __toESM(require_i18n(), 1);
   function useAlternativeTemplateParts(area, excludedId) {
     const { templateParts, isResolving } = (0, import_data156.useSelect)((select10) => {
       const { getEntityRecords, isResolving: _isResolving } = select10(import_core_data87.store);
@@ -76696,7 +76688,7 @@ ${text}
   }
   function useCreateTemplatePartFromBlocks(area, setAttributes) {
     const { saveEntityRecord } = (0, import_data156.useDispatch)(import_core_data87.store);
-    return async (blocks = [], title = (0, import_i18n256.__)("Untitled Template Part")) => {
+    return async (blocks = [], title = (0, import_i18n255.__)("Untitled Template Part")) => {
       const cleanSlug = paramCase(title).replace(/[^\w-]+/g, "") || "wp-custom-part";
       const record = {
         title,
@@ -76730,7 +76722,7 @@ ${text}
         );
         return {
           icon: selectedArea?.icon || defaultArea?.icon,
-          label: selectedArea?.label || (0, import_i18n256.__)("Template Part"),
+          label: selectedArea?.label || (0, import_i18n255.__)("Template Part"),
           tagName: selectedArea?.area_tag ?? "div"
         };
       },
@@ -76740,7 +76732,7 @@ ${text}
 
   // packages/block-library/build-module/template-part/edit/title-modal.mjs
   var import_element144 = __toESM(require_element(), 1);
-  var import_i18n257 = __toESM(require_i18n(), 1);
+  var import_i18n256 = __toESM(require_i18n(), 1);
   var import_components163 = __toESM(require_components(), 1);
   var import_jsx_runtime524 = __toESM(require_jsx_runtime(), 1);
   function TitleModal({ areaLabel, onClose, onSubmit }) {
@@ -76752,9 +76744,9 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime524.jsx)(
       import_components163.Modal,
       {
-        title: (0, import_i18n257.sprintf)(
+        title: (0, import_i18n256.sprintf)(
           // Translators: %s as template part area title ("Header", "Footer", etc.).
-          (0, import_i18n257.__)("Create new %s"),
+          (0, import_i18n256.__)("Create new %s"),
           areaLabel.toLowerCase()
         ),
         onRequestClose: onClose,
@@ -76764,10 +76756,10 @@ ${text}
           /* @__PURE__ */ (0, import_jsx_runtime524.jsx)(
             import_components163.TextControl,
             {
-              label: (0, import_i18n257.__)("Name"),
+              label: (0, import_i18n256.__)("Name"),
               value: title,
               onChange: setTitle,
-              placeholder: (0, import_i18n257.__)("Custom Template Part")
+              placeholder: (0, import_i18n256.__)("Custom Template Part")
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime524.jsxs)(import_components163.__experimentalHStack, { justify: "right", children: [
@@ -76780,7 +76772,7 @@ ${text}
                   onClose();
                   setTitle("");
                 },
-                children: (0, import_i18n257.__)("Cancel")
+                children: (0, import_i18n256.__)("Cancel")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime524.jsx)(
@@ -76791,7 +76783,7 @@ ${text}
                 accessibleWhenDisabled: true,
                 disabled: !title.length,
                 __next40pxDefaultSize: true,
-                children: (0, import_i18n257.__)("Create")
+                children: (0, import_i18n256.__)("Create")
               }
             )
           ] })
@@ -76838,13 +76830,13 @@ ${text}
       {
         icon: getTemplatePartIcon(areaObject.icon),
         label: areaObject.label,
-        instructions: isBlockBasedTheme ? (0, import_i18n258.sprintf)(
+        instructions: isBlockBasedTheme ? (0, import_i18n257.sprintf)(
           // Translators: %s as template part area title ("Header", "Footer", etc.).
-          (0, import_i18n258.__)("Choose an existing %s or create a new one."),
+          (0, import_i18n257.__)("Choose an existing %s or create a new one."),
           areaObject.label.toLowerCase()
-        ) : (0, import_i18n258.sprintf)(
+        ) : (0, import_i18n257.sprintf)(
           // Translators: %s as template part area title ("Header", "Footer", etc.).
-          (0, import_i18n258.__)("Choose an existing %s."),
+          (0, import_i18n257.__)("Choose an existing %s."),
           areaObject.label.toLowerCase()
         ),
         children: [
@@ -76855,7 +76847,7 @@ ${text}
               __next40pxDefaultSize: true,
               variant: "primary",
               onClick: onOpenSelectionModal,
-              children: (0, import_i18n258.__)("Choose")
+              children: (0, import_i18n257.__)("Choose")
             }
           ),
           !isResolving && isBlockBasedTheme && canCreateTemplatePart && /* @__PURE__ */ (0, import_jsx_runtime525.jsx)(
@@ -76866,7 +76858,7 @@ ${text}
               onClick: () => {
                 setShowTitleModal(true);
               },
-              children: (0, import_i18n258.__)("Start blank")
+              children: (0, import_i18n257.__)("Start blank")
             }
           ),
           showTitleModal && /* @__PURE__ */ (0, import_jsx_runtime525.jsx)(
@@ -76886,7 +76878,7 @@ ${text}
 
   // packages/block-library/build-module/template-part/edit/selection-modal.mjs
   var import_element146 = __toESM(require_element(), 1);
-  var import_i18n259 = __toESM(require_i18n(), 1);
+  var import_i18n258 = __toESM(require_i18n(), 1);
   var import_notices19 = __toESM(require_notices(), 1);
   var import_data158 = __toESM(require_data(), 1);
   var import_block_editor276 = __toESM(require_block_editor(), 1);
@@ -76935,9 +76927,9 @@ ${text}
         area: void 0
       });
       createSuccessNotice(
-        (0, import_i18n259.sprintf)(
+        (0, import_i18n258.sprintf)(
           /* translators: %s: template part title. */
-          (0, import_i18n259.__)('Template Part "%s" inserted.'),
+          (0, import_i18n258.__)('Template Part "%s" inserted.'),
           templatePart.title?.rendered || templatePart.slug
         ),
         {
@@ -76954,12 +76946,12 @@ ${text}
         {
           onChange: setSearchValue,
           value: searchValue,
-          label: (0, import_i18n259.__)("Search"),
-          placeholder: (0, import_i18n259.__)("Search")
+          label: (0, import_i18n258.__)("Search"),
+          placeholder: (0, import_i18n258.__)("Search")
         }
       ) }),
       hasTemplateParts && /* @__PURE__ */ (0, import_jsx_runtime526.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime526.jsx)("h2", { children: (0, import_i18n259.__)("Existing template parts") }),
+        /* @__PURE__ */ (0, import_jsx_runtime526.jsx)("h2", { children: (0, import_i18n258.__)("Existing template parts") }),
         /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(
           import_block_editor276.__experimentalBlockPatternsList,
           {
@@ -76970,19 +76962,19 @@ ${text}
           }
         )
       ] }),
-      !hasTemplateParts && !hasBlockPatterns && /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(import_components165.__experimentalHStack, { alignment: "center", children: /* @__PURE__ */ (0, import_jsx_runtime526.jsx)("p", { children: (0, import_i18n259.__)("No results found.") }) })
+      !hasTemplateParts && !hasBlockPatterns && /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(import_components165.__experimentalHStack, { alignment: "center", children: /* @__PURE__ */ (0, import_jsx_runtime526.jsx)("p", { children: (0, import_i18n258.__)("No results found.") }) })
     ] });
   }
 
   // packages/block-library/build-module/template-part/edit/advanced-controls.mjs
   var import_core_data90 = __toESM(require_core_data(), 1);
   var import_components167 = __toESM(require_components(), 1);
-  var import_i18n261 = __toESM(require_i18n(), 1);
+  var import_i18n260 = __toESM(require_i18n(), 1);
   var import_data160 = __toESM(require_data(), 1);
   var import_block_editor277 = __toESM(require_block_editor(), 1);
 
   // packages/block-library/build-module/template-part/edit/import-controls.mjs
-  var import_i18n260 = __toESM(require_i18n(), 1);
+  var import_i18n259 = __toESM(require_i18n(), 1);
   var import_element147 = __toESM(require_element(), 1);
   var import_data159 = __toESM(require_data(), 1);
   var import_components166 = __toESM(require_components(), 1);
@@ -77101,7 +77093,7 @@ ${text}
         return [];
       }
       return [
-        { value: "", label: (0, import_i18n260.__)("Select widget area") },
+        { value: "", label: (0, import_i18n259.__)("Select widget area") },
         ...sidebarOptions
       ];
     }, [sidebars]);
@@ -77137,13 +77129,13 @@ ${text}
       await createFromBlocks(
         blocks,
         /* translators: %s: name of the widget area */
-        (0, import_i18n260.sprintf)((0, import_i18n260.__)("Widget area: %s"), sidebar.label)
+        (0, import_i18n259.sprintf)((0, import_i18n259.__)("Widget area: %s"), sidebar.label)
       );
       if (skippedWidgets.size) {
         createErrorNotice(
-          (0, import_i18n260.sprintf)(
+          (0, import_i18n259.sprintf)(
             /* translators: %s: the list of widgets */
-            (0, import_i18n260.__)("Unable to import the following widgets: %s."),
+            (0, import_i18n259.__)("Unable to import the following widgets: %s."),
             Array.from(skippedWidgets).join(", ")
           ),
           {
@@ -77157,7 +77149,7 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(import_components166.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
         import_components166.SelectControl,
         {
-          label: (0, import_i18n260.__)("Import widget area"),
+          label: (0, import_i18n259.__)("Import widget area"),
           value: selectedSidebar,
           options: options2,
           onChange: (value) => setSelectedSidebar(value),
@@ -77179,7 +77171,7 @@ ${text}
               type: "submit",
               isBusy,
               "aria-disabled": isBusy || !selectedSidebar,
-              children: (0, import_i18n260._x)("Import", "button label")
+              children: (0, import_i18n259._x)("Import", "button label")
             }
           )
         }
@@ -77226,7 +77218,7 @@ ${text}
         /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(
           import_components167.TextControl,
           {
-            label: (0, import_i18n261.__)("Title"),
+            label: (0, import_i18n260.__)("Title"),
             value: title,
             onChange: (value) => {
               setTitle(value);
@@ -77237,7 +77229,7 @@ ${text}
         /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(
           import_components167.SelectControl,
           {
-            label: (0, import_i18n261.__)("Area"),
+            label: (0, import_i18n260.__)("Area"),
             labelPosition: "top",
             options: areaOptions,
             value: area,
@@ -77253,9 +77245,9 @@ ${text}
           clientId,
           options: [
             {
-              label: (0, import_i18n261.sprintf)(
+              label: (0, import_i18n260.sprintf)(
                 /* translators: %s: HTML tag based on area. */
-                (0, import_i18n261.__)("Default based on area (%s)"),
+                (0, import_i18n260.__)("Default based on area (%s)"),
                 `<${defaultWrapper}>`
               ),
               value: ""
@@ -77454,7 +77446,7 @@ ${text}
         },
         "aria-expanded": isTemplatePartSelectionOpen,
         "aria-haspopup": "dialog",
-        children: (0, import_i18n262.__)("Replace")
+        children: (0, import_i18n261.__)("Replace")
       }
     );
   }
@@ -77464,10 +77456,10 @@ ${text}
     if (!canReplace) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_components168.PanelBody, { title: (0, import_i18n262.__)("Design"), children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_components168.PanelBody, { title: (0, import_i18n261.__)("Design"), children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(
       import_block_editor279.__experimentalBlockPatternsList,
       {
-        label: (0, import_i18n262.__)("Templates"),
+        label: (0, import_i18n261.__)("Templates"),
         blockPatterns,
         onClickPattern: onSelect,
         showTitlesAsTooltip: true
@@ -77547,9 +77539,9 @@ ${text}
         }
       );
       createSuccessNotice(
-        (0, import_i18n262.sprintf)(
+        (0, import_i18n261.sprintf)(
           /* translators: %s: template part title. */
-          (0, import_i18n262.__)('Template Part "%s" updated.'),
+          (0, import_i18n261.__)('Template Part "%s" updated.'),
           title || slug
         ),
         {
@@ -77558,16 +77550,16 @@ ${text}
       );
     };
     if (!hasInnerBlocks && (slug && !theme || slug && isMissing)) {
-      return /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_block_editor279.Warning, { children: (0, import_i18n262.sprintf)(
+      return /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_block_editor279.Warning, { children: (0, import_i18n261.sprintf)(
         /* translators: %s: Template part slug. */
-        (0, import_i18n262.__)(
+        (0, import_i18n261.__)(
           "Template part has been deleted or is unavailable: %s"
         ),
         slug
       ) }) });
     }
     if (isEntityAvailable && hasAlreadyRendered) {
-      return /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_block_editor279.Warning, { children: (0, import_i18n262.__)("Block cannot be rendered inside itself.") }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_block_editor279.Warning, { children: (0, import_i18n261.__)("Block cannot be rendered inside itself.") }) });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime530.jsxs)(import_jsx_runtime530.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime530.jsxs)(import_block_editor279.RecursionProvider, { uniqueId: templatePartId, children: [
@@ -77580,7 +77572,7 @@ ${text}
                 postType: "wp_template_part"
               });
             },
-            children: (0, import_i18n262.__)("Edit original")
+            children: (0, import_i18n261.__)("Edit original")
           }
         ) }),
         canUserEdit && /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_block_editor279.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(
@@ -77648,9 +77640,9 @@ ${text}
         import_components168.Modal,
         {
           overlayClassName: "block-editor-template-part__selection-modal",
-          title: (0, import_i18n262.sprintf)(
+          title: (0, import_i18n261.sprintf)(
             // Translators: %s as template part area title ("Header", "Footer", etc.).
-            (0, import_i18n262.__)("Choose a %s"),
+            (0, import_i18n261.__)("Choose a %s"),
             areaObject.label.toLowerCase()
           ),
           onRequestClose: () => setIsTemplatePartSelectionOpen(false),
@@ -77835,7 +77827,7 @@ ${text}
   };
 
   // packages/block-library/build-module/term-count/edit.mjs
-  var import_i18n263 = __toESM(require_i18n(), 1);
+  var import_i18n262 = __toESM(require_i18n(), 1);
   var import_block_editor280 = __toESM(require_block_editor(), 1);
   var import_components170 = __toESM(require_components(), 1);
 
@@ -77907,27 +77899,27 @@ ${text}
   // packages/block-library/build-module/term-count/edit.mjs
   var import_jsx_runtime532 = __toESM(require_jsx_runtime(), 1);
   var BRACKET_TYPES = {
-    none: { label: (0, import_i18n263.__)("No brackets"), icon: bareNumber },
+    none: { label: (0, import_i18n262.__)("No brackets"), icon: bareNumber },
     round: {
-      label: (0, import_i18n263.__)("Round brackets"),
+      label: (0, import_i18n262.__)("Round brackets"),
       icon: numberInParenthesis,
       before: "(",
       after: ")"
     },
     square: {
-      label: (0, import_i18n263.__)("Square brackets"),
+      label: (0, import_i18n262.__)("Square brackets"),
       icon: numberInSquareBrackets,
       before: "[",
       after: "]"
     },
     curly: {
-      label: (0, import_i18n263.__)("Curly brackets"),
+      label: (0, import_i18n262.__)("Curly brackets"),
       icon: numberInCurlyBrackets,
       before: "{",
       after: "}"
     },
     angle: {
-      label: (0, import_i18n263.__)("Angle brackets"),
+      label: (0, import_i18n262.__)("Angle brackets"),
       icon: numberInAngleBrackets,
       before: "<",
       after: ">"
@@ -77962,7 +77954,7 @@ ${text}
         import_components170.ToolbarDropdownMenu,
         {
           icon: BRACKET_TYPES[bracketType]?.icon ?? bareNumber,
-          label: (0, import_i18n263.__)("Change bracket type"),
+          label: (0, import_i18n262.__)("Change bracket type"),
           controls: bracketTypeControls
         }
       ) }),
@@ -78046,7 +78038,7 @@ ${text}
   };
 
   // packages/block-library/build-module/term-description/edit.mjs
-  var import_i18n264 = __toESM(require_i18n(), 1);
+  var import_i18n263 = __toESM(require_i18n(), 1);
   var import_block_editor281 = __toESM(require_block_editor(), 1);
 
   // packages/block-library/build-module/term-description/use-term-description.mjs
@@ -78123,7 +78115,7 @@ ${text}
       {
         dangerouslySetInnerHTML: { __html: termDescription }
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime533.jsx)("div", { className: "wp-block-term-description__placeholder", children: /* @__PURE__ */ (0, import_jsx_runtime533.jsx)("span", { children: (0, import_i18n264.__)("Term Description") }) }) }) });
+    ) : /* @__PURE__ */ (0, import_jsx_runtime533.jsx)("div", { className: "wp-block-term-description__placeholder", children: /* @__PURE__ */ (0, import_jsx_runtime533.jsx)("span", { children: (0, import_i18n263.__)("Term Description") }) }) }) });
   }
 
   // packages/block-library/build-module/term-description/deprecated.mjs
@@ -78279,7 +78271,7 @@ ${text}
   };
 
   // packages/block-library/build-module/term-name/edit.mjs
-  var import_i18n265 = __toESM(require_i18n(), 1);
+  var import_i18n264 = __toESM(require_i18n(), 1);
   var import_block_editor282 = __toESM(require_block_editor(), 1);
   var import_components171 = __toESM(require_components(), 1);
   var import_html_entities15 = __toESM(require_html_entities(), 1);
@@ -78359,7 +78351,7 @@ ${text}
   }) {
     const { level = 0, isLink, levelOptions } = attributes;
     const { term } = useTermName(termId, taxonomy);
-    const termName2 = term?.name ? (0, import_html_entities15.decodeEntities)(term.name) : (0, import_i18n265.__)("Term Name");
+    const termName2 = term?.name ? (0, import_html_entities15.decodeEntities)(term.name) : (0, import_i18n264.__)("Term Name");
     const blockProps = (0, import_block_editor282.useBlockProps)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const TagName2 = level === 0 ? "p" : `h${level}`;
@@ -78388,7 +78380,7 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(import_block_editor282.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(
         import_components171.__experimentalToolsPanel,
         {
-          label: (0, import_i18n265.__)("Settings"),
+          label: (0, import_i18n264.__)("Settings"),
           resetAll: () => {
             setAttributes({
               isLink: false
@@ -78399,13 +78391,13 @@ ${text}
             import_components171.__experimentalToolsPanelItem,
             {
               hasValue: () => !!isLink,
-              label: (0, import_i18n265.__)("Make term name a link"),
+              label: (0, import_i18n264.__)("Make term name a link"),
               onDeselect: () => setAttributes({ isLink: false }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(
                 import_components171.ToggleControl,
                 {
-                  label: (0, import_i18n265.__)("Make term name a link"),
+                  label: (0, import_i18n264.__)("Make term name a link"),
                   onChange: () => setAttributes({ isLink: !isLink }),
                   checked: isLink
                 }
@@ -78558,7 +78550,7 @@ ${text}
   var import_block_editor285 = __toESM(require_block_editor(), 1);
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/index.mjs
-  var import_i18n270 = __toESM(require_i18n(), 1);
+  var import_i18n269 = __toESM(require_i18n(), 1);
   var import_components179 = __toESM(require_components(), 1);
   var import_block_editor284 = __toESM(require_block_editor(), 1);
 
@@ -78599,7 +78591,7 @@ ${text}
   }
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/order-control.mjs
-  var import_i18n266 = __toESM(require_i18n(), 1);
+  var import_i18n265 = __toESM(require_i18n(), 1);
   var import_components173 = __toESM(require_components(), 1);
   var import_jsx_runtime536 = __toESM(require_jsx_runtime(), 1);
   function OrderControl3({ orderBy, order, onChange, ...props }) {
@@ -78608,19 +78600,19 @@ ${text}
       {
         options: [
           {
-            label: (0, import_i18n266.__)("Name: A \u2192 Z"),
+            label: (0, import_i18n265.__)("Name: A \u2192 Z"),
             value: "name/asc"
           },
           {
-            label: (0, import_i18n266.__)("Name: Z \u2192 A"),
+            label: (0, import_i18n265.__)("Name: Z \u2192 A"),
             value: "name/desc"
           },
           {
-            label: (0, import_i18n266.__)("Count, high to low"),
+            label: (0, import_i18n265.__)("Count, high to low"),
             value: "count/desc"
           },
           {
-            label: (0, import_i18n266.__)("Count, low to high"),
+            label: (0, import_i18n265.__)("Count, low to high"),
             value: "count/asc"
           }
         ],
@@ -78657,7 +78649,7 @@ ${text}
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/inherit-control.mjs
   var import_components176 = __toESM(require_components(), 1);
-  var import_i18n267 = __toESM(require_i18n(), 1);
+  var import_i18n266 = __toESM(require_i18n(), 1);
   var import_jsx_runtime539 = __toESM(require_jsx_runtime(), 1);
   function InheritControl({ value, onChange, label }) {
     return /* @__PURE__ */ (0, import_jsx_runtime539.jsxs)(
@@ -78670,26 +78662,26 @@ ${text}
             inherit: newValue === "default"
           });
         },
-        help: value ? (0, import_i18n267.__)(
+        help: value ? (0, import_i18n266.__)(
           "Display terms based on the current taxonomy archive. For hierarchical taxonomies, shows children of the current term. For non-hierarchical taxonomies, shows all terms."
-        ) : (0, import_i18n267.__)("Display terms based on specific criteria."),
+        ) : (0, import_i18n266.__)("Display terms based on specific criteria."),
         value: value ? "default" : "custom",
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(
             import_components176.__experimentalToggleGroupControlOption,
             {
               value: "default",
-              label: (0, import_i18n267.__)("Default")
+              label: (0, import_i18n266.__)("Default")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(import_components176.__experimentalToggleGroupControlOption, { value: "custom", label: (0, import_i18n267.__)("Custom") })
+          /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(import_components176.__experimentalToggleGroupControlOption, { value: "custom", label: (0, import_i18n266.__)("Custom") })
         ]
       }
     );
   }
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/max-terms-control.mjs
-  var import_i18n268 = __toESM(require_i18n(), 1);
+  var import_i18n267 = __toESM(require_i18n(), 1);
   var import_components177 = __toESM(require_components(), 1);
   var import_jsx_runtime540 = __toESM(require_jsx_runtime(), 1);
   function MaxTermsControl({ value, onChange, ...props }) {
@@ -78700,7 +78692,7 @@ ${text}
         min: 0,
         max: 100,
         onChange,
-        help: (0, import_i18n268.__)(
+        help: (0, import_i18n267.__)(
           "Limit the number of terms you want to show. To show all terms, use 0 (zero)."
         ),
         ...props
@@ -78709,7 +78701,7 @@ ${text}
   }
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/advanced-controls.mjs
-  var import_i18n269 = __toESM(require_i18n(), 1);
+  var import_i18n268 = __toESM(require_i18n(), 1);
   var import_block_editor283 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime541 = __toESM(require_jsx_runtime(), 1);
   var { HTMLElementControl: HTMLElementControl8 } = unlock(import_block_editor283.privateApis);
@@ -78725,7 +78717,7 @@ ${text}
         onChange: (value) => setAttributes({ tagName: value }),
         clientId,
         options: [
-          { label: (0, import_i18n269.__)("Default (<div>)"), value: "div" },
+          { label: (0, import_i18n268.__)("Default (<div>)"), value: "div" },
           { label: "<main>", value: "main" },
           { label: "<section>", value: "section" },
           { label: "<aside>", value: "aside" }
@@ -78893,18 +78885,18 @@ ${text}
     const displayInheritControl = ["taxonomy", "category", "tag", "archive"].includes(templateSlug) || templateSlug?.startsWith("taxonomy-") || templateSlug?.startsWith("category-") || templateSlug?.startsWith("tag-");
     const displayShowNestedControl = isTaxonomyHierarchical;
     const hasIncludeFilter = !!include?.length;
-    const queryTypeControlLabel = (0, import_i18n270.__)("Query type");
-    const taxonomyControlLabel = (0, import_i18n270.__)("Taxonomy");
-    const orderByControlLabel = (0, import_i18n270.__)("Order by");
-    const emptyTermsControlLabel = (0, import_i18n270.__)("Show empty terms");
-    const nestedTermsControlLabel = (0, import_i18n270.__)("Show nested terms");
-    const maxTermsControlLabel = (0, import_i18n270.__)("Max terms");
-    const includeControlLabel = (0, import_i18n270.__)("Selected terms");
+    const queryTypeControlLabel = (0, import_i18n269.__)("Query type");
+    const taxonomyControlLabel = (0, import_i18n269.__)("Taxonomy");
+    const orderByControlLabel = (0, import_i18n269.__)("Order by");
+    const emptyTermsControlLabel = (0, import_i18n269.__)("Show empty terms");
+    const nestedTermsControlLabel = (0, import_i18n269.__)("Show nested terms");
+    const maxTermsControlLabel = (0, import_i18n269.__)("Max terms");
+    const includeControlLabel = (0, import_i18n269.__)("Selected terms");
     return /* @__PURE__ */ (0, import_jsx_runtime543.jsxs)(import_jsx_runtime543.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(import_block_editor284.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime543.jsxs)(
         import_components179.__experimentalToolsPanel,
         {
-          label: (0, import_i18n270.__)("Settings"),
+          label: (0, import_i18n269.__)("Settings"),
           resetAll: () => {
             setAttributes({
               termQuery: {
@@ -78979,7 +78971,7 @@ ${text}
                       });
                     },
                     disabled: hasIncludeFilter,
-                    help: hasIncludeFilter ? (0, import_i18n270.__)(
+                    help: hasIncludeFilter ? (0, import_i18n269.__)(
                       "When specific terms are selected, the order is based on their selection order."
                     ) : void 0
                   }
@@ -79039,7 +79031,7 @@ ${text}
                     value: showNested,
                     onChange: (value) => setQuery({ showNested: value }),
                     disabled: hasIncludeFilter,
-                    help: hasIncludeFilter ? (0, import_i18n270.__)(
+                    help: hasIncludeFilter ? (0, import_i18n269.__)(
                       "When specific terms are selected, only those are displayed."
                     ) : void 0
                   }
@@ -79187,7 +79179,7 @@ ${text}
   }
 
   // packages/block-library/build-module/terms-query/variations.mjs
-  var import_i18n271 = __toESM(require_i18n(), 1);
+  var import_i18n270 = __toESM(require_i18n(), 1);
   var import_components180 = __toESM(require_components(), 1);
   var import_jsx_runtime548 = __toESM(require_jsx_runtime(), 1);
   var titleDate2 = /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components180.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components180.Path, { d: "M 41,9 H 7 v 3 h 34 z m 0,9 H 7 v 3 h 34 z m 0,18 H 7 v 3 h 34 z m 0,-9 H 7 v 3 h 34 z" }) });
@@ -79201,8 +79193,8 @@ ${text}
   var variations20 = [
     {
       name: "name",
-      title: (0, import_i18n271.__)("Name"),
-      description: (0, import_i18n271.__)("Display the terms' names."),
+      title: (0, import_i18n270.__)("Name"),
+      description: (0, import_i18n270.__)("Display the terms' names."),
       attributes: {},
       icon: titleDate2,
       scope: ["block"],
@@ -79210,8 +79202,8 @@ ${text}
     },
     {
       name: "name-count",
-      title: (0, import_i18n271.__)("Name & Count"),
-      description: (0, import_i18n271.__)(
+      title: (0, import_i18n270.__)("Name & Count"),
+      description: (0, import_i18n270.__)(
         "Display the terms' names and number of posts assigned to each term."
       ),
       attributes: {},
@@ -79322,7 +79314,7 @@ ${text}
   var import_components181 = __toESM(require_components(), 1);
   var import_element153 = __toESM(require_element(), 1);
   var import_data172 = __toESM(require_data(), 1);
-  var import_i18n272 = __toESM(require_i18n(), 1);
+  var import_i18n271 = __toESM(require_i18n(), 1);
   var import_block_editor289 = __toESM(require_block_editor(), 1);
   var import_core_data100 = __toESM(require_core_data(), 1);
   var import_jsx_runtime549 = __toESM(require_jsx_runtime(), 1);
@@ -79429,7 +79421,7 @@ ${text}
     if (!terms.length) {
       return /* @__PURE__ */ (0, import_jsx_runtime549.jsxs)("p", { ...blockProps, children: [
         " ",
-        (0, import_i18n272.__)("No terms found.")
+        (0, import_i18n271.__)("No terms found.")
       ] });
     }
     const setDisplayLayout = (newDisplayLayout) => setAttributes((prevAttributes) => ({
@@ -79442,7 +79434,7 @@ ${text}
           controls: [
             {
               icon: list_default,
-              title: (0, import_i18n272._x)(
+              title: (0, import_i18n271._x)(
                 "List view",
                 "Term template block display setting"
               ),
@@ -79451,7 +79443,7 @@ ${text}
             },
             {
               icon: grid_default,
-              title: (0, import_i18n272._x)(
+              title: (0, import_i18n271._x)(
                 "Grid view",
                 "Term template block display setting"
               ),
@@ -79519,7 +79511,7 @@ ${text}
   });
 
   // packages/block-library/build-module/text-columns/edit.mjs
-  var import_i18n273 = __toESM(require_i18n(), 1);
+  var import_i18n272 = __toESM(require_i18n(), 1);
   var import_components182 = __toESM(require_components(), 1);
   var import_block_editor291 = __toESM(require_block_editor(), 1);
   var import_deprecated61 = __toESM(require_deprecated(), 1);
@@ -79542,7 +79534,7 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime551.jsx)(import_block_editor291.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime551.jsx)(import_components182.PanelBody, { children: /* @__PURE__ */ (0, import_jsx_runtime551.jsx)(
         import_components182.RangeControl,
         {
-          label: (0, import_i18n273.__)("Columns"),
+          label: (0, import_i18n272.__)("Columns"),
           value: columns,
           onChange: (value) => setAttributes({ columns: value }),
           min: 2,
@@ -79575,12 +79567,12 @@ ${text}
                         ]
                       });
                     },
-                    "aria-label": (0, import_i18n273.sprintf)(
+                    "aria-label": (0, import_i18n272.sprintf)(
                       // translators: %d: column index (starting with 1)
-                      (0, import_i18n273.__)("Column %d text"),
+                      (0, import_i18n272.__)("Column %d text"),
                       index + 1
                     ),
-                    placeholder: (0, import_i18n273.__)("New Column")
+                    placeholder: (0, import_i18n272.__)("New Column")
                   }
                 )
               },
@@ -79705,7 +79697,7 @@ ${text}
     name: () => name119,
     settings: () => settings118
   });
-  var import_i18n275 = __toESM(require_i18n(), 1);
+  var import_i18n274 = __toESM(require_i18n(), 1);
   var import_blocks126 = __toESM(require_blocks(), 1);
 
   // packages/block-library/build-module/verse/deprecated.mjs
@@ -79846,7 +79838,7 @@ ${text}
   var deprecated_default55 = [v314, v223, v150];
 
   // packages/block-library/build-module/verse/edit.mjs
-  var import_i18n274 = __toESM(require_i18n(), 1);
+  var import_i18n273 = __toESM(require_i18n(), 1);
   var import_block_editor294 = __toESM(require_block_editor(), 1);
   var import_blocks124 = __toESM(require_blocks(), 1);
   var import_jsx_runtime554 = __toESM(require_jsx_runtime(), 1);
@@ -79874,8 +79866,8 @@ ${text}
             content: nextContent
           });
         },
-        "aria-label": (0, import_i18n274.__)("Poetry text"),
-        placeholder: (0, import_i18n274.__)("Write poetry\u2026"),
+        "aria-label": (0, import_i18n273.__)("Poetry text"),
+        placeholder: (0, import_i18n273.__)("Write poetry\u2026"),
         onRemove,
         onMerge: mergeBlocks,
         ...blockProps,
@@ -80005,7 +79997,7 @@ ${text}
       attributes: {
         /* eslint-disable @wordpress/i18n-no-collapsible-whitespace */
         // translators: Sample content for the Verse block. Can be replaced with a more locale-adequate work.
-        content: (0, import_i18n275.__)(
+        content: (0, import_i18n274.__)(
           "WHAT was he doing, the great god Pan,\n	Down in the reeds by the river?\nSpreading ruin and scattering ban,\nSplashing and paddling with hoofs of a goat,\nAnd breaking the golden lilies afloat\n    With the dragon-fly on the river."
         )
         /* eslint-enable @wordpress/i18n-no-collapsible-whitespace */
@@ -80025,7 +80017,7 @@ ${text}
     settings118[fieldsKey19] = [
       {
         id: "content",
-        label: (0, import_i18n275.__)("Content"),
+        label: (0, import_i18n274.__)("Content"),
         type: "text",
         Edit: "rich-text"
         // TODO: replace with custom component
@@ -80045,7 +80037,7 @@ ${text}
     name: () => name120,
     settings: () => settings119
   });
-  var import_i18n280 = __toESM(require_i18n(), 1);
+  var import_i18n279 = __toESM(require_i18n(), 1);
   var import_blocks128 = __toESM(require_blocks(), 1);
 
   // packages/block-library/build-module/video/deprecated.mjs
@@ -80215,24 +80207,24 @@ ${text}
   var import_components185 = __toESM(require_components(), 1);
   var import_block_editor298 = __toESM(require_block_editor(), 1);
   var import_element156 = __toESM(require_element(), 1);
-  var import_i18n279 = __toESM(require_i18n(), 1);
+  var import_i18n278 = __toESM(require_i18n(), 1);
   var import_data174 = __toESM(require_data(), 1);
   var import_notices22 = __toESM(require_notices(), 1);
   var import_url24 = __toESM(require_url(), 1);
 
   // packages/block-library/build-module/video/edit-common-settings.mjs
-  var import_i18n276 = __toESM(require_i18n(), 1);
+  var import_i18n275 = __toESM(require_i18n(), 1);
   var import_components183 = __toESM(require_components(), 1);
   var import_element154 = __toESM(require_element(), 1);
   var import_jsx_runtime558 = __toESM(require_jsx_runtime(), 1);
   var options = [
-    { value: "auto", label: (0, import_i18n276.__)("Auto") },
-    { value: "metadata", label: (0, import_i18n276.__)("Metadata") },
-    { value: "none", label: (0, import_i18n276._x)("None", "Preload value") }
+    { value: "auto", label: (0, import_i18n275.__)("Auto") },
+    { value: "metadata", label: (0, import_i18n275.__)("Metadata") },
+    { value: "none", label: (0, import_i18n275._x)("None", "Preload value") }
   ];
   var VideoSettings = ({ setAttributes, attributes }) => {
     const { autoplay, controls, loop, muted, playsInline, preload } = attributes;
-    const autoPlayHelpText = (0, import_i18n276.__)(
+    const autoPlayHelpText = (0, import_i18n275.__)(
       "Autoplay may cause usability issues for some users."
     );
     const getAutoplayHelp = (0, import_element154.useCallback)((checked) => {
@@ -80267,7 +80259,7 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
         import_components183.__experimentalToolsPanelItem,
         {
-          label: (0, import_i18n276.__)("Autoplay"),
+          label: (0, import_i18n275.__)("Autoplay"),
           isShownByDefault: true,
           hasValue: () => !!autoplay,
           onDeselect: () => {
@@ -80276,7 +80268,7 @@ ${text}
           children: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
             import_components183.ToggleControl,
             {
-              label: (0, import_i18n276.__)("Autoplay"),
+              label: (0, import_i18n275.__)("Autoplay"),
               onChange: toggleFactory.autoplay,
               checked: !!autoplay,
               help: getAutoplayHelp
@@ -80287,7 +80279,7 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
         import_components183.__experimentalToolsPanelItem,
         {
-          label: (0, import_i18n276.__)("Loop"),
+          label: (0, import_i18n275.__)("Loop"),
           isShownByDefault: true,
           hasValue: () => !!loop,
           onDeselect: () => {
@@ -80296,7 +80288,7 @@ ${text}
           children: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
             import_components183.ToggleControl,
             {
-              label: (0, import_i18n276.__)("Loop"),
+              label: (0, import_i18n275.__)("Loop"),
               onChange: toggleFactory.loop,
               checked: !!loop
             }
@@ -80306,7 +80298,7 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
         import_components183.__experimentalToolsPanelItem,
         {
-          label: (0, import_i18n276.__)("Muted"),
+          label: (0, import_i18n275.__)("Muted"),
           isShownByDefault: true,
           hasValue: () => !!muted,
           onDeselect: () => {
@@ -80315,11 +80307,11 @@ ${text}
           children: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
             import_components183.ToggleControl,
             {
-              label: (0, import_i18n276.__)("Muted"),
+              label: (0, import_i18n275.__)("Muted"),
               onChange: toggleFactory.muted,
               checked: !!muted,
               disabled: autoplay,
-              help: autoplay ? (0, import_i18n276.__)("Muted because of Autoplay.") : null
+              help: autoplay ? (0, import_i18n275.__)("Muted because of Autoplay.") : null
             }
           )
         }
@@ -80327,7 +80319,7 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
         import_components183.__experimentalToolsPanelItem,
         {
-          label: (0, import_i18n276.__)("Playback controls"),
+          label: (0, import_i18n275.__)("Playback controls"),
           isShownByDefault: true,
           hasValue: () => !controls,
           onDeselect: () => {
@@ -80336,7 +80328,7 @@ ${text}
           children: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
             import_components183.ToggleControl,
             {
-              label: (0, import_i18n276.__)("Playback controls"),
+              label: (0, import_i18n275.__)("Playback controls"),
               onChange: toggleFactory.controls,
               checked: !!controls
             }
@@ -80346,7 +80338,7 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
         import_components183.__experimentalToolsPanelItem,
         {
-          label: (0, import_i18n276.__)("Play inline"),
+          label: (0, import_i18n275.__)("Play inline"),
           isShownByDefault: true,
           hasValue: () => !!playsInline,
           onDeselect: () => {
@@ -80355,11 +80347,11 @@ ${text}
           children: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
             import_components183.ToggleControl,
             {
-              label: (0, import_i18n276.__)("Play inline"),
+              label: (0, import_i18n275.__)("Play inline"),
               onChange: toggleFactory.playsInline,
               checked: !!playsInline,
               disabled: autoplay,
-              help: autoplay ? (0, import_i18n276.__)("Play inline enabled because of Autoplay.") : (0, import_i18n276.__)(
+              help: autoplay ? (0, import_i18n275.__)("Play inline enabled because of Autoplay.") : (0, import_i18n275.__)(
                 "When enabled, videos will play directly within the webpage on mobile browsers, instead of opening in a fullscreen player."
               )
             }
@@ -80369,7 +80361,7 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
         import_components183.__experimentalToolsPanelItem,
         {
-          label: (0, import_i18n276.__)("Preload"),
+          label: (0, import_i18n275.__)("Preload"),
           isShownByDefault: true,
           hasValue: () => preload !== "metadata",
           onDeselect: () => {
@@ -80378,7 +80370,7 @@ ${text}
           children: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
             import_components183.SelectControl,
             {
-              label: (0, import_i18n276.__)("Preload"),
+              label: (0, import_i18n275.__)("Preload"),
               value: preload,
               onChange: onChangePreload,
               options,
@@ -80392,7 +80384,7 @@ ${text}
   var edit_common_settings_default = VideoSettings;
 
   // packages/block-library/build-module/video/tracks-editor.mjs
-  var import_i18n277 = __toESM(require_i18n(), 1);
+  var import_i18n276 = __toESM(require_i18n(), 1);
   var import_components184 = __toESM(require_components(), 1);
   var import_block_editor297 = __toESM(require_block_editor(), 1);
   var import_data173 = __toESM(require_data(), 1);
@@ -80403,11 +80395,11 @@ ${text}
   var ALLOWED_TYPES = ["text/vtt"];
   var DEFAULT_KIND = "subtitles";
   var KIND_OPTIONS = [
-    { label: (0, import_i18n277.__)("Subtitles"), value: "subtitles" },
-    { label: (0, import_i18n277.__)("Captions"), value: "captions" },
-    { label: (0, import_i18n277.__)("Descriptions"), value: "descriptions" },
-    { label: (0, import_i18n277.__)("Chapters"), value: "chapters" },
-    { label: (0, import_i18n277.__)("Metadata"), value: "metadata" }
+    { label: (0, import_i18n276.__)("Subtitles"), value: "subtitles" },
+    { label: (0, import_i18n276.__)("Captions"), value: "captions" },
+    { label: (0, import_i18n276.__)("Descriptions"), value: "descriptions" },
+    { label: (0, import_i18n276.__)("Chapters"), value: "chapters" },
+    { label: (0, import_i18n276.__)("Metadata"), value: "metadata" }
   ];
   var DEFAULT_TRACK = {
     src: "",
@@ -80425,19 +80417,19 @@ ${text}
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime559.jsx)("span", { children: track.label }),
             /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(import_components184.__experimentalHStack, { justify: "flex-end", children: [
-              track.default && /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(WCBadge2, { children: (0, import_i18n277.__)("Default") }),
+              track.default && /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(WCBadge2, { children: (0, import_i18n276.__)("Default") }),
               /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
                 import_components184.Button,
                 {
                   __next40pxDefaultSize: true,
                   variant: "tertiary",
                   onClick: () => onEditPress(index),
-                  "aria-label": (0, import_i18n277.sprintf)(
+                  "aria-label": (0, import_i18n276.sprintf)(
                     /* translators: %s: Label of the video text track e.g: "French subtitles". */
-                    (0, import_i18n277._x)("Edit %s", "text tracks"),
+                    (0, import_i18n276._x)("Edit %s", "text tracks"),
                     track.label
                   ),
-                  children: (0, import_i18n277.__)("Edit")
+                  children: (0, import_i18n276.__)("Edit")
                 }
               )
             ] })
@@ -80449,7 +80441,7 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
       import_components184.MenuGroup,
       {
-        label: (0, import_i18n277.__)("Text tracks"),
+        label: (0, import_i18n276.__)("Text tracks"),
         className: "block-library-video-tracks-editor__track-list",
         children: content
       }
@@ -80474,9 +80466,9 @@ ${text}
         className: "block-library-video-tracks-editor__single-track-editor",
         spacing: "4",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime559.jsx)("span", { className: "block-library-video-tracks-editor__single-track-editor-edit-track-label", children: (0, import_i18n277.__)("Edit track") }),
+          /* @__PURE__ */ (0, import_jsx_runtime559.jsx)("span", { className: "block-library-video-tracks-editor__single-track-editor-edit-track-label", children: (0, import_i18n276.__)("Edit track") }),
           /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)("span", { children: [
-            (0, import_i18n277.__)("File"),
+            (0, import_i18n276.__)("File"),
             ": ",
             /* @__PURE__ */ (0, import_jsx_runtime559.jsx)("b", { children: fileName })
           ] }),
@@ -80488,9 +80480,9 @@ ${text}
                   ...prevTrackState,
                   label: newLabel
                 })),
-                label: (0, import_i18n277.__)("Label"),
+                label: (0, import_i18n276.__)("Label"),
                 value: label,
-                help: (0, import_i18n277.__)("Title of track")
+                help: (0, import_i18n276.__)("Title of track")
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
@@ -80500,9 +80492,9 @@ ${text}
                   ...prevTrackState,
                   srcLang: newSrcLang
                 })),
-                label: (0, import_i18n277.__)("Source language"),
+                label: (0, import_i18n276.__)("Source language"),
                 value: srcLang,
-                help: (0, import_i18n277.__)("Language tag (en, fr, etc.)")
+                help: (0, import_i18n276.__)("Language tag (en, fr, etc.)")
               }
             )
           ] }),
@@ -80513,7 +80505,7 @@ ${text}
                 className: "block-library-video-tracks-editor__single-track-editor-kind-select",
                 options: KIND_OPTIONS,
                 value: kind,
-                label: (0, import_i18n277.__)("Kind"),
+                label: (0, import_i18n276.__)("Kind"),
                 onChange: (newKind) => setTrackState((prevTrackState) => ({
                   ...prevTrackState,
                   kind: newKind
@@ -80524,7 +80516,7 @@ ${text}
               import_components184.ToggleControl,
               {
                 __next40pxDefaultSize: true,
-                label: (0, import_i18n277.__)("Set as default track"),
+                label: (0, import_i18n276.__)("Set as default track"),
                 checked: isDefaultTrack,
                 disabled: !allowSettingDefault,
                 onChange: (defaultTrack) => setTrackState((prevTrackState) => ({
@@ -80541,7 +80533,7 @@ ${text}
                   isDestructive: true,
                   variant: "link",
                   onClick: onRemove,
-                  children: (0, import_i18n277.__)("Remove track")
+                  children: (0, import_i18n276.__)("Remove track")
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
@@ -80553,7 +80545,7 @@ ${text}
                     onChange(trackState);
                     onClose();
                   },
-                  children: (0, import_i18n277.__)("Apply")
+                  children: (0, import_i18n276.__)("Apply")
                 }
               )
             ] })
@@ -80634,7 +80626,7 @@ ${text}
               "aria-expanded": isOpen,
               "aria-haspopup": "true",
               onClick: handleOnToggle,
-              children: (0, import_i18n277.__)("Text tracks")
+              children: (0, import_i18n276.__)("Text tracks")
             }
           ) });
         },
@@ -80664,8 +80656,8 @@ ${text}
           }
           return /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(import_jsx_runtime559.Fragment, { children: [
             tracks.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)("div", { className: "block-library-video-tracks-editor__tracks-informative-message", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime559.jsx)("h2", { className: "block-library-video-tracks-editor__tracks-informative-message-title", children: (0, import_i18n277.__)("Text tracks") }),
-              /* @__PURE__ */ (0, import_jsx_runtime559.jsx)("p", { className: "block-library-video-tracks-editor__tracks-informative-message-description", children: (0, import_i18n277.__)(
+              /* @__PURE__ */ (0, import_jsx_runtime559.jsx)("h2", { className: "block-library-video-tracks-editor__tracks-informative-message-title", children: (0, import_i18n276.__)("Text tracks") }),
+              /* @__PURE__ */ (0, import_jsx_runtime559.jsx)("p", { className: "block-library-video-tracks-editor__tracks-informative-message-description", children: (0, import_i18n276.__)(
                 "Tracks can be subtitles, captions, chapters, or descriptions. They help make your content more accessible to a wider range of users."
               ) })
             ] }),
@@ -80681,7 +80673,7 @@ ${text}
                 import_components184.MenuGroup,
                 {
                   className: "block-library-video-tracks-editor__add-tracks-container",
-                  label: (0, import_i18n277.__)("Add tracks"),
+                  label: (0, import_i18n276.__)("Add tracks"),
                   children: /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(import_block_editor297.MediaUploadCheck, { children: [
                     /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
                       import_block_editor297.MediaUpload,
@@ -80695,7 +80687,7 @@ ${text}
                           {
                             icon: media_default,
                             onClick: open,
-                            children: (0, import_i18n277.__)("Open Media Library")
+                            children: (0, import_i18n276.__)("Open Media Library")
                           }
                         )
                       }
@@ -80712,7 +80704,7 @@ ${text}
                             {
                               icon: upload_default,
                               onClick: openFileDialog,
-                              children: (0, import_i18n277._x)("Upload", "verb")
+                              children: (0, import_i18n276._x)("Upload", "verb")
                             }
                           );
                         }
@@ -80729,7 +80721,7 @@ ${text}
   }
 
   // packages/block-library/build-module/video/variations.mjs
-  var import_i18n278 = __toESM(require_i18n(), 1);
+  var import_i18n277 = __toESM(require_i18n(), 1);
   var isGifVariation = ({
     controls,
     loop,
@@ -80740,8 +80732,8 @@ ${text}
   var variations21 = [
     {
       name: "video",
-      title: (0, import_i18n278.__)("Video"),
-      description: (0, import_i18n278.__)(
+      title: (0, import_i18n277.__)("Video"),
+      description: (0, import_i18n277.__)(
         "Embed a video from your media library or upload a new one."
       ),
       icon: video_default,
@@ -80753,12 +80745,12 @@ ${text}
     },
     {
       name: "gif",
-      title: (0, import_i18n278.__)("GIF"),
-      description: (0, import_i18n278.__)(
+      title: (0, import_i18n277.__)("GIF"),
+      description: (0, import_i18n277.__)(
         "A muted, looping video that plays automatically like an animated GIF."
       ),
       icon: video_default,
-      keywords: [(0, import_i18n278.__)("animated"), "gif"],
+      keywords: [(0, import_i18n277.__)("animated"), "gif"],
       attributes: {
         controls: false,
         loop: true,
@@ -80864,8 +80856,8 @@ ${text}
           className: "block-editor-media-placeholder",
           withIllustration: !isSingleSelected,
           icon: video_default,
-          label: (0, import_i18n279.__)("Video"),
-          instructions: (0, import_i18n279.__)(
+          label: (0, import_i18n278.__)("Video"),
+          instructions: (0, import_i18n278.__)(
             "Drag and drop a video, upload, or choose from your library."
           ),
           children: content
@@ -80922,7 +80914,7 @@ ${text}
       /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(import_block_editor298.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime560.jsxs)(
         import_components185.__experimentalToolsPanel,
         {
-          label: (0, import_i18n279.__)("Settings"),
+          label: (0, import_i18n278.__)("Settings"),
           resetAll: () => {
             setAttributes({
               autoplay: false,
@@ -80982,7 +80974,7 @@ ${text}
             setAttributes,
             isSelected: isSingleSelected,
             insertBlocksAfter,
-            label: (0, import_i18n279.__)("Video caption text"),
+            label: (0, import_i18n278.__)("Video caption text"),
             showToolbarButton: isSingleSelected && hasNonContentControls
           }
         )
@@ -81130,7 +81122,7 @@ ${text}
       attributes: {
         src: "https://upload.wikimedia.org/wikipedia/commons/c/ca/Wood_thrush_in_Central_Park_switch_sides_%2816510%29.webm",
         // translators: Caption accompanying a video of the wood thrush singing, which serves as an example for the Video block.
-        caption: (0, import_i18n280.__)("Wood thrush singing in Central Park, NYC.")
+        caption: (0, import_i18n279.__)("Wood thrush singing in Central Park, NYC.")
       }
     },
     transforms: transforms_default39,
@@ -81143,7 +81135,7 @@ ${text}
     settings119[fieldsKey20] = [
       {
         id: "video",
-        label: (0, import_i18n280.__)("Video"),
+        label: (0, import_i18n279.__)("Video"),
         type: "media",
         Edit: {
           control: "media",
@@ -81166,7 +81158,7 @@ ${text}
       },
       {
         id: "caption",
-        label: (0, import_i18n280.__)("Caption"),
+        label: (0, import_i18n279.__)("Caption"),
         type: "text",
         Edit: "rich-text"
         // TODO: replace with custom component
@@ -81191,7 +81183,7 @@ ${text}
   // packages/block-library/build-module/footnotes/edit.mjs
   var import_block_editor300 = __toESM(require_block_editor(), 1);
   var import_core_data101 = __toESM(require_core_data(), 1);
-  var import_i18n281 = __toESM(require_i18n(), 1);
+  var import_i18n280 = __toESM(require_i18n(), 1);
   var import_components186 = __toESM(require_components(), 1);
   var import_jsx_runtime562 = __toESM(require_jsx_runtime(), 1);
   function FootnotesEdit({ context: { postType, postId } }) {
@@ -81209,8 +81201,8 @@ ${text}
         import_components186.Placeholder,
         {
           icon: /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(import_block_editor300.BlockIcon, { icon: format_list_numbered_default }),
-          label: (0, import_i18n281.__)("Footnotes"),
-          instructions: (0, import_i18n281.__)(
+          label: (0, import_i18n280.__)("Footnotes"),
+          instructions: (0, import_i18n280.__)(
             "Footnotes are not supported here. Add this block to post or page content."
           )
         }
@@ -81221,8 +81213,8 @@ ${text}
         import_components186.Placeholder,
         {
           icon: /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(import_block_editor300.BlockIcon, { icon: format_list_numbered_default }),
-          label: (0, import_i18n281.__)("Footnotes"),
-          instructions: (0, import_i18n281.__)(
+          label: (0, import_i18n280.__)("Footnotes"),
+          instructions: (0, import_i18n280.__)(
             "Footnotes found in blocks within this document will be displayed here."
           )
         }
@@ -81388,7 +81380,7 @@ ${text}
   var v4_default = v412;
 
   // packages/block-library/build-module/footnotes/format.mjs
-  var import_i18n282 = __toESM(require_i18n(), 1);
+  var import_i18n281 = __toESM(require_i18n(), 1);
   var import_rich_text9 = __toESM(require_rich_text(), 1);
   var import_block_editor301 = __toESM(require_block_editor(), 1);
   var import_data175 = __toESM(require_data(), 1);
@@ -81400,7 +81392,7 @@ ${text}
   var POST_CONTENT_BLOCK_NAME = "core/post-content";
   var SYNCED_PATTERN_BLOCK_NAME = "core/block";
   var format2 = {
-    title: (0, import_i18n282.__)("Footnote"),
+    title: (0, import_i18n281.__)("Footnote"),
     tagName: "sup",
     className: "fn",
     attributes: {
@@ -81520,7 +81512,7 @@ ${text}
         import_block_editor301.RichTextToolbarButton,
         {
           icon: format_list_numbered_default,
-          title: (0, import_i18n282.__)("Footnote"),
+          title: (0, import_i18n281.__)("Footnote"),
           onClick,
           isActive: isObjectActive
         }
@@ -81548,7 +81540,7 @@ ${text}
   var import_element157 = __toESM(require_element(), 1);
   var import_data176 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
-  var import_i18n283 = __toESM(require_i18n(), 1);
+  var import_i18n282 = __toESM(require_i18n(), 1);
   var import_blocks130 = __toESM(require_blocks(), 1);
   var import_block_editor302 = __toESM(require_block_editor(), 1);
   function BlockKeyboardShortcuts() {
@@ -81595,7 +81587,7 @@ ${text}
       registerShortcut({
         name: "core/block-editor/transform-heading-to-paragraph",
         category: "block-library",
-        description: (0, import_i18n283.__)("Transform heading to paragraph."),
+        description: (0, import_i18n282.__)("Transform heading to paragraph."),
         keyCombination: {
           modifier: "access",
           character: "0"
@@ -81611,7 +81603,7 @@ ${text}
         registerShortcut({
           name: `core/block-editor/transform-paragraph-to-heading-${level}`,
           category: "block-library",
-          description: (0, import_i18n283.__)("Transform paragraph to heading."),
+          description: (0, import_i18n282.__)("Transform paragraph to heading."),
           keyCombination: {
             modifier: "access",
             character: `${level}`
@@ -81833,12 +81825,12 @@ ${text}
               urlQueryArgs: { post_id: context?.postId }
             });
             if (status === "loading") {
-              return /* @__PURE__ */ (0, import_jsx_runtime564.jsx)("div", { ...blockProps, children: (0, import_i18n284.__)("Loading\u2026") });
+              return /* @__PURE__ */ (0, import_jsx_runtime564.jsx)("div", { ...blockProps, children: (0, import_i18n283.__)("Loading\u2026") });
             }
             if (status === "error") {
-              return /* @__PURE__ */ (0, import_jsx_runtime564.jsx)("div", { ...blockProps, children: (0, import_i18n284.sprintf)(
+              return /* @__PURE__ */ (0, import_jsx_runtime564.jsx)("div", { ...blockProps, children: (0, import_i18n283.sprintf)(
                 /* translators: %s: error message describing the problem */
-                (0, import_i18n284.__)("Error loading block: %s"),
+                (0, import_i18n283.__)("Error loading block: %s"),
                 error2
               ) });
             }
