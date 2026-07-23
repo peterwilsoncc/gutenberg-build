@@ -2552,7 +2552,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState86({
+          cachedValue = useState87({
             inst: { value, getSnapshot: getSnapshot2 }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -2590,7 +2590,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React31 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState86 = React31.useState, useEffect69 = React31.useEffect, useLayoutEffect5 = React31.useLayoutEffect, useDebugValue = React31.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React31 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState87 = React31.useState, useEffect69 = React31.useEffect, useLayoutEffect5 = React31.useLayoutEffect, useDebugValue = React31.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React31.useSyncExternalStore ? React31.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -22156,6 +22156,7 @@ var wp;
     onEditMedia,
     editMediaButtonRef,
     showEditMediaButton,
+    isEditMediaDisabled,
     blockEditingMode
   }) {
     const {
@@ -22233,7 +22234,8 @@ var wp;
             icon: crop_default,
             label: (0, import_i18n51.__)("Crop background image"),
             onClick: onEditMedia,
-            "aria-haspopup": "dialog"
+            "aria-haspopup": "dialog",
+            disabled: isEditMediaDisabled
           }
         )
       ] }),
@@ -23326,6 +23328,7 @@ var wp;
       }
       return getBackgroundEmbedHtml(embedPreview.html);
     }, [embedPreview, backgroundType]);
+    const [isSwappingMedia, setIsSwappingMedia] = (0, import_element34.useState)(false);
     const isUploadingMedia = isTemporaryMedia(id, url);
     const isImageBackground = IMAGE_BACKGROUND_TYPE === backgroundType;
     const isVideoBackground = VIDEO_BACKGROUND_TYPE === backgroundType;
@@ -23400,6 +23403,9 @@ var wp;
           if (typeof newId !== "number") {
             return;
           }
+          if (newId !== id && newUrl) {
+            setIsSwappingMedia(true);
+          }
           const nextAttributes = {
             id: newId,
             backgroundType: IMAGE_BACKGROUND_TYPE,
@@ -23426,6 +23432,13 @@ var wp;
             nextAttributes.isUserOverlayColor = currentAttrs.isUserOverlayColor || false;
           }
           setAttributes(nextAttributes);
+          const {
+            hasParallax: currentHasParallax,
+            isRepeated: currentIsRepeated
+          } = propsRef.current.attributes;
+          if (currentHasParallax || currentIsRepeated) {
+            setIsSwappingMedia(false);
+          }
         }
       });
     }, [
@@ -23477,7 +23490,8 @@ var wp;
         blockEditingMode,
         onEditMedia: openCoverMediaEditorModal,
         editMediaButtonRef,
-        showEditMediaButton
+        showEditMediaButton,
+        isEditMediaDisabled: isSwappingMedia
       }
     );
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
@@ -23560,7 +23574,7 @@ var wp;
       {
         "is-dark-theme": isDark2,
         "is-light": !isDark2,
-        "is-transient": isUploadingMedia,
+        "is-transient": isUploadingMedia || isSwappingMedia,
         "has-parallax": hasParallax,
         "is-repeated": isRepeated,
         "has-custom-content-position": !isContentPositionCenter(contentPosition)
@@ -23594,7 +23608,9 @@ var wp;
                 className: "wp-block-cover__image-background",
                 alt,
                 src: url,
-                style: mediaStyle
+                style: mediaStyle,
+                onLoad: () => setIsSwappingMedia(false),
+                onError: () => setIsSwappingMedia(false)
               }
             ) : /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
               "div",
@@ -23663,7 +23679,7 @@ var wp;
                 style: { backgroundImage: gradientValue, ...bgStyle }
               }
             ),
-            isUploadingMedia && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(import_components34.Spinner, {}),
+            (isUploadingMedia || isSwappingMedia) && /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(import_components34.Spinner, {}),
             /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
               CoverPlaceholder,
               {
@@ -36126,7 +36142,8 @@ ${text}
   function useOpenImageMediaEditorModal({
     attributes,
     setAttributes,
-    onClose
+    onClose,
+    onUrlChange
   }) {
     const { id, url, alt, caption } = attributes;
     const registry = (0, import_data50.useRegistry)();
@@ -36198,6 +36215,9 @@ ${text}
         if (newId !== currentBlockAttributes.id) {
           nextAttributes.id = newId;
           nextAttributes.url = newUrl ?? currentBlockAttributes.url;
+          if (nextAttributes.url !== currentBlockAttributes.url) {
+            onUrlChange?.(nextAttributes.url);
+          }
           blockAttributesRef.current = {
             ...blockAttributesRef.current,
             id: nextAttributes.id,
@@ -36227,7 +36247,7 @@ ${text}
           setAttributes(nextAttributes);
         }
       },
-      [resolveFreshAttachmentRecord, setAttributes]
+      [onUrlChange, resolveFreshAttachmentRecord, setAttributes]
     );
     const openImageMediaEditorModal = (0, import_element56.useCallback)(async () => {
       if (!id || !openMediaEditorModal) {
@@ -36529,6 +36549,8 @@ ${text}
     );
     const { getBlock, getSettings: getSettings2 } = (0, import_data51.useSelect)(import_block_editor116.store);
     const cropButtonRef = (0, import_element57.useRef)();
+    const [pendingSwapUrl, setPendingSwapUrl] = (0, import_element57.useState)();
+    const isSwappingMedia = !!pendingSwapUrl;
     const handleMediaEditorModalClose = (0, import_element57.useCallback)(
       () => cropButtonRef.current?.focus(),
       []
@@ -36536,7 +36558,8 @@ ${text}
     const openImageMediaEditorModal = useOpenImageMediaEditorModal({
       attributes,
       setAttributes,
-      onClose: handleMediaEditorModalClose
+      onClose: handleMediaEditorModalClose,
+      onUrlChange: setPendingSwapUrl
     });
     const {
       replaceBlocks,
@@ -36582,7 +36605,13 @@ ${text}
         naturalHeight: imageElement?.naturalHeight || loadedNaturalHeight || void 0
       };
     }, [loadedNaturalWidth, loadedNaturalHeight, imageElement?.complete]);
+    (0, import_element57.useEffect)(() => {
+      if (pendingSwapUrl && pendingSwapUrl === url && imageElement?.complete) {
+        setPendingSwapUrl(void 0);
+      }
+    }, [pendingSwapUrl, url, imageElement]);
     function onImageError() {
+      setPendingSwapUrl(void 0);
       setHasImageErrored(true);
       const embedBlock = createUpgradedEmbedBlock({ attributes: { url } });
       if (void 0 !== embedBlock && onReplace) {
@@ -36590,6 +36619,7 @@ ${text}
       }
     }
     function onImageLoad(event) {
+      setPendingSwapUrl(void 0);
       setHasImageErrored(false);
       setLoadedNaturalSize({
         loadedNaturalWidth: event.target?.naturalWidth,
@@ -36921,7 +36951,8 @@ ${text}
             onClick: openImageMediaEditorModal,
             "aria-haspopup": "dialog",
             icon: crop_default,
-            label: (0, import_i18n99.__)("Crop")
+            label: (0, import_i18n99.__)("Crop"),
+            disabled: isSwappingMedia
           }
         ),
         showCoverControls && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
@@ -37174,7 +37205,9 @@ ${text}
           onError: onImageError,
           onLoad: onImageLoad,
           ref: setRefs,
-          className: borderProps.className,
+          className: clsx_default(borderProps.className, {
+            "is-swapping-media": isSwappingMedia
+          }),
           width: naturalWidth,
           height: naturalHeight,
           style: {
@@ -37203,7 +37236,7 @@ ${text}
           }
         }
       ),
-      isUploading && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components58.Spinner, {})
+      (isUploading || isSwappingMedia) && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components58.Spinner, {})
     ] }) });
     let resizableBox;
     if (isResizable && isSingleSelected && !isUploading && !SIZED_LAYOUTS.includes(parentLayoutType)) {
