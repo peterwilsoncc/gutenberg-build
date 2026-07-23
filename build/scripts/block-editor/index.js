@@ -1923,10 +1923,10 @@ var wp;
         };
         return function(d2, b2) {
           extendStatics2(d2, b2);
-          function __232() {
+          function __233() {
             this.constructor = d2;
           }
-          d2.prototype = b2 === null ? Object.create(b2) : (__232.prototype = b2.prototype, new __232());
+          d2.prototype = b2 === null ? Object.create(b2) : (__233.prototype = b2.prototype, new __233());
         };
       })();
       var __assign2 = exports && exports.__assign || Object.assign || function(t3) {
@@ -18125,7 +18125,7 @@ var wp;
     onChange,
     alignmentControls = DEFAULT_ALIGNMENT_CONTROLS,
     label = (0, import_i18n8.__)("Align text"),
-    description = (0, import_i18n8.__)("Change text alignment"),
+    description,
     isCollapsed: isCollapsed3 = true,
     isToolbar
   }) {
@@ -18143,9 +18143,7 @@ var wp;
     }
     const UIComponent = isToolbar ? import_components8.ToolbarGroup : import_components8.ToolbarDropdownMenu;
     const extraProps = isToolbar ? { isCollapsed: isCollapsed3 } : {
-      toggleProps: {
-        description
-      },
+      toggleProps: description ? { description } : {},
       popoverProps: POPOVER_PROPS
     };
     return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
@@ -18205,10 +18203,10 @@ var wp;
     if (typeof b2 !== "function" && b2 !== null)
       throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
     extendStatics(d2, b2);
-    function __232() {
+    function __233() {
       this.constructor = d2;
     }
-    d2.prototype = b2 === null ? Object.create(b2) : (__232.prototype = b2.prototype, new __232());
+    d2.prototype = b2 === null ? Object.create(b2) : (__233.prototype = b2.prototype, new __233());
   }
   var __assign = function() {
     __assign = Object.assign || function __assign2(t3) {
@@ -20556,7 +20554,9 @@ var wp;
     onChange,
     controls,
     isToolbar,
-    isCollapsed: isCollapsed3 = true
+    isCollapsed: isCollapsed3 = true,
+    label = (0, import_i18n17.__)("Align block"),
+    description
   }) {
     const enabledControls = useAvailableAlignments(controls);
     const hasEnabledControls = !!enabledControls.length;
@@ -20571,7 +20571,7 @@ var wp;
     const UIComponent = isToolbar ? import_components16.ToolbarGroup : import_components16.ToolbarDropdownMenu;
     const commonProps = {
       icon: activeAlignmentControl ? activeAlignmentControl.icon : defaultAlignmentControl.icon,
-      label: (0, import_i18n17.__)("Align")
+      label
     };
     const extraProps = isToolbar ? {
       isCollapsed: isCollapsed3,
@@ -20584,7 +20584,7 @@ var wp;
         };
       })
     } : {
-      toggleProps: { description: (0, import_i18n17.__)("Change alignment") },
+      toggleProps: description ? { description } : {},
       children: ({ onClose }) => {
         return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(import_jsx_runtime134.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(import_components16.MenuGroup, { className: "block-editor-block-alignment-control__menu-group", children: enabledControls.map(
           ({ name: controlName, info }) => {
@@ -64820,7 +64820,8 @@ var wp;
     onChange,
     controls = DEFAULT_CONTROLS2,
     isCollapsed: isCollapsed3 = true,
-    isToolbar
+    isToolbar,
+    label = (0, import_i18n121.__)("Align content vertically")
   }) {
     function applyOrUnset(align) {
       return () => onChange(value === align ? void 0 : align);
@@ -64833,10 +64834,7 @@ var wp;
       UIComponent,
       {
         icon: activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon,
-        label: (0, import_i18n121._x)(
-          "Change vertical alignment",
-          "Block vertical alignment setting label"
-        ),
+        label,
         controls: controls.map((control) => {
           return {
             ...BLOCK_ALIGNMENTS_CONTROLS2[control],

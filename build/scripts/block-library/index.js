@@ -43048,7 +43048,8 @@ ${text}
             import_block_editor139.BlockVerticalAlignmentControl,
             {
               onChange: onVerticalAlignmentChange,
-              value: verticalAlignment
+              value: verticalAlignment,
+              label: (0, import_i18n113.__)("Align media and text vertically")
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
@@ -74507,7 +74508,7 @@ ${text}
         /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(import_block_editor263.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
           import_block_editor263.AlignmentControl,
           {
-            label: (0, import_i18n248.__)("Change column alignment"),
+            label: (0, import_i18n248.__)("Align column content"),
             alignmentControls: ALIGNMENT_CONTROLS,
             value: getCellAlignment(),
             onChange: (nextAlign) => onChangeColumnAlignment(nextAlign)
