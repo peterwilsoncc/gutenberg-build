@@ -34077,12 +34077,15 @@ function getClosestSelectedId({
 }
 function useSelectionProps({
   data,
-  actions,
   getItemId: getItemId2,
+  isItemSelectable,
   selection,
   onChangeSelection,
-  pickerMultiselect
+  selectionMode,
+  shouldSelectOnClick
 }) {
+  const isMultiselect = selectionMode === "multi";
+  const allowDeselect = selectionMode !== "single-required";
   const gestureRef = (0, import_element136.useRef)(null);
   const anchorTo = (id) => {
     gestureRef.current = { anchorId: id, lastTargetId: null };
@@ -34097,26 +34100,25 @@ function useSelectionProps({
     });
     return () => document.removeEventListener("touchstart", markTouchDevice);
   }, []);
-  const isPicker = pickerMultiselect !== void 0;
-  const selectableIds = (isPicker ? data : data.filter((item) => hasAPossibleBulkAction(actions, item))).map(getItemId2);
+  const selectableIds = data.filter(isItemSelectable).map(getItemId2);
   const selectableIdSet = new Set(selectableIds);
   const hasSelectableItems = selectableIds.length > 0;
-  const hasRangeGesture = hasSelectableItems && pickerMultiselect !== false;
+  const hasRangeGesture = hasSelectableItems && isMultiselect;
   const getSelectionProps = (id) => {
     const isSelectable = selectableIdSet.has(id);
     return {
-      // A picker selects on a plain click, so that click is also what
-      // anchors the range a following Shift+Click extends from. Modifier
-      // clicks never reach here: `onClickCapture` stops them.
-      ...isPicker && {
+      // When a plain click selects, that click is also what anchors the
+      // range a following Shift+Click extends from. Modifier clicks never
+      // reach here: `onClickCapture` stops them.
+      ...shouldSelectOnClick && {
         onClick: () => {
-          if (selection.includes(id)) {
+          if (allowDeselect && selection.includes(id)) {
             onChangeSelection(
               selection.filter((itemId) => id !== itemId)
             );
           } else {
             onChangeSelection(
-              pickerMultiselect ? [...selection, id] : [id]
+              isMultiselect ? [...selection, id] : [id]
             );
           }
           anchorTo(id);
@@ -34487,10 +34489,12 @@ function ViewTable({
   const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
   const { getSelectionProps } = useSelectionProps({
     data: orderedData,
-    actions,
     getItemId: getItemId2,
+    isItemSelectable: (item) => hasAPossibleBulkAction(actions, item),
     selection,
-    onChangeSelection
+    onChangeSelection,
+    selectionMode: "multi",
+    shouldSelectOnClick: false
   });
   const headerMenuRefs = (0, import_element139.useRef)(/* @__PURE__ */ new Map());
   const headerMenuToFocusRef = (0, import_element139.useRef)(void 0);
@@ -35394,10 +35398,12 @@ function ViewGrid({
   const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
   const { getSelectionProps } = useSelectionProps({
     data: orderedData,
-    actions,
     getItemId: getItemId2,
+    isItemSelectable: (item) => hasAPossibleBulkAction(actions, item),
     selection,
-    onChangeSelection
+    onChangeSelection,
+    selectionMode: "multi",
+    shouldSelectOnClick: false
   });
   if (!hasData) {
     return /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
@@ -35551,7 +35557,7 @@ function ListItem({
   titleField,
   mediaField,
   descriptionField,
-  onSelect,
+  selectionProps,
   otherFields,
   onDropdownTriggerKeyDown,
   posinset
@@ -35706,7 +35712,7 @@ function ListItem({
                 "aria-labelledby": labelId,
                 "aria-describedby": descriptionId,
                 className: "dataviews-view-list__item",
-                onClick: () => onSelect(item)
+                ...selectionProps
               }
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime200.jsxs)(
@@ -35815,7 +35821,15 @@ function ViewList(props) {
     (field) => field.id === view.descriptionField
   );
   const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f2) => fieldId === f2.id)).filter(isDefined2);
-  const onSelect = (item) => onChangeSelection([getItemId2(item)]);
+  const { getSelectionProps } = useSelectionProps({
+    data,
+    getItemId: getItemId2,
+    isItemSelectable: () => true,
+    selection,
+    onChangeSelection,
+    selectionMode: "single-required",
+    shouldSelectOnClick: true
+  });
   const generateCompositeItemIdPrefix = (0, import_element144.useCallback)(
     (item) => `${baseId}-${getItemId2(item)}`,
     [baseId, getItemId2]
@@ -35947,7 +35961,9 @@ function ViewList(props) {
                   actions,
                   item,
                   isSelected: item === selectedItem,
-                  onSelect,
+                  selectionProps: getSelectionProps(
+                    getItemId2(item)
+                  ),
                   mediaField,
                   titleField,
                   descriptionField,
@@ -35979,7 +35995,9 @@ function ViewList(props) {
               actions,
               item,
               isSelected: item === selectedItem,
-              onSelect,
+              selectionProps: getSelectionProps(
+                getItemId2(item)
+              ),
               mediaField,
               titleField,
               descriptionField,
@@ -36878,11 +36896,12 @@ function ViewPickerGrid({
   const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
   const { getSelectionProps } = useSelectionProps({
     data: orderedData,
-    actions,
     getItemId: getItemId2,
+    isItemSelectable: () => true,
     selection,
     onChangeSelection,
-    pickerMultiselect: isMultiselect
+    selectionMode: isMultiselect ? "multi" : "single-clearable",
+    shouldSelectOnClick: true
   });
   const currentPage = view?.page ?? 1;
   const perPage = view?.perPage ?? 0;
@@ -37250,11 +37269,12 @@ function ViewPickerTable({
   const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
   const { getSelectionProps } = useSelectionProps({
     data: orderedData,
-    actions,
     getItemId: getItemId2,
+    isItemSelectable: () => true,
     selection,
     onChangeSelection,
-    pickerMultiselect: isMultiselect
+    selectionMode: isMultiselect ? "multi" : "single-clearable",
+    shouldSelectOnClick: true
   });
   const tableNoticeId = (0, import_element150.useId)();
   if (nextHeaderMenuToFocus) {
@@ -37673,11 +37693,12 @@ function ViewPickerActivity({
   const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
   const { getSelectionProps } = useSelectionProps({
     data: orderedData,
-    actions,
     getItemId: getItemId2,
+    isItemSelectable: () => true,
     selection,
     onChangeSelection,
-    pickerMultiselect: isMultiselect
+    selectionMode: isMultiselect ? "multi" : "single-clearable",
+    shouldSelectOnClick: true
   });
   const renderItem = (item) => /* @__PURE__ */ (0, import_jsx_runtime208.jsx)(
     PickerActivityItem,
