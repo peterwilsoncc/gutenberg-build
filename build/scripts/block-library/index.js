@@ -30258,7 +30258,8 @@ ${url}
     const sourceDescriptor = getDynamicSource(dynamicContent?.source);
     const sourceOrderby = dynamicContent?.args?.orderBy ?? DEFAULT_ORDERBY;
     const sourceOrder = dynamicContent?.args?.order ?? DEFAULT_ORDER;
-    const { replaceInnerBlocks } = (0, import_data38.useDispatch)(import_block_editor96.store);
+    const registry = (0, import_data38.useRegistry)();
+    const { replaceInnerBlocks, __unstableMarkNextChangeAsNotPersistent } = (0, import_data38.useDispatch)(import_block_editor96.store);
     const query = (0, import_element43.useMemo)(
       () => dynamicContent ? getSourceQuery(dynamicContent, { postId }) : null,
       [dynamicContent, postId]
@@ -30314,15 +30315,21 @@ ${url}
       ]
     );
     function enableDynamicMode() {
-      setAttributes({ dynamicContent: { source: ATTACHED_MEDIA } });
-      replaceInnerBlocks(clientId, []);
+      registry.batch(() => {
+        setAttributes({ dynamicContent: { source: ATTACHED_MEDIA } });
+        __unstableMarkNextChangeAsNotPersistent();
+        replaceInnerBlocks(clientId, []);
+      });
     }
     function convertToStatic() {
-      replaceInnerBlocks(
-        clientId,
-        buildImageBlocks(dynamicMedia, imageAttributes)
-      );
-      setAttributes({ dynamicContent: void 0 });
+      registry.batch(() => {
+        replaceInnerBlocks(
+          clientId,
+          buildImageBlocks(dynamicMedia, imageAttributes)
+        );
+        __unstableMarkNextChangeAsNotPersistent();
+        setAttributes({ dynamicContent: void 0 });
+      });
     }
     function setSourceOrder(nextOrderby, nextOrder) {
       const nextArgs = { ...dynamicContent?.args };
