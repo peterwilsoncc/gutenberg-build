@@ -3720,8 +3720,8 @@ iframe[name=editor-canvas] {
   }
 }
 .block-editor-content-only-controls__rich-text:focus {
-  border-color: var(--wp-admin-theme-color, #3858e9);
-  box-shadow: 0 0 0 0.5px var(--wp-admin-theme-color, #3858e9);
+  border-color: var(--wp-admin-theme-color);
+  box-shadow: 0 0 0 0.5px var(--wp-admin-theme-color);
   outline: 2px solid transparent;
 }
 .block-editor-content-only-controls__rich-text::-moz-placeholder {
