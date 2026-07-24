@@ -13388,9 +13388,13 @@ function useSelectionProps({
   actions,
   getItemId,
   selection,
-  onChangeSelection
+  onChangeSelection,
+  pickerMultiselect
 }) {
   const gestureRef = (0, import_element40.useRef)(null);
+  const anchorTo = (id) => {
+    gestureRef.current = { anchorId: id, lastTargetId: null };
+  };
   const isTouchDeviceRef = (0, import_element40.useRef)(false);
   (0, import_element40.useEffect)(() => {
     const markTouchDevice = () => {
@@ -13401,29 +13405,45 @@ function useSelectionProps({
     });
     return () => document.removeEventListener("touchstart", markTouchDevice);
   }, []);
-  const selectableIds = data.filter((item) => hasAPossibleBulkAction(actions, item)).map(getItemId);
+  const isPicker = pickerMultiselect !== void 0;
+  const selectableIds = (isPicker ? data : data.filter((item) => hasAPossibleBulkAction(actions, item))).map(getItemId);
   const selectableIdSet = new Set(selectableIds);
   const hasSelectableItems = selectableIds.length > 0;
+  const hasRangeGesture = hasSelectableItems && pickerMultiselect !== false;
   const getSelectionProps = (id) => {
     const isSelectable = selectableIdSet.has(id);
     return {
+      // A picker selects on a plain click, so that click is also what
+      // anchors the range a following Shift+Click extends from. Modifier
+      // clicks never reach here: `onClickCapture` stops them.
+      ...isPicker && {
+        onClick: () => {
+          if (selection.includes(id)) {
+            onChangeSelection(
+              selection.filter((itemId) => id !== itemId)
+            );
+          } else {
+            onChangeSelection(
+              pickerMultiselect ? [...selection, id] : [id]
+            );
+          }
+          anchorTo(id);
+        }
+      },
       onMouseDown: (event) => {
-        if (event.button === 0 && event.shiftKey && hasSelectableItems) {
+        if (event.button === 0 && event.shiftKey && hasRangeGesture) {
           event.preventDefault();
         }
       },
       onClickCapture: (event) => {
-        if (!hasSelectableItems) {
+        if (!hasRangeGesture) {
           return;
         }
         const isModifierKeyPressed = (0, import_keycodes.isAppleOS)() ? event.metaKey : event.ctrlKey;
         const isSelectionCheckboxClick = event.target instanceof Element && !!event.target.closest(`.${SELECTION_CHECKBOX_CLASS}`);
         if (!isModifierKeyPressed && !event.shiftKey) {
           if (isSelectable && isSelectionCheckboxClick) {
-            gestureRef.current = {
-              anchorId: id,
-              lastTargetId: null
-            };
+            anchorTo(id);
           }
           return;
         }
@@ -13466,7 +13486,7 @@ function useSelectionProps({
           onChangeSelection(
             selection.includes(id) ? selection.filter((itemId) => id !== itemId) : [...selection, id]
           );
-          gestureRef.current = { anchorId: id, lastTargetId: null };
+          anchorTo(id);
         }
       }
     };
@@ -15744,9 +15764,9 @@ var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
 var { Badge: WCBadge2 } = unlock2(import_components16.privateApis);
 function GridItem3({
   view,
-  multiselect,
   selection,
   onChangeSelection,
+  selectionProps,
   getItemId,
   item,
   mediaField,
@@ -15785,16 +15805,7 @@ function GridItem3({
         "is-selected": isSelected2
       }),
       "aria-selected": isSelected2,
-      onClick: () => {
-        if (isSelected2) {
-          onChangeSelection(
-            selection.filter((itemId) => id !== itemId)
-          );
-        } else {
-          const newSelection = multiselect ? [...selection, id] : [id];
-          onChangeSelection(newSelection);
-        }
-      },
+      ...selectionProps,
       children: [
         showMedia && renderedMediaField && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)("div", { className: "dataviews-view-picker-grid__media", children: renderedMediaField }),
         showMedia && renderedMediaField && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
@@ -15978,6 +15989,15 @@ function ViewPickerGrid({
   const groupField = view.groupBy?.field ? fields2.find((f2) => f2.id === view.groupBy?.field) : null;
   const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
   const isInfiniteScroll = (view.infiniteScrollEnabled && !dataByGroup) ?? false;
+  const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
+  const { getSelectionProps } = useSelectionProps({
+    data: orderedData,
+    actions,
+    getItemId,
+    selection,
+    onChangeSelection,
+    pickerMultiselect: isMultiselect
+  });
   const currentPage = view?.page ?? 1;
   const perPage = view?.perPage ?? 0;
   const setSize = isInfiniteScroll ? paginationInfo?.totalItems : void 0;
@@ -16038,9 +16058,11 @@ function ViewPickerGrid({
                         GridItem3,
                         {
                           view,
-                          multiselect: isMultiselect,
                           selection,
                           onChangeSelection,
+                          selectionProps: getSelectionProps(
+                            getItemId(item)
+                          ),
                           getItemId,
                           item,
                           mediaField,
@@ -16119,9 +16141,11 @@ function ViewPickerGrid({
                 GridItem3,
                 {
                   view,
-                  multiselect: isMultiselect,
                   selection,
                   onChangeSelection,
+                  selectionProps: getSelectionProps(
+                    getItemId(item)
+                  ),
                   getItemId,
                   item,
                   mediaField,
@@ -16190,7 +16214,7 @@ function TableRow2({
   selection,
   getItemId,
   onChangeSelection,
-  multiselect,
+  selectionProps,
   posinset
 }) {
   const { paginationInfo } = (0, import_element54.useContext)(dataviews_context_default);
@@ -16233,6 +16257,8 @@ function TableRow2({
       "aria-setsize": paginationInfo.totalItems || void 0,
       "aria-posinset": posinset,
       role: infiniteScrollEnabled ? "article" : "option",
+      onClickCapture: selectionProps.onClickCapture,
+      onClick: selectionProps.onClick,
       onMouseDown: (event) => {
         if (event.button !== 0) {
           return;
@@ -16240,16 +16266,7 @@ function TableRow2({
         event.currentTarget.parentElement?.focus({
           preventScroll: true
         });
-      },
-      onClick: () => {
-        if (isSelected2) {
-          onChangeSelection(
-            selection.filter((itemId) => id !== itemId)
-          );
-        } else {
-          const newSelection = multiselect ? [...selection, id] : [id];
-          onChangeSelection(newSelection);
-        }
+        selectionProps.onMouseDown(event);
       },
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
@@ -16344,6 +16361,15 @@ function ViewPickerTable({
   const groupField = view.groupBy?.field ? fields2.find((f2) => f2.id === view.groupBy?.field) : null;
   const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
   const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
+  const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
+  const { getSelectionProps } = useSelectionProps({
+    data: orderedData,
+    actions,
+    getItemId,
+    selection,
+    onChangeSelection,
+    pickerMultiselect: isMultiselect
+  });
   const tableNoticeId = (0, import_element54.useId)();
   if (nextHeaderMenuToFocus) {
     headerMenuToFocusRef.current = nextHeaderMenuToFocus;
@@ -16487,23 +16513,28 @@ function ViewPickerTable({
                       )
                     }
                   ),
-                  groupItems.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-                    TableRow2,
-                    {
-                      item,
-                      fields: fields2,
-                      id: getItemId(item) || index2.toString(),
-                      view,
-                      titleField,
-                      mediaField,
-                      descriptionField,
-                      selection,
-                      getItemId,
-                      onChangeSelection,
-                      multiselect: isMultiselect
-                    },
-                    getItemId(item)
-                  ))
+                  groupItems.map((item, index2) => {
+                    const id = getItemId(item) || index2.toString();
+                    return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+                      TableRow2,
+                      {
+                        item,
+                        fields: fields2,
+                        id,
+                        view,
+                        titleField,
+                        mediaField,
+                        descriptionField,
+                        selection,
+                        getItemId,
+                        onChangeSelection,
+                        selectionProps: getSelectionProps(
+                          id
+                        )
+                      },
+                      getItemId(item)
+                    );
+                  })
                 ]
               },
               `group-${groupName}`
@@ -16516,13 +16547,14 @@ function ViewPickerTable({
               orientation: "vertical",
               children: hasData && data.map((item, index2) => {
                 const itemId = getItemId(item);
+                const id = itemId || index2.toString();
                 const posinset = item.position;
                 return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
                   TableRow2,
                   {
                     item,
                     fields: fields2,
-                    id: itemId || index2.toString(),
+                    id,
                     view,
                     titleField,
                     mediaField,
@@ -16530,7 +16562,9 @@ function ViewPickerTable({
                     selection,
                     getItemId,
                     onChangeSelection,
-                    multiselect: isMultiselect,
+                    selectionProps: getSelectionProps(
+                      id
+                    ),
                     posinset
                   },
                   itemId
@@ -16570,9 +16604,8 @@ function isDefined4(item) {
 }
 function PickerActivityItem({
   view,
-  multiselect,
   selection,
-  onChangeSelection,
+  selectionProps,
   getItemId,
   item,
   titleField,
@@ -16631,16 +16664,7 @@ function PickerActivityItem({
         density === "comfortable" && "is-comfortable",
         isSelected2 && "is-selected"
       ),
-      onClick: () => {
-        if (isSelected2) {
-          onChangeSelection(
-            selection.filter((itemId) => id !== itemId)
-          );
-        } else {
-          const newSelection = multiselect ? [...selection, id] : [id];
-          onChangeSelection(newSelection);
-        }
-      },
+      ...selectionProps,
       render: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("div", {}),
       children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "row", gap: "lg", justify: "start", align: "flex-start", children: [
         /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
@@ -16760,13 +16784,21 @@ function ViewPickerActivity({
   const setsize = isInfiniteScroll ? paginationInfo?.totalItems : void 0;
   const hasData = !!data?.length;
   const isGrouped = !!(groupField && dataByGroup);
+  const orderedData = dataByGroup ? Array.from(dataByGroup.values()).flat() : data;
+  const { getSelectionProps } = useSelectionProps({
+    data: orderedData,
+    actions,
+    getItemId,
+    selection,
+    onChangeSelection,
+    pickerMultiselect: isMultiselect
+  });
   const renderItem = (item) => /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
     PickerActivityItem,
     {
       view,
-      multiselect: isMultiselect,
       selection,
-      onChangeSelection,
+      selectionProps: getSelectionProps(getItemId(item)),
       getItemId,
       item,
       titleField,
