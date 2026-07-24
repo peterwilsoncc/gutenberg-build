@@ -11549,6 +11549,63 @@ var wp;
     return null;
   }
 
+  // packages/global-styles-engine/build-module/utils/duotone.mjs
+  function getValuesFromColors(colors2 = []) {
+    const values = {
+      r: [],
+      g: [],
+      b: [],
+      a: []
+    };
+    colors2.forEach((color) => {
+      const rgbColor = w(color).toRgb();
+      values.r.push(rgbColor.r / 255);
+      values.g.push(rgbColor.g / 255);
+      values.b.push(rgbColor.b / 255);
+      values.a.push(rgbColor.a);
+    });
+    return values;
+  }
+  function getDuotoneUnsetStylesheet(selector3) {
+    return `${selector3}{filter:none}`;
+  }
+  function getDuotoneStylesheet(selector3, id) {
+    return `${selector3}{filter:url(#${id})}`;
+  }
+  function getDuotoneFilter(id, colors2) {
+    const values = getValuesFromColors(colors2);
+    return `
+<svg
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	viewBox="0 0 0 0"
+	width="0"
+	height="0"
+	focusable="false"
+	role="none"
+	aria-hidden="true"
+	style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"
+>
+	<defs>
+		<filter id="${id}">
+			<!--
+				Use sRGB instead of linearRGB so transparency looks correct.
+				Use perceptual brightness to convert to grayscale.
+			-->
+			<feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></feColorMatrix>
+			<!-- Use sRGB instead of linearRGB to be consistent with how CSS gradients work. -->
+			<feComponentTransfer color-interpolation-filters="sRGB">
+				<feFuncR type="table" tableValues="${values.r.join(" ")}"></feFuncR>
+				<feFuncG type="table" tableValues="${values.g.join(" ")}"></feFuncG>
+				<feFuncB type="table" tableValues="${values.b.join(" ")}"></feFuncB>
+				<feFuncA type="table" tableValues="${values.a.join(" ")}"></feFuncA>
+			</feComponentTransfer>
+			<!-- Re-mask the image with the original transparency since the feColorMatrix above loses that information. -->
+			<feComposite in2="SourceGraphic" operator="in"></feComposite>
+		</filter>
+	</defs>
+</svg>`;
+  }
+
   // packages/global-styles-engine/build-module/utils/string.mjs
   function kebabCase2(str) {
     return str.replace(/([a-z])([A-Z])/g, "$1-$2").replace(/([0-9])([a-zA-Z])/g, "$1-$2").replace(/([a-zA-Z])([0-9])/g, "$1-$2").replace(/[\s_]+/g, "-").toLowerCase();
@@ -13204,6 +13261,9 @@ var wp;
     getResponsiveMediaQueries,
     getViewportBreakpoints,
     getViewportBreakpointValueInPixels,
+    getDuotoneFilter,
+    getDuotoneStylesheet,
+    getDuotoneUnsetStylesheet,
     resolveStyle,
     getVariationStyle
   });
@@ -95230,61 +95290,8 @@ var wp;
   var import_hooks30 = __toESM(require_hooks(), 1);
   var import_element323 = __toESM(require_element(), 1);
   var import_data190 = __toESM(require_data(), 1);
-
-  // packages/block-editor/build-module/components/duotone/utils.mjs
-  function getValuesFromColors(colors2 = []) {
-    const values = { r: [], g: [], b: [], a: [] };
-    colors2.forEach((color) => {
-      const rgbColor = w(color).toRgb();
-      values.r.push(rgbColor.r / 255);
-      values.g.push(rgbColor.g / 255);
-      values.b.push(rgbColor.b / 255);
-      values.a.push(rgbColor.a);
-    });
-    return values;
-  }
-  function getDuotoneUnsetStylesheet(selector3) {
-    return `${selector3}{filter:none}`;
-  }
-  function getDuotoneStylesheet(selector3, id) {
-    return `${selector3}{filter:url(#${id})}`;
-  }
-  function getDuotoneFilter(id, colors2) {
-    const values = getValuesFromColors(colors2);
-    return `
-<svg
-	xmlns:xlink="http://www.w3.org/1999/xlink"
-	viewBox="0 0 0 0"
-	width="0"
-	height="0"
-	focusable="false"
-	role="none"
-	aria-hidden="true"
-	style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"
->
-	<defs>
-		<filter id="${id}">
-			<!--
-				Use sRGB instead of linearRGB so transparency looks correct.
-				Use perceptual brightness to convert to grayscale.
-			-->
-			<feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></feColorMatrix>
-			<!-- Use sRGB instead of linearRGB to be consistent with how CSS gradients work. -->
-			<feComponentTransfer color-interpolation-filters="sRGB">
-				<feFuncR type="table" tableValues="${values.r.join(" ")}"></feFuncR>
-				<feFuncG type="table" tableValues="${values.g.join(" ")}"></feFuncG>
-				<feFuncB type="table" tableValues="${values.b.join(" ")}"></feFuncB>
-				<feFuncA type="table" tableValues="${values.a.join(" ")}"></feFuncA>
-			</feComponentTransfer>
-			<!-- Re-mask the image with the original transparency since the feColorMatrix above loses that information. -->
-			<feComposite in2="SourceGraphic" operator="in"></feComposite>
-		</filter>
-	</defs>
-</svg>`;
-  }
-
-  // packages/block-editor/build-module/hooks/duotone.mjs
   var import_jsx_runtime522 = __toESM(require_jsx_runtime(), 1);
+  var { getDuotoneFilter: getDuotoneFilter2, getDuotoneStylesheet: getDuotoneStylesheet2, getDuotoneUnsetStylesheet: getDuotoneUnsetStylesheet2 } = unlock(privateApis);
   var EMPTY_ARRAY18 = [];
   var isSafari = window?.navigator.userAgent && window.navigator.userAgent.includes("Safari") && !window.navigator.userAgent.includes("Chrome") && !window.navigator.userAgent.includes("Chromium");
   k([names_default]);
@@ -95458,13 +95465,13 @@ var wp;
     const isValidFilter = Array.isArray(colors2) || colors2 === "unset";
     usePrivateStyleOverride(
       isValidFilter ? {
-        css: colors2 !== "unset" ? getDuotoneStylesheet(selector3, filterId) : getDuotoneUnsetStylesheet(selector3),
+        css: colors2 !== "unset" ? getDuotoneStylesheet2(selector3, filterId) : getDuotoneUnsetStylesheet2(selector3),
         __unstableType: "presets"
       } : void 0
     );
     usePrivateStyleOverride(
       isValidFilter ? {
-        assets: colors2 !== "unset" ? getDuotoneFilter(filterId, colors2) : "",
+        assets: colors2 !== "unset" ? getDuotoneFilter2(filterId, colors2) : "",
         __unstableType: "svgs"
       } : void 0
     );
@@ -99397,13 +99404,14 @@ var wp;
   }
 
   // packages/block-editor/build-module/private-apis.mjs
+  var { getDuotoneFilter: getDuotoneFilter3 } = unlock(privateApis);
   var privateApis14 = {};
   lock(privateApis14, {
     ...global_styles_exports,
     ExperimentalBlockCanvas,
     BlockCanvasCover,
     ExperimentalBlockEditorProvider,
-    getDuotoneFilter,
+    getDuotoneFilter: getDuotoneFilter3,
     getRichTextValues,
     PrivateQuickInserter: QuickInserter,
     extractWords,

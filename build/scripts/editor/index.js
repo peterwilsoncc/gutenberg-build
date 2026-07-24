@@ -4313,6 +4313,12 @@ var wp;
     });
     return values;
   }
+  function getDuotoneUnsetStylesheet(selector2) {
+    return `${selector2}{filter:none}`;
+  }
+  function getDuotoneStylesheet(selector2, id) {
+    return `${selector2}{filter:url(#${id})}`;
+  }
   function getDuotoneFilter(id, colors2) {
     const values = getValuesFromColors(colors2);
     return `
@@ -6222,6 +6228,9 @@ var wp;
     getResponsiveMediaQueries,
     getViewportBreakpoints,
     getViewportBreakpointValueInPixels,
+    getDuotoneFilter,
+    getDuotoneStylesheet,
+    getDuotoneUnsetStylesheet,
     resolveStyle,
     getVariationStyle
   });
