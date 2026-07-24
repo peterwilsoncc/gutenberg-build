@@ -46485,11 +46485,15 @@ var wp;
     const {
       getMultiSelectedBlocksStartClientId: getMultiSelectedBlocksStartClientId2,
       getMultiSelectedBlocksEndClientId: getMultiSelectedBlocksEndClientId2,
+      getNextBlockClientId: getNextBlockClientId2,
+      getPreviousBlockClientId: getPreviousBlockClientId2,
+      getSelectedBlockClientId: getSelectedBlockClientId2,
+      getSelectionStart: getSelectionStart2,
       getSettings: getSettings7,
       hasMultiSelection: hasMultiSelection2,
       __unstableIsFullySelected: __unstableIsFullySelected2
     } = (0, import_data41.useSelect)(store);
-    const { selectBlock: selectBlock2 } = (0, import_data41.useDispatch)(store);
+    const { selectBlock: selectBlock2, multiSelect: multiSelect2 } = (0, import_data41.useDispatch)(store);
     return (0, import_compose24.useRefEffect)((node) => {
       let verticalRect;
       function onMouseDown() {
@@ -46532,6 +46536,16 @@ var wp;
         }
         if (hasMultiSelection2()) {
           if (shiftKey) {
+            const selection2 = defaultView.getSelection();
+            if (__unstableIsFullySelected2() && (!selection2.rangeCount || selection2.isCollapsed)) {
+              const anchorClientId = getMultiSelectedBlocksStartClientId2();
+              const focusClientId = getMultiSelectedBlocksEndClientId2();
+              const nextClientId = isReverse ? getPreviousBlockClientId2(focusClientId) : getNextBlockClientId2(focusClientId);
+              if (nextClientId) {
+                multiSelect2(anchorClientId, nextClientId);
+                event.preventDefault();
+              }
+            }
             return;
           }
           if (!__unstableIsFullySelected2()) {
@@ -46542,6 +46556,15 @@ var wp;
             selectBlock2(getMultiSelectedBlocksStartClientId2());
           } else {
             selectBlock2(getMultiSelectedBlocksEndClientId2(), -1);
+          }
+          return;
+        }
+        if (shiftKey && getSelectedBlockClientId2() && !getSelectionStart2().attributeKey) {
+          const selectedClientId = getSelectedBlockClientId2();
+          const nextClientId = isReverse ? getPreviousBlockClientId2(selectedClientId) : getNextBlockClientId2(selectedClientId);
+          if (nextClientId) {
+            multiSelect2(selectedClientId, nextClientId);
+            event.preventDefault();
           }
           return;
         }
