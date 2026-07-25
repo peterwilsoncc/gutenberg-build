@@ -99045,6 +99045,7 @@ If there's a particular need for this, please submit a feature request at https:
     const onCreate = async ({ content, parent }) => {
       try {
         const inlineSelection = !parent ? readInlineSelection(getSelectionStart, getSelectionEnd) : null;
+        const clientId = !parent ? inlineSelection?.clientId || getSelectedBlockClientId2() : null;
         const savedRecord = await saveEntityRecord(
           "root",
           "comment",
@@ -99057,11 +99058,7 @@ If there's a particular need for this, please submit a feature request at https:
           },
           { throwOnError: true }
         );
-        if (!parent && savedRecord?.id) {
-          const clientId = inlineSelection?.clientId || getSelectedBlockClientId2();
-          if (!clientId) {
-            return savedRecord;
-          }
+        if (!parent && savedRecord?.id && clientId) {
           const attributes = getBlockAttributes2(clientId);
           const metadata = attributes?.metadata;
           const updatedMetadata = addNoteIdToMetadata(
