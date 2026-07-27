@@ -48858,11 +48858,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     styles: styles3 = [],
     scripts = [],
     onFocus,
-    tabIndex
+    tabIndex,
+    allowPopups = false
   }) {
     const ref = (0, import_element172.useRef)(null);
     const [width, setWidth] = (0, import_element172.useState)(0);
     const [height, setHeight] = (0, import_element172.useState)(0);
+    const sandbox = clsx_default("allow-scripts", "allow-presentation", {
+      "allow-popups": allowPopups
+    });
     const srcDoc = (0, import_element172.useMemo)(() => buildSandBoxDocument({
       html,
       title,
@@ -48918,7 +48922,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       title,
       tabIndex,
       className: "components-sandbox",
-      sandbox: "allow-scripts allow-presentation",
+      sandbox,
       srcDoc,
       onFocus,
       width: Math.ceil(width),
@@ -48932,11 +48936,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     styles: styles3 = [],
     scripts = [],
     onFocus,
-    tabIndex
+    tabIndex,
+    allowPopups = false
   }) {
     const ref = (0, import_element172.useRef)(null);
     const [width, setWidth] = (0, import_element172.useState)(0);
     const [height, setHeight] = (0, import_element172.useState)(0);
+    const sandbox = clsx_default("allow-scripts", "allow-same-origin", "allow-presentation", {
+      "allow-popups": allowPopups
+    });
     function isFrameAccessible() {
       try {
         return !!ref.current?.contentDocument?.body;
@@ -49009,7 +49017,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       title,
       tabIndex,
       className: "components-sandbox",
-      sandbox: "allow-scripts allow-same-origin allow-presentation",
+      sandbox,
       onFocus,
       width: Math.ceil(width),
       height: Math.ceil(height)
