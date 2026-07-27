@@ -709,7 +709,7 @@ body.is-fullscreen-mode .interface-interface-skeleton {
 }
 
 @media (min-width: 600px) {
-  .font-library__page-selection .font-library__page-selection-trigger {
+  .font-library__page-selection .components-select-control__input {
     font-size: 11px !important;
     font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   }
