@@ -373,7 +373,7 @@ _::-webkit-full-page-media, _:future, :root [data-has-multi-selection=true] .blo
 .wp-block[data-align=right] > *,
 .wp-block.alignleft,
 .wp-block.alignright {
-  z-index: 21;
+  z-index: 9;
 }
 
 .wp-site-blocks > [data-align=left] {
