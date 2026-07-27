@@ -18014,11 +18014,9 @@ var wp;
   var import_data20 = __toESM(require_data(), 1);
   var import_editor8 = __toESM(require_editor(), 1);
   var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
-  var { Theme } = unlock(import_components15.privateApis);
   var { useStyle: useStyle2 } = unlock(import_editor8.privateApis);
   function CanvasLoader({ id }) {
     const textColor = useStyle2("color.text");
-    const backgroundColor = useStyle2("color.background");
     const { elapsed, total } = (0, import_data20.useSelect)((select4) => {
       const selectorsByStatus = select4(import_core_data15.store).countSelectorsByStatus();
       const resolving = selectorsByStatus.resolving ?? 0;
@@ -18028,7 +18026,14 @@ var wp;
         total: finished + resolving
       };
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("div", { className: "edit-site-canvas-loader", children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(Theme, { accent: textColor, background: backgroundColor, children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_components15.ProgressBar, { id, max: total, value: elapsed }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+      "div",
+      {
+        className: "edit-site-canvas-loader",
+        style: textColor ? { "--color": textColor } : void 0,
+        children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_components15.ProgressBar, { id, max: total, value: elapsed })
+      }
+    );
   }
 
   // packages/edit-site/build-module/components/block-editor/use-site-editor-settings.mjs
