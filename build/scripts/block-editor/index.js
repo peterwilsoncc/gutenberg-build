@@ -2098,7 +2098,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState122({
+          cachedValue = useState123({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -2110,7 +2110,7 @@ var wp;
             },
             [subscribe, value, getSnapshot]
           );
-          useEffect94(
+          useEffect95(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe(function() {
@@ -2136,7 +2136,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React118 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState122 = React118.useState, useEffect94 = React118.useEffect, useLayoutEffect18 = React118.useLayoutEffect, useDebugValue2 = React118.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React118 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState123 = React118.useState, useEffect95 = React118.useEffect, useLayoutEffect18 = React118.useLayoutEffect, useDebugValue2 = React118.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React118.useSyncExternalStore ? React118.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -2164,9 +2164,9 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React118 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef109 = React118.useRef, useEffect94 = React118.useEffect, useMemo155 = React118.useMemo, useDebugValue2 = React118.useDebugValue;
+        var React118 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef110 = React118.useRef, useEffect95 = React118.useEffect, useMemo155 = React118.useMemo, useDebugValue2 = React118.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector3, isEqual2) {
-          var instRef = useRef109(null);
+          var instRef = useRef110(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -2207,7 +2207,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector3, isEqual2]
           );
           var value = useSyncExternalStore2(subscribe, instRef[0], instRef[1]);
-          useEffect94(
+          useEffect95(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -6967,7 +6967,7 @@ var wp;
     SkipToSelectedBlock: () => SkipToSelectedBlock,
     ToolSelector: () => tool_selector_default,
     Typewriter: () => typewriter_default,
-    URLInput: () => url_input_default,
+    URLInput: () => URLInput,
     URLInputButton: () => button_default,
     URLPopover: () => url_popover_default,
     Warning: () => warning_default,
@@ -7491,8 +7491,8 @@ var wp;
     if (!blockType) {
       return null;
     }
-    const Component6 = blockType.edit || blockType.save;
-    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Component6, { ...props });
+    const Component5 = blockType.edit || blockType.save;
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Component5, { ...props });
   };
   var EditWithFilters = (0, import_components2.withFilters)("editor.BlockEdit")(Edit);
   var EditWithGeneratedProps = (props) => {
@@ -22884,8 +22884,8 @@ var wp;
     };
     return _extends2.apply(this, arguments);
   }
-  var withAnimated = (Component6, host2) => {
-    const hasInstance = !is.fun(Component6) || Component6.prototype && Component6.prototype.isReactComponent;
+  var withAnimated = (Component5, host2) => {
+    const hasInstance = !is.fun(Component5) || Component5.prototype && Component5.prototype.isReactComponent;
     return (0, import_react2.forwardRef)((givenProps, givenRef) => {
       const instanceRef = (0, import_react2.useRef)(null);
       const ref = hasInstance && (0, import_react2.useCallback)((value) => {
@@ -22921,7 +22921,7 @@ var wp;
         each(observer2.deps, (dep) => removeFluidObserver(dep, observer2));
       });
       const usedProps = host2.getComponentProps(props.getValue());
-      return React.createElement(Component6, _extends2({}, usedProps, {
+      return React.createElement(Component5, _extends2({}, usedProps, {
         ref
       }));
     });
@@ -22965,21 +22965,21 @@ var wp;
       createAnimatedStyle: _createAnimatedStyle,
       getComponentProps: _getComponentProps
     };
-    const animated2 = (Component6) => {
-      const displayName = getDisplayName(Component6) || "Anonymous";
-      if (is.str(Component6)) {
-        Component6 = animated2[Component6] || (animated2[Component6] = withAnimated(Component6, hostConfig));
+    const animated2 = (Component5) => {
+      const displayName = getDisplayName(Component5) || "Anonymous";
+      if (is.str(Component5)) {
+        Component5 = animated2[Component5] || (animated2[Component5] = withAnimated(Component5, hostConfig));
       } else {
-        Component6 = Component6[cacheKey] || (Component6[cacheKey] = withAnimated(Component6, hostConfig));
+        Component5 = Component5[cacheKey] || (Component5[cacheKey] = withAnimated(Component5, hostConfig));
       }
-      Component6.displayName = `Animated(${displayName})`;
-      return Component6;
+      Component5.displayName = `Animated(${displayName})`;
+      return Component5;
     };
-    eachProp(components, (Component6, key) => {
+    eachProp(components, (Component5, key) => {
       if (is.arr(components)) {
-        key = getDisplayName(Component6);
+        key = getDisplayName(Component5);
       }
-      animated2[key] = animated2(Component6);
+      animated2[key] = animated2(Component5);
     });
     return {
       animated: animated2
@@ -49068,7 +49068,7 @@ var wp;
   var import_components36 = __toESM(require_components(), 1);
   var import_element107 = __toESM(require_element(), 1);
   var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
-  function InserterListboxItem({ isFirst, as: Component6, children, ...props }, ref) {
+  function InserterListboxItem({ isFirst, as: Component5, children, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
       import_components36.Composite.Item,
       {
@@ -49081,8 +49081,8 @@ var wp;
             ...htmlProps,
             tabIndex: isFirst ? 0 : htmlProps.tabIndex
           };
-          if (Component6) {
-            return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Component6, { ...propsWithTabIndex, children });
+          if (Component5) {
+            return /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(Component5, { ...propsWithTabIndex, children });
           }
           if (typeof children === "function") {
             return children(propsWithTabIndex);
@@ -65139,9 +65139,9 @@ var wp;
     const baseClass = "block-editor-block-variation-transforms";
     const showButtons = variations.length > 6;
     const ButtonComponent = showButtons ? VariationsButtons : VariationsToggleGroupControl;
-    const Component6 = hasUniqueIcons ? ButtonComponent : VariationsDropdown;
+    const Component5 = hasUniqueIcons ? ButtonComponent : VariationsDropdown;
     return /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
-      Component6,
+      Component5,
       {
         className: baseClass,
         onSelectVariation,
@@ -70213,7 +70213,7 @@ var wp;
       const label = hideLabelFromVision && placeholder !== "" ? _placeholder : (0, import_i18n155.__)("Link");
       return /* @__PURE__ */ (0, import_jsx_runtime379.jsxs)("div", { className: "block-editor-link-control__search-input-container", children: [
         /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
-          url_input_default,
+          URLInput,
           {
             disableSuggestions: currentLink?.url === value,
             label,
@@ -71576,6 +71576,7 @@ var wp;
   var import_components174 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/url-input/index.mjs
+  var import_a11y19 = __toESM(require_a11y(), 1);
   var import_i18n163 = __toESM(require_i18n(), 1);
   var import_element227 = __toESM(require_element(), 1);
   var import_keycodes21 = __toESM(require_keycodes(), 1);
@@ -71586,158 +71587,162 @@ var wp;
   var import_jsx_runtime387 = __toESM(require_jsx_runtime(), 1);
   var import_react15 = __toESM(require_react(), 1);
   var { ValidatedInputControl } = unlock(import_components173.privateApis);
+  var noop20 = () => {
+  };
   function isFunction(maybeFunc) {
     return typeof maybeFunc === "function";
   }
-  var URLInput = class extends import_element227.Component {
-    constructor(props) {
-      super(props);
-      this.onChange = this.onChange.bind(this);
-      this.onFocus = this.onFocus.bind(this);
-      this.onKeyDown = this.onKeyDown.bind(this);
-      this.selectLink = this.selectLink.bind(this);
-      this.handleOnClick = this.handleOnClick.bind(this);
-      this.bindSuggestionNode = this.bindSuggestionNode.bind(this);
-      this.autocompleteRef = props.autocompleteRef || (0, import_element227.createRef)();
-      this.inputRef = props.inputRef || (0, import_element227.createRef)();
-      this.hasRenderedValidation = { current: false };
-      this.updateSuggestions = (0, import_compose89.debounce)(
-        this.updateSuggestions.bind(this),
-        200
-      );
-      this.suggestionNodes = [];
-      this.suggestionsRequest = null;
-      this.state = {
-        suggestions: [],
-        showSuggestions: false,
-        suggestionsValue: null,
-        selectedSuggestion: null,
-        suggestionsListboxId: "",
-        suggestionOptionIdPrefix: ""
-      };
-    }
-    componentDidUpdate(prevProps) {
-      const { showSuggestions, selectedSuggestion } = this.state;
-      const { value, __experimentalShowInitialSuggestions = false } = this.props;
-      if (showSuggestions && selectedSuggestion !== null && this.suggestionNodes[selectedSuggestion]) {
-        this.suggestionNodes[selectedSuggestion].scrollIntoView({
-          behavior: "instant",
-          block: "nearest",
-          inline: "nearest"
-        });
-      }
-      if (prevProps.value !== value && !this.props.disableSuggestions) {
-        if (value?.length) {
-          this.updateSuggestions(value);
-        } else if (__experimentalShowInitialSuggestions) {
-          this.updateSuggestions();
-        }
-      }
-    }
-    componentDidMount() {
-      if (this.shouldShowInitialSuggestions()) {
-        this.updateSuggestions();
-      }
-    }
-    componentWillUnmount() {
-      this.suggestionsRequest?.cancel?.();
-      this.suggestionsRequest = null;
-    }
-    bindSuggestionNode(index2) {
-      return (ref) => {
-        this.suggestionNodes[index2] = ref;
-      };
-    }
-    shouldShowInitialSuggestions() {
-      const { __experimentalShowInitialSuggestions = false, value } = this.props;
-      return __experimentalShowInitialSuggestions && !(value && value.length);
-    }
-    updateSuggestions(value = "") {
-      const {
-        __experimentalFetchLinkSuggestions: fetchLinkSuggestions,
-        __experimentalHandleURLSuggestions: handleURLSuggestions
-      } = this.props;
+  function URLInput(props) {
+    const {
+      __experimentalFetchLinkSuggestions: fetchLinkSuggestionsProp,
+      __experimentalHandleURLSuggestions: handleURLSuggestions,
+      __experimentalRenderControl: renderControl,
+      __experimentalRenderSuggestions: renderSuggestions,
+      __experimentalShowInitialSuggestions: showInitialSuggestions = false,
+      autocompleteRef,
+      className,
+      customValidity,
+      disableSuggestions,
+      disabled: disabled2 = false,
+      help = null,
+      hideLabelFromVision = false,
+      inputRef,
+      isFullWidth,
+      label = null,
+      markWhenOptional,
+      onChange,
+      onKeyDown,
+      onSubmit,
+      placeholder = (0, import_i18n163.__)("Paste URL or type to search"),
+      required = true,
+      suffix,
+      value = ""
+    } = props;
+    const instanceId = (0, import_compose89.useInstanceId)(URLInput);
+    const { getSettings: getSettings7 } = (0, import_data150.useSelect)(store);
+    const debouncedSpeak = (0, import_compose89.useDebounce)(import_a11y19.speak, 500);
+    const [suggestions, setSuggestions] = (0, import_element227.useState)([]);
+    const [suggestionsValue, setSuggestionsValue] = (0, import_element227.useState)(null);
+    const [selectedSuggestion, setSelectedSuggestion] = (0, import_element227.useState)(null);
+    const [isSuggestionsListOpen, setIsSuggestionsListOpen] = (0, import_element227.useState)(false);
+    const [isLoading, setIsLoading] = (0, import_element227.useState)(false);
+    const fallbackInputRef = (0, import_element227.useRef)();
+    const suggestionNodesRef = (0, import_element227.useRef)([]);
+    const suggestionsRequestRef = (0, import_element227.useRef)(null);
+    const controlInputRef = inputRef ?? fallbackInputRef;
+    const inputId = `url-input-control-${instanceId}`;
+    const suggestionsListboxId = `block-editor-url-input-suggestions-${instanceId}`;
+    const suggestionOptionIdPrefix = `block-editor-url-input-suggestion-${instanceId}`;
+    const showSuggestions = isSuggestionsListOpen && disableSuggestions !== true && (showInitialSuggestions || !!value.length);
+    const updateSuggestions = (0, import_compose89.useEvent)((searchValue = "") => {
+      const fetchLinkSuggestions = isFunction(fetchLinkSuggestionsProp) ? fetchLinkSuggestionsProp : getSettings7().__experimentalFetchLinkSuggestions;
       if (!fetchLinkSuggestions) {
         return;
       }
-      const isInitialSuggestions = !value?.length;
-      value = value.trim();
-      if (!isInitialSuggestions && (value.length < 2 || !handleURLSuggestions && (0, import_url8.isURL)(value))) {
-        this.suggestionsRequest?.cancel?.();
-        this.suggestionsRequest = null;
-        this.setState({
-          suggestions: [],
-          showSuggestions: false,
-          suggestionsValue: value,
-          selectedSuggestion: null,
-          loading: false
-        });
+      const isInitialSuggestions = !searchValue?.length;
+      const search = searchValue.trim();
+      if (!isInitialSuggestions && (search.length < 2 || !handleURLSuggestions && (0, import_url8.isURL)(search))) {
+        suggestionsRequestRef.current?.cancel?.();
+        suggestionsRequestRef.current = null;
+        setSuggestions([]);
+        setIsSuggestionsListOpen(false);
+        setSuggestionsValue(search);
+        setSelectedSuggestion(null);
+        setIsLoading(false);
         return;
       }
-      this.setState({
-        selectedSuggestion: null,
-        loading: true
-      });
-      const request = fetchLinkSuggestions(value, {
+      setSelectedSuggestion(null);
+      setIsLoading(true);
+      const request = fetchLinkSuggestions(search, {
         isInitialSuggestions
       });
-      request.then((suggestions) => {
-        if (this.suggestionsRequest !== request) {
+      suggestionsRequestRef.current = request;
+      request.then((nextSuggestions) => {
+        if (suggestionsRequestRef.current !== request) {
           return;
         }
-        this.setState({
-          suggestions,
-          suggestionsValue: value,
-          loading: false,
-          showSuggestions: !!suggestions.length
-        });
-        if (!!suggestions.length) {
-          this.props.debouncedSpeak(
+        setSuggestions(nextSuggestions);
+        setSuggestionsValue(search);
+        setIsLoading(false);
+        setIsSuggestionsListOpen(!!nextSuggestions.length);
+        if (nextSuggestions.length) {
+          debouncedSpeak(
             (0, import_i18n163.sprintf)(
               /* translators: %d: number of results. */
               (0, import_i18n163._n)(
                 "%d result found, use up and down arrow keys to navigate.",
                 "%d results found, use up and down arrow keys to navigate.",
-                suggestions.length
+                nextSuggestions.length
               ),
-              suggestions.length
+              nextSuggestions.length
             ),
             "assertive"
           );
         } else {
-          this.props.debouncedSpeak(
-            (0, import_i18n163.__)("No results."),
-            "assertive"
-          );
+          debouncedSpeak((0, import_i18n163.__)("No results."), "assertive");
         }
       }).catch(() => {
-        if (this.suggestionsRequest !== request) {
+        if (suggestionsRequestRef.current !== request) {
           return;
         }
-        this.setState({
-          loading: false
-        });
+        setIsLoading(false);
       }).finally(() => {
-        if (this.suggestionsRequest === request) {
-          this.suggestionsRequest = null;
+        if (suggestionsRequestRef.current === request) {
+          suggestionsRequestRef.current = null;
         }
       });
-      this.suggestionsRequest = request;
+    });
+    const debouncedUpdateSuggestions = (0, import_compose89.useDebounce)(updateSuggestions, 200);
+    (0, import_element227.useEffect)(() => {
+      if (!disableSuggestions && (value.length || showInitialSuggestions)) {
+        debouncedUpdateSuggestions(value);
+      }
+    }, [
+      value,
+      disableSuggestions,
+      showInitialSuggestions,
+      debouncedUpdateSuggestions
+    ]);
+    (0, import_element227.useEffect)(() => {
+      if (!showSuggestions) {
+        setIsSuggestionsListOpen(false);
+      }
+    }, [showSuggestions]);
+    (0, import_element227.useEffect)(() => {
+      if (showSuggestions && selectedSuggestion !== null) {
+        suggestionNodesRef.current[selectedSuggestion]?.scrollIntoView({
+          behavior: "instant",
+          block: "nearest",
+          inline: "nearest"
+        });
+      }
+    }, [showSuggestions, selectedSuggestion]);
+    (0, import_element227.useEffect)(() => {
+      return () => {
+        suggestionsRequestRef.current?.cancel?.();
+        suggestionsRequestRef.current = null;
+      };
+    }, []);
+    function selectLink(suggestion) {
+      onChange(suggestion.url, suggestion);
+      setSelectedSuggestion(null);
+      setIsSuggestionsListOpen(false);
     }
-    onChange(newValue) {
-      this.props.onChange(newValue);
+    function handleSuggestionClick(suggestion) {
+      selectLink(suggestion);
+      controlInputRef.current.focus();
     }
-    onFocus() {
-      const { suggestions } = this.state;
-      const { disableSuggestions, value } = this.props;
-      if (value && !disableSuggestions && !(suggestions && suggestions.length) && this.suggestionsRequest === null) {
-        this.updateSuggestions(value);
+    function handleChange(newValue) {
+      onChange(newValue);
+    }
+    function handleFocus() {
+      if (value && !disableSuggestions && !suggestions.length && suggestionsRequestRef.current === null) {
+        debouncedUpdateSuggestions(value);
       }
     }
-    onKeyDown(event) {
-      this.props.onKeyDown?.(event);
-      const { showSuggestions, selectedSuggestion, suggestions, loading } = this.state;
-      if (!showSuggestions || !suggestions.length || loading) {
+    function handleKeyDown(event) {
+      onKeyDown?.(event);
+      if (!showSuggestions || !suggestions.length || isLoading) {
         switch (event.keyCode) {
           // When UP is pressed, if the caret is at the start of the text, move it to the 0
           // position.
@@ -71751,274 +71756,229 @@ var wp;
           // When DOWN is pressed, if the caret is not at the end of the text, move it to the
           // last position.
           case import_keycodes21.DOWN: {
-            if (this.props.value.length !== event.target.selectionStart) {
+            if (value.length !== event.target.selectionStart) {
               event.preventDefault();
               event.target.setSelectionRange(
-                this.props.value.length,
-                this.props.value.length
+                value.length,
+                value.length
               );
             }
             break;
           }
           // Submitting while loading should trigger onSubmit.
           case import_keycodes21.ENTER: {
-            if (this.props.onSubmit) {
+            if (onSubmit) {
               event.preventDefault();
-              this.props.onSubmit(null, event);
+              onSubmit(null, event);
             }
             break;
           }
         }
         return;
       }
-      const suggestion = this.state.suggestions[this.state.selectedSuggestion];
+      const suggestion = suggestions[selectedSuggestion];
       switch (event.keyCode) {
         case import_keycodes21.UP: {
           event.preventDefault();
-          const previousIndex = !selectedSuggestion ? suggestions.length - 1 : selectedSuggestion - 1;
-          this.setState({
-            selectedSuggestion: previousIndex
-          });
+          setSelectedSuggestion(
+            !selectedSuggestion ? suggestions.length - 1 : selectedSuggestion - 1
+          );
           break;
         }
         case import_keycodes21.DOWN: {
           event.preventDefault();
-          const nextIndex = selectedSuggestion === null || selectedSuggestion === suggestions.length - 1 ? 0 : selectedSuggestion + 1;
-          this.setState({
-            selectedSuggestion: nextIndex
-          });
+          setSelectedSuggestion(
+            selectedSuggestion === null || selectedSuggestion === suggestions.length - 1 ? 0 : selectedSuggestion + 1
+          );
           break;
         }
         case import_keycodes21.TAB: {
-          if (this.state.selectedSuggestion !== null) {
-            this.selectLink(suggestion);
-            this.props.speak((0, import_i18n163.__)("Link selected."));
+          if (selectedSuggestion !== null) {
+            selectLink(suggestion);
+            (0, import_a11y19.speak)((0, import_i18n163.__)("Link selected."));
           }
           break;
         }
         case import_keycodes21.ENTER: {
           event.preventDefault();
-          if (this.state.selectedSuggestion !== null) {
-            this.selectLink(suggestion);
-            if (this.props.onSubmit) {
-              this.props.onSubmit(suggestion, event);
+          if (selectedSuggestion !== null) {
+            selectLink(suggestion);
+            if (onSubmit) {
+              onSubmit(suggestion, event);
             }
-          } else if (this.props.onSubmit) {
-            this.props.onSubmit(null, event);
+          } else if (onSubmit) {
+            onSubmit(null, event);
           }
           break;
         }
       }
     }
-    selectLink(suggestion) {
-      this.props.onChange(suggestion.url, suggestion);
-      this.setState({
-        selectedSuggestion: null,
-        showSuggestions: false
+    const controlProps = {
+      id: inputId,
+      // Passes attribute to label for the for attribute
+      label,
+      className: clsx_default("block-editor-url-input", className, {
+        "is-full-width": isFullWidth
+      }),
+      hideLabelFromVision
+    };
+    const inputProps = {
+      id: inputId,
+      value,
+      required,
+      type: "text",
+      name: inputId,
+      autoComplete: "off",
+      onChange: disabled2 ? noop20 : handleChange,
+      onFocus: disabled2 ? noop20 : handleFocus,
+      onKeyDown: disabled2 ? noop20 : handleKeyDown,
+      placeholder,
+      role: "combobox",
+      "aria-label": label ? void 0 : (0, import_i18n163.__)("URL"),
+      // Ensure input always has an accessible label
+      "aria-expanded": showSuggestions,
+      "aria-autocomplete": "list",
+      "aria-owns": suggestionsListboxId,
+      "aria-activedescendant": selectedSuggestion !== null ? `${suggestionOptionIdPrefix}-${selectedSuggestion}` : void 0,
+      ref: controlInputRef,
+      disabled: disabled2,
+      suffix,
+      help
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)(import_jsx_runtime387.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+        Control3,
+        {
+          controlProps,
+          inputProps,
+          isLoading,
+          customValidity,
+          markWhenOptional,
+          renderControl
+        }
+      ),
+      showSuggestions && suggestions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+        Suggestions,
+        {
+          autocompleteRef,
+          className,
+          handleSuggestionClick,
+          isLoading,
+          renderSuggestions,
+          selectedSuggestion,
+          suggestionNodesRef,
+          suggestionOptionIdPrefix,
+          suggestions,
+          suggestionsListboxId,
+          suggestionsValue
+        }
+      )
+    ] });
+  }
+  function Control3({
+    controlProps,
+    inputProps,
+    isLoading,
+    customValidity,
+    markWhenOptional,
+    renderControl
+  }) {
+    const [isValidated, setIsValidated] = (0, import_element227.useState)(
+      customValidity !== void 0
+    );
+    if (customValidity !== void 0 && !isValidated) {
+      setIsValidated(true);
+    }
+    if (renderControl) {
+      return renderControl(controlProps, inputProps, isLoading);
+    }
+    const MaybeValidatedInputControl = isValidated ? ValidatedInputControl : import_components173.__experimentalInputControl;
+    return /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)(import_components173.BaseControl, { ...controlProps, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+        MaybeValidatedInputControl,
+        {
+          ...inputProps,
+          ...isValidated && {
+            customValidity,
+            // Suppress the "(Required)" indicator in the label.
+            // The field is still required for validation, but the indicator
+            // can be hidden when markWhenOptional is set to true.
+            ...markWhenOptional !== void 0 && {
+              markWhenOptional
+            }
+          }
+        }
+      ),
+      isLoading && /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_components173.Spinner, {})
+    ] });
+  }
+  function Suggestions({
+    autocompleteRef,
+    className,
+    handleSuggestionClick,
+    isLoading,
+    renderSuggestions,
+    selectedSuggestion,
+    suggestionNodesRef,
+    suggestionOptionIdPrefix,
+    suggestions,
+    suggestionsListboxId,
+    suggestionsValue
+  }) {
+    const suggestionsListProps = {
+      id: suggestionsListboxId,
+      ref: autocompleteRef,
+      role: "listbox"
+    };
+    const buildSuggestionItemProps = (suggestion, index2) => {
+      return {
+        role: "option",
+        tabIndex: "-1",
+        id: `${suggestionOptionIdPrefix}-${index2}`,
+        ref: (node) => {
+          suggestionNodesRef.current[index2] = node;
+        },
+        "aria-selected": index2 === selectedSuggestion ? true : void 0
+      };
+    };
+    if (isFunction(renderSuggestions)) {
+      return renderSuggestions({
+        suggestions,
+        selectedSuggestion,
+        suggestionsListProps,
+        buildSuggestionItemProps,
+        isLoading,
+        handleSuggestionClick,
+        isInitialSuggestions: !suggestionsValue?.length,
+        currentInputValue: suggestionsValue
       });
     }
-    handleOnClick(suggestion) {
-      this.selectLink(suggestion);
-      this.inputRef.current.focus();
-    }
-    static getDerivedStateFromProps({
-      value,
-      instanceId,
-      disableSuggestions,
-      __experimentalShowInitialSuggestions = false
-    }, { showSuggestions }) {
-      let shouldShowSuggestions = showSuggestions;
-      const hasValue3 = value && value.length;
-      if (!__experimentalShowInitialSuggestions && !hasValue3) {
-        shouldShowSuggestions = false;
-      }
-      if (disableSuggestions === true) {
-        shouldShowSuggestions = false;
-      }
-      return {
-        showSuggestions: shouldShowSuggestions,
-        suggestionsListboxId: `block-editor-url-input-suggestions-${instanceId}`,
-        suggestionOptionIdPrefix: `block-editor-url-input-suggestion-${instanceId}`
-      };
-    }
-    render() {
-      return /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)(import_jsx_runtime387.Fragment, { children: [
-        this.renderControl(),
-        this.renderSuggestions()
-      ] });
-    }
-    renderControl() {
-      const {
-        label = null,
-        className,
-        isFullWidth,
-        instanceId,
-        placeholder = (0, import_i18n163.__)("Paste URL or type to search"),
-        __experimentalRenderControl: renderControl,
-        value = "",
-        hideLabelFromVision = false,
-        help = null,
-        disabled: disabled2 = false,
-        customValidity,
-        markWhenOptional
-      } = this.props;
-      const {
-        loading,
-        showSuggestions,
-        selectedSuggestion,
-        suggestionsListboxId,
-        suggestionOptionIdPrefix
-      } = this.state;
-      const inputId = `url-input-control-${instanceId}`;
-      const controlProps = {
-        id: inputId,
-        // Passes attribute to label for the for attribute
-        label,
-        className: clsx_default("block-editor-url-input", className, {
-          "is-full-width": isFullWidth
+    return /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_components173.Popover, { placement: "bottom", focusOnMount: false, children: /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
+      "div",
+      {
+        ...suggestionsListProps,
+        className: clsx_default("block-editor-url-input__suggestions", {
+          [`${className}__suggestions`]: className
         }),
-        hideLabelFromVision
-      };
-      const inputProps = {
-        id: inputId,
-        value,
-        required: this.props.required ?? true,
-        type: "text",
-        name: inputId,
-        autoComplete: "off",
-        onChange: disabled2 ? () => {
-        } : this.onChange,
-        // Disable onChange when disabled
-        onFocus: disabled2 ? () => {
-        } : this.onFocus,
-        // Disable onFocus when disabled
-        placeholder,
-        onKeyDown: disabled2 ? () => {
-        } : this.onKeyDown,
-        // Disable onKeyDown when disabled
-        role: "combobox",
-        "aria-label": label ? void 0 : (0, import_i18n163.__)("URL"),
-        // Ensure input always has an accessible label
-        "aria-expanded": showSuggestions,
-        "aria-autocomplete": "list",
-        "aria-owns": suggestionsListboxId,
-        "aria-activedescendant": selectedSuggestion !== null ? `${suggestionOptionIdPrefix}-${selectedSuggestion}` : void 0,
-        ref: this.inputRef,
-        disabled: disabled2,
-        suffix: this.props.suffix,
-        help
-      };
-      const validationProps = {
-        customValidity,
-        // Suppress the "(Required)" indicator in the label.
-        // The field is still required for validation, but the indicator
-        // can be hidden when markWhenOptional is set to true.
-        ...markWhenOptional !== void 0 && {
-          markWhenOptional
-        }
-      };
-      if (renderControl) {
-        return renderControl(controlProps, inputProps, loading);
-      }
-      if (customValidity !== void 0) {
-        this.hasRenderedValidation.current = true;
-      }
-      const MaybeValidatedInputControl = this.hasRenderedValidation.current ? ValidatedInputControl : import_components173.__experimentalInputControl;
-      return /* @__PURE__ */ (0, import_jsx_runtime387.jsxs)(import_components173.BaseControl, { ...controlProps, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
-          MaybeValidatedInputControl,
+        children: suggestions.map((suggestion, index2) => /* @__PURE__ */ (0, import_react15.createElement)(
+          import_components173.Button,
           {
-            ...inputProps,
-            ...this.hasRenderedValidation.current ? validationProps : {}
-          }
-        ),
-        loading && /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_components173.Spinner, {})
-      ] });
-    }
-    renderSuggestions() {
-      const {
-        className,
-        __experimentalRenderSuggestions: renderSuggestions
-      } = this.props;
-      const {
-        showSuggestions,
-        suggestions,
-        suggestionsValue,
-        selectedSuggestion,
-        suggestionsListboxId,
-        suggestionOptionIdPrefix,
-        loading
-      } = this.state;
-      if (!showSuggestions || suggestions.length === 0) {
-        return null;
+            __next40pxDefaultSize: true,
+            ...buildSuggestionItemProps(suggestion, index2),
+            key: suggestion.id,
+            className: clsx_default(
+              "block-editor-url-input__suggestion",
+              {
+                "is-selected": index2 === selectedSuggestion
+              }
+            ),
+            onClick: () => handleSuggestionClick(suggestion)
+          },
+          suggestion.title
+        ))
       }
-      const suggestionsListProps = {
-        id: suggestionsListboxId,
-        ref: this.autocompleteRef,
-        role: "listbox"
-      };
-      const buildSuggestionItemProps = (suggestion, index2) => {
-        return {
-          role: "option",
-          tabIndex: "-1",
-          id: `${suggestionOptionIdPrefix}-${index2}`,
-          ref: this.bindSuggestionNode(index2),
-          "aria-selected": index2 === selectedSuggestion ? true : void 0
-        };
-      };
-      if (isFunction(renderSuggestions)) {
-        return renderSuggestions({
-          suggestions,
-          selectedSuggestion,
-          suggestionsListProps,
-          buildSuggestionItemProps,
-          isLoading: loading,
-          handleSuggestionClick: this.handleOnClick,
-          isInitialSuggestions: !suggestionsValue?.length,
-          currentInputValue: suggestionsValue
-        });
-      }
-      return /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(import_components173.Popover, { placement: "bottom", focusOnMount: false, children: /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
-        "div",
-        {
-          ...suggestionsListProps,
-          className: clsx_default("block-editor-url-input__suggestions", {
-            [`${className}__suggestions`]: className
-          }),
-          children: suggestions.map((suggestion, index2) => /* @__PURE__ */ (0, import_react15.createElement)(
-            import_components173.Button,
-            {
-              __next40pxDefaultSize: true,
-              ...buildSuggestionItemProps(suggestion, index2),
-              key: suggestion.id,
-              className: clsx_default(
-                "block-editor-url-input__suggestion",
-                {
-                  "is-selected": index2 === selectedSuggestion
-                }
-              ),
-              onClick: () => this.handleOnClick(suggestion)
-            },
-            suggestion.title
-          ))
-        }
-      ) });
-    }
-  };
-  var url_input_default = (0, import_compose89.compose)(
-    import_compose89.withSafeTimeout,
-    import_components173.withSpokenMessages,
-    import_compose89.withInstanceId,
-    (0, import_data150.withSelect)((select3, props) => {
-      if (isFunction(props.__experimentalFetchLinkSuggestions)) {
-        return;
-      }
-      const { getSettings: getSettings7 } = select3(store);
-      return {
-        __experimentalFetchLinkSuggestions: getSettings7().__experimentalFetchLinkSuggestions
-      };
-    })
-  )(URLInput);
+    ) });
+  }
 
   // packages/block-editor/build-module/components/url-popover/link-editor.mjs
   var import_jsx_runtime388 = __toESM(require_jsx_runtime(), 1);
@@ -72039,7 +71999,7 @@ var wp;
         ...props,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime388.jsx)(
-            url_input_default,
+            URLInput,
             {
               value,
               onChange: onChangeInputValue,
@@ -72138,7 +72098,7 @@ var wp;
 
   // packages/block-editor/build-module/components/media-placeholder/index.mjs
   var import_jsx_runtime390 = __toESM(require_jsx_runtime(), 1);
-  var noop20 = () => {
+  var noop21 = () => {
   };
   var InsertFromURLPopover = ({
     src,
@@ -72237,7 +72197,7 @@ var wp;
     onSelectURL,
     onToggleFeaturedImage,
     onDoubleClick,
-    onFilesPreUpload = noop20,
+    onFilesPreUpload = noop21,
     onHTMLDrop: deprecatedOnHTMLDrop,
     children,
     mediaLibraryButton,
@@ -73537,7 +73497,7 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/with-deprecations.mjs
   var import_jsx_runtime398 = __toESM(require_jsx_runtime(), 1);
-  function withDeprecations(Component6) {
+  function withDeprecations(Component5) {
     return (0, import_element236.forwardRef)((props, ref) => {
       let value = props.value;
       let onChange = props.onChange;
@@ -73555,7 +73515,7 @@ var wp;
           )
         );
       }
-      const NewComponent = props.multiline ? multiline_default : Component6;
+      const NewComponent = props.multiline ? multiline_default : Component5;
       return /* @__PURE__ */ (0, import_jsx_runtime398.jsx)(
         NewComponent,
         {
@@ -74244,7 +74204,7 @@ var wp;
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
-              url_input_default,
+              URLInput,
               {
                 value: url || "",
                 onChange,
@@ -74909,7 +74869,7 @@ var wp;
     onMouseOver,
     showSideInLabel = true,
     sides: sides2 = ALL_SIDES,
-    useSelect: useSelect181,
+    useSelect: useSelect182,
     values
   }) {
     const spacingSizes = useSpacingSizes();
@@ -74933,7 +74893,7 @@ var wp;
       sides: sides2,
       spacingSizes,
       type: labelProp,
-      useSelect: useSelect181,
+      useSelect: useSelect182,
       values: inputValues
     };
     const renderControls = () => {
@@ -79827,7 +79787,7 @@ var wp;
     shift: true,
     className: "block-editor-global-styles-background-panel__popover"
   };
-  var noop21 = () => {
+  var noop22 = () => {
   };
   var focusToggleButton = (containerRef) => {
     window.requestAnimationFrame(() => {
@@ -79870,7 +79830,7 @@ var wp;
     toggleProps = {},
     filename,
     label,
-    onToggleCallback = noop21
+    onToggleCallback = noop22
   }) {
     const { isOpen, ...restToggleProps } = toggleProps;
     (0, import_element258.useEffect)(() => {
@@ -79913,7 +79873,7 @@ var wp;
     filename,
     url: imgUrl,
     children,
-    onToggle: onToggleCallback = noop21,
+    onToggle: onToggleCallback = noop22,
     hasImageValue,
     onReset,
     hasLocalOverride,
@@ -79998,8 +79958,8 @@ var wp;
     onChange,
     style,
     inheritedValue,
-    onRemoveImage = noop21,
-    onResetImage = noop21,
+    onRemoveImage = noop22,
+    onResetImage = noop22,
     displayInPanel,
     defaultValues,
     containerRef
@@ -81600,7 +81560,7 @@ var wp;
   var import_element263 = __toESM(require_element(), 1);
   var import_data167 = __toESM(require_data(), 1);
   var import_blocks93 = __toESM(require_blocks(), 1);
-  var import_a11y19 = __toESM(require_a11y(), 1);
+  var import_a11y20 = __toESM(require_a11y(), 1);
   function getComputedValue(node, property) {
     return node.ownerDocument.defaultView.getComputedStyle(node).getPropertyValue(property);
   }
@@ -81697,7 +81657,7 @@ var wp;
     const speakMessage = warning6?.speakMessage;
     (0, import_element263.useEffect)(() => {
       if (speakMessage) {
-        (0, import_a11y19.speak)(speakMessage);
+        (0, import_a11y20.speak)(speakMessage);
       }
     }, [speakMessage]);
     return warning6?.message;
@@ -82640,14 +82600,14 @@ var wp;
   var import_element267 = __toESM(require_element(), 1);
   var import_i18n207 = __toESM(require_i18n(), 1);
   var import_components216 = __toESM(require_components(), 1);
-  var import_a11y20 = __toESM(require_a11y(), 1);
+  var import_a11y21 = __toESM(require_a11y(), 1);
   var import_jsx_runtime445 = __toESM(require_jsx_runtime(), 1);
   function FitTextSizeWarning() {
     const message2 = (0, import_i18n207.__)(
       "The text may be too small to read. Consider using a larger container or less text."
     );
     (0, import_element267.useEffect)(() => {
-      (0, import_a11y20.speak)(message2);
+      (0, import_a11y21.speak)(message2);
     }, [message2]);
     return /* @__PURE__ */ (0, import_jsx_runtime445.jsx)("div", { className: "block-editor-fit-text-size-warning", children: /* @__PURE__ */ (0, import_jsx_runtime445.jsx)(
       import_components216.Notice,
@@ -84223,7 +84183,7 @@ var wp;
   var import_data180 = __toESM(require_data(), 1);
   var import_element274 = __toESM(require_element(), 1);
   var import_jsx_runtime456 = __toESM(require_jsx_runtime(), 1);
-  var noop22 = () => {
+  var noop23 = () => {
   };
   function InserterLibrary({
     rootClientId,
@@ -84236,7 +84196,7 @@ var wp;
     __experimentalInitialCategory,
     __experimentalFilterValue,
     onPatternCategorySelection,
-    onSelect = noop22,
+    onSelect = noop23,
     shouldFocusBlock = false,
     onClose
   }, ref) {
@@ -85427,7 +85387,7 @@ var wp;
   var import_i18n216 = __toESM(require_i18n(), 1);
   var import_element280 = __toESM(require_element(), 1);
   var import_compose99 = __toESM(require_compose(), 1);
-  var import_a11y21 = __toESM(require_a11y(), 1);
+  var import_a11y22 = __toESM(require_a11y(), 1);
 
   // packages/block-editor/build-module/components/block-manager/category.mjs
   var import_element279 = __toESM(require_element(), 1);
@@ -85555,7 +85515,7 @@ var wp;
     onChange,
     showSelectAll = true
   }) {
-    const debouncedSpeak = (0, import_compose99.useDebounce)(import_a11y21.speak, 500);
+    const debouncedSpeak = (0, import_compose99.useDebounce)(import_a11y22.speak, 500);
     const [search, setSearch] = (0, import_element280.useState)("");
     const { categories, isMatchingSearchTerm } = (0, import_data182.useSelect)((select3) => {
       return {
@@ -88659,7 +88619,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/date.mjs
   var import_components239 = __toESM(require_components(), 1);
-  var import_a11y22 = __toESM(require_a11y(), 1);
+  var import_a11y23 = __toESM(require_a11y(), 1);
   var import_element290 = __toESM(require_element(), 1);
   var import_i18n224 = __toESM(require_i18n(), 1);
   var import_date6 = __toESM(require_date(), 1);
@@ -88815,7 +88775,7 @@ var wp;
     }, [isTouched, isValid2, validity, validateRefs]);
     (0, import_element290.useEffect)(() => {
       if (isTouched && customValidity?.message) {
-        (0, import_a11y22.speak)(customValidity.message);
+        (0, import_a11y23.speak)(customValidity.message);
       }
     }, [isTouched, customValidity?.message]);
     const onBlur = (event) => {
