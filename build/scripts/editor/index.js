@@ -98152,17 +98152,13 @@ If there's a particular need for this, please submit a feature request at https:
       }
       setIsSubmitting(true);
       const submitted = inputComment;
-      try {
-        const result = await onSubmit(submitted);
-        if (result !== void 0) {
-          setInputComment(
-            (current) => current === submitted ? "" : current
-          );
-        }
-      } catch {
-      } finally {
-        setIsSubmitting(false);
+      const result = await onSubmit(submitted);
+      if (result) {
+        setInputComment(
+          (current) => current === submitted ? "" : current
+        );
       }
+      setIsSubmitting(false);
     }
     return /* @__PURE__ */ (0, import_jsx_runtime545.jsxs)(
       Stack,
@@ -98431,10 +98427,15 @@ If there's a particular need for this, please submit a feature request at https:
       body = /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(
         NoteForm,
         {
-          onSubmit: (value) => {
-            onEditNote({ id: note.id, content: value });
-            setActionState(null);
-            actionButtonRef.current?.focus();
+          onSubmit: async (value) => {
+            const saved = await onEditNote({
+              id: note.id,
+              content: value
+            });
+            if (saved) {
+              handleCancel();
+            }
+            return saved;
           },
           onCancel: handleCancel,
           note,
@@ -99146,9 +99147,14 @@ If there's a particular need for this, please submit a feature request at https:
               _wp_note_status: status === "approved" ? "resolved" : "reopen"
             }
           };
-          await saveEntityRecord("root", "comment", newNoteData, {
-            throwOnError: true
-          });
+          const savedRecord2 = await saveEntityRecord(
+            "root",
+            "comment",
+            newNoteData,
+            {
+              throwOnError: true
+            }
+          );
           if (status === "approved") {
             clearInlineNoteMarker(
               id,
@@ -99160,34 +99166,37 @@ If there's a particular need for this, please submit a feature request at https:
           (0, import_a11y12.speak)(
             status === "approved" ? (0, import_i18n337.__)("Note marked as resolved.") : (0, import_i18n337.__)("Note reopened.")
           );
-        } else {
-          const updateData = {
-            id,
-            content,
-            status
-          };
-          await saveEntityRecord("root", "comment", updateData, {
-            throwOnError: true
-          });
-          createNotice("snackbar", (0, import_i18n337.__)("Note updated."), {
-            type: "snackbar",
-            isDismissible: true
-          });
+          return savedRecord2;
         }
+        const updateData = {
+          id,
+          content,
+          status
+        };
+        const savedRecord = await saveEntityRecord(
+          "root",
+          "comment",
+          updateData,
+          {
+            throwOnError: true
+          }
+        );
+        createNotice("snackbar", (0, import_i18n337.__)("Note updated."), {
+          type: "snackbar",
+          isDismissible: true
+        });
+        return savedRecord;
       } catch (error2) {
         onError(error2);
       }
     };
     const onDelete = async (note) => {
       try {
+        const clientId = !note.parent ? note.blockClientId || getSelectedBlockClientId2() : null;
         await deleteEntityRecord("root", "comment", note.id, void 0, {
           throwOnError: true
         });
-        if (!note.parent) {
-          const clientId = note.blockClientId || getSelectedBlockClientId2();
-          if (!clientId) {
-            return;
-          }
+        if (clientId) {
           const attributes = getBlockAttributes2(clientId);
           const newAttributes = {
             metadata: cleanEmptyObject3(
@@ -99213,6 +99222,7 @@ If there's a particular need for this, please submit a feature request at https:
           type: "snackbar",
           isDismissible: true
         });
+        return true;
       } catch (error2) {
         onError(error2);
       }
@@ -99369,7 +99379,10 @@ If there's a particular need for this, please submit a feature request at https:
       const currentIndex = threads.findIndex((t4) => t4.id === note.id);
       const nextThread = threads[currentIndex + 1];
       const prevThread = threads[currentIndex - 1];
-      await onDelete(note);
+      const deleted = await onDelete(note);
+      if (!deleted) {
+        return;
+      }
       if (note.parent !== 0) {
         selectNote2(note.parent);
         focusNoteThread(note.parent, sidebarRef.current);
