@@ -30465,6 +30465,23 @@ ${url}
       }
     );
   }
+  function DetachGalleryDialog({ onConfirm, onCancel }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
+      import_components45.__experimentalConfirmDialog,
+      {
+        isOpen: true,
+        title: (0, import_i18n79.__)("Detach Gallery"),
+        __experimentalHideHeader: false,
+        confirmButtonText: (0, import_i18n79.__)("Detach"),
+        onConfirm,
+        onCancel,
+        size: "medium",
+        children: (0, import_i18n79.__)(
+          "The gallery displays the images attached to the post. Detaching will enable you to add, delete, or reorder images. However, new attachments will no longer be added automatically."
+        )
+      }
+    );
+  }
   function GallerySourcePanel({
     dynamic,
     dropdownMenuProps,
@@ -30486,6 +30503,7 @@ ${url}
     } = dynamic;
     const isDynamic = !!dynamicContent;
     const [isConfirming, setIsConfirming] = (0, import_element44.useState)(false);
+    const [isConfirmingDetach, setIsConfirmingDetach] = (0, import_element44.useState)(false);
     function requestEnableDynamicMode() {
       if (hasImages) {
         setIsConfirming(true);
@@ -30494,63 +30512,75 @@ ${url}
       }
     }
     if (isDynamic) {
-      return /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(
-        import_components45.__experimentalToolsPanel,
-        {
-          label: (0, import_i18n79.__)("Source"),
-          resetAll: resetSource,
-          dropdownMenuProps,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)("div", { className: "wp-block-gallery__source-settings", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime273.jsx)("p", { className: "wp-block-gallery__source-description", children: sourceDescriptor?.description ?? (0, import_i18n79.__)("Dynamic images.") }),
-              /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
-                import_components45.Button,
-                {
-                  __next40pxDefaultSize: true,
-                  variant: "secondary",
-                  onClick: convertToStatic,
-                  disabled: isResolvingDynamic,
-                  accessibleWhenDisabled: true,
-                  children: (0, import_i18n79.__)("Convert to individual images")
-                }
-              )
-            ] }),
-            hasMoreImagesThanCap && /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
-              import_components45.Notice,
-              {
-                className: "wp-block-gallery__source-notice",
-                status: "warning",
-                isDismissible: false,
-                children: (0, import_i18n79.sprintf)(
-                  /* translators: 1: number of images shown. 2: total number of matching images. */
-                  (0, import_i18n79.__)(
-                    "Only the first %1$d of %2$d images will be displayed."
-                  ),
-                  MAX_IMAGES,
-                  dynamicMediaTotal
-                )
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
-              import_components45.__experimentalToolsPanelItem,
-              {
-                isShownByDefault: true,
-                label: (0, import_i18n79.__)("Order by"),
-                hasValue: () => sourceOrderby !== DEFAULT_ORDERBY || sourceOrder !== DEFAULT_ORDER,
-                onDeselect: () => setSourceOrder(void 0, void 0),
-                children: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
-                  OrderControl,
+      return /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(import_jsx_runtime273.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(
+          import_components45.__experimentalToolsPanel,
+          {
+            label: (0, import_i18n79.__)("Source"),
+            resetAll: resetSource,
+            dropdownMenuProps,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)("div", { className: "wp-block-gallery__source-settings", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime273.jsx)("p", { className: "wp-block-gallery__source-description", children: sourceDescriptor?.description ?? (0, import_i18n79.__)("Dynamic images.") }),
+                /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
+                  import_components45.Button,
                   {
-                    orderby: sourceOrderby,
-                    order: sourceOrder,
-                    onChange: ({ orderby, order }) => setSourceOrder(orderby, order)
+                    __next40pxDefaultSize: true,
+                    variant: "secondary",
+                    onClick: () => setIsConfirmingDetach(true),
+                    disabled: isResolvingDynamic,
+                    accessibleWhenDisabled: true,
+                    children: (0, import_i18n79.__)("Detach Gallery")
                   }
                 )
-              }
-            )
-          ]
-        }
-      );
+              ] }),
+              hasMoreImagesThanCap && /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
+                import_components45.Notice,
+                {
+                  className: "wp-block-gallery__source-notice",
+                  status: "warning",
+                  isDismissible: false,
+                  children: (0, import_i18n79.sprintf)(
+                    /* translators: 1: number of images shown. 2: total number of matching images. */
+                    (0, import_i18n79.__)(
+                      "Only the first %1$d of %2$d images will be displayed."
+                    ),
+                    MAX_IMAGES,
+                    dynamicMediaTotal
+                  )
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
+                import_components45.__experimentalToolsPanelItem,
+                {
+                  isShownByDefault: true,
+                  label: (0, import_i18n79.__)("Order by"),
+                  hasValue: () => sourceOrderby !== DEFAULT_ORDERBY || sourceOrder !== DEFAULT_ORDER,
+                  onDeselect: () => setSourceOrder(void 0, void 0),
+                  children: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
+                    OrderControl,
+                    {
+                      orderby: sourceOrderby,
+                      order: sourceOrder,
+                      onChange: ({ orderby, order }) => setSourceOrder(orderby, order)
+                    }
+                  )
+                }
+              )
+            ]
+          }
+        ),
+        isConfirmingDetach && /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
+          DetachGalleryDialog,
+          {
+            onConfirm: () => {
+              convertToStatic();
+              setIsConfirmingDetach(false);
+            },
+            onCancel: () => setIsConfirmingDetach(false)
+          }
+        )
+      ] });
     }
     if (!canUseDynamicSource) {
       return null;
@@ -30618,16 +30648,29 @@ ${url}
       convertToStatic
     } = dynamic;
     const blockEditingMode = (0, import_block_editor97.useBlockEditingMode)();
+    const [isConfirmingDetach, setIsConfirmingDetach] = (0, import_element44.useState)(false);
     const emptyInstructions = isResolvingDynamic ? (0, import_i18n79.__)("Loading images\u2026") : sourceDescriptor?.emptyMessage ?? (0, import_i18n79.__)("Dynamic images will appear here.");
     return /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(import_jsx_runtime273.Fragment, { children: [
-      blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(import_block_editor97.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
-        import_components45.ToolbarButton,
-        {
-          onClick: convertToStatic,
-          disabled: isResolvingDynamic,
-          children: (0, import_i18n79.__)("Convert to images")
-        }
-      ) }),
+      blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(import_jsx_runtime273.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(import_block_editor97.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
+          import_components45.ToolbarButton,
+          {
+            onClick: () => setIsConfirmingDetach(true),
+            disabled: isResolvingDynamic,
+            children: (0, import_i18n79.__)("Detach")
+          }
+        ) }),
+        isConfirmingDetach && /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
+          DetachGalleryDialog,
+          {
+            onConfirm: () => {
+              convertToStatic();
+              setIsConfirmingDetach(false);
+            },
+            onCancel: () => setIsConfirmingDetach(false)
+          }
+        )
+      ] }),
       /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)("figure", { ...blockProps, children: [
         dynamicImageBlocks.length ? /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(import_block_editor97.BlockContextProvider, { value: galleryContext, children: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
           GalleryImagesPreview,
