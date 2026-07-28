@@ -21239,10 +21239,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return React7.createElement.apply(null, createElementArgArray);
   };
-  (function(_jsx262) {
+  (function(_jsx261) {
     var JSX;
     /* @__PURE__ */ (function(_JSX) {
-    })(JSX || (JSX = _jsx262.JSX || (_jsx262.JSX = {})));
+    })(JSX || (JSX = _jsx261.JSX || (_jsx261.JSX = {})));
   })(jsx36 || (jsx36 = {}));
   function css() {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -52120,224 +52120,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     })
   });
 
-  // packages/components/build-module/theme/index.mjs
-  var import_element220 = __toESM(require_element(), 1);
-
-  // packages/components/build-module/theme/color-algorithms.mjs
-  var import_warning11 = __toESM(require_warning(), 1);
-  k([names_default, a11y_default]);
-  function generateThemeVariables(inputs) {
-    validateInputs(inputs);
-    const generatedColors = {
-      ...generateAccentDependentColors(inputs.accent),
-      ...generateBackgroundDependentColors(inputs.background)
-    };
-    warnContrastIssues(checkContrasts(inputs, generatedColors));
-    return {
-      colors: generatedColors
-    };
-  }
-  function validateInputs(inputs) {
-    for (const [key, value] of Object.entries(inputs)) {
-      if (typeof value !== "undefined" && !w(value).isValid()) {
-        true ? (0, import_warning11.default)(`wp.components.Theme: "${value}" is not a valid color value for the '${key}' prop.`) : void 0;
-      }
-    }
-  }
-  function checkContrasts(inputs, outputs) {
-    const background = inputs.background || COLORS.white;
-    const accent = inputs.accent || "#3858e9";
-    const foreground = outputs.foreground || COLORS.gray[900];
-    const gray = outputs.gray || COLORS.gray;
-    return {
-      accent: w(background).isReadable(accent) ? void 0 : `The background color ("${background}") does not have sufficient contrast against the accent color ("${accent}").`,
-      foreground: w(background).isReadable(foreground) ? void 0 : `The background color provided ("${background}") does not have sufficient contrast against the standard foreground colors.`,
-      grays: w(background).contrast(gray[600]) >= 3 && w(background).contrast(gray[700]) >= 4.5 ? void 0 : `The background color provided ("${background}") cannot generate a set of grayscale foreground colors with sufficient contrast. Try adjusting the color to be lighter or darker.`
-    };
-  }
-  function warnContrastIssues(issues) {
-    for (const error of Object.values(issues)) {
-      if (error) {
-        true ? (0, import_warning11.default)("wp.components.Theme: " + error) : void 0;
-      }
-    }
-  }
-  function generateAccentDependentColors(accent) {
-    if (!accent) {
-      return {};
-    }
-    return {
-      accent,
-      accentDarker10: w(accent).darken(0.1).toHex(),
-      accentDarker20: w(accent).darken(0.2).toHex(),
-      accentInverted: getForegroundForColor(accent)
-    };
-  }
-  function generateBackgroundDependentColors(background) {
-    if (!background) {
-      return {};
-    }
-    const foreground = getForegroundForColor(background);
-    return {
-      background,
-      foreground,
-      foregroundInverted: getForegroundForColor(foreground),
-      gray: generateShades(background, foreground)
-    };
-  }
-  function getForegroundForColor(color2) {
-    return w(color2).isDark() ? COLORS.white : COLORS.gray[900];
-  }
-  function generateShades(background, foreground) {
-    const SHADES = {
-      100: 0.06,
-      200: 0.121,
-      300: 0.132,
-      400: 0.2,
-      600: 0.42,
-      700: 0.543,
-      800: 0.821
-    };
-    const limit = 0.884;
-    const direction = w(background).isDark() ? "lighten" : "darken";
-    const range = Math.abs(w(background).toHsl().l - w(foreground).toHsl().l) / 100;
-    const result = {};
-    Object.entries(SHADES).forEach(([key, value]) => {
-      result[parseInt(key)] = w(background)[direction](value / limit * range).toHex();
-    });
-    return result;
-  }
-
-  // packages/components/build-module/theme/index.mjs
-  var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
-  function getRuntime19() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument19(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash19(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE19}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE19) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle19(targetDocument, hash2, css3) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime19();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash19(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE19, hash2);
-    style2.appendChild(targetDocument.createTextNode(css3));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument19(targetDocument) {
-    const runtime = getRuntime19();
-    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-    for (const [hash2, css3] of runtime.styles) {
-      injectStyle19(targetDocument, hash2, css3);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle18(hash2, css3) {
-    const runtime = getRuntime19();
-    runtime.styles.set(hash2, css3);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle19(targetDocument, hash2, css3);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle18("cd3164b4a3", ".ca605c9335af4c37__wrapper{color:var(--wp-components-color-foreground,currentColor)}");
-  }
-  var style_module_default17 = { "wrapper": "ca605c9335af4c37__wrapper" };
-  var getColorVariables = ({
-    colors
-  }) => ({
-    "--wp-components-color-accent": colors.accent,
-    "--wp-components-color-accent-darker-10": colors.accentDarker10,
-    "--wp-components-color-accent-darker-20": colors.accentDarker20,
-    "--wp-components-color-accent-inverted": colors.accentInverted,
-    "--wp-components-color-background": colors.background,
-    "--wp-components-color-foreground": colors.foreground,
-    "--wp-components-color-foreground-inverted": colors.foregroundInverted,
-    ...Object.fromEntries(Object.entries(colors.gray ?? {}).map(([key, value]) => [`--wp-components-color-gray-${key}`, value]))
-  });
-  function Theme({
-    accent,
-    background,
-    className: className2,
-    style: style2,
-    ...props
-  }) {
-    const themeVariables = (0, import_element220.useMemo)(() => getColorVariables(generateThemeVariables({
-      accent,
-      background
-    })), [accent, background]);
-    const wrapperStyle = (0, import_element220.useMemo)(() => ({
-      ...themeVariables,
-      ...style2
-    }), [style2, themeVariables]);
-    return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(PolymorphicElement, {
-      className: clsx_default(style_module_default17.wrapper, className2),
-      style: wrapperStyle,
-      ...props
-    });
-  }
-  var theme_default = Theme;
-
   // packages/components/build-module/tabs/index.mjs
   var import_compose85 = __toESM(require_compose(), 1);
-  var import_element226 = __toESM(require_element(), 1);
+  var import_element225 = __toESM(require_element(), 1);
   var import_i18n73 = __toESM(require_i18n(), 1);
 
   // packages/components/build-module/tabs/context.mjs
-  var import_element221 = __toESM(require_element(), 1);
-  var TabsContext = (0, import_element221.createContext)(void 0);
+  var import_element220 = __toESM(require_element(), 1);
+  var TabsContext = (0, import_element220.createContext)(void 0);
   TabsContext.displayName = "TabsContext";
-  var useTabsContext = () => (0, import_element221.useContext)(TabsContext);
+  var useTabsContext = () => (0, import_element220.useContext)(TabsContext);
 
   // packages/components/build-module/tabs/tab.mjs
-  var import_element222 = __toESM(require_element(), 1);
-  var import_warning12 = __toESM(require_warning(), 1);
+  var import_element221 = __toESM(require_element(), 1);
+  var import_warning11 = __toESM(require_warning(), 1);
 
   // packages/components/build-module/tabs/styles.mjs
   function _EMOTION_STRINGIFIED_CSS_ERROR__33() {
@@ -52382,8 +52178,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   })("&:focus{box-shadow:none;outline:none;}&[data-focus-visible]{box-shadow:0 0 0 var( --wp-admin-border-width-focus ) ", COLORS.theme.accent, ";outline:2px solid transparent;outline-offset:0;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUE0UWtEIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogRXh0ZXJuYWwgZGVwZW5kZW5jaWVzXG4gKi9cbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCAqIGFzIEFyaWFraXQgZnJvbSAnQGFyaWFraXQvcmVhY3QnO1xuXG4vKipcbiAqIEludGVybmFsIGRlcGVuZGVuY2llc1xuICovXG5pbXBvcnQgeyBDT0xPUlMsIENPTkZJRywgZm9udCB9IGZyb20gJy4uL3V0aWxzJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vdXRpbHMvc3BhY2UnO1xuaW1wb3J0IEljb24gZnJvbSAnLi4vaWNvbic7XG5cbmV4cG9ydCBjb25zdCBTdHlsZWRUYWJMaXN0ID0gc3R5bGVkKCBBcmlha2l0LlRhYkxpc3QgKWBcblx0ZGlzcGxheTogZmxleDtcblx0YWxpZ24taXRlbXM6IHN0cmV0Y2g7XG5cdG92ZXJmbG93LXg6IGF1dG87XG5cblx0JlthcmlhLW9yaWVudGF0aW9uPSd2ZXJ0aWNhbCddIHtcblx0XHRmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuXHR9XG5cblx0OndoZXJlKCBbYXJpYS1vcmllbnRhdGlvbj0naG9yaXpvbnRhbCddICkge1xuXHRcdHdpZHRoOiBmaXQtY29udGVudDtcblx0fVxuXG5cdC0tZGlyZWN0aW9uLWZhY3RvcjogMTtcblx0LS1kaXJlY3Rpb24tc3RhcnQ6IGxlZnQ7XG5cdC0tZGlyZWN0aW9uLWVuZDogcmlnaHQ7XG5cdC0tc2VsZWN0ZWQtc3RhcnQ6IHZhciggLS1zZWxlY3RlZC1sZWZ0LCAwICk7XG5cdCY6ZGlyKCBydGwgKSB7XG5cdFx0LS1kaXJlY3Rpb24tZmFjdG9yOiAtMTtcblx0XHQtLWRpcmVjdGlvbi1zdGFydDogcmlnaHQ7XG5cdFx0LS1kaXJlY3Rpb24tZW5kOiBsZWZ0O1xuXHRcdC0tc2VsZWN0ZWQtc3RhcnQ6IHZhciggLS1zZWxlY3RlZC1yaWdodCwgMCApO1xuXHR9XG5cblx0QG1lZGlhIG5vdCAoIHByZWZlcnMtcmVkdWNlZC1tb3Rpb24gKSB7XG5cdFx0JltkYXRhLWluZGljYXRvci1hbmltYXRlZF06OmJlZm9yZSB7XG5cdFx0XHR0cmFuc2l0aW9uLXByb3BlcnR5OiB0cmFuc2Zvcm0sIGJvcmRlci1yYWRpdXMsIGJvcmRlci1ibG9jaztcblx0XHRcdHRyYW5zaXRpb24tZHVyYXRpb246IDAuMnM7XG5cdFx0XHR0cmFuc2l0aW9uLXRpbWluZy1mdW5jdGlvbjogZWFzZS1vdXQ7XG5cdFx0fVxuXHR9XG5cdHBvc2l0aW9uOiByZWxhdGl2ZTtcblx0Jjo6YmVmb3JlIHtcblx0XHRjb250ZW50OiAnJztcblx0XHRwb3NpdGlvbjogYWJzb2x1dGU7XG5cdFx0cG9pbnRlci1ldmVudHM6IG5vbmU7XG5cdFx0dHJhbnNmb3JtLW9yaWdpbjogdmFyKCAtLWRpcmVjdGlvbi1zdGFydCApIHRvcDtcblxuXHRcdC8vIFdpbmRvd3MgaGlnaCBjb250cmFzdCBtb2RlLlxuXHRcdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcblx0XHRvdXRsaW5lLW9mZnNldDogLTFweDtcblx0fVxuXG5cdC8qIFVzaW5nIGEgbGFyZ2UgdmFsdWUgdG8gYXZvaWQgYW50aWFsaWFzaW5nIHJvdW5kaW5nIGlzc3Vlc1xuXHRcdFx0d2hlbiBzY2FsaW5nIGluIHRoZSB0cmFuc2Zvcm0sIHNlZTogaHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9hLzUyMTU5MTIzICovXG5cdC0tYW50aWFsaWFzaW5nLWZhY3RvcjogMTAwO1xuXHQmW2FyaWEtb3JpZW50YXRpb249J2hvcml6b250YWwnXSB7XG5cdFx0LS1mYWRlLXdpZHRoOiA2NHB4O1xuXHRcdC0tZmFkZS1ncmFkaWVudC1iYXNlOiB0cmFuc3BhcmVudCAwJSwgYmxhY2sgdmFyKCAtLWZhZGUtd2lkdGggKTtcblx0XHQtLWZhZGUtZ3JhZGllbnQtY29tcG9zZWQ6IHZhciggLS1mYWRlLWdyYWRpZW50LWJhc2UgKSwgYmxhY2sgNjAlLFxuXHRcdFx0dHJhbnNwYXJlbnQgNTAlO1xuXHRcdCYuaXMtb3ZlcmZsb3dpbmctZmlyc3Qge1xuXHRcdFx0bWFzay1pbWFnZTogbGluZWFyLWdyYWRpZW50KFxuXHRcdFx0XHR0byB2YXIoIC0tZGlyZWN0aW9uLWVuZCApLFxuXHRcdFx0XHR2YXIoIC0tZmFkZS1ncmFkaWVudC1iYXNlIClcblx0XHRcdCk7XG5cdFx0fVxuXHRcdCYuaXMtb3ZlcmZsb3dpbmctbGFzdCB7XG5cdFx0XHRtYXNrLWltYWdlOiBsaW5lYXItZ3JhZGllbnQoXG5cdFx0XHRcdHRvIHZhciggLS1kaXJlY3Rpb24tc3RhcnQgKSxcblx0XHRcdFx0dmFyKCAtLWZhZGUtZ3JhZGllbnQtYmFzZSApXG5cdFx0XHQpO1xuXHRcdH1cblx0XHQmLmlzLW92ZXJmbG93aW5nLWZpcnN0LmlzLW92ZXJmbG93aW5nLWxhc3Qge1xuXHRcdFx0bWFzay1pbWFnZTogbGluZWFyLWdyYWRpZW50KFxuXHRcdFx0XHRcdHRvIHJpZ2h0LFxuXHRcdFx0XHRcdHZhciggLS1mYWRlLWdyYWRpZW50LWNvbXBvc2VkIClcblx0XHRcdFx0KSxcblx0XHRcdFx0bGluZWFyLWdyYWRpZW50KCB0byBsZWZ0LCB2YXIoIC0tZmFkZS1ncmFkaWVudC1jb21wb3NlZCApICk7XG5cdFx0fVxuXG5cdFx0Jjo6YmVmb3JlIHtcblx0XHRcdGJvdHRvbTogMDtcblx0XHRcdGhlaWdodDogMDtcblx0XHRcdHdpZHRoOiBjYWxjKCB2YXIoIC0tYW50aWFsaWFzaW5nLWZhY3RvciApICogMXB4ICk7XG5cdFx0XHR0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoXG5cdFx0XHRcdFx0Y2FsYyhcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC1zdGFydCApICogdmFyKCAtLWRpcmVjdGlvbi1mYWN0b3IgKSAqXG5cdFx0XHRcdFx0XHRcdDFweFxuXHRcdFx0XHRcdClcblx0XHRcdFx0KVxuXHRcdFx0XHRzY2FsZVgoXG5cdFx0XHRcdFx0Y2FsYyhcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC13aWR0aCwgMCApIC9cblx0XHRcdFx0XHRcdFx0dmFyKCAtLWFudGlhbGlhc2luZy1mYWN0b3IgKVxuXHRcdFx0XHRcdClcblx0XHRcdFx0KTtcblx0XHRcdGJvcmRlci1ib3R0b206IHZhciggLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMgKSBzb2xpZFxuXHRcdFx0XHQkeyBDT0xPUlMudGhlbWUuZ3JheVsgNzAwIF0gfTtcblx0XHR9XG5cdH1cblx0JlthcmlhLW9yaWVudGF0aW9uPSd2ZXJ0aWNhbCddIHtcblx0XHQmOjpiZWZvcmUge1xuXHRcdFx0LyogQWRqdXN0aW5nIHRoZSBib3JkZXIgcmFkaXVzIHRvIG1hdGNoIHRoZSBzY2FsaW5nIGluIHRoZSB5IGF4aXMuICovXG5cdFx0XHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfSAvXG5cdFx0XHRcdGNhbGMoXG5cdFx0XHRcdFx0JHsgQ09ORklHLnJhZGl1c1NtYWxsIH0gL1xuXHRcdFx0XHRcdFx0KFxuXHRcdFx0XHRcdFx0XHR2YXIoIC0tc2VsZWN0ZWQtaGVpZ2h0LCAwICkgL1xuXHRcdFx0XHRcdFx0XHRcdHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yIClcblx0XHRcdFx0XHRcdClcblx0XHRcdFx0KTtcblx0XHRcdHRvcDogMDtcblx0XHRcdGxlZnQ6IDA7XG5cdFx0XHR3aWR0aDogMTAwJTtcblx0XHRcdGhlaWdodDogY2FsYyggdmFyKCAtLWFudGlhbGlhc2luZy1mYWN0b3IgKSAqIDFweCApO1xuXHRcdFx0dHJhbnNmb3JtOiB0cmFuc2xhdGVZKCBjYWxjKCB2YXIoIC0tc2VsZWN0ZWQtdG9wLCAwICkgKiAxcHggKSApXG5cdFx0XHRcdHNjYWxlWShcblx0XHRcdFx0XHRjYWxjKFxuXHRcdFx0XHRcdFx0dmFyKCAtLXNlbGVjdGVkLWhlaWdodCwgMCApIC9cblx0XHRcdFx0XHRcdFx0dmFyKCAtLWFudGlhbGlhc2luZy1mYWN0b3IgKVxuXHRcdFx0XHRcdClcblx0XHRcdFx0KTtcblx0XHRcdGJhY2tncm91bmQtY29sb3I6ICR7IENPTE9SUy50aGVtZS5ncmF5WyAxMDAgXSB9O1xuXHRcdH1cblx0XHQmW2RhdGEtc2VsZWN0LW9uLW1vdmU9J3RydWUnXTpoYXMoXG5cdFx0XHRcdDppcyggOmZvY3VzLXZpc2libGUsIFtkYXRhLWZvY3VzLXZpc2libGVdIClcblx0XHRcdCk6OmJlZm9yZSB7XG5cdFx0XHRib3gtc2l6aW5nOiBib3JkZXItYm94O1xuXHRcdFx0Ym9yZGVyOiB2YXIoIC0td3AtYWRtaW4tYm9yZGVyLXdpZHRoLWZvY3VzICkgc29saWRcblx0XHRcdFx0JHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdFx0LyogQWRqdXN0aW5nIHRoZSBib3JkZXIgd2lkdGggdG8gbWF0Y2ggdGhlIHNjYWxpbmcgaW4gdGhlIHkgYXhpcy4gKi9cblx0XHRcdGJvcmRlci1ibG9jay13aWR0aDogY2FsYyhcblx0XHRcdFx0dmFyKCAtLXdwLWFkbWluLWJvcmRlci13aWR0aC1mb2N1cywgMXB4ICkgL1xuXHRcdFx0XHRcdChcblx0XHRcdFx0XHRcdHZhciggLS1zZWxlY3RlZC1oZWlnaHQsIDAgKSAvXG5cdFx0XHRcdFx0XHRcdHZhciggLS1hbnRpYWxpYXNpbmctZmFjdG9yIClcblx0XHRcdFx0XHQpXG5cdFx0XHQpO1xuXHRcdH1cblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFRhYiA9IHN0eWxlZCggQXJpYWtpdC5UYWIgKWBcblx0JiB7XG5cdFx0LyogUmVzZXRzICovXG5cdFx0Ym9yZGVyLXJhZGl1czogMDtcblx0XHRiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcblx0XHRib3JkZXI6IG5vbmU7XG5cdFx0Ym94LXNoYWRvdzogbm9uZTtcblxuXHRcdGZsZXg6IDEgMCBhdXRvO1xuXHRcdHdoaXRlLXNwYWNlOiBub3dyYXA7XG5cdFx0ZGlzcGxheTogZmxleDtcblx0XHRhbGlnbi1pdGVtczogY2VudGVyO1xuXHRcdGN1cnNvcjogcG9pbnRlcjtcblx0XHRsaW5lLWhlaWdodDogMS4yOyAvLyBDaGFyYWN0ZXJzIGluIHNvbWUgbGFuZ3VhZ2VzIChlLmcuIEphcGFuZXNlKSBtYXkgaGF2ZSBhIG5hdGl2ZSBoaWdoZXIgbGluZS1oZWlnaHQuXG5cdFx0Zm9udC1mYW1pbHk6ICR7IGZvbnQoICdkZWZhdWx0LmZvbnRGYW1pbHknICkgfTtcblx0XHRmb250LXdlaWdodDogNDAwO1xuXHRcdGZvbnQtc2l6ZTogJHsgZm9udCggJ2RlZmF1bHQuZm9udFNpemUnICkgfTtcblx0XHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfTtcblxuXHRcdCZbYXJpYS1kaXNhYmxlZD0ndHJ1ZSddIHtcblx0XHRcdGN1cnNvcjogZGVmYXVsdDtcblx0XHRcdGNvbG9yOiAkeyBDT0xPUlMudWkudGV4dERpc2FibGVkIH07XG5cdFx0fVxuXG5cdFx0Jjpub3QoIFthcmlhLWRpc2FibGVkPSd0cnVlJ10gKTppcyggOmhvdmVyLCBbZGF0YS1mb2N1cy12aXNpYmxlXSApIHtcblx0XHRcdGNvbG9yOiAkeyBDT0xPUlMudGhlbWUuZm9yZWdyb3VuZCB9O1xuXHRcdH1cblxuXHRcdCY6Zm9jdXM6bm90KCA6ZGlzYWJsZWQgKSB7XG5cdFx0XHRib3gtc2hhZG93OiBub25lO1xuXHRcdFx0b3V0bGluZTogbm9uZTtcblx0XHR9XG5cblx0XHQvLyBGb2N1cyBpbmRpY2F0b3IuXG5cdFx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRcdCY6OmFmdGVyIHtcblx0XHRcdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0XHRcdHBvaW50ZXItZXZlbnRzOiBub25lO1xuXG5cdFx0XHQvLyBEcmF3IHRoZSBpbmRpY2F0b3IuXG5cdFx0XHQvLyBPdXRsaW5lIHdvcmtzIGZvciBXaW5kb3dzIGhpZ2ggY29udHJhc3QgbW9kZSBhcyB3ZWxsLlxuXHRcdFx0b3V0bGluZTogdmFyKCAtLXdwLWFkbWluLWJvcmRlci13aWR0aC1mb2N1cyApIHNvbGlkXG5cdFx0XHRcdCR7IENPTE9SUy50aGVtZS5hY2NlbnQgfTtcblx0XHRcdGJvcmRlci1yYWRpdXM6ICR7IENPTkZJRy5yYWRpdXNTbWFsbCB9O1xuXG5cdFx0XHQvLyBBbmltYXRpb25cblx0XHRcdG9wYWNpdHk6IDA7XG5cblx0XHRcdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdFx0XHR0cmFuc2l0aW9uOiBvcGFjaXR5IDAuMXMgbGluZWFyO1xuXHRcdFx0fVxuXHRcdH1cblxuXHRcdCZbZGF0YS1mb2N1cy12aXNpYmxlXTo6YWZ0ZXIge1xuXHRcdFx0b3BhY2l0eTogMTtcblx0XHR9XG5cdH1cblxuXHRbYXJpYS1vcmllbnRhdGlvbj0naG9yaXpvbnRhbCddICYge1xuXHRcdHBhZGRpbmctaW5saW5lOiAkeyBzcGFjZSggNCApIH07XG5cdFx0aGVpZ2h0OiAkeyBzcGFjZSggMTIgKSB9O1xuXHRcdHNjcm9sbC1tYXJnaW46IDI0cHg7XG5cblx0XHQmOjphZnRlciB7XG5cdFx0XHRjb250ZW50OiAnJztcblx0XHRcdGluc2V0OiAkeyBzcGFjZSggMyApIH07XG5cdFx0fVxuXHR9XG5cblx0W2FyaWEtb3JpZW50YXRpb249J3ZlcnRpY2FsJ10gJiB7XG5cdFx0cGFkZGluZzogJHsgc3BhY2UoIDIgKSB9ICR7IHNwYWNlKCAzICkgfTtcblx0XHRtaW4taGVpZ2h0OiAkeyBzcGFjZSggMTAgKSB9O1xuXG5cdFx0JlthcmlhLXNlbGVjdGVkPSd0cnVlJ10ge1xuXHRcdFx0ZmlsbDogY3VycmVudENvbG9yO1xuXHRcdH1cblx0fVxuXHRbYXJpYS1vcmllbnRhdGlvbj0ndmVydGljYWwnXVtkYXRhLXNlbGVjdC1vbi1tb3ZlPSdmYWxzZSddICY6OmFmdGVyIHtcblx0XHRjb250ZW50OiAnJztcblx0XHRpbnNldDogdmFyKCAtLXdwLWFkbWluLWJvcmRlci13aWR0aC1mb2N1cyApO1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgVGFiQ2hpbGRyZW4gPSBzdHlsZWQuc3BhbmBcblx0ZmxleC1ncm93OiAxO1xuXG5cdGRpc3BsYXk6IGZsZXg7XG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cblx0W2FyaWEtb3JpZW50YXRpb249J2hvcml6b250YWwnXSAmIHtcblx0XHRqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcblx0fVxuXHRbYXJpYS1vcmllbnRhdGlvbj0ndmVydGljYWwnXSAmIHtcblx0XHRqdXN0aWZ5LWNvbnRlbnQ6IHN0YXJ0O1xuXHR9XG5gO1xuXG5leHBvcnQgY29uc3QgVGFiQ2hldnJvbiA9IHN0eWxlZCggSWNvbiApYFxuXHRmbGV4LXNocmluazogMDtcblx0bWFyZ2luLWlubGluZS1lbmQ6ICR7IHNwYWNlKCAtMSApIH07XG5cdFthcmlhLW9yaWVudGF0aW9uPSdob3Jpem9udGFsJ10gJiB7XG5cdFx0ZGlzcGxheTogbm9uZTtcblx0fVxuXHRvcGFjaXR5OiAwO1xuXHRbcm9sZT0ndGFiJ106aXMoIFthcmlhLXNlbGVjdGVkPSd0cnVlJ10sIFtkYXRhLWZvY3VzLXZpc2libGVdLCA6aG92ZXIgKSAmIHtcblx0XHRvcGFjaXR5OiAxO1xuXHR9XG5cdC8vIFRoZSBjaGV2cm9uIGlzIHRyYW5zaXRpb25lZCBpbnRvIGV4aXN0ZW5jZSB3aGVuIHNlbGVjdE9uTW92ZSBpcyBlbmFibGVkLFxuXHQvLyBiZWNhdXNlIG90aGVyd2lzZSBpdCBsb29rcyBqYXJyaW5nLCBhcyBpdCBzaG93cyB1cCBvdXRzaWRlIG9mIHRoZSBmb2N1c1xuXHQvLyBpbmRpY2F0b3IgdGhhdCdzIGJlaW5nIGFuaW1hdGVkIGF0IHRoZSBzYW1lIHRpbWUuXG5cdEBtZWRpYSBub3QgKCBwcmVmZXJzLXJlZHVjZWQtbW90aW9uICkge1xuXHRcdFtkYXRhLXNlbGVjdC1vbi1tb3ZlPSd0cnVlJ11cblx0XHRcdFtyb2xlPSd0YWInXTppcyggW2FyaWEtc2VsZWN0ZWQ9J3RydWUnXSwgIClcblx0XHRcdCYge1xuXHRcdFx0dHJhbnNpdGlvbjogb3BhY2l0eSAwLjE1cyAwLjE1cyBsaW5lYXI7XG5cdFx0fVxuXHR9XG5cdCY6ZGlyKCBydGwgKSB7XG5cdFx0cm90YXRlOiAxODBkZWc7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBUYWJQYW5lbCA9IHN0eWxlZCggQXJpYWtpdC5UYWJQYW5lbCApYFxuXHQmOmZvY3VzIHtcblx0XHRib3gtc2hhZG93OiBub25lO1xuXHRcdG91dGxpbmU6IG5vbmU7XG5cdH1cblxuXHQmW2RhdGEtZm9jdXMtdmlzaWJsZV0ge1xuXHRcdGJveC1zaGFkb3c6IDAgMCAwIHZhciggLS13cC1hZG1pbi1ib3JkZXItd2lkdGgtZm9jdXMgKVxuXHRcdFx0JHsgQ09MT1JTLnRoZW1lLmFjY2VudCB9O1xuXHRcdC8vIFdpbmRvd3MgaGlnaCBjb250cmFzdCBtb2RlLlxuXHRcdG91dGxpbmU6IDJweCBzb2xpZCB0cmFuc3BhcmVudDtcblx0XHRvdXRsaW5lLW9mZnNldDogMDtcblx0fVxuYDtcbiJdfQ== */"));
 
   // packages/components/build-module/tabs/tab.mjs
-  var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
-  var Tab3 = (0, import_element222.forwardRef)(function Tab23({
+  var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
+  var Tab3 = (0, import_element221.forwardRef)(function Tab23({
     children,
     tabId,
     disabled,
@@ -52395,37 +52191,37 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       instanceId
     } = useTabsContext() ?? {};
     if (!store) {
-      true ? (0, import_warning12.default)("`Tabs.Tab` must be wrapped in a `Tabs` component.") : void 0;
+      true ? (0, import_warning11.default)("`Tabs.Tab` must be wrapped in a `Tabs` component.") : void 0;
       return null;
     }
     const instancedTabId = `${instanceId}-${tabId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime303.jsxs)(Tab22, {
+    return /* @__PURE__ */ (0, import_jsx_runtime302.jsxs)(Tab22, {
       ref,
       store,
       id: instancedTabId,
       disabled,
       render,
       ...otherProps,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime303.jsx)(TabChildren, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime302.jsx)(TabChildren, {
         children
-      }), /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(TabChevron, {
+      }), /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(TabChevron, {
         icon: chevron_right_default
       })]
     });
   });
 
   // packages/components/build-module/tabs/tablist.mjs
-  var import_warning13 = __toESM(require_warning(), 1);
-  var import_element224 = __toESM(require_element(), 1);
+  var import_warning12 = __toESM(require_warning(), 1);
+  var import_element223 = __toESM(require_element(), 1);
   var import_compose84 = __toESM(require_compose(), 1);
 
   // packages/components/build-module/tabs/use-track-overflow.mjs
-  var import_element223 = __toESM(require_element(), 1);
+  var import_element222 = __toESM(require_element(), 1);
   var import_compose83 = __toESM(require_compose(), 1);
   function useTrackOverflow(parent, children) {
-    const [first, setFirst] = (0, import_element223.useState)(false);
-    const [last, setLast] = (0, import_element223.useState)(false);
-    const [observer, setObserver] = (0, import_element223.useState)();
+    const [first, setFirst] = (0, import_element222.useState)(false);
+    const [last, setLast] = (0, import_element222.useState)(false);
+    const [observer, setObserver] = (0, import_element222.useState)();
     const callback = (0, import_compose83.useEvent)((entries) => {
       for (const entry of entries) {
         if (entry.target === children.first) {
@@ -52436,7 +52232,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       }
     });
-    (0, import_element223.useEffect)(() => {
+    (0, import_element222.useEffect)(() => {
       if (!parent || !window.IntersectionObserver) {
         return;
       }
@@ -52447,7 +52243,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       setObserver(newObserver);
       return () => newObserver.disconnect();
     }, [callback, parent]);
-    (0, import_element223.useEffect)(() => {
+    (0, import_element222.useEffect)(() => {
       if (!observer) {
         return;
       }
@@ -52473,12 +52269,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/tabs/tablist.mjs
-  var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_SCROLL_MARGIN = 24;
   function useScrollRectIntoView(parent, rect, {
     margin = DEFAULT_SCROLL_MARGIN
   } = {}) {
-    (0, import_element224.useLayoutEffect)(() => {
+    (0, import_element223.useLayoutEffect)(() => {
       if (!parent || !rect) {
         return;
       }
@@ -52507,7 +52303,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
     }, [margin, parent, rect]);
   }
-  var TabList3 = (0, import_element224.forwardRef)(function TabList22({
+  var TabList3 = (0, import_element223.forwardRef)(function TabList22({
     children,
     ...otherProps
   }, ref) {
@@ -52517,7 +52313,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const selectedId = useStoreState(store, "selectedId");
     const selectOnMove = useStoreState(store, "selectOnMove");
     const items = useStoreState(store, "items");
-    const [parent, setParent] = (0, import_element224.useState)();
+    const [parent, setParent] = (0, import_element223.useState)();
     const refs = (0, import_compose84.useMergeRefs)([ref, setParent]);
     const selectedItem = store?.item(selectedId);
     const renderedItems = useStoreState(store, "renderedItems");
@@ -52535,13 +52331,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
     useScrollRectIntoView(parent, selectedRect);
     if (!store) {
-      true ? (0, import_warning13.default)("`Tabs.TabList` must be wrapped in a `Tabs` component.") : void 0;
+      true ? (0, import_warning12.default)("`Tabs.TabList` must be wrapped in a `Tabs` component.") : void 0;
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(StyledTabList, {
+    return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(StyledTabList, {
       ref: refs,
       store,
-      render: (props) => /* @__PURE__ */ (0, import_jsx_runtime304.jsx)("div", {
+      render: (props) => /* @__PURE__ */ (0, import_jsx_runtime303.jsx)("div", {
         ...props,
         // Fallback to -1 to prevent browsers from making the tablist
         // tabbable when it is a scrolling container.
@@ -52555,10 +52351,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/tabs/tabpanel.mjs
-  var import_element225 = __toESM(require_element(), 1);
-  var import_warning14 = __toESM(require_warning(), 1);
-  var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
-  var TabPanel3 = (0, import_element225.forwardRef)(function TabPanel24({
+  var import_element224 = __toESM(require_element(), 1);
+  var import_warning13 = __toESM(require_warning(), 1);
+  var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
+  var TabPanel3 = (0, import_element224.forwardRef)(function TabPanel24({
     children,
     tabId,
     focusable = true,
@@ -52567,7 +52363,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const context = useTabsContext();
     const selectedId = useStoreState(context?.store, "selectedId");
     if (!context) {
-      true ? (0, import_warning14.default)("`Tabs.TabPanel` must be wrapped in a `Tabs` component.") : void 0;
+      true ? (0, import_warning13.default)("`Tabs.TabPanel` must be wrapped in a `Tabs` component.") : void 0;
       return null;
     }
     const {
@@ -52575,7 +52371,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       instanceId
     } = context;
     const instancedTabId = `${instanceId}-${tabId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(TabPanel23, {
+    return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(TabPanel23, {
       ref,
       store,
       id: `${instancedTabId}-view`,
@@ -52587,7 +52383,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/tabs/index.mjs
-  var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
   function externalToInternalTabId(externalId, instanceId) {
     return externalId && `${instanceId}-${externalId}`;
   }
@@ -52621,11 +52417,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       activeId: externalToInternalTabId(activeTabId, instanceId),
       rtl: (0, import_i18n73.isRTL)()
     });
-    const contextValue = (0, import_element226.useMemo)(() => ({
+    const contextValue = (0, import_element225.useMemo)(() => ({
       store,
       instanceId
     }), [store, instanceId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(TabsContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(TabsContext.Provider, {
       value: contextValue,
       children
     });
@@ -52659,7 +52455,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   });
 
   // packages/components/build-module/badge/index.mjs
-  var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
   function contextBasedIcon(intent = "default") {
     switch (intent) {
       case "info":
@@ -52682,20 +52478,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }) {
     const icon = contextBasedIcon(intent);
     const hasIcon = !!icon;
-    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("span", {
+    return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)("span", {
       className: clsx_default("components-badge", className2, {
         [`is-${intent}`]: intent,
         "has-icon": hasIcon
       }),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime307.jsxs)("span", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime306.jsxs)("span", {
         className: "components-badge__flex-wrapper",
-        children: [hasIcon && /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(icon_default3, {
+        children: [hasIcon && /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(icon_default3, {
           icon,
           size: 16,
           fill: "currentColor",
           className: "components-badge__icon"
-        }), /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("span", {
+        }), /* @__PURE__ */ (0, import_jsx_runtime306.jsx)("span", {
           className: "components-badge__content",
           children
         })]
@@ -54909,12 +54705,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/calendar/date-calendar/index.mjs
-  var import_element228 = __toESM(require_element(), 1);
+  var import_element227 = __toESM(require_element(), 1);
 
   // packages/components/build-module/calendar/utils/day-cell.mjs
-  var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
   var PreviewDashStartAndEnd = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -54922,13 +54718,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.7677",
       strokeDashoffset: "3.2",
       strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime308.jsx)("path", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("path", {
         d: "M29.5,0.5 h-27 a2,2 0 0 0 -2,2 v27 a2,2 0 0 0 2,2 h27 a2,2 0 0 0 2,-2 v-27 a2,2 0 0 0 -2,-2"
       })
     });
   };
   var PreviewDashStart = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -54936,13 +54732,13 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.84516",
       strokeDashoffset: "1.9226",
       strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime308.jsx)("path", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("path", {
         d: "M32,0.5 h-29.5 a2,2 0 0 0 -2,2 v27 a2,2 0 0 0 2,2 h30"
       })
     });
   };
   var PreviewDashMiddle = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime308.jsxs)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime307.jsxs)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -54950,12 +54746,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.9 4",
       strokeDashoffset: "2",
       strokeWidth: "1",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime308.jsx)("line", {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime307.jsx)("line", {
         x1: "0",
         y1: "0.5",
         x2: "100",
         y2: "0.5"
-      }), /* @__PURE__ */ (0, import_jsx_runtime308.jsx)("line", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("line", {
         x1: "0",
         y1: "31.5",
         x2: "100",
@@ -54964,7 +54760,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     });
   };
   var PreviewDashEnd = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)("svg", {
+    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("svg", {
       viewBox: "0 0 32 32",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -54972,7 +54768,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       strokeDasharray: "3.84516",
       strokeDashoffset: "1.9226",
       strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime308.jsx)("path", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("path", {
         d: "M0,0.5 h29.5 a2,2 0 0 1 2,2 v27 a2,2 0 0 1 -2,2 h-29.5"
       })
     });
@@ -54994,9 +54790,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } else if (modifiers.preview) {
       PreviewDash = PreviewDashMiddle;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime308.jsxs)("td", {
+    return /* @__PURE__ */ (0, import_jsx_runtime307.jsxs)("td", {
       ...tdProps,
-      children: [PreviewDash && /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(PreviewDash, {}), children]
+      children: [PreviewDash && /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(PreviewDash, {}), children]
     });
   }
 
@@ -55066,7 +54862,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/calendar/utils/use-localization-props.mjs
   var import_i18n74 = __toESM(require_i18n(), 1);
-  var import_element227 = __toESM(require_element(), 1);
+  var import_element226 = __toESM(require_element(), 1);
   function isLocaleRTL(localeCode) {
     const localeObj = new Intl.Locale(localeCode);
     const direction = localeObj.getTextInfo?.().direction;
@@ -55099,7 +54895,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     timeZone,
     mode: mode2
   }) => {
-    return (0, import_element227.useMemo)(() => {
+    return (0, import_element226.useMemo)(() => {
       const monthNameFormatter = new Intl.DateTimeFormat(locale.code, {
         year: "numeric",
         month: "long",
@@ -55195,7 +54991,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   };
 
   // packages/components/build-module/calendar/date-calendar/index.mjs
-  var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
   var DateCalendar = ({
     defaultSelected,
     selected: selectedProp,
@@ -55210,7 +55006,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       timeZone,
       mode: "single"
     });
-    const onChange = (0, import_element228.useCallback)((selected2, triggerDate, modifiers, e3) => {
+    const onChange = (0, import_element227.useCallback)((selected2, triggerDate, modifiers, e3) => {
       onSelect?.(selected2 ?? void 0, triggerDate, modifiers, e3);
     }, [onSelect]);
     const [selected, setSelected] = useControlledValue({
@@ -55218,7 +55014,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       value: selectedProp,
       onChange
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(DayPicker, {
+    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(DayPicker, {
       ...COMMON_PROPS,
       ...localizationProps,
       ...props,
@@ -55230,8 +55026,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   };
 
   // packages/components/build-module/calendar/date-range-calendar/index.mjs
-  var import_element229 = __toESM(require_element(), 1);
-  var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
+  var import_element228 = __toESM(require_element(), 1);
+  var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
   function usePreviewRange({
     selected,
     hoveredDate,
@@ -55240,7 +55036,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     max: max3,
     disabled
   }) {
-    return (0, import_element229.useMemo)(() => {
+    return (0, import_element228.useMemo)(() => {
       if (!hoveredDate || !selected?.from) {
         return;
       }
@@ -55313,7 +55109,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       timeZone,
       mode: "range"
     });
-    const onChange = (0, import_element229.useCallback)((selected2, triggerDate, modifiers2, e3) => {
+    const onChange = (0, import_element228.useCallback)((selected2, triggerDate, modifiers2, e3) => {
       onSelect?.(selected2 ?? void 0, triggerDate, modifiers2, e3);
     }, [onSelect]);
     const [selected, setSelected] = useControlledValue({
@@ -55321,7 +55117,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       value: selectedProp,
       onChange
     });
-    const [hoveredDate, setHoveredDate] = (0, import_element229.useState)(void 0);
+    const [hoveredDate, setHoveredDate] = (0, import_element228.useState)(void 0);
     const previewRange = usePreviewRange({
       selected,
       hoveredDate,
@@ -55330,14 +55126,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       max: max3,
       disabled
     });
-    const modifiers = (0, import_element229.useMemo)(() => {
+    const modifiers = (0, import_element228.useMemo)(() => {
       return {
         preview: previewRange,
         preview_start: previewRange?.from,
         preview_end: previewRange?.to
       };
     }, [previewRange]);
-    return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(DayPicker, {
+    return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(DayPicker, {
       ...COMMON_PROPS,
       ...localizationProps,
       ...props,
@@ -55358,14 +55154,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/validated-form-controls/components/checkbox-control.mjs
   var import_compose86 = __toESM(require_compose(), 1);
-  var import_element231 = __toESM(require_element(), 1);
+  var import_element230 = __toESM(require_element(), 1);
 
   // packages/components/build-module/validated-form-controls/control-with-error.mjs
   var import_i18n75 = __toESM(require_i18n(), 1);
-  var import_element230 = __toESM(require_element(), 1);
+  var import_element229 = __toESM(require_element(), 1);
 
   // packages/components/build-module/validated-form-controls/validity-indicator.mjs
-  var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
   function ValidityIndicator({
     id: id3,
     type,
@@ -55375,12 +55171,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       valid: published_default,
       invalid: error_default
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime311.jsxs)("p", {
+    return /* @__PURE__ */ (0, import_jsx_runtime310.jsxs)("p", {
       id: id3,
       className: clsx_default("components-validated-control__indicator", `is-${type}`),
-      children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(spinner_default, {
+      children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(spinner_default, {
         className: "components-validated-control__indicator-spinner"
-      }) : /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(icon_default3, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(icon_default3, {
         className: "components-validated-control__indicator-icon",
         icon: ICON[type],
         size: 16,
@@ -55390,7 +55186,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
 
   // packages/components/build-module/validated-form-controls/control-with-error.mjs
-  var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
   function appendRequiredIndicator(label, required, markWhenOptional) {
     let suffix;
     if (required && !markWhenOptional) {
@@ -55404,7 +55200,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (typeof label === "string") {
       return `${label} ${suffix}`;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime312.jsxs)(import_jsx_runtime312.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime311.jsxs)(import_jsx_runtime311.Fragment, {
       children: [label, " ", suffix]
     });
   }
@@ -55417,11 +55213,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     getValidityTarget,
     children
   }, forwardedRef) {
-    const [errorMessage, setErrorMessage] = (0, import_element230.useState)();
-    const [statusMessage, setStatusMessage] = (0, import_element230.useState)();
-    const [showMessage, setShowMessage] = (0, import_element230.useState)(false);
-    const [isTouched, setIsTouched] = (0, import_element230.useState)(false);
-    (0, import_element230.useEffect)(() => {
+    const [errorMessage, setErrorMessage] = (0, import_element229.useState)();
+    const [statusMessage, setStatusMessage] = (0, import_element229.useState)();
+    const [showMessage, setShowMessage] = (0, import_element229.useState)(false);
+    const [isTouched, setIsTouched] = (0, import_element229.useState)(false);
+    (0, import_element229.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const handler = () => {
         setShowMessage(true);
@@ -55430,7 +55226,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       validityTarget?.addEventListener("invalid", handler);
       return () => validityTarget?.removeEventListener("invalid", handler);
     }, [getValidityTarget]);
-    (0, import_element230.useEffect)(() => {
+    (0, import_element229.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {
         event.preventDefault();
@@ -55448,7 +55244,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         radioSibilings.forEach((sibling) => sibling.removeEventListener("invalid", suppressNativePopover));
       };
     }, [getValidityTarget]);
-    (0, import_element230.useEffect)(() => {
+    (0, import_element229.useEffect)(() => {
       const validityTarget = getValidityTarget();
       if (!customValidity?.type) {
         validityTarget?.setCustomValidity("");
@@ -55483,7 +55279,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       }
     }, [customValidity, getValidityTarget]);
-    (0, import_element230.useEffect)(() => {
+    (0, import_element229.useEffect)(() => {
       if (!isTouched || showMessage) {
         return;
       }
@@ -55504,17 +55300,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         getValidityTarget()?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       }
     };
-    const messageId = (0, import_element230.useId)();
+    const messageId = (0, import_element229.useId)();
     const message2 = (() => {
       if (errorMessage) {
-        return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(ValidityIndicator, {
+        return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(ValidityIndicator, {
           id: messageId,
           type: "invalid",
           message: errorMessage
         });
       }
       if (statusMessage?.type) {
-        return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(ValidityIndicator, {
+        return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(ValidityIndicator, {
           id: messageId,
           type: statusMessage.type,
           message: statusMessage.message
@@ -55523,7 +55319,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       return null;
     })();
     const visibleMessage = showMessage ? message2 : null;
-    (0, import_element230.useEffect)(() => {
+    (0, import_element229.useEffect)(() => {
       const target = getValidityTarget();
       if (!target) {
         return;
@@ -55542,36 +55338,36 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       setDescribedBy(target, !!visibleMessage);
       return () => setDescribedBy(target, false);
     }, [visibleMessage, messageId, getValidityTarget]);
-    return /* @__PURE__ */ (0, import_jsx_runtime312.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime311.jsxs)("div", {
       className,
       ref: forwardedRef,
       onBlur,
-      children: [(0, import_element230.cloneElement)(children, {
+      children: [(0, import_element229.cloneElement)(children, {
         label: appendRequiredIndicator(children.props.label, required, markWhenOptional),
         required
       }), visibleMessage]
     });
   }
-  var ControlWithError = (0, import_element230.forwardRef)(UnforwardedControlWithError);
+  var ControlWithError = (0, import_element229.forwardRef)(UnforwardedControlWithError);
   ControlWithError.displayName = "ControlWithError";
 
   // packages/components/build-module/validated-form-controls/components/checkbox-control.mjs
-  var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedCheckboxControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element231.useRef)(null);
+    const validityTargetRef = (0, import_element230.useRef)(null);
     const mergedRefs = (0, import_compose86.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       ref: mergedRefs,
       customValidity,
       getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="checkbox"]'),
-      children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
         checkbox_control_default,
         {
           ...restProps
@@ -55579,22 +55375,22 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       )
     });
   };
-  var ValidatedCheckboxControl = (0, import_element231.forwardRef)(UnforwardedValidatedCheckboxControl);
+  var ValidatedCheckboxControl = (0, import_element230.forwardRef)(UnforwardedValidatedCheckboxControl);
   ValidatedCheckboxControl.displayName = "ValidatedCheckboxControl";
 
   // packages/components/build-module/validated-form-controls/components/combobox-control.mjs
   var import_compose87 = __toESM(require_compose(), 1);
-  var import_element232 = __toESM(require_element(), 1);
-  var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
+  var import_element231 = __toESM(require_element(), 1);
+  var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedComboboxControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element232.useRef)(null);
+    const validityTargetRef = (0, import_element231.useRef)(null);
     const mergedRefs = (0, import_compose87.useMergeRefs)([forwardedRef, validityTargetRef]);
-    (0, import_element232.useEffect)(() => {
+    (0, import_element231.useEffect)(() => {
       const input = validityTargetRef.current?.querySelector('input[role="combobox"]');
       if (input) {
         input.required = required ?? false;
@@ -55602,43 +55398,43 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }, [required]);
     return (
       // TODO: Bug - Missing value error is not cleared immediately on change, waits for blur.
-      /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(ControlWithError, {
+      /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         ref: mergedRefs,
         customValidity,
         getValidityTarget: () => validityTargetRef.current?.querySelector('input[role="combobox"]'),
-        children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(combobox_control_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(combobox_control_default, {
           ...restProps
         })
       })
     );
   };
-  var ValidatedComboboxControl = (0, import_element232.forwardRef)(UnforwardedValidatedComboboxControl);
+  var ValidatedComboboxControl = (0, import_element231.forwardRef)(UnforwardedValidatedComboboxControl);
   ValidatedComboboxControl.displayName = "ValidatedComboboxControl";
 
   // packages/components/build-module/validated-form-controls/components/form-token-field.mjs
-  var import_element233 = __toESM(require_element(), 1);
-  var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
+  var import_element232 = __toESM(require_element(), 1);
+  var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedFormTokenField = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element233.useRef)(null);
-    return /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)("div", {
+    const validityTargetRef = (0, import_element232.useRef)(null);
+    return /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
       ref: forwardedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime315.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime314.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(FormTokenField, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(FormTokenField, {
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime314.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "text",
         ref: validityTargetRef,
@@ -55653,96 +55449,96 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   };
-  var ValidatedFormTokenField = (0, import_element233.forwardRef)(UnforwardedValidatedFormTokenField);
+  var ValidatedFormTokenField = (0, import_element232.forwardRef)(UnforwardedValidatedFormTokenField);
   ValidatedFormTokenField.displayName = "ValidatedFormTokenField";
 
   // packages/components/build-module/validated-form-controls/components/input-control.mjs
-  var import_element234 = __toESM(require_element(), 1);
+  var import_element233 = __toESM(require_element(), 1);
   var import_compose88 = __toESM(require_compose(), 1);
-  var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedInputControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element234.useRef)(null);
+    const validityTargetRef = (0, import_element233.useRef)(null);
     const mergedRefs = (0, import_compose88.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(input_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(input_control_default, {
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedInputControl = (0, import_element234.forwardRef)(UnforwardedValidatedInputControl);
+  var ValidatedInputControl = (0, import_element233.forwardRef)(UnforwardedValidatedInputControl);
   ValidatedInputControl.displayName = "ValidatedInputControl";
 
   // packages/components/build-module/validated-form-controls/components/number-control.mjs
-  var import_element235 = __toESM(require_element(), 1);
+  var import_element234 = __toESM(require_element(), 1);
   var import_compose89 = __toESM(require_compose(), 1);
-  var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedNumberControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element235.useRef)(null);
+    const validityTargetRef = (0, import_element234.useRef)(null);
     const mergedRefs = (0, import_compose89.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(number_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(number_control_default, {
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedNumberControl = (0, import_element235.forwardRef)(UnforwardedValidatedNumberControl);
+  var ValidatedNumberControl = (0, import_element234.forwardRef)(UnforwardedValidatedNumberControl);
   ValidatedNumberControl.displayName = "ValidatedNumberControl";
 
   // packages/components/build-module/validated-form-controls/components/radio-control.mjs
   var import_compose90 = __toESM(require_compose(), 1);
-  var import_element236 = __toESM(require_element(), 1);
-  var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
+  var import_element235 = __toESM(require_element(), 1);
+  var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedRadioControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element236.useRef)(null);
+    const validityTargetRef = (0, import_element235.useRef)(null);
     const mergedRefs = (0, import_compose90.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       ref: mergedRefs,
       customValidity,
       getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="radio"]'),
-      children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(radio_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(radio_control_default, {
         ...restProps
       })
     });
   };
-  var ValidatedRadioControl = (0, import_element236.forwardRef)(UnforwardedValidatedRadioControl);
+  var ValidatedRadioControl = (0, import_element235.forwardRef)(UnforwardedValidatedRadioControl);
   ValidatedRadioControl.displayName = "ValidatedRadioControl";
 
   // packages/components/build-module/validated-form-controls/components/content-editable-control.mjs
-  var import_element238 = __toESM(require_element(), 1);
+  var import_element237 = __toESM(require_element(), 1);
 
   // packages/components/build-module/content-editable-control/index.mjs
   var import_compose91 = __toESM(require_compose(), 1);
-  var import_element237 = __toESM(require_element(), 1);
-  var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
-  function getRuntime20() {
+  var import_element236 = __toESM(require_element(), 1);
+  var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
+  function getRuntime19() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -55753,26 +55549,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument20(document);
+      registerDocument19(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash20(targetDocument, hash2) {
+  function documentContainsStyleHash19(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE20}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE20) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE19}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE19) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle20(targetDocument, hash2, css3) {
+  function injectStyle19(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime20();
+    const runtime = getRuntime19();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -55781,21 +55577,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash20(targetDocument, hash2)) {
+    if (documentContainsStyleHash19(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE20, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE19, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument20(targetDocument) {
-    const runtime = getRuntime20();
+  function registerDocument19(targetDocument) {
+    const runtime = getRuntime19();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle20(targetDocument, hash2, css3);
+      injectStyle19(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -55809,17 +55605,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle19(hash2, css3) {
-    const runtime = getRuntime20();
+  function registerStyle18(hash2, css3) {
+    const runtime = getRuntime19();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle20(targetDocument, hash2, css3);
+      injectStyle19(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle19("87e5397cb4", "._0f130cee1a924516__editable{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:1px solid #949494;border-radius:2px;box-shadow:0 0 0 transparent;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;width:100%}@media not (prefers-reduced-motion){._0f130cee1a924516__editable{transition:box-shadow .1s linear}}@media (min-width:600px){._0f130cee1a924516__editable{font-size:13px;line-height:normal}}._0f130cee1a924516__editable:focus{border-color:var(--wp-admin-theme-color);box-shadow:0 0 0 .5px var(--wp-admin-theme-color);outline:2px solid transparent}._0f130cee1a924516__editable::placeholder{color:rgba(30,30,30,.62)}._0f130cee1a924516__editable{border-color:var(--wp-components-color-gray-600,var(--wpds-color-stroke-interactive-neutral,#8d8d8d))}._0f130cee1a924516__editable[aria-placeholder]:empty:before{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%);content:attr(aria-placeholder)}._0f130cee1a924516__editable{min-height:40px;padding:12px}._0f130cee1a924516__editable[aria-disabled=true]{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb));color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));cursor:default}");
+    registerStyle18("87e5397cb4", "._0f130cee1a924516__editable{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:1px solid #949494;border-radius:2px;box-shadow:0 0 0 transparent;color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;width:100%}@media not (prefers-reduced-motion){._0f130cee1a924516__editable{transition:box-shadow .1s linear}}@media (min-width:600px){._0f130cee1a924516__editable{font-size:13px;line-height:normal}}._0f130cee1a924516__editable:focus{border-color:var(--wp-admin-theme-color);box-shadow:0 0 0 .5px var(--wp-admin-theme-color);outline:2px solid transparent}._0f130cee1a924516__editable::placeholder{color:rgba(30,30,30,.62)}._0f130cee1a924516__editable{border-color:var(--wp-components-color-gray-600,var(--wpds-color-stroke-interactive-neutral,#8d8d8d))}._0f130cee1a924516__editable[aria-placeholder]:empty:before{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%);content:attr(aria-placeholder)}._0f130cee1a924516__editable{min-height:40px;padding:12px}._0f130cee1a924516__editable[aria-disabled=true]{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb));color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));cursor:default}");
   }
-  var style_module_default18 = { "editable": "_0f130cee1a924516__editable" };
+  var style_module_default17 = { "editable": "_0f130cee1a924516__editable" };
   function UnforwardedContentEditableControl({
     label,
     id: id3,
@@ -55840,19 +55636,19 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       help
     });
     const labelId = `${controlProps.id}__label`;
-    const editableRef = (0, import_element237.useRef)(null);
+    const editableRef = (0, import_element236.useRef)(null);
     const mergedRefs = (0, import_compose91.useMergeRefs)([editableRef, forwardedRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(base_control_default, {
       ...baseControlProps,
-      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(component_default2, {
+      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(component_default2, {
         id: labelId,
         children: label
-      }) : /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(base_control_default.VisualLabel, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(base_control_default.VisualLabel, {
         id: labelId,
         onClick: () => editableRef.current?.focus(),
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("div", {
-        className: style_module_default18.editable,
+      }), /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("div", {
+        className: style_module_default17.editable,
         role: "textbox",
         "aria-multiline": true,
         "aria-labelledby": labelId,
@@ -55867,11 +55663,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   }
-  var ContentEditableControl = (0, import_element237.forwardRef)(UnforwardedContentEditableControl);
+  var ContentEditableControl = (0, import_element236.forwardRef)(UnforwardedContentEditableControl);
   var content_editable_control_default = ContentEditableControl;
 
   // packages/components/build-module/validated-form-controls/components/content-editable-control.mjs
-  var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedContentEditableControl = ({
     required,
     customValidity,
@@ -55880,21 +55676,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     className: className2,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element238.useRef)(null);
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)("div", {
+    const validityTargetRef = (0, import_element237.useRef)(null);
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime320.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime319.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(content_editable_control_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(content_editable_control_default, {
           ref: forwardedRef,
           className: clsx_default("components-validated-control__content-editable", className2),
           "aria-invalid": customValidity?.type === "invalid" || void 0,
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "text",
         ref: validityTargetRef,
@@ -55909,137 +55705,137 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   };
-  var ValidatedContentEditableControl = (0, import_element238.forwardRef)(UnforwardedValidatedContentEditableControl);
+  var ValidatedContentEditableControl = (0, import_element237.forwardRef)(UnforwardedValidatedContentEditableControl);
   ValidatedContentEditableControl.displayName = "ValidatedContentEditableControl";
 
   // packages/components/build-module/validated-form-controls/components/select-control.mjs
-  var import_element239 = __toESM(require_element(), 1);
+  var import_element238 = __toESM(require_element(), 1);
   var import_compose92 = __toESM(require_compose(), 1);
-  var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedSelectControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element239.useRef)(null);
+    const validityTargetRef = (0, import_element238.useRef)(null);
     const mergedRefs = (0, import_compose92.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(select_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(select_control_default, {
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedSelectControl = (0, import_element239.forwardRef)(UnforwardedValidatedSelectControl);
+  var ValidatedSelectControl = (0, import_element238.forwardRef)(UnforwardedValidatedSelectControl);
   ValidatedSelectControl.displayName = "ValidatedSelectControl";
 
   // packages/components/build-module/validated-form-controls/components/text-control.mjs
   var import_compose93 = __toESM(require_compose(), 1);
-  var import_element240 = __toESM(require_element(), 1);
-  var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
+  var import_element239 = __toESM(require_element(), 1);
+  var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element240.useRef)(null);
+    const validityTargetRef = (0, import_element239.useRef)(null);
     const mergedRefs = (0, import_compose93.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(text_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(text_control_default, {
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedTextControl = (0, import_element240.forwardRef)(UnforwardedValidatedTextControl);
+  var ValidatedTextControl = (0, import_element239.forwardRef)(UnforwardedValidatedTextControl);
   ValidatedTextControl.displayName = "ValidatedTextControl";
 
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
-  var import_element241 = __toESM(require_element(), 1);
+  var import_element240 = __toESM(require_element(), 1);
   var import_compose94 = __toESM(require_compose(), 1);
-  var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element241.useRef)(null);
+    const validityTargetRef = (0, import_element240.useRef)(null);
     const mergedRefs = (0, import_compose94.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(textarea_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(textarea_control_default, {
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedTextareaControl = (0, import_element241.forwardRef)(UnforwardedValidatedTextareaControl);
+  var ValidatedTextareaControl = (0, import_element240.forwardRef)(UnforwardedValidatedTextareaControl);
   ValidatedTextareaControl.displayName = "ValidatedTextareaControl";
 
   // packages/components/build-module/validated-form-controls/components/toggle-control.mjs
-  var import_element242 = __toESM(require_element(), 1);
+  var import_element241 = __toESM(require_element(), 1);
   var import_compose95 = __toESM(require_compose(), 1);
-  var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedToggleControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element242.useRef)(null);
+    const validityTargetRef = (0, import_element241.useRef)(null);
     const mergedRefs = (0, import_compose95.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(toggle_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(toggle_control_default, {
         ref: mergedRefs,
         required,
         ...restProps
       })
     });
   };
-  var ValidatedToggleControl = (0, import_element242.forwardRef)(UnforwardedValidatedToggleControl);
+  var ValidatedToggleControl = (0, import_element241.forwardRef)(UnforwardedValidatedToggleControl);
   ValidatedToggleControl.displayName = "ValidatedToggleControl";
 
   // packages/components/build-module/validated-form-controls/components/toggle-group-control.mjs
-  var import_element243 = __toESM(require_element(), 1);
-  var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
+  var import_element242 = __toESM(require_element(), 1);
+  var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedToggleGroupControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element243.useRef)(null);
-    const nameAttr = (0, import_element243.useId)();
-    return /* @__PURE__ */ (0, import_jsx_runtime325.jsxs)("div", {
+    const validityTargetRef = (0, import_element242.useRef)(null);
+    const nameAttr = (0, import_element242.useId)();
+    return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime325.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime325.jsx)(component_default12, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(component_default12, {
           ref: forwardedRef,
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime325.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "radio",
         ref: validityTargetRef,
@@ -56055,7 +55851,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   };
-  var ValidatedToggleGroupControl = (0, import_element243.forwardRef)(UnforwardedValidatedToggleGroupControl);
+  var ValidatedToggleGroupControl = (0, import_element242.forwardRef)(UnforwardedValidatedToggleGroupControl);
   ValidatedToggleGroupControl.displayName = "ValidatedToggleGroupControl";
 
   // packages/components/build-module/private-apis.mjs
@@ -56065,7 +55861,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     __experimentalPopoverLegacyPositionToPlacement: positionToPlacement,
     ComponentsContext,
     Tabs,
-    Theme: theme_default,
     Menu: Menu3,
     kebabCase,
     withIgnoreIMEEvents,
