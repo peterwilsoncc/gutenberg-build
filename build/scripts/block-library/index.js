@@ -41041,7 +41041,9 @@ ${text}
       getSelectionStart,
       getSelectionEnd,
       hasMultiSelection,
-      getMultiSelectedBlockClientIds
+      getMultiSelectedBlockClientIds,
+      getBlockRootClientId,
+      getBlockAttributes: getBlockAttributes4
     } = (0, import_data58.useSelect)(import_block_editor129.store);
     return (0, import_element65.useCallback)(() => {
       const _hasMultiSelection = hasMultiSelection();
@@ -41051,8 +41053,14 @@ ${text}
       );
       const previousSiblingId = getPreviousBlockClientId(clientId);
       const newListItem = (0, import_blocks47.cloneBlock)(getBlock(previousSiblingId));
+      const parentListId = getBlockRootClientId(clientId);
+      const parentListAttributes = getBlockAttributes4(parentListId);
       if (!newListItem.innerBlocks?.length) {
-        newListItem.innerBlocks = [(0, import_blocks47.createBlock)("core/list")];
+        newListItem.innerBlocks = [
+          (0, import_blocks47.createBlock)("core/list", {
+            ordered: parentListAttributes.ordered
+          })
+        ];
       }
       newListItem.innerBlocks[newListItem.innerBlocks.length - 1].innerBlocks.push(...clonedBlocks);
       const selectionStart = getSelectionStart();
