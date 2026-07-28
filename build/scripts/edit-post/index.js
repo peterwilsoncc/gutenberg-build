@@ -11727,22 +11727,6 @@ var wp;
         "Your browser is using Quirks Mode. \nThis can cause rendering issues such as blocks overlaying meta boxes in the editor. Quirks Mode can be triggered by PHP errors or HTML code appearing before the opening <!DOCTYPE html>. Try checking the raw page source or your site's PHP error log and resolving errors there, removing any HTML before the doctype, or disabling plugins."
       );
     }
-    const isIphone = window.navigator.userAgent.indexOf("iPhone") !== -1;
-    if (isIphone) {
-      window.addEventListener("scroll", (event) => {
-        const editorScrollContainer = document.getElementsByClassName(
-          "interface-interface-skeleton__body"
-        )[0];
-        if (event.target === document) {
-          if (window.scrollY > 100) {
-            editorScrollContainer.scrollTop = editorScrollContainer.scrollTop + window.scrollY;
-          }
-          if (document.getElementsByClassName("is-mode-visual")[0]) {
-            window.scrollTo(0, 0);
-          }
-        }
-      });
-    }
     window.addEventListener("dragover", (e) => e.preventDefault(), false);
     window.addEventListener("drop", (e) => e.preventDefault(), false);
     enablePreloadMultiUse();
