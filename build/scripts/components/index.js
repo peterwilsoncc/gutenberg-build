@@ -55711,6 +55711,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {
         event.preventDefault();
+        if (!event.isTrusted) {
+          return;
+        }
         const target = event.target;
         const firstErrorInForm = Array.from(target.form?.elements ?? []).find((el) => !el.validity.valid);
         if (!target.form || firstErrorInForm === target) {

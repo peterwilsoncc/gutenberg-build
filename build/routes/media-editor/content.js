@@ -20912,19 +20912,28 @@ function useFormValidity(item, fields, form) {
 }
 var use_form_validity_default = useFormValidity;
 
-// packages/dataviews/build-module/hooks/use-report-validity.mjs
+// packages/dataviews/build-module/hooks/use-reveal-validity.mjs
 var import_element68 = __toESM(require_element(), 1);
-function useReportValidity(ref, shouldReport) {
+function useRevealValidity(ref, shouldReveal) {
+  const revealValidity = (0, import_element68.useCallback)(() => {
+    const inputs = ref.current?.querySelectorAll("input, textarea, select");
+    let revealedCount = 0;
+    inputs?.forEach((input) => {
+      if (input.willValidate && !input.validity.valid) {
+        revealedCount++;
+        input.dispatchEvent(
+          new Event("invalid", { cancelable: true })
+        );
+      }
+    });
+    return revealedCount;
+  }, [ref]);
   (0, import_element68.useEffect)(() => {
-    if (shouldReport && ref.current) {
-      const inputs = ref.current.querySelectorAll(
-        "input, textarea, select"
-      );
-      inputs.forEach((input) => {
-        input.reportValidity();
-      });
+    if (shouldReveal) {
+      revealValidity();
     }
-  }, [shouldReport, ref]);
+  }, [shouldReveal, revealValidity]);
+  return revealValidity;
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
@@ -21046,7 +21055,7 @@ function ModalContent({
   const focusOnMountRef = (0, import_compose4.useFocusOnMount)("firstInputElement");
   const contentRef = (0, import_element70.useRef)(null);
   const mergedRef = (0, import_compose4.useMergeRefs)([focusOnMountRef, contentRef]);
-  useReportValidity(contentRef, touched);
+  useRevealValidity(contentRef, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(
     import_components25.Modal,
     {
@@ -21193,7 +21202,7 @@ function DropdownContentWithValidation({
   children
 }) {
   const ref = (0, import_element71.useRef)(null);
-  useReportValidity(ref, touched);
+  useRevealValidity(ref, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("div", { ref, children });
 }
 function PanelDropdown({
@@ -21343,10 +21352,11 @@ function FormPanelField({
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
 var import_element72 = __toESM(require_element(), 1);
+var import_compose6 = __toESM(require_compose(), 1);
+import { speak as speak2 } from "@wordpress/a11y";
 
-// packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
+// packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
 var import_i18n22 = __toESM(require_i18n(), 1);
-var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
 function countInvalidFields(validity) {
   if (!validity) {
     return 0;
@@ -21368,14 +21378,12 @@ function countInvalidFields(validity) {
   }
   return count;
 }
-function ValidationBadge({
-  validity
-}) {
+function getValidationMessage(validity) {
   const invalidCount = countInvalidFields(validity);
   if (invalidCount === 0) {
-    return null;
+    return void 0;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(Badge, { intent: "high", children: (0, import_i18n22.sprintf)(
+  return (0, import_i18n22.sprintf)(
     /* translators: %d: Number of fields that need attention */
     (0, import_i18n22._n)(
       "%d field needs attention",
@@ -21383,7 +21391,19 @@ function ValidationBadge({
       invalidCount
     ),
     invalidCount
-  ) });
+  );
+}
+
+// packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
+var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
+function ValidationBadge({
+  validity
+}) {
+  const message2 = getValidationMessage(validity);
+  if (!message2) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(Badge, { intent: "high", children: message2 });
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
@@ -21502,6 +21522,7 @@ function FormCardField({
   const { fields } = (0, import_element72.useContext)(dataform_context_default);
   const layout = field.layout;
   const contentRef = (0, import_element72.useRef)(null);
+  const hasFocusedContentRef = (0, import_element72.useRef)(false);
   const form = (0, import_element72.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
@@ -21521,13 +21542,28 @@ function FormCardField({
     }
     setIsOpen(open);
   }, []);
-  const handleBlur = (0, import_element72.useCallback)(() => {
-    setTouched(true);
-  }, []);
-  useReportValidity(
+  const revealValidity = useRevealValidity(
     contentRef,
     (isCollapsible ? isOpen2 : true) && touched
   );
+  const handleContentFocus = (0, import_element72.useCallback)(() => {
+    hasFocusedContentRef.current = true;
+  }, []);
+  const handleFocusOutside = (0, import_element72.useCallback)(() => {
+    if (!hasFocusedContentRef.current) {
+      return;
+    }
+    setTouched(true);
+    if (isCollapsible && !isOpen2) {
+      return;
+    }
+    const revealedCount = revealValidity();
+    const message2 = getValidationMessage(validity);
+    if (revealedCount > 0 && message2) {
+      speak2(message2, "polite");
+    }
+  }, [isCollapsible, isOpen2, revealValidity, validity]);
+  const focusOutsideProps = (0, import_compose6.__experimentalUseFocusOutside)(handleFocusOutside);
   let label = field.label;
   let withHeader;
   if (field.children) {
@@ -21574,13 +21610,14 @@ function FormCardField({
         className: "dataforms-layouts-card__field",
         open: isOpen2,
         onOpenChange: handleOpenChange,
+        ...focusOutsideProps,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(collapsible_card_exports.Header, { children: headerContent }),
           /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
             collapsible_card_exports.Content,
             {
               ref: contentRef,
-              onBlur: handleBlur,
+              onFocus: handleContentFocus,
               children: bodyContent
             }
           )
@@ -21588,10 +21625,17 @@ function FormCardField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(card_exports.Root, { className: "dataforms-layouts-card__field", children: [
-    withHeader && /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(card_exports.Header, { children: headerContent }),
-    /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(card_exports.Content, { ref: contentRef, onBlur: handleBlur, children: bodyContent })
-  ] });
+  return /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(
+    card_exports.Root,
+    {
+      className: "dataforms-layouts-card__field",
+      ...focusOutsideProps,
+      children: [
+        withHeader && /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(card_exports.Header, { children: headerContent }),
+        /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(card_exports.Content, { ref: contentRef, onFocus: handleContentFocus, children: bodyContent })
+      ]
+    }
+  );
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/row/index.mjs
@@ -21675,6 +21719,8 @@ function FormRowField({
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
 var import_element73 = __toESM(require_element(), 1);
 var import_i18n23 = __toESM(require_i18n(), 1);
+var import_compose7 = __toESM(require_compose(), 1);
+import { speak as speak3 } from "@wordpress/a11y";
 var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
 function FormDetailsField({
   data,
@@ -21685,6 +21731,7 @@ function FormDetailsField({
   const { fields } = (0, import_element73.useContext)(dataform_context_default);
   const detailsRef = (0, import_element73.useRef)(null);
   const contentRef = (0, import_element73.useRef)(null);
+  const hasFocusedContentRef = (0, import_element73.useRef)(false);
   const [touched, setTouched] = (0, import_element73.useState)(false);
   const [isOpen2, setIsOpen] = (0, import_element73.useState)(false);
   const form = (0, import_element73.useMemo)(
@@ -21711,10 +21758,25 @@ function FormDetailsField({
       details.removeEventListener("toggle", handleToggle);
     };
   }, []);
-  useReportValidity(contentRef, isOpen2 && touched);
-  const handleBlur = (0, import_element73.useCallback)(() => {
-    setTouched(true);
+  const revealValidity = useRevealValidity(contentRef, isOpen2 && touched);
+  const handleContentFocus = (0, import_element73.useCallback)(() => {
+    hasFocusedContentRef.current = true;
   }, []);
+  const handleFocusOutside = (0, import_element73.useCallback)(() => {
+    if (!hasFocusedContentRef.current) {
+      return;
+    }
+    setTouched(true);
+    if (!detailsRef.current?.open) {
+      return;
+    }
+    const revealedCount = revealValidity();
+    const message2 = getValidationMessage(validity);
+    if (revealedCount > 0 && message2) {
+      speak3(message2, "polite");
+    }
+  }, [revealValidity, validity]);
+  const focusOutsideProps = (0, import_compose7.__experimentalUseFocusOutside)(handleFocusOutside);
   if (!field.children) {
     return null;
   }
@@ -21731,6 +21793,7 @@ function FormDetailsField({
     {
       ref: detailsRef,
       className: "dataforms-layouts-details__details",
+      ...focusOutsideProps,
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(
           Stack,
@@ -21750,7 +21813,7 @@ function FormDetailsField({
           {
             ref: contentRef,
             className: "dataforms-layouts-details__content",
-            onBlur: handleBlur,
+            onFocus: handleContentFocus,
             children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
               DataFormLayout,
               {
@@ -22077,7 +22140,7 @@ var import_notices3 = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
 var import_components40 = __toESM(require_components(), 1);
-var import_compose8 = __toESM(require_compose(), 1);
+var import_compose10 = __toESM(require_compose(), 1);
 var import_data8 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
 var import_element96 = __toESM(require_element(), 1);
@@ -22092,7 +22155,7 @@ var import_i18n25 = __toESM(require_i18n(), 1);
 var import_element77 = __toESM(require_element(), 1);
 var import_viewport = __toESM(require_viewport(), 1);
 var import_preferences3 = __toESM(require_preferences(), 1);
-var import_compose6 = __toESM(require_compose(), 1);
+var import_compose8 = __toESM(require_compose(), 1);
 var import_plugins2 = __toESM(require_plugins(), 1);
 
 // packages/interface/build-module/components/complementary-area-toggle/index.mjs
@@ -22590,10 +22653,10 @@ function ComplementaryAreaFill({
   className,
   id
 }) {
-  const disableMotion = (0, import_compose6.useReducedMotion)();
-  const isMobileViewport = (0, import_compose6.useViewportMatch)("medium", "<");
-  const previousActiveArea = (0, import_compose6.usePrevious)(activeArea);
-  const previousIsActive = (0, import_compose6.usePrevious)(isActive);
+  const disableMotion = (0, import_compose8.useReducedMotion)();
+  const isMobileViewport = (0, import_compose8.useViewportMatch)("medium", "<");
+  const previousActiveArea = (0, import_compose8.usePrevious)(activeArea);
+  const previousIsActive = (0, import_compose8.usePrevious)(isActive);
   const [, setState] = (0, import_element77.useState)({});
   (0, import_element77.useEffect)(() => {
     setState({});
@@ -22712,7 +22775,7 @@ function ComplementaryArea({
     },
     [identifier, scope]
   );
-  const isMobileViewport = (0, import_compose6.useViewportMatch)("medium", "<");
+  const isMobileViewport = (0, import_compose8.useViewportMatch)("medium", "<");
   useAdjustComplementaryListener(
     scope,
     identifier,
@@ -22827,7 +22890,7 @@ var complementary_area_default = ComplementaryArea;
 var import_element78 = __toESM(require_element(), 1);
 var import_components34 = __toESM(require_components(), 1);
 var import_i18n26 = __toESM(require_i18n(), 1);
-var import_compose7 = __toESM(require_compose(), 1);
+var import_compose9 = __toESM(require_compose(), 1);
 var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
 var ANIMATION_DURATION2 = 0.25;
 var commonTransition = {
@@ -22885,9 +22948,9 @@ function InterfaceSkeleton({
   labels,
   className
 }, ref) {
-  const [secondarySidebarResizeListener, secondarySidebarSize] = (0, import_compose7.useResizeObserver)();
-  const isMobileViewport = (0, import_compose7.useViewportMatch)("medium", "<");
-  const disableMotion = (0, import_compose7.useReducedMotion)();
+  const [secondarySidebarResizeListener, secondarySidebarSize] = (0, import_compose9.useResizeObserver)();
+  const isMobileViewport = (0, import_compose9.useViewportMatch)("medium", "<");
+  const disableMotion = (0, import_compose9.useReducedMotion)();
   const defaultTransition = {
     type: "tween",
     duration: disableMotion ? 0 : ANIMATION_DURATION2,
@@ -25461,7 +25524,7 @@ function useTransformStyle(state, imageSize) {
 // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
 var import_element81 = __toESM(require_element(), 1);
 var import_i18n28 = __toESM(require_i18n(), 1);
-import { speak as speak2 } from "@wordpress/a11y";
+import { speak as speak4 } from "@wordpress/a11y";
 
 // packages/media-editor/build-module/image-editor/core/source-region.mjs
 function getSourceRegion(state, imageSize) {
@@ -25729,7 +25792,7 @@ function useAriaAnnouncer(state) {
       prevStateRef.current = current;
       if (msg !== prevMessageRef.current) {
         prevMessageRef.current = msg;
-        speak2(msg);
+        speak4(msg);
       }
     }, ARIA_DEBOUNCE_MS);
     return () => {
@@ -28783,7 +28846,7 @@ function MediaEditorContent({
   shouldCloseOnEsc = false
 }) {
   const cropper = useMediaEditor();
-  const isPanelLayout = (0, import_compose8.useViewportMatch)("small");
+  const isPanelLayout = (0, import_compose10.useViewportMatch)("small");
   const footerLayout = isPanelLayout ? "wide" : "narrow";
   const { media, hasEdits } = (0, import_data8.useSelect)(
     (select) => {

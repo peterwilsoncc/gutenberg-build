@@ -85959,7 +85959,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/block-fields/index.mjs
   var import_blocks113 = __toESM(require_blocks(), 1);
-  var import_compose106 = __toESM(require_compose(), 1);
+  var import_compose108 = __toESM(require_compose(), 1);
   var import_components264 = __toESM(require_components(), 1);
   var import_data187 = __toESM(require_data(), 1);
 
@@ -92540,19 +92540,28 @@ var wp;
   }
   var use_form_validity_default = useFormValidity;
 
-  // packages/dataviews/build-module/hooks/use-report-validity.mjs
+  // packages/dataviews/build-module/hooks/use-reveal-validity.mjs
   var import_element308 = __toESM(require_element(), 1);
-  function useReportValidity(ref, shouldReport) {
+  function useRevealValidity(ref, shouldReveal) {
+    const revealValidity = (0, import_element308.useCallback)(() => {
+      const inputs = ref.current?.querySelectorAll("input, textarea, select");
+      let revealedCount = 0;
+      inputs?.forEach((input) => {
+        if (input.willValidate && !input.validity.valid) {
+          revealedCount++;
+          input.dispatchEvent(
+            new Event("invalid", { cancelable: true })
+          );
+        }
+      });
+      return revealedCount;
+    }, [ref]);
     (0, import_element308.useEffect)(() => {
-      if (shouldReport && ref.current) {
-        const inputs = ref.current.querySelectorAll(
-          "input, textarea, select"
-        );
-        inputs.forEach((input) => {
-          input.reportValidity();
-        });
+      if (shouldReveal) {
+        revealValidity();
       }
-    }, [shouldReport, ref]);
+    }, [shouldReveal, revealValidity]);
+    return revealValidity;
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
@@ -92674,7 +92683,7 @@ var wp;
     const focusOnMountRef = (0, import_compose102.useFocusOnMount)("firstInputElement");
     const contentRef = (0, import_element310.useRef)(null);
     const mergedRef = (0, import_compose102.useMergeRefs)([focusOnMountRef, contentRef]);
-    useReportValidity(contentRef, touched);
+    useRevealValidity(contentRef, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(
       import_components257.Modal,
       {
@@ -92821,7 +92830,7 @@ var wp;
     children
   }) {
     const ref = (0, import_element311.useRef)(null);
-    useReportValidity(ref, touched);
+    useRevealValidity(ref, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime504.jsx)("div", { ref, children });
   }
   function PanelDropdown({
@@ -92971,10 +92980,11 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
   var import_element312 = __toESM(require_element(), 1);
+  var import_a11y24 = __toESM(require_a11y(), 1);
+  var import_compose104 = __toESM(require_compose(), 1);
 
-  // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
+  // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
   var import_i18n238 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
   function countInvalidFields(validity) {
     if (!validity) {
       return 0;
@@ -92996,14 +93006,12 @@ var wp;
     }
     return count;
   }
-  function ValidationBadge({
-    validity
-  }) {
+  function getValidationMessage(validity) {
     const invalidCount = countInvalidFields(validity);
     if (invalidCount === 0) {
-      return null;
+      return void 0;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(Badge, { intent: "high", children: (0, import_i18n238.sprintf)(
+    return (0, import_i18n238.sprintf)(
       /* translators: %d: Number of fields that need attention */
       (0, import_i18n238._n)(
         "%d field needs attention",
@@ -93011,7 +93019,19 @@ var wp;
         invalidCount
       ),
       invalidCount
-    ) });
+    );
+  }
+
+  // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
+  var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
+  function ValidationBadge({
+    validity
+  }) {
+    const message2 = getValidationMessage(validity);
+    if (!message2) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(Badge, { intent: "high", children: message2 });
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
@@ -93130,6 +93150,7 @@ var wp;
     const { fields } = (0, import_element312.useContext)(dataform_context_default);
     const layout = field.layout;
     const contentRef = (0, import_element312.useRef)(null);
+    const hasFocusedContentRef = (0, import_element312.useRef)(false);
     const form = (0, import_element312.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
@@ -93149,13 +93170,28 @@ var wp;
       }
       setIsOpen(open);
     }, []);
-    const handleBlur = (0, import_element312.useCallback)(() => {
-      setTouched(true);
-    }, []);
-    useReportValidity(
+    const revealValidity = useRevealValidity(
       contentRef,
       (isCollapsible ? isOpen : true) && touched
     );
+    const handleContentFocus = (0, import_element312.useCallback)(() => {
+      hasFocusedContentRef.current = true;
+    }, []);
+    const handleFocusOutside = (0, import_element312.useCallback)(() => {
+      if (!hasFocusedContentRef.current) {
+        return;
+      }
+      setTouched(true);
+      if (isCollapsible && !isOpen) {
+        return;
+      }
+      const revealedCount = revealValidity();
+      const message2 = getValidationMessage(validity);
+      if (revealedCount > 0 && message2) {
+        (0, import_a11y24.speak)(message2, "polite");
+      }
+    }, [isCollapsible, isOpen, revealValidity, validity]);
+    const focusOutsideProps = (0, import_compose104.__experimentalUseFocusOutside)(handleFocusOutside);
     let label = field.label;
     let withHeader;
     if (field.children) {
@@ -93202,13 +93238,14 @@ var wp;
           className: "dataforms-layouts-card__field",
           open: isOpen,
           onOpenChange: handleOpenChange,
+          ...focusOutsideProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(collapsible_card_exports.Header, { children: headerContent }),
             /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(
               collapsible_card_exports.Content,
               {
                 ref: contentRef,
-                onBlur: handleBlur,
+                onFocus: handleContentFocus,
                 children: bodyContent
               }
             )
@@ -93216,10 +93253,17 @@ var wp;
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime507.jsxs)(card_exports.Root, { className: "dataforms-layouts-card__field", children: [
-      withHeader && /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(card_exports.Header, { children: headerContent }),
-      /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(card_exports.Content, { ref: contentRef, onBlur: handleBlur, children: bodyContent })
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime507.jsxs)(
+      card_exports.Root,
+      {
+        className: "dataforms-layouts-card__field",
+        ...focusOutsideProps,
+        children: [
+          withHeader && /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(card_exports.Header, { children: headerContent }),
+          /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(card_exports.Content, { ref: contentRef, onFocus: handleContentFocus, children: bodyContent })
+        ]
+      }
+    );
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/row/index.mjs
@@ -93303,6 +93347,8 @@ var wp;
   // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
   var import_element313 = __toESM(require_element(), 1);
   var import_i18n239 = __toESM(require_i18n(), 1);
+  var import_a11y25 = __toESM(require_a11y(), 1);
+  var import_compose105 = __toESM(require_compose(), 1);
   var import_jsx_runtime509 = __toESM(require_jsx_runtime(), 1);
   function FormDetailsField({
     data,
@@ -93313,6 +93359,7 @@ var wp;
     const { fields } = (0, import_element313.useContext)(dataform_context_default);
     const detailsRef = (0, import_element313.useRef)(null);
     const contentRef = (0, import_element313.useRef)(null);
+    const hasFocusedContentRef = (0, import_element313.useRef)(false);
     const [touched, setTouched] = (0, import_element313.useState)(false);
     const [isOpen, setIsOpen] = (0, import_element313.useState)(false);
     const form = (0, import_element313.useMemo)(
@@ -93339,10 +93386,25 @@ var wp;
         details.removeEventListener("toggle", handleToggle);
       };
     }, []);
-    useReportValidity(contentRef, isOpen && touched);
-    const handleBlur = (0, import_element313.useCallback)(() => {
-      setTouched(true);
+    const revealValidity = useRevealValidity(contentRef, isOpen && touched);
+    const handleContentFocus = (0, import_element313.useCallback)(() => {
+      hasFocusedContentRef.current = true;
     }, []);
+    const handleFocusOutside = (0, import_element313.useCallback)(() => {
+      if (!hasFocusedContentRef.current) {
+        return;
+      }
+      setTouched(true);
+      if (!detailsRef.current?.open) {
+        return;
+      }
+      const revealedCount = revealValidity();
+      const message2 = getValidationMessage(validity);
+      if (revealedCount > 0 && message2) {
+        (0, import_a11y25.speak)(message2, "polite");
+      }
+    }, [revealValidity, validity]);
+    const focusOutsideProps = (0, import_compose105.__experimentalUseFocusOutside)(handleFocusOutside);
     if (!field.children) {
       return null;
     }
@@ -93359,6 +93421,7 @@ var wp;
       {
         ref: detailsRef,
         className: "dataforms-layouts-details__details",
+        ...focusOutsideProps,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime509.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime509.jsxs)(
             Stack,
@@ -93378,7 +93441,7 @@ var wp;
             {
               ref: contentRef,
               className: "dataforms-layouts-details__content",
-              onBlur: handleBlur,
+              onFocus: handleContentFocus,
               children: /* @__PURE__ */ (0, import_jsx_runtime509.jsx)(
                 DataFormLayout,
                 {
@@ -93563,9 +93626,9 @@ var wp;
   var import_i18n240 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/hooks/block-fields/use-inspector-popover-placement.mjs
-  var import_compose104 = __toESM(require_compose(), 1);
+  var import_compose106 = __toESM(require_compose(), 1);
   function useInspectorPopoverPlacement2({ isControl } = { isControl: false }) {
-    const isMobile = (0, import_compose104.useViewportMatch)("medium", "<");
+    const isMobile = (0, import_compose106.useViewportMatch)("medium", "<");
     return !isMobile ? {
       popoverProps: {
         placement: "left-start",
@@ -93616,7 +93679,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/block-fields/rich-text/index.mjs
   var import_components261 = __toESM(require_components(), 1);
-  var import_compose105 = __toESM(require_compose(), 1);
+  var import_compose107 = __toESM(require_compose(), 1);
   var import_data185 = __toESM(require_data(), 1);
   var import_element316 = __toESM(require_element(), 1);
   var import_rich_text24 = __toESM(require_rich_text(), 1);
@@ -93695,7 +93758,7 @@ var wp;
           className: "block-editor-content-only-controls__rich-text",
           role: "textbox",
           "aria-multiline": !fieldConfig?.disableLineBreaks,
-          ref: (0, import_compose105.useMergeRefs)([
+          ref: (0, import_compose107.useMergeRefs)([
             richTextRef,
             useEventListeners({
               registry,
@@ -94127,7 +94190,7 @@ var wp;
       [blockContext, clientId, blockType?.name]
     );
     const { selectBlock: selectBlock2, toggleBlockHighlight: toggleBlockHighlight2 } = (0, import_data187.useDispatch)(store);
-    const debouncedToggleBlockHighlight = (0, import_compose106.useDebounce)(
+    const debouncedToggleBlockHighlight = (0, import_compose108.useDebounce)(
       toggleBlockHighlight2,
       50
     );
@@ -94367,7 +94430,7 @@ var wp;
   var import_hooks28 = __toESM(require_hooks(), 1);
   var import_data189 = __toESM(require_data(), 1);
   var import_blocks118 = __toESM(require_blocks(), 1);
-  var import_compose107 = __toESM(require_compose(), 1);
+  var import_compose109 = __toESM(require_compose(), 1);
   var import_style_engine5 = __toESM(require_style_engine(), 1);
 
   // packages/block-editor/build-module/hooks/dimensions.mjs
@@ -95208,7 +95271,7 @@ var wp;
     return rules.length > 0 ? rules.join("") : void 0;
   }
   function useBlockProps13({ name, style }) {
-    const blockElementsContainerIdentifier = (0, import_compose107.useInstanceId)(
+    const blockElementsContainerIdentifier = (0, import_compose109.useInstanceId)(
       STYLE_BLOCK_PROPS_REFERENCE,
       "wp-elements"
     );
@@ -95284,7 +95347,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/duotone.mjs
   var import_blocks120 = __toESM(require_blocks(), 1);
-  var import_compose108 = __toESM(require_compose(), 1);
+  var import_compose110 = __toESM(require_compose(), 1);
   var import_hooks30 = __toESM(require_hooks(), 1);
   var import_element323 = __toESM(require_element(), 1);
   var import_data190 = __toESM(require_data(), 1);
@@ -95488,7 +95551,7 @@ var wp;
   }
   var DUOTONE_BLOCK_PROPS_REFERENCE = {};
   function useBlockProps14({ clientId, name, style }) {
-    const id = (0, import_compose108.useInstanceId)(DUOTONE_BLOCK_PROPS_REFERENCE);
+    const id = (0, import_compose110.useInstanceId)(DUOTONE_BLOCK_PROPS_REFERENCE);
     const selector3 = (0, import_element323.useMemo)(() => {
       const blockType = (0, import_blocks120.getBlockType)(name);
       if (blockType) {
@@ -95536,7 +95599,7 @@ var wp;
   // packages/block-editor/build-module/hooks/custom-css.mjs
   var import_element324 = __toESM(require_element(), 1);
   var import_data191 = __toESM(require_data(), 1);
-  var import_compose109 = __toESM(require_compose(), 1);
+  var import_compose111 = __toESM(require_compose(), 1);
   var import_blocks121 = __toESM(require_blocks(), 1);
   var import_i18n245 = __toESM(require_i18n(), 1);
   var import_notices13 = __toESM(require_notices(), 1);
@@ -95618,7 +95681,7 @@ var wp;
         );
       }
     }, [canEditCSS, hasCustomCSS, createWarningNotice]);
-    const customCSSIdentifier = (0, import_compose109.useInstanceId)(
+    const customCSSIdentifier = (0, import_compose111.useInstanceId)(
       CUSTOM_CSS_INSTANCE_REFERENCE,
       "wp-custom-css"
     );
@@ -95665,7 +95728,7 @@ var wp;
   };
 
   // packages/block-editor/build-module/hooks/layout.mjs
-  var import_compose110 = __toESM(require_compose(), 1);
+  var import_compose112 = __toESM(require_compose(), 1);
   var import_hooks31 = __toESM(require_hooks(), 1);
   var import_element325 = __toESM(require_element(), 1);
   var import_blocks122 = __toESM(require_blocks(), 1);
@@ -96103,7 +96166,7 @@ var wp;
     layoutClasses
   }) {
     const { name, attributes } = props;
-    const id = (0, import_compose110.useInstanceId)(BlockListBlock2);
+    const id = (0, import_compose112.useInstanceId)(BlockListBlock2);
     const { layout } = attributes;
     const { default: defaultBlockLayout } = (0, import_blocks122.getBlockSupport)(name, layoutBlockSupportKey) || {};
     const usedLayout = layout?.inherit || layout?.contentSize || layout?.wideSize ? { ...layout, type: "constrained" } : layout || defaultBlockLayout || {};
@@ -96145,7 +96208,7 @@ var wp;
       }
     );
   }
-  var withLayoutStyles = (0, import_compose110.createHigherOrderComponent)(
+  var withLayoutStyles = (0, import_compose112.createHigherOrderComponent)(
     (BlockListBlock2) => function WithLayoutStyles(props) {
       const { clientId, name, attributes } = props;
       const blockSupportsLayout = hasLayoutBlockSupport(name);
@@ -96221,14 +96284,14 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/layout-child.mjs
-  var import_compose114 = __toESM(require_compose(), 1);
+  var import_compose116 = __toESM(require_compose(), 1);
   var import_data196 = __toESM(require_data(), 1);
   var import_element329 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/grid/grid-visualizer.mjs
   var import_element326 = __toESM(require_element(), 1);
   var import_data193 = __toESM(require_data(), 1);
-  var import_compose111 = __toESM(require_compose(), 1);
+  var import_compose113 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/grid/utils.mjs
   function range(start2, length) {
@@ -96737,7 +96800,7 @@ var wp;
     onDrop
   }) {
     const { getDraggedBlockClientIds: getDraggedBlockClientIds2 } = (0, import_data193.useSelect)(store);
-    return (0, import_compose111.__experimentalUseDropZone)({
+    return (0, import_compose113.__experimentalUseDropZone)({
       onDragEnter() {
         const [srcClientId] = getDraggedBlockClientIds2();
         if (srcClientId && validateDrag(srcClientId)) {
@@ -96917,7 +96980,7 @@ var wp;
   var import_i18n247 = __toESM(require_i18n(), 1);
   var import_components271 = __toESM(require_components(), 1);
   var import_data194 = __toESM(require_data(), 1);
-  var import_compose112 = __toESM(require_compose(), 1);
+  var import_compose114 = __toESM(require_compose(), 1);
   var import_jsx_runtime527 = __toESM(require_jsx_runtime(), 1);
   function GridItemMovers({
     layout,
@@ -97050,7 +97113,7 @@ var wp;
     onClick,
     description
   }) {
-    const instanceId = (0, import_compose112.useInstanceId)(GridItemMover);
+    const instanceId = (0, import_compose114.useInstanceId)(GridItemMover);
     const descriptionId = `block-editor-grid-item-mover-button__description-${instanceId}`;
     return /* @__PURE__ */ (0, import_jsx_runtime527.jsxs)(import_jsx_runtime527.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
@@ -97075,7 +97138,7 @@ var wp;
   // packages/block-editor/build-module/components/grid/use-grid-layout-sync.mjs
   var import_data195 = __toESM(require_data(), 1);
   var import_element328 = __toESM(require_element(), 1);
-  var import_compose113 = __toESM(require_compose(), 1);
+  var import_compose115 = __toESM(require_compose(), 1);
   function useGridLayoutSync({ clientId: gridClientId }) {
     const { gridLayout, blockOrder, selectedBlockLayout } = (0, import_data195.useSelect)(
       (select3) => {
@@ -97095,11 +97158,11 @@ var wp;
       () => selectedBlockLayout ? new GridRect(selectedBlockLayout) : null,
       [selectedBlockLayout]
     );
-    const previouslySelectedBlockRect = (0, import_compose113.usePrevious)(selectedBlockRect);
-    const previousIsManualPlacement = (0, import_compose113.usePrevious)(
+    const previouslySelectedBlockRect = (0, import_compose115.usePrevious)(selectedBlockRect);
+    const previousIsManualPlacement = (0, import_compose115.usePrevious)(
       gridLayout.isManualPlacement
     );
-    const previousBlockOrder = (0, import_compose113.usePrevious)(blockOrder);
+    const previousBlockOrder = (0, import_compose115.usePrevious)(blockOrder);
     (0, import_element328.useEffect)(() => {
       const updates = {};
       if (gridLayout.isManualPlacement) {
@@ -97450,7 +97513,7 @@ var wp;
     const layout = style?.layout ?? {};
     const { columnStart, rowStart, columnSpan, rowSpan } = layout;
     const parentLayout = useLayout() || {};
-    const id = (0, import_compose114.useInstanceId)(LAYOUT_CHILD_BLOCK_PROPS_REFERENCE);
+    const id = (0, import_compose116.useInstanceId)(LAYOUT_CHILD_BLOCK_PROPS_REFERENCE);
     const selector3 = `.wp-container-content-${id}`;
     if (true) {
       if (columnStart && typeof columnStart !== "number") {
@@ -97895,10 +97958,10 @@ var wp;
   var import_components274 = __toESM(require_components(), 1);
   var import_data198 = __toESM(require_data(), 1);
   var import_element331 = __toESM(require_element(), 1);
-  var import_compose115 = __toESM(require_compose(), 1);
+  var import_compose117 = __toESM(require_compose(), 1);
   var import_jsx_runtime530 = __toESM(require_jsx_runtime(), 1);
   var useToolsPanelDropdownMenuProps2 = () => {
-    const isMobile = (0, import_compose115.useViewportMatch)("medium", "<");
+    const isMobile = (0, import_compose117.useViewportMatch)("medium", "<");
     return !isMobile ? {
       popoverProps: {
         placement: "left-start",
@@ -98104,7 +98167,7 @@ var wp;
   );
 
   // packages/block-editor/build-module/hooks/grid-visualizer.mjs
-  var import_compose116 = __toESM(require_compose(), 1);
+  var import_compose118 = __toESM(require_compose(), 1);
   var import_hooks34 = __toESM(require_hooks(), 1);
   var import_data201 = __toESM(require_data(), 1);
   var import_jsx_runtime532 = __toESM(require_jsx_runtime(), 1);
@@ -98170,7 +98233,7 @@ var wp;
       )
     ] });
   }
-  var addGridVisualizerToBlockEdit = (0, import_compose116.createHigherOrderComponent)(
+  var addGridVisualizerToBlockEdit = (0, import_compose118.createHigherOrderComponent)(
     (BlockEdit2) => function AddGridVisualizerToBlockEdit(props) {
       if (props.attributes.layout?.type !== "grid") {
         return /* @__PURE__ */ (0, import_jsx_runtime532.jsx)(BlockEdit2, { ...props }, "edit");

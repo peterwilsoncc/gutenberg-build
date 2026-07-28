@@ -2504,7 +2504,7 @@ var wp;
   var import_data88 = __toESM(require_data(), 1);
   var import_core_data58 = __toESM(require_core_data(), 1);
   var import_element218 = __toESM(require_element(), 1);
-  var import_compose35 = __toESM(require_compose(), 1);
+  var import_compose37 = __toESM(require_compose(), 1);
   var import_hooks40 = __toESM(require_hooks(), 1);
 
   // packages/editor/build-module/store/index.mjs
@@ -7095,7 +7095,7 @@ var wp;
     updatePost: () => updatePost,
     updatePostLock: () => updatePostLock
   });
-  var import_a11y7 = __toESM(require_a11y(), 1);
+  var import_a11y9 = __toESM(require_a11y(), 1);
   var import_api_fetch8 = __toESM(require_api_fetch(), 1);
   var import_deprecated9 = __toESM(require_deprecated(), 1);
   var import_blocks20 = __toESM(require_blocks(), 1);
@@ -29670,7 +29670,7 @@ var wp;
   var import_core_data45 = __toESM(require_core_data(), 1);
   var import_i18n190 = __toESM(require_i18n(), 1);
   var import_preferences6 = __toESM(require_preferences(), 1);
-  var import_compose34 = __toESM(require_compose(), 1);
+  var import_compose36 = __toESM(require_compose(), 1);
   var import_blocks12 = __toESM(require_blocks(), 1);
   var import_block_editor21 = __toESM(require_block_editor(), 1);
 
@@ -47068,19 +47068,28 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var use_form_validity_default = useFormValidity;
 
-  // packages/dataviews/build-module/hooks/use-report-validity.mjs
+  // packages/dataviews/build-module/hooks/use-reveal-validity.mjs
   var import_element134 = __toESM(require_element(), 1);
-  function useReportValidity(ref, shouldReport) {
+  function useRevealValidity(ref, shouldReveal) {
+    const revealValidity = (0, import_element134.useCallback)(() => {
+      const inputs = ref.current?.querySelectorAll("input, textarea, select");
+      let revealedCount = 0;
+      inputs?.forEach((input) => {
+        if (input.willValidate && !input.validity.valid) {
+          revealedCount++;
+          input.dispatchEvent(
+            new Event("invalid", { cancelable: true })
+          );
+        }
+      });
+      return revealedCount;
+    }, [ref]);
     (0, import_element134.useEffect)(() => {
-      if (shouldReport && ref.current) {
-        const inputs = ref.current.querySelectorAll(
-          "input, textarea, select"
-        );
-        inputs.forEach((input) => {
-          input.reportValidity();
-        });
+      if (shouldReveal) {
+        revealValidity();
       }
-    }, [shouldReport, ref]);
+    }, [shouldReveal, revealValidity]);
+    return revealValidity;
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
@@ -47202,7 +47211,7 @@ If there's a particular need for this, please submit a feature request at https:
     const focusOnMountRef = (0, import_compose22.useFocusOnMount)("firstInputElement");
     const contentRef = (0, import_element136.useRef)(null);
     const mergedRef = (0, import_compose22.useMergeRefs)([focusOnMountRef, contentRef]);
-    useReportValidity(contentRef, touched);
+    useRevealValidity(contentRef, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime254.jsxs)(
       import_components76.Modal,
       {
@@ -47349,7 +47358,7 @@ If there's a particular need for this, please submit a feature request at https:
     children
   }) {
     const ref = (0, import_element137.useRef)(null);
-    useReportValidity(ref, touched);
+    useRevealValidity(ref, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime255.jsx)("div", { ref, children });
   }
   function PanelDropdown({
@@ -47499,10 +47508,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
   var import_element138 = __toESM(require_element(), 1);
+  var import_a11y4 = __toESM(require_a11y(), 1);
+  var import_compose24 = __toESM(require_compose(), 1);
 
-  // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
+  // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
   var import_i18n126 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
   function countInvalidFields(validity) {
     if (!validity) {
       return 0;
@@ -47524,14 +47534,12 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return count;
   }
-  function ValidationBadge({
-    validity
-  }) {
+  function getValidationMessage(validity) {
     const invalidCount = countInvalidFields(validity);
     if (invalidCount === 0) {
-      return null;
+      return void 0;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(Badge, { intent: "high", children: (0, import_i18n126.sprintf)(
+    return (0, import_i18n126.sprintf)(
       /* translators: %d: Number of fields that need attention */
       (0, import_i18n126._n)(
         "%d field needs attention",
@@ -47539,7 +47547,19 @@ If there's a particular need for this, please submit a feature request at https:
         invalidCount
       ),
       invalidCount
-    ) });
+    );
+  }
+
+  // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
+  var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
+  function ValidationBadge({
+    validity
+  }) {
+    const message2 = getValidationMessage(validity);
+    if (!message2) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(Badge, { intent: "high", children: message2 });
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
@@ -47658,6 +47678,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { fields: fields2 } = (0, import_element138.useContext)(dataform_context_default);
     const layout = field.layout;
     const contentRef = (0, import_element138.useRef)(null);
+    const hasFocusedContentRef = (0, import_element138.useRef)(false);
     const form = (0, import_element138.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
@@ -47677,13 +47698,28 @@ If there's a particular need for this, please submit a feature request at https:
       }
       setIsOpen(open);
     }, []);
-    const handleBlur = (0, import_element138.useCallback)(() => {
-      setTouched(true);
-    }, []);
-    useReportValidity(
+    const revealValidity = useRevealValidity(
       contentRef,
       (isCollapsible ? isOpen2 : true) && touched
     );
+    const handleContentFocus = (0, import_element138.useCallback)(() => {
+      hasFocusedContentRef.current = true;
+    }, []);
+    const handleFocusOutside = (0, import_element138.useCallback)(() => {
+      if (!hasFocusedContentRef.current) {
+        return;
+      }
+      setTouched(true);
+      if (isCollapsible && !isOpen2) {
+        return;
+      }
+      const revealedCount = revealValidity();
+      const message2 = getValidationMessage(validity);
+      if (revealedCount > 0 && message2) {
+        (0, import_a11y4.speak)(message2, "polite");
+      }
+    }, [isCollapsible, isOpen2, revealValidity, validity]);
+    const focusOutsideProps = (0, import_compose24.__experimentalUseFocusOutside)(handleFocusOutside);
     let label = field.label;
     let withHeader;
     if (field.children) {
@@ -47730,13 +47766,14 @@ If there's a particular need for this, please submit a feature request at https:
           className: "dataforms-layouts-card__field",
           open: isOpen2,
           onOpenChange: handleOpenChange,
+          ...focusOutsideProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(collapsible_card_exports.Header, { children: headerContent }),
             /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(
               collapsible_card_exports.Content,
               {
                 ref: contentRef,
-                onBlur: handleBlur,
+                onFocus: handleContentFocus,
                 children: bodyContent
               }
             )
@@ -47744,10 +47781,17 @@ If there's a particular need for this, please submit a feature request at https:
         }
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)(card_exports.Root, { className: "dataforms-layouts-card__field", children: [
-      withHeader && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(card_exports.Header, { children: headerContent }),
-      /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(card_exports.Content, { ref: contentRef, onBlur: handleBlur, children: bodyContent })
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime258.jsxs)(
+      card_exports.Root,
+      {
+        className: "dataforms-layouts-card__field",
+        ...focusOutsideProps,
+        children: [
+          withHeader && /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(card_exports.Header, { children: headerContent }),
+          /* @__PURE__ */ (0, import_jsx_runtime258.jsx)(card_exports.Content, { ref: contentRef, onFocus: handleContentFocus, children: bodyContent })
+        ]
+      }
+    );
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/row/index.mjs
@@ -47831,6 +47875,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
   var import_element139 = __toESM(require_element(), 1);
   var import_i18n127 = __toESM(require_i18n(), 1);
+  var import_a11y5 = __toESM(require_a11y(), 1);
+  var import_compose25 = __toESM(require_compose(), 1);
   var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
   function FormDetailsField({
     data,
@@ -47841,6 +47887,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { fields: fields2 } = (0, import_element139.useContext)(dataform_context_default);
     const detailsRef = (0, import_element139.useRef)(null);
     const contentRef = (0, import_element139.useRef)(null);
+    const hasFocusedContentRef = (0, import_element139.useRef)(false);
     const [touched, setTouched] = (0, import_element139.useState)(false);
     const [isOpen2, setIsOpen] = (0, import_element139.useState)(false);
     const form = (0, import_element139.useMemo)(
@@ -47867,10 +47914,25 @@ If there's a particular need for this, please submit a feature request at https:
         details.removeEventListener("toggle", handleToggle);
       };
     }, []);
-    useReportValidity(contentRef, isOpen2 && touched);
-    const handleBlur = (0, import_element139.useCallback)(() => {
-      setTouched(true);
+    const revealValidity = useRevealValidity(contentRef, isOpen2 && touched);
+    const handleContentFocus = (0, import_element139.useCallback)(() => {
+      hasFocusedContentRef.current = true;
     }, []);
+    const handleFocusOutside = (0, import_element139.useCallback)(() => {
+      if (!hasFocusedContentRef.current) {
+        return;
+      }
+      setTouched(true);
+      if (!detailsRef.current?.open) {
+        return;
+      }
+      const revealedCount = revealValidity();
+      const message2 = getValidationMessage(validity);
+      if (revealedCount > 0 && message2) {
+        (0, import_a11y5.speak)(message2, "polite");
+      }
+    }, [revealValidity, validity]);
+    const focusOutsideProps = (0, import_compose25.__experimentalUseFocusOutside)(handleFocusOutside);
     if (!field.children) {
       return null;
     }
@@ -47887,6 +47949,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         ref: detailsRef,
         className: "dataforms-layouts-details__details",
+        ...focusOutsideProps,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime260.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime260.jsxs)(
             Stack,
@@ -47906,7 +47969,7 @@ If there's a particular need for this, please submit a feature request at https:
             {
               ref: contentRef,
               className: "dataforms-layouts-details__content",
-              onBlur: handleBlur,
+              onFocus: handleContentFocus,
               children: /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(
                 DataFormLayout,
                 {
@@ -48335,7 +48398,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-editor/build-module/components/media-editor/index.mjs
   var import_components91 = __toESM(require_components(), 1);
-  var import_compose26 = __toESM(require_compose(), 1);
+  var import_compose28 = __toESM(require_compose(), 1);
   var import_data44 = __toESM(require_data(), 1);
   var import_core_data28 = __toESM(require_core_data(), 1);
   var import_element164 = __toESM(require_element(), 1);
@@ -48362,7 +48425,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element143 = __toESM(require_element(), 1);
   var import_viewport3 = __toESM(require_viewport(), 1);
   var import_preferences5 = __toESM(require_preferences(), 1);
-  var import_compose24 = __toESM(require_compose(), 1);
+  var import_compose26 = __toESM(require_compose(), 1);
   var import_plugins3 = __toESM(require_plugins(), 1);
 
   // packages/interface/build-module/components/complementary-area-toggle/index.mjs
@@ -48860,10 +48923,10 @@ If there's a particular need for this, please submit a feature request at https:
     className,
     id
   }) {
-    const disableMotion = (0, import_compose24.useReducedMotion)();
-    const isMobileViewport = (0, import_compose24.useViewportMatch)("medium", "<");
-    const previousActiveArea = (0, import_compose24.usePrevious)(activeArea);
-    const previousIsActive = (0, import_compose24.usePrevious)(isActive);
+    const disableMotion = (0, import_compose26.useReducedMotion)();
+    const isMobileViewport = (0, import_compose26.useViewportMatch)("medium", "<");
+    const previousActiveArea = (0, import_compose26.usePrevious)(activeArea);
+    const previousIsActive = (0, import_compose26.usePrevious)(isActive);
     const [, setState] = (0, import_element143.useState)({});
     (0, import_element143.useEffect)(() => {
       setState({});
@@ -48982,7 +49045,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [identifier, scope]
     );
-    const isMobileViewport = (0, import_compose24.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose26.useViewportMatch)("medium", "<");
     useAdjustComplementaryListener(
       scope,
       identifier,
@@ -49150,7 +49213,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element146 = __toESM(require_element(), 1);
   var import_components85 = __toESM(require_components(), 1);
   var import_i18n130 = __toESM(require_i18n(), 1);
-  var import_compose25 = __toESM(require_compose(), 1);
+  var import_compose27 = __toESM(require_compose(), 1);
   var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
   var ANIMATION_DURATION2 = 0.25;
   var commonTransition = {
@@ -49208,9 +49271,9 @@ If there's a particular need for this, please submit a feature request at https:
     labels,
     className
   }, ref) {
-    const [secondarySidebarResizeListener, secondarySidebarSize] = (0, import_compose25.useResizeObserver)();
-    const isMobileViewport = (0, import_compose25.useViewportMatch)("medium", "<");
-    const disableMotion = (0, import_compose25.useReducedMotion)();
+    const [secondarySidebarResizeListener, secondarySidebarSize] = (0, import_compose27.useResizeObserver)();
+    const isMobileViewport = (0, import_compose27.useViewportMatch)("medium", "<");
+    const disableMotion = (0, import_compose27.useReducedMotion)();
     const defaultTransition = {
       type: "tween",
       duration: disableMotion ? 0 : ANIMATION_DURATION2,
@@ -51782,7 +51845,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
-  var import_a11y4 = __toESM(require_a11y(), 1);
+  var import_a11y6 = __toESM(require_a11y(), 1);
   var import_element149 = __toESM(require_element(), 1);
   var import_i18n132 = __toESM(require_i18n(), 1);
 
@@ -52052,7 +52115,7 @@ If there's a particular need for this, please submit a feature request at https:
         prevStateRef.current = current;
         if (msg !== prevMessageRef.current) {
           prevMessageRef.current = msg;
-          (0, import_a11y4.speak)(msg);
+          (0, import_a11y6.speak)(msg);
         }
       }, ARIA_DEBOUNCE_MS);
       return () => {
@@ -55106,7 +55169,7 @@ If there's a particular need for this, please submit a feature request at https:
     shouldCloseOnEsc = false
   }) {
     const cropper = useMediaEditor();
-    const isPanelLayout = (0, import_compose26.useViewportMatch)("small");
+    const isPanelLayout = (0, import_compose28.useViewportMatch)("small");
     const footerLayout = isPanelLayout ? "wide" : "narrow";
     const { media, hasEdits } = (0, import_data44.useSelect)(
       (select9) => {
@@ -56128,7 +56191,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data61 = __toESM(require_data(), 1);
   var import_block_editor18 = __toESM(require_block_editor(), 1);
   var import_element197 = __toESM(require_element(), 1);
-  var import_compose32 = __toESM(require_compose(), 1);
+  var import_compose34 = __toESM(require_compose(), 1);
 
   // packages/global-styles-ui/build-module/provider.mjs
   var import_element167 = __toESM(require_element(), 1);
@@ -56816,7 +56879,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/preview-wrapper.mjs
   var import_components97 = __toESM(require_components(), 1);
-  var import_compose27 = __toESM(require_compose(), 1);
+  var import_compose29 = __toESM(require_compose(), 1);
   var import_element170 = __toESM(require_element(), 1);
   var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
   var normalizedWidth = 248;
@@ -56833,12 +56896,12 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const [backgroundColor = "white"] = useStyle("color.background");
     const [gradientValue] = useStyle("color.gradient");
-    const disableMotion = (0, import_compose27.useReducedMotion)();
+    const disableMotion = (0, import_compose29.useReducedMotion)();
     const [isHovered, setIsHovered] = (0, import_element170.useState)(false);
-    const [containerResizeListener, { width }] = (0, import_compose27.useResizeObserver)();
+    const [containerResizeListener, { width }] = (0, import_compose29.useResizeObserver)();
     const [throttledWidth, setThrottledWidthState] = (0, import_element170.useState)(width);
     const [ratioState, setRatioState] = (0, import_element170.useState)();
-    const setThrottledWidth = (0, import_compose27.useThrottle)(
+    const setThrottledWidth = (0, import_compose29.useThrottle)(
       setThrottledWidthState,
       250,
       THROTTLE_OPTIONS
@@ -57150,8 +57213,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data53 = __toESM(require_data(), 1);
   var import_element171 = __toESM(require_element(), 1);
   var import_block_editor7 = __toESM(require_block_editor(), 1);
-  var import_compose28 = __toESM(require_compose(), 1);
-  var import_a11y6 = __toESM(require_a11y(), 1);
+  var import_compose30 = __toESM(require_compose(), 1);
+  var import_a11y8 = __toESM(require_a11y(), 1);
 
   // packages/global-styles-ui/build-module/variations/variations-panel.mjs
   var import_blocks7 = __toESM(require_blocks(), 1);
@@ -57317,7 +57380,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function BlockList({ filterValue }) {
     const sortedBlockTypes = useSortedBlockTypes();
-    const debouncedSpeak = (0, import_compose28.useDebounce)(import_a11y6.speak, 500);
+    const debouncedSpeak = (0, import_compose30.useDebounce)(import_a11y8.speak, 500);
     const { isMatchingSearchTerm } = (0, import_data53.useSelect)(import_blocks8.store);
     const filteredBlockTypes = !filterValue ? sortedBlockTypes : sortedBlockTypes.filter(
       (blockType) => isMatchingSearchTerm(blockType, filterValue)
@@ -59501,7 +59564,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/font-library/font-collection.mjs
   var import_element181 = __toESM(require_element(), 1);
   var import_components117 = __toESM(require_components(), 1);
-  var import_compose29 = __toESM(require_compose(), 1);
+  var import_compose31 = __toESM(require_compose(), 1);
   var import_i18n159 = __toESM(require_i18n(), 1);
   var import_core_data38 = __toESM(require_core_data(), 1);
 
@@ -59693,7 +59756,7 @@ If there's a particular need for this, please submit a feature request at https:
       setFilters({ ...filters, search: value });
       setPage(1);
     };
-    const debouncedUpdateSearchInput = (0, import_compose29.debounce)(handleUpdateSearchInput, 300);
+    const debouncedUpdateSearchInput = (0, import_compose31.debounce)(handleUpdateSearchInput, 300);
     const handleToggleVariant = (font2, face) => {
       const newFontsToInstall = toggleFont(font2, face, fontsToInstall);
       setFontsToInstall(newFontsToInstall);
@@ -70846,7 +70909,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n171 = __toESM(require_i18n(), 1);
 
   // packages/global-styles-ui/build-module/color-palette-panel.mjs
-  var import_compose30 = __toESM(require_compose(), 1);
+  var import_compose32 = __toESM(require_compose(), 1);
   var import_components131 = __toESM(require_components(), 1);
   var import_i18n169 = __toESM(require_i18n(), 1);
 
@@ -70981,7 +71044,7 @@ If there's a particular need for this, please submit a feature request at https:
       "color.defaultPalette",
       name2
     );
-    const isMobileViewport = (0, import_compose30.useViewportMatch)("small", "<");
+    const isMobileViewport = (0, import_compose32.useViewportMatch)("small", "<");
     const popoverProps = isMobileViewport ? mobilePopoverProps : void 0;
     const [randomizeThemeColors] = useColorRandomizer(name2);
     return /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_components131.__experimentalVStack, { className: "global-styles-ui-color-palette-panel", spacing: 8, children: [
@@ -71037,7 +71100,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/global-styles-ui/build-module/gradients-palette-panel.mjs
-  var import_compose31 = __toESM(require_compose(), 1);
+  var import_compose33 = __toESM(require_compose(), 1);
   var import_components132 = __toESM(require_components(), 1);
   var import_i18n170 = __toESM(require_i18n(), 1);
   var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
@@ -71082,7 +71145,7 @@ If there's a particular need for this, please submit a feature request at https:
       ...themeDuotone || [],
       ...defaultDuotone && defaultDuotoneEnabled ? defaultDuotone : []
     ];
-    const isMobileViewport = (0, import_compose31.useViewportMatch)("small", "<");
+    const isMobileViewport = (0, import_compose33.useViewportMatch)("small", "<");
     const popoverProps = isMobileViewport ? mobilePopoverProps2 : void 0;
     return /* @__PURE__ */ (0, import_jsx_runtime332.jsxs)(
       import_components132.__experimentalVStack,
@@ -73559,8 +73622,8 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const navigator2 = (0, import_components150.useNavigator)();
     const { path: childPath } = navigator2.location;
-    const previousParentPath = (0, import_compose32.usePrevious)(path);
-    const previousChildPath = (0, import_compose32.usePrevious)(childPath);
+    const previousParentPath = (0, import_compose34.usePrevious)(path);
+    const previousChildPath = (0, import_compose34.usePrevious)(childPath);
     (0, import_element197.useEffect)(() => {
       if (path && path !== childPath) {
         if (path !== previousParentPath) {
@@ -73620,7 +73683,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data62 = __toESM(require_data(), 1);
   var import_element198 = __toESM(require_element(), 1);
   var import_block_editor19 = __toESM(require_block_editor(), 1);
-  var import_compose33 = __toESM(require_compose(), 1);
+  var import_compose35 = __toESM(require_compose(), 1);
   function GlobalStylesBlockLink({ path, onPathChange }) {
     const { selectedBlockName, selectedBlockClientId } = (0, import_data62.useSelect)(
       (select9) => {
@@ -73634,7 +73697,7 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const blockHasGlobalStyles = true;
-    const previousBlockClientId = (0, import_compose33.usePrevious)(selectedBlockClientId);
+    const previousBlockClientId = (0, import_compose35.usePrevious)(selectedBlockClientId);
     (0, import_element198.useEffect)(() => {
       if (selectedBlockClientId === previousBlockClientId) {
         return;
@@ -73994,7 +74057,7 @@ If there's a particular need for this, please submit a feature request at https:
     openMediaEditorModalKey
   } = unlock(import_block_editor21.privateApis);
   function useBlockEditorSettings(settings, postType2, postId2, renderingMode2) {
-    const isLargeViewport = (0, import_compose34.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose36.useViewportMatch)("medium");
     const {
       allImageSizes,
       bigImageSizeThreshold,
@@ -78809,13 +78872,13 @@ If there's a particular need for this, please submit a feature request at https:
       unlock(registry.dispatch(import_block_editor36.store)).resetZoomLevel();
     }
     if (mode === "visual") {
-      (0, import_a11y7.speak)((0, import_i18n205.__)("Visual editor selected"), "assertive");
+      (0, import_a11y9.speak)((0, import_i18n205.__)("Visual editor selected"), "assertive");
     } else if (mode === "text") {
       const isDistractionFree = registry.select(import_preferences10.store).get("core", "distractionFree");
       if (isDistractionFree) {
         dispatch8.toggleDistractionFree();
       }
-      (0, import_a11y7.speak)((0, import_i18n205.__)("Code editor selected"), "assertive");
+      (0, import_a11y9.speak)((0, import_i18n205.__)("Code editor selected"), "assertive");
     }
   };
   function openPublishSidebar() {
@@ -78898,7 +78961,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/hooks/custom-sources-backwards-compatibility.mjs
   var import_jsx_runtime374 = __toESM(require_jsx_runtime(), 1);
-  var createWithMetaAttributeSource = (metaAttributes) => (0, import_compose35.createHigherOrderComponent)(
+  var createWithMetaAttributeSource = (metaAttributes) => (0, import_compose37.createHigherOrderComponent)(
     (BlockEdit2) => ({ attributes, setAttributes, ...props }) => {
       const postType2 = (0, import_data88.useSelect)(
         (select9) => select9(store3).getCurrentPostType(),
@@ -79116,7 +79179,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data64 = __toESM(require_core_data(), 1);
   var import_commands3 = __toESM(require_commands(), 1);
   var import_element227 = __toESM(require_element(), 1);
-  var import_compose37 = __toESM(require_compose(), 1);
+  var import_compose39 = __toESM(require_compose(), 1);
   var import_html_entities15 = __toESM(require_html_entities(), 1);
   var import_dom23 = __toESM(require_dom(), 1);
 
@@ -79150,7 +79213,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_keycodes10 = __toESM(require_keycodes(), 1);
   var import_i18n211 = __toESM(require_i18n(), 1);
   var import_data97 = __toESM(require_data(), 1);
-  var import_compose36 = __toESM(require_compose(), 1);
+  var import_compose38 = __toESM(require_compose(), 1);
   var import_preferences11 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/styles-canvas/style-book.mjs
@@ -80815,8 +80878,8 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_data97.useDispatch)(store3)
     );
     const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data97.useDispatch)(store3);
-    const focusOnMountRef = (0, import_compose36.useFocusOnMount)("firstElement");
-    const sectionFocusReturnRef = (0, import_compose36.useFocusReturn)();
+    const focusOnMountRef = (0, import_compose38.useFocusOnMount)("firstElement");
+    const sectionFocusReturnRef = (0, import_compose38.useFocusReturn)();
     let content = null;
     if (showStylebook2) {
       content = /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
@@ -81010,7 +81073,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const { open: openCommandCenter } = (0, import_data99.useDispatch)(import_commands3.store);
-    const isReducedMotion = (0, import_compose37.useReducedMotion)();
+    const isReducedMotion = (0, import_compose39.useReducedMotion)();
     const isTemplate2 = TEMPLATE_POST_TYPES.includes(postType2);
     const hasBackButton = !!onNavigateToPreviousEntityRecord || !!unlockedPatternInfo;
     const entityTitle = isTemplate2 ? templateTitle : documentTitle;
@@ -81652,7 +81715,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n218 = __toESM(require_i18n(), 1);
   var import_components168 = __toESM(require_components(), 1);
   var import_data107 = __toESM(require_data(), 1);
-  var import_compose38 = __toESM(require_compose(), 1);
+  var import_compose40 = __toESM(require_compose(), 1);
   var import_hooks43 = __toESM(require_hooks(), 1);
   var import_jsx_runtime395 = __toESM(require_jsx_runtime(), 1);
   function getContent() {
@@ -81662,7 +81725,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
   function CopyButton({ text, children, variant = "secondary" }) {
-    const ref = (0, import_compose38.useCopyToClipboard)(text);
+    const ref = (0, import_compose40.useCopyToClipboard)(text);
     return /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(import_components168.Button, { __next40pxDefaultSize: true, variant, ref, children });
   }
   var ErrorBoundary = class extends import_element233.Component {
@@ -81708,7 +81771,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/local-autosave-monitor/index.mjs
   var import_element234 = __toESM(require_element(), 1);
-  var import_compose39 = __toESM(require_compose(), 1);
+  var import_compose41 = __toESM(require_compose(), 1);
   var import_data108 = __toESM(require_data(), 1);
   var import_i18n219 = __toESM(require_i18n(), 1);
   var import_blocks24 = __toESM(require_blocks(), 1);
@@ -81809,8 +81872,8 @@ If there's a particular need for this, please submit a feature request at https:
       lastIsDirtyRef.current = isDirty;
       lastIsAutosavingRef.current = isAutosaving;
     }, [isDirty, isAutosaving, didError]);
-    const wasEditedPostNew = (0, import_compose39.usePrevious)(isEditedPostNew2);
-    const prevPostId = (0, import_compose39.usePrevious)(postId2);
+    const wasEditedPostNew = (0, import_compose41.usePrevious)(isEditedPostNew2);
+    const prevPostId = (0, import_compose41.usePrevious)(postId2);
     (0, import_element234.useEffect)(() => {
       if (prevPostId === postId2 && wasEditedPostNew && !isEditedPostNew2) {
         localAutosaveClear(postId2, true);
@@ -81836,7 +81899,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var local_autosave_monitor_default = (0, import_compose39.ifCondition)(hasSessionStorageSupport)(LocalAutosaveMonitor);
+  var local_autosave_monitor_default = (0, import_compose41.ifCondition)(hasSessionStorageSupport)(LocalAutosaveMonitor);
 
   // packages/editor/build-module/components/page-attributes/check.mjs
   var import_data109 = __toESM(require_data(), 1);
@@ -81932,7 +81995,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_remove_accents4 = __toESM(require_remove_accents(), 1);
   var import_i18n221 = __toESM(require_i18n(), 1);
   var import_components171 = __toESM(require_components(), 1);
-  var import_compose40 = __toESM(require_compose(), 1);
+  var import_compose42 = __toESM(require_compose(), 1);
   var import_element237 = __toESM(require_element(), 1);
   var import_data112 = __toESM(require_data(), 1);
   var import_html_entities17 = __toESM(require_html_entities(), 1);
@@ -82133,7 +82196,7 @@ If there's a particular need for this, please submit a feature request at https:
         help: (0, import_i18n221.__)("Choose a parent page."),
         value: parentPostId,
         options: parentOptions,
-        onFilterValueChange: (0, import_compose40.debounce)(handleKeydown, 300),
+        onFilterValueChange: (0, import_compose42.debounce)(handleKeydown, 300),
         onChange: handleChange,
         hideLabelFromVision: true,
         isLoading
@@ -82833,7 +82896,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/block-settings-menu/plugin-block-settings-menu-item.mjs
   var import_block_editor49 = __toESM(require_block_editor(), 1);
   var import_components176 = __toESM(require_components(), 1);
-  var import_compose41 = __toESM(require_compose(), 1);
+  var import_compose43 = __toESM(require_compose(), 1);
   var import_jsx_runtime406 = __toESM(require_jsx_runtime(), 1);
   var isEverySelectedBlockAllowed = (selected, allowed) => selected.filter((id) => !allowed.includes(id)).length === 0;
   var shouldRenderItem = (selectedBlocks, allowedBlocks) => !Array.isArray(allowedBlocks) || isEverySelectedBlockAllowed(selectedBlocks, allowedBlocks);
@@ -82851,7 +82914,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
       import_components176.MenuItem,
       {
-        onClick: (0, import_compose41.compose)(onClick, onClose),
+        onClick: (0, import_compose43.compose)(onClick, onClose),
         icon,
         label: small ? label : void 0,
         role,
@@ -83375,7 +83438,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data77 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-author/combobox.mjs
-  var import_compose42 = __toESM(require_compose(), 1);
+  var import_compose44 = __toESM(require_compose(), 1);
   var import_element245 = __toESM(require_element(), 1);
   var import_data124 = __toESM(require_data(), 1);
   var import_i18n230 = __toESM(require_i18n(), 1);
@@ -83470,7 +83533,7 @@ If there's a particular need for this, please submit a feature request at https:
         label: (0, import_i18n230.__)("Author"),
         options: authorOptions,
         value: authorId,
-        onFilterValueChange: (0, import_compose42.debounce)(setFieldValue, 300),
+        onFilterValueChange: (0, import_compose44.debounce)(setFieldValue, 300),
         onChange: handleSelect,
         allowReset: false,
         hideLabelFromVision: true,
@@ -84038,7 +84101,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components195 = __toESM(require_components(), 1);
   var import_blob3 = __toESM(require_blob(), 1);
   var import_element250 = __toESM(require_element(), 1);
-  var import_compose43 = __toESM(require_compose(), 1);
+  var import_compose45 = __toESM(require_compose(), 1);
   var import_data135 = __toESM(require_data(), 1);
   var import_block_editor54 = __toESM(require_block_editor(), 1);
   var import_core_data82 = __toESM(require_core_data(), 1);
@@ -84328,7 +84391,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }
   );
-  var post_featured_image_default = (0, import_compose43.compose)(
+  var post_featured_image_default = (0, import_compose45.compose)(
     import_components195.withNotices,
     applyWithSelect,
     applyWithDispatch,
@@ -84378,7 +84441,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n240 = __toESM(require_i18n(), 1);
   var import_components197 = __toESM(require_components(), 1);
   var import_data138 = __toESM(require_data(), 1);
-  var import_compose44 = __toESM(require_compose(), 1);
+  var import_compose46 = __toESM(require_compose(), 1);
   var import_core_data84 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-format/check.mjs
@@ -84420,7 +84483,7 @@ If there's a particular need for this, please submit a feature request at https:
     return 0;
   });
   function PostFormat() {
-    const instanceId = (0, import_compose44.useInstanceId)(PostFormat);
+    const instanceId = (0, import_compose46.useInstanceId)(PostFormat);
     const postFormatSelectorId = `post-format-selector-${instanceId}`;
     const { postFormat, suggestedFormat, supportedFormats } = (0, import_data138.useSelect)(
       (select9) => {
@@ -84584,7 +84647,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url18 = __toESM(require_url(), 1);
   var import_element251 = __toESM(require_element(), 1);
   var import_hooks50 = __toESM(require_hooks(), 1);
-  var import_compose45 = __toESM(require_compose(), 1);
+  var import_compose47 = __toESM(require_compose(), 1);
   var import_core_data85 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/utils/sync-error-messages.mjs
@@ -84665,7 +84728,7 @@ If there's a particular need for this, please submit a feature request at https:
     ) });
   }
   function PostLockedModal() {
-    const instanceId = (0, import_compose45.useInstanceId)(PostLockedModal);
+    const instanceId = (0, import_compose47.useInstanceId)(PostLockedModal);
     const hookName = "core/editor/post-locked-modal-" + instanceId;
     const { autosave: autosave2, updatePostLock: updatePostLock2 } = (0, import_data141.useDispatch)(store3);
     const {
@@ -85139,9 +85202,9 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-publish-button/label.mjs
   var import_i18n246 = __toESM(require_i18n(), 1);
   var import_data145 = __toESM(require_data(), 1);
-  var import_compose46 = __toESM(require_compose(), 1);
+  var import_compose48 = __toESM(require_compose(), 1);
   function PublishButtonLabel() {
-    const isSmallerThanMediumViewport = (0, import_compose46.useViewportMatch)("medium", "<");
+    const isSmallerThanMediumViewport = (0, import_compose48.useViewportMatch)("medium", "<");
     const {
       isPublished,
       isBeingScheduled,
@@ -85323,7 +85386,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element261 = __toESM(require_element(), 1);
   var import_components214 = __toESM(require_components(), 1);
   var import_data160 = __toESM(require_data(), 1);
-  var import_compose51 = __toESM(require_compose(), 1);
+  var import_compose53 = __toESM(require_compose(), 1);
   var import_core_data96 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-publish-panel/prepublish.mjs
@@ -85338,7 +85401,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n248 = __toESM(require_i18n(), 1);
   var import_element253 = __toESM(require_element(), 1);
   var import_components204 = __toESM(require_components(), 1);
-  var import_compose47 = __toESM(require_compose(), 1);
+  var import_compose49 = __toESM(require_compose(), 1);
   var import_data147 = __toESM(require_data(), 1);
   var import_block_editor55 = __toESM(require_block_editor(), 1);
 
@@ -85365,7 +85428,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-visibility/index.mjs
   var import_jsx_runtime443 = __toESM(require_jsx_runtime(), 1);
   function PostVisibility({ onClose }) {
-    const instanceId = (0, import_compose47.useInstanceId)(PostVisibility);
+    const instanceId = (0, import_compose49.useInstanceId)(PostVisibility);
     const { status, visibility, password } = (0, import_data147.useSelect)((select9) => ({
       status: select9(store3).getEditedPostAttribute("status"),
       visibility: select9(store3).getEditedPostVisibility(),
@@ -85834,8 +85897,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components206 = __toESM(require_components(), 1);
   var import_data152 = __toESM(require_data(), 1);
   var import_core_data89 = __toESM(require_core_data(), 1);
-  var import_compose48 = __toESM(require_compose(), 1);
-  var import_a11y8 = __toESM(require_a11y(), 1);
+  var import_compose50 = __toESM(require_compose(), 1);
+  var import_a11y10 = __toESM(require_a11y(), 1);
   var import_notices26 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/most-used-terms.mjs
@@ -85917,7 +85980,7 @@ If there's a particular need for this, please submit a feature request at https:
   function FlatTermSelector({ slug }) {
     const [values, setValues] = (0, import_element255.useState)([]);
     const [search, setSearch] = (0, import_element255.useState)("");
-    const debouncedSearch = (0, import_compose48.useDebounce)(setSearch, 500);
+    const debouncedSearch = (0, import_compose50.useDebounce)(setSearch, 500);
     const {
       terms,
       termIds,
@@ -86055,7 +86118,7 @@ If there's a particular need for this, please submit a feature request at https:
         (0, import_i18n251._x)("%s added", "term"),
         taxonomy?.labels?.singular_name ?? defaultName
       );
-      (0, import_a11y8.speak)(termAddedMessage, "assertive");
+      (0, import_a11y10.speak)(termAddedMessage, "assertive");
       onUpdateTerms(newTermIds);
     }
     const newTermLabel = taxonomy?.labels?.add_new_item ?? (slug === "post_tag" ? (0, import_i18n251.__)("Add Tag") : (0, import_i18n251.__)("Add Term"));
@@ -86237,9 +86300,9 @@ If there's a particular need for this, please submit a feature request at https:
   var import_notices27 = __toESM(require_notices(), 1);
   var import_components209 = __toESM(require_components(), 1);
   var import_data155 = __toESM(require_data(), 1);
-  var import_compose49 = __toESM(require_compose(), 1);
+  var import_compose51 = __toESM(require_compose(), 1);
   var import_core_data92 = __toESM(require_core_data(), 1);
-  var import_a11y9 = __toESM(require_a11y(), 1);
+  var import_a11y11 = __toESM(require_a11y(), 1);
   var import_html_entities24 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime449 = __toESM(require_jsx_runtime(), 1);
   var { normalizeTextString } = unlock(import_components209.privateApis);
@@ -86312,7 +86375,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [showForm, setShowForm] = (0, import_element257.useState)(false);
     const [filterValue, setFilterValue] = (0, import_element257.useState)("");
     const [filteredTermsTree, setFilteredTermsTree] = (0, import_element257.useState)([]);
-    const debouncedSpeak = (0, import_compose49.useDebounce)(import_a11y9.speak, 500);
+    const debouncedSpeak = (0, import_compose51.useDebounce)(import_a11y11.speak, 500);
     const {
       hasCreateAction,
       hasAssignAction,
@@ -86408,7 +86471,7 @@ If there's a particular need for this, please submit a feature request at https:
         (0, import_i18n254._x)("%s added", "term"),
         taxonomy?.labels?.singular_name ?? defaultName
       );
-      (0, import_a11y9.speak)(termAddedMessage, "assertive");
+      (0, import_a11y11.speak)(termAddedMessage, "assertive");
       setAdding(false);
       setFormName("");
       setFormParent("");
@@ -86929,7 +86992,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data159 = __toESM(require_data(), 1);
   var import_url20 = __toESM(require_url(), 1);
   var import_html_entities26 = __toESM(require_html_entities(), 1);
-  var import_compose50 = __toESM(require_compose(), 1);
+  var import_compose52 = __toESM(require_compose(), 1);
   var import_core_data95 = __toESM(require_core_data(), 1);
   var import_jsx_runtime453 = __toESM(require_jsx_runtime(), 1);
   var POSTNAME = "%postname%";
@@ -86947,7 +87010,7 @@ If there's a particular need for this, please submit a feature request at https:
   function CopyButton2({ text }) {
     const [showCopyConfirmation, setShowCopyConfirmation] = (0, import_element260.useState)(false);
     const timeoutIdRef = (0, import_element260.useRef)();
-    const ref = (0, import_compose50.useCopyToClipboard)(text, () => {
+    const ref = (0, import_compose52.useCopyToClipboard)(text, () => {
       setShowCopyConfirmation(true);
       if (timeoutIdRef.current) {
         clearTimeout(timeoutIdRef.current);
@@ -87114,15 +87177,15 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const { disablePublishSidebar: disablePublishSidebar2, enablePublishSidebar: enablePublishSidebar2 } = (0, import_data160.useDispatch)(store3);
     const cancelButtonRef = (0, import_element261.useRef)(null);
-    const wrapperRef = (0, import_compose51.useMergeRefs)([
-      (0, import_compose51.useFocusReturn)(),
-      (0, import_compose51.useConstrainedTabbing)()
+    const wrapperRef = (0, import_compose53.useMergeRefs)([
+      (0, import_compose53.useFocusReturn)(),
+      (0, import_compose53.useConstrainedTabbing)()
     ]);
     (0, import_element261.useEffect)(() => {
       cancelButtonRef.current?.focus();
     }, []);
     const prevPostIdRef = (0, import_element261.useRef)(currentPostId);
-    const stableOnClose = (0, import_compose51.useEvent)(onClose);
+    const stableOnClose = (0, import_compose53.useEvent)(onClose);
     (0, import_element261.useEffect)(() => {
       const postChanged = currentPostId !== prevPostIdRef.current;
       prevPostIdRef.current = currentPostId;
@@ -87202,7 +87265,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-saved-state/index.mjs
   var import_components217 = __toESM(require_components(), 1);
-  var import_compose53 = __toESM(require_compose(), 1);
+  var import_compose55 = __toESM(require_compose(), 1);
   var import_data164 = __toESM(require_data(), 1);
   var import_element263 = __toESM(require_element(), 1);
   var import_i18n262 = __toESM(require_i18n(), 1);
@@ -87216,7 +87279,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element262 = __toESM(require_element(), 1);
   var import_core_data97 = __toESM(require_core_data(), 1);
   var import_block_editor58 = __toESM(require_block_editor(), 1);
-  var import_compose52 = __toESM(require_compose(), 1);
+  var import_compose54 = __toESM(require_compose(), 1);
 
   // packages/editor/build-module/components/post-sticky/index.mjs
   var import_i18n260 = __toESM(require_i18n(), 1);
@@ -87316,7 +87379,7 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const [showPassword, setShowPassword] = (0, import_element262.useState)(!!password);
-    const passwordInputId = (0, import_compose52.useInstanceId)(
+    const passwordInputId = (0, import_compose54.useInstanceId)(
       PostStatus,
       "editor-change-status__password-input"
     );
@@ -87482,7 +87545,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime457 = __toESM(require_jsx_runtime(), 1);
   function PostSavedState({ forceIsDirty }) {
     const [forceSavedMessage, setForceSavedMessage] = (0, import_element263.useState)(false);
-    const isLargeViewport = (0, import_compose53.useViewportMatch)("small");
+    const isLargeViewport = (0, import_compose55.useViewportMatch)("small");
     const {
       isAutosaving,
       isDirty,
@@ -87523,7 +87586,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const isPending = postStatus === "pending";
     const { savePost: savePost2 } = (0, import_data164.useDispatch)(store3);
-    const wasSaving = (0, import_compose53.usePrevious)(isSaving);
+    const wasSaving = (0, import_compose55.usePrevious)(isSaving);
     (0, import_element263.useEffect)(() => {
       let timeoutId;
       if (wasSaving && !isSaving) {
@@ -87852,7 +87915,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n266 = __toESM(require_i18n(), 1);
   var import_core_data100 = __toESM(require_core_data(), 1);
   var import_data172 = __toESM(require_data(), 1);
-  var import_compose54 = __toESM(require_compose(), 1);
+  var import_compose56 = __toESM(require_compose(), 1);
 
   // packages/editor/build-module/components/post-text-editor/utils.mjs
   var STRING_TOO_LARGE_THRESHOLD = 1e3;
@@ -87965,7 +88028,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-text-editor/index.mjs
   var import_jsx_runtime463 = __toESM(require_jsx_runtime(), 1);
   function PostTextEditor() {
-    const instanceId = (0, import_compose54.useInstanceId)(PostTextEditor);
+    const instanceId = (0, import_compose56.useInstanceId)(PostTextEditor);
     const textareaRef = (0, import_element267.useRef)();
     const previousValueRef = (0, import_element267.useRef)();
     const selectionRef = (0, import_element267.useRef)();
@@ -88062,7 +88125,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_keycodes15 = __toESM(require_keycodes(), 1);
   var import_blocks27 = __toESM(require_blocks(), 1);
   var import_rich_text6 = __toESM(require_rich_text(), 1);
-  var import_compose55 = __toESM(require_compose(), 1);
+  var import_compose57 = __toESM(require_compose(), 1);
   var import_dom24 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/post-title/constants.mjs
@@ -88229,7 +88292,7 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
         "h1",
         {
-          ref: (0, import_compose55.useMergeRefs)([richTextRef, focusRef]),
+          ref: (0, import_compose57.useMergeRefs)([richTextRef, focusRef]),
           contentEditable: !isEditingContentOnlySection && !isPreview,
           className,
           "aria-label": decodedPlaceholder,
@@ -88395,7 +88458,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components223 = __toESM(require_components(), 1);
   var import_notices28 = __toESM(require_notices(), 1);
   var import_core_data102 = __toESM(require_core_data(), 1);
-  var import_compose56 = __toESM(require_compose(), 1);
+  var import_compose58 = __toESM(require_compose(), 1);
   var import_jsx_runtime467 = __toESM(require_jsx_runtime(), 1);
   function PostURL({ onClose }) {
     const {
@@ -88428,13 +88491,13 @@ If there's a particular need for this, please submit a feature request at https:
     const { editPost: editPost2 } = (0, import_data179.useDispatch)(store3);
     const { createNotice } = (0, import_data179.useDispatch)(import_notices28.store);
     const [forceEmptyField, setForceEmptyField] = (0, import_element272.useState)(false);
-    const copyButtonRef = (0, import_compose56.useCopyToClipboard)(permalink, () => {
+    const copyButtonRef = (0, import_compose58.useCopyToClipboard)(permalink, () => {
       createNotice("info", (0, import_i18n270.__)("Copied Permalink to clipboard."), {
         isDismissible: true,
         type: "snackbar"
       });
     });
-    const postUrlSlugDescriptionId = "editor-post-url__slug-description-" + (0, import_compose56.useInstanceId)(PostURL);
+    const postUrlSlugDescriptionId = "editor-post-url__slug-description-" + (0, import_compose58.useInstanceId)(PostURL);
     return /* @__PURE__ */ (0, import_jsx_runtime467.jsxs)("div", { className: "editor-post-url", children: [
       /* @__PURE__ */ (0, import_jsx_runtime467.jsx)(
         import_block_editor61.__experimentalInspectorPopoverHeader,
@@ -89196,7 +89259,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/hooks/pattern-overrides.mjs
   var import_hooks54 = __toESM(require_hooks(), 1);
   var import_patterns9 = __toESM(require_patterns(), 1);
-  var import_compose57 = __toESM(require_compose(), 1);
+  var import_compose59 = __toESM(require_compose(), 1);
   var import_block_editor65 = __toESM(require_block_editor(), 1);
   var import_data190 = __toESM(require_data(), 1);
   var import_blocks28 = __toESM(require_blocks(), 1);
@@ -89207,7 +89270,7 @@ If there's a particular need for this, please submit a feature request at https:
     PATTERN_TYPES: PATTERN_TYPES5,
     PATTERN_SYNC_TYPES: PATTERN_SYNC_TYPES2
   } = unlock(import_patterns9.privateApis);
-  var withPatternOverrideControls = (0, import_compose57.createHigherOrderComponent)(
+  var withPatternOverrideControls = (0, import_compose59.createHigherOrderComponent)(
     (BlockEdit2) => (props) => {
       const isSupportedBlock = (0, import_data190.useSelect)(
         (select9) => {
@@ -89260,7 +89323,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/hooks/navigation-link-view-button.mjs
   var import_hooks55 = __toESM(require_hooks(), 1);
-  var import_compose58 = __toESM(require_compose(), 1);
+  var import_compose60 = __toESM(require_compose(), 1);
   var import_element279 = __toESM(require_element(), 1);
   var import_i18n277 = __toESM(require_i18n(), 1);
   var import_block_editor66 = __toESM(require_block_editor(), 1);
@@ -89296,7 +89359,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     ) }) });
   }
-  var withNavigationViewButton = (0, import_compose58.createHigherOrderComponent)(
+  var withNavigationViewButton = (0, import_compose60.createHigherOrderComponent)(
     (BlockEdit2) => (props) => {
       const isSupportedBlock = SUPPORTED_BLOCKS.includes(props.name);
       return /* @__PURE__ */ (0, import_jsx_runtime476.jsxs)(import_jsx_runtime476.Fragment, { children: [
@@ -89314,7 +89377,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/hooks/template-part-navigation-edit-button.mjs
   var import_hooks56 = __toESM(require_hooks(), 1);
-  var import_compose59 = __toESM(require_compose(), 1);
+  var import_compose61 = __toESM(require_compose(), 1);
   var import_element280 = __toESM(require_element(), 1);
   var import_i18n278 = __toESM(require_i18n(), 1);
   var import_block_editor67 = __toESM(require_block_editor(), 1);
@@ -89387,7 +89450,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     ) }) });
   }
-  var withTemplatePartNavigationEditButton = (0, import_compose59.createHigherOrderComponent)(
+  var withTemplatePartNavigationEditButton = (0, import_compose61.createHigherOrderComponent)(
     (BlockEdit2) => (props) => {
       const isTemplatePart2 = props.name === TEMPLATE_PART_BLOCK_NAME;
       return /* @__PURE__ */ (0, import_jsx_runtime477.jsxs)(import_jsx_runtime477.Fragment, { children: [
@@ -89410,7 +89473,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/hooks/push-changes-to-global-styles/index.mjs
   var import_hooks58 = __toESM(require_hooks(), 1);
-  var import_compose60 = __toESM(require_compose(), 1);
+  var import_compose62 = __toESM(require_compose(), 1);
   var import_block_editor68 = __toESM(require_block_editor(), 1);
   var import_components230 = __toESM(require_components(), 1);
   var import_i18n281 = __toESM(require_i18n(), 1);
@@ -90169,7 +90232,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(import_block_editor68.InspectorAdvancedControls, { children: /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(PushChangesToGlobalStylesControl, { ...props }) });
   }
-  var withPushChangesToGlobalStyles = (0, import_compose60.createHigherOrderComponent)(
+  var withPushChangesToGlobalStyles = (0, import_compose62.createHigherOrderComponent)(
     (BlockEdit2) => (props) => /* @__PURE__ */ (0, import_jsx_runtime479.jsxs)(import_jsx_runtime479.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(BlockEdit2, { ...props }, "edit"),
       props.isSelected && /* @__PURE__ */ (0, import_jsx_runtime479.jsx)(PushChangesToGlobalStyles, { ...props })
@@ -90268,7 +90331,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n307 = __toESM(require_i18n(), 1);
   var import_preferences24 = __toESM(require_preferences(), 1);
   var import_block_editor85 = __toESM(require_block_editor(), 1);
-  var import_compose77 = __toESM(require_compose(), 1);
+  var import_compose79 = __toESM(require_compose(), 1);
   var import_element309 = __toESM(require_element(), 1);
   var import_html_entities29 = __toESM(require_html_entities(), 1);
   var import_notices32 = __toESM(require_notices(), 1);
@@ -90277,7 +90340,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/header/index.mjs
   var import_block_editor74 = __toESM(require_block_editor(), 1);
   var import_data205 = __toESM(require_data(), 1);
-  var import_compose66 = __toESM(require_compose(), 1);
+  var import_compose68 = __toESM(require_compose(), 1);
   var import_preferences21 = __toESM(require_preferences(), 1);
   var import_element296 = __toESM(require_element(), 1);
 
@@ -90332,7 +90395,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/document-tools/index.mjs
-  var import_compose61 = __toESM(require_compose(), 1);
+  var import_compose63 = __toESM(require_compose(), 1);
   var import_data196 = __toESM(require_data(), 1);
   var import_i18n284 = __toESM(require_i18n(), 1);
   var import_block_editor70 = __toESM(require_block_editor(), 1);
@@ -90378,7 +90441,7 @@ If there's a particular need for this, please submit a feature request at https:
         event.preventDefault();
       }
     };
-    const isWideViewport = (0, import_compose61.useViewportMatch)("wide");
+    const isWideViewport = (0, import_compose63.useViewportMatch)("wide");
     const toolbarAriaLabel = (0, import_i18n284.__)("Document tools");
     const toggleListView = (0, import_element286.useCallback)(
       () => setIsListViewOpened2(!isListViewOpen),
@@ -90543,7 +90606,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components235 = __toESM(require_components(), 1);
   var import_data197 = __toESM(require_data(), 1);
   var import_i18n285 = __toESM(require_i18n(), 1);
-  var import_compose62 = __toESM(require_compose(), 1);
+  var import_compose64 = __toESM(require_compose(), 1);
   var import_notices30 = __toESM(require_notices(), 1);
   var import_jsx_runtime484 = __toESM(require_jsx_runtime(), 1);
   function CopyContentMenuItem() {
@@ -90558,7 +90621,7 @@ If there's a particular need for this, please submit a feature request at https:
         type: "snackbar"
       });
     }
-    const ref = (0, import_compose62.useCopyToClipboard)(getText, onSuccess);
+    const ref = (0, import_compose64.useCopyToClipboard)(getText, onSuccess);
     return /* @__PURE__ */ (0, import_jsx_runtime484.jsx)(import_components235.MenuItem, { ref, children: (0, import_i18n285.__)("Copy all blocks") });
   }
 
@@ -90792,7 +90855,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/post-publish-button/post-publish-button-or-toggle.mjs
-  var import_compose63 = __toESM(require_compose(), 1);
+  var import_compose65 = __toESM(require_compose(), 1);
   var import_data200 = __toESM(require_data(), 1);
   var import_jsx_runtime489 = __toESM(require_jsx_runtime(), 1);
   var IS_TOGGLE = "toggle";
@@ -90802,7 +90865,7 @@ If there's a particular need for this, please submit a feature request at https:
     setEntitiesSavedStatesCallback
   }) {
     let component;
-    const isSmallerThanMediumViewport = (0, import_compose63.useViewportMatch)("medium", "<");
+    const isSmallerThanMediumViewport = (0, import_compose65.useViewportMatch)("medium", "<");
     const { togglePublishSidebar: togglePublishSidebar2 } = (0, import_data200.useDispatch)(store3);
     const {
       hasPublishAction,
@@ -90887,7 +90950,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/preview-dropdown/index.mjs
-  var import_compose64 = __toESM(require_compose(), 1);
+  var import_compose66 = __toESM(require_compose(), 1);
   var import_components241 = __toESM(require_components(), 1);
   var import_i18n289 = __toESM(require_i18n(), 1);
   var import_data202 = __toESM(require_data(), 1);
@@ -90970,7 +91033,7 @@ If there's a particular need for this, please submit a feature request at https:
         enableComplementaryArea2("core", sidebars.block);
       }
     };
-    const isMobile = (0, import_compose64.useViewportMatch)("medium", "<");
+    const isMobile = (0, import_compose66.useViewportMatch)("medium", "<");
     if (isMobile) {
       return null;
     }
@@ -91343,7 +91406,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collaborators-presence/list.mjs
   var import_i18n293 = __toESM(require_i18n(), 1);
   var import_components244 = __toESM(require_components(), 1);
-  var import_a11y11 = __toESM(require_a11y(), 1);
+  var import_a11y13 = __toESM(require_a11y(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/get-avatar-url.mjs
   function getAvatarUrl(avatarUrls) {
@@ -91706,7 +91769,7 @@ If there's a particular need for this, please submit a feature request at https:
         highlightDuration: 2e3
       });
       if (success) {
-        (0, import_a11y11.speak)((0, import_i18n293.__)("Scrolled to cursor"), "polite");
+        (0, import_a11y13.speak)((0, import_i18n293.__)("Scrolled to cursor"), "polite");
         setIsPopoverVisible(false);
       }
     };
@@ -91832,7 +91895,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor73 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/overlay.mjs
-  var import_compose65 = __toESM(require_compose(), 1);
+  var import_compose67 = __toESM(require_compose(), 1);
   var import_element294 = __toESM(require_element(), 1);
   var import_i18n294 = __toESM(require_i18n(), 1);
 
@@ -92811,7 +92874,7 @@ If there's a particular need for this, please submit a feature request at https:
       rerenderCursorsOnResize();
       rerenderHighlightsOnResize();
     }, [rerenderCursorsOnResize, rerenderHighlightsOnResize]);
-    const resizeObserverRef = (0, import_compose65.useResizeObserver)(onResize);
+    const resizeObserverRef = (0, import_compose67.useResizeObserver)(onResize);
     (0, import_element294.useEffect)(() => {
       const cleanupCursors = rerenderCursorsAfterDelay();
       const cleanupHighlights = rerenderHighlightsAfterDelay();
@@ -92829,7 +92892,7 @@ If there's a particular need for this, please submit a feature request at https:
         CURSOR_REDRAW_INTERVAL_MS
       );
     }, [cursors.length, rerenderCursorsAfterDelay]);
-    const mergedRef = (0, import_compose65.useMergeRefs)([
+    const mergedRef = (0, import_compose67.useMergeRefs)([
       setOverlayElement,
       resizeObserverRef
     ]);
@@ -93063,9 +93126,9 @@ If there's a particular need for this, please submit a feature request at https:
     forceIsDirty,
     setEntitiesSavedStatesCallback
   }) {
-    const isWideViewport = (0, import_compose66.useViewportMatch)("large");
-    const isLargeViewport = (0, import_compose66.useViewportMatch)("medium");
-    const isTooNarrowForDocumentBar = (0, import_compose66.useMediaQuery)("(max-width: 403px)");
+    const isWideViewport = (0, import_compose68.useViewportMatch)("large");
+    const isLargeViewport = (0, import_compose68.useViewportMatch)("medium");
+    const isTooNarrowForDocumentBar = (0, import_compose68.useMediaQuery)("(max-width: 403px)");
     const {
       postId: postId2,
       postType: postType2,
@@ -93184,7 +93247,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/inserter-sidebar/index.mjs
   var import_data206 = __toESM(require_data(), 1);
   var import_block_editor75 = __toESM(require_block_editor(), 1);
-  var import_compose67 = __toESM(require_compose(), 1);
+  var import_compose69 = __toESM(require_compose(), 1);
   var import_element297 = __toESM(require_element(), 1);
   var import_preferences22 = __toESM(require_preferences(), 1);
   var import_keycodes18 = __toESM(require_keycodes(), 1);
@@ -93225,7 +93288,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const { setIsInserterOpened: setIsInserterOpened2 } = (0, import_data206.useDispatch)(store3);
     const { disableComplementaryArea: disableComplementaryArea2 } = (0, import_data206.useDispatch)(store2);
-    const isMobileViewport = (0, import_compose67.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose69.useViewportMatch)("medium", "<");
     const libraryRef = (0, import_element297.useRef)();
     const closeInserterSidebar = (0, import_element297.useCallback)(() => {
       setIsInserterOpened2(false);
@@ -93265,7 +93328,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/list-view-sidebar/index.mjs
   var import_block_editor76 = __toESM(require_block_editor(), 1);
-  var import_compose68 = __toESM(require_compose(), 1);
+  var import_compose70 = __toESM(require_compose(), 1);
   var import_data207 = __toESM(require_data(), 1);
   var import_dom26 = __toESM(require_dom(), 1);
   var import_element298 = __toESM(require_element(), 1);
@@ -93303,7 +93366,7 @@ If there's a particular need for this, please submit a feature request at https:
   function ListViewSidebar() {
     const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data207.useDispatch)(store3);
     const { getListViewToggleRef: getListViewToggleRef2 } = unlock((0, import_data207.useSelect)(store3));
-    const focusOnMountRef = (0, import_compose68.useFocusOnMount)("firstElement");
+    const focusOnMountRef = (0, import_compose70.useFocusOnMount)("firstElement");
     const closeListView = (0, import_element298.useCallback)(() => {
       setIsListViewOpened2(false);
       getListViewToggleRef2().current?.focus();
@@ -93322,7 +93385,7 @@ If there's a particular need for this, please submit a feature request at https:
     const sidebarRef = (0, import_element298.useRef)();
     const tabsRef = (0, import_element298.useRef)();
     const listViewRef = (0, import_element298.useRef)();
-    const listViewContainerRef = (0, import_compose68.useMergeRefs)([
+    const listViewContainerRef = (0, import_compose70.useMergeRefs)([
       focusOnMountRef,
       listViewRef,
       setDropZoneElement
@@ -93404,7 +93467,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n298 = __toESM(require_i18n(), 1);
   var import_date19 = __toESM(require_date(), 1);
   var import_element299 = __toESM(require_element(), 1);
-  var import_compose69 = __toESM(require_compose(), 1);
+  var import_compose71 = __toESM(require_compose(), 1);
   var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
   function RevisionsSlider() {
     const {
@@ -93443,7 +93506,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { setCurrentRevisionId: setCurrentRevisionId2, setRevisionPage: setRevisionPage2 } = unlock(
       (0, import_data208.useDispatch)(store3)
     );
-    const focusOnMountRef = (0, import_compose69.useFocusOnMount)(true);
+    const focusOnMountRef = (0, import_compose71.useFocusOnMount)(true);
     const isLoading = !rawRevisions;
     const totalPages = Math.ceil(totalRevisions / perPage) || 1;
     const revisions = (0, import_element299.useMemo)(
@@ -93653,7 +93716,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data216 = __toESM(require_data(), 1);
   var import_blocks33 = __toESM(require_blocks(), 1);
   var import_core_data117 = __toESM(require_core_data(), 1);
-  var import_compose75 = __toESM(require_compose(), 1);
+  var import_compose77 = __toESM(require_compose(), 1);
 
   // packages/editor/build-module/components/visual-editor/edit-template-blocks-notification.mjs
   var import_data210 = __toESM(require_data(), 1);
@@ -93722,7 +93785,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/visual-editor/use-select-nearest-editable-block.mjs
-  var import_compose70 = __toESM(require_compose(), 1);
+  var import_compose72 = __toESM(require_compose(), 1);
   var import_data211 = __toESM(require_data(), 1);
   var import_block_editor77 = __toESM(require_block_editor(), 1);
   var DISTANCE_THRESHOLD = 500;
@@ -93741,7 +93804,7 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_data211.useSelect)(import_block_editor77.store)
     );
     const { selectBlock: selectBlock2 } = (0, import_data211.useDispatch)(import_block_editor77.store);
-    return (0, import_compose70.useRefEffect)(
+    return (0, import_compose72.useRefEffect)(
       (element) => {
         if (!isEnabled) {
           return;
@@ -93794,12 +93857,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/visual-editor/use-zoom-out-mode-exit.mjs
   var import_data212 = __toESM(require_data(), 1);
-  var import_compose71 = __toESM(require_compose(), 1);
+  var import_compose73 = __toESM(require_compose(), 1);
   var import_block_editor78 = __toESM(require_block_editor(), 1);
   function useZoomOutModeExit() {
     const { getSettings: getSettings10, isZoomOut } = unlock((0, import_data212.useSelect)(import_block_editor78.store));
     const { resetZoomLevel } = unlock((0, import_data212.useDispatch)(import_block_editor78.store));
-    return (0, import_compose71.useRefEffect)(
+    return (0, import_compose73.useRefEffect)(
       (node) => {
         function onDoubleClick(event) {
           if (!isZoomOut()) {
@@ -93825,13 +93888,13 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/visual-editor/use-padding-appender.mjs
   var import_data213 = __toESM(require_data(), 1);
-  var import_compose72 = __toESM(require_compose(), 1);
+  var import_compose74 = __toESM(require_compose(), 1);
   var import_block_editor79 = __toESM(require_block_editor(), 1);
   var import_blocks31 = __toESM(require_blocks(), 1);
   var CSS2 = ':root :where(.editor-styles-wrapper)::after {content: ""; display: block; height: 40vh;}';
   function usePaddingAppender(enabled) {
     const registry = (0, import_data213.useRegistry)();
-    const effect = (0, import_compose72.useRefEffect)(
+    const effect = (0, import_compose74.useRefEffect)(
       (node) => {
         function onMouseDown(event) {
           if (event.target !== node && // Tests for the parent element because in the iframed editor if the click is
@@ -93872,7 +93935,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/visual-editor/use-edit-content-only-section-exit.mjs
   var import_data214 = __toESM(require_data(), 1);
-  var import_compose73 = __toESM(require_compose(), 1);
+  var import_compose75 = __toESM(require_compose(), 1);
   var import_block_editor80 = __toESM(require_block_editor(), 1);
   function useEditContentOnlySectionExit() {
     const { getEditedContentOnlySection } = unlock(
@@ -93881,7 +93944,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { stopEditingContentOnlySection } = unlock(
       (0, import_data214.useDispatch)(import_block_editor80.store)
     );
-    return (0, import_compose73.useRefEffect)(
+    return (0, import_compose75.useRefEffect)(
       (node) => {
         function onClick(event) {
           const editedContentOnlySection = getEditedContentOnlySection();
@@ -93907,7 +93970,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/sync-connection-error-modal/index.mjs
   var import_data215 = __toESM(require_data(), 1);
-  var import_compose74 = __toESM(require_compose(), 1);
+  var import_compose76 = __toESM(require_compose(), 1);
   var import_blocks32 = __toESM(require_blocks(), 1);
   var import_core_data116 = __toESM(require_core_data(), 1);
   var import_block_editor81 = __toESM(require_block_editor(), 1);
@@ -93997,7 +94060,7 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const { onManualRetry, secondsRemaining } = useRetryCountdown(connectionStatus);
-    const copyButtonRef = (0, import_compose74.useCopyToClipboard)(() => {
+    const copyButtonRef = (0, import_compose76.useCopyToClipboard)(() => {
       const blocks = (0, import_data215.select)(import_block_editor81.store).getBlocks();
       return (0, import_blocks32.serialize)(blocks);
     });
@@ -94158,7 +94221,7 @@ If there's a particular need for this, please submit a feature request at https:
     contentRef,
     className
   }) {
-    const isMobileViewport = (0, import_compose75.useViewportMatch)("small", "<");
+    const isMobileViewport = (0, import_compose77.useViewportMatch)("small", "<");
     const {
       renderingMode: renderingMode2,
       postContentAttributes,
@@ -94364,7 +94427,7 @@ If there's a particular need for this, please submit a feature request at https:
       paddingStyle
     ]);
     const typewriterRef = (0, import_block_editor82.__unstableUseTypewriter)();
-    contentRef = (0, import_compose75.useMergeRefs)([
+    contentRef = (0, import_compose77.useMergeRefs)([
       localRef,
       contentRef,
       renderingMode2 === "post-only" ? typewriterRef : null,
@@ -94514,7 +94577,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-revisions-preview/diff-markers.mjs
   var import_element304 = __toESM(require_element(), 1);
-  var import_compose76 = __toESM(require_compose(), 1);
+  var import_compose78 = __toESM(require_compose(), 1);
   var import_data217 = __toESM(require_data(), 1);
   var import_block_editor83 = __toESM(require_block_editor(), 1);
   var import_i18n302 = __toESM(require_i18n(), 1);
@@ -94604,7 +94667,7 @@ If there's a particular need for this, please submit a feature request at https:
       subscribersRef.current.add(callback);
       return () => subscribersRef.current.delete(callback);
     }, []);
-    const contentRef = (0, import_compose76.useRefEffect)((element) => {
+    const contentRef = (0, import_compose78.useRefEffect)((element) => {
       const { ownerDocument: ownerDocument2 } = element;
       const { defaultView } = ownerDocument2;
       const resizeObserver = new defaultView.ResizeObserver(() => {
@@ -94616,7 +94679,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     return [
-      (0, import_compose76.useMergeRefs)([contentRef, setIsMounted]),
+      (0, import_compose78.useMergeRefs)([contentRef, setIsMounted]),
       /* @__PURE__ */ (0, import_jsx_runtime508.jsx)(
         "div",
         {
@@ -95187,7 +95250,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const { setShowRevisionDiff: setShowRevisionDiff2 } = unlock((0, import_data222.useDispatch)(store3));
     useCollaboratorNotifications(postId2, postType2);
-    const isLargeViewport = (0, import_compose77.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose79.useViewportMatch)("medium");
     const secondarySidebarLabel = isListViewOpened2 ? (0, import_i18n307.__)("Document Overview") : (0, import_i18n307.__)("Block Library");
     const shouldShowStylesCanvas = showStylebook2 || stylesPath2?.startsWith("/revisions");
     const shouldShowBlockEditor = !shouldShowStylesCanvas;
@@ -96130,7 +96193,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/blog-title/index.mjs
   var import_i18n315 = __toESM(require_i18n(), 1);
-  var import_compose78 = __toESM(require_compose(), 1);
+  var import_compose80 = __toESM(require_compose(), 1);
   var import_data232 = __toESM(require_data(), 1);
   var import_core_data126 = __toESM(require_core_data(), 1);
   var import_html_entities31 = __toESM(require_html_entities(), 1);
@@ -96218,7 +96281,7 @@ If there's a particular need for this, please submit a feature request at https:
             {
               placeholder: (0, import_i18n315.__)("No title"),
               value: postsPageTitle,
-              onChange: (0, import_compose78.debounce)(setPostsPageTitle, 300),
+              onChange: (0, import_compose80.debounce)(setPostsPageTitle, 300),
               label: (0, import_i18n315.__)("Blog title"),
               help: (0, import_i18n315.__)(
                 "Set the Posts Page title. Appears in search results, and when the page is shared on social media."
@@ -97971,7 +98034,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n341 = __toESM(require_i18n(), 1);
   var import_data262 = __toESM(require_data(), 1);
   var import_element340 = __toESM(require_element(), 1);
-  var import_compose82 = __toESM(require_compose(), 1);
+  var import_compose84 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts13 = __toESM(require_keyboard_shortcuts(), 1);
   var import_block_editor106 = __toESM(require_block_editor(), 1);
   var import_preferences30 = __toESM(require_preferences(), 1);
@@ -97985,7 +98048,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
   var import_element335 = __toESM(require_element(), 1);
   var import_components278 = __toESM(require_components(), 1);
-  var import_compose81 = __toESM(require_compose(), 1);
+  var import_compose83 = __toESM(require_compose(), 1);
   var import_i18n336 = __toESM(require_i18n(), 1);
   var import_data257 = __toESM(require_data(), 1);
   var import_dom29 = __toESM(require_dom(), 1);
@@ -97994,7 +98057,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_i18n334 = __toESM(require_i18n(), 1);
   var import_element333 = __toESM(require_element(), 1);
-  var import_compose80 = __toESM(require_compose(), 1);
+  var import_compose82 = __toESM(require_compose(), 1);
   var import_data256 = __toESM(require_data(), 1);
   var import_block_editor99 = __toESM(require_block_editor(), 1);
 
@@ -98119,7 +98182,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element332 = __toESM(require_element(), 1);
   var import_components276 = __toESM(require_components(), 1);
   var import_i18n333 = __toESM(require_i18n(), 1);
-  var import_compose79 = __toESM(require_compose(), 1);
+  var import_compose81 = __toESM(require_compose(), 1);
   var import_keycodes21 = __toESM(require_keycodes(), 1);
   var import_dom28 = __toESM(require_dom(), 1);
 
@@ -98177,7 +98240,7 @@ If there's a particular need for this, please submit a feature request at https:
       note?.content?.raw ?? ""
     );
     const [isSubmitting, setIsSubmitting] = (0, import_element332.useState)(false);
-    const inputId = (0, import_compose79.useInstanceId)(NoteForm, "comment-input");
+    const inputId = (0, import_compose81.useInstanceId)(NoteForm, "comment-input");
     const trimmedPlainText = sanitizeNoteContent((0, import_dom28.__unstableStripHTML)(inputComment));
     const isDisabled = isSubmitting || inputComment === note?.content?.raw || !trimmedPlainText.length;
     async function submit() {
@@ -98301,7 +98364,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { selectNote: selectNote2 } = unlock((0, import_data256.useDispatch)(store3));
     const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data256.useSelect)(store3));
     const isSubmittingRef = (0, import_element333.useRef)(false);
-    const focusOutside = (0, import_compose80.__experimentalUseFocusOutside)((event) => {
+    const focusOutside = (0, import_compose82.__experimentalUseFocusOutside)((event) => {
       if (event.relatedTarget?.closest(
         ".editor-collab-sidebar-panel__add-note"
       )) {
@@ -98586,7 +98649,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { selectNote: selectNote2 } = unlock((0, import_data257.useDispatch)(store3));
     const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data257.useSelect)(store3));
     const relatedBlockElement = useBlockElement2(note.blockClientId);
-    const debouncedToggleBlockHighlight = (0, import_compose81.useDebounce)(
+    const debouncedToggleBlockHighlight = (0, import_compose83.useDebounce)(
       toggleBlockHighlight,
       50
     );
@@ -98607,7 +98670,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       scrollNoteThreadIntoView(note.id, sidebarRef.current);
     }, [isSelected2, floating?.y, note.id, sidebarRef]);
-    const focusOutside = (0, import_compose81.__experimentalUseFocusOutside)((event) => {
+    const focusOutside = (0, import_compose83.__experimentalUseFocusOutside)((event) => {
       const isNoteFocused2 = event.relatedTarget?.closest(
         ".editor-collab-sidebar-panel__thread"
       );
@@ -98842,7 +98905,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collab-sidebar/hooks.mjs
-  var import_a11y12 = __toESM(require_a11y(), 1);
+  var import_a11y14 = __toESM(require_a11y(), 1);
   var import_i18n337 = __toESM(require_i18n(), 1);
   var import_element336 = __toESM(require_element(), 1);
   var import_core_data138 = __toESM(require_core_data(), 1);
@@ -99197,7 +99260,7 @@ If there's a particular need for this, please submit a feature request at https:
               updateBlockAttributes2
             );
           }
-          (0, import_a11y12.speak)(
+          (0, import_a11y14.speak)(
             status === "approved" ? (0, import_i18n337.__)("Note marked as resolved.") : (0, import_i18n337.__)("Note reopened.")
           );
           return savedRecord2;
@@ -99751,7 +99814,7 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_data262.useDispatch)(import_block_editor106.store)
     );
     const { selectNote: selectNote2 } = unlock((0, import_data262.useDispatch)(store3));
-    const isLargeViewport = (0, import_compose82.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose84.useViewportMatch)("medium");
     const sidebarRef = (0, import_element340.useRef)(null);
     const { clientId, noteId, isClassicBlock } = (0, import_data262.useSelect)((select9) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select9(import_block_editor106.store);
@@ -99920,7 +99983,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data265 = __toESM(require_data(), 1);
   var import_element341 = __toESM(require_element(), 1);
   var import_preferences33 = __toESM(require_preferences(), 1);
-  var import_compose83 = __toESM(require_compose(), 1);
+  var import_compose85 = __toESM(require_compose(), 1);
   var import_core_data140 = __toESM(require_core_data(), 1);
   var import_block_editor107 = __toESM(require_block_editor(), 1);
 
@@ -100201,10 +100264,10 @@ If there's a particular need for this, please submit a feature request at https:
     const { setStylesPath: setStylesPath2, setShowStylebook: setShowStylebook2, resetStylesNavigation: resetStylesNavigation2 } = unlock(
       (0, import_data265.useDispatch)(store3)
     );
-    const isMobileViewport = (0, import_compose83.useViewportMatch)("medium", "<");
+    const isMobileViewport = (0, import_compose85.useViewportMatch)("medium", "<");
     const isRevisionsOpened = stylesPath2.startsWith("/revisions") && !showStylebook2;
     const isRevisionsStyleBookOpened = stylesPath2.startsWith("/revisions") && showStylebook2;
-    const previousActiveArea = (0, import_compose83.usePrevious)(activeComplementaryArea);
+    const previousActiveArea = (0, import_compose85.usePrevious)(activeComplementaryArea);
     (0, import_element341.useEffect)(() => {
       if (activeComplementaryArea === "edit-site/global-styles" && previousActiveArea !== "edit-site/global-styles") {
         resetStylesNavigation2();
@@ -100408,7 +100471,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/preferences-modal/index.mjs
   var import_i18n347 = __toESM(require_i18n(), 1);
-  var import_compose84 = __toESM(require_compose(), 1);
+  var import_compose86 = __toESM(require_compose(), 1);
   var import_data269 = __toESM(require_data(), 1);
   var import_element343 = __toESM(require_element(), 1);
   var import_preferences36 = __toESM(require_preferences(), 1);
@@ -100551,7 +100614,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(PreferencesModal, { closeModal: closeModal2, children: /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(PreferencesModalContents, { extraSections }) });
   }
   function PreferencesModalContents({ extraSections = {} }) {
-    const isLargeViewport = (0, import_compose84.useViewportMatch)("medium");
+    const isLargeViewport = (0, import_compose86.useViewportMatch)("medium");
     const { showBlockBreadcrumbsOption, showCollaborationOptions } = (0, import_data269.useSelect)(
       (select9) => {
         const { getEditorSettings: getEditorSettings2, isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2 } = unlock(select9(store3));
@@ -101381,7 +101444,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data270 = __toESM(require_data(), 1);
   var import_element344 = __toESM(require_element(), 1);
   var import_i18n350 = __toESM(require_i18n(), 1);
-  var import_a11y13 = __toESM(require_a11y(), 1);
+  var import_a11y15 = __toESM(require_a11y(), 1);
   var import_upload_media3 = __toESM(require_upload_media(), 1);
   var import_notices38 = __toESM(require_notices(), 1);
   var import_components286 = __toESM(require_components(), 1);
@@ -101438,14 +101501,14 @@ If there's a particular need for this, please submit a feature request at https:
       const isUploading = remaining > 0;
       if (isUploading && !wasUploadingRef.current) {
         dismissedRef.current = false;
-        (0, import_a11y13.speak)((0, import_i18n350.__)("Media upload started"), "polite");
+        (0, import_a11y15.speak)((0, import_i18n350.__)("Media upload started"), "polite");
         if (completionTimeoutRef.current) {
           clearTimeout(completionTimeoutRef.current);
           completionTimeoutRef.current = null;
           peakRef.current = 0;
         }
       } else if (!isUploading && wasUploadingRef.current) {
-        (0, import_a11y13.speak)((0, import_i18n350.__)("Media upload complete"), "polite");
+        (0, import_a11y15.speak)((0, import_i18n350.__)("Media upload complete"), "polite");
         if (!dismissedRef.current) {
           createNotice("info", (0, import_i18n350.__)("Upload complete"), {
             id: NOTICE_ID,

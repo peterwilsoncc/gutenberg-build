@@ -34488,19 +34488,28 @@ function useFormValidity(item, fields, form) {
 }
 var use_form_validity_default = useFormValidity;
 
-// packages/dataviews/build-module/hooks/use-report-validity.mjs
+// packages/dataviews/build-module/hooks/use-reveal-validity.mjs
 var import_element122 = __toESM(require_element(), 1);
-function useReportValidity(ref, shouldReport) {
+function useRevealValidity(ref, shouldReveal) {
+  const revealValidity = (0, import_element122.useCallback)(() => {
+    const inputs = ref.current?.querySelectorAll("input, textarea, select");
+    let revealedCount = 0;
+    inputs?.forEach((input) => {
+      if (input.willValidate && !input.validity.valid) {
+        revealedCount++;
+        input.dispatchEvent(
+          new Event("invalid", { cancelable: true })
+        );
+      }
+    });
+    return revealedCount;
+  }, [ref]);
   (0, import_element122.useEffect)(() => {
-    if (shouldReport && ref.current) {
-      const inputs = ref.current.querySelectorAll(
-        "input, textarea, select"
-      );
-      inputs.forEach((input) => {
-        input.reportValidity();
-      });
+    if (shouldReveal) {
+      revealValidity();
     }
-  }, [shouldReport, ref]);
+  }, [shouldReveal, revealValidity]);
+  return revealValidity;
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
@@ -34622,7 +34631,7 @@ function ModalContent({
   const focusOnMountRef = (0, import_compose18.useFocusOnMount)("firstInputElement");
   const contentRef = (0, import_element124.useRef)(null);
   const mergedRef = (0, import_compose18.useMergeRefs)([focusOnMountRef, contentRef]);
-  useReportValidity(contentRef, touched);
+  useRevealValidity(contentRef, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime169.jsxs)(
     import_components52.Modal,
     {
@@ -34769,7 +34778,7 @@ function DropdownContentWithValidation({
   children
 }) {
   const ref = (0, import_element125.useRef)(null);
-  useReportValidity(ref, touched);
+  useRevealValidity(ref, touched);
   return /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("div", { ref, children });
 }
 function PanelDropdown({
@@ -34919,10 +34928,11 @@ function FormPanelField({
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
 var import_element126 = __toESM(require_element(), 1);
+var import_compose20 = __toESM(require_compose(), 1);
+import { speak as speak4 } from "@wordpress/a11y";
 
-// packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
+// packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
 var import_i18n53 = __toESM(require_i18n(), 1);
-var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
 function countInvalidFields(validity) {
   if (!validity) {
     return 0;
@@ -34944,14 +34954,12 @@ function countInvalidFields(validity) {
   }
   return count;
 }
-function ValidationBadge({
-  validity
-}) {
+function getValidationMessage(validity) {
   const invalidCount = countInvalidFields(validity);
   if (invalidCount === 0) {
-    return null;
+    return void 0;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(Badge, { intent: "high", children: (0, import_i18n53.sprintf)(
+  return (0, import_i18n53.sprintf)(
     /* translators: %d: Number of fields that need attention */
     (0, import_i18n53._n)(
       "%d field needs attention",
@@ -34959,7 +34967,19 @@ function ValidationBadge({
       invalidCount
     ),
     invalidCount
-  ) });
+  );
+}
+
+// packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
+var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
+function ValidationBadge({
+  validity
+}) {
+  const message2 = getValidationMessage(validity);
+  if (!message2) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime172.jsx)(Badge, { intent: "high", children: message2 });
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
@@ -35078,6 +35098,7 @@ function FormCardField({
   const { fields } = (0, import_element126.useContext)(dataform_context_default);
   const layout = field.layout;
   const contentRef = (0, import_element126.useRef)(null);
+  const hasFocusedContentRef = (0, import_element126.useRef)(false);
   const form = (0, import_element126.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
@@ -35097,13 +35118,28 @@ function FormCardField({
     }
     setIsOpen(open);
   }, []);
-  const handleBlur = (0, import_element126.useCallback)(() => {
-    setTouched(true);
-  }, []);
-  useReportValidity(
+  const revealValidity = useRevealValidity(
     contentRef,
     (isCollapsible ? isOpen : true) && touched
   );
+  const handleContentFocus = (0, import_element126.useCallback)(() => {
+    hasFocusedContentRef.current = true;
+  }, []);
+  const handleFocusOutside = (0, import_element126.useCallback)(() => {
+    if (!hasFocusedContentRef.current) {
+      return;
+    }
+    setTouched(true);
+    if (isCollapsible && !isOpen) {
+      return;
+    }
+    const revealedCount = revealValidity();
+    const message2 = getValidationMessage(validity);
+    if (revealedCount > 0 && message2) {
+      speak4(message2, "polite");
+    }
+  }, [isCollapsible, isOpen, revealValidity, validity]);
+  const focusOutsideProps = (0, import_compose20.__experimentalUseFocusOutside)(handleFocusOutside);
   let label = field.label;
   let withHeader;
   if (field.children) {
@@ -35150,13 +35186,14 @@ function FormCardField({
         className: "dataforms-layouts-card__field",
         open: isOpen,
         onOpenChange: handleOpenChange,
+        ...focusOutsideProps,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(collapsible_card_exports.Header, { children: headerContent }),
           /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(
             collapsible_card_exports.Content,
             {
               ref: contentRef,
-              onBlur: handleBlur,
+              onFocus: handleContentFocus,
               children: bodyContent
             }
           )
@@ -35164,10 +35201,17 @@ function FormCardField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime173.jsxs)(card_exports.Root, { className: "dataforms-layouts-card__field", children: [
-    withHeader && /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(card_exports.Header, { children: headerContent }),
-    /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(card_exports.Content, { ref: contentRef, onBlur: handleBlur, children: bodyContent })
-  ] });
+  return /* @__PURE__ */ (0, import_jsx_runtime173.jsxs)(
+    card_exports.Root,
+    {
+      className: "dataforms-layouts-card__field",
+      ...focusOutsideProps,
+      children: [
+        withHeader && /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(card_exports.Header, { children: headerContent }),
+        /* @__PURE__ */ (0, import_jsx_runtime173.jsx)(card_exports.Content, { ref: contentRef, onFocus: handleContentFocus, children: bodyContent })
+      ]
+    }
+  );
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/row/index.mjs
@@ -35251,6 +35295,8 @@ function FormRowField({
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
 var import_element127 = __toESM(require_element(), 1);
 var import_i18n54 = __toESM(require_i18n(), 1);
+var import_compose21 = __toESM(require_compose(), 1);
+import { speak as speak5 } from "@wordpress/a11y";
 var import_jsx_runtime175 = __toESM(require_jsx_runtime(), 1);
 function FormDetailsField({
   data,
@@ -35261,6 +35307,7 @@ function FormDetailsField({
   const { fields } = (0, import_element127.useContext)(dataform_context_default);
   const detailsRef = (0, import_element127.useRef)(null);
   const contentRef = (0, import_element127.useRef)(null);
+  const hasFocusedContentRef = (0, import_element127.useRef)(false);
   const [touched, setTouched] = (0, import_element127.useState)(false);
   const [isOpen, setIsOpen] = (0, import_element127.useState)(false);
   const form = (0, import_element127.useMemo)(
@@ -35287,10 +35334,25 @@ function FormDetailsField({
       details.removeEventListener("toggle", handleToggle);
     };
   }, []);
-  useReportValidity(contentRef, isOpen && touched);
-  const handleBlur = (0, import_element127.useCallback)(() => {
-    setTouched(true);
+  const revealValidity = useRevealValidity(contentRef, isOpen && touched);
+  const handleContentFocus = (0, import_element127.useCallback)(() => {
+    hasFocusedContentRef.current = true;
   }, []);
+  const handleFocusOutside = (0, import_element127.useCallback)(() => {
+    if (!hasFocusedContentRef.current) {
+      return;
+    }
+    setTouched(true);
+    if (!detailsRef.current?.open) {
+      return;
+    }
+    const revealedCount = revealValidity();
+    const message2 = getValidationMessage(validity);
+    if (revealedCount > 0 && message2) {
+      speak5(message2, "polite");
+    }
+  }, [revealValidity, validity]);
+  const focusOutsideProps = (0, import_compose21.__experimentalUseFocusOutside)(handleFocusOutside);
   if (!field.children) {
     return null;
   }
@@ -35307,6 +35369,7 @@ function FormDetailsField({
     {
       ref: detailsRef,
       className: "dataforms-layouts-details__details",
+      ...focusOutsideProps,
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime175.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime175.jsxs)(
           Stack,
@@ -35326,7 +35389,7 @@ function FormDetailsField({
           {
             ref: contentRef,
             className: "dataforms-layouts-details__content",
-            onBlur: handleBlur,
+            onFocus: handleContentFocus,
             children: /* @__PURE__ */ (0, import_jsx_runtime175.jsx)(
               DataFormLayout,
               {
@@ -37656,7 +37719,7 @@ function PostTypesList() {
 
 // packages/content-types/build-module/post-types/edit.mjs
 var import_components61 = __toESM(require_components(), 1);
-var import_compose20 = __toESM(require_compose(), 1);
+var import_compose22 = __toESM(require_compose(), 1);
 var import_core_data10 = __toESM(require_core_data(), 1);
 var import_data15 = __toESM(require_data(), 1);
 var import_element139 = __toESM(require_element(), 1);
@@ -37790,7 +37853,7 @@ function PostTypePage({
     []
   );
   const { validity, isValid: isValid2 } = use_form_validity_default(data, fields, form);
-  const formId = (0, import_compose20.useInstanceId)(PostTypePage, "post-type-form");
+  const formId = (0, import_compose22.useInstanceId)(PostTypePage, "post-type-form");
   const { saveEntityRecord } = (0, import_data15.useDispatch)(import_core_data10.store);
   const { createSuccessNotice, createErrorNotice } = (0, import_data15.useDispatch)(import_notices5.store);
   const maybeInvalidateCache = useMaybeInvalidateContentTypeCache();
@@ -39277,7 +39340,7 @@ function TaxonomiesList() {
 
 // packages/content-types/build-module/taxonomies/edit.mjs
 var import_components66 = __toESM(require_components(), 1);
-var import_compose21 = __toESM(require_compose(), 1);
+var import_compose23 = __toESM(require_compose(), 1);
 var import_core_data17 = __toESM(require_core_data(), 1);
 var import_data21 = __toESM(require_data(), 1);
 var import_element147 = __toESM(require_element(), 1);
@@ -39437,7 +39500,7 @@ function TaxonomyPage({
     []
   );
   const { validity, isValid: isValid2 } = use_form_validity_default(data, fields, form);
-  const formId = (0, import_compose21.useInstanceId)(TaxonomyPage, "taxonomy-form");
+  const formId = (0, import_compose23.useInstanceId)(TaxonomyPage, "taxonomy-form");
   const { saveEntityRecord } = (0, import_data21.useDispatch)(import_core_data17.store);
   const { createSuccessNotice, createErrorNotice } = (0, import_data21.useDispatch)(import_notices9.store);
   const maybeInvalidateCache = useMaybeInvalidateContentTypeCache();
