@@ -45312,12 +45312,16 @@ var wp;
           const storeBlocks = controlledBlocks.map(
             (block) => cloneBlockWithMapping(block, idMappingRef.current)
           );
-          __unstableMarkNextChangeAsNotPersistent2();
+          __unstableMarkNextChangeAsNotPersistent2({
+            history: "ignore"
+          });
           setHasControlledInnerBlocks2(clientId, true);
           if (subscribedRef.current) {
             pendingChangesRef.current.incoming = storeBlocks;
           }
-          __unstableMarkNextChangeAsNotPersistent2();
+          __unstableMarkNextChangeAsNotPersistent2({
+            history: "ignore"
+          });
           replaceInnerBlocks2(clientId, storeBlocks);
           appliedSelectionRef.current = null;
         });
@@ -45325,18 +45329,26 @@ var wp;
         if (subscribedRef.current) {
           pendingChangesRef.current.incoming = controlledBlocks;
         }
-        __unstableMarkNextChangeAsNotPersistent2();
+        __unstableMarkNextChangeAsNotPersistent2({
+          history: "ignore"
+        });
         resetBlocks2(controlledBlocks);
       }
     };
     const unsetControlledBlocks = () => {
       if (clientId) {
-        __unstableMarkNextChangeAsNotPersistent2();
+        __unstableMarkNextChangeAsNotPersistent2({
+          history: "ignore"
+        });
         setHasControlledInnerBlocks2(clientId, false);
-        __unstableMarkNextChangeAsNotPersistent2();
+        __unstableMarkNextChangeAsNotPersistent2({
+          history: "ignore"
+        });
         replaceInnerBlocks2(clientId, []);
       } else {
-        __unstableMarkNextChangeAsNotPersistent2();
+        __unstableMarkNextChangeAsNotPersistent2({
+          history: "ignore"
+        });
         resetBlocks2([]);
       }
     };
