@@ -2555,6 +2555,7 @@ var wp;
     ...import_block_editor.SETTINGS_DEFAULTS,
     richEditingEnabled: true,
     codeEditingEnabled: true,
+    responsiveEditingEnabled: true,
     fontLibraryEnabled: true,
     enableCustomFields: void 0,
     defaultRenderingMode: "post-only"
@@ -74042,6 +74043,7 @@ If there's a particular need for this, please submit a feature request at https:
     const gradients = settings?.gradients;
     const __experimentalDiscussionSettings = settings?.__experimentalDiscussionSettings;
     const fontLibraryEnabled = settings?.fontLibraryEnabled ?? true;
+    const responsiveEditingEnabled = settings?.responsiveEditingEnabled ?? true;
     const mediaUploadHandler = (0, import_data64.useSelect)((select9) => {
       const { canUser } = select9(import_core_data44.store);
       const canUserUploadMedia = canUser("create", {
@@ -74082,14 +74084,19 @@ If there's a particular need for this, please submit a feature request at https:
       __experimentalDiscussionSettings,
       mediaUploadHandler
     ]);
-    return { serverCSS, serverSettings, fontLibraryEnabled };
+    return {
+      serverCSS,
+      serverSettings,
+      fontLibraryEnabled,
+      responsiveEditingEnabled
+    };
   }
   function GlobalStylesUIWrapper({
     path,
     onPathChange,
     settings,
     selectedViewport,
-    showResponsiveStateControls
+    showResponsiveStateControls = true
   }) {
     const {
       user: userConfig,
@@ -74097,7 +74104,12 @@ If there's a particular need for this, please submit a feature request at https:
       setUser: setUserConfig,
       isReady: isReady2
     } = useGlobalStyles();
-    const { serverCSS, serverSettings, fontLibraryEnabled } = useServerData(settings);
+    const {
+      serverCSS,
+      serverSettings,
+      fontLibraryEnabled,
+      responsiveEditingEnabled
+    } = useServerData(settings);
     if (!isReady2) {
       return null;
     }
@@ -74114,7 +74126,7 @@ If there's a particular need for this, please submit a feature request at https:
           serverCSS,
           serverSettings,
           selectedViewport,
-          showResponsiveStateControls
+          showResponsiveStateControls: showResponsiveStateControls && responsiveEditingEnabled
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime359.jsx)(
@@ -91372,6 +91384,7 @@ If there's a particular need for this, please submit a feature request at https:
       isTemplateHidden,
       templateId: templateId2,
       isResponsiveEditing,
+      isResponsiveEditingEnabled,
       hasBlockSelection,
       activeComplementaryArea
     } = (0, import_data206.useSelect)((select9) => {
@@ -91379,7 +91392,8 @@ If there's a particular need for this, please submit a feature request at https:
         getCurrentPostType: getCurrentPostType2,
         getCurrentTemplateId: getCurrentTemplateId2,
         getRenderingMode: getRenderingMode2,
-        getDeviceType: getDeviceType2
+        getDeviceType: getDeviceType2,
+        getEditorSettings: getEditorSettings2
       } = unlock(select9(store));
       const {
         isResponsiveEditing: _isResponsiveEditing,
@@ -91403,6 +91417,7 @@ If there's a particular need for this, please submit a feature request at https:
         isTemplateHidden: getRenderingMode2() === "post-only",
         templateId: getCurrentTemplateId2(),
         isResponsiveEditing: _isResponsiveEditing(),
+        isResponsiveEditingEnabled: getEditorSettings2().responsiveEditingEnabled,
         hasBlockSelection: !!getBlockSelectionStart2(),
         activeComplementaryArea: select9(store3).getActiveComplementaryArea("core")
       };
@@ -91496,7 +91511,7 @@ If there's a particular need for this, please submit a feature request at https:
               onSelect: handleDevicePreviewChange
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_components244.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
+          isResponsiveEditingEnabled && /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(import_components244.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime494.jsx)(
             import_components244.MenuItem,
             {
               icon: isResponsiveEditing ? check_default : void 0,
