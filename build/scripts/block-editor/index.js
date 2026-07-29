@@ -16916,10 +16916,15 @@ var wp;
       return;
     }
     if ((0, import_blocks8.isUnmodifiedDefaultBlock)(blockA)) {
-      dispatch.removeBlock(
-        clientIdA,
-        select3.isBlockSelected(clientIdA)
-      );
+      const isASelected = select3.isBlockSelected(clientIdA);
+      if (isASelected) {
+        registry.batch(() => {
+          dispatch.removeBlock(clientIdA, false);
+          dispatch.selectBlock(clientIdB, 0);
+        });
+      } else {
+        dispatch.removeBlock(clientIdA, false);
+      }
       return;
     }
     if ((0, import_blocks8.isUnmodifiedDefaultBlock)(blockB)) {
