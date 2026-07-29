@@ -26616,7 +26616,16 @@ var wp;
           if (!nextBlockClientId) {
             return;
           }
-          if (getBlockOrder2(nextBlockClientId).length) {
+          if ((0, import_blocks23.isUnmodifiedDefaultBlock)(getBlock2(clientId))) {
+            let firstLeafClientId = nextBlockClientId;
+            while (getBlockOrder2(firstLeafClientId).length) {
+              firstLeafClientId = getBlockOrder2(firstLeafClientId)[0];
+            }
+            registry.batch(() => {
+              removeBlock2(clientId);
+              selectBlock2(firstLeafClientId);
+            });
+          } else if (getBlockOrder2(nextBlockClientId).length) {
             moveFirstItemUp(nextBlockClientId, false);
           } else {
             mergeBlocks2(clientId, nextBlockClientId);
