@@ -7731,12 +7731,12 @@ If there's a particular need for this, please submit a feature request at https:
     return oppositeSideMap[side] + placement.slice(side.length);
   }
   function expandPaddingObject(padding2) {
+    var _padding$top, _padding$right, _padding$bottom, _padding$left;
     return {
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0,
-      ...padding2
+      top: (_padding$top = padding2.top) != null ? _padding$top : 0,
+      right: (_padding$right = padding2.right) != null ? _padding$right : 0,
+      bottom: (_padding$bottom = padding2.bottom) != null ? _padding$bottom : 0,
+      left: (_padding$left = padding2.left) != null ? _padding$left : 0
     };
   }
   function getPaddingObject(padding2) {
@@ -7812,13 +7812,9 @@ If there's a particular need for this, please submit a feature request at https:
           y: reference.y
         };
     }
-    switch (getAlignment(placement)) {
-      case "start":
-        coords[alignmentAxis] -= commonAlign * (rtl2 && isVertical ? -1 : 1);
-        break;
-      case "end":
-        coords[alignmentAxis] += commonAlign * (rtl2 && isVertical ? -1 : 1);
-        break;
+    const alignment = getAlignment(placement);
+    if (alignment) {
+      coords[alignmentAxis] += commonAlign * (alignment === "end" ? 1 : -1) * (rtl2 && isVertical ? -1 : 1);
     }
     return coords;
   }
@@ -7858,10 +7854,7 @@ If there's a particular need for this, please submit a feature request at https:
       height: rects.floating.height
     } : rects.reference;
     const offsetParent = await (platform2.getOffsetParent == null ? void 0 : platform2.getOffsetParent(elements2.floating));
-    const offsetScale = await (platform2.isElement == null ? void 0 : platform2.isElement(offsetParent)) ? await (platform2.getScale == null ? void 0 : platform2.getScale(offsetParent)) || {
-      x: 1,
-      y: 1
-    } : {
+    const offsetScale = await (platform2.isElement == null ? void 0 : platform2.isElement(offsetParent)) && await (platform2.getScale == null ? void 0 : platform2.getScale(offsetParent)) || {
       x: 1,
       y: 1
     };
@@ -8009,12 +8002,11 @@ If there's a particular need for this, please submit a feature request at https:
       const largestPossiblePadding = clientSize / 2 - arrowDimensions[length2] / 2 - 1;
       const minPadding = min(paddingObject[minProp], largestPossiblePadding);
       const maxPadding = min(paddingObject[maxProp], largestPossiblePadding);
-      const min$1 = minPadding;
       const max3 = clientSize - arrowDimensions[length2] - maxPadding;
       const center = clientSize / 2 - arrowDimensions[length2] / 2 + centerToReference;
-      const offset4 = clamp(min$1, center, max3);
-      const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset4 && rects.reference[length2] / 2 - (center < min$1 ? minPadding : maxPadding) - arrowDimensions[length2] / 2 < 0;
-      const alignmentOffset = shouldAddOffset ? center < min$1 ? center - min$1 : center - max3 : 0;
+      const offset4 = clamp(minPadding, center, max3);
+      const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset4 && rects.reference[length2] / 2 - (center < minPadding ? minPadding : maxPadding) - arrowDimensions[length2] / 2 < 0;
+      const alignmentOffset = shouldAddOffset ? center < minPadding ? center - minPadding : center - max3 : 0;
       return {
         [axis]: coords[axis] + alignmentOffset,
         data: {
@@ -8241,23 +8233,16 @@ If there's a particular need for this, please submit a feature request at https:
           y: y3
         };
         const overflow = await platform2.detectOverflow(state, detectOverflowOptions);
-        const crossAxis = getSideAxis(getSide(placement));
+        const crossAxis = getSideAxis(placement);
         const mainAxis = getOppositeAxis(crossAxis);
         let mainAxisCoord = coords[mainAxis];
         let crossAxisCoord = coords[crossAxis];
+        const clampCoord = (axis, coord) => clamp(coord + overflow[axis === "y" ? "top" : "left"], coord, coord - overflow[axis === "y" ? "bottom" : "right"]);
         if (checkMainAxis) {
-          const minSide = mainAxis === "y" ? "top" : "left";
-          const maxSide = mainAxis === "y" ? "bottom" : "right";
-          const min3 = mainAxisCoord + overflow[minSide];
-          const max3 = mainAxisCoord - overflow[maxSide];
-          mainAxisCoord = clamp(min3, mainAxisCoord, max3);
+          mainAxisCoord = clampCoord(mainAxis, mainAxisCoord);
         }
         if (checkCrossAxis) {
-          const minSide = crossAxis === "y" ? "top" : "left";
-          const maxSide = crossAxis === "y" ? "bottom" : "right";
-          const min3 = crossAxisCoord + overflow[minSide];
-          const max3 = crossAxisCoord - overflow[maxSide];
-          crossAxisCoord = clamp(min3, crossAxisCoord, max3);
+          crossAxisCoord = clampCoord(crossAxis, crossAxisCoord);
         }
         const limitedCoords = limiter.fn({
           ...state,
@@ -8285,6 +8270,7 @@ If there's a particular need for this, please submit a feature request at https:
     return {
       options: options2,
       fn(state) {
+        var _rawOffset$mainAxis, _rawOffset$crossAxis;
         const {
           x: x2,
           y: y3,
@@ -8310,9 +8296,8 @@ If there's a particular need for this, please submit a feature request at https:
           mainAxis: rawOffset,
           crossAxis: 0
         } : {
-          mainAxis: 0,
-          crossAxis: 0,
-          ...rawOffset
+          mainAxis: (_rawOffset$mainAxis = rawOffset.mainAxis) != null ? _rawOffset$mainAxis : 0,
+          crossAxis: (_rawOffset$crossAxis = rawOffset.crossAxis) != null ? _rawOffset$crossAxis : 0
         };
         if (checkMainAxis) {
           const len = mainAxis === "y" ? "height" : "width";
@@ -8351,7 +8336,6 @@ If there's a particular need for this, please submit a feature request at https:
       name: "size",
       options: options2,
       async fn(state) {
-        var _state$middlewareData, _state$middlewareData2;
         const {
           placement,
           rects,
@@ -8384,24 +8368,21 @@ If there's a particular need for this, please submit a feature request at https:
         const maximumClippingWidth = width - overflow.left - overflow.right;
         const overflowAvailableHeight = min(height - overflow[heightSide], maximumClippingHeight);
         const overflowAvailableWidth = min(width - overflow[widthSide], maximumClippingWidth);
-        const noShift = !state.middlewareData.shift;
+        const shiftData = state.middlewareData.shift;
+        const noShift = !shiftData;
         let availableHeight = overflowAvailableHeight;
         let availableWidth = overflowAvailableWidth;
-        if ((_state$middlewareData = state.middlewareData.shift) != null && _state$middlewareData.enabled.x) {
+        if (shiftData != null && shiftData.enabled.x) {
           availableWidth = maximumClippingWidth;
         }
-        if ((_state$middlewareData2 = state.middlewareData.shift) != null && _state$middlewareData2.enabled.y) {
+        if (shiftData != null && shiftData.enabled.y) {
           availableHeight = maximumClippingHeight;
         }
         if (noShift && !alignment) {
-          const xMin = max(overflow.left, 0);
-          const xMax = max(overflow.right, 0);
-          const yMin = max(overflow.top, 0);
-          const yMax = max(overflow.bottom, 0);
           if (isYAxis) {
-            availableWidth = width - 2 * (xMin !== 0 || xMax !== 0 ? xMin + xMax : max(overflow.left, overflow.right));
+            availableWidth = width - 2 * max(overflow.left, overflow.right);
           } else {
-            availableHeight = height - 2 * (yMin !== 0 || yMax !== 0 ? yMin + yMax : max(overflow.top, overflow.bottom));
+            availableHeight = height - 2 * max(overflow.top, overflow.bottom);
           }
         }
         await apply({
@@ -8549,7 +8530,7 @@ If there's a particular need for this, please submit a feature request at https:
   function getNearestOverflowAncestor(node2) {
     const parentNode = getParentNode(node2);
     if (isLastTraversableNode(parentNode)) {
-      return node2.ownerDocument ? node2.ownerDocument.body : node2.body;
+      return (node2.ownerDocument || node2).body;
     }
     if (isHTMLElement(parentNode) && isOverflowElement(parentNode)) {
       return parentNode;
@@ -8639,10 +8620,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (isFixed === void 0) {
       isFixed = false;
     }
-    if (!floatingOffsetParent || isFixed && floatingOffsetParent !== getWindow2(element)) {
-      return false;
-    }
-    return isFixed;
+    return !!floatingOffsetParent && isFixed && floatingOffsetParent === getWindow2(element);
   }
   function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetParent) {
     if (includeScale === void 0) {
@@ -8668,12 +8646,12 @@ If there's a particular need for this, please submit a feature request at https:
     let y3 = (clientRect.top + visualOffsets.y) / scale2.y;
     let width = clientRect.width / scale2.x;
     let height = clientRect.height / scale2.y;
-    if (domElement) {
+    if (domElement && offsetParent) {
       const win = getWindow2(domElement);
-      const offsetWin = offsetParent && isElement2(offsetParent) ? getWindow2(offsetParent) : offsetParent;
+      const offsetWin = isElement2(offsetParent) ? getWindow2(offsetParent) : offsetParent;
       let currentWin = win;
       let currentIFrame = getFrameElement(currentWin);
-      while (currentIFrame && offsetParent && offsetWin !== currentWin) {
+      while (currentIFrame && offsetWin !== currentWin) {
         const iframeScale = getScale(currentIFrame);
         const iframeRect = currentIFrame.getBoundingClientRect();
         const css3 = getComputedStyle2(currentIFrame);
@@ -8732,7 +8710,7 @@ If there's a particular need for this, please submit a feature request at https:
     let scale2 = createCoords(1);
     const offsets = createCoords(0);
     const isOffsetParentAnElement = isHTMLElement(offsetParent);
-    if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
+    if (isOffsetParentAnElement || !isFixed) {
       if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) {
         scroll = getNodeScroll(offsetParent);
       }
@@ -8752,15 +8730,14 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function getClientRects(element) {
-    return Array.from(element.getClientRects());
+    return element.getClientRects ? Array.from(element.getClientRects()) : [];
   }
-  function getDocumentRect(element) {
-    const html = getDocumentElement(element);
-    const scroll = getNodeScroll(element);
-    const body = element.ownerDocument.body;
+  function getDocumentRect(html) {
+    const scroll = getNodeScroll(html);
+    const body = html.ownerDocument.body;
     const width = max(html.scrollWidth, html.clientWidth, body.scrollWidth, body.clientWidth);
     const height = max(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
-    let x2 = -scroll.scrollLeft + getWindowScrollBarX(element);
+    let x2 = -scroll.scrollLeft + getWindowScrollBarX(html);
     const y3 = -scroll.scrollTop;
     if (getComputedStyle2(body).direction === "rtl") {
       x2 += max(html.clientWidth, body.clientWidth) - width;
@@ -8773,7 +8750,11 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   var SCROLLBAR_MAX = 25;
-  function getViewportRect(element, strategy) {
+  function getViewportRect(element, strategy, rootBoundary) {
+    if (rootBoundary === void 0) {
+      rootBoundary = "viewport";
+    }
+    const isLayoutViewport = rootBoundary === "layoutViewport";
     const win = getWindow2(element);
     const html = getDocumentElement(element);
     const visualViewport = win.visualViewport;
@@ -8782,12 +8763,19 @@ If there's a particular need for this, please submit a feature request at https:
     let x2 = 0;
     let y3 = 0;
     if (visualViewport) {
-      width = visualViewport.width;
-      height = visualViewport.height;
-      const visualViewportBased = isWebKit();
-      if (!visualViewportBased || visualViewportBased && strategy === "fixed") {
-        x2 = visualViewport.offsetLeft;
-        y3 = visualViewport.offsetTop;
+      const layoutRelativeClientCoords = !isWebKit() || strategy === "fixed";
+      if (isLayoutViewport) {
+        if (!layoutRelativeClientCoords) {
+          x2 = -visualViewport.offsetLeft;
+          y3 = -visualViewport.offsetTop;
+        }
+      } else {
+        width = visualViewport.width;
+        height = visualViewport.height;
+        if (layoutRelativeClientCoords) {
+          x2 = visualViewport.offsetLeft;
+          y3 = visualViewport.offsetTop;
+        }
       }
     }
     const windowScrollbarX = getWindowScrollBarX(html);
@@ -8796,12 +8784,11 @@ If there's a particular need for this, please submit a feature request at https:
       const body = doc.body;
       const bodyStyles = getComputedStyle(body);
       const bodyMarginInline = doc.compatMode === "CSS1Compat" ? parseFloat(bodyStyles.marginLeft) + parseFloat(bodyStyles.marginRight) || 0 : 0;
-      const clippingStableScrollbarWidth = Math.abs(html.clientWidth - body.clientWidth - bodyMarginInline);
-      if (clippingStableScrollbarWidth <= SCROLLBAR_MAX) {
-        width -= clippingStableScrollbarWidth;
+      const reservedWidth = Math.abs(html.clientWidth - body.clientWidth - bodyMarginInline);
+      const gutter = getComputedStyle(html).scrollbarGutter === "stable both-edges" ? reservedWidth / 2 : reservedWidth;
+      if (gutter <= SCROLLBAR_MAX) {
+        width -= gutter;
       }
-    } else if (windowScrollbarX <= SCROLLBAR_MAX) {
-      width += windowScrollbarX;
     }
     return {
       width,
@@ -8814,7 +8801,7 @@ If there's a particular need for this, please submit a feature request at https:
     const clientRect = getBoundingClientRect(element, true, strategy === "fixed");
     const top = clientRect.top + element.clientTop;
     const left = clientRect.left + element.clientLeft;
-    const scale2 = isHTMLElement(element) ? getScale(element) : createCoords(1);
+    const scale2 = getScale(element);
     const width = element.clientWidth * scale2.x;
     const height = element.clientHeight * scale2.y;
     const x2 = left * scale2.x;
@@ -8828,8 +8815,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function getClientRectFromClippingAncestor(element, clippingAncestor, strategy) {
     let rect;
-    if (clippingAncestor === "viewport") {
-      rect = getViewportRect(element, strategy);
+    if (clippingAncestor === "viewport" || clippingAncestor === "layoutViewport") {
+      rect = getViewportRect(element, strategy, clippingAncestor);
     } else if (clippingAncestor === "document") {
       rect = getDocumentRect(getDocumentElement(element));
     } else if (isElement2(clippingAncestor)) {
@@ -8845,33 +8832,24 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return rectToClientRect(rect);
   }
-  function hasFixedPositionAncestor(element, stopNode) {
-    const parentNode = getParentNode(element);
-    if (parentNode === stopNode || !isElement2(parentNode) || isLastTraversableNode(parentNode)) {
-      return false;
-    }
-    return getComputedStyle2(parentNode).position === "fixed" || hasFixedPositionAncestor(parentNode, stopNode);
-  }
   function getClippingElementAncestors(element, cache2) {
     const cachedResult = cache2.get(element);
     if (cachedResult) {
       return cachedResult;
     }
     let result = getOverflowAncestors(element, [], false).filter((el) => isElement2(el) && getNodeName(el) !== "body");
-    let currentContainingBlockComputedStyle = null;
+    let lastKeptComputedStyle = null;
     const elementIsFixed = getComputedStyle2(element).position === "fixed";
     let currentNode = elementIsFixed ? getParentNode(element) : element;
     while (isElement2(currentNode) && !isLastTraversableNode(currentNode)) {
       const computedStyle = getComputedStyle2(currentNode);
       const currentNodeIsContaining = isContainingBlock(currentNode);
-      if (!currentNodeIsContaining && computedStyle.position === "fixed") {
-        currentContainingBlockComputedStyle = null;
-      }
-      const shouldDropCurrentNode = elementIsFixed ? !currentNodeIsContaining && !currentContainingBlockComputedStyle : !currentNodeIsContaining && computedStyle.position === "static" && !!currentContainingBlockComputedStyle && (currentContainingBlockComputedStyle.position === "absolute" || currentContainingBlockComputedStyle.position === "fixed") || isOverflowElement(currentNode) && !currentNodeIsContaining && hasFixedPositionAncestor(element, currentNode);
+      const lastPosition = lastKeptComputedStyle ? lastKeptComputedStyle.position : elementIsFixed ? "fixed" : "";
+      const shouldDropCurrentNode = !currentNodeIsContaining && (lastPosition === "fixed" || lastPosition === "absolute" && computedStyle.position === "static");
       if (shouldDropCurrentNode) {
         result = result.filter((ancestor) => ancestor !== currentNode);
       } else {
-        currentContainingBlockComputedStyle = computedStyle;
+        lastKeptComputedStyle = computedStyle;
       }
       currentNode = getParentNode(currentNode);
     }
@@ -8926,10 +8904,7 @@ If there's a particular need for this, please submit a feature request at https:
       scrollTop: 0
     };
     const offsets = createCoords(0);
-    function setLeftRTLScrollbarOffset() {
-      offsets.x = getWindowScrollBarX(documentElement);
-    }
-    if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
+    if (isOffsetParentAnElement || !isFixed) {
       if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) {
         scroll = getNodeScroll(offsetParent);
       }
@@ -8937,12 +8912,10 @@ If there's a particular need for this, please submit a feature request at https:
         const offsetRect = getBoundingClientRect(offsetParent, true, isFixed, offsetParent);
         offsets.x = offsetRect.x + offsetParent.clientLeft;
         offsets.y = offsetRect.y + offsetParent.clientTop;
-      } else if (documentElement) {
-        setLeftRTLScrollbarOffset();
       }
     }
-    if (isFixed && !isOffsetParentAnElement && documentElement) {
-      setLeftRTLScrollbarOffset();
+    if (!isOffsetParentAnElement && documentElement) {
+      offsets.x = getWindowScrollBarX(documentElement);
     }
     const htmlOffset = documentElement && !isOffsetParentAnElement && !isFixed ? getHTMLOffset(documentElement, scroll) : createCoords(0);
     const x2 = rect.left + scroll.scrollLeft - offsets.x - htmlOffset.x;
@@ -9026,7 +8999,7 @@ If there's a particular need for this, please submit a feature request at https:
   function rectsAreEqual(a3, b3) {
     return a3.x === b3.x && a3.y === b3.y && a3.width === b3.width && a3.height === b3.height;
   }
-  function observeMove(element, onMove) {
+  function observeMove(element, onMove, ancestorResize) {
     let io = null;
     let timeoutId;
     const root = getDocumentElement(element);
@@ -9069,6 +9042,9 @@ If there's a particular need for this, please submit a feature request at https:
       let isFirstUpdate = true;
       function handleObserve(entries) {
         const ratio = entries[0].intersectionRatio;
+        if (!rectsAreEqual(elementRectForRootMargin, element.getBoundingClientRect())) {
+          return refresh();
+        }
         if (ratio !== threshold) {
           if (!isFirstUpdate) {
             return refresh();
@@ -9080,9 +9056,6 @@ If there's a particular need for this, please submit a feature request at https:
           } else {
             refresh(false, ratio);
           }
-        }
-        if (ratio === 1 && !rectsAreEqual(elementRectForRootMargin, element.getBoundingClientRect())) {
-          refresh();
         }
         isFirstUpdate = false;
       }
@@ -9097,8 +9070,14 @@ If there's a particular need for this, please submit a feature request at https:
       }
       io.observe(element);
     }
+    const win = getWindow2(element);
+    const handleResize = () => refresh(ancestorResize);
+    win.addEventListener("resize", handleResize);
     refresh(true);
-    return cleanup;
+    return () => {
+      win.removeEventListener("resize", handleResize);
+      cleanup();
+    };
   }
   function autoUpdate(reference, floating, update, options2) {
     if (options2 === void 0) {
@@ -9114,12 +9093,10 @@ If there's a particular need for this, please submit a feature request at https:
     const referenceEl = unwrapElement(reference);
     const ancestors = ancestorScroll || ancestorResize ? [...referenceEl ? getOverflowAncestors(referenceEl) : [], ...floating ? getOverflowAncestors(floating) : []] : [];
     ancestors.forEach((ancestor) => {
-      ancestorScroll && ancestor.addEventListener("scroll", update, {
-        passive: true
-      });
+      ancestorScroll && ancestor.addEventListener("scroll", update);
       ancestorResize && ancestor.addEventListener("resize", update);
     });
-    const cleanupIo = referenceEl && layoutShift ? observeMove(referenceEl, update) : null;
+    const cleanupIo = referenceEl && layoutShift ? observeMove(referenceEl, update, ancestorResize) : null;
     let reobserveFrame = -1;
     let resizeObserver = null;
     if (elementResize) {
@@ -9178,11 +9155,9 @@ If there's a particular need for this, please submit a feature request at https:
   var limitShift2 = limitShift;
   var computePosition2 = (reference, floating, options2) => {
     const cache2 = /* @__PURE__ */ new Map();
-    const mergedOptions = {
-      platform,
-      ...options2
-    };
+    const mergedOptions = options2 != null ? options2 : {};
     const platformWithCache = {
+      ...platform,
       ...mergedOptions.platform,
       _c: cache2
     };
