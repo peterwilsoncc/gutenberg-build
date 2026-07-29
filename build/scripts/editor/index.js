@@ -99046,6 +99046,7 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       if (!isNoteFocused2) {
+        debouncedToggleBlockHighlight.cancel();
         toggleBlockHighlight(note.blockClientId, false);
       }
       if (getSelectedNote2() === note.id) {
@@ -99060,6 +99061,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     function onFocus(event) {
       focusOutside.onFocus(event);
+      debouncedToggleBlockHighlight.cancel();
       toggleBlockHighlight(note.blockClientId, true);
     }
     function onSelectNote() {
