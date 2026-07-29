@@ -33813,12 +33813,14 @@ ${js}
   // packages/block-library/build-module/html/modal.mjs
   var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
   var { Tabs } = unlock(import_components50.privateApis);
+  var { useNativeUndo } = unlock(import_block_editor110.privateApis);
   function HTMLEditModal({ onRequestClose, content, onUpdate }) {
     const { html, css, js } = parseContent(content);
     const [editedHtml, setEditedHtml] = (0, import_element50.useState)(html);
     const [editedCss, setEditedCss] = (0, import_element50.useState)(css);
     const [editedJs, setEditedJs] = (0, import_element50.useState)(js);
     const [isFullscreen, setIsFullscreen] = (0, import_element50.useState)(false);
+    const nativeUndoRef = useNativeUndo();
     const isMobileViewport = (0, import_compose21.useViewportMatch)("small", "<");
     const { canUserUseUnfilteredHTML } = (0, import_data45.useSelect)((select10) => {
       const settings121 = select10(import_block_editor110.store).getSettings();
@@ -33900,67 +33902,74 @@ ${js}
               align: "stretch",
               gap: 8,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)("div", { className: "block-library-html__modal-content", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-                    Tabs.TabPanel,
-                    {
-                      tabId: "html",
-                      focusable: false,
-                      className: "block-library-html__modal-tab",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-                        import_block_editor110.PlainText,
+                /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)(
+                  "div",
+                  {
+                    ref: nativeUndoRef,
+                    className: "block-library-html__modal-content",
+                    children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+                        Tabs.TabPanel,
                         {
-                          value: editedHtml,
-                          onChange: setEditedHtml,
-                          placeholder: (0, import_i18n92.__)("Write HTML\u2026"),
-                          "aria-label": (0, import_i18n92.__)("HTML"),
-                          className: "block-library-html__modal-editor",
-                          async: true
+                          tabId: "html",
+                          focusable: false,
+                          className: "block-library-html__modal-tab",
+                          children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+                            import_block_editor110.PlainText,
+                            {
+                              value: editedHtml,
+                              onChange: setEditedHtml,
+                              placeholder: (0, import_i18n92.__)("Write HTML\u2026"),
+                              "aria-label": (0, import_i18n92.__)("HTML"),
+                              className: "block-library-html__modal-editor",
+                              async: true
+                            }
+                          )
+                        }
+                      ),
+                      canUserUseUnfilteredHTML && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+                        Tabs.TabPanel,
+                        {
+                          tabId: "css",
+                          focusable: false,
+                          className: "block-library-html__modal-tab",
+                          children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+                            import_block_editor110.PlainText,
+                            {
+                              value: editedCss,
+                              onChange: setEditedCss,
+                              placeholder: (0, import_i18n92.__)("Write CSS\u2026"),
+                              "aria-label": (0, import_i18n92.__)("CSS"),
+                              className: "block-library-html__modal-editor",
+                              async: true
+                            }
+                          )
+                        }
+                      ),
+                      canUserUseUnfilteredHTML && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+                        Tabs.TabPanel,
+                        {
+                          tabId: "js",
+                          focusable: false,
+                          className: "block-library-html__modal-tab",
+                          children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
+                            import_block_editor110.PlainText,
+                            {
+                              value: editedJs,
+                              onChange: setEditedJs,
+                              placeholder: (0, import_i18n92.__)(
+                                "Write JavaScript\u2026"
+                              ),
+                              "aria-label": (0, import_i18n92.__)("JavaScript"),
+                              className: "block-library-html__modal-editor",
+                              async: true
+                            }
+                          )
                         }
                       )
-                    }
-                  ),
-                  canUserUseUnfilteredHTML && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-                    Tabs.TabPanel,
-                    {
-                      tabId: "css",
-                      focusable: false,
-                      className: "block-library-html__modal-tab",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-                        import_block_editor110.PlainText,
-                        {
-                          value: editedCss,
-                          onChange: setEditedCss,
-                          placeholder: (0, import_i18n92.__)("Write CSS\u2026"),
-                          "aria-label": (0, import_i18n92.__)("CSS"),
-                          className: "block-library-html__modal-editor",
-                          async: true
-                        }
-                      )
-                    }
-                  ),
-                  canUserUseUnfilteredHTML && /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-                    Tabs.TabPanel,
-                    {
-                      tabId: "js",
-                      focusable: false,
-                      className: "block-library-html__modal-tab",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-                        import_block_editor110.PlainText,
-                        {
-                          value: editedJs,
-                          onChange: setEditedJs,
-                          placeholder: (0, import_i18n92.__)(
-                            "Write JavaScript\u2026"
-                          ),
-                          "aria-label": (0, import_i18n92.__)("JavaScript"),
-                          className: "block-library-html__modal-editor",
-                          async: true
-                        }
-                      )
-                    }
-                  )
-                ] }),
+                    ]
+                  }
+                ),
                 /* @__PURE__ */ (0, import_jsx_runtime286.jsx)("div", { className: "block-library-html__preview", children: /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
                   HTMLEditPreview,
                   {

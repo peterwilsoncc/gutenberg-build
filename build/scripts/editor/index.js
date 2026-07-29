@@ -77249,6 +77249,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_keyboard_shortcuts4 = __toESM(require_keyboard_shortcuts(), 1);
   var import_data79 = __toESM(require_data(), 1);
   var import_block_editor28 = __toESM(require_block_editor(), 1);
+  var { usesNativeUndo } = unlock(import_block_editor28.privateApis);
   function EditorKeyboardShortcuts() {
     const isModeToggleDisabled = (0, import_data79.useSelect)((select9) => {
       const { richEditingEnabled, codeEditingEnabled } = select9(store).getEditorSettings();
@@ -77287,10 +77288,16 @@ If there's a particular need for this, please submit a feature request at https:
       toggleDistractionFree2();
     });
     (0, import_keyboard_shortcuts4.useShortcut)("core/editor/undo", (event) => {
+      if (usesNativeUndo(event)) {
+        return;
+      }
       undo2();
       event.preventDefault();
     });
     (0, import_keyboard_shortcuts4.useShortcut)("core/editor/redo", (event) => {
+      if (usesNativeUndo(event)) {
+        return;
+      }
       redo2();
       event.preventDefault();
     });

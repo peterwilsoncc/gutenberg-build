@@ -9221,7 +9221,7 @@ var wp;
   // packages/edit-post/build-module/components/layout/index.mjs
   var import_editor17 = __toESM(require_editor(), 1);
   var import_data24 = __toESM(require_data(), 1);
-  var import_block_editor = __toESM(require_block_editor(), 1);
+  var import_block_editor2 = __toESM(require_block_editor(), 1);
 
   // packages/global-styles-engine/build-module/utils/common.mjs
   var import_style_engine = __toESM(require_style_engine(), 1);
@@ -10469,7 +10469,9 @@ var wp;
   var import_element22 = __toESM(require_element(), 1);
   var import_components4 = __toESM(require_components(), 1);
   var import_data10 = __toESM(require_data(), 1);
+  var import_block_editor = __toESM(require_block_editor(), 1);
   var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+  var { useNativeUndo } = unlock2(import_block_editor.privateApis);
   function MetaBoxesArea({ location }) {
     const container = (0, import_element22.useRef)(null);
     const formRef = (0, import_element22.useRef)(null);
@@ -10492,7 +10494,8 @@ var wp;
     const classes = clsx_default("edit-post-meta-boxes-area", `is-${location}`, {
       "is-loading": isSaving
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: classes, children: [
+    const nativeUndoRef = useNativeUndo();
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: classes, ref: nativeUndoRef, children: [
       isSaving && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_components4.Spinner, { className: "edit-post-meta-boxes-area__spinner" }),
       /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
         "div",
@@ -11421,7 +11424,7 @@ var wp;
           name: "wp_template"
         });
         const { getBlockSelectionStart, isZoomOut } = unlock2(
-          select3(import_block_editor.store)
+          select3(import_block_editor2.store)
         );
         const { getEditorMode: getEditorMode2, getDefaultRenderingMode } = unlock2(
           select3(import_editor17.store)
