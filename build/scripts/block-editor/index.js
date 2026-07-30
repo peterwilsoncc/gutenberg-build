@@ -72850,16 +72850,19 @@ var wp;
         return;
       }
       const value = getValue();
-      const transforms = (0, import_blocks81.getBlockTransforms)("from").filter(
-        (transform) => transform.type === "input"
-      );
-      const transformation = (0, import_blocks81.findTransform)(transforms, (item) => {
-        return item.regExp.test(value.text);
-      });
-      if (transformation) {
-        onReplace(transformation.transform());
-        registry.dispatch(store).__unstableMarkAutomaticChange();
-        return;
+      if (onReplace) {
+        const transforms = (0, import_blocks81.getBlockTransforms)("from").filter(
+          (transform) => transform.type === "input"
+        );
+        const transformation = (0, import_blocks81.findTransform)(
+          transforms,
+          (item) => item.regExp.test(value.text)
+        );
+        if (transformation) {
+          onReplace(transformation.transform());
+          registry.dispatch(store).__unstableMarkAutomaticChange();
+          return;
+        }
       }
       const transformed = formatTypes.reduce(
         (accumulator, { __unstableInputRule }) => {
