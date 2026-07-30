@@ -24872,7 +24872,7 @@ var wp;
       if (isPartOfSelection && isDragging3) {
         return;
       }
-      const zIndex = isPartOfSelection ? "1" : "";
+      const zIndex = isPartOfSelection ? "20" : "";
       const controller = new Controller({
         x: 0,
         y: 0,
@@ -24887,7 +24887,7 @@ var wp;
           const finishedMoving = x22 === 0 && y22 === 0;
           ref.current.style.transformOrigin = "center center";
           ref.current.style.transform = finishedMoving ? null : `translate3d(${x22}px,${y22}px,0)`;
-          ref.current.style.zIndex = zIndex;
+          ref.current.style.zIndex = finishedMoving ? null : zIndex;
           preserveScrollPosition();
         }
       });
