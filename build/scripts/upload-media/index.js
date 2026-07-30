@@ -943,6 +943,7 @@ var wp;
     ErrorCode2["IMAGE_ROTATION_ERROR"] = "IMAGE_ROTATION_ERROR";
     ErrorCode2["MEDIA_TRANSCODING_ERROR"] = "MEDIA_TRANSCODING_ERROR";
     ErrorCode2["GIF_TRANSCODING_ERROR"] = "GIF_TRANSCODING_ERROR";
+    ErrorCode2["MEDIA_FINALIZE_ERROR"] = "MEDIA_FINALIZE_ERROR";
     ErrorCode2["GENERAL"] = "GENERAL";
     return ErrorCode2;
   })(ErrorCode || {});
@@ -3367,6 +3368,15 @@ var wp;
           }
         } catch (error) {
           console.warn("Media finalization failed:", error);
+          dispatch.cancelItem(
+            id,
+            new UploadError({
+              code: ErrorCode.MEDIA_FINALIZE_ERROR,
+              message: (0, import_i18n6.__)("Could not finalize the upload."),
+              file: item.file
+            })
+          );
+          return;
         }
       }
       dispatch.finishOperation(id, updates);
@@ -3550,6 +3560,15 @@ var wp;
           fileName
         ),
         action: (0, import_i18n7.__)("The file may be corrupted. Try a different file.")
+      },
+      [ErrorCode.MEDIA_FINALIZE_ERROR]: {
+        title: (0, import_i18n7.__)("Upload failed"),
+        description: (0, import_i18n7.sprintf)(
+          /* translators: %s: file name */
+          (0, import_i18n7.__)('Could not finalize the upload of "%s".'),
+          fileName
+        ),
+        action: (0, import_i18n7.__)("Please try again.")
       },
       [ErrorCode.GENERAL]: {
         title: (0, import_i18n7.__)("Upload failed"),
