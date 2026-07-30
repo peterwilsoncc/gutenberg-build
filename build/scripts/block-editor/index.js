@@ -71763,57 +71763,32 @@ var wp;
     function handleKeyDown(event) {
       onKeyDown?.(event);
       if (!showSuggestions || !suggestions.length || isLoading) {
-        switch (event.keyCode) {
-          // When UP is pressed, if the caret is at the start of the text, move it to the 0
-          // position.
-          case import_keycodes21.UP: {
-            if (0 !== event.target.selectionStart) {
-              event.preventDefault();
-              event.target.setSelectionRange(0, 0);
-            }
-            break;
+        if (!event.shiftKey && (event.keyCode === import_keycodes21.UP || event.keyCode === import_keycodes21.DOWN)) {
+          const caret = event.keyCode === import_keycodes21.UP ? 0 : event.target.value.length;
+          if (event.target.selectionStart !== caret || event.target.selectionEnd !== caret) {
+            event.preventDefault();
+            event.target.setSelectionRange(caret, caret);
           }
-          // When DOWN is pressed, if the caret is not at the end of the text, move it to the
-          // last position.
-          case import_keycodes21.DOWN: {
-            if (value.length !== event.target.selectionStart) {
-              event.preventDefault();
-              event.target.setSelectionRange(
-                value.length,
-                value.length
-              );
-            }
-            break;
-          }
-          // Submitting while loading should trigger onSubmit.
-          case import_keycodes21.ENTER: {
-            if (onSubmit) {
-              event.preventDefault();
-              onSubmit(null, event);
-            }
-            break;
-          }
+        } else if (event.keyCode === import_keycodes21.ENTER && onSubmit) {
+          event.preventDefault();
+          onSubmit(null, event);
         }
         return;
       }
-      const suggestion = suggestions[selectedSuggestion];
+      const suggestion = suggestions[selectedSuggestion] ?? null;
       switch (event.keyCode) {
-        case import_keycodes21.UP: {
-          event.preventDefault();
-          setSelectedSuggestion(
-            !selectedSuggestion ? suggestions.length - 1 : selectedSuggestion - 1
-          );
-          break;
-        }
+        case import_keycodes21.UP:
         case import_keycodes21.DOWN: {
           event.preventDefault();
+          const offset4 = event.keyCode === import_keycodes21.UP ? -1 : 1;
+          const from = selectedSuggestion ?? (offset4 === -1 ? 0 : -1);
           setSelectedSuggestion(
-            selectedSuggestion === null || selectedSuggestion === suggestions.length - 1 ? 0 : selectedSuggestion + 1
+            (from + offset4 + suggestions.length) % suggestions.length
           );
           break;
         }
         case import_keycodes21.TAB: {
-          if (selectedSuggestion !== null) {
+          if (suggestion) {
             selectLink(suggestion);
             (0, import_a11y19.speak)((0, import_i18n163.__)("Link selected."));
           }
@@ -71821,14 +71796,10 @@ var wp;
         }
         case import_keycodes21.ENTER: {
           event.preventDefault();
-          if (selectedSuggestion !== null) {
+          if (suggestion) {
             selectLink(suggestion);
-            if (onSubmit) {
-              onSubmit(suggestion, event);
-            }
-          } else if (onSubmit) {
-            onSubmit(null, event);
           }
+          onSubmit?.(suggestion, event);
           break;
         }
       }
