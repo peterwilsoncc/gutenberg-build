@@ -57150,7 +57150,7 @@ var wp;
 
   // packages/block-editor/build-module/components/block-actions/index.mjs
   var import_data94 = __toESM(require_data(), 1);
-  var import_blocks53 = __toESM(require_blocks(), 1);
+  var import_blocks54 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/use-paste-styles/index.mjs
   var import_element158 = __toESM(require_element(), 1);
@@ -57370,13 +57370,27 @@ var wp;
     );
   }
 
+  // packages/block-editor/build-module/utils/group-blocks.mjs
+  var import_blocks53 = __toESM(require_blocks(), 1);
+  function groupBlocks(blocks2, groupingBlockName) {
+    const groupingBlockTransform = (0, import_blocks53.findTransform)(
+      (0, import_blocks53.getBlockTransforms)("from", groupingBlockName),
+      (transform) => transform.type === "block" && transform.isMultiBlock && transform.blocks.includes("*")
+    );
+    if (groupingBlockTransform?.__experimentalConvert) {
+      const result = groupingBlockTransform.__experimentalConvert(blocks2);
+      return Array.isArray(result) ? result : [result];
+    }
+    return (0, import_blocks53.switchToBlockType)(blocks2, groupingBlockName);
+  }
+
   // packages/block-editor/build-module/components/block-actions/index.mjs
   function BlockActions({
     clientIds,
     children,
     __experimentalUpdateSelection: updateSelection
   }) {
-    const { getDefaultBlockName: getDefaultBlockName8, getGroupingBlockName } = (0, import_data94.useSelect)(import_blocks53.store);
+    const { getDefaultBlockName: getDefaultBlockName8, getGroupingBlockName } = (0, import_data94.useSelect)(import_blocks54.store);
     const selected = (0, import_data94.useSelect)(
       (select3) => {
         const {
@@ -57399,10 +57413,10 @@ var wp;
             return (canInsertDefaultBlock || !!directInsertBlock) && canInsertBlockType2(block.name, rootClientId);
           }),
           canCopyStyles: blocks2.every((block) => {
-            return !!block && ((0, import_blocks53.hasBlockSupport)(block.name, "color") || (0, import_blocks53.hasBlockSupport)(block.name, "typography"));
+            return !!block && ((0, import_blocks54.hasBlockSupport)(block.name, "color") || (0, import_blocks54.hasBlockSupport)(block.name, "typography"));
           }),
           canDuplicate: blocks2.every((block) => {
-            return !!block && (0, import_blocks53.hasBlockSupport)(block.name, "multiple", true) && canInsertBlockType2(block.name, rootClientId);
+            return !!block && (0, import_blocks54.hasBlockSupport)(block.name, "multiple", true) && canInsertBlockType2(block.name, rootClientId);
           })
         };
       },
@@ -57441,7 +57455,7 @@ var wp;
           return;
         }
         const groupingBlockName = getGroupingBlockName();
-        const newBlocks = (0, import_blocks53.switchToBlockType)(
+        const newBlocks = groupBlocks(
           getBlocksByClientId2(clientIds),
           groupingBlockName
         );
@@ -57479,7 +57493,7 @@ var wp;
   // packages/block-editor/build-module/components/block-settings-menu/block-html-convert-button.mjs
   var import_i18n78 = __toESM(require_i18n(), 1);
   var import_components83 = __toESM(require_components(), 1);
-  var import_blocks54 = __toESM(require_blocks(), 1);
+  var import_blocks55 = __toESM(require_blocks(), 1);
   var import_data95 = __toESM(require_data(), 1);
   var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
   function BlockHTMLConvertButton({ clientId }) {
@@ -57496,7 +57510,7 @@ var wp;
       {
         onClick: () => replaceBlocks2(
           clientId,
-          (0, import_blocks54.rawHandler)({ HTML: (0, import_blocks54.getBlockContent)(block) })
+          (0, import_blocks55.rawHandler)({ HTML: (0, import_blocks55.getBlockContent)(block) })
         ),
         children: (0, import_i18n78.__)("Convert to Blocks")
       }
@@ -57520,12 +57534,11 @@ var wp;
   // packages/block-editor/build-module/components/convert-to-group-buttons/index.mjs
   var import_components86 = __toESM(require_components(), 1);
   var import_i18n80 = __toESM(require_i18n(), 1);
-  var import_blocks57 = __toESM(require_blocks(), 1);
   var import_data98 = __toESM(require_data(), 1);
   var import_keycodes11 = __toESM(require_keycodes(), 1);
 
   // packages/block-editor/build-module/components/convert-to-group-buttons/use-convert-to-group-button-props.mjs
-  var import_blocks55 = __toESM(require_blocks(), 1);
+  var import_blocks56 = __toESM(require_blocks(), 1);
   var import_data96 = __toESM(require_data(), 1);
   function useConvertToGroupButtonProps(selectedClientIds) {
     return (0, import_data96.useSelect)(
@@ -57536,7 +57549,7 @@ var wp;
           isUngroupable: isUngroupable2,
           isGroupable: isGroupable2
         } = select3(store);
-        const { getGroupingBlockName, getBlockType: getBlockType30 } = select3(import_blocks55.store);
+        const { getGroupingBlockName, getBlockType: getBlockType30 } = select3(import_blocks56.store);
         const clientIds = selectedClientIds?.length ? selectedClientIds : getSelectedBlockClientIds2();
         const blocksSelection = getBlocksByClientId2(clientIds);
         const [firstSelectedBlock] = blocksSelection;
@@ -57556,7 +57569,7 @@ var wp;
 
   // packages/block-editor/build-module/components/convert-to-group-buttons/toolbar.mjs
   var import_data97 = __toESM(require_data(), 1);
-  var import_blocks56 = __toESM(require_blocks(), 1);
+  var import_blocks57 = __toESM(require_blocks(), 1);
   var import_components85 = __toESM(require_components(), 1);
   var import_i18n79 = __toESM(require_i18n(), 1);
   var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
@@ -57572,7 +57585,7 @@ var wp;
     const { canRemove, variations } = (0, import_data97.useSelect)(
       (select3) => {
         const { canRemoveBlocks: canRemoveBlocks2 } = select3(store);
-        const { getBlockVariations: getBlockVariations2 } = select3(import_blocks56.store);
+        const { getBlockVariations: getBlockVariations2 } = select3(import_blocks57.store);
         return {
           canRemove: canRemoveBlocks2(clientIds),
           variations: getBlockVariations2(
@@ -57584,10 +57597,7 @@ var wp;
       [clientIds, groupingBlockName]
     );
     const onConvertToGroup = (layout) => {
-      const newBlocks = (0, import_blocks56.switchToBlockType)(
-        blocksSelection,
-        groupingBlockName
-      );
+      const newBlocks = groupBlocks(blocksSelection, groupingBlockName);
       if (typeof layout !== "string") {
         layout = "group";
       }
@@ -57663,10 +57673,7 @@ var wp;
     const { getSelectedBlockClientIds: getSelectedBlockClientIds2 } = (0, import_data98.useSelect)(store);
     const { replaceBlocks: replaceBlocks2 } = (0, import_data98.useDispatch)(store);
     const onConvertToGroup = () => {
-      const newBlocks = (0, import_blocks57.switchToBlockType)(
-        blocksSelection,
-        groupingBlockName
-      );
+      const newBlocks = groupBlocks(blocksSelection, groupingBlockName);
       if (newBlocks) {
         replaceBlocks2(clientIds, newBlocks);
       }
@@ -60910,10 +60917,7 @@ var wp;
           event.preventDefault();
           const blocks2 = getBlocksByClientId2(clientIds);
           const groupingBlockName = getGroupingBlockName();
-          const newBlocks = (0, import_blocks75.switchToBlockType)(
-            blocks2,
-            groupingBlockName
-          );
+          const newBlocks = groupBlocks(blocks2, groupingBlockName);
           replaceBlocks2(clientIds, newBlocks);
           (0, import_a11y12.speak)((0, import_i18n103.__)("Selected blocks are grouped."));
         }
@@ -61298,7 +61302,7 @@ var wp;
         return;
       }
       const groupingBlockName = getGroupingBlockName();
-      const newBlocks = (0, import_blocks76.switchToBlockType)(blocks2, groupingBlockName);
+      const newBlocks = groupBlocks(blocks2, groupingBlockName);
       if (!newBlocks) {
         return;
       }
@@ -62444,10 +62448,7 @@ var wp;
           event.preventDefault();
           const blocks2 = getBlocksByClientId2(blocksToUpdate);
           const groupingBlockName = getGroupingBlockName();
-          const newBlocks = (0, import_blocks77.switchToBlockType)(
-            blocks2,
-            groupingBlockName
-          );
+          const newBlocks = groupBlocks(blocks2, groupingBlockName);
           replaceBlocks2(blocksToUpdate, newBlocks);
           (0, import_a11y14.speak)((0, import_i18n109.__)("Selected blocks are grouped."));
           const newlySelectedBlocks = getSelectedBlockClientIds2();
