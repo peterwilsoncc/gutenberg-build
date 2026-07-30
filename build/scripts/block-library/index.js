@@ -67394,6 +67394,15 @@ ${text}
     isSelected
   }) {
     const { textAlign, allowedBlocks } = attributes;
+    const { hasInnerBlocks } = (0, import_data135.useSelect)(
+      (select10) => {
+        const { getBlockCount } = select10(import_block_editor233.store);
+        return {
+          hasInnerBlocks: getBlockCount(clientId) > 0
+        };
+      },
+      [clientId]
+    );
     useMigrateOnLoad2(attributes, clientId);
     const blockProps = (0, import_block_editor233.useBlockProps)({
       className: clsx_default(className, {
@@ -67404,7 +67413,7 @@ ${text}
       template: TEMPLATE16,
       templateInsertUpdatesSelection: true,
       __experimentalCaptureToolbars: true,
-      renderAppender: false,
+      renderAppender: hasInnerBlocks ? false : void 0,
       allowedBlocks
     });
     return /* @__PURE__ */ (0, import_jsx_runtime435.jsxs)(import_jsx_runtime435.Fragment, { children: [
