@@ -511,7 +511,6 @@ var wp;
             {
               path: `/${tab.name}`,
               as: import_components4.__experimentalItem,
-              isAction: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_components4.__experimentalHStack, { justify: "space-between", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components4.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components4.__experimentalTruncate, { children: tab.title }) }),
                 /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_components4.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
