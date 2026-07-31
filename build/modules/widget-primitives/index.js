@@ -111,7 +111,30 @@ function resolveFields(fields) {
   });
 }
 
+// packages/widget-primitives/build-module/icon-resolver/icon-resolver.mjs
+var iconResolver;
+function registerIconResolver(resolver) {
+  if (iconResolver) {
+    return void 0;
+  }
+  iconResolver = resolver;
+  return resolver;
+}
+async function resolveIcon(reference) {
+  if (!iconResolver) {
+    return null;
+  }
+  try {
+    return await iconResolver(reference);
+  } catch {
+    return null;
+  }
+}
+
 // packages/widget-primitives/build-module/hooks/use-widget-types.mjs
+var pendingIcon = (0, import_element2.createElement)("svg", {
+  viewBox: "0 0 24 24"
+});
 function useWidgetTypes(records) {
   const [widgetTypes, setWidgetTypes] = (0, import_element2.useState)([]);
   const [isResolvingWidgetTypes, setIsResolvingWidgetTypes] = (0, import_element2.useState)(true);
@@ -141,6 +164,8 @@ function useWidgetTypes(records) {
             return null;
           }
           const metadata = module.default;
+          const moduleIcon = (0, import_element2.isValidElement)(metadata.icon) ? metadata.icon : void 0;
+          const icon = moduleIcon ?? (record.icon ? pendingIcon : void 0);
           return {
             ...metadata,
             ...metadata.attributes ? {
@@ -150,6 +175,7 @@ function useWidgetTypes(records) {
             } : {},
             name: record.name,
             renderModule: record.render_module ?? "",
+            icon,
             /*
              * `title` is required:
              * - Server-side title wins
@@ -176,6 +202,27 @@ function useWidgetTypes(records) {
         results.filter((t) => t !== null)
       );
       setIsResolvingWidgetTypes(false);
+      for (const record of records) {
+        if (!record.icon) {
+          continue;
+        }
+        void resolveIcon(record.icon).then((resolved) => {
+          if (cancelled) {
+            return;
+          }
+          setWidgetTypes(
+            (prev) => prev.map((widgetType) => {
+              if (widgetType.name !== record.name) {
+                return widgetType;
+              }
+              if (resolved) {
+                return { ...widgetType, icon: resolved };
+              }
+              return widgetType.icon === pendingIcon ? { ...widgetType, icon: void 0 } : widgetType;
+            })
+          );
+        });
+      }
     });
     return () => {
       cancelled = true;
@@ -186,6 +233,7 @@ function useWidgetTypes(records) {
 export {
   WidgetRender,
   registerFieldType,
+  registerIconResolver,
   useWidgetTypes
 };
 //# sourceMappingURL=index.js.map
