@@ -7828,6 +7828,8 @@ var wp;
     allowedMimeTypes: null,
     // Allows to disable block locking interface.
     canLockBlocks: true,
+    // Allows to disable the block-level style states interface.
+    blockStatesEnabled: true,
     // Whether the user can edit custom CSS (requires edit_css capability).
     // Defaults to false for safety - PHP passes true when user has capability.
     canEditCSS: false,
@@ -83707,9 +83709,11 @@ var wp;
       blockEditingMode,
       selectedBlockStyleState: selectedBlockStyleState2,
       showStateOnCanvas,
-      isResponsiveEditing: isResponsiveEditing3
+      isResponsiveEditing: isResponsiveEditing3,
+      blockStatesEnabled
     } = (0, import_data179.useSelect)((select3) => {
       const {
+        getSettings: getSettings7,
         getSelectedBlockClientId: getSelectedBlockClientId2,
         getSelectedBlockClientIds: getSelectedBlockClientIds2,
         getSelectedBlockCount: getSelectedBlockCount2,
@@ -83753,7 +83757,8 @@ var wp;
         showStateOnCanvas: isSelectedBlockStyleStateShownOnCanvas2(
           _renderedBlockClientId
         ),
-        isResponsiveEditing: _isResponsiveEditing()
+        isResponsiveEditing: _isResponsiveEditing(),
+        blockStatesEnabled: getSettings7().blockStatesEnabled
       };
     }, []);
     const contentClientIds = (0, import_data179.useSelect)(
@@ -83844,6 +83849,7 @@ var wp;
             selectedBlockStyleState: selectedBlockStyleState2,
             showStateOnCanvas,
             isResponsiveEditing: isResponsiveEditing3,
+            blockStatesEnabled,
             isBlockStyleStateSelected
           }
         )
@@ -83892,7 +83898,8 @@ var wp;
     blockEditingMode,
     selectedBlockStyleState: selectedBlockStyleState2,
     showStateOnCanvas,
-    isResponsiveEditing: isResponsiveEditing3
+    isResponsiveEditing: isResponsiveEditing3,
+    blockStatesEnabled = true
   }) => {
     const listViewRef = (0, import_element271.useRef)(null);
     const hasMultipleTabs = availableTabs?.length > 1;
@@ -83933,7 +83940,7 @@ var wp;
           className: isBlockSynced && "is-synced",
           isChild: hasParentChildBlockCards,
           clientId: renderedBlockClientId,
-          controls: blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(
+          controls: blockEditingMode === "default" && blockStatesEnabled && /* @__PURE__ */ (0, import_jsx_runtime452.jsx)(
             BlockStatesControl,
             {
               name: blockName,
