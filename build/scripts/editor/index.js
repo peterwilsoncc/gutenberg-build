@@ -396,7 +396,7 @@ var wp;
             },
             [subscribe5, value, getSnapshot2]
           );
-          useEffect119(
+          useEffect118(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe5(function() {
@@ -422,7 +422,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React77 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState160 = React77.useState, useEffect119 = React77.useEffect, useLayoutEffect15 = React77.useLayoutEffect, useDebugValue2 = React77.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React77 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState160 = React77.useState, useEffect118 = React77.useEffect, useLayoutEffect15 = React77.useLayoutEffect, useDebugValue2 = React77.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React77.useSyncExternalStore ? React77.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -450,9 +450,9 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React77 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore6 = shim.useSyncExternalStore, useRef117 = React77.useRef, useEffect119 = React77.useEffect, useMemo152 = React77.useMemo, useDebugValue2 = React77.useDebugValue;
+        var React77 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore6 = shim.useSyncExternalStore, useRef116 = React77.useRef, useEffect118 = React77.useEffect, useMemo152 = React77.useMemo, useDebugValue2 = React77.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe5, getSnapshot2, getServerSnapshot2, selector2, isEqual2) {
-          var instRef = useRef117(null);
+          var instRef = useRef116(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -493,7 +493,7 @@ var wp;
             [getSnapshot2, getServerSnapshot2, selector2, isEqual2]
           );
           var value = useSyncExternalStore6(subscribe5, instRef[0], instRef[1]);
-          useEffect119(
+          useEffect118(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -95670,7 +95670,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/sidebar/index.mjs
   var import_block_editor97 = __toESM(require_block_editor(), 1);
   var import_data253 = __toESM(require_data(), 1);
-  var import_element330 = __toESM(require_element(), 1);
+  var import_element329 = __toESM(require_element(), 1);
   var import_i18n331 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts11 = __toESM(require_keyboard_shortcuts(), 1);
   var import_components274 = __toESM(require_components(), 1);
@@ -97715,11 +97715,10 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components269 = __toESM(require_components(), 1);
   var import_i18n325 = __toESM(require_i18n(), 1);
   var import_data246 = __toESM(require_data(), 1);
-  var import_element325 = __toESM(require_element(), 1);
   var import_html_entities32 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime535 = __toESM(require_jsx_runtime(), 1);
   var { Tabs: Tabs2 } = unlock(import_components269.privateApis);
-  var SidebarHeader = (_, ref) => {
+  function SidebarHeader() {
     const { postTypeLabel, isRevisionsMode: isRevisionsMode2 } = (0, import_data246.useSelect)((select9) => {
       const { getPostTypeLabel: getPostTypeLabel2 } = select9(store3);
       const { isRevisionsMode: _isRevisionsMode } = unlock(
@@ -97738,33 +97737,18 @@ If there's a particular need for this, please submit a feature request at https:
     } else {
       documentLabel = (0, import_i18n325._x)("Document", "noun, panel");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime535.jsxs)(Tabs2.TabList, { ref, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime535.jsx)(
-        Tabs2.Tab,
-        {
-          tabId: sidebars.document,
-          "data-tab-id": sidebars.document,
-          children: documentLabel
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime535.jsx)(
-        Tabs2.Tab,
-        {
-          tabId: sidebars.block,
-          "data-tab-id": sidebars.block,
-          children: (0, import_i18n325.__)("Block")
-        }
-      )
+    return /* @__PURE__ */ (0, import_jsx_runtime535.jsxs)(Tabs2.TabList, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime535.jsx)(Tabs2.Tab, { tabId: sidebars.document, children: documentLabel }),
+      /* @__PURE__ */ (0, import_jsx_runtime535.jsx)(Tabs2.Tab, { tabId: sidebars.block, children: (0, import_i18n325.__)("Block") })
     ] });
-  };
-  var header_default3 = (0, import_element325.forwardRef)(SidebarHeader);
+  }
 
   // packages/editor/build-module/components/template-actions-panel/block-theme-content.mjs
   var import_data247 = __toESM(require_data(), 1);
   var import_core_data134 = __toESM(require_core_data(), 1);
   var import_block_editor91 = __toESM(require_block_editor(), 1);
   var import_components270 = __toESM(require_components(), 1);
-  var import_element326 = __toESM(require_element(), 1);
+  var import_element325 = __toESM(require_element(), 1);
   var import_i18n326 = __toESM(require_i18n(), 1);
   var import_html_entities33 = __toESM(require_html_entities(), 1);
   var import_keycodes20 = __toESM(require_keycodes(), 1);
@@ -97776,8 +97760,8 @@ If there's a particular need for this, please submit a feature request at https:
       (select9) => select9(store3).getCurrentTemplateId(),
       []
     );
-    const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element326.useState)(false);
-    const [isSwapModalOpen, setIsSwapModalOpen] = (0, import_element326.useState)(false);
+    const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element325.useState)(false);
+    const [isSwapModalOpen, setIsSwapModalOpen] = (0, import_element325.useState)(false);
     const availableTemplates = useAvailableTemplates();
     const hasSwapTargets = !!availableTemplates?.length;
     const {
@@ -97928,7 +97912,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data135 = __toESM(require_core_data(), 1);
   var import_block_editor92 = __toESM(require_block_editor(), 1);
   var import_components271 = __toESM(require_components(), 1);
-  var import_element327 = __toESM(require_element(), 1);
+  var import_element326 = __toESM(require_element(), 1);
   var import_i18n327 = __toESM(require_i18n(), 1);
   var import_html_entities34 = __toESM(require_html_entities(), 1);
   var import_notices36 = __toESM(require_notices(), 1);
@@ -97939,7 +97923,7 @@ If there's a particular need for this, please submit a feature request at https:
       (select9) => select9(store3).getCurrentTemplateId(),
       []
     );
-    const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element327.useState)(false);
+    const [isCreateModalOpen, setIsCreateModalOpen] = (0, import_element326.useState)(false);
     const {
       onNavigateToEntityRecord,
       canCreateTemplate,
@@ -98110,7 +98094,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/template-part-content-panel/index.mjs
   var import_data250 = __toESM(require_data(), 1);
-  var import_element328 = __toESM(require_element(), 1);
+  var import_element327 = __toESM(require_element(), 1);
   var import_blocks37 = __toESM(require_blocks(), 1);
   var import_block_editor94 = __toESM(require_block_editor(), 1);
   var import_components273 = __toESM(require_components(), 1);
@@ -98122,7 +98106,7 @@ If there's a particular need for this, please submit a feature request at https:
       const { getBlockTypes: getBlockTypes6 } = select9(import_blocks37.store);
       return getBlockTypes6();
     }, []);
-    const themeBlockNames = (0, import_element328.useMemo)(() => {
+    const themeBlockNames = (0, import_element327.useMemo)(() => {
       return blockTypes.filter((blockType) => {
         return blockType.category === "theme";
       }).map(({ name: name2 }) => name2);
@@ -98178,7 +98162,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/provider/use-auto-switch-editor-sidebars.mjs
   var import_data252 = __toESM(require_data(), 1);
-  var import_element329 = __toESM(require_element(), 1);
+  var import_element328 = __toESM(require_element(), 1);
   var import_block_editor96 = __toESM(require_block_editor(), 1);
   var import_preferences29 = __toESM(require_preferences(), 1);
   function useAutoSwitchEditorSidebars() {
@@ -98190,7 +98174,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data252.useSelect)(store2);
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data252.useDispatch)(store2);
     const { get: getPreference } = (0, import_data252.useSelect)(import_preferences29.store);
-    (0, import_element329.useEffect)(() => {
+    (0, import_element328.useEffect)(() => {
       const activeGeneralSidebar = getActiveComplementaryArea2("core");
       const isEditorSidebarOpened = [
         "edit-post/document",
@@ -98224,29 +98208,10 @@ If there's a particular need for this, please submit a feature request at https:
     onActionPerformed,
     extraPanels
   }) => {
-    const tabListRef = (0, import_element330.useRef)(null);
-    const tabsContextValue = (0, import_element330.useContext)(Tabs3.Context);
+    const tabsContextValue = (0, import_element329.useContext)(Tabs3.Context);
     const isRevisionsMode2 = (0, import_data253.useSelect)((select9) => {
       return unlock(select9(store3)).isRevisionsMode();
     });
-    (0, import_element330.useEffect)(() => {
-      const tabsElements = Array.from(
-        tabListRef.current?.querySelectorAll('[role="tab"]') || []
-      );
-      const selectedTabElement = tabsElements.find(
-        // We are purposefully using a custom `data-tab-id` attribute here
-        // because we don't want rely on any assumptions about `Tabs`
-        // component internals.
-        (element) => element.getAttribute("data-tab-id") === tabName
-      );
-      const activeElement2 = selectedTabElement?.ownerDocument.activeElement;
-      const tabsHasFocus = tabsElements.some((element) => {
-        return activeElement2 && activeElement2.id === element.id;
-      });
-      if (tabsHasFocus && selectedTabElement && selectedTabElement.id !== activeElement2?.id) {
-        selectedTabElement?.focus();
-      }
-    }, [tabName]);
     let tabContent;
     if (isRevisionsMode2) {
       tabContent = /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(PostRevisionSummary, {});
@@ -98273,7 +98238,7 @@ If there's a particular need for this, please submit a feature request at https:
       PluginSidebar,
       {
         identifier: tabName,
-        header: /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(Tabs3.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(header_default3, { ref: tabListRef }) }),
+        header: /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(Tabs3.Context.Provider, { value: tabsContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(SidebarHeader, {}) }),
         closeLabel: (0, import_i18n331.__)("Close Settings"),
         className: "editor-sidebar__panel",
         headerClassName: "editor-sidebar__panel-tabs",
@@ -98315,7 +98280,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data253.useDispatch)(store2);
-    const onTabSelect = (0, import_element330.useCallback)(
+    const onTabSelect = (0, import_element329.useCallback)(
       (newSelectedTabId) => {
         if (!!newSelectedTabId) {
           enableComplementaryArea2("core", newSelectedTabId);
@@ -98346,20 +98311,20 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/index.mjs
   var import_i18n341 = __toESM(require_i18n(), 1);
   var import_data262 = __toESM(require_data(), 1);
-  var import_element340 = __toESM(require_element(), 1);
+  var import_element339 = __toESM(require_element(), 1);
   var import_compose84 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts13 = __toESM(require_keyboard_shortcuts(), 1);
   var import_block_editor106 = __toESM(require_block_editor(), 1);
   var import_preferences30 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/notes.mjs
-  var import_element337 = __toESM(require_element(), 1);
+  var import_element336 = __toESM(require_element(), 1);
   var import_i18n338 = __toESM(require_i18n(), 1);
   var import_data259 = __toESM(require_data(), 1);
   var import_block_editor102 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
-  var import_element335 = __toESM(require_element(), 1);
+  var import_element334 = __toESM(require_element(), 1);
   var import_components278 = __toESM(require_components(), 1);
   var import_compose83 = __toESM(require_compose(), 1);
   var import_i18n336 = __toESM(require_i18n(), 1);
@@ -98369,7 +98334,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_i18n334 = __toESM(require_i18n(), 1);
-  var import_element333 = __toESM(require_element(), 1);
+  var import_element332 = __toESM(require_element(), 1);
   var import_compose82 = __toESM(require_compose(), 1);
   var import_data256 = __toESM(require_data(), 1);
   var import_block_editor99 = __toESM(require_block_editor(), 1);
@@ -98492,7 +98457,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collab-sidebar/note-form.mjs
-  var import_element332 = __toESM(require_element(), 1);
+  var import_element331 = __toESM(require_element(), 1);
   var import_components276 = __toESM(require_components(), 1);
   var import_i18n333 = __toESM(require_i18n(), 1);
   var import_compose81 = __toESM(require_compose(), 1);
@@ -98500,7 +98465,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_dom28 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-mention-completer.mjs
-  var import_element331 = __toESM(require_element(), 1);
+  var import_element330 = __toESM(require_element(), 1);
   var import_data255 = __toESM(require_data(), 1);
   var import_core_data137 = __toESM(require_core_data(), 1);
   var import_jsx_runtime545 = __toESM(require_jsx_runtime(), 1);
@@ -98519,7 +98484,7 @@ If there's a particular need for this, please submit a feature request at https:
         },
         [filterValue]
       );
-      const options = (0, import_element331.useMemo)(
+      const options = (0, import_element330.useMemo)(
         () => users ? users.map((user) => ({
           key: `note-mention-${user.slug}`,
           value: user,
@@ -98549,10 +98514,10 @@ If there's a particular need for this, please submit a feature request at https:
   ];
   var NOTE_COMPLETERS = [note_mention_completer_default];
   function NoteForm({ onSubmit, onCancel, note, labels }) {
-    const [inputComment, setInputComment] = (0, import_element332.useState)(
+    const [inputComment, setInputComment] = (0, import_element331.useState)(
       note?.content?.raw ?? ""
     );
-    const [isSubmitting, setIsSubmitting] = (0, import_element332.useState)(false);
+    const [isSubmitting, setIsSubmitting] = (0, import_element331.useState)(false);
     const inputId = (0, import_compose81.useInstanceId)(NoteForm, "comment-input");
     const trimmedPlainText = sanitizeNoteContent((0, import_dom28.__unstableStripHTML)(inputComment));
     const isDisabled = isSubmitting || inputComment === note?.content?.raw || !trimmedPlainText.length;
@@ -98676,7 +98641,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { toggleBlockSpotlight } = unlock((0, import_data256.useDispatch)(import_block_editor99.store));
     const { selectNote: selectNote2 } = unlock((0, import_data256.useDispatch)(store3));
     const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data256.useSelect)(store3));
-    const isSubmittingRef = (0, import_element333.useRef)(false);
+    const isSubmittingRef = (0, import_element332.useRef)(false);
     const focusOutside = (0, import_compose82.__experimentalUseFocusOutside)((event) => {
       if (event.relatedTarget?.closest(
         ".editor-collab-sidebar-panel__add-note"
@@ -98743,7 +98708,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collab-sidebar/note.mjs
-  var import_element334 = __toESM(require_element(), 1);
+  var import_element333 = __toESM(require_element(), 1);
   var import_components277 = __toESM(require_components(), 1);
   var import_i18n335 = __toESM(require_i18n(), 1);
   var import_jsx_runtime549 = __toESM(require_jsx_runtime(), 1);
@@ -98783,18 +98748,18 @@ If there's a particular need for this, please submit a feature request at https:
     onDeleteNote,
     onResolve
   }) {
-    const [actionState, setActionState] = (0, import_element334.useState)(null);
-    const actionButtonRef = (0, import_element334.useRef)(null);
-    const commentRef = (0, import_element334.useRef)(null);
+    const [actionState, setActionState] = (0, import_element333.useState)(null);
+    const actionButtonRef = (0, import_element333.useRef)(null);
+    const commentRef = (0, import_element333.useRef)(null);
     const rawContent = note?.content?.raw;
-    const [prevContent, setPrevContent] = (0, import_element334.useState)(rawContent);
-    const [isExpanded, setIsExpanded] = (0, import_element334.useState)(false);
-    const [isOverflowing, setIsOverflowing] = (0, import_element334.useState)(false);
+    const [prevContent, setPrevContent] = (0, import_element333.useState)(rawContent);
+    const [isExpanded, setIsExpanded] = (0, import_element333.useState)(false);
+    const [isOverflowing, setIsOverflowing] = (0, import_element333.useState)(false);
     if (prevContent !== rawContent) {
       setPrevContent(rawContent);
       setIsExpanded(false);
     }
-    (0, import_element334.useLayoutEffect)(() => {
+    (0, import_element333.useLayoutEffect)(() => {
       const commentElement = commentRef.current;
       if (commentElement) {
         setIsOverflowing(
@@ -98966,18 +98931,18 @@ If there's a particular need for this, please submit a feature request at https:
       toggleBlockHighlight,
       50
     );
-    const floatingRef = (0, import_element335.useRef)(null);
-    const isKeyboardTabbingRef = (0, import_element335.useRef)(false);
+    const floatingRef = (0, import_element334.useRef)(null);
+    const isKeyboardTabbingRef = (0, import_element334.useRef)(false);
     const registerThread = floating?.registerThread;
     const unregisterThread = floating?.unregisterThread;
-    (0, import_element335.useEffect)(() => {
+    (0, import_element334.useEffect)(() => {
       const floatingEl = floatingRef.current;
       if (floatingEl && registerThread) {
         registerThread(note.id, relatedBlockElement, floatingEl);
       }
       return () => unregisterThread?.(note.id);
     }, [relatedBlockElement, note.id, registerThread, unregisterThread]);
-    (0, import_element335.useEffect)(() => {
+    (0, import_element334.useEffect)(() => {
       if (!isSelected2 || note.id === "new") {
         return;
       }
@@ -99222,7 +99187,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/hooks.mjs
   var import_a11y14 = __toESM(require_a11y(), 1);
   var import_i18n337 = __toESM(require_i18n(), 1);
-  var import_element336 = __toESM(require_element(), 1);
+  var import_element335 = __toESM(require_element(), 1);
   var import_core_data138 = __toESM(require_core_data(), 1);
   var import_data258 = __toESM(require_data(), 1);
   var import_block_editor101 = __toESM(require_block_editor(), 1);
@@ -99339,7 +99304,7 @@ If there's a particular need for this, please submit a feature request at https:
         clientIds: getClientIdsWithDescendants2()
       };
     }, []);
-    const { notes, unresolvedNotes } = (0, import_element336.useMemo)(() => {
+    const { notes, unresolvedNotes } = (0, import_element335.useMemo)(() => {
       if (!threads || threads.length === 0) {
         return { notes: [], unresolvedNotes: [] };
       }
@@ -99643,7 +99608,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useEnableFloatingSidebar(enabled = false) {
     const registry = (0, import_data258.useRegistry)();
-    (0, import_element336.useEffect)(() => {
+    (0, import_element335.useEffect)(() => {
       if (!enabled) {
         return;
       }
@@ -99668,10 +99633,10 @@ If there's a particular need for this, please submit a feature request at https:
     isFloating,
     sidebarRef
   }) {
-    const [notePositions, setNotePositions] = (0, import_element336.useState)({});
-    const [store4] = (0, import_element336.useState)(createBoardStore);
-    const heights = (0, import_element336.useSyncExternalStore)(store4.subscribe, store4.getSnapshot);
-    (0, import_element336.useEffect)(() => {
+    const [notePositions, setNotePositions] = (0, import_element335.useState)({});
+    const [store4] = (0, import_element335.useState)(createBoardStore);
+    const heights = (0, import_element335.useSyncExternalStore)(store4.subscribe, store4.getSnapshot);
+    (0, import_element335.useEffect)(() => {
       if (!isFloating || !sidebarRef?.current) {
         return;
       }
@@ -99760,7 +99725,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const relatedBlockElement = useBlockElement3(selectedBlockClientId);
-    const threads = (0, import_element337.useMemo)(() => {
+    const threads = (0, import_element336.useMemo)(() => {
       if (!isFloating || selectedNote2 !== "new") {
         return notes;
       }
@@ -99814,22 +99779,22 @@ If there's a particular need for this, please submit a feature request at https:
         relatedBlockElement?.focus();
       }
     };
-    const targetNoteId = (0, import_element337.useMemo)(() => {
+    const targetNoteId = (0, import_element336.useMemo)(() => {
       const blockNoteIds = getNoteIdsFromMetadata({ noteId });
       const blockThreads = notes.filter(
         (t4) => blockNoteIds.includes(t4.id)
       );
       return pickPrimaryNote(blockThreads)?.id;
     }, [noteId, notes]);
-    const prevBlockIdRef = (0, import_element337.useRef)(selectedBlockClientId);
-    (0, import_element337.useEffect)(() => {
+    const prevBlockIdRef = (0, import_element336.useRef)(selectedBlockClientId);
+    (0, import_element336.useEffect)(() => {
       if (prevBlockIdRef.current === selectedBlockClientId) {
         return;
       }
       prevBlockIdRef.current = selectedBlockClientId;
       selectNote2(targetNoteId);
     }, [selectedBlockClientId, targetNoteId, selectNote2]);
-    (0, import_element337.useEffect)(() => {
+    (0, import_element336.useEffect)(() => {
       if (noteFocused && selectedNote2) {
         focusNoteThread(
           selectedNote2,
@@ -99909,7 +99874,7 @@ If there's a particular need for this, please submit a feature request at https:
               sidebarRef
             }
           ),
-          threads.map((thread, index2) => /* @__PURE__ */ (0, import_jsx_runtime551.jsxs)(import_element337.Fragment, { children: [
+          threads.map((thread, index2) => /* @__PURE__ */ (0, import_jsx_runtime551.jsxs)(import_element336.Fragment, { children: [
             index2 === firstResolvedIndex && /* @__PURE__ */ (0, import_jsx_runtime551.jsx)(
               Stack,
               {
@@ -100009,7 +99974,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/note-indicator-toolbar.mjs
   var import_components280 = __toESM(require_components(), 1);
   var import_i18n340 = __toESM(require_i18n(), 1);
-  var import_element338 = __toESM(require_element(), 1);
+  var import_element337 = __toESM(require_element(), 1);
   var import_block_editor104 = __toESM(require_block_editor(), 1);
   var import_data261 = __toESM(require_data(), 1);
   var import_jsx_runtime553 = __toESM(require_jsx_runtime(), 1);
@@ -100050,7 +100015,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
   function NoteAvatarIndicator({ onClick, note }) {
-    const threadParticipants = (0, import_element338.useMemo)(() => {
+    const threadParticipants = (0, import_element337.useMemo)(() => {
       if (!note) {
         return [];
       }
@@ -100086,7 +100051,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collab-sidebar/note-highlight-styles.mjs
-  var import_element339 = __toESM(require_element(), 1);
+  var import_element338 = __toESM(require_element(), 1);
   var import_block_editor105 = __toESM(require_block_editor(), 1);
   var REST_ALPHA = "40";
   var ACTIVE_ALPHA = "80";
@@ -100112,7 +100077,7 @@ If there's a particular need for this, please submit a feature request at https:
     return rules.join("");
   }
   function NoteHighlightStyles({ threads, selectedId }) {
-    const css = (0, import_element339.useMemo)(
+    const css = (0, import_element338.useMemo)(
       () => buildHighlightCss(threads, selectedId),
       [threads, selectedId]
     );
@@ -100130,7 +100095,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { selectNote: selectNote2 } = unlock((0, import_data262.useDispatch)(store3));
     const isLargeViewport = (0, import_compose84.useViewportMatch)("medium");
-    const sidebarRef = (0, import_element340.useRef)(null);
+    const sidebarRef = (0, import_element339.useRef)(null);
     const { clientId, noteId, isClassicBlock } = (0, import_data262.useSelect)((select9) => {
       const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select9(import_block_editor106.store);
       const _clientId = getSelectedBlockClientId2();
@@ -100296,7 +100261,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components283 = __toESM(require_components(), 1);
   var import_i18n344 = __toESM(require_i18n(), 1);
   var import_data265 = __toESM(require_data(), 1);
-  var import_element341 = __toESM(require_element(), 1);
+  var import_element340 = __toESM(require_element(), 1);
   var import_preferences33 = __toESM(require_preferences(), 1);
   var import_compose85 = __toESM(require_compose(), 1);
   var import_core_data140 = __toESM(require_core_data(), 1);
@@ -100583,12 +100548,12 @@ If there's a particular need for this, please submit a feature request at https:
     const isRevisionsOpened = stylesPath2.startsWith("/revisions") && !showStylebook2;
     const isRevisionsStyleBookOpened = stylesPath2.startsWith("/revisions") && showStylebook2;
     const previousActiveArea = (0, import_compose85.usePrevious)(activeComplementaryArea);
-    (0, import_element341.useEffect)(() => {
+    (0, import_element340.useEffect)(() => {
       if (activeComplementaryArea === "edit-site/global-styles" && previousActiveArea !== "edit-site/global-styles") {
         resetStylesNavigation2();
       }
     }, [activeComplementaryArea, previousActiveArea, resetStylesNavigation2]);
-    (0, import_element341.useEffect)(() => {
+    (0, import_element340.useEffect)(() => {
       if (shouldResetNavigation) {
         resetStylesNavigation2();
       }
@@ -100788,7 +100753,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n347 = __toESM(require_i18n(), 1);
   var import_compose86 = __toESM(require_compose(), 1);
   var import_data269 = __toESM(require_data(), 1);
-  var import_element343 = __toESM(require_element(), 1);
+  var import_element342 = __toESM(require_element(), 1);
   var import_preferences36 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.mjs
@@ -100815,7 +100780,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data268 = __toESM(require_data(), 1);
   var import_preferences35 = __toESM(require_preferences(), 1);
   var import_blocks39 = __toESM(require_blocks(), 1);
-  var import_element342 = __toESM(require_element(), 1);
+  var import_element341 = __toESM(require_element(), 1);
   var import_components285 = __toESM(require_components(), 1);
   var import_i18n346 = __toESM(require_i18n(), 1);
   var import_block_editor108 = __toESM(require_block_editor(), 1);
@@ -100837,7 +100802,7 @@ If there's a particular need for this, please submit a feature request at https:
         hiddenBlockTypes: select9(import_preferences35.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY17
       };
     }, []);
-    const allowedBlockTypes = (0, import_element342.useMemo)(() => {
+    const allowedBlockTypes = (0, import_element341.useMemo)(() => {
       if (_allowedBlockTypes === true) {
         return blockTypes;
       }
@@ -100945,7 +100910,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { setIsListViewOpened: setIsListViewOpened2, setIsInserterOpened: setIsInserterOpened2 } = (0, import_data269.useDispatch)(store3);
     const { set: setPreference } = (0, import_data269.useDispatch)(import_preferences36.store);
-    const sections = (0, import_element343.useMemo)(
+    const sections = (0, import_element342.useMemo)(
       () => [
         {
           name: "general",
@@ -101757,7 +101722,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/upload-progress-snackbar/index.mjs
   var import_data270 = __toESM(require_data(), 1);
-  var import_element344 = __toESM(require_element(), 1);
+  var import_element343 = __toESM(require_element(), 1);
   var import_i18n350 = __toESM(require_i18n(), 1);
   var import_a11y15 = __toESM(require_a11y(), 1);
   var import_upload_media3 = __toESM(require_upload_media(), 1);
@@ -101792,7 +101757,7 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const tracker = useTracker();
-    const csmOriginals = (0, import_element344.useMemo)(
+    const csmOriginals = (0, import_element343.useMemo)(
       () => items.filter((item) => !item.parentId),
       [items]
     );
@@ -101800,19 +101765,19 @@ If there's a particular need for this, please submit a feature request at https:
     const trackedRemaining = tracker ? tracker.total - tracker.completed : 0;
     const remaining = csmRemaining + trackedRemaining;
     const sessionTotal = csmRemaining + (tracker ? tracker.total : 0);
-    const peakRef = (0, import_element344.useRef)(0);
+    const peakRef = (0, import_element343.useRef)(0);
     const { createNotice, removeNotice } = (0, import_data270.useDispatch)(import_notices38.store);
-    const dismissedRef = (0, import_element344.useRef)(false);
-    const wasUploadingRef = (0, import_element344.useRef)(false);
-    const completionTimeoutRef = (0, import_element344.useRef)(null);
-    (0, import_element344.useEffect)(() => {
+    const dismissedRef = (0, import_element343.useRef)(false);
+    const wasUploadingRef = (0, import_element343.useRef)(false);
+    const completionTimeoutRef = (0, import_element343.useRef)(null);
+    (0, import_element343.useEffect)(() => {
       return () => {
         if (completionTimeoutRef.current) {
           clearTimeout(completionTimeoutRef.current);
         }
       };
     }, []);
-    (0, import_element344.useEffect)(() => {
+    (0, import_element343.useEffect)(() => {
       const isUploading = remaining > 0;
       if (isUploading && !wasUploadingRef.current) {
         dismissedRef.current = false;
