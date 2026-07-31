@@ -2520,6 +2520,7 @@ var wp;
     richEditingEnabled: true,
     codeEditingEnabled: true,
     responsiveEditingEnabled: true,
+    blockStatesEnabled: true,
     fontLibraryEnabled: true,
     enableCustomFields: void 0,
     defaultRenderingMode: "post-only"
@@ -58133,7 +58134,8 @@ If there's a particular need for this, please submit a feature request at https:
     name: name2,
     variation,
     selectedViewport: controlledSelectedViewport,
-    showResponsiveStateControls = true
+    showResponsiveStateControls = true,
+    showBlockStateControls = true
   }) {
     const {
       user: userConfig,
@@ -58315,7 +58317,7 @@ If there's a particular need for this, please submit a feature request at https:
         {
           title: variation ? currentBlockStyle?.label : blockType?.title,
           viewportStates: validViewportStates,
-          pseudoStates: validPseudoStates,
+          pseudoStates: showBlockStateControls ? validPseudoStates : [],
           selectedViewport: effectiveSelectedViewport,
           selectedPseudoState,
           onChangeViewport: showResponsiveStateControls ? setSelectedViewport : void 0,
@@ -73948,7 +73950,8 @@ If there's a particular need for this, please submit a feature request at https:
     blockStyles,
     blockName,
     selectedViewport,
-    showResponsiveStateControls
+    showResponsiveStateControls,
+    showBlockStateControls
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(import_jsx_runtime357.Fragment, { children: blockStyles.map((style, index2) => /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
       import_components150.Navigator.Screen,
@@ -73960,7 +73963,8 @@ If there's a particular need for this, please submit a feature request at https:
             name: blockName,
             variation: style.name,
             selectedViewport,
-            showResponsiveStateControls
+            showResponsiveStateControls,
+            showBlockStateControls
           }
         )
       },
@@ -73971,7 +73975,8 @@ If there's a particular need for this, please submit a feature request at https:
     name: name2,
     parentMenu = "",
     selectedViewport,
-    showResponsiveStateControls
+    showResponsiveStateControls,
+    showBlockStateControls
   }) {
     const blockStyleVariations = (0, import_data61.useSelect)(
       (select9) => {
@@ -73993,7 +73998,8 @@ If there's a particular need for this, please submit a feature request at https:
         blockStyles: blockStyleVariations,
         blockName: name2 || "",
         selectedViewport,
-        showResponsiveStateControls
+        showResponsiveStateControls,
+        showBlockStateControls
       }
     );
   }
@@ -74007,7 +74013,8 @@ If there's a particular need for this, please submit a feature request at https:
     serverCSS,
     serverSettings,
     selectedViewport,
-    showResponsiveStateControls = true
+    showResponsiveStateControls = true,
+    showBlockStateControls = true
   }) {
     const blocks = (0, import_blocks11.getBlockTypes)();
     const mergedValue = (0, import_element197.useMemo)(() => {
@@ -74080,7 +74087,8 @@ If there's a particular need for this, please submit a feature request at https:
                       {
                         name: block.name,
                         selectedViewport,
-                        showResponsiveStateControls
+                        showResponsiveStateControls,
+                        showBlockStateControls
                       }
                     )
                   }
@@ -74091,7 +74099,8 @@ If there's a particular need for this, please submit a feature request at https:
                     name: block.name,
                     parentMenu: "/blocks/" + encodeURIComponent(block.name),
                     selectedViewport,
-                    showResponsiveStateControls
+                    showResponsiveStateControls,
+                    showBlockStateControls
                   }
                 )
               ] }, block.name))
@@ -74386,6 +74395,7 @@ If there's a particular need for this, please submit a feature request at https:
     const __experimentalDiscussionSettings = settings?.__experimentalDiscussionSettings;
     const fontLibraryEnabled = settings?.fontLibraryEnabled ?? true;
     const responsiveEditingEnabled = settings?.responsiveEditingEnabled ?? true;
+    const blockStatesEnabled = settings?.blockStatesEnabled ?? true;
     const mediaUploadHandler = (0, import_data64.useSelect)((select9) => {
       const { canUser } = select9(import_core_data44.store);
       const canUserUploadMedia = canUser("create", {
@@ -74430,7 +74440,8 @@ If there's a particular need for this, please submit a feature request at https:
       serverCSS,
       serverSettings,
       fontLibraryEnabled,
-      responsiveEditingEnabled
+      responsiveEditingEnabled,
+      blockStatesEnabled
     };
   }
   function GlobalStylesUIWrapper({
@@ -74450,7 +74461,8 @@ If there's a particular need for this, please submit a feature request at https:
       serverCSS,
       serverSettings,
       fontLibraryEnabled,
-      responsiveEditingEnabled
+      responsiveEditingEnabled,
+      blockStatesEnabled
     } = useServerData(settings);
     if (!isReady2) {
       return null;
@@ -74468,7 +74480,8 @@ If there's a particular need for this, please submit a feature request at https:
           serverCSS,
           serverSettings,
           selectedViewport,
-          showResponsiveStateControls: showResponsiveStateControls && responsiveEditingEnabled
+          showResponsiveStateControls: showResponsiveStateControls && responsiveEditingEnabled,
+          showBlockStateControls: blockStatesEnabled
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
@@ -74503,6 +74516,7 @@ If there's a particular need for this, please submit a feature request at https:
     "__experimentalGlobalStylesBaseStyles",
     "allImageSizes",
     "alignWide",
+    "blockStatesEnabled",
     "blockInspectorTabs",
     "maxUploadFileSize",
     "allowedMimeTypes",
