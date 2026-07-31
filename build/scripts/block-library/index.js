@@ -53411,6 +53411,7 @@ ${text}
     supports: {
       anchor: true,
       align: true,
+      __experimentalExposeControlsToChildren: true,
       color: {
         gradients: true,
         link: true,
@@ -55107,8 +55108,7 @@ ${text}
   var PlaylistContext = (0, import_element103.createContext)({
     currentTrackClientId: null,
     setCurrentTrackClientId: () => {
-    },
-    addTracks: void 0
+    }
   });
 
   // packages/block-library/build-module/playlist/utils.mjs
@@ -55345,10 +55345,9 @@ ${text}
     const playlistContext = (0, import_element104.useMemo)(
       () => ({
         currentTrackClientId,
-        setCurrentTrackClientId,
-        addTracks: onAddTracks
+        setCurrentTrackClientId
       }),
-      [currentTrackClientId, onAddTracks, setCurrentTrackClientId]
+      [currentTrackClientId, setCurrentTrackClientId]
     );
     const currentTrackData = tracks.find((track) => track.clientId === currentTrackClientId) ?? tracks[0];
     const onTrackEnded = (0, import_element104.useCallback)(() => {
@@ -55510,10 +55509,10 @@ ${text}
       );
     }
     return /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)(import_jsx_runtime372.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_block_editor183.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_block_editor183.BlockControls, { group: "other", __experimentalShareWithChildBlocks: true, children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
         import_block_editor183.MediaReplaceFlow,
         {
-          name: (0, import_i18n164.__)("Add"),
+          name: (0, import_i18n164.__)("Add track"),
           onSelect: onAddTracks,
           accept: "audio/*",
           multiple: true,
@@ -55926,7 +55925,7 @@ ${text}
     const showImages = context?.showImages ?? true;
     const imageButton = (0, import_element105.useRef)();
     const blockProps = (0, import_block_editor185.useBlockProps)();
-    const { currentTrackClientId, setCurrentTrackClientId, addTracks } = (0, import_element105.useContext)(PlaylistContext);
+    const { currentTrackClientId, setCurrentTrackClientId } = (0, import_element105.useContext)(PlaylistContext);
     const { createErrorNotice } = (0, import_data105.useDispatch)(import_notices15.store);
     function onUploadError(message) {
       createErrorNotice(message, { type: "snackbar" });
@@ -56011,19 +56010,6 @@ ${text}
           accept: "audio/*",
           mediaId: id,
           mediaURL: src,
-          allowedTypes: ALLOWED_MEDIA_TYPES7,
-          onError: onUploadError,
-          variant: "toolbar"
-        }
-      ) }),
-      !!addTracks && /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_block_editor185.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
-        import_block_editor185.MediaReplaceFlow,
-        {
-          name: (0, import_i18n165.__)("Add"),
-          onSelect: addTracks,
-          accept: "audio/*",
-          multiple: true,
-          handleUpload: false,
           allowedTypes: ALLOWED_MEDIA_TYPES7,
           onError: onUploadError,
           variant: "toolbar"
