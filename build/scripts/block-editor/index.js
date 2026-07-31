@@ -73063,8 +73063,15 @@ var wp;
       if (event.defaultPrevented) {
         return;
       }
-      const { plainText, html } = getPasteEventData(event);
+      const pasteData = getPasteEventData(event);
+      if (!pasteData) {
+        return;
+      }
       event.preventDefault();
+      const { plainText, html, files } = pasteData;
+      if (files.length) {
+        return;
+      }
       window.console.log("Received HTML (RichText):\n\n", html);
       window.console.log("Received plain text (RichText):\n\n", plainText);
       if (disableFormats) {
