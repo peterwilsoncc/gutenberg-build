@@ -660,6 +660,7 @@ var wp;
     LOCAL_UNDO_IGNORED_ORIGIN,
     retrySyncConnection
   } = unlock(import_sync.privateApis);
+  var CRDT_AUTOSAVE_SNAPSHOT_KEY = "crdt_snapshot";
   var syncManager;
   function getSyncManager() {
     if (syncManager) {
@@ -670,6 +671,25 @@ var wp;
   }
   function hasSyncManager() {
     return Boolean(syncManager);
+  }
+  function getEntitySnapshot(kind, name, recordId) {
+    if (!hasSyncManager()) {
+      return void 0;
+    }
+    return getSyncManager()?.getEntitySnapshot(
+      `${kind}/${name}`,
+      `${recordId}`
+    );
+  }
+  function entityContainsSnapshot(kind, name, recordId, encodedSnapshot) {
+    if (!hasSyncManager()) {
+      return false;
+    }
+    return getSyncManager()?.entityContainsSnapshot(
+      `${kind}/${name}`,
+      `${recordId}`,
+      encodedSnapshot
+    ) ?? false;
   }
 
   // packages/core-data/build-module/utils/save-crdt-doc.mjs
@@ -4239,6 +4259,7 @@ var wp;
     getEditorSettings: () => getEditorSettings,
     getEntityRecordPermissions: () => getEntityRecordPermissions,
     getEntityRecordsPermissions: () => getEntityRecordsPermissions,
+    getEntitySyncConnectionStatus: () => getEntitySyncConnectionStatus,
     getHomePage: () => getHomePage,
     getNavigationFallbackId: () => getNavigationFallbackId,
     getPostsPageId: () => getPostsPageId,
@@ -4465,6 +4486,9 @@ var wp;
       }
     }
     return coalesced;
+  }
+  function getEntitySyncConnectionStatus(state, kind, name, recordId) {
+    return state.syncConnectionStatuses?.[`${kind}/${name}:${recordId}`];
   }
 
   // packages/core-data/build-module/selectors.mjs
@@ -5606,6 +5630,14 @@ var wp;
       try {
         const path = `${baseURL}${recordId ? "/" + recordId : ""}`;
         const persistedRecord = !isNewRecord ? select4.getRawEntityRecord(kind, name, recordId) : {};
+        if (entityConfig.syncConfig && !__unstableSkipSyncUpdate && !isNewRecord && persistedRecord) {
+          getSyncManager()?.update(
+            `${kind}/${name}`,
+            recordId,
+            record,
+            LOCAL_UNDO_IGNORED_ORIGIN
+          );
+        }
         if (isAutosave) {
           const merged = { ...persistedRecord, ...record };
           const data = [
@@ -5628,6 +5660,15 @@ var wp;
               status: merged.status === "auto-draft" ? "draft" : void 0
             }
           );
+          if (entityConfig.syncConfig) {
+            const crdtSnapshot = getSyncManager()?.getEntitySnapshot(
+              `${kind}/${name}`,
+              recordId
+            );
+            if (crdtSnapshot) {
+              data[CRDT_AUTOSAVE_SNAPSHOT_KEY] = crdtSnapshot;
+            }
+          }
           updatedRecord = await __unstableFetch({
             path: `${path}/autosaves`,
             method: "POST",
@@ -5671,14 +5712,6 @@ var wp;
             );
           }
         } else {
-          if (entityConfig.syncConfig && !__unstableSkipSyncUpdate && !isNewRecord && persistedRecord) {
-            getSyncManager()?.update(
-              `${kind}/${name}`,
-              recordId,
-              record,
-              LOCAL_UNDO_IGNORED_ORIGIN
-            );
-          }
           let edits = record;
           if (entityConfig.__unstablePrePersist) {
             edits = {
@@ -8966,6 +8999,9 @@ var wp;
     useEntitiesSavedStatesIsDirty: useIsDirty,
     useEntityRecordsWithPermissions,
     RECEIVE_INTERMEDIATE_RESULTS,
+    CRDT_AUTOSAVE_SNAPSHOT_KEY,
+    entityContainsSnapshot,
+    getEntitySnapshot,
     retrySyncConnection,
     useActiveCollaborators,
     useResolvedSelection,
