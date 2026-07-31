@@ -32881,7 +32881,7 @@ function registerStyle69(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle69("9c052414dc", ".c10bdb70b86e7888__widget-chrome:has(:focus-visible){outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wp-widget-dashboard-tile-focus-offset,2px)}._05be5860e5abb8bb__widget-chrome-header-icon{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-flex}.a7e5c80edbcdf3f5__widget-chrome-content{flex:1;height:100%;min-height:0;min-width:0}._9b694d63bdec1a98__unavailable{height:100%}");
+  registerStyle69("c794c8cd9f", ".c10bdb70b86e7888__widget-chrome{display:flex;flex-direction:column}.c10bdb70b86e7888__widget-chrome:has(:focus-visible){outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wp-widget-dashboard-tile-focus-offset,2px)}._05be5860e5abb8bb__widget-chrome-header-icon{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-flex}.a7e5c80edbcdf3f5__widget-chrome-content{flex:1;height:100%;min-height:0;min-width:0}._9b694d63bdec1a98__unavailable{height:100%}");
 }
 var widget_chrome_default = { "widget-chrome": "c10bdb70b86e7888__widget-chrome", "widget-chrome-header-icon": "_05be5860e5abb8bb__widget-chrome-header-icon", "widget-chrome-content": "a7e5c80edbcdf3f5__widget-chrome-content", "unavailable": "_9b694d63bdec1a98__unavailable" };
 function UnavailableWidget({ widgetTypeName }) {
@@ -52052,7 +52052,7 @@ function registerStyle70(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle70("c47f6c464f", "._23cdee3dfcd79c9c__viewport{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border-radius:var(--wpds-border-radius-md,4px);inset:0;overflow:hidden;pointer-events:none;position:absolute;user-select:none}._5312b3880a174b72__canvas{display:grid;height:100%;width:100%}._8b8693cb129db8d2__card{height:100%;min-height:0}");
+  registerStyle70("8494098000", "._23cdee3dfcd79c9c__viewport{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);border-radius:var(--wpds-border-radius-md,4px);inset:0;overflow:hidden;pointer-events:none;position:absolute;user-select:none}._5312b3880a174b72__canvas{display:grid;height:100%;width:100%}._8b8693cb129db8d2__card{display:flex;flex-direction:column;height:100%;min-height:0}");
 }
 var widget_preview_chrome_default = { "viewport": "_23cdee3dfcd79c9c__viewport", "canvas": "_5312b3880a174b72__canvas", "card": "_8b8693cb129db8d2__card" };
 function WidgetPreviewChrome({
