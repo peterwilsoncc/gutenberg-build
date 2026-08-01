@@ -49808,7 +49808,6 @@ If there's a particular need for this, please submit a feature request at https:
                         identifier
                       ),
                       isPressed: isPinned,
-                      "aria-expanded": isPinned,
                       size: "compact"
                     }
                   )

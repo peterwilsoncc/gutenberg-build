@@ -22846,7 +22846,6 @@ function ComplementaryArea({
                       identifier
                     ),
                     isPressed: isPinned,
-                    "aria-expanded": isPinned,
                     size: "compact"
                   }
                 )

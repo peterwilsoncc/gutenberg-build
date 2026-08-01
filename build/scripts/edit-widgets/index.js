@@ -1146,7 +1146,6 @@ var wp;
                         identifier
                       ),
                       isPressed: isPinned,
-                      "aria-expanded": isPinned,
                       size: "compact"
                     }
                   )
