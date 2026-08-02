@@ -4602,27 +4602,19 @@ var wp;
       );
     }
     const navigateRegionsProps = (0, import_components22.__unstableUseNavigateRegions)();
-    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
-      "div",
+    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { ...navigateRegionsProps, children: /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(
+      WidgetAreasBlockEditorProvider,
       {
-        className: navigateRegionsProps.className,
-        ...navigateRegionsProps,
-        ref: navigateRegionsProps.ref,
-        children: /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(
-          WidgetAreasBlockEditorProvider,
-          {
-            blockEditorSettings,
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(interface_default, { blockEditorSettings }),
-              /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Sidebar, {}),
-              /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_plugins3.PluginArea, { onError: onPluginAreaError }),
-              /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(UnsavedChangesWarning, {}),
-              /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(WelcomeGuide, {})
-            ]
-          }
-        )
+        blockEditorSettings,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(interface_default, { blockEditorSettings }),
+          /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Sidebar, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_plugins3.PluginArea, { onError: onPluginAreaError }),
+          /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(UnsavedChangesWarning, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(WelcomeGuide, {})
+        ]
       }
-    ) });
+    ) }) });
   }
   var layout_default = Layout;
 
