@@ -2098,7 +2098,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState123({
+          cachedValue = useState124({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -2136,7 +2136,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React118 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState123 = React118.useState, useEffect94 = React118.useEffect, useLayoutEffect18 = React118.useLayoutEffect, useDebugValue2 = React118.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React118 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState124 = React118.useState, useEffect94 = React118.useEffect, useLayoutEffect18 = React118.useLayoutEffect, useDebugValue2 = React118.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React118.useSyncExternalStore ? React118.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -47862,17 +47862,31 @@ var wp;
       }
     ];
   }
+  var NULL_SIZE = { width: null, height: null };
+  function extractSize(entries) {
+    const contentBoxSize = entries.at(-1).contentBoxSize[0];
+    return {
+      width: contentBoxSize.inlineSize,
+      height: contentBoxSize.blockSize
+    };
+  }
   function useScaleCanvas({
     frameSize,
     iframeDocument,
     maxContainerWidth = 750,
     scale
   }) {
-    const [contentResizeListener, { height: contentHeight }] = (0, import_compose34.useResizeObserver)();
+    const [{ height: contentHeight }, setContentRect] = (0, import_element98.useState)(NULL_SIZE);
+    const contentRef = (0, import_compose34.useResizeObserver)((entries) => {
+      setContentRect(extractSize(entries));
+    });
     const [
-      containerResizeListener,
-      { width: containerWidth, height: containerHeight }
-    ] = (0, import_compose34.useResizeObserver)();
+      { width: containerWidth, height: containerHeight },
+      setContainerRect
+    ] = (0, import_element98.useState)(NULL_SIZE);
+    const containerRef = (0, import_compose34.useResizeObserver)((entries) => {
+      setContainerRect(extractSize(entries));
+    });
     const initialContainerWidthRef = (0, import_element98.useRef)(0);
     const isZoomedOut = scale !== 1;
     const prefersReducedMotion = (0, import_compose34.useReducedMotion)();
@@ -48069,8 +48083,8 @@ var wp;
     return {
       isZoomedOut,
       scaleContainerWidth,
-      contentResizeListener,
-      containerResizeListener
+      contentRef,
+      containerRef
     };
   }
 
@@ -48249,8 +48263,8 @@ var wp;
       };
     }, []);
     const {
-      contentResizeListener,
-      containerResizeListener,
+      contentRef: scaleContentRef,
+      containerRef,
       isZoomedOut,
       scaleContainerWidth
     } = useScaleCanvas({
@@ -48263,7 +48277,8 @@ var wp;
       useBubbleEvents(iframeDocument),
       contentRef,
       writingFlowRef,
-      disabledRef
+      disabledRef,
+      scaleContentRef
     ]);
     const bodyRef = (0, import_compose35.useRefEffect)(
       (node) => {
@@ -48311,7 +48326,7 @@ var wp;
             }
           },
           children: iframeDocument && (0, import_element99.createPortal)(
-            /* @__PURE__ */ (0, import_jsx_runtime222.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
               "body",
               {
                 ref: bodyRef,
@@ -48320,10 +48335,7 @@ var wp;
                   "editor-styles-wrapper",
                   ...bodyClasses
                 ),
-                children: [
-                  contentResizeListener,
-                  /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_components32.__experimentalStyleProvider, { document: iframeDocument, children })
-                ]
+                children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_components32.__experimentalStyleProvider, { document: iframeDocument, children })
               }
             ),
             iframeDocument.documentElement
@@ -48332,22 +48344,19 @@ var wp;
       ),
       shouldRenderFocusCaptureElements && after
     ] });
-    return /* @__PURE__ */ (0, import_jsx_runtime222.jsxs)("div", { className: "block-editor-iframe__container", children: [
-      containerResizeListener,
-      /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
-        "div",
-        {
-          className: clsx_default(
-            "block-editor-iframe__scale-container",
-            isZoomedOut && "is-zoomed-out"
-          ),
-          style: {
-            "--wp-block-editor-iframe-zoom-out-scale-container-width": isZoomedOut && `${scaleContainerWidth}px`
-          },
-          children: iframe
-        }
-      )
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)("div", { className: "block-editor-iframe__container", ref: containerRef, children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
+      "div",
+      {
+        className: clsx_default(
+          "block-editor-iframe__scale-container",
+          isZoomedOut && "is-zoomed-out"
+        ),
+        style: {
+          "--wp-block-editor-iframe-zoom-out-scale-container-width": isZoomedOut && `${scaleContainerWidth}px`
+        },
+        children: iframe
+      }
+    ) });
   }
   function IframeIfReady(props, ref) {
     const isInitialised = (0, import_data51.useSelect)(
