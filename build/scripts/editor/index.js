@@ -2520,7 +2520,7 @@ var wp;
     richEditingEnabled: true,
     codeEditingEnabled: true,
     responsiveEditingEnabled: true,
-    blockStatesEnabled: true,
+    blockStatesEditingEnabled: true,
     fontLibraryEnabled: true,
     enableCustomFields: void 0,
     defaultRenderingMode: "post-only"
@@ -74563,7 +74563,7 @@ If there's a particular need for this, please submit a feature request at https:
     const __experimentalDiscussionSettings = settings?.__experimentalDiscussionSettings;
     const fontLibraryEnabled = settings?.fontLibraryEnabled ?? true;
     const responsiveEditingEnabled = settings?.responsiveEditingEnabled ?? true;
-    const blockStatesEnabled = settings?.blockStatesEnabled ?? true;
+    const blockStatesEditingEnabled = settings?.blockStatesEditingEnabled ?? true;
     const mediaUploadHandler = (0, import_data66.useSelect)((select9) => {
       const { canUser } = select9(import_core_data46.store);
       const canUserUploadMedia = canUser("create", {
@@ -74609,7 +74609,7 @@ If there's a particular need for this, please submit a feature request at https:
       serverSettings,
       fontLibraryEnabled,
       responsiveEditingEnabled,
-      blockStatesEnabled
+      blockStatesEditingEnabled
     };
   }
   function GlobalStylesUIWrapper({
@@ -74630,7 +74630,7 @@ If there's a particular need for this, please submit a feature request at https:
       serverSettings,
       fontLibraryEnabled,
       responsiveEditingEnabled,
-      blockStatesEnabled
+      blockStatesEditingEnabled
     } = useServerData(settings);
     if (!isReady2) {
       return null;
@@ -74649,7 +74649,7 @@ If there's a particular need for this, please submit a feature request at https:
           serverSettings,
           selectedViewport,
           showResponsiveStateControls: showResponsiveStateControls && responsiveEditingEnabled,
-          showBlockStateControls: blockStatesEnabled
+          showBlockStateControls: blockStatesEditingEnabled
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime360.jsx)(
@@ -74684,7 +74684,7 @@ If there's a particular need for this, please submit a feature request at https:
     "__experimentalGlobalStylesBaseStyles",
     "allImageSizes",
     "alignWide",
-    "blockStatesEnabled",
+    "blockStatesEditingEnabled",
     "blockInspectorTabs",
     "maxUploadFileSize",
     "allowedMimeTypes",
