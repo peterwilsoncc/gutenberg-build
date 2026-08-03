@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).domReady = (() => {
@@ -38,6 +37,4 @@ var wp;
   return __toCommonJS(index_exports);
 })();
 if (typeof wp.domReady === 'object' && wp.domReady.default) { wp.domReady = wp.domReady.default; }
-(window.wp ||= {}).domReady = wp.domReady;
-})();
 //# sourceMappingURL=index.js.map

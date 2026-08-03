@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).plugins = (() => {
@@ -571,6 +570,4 @@ react-is/cjs/react-is.development.js:
    * LICENSE file in the root directory of this source tree.
    *)
 */
-(window.wp ||= {}).plugins = wp.plugins;
-})();
 //# sourceMappingURL=index.js.map

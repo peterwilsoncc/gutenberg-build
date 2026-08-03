@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).sync = (() => {
@@ -12864,7 +12863,5 @@ ${err.toString()}`);
   // packages/sync/build-module/index.mjs
   var YJS_VERSION = "13";
   return __toCommonJS(index_exports);
-})();
-(window.wp ||= {}).sync = wp.sync;
 })();
 //# sourceMappingURL=index.js.map

@@ -1,4 +1,3 @@
-(function() {
 var wp;
 (wp ||= {}).blockDirectory = (() => {
   var __create = Object.create;
@@ -10263,6 +10262,4 @@ use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.developme
    * LICENSE file in the root directory of this source tree.
    *)
 */
-(window.wp ||= {}).blockDirectory = wp.blockDirectory;
-})();
 //# sourceMappingURL=index.js.map

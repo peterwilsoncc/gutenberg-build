@@ -218,7 +218,7 @@
 
 .edit-post-layout__snackbar {
   position: fixed;
-  bottom: var(--wpds-dimension-size-md, 32px);
+  bottom: 24px;
   right: 0;
   left: 0;
   padding-inline: 16px;

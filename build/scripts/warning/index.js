@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).warning = (() => {
@@ -50,6 +49,4 @@ var wp;
   return __toCommonJS(index_exports);
 })();
 if (typeof wp.warning === 'object' && wp.warning.default) { wp.warning = wp.warning.default; }
-(window.wp ||= {}).warning = wp.warning;
-})();
 //# sourceMappingURL=index.js.map

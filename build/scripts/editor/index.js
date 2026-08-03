@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).editor = (() => {
@@ -6820,7 +6819,6 @@ var wp;
   var DESKTOP_DEVICE_TYPE = "Desktop";
   var TABLET_DEVICE_TYPE = "Tablet";
   var MOBILE_DEVICE_TYPE = "Mobile";
-  var DEVICE_PREVIEW_WIDTH_OFFSET = 1;
   var VIEWPORT_STATE_BY_DEVICE_TYPE = {
     Desktop: "default",
     Tablet: "@tablet",
@@ -6828,36 +6826,25 @@ var wp;
   };
   function getDeviceTypeByCanvasWidth(canvasWidth2, viewportSettings) {
     const width = getViewportBreakpointValueInPixels2(canvasWidth2);
-    const breakpoints = getViewportBreakpoints2(viewportSettings);
-    if (width && width <= getViewportBreakpointValueInPixels2(breakpoints.mobile)) {
+    if (width && width <= getViewportBreakpointValueInPixels2(
+      getCanvasWidthByDeviceType("Mobile", viewportSettings)
+    )) {
       return MOBILE_DEVICE_TYPE;
     }
-    if (width && width <= getViewportBreakpointValueInPixels2(breakpoints.tablet)) {
+    if (width && width <= getViewportBreakpointValueInPixels2(
+      getCanvasWidthByDeviceType("Tablet", viewportSettings)
+    )) {
       return TABLET_DEVICE_TYPE;
     }
     return DESKTOP_DEVICE_TYPE;
   }
   function getCanvasWidthByDeviceType(deviceType, viewportSettings) {
     const viewportKey = VIEWPORT_KEY_BY_DEVICE_TYPE[deviceType];
-    if (!viewportKey) {
-      return void 0;
+    if (viewportKey) {
+      return getViewportBreakpointValueInPixels2(
+        getViewportBreakpoints2(viewportSettings)[viewportKey]
+      );
     }
-    const breakpoints = getViewportBreakpoints2(viewportSettings);
-    const width = getViewportBreakpointValueInPixels2(
-      breakpoints[viewportKey]
-    );
-    if (width === void 0) {
-      return void 0;
-    }
-    let lowerBreakpoint = 0;
-    if (deviceType === TABLET_DEVICE_TYPE) {
-      lowerBreakpoint = getViewportBreakpointValueInPixels2(breakpoints.mobile) ?? 0;
-    }
-    const offset4 = Math.min(
-      DEVICE_PREVIEW_WIDTH_OFFSET,
-      (width - lowerBreakpoint) / 2
-    );
-    return width - offset4;
   }
 
   // packages/editor/build-module/store/selectors.mjs
@@ -7800,7 +7787,6 @@ var wp;
   __export(private_actions_exports, {
     createTemplate: () => createTemplate,
     hideBlockTypes: () => hideBlockTypes,
-    openRevision: () => openRevision,
     registerEntityAction: () => registerEntityAction,
     registerEntityField: () => registerEntityField,
     registerPostTypeSchema: () => registerPostTypeSchema,
@@ -8394,19 +8380,7 @@ var wp;
       if (!revisions) {
         return null;
       }
-      const revision = revisions.find(
-        (record) => record[revisionKey] === revisionId2
-      );
-      if (revision) {
-        return revision;
-      }
-      return select9(import_core_data3.store).getRevision(
-        "postType",
-        postType2,
-        postId2,
-        revisionId2,
-        { context: "edit" }
-      ) ?? null;
+      return revisions.find((r4) => r4[revisionKey] === revisionId2) ?? null;
     }
   );
   function getSelectedNote(state2) {
@@ -19693,9 +19667,9 @@ var wp;
   }
   var resets_default = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
   if (typeof process === "undefined" || true) {
-    registerStyle3("da99a163ac", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._08e8a2e44959f892__outset-ring--focus:focus,.c5cb3ee4bddaa8e4__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.cd83dfc2126a0846__outset-ring--focus-within:focus-within,.d0541bc9dd9dc7b6__outset-ring--focus-visible:focus-visible,:focus-visible .ecadb9e080e2dfa5__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._970d04df7376df67__outset-ring--focus-within-except-active:focus-within,.e25b2bdd7aa21721__outset-ring--focus-except-active:focus{outline:none}._970d04df7376df67__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.e25b2bdd7aa21721__outset-ring--focus-except-active:focus:not(:active){@include mixins.focus-ring()}}}");
+    registerStyle3("5f8e7aa0bc", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._08e8a2e44959f892__outset-ring--focus:focus,._970d04df7376df67__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c5cb3ee4bddaa8e4__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.cd83dfc2126a0846__outset-ring--focus-within:focus-within,.d0541bc9dd9dc7b6__outset-ring--focus-visible:focus-visible,.e25b2bdd7aa21721__outset-ring--focus-except-active:focus:not(:active),:focus-visible .ecadb9e080e2dfa5__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
   }
-  var focus_default = { "outset-ring--focus": "_08e8a2e44959f892__outset-ring--focus", "outset-ring--focus-visible": "d0541bc9dd9dc7b6__outset-ring--focus-visible", "outset-ring--focus-within": "cd83dfc2126a0846__outset-ring--focus-within", "outset-ring--focus-within-visible": "c5cb3ee4bddaa8e4__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "ecadb9e080e2dfa5__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "e25b2bdd7aa21721__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_970d04df7376df67__outset-ring--focus-within-except-active" };
+  var focus_default = { "outset-ring--focus": "_08e8a2e44959f892__outset-ring--focus", "outset-ring--focus-except-active": "e25b2bdd7aa21721__outset-ring--focus-except-active", "outset-ring--focus-visible": "d0541bc9dd9dc7b6__outset-ring--focus-visible", "outset-ring--focus-within": "cd83dfc2126a0846__outset-ring--focus-within", "outset-ring--focus-within-except-active": "_970d04df7376df67__outset-ring--focus-within-except-active", "outset-ring--focus-within-visible": "c5cb3ee4bddaa8e4__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "ecadb9e080e2dfa5__outset-ring--focus-parent-visible" };
   if (typeof process === "undefined" || true) {
     registerStyle3("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
   }
@@ -20454,9 +20428,9 @@ var wp;
   }
   var global_css_defense_default3 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
   if (typeof process === "undefined" || true) {
-    registerStyle9("da99a163ac", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._08e8a2e44959f892__outset-ring--focus:focus,.c5cb3ee4bddaa8e4__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.cd83dfc2126a0846__outset-ring--focus-within:focus-within,.d0541bc9dd9dc7b6__outset-ring--focus-visible:focus-visible,:focus-visible .ecadb9e080e2dfa5__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._970d04df7376df67__outset-ring--focus-within-except-active:focus-within,.e25b2bdd7aa21721__outset-ring--focus-except-active:focus{outline:none}._970d04df7376df67__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.e25b2bdd7aa21721__outset-ring--focus-except-active:focus:not(:active){@include mixins.focus-ring()}}}");
+    registerStyle9("5f8e7aa0bc", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._08e8a2e44959f892__outset-ring--focus:focus,._970d04df7376df67__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c5cb3ee4bddaa8e4__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.cd83dfc2126a0846__outset-ring--focus-within:focus-within,.d0541bc9dd9dc7b6__outset-ring--focus-visible:focus-visible,.e25b2bdd7aa21721__outset-ring--focus-except-active:focus:not(:active),:focus-visible .ecadb9e080e2dfa5__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
   }
-  var focus_default2 = { "outset-ring--focus": "_08e8a2e44959f892__outset-ring--focus", "outset-ring--focus-visible": "d0541bc9dd9dc7b6__outset-ring--focus-visible", "outset-ring--focus-within": "cd83dfc2126a0846__outset-ring--focus-within", "outset-ring--focus-within-visible": "c5cb3ee4bddaa8e4__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "ecadb9e080e2dfa5__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "e25b2bdd7aa21721__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_970d04df7376df67__outset-ring--focus-within-except-active" };
+  var focus_default2 = { "outset-ring--focus": "_08e8a2e44959f892__outset-ring--focus", "outset-ring--focus-except-active": "e25b2bdd7aa21721__outset-ring--focus-except-active", "outset-ring--focus-visible": "d0541bc9dd9dc7b6__outset-ring--focus-visible", "outset-ring--focus-within": "cd83dfc2126a0846__outset-ring--focus-within", "outset-ring--focus-within-except-active": "_970d04df7376df67__outset-ring--focus-within-except-active", "outset-ring--focus-within-visible": "c5cb3ee4bddaa8e4__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "ecadb9e080e2dfa5__outset-ring--focus-parent-visible" };
   var Header2 = (0, import_element29.forwardRef)(
     function CollapsibleCardHeader({ children, className, render: render5, ...restProps }, ref) {
       const [descriptionId, setDescriptionId] = (0, import_element29.useState)();
@@ -21432,9 +21406,9 @@ var wp;
   }
   var resets_default4 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
   if (typeof process === "undefined" || true) {
-    registerStyle16("da99a163ac", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._08e8a2e44959f892__outset-ring--focus:focus,.c5cb3ee4bddaa8e4__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.cd83dfc2126a0846__outset-ring--focus-within:focus-within,.d0541bc9dd9dc7b6__outset-ring--focus-visible:focus-visible,:focus-visible .ecadb9e080e2dfa5__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._970d04df7376df67__outset-ring--focus-within-except-active:focus-within,.e25b2bdd7aa21721__outset-ring--focus-except-active:focus{outline:none}._970d04df7376df67__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.e25b2bdd7aa21721__outset-ring--focus-except-active:focus:not(:active){@include mixins.focus-ring()}}}");
+    registerStyle16("5f8e7aa0bc", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._08e8a2e44959f892__outset-ring--focus:focus,._970d04df7376df67__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c5cb3ee4bddaa8e4__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.cd83dfc2126a0846__outset-ring--focus-within:focus-within,.d0541bc9dd9dc7b6__outset-ring--focus-visible:focus-visible,.e25b2bdd7aa21721__outset-ring--focus-except-active:focus:not(:active),:focus-visible .ecadb9e080e2dfa5__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
   }
-  var focus_default3 = { "outset-ring--focus": "_08e8a2e44959f892__outset-ring--focus", "outset-ring--focus-visible": "d0541bc9dd9dc7b6__outset-ring--focus-visible", "outset-ring--focus-within": "cd83dfc2126a0846__outset-ring--focus-within", "outset-ring--focus-within-visible": "c5cb3ee4bddaa8e4__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "ecadb9e080e2dfa5__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "e25b2bdd7aa21721__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_970d04df7376df67__outset-ring--focus-within-except-active" };
+  var focus_default3 = { "outset-ring--focus": "_08e8a2e44959f892__outset-ring--focus", "outset-ring--focus-except-active": "e25b2bdd7aa21721__outset-ring--focus-except-active", "outset-ring--focus-visible": "d0541bc9dd9dc7b6__outset-ring--focus-visible", "outset-ring--focus-within": "cd83dfc2126a0846__outset-ring--focus-within", "outset-ring--focus-within-except-active": "_970d04df7376df67__outset-ring--focus-within-except-active", "outset-ring--focus-within-visible": "c5cb3ee4bddaa8e4__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "ecadb9e080e2dfa5__outset-ring--focus-parent-visible" };
   if (typeof process === "undefined" || true) {
     registerStyle16("e8e6a9be37", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d4250949359b05ce__link{text-decoration-thickness:from-font;text-underline-offset:.2em}.c6055659b8e2cd2c__is-brand,.c6055659b8e2cd2c__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}.c6055659b8e2cd2c__is-brand:active,.c6055659b8e2cd2c__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._92e0dfcaeee15b88__is-neutral,._92e0dfcaeee15b88__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._92e0dfcaeee15b88__is-neutral:active,._92e0dfcaeee15b88__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}.cf122a9bf1035d42__is-unstyled{--_gcd-a-color:inherit;color:inherit;text-decoration:none}._0cb411afac4c86c7__link-icon{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._0cb411afac4c86c7__link-icon:after{content:"\\2197"}._0cb411afac4c86c7__link-icon:dir(rtl):after{content:"\\2196"}}}');
   }
@@ -21963,9 +21937,9 @@ var wp;
   }
   var global_css_defense_default5 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
   if (typeof process === "undefined" || true) {
-    registerStyle19("da99a163ac", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._08e8a2e44959f892__outset-ring--focus:focus,.c5cb3ee4bddaa8e4__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.cd83dfc2126a0846__outset-ring--focus-within:focus-within,.d0541bc9dd9dc7b6__outset-ring--focus-visible:focus-visible,:focus-visible .ecadb9e080e2dfa5__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._970d04df7376df67__outset-ring--focus-within-except-active:focus-within,.e25b2bdd7aa21721__outset-ring--focus-except-active:focus{outline:none}._970d04df7376df67__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.e25b2bdd7aa21721__outset-ring--focus-except-active:focus:not(:active){@include mixins.focus-ring()}}}");
+    registerStyle19("5f8e7aa0bc", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._08e8a2e44959f892__outset-ring--focus:focus,._970d04df7376df67__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c5cb3ee4bddaa8e4__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.cd83dfc2126a0846__outset-ring--focus-within:focus-within,.d0541bc9dd9dc7b6__outset-ring--focus-visible:focus-visible,.e25b2bdd7aa21721__outset-ring--focus-except-active:focus:not(:active),:focus-visible .ecadb9e080e2dfa5__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
   }
-  var focus_default4 = { "outset-ring--focus": "_08e8a2e44959f892__outset-ring--focus", "outset-ring--focus-visible": "d0541bc9dd9dc7b6__outset-ring--focus-visible", "outset-ring--focus-within": "cd83dfc2126a0846__outset-ring--focus-within", "outset-ring--focus-within-visible": "c5cb3ee4bddaa8e4__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "ecadb9e080e2dfa5__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "e25b2bdd7aa21721__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_970d04df7376df67__outset-ring--focus-within-except-active" };
+  var focus_default4 = { "outset-ring--focus": "_08e8a2e44959f892__outset-ring--focus", "outset-ring--focus-except-active": "e25b2bdd7aa21721__outset-ring--focus-except-active", "outset-ring--focus-visible": "d0541bc9dd9dc7b6__outset-ring--focus-visible", "outset-ring--focus-within": "cd83dfc2126a0846__outset-ring--focus-within", "outset-ring--focus-within-except-active": "_970d04df7376df67__outset-ring--focus-within-except-active", "outset-ring--focus-within-visible": "c5cb3ee4bddaa8e4__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "ecadb9e080e2dfa5__outset-ring--focus-parent-visible" };
   var Panel2 = (0, import_element44.forwardRef)(
     function TabPanel({ className, ...otherProps }, forwardedRef) {
       useRegisterPanel();
@@ -29490,6 +29464,7 @@ var wp;
         _embedded: { ...data?._embedded, "wp:attached-to": void 0 }
       });
       setValue(null);
+      setOptions([]);
     };
     const onValueChange = async (filterValue) => {
       setIsLoading(true);
@@ -29513,7 +29488,6 @@ var wp;
       setOptions(suggestions.concat(includeCurrent ? defaultPost : []));
       setIsLoading(false);
     };
-    const debouncedValueChange = (0, import_compose5.useDebounce)((0, import_compose5.useEvent)(onValueChange), 300);
     const handleSelectOption = (selectedPostId) => {
       if (!selectedPostId) {
         handleDetach();
@@ -29546,19 +29520,38 @@ var wp;
         }
       }
     };
+    const help = (0, import_element66.createInterpolateElement)(
+      (0, import_i18n67.__)(
+        "Search for a post or page to attach this media to or <button>detach current</button>."
+      ),
+      {
+        button: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
+          import_components22.Button,
+          {
+            __next40pxDefaultSize: true,
+            onClick: handleDetach,
+            variant: "link",
+            accessibleWhenDisabled: true,
+            disabled: !value
+          }
+        )
+      }
+    );
     return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
       import_components22.ComboboxControl,
       {
         className: "dataviews-media-field__attached-to",
         isLoading,
         label: (0, import_i18n67.__)("Attached to"),
-        help: (0, import_i18n67.__)("Attach this file to a single post or page."),
+        help,
         value,
         options,
-        onFilterValueChange: (filterValue) => debouncedValueChange(filterValue),
+        onFilterValueChange: (0, import_compose5.debounce)(
+          (filterValue) => onValueChange(filterValue),
+          300
+        ),
         onChange: handleSelectOption,
-        hideLabelFromVision: true,
-        expandOnFocus: false
+        hideLabelFromVision: true
       }
     );
   }
@@ -35451,7 +35444,7 @@ var wp;
     });
     return ref;
   }
-  function useEvent2(callback) {
+  function useEvent(callback) {
     const ref = (0, import_react18.useRef)(() => {
       throw new Error("Cannot call an event handler while rendering.");
     });
@@ -35567,7 +35560,7 @@ var wp;
     return (0, import_react18.useReducer)(() => [], []);
   }
   function useBooleanEvent(booleanOrCallback) {
-    return useEvent2(typeof booleanOrCallback === "function" ? booleanOrCallback : () => booleanOrCallback);
+    return useEvent(typeof booleanOrCallback === "function" ? booleanOrCallback : () => booleanOrCallback);
   }
   function useWrapElement(props, callback, deps = []) {
     const wrapElement = (0, import_react18.useCallback)((element) => {
@@ -35602,7 +35595,7 @@ var wp;
       addGlobalEventListener("scroll", resetMouseMoving, true);
       hasInstalledGlobalEventListeners = true;
     }, []);
-    return useEvent2(() => mouseMoving);
+    return useEvent(() => mouseMoving);
   }
   var mouseMoving = false;
   var previousScreenX = 0;
@@ -35757,7 +35750,7 @@ var wp;
     return tabIndexProp ?? 0;
   }
   function useDisableEvent(onEvent, disabled2) {
-    return useEvent2((event) => {
+    return useEvent((event) => {
       onEvent?.(event);
       if (event.defaultPrevented) return;
       if (disabled2) {
@@ -35794,7 +35787,7 @@ var wp;
     const [focusVisible, setFocusVisible] = (0, import_react19.useState)(false);
     const focusVisibleRef = (0, import_react19.useRef)(false);
     const nativeSubmitObserverCleanupRef = (0, import_react19.useRef)(null);
-    const cleanupFocusVisible = useEvent2((element) => {
+    const cleanupFocusVisible = useEvent((element) => {
       nativeSubmitObserverCleanupRef.current?.();
       nativeSubmitObserverCleanupRef.current = null;
       focusVisibleRef.current = false;
@@ -35858,7 +35851,7 @@ var wp;
       setFocusVisible(true);
     };
     const onKeyDownCaptureProp = props.onKeyDownCapture;
-    const onKeyDownCapture = useEvent2((event) => {
+    const onKeyDownCapture = useEvent((event) => {
       onKeyDownCaptureProp?.(event);
       if (event.defaultPrevented) return;
       if (!focusable2) return;
@@ -35873,7 +35866,7 @@ var wp;
       queueBeforeEvent(element, "focusout", applyFocusVisible);
     });
     const onFocusCaptureProp = props.onFocusCapture;
-    const onFocusCapture = useEvent2((event) => {
+    const onFocusCapture = useEvent((event) => {
       onFocusCaptureProp?.(event);
       if (event.defaultPrevented) return;
       if (!focusable2) return;
@@ -35887,7 +35880,7 @@ var wp;
       else setFocusVisible(false);
     });
     const onBlurProp = props.onBlur;
-    const onBlur = useEvent2((event) => {
+    const onBlur = useEvent((event) => {
       onBlurProp?.(event);
       if (!focusable2) return;
       if (!isFocusEventOutside(event)) return;
@@ -35895,7 +35888,7 @@ var wp;
       setFocusVisible(false);
     });
     const autoFocusOnShow = (0, import_react19.useContext)(FocusableContext);
-    const autoFocusRef = useEvent2((element) => {
+    const autoFocusRef = useEvent((element) => {
       if (!focusable2) return;
       if (!autoFocus) return;
       if (!element) return;
@@ -35985,7 +35978,7 @@ var wp;
       setActive(false);
     }, [disabled2]);
     const onKeyDownProp = props.onKeyDown;
-    const onKeyDown = useEvent2((event) => {
+    const onKeyDown = useEvent((event) => {
       onKeyDownProp?.(event);
       const element = event.currentTarget;
       if (event.defaultPrevented) return;
@@ -36022,7 +36015,7 @@ var wp;
       }
     });
     const onKeyUpProp = props.onKeyUp;
-    const onKeyUp = useEvent2((event) => {
+    const onKeyUp = useEvent((event) => {
       onKeyUpProp?.(event);
       if (isDuplicate) return;
       const isSpace = clickOnSpace && event.key === " ";
@@ -36041,7 +36034,7 @@ var wp;
       queueMicrotask(() => fireClickEvent(element, eventInit));
     });
     const onBlurProp = props.onBlur;
-    const onBlur = useEvent2((event) => {
+    const onBlur = useEvent((event) => {
       onBlurProp?.(event);
       if (!activeRef.current) return;
       activeRef.current = false;
@@ -37058,7 +37051,7 @@ If there's a particular need for this, please submit a feature request at https:
     return [React76.useMemo(() => ({
       ...store4,
       useState: useState161
-    }), [store4, useState161]), useEvent2(() => {
+    }), [store4, useState161]), useEvent(() => {
       setStore((store5) => createStore2({
         ...props,
         ...store5.getState()
@@ -37184,7 +37177,7 @@ If there's a particular need for this, please submit a feature request at https:
     const onFocusProp = props.onFocus;
     const hasFocusedComposite = (0, import_react23.useRef)(false);
     const cancelScheduledFocusRedirectRef = (0, import_react23.useRef)(null);
-    const onFocus = useEvent2((event) => {
+    const onFocus = useEvent((event) => {
       onFocusProp?.(event);
       if (event.defaultPrevented) return;
       if (isPortalEvent(event)) return;
@@ -37231,7 +37224,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
     });
     const onBlurCaptureProp = props.onBlurCapture;
-    const onBlurCapture = useEvent2((event) => {
+    const onBlurCapture = useEvent((event) => {
       onBlurCaptureProp?.(event);
       if (event.defaultPrevented) return;
       if (store4?.getState()?.virtualFocus && hasFocusedComposite.current) {
@@ -37243,7 +37236,7 @@ If there's a particular need for this, please submit a feature request at https:
     const onKeyDownProp = props.onKeyDown;
     const preventScrollOnKeyDownProp = useBooleanEvent(preventScrollOnKeyDown);
     const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-    const onKeyDown = useEvent2((event) => {
+    const onKeyDown = useEvent((event) => {
       onKeyDownProp?.(event);
       if (event.defaultPrevented) return;
       if (!isSelfTarget(event)) return;
@@ -37353,7 +37346,7 @@ If there's a particular need for this, please submit a feature request at https:
     return event.key === "Shift" || event.key === "Control" || event.key === "Alt" || event.key === "Meta";
   }
   function useKeyboardEventProxy(store4, onKeyboardEvent, previousElementRef) {
-    return useEvent2((event) => {
+    return useEvent((event) => {
       onKeyboardEvent?.(event);
       if (event.defaultPrevented) return;
       if (event.isPropagationStopped()) return;
@@ -37462,7 +37455,7 @@ If there's a particular need for this, please submit a feature request at https:
     const onKeyDownCapture = useKeyboardEventProxy(store4, props.onKeyDownCapture, previousElementRef);
     const onKeyUpCapture = useKeyboardEventProxy(store4, props.onKeyUpCapture, previousElementRef);
     const onFocusCaptureProp = props.onFocusCapture;
-    const onFocusCapture = useEvent2((event) => {
+    const onFocusCapture = useEvent((event) => {
       onFocusCaptureProp?.(event);
       if (event.defaultPrevented) return;
       if (!store4) return;
@@ -37476,7 +37469,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     });
     const onFocusProp = props.onFocus;
-    const onFocus = useEvent2((event) => {
+    const onFocus = useEvent((event) => {
       onFocusProp?.(event);
       if (event.defaultPrevented) return;
       if (!composite) return;
@@ -37488,7 +37481,7 @@ If there's a particular need for this, please submit a feature request at https:
       } else if (isSelfTarget(event)) store4.setActiveId(null);
     });
     const onBlurCaptureProp = props.onBlurCapture;
-    const onBlurCapture = useEvent2((event) => {
+    const onBlurCapture = useEvent((event) => {
       onBlurCaptureProp?.(event);
       if (event.defaultPrevented) return;
       if (!store4) return;
@@ -37509,7 +37502,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const onKeyDownProp = props.onKeyDown;
     const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-    const onKeyDown = useEvent2((event) => {
+    const onKeyDown = useEvent((event) => {
       onKeyDownProp?.(event);
       if (event.nativeEvent.isComposing) return;
       if (event.defaultPrevented) return;
@@ -37940,7 +37933,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isMouseMoving = useIsMouseMoving();
     const onMouseMoveProp = props.onMouseMove;
     const focusOnHoverProp = useBooleanEvent(focusOnHover);
-    const onMouseMove = useEvent2((event) => {
+    const onMouseMove = useEvent((event) => {
       onMouseMoveProp?.(event);
       if (event.defaultPrevented) return;
       if (!isMouseMoving()) return;
@@ -37953,7 +37946,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const onMouseLeaveProp = props.onMouseLeave;
     const blurOnHoverEndProp = useBooleanEvent(blurOnHoverEnd);
-    const onMouseLeave = useEvent2((event) => {
+    const onMouseLeave = useEvent((event) => {
       onMouseLeaveProp?.(event);
       if (event.defaultPrevented) return;
       if (!isMouseMoving()) return;
@@ -38096,7 +38089,7 @@ If there's a particular need for this, please submit a feature request at https:
       autoSelect,
       storeValue
     ]);
-    const getAutoSelectIdProp = useEvent2(getAutoSelectId);
+    const getAutoSelectIdProp = useEvent(getAutoSelectId);
     const autoSelectIdRef = (0, import_react29.useRef)(null);
     const autoSelectMovedRef = (0, import_react29.useRef)(void 0);
     const userScrolledRef = (0, import_react29.useRef)(false);
@@ -38224,7 +38217,7 @@ If there's a particular need for this, please submit a feature request at https:
     const onChangeProp = props.onChange;
     const showOnChangeProp = useBooleanEvent(showOnChange ?? canShow);
     const setValueOnChangeProp = useBooleanEvent(setValueOnChange ?? !store4.tag);
-    const onChange = useEvent2((event) => {
+    const onChange = useEvent((event) => {
       onChangeProp?.(event);
       if (event.defaultPrevented) return;
       if (!store4) return;
@@ -38255,7 +38248,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!autoSelect || !canAutoSelectRef.current) store4.setActiveId(null);
     });
     const onCompositionEndProp = props.onCompositionEnd;
-    const onCompositionEnd = useEvent2((event) => {
+    const onCompositionEnd = useEvent((event) => {
       canAutoSelectRef.current = true;
       composingRef.current = false;
       onCompositionEndProp?.(event);
@@ -38267,7 +38260,7 @@ If there's a particular need for this, please submit a feature request at https:
     const blurActiveItemOnClickProp = useBooleanEvent(blurActiveItemOnClick ?? (() => store4.getState().includesBaseElement));
     const setValueOnClickProp = useBooleanEvent(setValueOnClick);
     const showOnClickProp = useBooleanEvent(showOnClick ?? canShow);
-    const onMouseDown = useEvent2((event) => {
+    const onMouseDown = useEvent((event) => {
       onMouseDownProp?.(event);
       if (event.defaultPrevented) return;
       if (event.button) return;
@@ -38279,7 +38272,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const onKeyDownProp = props.onKeyDown;
     const showOnKeyPressProp = useBooleanEvent(showOnKeyPress ?? canShow);
-    const onKeyDown = useEvent2((event) => {
+    const onKeyDown = useEvent((event) => {
       onKeyDownProp?.(event);
       if (!event.repeat) canAutoSelectRef.current = false;
       if (event.defaultPrevented) return;
@@ -38302,7 +38295,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     });
     const onBlurProp = props.onBlur;
-    const onBlur = useEvent2((event) => {
+    const onBlur = useEvent((event) => {
       canAutoSelectRef.current = false;
       onBlurProp?.(event);
     });
@@ -38390,7 +38383,7 @@ If there's a particular need for this, please submit a feature request at https:
     const selectValueOnClickProp = useBooleanEvent(selectValueOnClick);
     const resetValueOnSelectProp = useBooleanEvent(resetValueOnSelect ?? resetValueOnSelectState ?? multiSelectable);
     const hideOnClickProp = useBooleanEvent(hideOnClick);
-    const onClick = useEvent2((event) => {
+    const onClick = useEvent((event) => {
       onClickProp?.(event);
       if (event.defaultPrevented) return;
       if (isDownloading(event)) return;
@@ -38409,7 +38402,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (hideOnClickProp(event)) store4?.hide();
     });
     const onKeyDownProp = props.onKeyDown;
-    const onKeyDown = useEvent2((event) => {
+    const onKeyDown = useEvent((event) => {
       onKeyDownProp?.(event);
       if (event.defaultPrevented) return;
       const baseElement = store4?.getState().baseElement;
@@ -78256,9 +78249,7 @@ If there's a particular need for this, please submit a feature request at https:
           });
         }
         pendingSavedRecords.push(
-          registry.dispatch(import_core_data56.store).saveEditedEntityRecord(kind, name2, key, {
-            throwOnError: true
-          }).catch(ensureError)
+          registry.dispatch(import_core_data56.store).saveEditedEntityRecord(kind, name2, key)
         );
       }
     });
@@ -78268,34 +78259,19 @@ If there's a particular need for this, please submit a feature request at https:
           "root",
           "site",
           void 0,
-          siteItemsToSave,
-          {
-            throwOnError: true
-          }
-        ).catch(ensureError)
+          siteItemsToSave
+        )
       );
     }
     registry.dispatch(import_block_editor35.store).__unstableMarkLastChangeAsPersistent();
-    return Promise.all(pendingSavedRecords).then(async (values) => {
+    Promise.all(pendingSavedRecords).then(async (values) => {
       if (onSave) {
         await onSave();
       }
       return values;
     }).then((values) => {
-      const errors = values.filter((v3) => v3 instanceof Error);
-      if (errors.length) {
-        const firstMessage = errors.find(
-          (e3) => e3.message
-        )?.message;
-        registry.dispatch(import_notices19.store).createErrorNotice(
-          (0, import_html_entities12.decodeEntities)(
-            firstMessage || (0, import_i18n204.__)("Saving failed.")
-          ),
-          {
-            type: "snackbar",
-            id: saveNoticeId
-          }
-        );
+      if (values.some((value) => typeof value === "undefined")) {
+        registry.dispatch(import_notices19.store).createErrorNotice((0, import_i18n204.__)("Saving failed."));
       } else {
         registry.dispatch(import_notices19.store).createSuccessNotice(
           successNoticeContent || (0, import_i18n204.__)("Site updated."),
@@ -78314,33 +78290,9 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }).catch(
       (error2) => registry.dispatch(import_notices19.store).createErrorNotice(
-        (0, import_html_entities12.decodeEntities)(
-          error2?.message || (0, import_i18n204.__)("Saving failed.")
-        ),
-        {
-          type: "snackbar",
-          id: saveNoticeId
-        }
+        `${(0, import_i18n204.__)("Saving failed.")} ${error2}`
       )
     );
-    function ensureError(error2) {
-      if (error2 instanceof Error) {
-        return error2;
-      }
-      let message2;
-      if (!error2) {
-      } else if (typeof error2.message === "string") {
-        message2 = error2.message;
-      } else if (typeof error2 === "string") {
-        message2 = error2;
-      } else if (Object.hasOwn(error2, "toString") && typeof error2.toString === "function") {
-        const result = error2.toString();
-        if (typeof result === "string") {
-          message2 = result;
-        }
-      }
-      return new Error(message2, { cause: error2 });
-    }
   };
   var revertTemplate2 = (template2, { allowUndo = true } = {}) => async ({ registry }) => {
     const noticeId = "edit-site-template-reverted";
@@ -78607,76 +78559,6 @@ If there's a particular need for this, please submit a feature request at https:
         dispatch8.setCurrentRevisionId(revisions[0][revisionKey]);
       }
     });
-  };
-  function createRevisionsLoadFailedNotice(registry) {
-    registry.dispatch(import_notices19.store).createNotice("warning", (0, import_i18n204.__)("Revisions could not be loaded."), {
-      type: "snackbar",
-      id: "editor-revisions-load-failed"
-    });
-  }
-  var openRevision = (revisionId2) => async ({ dispatch: dispatch8, select: select9, registry }) => {
-    dispatch8.setCurrentRevisionId(revisionId2);
-    const postType2 = select9.getCurrentPostType();
-    const postId2 = select9.getCurrentPostId();
-    const entityConfig = registry.select(import_core_data56.store).getEntityConfig("postType", postType2);
-    const revisionKey = entityConfig?.revisionKey || "id";
-    const revisions = await registry.resolveSelect(import_core_data56.store).getRevisions("postType", postType2, postId2, {
-      per_page: -1,
-      context: "edit",
-      orderby: "date",
-      order: "desc",
-      _fields: revisionKey
-    });
-    if (select9.getCurrentRevisionId() !== revisionId2) {
-      return;
-    }
-    if (!revisions) {
-      createRevisionsLoadFailedNotice(registry);
-      return;
-    }
-    const index2 = revisions.findIndex(
-      (revision) => revision[revisionKey] === revisionId2
-    );
-    if (index2 === -1) {
-      let revision;
-      try {
-        revision = await (0, import_api_fetch7.default)({
-          path: (0, import_url14.addQueryArgs)(
-            entityConfig.getRevisionsUrl(postId2, revisionId2),
-            { context: "edit" }
-          )
-        });
-      } catch (error2) {
-        if (select9.getCurrentRevisionId() !== revisionId2) {
-          return;
-        }
-        if (error2?.data?.status !== 404) {
-          createRevisionsLoadFailedNotice(registry);
-          return;
-        }
-        dispatch8.setCurrentRevisionId(null);
-        registry.dispatch(import_notices19.store).createNotice("warning", (0, import_i18n204.__)("Invalid revision ID."), {
-          type: "snackbar",
-          id: "editor-revision-invalid"
-        });
-        return;
-      }
-      if (select9.getCurrentRevisionId() !== revisionId2) {
-        return;
-      }
-      if (!revision) {
-        createRevisionsLoadFailedNotice(registry);
-        return;
-      }
-      await registry.dispatch(import_core_data56.store).receiveRevisions("postType", postType2, postId2, revision, {
-        context: "edit"
-      });
-      return;
-    }
-    const page = Math.floor(index2 / select9.getRevisionsPerPage()) + 1;
-    if (page !== select9.getRevisionPage()) {
-      dispatch8({ type: "SET_REVISION_PAGE", page });
-    }
   };
   function setShowRevisionDiff(showDiff) {
     return {
@@ -102211,6 +102093,4 @@ is-plain-object/dist/is-plain-object.mjs:
    * Released under the MIT License.
    *)
 */
-(window.wp ||= {}).editor = wp.editor;
-})();
 //# sourceMappingURL=index.js.map

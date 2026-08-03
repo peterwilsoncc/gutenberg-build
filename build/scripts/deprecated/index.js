@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).deprecated = (() => {
@@ -67,6 +66,4 @@ var wp;
   return __toCommonJS(index_exports);
 })();
 if (typeof wp.deprecated === 'object' && wp.deprecated.default) { wp.deprecated = wp.deprecated.default; }
-(window.wp ||= {}).deprecated = wp.deprecated;
-})();
 //# sourceMappingURL=index.js.map
