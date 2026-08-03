@@ -81798,10 +81798,7 @@ var wp;
       className,
       selectedState
     );
-    const backgroundGradientSupported = hasBackgroundSupport(
-      name,
-      "gradient"
-    );
+    const backgroundGradientSupported = hasBackgroundSupport(name, "gradient") && !!settings2?.background?.gradient;
     const colorSupport = (0, import_blocks93.getBlockSupport)(name, "color");
     const hasColorBackgroundSupport = colorSupport && colorSupport.background !== false;
     const hasColorGradientSupport = !!colorSupport?.gradients;
