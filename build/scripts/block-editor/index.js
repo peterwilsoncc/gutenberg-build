@@ -2164,9 +2164,9 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React118 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef109 = React118.useRef, useEffect94 = React118.useEffect, useMemo155 = React118.useMemo, useDebugValue2 = React118.useDebugValue;
+        var React118 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef108 = React118.useRef, useEffect94 = React118.useEffect, useMemo155 = React118.useMemo, useDebugValue2 = React118.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector3, isEqual2) {
-          var instRef = useRef109(null);
+          var instRef = useRef108(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -62424,6 +62424,7 @@ var wp;
   // packages/block-editor/build-module/components/list-view/utils.mjs
   var import_i18n108 = __toESM(require_i18n(), 1);
   var import_dom64 = __toESM(require_dom(), 1);
+  var BLOCK_LIST_ITEM_HEIGHT = 32;
   var getBlockPositionDescription = (position, siblingCount, level) => (0, import_i18n108.sprintf)(
     /* translators: 1: The numerical position of the block. 2: The total number of blocks. 3. The level of nesting for the block. */
     (0, import_i18n108.__)("Block %1$d of %2$d, Level %3$d."),
@@ -63085,34 +63086,19 @@ var wp;
       return 0;
     }
     const isExpanded = expandedState[block.clientId] ?? isExpandedByDefault;
-    if (isExpanded) {
-      return 1 + block.innerBlocks.reduce(
-        countReducer(
-          expandedState,
-          draggedClientIds,
-          isExpandedByDefault
-        ),
-        0
-      );
+    if (!isExpanded) {
+      return 1;
     }
-    return 1;
-  }
-  var countReducer = (expandedState, draggedClientIds, isExpandedByDefault) => (count, block) => {
-    const isDragged = draggedClientIds?.includes(block.clientId);
-    if (isDragged) {
-      return count;
-    }
-    const isExpanded = expandedState[block.clientId] ?? isExpandedByDefault;
-    if (isExpanded && block.innerBlocks.length > 0) {
-      return count + countBlocks(
-        block,
+    return block.innerBlocks.reduce(
+      (count, innerBlock) => count + countBlocks(
+        innerBlock,
         expandedState,
         draggedClientIds,
         isExpandedByDefault
-      );
-    }
-    return count + 1;
-  };
+      ),
+      1
+    );
+  }
   var noop13 = () => {
   };
   function ListViewBranch(props) {
@@ -63151,7 +63137,6 @@ var wp;
       expandedState,
       draggedClientIds
     } = useListViewContext();
-    const nextPositionRef = (0, import_element190.useRef)();
     if (!canParentExpand) {
       return null;
     }
@@ -63159,40 +63144,66 @@ var wp;
     const filteredBlocks = blocks2.filter(Boolean);
     const blockCount = filteredBlocks.length;
     const rowCount = showAppender ? blockCount + 1 : blockCount;
-    nextPositionRef.current = listPosition;
-    return /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(import_jsx_runtime329.Fragment, { children: [
-      filteredBlocks.map((block, index2) => {
-        const { clientId, innerBlocks } = block;
-        if (index2 > 0) {
-          nextPositionRef.current += countBlocks(
-            filteredBlocks[index2 - 1],
-            expandedState,
-            draggedClientIds,
-            isExpanded
-          );
+    let nextPosition = listPosition;
+    const rows = [];
+    let placeholderRows = 0;
+    let placeholderKey;
+    const pushPlaceholderRow = () => {
+      if (!placeholderRows) {
+        return;
+      }
+      rows.push(
+        /* @__PURE__ */ (0, import_jsx_runtime329.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
+          "td",
+          {
+            className: "block-editor-list-view-placeholder",
+            style: {
+              height: placeholderRows * BLOCK_LIST_ITEM_HEIGHT
+            }
+          }
+        ) }, `placeholder-${placeholderKey}`)
+      );
+      placeholderRows = 0;
+      placeholderKey = void 0;
+    };
+    filteredBlocks.forEach((block, index2) => {
+      const { clientId, innerBlocks } = block;
+      const blockListPosition = nextPosition;
+      nextPosition += countBlocks(
+        block,
+        expandedState,
+        draggedClientIds,
+        isExpanded
+      );
+      const isDragged = !!draggedClientIds?.includes(clientId);
+      const { itemInView } = fixedListWindow;
+      const blockInView = itemInView(blockListPosition);
+      const position = index2 + 1;
+      const updatedPath = path.length > 0 ? `${path}_${position}` : `${position}`;
+      const hasNestedBlocks = !!innerBlocks?.length;
+      const shouldExpand = hasNestedBlocks && shouldShowInnerBlocks ? expandedState[clientId] ?? isExpanded : void 0;
+      const isSelected = isClientIdSelected(clientId, selectedClientIds);
+      const isSelectedBranch = isBranchSelected || isSelected && hasNestedBlocks;
+      const showBlock = isDragged || blockInView || isSelected && clientId === selectedClientIds[0] || index2 === 0 || index2 === blockCount - 1;
+      const showNestedBlocks = hasNestedBlocks && shouldExpand && !isDragged;
+      if (!showBlock) {
+        placeholderRows += 1;
+        placeholderKey ??= clientId;
+        if (!showNestedBlocks) {
+          return;
         }
-        const isDragged = !!draggedClientIds?.includes(clientId);
-        const { displacement, isAfterDraggedBlocks, isNesting } = getDragDisplacementValues({
-          blockIndexes,
-          blockDropTargetIndex,
-          blockDropPosition,
-          clientId,
-          firstDraggedBlockIndex,
-          isDragged
-        });
-        const { itemInView } = fixedListWindow;
-        const blockInView = itemInView(nextPositionRef.current);
-        const position = index2 + 1;
-        const updatedPath = path.length > 0 ? `${path}_${position}` : `${position}`;
-        const hasNestedBlocks = !!innerBlocks?.length;
-        const shouldExpand = hasNestedBlocks && shouldShowInnerBlocks ? expandedState[clientId] ?? isExpanded : void 0;
-        const isSelected = isClientIdSelected(
-          clientId,
-          selectedClientIds
-        );
-        const isSelectedBranch = isBranchSelected || isSelected && hasNestedBlocks;
-        const showBlock = isDragged || blockInView || isSelected && clientId === selectedClientIds[0] || index2 === 0 || index2 === blockCount - 1;
-        return /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(import_data130.AsyncModeProvider, { value: !isSelected, children: [
+      }
+      pushPlaceholderRow();
+      const { displacement, isAfterDraggedBlocks, isNesting } = getDragDisplacementValues({
+        blockIndexes,
+        blockDropTargetIndex,
+        blockDropPosition,
+        clientId,
+        firstDraggedBlockIndex,
+        isDragged
+      });
+      rows.push(
+        /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(import_data130.AsyncModeProvider, { value: !isSelected, children: [
           showBlock && /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
             block_default3,
             {
@@ -63208,7 +63219,7 @@ var wp;
               showBlockMovers,
               path: updatedPath,
               isExpanded: isDragged ? false : shouldExpand,
-              listPosition: nextPositionRef.current,
+              listPosition: blockListPosition,
               selectedClientIds,
               isSyncedBranch: syncedBranch,
               displacement,
@@ -63216,8 +63227,7 @@ var wp;
               isNesting
             }
           ),
-          !showBlock && /* @__PURE__ */ (0, import_jsx_runtime329.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)("td", { className: "block-editor-list-view-placeholder" }) }),
-          hasNestedBlocks && shouldExpand && !isDragged && /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
+          showNestedBlocks && /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
             ListViewBranch,
             {
               parentId: clientId,
@@ -63226,7 +63236,7 @@ var wp;
               showBlockMovers,
               level: level + 1,
               path: updatedPath,
-              listPosition: nextPositionRef.current + 1,
+              listPosition: blockListPosition + 1,
               fixedListWindow,
               isBranchSelected: isSelectedBranch,
               selectedClientIds,
@@ -63234,8 +63244,12 @@ var wp;
               isSyncedBranch: syncedBranch
             }
           )
-        ] }, clientId);
-      }),
+        ] }, clientId)
+      );
+    });
+    pushPlaceholderRow();
+    return /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(import_jsx_runtime329.Fragment, { children: [
+      rows,
       showAppender && /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
         import_components121.__experimentalTreeGridRow,
         {
@@ -64128,7 +64142,6 @@ var wp;
     }
     return state;
   };
-  var BLOCK_LIST_ITEM_HEIGHT = 32;
   function ListViewComponent({
     id,
     blocks: blocks2,
