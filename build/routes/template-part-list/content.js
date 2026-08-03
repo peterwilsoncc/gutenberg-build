@@ -956,124 +956,116 @@ function generatePreferenceKey(kind, name, slug) {
   return `dataviews-${kind}-${name}-${slug}`;
 }
 
-// packages/views/build-module/filter-utils.mjs
-var SCALAR_VALUES = [
-  "titleField",
-  "mediaField",
-  "descriptionField",
-  "showTitle",
-  "showMedia",
-  "showDescription",
-  "showLevels",
-  "infiniteScrollEnabled"
-];
-function mergeActiveViewOverrides(view, activeViewOverrides, defaultView) {
-  if (!activeViewOverrides) {
-    return view;
-  }
-  let result = view;
-  for (const key of SCALAR_VALUES) {
-    if (key in activeViewOverrides) {
-      result = { ...result, [key]: activeViewOverrides[key] };
-    }
-  }
-  if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
-    const activeFields = new Set(
-      activeViewOverrides.filters.map((f2) => f2.field)
-    );
-    const preserved = (view.filters ?? []).filter(
-      (f2) => !activeFields.has(f2.field)
-    );
-    result = {
-      ...result,
-      filters: [...preserved, ...activeViewOverrides.filters]
-    };
-  }
-  if (activeViewOverrides.sort) {
-    const isDefaultSort = defaultView && view.sort?.field === defaultView.sort?.field && view.sort?.direction === defaultView.sort?.direction;
-    if (isDefaultSort) {
-      result = {
-        ...result,
-        sort: activeViewOverrides.sort
-      };
-    }
-  }
-  if (activeViewOverrides.layout) {
-    result = {
-      ...result,
-      layout: {
-        ...result.layout,
-        ...activeViewOverrides.layout
-      }
-    };
-  }
-  if (activeViewOverrides.groupBy) {
-    result = {
-      ...result,
-      groupBy: activeViewOverrides.groupBy
-    };
-  }
-  return result;
+// packages/views/build-module/resolve-view.mjs
+var QUERY_PARAMS = ["page", "search"];
+function isPlainObject(value) {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }
-function stripActiveViewOverrides(view, activeViewOverrides, defaultView) {
-  if (!activeViewOverrides) {
-    return view;
-  }
-  let result = view;
-  for (const key of SCALAR_VALUES) {
-    if (key in activeViewOverrides) {
-      const { [key]: _, ...rest } = result;
-      result = rest;
-    }
-  }
-  if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
-    const activeFields = new Set(
-      activeViewOverrides.filters.map((f2) => f2.field)
-    );
-    result = {
-      ...result,
-      filters: (view.filters ?? []).filter(
-        (f2) => !activeFields.has(f2.field)
-      )
-    };
-  }
-  if (activeViewOverrides.sort && view.sort?.field === activeViewOverrides.sort.field && view.sort?.direction === activeViewOverrides.sort.direction) {
-    result = {
-      ...result,
-      sort: defaultView?.sort
-    };
-  }
-  if (activeViewOverrides.layout && "layout" in result && result.layout) {
-    const layout = { ...result.layout };
-    for (const key of Object.keys(activeViewOverrides.layout)) {
-      delete layout[key];
-    }
-    result = {
-      ...result,
-      layout: Object.keys(layout).length > 0 ? layout : void 0
-    };
-  }
-  if (activeViewOverrides.groupBy && "groupBy" in result) {
-    const { groupBy: _, ...rest } = result;
-    result = rest;
-  }
-  return result;
-}
-
-// packages/views/build-module/use-view.mjs
-function omit(obj, keys) {
-  const result = { ...obj };
-  for (const key of keys) {
+function withoutQueryParams(layer) {
+  const result = isPlainObject(layer) ? { ...layer } : {};
+  for (const key of QUERY_PARAMS) {
     delete result[key];
   }
   return result;
 }
+function mergeLayer(lower, upper) {
+  const result = { ...lower };
+  for (const key of Object.keys(upper)) {
+    const value = upper[key];
+    const current = result[key];
+    result[key] = isPlainObject(current) && isPlainObject(value) ? mergeLayer(current, value) : value;
+  }
+  return result;
+}
+function diffLayer(value, base, persisted = {}) {
+  const result = {};
+  for (const key of Object.keys(value)) {
+    const next = value[key];
+    const current = base[key];
+    const prev = persisted[key];
+    if (next === void 0) {
+      continue;
+    }
+    if (isPlainObject(next) && isPlainObject(current)) {
+      const nested = diffLayer(
+        next,
+        current,
+        isPlainObject(prev) ? prev : {}
+      );
+      if (Object.keys(nested).length > 0) {
+        result[key] = nested;
+      }
+    } else if (!dequal(next, current)) {
+      result[key] = next;
+    } else if (prev !== void 0 && dequal(next, prev)) {
+      result[key] = prev;
+    }
+  }
+  return result;
+}
+function getLockedFilters(overrides) {
+  return (overrides?.filters ?? []).filter((filter) => filter.isLocked);
+}
+function applyLockedFilters(view, overrides) {
+  const locked = getLockedFilters(overrides);
+  if (locked.length === 0) {
+    return view;
+  }
+  const rest = (view.filters ?? []).filter(
+    (filter) => !locked.some((f2) => f2.field === filter.field)
+  );
+  return { ...view, filters: [...locked, ...rest] };
+}
+function resolveBaseView(layers, effectiveType) {
+  const { defaultView, defaultLayouts, activeViewOverrides } = layers;
+  const layoutDefaults = defaultLayouts?.[effectiveType];
+  return applyLockedFilters(
+    [layoutDefaults, activeViewOverrides].reduce(
+      (lower, upper) => mergeLayer(lower, withoutQueryParams(upper)),
+      withoutQueryParams(defaultView)
+    ),
+    activeViewOverrides
+  );
+}
+function resolveView(args) {
+  const { defaultView, activeViewOverrides, persistedView, page, search } = args;
+  const effectiveType = persistedView?.type ?? activeViewOverrides?.type ?? defaultView?.type;
+  const baseView = resolveBaseView(args, effectiveType);
+  const view = {
+    ...applyLockedFilters(
+      mergeLayer(baseView, withoutQueryParams(persistedView)),
+      activeViewOverrides
+    ),
+    page: Number(page ?? 1),
+    search: search ?? ""
+  };
+  return view;
+}
+function getUserModifications(newView, layers) {
+  const { activeViewOverrides, persistedView } = layers;
+  const baseView = resolveBaseView(layers, newView.type);
+  const modifications = diffLayer(
+    withoutQueryParams(newView),
+    withoutQueryParams(baseView),
+    withoutQueryParams(persistedView)
+  );
+  const locked = getLockedFilters(activeViewOverrides);
+  if (locked.length > 0 && Array.isArray(modifications.filters)) {
+    modifications.filters = modifications.filters.filter(
+      (filter) => !locked.some((f2) => f2.field === filter.field)
+    );
+  }
+  return Object.keys(modifications).length > 0 ? modifications : void 0;
+}
+
+// packages/views/build-module/use-view.mjs
 function useView(config) {
   const {
     kind,
     name,
     slug,
     defaultView,
+    defaultLayouts,
     activeViewOverrides,
     queryParams,
     onChangeQueryParams
@@ -1089,68 +1081,54 @@ function useView(config) {
     [preferenceKey]
   );
   const { set: set2 } = (0, import_data.useDispatch)(import_preferences.store);
-  const baseView = (0, import_element.useMemo)(
-    () => persistedView ?? defaultView ?? {},
-    [persistedView, defaultView]
+  const page = Number(queryParams?.page ?? 1);
+  const search = queryParams?.search ?? "";
+  const view = (0, import_element.useMemo)(
+    () => resolveView({
+      defaultView,
+      defaultLayouts,
+      activeViewOverrides,
+      persistedView,
+      page,
+      search
+    }),
+    [
+      defaultView,
+      defaultLayouts,
+      activeViewOverrides,
+      persistedView,
+      page,
+      search
+    ]
   );
-  const page = Number(queryParams?.page ?? baseView.page ?? 1);
-  const search = queryParams?.search ?? baseView.search ?? "";
-  const combinedOverrides = (0, import_element.useMemo)(() => {
-    const rawDefaults = config.defaultLayouts?.[baseView.type];
-    const layoutTypeDefaults = !rawDefaults || rawDefaults === true ? {} : rawDefaults;
-    return { ...layoutTypeDefaults, ...activeViewOverrides };
-  }, [config.defaultLayouts, baseView.type, activeViewOverrides]);
-  const view = (0, import_element.useMemo)(() => {
-    return mergeActiveViewOverrides(
-      {
-        ...baseView,
-        page,
-        search
-      },
-      combinedOverrides,
-      defaultView
-    );
-  }, [baseView, page, search, combinedOverrides, defaultView]);
-  const isModified = !!persistedView;
+  const isModified = !!persistedView && Object.keys(persistedView).length > 0;
   const updateView = (0, import_element.useCallback)(
     (newView) => {
-      const urlParams = {
-        page: newView?.page,
-        search: newView?.search
+      const newQueryParams = {
+        page: Number(newView?.page ?? 1),
+        search: newView?.search ?? ""
       };
-      const preferenceView = stripActiveViewOverrides(
-        omit(newView, ["page", "search"]),
-        combinedOverrides,
-        defaultView
-      );
-      if (onChangeQueryParams && !dequal(urlParams, { page, search })) {
-        onChangeQueryParams(urlParams);
+      if (onChangeQueryParams && !dequal(newQueryParams, { page, search })) {
+        onChangeQueryParams(newQueryParams);
       }
-      const comparableBaseView = stripActiveViewOverrides(
-        baseView,
-        combinedOverrides,
-        defaultView
-      );
-      const comparableDefaultView = stripActiveViewOverrides(
+      const modifications = getUserModifications(newView, {
         defaultView,
-        combinedOverrides,
-        defaultView
-      );
-      if (!dequal(comparableBaseView, preferenceView)) {
-        if (dequal(preferenceView, comparableDefaultView)) {
-          set2("core/views", preferenceKey, void 0);
-        } else {
-          set2("core/views", preferenceKey, preferenceView);
-        }
+        defaultLayouts,
+        activeViewOverrides,
+        persistedView
+      });
+      if (!dequal(modifications, persistedView)) {
+        set2("core/views", preferenceKey, modifications);
       }
     },
     [
       onChangeQueryParams,
       page,
       search,
-      baseView,
       defaultView,
-      combinedOverrides,
+      defaultLayouts,
+      activeViewOverrides,
+      persistedView,
       set2,
       preferenceKey
     ]
@@ -15175,7 +15153,7 @@ function chain(...fns) {
 function normalizeString(str) {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
-function omit2(object, keys) {
+function omit(object, keys) {
   const result = { ...object };
   for (const key of keys) if (hasOwnProperty(result, key)) delete result[key];
   return result;
@@ -16665,7 +16643,7 @@ function createStore(initialState, ...stores) {
     return registerListener(keys, listener, batchListenerGroup);
   };
   const storePick = (keys) => createStore(pick(state, keys), finalStore);
-  const storeOmit = (keys) => createStore(omit2(state, keys), finalStore);
+  const storeOmit = (keys) => createStore(omit(state, keys), finalStore);
   const getState = () => state;
   const runListeners = (group, prevState, updatedKey) => {
     if (!(updatedKey instanceof Set) && !group.allKeysListeners?.size) {
@@ -16807,7 +16785,7 @@ function batch(store, ...args) {
   if (!store) return;
   return getInternal(store, "batch")(...args);
 }
-function omit3(store, ...args) {
+function omit2(store, ...args) {
   if (!store) return;
   return getInternal(store, "omit")(...args);
 }
@@ -18194,7 +18172,7 @@ var DisclosureContent = forwardRef21(function DisclosureContent2({ unmountOnHide
 
 // node_modules/@ariakit/components/dist/disclosure/disclosure-store.js
 function createDisclosureStore(props = {}) {
-  const store = props.store || props.disclosure ? mergeStore(props.store, omit3(props.disclosure, ["contentElement", "disclosureElement"])) : void 0;
+  const store = props.store || props.disclosure ? mergeStore(props.store, omit2(props.disclosure, ["contentElement", "disclosureElement"])) : void 0;
   throwOnConflictingProps(props, store);
   const syncState = store?.getState();
   const open = defaultValue(props.open, syncState?.open, props.defaultOpen, false);
@@ -18300,7 +18278,7 @@ function useDialogStoreProps(store, update2, props) {
 
 // node_modules/@ariakit/components/dist/popover/popover-store.js
 function createPopoverStore({ popover: otherPopover, ...props } = {}) {
-  const store = mergeStore(props.store, omit3(otherPopover, [
+  const store = mergeStore(props.store, omit2(otherPopover, [
     "arrowElement",
     "anchorElement",
     "contentElement",
