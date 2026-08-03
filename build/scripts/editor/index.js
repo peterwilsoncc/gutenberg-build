@@ -98747,7 +98747,16 @@ If there's a particular need for this, please submit a feature request at https:
               gap: "sm",
               wrap: "wrap",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(import_components276.Button, { size: "compact", variant: "tertiary", onClick: onCancel, children: /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(import_components276.__experimentalTruncate, { children: (0, import_i18n333.__)("Cancel") }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(
+                  import_components276.Button,
+                  {
+                    size: "compact",
+                    variant: "tertiary",
+                    onClick: onCancel,
+                    shortcut: "Escape",
+                    children: /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(import_components276.__experimentalTruncate, { children: (0, import_i18n333.__)("Cancel") })
+                  }
+                ),
                 /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(
                   import_components276.Button,
                   {
@@ -98756,6 +98765,7 @@ If there's a particular need for this, please submit a feature request at https:
                     variant: "primary",
                     type: "submit",
                     disabled: isDisabled,
+                    shortcut: import_keycodes21.displayShortcut.primary("Enter"),
                     children: /* @__PURE__ */ (0, import_jsx_runtime546.jsx)(import_components276.__experimentalTruncate, { children: labels?.submit ?? (0, import_i18n333.__)("Add note") })
                   }
                 )
