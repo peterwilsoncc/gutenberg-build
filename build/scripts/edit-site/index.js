@@ -188,7 +188,7 @@ var wp;
             },
             [subscribe3, value, getSnapshot]
           );
-          useEffect70(
+          useEffect71(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe3(function() {
@@ -214,7 +214,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React61 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState88 = React61.useState, useEffect70 = React61.useEffect, useLayoutEffect11 = React61.useLayoutEffect, useDebugValue2 = React61.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React61 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState88 = React61.useState, useEffect71 = React61.useEffect, useLayoutEffect11 = React61.useLayoutEffect, useDebugValue2 = React61.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React61.useSyncExternalStore ? React61.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -242,9 +242,9 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React61 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore3 = shim.useSyncExternalStore, useRef77 = React61.useRef, useEffect70 = React61.useEffect, useMemo95 = React61.useMemo, useDebugValue2 = React61.useDebugValue;
+        var React61 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore3 = shim.useSyncExternalStore, useRef78 = React61.useRef, useEffect71 = React61.useEffect, useMemo95 = React61.useMemo, useDebugValue2 = React61.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe3, getSnapshot, getServerSnapshot, selector2, isEqual2) {
-          var instRef = useRef77(null);
+          var instRef = useRef78(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -285,7 +285,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector2, isEqual2]
           );
           var value = useSyncExternalStore3(subscribe3, instRef[0], instRef[1]);
-          useEffect70(
+          useEffect71(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -1106,10 +1106,10 @@ var wp;
   });
   var import_blocks15 = __toESM(require_blocks(), 1);
   var import_block_library4 = __toESM(require_block_library(), 1);
-  var import_data89 = __toESM(require_data(), 1);
+  var import_data90 = __toESM(require_data(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
-  var import_element200 = __toESM(require_element(), 1);
-  var import_editor42 = __toESM(require_editor(), 1);
+  var import_element201 = __toESM(require_element(), 1);
+  var import_editor43 = __toESM(require_editor(), 1);
   var import_preferences13 = __toESM(require_preferences(), 1);
   var import_widgets = __toESM(require_widgets(), 1);
 
@@ -1741,9 +1741,9 @@ var wp;
   unlock(store).registerPrivateActions(private_actions_exports);
 
   // packages/edit-site/build-module/components/app/index.mjs
-  var import_data88 = __toESM(require_data(), 1);
-  var import_router37 = __toESM(require_router(), 1);
-  var import_element199 = __toESM(require_element(), 1);
+  var import_data89 = __toESM(require_data(), 1);
+  var import_router38 = __toESM(require_router(), 1);
+  var import_element200 = __toESM(require_element(), 1);
   var import_core_data70 = __toESM(require_core_data(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
@@ -17431,8 +17431,8 @@ var wp;
   }
 
   // packages/edit-site/build-module/components/site-editor-routes/index.mjs
-  var import_data87 = __toESM(require_data(), 1);
-  var import_element198 = __toESM(require_element(), 1);
+  var import_data88 = __toESM(require_data(), 1);
+  var import_element199 = __toESM(require_element(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-main/index.mjs
   var import_components10 = __toESM(require_components(), 1);
@@ -17754,19 +17754,19 @@ var wp;
   }
 
   // packages/edit-site/build-module/components/editor/index.mjs
-  var import_data34 = __toESM(require_data(), 1);
+  var import_data35 = __toESM(require_data(), 1);
   var import_components19 = __toESM(require_components(), 1);
   var import_compose4 = __toESM(require_compose(), 1);
-  var import_editor16 = __toESM(require_editor(), 1);
+  var import_editor17 = __toESM(require_editor(), 1);
   var import_i18n22 = __toESM(require_i18n(), 1);
   var import_core_data22 = __toESM(require_core_data(), 1);
   var import_block_library = __toESM(require_block_library(), 1);
-  var import_element56 = __toESM(require_element(), 1);
+  var import_element57 = __toESM(require_element(), 1);
   var import_notices3 = __toESM(require_notices(), 1);
-  var import_router17 = __toESM(require_router(), 1);
+  var import_router18 = __toESM(require_router(), 1);
   var import_html_entities3 = __toESM(require_html_entities(), 1);
   var import_block_editor5 = __toESM(require_block_editor(), 1);
-  var import_url8 = __toESM(require_url(), 1);
+  var import_url9 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/welcome-guide/editor.mjs
   var import_data17 = __toESM(require_data(), 1);
@@ -21409,25 +21409,122 @@ var wp;
   }
   var use_editor_title_default = useEditorTitle;
 
-  // packages/edit-site/build-module/components/editor/use-adapt-editor-to-canvas.mjs
+  // packages/edit-site/build-module/components/editor/use-revisions-url-sync.mjs
   var import_data31 = __toESM(require_data(), 1);
-  var import_block_editor4 = __toESM(require_block_editor(), 1);
-  var import_editor15 = __toESM(require_editor(), 1);
   var import_element54 = __toESM(require_element(), 1);
+  var import_editor15 = __toESM(require_editor(), 1);
+  var import_router16 = __toESM(require_router(), 1);
+  var import_url7 = __toESM(require_url(), 1);
+  var { useHistory: useHistory10, useLocation: useLocation16 } = unlock(import_router16.privateApis);
+  var URL_WRITE_DEBOUNCE_MS = 300;
+  function useRevisionsURLSync(enabled, postType2, postId) {
+    const location = useLocation16();
+    const history = useHistory10();
+    const { currentPostType, currentPostId, currentRevisionId } = (0, import_data31.useSelect)(
+      (select4) => {
+        const editor = select4(import_editor15.store);
+        return {
+          currentPostType: editor.getCurrentPostType(),
+          currentPostId: editor.getCurrentPostId(),
+          currentRevisionId: unlock(editor).getCurrentRevisionId()
+        };
+      },
+      []
+    );
+    const { openRevision, setCurrentRevisionId } = unlock(
+      (0, import_data31.useDispatch)(import_editor15.store)
+    );
+    const entityKey = postType2 && postId ? `${postType2}:${postId}` : null;
+    const isCurrentEntity = !!entityKey && currentPostType === postType2 && String(currentPostId) === String(postId);
+    const handledEntityKeyRef = (0, import_element54.useRef)(null);
+    const lastURLWriteTimeRef = (0, import_element54.useRef)(null);
+    (0, import_element54.useEffect)(() => {
+      if (!enabled) {
+        handledEntityKeyRef.current = null;
+        return;
+      }
+      if (!isCurrentEntity || !entityKey || handledEntityKeyRef.current === entityKey) {
+        return;
+      }
+      lastURLWriteTimeRef.current = null;
+      handledEntityKeyRef.current = entityKey;
+      const revision = Number(location.query.revision);
+      if (Number.isInteger(revision) && revision > 0) {
+        openRevision(revision);
+      } else if (currentRevisionId) {
+        setCurrentRevisionId(null);
+      }
+    }, [
+      enabled,
+      isCurrentEntity,
+      entityKey,
+      location.query.revision,
+      currentRevisionId,
+      openRevision,
+      setCurrentRevisionId
+    ]);
+    (0, import_element54.useEffect)(() => {
+      if (!enabled || !isCurrentEntity || !entityKey || handledEntityKeyRef.current !== entityKey) {
+        return;
+      }
+      if (lastURLWriteTimeRef.current === null) {
+        lastURLWriteTimeRef.current = Date.now();
+      }
+      const revisionArg = currentRevisionId ? String(currentRevisionId) : void 0;
+      if (location.query.revision === revisionArg) {
+        return;
+      }
+      const write = async () => {
+        const addressBarArg = new URLSearchParams(window.location.search).get(
+          "revision"
+        ) ?? void 0;
+        if (addressBarArg !== location.query.revision) {
+          return;
+        }
+        lastURLWriteTimeRef.current = Date.now();
+        try {
+          await history.navigate(
+            (0, import_url7.addQueryArgs)(location.path, { revision: revisionArg }),
+            { replace: true }
+          );
+        } catch {
+        }
+      };
+      if (Date.now() - lastURLWriteTimeRef.current >= URL_WRITE_DEBOUNCE_MS) {
+        write();
+        return;
+      }
+      const timeoutId = setTimeout(write, URL_WRITE_DEBOUNCE_MS);
+      return () => clearTimeout(timeoutId);
+    }, [
+      enabled,
+      isCurrentEntity,
+      entityKey,
+      currentRevisionId,
+      location,
+      history
+    ]);
+  }
+
+  // packages/edit-site/build-module/components/editor/use-adapt-editor-to-canvas.mjs
+  var import_data32 = __toESM(require_data(), 1);
+  var import_block_editor4 = __toESM(require_block_editor(), 1);
+  var import_editor16 = __toESM(require_editor(), 1);
+  var import_element55 = __toESM(require_element(), 1);
   var import_preferences9 = __toESM(require_preferences(), 1);
   function useAdaptEditorToCanvas(canvas) {
-    const { clearSelectedBlock } = (0, import_data31.useDispatch)(import_block_editor4.store);
+    const { clearSelectedBlock } = (0, import_data32.useDispatch)(import_block_editor4.store);
     const {
       editPost,
       setDeviceType,
       closePublishSidebar,
       setIsListViewOpened: setIsListViewOpened2,
       setIsInserterOpened: setIsInserterOpened2
-    } = (0, import_data31.useDispatch)(import_editor15.store);
-    const { get: getPreference } = (0, import_data31.useSelect)(import_preferences9.store);
-    const { getCurrentPost } = (0, import_data31.useSelect)(import_editor15.store);
-    const registry = (0, import_data31.useRegistry)();
-    (0, import_element54.useLayoutEffect)(() => {
+    } = (0, import_data32.useDispatch)(import_editor16.store);
+    const { get: getPreference } = (0, import_data32.useSelect)(import_preferences9.store);
+    const { getCurrentPost } = (0, import_data32.useSelect)(import_editor16.store);
+    const registry = (0, import_data32.useRegistry)();
+    (0, import_element55.useLayoutEffect)(() => {
       const isMediumOrBigger = window.matchMedia("(min-width: 782px)").matches;
       registry.batch(() => {
         clearSelectedBlock();
@@ -21458,11 +21555,11 @@ var wp;
   }
 
   // packages/edit-site/build-module/components/editor/use-resolve-edited-entity.mjs
-  var import_element55 = __toESM(require_element(), 1);
-  var import_data32 = __toESM(require_data(), 1);
+  var import_element56 = __toESM(require_element(), 1);
+  var import_data33 = __toESM(require_data(), 1);
   var import_core_data20 = __toESM(require_core_data(), 1);
-  var import_router16 = __toESM(require_router(), 1);
-  var { useLocation: useLocation16 } = unlock(import_router16.privateApis);
+  var import_router17 = __toESM(require_router(), 1);
+  var { useLocation: useLocation17 } = unlock(import_router17.privateApis);
   var postTypesWithoutParentTemplate = [
     ATTACHMENT_POST_TYPE,
     TEMPLATE_POST_TYPE,
@@ -21491,18 +21588,18 @@ var wp;
     return postType2;
   }
   function useResolveEditedEntity() {
-    const { editEntityRecord } = (0, import_data32.useDispatch)(import_core_data20.store);
-    const { hasEntityRecord } = (0, import_data32.useSelect)(import_core_data20.store);
-    const { name: name2, params = {}, query } = useLocation16();
+    const { editEntityRecord } = (0, import_data33.useDispatch)(import_core_data20.store);
+    const { hasEntityRecord } = (0, import_data33.useSelect)(import_core_data20.store);
+    const { name: name2, params = {}, query } = useLocation17();
     const { postId = query?.postId } = params;
     const postType2 = getPostType(name2, postId) ?? query?.postType;
     const { selectedBlock } = query;
-    const appliedSelectionRef = (0, import_element55.useRef)(null);
-    const homePage = (0, import_data32.useSelect)((select4) => {
+    const appliedSelectionRef = (0, import_element56.useRef)(null);
+    const homePage = (0, import_data33.useSelect)((select4) => {
       const { getHomePage } = unlock(select4(import_core_data20.store));
       return getHomePage();
     }, []);
-    const resolvedTemplateId = (0, import_data32.useSelect)(
+    const resolvedTemplateId = (0, import_data33.useSelect)(
       (select4) => {
         if (postTypesWithoutParentTemplate.includes(postType2) && postId) {
           return;
@@ -21523,7 +21620,7 @@ var wp;
       },
       [homePage, postId, postType2]
     );
-    const context = (0, import_element55.useMemo)(() => {
+    const context = (0, import_element56.useMemo)(() => {
       if (postTypesWithoutParentTemplate.includes(postType2) && postId) {
         return {};
       }
@@ -21575,8 +21672,8 @@ var wp;
     context,
     isReady
   }) {
-    const { setEditedEntity: setEditedEntity2 } = (0, import_data32.useDispatch)(store);
-    (0, import_element55.useEffect)(() => {
+    const { setEditedEntity: setEditedEntity2 } = (0, import_data33.useDispatch)(store);
+    (0, import_element56.useEffect)(() => {
       if (isReady) {
         setEditedEntity2(postType2, String(postId), context);
       }
@@ -21585,13 +21682,13 @@ var wp;
 
   // packages/edit-site/build-module/components/editor/site-preview.mjs
   var import_i18n21 = __toESM(require_i18n(), 1);
-  var import_data33 = __toESM(require_data(), 1);
+  var import_data34 = __toESM(require_data(), 1);
   var import_core_data21 = __toESM(require_core_data(), 1);
   var import_dom24 = __toESM(require_dom(), 1);
-  var import_url7 = __toESM(require_url(), 1);
+  var import_url8 = __toESM(require_url(), 1);
   var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
   function SitePreview() {
-    const siteUrl = (0, import_data33.useSelect)((select4) => {
+    const siteUrl = (0, import_data34.useSelect)((select4) => {
       const { getEntityRecord } = select4(import_core_data21.store);
       const siteData = getEntityRecord("root", "__unstableBase");
       return siteData?.home;
@@ -21599,7 +21696,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
       "iframe",
       {
-        src: (0, import_url7.addQueryArgs)(siteUrl, {
+        src: (0, import_url8.addQueryArgs)(siteUrl, {
           // Parameter for hiding the admin bar.
           wp_site_preview: 1
         }),
@@ -21625,8 +21722,8 @@ var wp;
 
   // packages/edit-site/build-module/components/editor/index.mjs
   var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
-  var { Editor, BackButton } = unlock(import_editor16.privateApis);
-  var { useHistory: useHistory10, useLocation: useLocation17 } = unlock(import_router17.privateApis);
+  var { Editor, BackButton } = unlock(import_editor17.privateApis);
+  var { useHistory: useHistory11, useLocation: useLocation18 } = unlock(import_router18.privateApis);
   var { BlockKeyboardShortcuts } = unlock(import_block_library.privateApis);
   function getListPathForPostType(postType2) {
     switch (postType2) {
@@ -21657,38 +21754,38 @@ var wp;
     ].includes(name2)) {
       return getListPathForPostType(postType2);
     }
-    return (0, import_url8.addQueryArgs)(path, { canvas: void 0 });
+    return (0, import_url9.addQueryArgs)(path, { canvas: void 0, revision: void 0 });
   }
   function EditSiteEditor({ isHomeRoute = false }) {
-    const location = useLocation17();
-    const history = useHistory10();
+    const location = useLocation18();
+    const history = useHistory11();
     const { canvas = "view" } = location.query;
     const isLoading = useIsSiteEditorLoading();
     useAdaptEditorToCanvas(canvas);
     const entity = useResolveEditedEntity();
     useSyncDeprecatedEntityIntoState(entity);
     const { postType: postType2, postId, context } = entity;
-    const isBlockBasedTheme = (0, import_data34.useSelect)(
+    const isBlockBasedTheme = (0, import_data35.useSelect)(
       (select4) => select4(import_core_data22.store).getCurrentTheme()?.is_block_theme,
       []
     );
     const postWithTemplate = !!context?.postId;
-    use_editor_title_default(
-      postWithTemplate ? context.postType : postType2,
-      postWithTemplate ? context.postId : postId
-    );
+    const editorPostType = postWithTemplate ? context.postType : postType2;
+    const editorPostId = postWithTemplate ? context.postId : postId;
+    use_editor_title_default(editorPostType, editorPostId);
     const _isPreviewingTheme = isPreviewingTheme();
     const iframeProps = useEditorIframeProps();
     const isEditMode = canvas === "edit";
+    useRevisionsURLSync(isEditMode, editorPostType, editorPostId);
     const loadingProgressId = (0, import_compose4.useInstanceId)(
       CanvasLoader,
       "edit-site-editor__loading-progress"
     );
     const editorSettings = useSpecificEditorSettings();
-    const { resetZoomLevel } = unlock((0, import_data34.useDispatch)(import_block_editor5.store));
-    const { setCurrentRevisionId } = unlock((0, import_data34.useDispatch)(import_editor16.store));
-    const { createSuccessNotice } = (0, import_data34.useDispatch)(import_notices3.store);
-    const onActionPerformed = (0, import_element56.useCallback)(
+    const { resetZoomLevel } = unlock((0, import_data35.useDispatch)(import_block_editor5.store));
+    const { setCurrentRevisionId } = unlock((0, import_data35.useDispatch)(import_editor17.store));
+    const { createSuccessNotice } = (0, import_data35.useDispatch)(import_notices3.store);
+    const onActionPerformed = (0, import_element57.useCallback)(
       (actionId, items) => {
         switch (actionId) {
           case "move-to-trash":
@@ -21740,7 +21837,7 @@ var wp;
     );
     const isReady = !isLoading;
     return !isBlockBasedTheme && isHomeRoute ? /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(SitePreview, {}) : /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(import_jsx_runtime121.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_editor16.EditorKeyboardShortcutsRegister, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_editor17.EditorKeyboardShortcutsRegister, {}),
       isEditMode && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(BlockKeyboardShortcuts, {}),
       !isReady ? /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(CanvasLoader, { id: loadingProgressId }) : null,
       isEditMode && isReady && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
@@ -21849,15 +21946,15 @@ var wp;
 
   // packages/edit-site/build-module/components/sidebar-identity/index.mjs
   var import_i18n74 = __toESM(require_i18n(), 1);
-  var import_data41 = __toESM(require_data(), 1);
+  var import_data42 = __toESM(require_data(), 1);
   var import_core_data24 = __toESM(require_core_data(), 1);
 
   // packages/dataviews/build-module/dataviews/index.mjs
-  var import_element116 = __toESM(require_element(), 1);
+  var import_element117 = __toESM(require_element(), 1);
   var import_compose18 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataviews-context/index.mjs
-  var import_element57 = __toESM(require_element(), 1);
+  var import_element58 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/constants.mjs
   var import_i18n24 = __toESM(require_i18n(), 1);
@@ -21903,7 +22000,7 @@ var wp;
   var LAYOUT_PICKER_ACTIVITY = "pickerActivity";
 
   // packages/dataviews/build-module/components/dataviews-context/index.mjs
-  var DataViewsContext = (0, import_element57.createContext)({
+  var DataViewsContext = (0, import_element58.createContext)({
     view: { type: LAYOUT_TABLE },
     onChangeView: () => {
     },
@@ -21923,7 +22020,7 @@ var wp;
     isItemClickable: () => true,
     renderItemLink: void 0,
     containerWidth: 0,
-    containerRef: (0, import_element57.createRef)(),
+    containerRef: (0, import_element58.createRef)(),
     resizeObserverRef: () => {
     },
     defaultLayouts: { list: {}, grid: {}, table: {} },
@@ -21946,7 +22043,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/table/index.mjs
   var import_i18n32 = __toESM(require_i18n(), 1);
   var import_components25 = __toESM(require_components(), 1);
-  var import_element66 = __toESM(require_element(), 1);
+  var import_element67 = __toESM(require_element(), 1);
   var import_keycodes4 = __toESM(require_keycodes(), 1);
 
   // packages/dataviews/build-module/components/dataviews-selection-checkbox/index.mjs
@@ -21990,8 +22087,8 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
   var import_components21 = __toESM(require_components(), 1);
   var import_i18n26 = __toESM(require_i18n(), 1);
-  var import_element58 = __toESM(require_element(), 1);
-  var import_data35 = __toESM(require_data(), 1);
+  var import_element59 = __toESM(require_element(), 1);
+  var import_data36 = __toESM(require_data(), 1);
   var import_compose5 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/lock-unlock.mjs
@@ -22059,7 +22156,7 @@ var wp;
     registry,
     setActiveModalAction
   }) {
-    const { primaryActions, regularActions } = (0, import_element58.useMemo)(() => {
+    const { primaryActions, regularActions } = (0, import_element59.useMemo)(() => {
       return actions.reduce(
         (acc, action) => {
           (action.isPrimary ? acc.primaryActions : acc.regularActions).push(action);
@@ -22096,8 +22193,8 @@ var wp;
     actions,
     isCompact
   }) {
-    const registry = (0, import_data35.useRegistry)();
-    const { primaryActions, eligibleActions } = (0, import_element58.useMemo)(() => {
+    const registry = (0, import_data36.useRegistry)();
+    const { primaryActions, eligibleActions } = (0, import_element59.useMemo)(() => {
       const _eligibleActions = actions.filter(
         (action) => !action.isEligible || action.isEligible(item)
       );
@@ -22160,7 +22257,7 @@ var wp;
     isSmall,
     registry
   }) {
-    const [activeModalAction, setActiveModalAction] = (0, import_element58.useState)(
+    const [activeModalAction, setActiveModalAction] = (0, import_element59.useState)(
       null
     );
     return /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)(import_jsx_runtime125.Fragment, { children: [
@@ -22207,7 +22304,7 @@ var wp;
     registry,
     buttonVariant
   }) {
-    const [activeModalAction, setActiveModalAction] = (0, import_element58.useState)(null);
+    const [activeModalAction, setActiveModalAction] = (0, import_element59.useState)(null);
     const isMobileViewport = (0, import_compose5.useViewportMatch)("medium", "<");
     if (isMobileViewport) {
       return null;
@@ -22246,8 +22343,8 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-bulk-actions/index.mjs
   var import_components22 = __toESM(require_components(), 1);
   var import_i18n28 = __toESM(require_i18n(), 1);
-  var import_element59 = __toESM(require_element(), 1);
-  var import_data36 = __toESM(require_data(), 1);
+  var import_element60 = __toESM(require_element(), 1);
+  var import_data37 = __toESM(require_data(), 1);
   var import_compose6 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/utils/get-footer-message.mjs
@@ -22282,7 +22379,7 @@ var wp;
     items,
     ActionTriggerComponent
   }) {
-    const [isModalOpen, setIsModalOpen] = (0, import_element59.useState)(false);
+    const [isModalOpen, setIsModalOpen] = (0, import_element60.useState)(false);
     const actionTriggerProps = {
       action,
       onClick: () => {
@@ -22308,13 +22405,13 @@ var wp;
     );
   }
   function useHasAPossibleBulkAction(actions, item) {
-    return (0, import_element59.useMemo)(
+    return (0, import_element60.useMemo)(
       () => hasAPossibleBulkAction(actions, item),
       [actions, item]
     );
   }
   function useSomeItemHasAPossibleBulkAction(actions, data) {
-    return (0, import_element59.useMemo)(
+    return (0, import_element60.useMemo)(
       () => data.some((item) => hasAPossibleBulkAction(actions, item)),
       [actions, data]
     );
@@ -22327,7 +22424,7 @@ var wp;
     getItemId: getItemId2,
     disableSelectAll = false
   }) {
-    const selectableItems = (0, import_element59.useMemo)(() => {
+    const selectableItems = (0, import_element60.useMemo)(() => {
       return data.filter((item) => {
         return actions.some(
           (action) => action.supportsBulk && (!action.isEligible || action.isEligible(item))
@@ -22413,8 +22510,8 @@ var wp;
     actionInProgress,
     setActionInProgress
   }) {
-    const registry = (0, import_data36.useRegistry)();
-    const selectedEligibleItems = (0, import_element59.useMemo)(() => {
+    const registry = (0, import_data37.useRegistry)();
+    const selectedEligibleItems = (0, import_element60.useMemo)(() => {
       return selectedItems.filter((item) => {
         return !action.isEligible || action.isEligible(item);
       });
@@ -22524,28 +22621,28 @@ var wp;
     isInfiniteScroll,
     paginationInfo
   }) {
-    const [actionInProgress, setActionInProgress] = (0, import_element59.useState)(
+    const [actionInProgress, setActionInProgress] = (0, import_element60.useState)(
       null
     );
-    const footerContentRef = (0, import_element59.useRef)(void 0);
+    const footerContentRef = (0, import_element60.useRef)(void 0);
     const isMobile = (0, import_compose6.useViewportMatch)("medium", "<");
-    const bulkActions = (0, import_element59.useMemo)(
+    const bulkActions = (0, import_element60.useMemo)(
       () => actions.filter((action) => action.supportsBulk),
       [actions]
     );
-    const selectableItems = (0, import_element59.useMemo)(() => {
+    const selectableItems = (0, import_element60.useMemo)(() => {
       return data.filter((item) => {
         return bulkActions.some(
           (action) => !action.isEligible || action.isEligible(item)
         );
       });
     }, [data, bulkActions]);
-    const selectedItems = (0, import_element59.useMemo)(() => {
+    const selectedItems = (0, import_element60.useMemo)(() => {
       return data.filter(
         (item) => selection.includes(getItemId2(item)) && selectableItems.includes(item)
       );
     }, [selection, data, getItemId2, selectableItems]);
-    const actionsToShow = (0, import_element59.useMemo)(
+    const actionsToShow = (0, import_element60.useMemo)(
       () => actions.filter((action) => {
         return action.supportsBulk && (!isMobile || action.icon) && selectedItems.some(
           (item) => !action.isEligible || action.isEligible(item)
@@ -22596,7 +22693,7 @@ var wp;
       getItemId: getItemId2,
       paginationInfo,
       view
-    } = (0, import_element59.useContext)(dataviews_context_default);
+    } = (0, import_element60.useContext)(dataviews_context_default);
     return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
       FooterContent,
       {
@@ -22614,7 +22711,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
   var import_i18n29 = __toESM(require_i18n(), 1);
   var import_components23 = __toESM(require_components(), 1);
-  var import_element60 = __toESM(require_element(), 1);
+  var import_element61 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/utils/get-hideable-fields.mjs
   function getHideableFields(view, fields2) {
@@ -22632,12 +22729,12 @@ var wp;
   var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu2 } = unlock4(import_components23.privateApis);
   function WithMenuSeparators({ children }) {
-    return import_element60.Children.toArray(children).filter(Boolean).map((child, i2) => /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(import_element60.Fragment, { children: [
+    return import_element61.Children.toArray(children).filter(Boolean).map((child, i2) => /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(import_element61.Fragment, { children: [
       i2 > 0 && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(Menu2.Separator, {}),
       child
     ] }, i2));
   }
-  var _HeaderMenu = (0, import_element60.forwardRef)(function HeaderMenu({
+  var _HeaderMenu = (0, import_element61.forwardRef)(function HeaderMenu({
     fieldId,
     view,
     fields: fields2,
@@ -22656,7 +22753,7 @@ var wp;
     let canAddFilter = false;
     let operators = [];
     const field = fields2.find((f2) => f2.id === fieldId);
-    const { setIsShowingFilter } = (0, import_element60.useContext)(dataviews_context_default);
+    const { setIsShowingFilter } = (0, import_element61.useContext)(dataviews_context_default);
     if (!field) {
       return null;
     }
@@ -22871,7 +22968,7 @@ var wp;
   var column_header_menu_default = ColumnHeaderMenu;
 
   // packages/dataviews/build-module/components/dataviews-layouts/utils/item-click-wrapper.mjs
-  var import_element61 = __toESM(require_element(), 1);
+  var import_element62 = __toESM(require_element(), 1);
   var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
   function getClickableItemProps({
     item,
@@ -22917,7 +23014,7 @@ var wp;
         ...extraProps,
         children
       });
-      return (0, import_element61.cloneElement)(renderedElement, {
+      return (0, import_element62.cloneElement)(renderedElement, {
         onClick: (event) => {
           event.stopPropagation();
           if (renderedElement.props.onClick) {
@@ -23014,7 +23111,7 @@ var wp;
   var column_primary_default = ColumnPrimary;
 
   // packages/dataviews/build-module/components/dataviews-layouts/table/use-scroll-state.mjs
-  var import_element62 = __toESM(require_element(), 1);
+  var import_element63 = __toESM(require_element(), 1);
   var import_i18n30 = __toESM(require_i18n(), 1);
   var isScrolledToEnd = (element) => {
     if ((0, import_i18n30.isRTL)()) {
@@ -23027,9 +23124,9 @@ var wp;
     scrollContainerRef,
     enabledHorizontal = false
   }) {
-    const [isHorizontalScrollEnd, setIsHorizontalScrollEnd] = (0, import_element62.useState)(false);
-    const [isVerticallyScrolled, setIsVerticallyScrolled] = (0, import_element62.useState)(false);
-    const handleScroll = (0, import_element62.useCallback)(() => {
+    const [isHorizontalScrollEnd, setIsHorizontalScrollEnd] = (0, import_element63.useState)(false);
+    const [isVerticallyScrolled, setIsVerticallyScrolled] = (0, import_element63.useState)(false);
+    const handleScroll = (0, import_element63.useCallback)(() => {
       const scrollContainer = scrollContainerRef.current;
       if (!scrollContainer) {
         return;
@@ -23039,7 +23136,7 @@ var wp;
       }
       setIsVerticallyScrolled(scrollContainer.scrollTop > 0);
     }, [scrollContainerRef, enabledHorizontal]);
-    (0, import_element62.useEffect)(() => {
+    (0, import_element63.useEffect)(() => {
       if (typeof window === "undefined" || !scrollContainerRef.current) {
         return () => {
         };
@@ -23069,7 +23166,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataviews-layouts/utils/use-selection-props.mjs
-  var import_element63 = __toESM(require_element(), 1);
+  var import_element64 = __toESM(require_element(), 1);
   var import_keycodes3 = __toESM(require_keycodes(), 1);
   function getRange(orderedIds, fromIndex, toIndex) {
     return orderedIds.slice(
@@ -23136,12 +23233,12 @@ var wp;
   }) {
     const isMultiselect = selectionMode === "multi";
     const allowDeselect = selectionMode !== "single-required";
-    const gestureRef = (0, import_element63.useRef)(null);
+    const gestureRef = (0, import_element64.useRef)(null);
     const anchorTo = (id) => {
       gestureRef.current = { anchorId: id, lastTargetId: null };
     };
-    const isTouchDeviceRef = (0, import_element63.useRef)(false);
-    (0, import_element63.useEffect)(() => {
+    const isTouchDeviceRef = (0, import_element64.useRef)(false);
+    (0, import_element64.useEffect)(() => {
       const markTouchDevice = () => {
         isTouchDeviceRef.current = true;
       };
@@ -23241,7 +23338,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-view-config/properties-section.mjs
   var import_components24 = __toESM(require_components(), 1);
   var import_i18n31 = __toESM(require_i18n(), 1);
-  var import_element64 = __toESM(require_element(), 1);
+  var import_element65 = __toESM(require_element(), 1);
   var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
   function FieldItem({
     field,
@@ -23259,7 +23356,7 @@ var wp;
   function PropertiesSection({
     showLabel = true
   }) {
-    const { view, fields: fields2, onChangeView } = (0, import_element64.useContext)(dataviews_context_default);
+    const { view, fields: fields2, onChangeView } = (0, import_element65.useContext)(dataviews_context_default);
     const regularFields = getHideableFields(view, fields2);
     if (!regularFields?.length) {
       return null;
@@ -23348,10 +23445,10 @@ var wp;
   }
 
   // packages/dataviews/build-module/hooks/use-delayed-loading.mjs
-  var import_element65 = __toESM(require_element(), 1);
+  var import_element66 = __toESM(require_element(), 1);
   function useDelayedLoading(isLoading, options = { delay: 400 }) {
-    const [showLoader, setShowLoader] = (0, import_element65.useState)(false);
-    (0, import_element65.useEffect)(() => {
+    const [showLoader, setShowLoader] = (0, import_element66.useState)(false);
+    (0, import_element66.useEffect)(() => {
       if (!isLoading) {
         return;
       }
@@ -23415,7 +23512,7 @@ var wp;
     isActionsColumnSticky,
     posinset
   }) {
-    const { paginationInfo } = (0, import_element66.useContext)(dataviews_context_default);
+    const { paginationInfo } = (0, import_element67.useContext)(dataviews_context_default);
     const hasPossibleBulkAction = useHasAPossibleBulkAction(actions, item);
     const isSelected2 = hasPossibleBulkAction && selection.includes(id);
     const {
@@ -23532,7 +23629,7 @@ var wp;
     className,
     empty
   }) {
-    const { containerRef } = (0, import_element66.useContext)(dataviews_context_default);
+    const { containerRef } = (0, import_element67.useContext)(dataviews_context_default);
     const isDelayedLoading = useDelayedLoading(isLoading);
     const groupField = view.groupBy?.field ? fields2.find((f2) => f2.id === view.groupBy?.field) : null;
     const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
@@ -23546,17 +23643,17 @@ var wp;
       selectionMode: "multi",
       shouldSelectOnClick: false
     });
-    const headerMenuRefs = (0, import_element66.useRef)(/* @__PURE__ */ new Map());
-    const headerMenuToFocusRef = (0, import_element66.useRef)(void 0);
-    const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element66.useState)();
-    const [contextMenuAnchor, setContextMenuAnchor] = (0, import_element66.useState)(null);
-    (0, import_element66.useEffect)(() => {
+    const headerMenuRefs = (0, import_element67.useRef)(/* @__PURE__ */ new Map());
+    const headerMenuToFocusRef = (0, import_element67.useRef)(void 0);
+    const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element67.useState)();
+    const [contextMenuAnchor, setContextMenuAnchor] = (0, import_element67.useState)(null);
+    (0, import_element67.useEffect)(() => {
       if (headerMenuToFocusRef.current) {
         headerMenuToFocusRef.current.focus();
         headerMenuToFocusRef.current = void 0;
       }
     });
-    const tableNoticeId = (0, import_element66.useId)();
+    const tableNoticeId = (0, import_element67.useId)();
     const { isHorizontalScrollEnd, isVerticallyScrolled } = useScrollState({
       scrollContainerRef: containerRef,
       enabledHorizontal: !!actions?.length
@@ -23854,12 +23951,12 @@ var wp;
   var import_components27 = __toESM(require_components(), 1);
   var import_i18n34 = __toESM(require_i18n(), 1);
   var import_compose7 = __toESM(require_compose(), 1);
-  var import_element70 = __toESM(require_element(), 1);
+  var import_element71 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataviews-layouts/grid/preview-size-picker.mjs
   var import_components26 = __toESM(require_components(), 1);
   var import_i18n33 = __toESM(require_i18n(), 1);
-  var import_element67 = __toESM(require_element(), 1);
+  var import_element68 = __toESM(require_element(), 1);
   var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
   var imageSizes = [
     {
@@ -23892,9 +23989,9 @@ var wp;
   ];
   var DEFAULT_PREVIEW_SIZE = imageSizes[2].value;
   function useGridColumns() {
-    const context = (0, import_element67.useContext)(dataviews_context_default);
+    const context = (0, import_element68.useContext)(dataviews_context_default);
     const view = context.view;
-    return (0, import_element67.useMemo)(() => {
+    return (0, import_element68.useMemo)(() => {
       const containerWidth = context.containerWidth;
       const gap = 32;
       const previewSize = view.layout?.previewSize ?? DEFAULT_PREVIEW_SIZE;
@@ -23906,9 +24003,9 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataviews-layouts/utils/grid-items.mjs
-  var import_element68 = __toESM(require_element(), 1);
+  var import_element69 = __toESM(require_element(), 1);
   var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
-  var GridItems = (0, import_element68.forwardRef)(({ className, previewSize, ...props }, ref) => {
+  var GridItems = (0, import_element69.forwardRef)(({ className, previewSize, ...props }, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
       "div",
       {
@@ -23923,10 +24020,10 @@ var wp;
   });
 
   // packages/dataviews/build-module/components/dataviews-layouts/utils/use-infinite-scroll.mjs
-  var import_element69 = __toESM(require_element(), 1);
+  var import_element70 = __toESM(require_element(), 1);
   function useIntersectionObserver(elementRef, posinset) {
-    const { intersectionObserver } = (0, import_element69.useContext)(dataviews_context_default);
-    (0, import_element69.useEffect)(() => {
+    const { intersectionObserver } = (0, import_element70.useContext)(dataviews_context_default);
+    (0, import_element70.useEffect)(() => {
       const element = elementRef.current;
       if (!element || posinset === void 0 || !intersectionObserver) {
         return;
@@ -23953,7 +24050,7 @@ var wp;
     }
     return chunks;
   }
-  var GridItem = (0, import_element70.forwardRef)(
+  var GridItem = (0, import_element71.forwardRef)(
     function GridItem2({
       view,
       selection,
@@ -23982,8 +24079,8 @@ var wp;
       } = view;
       const hasBulkAction = useHasAPossibleBulkAction(actions, item);
       const id = getItemId2(item);
-      const elementRef = (0, import_element70.useRef)(null);
-      const setRefs = (0, import_element70.useCallback)(
+      const elementRef = (0, import_element71.useRef)(null);
+      const setRefs = (0, import_element71.useCallback)(
         (node) => {
           elementRef.current = node;
           if (typeof forwardedRef === "function") {
@@ -24195,7 +24292,7 @@ var wp;
     actions,
     getSelectionProps
   }) {
-    const { paginationInfo, resizeObserverRef } = (0, import_element70.useContext)(dataviews_context_default);
+    const { paginationInfo, resizeObserverRef } = (0, import_element71.useContext)(dataviews_context_default);
     const gridColumns = useGridColumns();
     const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data);
     const titleField = fields2.find(
@@ -24530,9 +24627,9 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/list/index.mjs
   var import_compose8 = __toESM(require_compose(), 1);
   var import_components29 = __toESM(require_components(), 1);
-  var import_element71 = __toESM(require_element(), 1);
+  var import_element72 = __toESM(require_element(), 1);
   var import_i18n36 = __toESM(require_i18n(), 1);
-  var import_data37 = __toESM(require_data(), 1);
+  var import_data38 = __toESM(require_data(), 1);
   var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu3 } = unlock4(import_components29.privateApis);
   function generateItemWrapperCompositeId(idPrefix) {
@@ -24549,8 +24646,8 @@ var wp;
     primaryAction,
     item
   }) {
-    const registry = (0, import_data37.useRegistry)();
-    const [isModalOpen, setIsModalOpen] = (0, import_element71.useState)(false);
+    const registry = (0, import_data38.useRegistry)();
+    const [isModalOpen, setIsModalOpen] = (0, import_element72.useState)(false);
     const compositeItemId = generatePrimaryActionCompositeId(
       idPrefix,
       primaryAction.id
@@ -24618,20 +24715,20 @@ var wp;
       showDescription = true,
       infiniteScrollEnabled
     } = view;
-    const itemRef = (0, import_element71.useRef)(null);
+    const itemRef = (0, import_element72.useRef)(null);
     const labelId = `${idPrefix}-label`;
     const descriptionId = `${idPrefix}-description`;
-    const registry = (0, import_data37.useRegistry)();
-    const [isHovered, setIsHovered] = (0, import_element71.useState)(false);
-    const [activeModalAction, setActiveModalAction] = (0, import_element71.useState)(
+    const registry = (0, import_data38.useRegistry)();
+    const [isHovered, setIsHovered] = (0, import_element72.useState)(false);
+    const [activeModalAction, setActiveModalAction] = (0, import_element72.useState)(
       null
     );
     const handleHover = ({ type }) => {
       const isHover = type === "mouseenter";
       setIsHovered(isHover);
     };
-    const { paginationInfo } = (0, import_element71.useContext)(dataviews_context_default);
-    (0, import_element71.useEffect)(() => {
+    const { paginationInfo } = (0, import_element72.useContext)(dataviews_context_default);
+    (0, import_element72.useEffect)(() => {
       if (isSelected2) {
         itemRef.current?.scrollIntoView({
           behavior: "auto",
@@ -24640,7 +24737,7 @@ var wp;
         });
       }
     }, [isSelected2]);
-    const { primaryAction, eligibleActions } = (0, import_element71.useMemo)(() => {
+    const { primaryAction, eligibleActions } = (0, import_element72.useMemo)(() => {
       const _eligibleActions = actions.filter(
         (action) => !action.isEligible || action.isEligible(item)
       );
@@ -24861,7 +24958,7 @@ var wp;
     } = props;
     const baseId = (0, import_compose8.useInstanceId)(ViewList, "view-list");
     const isDelayedLoading = useDelayedLoading(!!isLoading);
-    const { paginationInfo } = (0, import_element71.useContext)(dataviews_context_default);
+    const { paginationInfo } = (0, import_element72.useContext)(dataviews_context_default);
     const selectedItem = data?.findLast(
       (item) => selection.includes(getItemId2(item))
     );
@@ -24880,11 +24977,11 @@ var wp;
       selectionMode: "single-required",
       shouldSelectOnClick: true
     });
-    const generateCompositeItemIdPrefix = (0, import_element71.useCallback)(
+    const generateCompositeItemIdPrefix = (0, import_element72.useCallback)(
       (item) => `${baseId}-${getItemId2(item)}`,
       [baseId, getItemId2]
     );
-    const isActiveCompositeItem = (0, import_element71.useCallback)(
+    const isActiveCompositeItem = (0, import_element72.useCallback)(
       (item, idToCheck) => {
         return idToCheck.startsWith(
           generateCompositeItemIdPrefix(item)
@@ -24892,9 +24989,9 @@ var wp;
       },
       [generateCompositeItemIdPrefix]
     );
-    const [activeCompositeId, setActiveCompositeId] = (0, import_element71.useState)(void 0);
-    const compositeRef = (0, import_element71.useRef)(null);
-    (0, import_element71.useEffect)(() => {
+    const [activeCompositeId, setActiveCompositeId] = (0, import_element72.useState)(void 0);
+    const compositeRef = (0, import_element72.useRef)(null);
+    (0, import_element72.useEffect)(() => {
       if (selectedItem) {
         setActiveCompositeId(
           generateItemWrapperCompositeId(
@@ -24908,7 +25005,7 @@ var wp;
     );
     const previousActiveItemIndex = (0, import_compose8.usePrevious)(activeItemIndex);
     const isActiveIdInList = activeItemIndex !== -1;
-    const selectCompositeItem = (0, import_element71.useCallback)(
+    const selectCompositeItem = (0, import_element72.useCallback)(
       (targetIndex, generateCompositeId) => {
         const clampedIndex = Math.min(
           data.length - 1,
@@ -24930,7 +25027,7 @@ var wp;
       },
       [data, generateCompositeItemIdPrefix]
     );
-    (0, import_element71.useEffect)(() => {
+    (0, import_element72.useEffect)(() => {
       const wasActiveIdInList = previousActiveItemIndex !== void 0 && previousActiveItemIndex !== -1;
       if (!isActiveIdInList && wasActiveIdInList) {
         selectCompositeItem(
@@ -24939,7 +25036,7 @@ var wp;
         );
       }
     }, [isActiveIdInList, selectCompositeItem, previousActiveItemIndex]);
-    const onDropdownTriggerKeyDown = (0, import_element71.useCallback)(
+    const onDropdownTriggerKeyDown = (0, import_element72.useCallback)(
       (event) => {
         if (event.key === "ArrowDown") {
           event.preventDefault();
@@ -25079,7 +25176,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-group.mjs
   var import_i18n37 = __toESM(require_i18n(), 1);
-  var import_element72 = __toESM(require_element(), 1);
+  var import_element73 = __toESM(require_element(), 1);
   var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
   function ActivityGroup({
     groupName,
@@ -25088,7 +25185,7 @@ var wp;
     showLabel = true,
     children
   }) {
-    const groupHeader = showLabel ? (0, import_element72.createInterpolateElement)(
+    const groupHeader = showLabel ? (0, import_element73.createInterpolateElement)(
       // translators: %s: The label of the field e.g. "Status".
       (0, import_i18n37.sprintf)((0, import_i18n37.__)("%s: <groupName />"), groupField.label).trim(),
       {
@@ -25116,8 +25213,8 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-item.mjs
-  var import_element73 = __toESM(require_element(), 1);
-  var import_data38 = __toESM(require_data(), 1);
+  var import_element74 = __toESM(require_element(), 1);
+  var import_data39 = __toESM(require_data(), 1);
   var import_compose9 = __toESM(require_compose(), 1);
   var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
   function ActivityItem(props) {
@@ -25140,10 +25237,10 @@ var wp;
       showDescription = true,
       infiniteScrollEnabled
     } = view;
-    const itemRef = (0, import_element73.useRef)(null);
-    const registry = (0, import_data38.useRegistry)();
-    const { paginationInfo } = (0, import_element73.useContext)(dataviews_context_default);
-    const { primaryActions, eligibleActions } = (0, import_element73.useMemo)(() => {
+    const itemRef = (0, import_element74.useRef)(null);
+    const registry = (0, import_data39.useRegistry)();
+    const { paginationInfo } = (0, import_element74.useContext)(dataviews_context_default);
+    const { primaryActions, eligibleActions } = (0, import_element74.useMemo)(() => {
       const _eligibleActions = actions.filter(
         (action) => !action.isEligible || action.isEligible(item)
       );
@@ -25175,7 +25272,7 @@ var wp;
       }
     ) });
     const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(titleField.render, { item, field: titleField }) : null;
-    const verticalGap = (0, import_element73.useMemo)(() => {
+    const verticalGap = (0, import_element74.useMemo)(() => {
       switch (density) {
         case "comfortable":
           return "md";
@@ -25389,24 +25486,24 @@ var wp;
   var import_components33 = __toESM(require_components(), 1);
   var import_i18n40 = __toESM(require_i18n(), 1);
   var import_compose10 = __toESM(require_compose(), 1);
-  var import_element76 = __toESM(require_element(), 1);
+  var import_element77 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
   var import_components32 = __toESM(require_components(), 1);
-  var import_data39 = __toESM(require_data(), 1);
-  var import_element75 = __toESM(require_element(), 1);
+  var import_data40 = __toESM(require_data(), 1);
+  var import_element76 = __toESM(require_element(), 1);
   var import_i18n39 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/components/dataviews-pagination/index.mjs
   var import_components31 = __toESM(require_components(), 1);
-  var import_element74 = __toESM(require_element(), 1);
+  var import_element75 = __toESM(require_element(), 1);
   var import_i18n38 = __toESM(require_i18n(), 1);
   var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
   function hasPaginationControls(view, paginationInfo) {
     return !view.infiniteScrollEnabled && paginationInfo.totalItems > 0 && paginationInfo.totalPages > 1;
   }
   function DataViewsPagination() {
-    const { view, onChangeView, paginationInfo } = (0, import_element74.useContext)(dataviews_context_default);
+    const { view, onChangeView, paginationInfo } = (0, import_element75.useContext)(dataviews_context_default);
     if (!hasPaginationControls(view, paginationInfo)) {
       return null;
     }
@@ -25444,7 +25541,7 @@ var wp;
               align: "center",
               gap: "xs",
               className: "dataviews-pagination__page-select",
-              children: (0, import_element74.createInterpolateElement)(
+              children: (0, import_element75.createInterpolateElement)(
                 (0, import_i18n38.sprintf)(
                   // translators: 1: Current page number, 2: Total number of pages.
                   (0, import_i18n38._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"),
@@ -25509,12 +25606,12 @@ var wp;
       }
     );
   }
-  var dataviews_pagination_default = (0, import_element74.memo)(DataViewsPagination);
+  var dataviews_pagination_default = (0, import_element75.memo)(DataViewsPagination);
 
   // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
   var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
   function useIsMultiselectPicker(actions) {
-    return (0, import_element75.useMemo)(() => {
+    return (0, import_element76.useMemo)(() => {
       return !!actions?.length && actions?.every((action) => action.supportsBulk);
     }, [actions]);
   }
@@ -25540,7 +25637,7 @@ var wp;
   }) {
     const { showTitle = true, showMedia = true, showDescription = true } = view;
     const id = getItemId2(item);
-    const elementRef = (0, import_element76.useRef)(null);
+    const elementRef = (0, import_element77.useRef)(null);
     const isSelected2 = selection.includes(id);
     useIntersectionObserver(elementRef, posinset);
     const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
@@ -25719,7 +25816,7 @@ var wp;
     className,
     empty
   }) {
-    const { resizeObserverRef, paginationInfo, itemListLabel } = (0, import_element76.useContext)(dataviews_context_default);
+    const { resizeObserverRef, paginationInfo, itemListLabel } = (0, import_element77.useContext)(dataviews_context_default);
     const titleField = fields2.find(
       (field) => field.id === view?.titleField
     );
@@ -25946,7 +26043,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/picker-table/index.mjs
   var import_i18n41 = __toESM(require_i18n(), 1);
   var import_components34 = __toESM(require_components(), 1);
-  var import_element77 = __toESM(require_element(), 1);
+  var import_element78 = __toESM(require_element(), 1);
   var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
   function TableColumnField2({
     item,
@@ -25978,10 +26075,10 @@ var wp;
     selectionProps,
     posinset
   }) {
-    const { paginationInfo } = (0, import_element77.useContext)(dataviews_context_default);
+    const { paginationInfo } = (0, import_element78.useContext)(dataviews_context_default);
     const isSelected2 = selection.includes(id);
-    const [isHovered, setIsHovered] = (0, import_element77.useState)(false);
-    const elementRef = (0, import_element77.useRef)(null);
+    const [isHovered, setIsHovered] = (0, import_element78.useState)(false);
+    const elementRef = (0, import_element78.useRef)(null);
     useIntersectionObserver(elementRef, posinset);
     const {
       showTitle = true,
@@ -26109,11 +26206,11 @@ var wp;
     className,
     empty
   }) {
-    const headerMenuRefs = (0, import_element77.useRef)(/* @__PURE__ */ new Map());
-    const headerMenuToFocusRef = (0, import_element77.useRef)(void 0);
-    const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element77.useState)();
+    const headerMenuRefs = (0, import_element78.useRef)(/* @__PURE__ */ new Map());
+    const headerMenuToFocusRef = (0, import_element78.useRef)(void 0);
+    const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element78.useState)();
     const isMultiselect = useIsMultiselectPicker(actions) ?? false;
-    (0, import_element77.useEffect)(() => {
+    (0, import_element78.useEffect)(() => {
       if (headerMenuToFocusRef.current) {
         headerMenuToFocusRef.current.focus();
         headerMenuToFocusRef.current = void 0;
@@ -26132,7 +26229,7 @@ var wp;
       selectionMode: isMultiselect ? "multi" : "single-clearable",
       shouldSelectOnClick: true
     });
-    const tableNoticeId = (0, import_element77.useId)();
+    const tableNoticeId = (0, import_element78.useId)();
     if (nextHeaderMenuToFocus) {
       headerMenuToFocusRef.current = nextHeaderMenuToFocus;
       setNextHeaderMenuToFocus(void 0);
@@ -26357,7 +26454,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/picker-activity/index.mjs
   var import_components35 = __toESM(require_components(), 1);
-  var import_element78 = __toESM(require_element(), 1);
+  var import_element79 = __toESM(require_element(), 1);
   var import_compose11 = __toESM(require_compose(), 1);
   var import_i18n42 = __toESM(require_i18n(), 1);
   var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
@@ -26377,7 +26474,7 @@ var wp;
     posinset,
     setsize
   }) {
-    const elementRef = (0, import_element78.useRef)(null);
+    const elementRef = (0, import_element79.useRef)(null);
     useIntersectionObserver(elementRef, posinset);
     const { showTitle = true, showMedia = true, showDescription = true } = view;
     const id = getItemId2(item);
@@ -26402,7 +26499,7 @@ var wp;
     ) });
     const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(titleField.render, { item, field: titleField }) : null;
     const renderedDescriptionField = showDescription && descriptionField2?.render ? /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(descriptionField2.render, { item, field: descriptionField2 }) : null;
-    const verticalGap = (0, import_element78.useMemo)(() => {
+    const verticalGap = (0, import_element79.useMemo)(() => {
       switch (density) {
         case "comfortable":
           return "md";
@@ -26528,7 +26625,7 @@ var wp;
     className,
     empty
   }) {
-    const { itemListLabel, paginationInfo } = (0, import_element78.useContext)(dataviews_context_default);
+    const { itemListLabel, paginationInfo } = (0, import_element79.useContext)(dataviews_context_default);
     const isMultiselect = useIsMultiselectPicker(actions);
     const titleField = fields2.find(
       (field) => field.id === view?.titleField
@@ -26621,10 +26718,10 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/utils/density-picker.mjs
   var import_components36 = __toESM(require_components(), 1);
   var import_i18n43 = __toESM(require_i18n(), 1);
-  var import_element79 = __toESM(require_element(), 1);
+  var import_element80 = __toESM(require_element(), 1);
   var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
   function DensityPicker() {
-    const context = (0, import_element79.useContext)(dataviews_context_default);
+    const context = (0, import_element80.useContext)(dataviews_context_default);
     const view = context.view;
     return /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(
       import_components36.__experimentalToggleGroupControl,
@@ -26677,7 +26774,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/utils/preview-size-picker.mjs
   var import_components37 = __toESM(require_components(), 1);
   var import_i18n44 = __toESM(require_i18n(), 1);
-  var import_element80 = __toESM(require_element(), 1);
+  var import_element81 = __toESM(require_element(), 1);
   var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
   var imageSizes2 = [
     {
@@ -26709,7 +26806,7 @@ var wp;
     }
   ];
   function PreviewSizePicker() {
-    const context = (0, import_element80.useContext)(dataviews_context_default);
+    const context = (0, import_element81.useContext)(dataviews_context_default);
     const view = context.view;
     const breakValues = imageSizes2.filter((size4) => {
       return context.containerWidth >= size4.breakpoint;
@@ -26811,12 +26908,12 @@ var wp;
   ];
 
   // packages/dataviews/build-module/components/dataviews-filters/filters.mjs
-  var import_element88 = __toESM(require_element(), 1);
+  var import_element89 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataviews-filters/filter.mjs
   var import_components40 = __toESM(require_components(), 1);
   var import_i18n48 = __toESM(require_i18n(), 1);
-  var import_element85 = __toESM(require_element(), 1);
+  var import_element86 = __toESM(require_element(), 1);
 
   // node_modules/@ariakit/react-components/dist/button/utils.js
   function withDefaultButtonType(props) {
@@ -30995,7 +31092,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_remove_accents = __toESM(require_remove_accents(), 1);
   var import_compose12 = __toESM(require_compose(), 1);
   var import_i18n46 = __toESM(require_i18n(), 1);
-  var import_element82 = __toESM(require_element(), 1);
+  var import_element83 = __toESM(require_element(), 1);
   var import_components38 = __toESM(require_components(), 1);
 
   // packages/dataviews/build-module/components/dataviews-filters/utils.mjs
@@ -31014,16 +31111,16 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/hooks/use-elements.mjs
-  var import_element81 = __toESM(require_element(), 1);
+  var import_element82 = __toESM(require_element(), 1);
   var EMPTY_ARRAY5 = [];
   function useElements({
     elements: elements2,
     getElements
   }) {
     const staticElements = Array.isArray(elements2) && elements2.length > 0 ? elements2 : EMPTY_ARRAY5;
-    const [records, setRecords] = (0, import_element81.useState)(staticElements);
-    const [isLoading, setIsLoading] = (0, import_element81.useState)(false);
-    (0, import_element81.useEffect)(() => {
+    const [records, setRecords] = (0, import_element82.useState)(staticElements);
+    const [isLoading, setIsLoading] = (0, import_element82.useState)(false);
+    (0, import_element82.useEffect)(() => {
       if (!getElements) {
         setRecords(staticElements);
         return;
@@ -31096,7 +31193,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   function ListBox({ view, filter, onChangeView }) {
     const baseId = (0, import_compose12.useInstanceId)(ListBox, "dataviews-filter-list-box");
-    const [activeCompositeId, setActiveCompositeId] = (0, import_element82.useState)(
+    const [activeCompositeId, setActiveCompositeId] = (0, import_element83.useState)(
       // When there are one or less operators, the first item is set as active
       // (by setting the initial `activeId` to `undefined`).
       // With 2 or more operators, the focus is moved on the operators control
@@ -31219,13 +31316,13 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function ComboboxList22({ view, filter, onChangeView }) {
-    const [searchValue, setSearchValue] = (0, import_element82.useState)("");
-    const deferredSearchValue = (0, import_element82.useDeferredValue)(searchValue);
+    const [searchValue, setSearchValue] = (0, import_element83.useState)("");
+    const deferredSearchValue = (0, import_element83.useDeferredValue)(searchValue);
     const currentFilter = view.filters?.find(
       (_filter) => _filter.field === filter.field
     );
     const currentValue = getCurrentValue(filter, currentFilter);
-    const matches = (0, import_element82.useMemo)(() => {
+    const matches = (0, import_element83.useMemo)(() => {
       const normalizedSearch = normalizeSearchInput(deferredSearchValue);
       return filter.elements.filter(
         (item) => normalizeSearchInput(item.label).includes(normalizedSearch)
@@ -31354,7 +31451,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
   var import_es62 = __toESM(require_es6(), 1);
   var import_compose13 = __toESM(require_compose(), 1);
-  var import_element83 = __toESM(require_element(), 1);
+  var import_element84 = __toESM(require_element(), 1);
   var import_components39 = __toESM(require_components(), 1);
   var import_jsx_runtime158 = __toESM(require_jsx_runtime(), 1);
   function InputWidget({
@@ -31367,7 +31464,7 @@ If there's a particular need for this, please submit a feature request at https:
       (f2) => f2.field === filter.field
     );
     const currentValue = getCurrentValue(filter, currentFilter);
-    const field = (0, import_element83.useMemo)(() => {
+    const field = (0, import_element84.useMemo)(() => {
       const currentField = fields2.find((f2) => f2.id === filter.field);
       if (currentField) {
         return {
@@ -31387,7 +31484,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return currentField;
     }, [fields2, filter.field]);
-    const data = (0, import_element83.useMemo)(() => {
+    const data = (0, import_element84.useMemo)(() => {
       return (view.filters ?? []).reduce(
         (acc, activeFilter) => {
           acc[activeFilter.field] = activeFilter.value;
@@ -33085,7 +33182,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/utils/operators.mjs
   var import_i18n47 = __toESM(require_i18n(), 1);
-  var import_element84 = __toESM(require_element(), 1);
+  var import_element85 = __toESM(require_element(), 1);
   var import_date = __toESM(require_date(), 1);
   var import_jsx_runtime159 = __toESM(require_jsx_runtime(), 1);
   var filterTextWrappers = {
@@ -33109,7 +33206,7 @@ If there's a particular need for this, please submit a feature request at https:
   var isNoneOperatorDefinition = {
     /* translators: DataViews operator name */
     label: (0, import_i18n47.__)("Is none of"),
-    filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
       (0, import_i18n47.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
         (0, import_i18n47.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
@@ -33139,7 +33236,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_IS_ANY2,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Includes"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
           (0, import_i18n47.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
@@ -33172,7 +33269,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_IS_ALL,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Includes all"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
           (0, import_i18n47.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
@@ -33199,7 +33296,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_BETWEEN,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Between (inc)"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
           (0, import_i18n47.__)(
@@ -33227,7 +33324,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_IN_THE_PAST,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("In the past"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
           (0, import_i18n47.__)(
@@ -33255,7 +33352,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_OVER,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Over"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
           (0, import_i18n47.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
@@ -33281,7 +33378,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_IS,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Is"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
           (0, import_i18n47.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
@@ -33299,7 +33396,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_IS_NOT,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Is not"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
           (0, import_i18n47.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
@@ -33317,7 +33414,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_LESS_THAN,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Less than"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
           (0, import_i18n47.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
@@ -33339,7 +33436,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_GREATER_THAN,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Greater than"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
           (0, import_i18n47.__)(
@@ -33363,7 +33460,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_LESS_THAN_OR_EQUAL,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Less than or equal"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
           (0, import_i18n47.__)(
@@ -33387,7 +33484,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_GREATER_THAN_OR_EQUAL,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Greater than or equal"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
           (0, import_i18n47.__)(
@@ -33411,7 +33508,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_BEFORE2,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Before"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
           (0, import_i18n47.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
@@ -33434,7 +33531,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_AFTER2,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("After"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
           (0, import_i18n47.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
@@ -33457,7 +33554,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_BEFORE_INC,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Before (inc)"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
           (0, import_i18n47.__)(
@@ -33482,7 +33579,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_AFTER_INC,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("After (inc)"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
           (0, import_i18n47.__)(
@@ -33507,7 +33604,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_CONTAINS,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Contains"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
           (0, import_i18n47.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
@@ -33529,7 +33626,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_NOT_CONTAINS,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Doesn't contain"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
           (0, import_i18n47.__)(
@@ -33553,7 +33650,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_STARTS_WITH,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Starts with"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
           (0, import_i18n47.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
@@ -33575,7 +33672,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_ON,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("On"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
           (0, import_i18n47.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
@@ -33598,7 +33695,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_NOT_ON,
       /* translators: DataViews operator name */
       label: (0, import_i18n47.__)("Not on"),
-      filterText: (filter, activeElements) => (0, import_element84.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element85.createInterpolateElement)(
         (0, import_i18n47.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
           (0, import_i18n47.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
@@ -33732,13 +33829,13 @@ If there's a particular need for this, please submit a feature request at https:
     fields: fields2,
     ...commonProps
   }) {
-    const toggleRef = (0, import_element85.useRef)(null);
+    const toggleRef = (0, import_element86.useRef)(null);
     const { filter, view, onChangeView } = commonProps;
     const filterInView = view.filters?.find(
       (f2) => f2.field === filter.field
     );
     let activeElements = [];
-    const field = (0, import_element85.useMemo)(() => {
+    const field = (0, import_element86.useMemo)(() => {
       const currentField = fields2.find((f2) => f2.id === filter.field);
       if (currentField) {
         return {
@@ -33915,7 +34012,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataviews-filters/add-filter.mjs
   var import_components41 = __toESM(require_components(), 1);
   var import_i18n49 = __toESM(require_i18n(), 1);
-  var import_element86 = __toESM(require_element(), 1);
+  var import_element87 = __toESM(require_element(), 1);
   var import_jsx_runtime161 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu4 } = unlock4(import_components41.privateApis);
   function AddFilterMenu({
@@ -33980,7 +34077,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var add_filter_default = (0, import_element86.forwardRef)(AddFilter);
+  var add_filter_default = (0, import_element87.forwardRef)(AddFilter);
 
   // packages/dataviews/build-module/components/dataviews-filters/reset-filters.mjs
   var import_components42 = __toESM(require_components(), 1);
@@ -34019,9 +34116,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataviews-filters/use-filters.mjs
-  var import_element87 = __toESM(require_element(), 1);
+  var import_element88 = __toESM(require_element(), 1);
   function useFilters(fields2, view) {
-    return (0, import_element87.useMemo)(() => {
+    return (0, import_element88.useMemo)(() => {
       const filters = [];
       fields2.forEach((field) => {
         if (field.filterBy === false || !field.hasElements && !field.Edit) {
@@ -34072,8 +34169,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataviews-filters/filters.mjs
   var import_jsx_runtime163 = __toESM(require_jsx_runtime(), 1);
   function Filters({ className }) {
-    const { fields: fields2, view, onChangeView, openedFilter, setOpenedFilter } = (0, import_element88.useContext)(dataviews_context_default);
-    const addFilterRef = (0, import_element88.useRef)(null);
+    const { fields: fields2, view, onChangeView, openedFilter, setOpenedFilter } = (0, import_element89.useContext)(dataviews_context_default);
+    const addFilterRef = (0, import_element89.useRef)(null);
     const filters = use_filters_default(fields2, view);
     const addFilter = /* @__PURE__ */ (0, import_jsx_runtime163.jsx)(
       add_filter_default,
@@ -34131,10 +34228,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var filters_default = (0, import_element88.memo)(Filters);
+  var filters_default = (0, import_element89.memo)(Filters);
 
   // packages/dataviews/build-module/components/dataviews-filters/toggle.mjs
-  var import_element89 = __toESM(require_element(), 1);
+  var import_element90 = __toESM(require_element(), 1);
   var import_components43 = __toESM(require_components(), 1);
   var import_i18n51 = __toESM(require_i18n(), 1);
   var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
@@ -34146,9 +34243,9 @@ If there's a particular need for this, please submit a feature request at https:
       setOpenedFilter,
       isShowingFilter,
       setIsShowingFilter
-    } = (0, import_element89.useContext)(dataviews_context_default);
-    const buttonRef = (0, import_element89.useRef)(null);
-    const onChangeViewWithFilterVisibility = (0, import_element89.useCallback)(
+    } = (0, import_element90.useContext)(dataviews_context_default);
+    const buttonRef = (0, import_element90.useRef)(null);
+    const onChangeViewWithFilterVisibility = (0, import_element90.useCallback)(
       (_view) => {
         onChangeView(_view);
         setIsShowingFilter(true);
@@ -34213,7 +34310,7 @@ If there's a particular need for this, please submit a feature request at https:
     filtersCount,
     children
   }) {
-    (0, import_element89.useEffect)(
+    (0, import_element90.useEffect)(
       () => () => {
         buttonRef.current?.focus();
       },
@@ -34227,10 +34324,10 @@ If there's a particular need for this, please submit a feature request at https:
   var toggle_default = FiltersToggle;
 
   // packages/dataviews/build-module/components/dataviews-filters/filters-toggled.mjs
-  var import_element90 = __toESM(require_element(), 1);
+  var import_element91 = __toESM(require_element(), 1);
   var import_jsx_runtime165 = __toESM(require_jsx_runtime(), 1);
   function FiltersToggled(props) {
-    const { isShowingFilter } = (0, import_element90.useContext)(dataviews_context_default);
+    const { isShowingFilter } = (0, import_element91.useContext)(dataviews_context_default);
     if (!isShowingFilter) {
       return null;
     }
@@ -34239,7 +34336,7 @@ If there's a particular need for this, please submit a feature request at https:
   var filters_toggled_default = FiltersToggled;
 
   // packages/dataviews/build-module/components/dataviews-layout/index.mjs
-  var import_element91 = __toESM(require_element(), 1);
+  var import_element92 = __toESM(require_element(), 1);
   var import_components44 = __toESM(require_components(), 1);
   var import_i18n52 = __toESM(require_i18n(), 1);
   var import_jsx_runtime166 = __toESM(require_jsx_runtime(), 1);
@@ -34263,7 +34360,7 @@ If there's a particular need for this, please submit a feature request at https:
       defaultLayouts: defaultLayouts2,
       containerRef,
       empty = /* @__PURE__ */ (0, import_jsx_runtime166.jsx)("p", { children: (0, import_i18n52.__)("No results") })
-    } = (0, import_element91.useContext)(dataviews_context_default);
+    } = (0, import_element92.useContext)(dataviews_context_default);
     const isDelayedInitialLoading = useDelayedLoading(!hasInitiallyLoaded, {
       delay: 200
     });
@@ -34300,7 +34397,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataviews-footer/index.mjs
-  var import_element92 = __toESM(require_element(), 1);
+  var import_element93 = __toESM(require_element(), 1);
   var import_jsx_runtime167 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY6 = [];
   function DataViewsFooter() {
@@ -34311,7 +34408,7 @@ If there's a particular need for this, please submit a feature request at https:
       actions = EMPTY_ARRAY6,
       isLoading,
       hasInitiallyLoaded
-    } = (0, import_element92.useContext)(dataviews_context_default);
+    } = (0, import_element93.useContext)(dataviews_context_default);
     const isRefreshing = !!isLoading && hasInitiallyLoaded && !!data?.length;
     const isDelayedRefreshing = useDelayedLoading(!!isRefreshing);
     const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data) && [LAYOUT_TABLE, LAYOUT_GRID].includes(view.type);
@@ -34349,27 +34446,27 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataviews-search/index.mjs
   var import_i18n53 = __toESM(require_i18n(), 1);
-  var import_element93 = __toESM(require_element(), 1);
+  var import_element94 = __toESM(require_element(), 1);
   var import_components45 = __toESM(require_components(), 1);
   var import_compose14 = __toESM(require_compose(), 1);
   var import_jsx_runtime168 = __toESM(require_jsx_runtime(), 1);
-  var DataViewsSearch = (0, import_element93.memo)(function Search({ label }) {
-    const { view, onChangeView } = (0, import_element93.useContext)(dataviews_context_default);
+  var DataViewsSearch = (0, import_element94.memo)(function Search({ label }) {
+    const { view, onChangeView } = (0, import_element94.useContext)(dataviews_context_default);
     const [search, setSearch, debouncedSearch] = (0, import_compose14.useDebouncedInput)(
       view.search
     );
-    (0, import_element93.useEffect)(() => {
+    (0, import_element94.useEffect)(() => {
       if (view.search !== debouncedSearch) {
         setSearch(view.search ?? "");
       }
     }, [view.search, setSearch]);
-    const onChangeViewRef = (0, import_element93.useRef)(onChangeView);
-    const viewRef = (0, import_element93.useRef)(view);
-    (0, import_element93.useEffect)(() => {
+    const onChangeViewRef = (0, import_element94.useRef)(onChangeView);
+    const viewRef = (0, import_element94.useRef)(view);
+    (0, import_element94.useEffect)(() => {
       onChangeViewRef.current = onChangeView;
       viewRef.current = view;
     }, [onChangeView, view]);
-    (0, import_element93.useEffect)(() => {
+    (0, import_element94.useEffect)(() => {
       if (debouncedSearch !== viewRef.current?.search) {
         onChangeViewRef.current({
           ...viewRef.current,
@@ -34397,7 +34494,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataviews-view-config/index.mjs
   var import_components46 = __toESM(require_components(), 1);
   var import_i18n54 = __toESM(require_i18n(), 1);
-  var import_element94 = __toESM(require_element(), 1);
+  var import_element95 = __toESM(require_element(), 1);
   var import_warning = __toESM(require_warning(), 1);
   var import_compose15 = __toESM(require_compose(), 1);
   var import_jsx_runtime169 = __toESM(require_jsx_runtime(), 1);
@@ -34408,7 +34505,7 @@ If there's a particular need for this, please submit a feature request at https:
     offset: 9
   };
   function ViewTypeMenu() {
-    const { view, onChangeView, defaultLayouts: defaultLayouts2 } = (0, import_element94.useContext)(dataviews_context_default);
+    const { view, onChangeView, defaultLayouts: defaultLayouts2 } = (0, import_element95.useContext)(dataviews_context_default);
     const availableLayouts = Object.keys(defaultLayouts2);
     if (availableLayouts.length <= 1) {
       return null;
@@ -34471,8 +34568,8 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
   function SortFieldControl() {
-    const { view, fields: fields2, onChangeView } = (0, import_element94.useContext)(dataviews_context_default);
-    const orderOptions = (0, import_element94.useMemo)(() => {
+    const { view, fields: fields2, onChangeView } = (0, import_element95.useContext)(dataviews_context_default);
+    const orderOptions = (0, import_element95.useMemo)(() => {
       const sortableFields = fields2.filter(
         (field) => field.enableSorting !== false
       );
@@ -34503,7 +34600,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function SortDirectionControl() {
-    const { view, fields: fields2, onChangeView } = (0, import_element94.useContext)(dataviews_context_default);
+    const { view, fields: fields2, onChangeView } = (0, import_element95.useContext)(dataviews_context_default);
     const sortableFields = fields2.filter(
       (field) => field.enableSorting !== false
     );
@@ -34553,7 +34650,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function ItemsPerPageControl() {
-    const { view, config: config2, onChangeView } = (0, import_element94.useContext)(dataviews_context_default);
+    const { view, config: config2, onChangeView } = (0, import_element95.useContext)(dataviews_context_default);
     const { infiniteScrollEnabled } = view;
     if (!config2 || !config2.perPageSizes || config2.perPageSizes.length < 2 || config2.perPageSizes.length > 6 || infiniteScrollEnabled) {
       return null;
@@ -34587,7 +34684,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function ResetViewButton() {
-    const { onReset } = (0, import_element94.useContext)(dataviews_context_default);
+    const { onReset } = (0, import_element95.useContext)(dataviews_context_default);
     if (onReset === void 0) {
       return null;
     }
@@ -34610,7 +34707,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function DataviewsViewConfigDropdown() {
-    const { view, onReset } = (0, import_element94.useContext)(dataviews_context_default);
+    const { view, onReset } = (0, import_element95.useContext)(dataviews_context_default);
     const popoverId = (0, import_compose15.useInstanceId)(
       _DataViewsViewConfig,
       "dataviews-view-config-dropdown"
@@ -34709,12 +34806,12 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(DataviewsViewConfigDropdown, {})
     ] });
   }
-  var DataViewsViewConfig = (0, import_element94.memo)(_DataViewsViewConfig);
+  var DataViewsViewConfig = (0, import_element95.memo)(_DataViewsViewConfig);
   var dataviews_view_config_default = DataViewsViewConfig;
 
   // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
   var import_components47 = __toESM(require_components(), 1);
-  var import_element95 = __toESM(require_element(), 1);
+  var import_element96 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.mjs
   function getCustomValidity(isValid2, validity) {
@@ -34752,7 +34849,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { getValue, setValue, label, description, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
-    const onChangeControl = (0, import_element95.useCallback)(() => {
+    const onChangeControl = (0, import_element96.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
       );
@@ -34775,7 +34872,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/combobox.mjs
   var import_components48 = __toESM(require_components(), 1);
-  var import_element96 = __toESM(require_element(), 1);
+  var import_element97 = __toESM(require_element(), 1);
   var import_jsx_runtime171 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedComboboxControl } = unlock4(import_components48.privateApis);
   function Combobox3({
@@ -34787,7 +34884,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { label, description, placeholder, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data }) ?? "";
-    const onChangeControl = (0, import_element96.useCallback)(
+    const onChangeControl = (0, import_element97.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue ?? "" })),
       [data, onChange, setValue]
     );
@@ -34818,13 +34915,13 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
   var import_components50 = __toESM(require_components(), 1);
-  var import_element99 = __toESM(require_element(), 1);
+  var import_element100 = __toESM(require_element(), 1);
   var import_i18n56 = __toESM(require_i18n(), 1);
   var import_date3 = __toESM(require_date(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
   var import_components49 = __toESM(require_components(), 1);
-  var import_element97 = __toESM(require_element(), 1);
+  var import_element98 = __toESM(require_element(), 1);
   var import_i18n55 = __toESM(require_i18n(), 1);
   var import_jsx_runtime172 = __toESM(require_jsx_runtime(), 1);
   var TIME_UNITS_OPTIONS = {
@@ -34854,7 +34951,7 @@ If there's a particular need for this, please submit a feature request at https:
     const disabled2 = field.isDisabled({ item: data, field });
     const fieldValue = getValue({ item: data });
     const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
-    const onChangeValue = (0, import_element97.useCallback)(
+    const onChangeValue = (0, import_element98.useCallback)(
       (newValue) => onChange(
         setValue({
           item: data,
@@ -34863,7 +34960,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [onChange, setValue, data, unit]
     );
-    const onChangeUnit = (0, import_element97.useCallback)(
+    const onChangeUnit = (0, import_element98.useCallback)(
       (newUnit) => onChange(
         setValue({
           item: data,
@@ -34911,11 +35008,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/utils/use-disabled-date-matchers.mjs
-  var import_element98 = __toESM(require_element(), 1);
+  var import_element99 = __toESM(require_element(), 1);
   function useDisabledDateMatchers(isValid2, parseDateFn) {
     const minConstraint = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
     const maxConstraint = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
-    const disabledMatchers = (0, import_element98.useMemo)(() => {
+    const disabledMatchers = (0, import_element99.useMemo)(() => {
       const matchers = [];
       if (minConstraint) {
         const minDate = parseDateFn(minConstraint);
@@ -34967,26 +35064,26 @@ If there's a particular need for this, please submit a feature request at https:
     const disabled2 = field.isDisabled({ item: data, field });
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
-    const [calendarMonth, setCalendarMonth] = (0, import_element99.useState)(() => {
+    const [calendarMonth, setCalendarMonth] = (0, import_element100.useState)(() => {
       const parsedDate = parseDateTime(value);
       return parsedDate || /* @__PURE__ */ new Date();
     });
-    const inputControlRef = (0, import_element99.useRef)(null);
-    const validationTimeoutRef = (0, import_element99.useRef)(void 0);
-    const previousFocusRef = (0, import_element99.useRef)(null);
+    const inputControlRef = (0, import_element100.useRef)(null);
+    const validationTimeoutRef = (0, import_element100.useRef)(void 0);
+    const previousFocusRef = (0, import_element100.useRef)(null);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
-    const onChangeCallback = (0, import_element99.useCallback)(
+    const onChangeCallback = (0, import_element100.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
-    (0, import_element99.useEffect)(() => {
+    (0, import_element100.useEffect)(() => {
       return () => {
         if (validationTimeoutRef.current) {
           clearTimeout(validationTimeoutRef.current);
         }
       };
     }, []);
-    const onSelectDate = (0, import_element99.useCallback)(
+    const onSelectDate = (0, import_element100.useCallback)(
       (newDate) => {
         let dateTimeValue;
         if (newDate) {
@@ -35020,7 +35117,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [onChangeCallback, value]
     );
-    const handleManualDateTimeChange = (0, import_element99.useCallback)(
+    const handleManualDateTimeChange = (0, import_element100.useCallback)(
       (newValue) => {
         if (newValue) {
           const dateTime = (0, import_date3.getDate)(newValue);
@@ -35127,7 +35224,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-controls/date.mjs
   var import_components51 = __toESM(require_components(), 1);
   var import_a11y2 = __toESM(require_a11y(), 1);
-  var import_element100 = __toESM(require_element(), 1);
+  var import_element101 = __toESM(require_element(), 1);
   var import_i18n57 = __toESM(require_i18n(), 1);
   var import_date4 = __toESM(require_date(), 1);
   var import_jsx_runtime174 = __toESM(require_jsx_runtime(), 1);
@@ -35227,8 +35324,8 @@ If there's a particular need for this, please submit a feature request at https:
     children
   }) {
     const { isValid: isValid2 } = field;
-    const [customValidity, setCustomValidity] = (0, import_element100.useState)(void 0);
-    const validateRefs = (0, import_element100.useCallback)(() => {
+    const [customValidity, setCustomValidity] = (0, import_element101.useState)(void 0);
+    const validateRefs = (0, import_element101.useCallback)(() => {
       const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
       for (const ref of refs) {
         const input = ref.current;
@@ -35242,7 +35339,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       setCustomValidity(void 0);
     }, [inputRefs]);
-    (0, import_element100.useEffect)(() => {
+    (0, import_element101.useEffect)(() => {
       const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
       const result = validity ? getCustomValidity(isValid2, validity) : void 0;
       for (const ref of refs) {
@@ -35254,7 +35351,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     }, [inputRefs, isValid2, validity]);
-    (0, import_element100.useEffect)(() => {
+    (0, import_element101.useEffect)(() => {
       const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
       const handleInvalid = (event) => {
         event.preventDefault();
@@ -35269,7 +35366,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       };
     }, [inputRefs, setIsTouched]);
-    (0, import_element100.useEffect)(() => {
+    (0, import_element101.useEffect)(() => {
       if (!isTouched) {
         return;
       }
@@ -35280,7 +35377,7 @@ If there's a particular need for this, please submit a feature request at https:
         validateRefs();
       }
     }, [isTouched, isValid2, validity, validateRefs]);
-    (0, import_element100.useEffect)(() => {
+    (0, import_element101.useEffect)(() => {
       if (isTouched && customValidity?.message) {
         (0, import_a11y2.speak)(customValidity.message);
       }
@@ -35336,24 +35433,24 @@ If there's a particular need for this, please submit a feature request at https:
       format: fieldFormat
     } = field;
     const disabled2 = field.isDisabled({ item: data, field });
-    const [selectedPresetId, setSelectedPresetId] = (0, import_element100.useState)(
+    const [selectedPresetId, setSelectedPresetId] = (0, import_element101.useState)(
       null
     );
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
-    const [calendarMonth, setCalendarMonth] = (0, import_element100.useState)(() => {
+    const [calendarMonth, setCalendarMonth] = (0, import_element101.useState)(() => {
       const parsedDate = parseDate(value);
       return parsedDate || /* @__PURE__ */ new Date();
     });
-    const [isTouched, setIsTouched] = (0, import_element100.useState)(false);
-    const validityTargetRef = (0, import_element100.useRef)(null);
+    const [isTouched, setIsTouched] = (0, import_element101.useState)(false);
+    const validityTargetRef = (0, import_element101.useRef)(null);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
-    const onChangeCallback = (0, import_element100.useCallback)(
+    const onChangeCallback = (0, import_element101.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
-    const onSelectDate = (0, import_element100.useCallback)(
+    const onSelectDate = (0, import_element101.useCallback)(
       (newDate) => {
         const dateValue = newDate ? format(newDate, "yyyy-MM-dd") : void 0;
         onChangeCallback(dateValue);
@@ -35362,7 +35459,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [onChangeCallback]
     );
-    const handlePresetClick = (0, import_element100.useCallback)(
+    const handlePresetClick = (0, import_element101.useCallback)(
       (preset) => {
         const presetDate = preset.getValue();
         const dateValue = formatDate(presetDate);
@@ -35373,7 +35470,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [onChangeCallback]
     );
-    const handleManualDateChange = (0, import_element100.useCallback)(
+    const handleManualDateChange = (0, import_element101.useCallback)(
       (newValue) => {
         onChangeCallback(newValue);
         if (newValue) {
@@ -35513,7 +35610,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
-    const onChangeCallback = (0, import_element100.useCallback)(
+    const onChangeCallback = (0, import_element101.useCallback)(
       (newValue) => {
         onChange(
           setValue({
@@ -35524,10 +35621,10 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [data, onChange, setValue]
     );
-    const [selectedPresetId, setSelectedPresetId] = (0, import_element100.useState)(
+    const [selectedPresetId, setSelectedPresetId] = (0, import_element101.useState)(
       null
     );
-    const selectedRange = (0, import_element100.useMemo)(() => {
+    const selectedRange = (0, import_element101.useMemo)(() => {
       if (!value) {
         return { from: void 0, to: void 0 };
       }
@@ -35537,13 +35634,13 @@ If there's a particular need for this, please submit a feature request at https:
         to: parseDate(to2) || void 0
       };
     }, [value]);
-    const [calendarMonth, setCalendarMonth] = (0, import_element100.useState)(() => {
+    const [calendarMonth, setCalendarMonth] = (0, import_element101.useState)(() => {
       return selectedRange.from || /* @__PURE__ */ new Date();
     });
-    const [isTouched, setIsTouched] = (0, import_element100.useState)(false);
-    const fromInputRef = (0, import_element100.useRef)(null);
-    const toInputRef = (0, import_element100.useRef)(null);
-    const updateDateRange = (0, import_element100.useCallback)(
+    const [isTouched, setIsTouched] = (0, import_element101.useState)(false);
+    const fromInputRef = (0, import_element101.useRef)(null);
+    const toInputRef = (0, import_element101.useRef)(null);
+    const updateDateRange = (0, import_element101.useCallback)(
       (fromDate, toDate2) => {
         if (fromDate && toDate2) {
           onChangeCallback([
@@ -35556,7 +35653,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [onChangeCallback]
     );
-    const onSelectCalendarRange = (0, import_element100.useCallback)(
+    const onSelectCalendarRange = (0, import_element101.useCallback)(
       (newRange) => {
         updateDateRange(newRange?.from, newRange?.to);
         setSelectedPresetId(null);
@@ -35564,7 +35661,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [updateDateRange]
     );
-    const handlePresetClick = (0, import_element100.useCallback)(
+    const handlePresetClick = (0, import_element101.useCallback)(
       (preset) => {
         const [startDate2, endDate] = preset.getValue();
         setCalendarMonth(startDate2);
@@ -35574,7 +35671,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [updateDateRange]
     );
-    const handleManualDateChange = (0, import_element100.useCallback)(
+    const handleManualDateChange = (0, import_element101.useCallback)(
       (fromOrTo, newValue) => {
         const [currentFrom, currentTo] = value || [
           void 0,
@@ -35768,7 +35865,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/select.mjs
   var import_components52 = __toESM(require_components(), 1);
-  var import_element101 = __toESM(require_element(), 1);
+  var import_element102 = __toESM(require_element(), 1);
   var import_jsx_runtime175 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedSelectControl } = unlock4(import_components52.privateApis);
   function Select({
@@ -35783,7 +35880,7 @@ If there's a particular need for this, please submit a feature request at https:
     const disabled2 = field.isDisabled({ item: data, field });
     const isMultiple = type === "array";
     const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
-    const onChangeControl = (0, import_element101.useCallback)(
+    const onChangeControl = (0, import_element102.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -35832,7 +35929,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.mjs
   var import_components53 = __toESM(require_components(), 1);
-  var import_element102 = __toESM(require_element(), 1);
+  var import_element103 = __toESM(require_element(), 1);
   var import_jsx_runtime177 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedInputControl: ValidatedInputControl2 } = unlock4(import_components53.privateApis);
   function ValidatedText({
@@ -35849,7 +35946,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data });
     const disabled2 = field.isDisabled({ item: data, field });
-    const onChangeControl = (0, import_element102.useCallback)(
+    const onChangeControl = (0, import_element103.useCallback)(
       (newValue) => onChange(
         setValue({
           item: data,
@@ -35966,7 +36063,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
   var import_components57 = __toESM(require_components(), 1);
-  var import_element103 = __toESM(require_element(), 1);
+  var import_element104 = __toESM(require_element(), 1);
   var import_i18n58 = __toESM(require_i18n(), 1);
   var import_jsx_runtime181 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedNumberControl } = unlock4(import_components57.privateApis);
@@ -35984,11 +36081,11 @@ If there's a particular need for this, please submit a feature request at https:
     step
   }) {
     const [min2 = "", max2 = ""] = value;
-    const onChangeMin = (0, import_element103.useCallback)(
+    const onChangeMin = (0, import_element104.useCallback)(
       (newValue) => onChange([toNumberOrEmpty(newValue), max2]),
       [onChange, max2]
     );
-    const onChangeMax = (0, import_element103.useCallback)(
+    const onChangeMax = (0, import_element104.useCallback)(
       (newValue) => onChange([min2, toNumberOrEmpty(newValue)]),
       [onChange, min2]
     );
@@ -36037,7 +36134,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data }) ?? "";
     const disabled2 = field.isDisabled({ item: data, field });
-    const onChangeControl = (0, import_element103.useCallback)(
+    const onChangeControl = (0, import_element104.useCallback)(
       (newValue) => {
         onChange(
           setValue({
@@ -36051,7 +36148,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [data, onChange, setValue]
     );
-    const onChangeBetweenControls = (0, import_element103.useCallback)(
+    const onChangeBetweenControls = (0, import_element104.useCallback)(
       (newValue) => {
         onChange(
           setValue({
@@ -36112,7 +36209,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/radio.mjs
   var import_components58 = __toESM(require_components(), 1);
-  var import_element104 = __toESM(require_element(), 1);
+  var import_element105 = __toESM(require_element(), 1);
   var import_jsx_runtime184 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedRadioControl } = unlock4(import_components58.privateApis);
   function Radio({
@@ -36130,7 +36227,7 @@ If there's a particular need for this, please submit a feature request at https:
       getElements: field.getElements
     });
     const value = getValue({ item: data });
-    const onChangeControl = (0, import_element104.useCallback)(
+    const onChangeControl = (0, import_element105.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -36155,7 +36252,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/text.mjs
-  var import_element105 = __toESM(require_element(), 1);
+  var import_element106 = __toESM(require_element(), 1);
   var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
   function Text3({
     data,
@@ -36177,8 +36274,8 @@ If there's a particular need for this, please submit a feature request at https:
           hideLabelFromVision,
           markWhenOptional,
           validity,
-          prefix: prefix2 ? (0, import_element105.createElement)(prefix2) : void 0,
-          suffix: suffix ? (0, import_element105.createElement)(suffix) : void 0
+          prefix: prefix2 ? (0, import_element106.createElement)(prefix2) : void 0,
+          suffix: suffix ? (0, import_element106.createElement)(suffix) : void 0
         }
       }
     );
@@ -36186,7 +36283,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
   var import_components59 = __toESM(require_components(), 1);
-  var import_element106 = __toESM(require_element(), 1);
+  var import_element107 = __toESM(require_element(), 1);
   var import_jsx_runtime186 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedToggleControl } = unlock4(import_components59.privateApis);
   function Toggle({
@@ -36199,7 +36296,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
-    const onChangeControl = (0, import_element106.useCallback)(() => {
+    const onChangeControl = (0, import_element107.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
       );
@@ -36222,7 +36319,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
   var import_components60 = __toESM(require_components(), 1);
-  var import_element107 = __toESM(require_element(), 1);
+  var import_element108 = __toESM(require_element(), 1);
   var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedTextareaControl } = unlock4(import_components60.privateApis);
   function Textarea({
@@ -36238,7 +36335,7 @@ If there's a particular need for this, please submit a feature request at https:
     const disabled2 = field.isDisabled({ item: data, field });
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data });
-    const onChangeControl = (0, import_element107.useCallback)(
+    const onChangeControl = (0, import_element108.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -36263,12 +36360,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/index.mjs
-  var import_element109 = __toESM(require_element(), 1);
+  var import_element110 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
   var import_components61 = __toESM(require_components(), 1);
   var import_compose16 = __toESM(require_compose(), 1);
-  var import_element108 = __toESM(require_element(), 1);
+  var import_element109 = __toESM(require_element(), 1);
   var import_rich_text2 = __toESM(require_rich_text(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/utils.mjs
@@ -36364,14 +36461,14 @@ If there's a particular need for this, please submit a feature request at https:
     focusOnMount,
     completers = EMPTY_COMPLETERS
   }) {
-    const [selection, setSelection] = (0, import_element108.useState)({
+    const [selection, setSelection] = (0, import_element109.useState)({
       start: void 0,
       end: void 0
     });
-    const [isSelected2, setIsSelected] = (0, import_element108.useState)(false);
-    const anchorRef = (0, import_element108.useRef)(void 0);
-    const inputEvents = (0, import_element108.useRef)(/* @__PURE__ */ new Set());
-    const keyboardShortcuts = (0, import_element108.useRef)(
+    const [isSelected2, setIsSelected] = (0, import_element109.useState)(false);
+    const anchorRef = (0, import_element109.useRef)(void 0);
+    const inputEvents = (0, import_element109.useRef)(/* @__PURE__ */ new Set());
+    const keyboardShortcuts = (0, import_element109.useRef)(
       /* @__PURE__ */ new Set()
     );
     const focusOutside = (0, import_compose16.__experimentalUseFocusOutside)(() => setIsSelected(false));
@@ -36397,7 +36494,7 @@ If there's a particular need for this, please submit a feature request at https:
       __unstableDisableFormats: disableFormats,
       allowedFormats: adjustedAllowedFormats,
       withoutInteractiveFormatting,
-      __unstableFormatTypeHandlerContext: (0, import_element108.useMemo)(
+      __unstableFormatTypeHandlerContext: (0, import_element109.useMemo)(
         () => ({
           richTextIdentifier: id,
           blockClientId: clientId
@@ -36408,16 +36505,16 @@ If there's a particular need for this, please submit a feature request at https:
     function onFocus() {
       anchorRef.current?.focus();
     }
-    const eventListenersPropsRef = (0, import_element108.useRef)({
+    const eventListenersPropsRef = (0, import_element109.useRef)({
       keyboardShortcuts,
       inputEvents
     });
-    const inputRulePropsRef = (0, import_element108.useRef)({
+    const inputRulePropsRef = (0, import_element109.useRef)({
       formatTypes,
       getValue,
       onChange: onRichTextChange
     });
-    (0, import_element108.useInsertionEffect)(() => {
+    (0, import_element109.useInsertionEffect)(() => {
       inputRulePropsRef.current = {
         formatTypes,
         getValue,
@@ -36606,7 +36703,7 @@ If there's a particular need for this, please submit a feature request at https:
     const disabled2 = field.isDisabled({ item: data, field });
     const { label, placeholder, description, id, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data }) ?? "";
-    const onChangeControl = (0, import_element109.useCallback)(
+    const onChangeControl = (0, import_element110.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -36637,7 +36734,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
   var import_components62 = __toESM(require_components(), 1);
-  var import_element110 = __toESM(require_element(), 1);
+  var import_element111 = __toESM(require_element(), 1);
   var import_jsx_runtime191 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedToggleGroupControl } = unlock4(import_components62.privateApis);
   function ToggleGroup({
@@ -36651,7 +36748,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { getValue, setValue, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
     const value = getValue({ item: data });
-    const onChangeControl = (0, import_element110.useCallback)(
+    const onChangeControl = (0, import_element111.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -36693,7 +36790,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/array.mjs
   var import_components63 = __toESM(require_components(), 1);
-  var import_element111 = __toESM(require_element(), 1);
+  var import_element112 = __toESM(require_element(), 1);
   var import_jsx_runtime192 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedFormTokenField } = unlock4(import_components63.privateApis);
   function ArrayControl({
@@ -36711,7 +36808,7 @@ If there's a particular need for this, please submit a feature request at https:
       elements: field.elements,
       getElements: field.getElements
     });
-    const arrayValueAsElements = (0, import_element111.useMemo)(
+    const arrayValueAsElements = (0, import_element112.useMemo)(
       () => Array.isArray(value) ? value.map((token) => {
         const element = elements2?.find(
           (suggestion) => suggestion.value === token
@@ -36720,7 +36817,7 @@ If there's a particular need for this, please submit a feature request at https:
       }) : [],
       [value, elements2]
     );
-    const onChangeControl = (0, import_element111.useCallback)(
+    const onChangeControl = (0, import_element112.useCallback)(
       (tokens) => {
         const valueTokens = tokens.map((token) => {
           if (typeof token === "object" && "value" in token) {
@@ -36784,7 +36881,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/color.mjs
   var import_components64 = __toESM(require_components(), 1);
-  var import_element112 = __toESM(require_element(), 1);
+  var import_element113 = __toESM(require_element(), 1);
   var import_i18n59 = __toESM(require_i18n(), 1);
   var import_jsx_runtime193 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedInputControl: ValidatedInputControl3 } = unlock4(import_components64.privateApis);
@@ -36832,13 +36929,13 @@ If there's a particular need for this, please submit a feature request at https:
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
     const value = field.getValue({ item: data }) || "";
-    const handleColorChange = (0, import_element112.useCallback)(
+    const handleColorChange = (0, import_element113.useCallback)(
       (newColor) => {
         onChange(setValue({ item: data, value: newColor }));
       },
       [data, onChange, setValue]
     );
-    const handleInputChange = (0, import_element112.useCallback)(
+    const handleInputChange = (0, import_element113.useCallback)(
       (newValue) => {
         onChange(setValue({ item: data, value: newValue || "" }));
       },
@@ -36872,7 +36969,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/password.mjs
   var import_components65 = __toESM(require_components(), 1);
-  var import_element113 = __toESM(require_element(), 1);
+  var import_element114 = __toESM(require_element(), 1);
   var import_i18n60 = __toESM(require_i18n(), 1);
   var import_jsx_runtime194 = __toESM(require_jsx_runtime(), 1);
   function Password({
@@ -36883,9 +36980,9 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     validity
   }) {
-    const [isVisible2, setIsVisible] = (0, import_element113.useState)(false);
+    const [isVisible2, setIsVisible] = (0, import_element114.useState)(false);
     const disabled2 = field.isDisabled({ item: data, field });
-    const toggleVisibility = (0, import_element113.useCallback)(() => {
+    const toggleVisibility = (0, import_element114.useCallback)(() => {
       setIsVisible((prev) => !prev);
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime194.jsx)(
@@ -38066,7 +38163,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/hooks/use-data.mjs
-  var import_element114 = __toESM(require_element(), 1);
+  var import_element115 = __toESM(require_element(), 1);
   function useData({
     view,
     data: shownData,
@@ -38076,34 +38173,34 @@ If there's a particular need for this, please submit a feature request at https:
     selection
   }) {
     const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-    const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element114.useState)(
+    const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element115.useState)(
       !isLoading
     );
-    (0, import_element114.useEffect)(() => {
+    (0, import_element115.useEffect)(() => {
       if (!isLoading) {
         setHasInitiallyLoaded(true);
       }
     }, [isLoading]);
-    const previousDataRef = (0, import_element114.useRef)(shownData);
-    const previousPaginationInfoRef = (0, import_element114.useRef)(paginationInfo);
-    (0, import_element114.useEffect)(() => {
+    const previousDataRef = (0, import_element115.useRef)(shownData);
+    const previousPaginationInfoRef = (0, import_element115.useRef)(paginationInfo);
+    (0, import_element115.useEffect)(() => {
       if (!isLoading) {
         previousDataRef.current = shownData;
         previousPaginationInfoRef.current = paginationInfo;
       }
     }, [shownData, isLoading, paginationInfo]);
-    const [visibleEntries, setVisibleEntries] = (0, import_element114.useState)([]);
-    const positionMapRef = (0, import_element114.useRef)(/* @__PURE__ */ new Map());
-    const allLoadedRecordsRef = (0, import_element114.useRef)([]);
-    const prevViewParamsRef = (0, import_element114.useRef)({
+    const [visibleEntries, setVisibleEntries] = (0, import_element115.useState)([]);
+    const positionMapRef = (0, import_element115.useRef)(/* @__PURE__ */ new Map());
+    const allLoadedRecordsRef = (0, import_element115.useRef)([]);
+    const prevViewParamsRef = (0, import_element115.useRef)({
       search: void 0,
       filters: void 0,
       perPage: void 0
     });
-    const scrollDirectionRef = (0, import_element114.useRef)(void 0);
-    const prevStartPositionRef = (0, import_element114.useRef)(void 0);
-    const hasInitializedRef = (0, import_element114.useRef)(false);
-    const allLoadedRecords = (0, import_element114.useMemo)(() => {
+    const scrollDirectionRef = (0, import_element115.useRef)(void 0);
+    const prevStartPositionRef = (0, import_element115.useRef)(void 0);
+    const hasInitializedRef = (0, import_element115.useRef)(false);
+    const allLoadedRecords = (0, import_element115.useMemo)(() => {
       if (view.startPosition !== void 0 && prevStartPositionRef.current !== void 0) {
         if (view.startPosition < prevStartPositionRef.current) {
           scrollDirectionRef.current = "up";
@@ -38225,7 +38322,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
-  var import_element115 = __toESM(require_element(), 1);
+  var import_element116 = __toESM(require_element(), 1);
   var import_compose17 = __toESM(require_compose(), 1);
   function captureAnchorElement(container, anchorElementRef, direction) {
     const containerRect = container.getBoundingClientRect();
@@ -38261,18 +38358,18 @@ If there's a particular need for this, please submit a feature request at https:
     containerRef,
     setVisibleEntries
   }) {
-    const anchorElementRef = (0, import_element115.useRef)(null);
-    const viewRef = (0, import_element115.useRef)(view);
-    const isLoadingRef = (0, import_element115.useRef)(isLoading);
-    const onChangeViewRef = (0, import_element115.useRef)(onChangeView);
-    const totalItemsRef = (0, import_element115.useRef)(paginationInfo.totalItems);
-    (0, import_element115.useLayoutEffect)(() => {
+    const anchorElementRef = (0, import_element116.useRef)(null);
+    const viewRef = (0, import_element116.useRef)(view);
+    const isLoadingRef = (0, import_element116.useRef)(isLoading);
+    const onChangeViewRef = (0, import_element116.useRef)(onChangeView);
+    const totalItemsRef = (0, import_element116.useRef)(paginationInfo.totalItems);
+    (0, import_element116.useLayoutEffect)(() => {
       viewRef.current = view;
       isLoadingRef.current = isLoading;
       onChangeViewRef.current = onChangeView;
       totalItemsRef.current = paginationInfo.totalItems;
     }, [view, isLoading, onChangeView, paginationInfo.totalItems]);
-    const intersectionObserverCallback = (0, import_element115.useCallback)(
+    const intersectionObserverCallback = (0, import_element116.useCallback)(
       (entries) => {
         if (!setVisibleEntries) {
           return;
@@ -38304,7 +38401,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [setVisibleEntries]
     );
-    (0, import_element115.useLayoutEffect)(() => {
+    (0, import_element116.useLayoutEffect)(() => {
       const container = containerRef.current;
       const anchor = anchorElementRef.current;
       if (!container || !view.infiniteScrollEnabled || !anchor || isLoading) {
@@ -38324,10 +38421,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
       anchorElementRef.current = null;
     }, [containerRef, isLoading, view.infiniteScrollEnabled]);
-    const intersectionObserverRef = (0, import_element115.useRef)(
+    const intersectionObserverRef = (0, import_element116.useRef)(
       null
     );
-    (0, import_element115.useEffect)(() => {
+    (0, import_element116.useEffect)(() => {
       if (!view.infiniteScrollEnabled || !intersectionObserverCallback) {
         if (intersectionObserverRef.current) {
           intersectionObserverRef.current.disconnect();
@@ -38346,7 +38443,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       };
     }, [view.infiniteScrollEnabled, intersectionObserverCallback]);
-    (0, import_element115.useEffect)(() => {
+    (0, import_element116.useEffect)(() => {
       if (!view.infiniteScrollEnabled || !containerRef.current) {
         return;
       }
@@ -38419,7 +38516,7 @@ If there's a particular need for this, please submit a feature request at https:
     search = true,
     searchLabel = void 0
   }) {
-    const { view } = (0, import_element116.useContext)(dataviews_context_default);
+    const { view } = (0, import_element117.useContext)(dataviews_context_default);
     const isInfiniteScroll = view.infiniteScrollEnabled;
     return /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(import_jsx_runtime198.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(
@@ -38482,7 +38579,7 @@ If there's a particular need for this, please submit a feature request at https:
     empty,
     onReset
   }) {
-    const [selectionState, setSelectionState] = (0, import_element116.useState)([]);
+    const [selectionState, setSelectionState] = (0, import_element117.useState)([]);
     const isUncontrolled = selectionProperty === void 0 || onChangeSelection === void 0;
     const selection = isUncontrolled ? selectionState : selectionProperty;
     const {
@@ -38498,8 +38595,8 @@ If there's a particular need for this, please submit a feature request at https:
       selection,
       paginationInfo
     });
-    const containerRef = (0, import_element116.useRef)(null);
-    const [containerWidth, setContainerWidth] = (0, import_element116.useState)(0);
+    const containerRef = (0, import_element117.useRef)(null);
+    const [containerWidth, setContainerWidth] = (0, import_element117.useState)(0);
     const resizeObserverRef = (0, import_compose18.useResizeObserver)(
       (resizeObserverEntries) => {
         setContainerWidth(
@@ -38508,7 +38605,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       { box: "border-box" }
     );
-    const [openedFilter, setOpenedFilter] = (0, import_element116.useState)(null);
+    const [openedFilter, setOpenedFilter] = (0, import_element117.useState)(null);
     function setSelectionWithChange(value) {
       const newValue = typeof value === "function" ? value(selection) : value;
       if (isUncontrolled) {
@@ -38518,8 +38615,8 @@ If there's a particular need for this, please submit a feature request at https:
         onChangeSelection(newValue);
       }
     }
-    const _fields = (0, import_element116.useMemo)(() => normalizeFields(fields2), [fields2]);
-    const _selection = (0, import_element116.useMemo)(() => {
+    const _fields = (0, import_element117.useMemo)(() => normalizeFields(fields2), [fields2]);
+    const _selection = (0, import_element117.useMemo)(() => {
       if (view.infiniteScrollEnabled) {
         return selection;
       }
@@ -38528,13 +38625,13 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }, [selection, data, getItemId2, view.infiniteScrollEnabled]);
     const filters = use_filters_default(_fields, view);
-    const hasPrimaryOrLockedFilters = (0, import_element116.useMemo)(
+    const hasPrimaryOrLockedFilters = (0, import_element117.useMemo)(
       () => (filters || []).some(
         (filter) => filter.isPrimary || filter.isLocked
       ),
       [filters]
     );
-    const [isShowingFilter, setIsShowingFilter] = (0, import_element116.useState)(
+    const [isShowingFilter, setIsShowingFilter] = (0, import_element117.useState)(
       hasPrimaryOrLockedFilters
     );
     const { intersectionObserver } = useInfiniteScroll({
@@ -38545,12 +38642,12 @@ If there's a particular need for this, please submit a feature request at https:
       containerRef,
       setVisibleEntries
     });
-    (0, import_element116.useEffect)(() => {
+    (0, import_element117.useEffect)(() => {
       if (hasPrimaryOrLockedFilters && !isShowingFilter) {
         setIsShowingFilter(true);
       }
     }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-    const defaultLayouts2 = (0, import_element116.useMemo)(
+    const defaultLayouts2 = (0, import_element117.useMemo)(
       () => Object.fromEntries(
         Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
           return dataViewsLayouts.some(
@@ -38624,12 +38721,12 @@ If there's a particular need for this, please submit a feature request at https:
   var dataviews_default = DataViewsSubComponents;
 
   // packages/dataviews/build-module/dataform/index.mjs
-  var import_element128 = __toESM(require_element(), 1);
+  var import_element129 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-context/index.mjs
-  var import_element117 = __toESM(require_element(), 1);
+  var import_element118 = __toESM(require_element(), 1);
   var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
-  var DataFormContext = (0, import_element117.createContext)({
+  var DataFormContext = (0, import_element118.createContext)({
     fields: []
   });
   DataFormContext.displayName = "DataFormContext";
@@ -38642,10 +38739,10 @@ If there's a particular need for this, please submit a feature request at https:
   var dataform_context_default = DataFormContext;
 
   // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-  var import_element127 = __toESM(require_element(), 1);
+  var import_element128 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-  var import_element118 = __toESM(require_element(), 1);
+  var import_element119 = __toESM(require_element(), 1);
   var import_components66 = __toESM(require_components(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
@@ -38787,9 +38884,9 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     validity
   }) {
-    const { fields: fields2 } = (0, import_element118.useContext)(dataform_context_default);
+    const { fields: fields2 } = (0, import_element119.useContext)(dataform_context_default);
     const layout = field.layout;
-    const form2 = (0, import_element118.useMemo)(
+    const form2 = (0, import_element119.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: !!field.children ? field.children : []
@@ -38882,14 +38979,14 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
   var import_deepmerge3 = __toESM(require_cjs(), 1);
   var import_components69 = __toESM(require_components(), 1);
-  var import_element123 = __toESM(require_element(), 1);
+  var import_element124 = __toESM(require_element(), 1);
   var import_compose20 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
   var import_components68 = __toESM(require_components(), 1);
   var import_i18n68 = __toESM(require_i18n(), 1);
   var import_compose19 = __toESM(require_compose(), 1);
-  var import_element119 = __toESM(require_element(), 1);
+  var import_element120 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
   function getLabelClassName(labelPosition, showError) {
@@ -38998,8 +39095,8 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_i18n68._x)("Edit %s", "field"),
       fieldLabel || ""
     );
-    const rowRef = (0, import_element119.useRef)(null);
-    const editButtonRef = (0, import_element119.useRef)(null);
+    const rowRef = (0, import_element120.useRef)(null);
+    const editButtonRef = (0, import_element120.useRef)(null);
     const handleRowClick = (event) => {
       if (!isOpen && event.detail < 2 && !editButtonRef.current?.contains(event.target) && rowRef.current?.ownerDocument.defaultView?.getSelection()?.toString()) {
         return;
@@ -39099,7 +39196,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/hooks/use-form-validity.mjs
   var import_deepmerge2 = __toESM(require_cjs(), 1);
   var import_es63 = __toESM(require_es6(), 1);
-  var import_element120 = __toESM(require_element(), 1);
+  var import_element121 = __toESM(require_element(), 1);
   var import_i18n69 = __toESM(require_i18n(), 1);
   function isFormValid(formValidity) {
     if (!formValidity) {
@@ -39521,11 +39618,11 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function useFormValidity(item, fields2, form2) {
-    const [formValidity, setFormValidity] = (0, import_element120.useState)();
-    const customCounterRef = (0, import_element120.useRef)({});
-    const elementsCounterRef = (0, import_element120.useRef)({});
-    const previousValuesRef = (0, import_element120.useRef)({});
-    const validate = (0, import_element120.useCallback)(() => {
+    const [formValidity, setFormValidity] = (0, import_element121.useState)();
+    const customCounterRef = (0, import_element121.useRef)({});
+    const elementsCounterRef = (0, import_element121.useRef)({});
+    const previousValuesRef = (0, import_element121.useRef)({});
+    const validate = (0, import_element121.useCallback)(() => {
       const promiseHandler = {
         customCounterRef,
         elementsCounterRef,
@@ -39583,7 +39680,7 @@ If there's a particular need for this, please submit a feature request at https:
         return validity;
       });
     }, [item, fields2, form2]);
-    (0, import_element120.useEffect)(() => {
+    (0, import_element121.useEffect)(() => {
       validate();
     }, [validate]);
     return {
@@ -39594,9 +39691,9 @@ If there's a particular need for this, please submit a feature request at https:
   var use_form_validity_default = useFormValidity;
 
   // packages/dataviews/build-module/hooks/use-reveal-validity.mjs
-  var import_element121 = __toESM(require_element(), 1);
+  var import_element122 = __toESM(require_element(), 1);
   function useRevealValidity(ref, shouldReveal) {
-    const revealValidity = (0, import_element121.useCallback)(() => {
+    const revealValidity = (0, import_element122.useCallback)(() => {
       const inputs = ref.current?.querySelectorAll("input, textarea, select");
       let revealedCount = 0;
       inputs?.forEach((input) => {
@@ -39609,7 +39706,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
       return revealedCount;
     }, [ref]);
-    (0, import_element121.useEffect)(() => {
+    (0, import_element122.useEffect)(() => {
       if (shouldReveal) {
         revealValidity();
       }
@@ -39618,7 +39715,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
-  var import_element122 = __toESM(require_element(), 1);
+  var import_element123 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
   function extractSummaryIds(summary) {
@@ -39659,7 +39756,7 @@ If there's a particular need for this, please submit a feature request at https:
     return fieldDefinition;
   };
   function useFieldFromFormField(field) {
-    const { fields: fields2 } = (0, import_element122.useContext)(dataform_context_default);
+    const { fields: fields2 } = (0, import_element123.useContext)(dataform_context_default);
     const layout = field.layout;
     const summaryFields = getSummaryFields(layout.summary, fields2);
     const fieldDefinition = getFieldDefinition(field, fields2);
@@ -39691,14 +39788,14 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { openAs } = field.layout;
     const { applyLabel, cancelLabel } = openAs;
-    const { fields: fields2 } = (0, import_element123.useContext)(dataform_context_default);
-    const [changes, setChanges] = (0, import_element123.useState)({});
-    const modalData = (0, import_element123.useMemo)(() => {
+    const { fields: fields2 } = (0, import_element124.useContext)(dataform_context_default);
+    const [changes, setChanges] = (0, import_element124.useState)({});
+    const modalData = (0, import_element124.useMemo)(() => {
       return (0, import_deepmerge3.default)(data, changes, {
         arrayMerge: (target, source) => source
       });
     }, [data, changes]);
-    const form2 = (0, import_element123.useMemo)(
+    const form2 = (0, import_element124.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: !!field.children ? field.children : (
@@ -39734,7 +39831,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
     };
     const focusOnMountRef = (0, import_compose20.useFocusOnMount)("firstInputElement");
-    const contentRef = (0, import_element123.useRef)(null);
+    const contentRef = (0, import_element124.useRef)(null);
     const mergedRef = (0, import_compose20.useMergeRefs)([focusOnMountRef, contentRef]);
     useRevealValidity(contentRef, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime203.jsxs)(
@@ -39806,8 +39903,8 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     validity
   }) {
-    const [touched, setTouched] = (0, import_element123.useState)(false);
-    const [isOpen, setIsOpen] = (0, import_element123.useState)(false);
+    const [touched, setTouched] = (0, import_element124.useState)(false);
+    const [isOpen, setIsOpen] = (0, import_element124.useState)(false);
     const { fieldDefinition, fieldLabel, summaryFields } = use_field_from_form_field_default(field);
     if (!fieldDefinition) {
       return null;
@@ -39849,7 +39946,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
   var import_components70 = __toESM(require_components(), 1);
   var import_i18n70 = __toESM(require_i18n(), 1);
-  var import_element124 = __toESM(require_element(), 1);
+  var import_element125 = __toESM(require_element(), 1);
   var import_compose21 = __toESM(require_compose(), 1);
   var import_jsx_runtime204 = __toESM(require_jsx_runtime(), 1);
   function DropdownHeader({
@@ -39882,7 +39979,7 @@ If there's a particular need for this, please submit a feature request at https:
     touched,
     children
   }) {
-    const ref = (0, import_element124.useRef)(null);
+    const ref = (0, import_element125.useRef)(null);
     useRevealValidity(ref, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime204.jsx)("div", { ref, children });
   }
@@ -39892,11 +39989,11 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     validity
   }) {
-    const [touched, setTouched] = (0, import_element124.useState)(false);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element124.useState)(
+    const [touched, setTouched] = (0, import_element125.useState)(false);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element125.useState)(
       null
     );
-    const popoverProps = (0, import_element124.useMemo)(
+    const popoverProps = (0, import_element125.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -39910,7 +40007,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [dialogRef, dialogProps] = (0, import_compose21.__experimentalUseDialog)({
       focusOnMount: "firstInputElement"
     });
-    const form2 = (0, import_element124.useMemo)(
+    const form2 = (0, import_element125.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: !!field.children ? field.children : (
@@ -39920,7 +40017,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [field]
     );
-    const formValidity = (0, import_element124.useMemo)(() => {
+    const formValidity = (0, import_element125.useMemo)(() => {
       if (validity === void 0) {
         return void 0;
       }
@@ -40032,7 +40129,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-  var import_element125 = __toESM(require_element(), 1);
+  var import_element126 = __toESM(require_element(), 1);
   var import_a11y3 = __toESM(require_a11y(), 1);
   var import_compose22 = __toESM(require_compose(), 1);
 
@@ -40200,11 +40297,11 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     validity
   }) {
-    const { fields: fields2 } = (0, import_element125.useContext)(dataform_context_default);
+    const { fields: fields2 } = (0, import_element126.useContext)(dataform_context_default);
     const layout = field.layout;
-    const contentRef = (0, import_element125.useRef)(null);
-    const hasFocusedContentRef = (0, import_element125.useRef)(false);
-    const form2 = (0, import_element125.useMemo)(
+    const contentRef = (0, import_element126.useRef)(null);
+    const hasFocusedContentRef = (0, import_element126.useRef)(false);
+    const form2 = (0, import_element126.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: field.children ?? []
@@ -40212,12 +40309,12 @@ If there's a particular need for this, please submit a feature request at https:
       [field]
     );
     const { isOpened, isCollapsible } = layout;
-    const [isOpen, setIsOpen] = (0, import_element125.useState)(isOpened);
-    const [touched, setTouched] = (0, import_element125.useState)(false);
-    (0, import_element125.useEffect)(() => {
+    const [isOpen, setIsOpen] = (0, import_element126.useState)(isOpened);
+    const [touched, setTouched] = (0, import_element126.useState)(false);
+    (0, import_element126.useEffect)(() => {
       setIsOpen(isOpened);
     }, [isOpened]);
-    const handleOpenChange = (0, import_element125.useCallback)((open) => {
+    const handleOpenChange = (0, import_element126.useCallback)((open) => {
       if (!open) {
         setTouched(true);
       }
@@ -40227,10 +40324,10 @@ If there's a particular need for this, please submit a feature request at https:
       contentRef,
       (isCollapsible ? isOpen : true) && touched
     );
-    const handleContentFocus = (0, import_element125.useCallback)(() => {
+    const handleContentFocus = (0, import_element126.useCallback)(() => {
       hasFocusedContentRef.current = true;
     }, []);
-    const handleFocusOutside = (0, import_element125.useCallback)(() => {
+    const handleFocusOutside = (0, import_element126.useCallback)(() => {
       if (!hasFocusedContentRef.current) {
         return;
       }
@@ -40398,7 +40495,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
-  var import_element126 = __toESM(require_element(), 1);
+  var import_element127 = __toESM(require_element(), 1);
   var import_i18n72 = __toESM(require_i18n(), 1);
   var import_a11y4 = __toESM(require_a11y(), 1);
   var import_compose23 = __toESM(require_compose(), 1);
@@ -40409,20 +40506,20 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     validity
   }) {
-    const { fields: fields2 } = (0, import_element126.useContext)(dataform_context_default);
-    const detailsRef = (0, import_element126.useRef)(null);
-    const contentRef = (0, import_element126.useRef)(null);
-    const hasFocusedContentRef = (0, import_element126.useRef)(false);
-    const [touched, setTouched] = (0, import_element126.useState)(false);
-    const [isOpen, setIsOpen] = (0, import_element126.useState)(false);
-    const form2 = (0, import_element126.useMemo)(
+    const { fields: fields2 } = (0, import_element127.useContext)(dataform_context_default);
+    const detailsRef = (0, import_element127.useRef)(null);
+    const contentRef = (0, import_element127.useRef)(null);
+    const hasFocusedContentRef = (0, import_element127.useRef)(false);
+    const [touched, setTouched] = (0, import_element127.useState)(false);
+    const [isOpen, setIsOpen] = (0, import_element127.useState)(false);
+    const form2 = (0, import_element127.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: field.children ?? []
       }),
       [field]
     );
-    (0, import_element126.useEffect)(() => {
+    (0, import_element127.useEffect)(() => {
       const details = detailsRef.current;
       if (!details) {
         return;
@@ -40440,10 +40537,10 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const revealValidity = useRevealValidity(contentRef, isOpen && touched);
-    const handleContentFocus = (0, import_element126.useCallback)(() => {
+    const handleContentFocus = (0, import_element127.useCallback)(() => {
       hasFocusedContentRef.current = true;
     }, []);
-    const handleFocusOutside = (0, import_element126.useCallback)(() => {
+    const handleFocusOutside = (0, import_element127.useCallback)(() => {
       if (!hasFocusedContentRef.current) {
         return;
       }
@@ -40597,8 +40694,8 @@ If there's a particular need for this, please submit a feature request at https:
     children,
     as
   }) {
-    const { fields: fieldDefinitions } = (0, import_element127.useContext)(dataform_context_default);
-    const markWhenOptional = (0, import_element127.useMemo)(() => {
+    const { fields: fieldDefinitions } = (0, import_element128.useContext)(dataform_context_default);
+    const markWhenOptional = (0, import_element128.useMemo)(() => {
       const requiredCount = fieldDefinitions.filter(
         (f2) => !!f2.isValid?.required
       ).length;
@@ -40651,8 +40748,8 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     validity
   }) {
-    const normalizedForm = (0, import_element128.useMemo)(() => normalize_form_default(form2), [form2]);
-    const normalizedFields = (0, import_element128.useMemo)(
+    const normalizedForm = (0, import_element129.useMemo)(() => normalize_form_default(form2), [form2]);
+    const normalizedFields = (0, import_element129.useMemo)(
       () => normalizeFields(fields2),
       [fields2]
     );
@@ -40777,15 +40874,15 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components72 = __toESM(require_components(), 1);
   var import_blob2 = __toESM(require_blob(), 1);
   var import_core_data23 = __toESM(require_core_data(), 1);
-  var import_data40 = __toESM(require_data(), 1);
-  var import_element130 = __toESM(require_element(), 1);
+  var import_data41 = __toESM(require_data(), 1);
+  var import_element131 = __toESM(require_element(), 1);
   var import_i18n73 = __toESM(require_i18n(), 1);
   var import_a11y5 = __toESM(require_a11y(), 1);
   var import_media_utils = __toESM(require_media_utils(), 1);
   var import_notices4 = __toESM(require_notices(), 1);
 
   // packages/fields/build-module/components/media-edit/use-moving-animation.mjs
-  var import_element129 = __toESM(require_element(), 1);
+  var import_element130 = __toESM(require_element(), 1);
   function getAbsolutePosition2(element) {
     return {
       top: element.offsetTop,
@@ -40793,12 +40890,12 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function useMovingAnimation2(triggerAnimationOnChange) {
-    const ref = (0, import_element129.useRef)(null);
-    const previousRef = (0, import_element129.useRef)(void 0);
+    const ref = (0, import_element130.useRef)(null);
+    const previousRef = (0, import_element130.useRef)(void 0);
     if (ref.current) {
       previousRef.current = getAbsolutePosition2(ref.current);
     }
-    (0, import_element129.useLayoutEffect)(() => {
+    (0, import_element130.useLayoutEffect)(() => {
       const previous = previousRef.current;
       if (!previous || !ref.current) {
         return;
@@ -40852,7 +40949,7 @@ If there's a particular need for this, please submit a feature request at https:
     return value ? [value] : [];
   }
   function ConditionalMediaUpload({ render: render4, multiple, ...props }) {
-    const [isModalOpen, setIsModalOpen] = (0, import_element130.useState)(false);
+    const [isModalOpen, setIsModalOpen] = (0, import_element131.useState)(false);
     if (window.__experimentalDataViewsMediaModal) {
       return /* @__PURE__ */ (0, import_jsx_runtime213.jsxs)(import_jsx_runtime213.Fragment, { children: [
         render4 && render4({ open: () => setIsModalOpen(true) }),
@@ -41270,10 +41367,10 @@ If there's a particular need for this, please submit a feature request at https:
     validity
   }) {
     const value = field.getValue({ item: data });
-    const [isTouched, setIsTouched] = (0, import_element130.useState)(false);
-    const validityTargetRef = (0, import_element130.useRef)(null);
-    const [customValidity, setCustomValidity] = (0, import_element130.useState)(void 0);
-    (0, import_element130.useEffect)(() => {
+    const [isTouched, setIsTouched] = (0, import_element131.useState)(false);
+    const validityTargetRef = (0, import_element131.useRef)(null);
+    const [customValidity, setCustomValidity] = (0, import_element131.useState)(void 0);
+    (0, import_element131.useEffect)(() => {
       const validityTarget = validityTargetRef.current;
       const handler = () => {
         setIsTouched(true);
@@ -41281,7 +41378,7 @@ If there's a particular need for this, please submit a feature request at https:
       validityTarget?.addEventListener("invalid", handler);
       return () => validityTarget?.removeEventListener("invalid", handler);
     }, []);
-    const attachments = (0, import_data40.useSelect)(
+    const attachments = (0, import_data41.useSelect)(
       (select4) => {
         if (!value) {
           return null;
@@ -41295,7 +41392,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [value]
     );
-    const stableAttachmentsRef = (0, import_element130.useRef)(
+    const stableAttachmentsRef = (0, import_element131.useRef)(
       null
     );
     if (attachments !== null) {
@@ -41310,7 +41407,7 @@ If there's a particular need for this, please submit a feature request at https:
         stableAttachments = stableAttachmentsRef.current;
       }
     }
-    const orderedAttachments = (0, import_element130.useMemo)(() => {
+    const orderedAttachments = (0, import_element131.useMemo)(() => {
       if (!stableAttachments) {
         return null;
       }
@@ -41320,23 +41417,23 @@ If there's a particular need for this, please submit a feature request at https:
       );
       return normalizedValue.map((id) => attachmentMap.get(id)).filter((a2) => a2 !== void 0);
     }, [stableAttachments, value]);
-    const { createErrorNotice } = (0, import_data40.useDispatch)(import_notices4.store);
-    const { receiveEntityRecords } = (0, import_data40.useDispatch)(import_core_data23.store);
-    const [targetItemId, setTargetItemId] = (0, import_element130.useState)();
-    const openModalRef = (0, import_element130.useRef)(void 0);
-    const [pendingOpen, setPendingOpen] = (0, import_element130.useState)(false);
-    const [blobs, setBlobs] = (0, import_element130.useState)([]);
-    (0, import_element130.useEffect)(() => {
+    const { createErrorNotice } = (0, import_data41.useDispatch)(import_notices4.store);
+    const { receiveEntityRecords } = (0, import_data41.useDispatch)(import_core_data23.store);
+    const [targetItemId, setTargetItemId] = (0, import_element131.useState)();
+    const openModalRef = (0, import_element131.useRef)(void 0);
+    const [pendingOpen, setPendingOpen] = (0, import_element131.useState)(false);
+    const [blobs, setBlobs] = (0, import_element131.useState)([]);
+    (0, import_element131.useEffect)(() => {
       if (pendingOpen) {
         setPendingOpen(false);
         openModalRef.current?.();
       }
     }, [pendingOpen]);
-    const onChangeControl = (0, import_element130.useCallback)(
+    const onChangeControl = (0, import_element131.useCallback)(
       (newValue) => onChange(field.setValue({ item: data, value: newValue })),
       [data, field, onChange]
     );
-    const removeItem = (0, import_element130.useCallback)(
+    const removeItem = (0, import_element131.useCallback)(
       (itemId) => {
         const currentIds = normalizeValue2(value);
         const newIds = currentIds.filter((id) => id !== itemId);
@@ -41345,7 +41442,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [value, onChangeControl]
     );
-    const moveItem = (0, import_element130.useCallback)(
+    const moveItem = (0, import_element131.useCallback)(
       (itemId, direction) => {
         if (!orderedAttachments) {
           return;
@@ -41361,7 +41458,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [orderedAttachments, onChangeControl]
     );
-    const onFilesDrop = (0, import_element130.useCallback)(
+    const onFilesDrop = (0, import_element131.useCallback)(
       (files, _targetItemId) => {
         setTargetItemId(_targetItemId);
         (0, import_media_utils.uploadMedia)({
@@ -41420,7 +41517,7 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     );
     const addButtonLabel = field.placeholder || (multiple ? (0, import_i18n73.__)("Choose files") : (0, import_i18n73.__)("Choose file"));
-    const allItems = (0, import_element130.useMemo)(() => {
+    const allItems = (0, import_element131.useMemo)(() => {
       if (!blobs.length) {
         return orderedAttachments;
       }
@@ -41442,7 +41539,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return items;
     }, [orderedAttachments, targetItemId, blobs]);
-    (0, import_element130.useEffect)(() => {
+    (0, import_element131.useEffect)(() => {
       if (!isTouched) {
         return;
       }
@@ -41465,12 +41562,12 @@ If there's a particular need for this, please submit a feature request at https:
         setCustomValidity(void 0);
       }
     }, [isTouched, field.isValid, validity]);
-    (0, import_element130.useEffect)(() => {
+    (0, import_element131.useEffect)(() => {
       if (isTouched && customValidity?.message) {
         (0, import_a11y5.speak)(customValidity.message);
       }
     }, [isTouched, customValidity?.message]);
-    const onBlur = (0, import_element130.useCallback)(
+    const onBlur = (0, import_element131.useCallback)(
       (event) => {
         if (isTouched) {
           return;
@@ -41712,11 +41809,11 @@ If there's a particular need for this, please submit a feature request at https:
     fields: ["title", "description", "site_logo", "site_icon"]
   };
   function SidebarIdentity() {
-    const data = (0, import_data41.useSelect)(
+    const data = (0, import_data42.useSelect)(
       (select4) => select4(import_core_data24.store).getEditedEntityRecord("root", "site"),
       []
     );
-    const { editEntityRecord } = (0, import_data41.useDispatch)(import_core_data24.store);
+    const { editEntityRecord } = (0, import_data42.useDispatch)(import_core_data24.store);
     const onChange = (edits) => {
       editEntityRecord("root", "site", void 0, edits);
     };
@@ -41756,33 +41853,33 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/styles.mjs
-  var import_router20 = __toESM(require_router(), 1);
-  var import_editor21 = __toESM(require_editor(), 1);
-  var import_url14 = __toESM(require_url(), 1);
+  var import_router21 = __toESM(require_router(), 1);
+  var import_editor22 = __toESM(require_editor(), 1);
+  var import_url15 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-global-styles/index.mjs
   var import_i18n122 = __toESM(require_i18n(), 1);
-  var import_data54 = __toESM(require_data(), 1);
-  var import_element163 = __toESM(require_element(), 1);
+  var import_data55 = __toESM(require_data(), 1);
+  var import_element164 = __toESM(require_element(), 1);
   var import_preferences10 = __toESM(require_preferences(), 1);
-  var import_editor19 = __toESM(require_editor(), 1);
-  var import_router18 = __toESM(require_router(), 1);
-  var import_url12 = __toESM(require_url(), 1);
+  var import_editor20 = __toESM(require_editor(), 1);
+  var import_router19 = __toESM(require_router(), 1);
+  var import_url13 = __toESM(require_url(), 1);
 
   // packages/global-styles-ui/build-module/global-styles-ui.mjs
   var import_components130 = __toESM(require_components(), 1);
   var import_blocks8 = __toESM(require_blocks(), 1);
-  var import_data53 = __toESM(require_data(), 1);
+  var import_data54 = __toESM(require_data(), 1);
   var import_block_editor19 = __toESM(require_block_editor(), 1);
-  var import_element162 = __toESM(require_element(), 1);
+  var import_element163 = __toESM(require_element(), 1);
   var import_compose29 = __toESM(require_compose(), 1);
 
   // packages/global-styles-ui/build-module/provider.mjs
-  var import_element132 = __toESM(require_element(), 1);
+  var import_element133 = __toESM(require_element(), 1);
 
   // packages/global-styles-ui/build-module/context.mjs
-  var import_element131 = __toESM(require_element(), 1);
-  var GlobalStylesContext = (0, import_element131.createContext)({
+  var import_element132 = __toESM(require_element(), 1);
+  var GlobalStylesContext = (0, import_element132.createContext)({
     user: { styles: {}, settings: {} },
     base: { styles: {}, settings: {} },
     merged: { styles: {}, settings: {} },
@@ -41800,10 +41897,10 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     fontLibraryEnabled
   }) {
-    const merged = (0, import_element132.useMemo)(() => {
+    const merged = (0, import_element133.useMemo)(() => {
       return mergeGlobalStyles(baseValue, value);
     }, [baseValue, value]);
-    const contextValue = (0, import_element132.useMemo)(
+    const contextValue = (0, import_element133.useMemo)(
       () => ({
         user: value,
         base: baseValue,
@@ -41819,7 +41916,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/screen-root.mjs
   var import_components79 = __toESM(require_components(), 1);
   var import_i18n79 = __toESM(require_i18n(), 1);
-  var import_data43 = __toESM(require_data(), 1);
+  var import_data44 = __toESM(require_data(), 1);
   var import_core_data26 = __toESM(require_core_data(), 1);
 
   // packages/global-styles-ui/build-module/icon-with-current-color.mjs
@@ -41888,8 +41985,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/global-styles-ui/build-module/hooks.mjs
-  var import_element133 = __toESM(require_element(), 1);
-  var import_data42 = __toESM(require_data(), 1);
+  var import_element134 = __toESM(require_element(), 1);
+  var import_data43 = __toESM(require_data(), 1);
   var import_core_data25 = __toESM(require_core_data(), 1);
   var import_i18n76 = __toESM(require_i18n(), 1);
 
@@ -42022,7 +42119,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/hooks.mjs
   k([a11y_default]);
   function useStyle3(path, blockName, readFrom = "merged", shouldDecodeEncode = true, state) {
-    const { user, base, merged, onChange } = (0, import_element133.useContext)(GlobalStylesContext);
+    const { user, base, merged, onChange } = (0, import_element134.useContext)(GlobalStylesContext);
     const statePathParts = state?.split(".").filter(Boolean) ?? [];
     const pseudoSelectorState = statePathParts.find(
       (value) => value.startsWith(":")
@@ -42035,7 +42132,7 @@ If there's a particular need for this, please submit a feature request at https:
     } else if (readFrom === "user") {
       sourceValue = user;
     }
-    const styleValue = (0, import_element133.useMemo)(() => {
+    const styleValue = (0, import_element134.useMemo)(() => {
       const rawValue = getStyle(
         sourceValue,
         stylePath,
@@ -42053,7 +42150,7 @@ If there's a particular need for this, please submit a feature request at https:
       shouldDecodeEncode,
       pseudoSelectorState
     ]);
-    const setStyleValue = (0, import_element133.useCallback)(
+    const setStyleValue = (0, import_element134.useCallback)(
       (newValue) => {
         let valueToSet = newValue;
         if (pseudoSelectorState) {
@@ -42081,18 +42178,18 @@ If there's a particular need for this, please submit a feature request at https:
     return [styleValue, setStyleValue];
   }
   function useSetting(path, blockName, readFrom = "merged") {
-    const { user, base, merged, onChange } = (0, import_element133.useContext)(GlobalStylesContext);
+    const { user, base, merged, onChange } = (0, import_element134.useContext)(GlobalStylesContext);
     let sourceValue = merged;
     if (readFrom === "base") {
       sourceValue = base;
     } else if (readFrom === "user") {
       sourceValue = user;
     }
-    const settingValue = (0, import_element133.useMemo)(
+    const settingValue = (0, import_element134.useMemo)(
       () => getSetting(sourceValue, path, blockName),
       [sourceValue, path, blockName]
     );
-    const setSettingValue = (0, import_element133.useCallback)(
+    const setSettingValue = (0, import_element134.useCallback)(
       (newValue) => {
         const newGlobalStyles = setSetting(
           user,
@@ -42115,7 +42212,7 @@ If there's a particular need for this, please submit a feature request at https:
     return title === (0, import_i18n76.__)("Default") || Object.keys(settings2 || {}).length > 0 || Object.keys(styles || {}).length > 0;
   }
   function useCurrentMergeThemeStyleVariationsWithUserConfig(properties = []) {
-    const { variationsFromTheme } = (0, import_data42.useSelect)((select4) => {
+    const { variationsFromTheme } = (0, import_data43.useSelect)((select4) => {
       const _variationsFromTheme = select4(
         import_core_data25.store
       ).__experimentalGetCurrentThemeGlobalStylesVariations?.();
@@ -42123,8 +42220,8 @@ If there's a particular need for this, please submit a feature request at https:
         variationsFromTheme: _variationsFromTheme || EMPTY_ARRAY10
       };
     }, []);
-    const { user: userVariation } = (0, import_element133.useContext)(GlobalStylesContext);
-    return (0, import_element133.useMemo)(() => {
+    const { user: userVariation } = (0, import_element134.useContext)(GlobalStylesContext);
+    return (0, import_element134.useMemo)(() => {
       const clonedUserVariation = structuredClone(userVariation);
       const userVariationWithoutProperties = removePropertiesFromObject(
         clonedUserVariation,
@@ -42194,7 +42291,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/global-styles-ui/build-module/typography-example.mjs
-  var import_element134 = __toESM(require_element(), 1);
+  var import_element135 = __toESM(require_element(), 1);
   var import_components75 = __toESM(require_components(), 1);
   var import_i18n78 = __toESM(require_i18n(), 1);
 
@@ -42270,7 +42367,7 @@ If there's a particular need for this, please submit a feature request at https:
     fontSize,
     variation
   }) {
-    const { base } = (0, import_element134.useContext)(GlobalStylesContext);
+    const { base } = (0, import_element135.useContext)(GlobalStylesContext);
     let config2 = base;
     if (variation) {
       config2 = { ...base, ...variation };
@@ -42351,7 +42448,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/preview-wrapper.mjs
   var import_components77 = __toESM(require_components(), 1);
   var import_compose24 = __toESM(require_compose(), 1);
-  var import_element135 = __toESM(require_element(), 1);
+  var import_element136 = __toESM(require_element(), 1);
   var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
   var normalizedWidth = 248;
   var normalizedHeight = 152;
@@ -42368,21 +42465,21 @@ If there's a particular need for this, please submit a feature request at https:
     const [backgroundColor = "white"] = useStyle3("color.background");
     const [gradientValue] = useStyle3("color.gradient");
     const disableMotion = (0, import_compose24.useReducedMotion)();
-    const [isHovered, setIsHovered] = (0, import_element135.useState)(false);
+    const [isHovered, setIsHovered] = (0, import_element136.useState)(false);
     const [containerResizeListener, { width }] = (0, import_compose24.useResizeObserver)();
-    const [throttledWidth, setThrottledWidthState] = (0, import_element135.useState)(width);
-    const [ratioState, setRatioState] = (0, import_element135.useState)();
+    const [throttledWidth, setThrottledWidthState] = (0, import_element136.useState)(width);
+    const [ratioState, setRatioState] = (0, import_element136.useState)();
     const setThrottledWidth = (0, import_compose24.useThrottle)(
       setThrottledWidthState,
       250,
       THROTTLE_OPTIONS
     );
-    (0, import_element135.useLayoutEffect)(() => {
+    (0, import_element136.useLayoutEffect)(() => {
       if (width) {
         setThrottledWidth(width);
       }
     }, [width, setThrottledWidth]);
-    (0, import_element135.useLayoutEffect)(() => {
+    (0, import_element136.useLayoutEffect)(() => {
       const newRatio = throttledWidth ? throttledWidth / normalizedWidth : 1;
       const ratioDiff = newRatio - (ratioState || 0);
       const isRatioDiffBigEnough = Math.abs(ratioDiff) > 0.1;
@@ -42626,15 +42723,15 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks5 = __toESM(require_blocks(), 1);
   var import_i18n81 = __toESM(require_i18n(), 1);
   var import_components82 = __toESM(require_components(), 1);
-  var import_data45 = __toESM(require_data(), 1);
-  var import_element136 = __toESM(require_element(), 1);
+  var import_data46 = __toESM(require_data(), 1);
+  var import_element137 = __toESM(require_element(), 1);
   var import_block_editor8 = __toESM(require_block_editor(), 1);
   var import_compose25 = __toESM(require_compose(), 1);
   var import_a11y7 = __toESM(require_a11y(), 1);
 
   // packages/global-styles-ui/build-module/variations/variations-panel.mjs
   var import_blocks4 = __toESM(require_blocks(), 1);
-  var import_data44 = __toESM(require_data(), 1);
+  var import_data45 = __toESM(require_data(), 1);
   var import_components80 = __toESM(require_components(), 1);
   var import_jsx_runtime225 = __toESM(require_jsx_runtime(), 1);
   function getFilteredBlockStyles(blockStyles, variations) {
@@ -42643,7 +42740,7 @@ If there's a particular need for this, please submit a feature request at https:
     ) || [];
   }
   function useBlockVariations(name2) {
-    const blockStyles = (0, import_data44.useSelect)(
+    const blockStyles = (0, import_data45.useSelect)(
       (select4) => {
         const { getBlockStyles } = select4(import_blocks4.store);
         return getBlockStyles(name2);
@@ -42673,7 +42770,7 @@ If there's a particular need for this, please submit a feature request at https:
     useHasBackgroundPanel: useHasBackgroundPanel2
   } = unlock6(import_block_editor8.privateApis);
   function useSortedBlockTypes() {
-    const blockItems = (0, import_data45.useSelect)(
+    const blockItems = (0, import_data46.useSelect)(
       (select4) => select4(import_blocks5.store).getBlockTypes(),
       []
     );
@@ -42721,12 +42818,12 @@ If there's a particular need for this, please submit a feature request at https:
   function BlockList({ filterValue }) {
     const sortedBlockTypes = useSortedBlockTypes();
     const debouncedSpeak = (0, import_compose25.useDebounce)(import_a11y7.speak, 500);
-    const { isMatchingSearchTerm } = (0, import_data45.useSelect)(import_blocks5.store);
+    const { isMatchingSearchTerm } = (0, import_data46.useSelect)(import_blocks5.store);
     const filteredBlockTypes = !filterValue ? sortedBlockTypes : sortedBlockTypes.filter(
       (blockType) => isMatchingSearchTerm(blockType, filterValue)
     );
-    const blockTypesListRef = (0, import_element136.useRef)(null);
-    (0, import_element136.useEffect)(() => {
+    const blockTypesListRef = (0, import_element137.useRef)(null);
+    (0, import_element137.useEffect)(() => {
       if (!filterValue) {
         return;
       }
@@ -42754,13 +42851,13 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var MemoizedBlockList = (0, import_element136.memo)(BlockList);
+  var MemoizedBlockList = (0, import_element137.memo)(BlockList);
 
   // packages/global-styles-ui/build-module/screen-block.mjs
   var import_blocks7 = __toESM(require_blocks(), 1);
   var import_block_editor10 = __toESM(require_block_editor(), 1);
-  var import_element138 = __toESM(require_element(), 1);
-  var import_data46 = __toESM(require_data(), 1);
+  var import_element139 = __toESM(require_element(), 1);
+  var import_data47 = __toESM(require_data(), 1);
   var import_core_data27 = __toESM(require_core_data(), 1);
   var import_components85 = __toESM(require_components(), 1);
   var import_i18n82 = __toESM(require_i18n(), 1);
@@ -42769,7 +42866,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor9 = __toESM(require_block_editor(), 1);
   var import_blocks6 = __toESM(require_blocks(), 1);
   var import_components83 = __toESM(require_components(), 1);
-  var import_element137 = __toESM(require_element(), 1);
+  var import_element138 = __toESM(require_element(), 1);
   var import_jsx_runtime228 = __toESM(require_jsx_runtime(), 1);
   var { getViewportBreakpoints: getViewportBreakpoints3, getViewportBreakpointValueInPixels: getViewportBreakpointValueInPixels2 } = unlock6(
     privateApis
@@ -42806,7 +42903,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/screen-typography.mjs
   var import_i18n96 = __toESM(require_i18n(), 1);
   var import_components104 = __toESM(require_components(), 1);
-  var import_element150 = __toESM(require_element(), 1);
+  var import_element151 = __toESM(require_element(), 1);
 
   // packages/global-styles-ui/build-module/screen-body.mjs
   var import_components86 = __toESM(require_components(), 1);
@@ -42859,7 +42956,7 @@ If there's a particular need for this, please submit a feature request at https:
   var preview_typography_default = StylesPreviewTypography;
 
   // packages/global-styles-ui/build-module/variations/variation.mjs
-  var import_element139 = __toESM(require_element(), 1);
+  var import_element140 = __toESM(require_element(), 1);
   var import_keycodes5 = __toESM(require_keycodes(), 1);
   var import_i18n84 = __toESM(require_i18n(), 1);
   var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
@@ -42870,13 +42967,13 @@ If there's a particular need for this, please submit a feature request at https:
     properties,
     showTooltip = false
   }) {
-    const [isFocused, setIsFocused] = (0, import_element139.useState)(false);
+    const [isFocused, setIsFocused] = (0, import_element140.useState)(false);
     const {
       base,
       user,
       onChange: setUserConfig
-    } = (0, import_element139.useContext)(GlobalStylesContext);
-    const context = (0, import_element139.useMemo)(() => {
+    } = (0, import_element140.useContext)(GlobalStylesContext);
+    const context = (0, import_element140.useMemo)(() => {
       let merged = mergeGlobalStyles(base, variation);
       if (properties) {
         merged = filterObjectByProperties(merged, properties);
@@ -42896,7 +42993,7 @@ If there's a particular need for this, please submit a feature request at https:
         selectVariation();
       }
     };
-    const isActive = (0, import_element139.useMemo)(
+    const isActive = (0, import_element140.useMemo)(
       () => areGlobalStylesEqual(user, variation),
       [user, variation]
     );
@@ -42986,11 +43083,11 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/font-families.mjs
   var import_i18n94 = __toESM(require_i18n(), 1);
   var import_components102 = __toESM(require_components(), 1);
-  var import_element149 = __toESM(require_element(), 1);
+  var import_element150 = __toESM(require_element(), 1);
 
   // packages/global-styles-ui/build-module/font-library/context.mjs
-  var import_element140 = __toESM(require_element(), 1);
-  var import_data47 = __toESM(require_data(), 1);
+  var import_element141 = __toESM(require_element(), 1);
+  var import_data48 = __toESM(require_data(), 1);
   var import_core_data29 = __toESM(require_core_data(), 1);
   var import_i18n86 = __toESM(require_i18n(), 1);
 
@@ -43025,7 +43122,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/font-library/context.mjs
   var import_jsx_runtime236 = __toESM(require_jsx_runtime(), 1);
-  var FontLibraryContext = (0, import_element140.createContext)(
+  var FontLibraryContext = (0, import_element141.createContext)(
     {}
   );
   FontLibraryContext.displayName = "FontLibraryContext";
@@ -43034,30 +43131,30 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n92 = __toESM(require_i18n(), 1);
   var import_components100 = __toESM(require_components(), 1);
   var import_core_data32 = __toESM(require_core_data(), 1);
-  var import_data49 = __toESM(require_data(), 1);
+  var import_data50 = __toESM(require_data(), 1);
 
   // packages/global-styles-ui/build-module/font-library/installed-fonts.mjs
   var import_components94 = __toESM(require_components(), 1);
   var import_core_data30 = __toESM(require_core_data(), 1);
-  var import_data48 = __toESM(require_data(), 1);
-  var import_element144 = __toESM(require_element(), 1);
+  var import_data49 = __toESM(require_data(), 1);
+  var import_element145 = __toESM(require_element(), 1);
   var import_i18n88 = __toESM(require_i18n(), 1);
 
   // packages/global-styles-ui/build-module/font-library/font-card.mjs
   var import_i18n87 = __toESM(require_i18n(), 1);
-  var import_element142 = __toESM(require_element(), 1);
+  var import_element143 = __toESM(require_element(), 1);
   var import_components92 = __toESM(require_components(), 1);
 
   // packages/global-styles-ui/build-module/font-library/font-demo.mjs
   var import_components91 = __toESM(require_components(), 1);
-  var import_element141 = __toESM(require_element(), 1);
+  var import_element142 = __toESM(require_element(), 1);
   var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
 
   // packages/global-styles-ui/build-module/font-library/font-card.mjs
   var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
 
   // packages/global-styles-ui/build-module/font-library/library-font-variant.mjs
-  var import_element143 = __toESM(require_element(), 1);
+  var import_element144 = __toESM(require_element(), 1);
   var import_components93 = __toESM(require_components(), 1);
   var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
 
@@ -43065,7 +43162,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime240 = __toESM(require_jsx_runtime(), 1);
 
   // packages/global-styles-ui/build-module/font-library/font-collection.mjs
-  var import_element146 = __toESM(require_element(), 1);
+  var import_element147 = __toESM(require_element(), 1);
   var import_components97 = __toESM(require_components(), 1);
   var import_compose26 = __toESM(require_compose(), 1);
   var import_i18n90 = __toESM(require_i18n(), 1);
@@ -43077,7 +43174,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
 
   // packages/global-styles-ui/build-module/font-library/collection-font-variant.mjs
-  var import_element145 = __toESM(require_element(), 1);
+  var import_element146 = __toESM(require_element(), 1);
   var import_components96 = __toESM(require_components(), 1);
   var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
 
@@ -43091,7 +43188,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/font-library/upload-fonts.mjs
   var import_i18n91 = __toESM(require_i18n(), 1);
   var import_components99 = __toESM(require_components(), 1);
-  var import_element147 = __toESM(require_element(), 1);
+  var import_element148 = __toESM(require_element(), 1);
 
   // packages/global-styles-ui/build-module/font-library/lib/unbrotli.mjs
   var __require2 = /* @__PURE__ */ ((x2) => typeof __require !== "undefined" ? __require : typeof Proxy !== "undefined" ? new Proxy(x2, {
@@ -53147,7 +53244,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/font-family-item.mjs
   var import_i18n93 = __toESM(require_i18n(), 1);
   var import_components101 = __toESM(require_components(), 1);
-  var import_element148 = __toESM(require_element(), 1);
+  var import_element149 = __toESM(require_element(), 1);
   var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
 
   // packages/global-styles-ui/build-module/font-families.mjs
@@ -53164,7 +53261,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/screen-typography-element.mjs
   var import_i18n97 = __toESM(require_i18n(), 1);
   var import_components105 = __toESM(require_components(), 1);
-  var import_element151 = __toESM(require_element(), 1);
+  var import_element152 = __toESM(require_element(), 1);
 
   // packages/global-styles-ui/build-module/typography-panel.mjs
   var import_block_editor11 = __toESM(require_block_editor(), 1);
@@ -53207,7 +53304,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/palette.mjs
   var import_components107 = __toESM(require_components(), 1);
   var import_i18n98 = __toESM(require_i18n(), 1);
-  var import_element152 = __toESM(require_element(), 1);
+  var import_element153 = __toESM(require_element(), 1);
 
   // packages/global-styles-ui/build-module/color-indicator-wrapper.mjs
   var import_components106 = __toESM(require_components(), 1);
@@ -53362,7 +53459,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/shadows-panel.mjs
   var import_components115 = __toESM(require_components(), 1);
   var import_i18n105 = __toESM(require_i18n(), 1);
-  var import_element153 = __toESM(require_element(), 1);
+  var import_element154 = __toESM(require_element(), 1);
 
   // packages/global-styles-ui/build-module/confirm-reset-shadow-dialog.mjs
   var import_components114 = __toESM(require_components(), 1);
@@ -53376,7 +53473,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/shadows-edit-panel.mjs
   var import_components116 = __toESM(require_components(), 1);
   var import_i18n106 = __toESM(require_i18n(), 1);
-  var import_element154 = __toESM(require_element(), 1);
+  var import_element155 = __toESM(require_element(), 1);
   var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
   var { Menu: Menu7 } = unlock6(import_components116.privateApis);
   var customShadowMenuItems = [
@@ -53405,7 +53502,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/dimensions-panel.mjs
   var import_block_editor15 = __toESM(require_block_editor(), 1);
-  var import_element155 = __toESM(require_element(), 1);
+  var import_element156 = __toESM(require_element(), 1);
   var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
   var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock6(import_block_editor15.privateApis);
 
@@ -53425,17 +53522,17 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/style-variations-container.mjs
   var import_core_data33 = __toESM(require_core_data(), 1);
-  var import_data50 = __toESM(require_data(), 1);
-  var import_element156 = __toESM(require_element(), 1);
+  var import_data51 = __toESM(require_data(), 1);
+  var import_element157 = __toESM(require_element(), 1);
   var import_components117 = __toESM(require_components(), 1);
   var import_i18n108 = __toESM(require_i18n(), 1);
   var import_jsx_runtime270 = __toESM(require_jsx_runtime(), 1);
   function StyleVariationsContainer({
     gap = 2
   }) {
-    const { user } = (0, import_element156.useContext)(GlobalStylesContext);
+    const { user } = (0, import_element157.useContext)(GlobalStylesContext);
     const userStyles = user?.styles;
-    const variations = (0, import_data50.useSelect)((select4) => {
+    const variations = (0, import_data51.useSelect)((select4) => {
       const result = select4(
         import_core_data33.store
       ).__experimentalGetCurrentThemeGlobalStylesVariations();
@@ -53449,7 +53546,7 @@ If there's a particular need for this, please submit a feature request at https:
         ]);
       }
     );
-    const themeVariations = (0, import_element156.useMemo)(() => {
+    const themeVariations = (0, import_element157.useMemo)(() => {
       const withEmptyVariation = [
         {
           title: (0, import_i18n108.__)("Default"),
@@ -53533,12 +53630,12 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/screen-revisions/index.mjs
   var import_i18n114 = __toESM(require_i18n(), 1);
   var import_components123 = __toESM(require_components(), 1);
-  var import_element158 = __toESM(require_element(), 1);
+  var import_element159 = __toESM(require_element(), 1);
 
   // packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.mjs
-  var import_data51 = __toESM(require_data(), 1);
+  var import_data52 = __toESM(require_data(), 1);
   var import_core_data34 = __toESM(require_core_data(), 1);
-  var import_element157 = __toESM(require_element(), 1);
+  var import_element158 = __toESM(require_element(), 1);
   var SITE_EDITOR_AUTHORS_QUERY = {
     per_page: -1,
     _fields: "id,name,avatar_urls",
@@ -53550,8 +53647,8 @@ If there's a particular need for this, please submit a feature request at https:
   function useGlobalStylesRevisions({
     query
   } = {}) {
-    const { user: userConfig } = (0, import_element157.useContext)(GlobalStylesContext);
-    const _query = (0, import_element157.useMemo)(
+    const { user: userConfig } = (0, import_element158.useContext)(GlobalStylesContext);
+    const _query = (0, import_element158.useMemo)(
       () => ({ ...DEFAULT_QUERY, ...query }),
       [query]
     );
@@ -53562,7 +53659,7 @@ If there's a particular need for this, please submit a feature request at https:
       revisions,
       isLoadingGlobalStylesRevisions,
       revisionsCount
-    } = (0, import_data51.useSelect)(
+    } = (0, import_data52.useSelect)(
       (select4) => {
         const {
           __experimentalGetDirtyEntityRecords,
@@ -53610,7 +53707,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [_query]
     );
-    return (0, import_element157.useMemo)(() => {
+    return (0, import_element158.useMemo)(() => {
       if (!authors.length || isLoadingGlobalStylesRevisions) {
         return {
           revisions: EMPTY_ARRAY11,
@@ -53679,7 +53776,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components121 = __toESM(require_components(), 1);
   var import_date10 = __toESM(require_date(), 1);
   var import_core_data35 = __toESM(require_core_data(), 1);
-  var import_data52 = __toESM(require_data(), 1);
+  var import_data53 = __toESM(require_data(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
   var { Badge: WCBadge3 } = unlock6(import_components121.privateApis);
@@ -53696,7 +53793,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
   var import_i18n116 = __toESM(require_i18n(), 1);
   var import_components125 = __toESM(require_components(), 1);
-  var import_element159 = __toESM(require_element(), 1);
+  var import_element160 = __toESM(require_element(), 1);
 
   // packages/global-styles-ui/build-module/font-sizes/confirm-reset-font-sizes-dialog.mjs
   var import_components124 = __toESM(require_components(), 1);
@@ -53710,7 +53807,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
   var import_i18n120 = __toESM(require_i18n(), 1);
   var import_components129 = __toESM(require_components(), 1);
-  var import_element161 = __toESM(require_element(), 1);
+  var import_element162 = __toESM(require_element(), 1);
 
   // packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
   var import_block_editor18 = __toESM(require_block_editor(), 1);
@@ -53725,7 +53822,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/font-sizes/rename-font-size-dialog.mjs
   var import_components127 = __toESM(require_components(), 1);
   var import_i18n119 = __toESM(require_i18n(), 1);
-  var import_element160 = __toESM(require_element(), 1);
+  var import_element161 = __toESM(require_element(), 1);
   var import_jsx_runtime281 = __toESM(require_jsx_runtime(), 1);
 
   // packages/global-styles-ui/build-module/size-control/index.mjs
@@ -53774,7 +53871,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-details-footer/index.mjs
   var import_i18n121 = __toESM(require_i18n(), 1);
-  var import_url11 = __toESM(require_url(), 1);
+  var import_url12 = __toESM(require_url(), 1);
   var import_components131 = __toESM(require_components(), 1);
   var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
   function SidebarNavigationScreenDetailsFooter({
@@ -53786,7 +53883,7 @@ If there's a particular need for this, please submit a feature request at https:
     const lastRevisionId = record?._links?.["predecessor-version"]?.[0]?.id ?? null;
     revisionsCount = revisionsCount || record?._links?.["version-history"]?.[0]?.count || 0;
     if (lastRevisionId && revisionsCount > 1) {
-      hrefProps.href = (0, import_url11.addQueryArgs)("revision.php", {
+      hrefProps.href = (0, import_url12.addQueryArgs)("revision.php", {
         revision: record?._links["predecessor-version"][0].id
       });
       hrefProps.as = "a";
@@ -53815,20 +53912,20 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-global-styles/index.mjs
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation18, useHistory: useHistory11 } = unlock(import_router18.privateApis);
+  var { useLocation: useLocation19, useHistory: useHistory12 } = unlock(import_router19.privateApis);
   function SidebarNavigationScreenGlobalStyles() {
-    const history = useHistory11();
-    const { path } = useLocation18();
+    const history = useHistory12();
+    const { path } = useLocation19();
     const {
       revisions,
       isLoading: isLoadingRevisions,
       revisionsCount
     } = useGlobalStylesRevisions();
-    const { openGeneralSidebar: openGeneralSidebar2 } = (0, import_data54.useDispatch)(store);
-    const { setStylesPath } = unlock((0, import_data54.useDispatch)(import_editor19.store));
-    const { set: setPreference } = (0, import_data54.useDispatch)(import_preferences10.store);
-    const openGlobalStyles = (0, import_element163.useCallback)(async () => {
-      history.navigate((0, import_url12.addQueryArgs)(path, { canvas: "edit" }), {
+    const { openGeneralSidebar: openGeneralSidebar2 } = (0, import_data55.useDispatch)(store);
+    const { setStylesPath } = unlock((0, import_data55.useDispatch)(import_editor20.store));
+    const { set: setPreference } = (0, import_data55.useDispatch)(import_preferences10.store);
+    const openGlobalStyles = (0, import_element164.useCallback)(async () => {
+      history.navigate((0, import_url13.addQueryArgs)(path, { canvas: "edit" }), {
         transition: "canvas-mode-edit-transition"
       });
       return Promise.all([
@@ -53836,7 +53933,7 @@ If there's a particular need for this, please submit a feature request at https:
         openGeneralSidebar2("edit-site/global-styles")
       ]);
     }, [path, history, openGeneralSidebar2, setPreference]);
-    const openRevisions = (0, import_element163.useCallback)(async () => {
+    const openRevisions = (0, import_element164.useCallback)(async () => {
       await openGlobalStyles();
       setStylesPath("/revisions");
     }, [openGlobalStyles, setStylesPath]);
@@ -53864,23 +53961,23 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-global-styles/index.mjs
   var import_i18n123 = __toESM(require_i18n(), 1);
-  var import_element164 = __toESM(require_element(), 1);
-  var import_router19 = __toESM(require_router(), 1);
-  var import_editor20 = __toESM(require_editor(), 1);
+  var import_element165 = __toESM(require_element(), 1);
+  var import_router20 = __toESM(require_router(), 1);
+  var import_editor21 = __toESM(require_editor(), 1);
   var import_compose30 = __toESM(require_compose(), 1);
-  var import_data55 = __toESM(require_data(), 1);
+  var import_data56 = __toESM(require_data(), 1);
   var import_components132 = __toESM(require_components(), 1);
-  var import_url13 = __toESM(require_url(), 1);
+  var import_url14 = __toESM(require_url(), 1);
   var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
-  var { GlobalStylesUIWrapper, GlobalStylesActionMenu } = unlock(import_editor20.privateApis);
-  var { useLocation: useLocation19, useHistory: useHistory12 } = unlock(import_router19.privateApis);
+  var { GlobalStylesUIWrapper, GlobalStylesActionMenu } = unlock(import_editor21.privateApis);
+  var { useLocation: useLocation20, useHistory: useHistory13 } = unlock(import_router20.privateApis);
   var GlobalStylesPageActions = ({
     isStyleBookOpened,
     setIsStyleBookOpened,
     path,
     onChangeSection
   }) => {
-    const history = useHistory12();
+    const history = useHistory13();
     return /* @__PURE__ */ (0, import_jsx_runtime289.jsxs)(import_components132.__experimentalHStack, { className: "edit-site-styles__header-actions", children: [
       /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
         import_components132.Button,
@@ -53890,7 +53987,7 @@ If there's a particular need for this, please submit a feature request at https:
           label: (0, import_i18n123.__)("Style Book"),
           onClick: () => {
             setIsStyleBookOpened(!isStyleBookOpened);
-            const updatedPath = !isStyleBookOpened ? (0, import_url13.addQueryArgs)(path, { preview: "stylebook" }) : (0, import_url13.removeQueryArgs)(path, "preview");
+            const updatedPath = !isStyleBookOpened ? (0, import_url14.addQueryArgs)(path, { preview: "stylebook" }) : (0, import_url14.removeQueryArgs)(path, "preview");
             history.navigate(updatedPath);
           },
           size: "compact"
@@ -53906,14 +54003,14 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   };
   var useSection = () => {
-    const { path, query } = useLocation19();
-    const history = useHistory12();
-    return (0, import_element164.useMemo)(() => {
+    const { path, query } = useLocation20();
+    const history = useHistory13();
+    return (0, import_element165.useMemo)(() => {
       return [
         query.section ?? "/",
         (updatedSection) => {
           history.navigate(
-            (0, import_url13.addQueryArgs)(path, {
+            (0, import_url14.addQueryArgs)(path, {
               section: updatedSection
             })
           );
@@ -53922,13 +54019,13 @@ If there's a particular need for this, please submit a feature request at https:
     }, [path, query.section, history]);
   };
   function SidebarGlobalStyles() {
-    const { path } = useLocation19();
-    const [isStyleBookOpened, setIsStyleBookOpened] = (0, import_element164.useState)(
+    const { path } = useLocation20();
+    const [isStyleBookOpened, setIsStyleBookOpened] = (0, import_element165.useState)(
       path.includes("preview=stylebook")
     );
     const isMobileViewport = (0, import_compose30.useViewportMatch)("medium", "<");
     const [section, onChangeSection] = useSection();
-    const settings2 = (0, import_data55.useSelect)(
+    const settings2 = (0, import_data56.useSelect)(
       (select4) => select4(store).getSettings(),
       []
     );
@@ -53961,16 +54058,16 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/site-editor-routes/styles.mjs
   var import_jsx_runtime290 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation20, useHistory: useHistory13 } = unlock(import_router20.privateApis);
-  var { StyleBookPreview, useGlobalStyles: useGlobalStyles3 } = unlock(import_editor21.privateApis);
+  var { useLocation: useLocation21, useHistory: useHistory14 } = unlock(import_router21.privateApis);
+  var { StyleBookPreview, useGlobalStyles: useGlobalStyles3 } = unlock(import_editor22.privateApis);
   function StyleBookPreviewArea({ siteData }) {
-    const { path, query } = useLocation20();
-    const history = useHistory13();
+    const { path, query } = useLocation21();
+    const history = useHistory14();
     const { user: userConfig } = useGlobalStyles3();
     const section = query.section ?? "/";
     const onChangeSection = (updatedSection) => {
       history.navigate(
-        (0, import_url14.addQueryArgs)(path, {
+        (0, import_url15.addQueryArgs)(path, {
           section: updatedSection
         })
       );
@@ -53986,7 +54083,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function StylesPreviewArea({ siteData }) {
-    const { query } = useLocation20();
+    const { query } = useLocation21();
     if (query.preview === "stylebook") {
       return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(StyleBookPreviewArea, { siteData });
     }
@@ -54009,7 +54106,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/index.mjs
   var import_i18n132 = __toESM(require_i18n(), 1);
   var import_core_data40 = __toESM(require_core_data(), 1);
-  var import_data61 = __toESM(require_data(), 1);
+  var import_data62 = __toESM(require_data(), 1);
   var import_html_entities7 = __toESM(require_html_entities(), 1);
   var import_components138 = __toESM(require_components(), 1);
 
@@ -54028,17 +54125,17 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/more-menu.mjs
   var import_components135 = __toESM(require_components(), 1);
   var import_i18n126 = __toESM(require_i18n(), 1);
-  var import_element166 = __toESM(require_element(), 1);
-  var import_router21 = __toESM(require_router(), 1);
+  var import_element167 = __toESM(require_element(), 1);
+  var import_router22 = __toESM(require_router(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/rename-modal.mjs
   var import_components133 = __toESM(require_components(), 1);
   var import_i18n124 = __toESM(require_i18n(), 1);
-  var import_element165 = __toESM(require_element(), 1);
+  var import_element166 = __toESM(require_element(), 1);
   var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
   var notEmptyString = (testString) => testString?.trim()?.length > 0;
   function RenameModal({ menuTitle, onClose, onSave }) {
-    const [editedMenuTitle, setEditedMenuTitle] = (0, import_element165.useState)(menuTitle);
+    const [editedMenuTitle, setEditedMenuTitle] = (0, import_element166.useState)(menuTitle);
     const titleHasChanged = editedMenuTitle !== menuTitle;
     const isEditedMenuTitleValid = titleHasChanged && notEmptyString(editedMenuTitle);
     return /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
@@ -54116,15 +54213,15 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/more-menu.mjs
   var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
-  var { useHistory: useHistory14 } = unlock(import_router21.privateApis);
+  var { useHistory: useHistory15 } = unlock(import_router22.privateApis);
   var POPOVER_PROPS = {
     position: "bottom right"
   };
   function ScreenNavigationMoreMenu(props) {
     const { onDelete, onSave, onDuplicate, menuTitle, menuId } = props;
-    const [renameModalOpen, setRenameModalOpen] = (0, import_element166.useState)(false);
-    const [deleteConfirmDialogOpen, setDeleteConfirmDialogOpen] = (0, import_element166.useState)(false);
-    const history = useHistory14();
+    const [renameModalOpen, setRenameModalOpen] = (0, import_element167.useState)(false);
+    const [deleteConfirmDialogOpen, setDeleteConfirmDialogOpen] = (0, import_element167.useState)(false);
+    const history = useHistory15();
     const closeModals = () => {
       setRenameModalOpen(false);
       setDeleteConfirmDialogOpen(false);
@@ -54204,39 +54301,39 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/navigation-menu-editor.mjs
-  var import_element169 = __toESM(require_element(), 1);
-  var import_data58 = __toESM(require_data(), 1);
+  var import_element170 = __toESM(require_element(), 1);
+  var import_data59 = __toESM(require_data(), 1);
   var import_block_editor22 = __toESM(require_block_editor(), 1);
   var import_blocks10 = __toESM(require_blocks(), 1);
   var import_core_data37 = __toESM(require_core_data(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/navigation-menu-content.mjs
   var import_block_editor21 = __toESM(require_block_editor(), 1);
-  var import_data57 = __toESM(require_data(), 1);
+  var import_data58 = __toESM(require_data(), 1);
   var import_blocks9 = __toESM(require_blocks(), 1);
-  var import_element168 = __toESM(require_element(), 1);
+  var import_element169 = __toESM(require_element(), 1);
   var import_core_data36 = __toESM(require_core_data(), 1);
   var import_block_library2 = __toESM(require_block_library(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/leaf-more-menu.mjs
   var import_components136 = __toESM(require_components(), 1);
-  var import_data56 = __toESM(require_data(), 1);
-  var import_element167 = __toESM(require_element(), 1);
+  var import_data57 = __toESM(require_data(), 1);
+  var import_element168 = __toESM(require_element(), 1);
   var import_i18n127 = __toESM(require_i18n(), 1);
   var import_block_editor20 = __toESM(require_block_editor(), 1);
-  var import_router22 = __toESM(require_router(), 1);
+  var import_router23 = __toESM(require_router(), 1);
   var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
   var POPOVER_PROPS2 = {
     className: "block-editor-block-settings-menu__popover",
     placement: "bottom-start"
   };
-  var { useHistory: useHistory15, useLocation: useLocation21 } = unlock(import_router22.privateApis);
+  var { useHistory: useHistory16, useLocation: useLocation22 } = unlock(import_router23.privateApis);
   function LeafMoreMenu(props) {
-    const history = useHistory15();
-    const { path } = useLocation21();
+    const history = useHistory16();
+    const { path } = useLocation22();
     const { block } = props;
     const { clientId } = block;
-    const { moveBlocksDown, moveBlocksUp, removeBlocks } = (0, import_data56.useDispatch)(import_block_editor20.store);
+    const { moveBlocksDown, moveBlocksUp, removeBlocks } = (0, import_data57.useDispatch)(import_block_editor20.store);
     const removeLabel = (0, import_i18n127.sprintf)(
       /* translators: %s: block name */
       (0, import_i18n127.__)("Remove %s"),
@@ -54247,14 +54344,14 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_i18n127.__)("Go to %s"),
       (0, import_block_editor20.BlockTitle)({ clientId, maximumLength: 25 })
     );
-    const rootClientId = (0, import_data56.useSelect)(
+    const rootClientId = (0, import_data57.useSelect)(
       (select4) => {
         const { getBlockRootClientId } = select4(import_block_editor20.store);
         return getBlockRootClientId(clientId);
       },
       [clientId]
     );
-    const onGoToPage = (0, import_element167.useCallback)(
+    const onGoToPage = (0, import_element168.useCallback)(
       (selectedBlock) => {
         const { attributes, name: name2 } = selectedBlock;
         if (attributes.kind === "post-type" && attributes.id && attributes.type && history) {
@@ -54351,7 +54448,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   ];
   function NavigationMenuContent({ rootClientId }) {
-    const { listViewRootClientId, isLoading } = (0, import_data57.useSelect)(
+    const { listViewRootClientId, isLoading } = (0, import_data58.useSelect)(
       (select4) => {
         const {
           areInnerBlocksControlled,
@@ -54376,8 +54473,8 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [rootClientId]
     );
-    const { replaceBlock, __unstableMarkNextChangeAsNotPersistent } = (0, import_data57.useDispatch)(import_block_editor21.store);
-    const offCanvasOnselect = (0, import_element168.useCallback)(
+    const { replaceBlock, __unstableMarkNextChangeAsNotPersistent } = (0, import_data58.useDispatch)(import_block_editor21.store);
+    const offCanvasOnselect = (0, import_element169.useCallback)(
       (block) => {
         if (block.name === "core/navigation-link" && !block.attributes.url) {
           __unstableMarkNextChangeAsNotPersistent();
@@ -54410,19 +54507,19 @@ If there's a particular need for this, please submit a feature request at https:
   var noop6 = () => {
   };
   function NavigationMenuEditor({ navigationMenuId }) {
-    const { storedSettings } = (0, import_data58.useSelect)((select4) => {
+    const { storedSettings } = (0, import_data59.useSelect)((select4) => {
       const { getSettings: getSettings7 } = unlock(select4(store));
       return {
         storedSettings: getSettings7()
       };
     }, []);
-    const settings2 = (0, import_element169.useMemo)(() => {
+    const settings2 = (0, import_element170.useMemo)(() => {
       return {
         ...storedSettings,
         __experimentalFetchLinkSuggestions: (search, searchOptions) => (0, import_core_data37.__experimentalFetchLinkSuggestions)(search, searchOptions, storedSettings)
       };
     }, [storedSettings]);
-    const blocks = (0, import_element169.useMemo)(() => {
+    const blocks = (0, import_element170.useMemo)(() => {
       if (!navigationMenuId) {
         return [];
       }
@@ -54501,30 +54598,30 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/use-navigation-menu-handlers.mjs
   var import_core_data39 = __toESM(require_core_data(), 1);
   var import_i18n131 = __toESM(require_i18n(), 1);
-  var import_data60 = __toESM(require_data(), 1);
+  var import_data61 = __toESM(require_data(), 1);
   var import_notices5 = __toESM(require_notices(), 1);
-  var import_router24 = __toESM(require_router(), 1);
+  var import_router25 = __toESM(require_router(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/index.mjs
   var import_core_data38 = __toESM(require_core_data(), 1);
   var import_components137 = __toESM(require_components(), 1);
   var import_i18n130 = __toESM(require_i18n(), 1);
-  var import_data59 = __toESM(require_data(), 1);
+  var import_data60 = __toESM(require_data(), 1);
   var import_html_entities6 = __toESM(require_html_entities(), 1);
-  var import_router23 = __toESM(require_router(), 1);
+  var import_router24 = __toESM(require_router(), 1);
   var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation22 } = unlock(import_router23.privateApis);
+  var { useLocation: useLocation23 } = unlock(import_router24.privateApis);
   var postType = `wp_navigation`;
   function SidebarNavigationScreenNavigationMenu({ backPath }) {
     const {
       params: { postId }
-    } = useLocation22();
+    } = useLocation23();
     const { record: navigationMenu, isResolving } = (0, import_core_data38.useEntityRecord)(
       "postType",
       postType,
       postId
     );
-    const { isSaving, isDeleting } = (0, import_data59.useSelect)(
+    const { isSaving, isDeleting } = (0, import_data60.useSelect)(
       (select4) => {
         const { isSavingEntityRecord, isDeletingEntityRecord } = select4(import_core_data38.store);
         return {
@@ -54602,11 +54699,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/use-navigation-menu-handlers.mjs
-  var { useHistory: useHistory16 } = unlock(import_router24.privateApis);
+  var { useHistory: useHistory17 } = unlock(import_router25.privateApis);
   function useDeleteNavigationMenu() {
-    const { deleteEntityRecord } = (0, import_data60.useDispatch)(import_core_data39.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data60.useDispatch)(import_notices5.store);
-    const history = useHistory16();
+    const { deleteEntityRecord } = (0, import_data61.useDispatch)(import_core_data39.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data61.useDispatch)(import_notices5.store);
+    const history = useHistory17();
     const handleDelete = async (navigationMenu) => {
       const postId = navigationMenu?.id;
       try {
@@ -54644,7 +54741,7 @@ If there's a particular need for this, please submit a feature request at https:
     return handleDelete;
   }
   function useSaveNavigationMenu() {
-    const { getEditedEntityRecord } = (0, import_data60.useSelect)((select4) => {
+    const { getEditedEntityRecord } = (0, import_data61.useSelect)((select4) => {
       const { getEditedEntityRecord: getEditedEntityRecordSelector } = select4(import_core_data39.store);
       return {
         getEditedEntityRecord: getEditedEntityRecordSelector
@@ -54653,8 +54750,8 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       editEntityRecord,
       __experimentalSaveSpecifiedEntityEdits: saveSpecifiedEntityEdits
-    } = (0, import_data60.useDispatch)(import_core_data39.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data60.useDispatch)(import_notices5.store);
+    } = (0, import_data61.useDispatch)(import_core_data39.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data61.useDispatch)(import_notices5.store);
     const handleSave = async (navigationMenu, edits) => {
       if (!edits) {
         return;
@@ -54697,9 +54794,9 @@ If there's a particular need for this, please submit a feature request at https:
     return handleSave;
   }
   function useDuplicateNavigationMenu() {
-    const history = useHistory16();
-    const { saveEntityRecord } = (0, import_data60.useDispatch)(import_core_data39.store);
-    const { createSuccessNotice, createErrorNotice } = (0, import_data60.useDispatch)(import_notices5.store);
+    const history = useHistory17();
+    const { saveEntityRecord } = (0, import_data61.useDispatch)(import_core_data39.store);
+    const { createSuccessNotice, createErrorNotice } = (0, import_data61.useDispatch)(import_notices5.store);
     const handleDuplicate = async (navigationMenu) => {
       const menuTitle = navigationMenu?.title?.rendered || navigationMenu?.slug;
       try {
@@ -54775,8 +54872,8 @@ If there's a particular need for this, please submit a feature request at https:
       PRELOADED_NAVIGATION_MENUS_QUERY
     );
     const isLoading = isResolvingNavigationMenus && !hasResolvedNavigationMenus;
-    const { getNavigationFallbackId } = unlock((0, import_data61.useSelect)(import_core_data40.store));
-    const isCreatingNavigationFallback = (0, import_data61.useSelect)(
+    const { getNavigationFallbackId } = unlock((0, import_data62.useSelect)(import_core_data40.store));
+    const isCreatingNavigationFallback = (0, import_data62.useSelect)(
       (select4) => select4(import_core_data40.store).isResolving("getNavigationFallbackId"),
       []
     );
@@ -54904,9 +55001,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.mjs
   var import_components139 = __toESM(require_components(), 1);
-  var import_element174 = __toESM(require_element(), 1);
+  var import_element175 = __toESM(require_element(), 1);
   var import_i18n134 = __toESM(require_i18n(), 1);
-  var import_router25 = __toESM(require_router(), 1);
+  var import_router26 = __toESM(require_router(), 1);
   var import_core_data46 = __toESM(require_core_data(), 1);
 
   // node_modules/dequal/dist/index.mjs
@@ -54986,8 +55083,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/views/build-module/use-view.mjs
-  var import_element170 = __toESM(require_element(), 1);
-  var import_data62 = __toESM(require_data(), 1);
+  var import_element171 = __toESM(require_element(), 1);
+  var import_data63 = __toESM(require_data(), 1);
   var import_preferences11 = __toESM(require_preferences(), 1);
 
   // packages/views/build-module/preference-keys.mjs
@@ -55110,7 +55207,7 @@ If there's a particular need for this, please submit a feature request at https:
       onChangeQueryParams
     } = config2;
     const preferenceKey = generatePreferenceKey(kind, name2, slug);
-    const persistedView = (0, import_data62.useSelect)(
+    const persistedView = (0, import_data63.useSelect)(
       (select4) => {
         return select4(import_preferences11.store).get(
           "core/views",
@@ -55119,10 +55216,10 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [preferenceKey]
     );
-    const { set: set3 } = (0, import_data62.useDispatch)(import_preferences11.store);
+    const { set: set3 } = (0, import_data63.useDispatch)(import_preferences11.store);
     const page = Number(queryParams?.page ?? 1);
     const search = queryParams?.search ?? "";
-    const view = (0, import_element170.useMemo)(
+    const view = (0, import_element171.useMemo)(
       () => resolveView({
         defaultView,
         defaultLayouts: defaultLayouts2,
@@ -55141,7 +55238,7 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     );
     const isModified = !!persistedView && Object.keys(persistedView).length > 0;
-    const updateView = (0, import_element170.useCallback)(
+    const updateView = (0, import_element171.useCallback)(
       (newView) => {
         const newQueryParams = {
           page: Number(newView?.page ?? 1),
@@ -55172,7 +55269,7 @@ If there's a particular need for this, please submit a feature request at https:
         preferenceKey
       ]
     );
-    const resetToDefault = (0, import_element170.useCallback)(() => {
+    const resetToDefault = (0, import_element171.useCallback)(() => {
       set3("core/views", preferenceKey, void 0);
     }, [preferenceKey, set3]);
     return {
@@ -55184,7 +55281,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/views/build-module/load-view.mjs
-  var import_data63 = __toESM(require_data(), 1);
+  var import_data64 = __toESM(require_data(), 1);
   var import_preferences12 = __toESM(require_preferences(), 1);
   async function loadView(config2) {
     const {
@@ -55197,7 +55294,7 @@ If there's a particular need for this, please submit a feature request at https:
       queryParams
     } = config2;
     const preferenceKey = generatePreferenceKey(kind, name2, slug);
-    const persistedView = (0, import_data63.select)(
+    const persistedView = (0, import_data64.select)(
       import_preferences12.store
     ).get("core/views", preferenceKey);
     return resolveView({
@@ -55211,7 +55308,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/views/build-module/use-view-config.mjs
-  var import_data64 = __toESM(require_data(), 1);
+  var import_data65 = __toESM(require_data(), 1);
   var import_core_data41 = __toESM(require_core_data(), 1);
 
   // packages/views/build-module/lock-unlock.mjs
@@ -55229,7 +55326,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const fieldList = Array.isArray(fields2) ? fields2 : fields2?.split(",");
     const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
-    return (0, import_data64.useSelect)(
+    return (0, import_data65.useSelect)(
       (select4) => {
         return unlock7(select4(import_core_data41.store)).getViewConfig(kind, name2, {
           fields: fieldsKey
@@ -55269,19 +55366,19 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-pattern-categories.mjs
-  var import_element173 = __toESM(require_element(), 1);
+  var import_element174 = __toESM(require_element(), 1);
   var import_i18n133 = __toESM(require_i18n(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-default-pattern-categories.mjs
   var import_core_data42 = __toESM(require_core_data(), 1);
-  var import_data65 = __toESM(require_data(), 1);
+  var import_data66 = __toESM(require_data(), 1);
   function useDefaultPatternCategories() {
-    const blockPatternCategories = (0, import_data65.useSelect)((select4) => {
+    const blockPatternCategories = (0, import_data66.useSelect)((select4) => {
       const { getSettings: getSettings7 } = unlock(select4(store));
       const settings2 = getSettings7();
       return settings2.__experimentalAdditionalBlockPatternCategories ?? settings2.__experimentalBlockPatternCategories;
     });
-    const restBlockPatternCategories = (0, import_data65.useSelect)(
+    const restBlockPatternCategories = (0, import_data66.useSelect)(
       (select4) => select4(import_core_data42.store).getBlockPatternCategories()
     );
     return [
@@ -55292,22 +55389,22 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.mjs
   var import_core_data43 = __toESM(require_core_data(), 1);
-  var import_data66 = __toESM(require_data(), 1);
-  var import_element171 = __toESM(require_element(), 1);
+  var import_data67 = __toESM(require_data(), 1);
+  var import_element172 = __toESM(require_element(), 1);
 
   // packages/edit-site/build-module/components/page-patterns/utils.mjs
   var filterOutDuplicatesByName = (currentItem, index2, items) => index2 === items.findIndex((item) => currentItem.name === item.name);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.mjs
   function useThemePatterns() {
-    const blockPatterns = (0, import_data66.useSelect)((select4) => {
+    const blockPatterns = (0, import_data67.useSelect)((select4) => {
       const { getSettings: getSettings7 } = unlock(select4(store));
       return getSettings7().__experimentalAdditionalBlockPatterns ?? getSettings7().__experimentalBlockPatterns;
     });
-    const restBlockPatterns = (0, import_data66.useSelect)(
+    const restBlockPatterns = (0, import_data67.useSelect)(
       (select4) => select4(import_core_data43.store).getBlockPatterns()
     );
-    const patterns = (0, import_element171.useMemo)(
+    const patterns = (0, import_element172.useMemo)(
       () => [...blockPatterns || [], ...restBlockPatterns || []].filter(
         (pattern) => !EXCLUDED_PATTERN_SOURCES.includes(pattern.source)
       ).filter(filterOutDuplicatesByName).filter((pattern) => pattern.inserter !== false),
@@ -55318,9 +55415,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-patterns/use-patterns.mjs
   var import_blocks11 = __toESM(require_blocks(), 1);
-  var import_data67 = __toESM(require_data(), 1);
+  var import_data68 = __toESM(require_data(), 1);
   var import_core_data44 = __toESM(require_core_data(), 1);
-  var import_element172 = __toESM(require_element(), 1);
+  var import_element173 = __toESM(require_element(), 1);
 
   // packages/edit-site/build-module/components/page-patterns/search-items.mjs
   var import_block_editor23 = __toESM(require_block_editor(), 1);
@@ -55420,7 +55517,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-patterns/use-patterns.mjs
   var EMPTY_PATTERN_LIST = [];
-  var selectTemplateParts = (0, import_data67.createSelector)(
+  var selectTemplateParts = (0, import_data68.createSelector)(
     (select4, categoryId, search = "") => {
       const {
         getEntityRecords,
@@ -55464,7 +55561,7 @@ If there's a particular need for this, please submit a feature request at https:
       select4(import_core_data44.store).getCurrentTheme()?.default_template_part_areas
     ]
   );
-  var selectThemePatterns = (0, import_data67.createSelector)(
+  var selectThemePatterns = (0, import_data68.createSelector)(
     (select4) => {
       const { getSettings: getSettings7 } = unlock(select4(store));
       const { isResolving: isResolvingSelector } = select4(import_core_data44.store);
@@ -55495,7 +55592,7 @@ If there's a particular need for this, please submit a feature request at https:
       unlock(select4(store)).getSettings()
     ]
   );
-  var selectPatterns = (0, import_data67.createSelector)(
+  var selectPatterns = (0, import_data68.createSelector)(
     (select4, categoryId, syncStatus, search = "") => {
       const {
         patterns: themePatterns,
@@ -55553,7 +55650,7 @@ If there's a particular need for this, please submit a feature request at https:
       selectUserPatterns(select4)
     ]
   );
-  var selectUserPatterns = (0, import_data67.createSelector)(
+  var selectUserPatterns = (0, import_data68.createSelector)(
     (select4, syncStatus, search = "") => {
       const {
         getEntityRecords,
@@ -55607,11 +55704,11 @@ If there's a particular need for this, please submit a feature request at https:
     ]
   );
   function useAugmentPatternsWithPermissions(patterns) {
-    const idsAndTypes = (0, import_element172.useMemo)(
+    const idsAndTypes = (0, import_element173.useMemo)(
       () => patterns?.filter((record) => record.type !== PATTERN_TYPES.theme).map((record) => [record.type, record.id]) ?? [],
       [patterns]
     );
-    const permissions = (0, import_data67.useSelect)(
+    const permissions = (0, import_data68.useSelect)(
       (select4) => {
         const { getEntityRecordPermissions } = unlock(
           select4(import_core_data44.store)
@@ -55623,7 +55720,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [idsAndTypes]
     );
-    return (0, import_element172.useMemo)(
+    return (0, import_element173.useMemo)(
       () => patterns?.map((record) => ({
         ...record,
         permissions: permissions?.[record.id] ?? {}
@@ -55632,7 +55729,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   var usePatterns = (postType2, categoryId, { search = "", syncStatus } = {}) => {
-    return (0, import_data67.useSelect)(
+    return (0, import_data68.useSelect)(
       (select4) => {
         if (postType2 === TEMPLATE_PART_POST_TYPE) {
           return selectTemplateParts(select4, categoryId, search);
@@ -55666,7 +55763,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const themePatterns = useThemePatterns();
     const { patterns: userPatterns, categories: userPatternCategories } = use_patterns_default(PATTERN_TYPES.user);
-    const patternCategories = (0, import_element173.useMemo)(() => {
+    const patternCategories = (0, import_element174.useMemo)(() => {
       const categoryMap = {};
       const categoriesWithCounts = [];
       defaultCategories.forEach((category) => {
@@ -55739,14 +55836,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-template-part-areas.mjs
   var import_core_data45 = __toESM(require_core_data(), 1);
-  var import_data68 = __toESM(require_data(), 1);
+  var import_data69 = __toESM(require_data(), 1);
   var import_block_library3 = __toESM(require_block_library(), 1);
   var { NAVIGATION_OVERLAY_TEMPLATE_PART_AREA } = unlock(
     import_block_library3.privateApis
   );
   var useTemplatePartsGroupedByArea = (items) => {
     const allItems = items || [];
-    const templatePartAreas = (0, import_data68.useSelect)(
+    const templatePartAreas = (0, import_data69.useSelect)(
       (select4) => select4(import_core_data45.store).getCurrentTheme()?.default_template_part_areas || [],
       []
     );
@@ -55786,7 +55883,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.mjs
   var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
   var VIEW_CONFIG_FIELDS = ["view_list"];
-  var { useLocation: useLocation23 } = unlock(import_router25.privateApis);
+  var { useLocation: useLocation24 } = unlock(import_router26.privateApis);
   var { getTemplatePartIcon } = unlock(import_core_data46.privateApis);
   function CategoriesGroup({
     templatePartViews,
@@ -55829,7 +55926,7 @@ If there's a particular need for this, please submit a feature request at https:
   function SidebarNavigationScreenPatterns({ backPath }) {
     const {
       query: { postType: postType2 = "wp_block", categoryId }
-    } = useLocation23();
+    } = useLocation24();
     const currentCategory = categoryId || (postType2 === PATTERN_TYPES.user ? PATTERN_DEFAULT_CATEGORY : TEMPLATE_PART_ALL_AREAS_CATEGORY);
     const { view_list: templatePartViews } = useViewConfig({
       kind: "postType",
@@ -55842,7 +55939,7 @@ If there's a particular need for this, please submit a feature request at https:
       fields: VIEW_CONFIG_FIELDS
     });
     const { templatePartAreas, isLoading, hasTemplateParts } = useTemplatePartAreas();
-    const templatePartCounts = (0, import_element174.useMemo)(() => {
+    const templatePartCounts = (0, import_element175.useMemo)(() => {
       const counts = { [TEMPLATE_PART_ALL_AREAS_CATEGORY]: 0 };
       Object.entries(templatePartAreas).forEach(
         ([area, { templateParts }]) => {
@@ -55854,7 +55951,7 @@ If there's a particular need for this, please submit a feature request at https:
       return counts;
     }, [templatePartAreas]);
     const { patternCategories } = usePatternCategories();
-    const patternCounts = (0, import_element174.useMemo)(() => {
+    const patternCounts = (0, import_element175.useMemo)(() => {
       const counts = {};
       patternCategories.forEach((cat) => {
         counts[cat.name] = cat.count;
@@ -55894,47 +55991,47 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-patterns/index.mjs
   var import_i18n141 = __toESM(require_i18n(), 1);
-  var import_element181 = __toESM(require_element(), 1);
+  var import_element182 = __toESM(require_element(), 1);
   var import_block_editor26 = __toESM(require_block_editor(), 1);
   var import_core_data51 = __toESM(require_core_data(), 1);
-  var import_editor28 = __toESM(require_editor(), 1);
-  var import_router29 = __toESM(require_router(), 1);
-  var import_data73 = __toESM(require_data(), 1);
-  var import_url16 = __toESM(require_url(), 1);
+  var import_editor29 = __toESM(require_editor(), 1);
+  var import_router30 = __toESM(require_router(), 1);
+  var import_data74 = __toESM(require_data(), 1);
+  var import_url17 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/page-patterns/use-pattern-settings.mjs
   var import_core_data47 = __toESM(require_core_data(), 1);
-  var import_data69 = __toESM(require_data(), 1);
-  var import_element175 = __toESM(require_element(), 1);
+  var import_data70 = __toESM(require_data(), 1);
+  var import_element176 = __toESM(require_element(), 1);
   var import_block_editor24 = __toESM(require_block_editor(), 1);
-  var import_editor25 = __toESM(require_editor(), 1);
-  var { useGlobalStyles: useGlobalStyles4 } = unlock(import_editor25.privateApis);
+  var import_editor26 = __toESM(require_editor(), 1);
+  var { useGlobalStyles: useGlobalStyles4 } = unlock(import_editor26.privateApis);
   var { globalStylesDataKey } = unlock(import_block_editor24.privateApis);
   function usePatternSettings() {
     const { merged: mergedConfig } = useGlobalStyles4();
-    const storedSettings = (0, import_data69.useSelect)((select4) => {
+    const storedSettings = (0, import_data70.useSelect)((select4) => {
       const { getSettings: getSettings7 } = unlock(select4(store));
       return getSettings7();
     }, []);
     const settingsBlockPatterns = storedSettings.__experimentalAdditionalBlockPatterns ?? // WP 6.0
     storedSettings.__experimentalBlockPatterns;
-    const restBlockPatterns = (0, import_data69.useSelect)(
+    const restBlockPatterns = (0, import_data70.useSelect)(
       (select4) => select4(import_core_data47.store).getBlockPatterns(),
       []
     );
-    const blockPatterns = (0, import_element175.useMemo)(
+    const blockPatterns = (0, import_element176.useMemo)(
       () => [
         ...settingsBlockPatterns || [],
         ...restBlockPatterns || []
       ].filter(filterOutDuplicatesByName),
       [settingsBlockPatterns, restBlockPatterns]
     );
-    const [globalStyles, globalSettings] = (0, import_element175.useMemo)(() => {
+    const [globalStyles, globalSettings] = (0, import_element176.useMemo)(() => {
       return generateGlobalStyles(mergedConfig, [], {
         disableRootPadding: false
       });
     }, [mergedConfig]);
-    const settings2 = (0, import_element175.useMemo)(() => {
+    const settings2 = (0, import_element176.useMemo)(() => {
       const {
         __experimentalAdditionalBlockPatterns,
         styles,
@@ -55968,35 +56065,35 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/add-new-pattern/index.mjs
   var import_components140 = __toESM(require_components(), 1);
-  var import_element176 = __toESM(require_element(), 1);
+  var import_element177 = __toESM(require_element(), 1);
   var import_i18n135 = __toESM(require_i18n(), 1);
-  var import_data70 = __toESM(require_data(), 1);
-  var import_router26 = __toESM(require_router(), 1);
+  var import_data71 = __toESM(require_data(), 1);
+  var import_router27 = __toESM(require_router(), 1);
   var import_patterns2 = __toESM(require_patterns(), 1);
   var import_notices6 = __toESM(require_notices(), 1);
   var import_core_data48 = __toESM(require_core_data(), 1);
-  var import_editor26 = __toESM(require_editor(), 1);
+  var import_editor27 = __toESM(require_editor(), 1);
   var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
-  var { useHistory: useHistory17, useLocation: useLocation24 } = unlock(import_router26.privateApis);
+  var { useHistory: useHistory18, useLocation: useLocation25 } = unlock(import_router27.privateApis);
   var { CreatePatternModal, useAddPatternCategory } = unlock(
     import_patterns2.privateApis
   );
-  var { CreateTemplatePartModal } = unlock(import_editor26.privateApis);
+  var { CreateTemplatePartModal } = unlock(import_editor27.privateApis);
   function AddNewPattern() {
-    const history = useHistory17();
-    const location = useLocation24();
-    const [showPatternModal, setShowPatternModal] = (0, import_element176.useState)(false);
-    const [showTemplatePartModal, setShowTemplatePartModal] = (0, import_element176.useState)(false);
-    const { createPatternFromFile } = unlock((0, import_data70.useDispatch)(import_patterns2.store));
-    const { createSuccessNotice, createErrorNotice } = (0, import_data70.useDispatch)(import_notices6.store);
-    const patternUploadInputRef = (0, import_element176.useRef)();
+    const history = useHistory18();
+    const location = useLocation25();
+    const [showPatternModal, setShowPatternModal] = (0, import_element177.useState)(false);
+    const [showTemplatePartModal, setShowTemplatePartModal] = (0, import_element177.useState)(false);
+    const { createPatternFromFile } = unlock((0, import_data71.useDispatch)(import_patterns2.store));
+    const { createSuccessNotice, createErrorNotice } = (0, import_data71.useDispatch)(import_notices6.store);
+    const patternUploadInputRef = (0, import_element177.useRef)();
     const {
       isBlockBasedTheme,
       addNewPatternLabel,
       addNewTemplatePartLabel,
       canCreatePattern,
       canCreateTemplatePart
-    } = (0, import_data70.useSelect)((select4) => {
+    } = (0, import_data71.useSelect)((select4) => {
       const { getCurrentTheme, getPostType: getPostType2, canUser } = select4(import_core_data48.store);
       return {
         isBlockBasedTheme: getCurrentTheme()?.is_block_theme,
@@ -56152,13 +56249,13 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-patterns/rename-category-menu-item.mjs
   var import_components141 = __toESM(require_components(), 1);
-  var import_element177 = __toESM(require_element(), 1);
+  var import_element178 = __toESM(require_element(), 1);
   var import_i18n136 = __toESM(require_i18n(), 1);
   var import_patterns3 = __toESM(require_patterns(), 1);
   var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
   var { RenamePatternCategoryModal } = unlock(import_patterns3.privateApis);
   function RenameCategoryMenuItem({ category, onClose }) {
-    const [isModalOpen, setIsModalOpen] = (0, import_element177.useState)(false);
+    const [isModalOpen, setIsModalOpen] = (0, import_element178.useState)(false);
     return /* @__PURE__ */ (0, import_jsx_runtime305.jsxs)(import_jsx_runtime305.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(import_components141.MenuItem, { onClick: () => setIsModalOpen(true), children: (0, import_i18n136.__)("Rename") }),
       isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
@@ -56196,19 +56293,19 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-patterns/delete-category-menu-item.mjs
   var import_components142 = __toESM(require_components(), 1);
   var import_core_data49 = __toESM(require_core_data(), 1);
-  var import_data71 = __toESM(require_data(), 1);
-  var import_element178 = __toESM(require_element(), 1);
+  var import_data72 = __toESM(require_data(), 1);
+  var import_element179 = __toESM(require_element(), 1);
   var import_html_entities8 = __toESM(require_html_entities(), 1);
   var import_i18n137 = __toESM(require_i18n(), 1);
   var import_notices7 = __toESM(require_notices(), 1);
-  var import_router27 = __toESM(require_router(), 1);
+  var import_router28 = __toESM(require_router(), 1);
   var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
-  var { useHistory: useHistory18 } = unlock(import_router27.privateApis);
+  var { useHistory: useHistory19 } = unlock(import_router28.privateApis);
   function DeleteCategoryMenuItem({ category, onClose }) {
-    const [isModalOpen, setIsModalOpen] = (0, import_element178.useState)(false);
-    const history = useHistory18();
-    const { createSuccessNotice, createErrorNotice } = (0, import_data71.useDispatch)(import_notices7.store);
-    const { deleteEntityRecord, invalidateResolution } = (0, import_data71.useDispatch)(import_core_data49.store);
+    const [isModalOpen, setIsModalOpen] = (0, import_element179.useState)(false);
+    const history = useHistory19();
+    const { createSuccessNotice, createErrorNotice } = (0, import_data72.useDispatch)(import_notices7.store);
+    const { deleteEntityRecord, invalidateResolution } = (0, import_data72.useDispatch)(import_core_data49.store);
     const onDelete = async () => {
       try {
         await deleteEntityRecord(
@@ -56319,19 +56416,19 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/dataviews-actions/index.mjs
   var import_i18n139 = __toESM(require_i18n(), 1);
-  var import_element179 = __toESM(require_element(), 1);
-  var import_router28 = __toESM(require_router(), 1);
-  var import_data72 = __toESM(require_data(), 1);
+  var import_element180 = __toESM(require_element(), 1);
+  var import_router29 = __toESM(require_router(), 1);
+  var import_data73 = __toESM(require_data(), 1);
   var import_core_data50 = __toESM(require_core_data(), 1);
-  var import_url15 = __toESM(require_url(), 1);
-  var { useLocation: useLocation25, useHistory: useHistory19 } = unlock(import_router28.privateApis);
+  var import_url16 = __toESM(require_url(), 1);
+  var { useLocation: useLocation26, useHistory: useHistory20 } = unlock(import_router29.privateApis);
   var useSetActiveTemplateAction = () => {
-    const activeTheme = (0, import_data72.useSelect)(
+    const activeTheme = (0, import_data73.useSelect)(
       (select4) => select4(import_core_data50.store).getCurrentTheme()
     );
-    const { getEntityRecord } = (0, import_data72.useSelect)(import_core_data50.store);
-    const { editEntityRecord, saveEditedEntityRecord } = (0, import_data72.useDispatch)(import_core_data50.store);
-    return (0, import_element179.useMemo)(
+    const { getEntityRecord } = (0, import_data73.useSelect)(import_core_data50.store);
+    const { editEntityRecord, saveEditedEntityRecord } = (0, import_data73.useDispatch)(import_core_data50.store);
+    return (0, import_element180.useMemo)(
       () => ({
         id: "set-active-template",
         label(items) {
@@ -56375,8 +56472,8 @@ If there's a particular need for this, please submit a feature request at https:
     );
   };
   var useEditPostAction = () => {
-    const history = useHistory19();
-    return (0, import_element179.useMemo)(
+    const history = useHistory20();
+    return (0, import_element180.useMemo)(
       () => ({
         id: "edit-post",
         label: (0, import_i18n139.__)("Edit"),
@@ -56396,9 +56493,9 @@ If there's a particular need for this, please submit a feature request at https:
     );
   };
   var useQuickEditPostAction = () => {
-    const history = useHistory19();
-    const { path, query } = useLocation25();
-    return (0, import_element179.useMemo)(
+    const history = useHistory20();
+    const { path, query } = useLocation26();
+    return (0, import_element180.useMemo)(
       () => ({
         id: "quick-edit",
         label: (0, import_i18n139.__)("Quick Edit"),
@@ -56413,7 +56510,7 @@ If there's a particular need for this, please submit a feature request at https:
         },
         callback(items) {
           history.navigate(
-            (0, import_url15.addQueryArgs)(path, {
+            (0, import_url16.addQueryArgs)(path, {
               ...query,
               quickEdit: true,
               postId: items.map((item) => item.id).join(",")
@@ -56427,18 +56524,18 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-patterns/fields.mjs
   var import_i18n140 = __toESM(require_i18n(), 1);
-  var import_element180 = __toESM(require_element(), 1);
+  var import_element181 = __toESM(require_element(), 1);
   var import_block_editor25 = __toESM(require_block_editor(), 1);
   var import_blocks12 = __toESM(require_blocks(), 1);
-  var import_editor27 = __toESM(require_editor(), 1);
+  var import_editor28 = __toESM(require_editor(), 1);
   var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
-  var { useStyle: useStyle4 } = unlock(import_editor27.privateApis);
+  var { useStyle: useStyle4 } = unlock(import_editor28.privateApis);
   function PreviewField({ item }) {
-    const descriptionId = (0, import_element180.useId)();
+    const descriptionId = (0, import_element181.useId)();
     const description = item.description || item?.excerpt?.raw;
     const isTemplatePart2 = item.type === TEMPLATE_PART_POST_TYPE;
     const backgroundColor = useStyle4("color.background");
-    const blocks = (0, import_element180.useMemo)(() => {
+    const blocks = (0, import_element181.useMemo)(() => {
       return item.blocks ?? (0, import_blocks12.parse)(item.content.raw, {
         __unstableSkipMigrationLogs: true
       });
@@ -56475,13 +56572,13 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-patterns/index.mjs
   var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
   var { ExperimentalBlockEditorProvider } = unlock(import_block_editor26.privateApis);
-  var { usePostActions, usePostFields } = unlock(import_editor28.privateApis);
-  var { useLocation: useLocation26, useHistory: useHistory20 } = unlock(import_router29.privateApis);
+  var { usePostActions, usePostFields } = unlock(import_editor29.privateApis);
+  var { useLocation: useLocation27, useHistory: useHistory21 } = unlock(import_router30.privateApis);
   var EMPTY_ARRAY12 = [];
   var VIEW_CONFIG_FIELDS2 = ["default_view", "default_layouts"];
   function usePagePatternsHeader(type, categoryId) {
     const { patternCategories } = usePatternCategories();
-    const templatePartAreas = (0, import_data73.useSelect)(
+    const templatePartAreas = (0, import_data74.useSelect)(
       (select4) => select4(import_core_data51.store).getCurrentTheme()?.default_template_part_areas || [],
       []
     );
@@ -56502,9 +56599,9 @@ If there's a particular need for this, please submit a feature request at https:
     return { title, description };
   }
   function DataviewsPatterns() {
-    const { path, query } = useLocation26();
+    const { path, query } = useLocation27();
     const { postType: postType2 = "wp_block", categoryId: categoryIdFromURL } = query;
-    const history = useHistory20();
+    const history = useHistory21();
     const categoryId = categoryIdFromURL || PATTERN_DEFAULT_CATEGORY;
     const { default_view: defaultView, default_layouts: defaultLayouts2 } = useViewConfig({
       kind: "postType",
@@ -56523,7 +56620,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       onChangeQueryParams: (params) => {
         history.navigate(
-          (0, import_url16.addQueryArgs)(path, {
+          (0, import_url17.addQueryArgs)(path, {
             ...query,
             pageNumber: params.page,
             search: params.search
@@ -56539,10 +56636,10 @@ If there's a particular need for this, please submit a feature request at https:
       syncStatus: viewSyncStatus
     });
     const postTypeFields = usePostFields({ postType: postType2 });
-    const fields2 = (0, import_element181.useMemo)(() => {
+    const fields2 = (0, import_element182.useMemo)(() => {
       return [previewField, ...postTypeFields || []];
     }, [postTypeFields]);
-    const { data, paginationInfo } = (0, import_element181.useMemo)(() => {
+    const { data, paginationInfo } = (0, import_element182.useMemo)(() => {
       const viewWithoutFilters = { ...view };
       delete viewWithoutFilters.search;
       if (postType2 !== TEMPLATE_PART_POST_TYPE) {
@@ -56560,7 +56657,7 @@ If there's a particular need for this, please submit a feature request at https:
       context: "list"
     });
     const editAction = useEditPostAction();
-    const actions = (0, import_element181.useMemo)(() => {
+    const actions = (0, import_element182.useMemo)(() => {
       if (postType2 === TEMPLATE_PART_POST_TYPE) {
         return [editAction, ...templatePartActions].filter(Boolean);
       }
@@ -56669,7 +56766,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/edit-site/build-module/components/site-editor-routes/templates.mjs
-  var import_data82 = __toESM(require_data(), 1);
+  var import_data83 = __toESM(require_data(), 1);
   var import_core_data64 = __toESM(require_core_data(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/index.mjs
@@ -56677,17 +56774,17 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content.mjs
   var import_core_data53 = __toESM(require_core_data(), 1);
-  var import_element182 = __toESM(require_element(), 1);
+  var import_element183 = __toESM(require_element(), 1);
   var import_components144 = __toESM(require_components(), 1);
   var import_i18n142 = __toESM(require_i18n(), 1);
-  var import_router30 = __toESM(require_router(), 1);
-  var import_url17 = __toESM(require_url(), 1);
+  var import_router31 = __toESM(require_router(), 1);
+  var import_url18 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/page-templates/hooks.mjs
   var import_core_data52 = __toESM(require_core_data(), 1);
-  var import_data74 = __toESM(require_data(), 1);
+  var import_data75 = __toESM(require_data(), 1);
   function useAddedBy(postType2, postId) {
-    return (0, import_data74.useSelect)(
+    return (0, import_data75.useSelect)(
       (select4) => {
         const { getEntityRecord, getUser, getEditedEntityRecord } = select4(import_core_data52.store);
         const template = getEditedEntityRecord(
@@ -56749,14 +56846,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content.mjs
   var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation27 } = unlock(import_router30.privateApis);
+  var { useLocation: useLocation28 } = unlock(import_router31.privateApis);
   var EMPTY_ARRAY13 = [];
   function TemplateDataviewItem({ template, isActive }) {
     const { text, icon } = useAddedBy(template.type, template.id);
     return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
       SidebarNavigationItem,
       {
-        to: (0, import_url17.addQueryArgs)("/template", { activeView: text }),
+        to: (0, import_url18.addQueryArgs)("/template", { activeView: text }),
         icon,
         "aria-current": isActive,
         children: text
@@ -56766,14 +56863,14 @@ If there's a particular need for this, please submit a feature request at https:
   function DataviewsTemplatesSidebarContent() {
     const {
       query: { activeView = "active" }
-    } = useLocation27();
+    } = useLocation28();
     const { records } = (0, import_core_data53.useEntityRecords)("root", "registeredTemplate", {
       // This should not be needed, the endpoint returns all registered
       // templates, but it's not possible right now to turn off pagination for
       // entity configs.
       per_page: -1
     });
-    const firstItemPerAuthorText = (0, import_element182.useMemo)(() => {
+    const firstItemPerAuthorText = (0, import_element183.useMemo)(() => {
       const firstItemPerAuthor = records?.reduce((acc, template) => {
         const author = template.author_text;
         if (author && !acc[author]) {
@@ -56796,7 +56893,7 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
         SidebarNavigationItem,
         {
-          to: (0, import_url17.addQueryArgs)("/template", { activeView: "user" }),
+          to: (0, import_url18.addQueryArgs)("/template", { activeView: "user" }),
           icon: comment_author_avatar_default,
           "aria-current": activeView === "user",
           // Let's avoid calling them "custom templates" to avoid
@@ -56821,14 +56918,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content-legacy.mjs
   var import_core_data54 = __toESM(require_core_data(), 1);
-  var import_data75 = __toESM(require_data(), 1);
+  var import_data76 = __toESM(require_data(), 1);
 
   // packages/edit-site/build-module/components/sidebar-dataviews/index.mjs
   var import_components145 = __toESM(require_components(), 1);
-  var import_router31 = __toESM(require_router(), 1);
-  var import_url18 = __toESM(require_url(), 1);
+  var import_router32 = __toESM(require_router(), 1);
+  var import_url19 = __toESM(require_url(), 1);
   var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
-  var { useLocation: useLocation28 } = unlock(import_router31.privateApis);
+  var { useLocation: useLocation29 } = unlock(import_router32.privateApis);
   var VIEW_CONFIG_FIELDS3 = ["view_list"];
   var SLUG_TO_ICON = {
     all: pages_default,
@@ -56849,7 +56946,7 @@ If there's a particular need for this, please submit a feature request at https:
     const {
       path,
       query: { activeView = "all" }
-    } = useLocation28();
+    } = useLocation29();
     const { view_list: viewList } = useViewConfig({
       kind: "postType",
       name: postType2,
@@ -56866,7 +56963,7 @@ If there's a particular need for this, please submit a feature request at https:
         SidebarNavigationItem,
         {
           icon,
-          to: (0, import_url18.addQueryArgs)(path, {
+          to: (0, import_url19.addQueryArgs)(path, {
             activeView: slug
           }),
           "aria-current": isActive ? "true" : void 0,
@@ -56886,7 +56983,7 @@ If there's a particular need for this, please submit a feature request at https:
     site: globe_default
   };
   function DataviewsTemplatesSidebarContent2() {
-    const authorSourceMap = (0, import_data75.useSelect)((select4) => {
+    const authorSourceMap = (0, import_data76.useSelect)((select4) => {
       const templates = select4(import_core_data54.store).getEntityRecords(
         "postType",
         TEMPLATE_POST_TYPE,
@@ -56935,12 +57032,12 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/page-templates/index.mjs
   var import_i18n149 = __toESM(require_i18n(), 1);
   var import_html_entities13 = __toESM(require_html_entities(), 1);
-  var import_element188 = __toESM(require_element(), 1);
+  var import_element189 = __toESM(require_element(), 1);
   var import_core_data59 = __toESM(require_core_data(), 1);
-  var import_router33 = __toESM(require_router(), 1);
-  var import_editor32 = __toESM(require_editor(), 1);
-  var import_url21 = __toESM(require_url(), 1);
-  var import_data79 = __toESM(require_data(), 1);
+  var import_router34 = __toESM(require_router(), 1);
+  var import_editor33 = __toESM(require_editor(), 1);
+  var import_url22 = __toESM(require_url(), 1);
+  var import_data80 = __toESM(require_data(), 1);
   var import_compose33 = __toESM(require_compose(), 1);
   var import_components150 = __toESM(require_components(), 1);
   var import_notices9 = __toESM(require_notices(), 1);
@@ -56948,32 +57045,32 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/add-new-template/index.mjs
   var import_components148 = __toESM(require_components(), 1);
   var import_html_entities11 = __toESM(require_html_entities(), 1);
-  var import_element186 = __toESM(require_element(), 1);
-  var import_data77 = __toESM(require_data(), 1);
+  var import_element187 = __toESM(require_element(), 1);
+  var import_data78 = __toESM(require_data(), 1);
   var import_core_data57 = __toESM(require_core_data(), 1);
   var import_compose32 = __toESM(require_compose(), 1);
   var import_i18n147 = __toESM(require_i18n(), 1);
   var import_notices8 = __toESM(require_notices(), 1);
-  var import_router32 = __toESM(require_router(), 1);
+  var import_router33 = __toESM(require_router(), 1);
   var import_dom26 = __toESM(require_dom(), 1);
 
   // packages/edit-site/build-module/components/add-new-template/add-custom-template-modal-content.mjs
-  var import_element184 = __toESM(require_element(), 1);
+  var import_element185 = __toESM(require_element(), 1);
   var import_i18n145 = __toESM(require_i18n(), 1);
   var import_components146 = __toESM(require_components(), 1);
   var import_core_data56 = __toESM(require_core_data(), 1);
   var import_html_entities10 = __toESM(require_html_entities(), 1);
   var import_compose31 = __toESM(require_compose(), 1);
   var import_dom25 = __toESM(require_dom(), 1);
-  var import_url20 = __toESM(require_url(), 1);
+  var import_url21 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/add-new-template/utils.mjs
-  var import_data76 = __toESM(require_data(), 1);
+  var import_data77 = __toESM(require_data(), 1);
   var import_core_data55 = __toESM(require_core_data(), 1);
   var import_html_entities9 = __toESM(require_html_entities(), 1);
-  var import_element183 = __toESM(require_element(), 1);
+  var import_element184 = __toESM(require_element(), 1);
   var import_i18n144 = __toESM(require_i18n(), 1);
-  var import_url19 = __toESM(require_url(), 1);
+  var import_url20 = __toESM(require_url(), 1);
   var EMPTY_OBJECT2 = {};
   var getValueFromObjectPath2 = (object, path) => {
     let value = object;
@@ -56983,7 +57080,7 @@ If there's a particular need for this, please submit a feature request at https:
     return value;
   };
   function prefixSlug(prefix2, slug) {
-    return `${prefix2}-${(0, import_url19.safeDecodeURI)(slug)}`;
+    return `${prefix2}-${(0, import_url20.safeDecodeURI)(slug)}`;
   }
   var mapToIHasNameAndId = (entities, path) => {
     return (entities || []).map((entity) => ({
@@ -56992,7 +57089,7 @@ If there's a particular need for this, please submit a feature request at https:
     }));
   };
   var useExistingTemplates = () => {
-    return (0, import_data76.useSelect)(
+    return (0, import_data77.useSelect)(
       (select4) => select4(import_core_data55.store).getEntityRecords(
         "postType",
         TEMPLATE_POST_TYPE,
@@ -57004,17 +57101,17 @@ If there's a particular need for this, please submit a feature request at https:
     );
   };
   var useDefaultTemplateTypes = () => {
-    return (0, import_data76.useSelect)(
+    return (0, import_data77.useSelect)(
       (select4) => select4(import_core_data55.store).getCurrentTheme()?.default_template_types || [],
       []
     );
   };
   var usePublicPostTypes = () => {
-    const postTypes = (0, import_data76.useSelect)(
+    const postTypes = (0, import_data77.useSelect)(
       (select4) => select4(import_core_data55.store).getPostTypes({ per_page: -1 }),
       []
     );
-    return (0, import_element183.useMemo)(() => {
+    return (0, import_element184.useMemo)(() => {
       const excludedPostTypes = ["attachment"];
       return postTypes?.filter(
         ({ viewable, slug }) => viewable && !excludedPostTypes.includes(slug)
@@ -57027,11 +57124,11 @@ If there's a particular need for this, please submit a feature request at https:
     }, [postTypes]);
   };
   var usePublicTaxonomies = () => {
-    const taxonomies = (0, import_data76.useSelect)(
+    const taxonomies = (0, import_data77.useSelect)(
       (select4) => select4(import_core_data55.store).getTaxonomies({ per_page: -1 }),
       []
     );
-    return (0, import_element183.useMemo)(() => {
+    return (0, import_element184.useMemo)(() => {
       return taxonomies?.filter(
         ({ visibility }) => visibility?.publicly_queryable
       );
@@ -57039,12 +57136,12 @@ If there's a particular need for this, please submit a feature request at https:
   };
   function usePostTypeArchiveMenuItems() {
     const publicPostTypes = usePublicPostTypes();
-    const postTypesWithArchives = (0, import_element183.useMemo)(
+    const postTypesWithArchives = (0, import_element184.useMemo)(
       () => publicPostTypes?.filter((postType2) => postType2.has_archive),
       [publicPostTypes]
     );
     const existingTemplates = useExistingTemplates();
-    const postTypeLabels = (0, import_element183.useMemo)(
+    const postTypeLabels = (0, import_element184.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { labels }) => {
         const singularName = labels.singular_name.toLowerCase();
         accumulator[singularName] = (accumulator[singularName] || 0) + 1;
@@ -57052,14 +57149,14 @@ If there's a particular need for this, please submit a feature request at https:
       }, {}),
       [publicPostTypes]
     );
-    const needsUniqueIdentifier = (0, import_element183.useCallback)(
+    const needsUniqueIdentifier = (0, import_element184.useCallback)(
       ({ labels, slug }) => {
         const singularName = labels.singular_name.toLowerCase();
         return postTypeLabels[singularName] > 1 && singularName !== slug;
       },
       [postTypeLabels]
     );
-    return (0, import_element183.useMemo)(
+    return (0, import_element184.useMemo)(
       () => postTypesWithArchives?.filter(
         (postType2) => !(existingTemplates || []).some(
           (existingTemplate) => existingTemplate.slug === "archive-" + postType2.slug
@@ -57103,7 +57200,7 @@ If there's a particular need for this, please submit a feature request at https:
   var usePostTypeMenuItems = (onClickMenuItem) => {
     const publicPostTypes = usePublicPostTypes();
     const defaultTemplateTypes = useDefaultTemplateTypes();
-    const templateLabels = (0, import_element183.useMemo)(
+    const templateLabels = (0, import_element184.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { labels }) => {
         const templateName = (labels.template_name || labels.singular_name).toLowerCase();
         accumulator[templateName] = (accumulator[templateName] || 0) + 1;
@@ -57111,14 +57208,14 @@ If there's a particular need for this, please submit a feature request at https:
       }, {}),
       [publicPostTypes]
     );
-    const needsUniqueIdentifier = (0, import_element183.useCallback)(
+    const needsUniqueIdentifier = (0, import_element184.useCallback)(
       ({ labels, slug }) => {
         const templateName = (labels.template_name || labels.singular_name).toLowerCase();
         return templateLabels[templateName] > 1 && templateName !== slug;
       },
       [templateLabels]
     );
-    const templatePrefixes = (0, import_element183.useMemo)(
+    const templatePrefixes = (0, import_element184.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { slug }) => {
         let suffix = slug;
         if (slug !== "page") {
@@ -57215,7 +57312,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const postTypesMenuItems = (0, import_element183.useMemo)(
+    const postTypesMenuItems = (0, import_element184.useMemo)(
       () => menuItems.reduce(
         (accumulator, postType2) => {
           const { slug } = postType2;
@@ -57236,7 +57333,7 @@ If there's a particular need for this, please submit a feature request at https:
     const publicTaxonomies = usePublicTaxonomies();
     const existingTemplates = useExistingTemplates();
     const defaultTemplateTypes = useDefaultTemplateTypes();
-    const templatePrefixes = (0, import_element183.useMemo)(
+    const templatePrefixes = (0, import_element184.useMemo)(
       () => publicTaxonomies?.reduce((accumulator, { slug }) => {
         let suffix = slug;
         if (!["category", "post_tag"].includes(slug)) {
@@ -57348,7 +57445,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const taxonomiesMenuItems = (0, import_element183.useMemo)(
+    const taxonomiesMenuItems = (0, import_element184.useMemo)(
       () => menuItems.reduce(
         (accumulator, taxonomy) => {
           const { slug } = taxonomy;
@@ -57437,7 +57534,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
   var useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters = EMPTY_OBJECT2) => {
-    const entitiesHasRecords = (0, import_data76.useSelect)(
+    const entitiesHasRecords = (0, import_data77.useSelect)(
       (select4) => {
         return Object.keys(templatePrefixes || {}).reduce(
           (accumulator, slug) => {
@@ -57459,7 +57556,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [templatePrefixes, entityName, additionalQueryParameters]
     );
-    const entitiesInfo = (0, import_element183.useMemo)(() => {
+    const entitiesInfo = (0, import_element184.useMemo)(() => {
       return Object.keys(templatePrefixes || {}).reduce(
         (accumulator, slug) => {
           accumulator[slug] = {
@@ -57522,7 +57619,7 @@ If there's a particular need for this, please submit a feature request at https:
               size: "body",
               lineHeight: 1.53846153846,
               className: `${baseCssClass}__info`,
-              children: (0, import_url20.safeDecodeURI)(suggestion.link)
+              children: (0, import_url21.safeDecodeURI)(suggestion.link)
             }
           )
         ]
@@ -57531,7 +57628,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useSearchSuggestions(entityForSuggestions, search) {
     const { config: config2 } = entityForSuggestions;
-    const query = (0, import_element184.useMemo)(
+    const query = (0, import_element185.useMemo)(
       () => ({
         order: "asc",
         context: "view",
@@ -57546,8 +57643,8 @@ If there's a particular need for this, please submit a feature request at https:
       entityForSuggestions.slug,
       query
     );
-    const [suggestions, setSuggestions] = (0, import_element184.useState)(EMPTY_ARRAY14);
-    (0, import_element184.useEffect)(() => {
+    const [suggestions, setSuggestions] = (0, import_element185.useState)(EMPTY_ARRAY14);
+    (0, import_element185.useEffect)(() => {
       if (!searchHasResolved) {
         return;
       }
@@ -57572,7 +57669,7 @@ If there's a particular need for this, please submit a feature request at https:
       debouncedSearch
     );
     const { labels } = entityForSuggestions;
-    const [showSearchControl, setShowSearchControl] = (0, import_element184.useState)(false);
+    const [showSearchControl, setShowSearchControl] = (0, import_element185.useState)(false);
     if (!showSearchControl && suggestions?.length > 9) {
       setShowSearchControl(true);
     }
@@ -57621,8 +57718,8 @@ If there's a particular need for this, please submit a feature request at https:
     onBack,
     containerRef
   }) {
-    const [showSearchEntities, setShowSearchEntities] = (0, import_element184.useState)();
-    (0, import_element184.useEffect)(() => {
+    const [showSearchEntities, setShowSearchEntities] = (0, import_element185.useState)();
+    (0, import_element185.useEffect)(() => {
       if (containerRef.current) {
         const [firstFocusable] = import_dom25.focus.focusable.find(
           containerRef.current
@@ -57766,16 +57863,16 @@ If there's a particular need for this, please submit a feature request at https:
   var add_custom_template_modal_content_default = AddCustomTemplateModalContent;
 
   // packages/edit-site/build-module/components/add-new-template/add-custom-generic-template-modal-content.mjs
-  var import_element185 = __toESM(require_element(), 1);
+  var import_element186 = __toESM(require_element(), 1);
   var import_i18n146 = __toESM(require_i18n(), 1);
   var import_components147 = __toESM(require_components(), 1);
   var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
   function AddCustomGenericTemplateModalContent({ createTemplate, onBack }) {
-    const [title, setTitle] = (0, import_element185.useState)("");
+    const [title, setTitle] = (0, import_element186.useState)("");
     const defaultTitle = (0, import_i18n146.__)("Custom Template");
-    const [isBusy, setIsBusy] = (0, import_element185.useState)(false);
-    const inputRef = (0, import_element185.useRef)();
-    (0, import_element185.useEffect)(() => {
+    const [isBusy, setIsBusy] = (0, import_element186.useState)(false);
+    const inputRef = (0, import_element186.useRef)();
+    (0, import_element186.useEffect)(() => {
       if (inputRef.current) {
         inputRef.current.focus();
       }
@@ -57849,7 +57946,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/add-new-template/index.mjs
   var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
-  var { useHistory: useHistory21 } = unlock(import_router32.privateApis);
+  var { useHistory: useHistory22 } = unlock(import_router33.privateApis);
   var DEFAULT_TEMPLATE_SLUGS = [
     "front-page",
     "home",
@@ -57940,21 +58037,21 @@ If there's a particular need for this, please submit a feature request at https:
     customGenericTemplate: 3
   };
   function NewTemplateModal({ onClose }) {
-    const [modalContent, setModalContent] = (0, import_element186.useState)(
+    const [modalContent, setModalContent] = (0, import_element187.useState)(
       modalContentMap.templatesList
     );
-    const [entityForSuggestions, setEntityForSuggestions] = (0, import_element186.useState)({});
-    const [isSubmitting, setIsSubmitting] = (0, import_element186.useState)(false);
+    const [entityForSuggestions, setEntityForSuggestions] = (0, import_element187.useState)({});
+    const [isSubmitting, setIsSubmitting] = (0, import_element187.useState)(false);
     const missingTemplates = useMissingTemplates(
       setEntityForSuggestions,
       () => setModalContent(modalContentMap.customTemplate)
     );
-    const history = useHistory21();
-    const { saveEntityRecord } = (0, import_data77.useDispatch)(import_core_data57.store);
-    const { createErrorNotice, createSuccessNotice } = (0, import_data77.useDispatch)(import_notices8.store);
-    const containerRef = (0, import_element186.useRef)(null);
+    const history = useHistory22();
+    const { saveEntityRecord } = (0, import_data78.useDispatch)(import_core_data57.store);
+    const { createErrorNotice, createSuccessNotice } = (0, import_data78.useDispatch)(import_notices8.store);
+    const containerRef = (0, import_element187.useRef)(null);
     const isMobile = (0, import_compose32.useViewportMatch)("medium", "<");
-    const homeUrl = (0, import_data77.useSelect)((select4) => {
+    const homeUrl = (0, import_data78.useSelect)((select4) => {
       return select4(import_core_data57.store).getEntityRecord("root", "__unstableBase")?.home;
     }, []);
     const TEMPLATE_SHORT_DESCRIPTIONS = {
@@ -57965,7 +58062,7 @@ If there's a particular need for this, please submit a feature request at https:
         homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
       )
     };
-    (0, import_element186.useEffect)(() => {
+    (0, import_element187.useEffect)(() => {
       if (containerRef.current && modalContent === modalContentMap.templatesList) {
         const [firstFocusable] = import_dom26.focus.focusable.find(
           containerRef.current
@@ -58116,8 +58213,8 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function NewTemplate() {
-    const [showModal, setShowModal] = (0, import_element186.useState)(false);
-    const { postType: postType2 } = (0, import_data77.useSelect)((select4) => {
+    const [showModal, setShowModal] = (0, import_element187.useState)(false);
+    const { postType: postType2 } = (0, import_data78.useSelect)((select4) => {
       const { getPostType: getPostType2 } = select4(import_core_data57.store);
       return {
         postType: getPostType2(TEMPLATE_POST_TYPE)
@@ -58182,22 +58279,22 @@ If there's a particular need for this, please submit a feature request at https:
     ];
     return missingTemplates;
   }
-  var add_new_template_default = (0, import_element186.memo)(NewTemplate);
+  var add_new_template_default = (0, import_element187.memo)(NewTemplate);
 
   // packages/edit-site/build-module/components/page-templates/fields.mjs
   var import_components149 = __toESM(require_components(), 1);
   var import_i18n148 = __toESM(require_i18n(), 1);
-  var import_element187 = __toESM(require_element(), 1);
+  var import_element188 = __toESM(require_element(), 1);
   var import_html_entities12 = __toESM(require_html_entities(), 1);
   var import_blocks13 = __toESM(require_blocks(), 1);
   var import_block_editor27 = __toESM(require_block_editor(), 1);
-  var import_editor31 = __toESM(require_editor(), 1);
+  var import_editor32 = __toESM(require_editor(), 1);
   var import_core_data58 = __toESM(require_core_data(), 1);
-  var import_data78 = __toESM(require_data(), 1);
+  var import_data79 = __toESM(require_data(), 1);
   var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
   var { Badge: WCBadge4 } = unlock(import_components149.privateApis);
   var { useEntityRecordsWithPermissions } = unlock(import_core_data58.privateApis);
-  var { useStyle: useStyle5 } = unlock(import_editor31.privateApis);
+  var { useStyle: useStyle5 } = unlock(import_editor32.privateApis);
   function useAllDefaultTemplateTypes() {
     const defaultTemplateTypes = useDefaultTemplateTypes();
     const { records: staticRecords } = useEntityRecordsWithPermissions(
@@ -58218,11 +58315,11 @@ If there's a particular need for this, please submit a feature request at https:
   function PreviewField2({ item }) {
     const settings2 = usePatternSettings();
     const backgroundColor = useStyle5("color.background") ?? "white";
-    const blocks = (0, import_element187.useMemo)(() => {
+    const blocks = (0, import_element188.useMemo)(() => {
       return (0, import_blocks13.parse)(item.content.raw);
     }, [item.content.raw]);
     const isEmpty2 = !blocks?.length;
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(import_editor31.EditorProvider, { post: item, settings: settings2, children: /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(import_editor32.EditorProvider, { post: item, settings: settings2, children: /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)(
       "div",
       {
         className: "page-templates-preview-field",
@@ -58256,7 +58353,7 @@ If there's a particular need for this, please submit a feature request at https:
     enableGlobalSearch: true
   };
   function AuthorField({ item }) {
-    const [isImageLoaded, setIsImageLoaded] = (0, import_element187.useState)(false);
+    const [isImageLoaded, setIsImageLoaded] = (0, import_element188.useState)(false);
     const { text, icon, imageUrl } = useAddedBy(item.type, item.id);
     return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)(import_components149.__experimentalHStack, { alignment: "left", spacing: 0, children: [
       imageUrl && /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(
@@ -58298,10 +58395,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
   var useThemeField = () => {
-    const activeTheme = (0, import_data78.useSelect)(
+    const activeTheme = (0, import_data79.useSelect)(
       (select4) => select4(import_core_data58.store).getCurrentTheme()
     );
-    return (0, import_element187.useMemo)(
+    return (0, import_element188.useMemo)(
       () => ({
         label: (0, import_i18n148.__)("Compatible Theme"),
         id: "theme",
@@ -58378,16 +58475,16 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-templates/index.mjs
   var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
-  var { usePostActions: usePostActions2, usePostFields: usePostFields2, templateTitleField } = unlock(import_editor32.privateApis);
-  var { useHistory: useHistory22, useLocation: useLocation29 } = unlock(import_router33.privateApis);
+  var { usePostActions: usePostActions2, usePostFields: usePostFields2, templateTitleField } = unlock(import_editor33.privateApis);
+  var { useHistory: useHistory23, useLocation: useLocation30 } = unlock(import_router34.privateApis);
   var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions2 } = unlock(import_core_data59.privateApis);
   function PageTemplates() {
-    const { path, query } = useLocation29();
+    const { path, query } = useLocation30();
     const { activeView = "active", postId } = query;
-    const [selection, setSelection] = (0, import_element188.useState)([postId]);
-    const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element188.useState)(false);
+    const [selection, setSelection] = (0, import_element189.useState)([postId]);
+    const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element189.useState)(false);
     const defaultView = DEFAULT_VIEW;
-    const activeViewOverrides = (0, import_element188.useMemo)(
+    const activeViewOverrides = (0, import_element189.useMemo)(
       () => getActiveViewOverridesForTab(activeView),
       [activeView]
     );
@@ -58403,7 +58500,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       onChangeQueryParams: (newQueryParams) => {
         history.navigate(
-          (0, import_url21.addQueryArgs)(path, {
+          (0, import_url22.addQueryArgs)(path, {
             ...query,
             pageNumber: newQueryParams.page,
             search: newQueryParams.search || void 0
@@ -58411,7 +58508,7 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     });
-    const { activeTemplatesOption, activeTheme, defaultTemplateTypes } = (0, import_data79.useSelect)((select4) => {
+    const { activeTemplatesOption, activeTheme, defaultTemplateTypes } = (0, import_data80.useSelect)((select4) => {
       const { getEntityRecord, getCurrentTheme } = select4(import_core_data59.store);
       return {
         activeTemplatesOption: getEntityRecord("root", "site")?.active_templates,
@@ -58429,7 +58526,7 @@ If there's a particular need for this, please submit a feature request at https:
       // for entity configs.
       per_page: -1
     });
-    const activeTemplates = (0, import_element188.useMemo)(() => {
+    const activeTemplates = (0, import_element189.useMemo)(() => {
       const _active = [...staticRecords];
       if (activeTemplatesOption) {
         for (const activeSlug in activeTemplatesOption) {
@@ -58459,7 +58556,7 @@ If there's a particular need for this, please submit a feature request at https:
     } else {
       isLoadingData = isLoadingStaticData;
     }
-    const records = (0, import_element188.useMemo)(() => {
+    const records = (0, import_element189.useMemo)(() => {
       function isCustom(record) {
         return record.is_custom ?? // For user templates it's custom if the is_wp_suggestion meta
         // field is not set and the slug is not found in the default
@@ -58492,7 +58589,7 @@ If there's a particular need for this, please submit a feature request at https:
       staticRecords,
       activeView
     ]);
-    const users = (0, import_data79.useSelect)(
+    const users = (0, import_data80.useSelect)(
       (select4) => {
         const { getUser } = select4(import_core_data59.store);
         return records.reduce((acc, record) => {
@@ -58510,13 +58607,13 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [records]
     );
-    const history = useHistory22();
-    const onChangeSelection = (0, import_element188.useCallback)(
+    const history = useHistory23();
+    const onChangeSelection = (0, import_element189.useCallback)(
       (items) => {
         setSelection(items);
         if (view?.type === "list") {
           history.navigate(
-            (0, import_url21.addQueryArgs)(path, {
+            (0, import_url22.addQueryArgs)(path, {
               postId: items.length === 1 ? items[0] : void 0
             })
           );
@@ -58529,7 +58626,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const dateField = postTypeFields.find((field) => field.id === "date");
     const themeField = useThemeField();
-    const fields2 = (0, import_element188.useMemo)(() => {
+    const fields2 = (0, import_element189.useMemo)(() => {
       const _fields = [
         previewField2,
         templateTitleField,
@@ -58556,11 +58653,11 @@ If there's a particular need for this, please submit a feature request at https:
       });
       return _fields;
     }, [users, activeView, themeField, dateField]);
-    const { data, paginationInfo } = (0, import_element188.useMemo)(() => {
+    const { data, paginationInfo } = (0, import_element189.useMemo)(() => {
       return filterSortAndPaginate(records, view, fields2);
     }, [records, view, fields2]);
-    const { createSuccessNotice } = (0, import_data79.useDispatch)(import_notices9.store);
-    const onActionPerformed = (0, import_element188.useCallback)(
+    const { createSuccessNotice } = (0, import_data80.useDispatch)(import_notices9.store);
+    const onActionPerformed = (0, import_element189.useCallback)(
       (actionId, items) => {
         switch (actionId) {
           case "duplicate-post":
@@ -58602,7 +58699,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const editAction = useEditPostAction();
     const setActiveTemplateAction = useSetActiveTemplateAction();
-    const actions = (0, import_element188.useMemo)(
+    const actions = (0, import_element189.useMemo)(
       () => activeView === "user" ? [setActiveTemplateAction, editAction, ...postTypeActions] : [setActiveTemplateAction, ...postTypeActions],
       [postTypeActions, setActiveTemplateAction, editAction, activeView]
     );
@@ -58675,42 +58772,42 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-templates/index-legacy.mjs
   var import_i18n154 = __toESM(require_i18n(), 1);
-  var import_element193 = __toESM(require_element(), 1);
+  var import_element194 = __toESM(require_element(), 1);
   var import_core_data63 = __toESM(require_core_data(), 1);
-  var import_router35 = __toESM(require_router(), 1);
-  var import_editor33 = __toESM(require_editor(), 1);
-  var import_url24 = __toESM(require_url(), 1);
+  var import_router36 = __toESM(require_router(), 1);
+  var import_editor34 = __toESM(require_editor(), 1);
+  var import_url25 = __toESM(require_url(), 1);
   var import_compose36 = __toESM(require_compose(), 1);
 
   // packages/edit-site/build-module/components/add-new-template-legacy/index.mjs
   var import_components153 = __toESM(require_components(), 1);
   var import_html_entities16 = __toESM(require_html_entities(), 1);
-  var import_element192 = __toESM(require_element(), 1);
-  var import_data81 = __toESM(require_data(), 1);
+  var import_element193 = __toESM(require_element(), 1);
+  var import_data82 = __toESM(require_data(), 1);
   var import_core_data62 = __toESM(require_core_data(), 1);
   var import_compose35 = __toESM(require_compose(), 1);
   var import_i18n153 = __toESM(require_i18n(), 1);
   var import_notices10 = __toESM(require_notices(), 1);
-  var import_router34 = __toESM(require_router(), 1);
+  var import_router35 = __toESM(require_router(), 1);
   var import_dom28 = __toESM(require_dom(), 1);
 
   // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-template-modal-content.mjs
-  var import_element190 = __toESM(require_element(), 1);
+  var import_element191 = __toESM(require_element(), 1);
   var import_i18n151 = __toESM(require_i18n(), 1);
   var import_components151 = __toESM(require_components(), 1);
   var import_core_data61 = __toESM(require_core_data(), 1);
   var import_html_entities15 = __toESM(require_html_entities(), 1);
   var import_compose34 = __toESM(require_compose(), 1);
   var import_dom27 = __toESM(require_dom(), 1);
-  var import_url23 = __toESM(require_url(), 1);
+  var import_url24 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/add-new-template-legacy/utils.mjs
-  var import_data80 = __toESM(require_data(), 1);
+  var import_data81 = __toESM(require_data(), 1);
   var import_core_data60 = __toESM(require_core_data(), 1);
   var import_html_entities14 = __toESM(require_html_entities(), 1);
-  var import_element189 = __toESM(require_element(), 1);
+  var import_element190 = __toESM(require_element(), 1);
   var import_i18n150 = __toESM(require_i18n(), 1);
-  var import_url22 = __toESM(require_url(), 1);
+  var import_url23 = __toESM(require_url(), 1);
   var EMPTY_OBJECT3 = {};
   var getValueFromObjectPath3 = (object, path) => {
     let value = object;
@@ -58720,7 +58817,7 @@ If there's a particular need for this, please submit a feature request at https:
     return value;
   };
   function prefixSlug2(prefix2, slug) {
-    return `${prefix2}-${(0, import_url22.safeDecodeURI)(slug)}`;
+    return `${prefix2}-${(0, import_url23.safeDecodeURI)(slug)}`;
   }
   var mapToIHasNameAndId2 = (entities, path) => {
     return (entities || []).map((entity) => ({
@@ -58729,7 +58826,7 @@ If there's a particular need for this, please submit a feature request at https:
     }));
   };
   var useExistingTemplates2 = () => {
-    return (0, import_data80.useSelect)(
+    return (0, import_data81.useSelect)(
       (select4) => select4(import_core_data60.store).getEntityRecords(
         "postType",
         TEMPLATE_POST_TYPE,
@@ -58741,17 +58838,17 @@ If there's a particular need for this, please submit a feature request at https:
     );
   };
   var useDefaultTemplateTypes2 = () => {
-    return (0, import_data80.useSelect)(
+    return (0, import_data81.useSelect)(
       (select4) => select4(import_core_data60.store).getCurrentTheme()?.default_template_types || [],
       []
     );
   };
   var usePublicPostTypes2 = () => {
-    const postTypes = (0, import_data80.useSelect)(
+    const postTypes = (0, import_data81.useSelect)(
       (select4) => select4(import_core_data60.store).getPostTypes({ per_page: -1 }),
       []
     );
-    return (0, import_element189.useMemo)(() => {
+    return (0, import_element190.useMemo)(() => {
       const excludedPostTypes = ["attachment"];
       return postTypes?.filter(
         ({ viewable, slug }) => viewable && !excludedPostTypes.includes(slug)
@@ -58764,11 +58861,11 @@ If there's a particular need for this, please submit a feature request at https:
     }, [postTypes]);
   };
   var usePublicTaxonomies2 = () => {
-    const taxonomies = (0, import_data80.useSelect)(
+    const taxonomies = (0, import_data81.useSelect)(
       (select4) => select4(import_core_data60.store).getTaxonomies({ per_page: -1 }),
       []
     );
-    return (0, import_element189.useMemo)(() => {
+    return (0, import_element190.useMemo)(() => {
       return taxonomies?.filter(
         ({ visibility }) => visibility?.publicly_queryable
       );
@@ -58776,12 +58873,12 @@ If there's a particular need for this, please submit a feature request at https:
   };
   function usePostTypeArchiveMenuItems2() {
     const publicPostTypes = usePublicPostTypes2();
-    const postTypesWithArchives = (0, import_element189.useMemo)(
+    const postTypesWithArchives = (0, import_element190.useMemo)(
       () => publicPostTypes?.filter((postType2) => postType2.has_archive),
       [publicPostTypes]
     );
     const existingTemplates = useExistingTemplates2();
-    const postTypeLabels = (0, import_element189.useMemo)(
+    const postTypeLabels = (0, import_element190.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { labels }) => {
         const singularName = labels.singular_name.toLowerCase();
         accumulator[singularName] = (accumulator[singularName] || 0) + 1;
@@ -58789,14 +58886,14 @@ If there's a particular need for this, please submit a feature request at https:
       }, {}),
       [publicPostTypes]
     );
-    const needsUniqueIdentifier = (0, import_element189.useCallback)(
+    const needsUniqueIdentifier = (0, import_element190.useCallback)(
       ({ labels, slug }) => {
         const singularName = labels.singular_name.toLowerCase();
         return postTypeLabels[singularName] > 1 && singularName !== slug;
       },
       [postTypeLabels]
     );
-    return (0, import_element189.useMemo)(
+    return (0, import_element190.useMemo)(
       () => postTypesWithArchives?.filter(
         (postType2) => !(existingTemplates || []).some(
           (existingTemplate) => existingTemplate.slug === "archive-" + postType2.slug
@@ -58841,7 +58938,7 @@ If there's a particular need for this, please submit a feature request at https:
     const publicPostTypes = usePublicPostTypes2();
     const existingTemplates = useExistingTemplates2();
     const defaultTemplateTypes = useDefaultTemplateTypes2();
-    const templateLabels = (0, import_element189.useMemo)(
+    const templateLabels = (0, import_element190.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { labels }) => {
         const templateName = (labels.template_name || labels.singular_name).toLowerCase();
         accumulator[templateName] = (accumulator[templateName] || 0) + 1;
@@ -58849,14 +58946,14 @@ If there's a particular need for this, please submit a feature request at https:
       }, {}),
       [publicPostTypes]
     );
-    const needsUniqueIdentifier = (0, import_element189.useCallback)(
+    const needsUniqueIdentifier = (0, import_element190.useCallback)(
       ({ labels, slug }) => {
         const templateName = (labels.template_name || labels.singular_name).toLowerCase();
         return templateLabels[templateName] > 1 && templateName !== slug;
       },
       [templateLabels]
     );
-    const templatePrefixes = (0, import_element189.useMemo)(
+    const templatePrefixes = (0, import_element190.useMemo)(
       () => publicPostTypes?.reduce((accumulator, { slug }) => {
         let suffix = slug;
         if (slug !== "page") {
@@ -58958,7 +59055,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const postTypesMenuItems = (0, import_element189.useMemo)(
+    const postTypesMenuItems = (0, import_element190.useMemo)(
       () => menuItems.reduce(
         (accumulator, postType2) => {
           const { slug } = postType2;
@@ -58979,7 +59076,7 @@ If there's a particular need for this, please submit a feature request at https:
     const publicTaxonomies = usePublicTaxonomies2();
     const existingTemplates = useExistingTemplates2();
     const defaultTemplateTypes = useDefaultTemplateTypes2();
-    const templatePrefixes = (0, import_element189.useMemo)(
+    const templatePrefixes = (0, import_element190.useMemo)(
       () => publicTaxonomies?.reduce((accumulator, { slug }) => {
         let suffix = slug;
         if (!["category", "post_tag"].includes(slug)) {
@@ -59091,7 +59188,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const taxonomiesMenuItems = (0, import_element189.useMemo)(
+    const taxonomiesMenuItems = (0, import_element190.useMemo)(
       () => menuItems.reduce(
         (accumulator, taxonomy) => {
           const { slug } = taxonomy;
@@ -59177,7 +59274,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var useExistingTemplateSlugs = (templatePrefixes) => {
     const existingTemplates = useExistingTemplates2();
-    const existingSlugs = (0, import_element189.useMemo)(() => {
+    const existingSlugs = (0, import_element190.useMemo)(() => {
       return Object.entries(templatePrefixes || {}).reduce(
         (accumulator, [slug, prefix2]) => {
           const slugsWithTemplates = (existingTemplates || []).reduce(
@@ -59206,7 +59303,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var useTemplatesToExclude = (entityName, templatePrefixes, additionalQueryParameters = {}) => {
     const slugsToExcludePerEntity = useExistingTemplateSlugs(templatePrefixes);
-    const recordsToExcludePerEntity = (0, import_data80.useSelect)(
+    const recordsToExcludePerEntity = (0, import_data81.useSelect)(
       (select4) => {
         return Object.entries(slugsToExcludePerEntity || {}).reduce(
           (accumulator, [slug, slugsWithTemplates]) => {
@@ -59236,7 +59333,7 @@ If there's a particular need for this, please submit a feature request at https:
       templatePrefixes,
       additionalQueryParameters
     );
-    const entitiesHasRecords = (0, import_data80.useSelect)(
+    const entitiesHasRecords = (0, import_data81.useSelect)(
       (select4) => {
         return Object.keys(templatePrefixes || {}).reduce(
           (accumulator, slug) => {
@@ -59267,7 +59364,7 @@ If there's a particular need for this, please submit a feature request at https:
         additionalQueryParameters
       ]
     );
-    const entitiesInfo = (0, import_element189.useMemo)(() => {
+    const entitiesInfo = (0, import_element190.useMemo)(() => {
       return Object.keys(templatePrefixes || {}).reduce(
         (accumulator, slug) => {
           const existingEntitiesIds = recordsToExcludePerEntity?.[slug]?.map(
@@ -59334,7 +59431,7 @@ If there's a particular need for this, please submit a feature request at https:
               size: "body",
               lineHeight: 1.53846153846,
               className: `${baseCssClass}__info`,
-              children: (0, import_url23.safeDecodeURI)(suggestion.link)
+              children: (0, import_url24.safeDecodeURI)(suggestion.link)
             }
           )
         ]
@@ -59343,7 +59440,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useSearchSuggestions2(entityForSuggestions, search) {
     const { config: config2 } = entityForSuggestions;
-    const query = (0, import_element190.useMemo)(
+    const query = (0, import_element191.useMemo)(
       () => ({
         order: "asc",
         context: "view",
@@ -59358,8 +59455,8 @@ If there's a particular need for this, please submit a feature request at https:
       entityForSuggestions.slug,
       query
     );
-    const [suggestions, setSuggestions] = (0, import_element190.useState)(EMPTY_ARRAY15);
-    (0, import_element190.useEffect)(() => {
+    const [suggestions, setSuggestions] = (0, import_element191.useState)(EMPTY_ARRAY15);
+    (0, import_element191.useEffect)(() => {
       if (!searchHasResolved) {
         return;
       }
@@ -59384,7 +59481,7 @@ If there's a particular need for this, please submit a feature request at https:
       debouncedSearch
     );
     const { labels } = entityForSuggestions;
-    const [showSearchControl, setShowSearchControl] = (0, import_element190.useState)(false);
+    const [showSearchControl, setShowSearchControl] = (0, import_element191.useState)(false);
     if (!showSearchControl && suggestions?.length > 9) {
       setShowSearchControl(true);
     }
@@ -59433,10 +59530,10 @@ If there's a particular need for this, please submit a feature request at https:
     onBack,
     containerRef
   }) {
-    const [showSearchEntities, setShowSearchEntities] = (0, import_element190.useState)(
+    const [showSearchEntities, setShowSearchEntities] = (0, import_element191.useState)(
       entityForSuggestions.hasGeneralTemplate
     );
-    (0, import_element190.useEffect)(() => {
+    (0, import_element191.useEffect)(() => {
       if (containerRef.current) {
         const [firstFocusable] = import_dom27.focus.focusable.find(
           containerRef.current
@@ -59580,16 +59677,16 @@ If there's a particular need for this, please submit a feature request at https:
   var add_custom_template_modal_content_default2 = AddCustomTemplateModalContent2;
 
   // packages/edit-site/build-module/components/add-new-template-legacy/add-custom-generic-template-modal-content.mjs
-  var import_element191 = __toESM(require_element(), 1);
+  var import_element192 = __toESM(require_element(), 1);
   var import_i18n152 = __toESM(require_i18n(), 1);
   var import_components152 = __toESM(require_components(), 1);
   var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
   function AddCustomGenericTemplateModalContent2({ createTemplate, onBack }) {
-    const [title, setTitle] = (0, import_element191.useState)("");
+    const [title, setTitle] = (0, import_element192.useState)("");
     const defaultTitle = (0, import_i18n152.__)("Custom Template");
-    const [isBusy, setIsBusy] = (0, import_element191.useState)(false);
-    const inputRef = (0, import_element191.useRef)();
-    (0, import_element191.useEffect)(() => {
+    const [isBusy, setIsBusy] = (0, import_element192.useState)(false);
+    const inputRef = (0, import_element192.useRef)();
+    (0, import_element192.useEffect)(() => {
       if (inputRef.current) {
         inputRef.current.focus();
       }
@@ -59663,7 +59760,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/add-new-template-legacy/index.mjs
   var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
-  var { useHistory: useHistory23 } = unlock(import_router34.privateApis);
+  var { useHistory: useHistory24 } = unlock(import_router35.privateApis);
   var DEFAULT_TEMPLATE_SLUGS2 = [
     "front-page",
     "home",
@@ -59754,21 +59851,21 @@ If there's a particular need for this, please submit a feature request at https:
     customGenericTemplate: 3
   };
   function NewTemplateModal2({ onClose }) {
-    const [modalContent, setModalContent] = (0, import_element192.useState)(
+    const [modalContent, setModalContent] = (0, import_element193.useState)(
       modalContentMap2.templatesList
     );
-    const [entityForSuggestions, setEntityForSuggestions] = (0, import_element192.useState)({});
-    const [isSubmitting, setIsSubmitting] = (0, import_element192.useState)(false);
+    const [entityForSuggestions, setEntityForSuggestions] = (0, import_element193.useState)({});
+    const [isSubmitting, setIsSubmitting] = (0, import_element193.useState)(false);
     const missingTemplates = useMissingTemplates2(
       setEntityForSuggestions,
       () => setModalContent(modalContentMap2.customTemplate)
     );
-    const history = useHistory23();
-    const { saveEntityRecord } = (0, import_data81.useDispatch)(import_core_data62.store);
-    const { createErrorNotice, createSuccessNotice } = (0, import_data81.useDispatch)(import_notices10.store);
-    const containerRef = (0, import_element192.useRef)(null);
+    const history = useHistory24();
+    const { saveEntityRecord } = (0, import_data82.useDispatch)(import_core_data62.store);
+    const { createErrorNotice, createSuccessNotice } = (0, import_data82.useDispatch)(import_notices10.store);
+    const containerRef = (0, import_element193.useRef)(null);
     const isMobile = (0, import_compose35.useViewportMatch)("medium", "<");
-    const homeUrl = (0, import_data81.useSelect)((select4) => {
+    const homeUrl = (0, import_data82.useSelect)((select4) => {
       return select4(import_core_data62.store).getEntityRecord("root", "__unstableBase")?.home;
     }, []);
     const TEMPLATE_SHORT_DESCRIPTIONS = {
@@ -59779,7 +59876,7 @@ If there's a particular need for this, please submit a feature request at https:
         homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
       )
     };
-    (0, import_element192.useEffect)(() => {
+    (0, import_element193.useEffect)(() => {
       if (containerRef.current && modalContent === modalContentMap2.templatesList) {
         const [firstFocusable] = import_dom28.focus.focusable.find(
           containerRef.current
@@ -59928,8 +60025,8 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function NewTemplate2() {
-    const [showModal, setShowModal] = (0, import_element192.useState)(false);
-    const { postType: postType2 } = (0, import_data81.useSelect)((select4) => {
+    const [showModal, setShowModal] = (0, import_element193.useState)(false);
+    const { postType: postType2 } = (0, import_data82.useSelect)((select4) => {
       const { getPostType: getPostType2 } = select4(import_core_data62.store);
       return {
         postType: getPostType2(TEMPLATE_POST_TYPE)
@@ -59998,18 +60095,18 @@ If there's a particular need for this, please submit a feature request at https:
     ];
     return missingTemplates;
   }
-  var add_new_template_legacy_default = (0, import_element192.memo)(NewTemplate2);
+  var add_new_template_legacy_default = (0, import_element193.memo)(NewTemplate2);
 
   // packages/edit-site/build-module/components/page-templates/index-legacy.mjs
   var import_jsx_runtime325 = __toESM(require_jsx_runtime(), 1);
-  var { usePostActions: usePostActions3, usePostFields: usePostFields3 } = unlock(import_editor33.privateApis);
-  var { useHistory: useHistory24, useLocation: useLocation30 } = unlock(import_router35.privateApis);
+  var { usePostActions: usePostActions3, usePostFields: usePostFields3 } = unlock(import_editor34.privateApis);
+  var { useHistory: useHistory25, useLocation: useLocation31 } = unlock(import_router36.privateApis);
   var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions3 } = unlock(import_core_data63.privateApis);
   var VIEW_CONFIG_FIELDS4 = ["default_view", "default_layouts", "view_list"];
   function PageTemplates2() {
-    const { path, query } = useLocation30();
+    const { path, query } = useLocation31();
     const { activeView = "all", postId } = query;
-    const [selection, setSelection] = (0, import_element193.useState)([postId]);
+    const [selection, setSelection] = (0, import_element194.useState)([postId]);
     const {
       default_view: defaultView,
       default_layouts: defaultLayouts2,
@@ -60019,7 +60116,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: TEMPLATE_POST_TYPE,
       fields: VIEW_CONFIG_FIELDS4
     });
-    const activeViewOverrides = (0, import_element193.useMemo)(
+    const activeViewOverrides = (0, import_element194.useMemo)(
       () => viewList?.find((v2) => v2.slug === activeView)?.view ?? {},
       [viewList, activeView]
     );
@@ -60036,7 +60133,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       onChangeQueryParams: (newQueryParams) => {
         history.navigate(
-          (0, import_url24.addQueryArgs)(path, {
+          (0, import_url25.addQueryArgs)(path, {
             ...query,
             pageNumber: newQueryParams.page,
             search: newQueryParams.search || void 0
@@ -60047,13 +60144,13 @@ If there's a particular need for this, please submit a feature request at https:
     const { records, isResolving: isLoadingData } = useEntityRecordsWithPermissions3("postType", TEMPLATE_POST_TYPE, {
       per_page: -1
     });
-    const history = useHistory24();
-    const onChangeSelection = (0, import_element193.useCallback)(
+    const history = useHistory25();
+    const onChangeSelection = (0, import_element194.useCallback)(
       (items) => {
         setSelection(items);
         if (view?.type === "list") {
           history.navigate(
-            (0, import_url24.addQueryArgs)(path, {
+            (0, import_url25.addQueryArgs)(path, {
               postId: items.length === 1 ? items[0] : void 0
             })
           );
@@ -60062,10 +60159,10 @@ If there's a particular need for this, please submit a feature request at https:
       [history, path, view?.type]
     );
     const postFields = usePostFields3({ postType: TEMPLATE_POST_TYPE });
-    const fields2 = (0, import_element193.useMemo)(() => {
+    const fields2 = (0, import_element194.useMemo)(() => {
       return [previewField2, ...postFields || []];
     }, [postFields]);
-    const { data, paginationInfo } = (0, import_element193.useMemo)(() => {
+    const { data, paginationInfo } = (0, import_element194.useMemo)(() => {
       return filterSortAndPaginate(records, view, fields2);
     }, [records, view, fields2]);
     const postTypeActions = usePostActions3({
@@ -60073,7 +60170,7 @@ If there's a particular need for this, please submit a feature request at https:
       context: "list"
     });
     const editAction = useEditPostAction();
-    const actions = (0, import_element193.useMemo)(
+    const actions = (0, import_element194.useMemo)(
       () => [editAction, ...postTypeActions],
       [postTypeActions, editAction]
     );
@@ -60122,7 +60219,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
   async function isTemplateListView(query) {
     const { activeView = "active" } = query;
-    const config2 = await unlock((0, import_data82.resolveSelect)(import_core_data64.store)).getViewConfig(
+    const config2 = await unlock((0, import_data83.resolveSelect)(import_core_data64.store)).getViewConfig(
       "postType",
       "wp_template"
     );
@@ -60213,39 +60310,39 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/site-editor-routes/pages.mjs
   var import_i18n157 = __toESM(require_i18n(), 1);
-  var import_data86 = __toESM(require_data(), 1);
+  var import_data87 = __toESM(require_data(), 1);
   var import_core_data69 = __toESM(require_core_data(), 1);
 
   // packages/edit-site/build-module/components/post-list/index.mjs
   var import_components156 = __toESM(require_components(), 1);
   var import_core_data68 = __toESM(require_core_data(), 1);
-  var import_element197 = __toESM(require_element(), 1);
-  var import_router36 = __toESM(require_router(), 1);
-  var import_data85 = __toESM(require_data(), 1);
-  var import_editor37 = __toESM(require_editor(), 1);
+  var import_element198 = __toESM(require_element(), 1);
+  var import_router37 = __toESM(require_router(), 1);
+  var import_data86 = __toESM(require_data(), 1);
+  var import_editor38 = __toESM(require_editor(), 1);
   var import_compose37 = __toESM(require_compose(), 1);
-  var import_url25 = __toESM(require_url(), 1);
+  var import_url26 = __toESM(require_url(), 1);
 
   // packages/edit-site/build-module/components/add-new-post/index.mjs
   var import_components154 = __toESM(require_components(), 1);
   var import_i18n155 = __toESM(require_i18n(), 1);
-  var import_data83 = __toESM(require_data(), 1);
-  var import_element194 = __toESM(require_element(), 1);
+  var import_data84 = __toESM(require_data(), 1);
+  var import_element195 = __toESM(require_element(), 1);
   var import_core_data65 = __toESM(require_core_data(), 1);
   var import_notices11 = __toESM(require_notices(), 1);
   var import_html_entities17 = __toESM(require_html_entities(), 1);
   var import_blocks14 = __toESM(require_blocks(), 1);
   var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
   function AddNewPostModal({ postType: postType2, onSave, onClose }) {
-    const labels = (0, import_data83.useSelect)(
+    const labels = (0, import_data84.useSelect)(
       (select4) => select4(import_core_data65.store).getPostType(postType2)?.labels,
       [postType2]
     );
-    const [isCreatingPost, setIsCreatingPost] = (0, import_element194.useState)(false);
-    const [title, setTitle] = (0, import_element194.useState)("");
-    const { saveEntityRecord } = (0, import_data83.useDispatch)(import_core_data65.store);
-    const { createErrorNotice, createSuccessNotice } = (0, import_data83.useDispatch)(import_notices11.store);
-    const { resolveSelect: resolveSelect4 } = (0, import_data83.useRegistry)();
+    const [isCreatingPost, setIsCreatingPost] = (0, import_element195.useState)(false);
+    const [title, setTitle] = (0, import_element195.useState)("");
+    const { saveEntityRecord } = (0, import_data84.useDispatch)(import_core_data65.store);
+    const { createErrorNotice, createSuccessNotice } = (0, import_data84.useDispatch)(import_notices11.store);
+    const { resolveSelect: resolveSelect4 } = (0, import_data84.useRegistry)();
     async function createPost(event) {
       event.preventDefault();
       if (isCreatingPost) {
@@ -60336,7 +60433,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/post-list/use-notes-count.mjs
-  var import_element195 = __toESM(require_element(), 1);
+  var import_element196 = __toESM(require_element(), 1);
   var import_core_data66 = __toESM(require_core_data(), 1);
   function useNotesCount(postIds) {
     const { records: notes, isResolving } = (0, import_core_data66.useEntityRecords)(
@@ -60353,7 +60450,7 @@ If there's a particular need for this, please submit a feature request at https:
         enabled: postIds?.length > 0
       }
     );
-    const notesCount = (0, import_element195.useMemo)(() => {
+    const notesCount = (0, import_element196.useMemo)(() => {
       if (!notes || notes.length === 0) {
         return {};
       }
@@ -60369,13 +60466,13 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/post-list/quick-edit-modal.mjs
   var import_i18n156 = __toESM(require_i18n(), 1);
-  var import_data84 = __toESM(require_data(), 1);
+  var import_data85 = __toESM(require_data(), 1);
   var import_core_data67 = __toESM(require_core_data(), 1);
   var import_components155 = __toESM(require_components(), 1);
-  var import_element196 = __toESM(require_element(), 1);
-  var import_editor36 = __toESM(require_editor(), 1);
+  var import_element197 = __toESM(require_element(), 1);
+  var import_editor37 = __toESM(require_editor(), 1);
   var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
-  var { usePostFields: usePostFields4, PostCardPanel } = unlock(import_editor36.privateApis);
+  var { usePostFields: usePostFields4, PostCardPanel } = unlock(import_editor37.privateApis);
   var fieldsWithBulkEditSupport = ["status", "date", "author", "discussion"];
   function QuickEditModal({
     postType: postType2,
@@ -60384,8 +60481,8 @@ If there's a particular need for this, please submit a feature request at https:
     quickEditForm
   }) {
     const isBulk = postId.length > 1;
-    const [localEdits, setLocalEdits] = (0, import_element196.useState)({});
-    const { record, hasFinishedResolution, canSwitchTemplate } = (0, import_data84.useSelect)(
+    const [localEdits, setLocalEdits] = (0, import_element197.useState)({});
+    const { record, hasFinishedResolution, canSwitchTemplate } = (0, import_data85.useSelect)(
       (select4) => {
         const {
           getEditedEntityRecord,
@@ -60415,9 +60512,9 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [postType2, postId, isBulk]
     );
-    const { editEntityRecord, saveEditedEntityRecord } = (0, import_data84.useDispatch)(import_core_data67.store);
+    const { editEntityRecord, saveEditedEntityRecord } = (0, import_data85.useDispatch)(import_core_data67.store);
     const _fields = usePostFields4({ postType: postType2 });
-    const fields2 = (0, import_element196.useMemo)(
+    const fields2 = (0, import_element197.useMemo)(
       () => _fields?.map((field) => {
         if (field.id === "status") {
           return {
@@ -60437,7 +60534,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [_fields, canSwitchTemplate]
     );
-    const form2 = (0, import_element196.useMemo)(() => {
+    const form2 = (0, import_element197.useMemo)(() => {
       if (!quickEditForm) {
         return { layout: { type: "panel" }, fields: [] };
       }
@@ -60463,7 +60560,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       setLocalEdits((prev) => ({ ...prev, ...edits }));
     };
-    (0, import_element196.useEffect)(() => {
+    (0, import_element197.useEffect)(() => {
       setLocalEdits({});
     }, [postId]);
     const onSave = async () => {
@@ -60533,8 +60630,8 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/post-list/index.mjs
   var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
-  var { usePostActions: usePostActions4, usePostFields: usePostFields5 } = unlock(import_editor37.privateApis);
-  var { useLocation: useLocation31, useHistory: useHistory25 } = unlock(import_router36.privateApis);
+  var { usePostActions: usePostActions4, usePostFields: usePostFields5 } = unlock(import_editor38.privateApis);
+  var { useLocation: useLocation32, useHistory: useHistory26 } = unlock(import_router37.privateApis);
   var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions4 } = unlock(import_core_data68.privateApis);
   var EMPTY_ARRAY16 = [];
   var DEFAULT_STATUSES = "draft,future,pending,private,publish";
@@ -60545,9 +60642,9 @@ If there's a particular need for this, please submit a feature request at https:
     return item.level;
   }
   function PostList({ postType: postType2 }) {
-    const { path, query } = useLocation31();
+    const { path, query } = useLocation32();
     const { activeView = "all", postId, quickEdit = false } = query;
-    const history = useHistory25();
+    const history = useHistory26();
     const {
       default_view: defaultView,
       default_layouts: defaultLayouts2,
@@ -60557,7 +60654,7 @@ If there's a particular need for this, please submit a feature request at https:
       kind: "postType",
       name: postType2
     });
-    const activeViewOverrides = (0, import_element197.useMemo)(
+    const activeViewOverrides = (0, import_element198.useMemo)(
       () => viewList?.find((v2) => v2.slug === activeView)?.view ?? {},
       [viewList, activeView]
     );
@@ -60574,7 +60671,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       onChangeQueryParams: (newQueryParams) => {
         history.navigate(
-          (0, import_url25.addQueryArgs)(path, {
+          (0, import_url26.addQueryArgs)(path, {
             ...query,
             pageNumber: newQueryParams.page,
             search: newQueryParams.search || void 0
@@ -60588,26 +60685,26 @@ If there's a particular need for this, please submit a feature request at https:
         history.invalidate();
       }
     });
-    const [selection, setSelection] = (0, import_element197.useState)(postId?.split(",") ?? []);
-    const onChangeSelection = (0, import_element197.useCallback)(
+    const [selection, setSelection] = (0, import_element198.useState)(postId?.split(",") ?? []);
+    const onChangeSelection = (0, import_element198.useCallback)(
       (items) => {
         setSelection(items);
         history.navigate(
-          (0, import_url25.addQueryArgs)(path, {
+          (0, import_url26.addQueryArgs)(path, {
             postId: items.join(",")
           })
         );
       },
       [path, history]
     );
-    (0, import_element197.useEffect)(() => {
+    (0, import_element198.useEffect)(() => {
       const newSelection = postId?.split(",") ?? [];
       setSelection(newSelection);
     }, [postId]);
     const fields2 = usePostFields5({
       postType: postType2
     });
-    const queryArgs = (0, import_element197.useMemo)(() => {
+    const queryArgs = (0, import_element198.useMemo)(() => {
       const filters = {};
       view.filters?.forEach((filter) => {
         if (filter.field === "status" && filter.operator === OPERATOR_IS_ANY) {
@@ -60650,12 +60747,12 @@ If there's a particular need for this, please submit a feature request at https:
       totalPages,
       hasResolved
     } = useEntityRecordsWithPermissions4("postType", postType2, queryArgs);
-    const postIds = (0, import_element197.useMemo)(
+    const postIds = (0, import_element198.useMemo)(
       () => records?.map((record) => record.id) ?? [],
       [records]
     );
     const { notesCount, isLoading: isLoadingNotesCount } = useNotesCount(postIds);
-    const data = (0, import_element197.useMemo)(() => {
+    const data = (0, import_element198.useMemo)(() => {
       let processedRecords = records;
       if (view?.sort?.field === "author") {
         processedRecords = filterSortAndPaginate(
@@ -60676,23 +60773,23 @@ If there's a particular need for this, please submit a feature request at https:
     const prevIds = (0, import_compose37.usePrevious)(ids) ?? [];
     const deletedIds = prevIds.filter((id) => !ids.includes(id));
     const postIdWasDeleted = deletedIds.includes(postId);
-    (0, import_element197.useEffect)(() => {
+    (0, import_element198.useEffect)(() => {
       if (postIdWasDeleted) {
         history.navigate(
-          (0, import_url25.addQueryArgs)(path, {
+          (0, import_url26.addQueryArgs)(path, {
             postId: void 0
           })
         );
       }
     }, [history, postIdWasDeleted, path]);
-    const paginationInfo = (0, import_element197.useMemo)(
+    const paginationInfo = (0, import_element198.useMemo)(
       () => ({
         totalItems,
         totalPages
       }),
       [totalItems, totalPages]
     );
-    const { labels, canCreateRecord } = (0, import_data85.useSelect)(
+    const { labels, canCreateRecord } = (0, import_data86.useSelect)(
       (select4) => {
         const { getPostType: getPostType2, canUser } = select4(import_core_data68.store);
         return {
@@ -60711,14 +60808,14 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const editAction = useEditPostAction();
     const quickEditAction = useQuickEditPostAction();
-    const actions = (0, import_element197.useMemo)(() => {
+    const actions = (0, import_element198.useMemo)(() => {
       if (view.type === LAYOUT_LIST) {
         const editActionPrimary = { ...editAction, isPrimary: true };
         return [editActionPrimary, ...postTypeActions];
       }
       return [editAction, quickEditAction, ...postTypeActions];
     }, [view.type, editAction, quickEditAction, postTypeActions]);
-    const [showAddPostModal, setShowAddPostModal] = (0, import_element197.useState)(false);
+    const [showAddPostModal, setShowAddPostModal] = (0, import_element198.useState)(false);
     const openModal = () => setShowAddPostModal(true);
     const closeModal = () => setShowAddPostModal(false);
     const handleNewPage = ({ type, id }) => {
@@ -60727,7 +60824,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const closeQuickEditModal = () => {
       history.navigate(
-        (0, import_url25.addQueryArgs)(path, {
+        (0, import_url26.addQueryArgs)(path, {
           ...query,
           quickEdit: void 0
         })
@@ -60803,7 +60900,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
   async function isListView(query) {
     const { activeView = "all" } = query;
-    const config2 = await unlock((0, import_data86.resolveSelect)(import_core_data69.store)).getViewConfig(
+    const config2 = await unlock((0, import_data87.resolveSelect)(import_core_data69.store)).getViewConfig(
       "postType",
       "page"
     );
@@ -60900,9 +60997,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/site-editor-routes/stylebook.mjs
   var import_i18n159 = __toESM(require_i18n(), 1);
-  var import_editor40 = __toESM(require_editor(), 1);
+  var import_editor41 = __toESM(require_editor(), 1);
   var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
-  var { StyleBookPreview: StyleBookPreview2 } = unlock(import_editor40.privateApis);
+  var { StyleBookPreview: StyleBookPreview2 } = unlock(import_editor41.privateApis);
   var stylebookRoute = {
     name: "stylebook",
     path: "/stylebook",
@@ -60985,9 +61082,9 @@ If there's a particular need for this, please submit a feature request at https:
     notFoundRoute
   ];
   function useRegisterSiteEditorRoutes() {
-    const registry = (0, import_data87.useRegistry)();
-    const { registerRoute: registerRoute2 } = unlock((0, import_data87.useDispatch)(store));
-    (0, import_element198.useEffect)(() => {
+    const registry = (0, import_data88.useRegistry)();
+    const { registerRoute: registerRoute2 } = unlock((0, import_data88.useDispatch)(store));
+    (0, import_element199.useEffect)(() => {
       registry.batch(() => {
         routes2.forEach(registerRoute2);
       });
@@ -60996,7 +61093,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/app/index.mjs
   var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
-  var { RouterProvider } = unlock(import_router37.privateApis);
+  var { RouterProvider } = unlock(import_router38.privateApis);
   function AppLayout() {
     useCommonCommands();
     useSetCommandContext();
@@ -61004,7 +61101,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function App() {
     useRegisterSiteEditorRoutes();
-    const { routes: routes3, currentTheme, editorSettings } = (0, import_data88.useSelect)((select4) => {
+    const { routes: routes3, currentTheme, editorSettings } = (0, import_data89.useSelect)((select4) => {
       return {
         routes: unlock(select4(store)).getRoutes(),
         currentTheme: select4(import_core_data70.store).getCurrentTheme(),
@@ -61012,7 +61109,7 @@ If there's a particular need for this, please submit a feature request at https:
         editorSettings: select4(store).getSettings()
       };
     }, []);
-    const beforeNavigate = (0, import_element199.useCallback)(({ path, query }) => {
+    const beforeNavigate = (0, import_element200.useCallback)(({ path, query }) => {
       if (!isPreviewingTheme()) {
         return { path, query };
       }
@@ -61024,7 +61121,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       };
     }, []);
-    const matchResolverArgsValue = (0, import_element199.useMemo)(
+    const matchResolverArgsValue = (0, import_element200.useMemo)(
       () => ({
         siteData: { currentTheme, editorSettings }
       }),
@@ -61043,11 +61140,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/deprecated.mjs
-  var import_editor41 = __toESM(require_editor(), 1);
-  var import_url26 = __toESM(require_url(), 1);
+  var import_editor42 = __toESM(require_editor(), 1);
+  var import_url27 = __toESM(require_url(), 1);
   var import_deprecated5 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime336 = __toESM(require_jsx_runtime(), 1);
-  var isSiteEditor = (0, import_url26.getPath)(window.location.href)?.includes(
+  var isSiteEditor = (0, import_url27.getPath)(window.location.href)?.includes(
     "site-editor.php"
   );
   var deprecateSlot = (name2) => {
@@ -61061,36 +61158,36 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     deprecateSlot("PluginMoreMenuItem");
-    return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(import_editor41.PluginMoreMenuItem, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(import_editor42.PluginMoreMenuItem, { ...props });
   }
   function PluginSidebar(props) {
     if (!isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginSidebar");
-    return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(import_editor41.PluginSidebar, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(import_editor42.PluginSidebar, { ...props });
   }
   function PluginSidebarMoreMenuItem(props) {
     if (!isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginSidebarMoreMenuItem");
-    return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(import_editor41.PluginSidebarMoreMenuItem, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(import_editor42.PluginSidebarMoreMenuItem, { ...props });
   }
 
   // packages/edit-site/build-module/index.mjs
   var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
-  var { registerCoreBlockBindingsSources } = unlock(import_editor42.privateApis);
+  var { registerCoreBlockBindingsSources } = unlock(import_editor43.privateApis);
   function initializeEditor(id, settings2) {
     const target = document.getElementById(id);
-    const root = (0, import_element200.createRoot)(target);
-    (0, import_data89.dispatch)(import_blocks15.store).reapplyBlockTypeFilters();
+    const root = (0, import_element201.createRoot)(target);
+    (0, import_data90.dispatch)(import_blocks15.store).reapplyBlockTypeFilters();
     const coreBlocks = (0, import_block_library4.__experimentalGetCoreBlocks)().filter(
       ({ name: name2 }) => name2 !== "core/freeform"
     );
     (0, import_block_library4.registerCoreBlocks)(coreBlocks);
     registerCoreBlockBindingsSources();
-    (0, import_data89.dispatch)(import_blocks15.store).setFreeformFallbackBlockName("core/html");
+    (0, import_data90.dispatch)(import_blocks15.store).setFreeformFallbackBlockName("core/html");
     (0, import_widgets.registerLegacyWidgetBlock)({ inserter: false });
     (0, import_widgets.registerWidgetGroupBlock)({ inserter: false });
     if (true) {
@@ -61098,13 +61195,13 @@ If there's a particular need for this, please submit a feature request at https:
         enableFSEBlocks: true
       });
     }
-    (0, import_data89.dispatch)(import_preferences13.store).setDefaults("core/edit-site", {
+    (0, import_data90.dispatch)(import_preferences13.store).setDefaults("core/edit-site", {
       welcomeGuide: true,
       welcomeGuideStyles: true,
       welcomeGuidePage: true,
       welcomeGuideTemplate: true
     });
-    (0, import_data89.dispatch)(import_preferences13.store).setDefaults("core", {
+    (0, import_data90.dispatch)(import_preferences13.store).setDefaults("core", {
       allowRightClickOverrides: true,
       distractionFree: false,
       editorMode: "visual",
@@ -61123,16 +61220,16 @@ If there's a particular need for this, please submit a feature request at https:
       showCollaborationPostSaveNotifications: true
     });
     if (window.__clientSideMediaProcessing) {
-      (0, import_data89.dispatch)(import_preferences13.store).setDefaults("core/media", {
+      (0, import_data90.dispatch)(import_preferences13.store).setDefaults("core/media", {
         requireApproval: true,
         optimizeOnUpload: true
       });
     }
-    (0, import_data89.dispatch)(store).updateSettings(settings2);
+    (0, import_data90.dispatch)(store).updateSettings(settings2);
     window.addEventListener("dragover", (e2) => e2.preventDefault(), false);
     window.addEventListener("drop", (e2) => e2.preventDefault(), false);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(import_element200.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(import_element201.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(App, {}) })
     );
     return root;
   }

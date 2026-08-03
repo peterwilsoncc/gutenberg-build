@@ -1001,7 +1001,7 @@ var wp;
         const path = (0, import_url.getPath)("http://domain.com/" + rawPath) ?? "";
         const performPush = () => {
           const result = beforeNavigate ? beforeNavigate({ path, query }) : { path, query };
-          return history.push(
+          return history[options.replace ? "replace" : "push"](
             {
               search: (0, import_url.buildQueryString)({
                 [pathArg]: result.path,
