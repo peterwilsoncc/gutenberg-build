@@ -27169,124 +27169,116 @@ If there's a particular need for this, please submit a feature request at https:
     return `dataviews-${kind}-${name}-${slug}`;
   }
 
-  // packages/views/build-module/filter-utils.mjs
-  var SCALAR_VALUES = [
-    "titleField",
-    "mediaField",
-    "descriptionField",
-    "showTitle",
-    "showMedia",
-    "showDescription",
-    "showLevels",
-    "infiniteScrollEnabled"
-  ];
-  function mergeActiveViewOverrides(view, activeViewOverrides, defaultView2) {
-    if (!activeViewOverrides) {
-      return view;
-    }
-    let result = view;
-    for (const key of SCALAR_VALUES) {
-      if (key in activeViewOverrides) {
-        result = { ...result, [key]: activeViewOverrides[key] };
-      }
-    }
-    if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
-      const activeFields = new Set(
-        activeViewOverrides.filters.map((f2) => f2.field)
-      );
-      const preserved = (view.filters ?? []).filter(
-        (f2) => !activeFields.has(f2.field)
-      );
-      result = {
-        ...result,
-        filters: [...preserved, ...activeViewOverrides.filters]
-      };
-    }
-    if (activeViewOverrides.sort) {
-      const isDefaultSort = defaultView2 && view.sort?.field === defaultView2.sort?.field && view.sort?.direction === defaultView2.sort?.direction;
-      if (isDefaultSort) {
-        result = {
-          ...result,
-          sort: activeViewOverrides.sort
-        };
-      }
-    }
-    if (activeViewOverrides.layout) {
-      result = {
-        ...result,
-        layout: {
-          ...result.layout,
-          ...activeViewOverrides.layout
-        }
-      };
-    }
-    if (activeViewOverrides.groupBy) {
-      result = {
-        ...result,
-        groupBy: activeViewOverrides.groupBy
-      };
-    }
-    return result;
+  // packages/views/build-module/resolve-view.mjs
+  var QUERY_PARAMS = ["page", "search"];
+  function isPlainObject2(value) {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
   }
-  function stripActiveViewOverrides(view, activeViewOverrides, defaultView2) {
-    if (!activeViewOverrides) {
-      return view;
-    }
-    let result = view;
-    for (const key of SCALAR_VALUES) {
-      if (key in activeViewOverrides) {
-        const { [key]: _, ...rest } = result;
-        result = rest;
-      }
-    }
-    if (activeViewOverrides.filters && activeViewOverrides.filters.length > 0) {
-      const activeFields = new Set(
-        activeViewOverrides.filters.map((f2) => f2.field)
-      );
-      result = {
-        ...result,
-        filters: (view.filters ?? []).filter(
-          (f2) => !activeFields.has(f2.field)
-        )
-      };
-    }
-    if (activeViewOverrides.sort && view.sort?.field === activeViewOverrides.sort.field && view.sort?.direction === activeViewOverrides.sort.direction) {
-      result = {
-        ...result,
-        sort: defaultView2?.sort
-      };
-    }
-    if (activeViewOverrides.layout && "layout" in result && result.layout) {
-      const layout = { ...result.layout };
-      for (const key of Object.keys(activeViewOverrides.layout)) {
-        delete layout[key];
-      }
-      result = {
-        ...result,
-        layout: Object.keys(layout).length > 0 ? layout : void 0
-      };
-    }
-    if (activeViewOverrides.groupBy && "groupBy" in result) {
-      const { groupBy: _, ...rest } = result;
-      result = rest;
-    }
-    return result;
-  }
-
-  // packages/views/build-module/use-view.mjs
-  function omit3(obj, keys) {
-    const result = { ...obj };
-    for (const key of keys) {
+  function withoutQueryParams(layer) {
+    const result = isPlainObject2(layer) ? { ...layer } : {};
+    for (const key of QUERY_PARAMS) {
       delete result[key];
     }
     return result;
   }
+  function mergeLayer(lower, upper) {
+    const result = { ...lower };
+    for (const key of Object.keys(upper)) {
+      const value = upper[key];
+      const current = result[key];
+      result[key] = isPlainObject2(current) && isPlainObject2(value) ? mergeLayer(current, value) : value;
+    }
+    return result;
+  }
+  function diffLayer(value, base, persisted = {}) {
+    const result = {};
+    for (const key of Object.keys(value)) {
+      const next = value[key];
+      const current = base[key];
+      const prev = persisted[key];
+      if (next === void 0) {
+        continue;
+      }
+      if (isPlainObject2(next) && isPlainObject2(current)) {
+        const nested = diffLayer(
+          next,
+          current,
+          isPlainObject2(prev) ? prev : {}
+        );
+        if (Object.keys(nested).length > 0) {
+          result[key] = nested;
+        }
+      } else if (!dequal(next, current)) {
+        result[key] = next;
+      } else if (prev !== void 0 && dequal(next, prev)) {
+        result[key] = prev;
+      }
+    }
+    return result;
+  }
+  function getLockedFilters(overrides) {
+    return (overrides?.filters ?? []).filter((filter) => filter.isLocked);
+  }
+  function applyLockedFilters(view, overrides) {
+    const locked = getLockedFilters(overrides);
+    if (locked.length === 0) {
+      return view;
+    }
+    const rest = (view.filters ?? []).filter(
+      (filter) => !locked.some((f2) => f2.field === filter.field)
+    );
+    return { ...view, filters: [...locked, ...rest] };
+  }
+  function resolveBaseView(layers, effectiveType) {
+    const { defaultView: defaultView2, defaultLayouts: defaultLayouts2, activeViewOverrides } = layers;
+    const layoutDefaults = defaultLayouts2?.[effectiveType];
+    return applyLockedFilters(
+      [layoutDefaults, activeViewOverrides].reduce(
+        (lower, upper) => mergeLayer(lower, withoutQueryParams(upper)),
+        withoutQueryParams(defaultView2)
+      ),
+      activeViewOverrides
+    );
+  }
+  function resolveView(args) {
+    const { defaultView: defaultView2, activeViewOverrides, persistedView, page, search } = args;
+    const effectiveType = persistedView?.type ?? activeViewOverrides?.type ?? defaultView2?.type;
+    const baseView = resolveBaseView(args, effectiveType);
+    const view = {
+      ...applyLockedFilters(
+        mergeLayer(baseView, withoutQueryParams(persistedView)),
+        activeViewOverrides
+      ),
+      page: Number(page ?? 1),
+      search: search ?? ""
+    };
+    return view;
+  }
+  function getUserModifications(newView, layers) {
+    const { activeViewOverrides, persistedView } = layers;
+    const baseView = resolveBaseView(layers, newView.type);
+    const modifications = diffLayer(
+      withoutQueryParams(newView),
+      withoutQueryParams(baseView),
+      withoutQueryParams(persistedView)
+    );
+    const locked = getLockedFilters(activeViewOverrides);
+    if (locked.length > 0 && Array.isArray(modifications.filters)) {
+      modifications.filters = modifications.filters.filter(
+        (filter) => !locked.some((f2) => f2.field === filter.field)
+      );
+    }
+    return Object.keys(modifications).length > 0 ? modifications : void 0;
+  }
+
+  // packages/views/build-module/use-view.mjs
   function useView(config) {
     const {
       kind,
       name,
       slug,
       defaultView: defaultView2,
+      defaultLayouts: defaultLayouts2,
       activeViewOverrides,
       queryParams,
       onChangeQueryParams
@@ -27302,68 +27294,54 @@ If there's a particular need for this, please submit a feature request at https:
       [preferenceKey]
     );
     const { set: set2 } = (0, import_data7.useDispatch)(import_preferences.store);
-    const baseView = (0, import_element78.useMemo)(
-      () => persistedView ?? defaultView2 ?? {},
-      [persistedView, defaultView2]
+    const page = Number(queryParams?.page ?? 1);
+    const search = queryParams?.search ?? "";
+    const view = (0, import_element78.useMemo)(
+      () => resolveView({
+        defaultView: defaultView2,
+        defaultLayouts: defaultLayouts2,
+        activeViewOverrides,
+        persistedView,
+        page,
+        search
+      }),
+      [
+        defaultView2,
+        defaultLayouts2,
+        activeViewOverrides,
+        persistedView,
+        page,
+        search
+      ]
     );
-    const page = Number(queryParams?.page ?? baseView.page ?? 1);
-    const search = queryParams?.search ?? baseView.search ?? "";
-    const combinedOverrides = (0, import_element78.useMemo)(() => {
-      const rawDefaults = config.defaultLayouts?.[baseView.type];
-      const layoutTypeDefaults = !rawDefaults || rawDefaults === true ? {} : rawDefaults;
-      return { ...layoutTypeDefaults, ...activeViewOverrides };
-    }, [config.defaultLayouts, baseView.type, activeViewOverrides]);
-    const view = (0, import_element78.useMemo)(() => {
-      return mergeActiveViewOverrides(
-        {
-          ...baseView,
-          page,
-          search
-        },
-        combinedOverrides,
-        defaultView2
-      );
-    }, [baseView, page, search, combinedOverrides, defaultView2]);
-    const isModified = !!persistedView;
+    const isModified = !!persistedView && Object.keys(persistedView).length > 0;
     const updateView = (0, import_element78.useCallback)(
       (newView) => {
-        const urlParams = {
-          page: newView?.page,
-          search: newView?.search
+        const newQueryParams = {
+          page: Number(newView?.page ?? 1),
+          search: newView?.search ?? ""
         };
-        const preferenceView = stripActiveViewOverrides(
-          omit3(newView, ["page", "search"]),
-          combinedOverrides,
-          defaultView2
-        );
-        if (onChangeQueryParams && !dequal(urlParams, { page, search })) {
-          onChangeQueryParams(urlParams);
+        if (onChangeQueryParams && !dequal(newQueryParams, { page, search })) {
+          onChangeQueryParams(newQueryParams);
         }
-        const comparableBaseView = stripActiveViewOverrides(
-          baseView,
-          combinedOverrides,
-          defaultView2
-        );
-        const comparableDefaultView = stripActiveViewOverrides(
-          defaultView2,
-          combinedOverrides,
-          defaultView2
-        );
-        if (!dequal(comparableBaseView, preferenceView)) {
-          if (dequal(preferenceView, comparableDefaultView)) {
-            set2("core/views", preferenceKey, void 0);
-          } else {
-            set2("core/views", preferenceKey, preferenceView);
-          }
+        const modifications = getUserModifications(newView, {
+          defaultView: defaultView2,
+          defaultLayouts: defaultLayouts2,
+          activeViewOverrides,
+          persistedView
+        });
+        if (!dequal(modifications, persistedView)) {
+          set2("core/views", preferenceKey, modifications);
         }
       },
       [
         onChangeQueryParams,
         page,
         search,
-        baseView,
         defaultView2,
-        combinedOverrides,
+        defaultLayouts2,
+        activeViewOverrides,
+        persistedView,
         set2,
         preferenceKey
       ]
