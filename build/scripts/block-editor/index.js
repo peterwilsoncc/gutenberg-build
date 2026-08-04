@@ -13591,25 +13591,33 @@ var wp;
       }
     );
   }
-  var getEnabledClientIdsTree = (0, import_data4.createRegistrySelector)(
-    () => (0, import_data4.createSelector)(getEnabledClientIdsTreeUnmemoized, (state) => [
+  var getEnabledClientIdsTree = (0, import_data4.createSelector)(
+    getEnabledClientIdsTreeUnmemoized,
+    (state) => [
       state.blocks.order,
       state.derivedBlockEditingModes,
       state.blocks.blockEditingModes
-    ])
+    ]
   );
-  var getListViewClientIdsTree = (0, import_data4.createRegistrySelector)(
-    () => (0, import_data4.createSelector)(getListViewClientIdsTreeUnmemoized, (state) => [
+  var getListViewClientIdsTree = (0, import_data4.createSelector)(
+    getListViewClientIdsTreeUnmemoized,
+    (state) => [
       state.blocks.order,
       state.derivedBlockEditingModes,
       state.blocks.blockEditingModes,
       state.blocks.parents,
-      state.blocks.byClientId,
-      state.blocks.attributes,
-      state.blockListSettings,
       state.editedContentOnlySection,
-      state.settings
-    ])
+      // The state below is only read to resolve a block's parent section,
+      // which the tree does only while a content-only section is being
+      // edited. Depending on it otherwise rebuilds the tree on every
+      // attribute change, i.e. on every keystroke.
+      ...state.editedContentOnlySection ? [
+        state.blocks.byClientId,
+        state.blocks.attributes,
+        state.blockListSettings,
+        state.settings
+      ] : []
+    ]
   );
   var getEnabledBlockParents = (0, import_data4.createSelector)(
     (state, clientId, ascending = false) => {
