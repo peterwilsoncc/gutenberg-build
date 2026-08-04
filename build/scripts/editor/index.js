@@ -309,6 +309,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/escape-html
+  var require_escape_html = __commonJS({
+    "package-external:@wordpress/escape-html"(exports, module) {
+      module.exports = window.wp.escapeHtml;
+    }
+  });
+
   // package-external:@wordpress/notices
   var require_notices = __commonJS({
     "package-external:@wordpress/notices"(exports, module) {
@@ -7099,6 +7106,7 @@ var wp;
   });
   var import_a11y9 = __toESM(require_a11y(), 1);
   var import_api_fetch8 = __toESM(require_api_fetch(), 1);
+  var import_escape_html = __toESM(require_escape_html(), 1);
   var import_deprecated9 = __toESM(require_deprecated(), 1);
   var import_blocks20 = __toESM(require_blocks(), 1);
   var import_notices21 = __toESM(require_notices(), 1);
@@ -7146,6 +7154,12 @@ var wp;
 
   // packages/editor/build-module/store/utils/notice-builder.mjs
   var import_i18n2 = __toESM(require_i18n(), 1);
+  var AUTO_SAVE_FAILURE_NOTICE = (0, import_i18n2.__)(
+    "Auto-save failed. We\u2019ll try to save a backup in this browser. You can also save manually."
+  );
+  var AUTO_SAVE_OFFLINE_FAILURE_NOTICE = (0, import_i18n2.__)(
+    "Auto-save failed because you were offline. We\u2019ll try to save a backup in this browser. Please verify your connection and save manually."
+  );
   function getNotificationArgumentsForSaveSuccess(data) {
     const { previousPost, post: post2, postType: postType2 } = data;
     if (data.options?.isAutosave) {
@@ -7197,7 +7211,7 @@ var wp;
     ];
   }
   function getNotificationArgumentsForSaveFail(data) {
-    const { post: post2, edits, error: error2 } = data;
+    const { post: post2, edits, error: error2, options } = data;
     if (error2 && "rest_autosave_no_changes" === error2.code) {
       return [];
     }
@@ -7218,18 +7232,29 @@ var wp;
           "Updating failed because you were offline. Please verify your connection and try again."
         )
       };
-      const noticeMessage2 = !isPublished && edits.status in messages2 ? messages2[edits.status] : messages2.default;
+      let noticeMessage2 = !isPublished && edits.status in messages2 ? messages2[edits.status] : messages2.default;
+      if (options?.isAutosave) {
+        noticeMessage2 = AUTO_SAVE_OFFLINE_FAILURE_NOTICE;
+      }
       return [noticeMessage2, { id: "editor-save" }];
     }
     const messages = {
-      publish: (0, import_i18n2.__)("Publishing failed."),
-      private: (0, import_i18n2.__)("Publishing failed."),
-      future: (0, import_i18n2.__)("Scheduling failed."),
-      default: (0, import_i18n2.__)("Updating failed.")
+      publish: (0, import_i18n2.__)(
+        "Publishing failed. We\u2019ll try to save a backup in this browser. Please try publishing again."
+      ),
+      private: (0, import_i18n2.__)(
+        "Publishing failed. We\u2019ll try to save a backup in this browser. Please try publishing again."
+      ),
+      future: (0, import_i18n2.__)(
+        "Scheduling failed. We\u2019ll try to save a backup in this browser. Please try scheduling again."
+      ),
+      default: (0, import_i18n2.__)(
+        "Updating failed. We\u2019ll try to save a backup in this browser. Please try updating again."
+      )
     };
     let noticeMessage = !isPublished && edits.status in messages ? messages[edits.status] : messages.default;
-    if (error2.message && !/<\/?[^>]*>/.test(error2.message)) {
-      noticeMessage = [noticeMessage, error2.message].join(" ");
+    if (options?.isAutosave) {
+      noticeMessage = AUTO_SAVE_FAILURE_NOTICE;
     }
     return [
       noticeMessage,
@@ -81160,6 +81185,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/store/actions.mjs
   var { getEntitySnapshot } = unlock(import_core_data59.privateApis);
+  var CLIENT_GENERATED_ERROR_CODES = ["offline_error", "fetch_error"];
   var setupEditor = (post2, edits, template2) => ({ dispatch: dispatch8 }) => {
     dispatch8.setEditedPost(post2.type, post2.id);
     const isNewPost = post2.status === "auto-draft";
@@ -81302,9 +81328,26 @@ If there's a particular need for this, please submit a feature request at https:
       const args = getNotificationArgumentsForSaveFail({
         post: previousRecord,
         edits,
-        error: error2
+        error: error2,
+        options
       });
       if (args.length) {
+        const [noticeMessage] = args;
+        if (error2.message && !CLIENT_GENERATED_ERROR_CODES.includes(error2.code) && !/<\/?[^>]*>/.test(error2.message)) {
+          args[0] = `${(0, import_escape_html.escapeHTML)(
+            noticeMessage
+          )} <details class="editor-save-error-details"><summary>${(0, import_escape_html.escapeHTML)(
+            (0, import_i18n206.__)("Show details")
+          )}</summary><span class="editor-save-error-details__message">${(0, import_escape_html.escapeHTML)(
+            error2.message
+          )}</span></details>`;
+          args[1] = {
+            ...args[1],
+            __unstableHTML: true,
+            speak: false
+          };
+          (0, import_a11y9.speak)(noticeMessage, "assertive");
+        }
         registry.dispatch(import_notices21.store).createErrorNotice(...args);
       }
     } else {

@@ -8308,6 +8308,20 @@ textarea.editor-post-text-editor::placeholder {
   background-color: var(--wp-admin-theme-color);
 }
 
+.editor-save-error-details {
+  display: inline;
+}
+
+.editor-save-error-details summary {
+  display: inline;
+  cursor: var(--wpds-cursor-control, pointer);
+  margin-left: 0.35em;
+}
+
+.editor-save-error-details__message {
+  white-space: break-spaces;
+}
+
 .editor-layout__toggle-publish-panel,
 .editor-layout__toggle-sidebar-panel,
 .editor-layout__toggle-entities-saved-states-panel {
