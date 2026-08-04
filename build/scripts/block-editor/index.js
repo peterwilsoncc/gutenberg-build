@@ -62660,12 +62660,10 @@ var wp;
     const instanceId = (0, import_compose74.useInstanceId)(ListViewBlock);
     const descriptionId = `list-view-block-select-button__description-${instanceId}`;
     const {
-      expand,
-      collapse,
-      collapseAll,
       BlockSettingsMenu: BlockSettingsMenu2,
       listViewInstanceId,
-      expandedState,
+      expansionState,
+      updateExpansion,
       setInsertedBlockClientId,
       treeGridElementRef,
       rootClientId
@@ -62784,8 +62782,8 @@ var wp;
         event.preventDefault();
         const { firstBlockClientId } = getBlocksToUpdate();
         const blockParents = getBlockParents2(firstBlockClientId, false);
-        collapseAll();
-        expand(blockParents);
+        updateExpansion({ type: "clear" });
+        updateExpansion({ type: "expand", clientIds: blockParents });
       } else if (isMatch("core/block-editor/group", event)) {
         const { blocksToUpdate } = getBlocksToUpdate();
         if (blocksToUpdate.length > 1 && isGroupable2(blocksToUpdate)) {
@@ -62855,13 +62853,15 @@ var wp;
       (event) => {
         event.preventDefault();
         event.stopPropagation();
-        if (isExpanded === true) {
-          collapse(clientId);
-        } else if (isExpanded === false) {
-          expand(clientId);
+        if (isExpanded === void 0) {
+          return;
         }
+        updateExpansion({
+          type: isExpanded ? "collapse" : "expand",
+          clientIds: clientId
+        });
       },
-      [clientId, expand, collapse, isExpanded]
+      [clientId, updateExpansion, isExpanded]
     );
     const onContextMenu = (0, import_element189.useCallback)(
       (event) => {
@@ -63079,8 +63079,8 @@ var wp;
                     size: "small"
                   },
                   disableOpenOnArrowDown: true,
-                  expand,
-                  expandedState,
+                  expansionState,
+                  updateExpansion,
                   setInsertedBlockClientId,
                   __experimentalSelectBlock: updateFocusAndSelection,
                   isContentOnlyListView: !!rootClientId && getBlockEditingMode2(rootClientId) === "contentOnly"
@@ -63103,19 +63103,19 @@ var wp;
 
   // packages/block-editor/build-module/components/list-view/branch.mjs
   var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
-  function countBlocks(block, expandedState, draggedClientIds, isExpandedByDefault) {
+  function countBlocks(block, expansionState, draggedClientIds, isExpandedByDefault) {
     const isDragged = draggedClientIds?.includes(block.clientId);
     if (isDragged) {
       return 0;
     }
-    const isExpanded = expandedState[block.clientId] ?? isExpandedByDefault;
+    const isExpanded = expansionState[block.clientId] ?? isExpandedByDefault;
     if (!isExpanded) {
       return 1;
     }
     return block.innerBlocks.reduce(
       (count, innerBlock) => count + countBlocks(
         innerBlock,
-        expandedState,
+        expansionState,
         draggedClientIds,
         isExpandedByDefault
       ),
@@ -63157,7 +63157,7 @@ var wp;
       blockDropTargetIndex,
       firstDraggedBlockIndex,
       blockIndexes,
-      expandedState,
+      expansionState,
       draggedClientIds
     } = useListViewContext();
     if (!canParentExpand) {
@@ -63194,7 +63194,7 @@ var wp;
       const blockListPosition = nextPosition;
       nextPosition += countBlocks(
         block,
-        expandedState,
+        expansionState,
         draggedClientIds,
         isExpanded
       );
@@ -63204,7 +63204,7 @@ var wp;
       const position = index2 + 1;
       const updatedPath = path.length > 0 ? `${path}_${position}` : `${position}`;
       const hasNestedBlocks = !!innerBlocks?.length;
-      const shouldExpand = hasNestedBlocks && shouldShowInnerBlocks ? expandedState[clientId] ?? isExpanded : void 0;
+      const shouldExpand = hasNestedBlocks && shouldShowInnerBlocks ? expansionState[clientId] ?? isExpanded : void 0;
       const isSelected = isClientIdSelected(clientId, selectedClientIds);
       const isSelectedBranch = isBranchSelected || isSelected && hasNestedBlocks;
       const showBlock = isDragged || blockInView || isSelected && clientId === selectedClientIds[0] || index2 === 0 || index2 === blockCount - 1;
@@ -63667,7 +63667,7 @@ var wp;
   // packages/block-editor/build-module/components/list-view/use-list-view-collapse-items.mjs
   var import_element194 = __toESM(require_element(), 1);
   var import_data133 = __toESM(require_data(), 1);
-  function useListViewCollapseItems({ collapseAll, expand }) {
+  function useListViewCollapseItems({ updateExpansion }) {
     const { expandedBlock: expandedBlock2, getBlockParents: getBlockParents2 } = (0, import_data133.useSelect)((select3) => {
       const { getBlockParents: _getBlockParents, getExpandedBlock: getExpandedBlock2 } = unlock(
         select3(store)
@@ -63680,10 +63680,10 @@ var wp;
     (0, import_element194.useEffect)(() => {
       if (expandedBlock2) {
         const blockParents = getBlockParents2(expandedBlock2, false);
-        collapseAll();
-        expand(blockParents);
+        updateExpansion({ type: "clear" });
+        updateExpansion({ type: "expand", clientIds: blockParents });
       }
-    }, [collapseAll, expand, expandedBlock2, getBlockParents2]);
+    }, [updateExpansion, expandedBlock2, getBlockParents2]);
   }
 
   // packages/block-editor/build-module/components/list-view/use-list-view-drop-zone.mjs
@@ -63852,8 +63852,8 @@ var wp;
   };
   function useListViewDropZone({
     dropZoneElement,
-    expandedState,
-    setExpandedState
+    expansionState,
+    updateExpansion
   }) {
     const {
       getBlockRootClientId: getBlockRootClientId2,
@@ -63868,19 +63868,19 @@ var wp;
     const rtl = (0, import_i18n112.isRTL)();
     const previousRootClientId = (0, import_compose75.usePrevious)(targetRootClientId);
     const maybeExpandBlock = (0, import_element195.useCallback)(
-      (_expandedState, _target) => {
+      (_expansionState, _target) => {
         const { rootClientId } = _target || {};
         if (!rootClientId) {
           return;
         }
-        if (_target?.dropPosition === "inside" && !_expandedState[rootClientId]) {
-          setExpandedState({
+        if (_target?.dropPosition === "inside" && !_expansionState[rootClientId]) {
+          updateExpansion({
             type: "expand",
-            clientIds: [rootClientId]
+            clientIds: rootClientId
           });
         }
       },
-      [setExpandedState]
+      [updateExpansion]
     );
     const throttledMaybeExpandBlock = (0, import_compose75.useThrottle)(
       maybeExpandBlock,
@@ -63892,9 +63892,9 @@ var wp;
         throttledMaybeExpandBlock.cancel();
         return;
       }
-      throttledMaybeExpandBlock(expandedState, target);
+      throttledMaybeExpandBlock(expansionState, target);
     }, [
-      expandedState,
+      expansionState,
       previousRootClientId,
       target,
       throttledMaybeExpandBlock
@@ -63982,7 +63982,7 @@ var wp;
   var import_data135 = __toESM(require_data(), 1);
   function useListViewExpandSelectedItem({
     firstSelectedBlockClientId,
-    setExpandedState
+    updateExpansion
   }) {
     const [selectedTreeId, setSelectedTreeId] = (0, import_element196.useState)(null);
     const { selectedBlockParentClientIds } = (0, import_data135.useSelect)(
@@ -64002,7 +64002,7 @@ var wp;
         return;
       }
       if (selectedBlockParentClientIds?.length) {
-        setExpandedState({
+        updateExpansion({
           type: "expand",
           clientIds: selectedBlockParentClientIds
         });
@@ -64011,7 +64011,7 @@ var wp;
       firstSelectedBlockClientId,
       selectedBlockParentClientIds,
       selectedTreeId,
-      setExpandedState
+      updateExpansion
     ]);
     return {
       setSelectedTreeId
@@ -64147,23 +64147,20 @@ var wp;
 
   // packages/block-editor/build-module/components/list-view/index.mjs
   var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
-  var expanded = (state, action) => {
+  var expansion = (state, action) => {
     if (action.type === "clear") {
       return {};
     }
-    if (Array.isArray(action.clientIds)) {
-      return {
-        ...state,
-        ...action.clientIds.reduce(
-          (newState, id) => ({
-            ...newState,
-            [id]: action.type === "expand"
-          }),
-          {}
-        )
-      };
+    const clientIds = [action.clientIds].flat().filter(Boolean);
+    if (!clientIds.length) {
+      return state;
     }
-    return state;
+    return {
+      ...state,
+      ...Object.fromEntries(
+        clientIds.map((id) => [id, action.type === "expand"])
+      )
+    };
   };
   function ListViewComponent({
     id,
@@ -64202,11 +64199,11 @@ var wp;
       [draggedClientIds]
     );
     const { updateBlockSelection } = useBlockSelection();
-    const [expandedState, setExpandedState] = (0, import_element197.useReducer)(expanded, {});
+    const [expansionState, updateExpansion] = (0, import_element197.useReducer)(expansion, {});
     const [insertedBlockClientId, setInsertedBlockClientId] = (0, import_element197.useState)(null);
     const { setSelectedTreeId } = useListViewExpandSelectedItem({
       firstSelectedBlockClientId: selectedClientIds[0],
-      setExpandedState
+      updateExpansion
     });
     const selectEditorBlock = (0, import_element197.useCallback)(
       /**
@@ -64225,8 +64222,8 @@ var wp;
     );
     const { ref: dropZoneRef, target: blockDropTarget } = useListViewDropZone({
       dropZoneElement,
-      expandedState,
-      setExpandedState
+      expansionState,
+      updateExpansion
     });
     const elementRef = (0, import_element197.useRef)();
     const clipBoardRef = useClipboardHandler2({
@@ -64248,40 +64245,12 @@ var wp;
       dropZoneRef,
       ref
     ]);
-    const expand = (0, import_element197.useCallback)(
-      (clientId) => {
-        if (!clientId) {
-          return;
-        }
-        const clientIds = Array.isArray(clientId) ? clientId : [clientId];
-        setExpandedState({ type: "expand", clientIds });
-      },
-      [setExpandedState]
-    );
-    const collapse = (0, import_element197.useCallback)(
-      (clientId) => {
-        if (!clientId) {
-          return;
-        }
-        setExpandedState({ type: "collapse", clientIds: [clientId] });
-      },
-      [setExpandedState]
-    );
-    const collapseAll = (0, import_element197.useCallback)(() => {
-      setExpandedState({ type: "clear" });
-    }, [setExpandedState]);
-    const expandRow = (0, import_element197.useCallback)(
-      (row) => {
-        expand(row?.dataset?.block);
-      },
-      [expand]
-    );
-    const collapseRow = (0, import_element197.useCallback)(
-      (row) => {
-        collapse(row?.dataset?.block);
-      },
-      [collapse]
-    );
+    const expandRow = (0, import_element197.useCallback)((row) => {
+      updateExpansion({ type: "expand", clientIds: row?.dataset?.block });
+    }, []);
+    const collapseRow = (0, import_element197.useCallback)((row) => {
+      updateExpansion({ type: "collapse", clientIds: row?.dataset?.block });
+    }, []);
     const focusRow = (0, import_element197.useCallback)(
       (event, startRow, endRow) => {
         if (event.shiftKey) {
@@ -64294,10 +64263,7 @@ var wp;
       },
       [updateBlockSelection]
     );
-    useListViewCollapseItems({
-      collapseAll,
-      expand
-    });
+    useListViewCollapseItems({ updateExpansion });
     const firstDraggedBlockClientId = draggedClientIds?.[0];
     const { blockDropTargetIndex, blockDropPosition, firstDraggedBlockIndex } = (0, import_element197.useMemo)(() => {
       let _blockDropTargetIndex, _firstDraggedBlockIndex;
@@ -64323,11 +64289,9 @@ var wp;
         blockDropTargetIndex,
         blockIndexes,
         draggedClientIds,
-        expandedState,
-        expand,
+        expansionState,
+        updateExpansion,
         firstDraggedBlockIndex,
-        collapse,
-        collapseAll,
         BlockSettingsMenu: BlockSettingsMenu2,
         listViewInstanceId: instanceId,
         AdditionalBlockContent,
@@ -64341,11 +64305,9 @@ var wp;
         blockDropTargetIndex,
         blockIndexes,
         draggedClientIds,
-        expandedState,
-        expand,
+        expansionState,
+        updateExpansion,
         firstDraggedBlockIndex,
-        collapse,
-        collapseAll,
         BlockSettingsMenu2,
         instanceId,
         AdditionalBlockContent,
@@ -64364,7 +64326,7 @@ var wp;
         // switch the list view to a tall list view with a scrollbar, and vice versa.
         // When this happens, the windowing logic needs to be recalculated to ensure that
         // the correct number of blocks are rendered, by rechecking for a scroll container.
-        expandedState,
+        expandedState: expansionState,
         useWindowing: true,
         windowOverscan: 40
       }
@@ -74229,7 +74191,7 @@ var wp;
   var import_components183 = __toESM(require_components(), 1);
   var import_jsx_runtime405 = __toESM(require_jsx_runtime(), 1);
   function URLInputButton({ url, onChange }) {
-    const [expanded2, toggleExpanded] = (0, import_element240.useReducer)(
+    const [expanded, toggleExpanded] = (0, import_element240.useReducer)(
       (isExpanded) => !isExpanded,
       false
     );
@@ -74249,7 +74211,7 @@ var wp;
           isPressed: !!url
         }
       ),
-      expanded2 && /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
+      expanded && /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
         "form",
         {
           className: "block-editor-url-input__button-modal",

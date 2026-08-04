@@ -46641,8 +46641,8 @@ ${text}
     clientId,
     onClose,
     isDisabled,
-    expandedState,
-    expand,
+    expansionState,
+    updateExpansion,
     setInsertedBlockClientId
   }) {
     const { insertBlock, replaceBlock, replaceInnerBlocks } = (0, import_data81.useDispatch)(import_block_editor152.store);
@@ -46680,8 +46680,8 @@ ${text}
             );
           }
           setInsertedBlockClientId(newLink.clientId);
-          if (!expandedState[clientId]) {
-            expand(clientId);
+          if (!expansionState[clientId]) {
+            updateExpansion({ type: "expand", clientIds: clientId });
           }
           onClose();
         },
@@ -46784,8 +46784,8 @@ ${text}
                 clientId,
                 onClose,
                 isDisabled: isSubmenuDisabled,
-                expandedState: props.expandedState,
-                expand: props.expand,
+                expansionState: props.expansionState,
+                updateExpansion: props.updateExpansion,
                 setInsertedBlockClientId: props.setInsertedBlockClientId
               }
             ),
