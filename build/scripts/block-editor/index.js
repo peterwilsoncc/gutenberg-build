@@ -62213,8 +62213,7 @@ var wp;
     }
   };
   function getImagesFromBlock(block, isExpanded) {
-    const getImages = IMAGE_GETTERS[block.name];
-    const images = !!getImages ? getImages(block) : void 0;
+    const images = block ? IMAGE_GETTERS[block.name](block) : void 0;
     if (!images) {
       return [];
     }
@@ -62226,7 +62225,9 @@ var wp;
   function useListViewImages({ clientId, isExpanded }) {
     const { block } = (0, import_data128.useSelect)(
       (select3) => {
-        return { block: select3(store).getBlock(clientId) };
+        const { getBlockName: getBlockName2, getBlock: getBlock2 } = select3(store);
+        const hasImages = !!IMAGE_GETTERS[getBlockName2(clientId)];
+        return { block: hasImages ? getBlock2(clientId) : void 0 };
       },
       [clientId]
     );
