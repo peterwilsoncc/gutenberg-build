@@ -2468,7 +2468,7 @@ iframe[name=editor-canvas] {
   max-height: 32px;
 }
 .block-editor-link-control__preview .block-editor-link-control__preview-title {
-  line-height: 1.1;
+  line-height: var(--wpds-typography-line-height-sm, 20px);
 }
 .block-editor-link-control__preview .block-editor-link-control__preview-title:focus {
   box-shadow: none;
