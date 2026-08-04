@@ -6589,10 +6589,10 @@ mark.wp-note {
 .editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon.is-pressed {
   background: #1e1e1e;
 }
-.editor-document-tools .editor-document-tools__left > .components-button.has-icon:focus:not(:disabled),
-.editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon:focus:not(:disabled) {
-  box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color), inset 0 0 0 1px #fff;
-  outline: 1px solid transparent;
+.editor-document-tools .editor-document-tools__left > .components-button.has-icon:focus:not(:active),
+.editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon:focus:not(:active) {
+  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
+  outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
 }
 .editor-document-tools .editor-document-tools__left > .components-button.has-icon::before,
 .editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon::before {
