@@ -1,3 +1,4 @@
+(function() {
 "use strict";
 var wp;
 (wp ||= {}).components = (() => {
@@ -57347,4 +57348,6 @@ is-plain-object/dist/is-plain-object.mjs:
    * Released under the MIT License.
    *)
 */
+(window.wp ||= {}).components = wp.components;
+})();
 //# sourceMappingURL=index.js.map

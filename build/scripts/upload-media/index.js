@@ -1,3 +1,4 @@
+(function() {
 "use strict";
 var wp;
 (wp ||= {}).uploadMedia = (() => {
@@ -3591,5 +3592,7 @@ var wp;
     };
   }
   return __toCommonJS(index_exports);
+})();
+(window.wp ||= {}).uploadMedia = wp.uploadMedia;
 })();
 //# sourceMappingURL=index.js.map

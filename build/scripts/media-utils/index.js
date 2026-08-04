@@ -1,3 +1,4 @@
+(function() {
 "use strict";
 var wp;
 (wp ||= {}).mediaUtils = (() => {
@@ -31263,4 +31264,6 @@ use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.developme
    * LICENSE file in the root directory of this source tree.
    *)
 */
+(window.wp ||= {}).mediaUtils = wp.mediaUtils;
+})();
 //# sourceMappingURL=index.js.map

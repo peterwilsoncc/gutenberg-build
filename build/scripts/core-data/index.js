@@ -1,3 +1,4 @@
+(function() {
 "use strict";
 var wp;
 (wp ||= {}).coreData = (() => {
@@ -9146,5 +9147,7 @@ var wp;
   unlock(store).registerPrivateActions(private_actions_exports);
   (0, import_data19.register)(store);
   return __toCommonJS(index_exports);
+})();
+(window.wp ||= {}).coreData = wp.coreData;
 })();
 //# sourceMappingURL=index.js.map

@@ -1,3 +1,4 @@
+(function() {
 "use strict";
 var wp;
 (wp ||= {}).router = (() => {
@@ -1183,5 +1184,7 @@ var wp;
     Link
   });
   return __toCommonJS(index_exports);
+})();
+(window.wp ||= {}).router = wp.router;
 })();
 //# sourceMappingURL=index.js.map

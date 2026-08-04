@@ -1,3 +1,4 @@
+(function() {
 var wp;
 (wp ||= {}).editPost = (() => {
   var __create = Object.create;
@@ -12011,4 +12012,6 @@ use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.developme
    * LICENSE file in the root directory of this source tree.
    *)
 */
+(window.wp ||= {}).editPost = wp.editPost;
+})();
 //# sourceMappingURL=index.js.map

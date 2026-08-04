@@ -1,3 +1,4 @@
+(function() {
 "use strict";
 var wp;
 (wp ||= {}).blockLibrary = (() => {
@@ -82067,4 +82068,6 @@ use-sync-external-store/cjs/use-sync-external-store-shim.development.js:
 fast-average-color/dist/index.esm.js:
   (*! Fast Average Color | © 2022 Denis Seleznev | MIT License | https://github.com/fast-average-color/fast-average-color *)
 */
+(window.wp ||= {}).blockLibrary = wp.blockLibrary;
+})();
 //# sourceMappingURL=index.js.map

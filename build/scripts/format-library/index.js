@@ -1,3 +1,4 @@
+(function() {
 var wp;
 (wp ||= {}).formatLibrary = (() => {
   var __create = Object.create;
@@ -5939,4 +5940,6 @@ use-sync-external-store/cjs/use-sync-external-store-shim.development.js:
    * LICENSE file in the root directory of this source tree.
    *)
 */
+(window.wp ||= {}).formatLibrary = wp.formatLibrary;
+})();
 //# sourceMappingURL=index.js.map

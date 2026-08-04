@@ -1,3 +1,4 @@
+(function() {
 var wp;
 (wp ||= {}).customizeWidgets = (() => {
   var __create = Object.create;
@@ -3039,5 +3040,7 @@ var wp;
     });
   }
   return __toCommonJS(index_exports);
+})();
+(window.wp ||= {}).customizeWidgets = wp.customizeWidgets;
 })();
 //# sourceMappingURL=index.js.map

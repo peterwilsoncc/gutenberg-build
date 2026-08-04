@@ -1,3 +1,4 @@
+(function() {
 var wp;
 (wp ||= {}).editWidgets = (() => {
   var __create = Object.create;
@@ -4684,5 +4685,7 @@ var wp;
     (0, import_blocks3.registerBlockType)(name2, settings2);
   };
   return __toCommonJS(index_exports);
+})();
+(window.wp ||= {}).editWidgets = wp.editWidgets;
 })();
 //# sourceMappingURL=index.js.map

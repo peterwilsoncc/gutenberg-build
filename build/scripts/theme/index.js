@@ -1,3 +1,4 @@
+(function() {
 var wp;
 (wp ||= {}).theme = (() => {
   var __create = Object.create;
@@ -4927,5 +4928,7 @@ var wp;
     }
   });
   return __toCommonJS(index_exports);
+})();
+(window.wp ||= {}).theme = wp.theme;
 })();
 //# sourceMappingURL=index.js.map

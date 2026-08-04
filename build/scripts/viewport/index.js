@@ -1,3 +1,4 @@
+(function() {
 "use strict";
 var wp;
 (wp ||= {}).viewport = (() => {
@@ -215,5 +216,7 @@ var wp;
   };
   listener_default(BREAKPOINTS, OPERATORS);
   return __toCommonJS(index_exports);
+})();
+(window.wp ||= {}).viewport = wp.viewport;
 })();
 //# sourceMappingURL=index.js.map
