@@ -22621,13 +22621,24 @@ var variants = {
   closed: { width: 0 },
   mobileOpen: { width: "100vw" }
 };
+function renderContainer(render4, props) {
+  if ((0, import_element77.isValidElement)(render4)) {
+    return (0, import_element77.cloneElement)(render4, {
+      ...props,
+      className: clsx_default(render4.props.className, props.className),
+      style: { ...render4.props.style, ...props.style }
+    });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)("div", { ...props });
+}
 function ComplementaryAreaFill({
   activeArea,
   isActive,
   scope,
   children,
   className,
-  id
+  id,
+  render: render4
 }) {
   const disableMotion = (0, import_compose8.useReducedMotion)();
   const isMobileViewport = (0, import_compose8.useViewportMatch)("medium", "<");
@@ -22651,17 +22662,14 @@ function ComplementaryAreaFill({
       exit: "closed",
       transition,
       className: "interface-complementary-area__fill",
-      children: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
-        "div",
-        {
-          id,
-          className,
-          style: {
-            width: isMobileViewport ? "100vw" : SIDEBAR_WIDTH
-          },
-          children
-        }
-      )
+      children: renderContainer(render4, {
+        id,
+        className,
+        style: {
+          width: isMobileViewport ? "100vw" : SIDEBAR_WIDTH
+        },
+        children
+      })
     }
   ) }) });
 }
@@ -22712,6 +22720,7 @@ function ComplementaryArea({
   icon: iconProp,
   isPinnable = true,
   panelClassName,
+  render: render4,
   scope,
   name,
   title,
@@ -22819,6 +22828,7 @@ function ComplementaryArea({
         className: clsx_default("interface-complementary-area", className),
         scope,
         id: identifier.replace("/", ":"),
+        render: render4,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
             complementary_area_header_default,
