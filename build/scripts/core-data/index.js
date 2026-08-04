@@ -5942,6 +5942,7 @@ var wp;
   var import_api_fetch5 = __toESM(require_api_fetch(), 1);
   var import_notices = __toESM(require_notices(), 1);
   var import_block_editor5 = __toESM(require_block_editor(), 1);
+  var import_html_entities = __toESM(require_html_entities(), 1);
   var import_i18n2 = __toESM(require_i18n(), 1);
   function receiveRegisteredPostMeta(postType, registeredPostMeta2) {
     return {
@@ -6106,7 +6107,9 @@ var wp;
           });
         }
         pendingSavedRecords.push(
-          registry.dispatch(STORE_NAME).saveEditedEntityRecord(kind, name, key)
+          registry.dispatch(STORE_NAME).saveEditedEntityRecord(kind, name, key, {
+            throwOnError: true
+          }).catch(ensureError)
         );
       }
     });
@@ -6116,19 +6119,34 @@ var wp;
           "root",
           "site",
           void 0,
-          siteItemsToSave
-        )
+          siteItemsToSave,
+          {
+            throwOnError: true
+          }
+        ).catch(ensureError)
       );
     }
     registry.dispatch(import_block_editor5.store).__unstableMarkLastChangeAsPersistent();
-    Promise.all(pendingSavedRecords).then(async (values) => {
+    return Promise.all(pendingSavedRecords).then(async (values) => {
       if (onSave) {
         await onSave();
       }
       return values;
     }).then((values) => {
-      if (values.some((value) => typeof value === "undefined")) {
-        registry.dispatch(import_notices.store).createErrorNotice((0, import_i18n2.__)("Saving failed."));
+      const errors = values.filter((v) => v instanceof Error);
+      if (errors.length) {
+        const firstMessage = errors.find(
+          (e) => e.message
+        )?.message;
+        registry.dispatch(import_notices.store).createErrorNotice(
+          (0, import_html_entities.decodeEntities)(
+            firstMessage || (0, import_i18n2.__)("Saving failed.")
+          ),
+          {
+            type: "snackbar",
+            id: saveNoticeId
+          }
+        );
       } else {
         registry.dispatch(import_notices.store).createSuccessNotice(
           successNoticeContent || (0, import_i18n2.__)("Site updated."),
@@ -6147,9 +6165,38 @@ var wp;
       }
     }).catch(
       (error) => registry.dispatch(import_notices.store).createErrorNotice(
-        `${(0, import_i18n2.__)("Saving failed.")} ${error}`
+        (0, import_html_entities.decodeEntities)(
+          error?.message || (0, import_i18n2.__)("Saving failed.")
+        ),
+        {
+          type: "snackbar",
+          id: saveNoticeId
+        }
       )
     );
+    function ensureError(error) {
+      if (error instanceof Error) {
+        return error;
+      }
+      let message;
+      if (!error) {
+      } else if (typeof error.message === "string") {
+        message = error.message;
+      } else if (typeof error === "string") {
+        message = error;
+      } else if (
+        // Only consider own method, lest we erroneously end up calling
+        // `Object#toString` at the end of the prototype chain, thereby
+        // returning `"[object Object]"`.
+        Object.hasOwn(error, "toString") && typeof error.toString === "function"
+      ) {
+        const result = error.toString();
+        if (typeof result === "string") {
+          message = result;
+        }
+      }
+      return new Error(message, { cause: error });
+    }
   };
 
   // packages/core-data/build-module/resolvers.mjs
@@ -6188,7 +6235,7 @@ var wp;
     getViewConfig: () => getViewConfig2
   });
   var import_url6 = __toESM(require_url(), 1);
-  var import_html_entities2 = __toESM(require_html_entities(), 1);
+  var import_html_entities3 = __toESM(require_html_entities(), 1);
   var import_api_fetch9 = __toESM(require_api_fetch(), 1);
 
   // packages/core-data/build-module/fetch/index.mjs
@@ -6197,7 +6244,7 @@ var wp;
   // packages/core-data/build-module/fetch/__experimental-fetch-link-suggestions.mjs
   var import_api_fetch6 = __toESM(require_api_fetch(), 1);
   var import_url4 = __toESM(require_url(), 1);
-  var import_html_entities = __toESM(require_html_entities(), 1);
+  var import_html_entities2 = __toESM(require_html_entities(), 1);
   var import_i18n3 = __toESM(require_i18n(), 1);
   async function fetchLinkSuggestions(search, searchOptions = {}, editorSettings2 = {}) {
     const searchOptionsToUse = searchOptions.isInitialSuggestions && searchOptions.initialSuggestionsSearchOptions ? {
@@ -6227,7 +6274,7 @@ var wp;
             return {
               id: result.id,
               url: result.url,
-              title: (0, import_html_entities.decodeEntities)(result.title || "") || (0, import_i18n3.__)("(no title)"),
+              title: (0, import_html_entities2.decodeEntities)(result.title || "") || (0, import_i18n3.__)("(no title)"),
               type: result.subtype || result.type,
               kind: "post-type"
             };
@@ -6251,7 +6298,7 @@ var wp;
             return {
               id: result.id,
               url: result.url,
-              title: (0, import_html_entities.decodeEntities)(result.title || "") || (0, import_i18n3.__)("(no title)"),
+              title: (0, import_html_entities2.decodeEntities)(result.title || "") || (0, import_i18n3.__)("(no title)"),
               type: result.subtype || result.type,
               kind: "taxonomy"
             };
@@ -6275,7 +6322,7 @@ var wp;
             return {
               id: result.id,
               url: result.url,
-              title: (0, import_html_entities.decodeEntities)(result.title || "") || (0, import_i18n3.__)("(no title)"),
+              title: (0, import_html_entities2.decodeEntities)(result.title || "") || (0, import_i18n3.__)("(no title)"),
               type: result.subtype || result.type,
               kind: "taxonomy"
             };
@@ -6297,7 +6344,7 @@ var wp;
             return {
               id: result.id,
               url: result.source_url,
-              title: (0, import_html_entities.decodeEntities)(result.title.rendered || "") || (0, import_i18n3.__)("(no title)"),
+              title: (0, import_html_entities2.decodeEntities)(result.title.rendered || "") || (0, import_i18n3.__)("(no title)"),
               type: result.type,
               kind: "media"
             };
@@ -6984,7 +7031,7 @@ var wp;
     );
     const mappedPatternCategories = patternCategories?.map((userCategory) => ({
       ...userCategory,
-      label: (0, import_html_entities2.decodeEntities)(userCategory.name),
+      label: (0, import_html_entities3.decodeEntities)(userCategory.name),
       name: userCategory.slug
     })) || [];
     dispatch3({
@@ -8619,7 +8666,7 @@ var wp;
   var import_components = __toESM(require_components(), 1);
   var import_i18n5 = __toESM(require_i18n(), 1);
   var import_data15 = __toESM(require_data(), 1);
-  var import_html_entities3 = __toESM(require_html_entities(), 1);
+  var import_html_entities4 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
   function EntityRecordItem({ record, checked, onChange }) {
     const { name, kind, title, key } = record;
@@ -8648,7 +8695,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_jsx_runtime8.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_components.PanelRow, { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
       import_components.CheckboxControl,
       {
-        label: (0, import_html_entities3.decodeEntities)(entityRecordTitle) || (0, import_i18n5.__)("Untitled"),
+        label: (0, import_html_entities4.decodeEntities)(entityRecordTitle) || (0, import_i18n5.__)("Untitled"),
         checked,
         onChange,
         className: "entities-saved-states__change-control"
