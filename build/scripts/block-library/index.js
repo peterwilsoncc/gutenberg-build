@@ -37514,7 +37514,10 @@ ${text}
     const blockEditingMode = (0, import_block_editor117.useBlockEditingMode)();
     const { createErrorNotice } = (0, import_data52.useDispatch)(import_notices8.store);
     function onUploadError(message) {
-      createErrorNotice(message, { type: "snackbar" });
+      createErrorNotice(message, {
+        type: "snackbar",
+        explicitDismiss: true
+      });
       setTemporaryURL();
       setAttributes({
         src: void 0,
