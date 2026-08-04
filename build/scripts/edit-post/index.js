@@ -9218,6 +9218,27 @@ var wp;
   NavigableRegion.displayName = "NavigableRegion";
   var navigable_region_default = NavigableRegion;
 
+  // packages/admin-ui/build-module/admin-theme-colors/index.mjs
+  var DEFAULT_THEME_COLORS = {
+    primary: "#3858e9",
+    background: "#222524"
+  };
+  var ADMIN_THEME_COLORS = /* @__PURE__ */ new Map([
+    ["modern", DEFAULT_THEME_COLORS],
+    ["fresh", { primary: "#3858e9", background: "#25292b" }],
+    ["midnight", { primary: "#cf4339", background: "#3d4042" }],
+    ["coffee", { primary: "#916745", background: "#5b534d" }],
+    ["ocean", { primary: "#567958", background: "#5f787f" }],
+    ["blue", { primary: "#437aa8", background: "#3876a8" }],
+    ["ectoplasm", { primary: "#646c3e", background: "#4f386e" }],
+    ["sunrise", { primary: "#ad631e", background: "#cc4541" }],
+    ["light", { primary: "#007cba", background: "#eaeeed" }]
+  ]);
+  function getAdminThemeColors() {
+    const scheme = document.body.className.match(/admin-color-([\w-]+)/)?.[1] ?? "modern";
+    return ADMIN_THEME_COLORS.get(scheme) ?? DEFAULT_THEME_COLORS;
+  }
+
   // packages/edit-post/build-module/components/layout/index.mjs
   var import_editor17 = __toESM(require_editor(), 1);
   var import_data24 = __toESM(require_data(), 1);
@@ -9540,6 +9561,7 @@ var wp;
   var import_core_data8 = __toESM(require_core_data(), 1);
   var import_components9 = __toESM(require_components(), 1);
   var import_compose2 = __toESM(require_compose(), 1);
+  var import_theme = __toESM(require_theme(), 1);
 
   // packages/edit-post/build-module/components/back-button/index.mjs
   var import_editor2 = __toESM(require_editor(), 1);
@@ -11545,7 +11567,8 @@ var wp;
       };
     }, [initialPostType, initialPostId]);
     const backButton = (0, import_compose2.useViewportMatch)("medium") && isFullscreenActive ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(back_button_default, { initialPost }) : null;
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_components9.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(tooltip_exports.Provider, { children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_editor17.ErrorBoundary, { canCopyContent: true, children: [
+    const adminPrimary = (0, import_element28.useMemo)(() => getAdminThemeColors().primary, []);
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_components9.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(tooltip_exports.Provider, { children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_theme.ThemeProvider, { isRoot: true, color: { primary: adminPrimary }, children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_editor17.ErrorBoundary, { canCopyContent: true, children: [
       /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(WelcomeGuide, { postType: currentPostType }),
       /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { ...navigateRegionsProps, children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
         Editor,
@@ -11564,7 +11587,12 @@ var wp;
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_editor17.PostLockedModal, {}),
             /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(EditorInitialization, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(FullscreenMode, { isActive: isFullscreenActive }),
+            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+              FullscreenMode,
+              {
+                isActive: isFullscreenActive
+              }
+            ),
             /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(BrowserURL, {}),
             /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_editor17.UnsavedChangesWarning, {}),
             /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_editor17.AutosaveMonitor, {}),
@@ -11581,7 +11609,7 @@ var wp;
           ]
         }
       ) })
-    ] }) }) });
+    ] }) }) }) });
   }
   var layout_default = Layout;
 
