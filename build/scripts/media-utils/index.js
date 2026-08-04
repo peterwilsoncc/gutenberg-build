@@ -1658,11 +1658,11 @@ var wp;
   var clsx_default = clsx;
 
   // packages/media-utils/build-module/components/media-upload-modal/index.mjs
-  var import_element87 = __toESM(require_element(), 1);
-  var import_i18n68 = __toESM(require_i18n(), 1);
+  var import_element88 = __toESM(require_element(), 1);
+  var import_i18n69 = __toESM(require_i18n(), 1);
   var import_core_data6 = __toESM(require_core_data(), 1);
   var import_data14 = __toESM(require_data(), 1);
-  var import_components54 = __toESM(require_components(), 1);
+  var import_components55 = __toESM(require_components(), 1);
 
   // packages/icons/build-module/library/arrow-down.mjs
   var import_primitives = __toESM(require_primitives(), 1);
@@ -20195,6 +20195,9 @@ If there's a particular need for this, please submit a feature request at https:
   var minTime = -maxTime;
   var millisecondsInWeek = 6048e5;
   var millisecondsInDay = 864e5;
+  var millisecondsInMinute = 6e4;
+  var millisecondsInHour = 36e5;
+  var millisecondsInSecond = 1e3;
   var secondsInHour = 3600;
   var secondsInDay = secondsInHour * 24;
   var secondsInWeek = secondsInDay * 7;
@@ -20474,8 +20477,8 @@ If there's a particular need for this, please submit a feature request at https:
   function buildFormatLongFn(args) {
     return (options = {}) => {
       const width = options.width ? String(options.width) : args.defaultWidth;
-      const format6 = args.formats[width] || args.formats[args.defaultWidth];
-      return format6;
+      const format7 = args.formats[width] || args.formats[args.defaultWidth];
+      return format7;
     };
   }
 
@@ -21732,14 +21735,14 @@ If there's a particular need for this, please submit a feature request at https:
   function isProtectedWeekYearToken(token) {
     return weekYearTokenRE.test(token);
   }
-  function warnOrThrowProtectedError(token, format6, input) {
-    const _message = message(token, format6, input);
+  function warnOrThrowProtectedError(token, format7, input) {
+    const _message = message(token, format7, input);
     console.warn(_message);
     if (throwTokens.includes(token)) throw new RangeError(_message);
   }
-  function message(token, format6, input) {
+  function message(token, format7, input) {
     const subject = token[0] === "Y" ? "years" : "days of the month";
-    return `Use \`${token.toLowerCase()}\` instead of \`${token}\` (in \`${format6}\`) for formatting ${subject} to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`;
+    return `Use \`${token.toLowerCase()}\` instead of \`${token}\` (in \`${format7}\`) for formatting ${subject} to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`;
   }
 
   // node_modules/date-fns/format.js
@@ -21808,6 +21811,1747 @@ If there's a particular need for this, please submit a feature request at https:
     return matched[1].replace(doubleQuoteRegExp, "'");
   }
 
+  // node_modules/date-fns/getDefaultOptions.js
+  function getDefaultOptions2() {
+    return Object.assign({}, getDefaultOptions());
+  }
+
+  // node_modules/date-fns/getISODay.js
+  function getISODay(date, options) {
+    const day = toDate(date, options?.in).getDay();
+    return day === 0 ? 7 : day;
+  }
+
+  // node_modules/date-fns/transpose.js
+  function transpose(date, constructor) {
+    const date_ = isConstructor(constructor) ? new constructor(0) : constructFrom(constructor, 0);
+    date_.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
+    date_.setHours(
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+      date.getMilliseconds()
+    );
+    return date_;
+  }
+  function isConstructor(constructor) {
+    return typeof constructor === "function" && constructor.prototype?.constructor === constructor;
+  }
+
+  // node_modules/date-fns/parse/_lib/Setter.js
+  var TIMEZONE_UNIT_PRIORITY = 10;
+  var Setter = class {
+    subPriority = 0;
+    validate(_utcDate, _options) {
+      return true;
+    }
+  };
+  var ValueSetter = class extends Setter {
+    constructor(value, validateValue, setValue, priority, subPriority) {
+      super();
+      this.value = value;
+      this.validateValue = validateValue;
+      this.setValue = setValue;
+      this.priority = priority;
+      if (subPriority) {
+        this.subPriority = subPriority;
+      }
+    }
+    validate(date, options) {
+      return this.validateValue(date, this.value, options);
+    }
+    set(date, flags, options) {
+      return this.setValue(date, flags, this.value, options);
+    }
+  };
+  var DateTimezoneSetter = class extends Setter {
+    priority = TIMEZONE_UNIT_PRIORITY;
+    subPriority = -1;
+    constructor(context, reference) {
+      super();
+      this.context = context || ((date) => constructFrom(reference, date));
+    }
+    set(date, flags) {
+      if (flags.timestampIsSet) return date;
+      return constructFrom(date, transpose(date, this.context));
+    }
+  };
+
+  // node_modules/date-fns/parse/_lib/Parser.js
+  var Parser = class {
+    run(dateString, token, match2, options) {
+      const result = this.parse(dateString, token, match2, options);
+      if (!result) {
+        return null;
+      }
+      return {
+        setter: new ValueSetter(
+          result.value,
+          this.validate,
+          this.set,
+          this.priority,
+          this.subPriority
+        ),
+        rest: result.rest
+      };
+    }
+    validate(_utcDate, _value, _options) {
+      return true;
+    }
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/EraParser.js
+  var EraParser = class extends Parser {
+    priority = 140;
+    parse(dateString, token, match2) {
+      switch (token) {
+        // AD, BC
+        case "G":
+        case "GG":
+        case "GGG":
+          return match2.era(dateString, { width: "abbreviated" }) || match2.era(dateString, { width: "narrow" });
+        // A, B
+        case "GGGGG":
+          return match2.era(dateString, { width: "narrow" });
+        // Anno Domini, Before Christ
+        case "GGGG":
+        default:
+          return match2.era(dateString, { width: "wide" }) || match2.era(dateString, { width: "abbreviated" }) || match2.era(dateString, { width: "narrow" });
+      }
+    }
+    set(date, flags, value) {
+      flags.era = value;
+      date.setFullYear(value, 0, 1);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = ["R", "u", "t", "T"];
+  };
+
+  // node_modules/date-fns/parse/_lib/constants.js
+  var numericPatterns = {
+    month: /^(1[0-2]|0?\d)/,
+    // 0 to 12
+    date: /^(3[0-1]|[0-2]?\d)/,
+    // 0 to 31
+    dayOfYear: /^(36[0-6]|3[0-5]\d|[0-2]?\d?\d)/,
+    // 0 to 366
+    week: /^(5[0-3]|[0-4]?\d)/,
+    // 0 to 53
+    hour23h: /^(2[0-3]|[0-1]?\d)/,
+    // 0 to 23
+    hour24h: /^(2[0-4]|[0-1]?\d)/,
+    // 0 to 24
+    hour11h: /^(1[0-1]|0?\d)/,
+    // 0 to 11
+    hour12h: /^(1[0-2]|0?\d)/,
+    // 0 to 12
+    minute: /^[0-5]?\d/,
+    // 0 to 59
+    second: /^[0-5]?\d/,
+    // 0 to 59
+    singleDigit: /^\d/,
+    // 0 to 9
+    twoDigits: /^\d{1,2}/,
+    // 0 to 99
+    threeDigits: /^\d{1,3}/,
+    // 0 to 999
+    fourDigits: /^\d{1,4}/,
+    // 0 to 9999
+    anyDigitsSigned: /^-?\d+/,
+    singleDigitSigned: /^-?\d/,
+    // 0 to 9, -0 to -9
+    twoDigitsSigned: /^-?\d{1,2}/,
+    // 0 to 99, -0 to -99
+    threeDigitsSigned: /^-?\d{1,3}/,
+    // 0 to 999, -0 to -999
+    fourDigitsSigned: /^-?\d{1,4}/
+    // 0 to 9999, -0 to -9999
+  };
+  var timezonePatterns = {
+    basicOptionalMinutes: /^([+-])(\d{2})(\d{2})?|Z/,
+    basic: /^([+-])(\d{2})(\d{2})|Z/,
+    basicOptionalSeconds: /^([+-])(\d{2})(\d{2})((\d{2}))?|Z/,
+    extended: /^([+-])(\d{2}):(\d{2})|Z/,
+    extendedOptionalSeconds: /^([+-])(\d{2}):(\d{2})(:(\d{2}))?|Z/
+  };
+
+  // node_modules/date-fns/parse/_lib/utils.js
+  function mapValue(parseFnResult, mapFn) {
+    if (!parseFnResult) {
+      return parseFnResult;
+    }
+    return {
+      value: mapFn(parseFnResult.value),
+      rest: parseFnResult.rest
+    };
+  }
+  function parseNumericPattern(pattern, dateString) {
+    const matchResult = dateString.match(pattern);
+    if (!matchResult) {
+      return null;
+    }
+    return {
+      value: parseInt(matchResult[0], 10),
+      rest: dateString.slice(matchResult[0].length)
+    };
+  }
+  function parseTimezonePattern(pattern, dateString) {
+    const matchResult = dateString.match(pattern);
+    if (!matchResult) {
+      return null;
+    }
+    if (matchResult[0] === "Z") {
+      return {
+        value: 0,
+        rest: dateString.slice(1)
+      };
+    }
+    const sign = matchResult[1] === "+" ? 1 : -1;
+    const hours = matchResult[2] ? parseInt(matchResult[2], 10) : 0;
+    const minutes = matchResult[3] ? parseInt(matchResult[3], 10) : 0;
+    const seconds = matchResult[5] ? parseInt(matchResult[5], 10) : 0;
+    return {
+      value: sign * (hours * millisecondsInHour + minutes * millisecondsInMinute + seconds * millisecondsInSecond),
+      rest: dateString.slice(matchResult[0].length)
+    };
+  }
+  function parseAnyDigitsSigned(dateString) {
+    return parseNumericPattern(numericPatterns.anyDigitsSigned, dateString);
+  }
+  function parseNDigits(n2, dateString) {
+    switch (n2) {
+      case 1:
+        return parseNumericPattern(numericPatterns.singleDigit, dateString);
+      case 2:
+        return parseNumericPattern(numericPatterns.twoDigits, dateString);
+      case 3:
+        return parseNumericPattern(numericPatterns.threeDigits, dateString);
+      case 4:
+        return parseNumericPattern(numericPatterns.fourDigits, dateString);
+      default:
+        return parseNumericPattern(new RegExp("^\\d{1," + n2 + "}"), dateString);
+    }
+  }
+  function parseNDigitsSigned(n2, dateString) {
+    switch (n2) {
+      case 1:
+        return parseNumericPattern(numericPatterns.singleDigitSigned, dateString);
+      case 2:
+        return parseNumericPattern(numericPatterns.twoDigitsSigned, dateString);
+      case 3:
+        return parseNumericPattern(numericPatterns.threeDigitsSigned, dateString);
+      case 4:
+        return parseNumericPattern(numericPatterns.fourDigitsSigned, dateString);
+      default:
+        return parseNumericPattern(new RegExp("^-?\\d{1," + n2 + "}"), dateString);
+    }
+  }
+  function dayPeriodEnumToHours(dayPeriod) {
+    switch (dayPeriod) {
+      case "morning":
+        return 4;
+      case "evening":
+        return 17;
+      case "pm":
+      case "noon":
+      case "afternoon":
+        return 12;
+      case "am":
+      case "midnight":
+      case "night":
+      default:
+        return 0;
+    }
+  }
+  function normalizeTwoDigitYear(twoDigitYear, currentYear) {
+    const isCommonEra = currentYear > 0;
+    const absCurrentYear = isCommonEra ? currentYear : 1 - currentYear;
+    let result;
+    if (absCurrentYear <= 50) {
+      result = twoDigitYear || 100;
+    } else {
+      const rangeEnd = absCurrentYear + 50;
+      const rangeEndCentury = Math.trunc(rangeEnd / 100) * 100;
+      const isPreviousCentury = twoDigitYear >= rangeEnd % 100;
+      result = twoDigitYear + rangeEndCentury - (isPreviousCentury ? 100 : 0);
+    }
+    return isCommonEra ? result : 1 - result;
+  }
+  function isLeapYearIndex(year) {
+    return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
+  }
+
+  // node_modules/date-fns/parse/_lib/parsers/YearParser.js
+  var YearParser = class extends Parser {
+    priority = 130;
+    incompatibleTokens = ["Y", "R", "u", "w", "I", "i", "e", "c", "t", "T"];
+    parse(dateString, token, match2) {
+      const valueCallback = (year) => ({
+        year,
+        isTwoDigitYear: token === "yy"
+      });
+      switch (token) {
+        case "y":
+          return mapValue(parseNDigits(4, dateString), valueCallback);
+        case "yo":
+          return mapValue(
+            match2.ordinalNumber(dateString, {
+              unit: "year"
+            }),
+            valueCallback
+          );
+        default:
+          return mapValue(parseNDigits(token.length, dateString), valueCallback);
+      }
+    }
+    validate(_date, value) {
+      return value.isTwoDigitYear || value.year > 0;
+    }
+    set(date, flags, value) {
+      const currentYear = date.getFullYear();
+      if (value.isTwoDigitYear) {
+        const normalizedTwoDigitYear = normalizeTwoDigitYear(
+          value.year,
+          currentYear
+        );
+        date.setFullYear(normalizedTwoDigitYear, 0, 1);
+        date.setHours(0, 0, 0, 0);
+        return date;
+      }
+      const year = !("era" in flags) || flags.era === 1 ? value.year : 1 - value.year;
+      date.setFullYear(year, 0, 1);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/LocalWeekYearParser.js
+  var LocalWeekYearParser = class extends Parser {
+    priority = 130;
+    parse(dateString, token, match2) {
+      const valueCallback = (year) => ({
+        year,
+        isTwoDigitYear: token === "YY"
+      });
+      switch (token) {
+        case "Y":
+          return mapValue(parseNDigits(4, dateString), valueCallback);
+        case "Yo":
+          return mapValue(
+            match2.ordinalNumber(dateString, {
+              unit: "year"
+            }),
+            valueCallback
+          );
+        default:
+          return mapValue(parseNDigits(token.length, dateString), valueCallback);
+      }
+    }
+    validate(_date, value) {
+      return value.isTwoDigitYear || value.year > 0;
+    }
+    set(date, flags, value, options) {
+      const currentYear = getWeekYear(date, options);
+      if (value.isTwoDigitYear) {
+        const normalizedTwoDigitYear = normalizeTwoDigitYear(
+          value.year,
+          currentYear
+        );
+        date.setFullYear(
+          normalizedTwoDigitYear,
+          0,
+          options.firstWeekContainsDate
+        );
+        date.setHours(0, 0, 0, 0);
+        return startOfWeek(date, options);
+      }
+      const year = !("era" in flags) || flags.era === 1 ? value.year : 1 - value.year;
+      date.setFullYear(year, 0, options.firstWeekContainsDate);
+      date.setHours(0, 0, 0, 0);
+      return startOfWeek(date, options);
+    }
+    incompatibleTokens = [
+      "y",
+      "R",
+      "u",
+      "Q",
+      "q",
+      "M",
+      "L",
+      "I",
+      "d",
+      "D",
+      "i",
+      "t",
+      "T"
+    ];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/ISOWeekYearParser.js
+  var ISOWeekYearParser = class extends Parser {
+    priority = 130;
+    parse(dateString, token) {
+      if (token === "R") {
+        return parseNDigitsSigned(4, dateString);
+      }
+      return parseNDigitsSigned(token.length, dateString);
+    }
+    set(date, _flags, value) {
+      const firstWeekOfYear = constructFrom(date, 0);
+      firstWeekOfYear.setFullYear(value, 0, 4);
+      firstWeekOfYear.setHours(0, 0, 0, 0);
+      return startOfISOWeek(firstWeekOfYear);
+    }
+    incompatibleTokens = [
+      "G",
+      "y",
+      "Y",
+      "u",
+      "Q",
+      "q",
+      "M",
+      "L",
+      "w",
+      "d",
+      "D",
+      "e",
+      "c",
+      "t",
+      "T"
+    ];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/ExtendedYearParser.js
+  var ExtendedYearParser = class extends Parser {
+    priority = 130;
+    parse(dateString, token) {
+      if (token === "u") {
+        return parseNDigitsSigned(4, dateString);
+      }
+      return parseNDigitsSigned(token.length, dateString);
+    }
+    set(date, _flags, value) {
+      date.setFullYear(value, 0, 1);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = ["G", "y", "Y", "R", "w", "I", "i", "e", "c", "t", "T"];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/QuarterParser.js
+  var QuarterParser = class extends Parser {
+    priority = 120;
+    parse(dateString, token, match2) {
+      switch (token) {
+        // 1, 2, 3, 4
+        case "Q":
+        case "QQ":
+          return parseNDigits(token.length, dateString);
+        // 1st, 2nd, 3rd, 4th
+        case "Qo":
+          return match2.ordinalNumber(dateString, { unit: "quarter" });
+        // Q1, Q2, Q3, Q4
+        case "QQQ":
+          return match2.quarter(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.quarter(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+        // 1, 2, 3, 4 (narrow quarter; could be not numerical)
+        case "QQQQQ":
+          return match2.quarter(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+        // 1st quarter, 2nd quarter, ...
+        case "QQQQ":
+        default:
+          return match2.quarter(dateString, {
+            width: "wide",
+            context: "formatting"
+          }) || match2.quarter(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.quarter(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+      }
+    }
+    validate(_date, value) {
+      return value >= 1 && value <= 4;
+    }
+    set(date, _flags, value) {
+      date.setMonth((value - 1) * 3, 1);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = [
+      "Y",
+      "R",
+      "q",
+      "M",
+      "L",
+      "w",
+      "I",
+      "d",
+      "D",
+      "i",
+      "e",
+      "c",
+      "t",
+      "T"
+    ];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/StandAloneQuarterParser.js
+  var StandAloneQuarterParser = class extends Parser {
+    priority = 120;
+    parse(dateString, token, match2) {
+      switch (token) {
+        // 1, 2, 3, 4
+        case "q":
+        case "qq":
+          return parseNDigits(token.length, dateString);
+        // 1st, 2nd, 3rd, 4th
+        case "qo":
+          return match2.ordinalNumber(dateString, { unit: "quarter" });
+        // Q1, Q2, Q3, Q4
+        case "qqq":
+          return match2.quarter(dateString, {
+            width: "abbreviated",
+            context: "standalone"
+          }) || match2.quarter(dateString, {
+            width: "narrow",
+            context: "standalone"
+          });
+        // 1, 2, 3, 4 (narrow quarter; could be not numerical)
+        case "qqqqq":
+          return match2.quarter(dateString, {
+            width: "narrow",
+            context: "standalone"
+          });
+        // 1st quarter, 2nd quarter, ...
+        case "qqqq":
+        default:
+          return match2.quarter(dateString, {
+            width: "wide",
+            context: "standalone"
+          }) || match2.quarter(dateString, {
+            width: "abbreviated",
+            context: "standalone"
+          }) || match2.quarter(dateString, {
+            width: "narrow",
+            context: "standalone"
+          });
+      }
+    }
+    validate(_date, value) {
+      return value >= 1 && value <= 4;
+    }
+    set(date, _flags, value) {
+      date.setMonth((value - 1) * 3, 1);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = [
+      "Y",
+      "R",
+      "Q",
+      "M",
+      "L",
+      "w",
+      "I",
+      "d",
+      "D",
+      "i",
+      "e",
+      "c",
+      "t",
+      "T"
+    ];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/MonthParser.js
+  var MonthParser = class extends Parser {
+    incompatibleTokens = [
+      "Y",
+      "R",
+      "q",
+      "Q",
+      "L",
+      "w",
+      "I",
+      "D",
+      "i",
+      "e",
+      "c",
+      "t",
+      "T"
+    ];
+    priority = 110;
+    parse(dateString, token, match2) {
+      const valueCallback = (value) => value - 1;
+      switch (token) {
+        // 1, 2, ..., 12
+        case "M":
+          return mapValue(
+            parseNumericPattern(numericPatterns.month, dateString),
+            valueCallback
+          );
+        // 01, 02, ..., 12
+        case "MM":
+          return mapValue(parseNDigits(2, dateString), valueCallback);
+        // 1st, 2nd, ..., 12th
+        case "Mo":
+          return mapValue(
+            match2.ordinalNumber(dateString, {
+              unit: "month"
+            }),
+            valueCallback
+          );
+        // Jan, Feb, ..., Dec
+        case "MMM":
+          return match2.month(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.month(dateString, { width: "narrow", context: "formatting" });
+        // J, F, ..., D
+        case "MMMMM":
+          return match2.month(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+        // January, February, ..., December
+        case "MMMM":
+        default:
+          return match2.month(dateString, { width: "wide", context: "formatting" }) || match2.month(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.month(dateString, { width: "narrow", context: "formatting" });
+      }
+    }
+    validate(_date, value) {
+      return value >= 0 && value <= 11;
+    }
+    set(date, _flags, value) {
+      date.setMonth(value, 1);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/StandAloneMonthParser.js
+  var StandAloneMonthParser = class extends Parser {
+    priority = 110;
+    parse(dateString, token, match2) {
+      const valueCallback = (value) => value - 1;
+      switch (token) {
+        // 1, 2, ..., 12
+        case "L":
+          return mapValue(
+            parseNumericPattern(numericPatterns.month, dateString),
+            valueCallback
+          );
+        // 01, 02, ..., 12
+        case "LL":
+          return mapValue(parseNDigits(2, dateString), valueCallback);
+        // 1st, 2nd, ..., 12th
+        case "Lo":
+          return mapValue(
+            match2.ordinalNumber(dateString, {
+              unit: "month"
+            }),
+            valueCallback
+          );
+        // Jan, Feb, ..., Dec
+        case "LLL":
+          return match2.month(dateString, {
+            width: "abbreviated",
+            context: "standalone"
+          }) || match2.month(dateString, { width: "narrow", context: "standalone" });
+        // J, F, ..., D
+        case "LLLLL":
+          return match2.month(dateString, {
+            width: "narrow",
+            context: "standalone"
+          });
+        // January, February, ..., December
+        case "LLLL":
+        default:
+          return match2.month(dateString, { width: "wide", context: "standalone" }) || match2.month(dateString, {
+            width: "abbreviated",
+            context: "standalone"
+          }) || match2.month(dateString, { width: "narrow", context: "standalone" });
+      }
+    }
+    validate(_date, value) {
+      return value >= 0 && value <= 11;
+    }
+    set(date, _flags, value) {
+      date.setMonth(value, 1);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = [
+      "Y",
+      "R",
+      "q",
+      "Q",
+      "M",
+      "w",
+      "I",
+      "D",
+      "i",
+      "e",
+      "c",
+      "t",
+      "T"
+    ];
+  };
+
+  // node_modules/date-fns/setWeek.js
+  function setWeek(date, week, options) {
+    const date_ = toDate(date, options?.in);
+    const diff = getWeek(date_, options) - week;
+    date_.setDate(date_.getDate() - diff * 7);
+    return toDate(date_, options?.in);
+  }
+
+  // node_modules/date-fns/parse/_lib/parsers/LocalWeekParser.js
+  var LocalWeekParser = class extends Parser {
+    priority = 100;
+    parse(dateString, token, match2) {
+      switch (token) {
+        case "w":
+          return parseNumericPattern(numericPatterns.week, dateString);
+        case "wo":
+          return match2.ordinalNumber(dateString, { unit: "week" });
+        default:
+          return parseNDigits(token.length, dateString);
+      }
+    }
+    validate(_date, value) {
+      return value >= 1 && value <= 53;
+    }
+    set(date, _flags, value, options) {
+      return startOfWeek(setWeek(date, value, options), options);
+    }
+    incompatibleTokens = [
+      "y",
+      "R",
+      "u",
+      "q",
+      "Q",
+      "M",
+      "L",
+      "I",
+      "d",
+      "D",
+      "i",
+      "t",
+      "T"
+    ];
+  };
+
+  // node_modules/date-fns/setISOWeek.js
+  function setISOWeek(date, week, options) {
+    const _date = toDate(date, options?.in);
+    const diff = getISOWeek(_date, options) - week;
+    _date.setDate(_date.getDate() - diff * 7);
+    return _date;
+  }
+
+  // node_modules/date-fns/parse/_lib/parsers/ISOWeekParser.js
+  var ISOWeekParser = class extends Parser {
+    priority = 100;
+    parse(dateString, token, match2) {
+      switch (token) {
+        case "I":
+          return parseNumericPattern(numericPatterns.week, dateString);
+        case "Io":
+          return match2.ordinalNumber(dateString, { unit: "week" });
+        default:
+          return parseNDigits(token.length, dateString);
+      }
+    }
+    validate(_date, value) {
+      return value >= 1 && value <= 53;
+    }
+    set(date, _flags, value) {
+      return startOfISOWeek(setISOWeek(date, value));
+    }
+    incompatibleTokens = [
+      "y",
+      "Y",
+      "u",
+      "q",
+      "Q",
+      "M",
+      "L",
+      "w",
+      "d",
+      "D",
+      "e",
+      "c",
+      "t",
+      "T"
+    ];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/DateParser.js
+  var DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  var DAYS_IN_MONTH_LEAP_YEAR = [
+    31,
+    29,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31
+  ];
+  var DateParser = class extends Parser {
+    priority = 90;
+    subPriority = 1;
+    parse(dateString, token, match2) {
+      switch (token) {
+        case "d":
+          return parseNumericPattern(numericPatterns.date, dateString);
+        case "do":
+          return match2.ordinalNumber(dateString, { unit: "date" });
+        default:
+          return parseNDigits(token.length, dateString);
+      }
+    }
+    validate(date, value) {
+      const year = date.getFullYear();
+      const isLeapYear = isLeapYearIndex(year);
+      const month = date.getMonth();
+      if (isLeapYear) {
+        return value >= 1 && value <= DAYS_IN_MONTH_LEAP_YEAR[month];
+      } else {
+        return value >= 1 && value <= DAYS_IN_MONTH[month];
+      }
+    }
+    set(date, _flags, value) {
+      date.setDate(value);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = [
+      "Y",
+      "R",
+      "q",
+      "Q",
+      "w",
+      "I",
+      "D",
+      "i",
+      "e",
+      "c",
+      "t",
+      "T"
+    ];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/DayOfYearParser.js
+  var DayOfYearParser = class extends Parser {
+    priority = 90;
+    subpriority = 1;
+    parse(dateString, token, match2) {
+      switch (token) {
+        case "D":
+        case "DD":
+          return parseNumericPattern(numericPatterns.dayOfYear, dateString);
+        case "Do":
+          return match2.ordinalNumber(dateString, { unit: "date" });
+        default:
+          return parseNDigits(token.length, dateString);
+      }
+    }
+    validate(date, value) {
+      const year = date.getFullYear();
+      const isLeapYear = isLeapYearIndex(year);
+      if (isLeapYear) {
+        return value >= 1 && value <= 366;
+      } else {
+        return value >= 1 && value <= 365;
+      }
+    }
+    set(date, _flags, value) {
+      date.setMonth(0, value);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = [
+      "Y",
+      "R",
+      "q",
+      "Q",
+      "M",
+      "L",
+      "w",
+      "I",
+      "d",
+      "E",
+      "i",
+      "e",
+      "c",
+      "t",
+      "T"
+    ];
+  };
+
+  // node_modules/date-fns/setDay.js
+  function setDay(date, day, options) {
+    const defaultOptions2 = getDefaultOptions();
+    const weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions2.weekStartsOn ?? defaultOptions2.locale?.options?.weekStartsOn ?? 0;
+    const date_ = toDate(date, options?.in);
+    const currentDay = date_.getDay();
+    const remainder = day % 7;
+    const dayIndex = (remainder + 7) % 7;
+    const delta = 7 - weekStartsOn;
+    const diff = day < 0 || day > 6 ? day - (currentDay + delta) % 7 : (dayIndex + delta) % 7 - (currentDay + delta) % 7;
+    return addDays(date_, diff, options);
+  }
+
+  // node_modules/date-fns/parse/_lib/parsers/DayParser.js
+  var DayParser = class extends Parser {
+    priority = 90;
+    parse(dateString, token, match2) {
+      switch (token) {
+        // Tue
+        case "E":
+        case "EE":
+        case "EEE":
+          return match2.day(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.day(dateString, { width: "short", context: "formatting" }) || match2.day(dateString, { width: "narrow", context: "formatting" });
+        // T
+        case "EEEEE":
+          return match2.day(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+        // Tu
+        case "EEEEEE":
+          return match2.day(dateString, { width: "short", context: "formatting" }) || match2.day(dateString, { width: "narrow", context: "formatting" });
+        // Tuesday
+        case "EEEE":
+        default:
+          return match2.day(dateString, { width: "wide", context: "formatting" }) || match2.day(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.day(dateString, { width: "short", context: "formatting" }) || match2.day(dateString, { width: "narrow", context: "formatting" });
+      }
+    }
+    validate(_date, value) {
+      return value >= 0 && value <= 6;
+    }
+    set(date, _flags, value, options) {
+      date = setDay(date, value, options);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = ["D", "i", "e", "c", "t", "T"];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/LocalDayParser.js
+  var LocalDayParser = class extends Parser {
+    priority = 90;
+    parse(dateString, token, match2, options) {
+      const valueCallback = (value) => {
+        const wholeWeekDays = Math.floor((value - 1) / 7) * 7;
+        return (value + options.weekStartsOn + 6) % 7 + wholeWeekDays;
+      };
+      switch (token) {
+        // 3
+        case "e":
+        case "ee":
+          return mapValue(parseNDigits(token.length, dateString), valueCallback);
+        // 3rd
+        case "eo":
+          return mapValue(
+            match2.ordinalNumber(dateString, {
+              unit: "day"
+            }),
+            valueCallback
+          );
+        // Tue
+        case "eee":
+          return match2.day(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.day(dateString, { width: "short", context: "formatting" }) || match2.day(dateString, { width: "narrow", context: "formatting" });
+        // T
+        case "eeeee":
+          return match2.day(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+        // Tu
+        case "eeeeee":
+          return match2.day(dateString, { width: "short", context: "formatting" }) || match2.day(dateString, { width: "narrow", context: "formatting" });
+        // Tuesday
+        case "eeee":
+        default:
+          return match2.day(dateString, { width: "wide", context: "formatting" }) || match2.day(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.day(dateString, { width: "short", context: "formatting" }) || match2.day(dateString, { width: "narrow", context: "formatting" });
+      }
+    }
+    validate(_date, value) {
+      return value >= 0 && value <= 6;
+    }
+    set(date, _flags, value, options) {
+      date = setDay(date, value, options);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = [
+      "y",
+      "R",
+      "u",
+      "q",
+      "Q",
+      "M",
+      "L",
+      "I",
+      "d",
+      "D",
+      "E",
+      "i",
+      "c",
+      "t",
+      "T"
+    ];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/StandAloneLocalDayParser.js
+  var StandAloneLocalDayParser = class extends Parser {
+    priority = 90;
+    parse(dateString, token, match2, options) {
+      const valueCallback = (value) => {
+        const wholeWeekDays = Math.floor((value - 1) / 7) * 7;
+        return (value + options.weekStartsOn + 6) % 7 + wholeWeekDays;
+      };
+      switch (token) {
+        // 3
+        case "c":
+        case "cc":
+          return mapValue(parseNDigits(token.length, dateString), valueCallback);
+        // 3rd
+        case "co":
+          return mapValue(
+            match2.ordinalNumber(dateString, {
+              unit: "day"
+            }),
+            valueCallback
+          );
+        // Tue
+        case "ccc":
+          return match2.day(dateString, {
+            width: "abbreviated",
+            context: "standalone"
+          }) || match2.day(dateString, { width: "short", context: "standalone" }) || match2.day(dateString, { width: "narrow", context: "standalone" });
+        // T
+        case "ccccc":
+          return match2.day(dateString, {
+            width: "narrow",
+            context: "standalone"
+          });
+        // Tu
+        case "cccccc":
+          return match2.day(dateString, { width: "short", context: "standalone" }) || match2.day(dateString, { width: "narrow", context: "standalone" });
+        // Tuesday
+        case "cccc":
+        default:
+          return match2.day(dateString, { width: "wide", context: "standalone" }) || match2.day(dateString, {
+            width: "abbreviated",
+            context: "standalone"
+          }) || match2.day(dateString, { width: "short", context: "standalone" }) || match2.day(dateString, { width: "narrow", context: "standalone" });
+      }
+    }
+    validate(_date, value) {
+      return value >= 0 && value <= 6;
+    }
+    set(date, _flags, value, options) {
+      date = setDay(date, value, options);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = [
+      "y",
+      "R",
+      "u",
+      "q",
+      "Q",
+      "M",
+      "L",
+      "I",
+      "d",
+      "D",
+      "E",
+      "i",
+      "e",
+      "t",
+      "T"
+    ];
+  };
+
+  // node_modules/date-fns/setISODay.js
+  function setISODay(date, day, options) {
+    const date_ = toDate(date, options?.in);
+    const currentDay = getISODay(date_, options);
+    const diff = day - currentDay;
+    return addDays(date_, diff, options);
+  }
+
+  // node_modules/date-fns/parse/_lib/parsers/ISODayParser.js
+  var ISODayParser = class extends Parser {
+    priority = 90;
+    parse(dateString, token, match2) {
+      const valueCallback = (value) => {
+        if (value === 0) {
+          return 7;
+        }
+        return value;
+      };
+      switch (token) {
+        // 2
+        case "i":
+        case "ii":
+          return parseNDigits(token.length, dateString);
+        // 2nd
+        case "io":
+          return match2.ordinalNumber(dateString, { unit: "day" });
+        // Tue
+        case "iii":
+          return mapValue(
+            match2.day(dateString, {
+              width: "abbreviated",
+              context: "formatting"
+            }) || match2.day(dateString, {
+              width: "short",
+              context: "formatting"
+            }) || match2.day(dateString, {
+              width: "narrow",
+              context: "formatting"
+            }),
+            valueCallback
+          );
+        // T
+        case "iiiii":
+          return mapValue(
+            match2.day(dateString, {
+              width: "narrow",
+              context: "formatting"
+            }),
+            valueCallback
+          );
+        // Tu
+        case "iiiiii":
+          return mapValue(
+            match2.day(dateString, {
+              width: "short",
+              context: "formatting"
+            }) || match2.day(dateString, {
+              width: "narrow",
+              context: "formatting"
+            }),
+            valueCallback
+          );
+        // Tuesday
+        case "iiii":
+        default:
+          return mapValue(
+            match2.day(dateString, {
+              width: "wide",
+              context: "formatting"
+            }) || match2.day(dateString, {
+              width: "abbreviated",
+              context: "formatting"
+            }) || match2.day(dateString, {
+              width: "short",
+              context: "formatting"
+            }) || match2.day(dateString, {
+              width: "narrow",
+              context: "formatting"
+            }),
+            valueCallback
+          );
+      }
+    }
+    validate(_date, value) {
+      return value >= 1 && value <= 7;
+    }
+    set(date, _flags, value) {
+      date = setISODay(date, value);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = [
+      "y",
+      "Y",
+      "u",
+      "q",
+      "Q",
+      "M",
+      "L",
+      "w",
+      "d",
+      "D",
+      "E",
+      "e",
+      "c",
+      "t",
+      "T"
+    ];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/AMPMParser.js
+  var AMPMParser = class extends Parser {
+    priority = 80;
+    parse(dateString, token, match2) {
+      switch (token) {
+        case "a":
+        case "aa":
+        case "aaa":
+          return match2.dayPeriod(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+        case "aaaaa":
+          return match2.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+        case "aaaa":
+        default:
+          return match2.dayPeriod(dateString, {
+            width: "wide",
+            context: "formatting"
+          }) || match2.dayPeriod(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+      }
+    }
+    set(date, _flags, value) {
+      date.setHours(dayPeriodEnumToHours(value), 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = ["b", "B", "H", "k", "t", "T"];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/AMPMMidnightParser.js
+  var AMPMMidnightParser = class extends Parser {
+    priority = 80;
+    parse(dateString, token, match2) {
+      switch (token) {
+        case "b":
+        case "bb":
+        case "bbb":
+          return match2.dayPeriod(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+        case "bbbbb":
+          return match2.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+        case "bbbb":
+        default:
+          return match2.dayPeriod(dateString, {
+            width: "wide",
+            context: "formatting"
+          }) || match2.dayPeriod(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+      }
+    }
+    set(date, _flags, value) {
+      date.setHours(dayPeriodEnumToHours(value), 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = ["a", "B", "H", "k", "t", "T"];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/DayPeriodParser.js
+  var DayPeriodParser = class extends Parser {
+    priority = 80;
+    parse(dateString, token, match2) {
+      switch (token) {
+        case "B":
+        case "BB":
+        case "BBB":
+          return match2.dayPeriod(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+        case "BBBBB":
+          return match2.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+        case "BBBB":
+        default:
+          return match2.dayPeriod(dateString, {
+            width: "wide",
+            context: "formatting"
+          }) || match2.dayPeriod(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting"
+          });
+      }
+    }
+    set(date, _flags, value) {
+      date.setHours(dayPeriodEnumToHours(value), 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = ["a", "b", "t", "T"];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/Hour1to12Parser.js
+  var Hour1to12Parser = class extends Parser {
+    priority = 70;
+    parse(dateString, token, match2) {
+      switch (token) {
+        case "h":
+          return parseNumericPattern(numericPatterns.hour12h, dateString);
+        case "ho":
+          return match2.ordinalNumber(dateString, { unit: "hour" });
+        default:
+          return parseNDigits(token.length, dateString);
+      }
+    }
+    validate(_date, value) {
+      return value >= 1 && value <= 12;
+    }
+    set(date, _flags, value) {
+      const isPM = date.getHours() >= 12;
+      if (isPM && value < 12) {
+        date.setHours(value + 12, 0, 0, 0);
+      } else if (!isPM && value === 12) {
+        date.setHours(0, 0, 0, 0);
+      } else {
+        date.setHours(value, 0, 0, 0);
+      }
+      return date;
+    }
+    incompatibleTokens = ["H", "K", "k", "t", "T"];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/Hour0to23Parser.js
+  var Hour0to23Parser = class extends Parser {
+    priority = 70;
+    parse(dateString, token, match2) {
+      switch (token) {
+        case "H":
+          return parseNumericPattern(numericPatterns.hour23h, dateString);
+        case "Ho":
+          return match2.ordinalNumber(dateString, { unit: "hour" });
+        default:
+          return parseNDigits(token.length, dateString);
+      }
+    }
+    validate(_date, value) {
+      return value >= 0 && value <= 23;
+    }
+    set(date, _flags, value) {
+      date.setHours(value, 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = ["a", "b", "h", "K", "k", "t", "T"];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/Hour0To11Parser.js
+  var Hour0To11Parser = class extends Parser {
+    priority = 70;
+    parse(dateString, token, match2) {
+      switch (token) {
+        case "K":
+          return parseNumericPattern(numericPatterns.hour11h, dateString);
+        case "Ko":
+          return match2.ordinalNumber(dateString, { unit: "hour" });
+        default:
+          return parseNDigits(token.length, dateString);
+      }
+    }
+    validate(_date, value) {
+      return value >= 0 && value <= 11;
+    }
+    set(date, _flags, value) {
+      const isPM = date.getHours() >= 12;
+      if (isPM && value < 12) {
+        date.setHours(value + 12, 0, 0, 0);
+      } else {
+        date.setHours(value, 0, 0, 0);
+      }
+      return date;
+    }
+    incompatibleTokens = ["h", "H", "k", "t", "T"];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/Hour1To24Parser.js
+  var Hour1To24Parser = class extends Parser {
+    priority = 70;
+    parse(dateString, token, match2) {
+      switch (token) {
+        case "k":
+          return parseNumericPattern(numericPatterns.hour24h, dateString);
+        case "ko":
+          return match2.ordinalNumber(dateString, { unit: "hour" });
+        default:
+          return parseNDigits(token.length, dateString);
+      }
+    }
+    validate(_date, value) {
+      return value >= 1 && value <= 24;
+    }
+    set(date, _flags, value) {
+      const hours = value <= 24 ? value % 24 : value;
+      date.setHours(hours, 0, 0, 0);
+      return date;
+    }
+    incompatibleTokens = ["a", "b", "h", "H", "K", "t", "T"];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/MinuteParser.js
+  var MinuteParser = class extends Parser {
+    priority = 60;
+    parse(dateString, token, match2) {
+      switch (token) {
+        case "m":
+          return parseNumericPattern(numericPatterns.minute, dateString);
+        case "mo":
+          return match2.ordinalNumber(dateString, { unit: "minute" });
+        default:
+          return parseNDigits(token.length, dateString);
+      }
+    }
+    validate(_date, value) {
+      return value >= 0 && value <= 59;
+    }
+    set(date, _flags, value) {
+      date.setMinutes(value, 0, 0);
+      return date;
+    }
+    incompatibleTokens = ["t", "T"];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/SecondParser.js
+  var SecondParser = class extends Parser {
+    priority = 50;
+    parse(dateString, token, match2) {
+      switch (token) {
+        case "s":
+          return parseNumericPattern(numericPatterns.second, dateString);
+        case "so":
+          return match2.ordinalNumber(dateString, { unit: "second" });
+        default:
+          return parseNDigits(token.length, dateString);
+      }
+    }
+    validate(_date, value) {
+      return value >= 0 && value <= 59;
+    }
+    set(date, _flags, value) {
+      date.setSeconds(value, 0);
+      return date;
+    }
+    incompatibleTokens = ["t", "T"];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/FractionOfSecondParser.js
+  var FractionOfSecondParser = class extends Parser {
+    priority = 30;
+    parse(dateString, token) {
+      const valueCallback = (value) => Math.trunc(value * Math.pow(10, -token.length + 3));
+      return mapValue(parseNDigits(token.length, dateString), valueCallback);
+    }
+    set(date, _flags, value) {
+      date.setMilliseconds(value);
+      return date;
+    }
+    incompatibleTokens = ["t", "T"];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/ISOTimezoneWithZParser.js
+  var ISOTimezoneWithZParser = class extends Parser {
+    priority = 10;
+    parse(dateString, token) {
+      switch (token) {
+        case "X":
+          return parseTimezonePattern(
+            timezonePatterns.basicOptionalMinutes,
+            dateString
+          );
+        case "XX":
+          return parseTimezonePattern(timezonePatterns.basic, dateString);
+        case "XXXX":
+          return parseTimezonePattern(
+            timezonePatterns.basicOptionalSeconds,
+            dateString
+          );
+        case "XXXXX":
+          return parseTimezonePattern(
+            timezonePatterns.extendedOptionalSeconds,
+            dateString
+          );
+        case "XXX":
+        default:
+          return parseTimezonePattern(timezonePatterns.extended, dateString);
+      }
+    }
+    set(date, flags, value) {
+      if (flags.timestampIsSet) return date;
+      return constructFrom(
+        date,
+        date.getTime() - getTimezoneOffsetInMilliseconds(date) - value
+      );
+    }
+    incompatibleTokens = ["t", "T", "x"];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/ISOTimezoneParser.js
+  var ISOTimezoneParser = class extends Parser {
+    priority = 10;
+    parse(dateString, token) {
+      switch (token) {
+        case "x":
+          return parseTimezonePattern(
+            timezonePatterns.basicOptionalMinutes,
+            dateString
+          );
+        case "xx":
+          return parseTimezonePattern(timezonePatterns.basic, dateString);
+        case "xxxx":
+          return parseTimezonePattern(
+            timezonePatterns.basicOptionalSeconds,
+            dateString
+          );
+        case "xxxxx":
+          return parseTimezonePattern(
+            timezonePatterns.extendedOptionalSeconds,
+            dateString
+          );
+        case "xxx":
+        default:
+          return parseTimezonePattern(timezonePatterns.extended, dateString);
+      }
+    }
+    set(date, flags, value) {
+      if (flags.timestampIsSet) return date;
+      return constructFrom(
+        date,
+        date.getTime() - getTimezoneOffsetInMilliseconds(date) - value
+      );
+    }
+    incompatibleTokens = ["t", "T", "X"];
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/TimestampSecondsParser.js
+  var TimestampSecondsParser = class extends Parser {
+    priority = 40;
+    parse(dateString) {
+      return parseAnyDigitsSigned(dateString);
+    }
+    set(date, _flags, value) {
+      return [constructFrom(date, value * 1e3), { timestampIsSet: true }];
+    }
+    incompatibleTokens = "*";
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers/TimestampMillisecondsParser.js
+  var TimestampMillisecondsParser = class extends Parser {
+    priority = 20;
+    parse(dateString) {
+      return parseAnyDigitsSigned(dateString);
+    }
+    set(date, _flags, value) {
+      return [constructFrom(date, value), { timestampIsSet: true }];
+    }
+    incompatibleTokens = "*";
+  };
+
+  // node_modules/date-fns/parse/_lib/parsers.js
+  var parsers = {
+    G: new EraParser(),
+    y: new YearParser(),
+    Y: new LocalWeekYearParser(),
+    R: new ISOWeekYearParser(),
+    u: new ExtendedYearParser(),
+    Q: new QuarterParser(),
+    q: new StandAloneQuarterParser(),
+    M: new MonthParser(),
+    L: new StandAloneMonthParser(),
+    w: new LocalWeekParser(),
+    I: new ISOWeekParser(),
+    d: new DateParser(),
+    D: new DayOfYearParser(),
+    E: new DayParser(),
+    e: new LocalDayParser(),
+    c: new StandAloneLocalDayParser(),
+    i: new ISODayParser(),
+    a: new AMPMParser(),
+    b: new AMPMMidnightParser(),
+    B: new DayPeriodParser(),
+    h: new Hour1to12Parser(),
+    H: new Hour0to23Parser(),
+    K: new Hour0To11Parser(),
+    k: new Hour1To24Parser(),
+    m: new MinuteParser(),
+    s: new SecondParser(),
+    S: new FractionOfSecondParser(),
+    X: new ISOTimezoneWithZParser(),
+    x: new ISOTimezoneParser(),
+    t: new TimestampSecondsParser(),
+    T: new TimestampMillisecondsParser()
+  };
+
+  // node_modules/date-fns/parse.js
+  var formattingTokensRegExp2 = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g;
+  var longFormattingTokensRegExp2 = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
+  var escapedStringRegExp2 = /^'([^]*?)'?$/;
+  var doubleQuoteRegExp2 = /''/g;
+  var notWhitespaceRegExp = /\S/;
+  var unescapedLatinCharacterRegExp2 = /[a-zA-Z]/;
+  function parse(dateStr, formatStr, referenceDate, options) {
+    const invalidDate = () => constructFrom(options?.in || referenceDate, NaN);
+    const defaultOptions2 = getDefaultOptions2();
+    const locale = options?.locale ?? defaultOptions2.locale ?? enUS;
+    const firstWeekContainsDate = options?.firstWeekContainsDate ?? options?.locale?.options?.firstWeekContainsDate ?? defaultOptions2.firstWeekContainsDate ?? defaultOptions2.locale?.options?.firstWeekContainsDate ?? 1;
+    const weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions2.weekStartsOn ?? defaultOptions2.locale?.options?.weekStartsOn ?? 0;
+    if (!formatStr)
+      return dateStr ? invalidDate() : toDate(referenceDate, options?.in);
+    const subFnOptions = {
+      firstWeekContainsDate,
+      weekStartsOn,
+      locale
+    };
+    const setters = [new DateTimezoneSetter(options?.in, referenceDate)];
+    const tokens = formatStr.match(longFormattingTokensRegExp2).map((substring) => {
+      const firstCharacter = substring[0];
+      if (firstCharacter in longFormatters) {
+        const longFormatter = longFormatters[firstCharacter];
+        return longFormatter(substring, locale.formatLong);
+      }
+      return substring;
+    }).join("").match(formattingTokensRegExp2);
+    const usedTokens = [];
+    for (let token of tokens) {
+      if (!options?.useAdditionalWeekYearTokens && isProtectedWeekYearToken(token)) {
+        warnOrThrowProtectedError(token, formatStr, dateStr);
+      }
+      if (!options?.useAdditionalDayOfYearTokens && isProtectedDayOfYearToken(token)) {
+        warnOrThrowProtectedError(token, formatStr, dateStr);
+      }
+      const firstCharacter = token[0];
+      const parser = parsers[firstCharacter];
+      if (parser) {
+        const { incompatibleTokens } = parser;
+        if (Array.isArray(incompatibleTokens)) {
+          const incompatibleToken = usedTokens.find(
+            (usedToken) => incompatibleTokens.includes(usedToken.token) || usedToken.token === firstCharacter
+          );
+          if (incompatibleToken) {
+            throw new RangeError(
+              `The format string mustn't contain \`${incompatibleToken.fullToken}\` and \`${token}\` at the same time`
+            );
+          }
+        } else if (parser.incompatibleTokens === "*" && usedTokens.length > 0) {
+          throw new RangeError(
+            `The format string mustn't contain \`${token}\` and any other token at the same time`
+          );
+        }
+        usedTokens.push({ token: firstCharacter, fullToken: token });
+        const parseResult = parser.run(
+          dateStr,
+          token,
+          locale.match,
+          subFnOptions
+        );
+        if (!parseResult) {
+          return invalidDate();
+        }
+        setters.push(parseResult.setter);
+        dateStr = parseResult.rest;
+      } else {
+        if (firstCharacter.match(unescapedLatinCharacterRegExp2)) {
+          throw new RangeError(
+            "Format string contains an unescaped latin alphabet character `" + firstCharacter + "`"
+          );
+        }
+        if (token === "''") {
+          token = "'";
+        } else if (firstCharacter === "'") {
+          token = cleanEscapedString2(token);
+        }
+        if (dateStr.indexOf(token) === 0) {
+          dateStr = dateStr.slice(token.length);
+        } else {
+          return invalidDate();
+        }
+      }
+    }
+    if (dateStr.length > 0 && notWhitespaceRegExp.test(dateStr)) {
+      return invalidDate();
+    }
+    const uniquePrioritySetters = setters.map((setter) => setter.priority).sort((a2, b2) => b2 - a2).filter((priority, index2, array) => array.indexOf(priority) === index2).map(
+      (priority) => setters.filter((setter) => setter.priority === priority).sort((a2, b2) => b2.subPriority - a2.subPriority)
+    ).map((setterArray) => setterArray[0]);
+    let date = toDate(referenceDate, options?.in);
+    if (isNaN(+date)) return invalidDate();
+    const flags = {};
+    for (const setter of uniquePrioritySetters) {
+      if (!setter.validate(date, subFnOptions)) {
+        return invalidDate();
+      }
+      const result = setter.set(date, flags, subFnOptions);
+      if (Array.isArray(result)) {
+        date = result[0];
+        Object.assign(flags, result[1]);
+      } else {
+        date = result;
+      }
+    }
+    return date;
+  }
+  function cleanEscapedString2(input) {
+    return input.match(escapedStringRegExp2)[1].replace(doubleQuoteRegExp2, "'");
+  }
+
   // node_modules/date-fns/subDays.js
   function subDays(date, amount, options) {
     return addDays(date, -amount, options);
@@ -21832,11 +23576,41 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n31 = __toESM(require_i18n(), 1);
   var import_element46 = __toESM(require_element(), 1);
   var import_date = __toESM(require_date(), 1);
+
+  // packages/dataviews/build-module/field-types/utils/parse-time.mjs
+  var ZONE_DESIGNATOR = /(?:[Zz]|[+-](?:[01]\d|2[0-3]):?[0-5]\d)$/;
+  var TIME_FORMATS = ["HH:mm", "HH:mm:ss"];
+  var REFERENCE_DATE = new Date(2e3, 0, 1);
+  function parseTime(value) {
+    if (typeof value !== "string") {
+      return null;
+    }
+    const time = value.trim().replace(ZONE_DESIGNATOR, "");
+    for (const timeFormat of TIME_FORMATS) {
+      const parsed = parse(time, timeFormat, REFERENCE_DATE);
+      if (isValid(parsed)) {
+        return parsed.getHours() * 3600 + parsed.getMinutes() * 60 + parsed.getSeconds();
+      }
+    }
+    return null;
+  }
+
+  // packages/dataviews/build-module/utils/operators.mjs
   var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
   var filterTextWrappers = {
     Name: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
     Value: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
   };
+  function toComparableTemporals(fieldValue, filterValue) {
+    const filterTime = parseTime(filterValue);
+    if (filterTime !== null) {
+      return [parseTime(fieldValue) ?? NaN, filterTime];
+    }
+    return [
+      (0, import_date.getDate)(fieldValue).getTime(),
+      (0, import_date.getDate)(filterValue).getTime()
+    ];
+  }
   function getRelativeDate(value, unit) {
     switch (unit) {
       case "days":
@@ -21957,10 +23731,18 @@ If there's a particular need for this, please submit a feature request at https:
         filterTextWrappers
       ),
       filter(item, field, filterValue) {
-        if (!Array.isArray(filterValue) || filterValue.length !== 2 || filterValue[0] === void 0 || filterValue[1] === void 0) {
+        if (!Array.isArray(filterValue) || filterValue.length !== 2 || // An unfilled bound is `undefined` from the controls, `''`
+        // when it arrives from a persisted view, or `null` once
+        // `undefined` round-trips through JSON persistence.
+        filterValue.includes(void 0) || filterValue.includes("") || filterValue.includes(null)) {
           return true;
         }
         const fieldValue = field.getValue({ item });
+        const [min2, max2] = filterValue.map(parseTime);
+        if (min2 !== null && max2 !== null) {
+          const value = parseTime(fieldValue);
+          return value !== null && value >= min2 && value <= max2;
+        }
         if (typeof fieldValue === "number" || fieldValue instanceof Date || typeof fieldValue === "string") {
           return fieldValue >= filterValue[0] && fieldValue <= filterValue[1];
         }
@@ -22169,9 +23951,11 @@ If there's a particular need for this, please submit a feature request at https:
         if (filterValue === void 0) {
           return true;
         }
-        const filterDate = (0, import_date.getDate)(filterValue);
-        const fieldDate = (0, import_date.getDate)(field.getValue({ item }));
-        return fieldDate < filterDate;
+        const [fieldTemporal, filterTemporal] = toComparableTemporals(
+          field.getValue({ item }),
+          filterValue
+        );
+        return fieldTemporal < filterTemporal;
       },
       selection: "single"
     },
@@ -22192,9 +23976,11 @@ If there's a particular need for this, please submit a feature request at https:
         if (filterValue === void 0) {
           return true;
         }
-        const filterDate = (0, import_date.getDate)(filterValue);
-        const fieldDate = (0, import_date.getDate)(field.getValue({ item }));
-        return fieldDate > filterDate;
+        const [fieldTemporal, filterTemporal] = toComparableTemporals(
+          field.getValue({ item }),
+          filterValue
+        );
+        return fieldTemporal > filterTemporal;
       },
       selection: "single"
     },
@@ -22217,9 +24003,11 @@ If there's a particular need for this, please submit a feature request at https:
         if (filterValue === void 0) {
           return true;
         }
-        const filterDate = (0, import_date.getDate)(filterValue);
-        const fieldDate = (0, import_date.getDate)(field.getValue({ item }));
-        return fieldDate <= filterDate;
+        const [fieldTemporal, filterTemporal] = toComparableTemporals(
+          field.getValue({ item }),
+          filterValue
+        );
+        return fieldTemporal <= filterTemporal;
       },
       selection: "single"
     },
@@ -22242,9 +24030,11 @@ If there's a particular need for this, please submit a feature request at https:
         if (filterValue === void 0) {
           return true;
         }
-        const filterDate = (0, import_date.getDate)(filterValue);
-        const fieldDate = (0, import_date.getDate)(field.getValue({ item }));
-        return fieldDate >= filterDate;
+        const [fieldTemporal, filterTemporal] = toComparableTemporals(
+          field.getValue({ item }),
+          filterValue
+        );
+        return fieldTemporal >= filterTemporal;
       },
       selection: "single"
     },
@@ -22333,9 +24123,11 @@ If there's a particular need for this, please submit a feature request at https:
         if (filterValue === void 0) {
           return true;
         }
-        const filterDate = (0, import_date.getDate)(filterValue);
-        const fieldDate = (0, import_date.getDate)(field.getValue({ item }));
-        return filterDate.getTime() === fieldDate.getTime();
+        const [fieldTemporal, filterTemporal] = toComparableTemporals(
+          field.getValue({ item }),
+          filterValue
+        );
+        return fieldTemporal === filterTemporal;
       },
       selection: "single"
     },
@@ -22356,9 +24148,11 @@ If there's a particular need for this, please submit a feature request at https:
         if (filterValue === void 0) {
           return true;
         }
-        const filterDate = (0, import_date.getDate)(filterValue);
-        const fieldDate = (0, import_date.getDate)(field.getValue({ item }));
-        return filterDate.getTime() !== fieldDate.getTime();
+        const [fieldTemporal, filterTemporal] = toComparableTemporals(
+          field.getValue({ item }),
+          filterValue
+        );
+        return fieldTemporal !== filterTemporal;
       },
       selection: "single"
     }
@@ -22507,20 +24301,25 @@ If there's a particular need for this, please submit a feature request at https:
         return filterInView?.value?.includes(element.value);
       });
     } else if (Array.isArray(filterInView?.value)) {
-      const label = filterInView.value.map((v2) => {
-        const formattedValue = field?.getValueFormatted({
-          item: { [field.id]: v2 },
-          field
+      const isComplete = !filterInView.value.some(
+        (v2) => v2 === void 0 || v2 === null || v2 === ""
+      );
+      if (isComplete) {
+        const label = filterInView.value.map((v2) => {
+          const formattedValue = field?.getValueFormatted({
+            item: { [field.id]: v2 },
+            field
+          });
+          return formattedValue || String(v2);
         });
-        return formattedValue || String(v2);
-      });
-      activeElements = [
-        {
-          value: filterInView.value,
-          // @ts-ignore
-          label
-        }
-      ];
+        activeElements = [
+          {
+            value: filterInView.value,
+            // @ts-ignore
+            label
+          }
+        ];
+      }
     } else if (typeof filterInView?.value === "object") {
       activeElements = [
         { value: filterInView.value, label: filterInView.value }
@@ -24881,11 +26680,168 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
+  // packages/dataviews/build-module/components/dataform-controls/time.mjs
   var import_components40 = __toESM(require_components(), 1);
   var import_element67 = __toESM(require_element(), 1);
+  var import_i18n43 = __toESM(require_i18n(), 1);
   var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedToggleControl } = unlock2(import_components40.privateApis);
+  var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components40.privateApis);
+  function getStep(timeFormat, values) {
+    const tokens = (timeFormat ?? "").replace(/\\./g, "");
+    const hasSeconds = tokens.includes("s") || values.some((value) => (parseTime(value) ?? 0) % 60 !== 0);
+    return hasSeconds ? 1 : void 0;
+  }
+  function toInputValue(value) {
+    const seconds = parseTime(value);
+    if (seconds === null) {
+      return "";
+    }
+    const parts = [
+      Math.floor(seconds / 3600),
+      Math.floor(seconds % 3600 / 60)
+    ];
+    if (seconds % 60 !== 0) {
+      parts.push(seconds % 60);
+    }
+    return parts.map((part) => String(part).padStart(2, "0")).join(":");
+  }
+  function BetweenControls2({
+    value,
+    onChange,
+    hideLabelFromVision,
+    disabled: disabled2,
+    step,
+    min: min2,
+    max: max2
+  }) {
+    const [from = "", to = ""] = value;
+    const onChangeFrom = (0, import_element67.useCallback)(
+      (newValue) => onChange([newValue ?? "", to]),
+      [onChange, to]
+    );
+    const onChangeTo = (0, import_element67.useCallback)(
+      (newValue) => onChange([from, newValue ?? ""]),
+      [onChange, from]
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+      import_components40.BaseControl,
+      {
+        help: (0, import_i18n43.__)("The end time must be later than the start time."),
+        children: /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+            ValidatedInputControl3,
+            {
+              type: "time",
+              label: (0, import_i18n43.__)("From"),
+              value: from,
+              onChange: onChangeFrom,
+              hideLabelFromVision,
+              disabled: disabled2,
+              step,
+              min: min2,
+              max: to || max2
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+            ValidatedInputControl3,
+            {
+              type: "time",
+              label: (0, import_i18n43.__)("To"),
+              value: to,
+              onChange: onChangeTo,
+              hideLabelFromVision,
+              disabled: disabled2,
+              step,
+              min: from || min2,
+              max: max2
+            }
+          )
+        ] })
+      }
+    );
+  }
+  function Time({
+    data,
+    field,
+    onChange,
+    hideLabelFromVision,
+    markWhenOptional,
+    operator,
+    validity
+  }) {
+    const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
+    const value = getValue({ item: data });
+    const disabled2 = field.isDisabled({ item: data, field });
+    const timeFormat = field.format?.time;
+    const min2 = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
+    const max2 = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
+    const onChangeControl = (0, import_element67.useCallback)(
+      (newValue) => onChange(
+        setValue({
+          item: data,
+          value: newValue === "" ? void 0 : newValue
+        })
+      ),
+      [data, onChange, setValue]
+    );
+    const onChangeBetweenControls = (0, import_element67.useCallback)(
+      ([from, to]) => onChange(
+        setValue({
+          item: data,
+          // An unfilled bound is stored as `undefined`, which the
+          // `between` operator reads as "do not apply the filter".
+          value: [from || void 0, to || void 0]
+        })
+      ),
+      [data, onChange, setValue]
+    );
+    if (operator === OPERATOR_BETWEEN) {
+      let valueBetween = ["", ""];
+      if (Array.isArray(value) && value.length === 2) {
+        valueBetween = [
+          toInputValue(value[0]),
+          toInputValue(value[1])
+        ];
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+        BetweenControls2,
+        {
+          value: valueBetween,
+          onChange: onChangeBetweenControls,
+          hideLabelFromVision,
+          disabled: disabled2,
+          step: getStep(timeFormat, valueBetween),
+          min: min2,
+          max: max2
+        }
+      );
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+      ValidatedInputControl3,
+      {
+        required: !!isValid2.required,
+        markWhenOptional,
+        customValidity: getCustomValidity(isValid2, validity),
+        type: "time",
+        label,
+        placeholder,
+        help: description,
+        value: toInputValue(value),
+        onChange: onChangeControl,
+        hideLabelFromVision,
+        disabled: disabled2,
+        step: getStep(timeFormat, [value]),
+        min: min2,
+        max: max2
+      }
+    );
+  }
+
+  // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
+  var import_components41 = __toESM(require_components(), 1);
+  var import_element68 = __toESM(require_element(), 1);
+  var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
+  var { ValidatedToggleControl } = unlock2(import_components41.privateApis);
   function Toggle({
     field,
     onChange,
@@ -24896,12 +26852,12 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
-    const onChangeControl = (0, import_element67.useCallback)(() => {
+    const onChangeControl = (0, import_element68.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
       );
     }, [onChange, setValue, data, getValue]);
-    return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
       ValidatedToggleControl,
       {
         required: !!isValid2.required,
@@ -24918,10 +26874,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
-  var import_components41 = __toESM(require_components(), 1);
-  var import_element68 = __toESM(require_element(), 1);
-  var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedTextareaControl } = unlock2(import_components41.privateApis);
+  var import_components42 = __toESM(require_components(), 1);
+  var import_element69 = __toESM(require_element(), 1);
+  var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
+  var { ValidatedTextareaControl } = unlock2(import_components42.privateApis);
   function Textarea({
     data,
     field,
@@ -24935,11 +26891,11 @@ If there's a particular need for this, please submit a feature request at https:
     const disabled2 = field.isDisabled({ item: data, field });
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data });
-    const onChangeControl = (0, import_element68.useCallback)(
+    const onChangeControl = (0, import_element69.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
       ValidatedTextareaControl,
       {
         required: !!isValid2.required,
@@ -24960,12 +26916,12 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/index.mjs
-  var import_element70 = __toESM(require_element(), 1);
+  var import_element71 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
-  var import_components42 = __toESM(require_components(), 1);
+  var import_components43 = __toESM(require_components(), 1);
   var import_compose12 = __toESM(require_compose(), 1);
-  var import_element69 = __toESM(require_element(), 1);
+  var import_element70 = __toESM(require_element(), 1);
   var import_rich_text2 = __toESM(require_rich_text(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/utils.mjs
@@ -24982,7 +26938,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/format-edit.mjs
   var import_rich_text = __toESM(require_rich_text(), 1);
-  var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
   var import_react24 = __toESM(require_react(), 1);
   var EMPTY_CONTEXT = {};
   function Edit({
@@ -25001,7 +26957,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isActive = activeFormat !== void 0;
     const activeObject = (0, import_rich_text.getActiveObject)(value);
     const isObjectActive = activeObject !== void 0 && activeObject.type === name;
-    return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
       EditFunction,
       {
         isActive,
@@ -25026,11 +26982,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
-  var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
   var {
     ValidatedContentEditableControl: RichTextControlShell,
     withIgnoreIMEEvents
-  } = unlock2(import_components42.privateApis);
+  } = unlock2(import_components43.privateApis);
   var {
     useRichText,
     KeyboardShortcutContext,
@@ -25061,14 +27017,14 @@ If there's a particular need for this, please submit a feature request at https:
     focusOnMount,
     completers = EMPTY_COMPLETERS
   }) {
-    const [selection, setSelection] = (0, import_element69.useState)({
+    const [selection, setSelection] = (0, import_element70.useState)({
       start: void 0,
       end: void 0
     });
-    const [isSelected2, setIsSelected] = (0, import_element69.useState)(false);
-    const anchorRef = (0, import_element69.useRef)(void 0);
-    const inputEvents = (0, import_element69.useRef)(/* @__PURE__ */ new Set());
-    const keyboardShortcuts = (0, import_element69.useRef)(
+    const [isSelected2, setIsSelected] = (0, import_element70.useState)(false);
+    const anchorRef = (0, import_element70.useRef)(void 0);
+    const inputEvents = (0, import_element70.useRef)(/* @__PURE__ */ new Set());
+    const keyboardShortcuts = (0, import_element70.useRef)(
       /* @__PURE__ */ new Set()
     );
     const focusOutside = (0, import_compose12.__experimentalUseFocusOutside)(() => setIsSelected(false));
@@ -25094,7 +27050,7 @@ If there's a particular need for this, please submit a feature request at https:
       __unstableDisableFormats: disableFormats,
       allowedFormats: adjustedAllowedFormats,
       withoutInteractiveFormatting,
-      __unstableFormatTypeHandlerContext: (0, import_element69.useMemo)(
+      __unstableFormatTypeHandlerContext: (0, import_element70.useMemo)(
         () => ({
           richTextIdentifier: id,
           blockClientId: clientId
@@ -25105,16 +27061,16 @@ If there's a particular need for this, please submit a feature request at https:
     function onFocus() {
       anchorRef.current?.focus();
     }
-    const eventListenersPropsRef = (0, import_element69.useRef)({
+    const eventListenersPropsRef = (0, import_element70.useRef)({
       keyboardShortcuts,
       inputEvents
     });
-    const inputRulePropsRef = (0, import_element69.useRef)({
+    const inputRulePropsRef = (0, import_element70.useRef)({
       formatTypes,
       getValue,
       onChange: onRichTextChange
     });
-    (0, import_element69.useInsertionEffect)(() => {
+    (0, import_element70.useInsertionEffect)(() => {
       inputRulePropsRef.current = {
         formatTypes,
         getValue,
@@ -25195,7 +27151,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [isSelected2]
     );
-    const { ref: autocompleteRef, ...autocompleteProps } = (0, import_components42.__unstableUseAutocompleteProps)(
+    const { ref: autocompleteRef, ...autocompleteProps } = (0, import_components43.__unstableUseAutocompleteProps)(
       {
         completers,
         record: value,
@@ -25226,7 +27182,7 @@ If there's a particular need for this, please submit a feature request at https:
     return (
       // Focus boundary for the field's selection: `onFocus` selects on entry;
       // the spread `useFocusOutside` handlers deselect once focus leaves.
-      /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
         "div",
         {
           ...focusOutside,
@@ -25234,8 +27190,8 @@ If there's a particular need for this, please submit a feature request at https:
             setIsSelected(true);
             focusOutside.onFocus(event);
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime112.jsxs)(import_components42.SlotFillProvider, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(import_components43.SlotFillProvider, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
               RichTextControlShell,
               {
                 label,
@@ -25257,11 +27213,11 @@ If there's a particular need for this, please submit a feature request at https:
                 ref: editableRef
               }
             ),
-            isSelected2 && !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+            isSelected2 && !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
               KeyboardShortcutContext.Provider,
               {
                 value: keyboardShortcuts,
-                children: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(InputEventContext.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(InputEventContext.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
                   FormatEdit,
                   {
                     value,
@@ -25281,7 +27237,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/index.mjs
-  var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
   function RichText({
     data,
     field,
@@ -25303,11 +27259,11 @@ If there's a particular need for this, please submit a feature request at https:
     const disabled2 = field.isDisabled({ item: data, field });
     const { label, placeholder, description, id, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data }) ?? "";
-    const onChangeControl = (0, import_element70.useCallback)(
+    const onChangeControl = (0, import_element71.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
       RichTextControl,
       {
         label,
@@ -25333,10 +27289,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
-  var import_components43 = __toESM(require_components(), 1);
-  var import_element71 = __toESM(require_element(), 1);
-  var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedToggleGroupControl } = unlock2(import_components43.privateApis);
+  var import_components44 = __toESM(require_components(), 1);
+  var import_element72 = __toESM(require_element(), 1);
+  var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
+  var { ValidatedToggleGroupControl } = unlock2(import_components44.privateApis);
   function ToggleGroup({
     data,
     field,
@@ -25348,7 +27304,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { getValue, setValue, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
     const value = getValue({ item: data });
-    const onChangeControl = (0, import_element71.useCallback)(
+    const onChangeControl = (0, import_element72.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -25357,13 +27313,13 @@ If there's a particular need for this, please submit a feature request at https:
       getElements: field.getElements
     });
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components43.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_components44.Spinner, {});
     }
     if (elements.length === 0) {
       return null;
     }
     const selectedOption = elements.find((el) => el.value === value);
-    return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
       ValidatedToggleGroupControl,
       {
         required: !!field.isValid?.required,
@@ -25375,8 +27331,8 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: onChangeControl,
         value,
         hideLabelFromVision,
-        children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
-          import_components43.__experimentalToggleGroupControlOption,
+        children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+          import_components44.__experimentalToggleGroupControlOption,
           {
             label: el.label,
             value: el.value,
@@ -25389,10 +27345,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/array.mjs
-  var import_components44 = __toESM(require_components(), 1);
-  var import_element72 = __toESM(require_element(), 1);
-  var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedFormTokenField } = unlock2(import_components44.privateApis);
+  var import_components45 = __toESM(require_components(), 1);
+  var import_element73 = __toESM(require_element(), 1);
+  var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
+  var { ValidatedFormTokenField } = unlock2(import_components45.privateApis);
   function ArrayControl({
     data,
     field,
@@ -25408,7 +27364,7 @@ If there's a particular need for this, please submit a feature request at https:
       elements: field.elements,
       getElements: field.getElements
     });
-    const arrayValueAsElements = (0, import_element72.useMemo)(
+    const arrayValueAsElements = (0, import_element73.useMemo)(
       () => Array.isArray(value) ? value.map((token) => {
         const element = elements?.find(
           (suggestion) => suggestion.value === token
@@ -25417,7 +27373,7 @@ If there's a particular need for this, please submit a feature request at https:
       }) : [],
       [value, elements]
     );
-    const onChangeControl = (0, import_element72.useCallback)(
+    const onChangeControl = (0, import_element73.useCallback)(
       (tokens) => {
         const valueTokens = tokens.map((token) => {
           if (typeof token === "object" && "value" in token) {
@@ -25430,9 +27386,9 @@ If there's a particular need for this, please submit a feature request at https:
       [onChange, setValue, data]
     );
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_components44.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_components45.Spinner, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
       ValidatedFormTokenField,
       {
         required: !!isValid2?.required,
@@ -25471,9 +27427,9 @@ If there's a particular need for this, please submit a feature request at https:
             const element = elements.find(
               (el) => el.value === item
             );
-            return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("span", { children: element?.label || item });
+            return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("span", { children: element?.label || item });
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("span", { children: item });
+          return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("span", { children: item });
         }
       }
     );
@@ -25638,35 +27594,35 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/components/dataform-controls/color.mjs
-  var import_components45 = __toESM(require_components(), 1);
-  var import_element73 = __toESM(require_element(), 1);
-  var import_i18n43 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components45.privateApis);
+  var import_components46 = __toESM(require_components(), 1);
+  var import_element74 = __toESM(require_element(), 1);
+  var import_i18n44 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
+  var { ValidatedInputControl: ValidatedInputControl4 } = unlock2(import_components46.privateApis);
   var ColorPickerDropdown = ({
     color,
     onColorChange,
     disabled: disabled2
   }) => {
     const validColor = color && w(color).isValid() ? color : "#ffffff";
-    return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
-      import_components45.Dropdown,
+    return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+      import_components46.Dropdown,
       {
         className: "dataviews-controls__color-picker-dropdown",
         popoverProps: { resize: false },
-        renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
-          import_components45.Button,
+        renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+          import_components46.Button,
           {
             onClick: onToggle,
-            "aria-label": (0, import_i18n43.__)("Open color picker"),
+            "aria-label": (0, import_i18n44.__)("Open color picker"),
             size: "small",
             disabled: disabled2,
             accessibleWhenDisabled: true,
-            icon: () => /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_components45.ColorIndicator, { colorValue: validColor })
+            icon: () => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components46.ColorIndicator, { colorValue: validColor })
           }
         ),
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_components45.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
-          import_components45.ColorPicker,
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components46.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+          import_components46.ColorPicker,
           {
             color: validColor,
             onChange: onColorChange,
@@ -25687,20 +27643,20 @@ If there's a particular need for this, please submit a feature request at https:
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
     const value = field.getValue({ item: data }) || "";
-    const handleColorChange = (0, import_element73.useCallback)(
+    const handleColorChange = (0, import_element74.useCallback)(
       (newColor) => {
         onChange(setValue({ item: data, value: newColor }));
       },
       [data, onChange, setValue]
     );
-    const handleInputChange = (0, import_element73.useCallback)(
+    const handleInputChange = (0, import_element74.useCallback)(
       (newValue) => {
         onChange(setValue({ item: data, value: newValue || "" }));
       },
       [data, onChange, setValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
-      ValidatedInputControl3,
+    return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+      ValidatedInputControl4,
       {
         required: !!field.isValid?.required,
         markWhenOptional,
@@ -25713,7 +27669,7 @@ If there's a particular need for this, please submit a feature request at https:
         hideLabelFromVision,
         type: "text",
         disabled: disabled2,
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_components45.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components46.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
           ColorPickerDropdown,
           {
             color: value,
@@ -25726,10 +27682,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/password.mjs
-  var import_components46 = __toESM(require_components(), 1);
-  var import_element74 = __toESM(require_element(), 1);
-  var import_i18n44 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
+  var import_components47 = __toESM(require_components(), 1);
+  var import_element75 = __toESM(require_element(), 1);
+  var import_i18n45 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
   function Password({
     data,
     field,
@@ -25738,12 +27694,12 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     validity
   }) {
-    const [isVisible2, setIsVisible] = (0, import_element74.useState)(false);
+    const [isVisible2, setIsVisible] = (0, import_element75.useState)(false);
     const disabled2 = field.isDisabled({ item: data, field });
-    const toggleVisibility = (0, import_element74.useCallback)(() => {
+    const toggleVisibility = (0, import_element75.useCallback)(() => {
       setIsVisible((prev) => !prev);
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
       ValidatedText,
       {
         ...{
@@ -25754,13 +27710,13 @@ If there's a particular need for this, please submit a feature request at https:
           markWhenOptional,
           validity,
           type: isVisible2 ? "text" : "password",
-          suffix: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components46.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
-            import_components46.Button,
+          suffix: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(import_components47.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+            import_components47.Button,
             {
               icon: isVisible2 ? unseen_default : seen_default,
               onClick: toggleVisibility,
               size: "small",
-              label: isVisible2 ? (0, import_i18n44.__)("Hide password") : (0, import_i18n44.__)("Show password"),
+              label: isVisible2 ? (0, import_i18n45.__)("Hide password") : (0, import_i18n45.__)("Show password"),
               disabled: disabled2,
               accessibleWhenDisabled: true
             }
@@ -25776,7 +27732,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/index.mjs
-  var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
   var FORM_CONTROLS = {
     adaptiveSelect: AdaptiveSelect,
     array: ArrayControl,
@@ -25794,6 +27750,7 @@ If there's a particular need for this, please submit a feature request at https:
     radio: Radio,
     select: Select,
     text: Text,
+    time: Time,
     toggle: Toggle,
     textarea: Textarea,
     richtext: RichText,
@@ -25809,7 +27766,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return function ConfiguredControl(props) {
-      return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(BaseControlType, { ...props, config: controlConfig });
+      return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(BaseControlType, { ...props, config: controlConfig });
     };
   }
   function getControl(field, fallback) {
@@ -25885,7 +27842,7 @@ If there's a particular need for this, please submit a feature request at https:
   var set_value_from_id_default = setValueFromId;
 
   // packages/dataviews/build-module/field-types/email.mjs
-  var import_i18n45 = __toESM(require_i18n(), 1);
+  var import_i18n46 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
   function RenderFromElements({
@@ -25907,13 +27864,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/field-types/utils/render-default.mjs
-  var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
   function render({
     item,
     field
   }) {
     if (field.hasElements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(RenderFromElements, { item, field });
+      return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(RenderFromElements, { item, field });
     }
     return field.getValueFormatted({ item, field });
   }
@@ -25995,7 +27952,7 @@ If there's a particular need for this, please submit a feature request at https:
   function isValidCustom(item, field) {
     const value = field.getValue({ item });
     if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-      return (0, import_i18n45.__)("Value must be a valid email address.");
+      return (0, import_i18n46.__)("Value must be a valid email address.");
     }
     return null;
   }
@@ -26032,7 +27989,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/integer.mjs
-  var import_i18n46 = __toESM(require_i18n(), 1);
+  var import_i18n47 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/field-types/utils/sort-number.mjs
   var sort_number_default = (a2, b2, direction) => {
@@ -26098,7 +28055,7 @@ If there's a particular need for this, please submit a feature request at https:
   function isValidCustom2(item, field) {
     const value = field.getValue({ item });
     if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-      return (0, import_i18n46.__)("Value must be an integer.");
+      return (0, import_i18n47.__)("Value must be an integer.");
     }
     return null;
   }
@@ -26145,7 +28102,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/number.mjs
-  var import_i18n47 = __toESM(require_i18n(), 1);
+  var import_i18n48 = __toESM(require_i18n(), 1);
   var format3 = {
     separatorThousand: ",",
     separatorDecimal: ".",
@@ -26181,7 +28138,7 @@ If there's a particular need for this, please submit a feature request at https:
   function isValidCustom3(item, field) {
     const value = field.getValue({ item });
     if (!isEmpty(value) && !Number.isFinite(value)) {
-      return (0, import_i18n47.__)("Value must be a number.");
+      return (0, import_i18n48.__)("Value must be a number.");
     }
     return null;
   }
@@ -26263,19 +28220,16 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/field-types/datetime.mjs
   var import_date7 = __toESM(require_date(), 1);
 
-  // packages/dataviews/build-module/field-types/utils/is-valid-date-boundary.mjs
+  // packages/dataviews/build-module/field-types/utils/is-valid-boundary.mjs
   var import_date6 = __toESM(require_date(), 1);
   function parseDateLike(value) {
-    if (!value) {
-      return null;
-    }
     if (!isValid(new Date(value))) {
       return null;
     }
     const parsed = (0, import_date6.getDate)(value);
-    return parsed && isValid(parsed) ? parsed : null;
+    return parsed && isValid(parsed) ? parsed.getTime() : null;
   }
-  function validateDateLikeBoundary(item, field, boundary) {
+  function validateBoundary(item, field, boundary, parse2) {
     const constraint = field.isValid[boundary]?.constraint;
     if (typeof constraint !== "string") {
       return false;
@@ -26285,15 +28239,24 @@ If there's a particular need for this, please submit a feature request at https:
     if (boundaryValue === void 0 || boundaryValue === null || boundaryValue === "") {
       return true;
     }
-    const parsedConstraint = parseDateLike(constraint);
-    const parsedValue = parseDateLike(String(boundaryValue));
-    return !!parsedConstraint && !!parsedValue && (boundary === "min" ? parsedValue.getTime() >= parsedConstraint.getTime() : parsedValue.getTime() <= parsedConstraint.getTime());
+    const parsedConstraint = parse2(constraint);
+    const parsedValue = parse2(String(boundaryValue));
+    if (parsedConstraint === null || parsedValue === null) {
+      return false;
+    }
+    return boundary === "min" ? parsedValue >= parsedConstraint : parsedValue <= parsedConstraint;
   }
   function isValidMinDate(item, field) {
-    return validateDateLikeBoundary(item, field, "min");
+    return validateBoundary(item, field, "min", parseDateLike);
   }
   function isValidMaxDate(item, field) {
-    return validateDateLikeBoundary(item, field, "max");
+    return validateBoundary(item, field, "max", parseDateLike);
+  }
+  function isValidMinTime(item, field) {
+    return validateBoundary(item, field, "min", parseTime);
+  }
+  function isValidMaxTime(item, field) {
+    return validateBoundary(item, field, "max", parseTime);
   }
 
   // packages/dataviews/build-module/field-types/datetime.mjs
@@ -26425,8 +28388,83 @@ If there's a particular need for this, please submit a feature request at https:
     }
   };
 
+  // packages/dataviews/build-module/field-types/time.mjs
+  var import_date9 = __toESM(require_date(), 1);
+  var format6 = {
+    time: (0, import_date9.getSettings)().formats.time
+  };
+  var ANCHOR_DATE = "2000-01-01";
+  function toAnchoredDate(secondsSinceMidnight) {
+    const hours = Math.floor(secondsSinceMidnight / 3600);
+    const minutes = Math.floor(secondsSinceMidnight % 3600 / 60);
+    const seconds = secondsSinceMidnight % 60;
+    const time = [hours, minutes, seconds].map((part) => String(part).padStart(2, "0")).join(":");
+    return (0, import_date9.getDate)(`${ANCHOR_DATE}T${time}`);
+  }
+  function getValueFormatted6({
+    item,
+    field
+  }) {
+    const secondsSinceMidnight = parseTime(field.getValue({ item }));
+    if (secondsSinceMidnight === null) {
+      return "";
+    }
+    let formatTime;
+    if (field.type !== "time") {
+      formatTime = format6;
+    } else {
+      formatTime = field.format;
+    }
+    return (0, import_date9.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
+  }
+  var sort3 = (a2, b2, direction) => {
+    const timeA = parseTime(a2);
+    const timeB = parseTime(b2);
+    if (timeA === null || timeB === null) {
+      if (timeA === timeB) {
+        return 0;
+      }
+      return timeA === null ? 1 : -1;
+    }
+    return direction === "asc" ? timeA - timeB : timeB - timeA;
+  };
+  var time_default = {
+    type: "time",
+    render,
+    Edit: "time",
+    sort: sort3,
+    enableSorting: true,
+    enableGlobalSearch: false,
+    defaultOperators: [
+      OPERATOR_ON,
+      OPERATOR_NOT_ON,
+      OPERATOR_BEFORE,
+      OPERATOR_AFTER,
+      OPERATOR_BEFORE_INC,
+      OPERATOR_AFTER_INC,
+      OPERATOR_BETWEEN
+    ],
+    validOperators: [
+      OPERATOR_ON,
+      OPERATOR_NOT_ON,
+      OPERATOR_BEFORE,
+      OPERATOR_AFTER,
+      OPERATOR_BEFORE_INC,
+      OPERATOR_AFTER_INC,
+      OPERATOR_BETWEEN
+    ],
+    format: format6,
+    getValueFormatted: getValueFormatted6,
+    validate: {
+      required: isValidRequired,
+      elements: isValidElements,
+      min: isValidMinTime,
+      max: isValidMaxTime
+    }
+  };
+
   // packages/dataviews/build-module/field-types/boolean.mjs
-  var import_i18n48 = __toESM(require_i18n(), 1);
+  var import_i18n49 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
   function isValidRequiredForBool(item, field) {
@@ -26435,27 +28473,27 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/field-types/boolean.mjs
-  function getValueFormatted6({
+  function getValueFormatted7({
     item,
     field
   }) {
     const value = field.getValue({ item });
     if (value === true) {
-      return (0, import_i18n48.__)("True");
+      return (0, import_i18n49.__)("True");
     }
     if (value === false) {
-      return (0, import_i18n48.__)("False");
+      return (0, import_i18n49.__)("False");
     }
     return "";
   }
   function isValidCustom4(item, field) {
     const value = field.getValue({ item });
     if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-      return (0, import_i18n48.__)("Value must be true, false, or undefined");
+      return (0, import_i18n49.__)("Value must be true, false, or undefined");
     }
     return null;
   }
-  var sort3 = (a2, b2, direction) => {
+  var sort4 = (a2, b2, direction) => {
     const boolA = Boolean(a2);
     const boolB = Boolean(b2);
     if (boolA === boolB) {
@@ -26470,7 +28508,7 @@ If there's a particular need for this, please submit a feature request at https:
     type: "boolean",
     render,
     Edit: "checkbox",
-    sort: sort3,
+    sort: sort4,
     validate: {
       required: isValidRequiredForBool,
       elements: isValidElements,
@@ -26481,7 +28519,7 @@ If there's a particular need for this, please submit a feature request at https:
     defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
     validOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
     format: {},
-    getValueFormatted: getValueFormatted6
+    getValueFormatted: getValueFormatted7
   };
 
   // packages/dataviews/build-module/field-types/media.mjs
@@ -26503,7 +28541,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/array.mjs
-  var import_i18n49 = __toESM(require_i18n(), 1);
+  var import_i18n50 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
   function isValidRequiredForArray(item, field) {
@@ -26514,7 +28552,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/field-types/array.mjs
-  function getValueFormatted7({
+  function getValueFormatted8({
     item,
     field
   }) {
@@ -26523,19 +28561,19 @@ If there's a particular need for this, please submit a feature request at https:
     return arr.join(", ");
   }
   function render2({ item, field }) {
-    return getValueFormatted7({ item, field });
+    return getValueFormatted8({ item, field });
   }
   function isValidCustom5(item, field) {
     const value = field.getValue({ item });
     if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
-      return (0, import_i18n49.__)("Value must be an array.");
+      return (0, import_i18n50.__)("Value must be an array.");
     }
     if (!value.every((v2) => typeof v2 === "string")) {
-      return (0, import_i18n49.__)("Every value must be a string.");
+      return (0, import_i18n50.__)("Every value must be a string.");
     }
     return null;
   }
-  var sort4 = (a2, b2, direction) => {
+  var sort5 = (a2, b2, direction) => {
     const arrA = Array.isArray(a2) ? a2 : [];
     const arrB = Array.isArray(b2) ? b2 : [];
     if (arrA.length !== arrB.length) {
@@ -26549,7 +28587,7 @@ If there's a particular need for this, please submit a feature request at https:
     type: "array",
     render: render2,
     Edit: "array",
-    sort: sort4,
+    sort: sort5,
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -26560,7 +28598,7 @@ If there's a particular need for this, please submit a feature request at https:
       OPERATOR_IS_NOT_ALL
     ],
     format: {},
-    getValueFormatted: getValueFormatted7,
+    getValueFormatted: getValueFormatted8,
     validate: {
       required: isValidRequiredForArray,
       elements: isValidElements,
@@ -26569,7 +28607,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/password.mjs
-  function getValueFormatted8({
+  function getValueFormatted9({
     item,
     field
   }) {
@@ -26586,7 +28624,7 @@ If there's a particular need for this, please submit a feature request at https:
     defaultOperators: [],
     validOperators: [],
     format: {},
-    getValueFormatted: getValueFormatted8,
+    getValueFormatted: getValueFormatted9,
     validate: {
       required: isValidRequired,
       pattern: isValidPattern,
@@ -26629,18 +28667,18 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/color.mjs
-  var import_i18n50 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
+  var import_i18n51 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
   function render3({ item, field }) {
     if (field.hasElements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(RenderFromElements, { item, field });
+      return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(RenderFromElements, { item, field });
     }
     const value = get_value_formatted_default_default({ item, field });
     if (!value || !w(value).isValid()) {
       return value;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
         "div",
         {
           style: {
@@ -26653,17 +28691,17 @@ If there's a particular need for this, please submit a feature request at https:
           }
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("span", { children: value })
+      /* @__PURE__ */ (0, import_jsx_runtime121.jsx)("span", { children: value })
     ] });
   }
   function isValidCustom6(item, field) {
     const value = field.getValue({ item });
     if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-      return (0, import_i18n50.__)("Value must be a valid color.");
+      return (0, import_i18n51.__)("Value must be a valid color.");
     }
     return null;
   }
-  var sort5 = (a2, b2, direction) => {
+  var sort6 = (a2, b2, direction) => {
     const colorA = w(a2);
     const colorB = w(b2);
     if (!colorA.isValid() && !colorB.isValid()) {
@@ -26689,7 +28727,7 @@ If there's a particular need for this, please submit a feature request at https:
     type: "color",
     render: render3,
     Edit: "color",
-    sort: sort5,
+    sort: sort6,
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -26741,7 +28779,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/field-types/no-type.mjs
-  var sort6 = (a2, b2, direction) => {
+  var sort7 = (a2, b2, direction) => {
     if (typeof a2 === "number" && typeof b2 === "number") {
       return sort_number_default(a2, b2, direction);
     }
@@ -26751,7 +28789,7 @@ If there's a particular need for this, please submit a feature request at https:
     // type: no type for this one
     render,
     Edit: null,
-    sort: sort6,
+    sort: sort7,
     enableSorting: true,
     enableGlobalSearch: false,
     defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
@@ -26768,12 +28806,12 @@ If there's a particular need for this, please submit a feature request at https:
   function supportsNumericRangeConstraint(type) {
     return type === "integer" || type === "number";
   }
-  function supportsDateRangeConstraint(type) {
-    return type === "date" || type === "datetime";
+  function supportsStringRangeConstraint(type) {
+    return type === "date" || type === "datetime" || type === "time";
   }
   function normalizeRangeRule(value, fieldType, key) {
     const validator = fieldType.validate[key];
-    if (validator && (typeof value === "number" && supportsNumericRangeConstraint(fieldType.type) || typeof value === "string" && supportsDateRangeConstraint(fieldType.type))) {
+    if (validator && (typeof value === "number" && supportsNumericRangeConstraint(fieldType.type) || typeof value === "string" && supportsStringRangeConstraint(fieldType.type))) {
       return { constraint: value, validate: validator };
     }
     return void 0;
@@ -26863,6 +28901,7 @@ If there's a particular need for this, please submit a feature request at https:
       text_default,
       datetime_default,
       date_default,
+      time_default,
       boolean_default,
       media_default,
       array_default,
@@ -26880,7 +28919,7 @@ If there's a particular need for this, please submit a feature request at https:
     return fields.map((field) => {
       const fieldType = getFieldTypeByName(field.type);
       const getValue = field.getValue || get_value_from_id_default(field.id);
-      const sort7 = function(a2, b2, direction) {
+      const sort8 = function(a2, b2, direction) {
         const aValue = getValue({ item: a2 });
         const bValue = getValue({ item: b2 });
         return field.sort ? field.sort(aValue, bValue, direction) : fieldType.sort(aValue, bValue, direction);
@@ -26904,7 +28943,7 @@ If there's a particular need for this, please submit a feature request at https:
         type: fieldType.type,
         render: field.render ?? fieldType.render,
         Edit: getControl(field, fieldType.Edit),
-        sort: sort7,
+        sort: sort8,
         enableSorting: field.enableSorting ?? fieldType.enableSorting,
         enableGlobalSearch: field.enableGlobalSearch ?? fieldType.enableGlobalSearch,
         isValid: getIsValid(field, fieldType),
@@ -26921,7 +28960,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/hooks/use-data.mjs
-  var import_element75 = __toESM(require_element(), 1);
+  var import_element76 = __toESM(require_element(), 1);
   function useData({
     view,
     data: shownData,
@@ -26931,34 +28970,34 @@ If there's a particular need for this, please submit a feature request at https:
     selection
   }) {
     const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-    const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element75.useState)(
+    const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element76.useState)(
       !isLoading
     );
-    (0, import_element75.useEffect)(() => {
+    (0, import_element76.useEffect)(() => {
       if (!isLoading) {
         setHasInitiallyLoaded(true);
       }
     }, [isLoading]);
-    const previousDataRef = (0, import_element75.useRef)(shownData);
-    const previousPaginationInfoRef = (0, import_element75.useRef)(paginationInfo);
-    (0, import_element75.useEffect)(() => {
+    const previousDataRef = (0, import_element76.useRef)(shownData);
+    const previousPaginationInfoRef = (0, import_element76.useRef)(paginationInfo);
+    (0, import_element76.useEffect)(() => {
       if (!isLoading) {
         previousDataRef.current = shownData;
         previousPaginationInfoRef.current = paginationInfo;
       }
     }, [shownData, isLoading, paginationInfo]);
-    const [visibleEntries, setVisibleEntries] = (0, import_element75.useState)([]);
-    const positionMapRef = (0, import_element75.useRef)(/* @__PURE__ */ new Map());
-    const allLoadedRecordsRef = (0, import_element75.useRef)([]);
-    const prevViewParamsRef = (0, import_element75.useRef)({
+    const [visibleEntries, setVisibleEntries] = (0, import_element76.useState)([]);
+    const positionMapRef = (0, import_element76.useRef)(/* @__PURE__ */ new Map());
+    const allLoadedRecordsRef = (0, import_element76.useRef)([]);
+    const prevViewParamsRef = (0, import_element76.useRef)({
       search: void 0,
       filters: void 0,
       perPage: void 0
     });
-    const scrollDirectionRef = (0, import_element75.useRef)(void 0);
-    const prevStartPositionRef = (0, import_element75.useRef)(void 0);
-    const hasInitializedRef = (0, import_element75.useRef)(false);
-    const allLoadedRecords = (0, import_element75.useMemo)(() => {
+    const scrollDirectionRef = (0, import_element76.useRef)(void 0);
+    const prevStartPositionRef = (0, import_element76.useRef)(void 0);
+    const hasInitializedRef = (0, import_element76.useRef)(false);
+    const allLoadedRecords = (0, import_element76.useMemo)(() => {
       if (view.startPosition !== void 0 && prevStartPositionRef.current !== void 0) {
         if (view.startPosition < prevStartPositionRef.current) {
           scrollDirectionRef.current = "up";
@@ -27080,7 +29119,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
-  var import_element76 = __toESM(require_element(), 1);
+  var import_element77 = __toESM(require_element(), 1);
   var import_compose13 = __toESM(require_compose(), 1);
   function captureAnchorElement(container, anchorElementRef, direction) {
     const containerRect = container.getBoundingClientRect();
@@ -27116,18 +29155,18 @@ If there's a particular need for this, please submit a feature request at https:
     containerRef,
     setVisibleEntries
   }) {
-    const anchorElementRef = (0, import_element76.useRef)(null);
-    const viewRef = (0, import_element76.useRef)(view);
-    const isLoadingRef = (0, import_element76.useRef)(isLoading);
-    const onChangeViewRef = (0, import_element76.useRef)(onChangeView);
-    const totalItemsRef = (0, import_element76.useRef)(paginationInfo.totalItems);
-    (0, import_element76.useLayoutEffect)(() => {
+    const anchorElementRef = (0, import_element77.useRef)(null);
+    const viewRef = (0, import_element77.useRef)(view);
+    const isLoadingRef = (0, import_element77.useRef)(isLoading);
+    const onChangeViewRef = (0, import_element77.useRef)(onChangeView);
+    const totalItemsRef = (0, import_element77.useRef)(paginationInfo.totalItems);
+    (0, import_element77.useLayoutEffect)(() => {
       viewRef.current = view;
       isLoadingRef.current = isLoading;
       onChangeViewRef.current = onChangeView;
       totalItemsRef.current = paginationInfo.totalItems;
     }, [view, isLoading, onChangeView, paginationInfo.totalItems]);
-    const intersectionObserverCallback = (0, import_element76.useCallback)(
+    const intersectionObserverCallback = (0, import_element77.useCallback)(
       (entries) => {
         if (!setVisibleEntries) {
           return;
@@ -27159,7 +29198,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [setVisibleEntries]
     );
-    (0, import_element76.useLayoutEffect)(() => {
+    (0, import_element77.useLayoutEffect)(() => {
       const container = containerRef.current;
       const anchor = anchorElementRef.current;
       if (!container || !view.infiniteScrollEnabled || !anchor || isLoading) {
@@ -27179,10 +29218,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
       anchorElementRef.current = null;
     }, [containerRef, isLoading, view.infiniteScrollEnabled]);
-    const intersectionObserverRef = (0, import_element76.useRef)(
+    const intersectionObserverRef = (0, import_element77.useRef)(
       null
     );
-    (0, import_element76.useEffect)(() => {
+    (0, import_element77.useEffect)(() => {
       if (!view.infiniteScrollEnabled || !intersectionObserverCallback) {
         if (intersectionObserverRef.current) {
           intersectionObserverRef.current.disconnect();
@@ -27201,7 +29240,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       };
     }, [view.infiniteScrollEnabled, intersectionObserverCallback]);
-    (0, import_element76.useEffect)(() => {
+    (0, import_element77.useEffect)(() => {
       if (!view.infiniteScrollEnabled || !containerRef.current) {
         return;
       }
@@ -27261,9 +29300,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataviews-picker/index.mjs
-  var import_element77 = __toESM(require_element(), 1);
+  var import_element78 = __toESM(require_element(), 1);
   var import_compose14 = __toESM(require_compose(), 1);
-  var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
   var isItemClickable = () => false;
   var dataViewsPickerLayouts = VIEW_LAYOUTS.filter(
     (viewLayout) => viewLayout.isPicker
@@ -27278,10 +29317,10 @@ If there's a particular need for this, please submit a feature request at https:
     search = true,
     searchLabel = void 0
   }) {
-    const { view } = (0, import_element77.useContext)(dataviews_context_default);
+    const { view } = (0, import_element78.useContext)(dataviews_context_default);
     const isInfiniteScroll = view.infiniteScrollEnabled;
-    return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(import_jsx_runtime121.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_jsx_runtime122.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(
         Stack,
         {
           direction: "row",
@@ -27292,7 +29331,7 @@ If there's a particular need for this, please submit a feature request at https:
           }),
           gap: "xs",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -27300,18 +29339,18 @@ If there's a particular need for this, please submit a feature request at https:
                 justify: "start",
                 className: "dataviews__search",
                 children: [
-                  search && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(dataviews_search_default, { label: searchLabel }),
-                  /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(toggle_default, {})
+                  search && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(dataviews_search_default, { label: searchLabel }),
+                  /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(toggle_default, {})
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(dataviews_view_config_default, {}) })
+            /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(dataviews_view_config_default, {}) })
           ]
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
-      /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(DataViewsLayout, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(DataViewsPickerFooter, {})
+      /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
+      /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(DataViewsLayout, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(DataViewsPickerFooter, {})
     ] });
   }
   function DataViewsPicker({
@@ -27341,8 +29380,8 @@ If there's a particular need for this, please submit a feature request at https:
       selection,
       paginationInfo
     });
-    const containerRef = (0, import_element77.useRef)(null);
-    const [containerWidth, setContainerWidth] = (0, import_element77.useState)(0);
+    const containerRef = (0, import_element78.useRef)(null);
+    const [containerWidth, setContainerWidth] = (0, import_element78.useState)(0);
     const resizeObserverRef = (0, import_compose14.useResizeObserver)(
       (resizeObserverEntries) => {
         setContainerWidth(
@@ -27351,22 +29390,22 @@ If there's a particular need for this, please submit a feature request at https:
       },
       { box: "border-box" }
     );
-    const [openedFilter, setOpenedFilter] = (0, import_element77.useState)(null);
+    const [openedFilter, setOpenedFilter] = (0, import_element78.useState)(null);
     function setSelectionWithChange(value) {
       const newValue = typeof value === "function" ? value(selection) : value;
       if (onChangeSelection) {
         onChangeSelection(newValue);
       }
     }
-    const _fields = (0, import_element77.useMemo)(() => normalizeFields(fields), [fields]);
+    const _fields = (0, import_element78.useMemo)(() => normalizeFields(fields), [fields]);
     const filters = use_filters_default(_fields, view);
-    const hasPrimaryOrLockedFilters = (0, import_element77.useMemo)(
+    const hasPrimaryOrLockedFilters = (0, import_element78.useMemo)(
       () => (filters || []).some(
         (filter) => filter.isPrimary || filter.isLocked
       ),
       [filters]
     );
-    const [isShowingFilter, setIsShowingFilter] = (0, import_element77.useState)(
+    const [isShowingFilter, setIsShowingFilter] = (0, import_element78.useState)(
       hasPrimaryOrLockedFilters
     );
     const { intersectionObserver } = useInfiniteScroll({
@@ -27377,12 +29416,12 @@ If there's a particular need for this, please submit a feature request at https:
       containerRef,
       setVisibleEntries
     });
-    (0, import_element77.useEffect)(() => {
+    (0, import_element78.useEffect)(() => {
       if (hasPrimaryOrLockedFilters && !isShowingFilter) {
         setIsShowingFilter(true);
       }
     }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-    const defaultLayouts2 = (0, import_element77.useMemo)(
+    const defaultLayouts2 = (0, import_element78.useMemo)(
       () => Object.fromEntries(
         Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
           return dataViewsPickerLayouts.some(
@@ -27398,7 +29437,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!defaultLayouts2[view.type]) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
       dataviews_context_default.Provider,
       {
         value: {
@@ -27429,7 +29468,7 @@ If there's a particular need for this, please submit a feature request at https:
           hasInitiallyLoaded: true,
           intersectionObserver
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)("div", { className: "dataviews-picker-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(DefaultUI, { search, searchLabel }) })
+        children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("div", { className: "dataviews-picker-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(DefaultUI, { search, searchLabel }) })
       }
     );
   }
@@ -27523,7 +29562,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/views/build-module/use-view.mjs
-  var import_element78 = __toESM(require_element(), 1);
+  var import_element79 = __toESM(require_element(), 1);
   var import_data7 = __toESM(require_data(), 1);
   var import_preferences = __toESM(require_preferences(), 1);
 
@@ -27659,7 +29698,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { set: set2 } = (0, import_data7.useDispatch)(import_preferences.store);
     const page = Number(queryParams?.page ?? 1);
     const search = queryParams?.search ?? "";
-    const view = (0, import_element78.useMemo)(
+    const view = (0, import_element79.useMemo)(
       () => resolveView({
         defaultView: defaultView2,
         defaultLayouts: defaultLayouts2,
@@ -27678,7 +29717,7 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     );
     const isModified = !!persistedView && Object.keys(persistedView).length > 0;
-    const updateView = (0, import_element78.useCallback)(
+    const updateView = (0, import_element79.useCallback)(
       (newView) => {
         const newQueryParams = {
           page: Number(newView?.page ?? 1),
@@ -27709,7 +29748,7 @@ If there's a particular need for this, please submit a feature request at https:
         preferenceKey
       ]
     );
-    const resetToDefault = (0, import_element78.useCallback)(() => {
+    const resetToDefault = (0, import_element79.useCallback)(() => {
       set2("core/views", preferenceKey, void 0);
     }, [preferenceKey, set2]);
     return {
@@ -27736,38 +29775,38 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/media-fields/build-module/alt_text/index.mjs
-  var import_i18n51 = __toESM(require_i18n(), 1);
-  var import_components47 = __toESM(require_components(), 1);
-  var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
+  var import_i18n52 = __toESM(require_i18n(), 1);
+  var import_components48 = __toESM(require_components(), 1);
+  var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
   var altTextField = {
     id: "alt_text",
     type: "text",
-    label: (0, import_i18n51.__)("Alt text"),
+    label: (0, import_i18n52.__)("Alt text"),
     isVisible: (item) => item?.media_type === "image",
     render: ({ item }) => item?.alt_text || "-",
     Edit: ({ field, onChange, data }) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
-        import_components47.TextareaControl,
+      return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+        import_components48.TextareaControl,
         {
           label: field.label,
           value: data.alt_text || "",
           onChange: (value) => onChange({ alt_text: value }),
-          help: /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_jsx_runtime122.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+          help: /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(import_jsx_runtime123.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
               Link,
               {
                 href: (
                   // translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations.
-                  (0, import_i18n51.__)(
+                  (0, import_i18n52.__)(
                     "https://www.w3.org/WAI/tutorials/images/decision-tree/"
                   )
                 ),
                 openInNewTab: true,
-                children: (0, import_i18n51.__)("Describe the purpose of the image.")
+                children: (0, import_i18n52.__)("Describe the purpose of the image.")
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("br", {}),
-            (0, import_i18n51.__)("Leave empty if decorative.")
+            /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("br", {}),
+            (0, import_i18n52.__)("Leave empty if decorative.")
           ] }),
           rows: 2
         }
@@ -27779,11 +29818,11 @@ If there's a particular need for this, please submit a feature request at https:
   var alt_text_default = altTextField;
 
   // packages/media-fields/build-module/attached_to/index.mjs
-  var import_i18n54 = __toESM(require_i18n(), 1);
+  var import_i18n55 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/attached_to/view.mjs
-  var import_element79 = __toESM(require_element(), 1);
-  var import_i18n52 = __toESM(require_i18n(), 1);
+  var import_element80 = __toESM(require_element(), 1);
+  var import_i18n53 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/utils/get-rendered-content.mjs
   function getRenderedContent(content) {
@@ -27800,35 +29839,35 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-fields/build-module/attached_to/view.mjs
-  var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
   function MediaAttachedToView({
     item
   }) {
-    const [attachedPostTitle, setAttachedPostTitle] = (0, import_element79.useState)(null);
+    const [attachedPostTitle, setAttachedPostTitle] = (0, import_element80.useState)(null);
     const parentId = item.post;
     const embeddedPostId = item._embedded?.["wp:attached-to"]?.[0]?.id;
     const embeddedPostTitle = item._embedded?.["wp:attached-to"]?.[0]?.title;
-    (0, import_element79.useEffect)(() => {
+    (0, import_element80.useEffect)(() => {
       if (!!parentId && parentId === embeddedPostId) {
         setAttachedPostTitle(
-          getRenderedContent(embeddedPostTitle) || (0, import_i18n52.__)("(no title)")
+          getRenderedContent(embeddedPostTitle) || (0, import_i18n53.__)("(no title)")
         );
       }
       if (!parentId) {
-        setAttachedPostTitle((0, import_i18n52.__)("(Unattached)"));
+        setAttachedPostTitle((0, import_i18n53.__)("(Unattached)"));
       }
     }, [parentId, embeddedPostId, embeddedPostTitle]);
-    return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_jsx_runtime123.Fragment, { children: attachedPostTitle });
+    return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_jsx_runtime124.Fragment, { children: attachedPostTitle });
   }
 
   // packages/media-fields/build-module/attached_to/edit.mjs
   var import_core_data3 = __toESM(require_core_data(), 1);
-  var import_components48 = __toESM(require_components(), 1);
-  var import_i18n53 = __toESM(require_i18n(), 1);
-  var import_element80 = __toESM(require_element(), 1);
+  var import_components49 = __toESM(require_components(), 1);
+  var import_i18n54 = __toESM(require_i18n(), 1);
+  var import_element81 = __toESM(require_element(), 1);
   var import_compose15 = __toESM(require_compose(), 1);
   var import_data10 = __toESM(require_data(), 1);
-  var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
   function MediaAttachedToEdit({
     data,
     onChange
@@ -27841,12 +29880,12 @@ If there's a particular need for this, please submit a feature request at https:
         value: data.post.toString()
       }
     ] : [];
-    const [options, setOptions] = (0, import_element80.useState)(defaultPost);
-    const [searchResults, setSearchResults] = (0, import_element80.useState)(
+    const [options, setOptions] = (0, import_element81.useState)(defaultPost);
+    const [searchResults, setSearchResults] = (0, import_element81.useState)(
       []
     );
-    const [isLoading, setIsLoading] = (0, import_element80.useState)(false);
-    const [value, setValue] = (0, import_element80.useState)(
+    const [isLoading, setIsLoading] = (0, import_element81.useState)(false);
+    const [value, setValue] = (0, import_element81.useState)(
       data?.post?.toString() ?? null
     );
     const postTypes = (0, import_data10.useSelect)(
@@ -27915,13 +29954,13 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     };
-    const help = (0, import_element80.createInterpolateElement)(
-      (0, import_i18n53.__)(
+    const help = (0, import_element81.createInterpolateElement)(
+      (0, import_i18n54.__)(
         "Search for a post or page to attach this media to or <button>detach current</button>."
       ),
       {
-        button: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
-          import_components48.Button,
+        button: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
+          import_components49.Button,
           {
             __next40pxDefaultSize: true,
             onClick: handleDetach,
@@ -27932,12 +29971,12 @@ If there's a particular need for this, please submit a feature request at https:
         )
       }
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
-      import_components48.ComboboxControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
+      import_components49.ComboboxControl,
       {
         className: "dataviews-media-field__attached-to",
         isLoading,
-        label: (0, import_i18n53.__)("Attached to"),
+        label: (0, import_i18n54.__)("Attached to"),
         help,
         value,
         options,
@@ -27955,7 +29994,7 @@ If there's a particular need for this, please submit a feature request at https:
   var attachedToField = {
     id: "attached_to",
     type: "text",
-    label: (0, import_i18n54.__)("Attached to"),
+    label: (0, import_i18n55.__)("Attached to"),
     Edit: MediaAttachedToEdit,
     render: MediaAttachedToView,
     enableSorting: false,
@@ -27964,26 +30003,26 @@ If there's a particular need for this, please submit a feature request at https:
   var attached_to_default = attachedToField;
 
   // packages/media-fields/build-module/author/index.mjs
-  var import_i18n56 = __toESM(require_i18n(), 1);
+  var import_i18n57 = __toESM(require_i18n(), 1);
   var import_data11 = __toESM(require_data(), 1);
   var import_core_data4 = __toESM(require_core_data(), 1);
 
   // packages/media-fields/build-module/author/view.mjs
-  var import_i18n55 = __toESM(require_i18n(), 1);
-  var import_element81 = __toESM(require_element(), 1);
-  var import_components49 = __toESM(require_components(), 1);
-  var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
+  var import_i18n56 = __toESM(require_i18n(), 1);
+  var import_element82 = __toESM(require_element(), 1);
+  var import_components50 = __toESM(require_components(), 1);
+  var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
   function AuthorView({
     item
   }) {
     const author = item?._embedded?.author?.[0];
     const text = author?.name;
     const imageUrl = author?.avatar_urls?.[48];
-    const [loadingState, setLoadingState] = (0, import_element81.useState)("loading");
-    (0, import_element81.useEffect)(() => {
+    const [loadingState, setLoadingState] = (0, import_element82.useState)("loading");
+    (0, import_element82.useEffect)(() => {
       setLoadingState("loading");
     }, [imageUrl]);
-    const imgRef = (0, import_element81.useCallback)((img) => {
+    const imgRef = (0, import_element82.useCallback)((img) => {
       if (img?.complete) {
         setLoadingState("instant");
       }
@@ -27993,33 +30032,33 @@ If there's a particular need for this, please submit a feature request at https:
         setLoadingState("loaded");
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)(import_components49.__experimentalHStack, { alignment: "left", spacing: 0, children: [
-      !!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(import_components50.__experimentalHStack, { alignment: "left", spacing: 0, children: [
+      !!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
         "div",
         {
           className: clsx_default("media-author-field__avatar", {
             "is-loading": loadingState === "loading",
             "is-loaded": loadingState === "loaded"
           }),
-          children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
             "img",
             {
               ref: imgRef,
               onLoad: handleLoad,
-              alt: (0, import_i18n55.__)("Author avatar"),
+              alt: (0, import_i18n56.__)("Author avatar"),
               src: imageUrl
             }
           )
         }
       ),
-      !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime125.jsx)("div", { className: "media-author-field__icon", children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(import_components49.Icon, { icon: comment_author_avatar_default }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime125.jsx)("span", { className: "media-author-field__name", children: text })
+      !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { className: "media-author-field__icon", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components50.Icon, { icon: comment_author_avatar_default }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("span", { className: "media-author-field__name", children: text })
     ] });
   }
 
   // packages/media-fields/build-module/author/index.mjs
   var authorField = {
-    label: (0, import_i18n56.__)("Author"),
+    label: (0, import_i18n57.__)("Author"),
     id: "author",
     type: "integer",
     getElements: async () => {
@@ -28052,8 +30091,8 @@ If there's a particular need for this, please submit a feature request at https:
   var author_default = authorField;
 
   // packages/media-fields/build-module/caption/index.mjs
-  var import_i18n57 = __toESM(require_i18n(), 1);
-  var import_components50 = __toESM(require_components(), 1);
+  var import_i18n58 = __toESM(require_i18n(), 1);
+  var import_components51 = __toESM(require_components(), 1);
 
   // packages/media-fields/build-module/utils/get-raw-content.mjs
   function getRawContent(content) {
@@ -28070,16 +30109,16 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-fields/build-module/caption/index.mjs
-  var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
   var captionField = {
     id: "caption",
     type: "text",
-    label: (0, import_i18n57.__)("Caption"),
+    label: (0, import_i18n58.__)("Caption"),
     getValue: ({ item }) => getRawContent(item?.caption),
     render: ({ item }) => getRawContent(item?.caption) || "-",
     Edit: ({ field, onChange, data }) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
-        import_components50.TextareaControl,
+      return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+        import_components51.TextareaControl,
         {
           label: field.label,
           value: getRawContent(data.caption) || "",
@@ -28094,11 +30133,11 @@ If there's a particular need for this, please submit a feature request at https:
   var caption_default = captionField;
 
   // packages/media-fields/build-module/date_added/index.mjs
-  var import_i18n58 = __toESM(require_i18n(), 1);
+  var import_i18n59 = __toESM(require_i18n(), 1);
   var dateAddedField = {
     id: "date",
     type: "datetime",
-    label: (0, import_i18n58.__)("Date added"),
+    label: (0, import_i18n59.__)("Date added"),
     filterBy: {
       operators: ["before", "after"]
     },
@@ -28107,11 +30146,11 @@ If there's a particular need for this, please submit a feature request at https:
   var date_added_default = dateAddedField;
 
   // packages/media-fields/build-module/date_modified/index.mjs
-  var import_i18n59 = __toESM(require_i18n(), 1);
+  var import_i18n60 = __toESM(require_i18n(), 1);
   var dateModifiedField = {
     id: "modified",
     type: "datetime",
-    label: (0, import_i18n59.__)("Date modified"),
+    label: (0, import_i18n60.__)("Date modified"),
     filterBy: {
       operators: ["before", "after"]
     },
@@ -28120,18 +30159,18 @@ If there's a particular need for this, please submit a feature request at https:
   var date_modified_default = dateModifiedField;
 
   // packages/media-fields/build-module/description/index.mjs
-  var import_i18n60 = __toESM(require_i18n(), 1);
-  var import_components51 = __toESM(require_components(), 1);
-  var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
+  var import_i18n61 = __toESM(require_i18n(), 1);
+  var import_components52 = __toESM(require_components(), 1);
+  var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
   var descriptionField = {
     id: "description",
     type: "text",
-    label: (0, import_i18n60.__)("Description"),
+    label: (0, import_i18n61.__)("Description"),
     getValue: ({ item }) => getRawContent(item?.description),
-    render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("div", { children: getRawContent(item?.description) || "-" }),
+    render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("div", { children: getRawContent(item?.description) || "-" }),
     Edit: ({ field, onChange, data }) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
-        import_components51.TextareaControl,
+      return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+        import_components52.TextareaControl,
         {
           label: field.label,
           value: getRawContent(data.description) || "",
@@ -28146,18 +30185,18 @@ If there's a particular need for this, please submit a feature request at https:
   var description_default = descriptionField;
 
   // packages/media-fields/build-module/filename/index.mjs
-  var import_i18n61 = __toESM(require_i18n(), 1);
+  var import_i18n62 = __toESM(require_i18n(), 1);
   var import_url4 = __toESM(require_url(), 1);
 
   // packages/media-fields/build-module/filename/view.mjs
-  var import_element82 = __toESM(require_element(), 1);
+  var import_element83 = __toESM(require_element(), 1);
   var import_url3 = __toESM(require_url(), 1);
-  var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
   var TRUNCATE_LENGTH = 15;
   function FileNameView({
     item
   }) {
-    const fileName = (0, import_element82.useMemo)(
+    const fileName = (0, import_element83.useMemo)(
       () => item?.source_url ? (0, import_url3.getFilename)(item.source_url) : null,
       [item?.source_url]
     );
@@ -28165,16 +30204,16 @@ If there's a particular need for this, please submit a feature request at https:
       return "";
     }
     if (fileName.length <= TRUNCATE_LENGTH) {
-      return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("span", { className: "dataviews-media-field__filename", children: fileName });
+      return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)("span", { className: "dataviews-media-field__filename", children: fileName });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(tooltip_exports.Root, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)(tooltip_exports.Root, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
         tooltip_exports.Trigger,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("span", { className: "dataviews-media-field__filename", children: fileName })
+          render: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)("span", { className: "dataviews-media-field__filename", children: fileName })
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(tooltip_exports.Popup, { children: fileName })
+      /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(tooltip_exports.Popup, { children: fileName })
     ] });
   }
 
@@ -28182,7 +30221,7 @@ If there's a particular need for this, please submit a feature request at https:
   var filenameField = {
     id: "filename",
     type: "text",
-    label: (0, import_i18n61.__)("File name"),
+    label: (0, import_i18n62.__)("File name"),
     getValue: ({ item }) => (0, import_url4.getFilename)(item?.source_url || ""),
     render: FileNameView,
     enableSorting: false,
@@ -28192,7 +30231,7 @@ If there's a particular need for this, please submit a feature request at https:
   var filename_default = filenameField;
 
   // packages/media-fields/build-module/filesize/index.mjs
-  var import_i18n62 = __toESM(require_i18n(), 1);
+  var import_i18n63 = __toESM(require_i18n(), 1);
   var KB_IN_BYTES = 1024;
   var MB_IN_BYTES = 1024 * KB_IN_BYTES;
   var GB_IN_BYTES = 1024 * MB_IN_BYTES;
@@ -28202,9 +30241,9 @@ If there's a particular need for this, please submit a feature request at https:
   var ZB_IN_BYTES = 1024 * EB_IN_BYTES;
   var YB_IN_BYTES = 1024 * ZB_IN_BYTES;
   function getBytesString(bytes, unitSymbol, decimals = 2) {
-    return (0, import_i18n62.sprintf)(
+    return (0, import_i18n63.sprintf)(
       // translators: 1: Actual bytes of a file. 2: The unit symbol (e.g. MB).
-      (0, import_i18n62._x)("%1$s %2$s", "file size"),
+      (0, import_i18n63._x)("%1$s %2$s", "file size"),
       bytes.toLocaleString(void 0, {
         minimumFractionDigits: 0,
         maximumFractionDigits: decimals
@@ -28214,27 +30253,27 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function formatFileSize(bytes, decimals = 2) {
     if (bytes === 0) {
-      return getBytesString(0, (0, import_i18n62._x)("B", "unit symbol"), decimals);
+      return getBytesString(0, (0, import_i18n63._x)("B", "unit symbol"), decimals);
     }
     const quant = {
       /* translators: Unit symbol for yottabyte. */
-      [(0, import_i18n62._x)("YB", "unit symbol")]: YB_IN_BYTES,
+      [(0, import_i18n63._x)("YB", "unit symbol")]: YB_IN_BYTES,
       /* translators: Unit symbol for zettabyte. */
-      [(0, import_i18n62._x)("ZB", "unit symbol")]: ZB_IN_BYTES,
+      [(0, import_i18n63._x)("ZB", "unit symbol")]: ZB_IN_BYTES,
       /* translators: Unit symbol for exabyte. */
-      [(0, import_i18n62._x)("EB", "unit symbol")]: EB_IN_BYTES,
+      [(0, import_i18n63._x)("EB", "unit symbol")]: EB_IN_BYTES,
       /* translators: Unit symbol for petabyte. */
-      [(0, import_i18n62._x)("PB", "unit symbol")]: PB_IN_BYTES,
+      [(0, import_i18n63._x)("PB", "unit symbol")]: PB_IN_BYTES,
       /* translators: Unit symbol for terabyte. */
-      [(0, import_i18n62._x)("TB", "unit symbol")]: TB_IN_BYTES,
+      [(0, import_i18n63._x)("TB", "unit symbol")]: TB_IN_BYTES,
       /* translators: Unit symbol for gigabyte. */
-      [(0, import_i18n62._x)("GB", "unit symbol")]: GB_IN_BYTES,
+      [(0, import_i18n63._x)("GB", "unit symbol")]: GB_IN_BYTES,
       /* translators: Unit symbol for megabyte. */
-      [(0, import_i18n62._x)("MB", "unit symbol")]: MB_IN_BYTES,
+      [(0, import_i18n63._x)("MB", "unit symbol")]: MB_IN_BYTES,
       /* translators: Unit symbol for kilobyte. */
-      [(0, import_i18n62._x)("KB", "unit symbol")]: KB_IN_BYTES,
+      [(0, import_i18n63._x)("KB", "unit symbol")]: KB_IN_BYTES,
       /* translators: Unit symbol for byte. */
-      [(0, import_i18n62._x)("B", "unit symbol")]: 1
+      [(0, import_i18n63._x)("B", "unit symbol")]: 1
     };
     for (const [unit, mag] of Object.entries(quant)) {
       if (bytes >= mag) {
@@ -28246,7 +30285,7 @@ If there's a particular need for this, please submit a feature request at https:
   var filesizeField = {
     id: "filesize",
     type: "text",
-    label: (0, import_i18n62.__)("File size"),
+    label: (0, import_i18n63.__)("File size"),
     getValue: ({ item }) => item?.media_details?.filesize ? formatFileSize(item?.media_details?.filesize) : "",
     isVisible: (item) => {
       return !!item?.media_details?.filesize;
@@ -28258,14 +30297,14 @@ If there's a particular need for this, please submit a feature request at https:
   var filesize_default = filesizeField;
 
   // packages/media-fields/build-module/media_dimensions/index.mjs
-  var import_i18n63 = __toESM(require_i18n(), 1);
+  var import_i18n64 = __toESM(require_i18n(), 1);
   var mediaDimensionsField = {
     id: "media_dimensions",
     type: "text",
-    label: (0, import_i18n63.__)("Dimensions"),
-    getValue: ({ item }) => item?.media_details?.width && item?.media_details?.height ? (0, import_i18n63.sprintf)(
+    label: (0, import_i18n64.__)("Dimensions"),
+    getValue: ({ item }) => item?.media_details?.width && item?.media_details?.height ? (0, import_i18n64.sprintf)(
       // translators: 1: Width. 2: Height.
-      (0, import_i18n63._x)("%1$s \xD7 %2$s", "image dimensions"),
+      (0, import_i18n64._x)("%1$s \xD7 %2$s", "image dimensions"),
       item?.media_details?.width?.toString(),
       item?.media_details?.height?.toString()
     ) : "",
@@ -28279,48 +30318,48 @@ If there's a particular need for this, please submit a feature request at https:
   var media_dimensions_default = mediaDimensionsField;
 
   // packages/media-fields/build-module/media_thumbnail/index.mjs
-  var import_i18n65 = __toESM(require_i18n(), 1);
+  var import_i18n66 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/media_thumbnail/view.mjs
   var import_data12 = __toESM(require_data(), 1);
   var import_core_data5 = __toESM(require_core_data(), 1);
-  var import_components52 = __toESM(require_components(), 1);
-  var import_element83 = __toESM(require_element(), 1);
+  var import_components53 = __toESM(require_components(), 1);
+  var import_element84 = __toESM(require_element(), 1);
   var import_url5 = __toESM(require_url(), 1);
 
   // packages/media-fields/build-module/utils/get-media-type-from-mime-type.mjs
-  var import_i18n64 = __toESM(require_i18n(), 1);
+  var import_i18n65 = __toESM(require_i18n(), 1);
   function getMediaTypeFromMimeType(mimeType) {
     if (mimeType.startsWith("image/")) {
       return {
         type: "image",
-        label: (0, import_i18n64.__)("Image"),
+        label: (0, import_i18n65.__)("Image"),
         icon: image_default
       };
     }
     if (mimeType.startsWith("video/")) {
       return {
         type: "video",
-        label: (0, import_i18n64.__)("Video"),
+        label: (0, import_i18n65.__)("Video"),
         icon: video_default
       };
     }
     if (mimeType.startsWith("audio/")) {
       return {
         type: "audio",
-        label: (0, import_i18n64.__)("Audio"),
+        label: (0, import_i18n65.__)("Audio"),
         icon: audio_default
       };
     }
     return {
       type: "application",
-      label: (0, import_i18n64.__)("Application"),
+      label: (0, import_i18n65.__)("Application"),
       icon: file_default
     };
   }
 
   // packages/media-fields/build-module/media_thumbnail/view.mjs
-  var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
   function getBestImageUrl(featuredMedia, configSizes) {
     const sizes = featuredMedia?.media_details?.sizes;
     if (!sizes) {
@@ -28353,23 +30392,23 @@ If there's a particular need for this, please submit a feature request at https:
     item,
     filename
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)(
-      import_components52.__experimentalVStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
+      import_components53.__experimentalVStack,
       {
         justify: "center",
         alignment: "center",
         className: "dataviews-media-field__media-thumbnail__stack",
         spacing: 0,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
-            import_components52.Icon,
+          /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+            import_components53.Icon,
             {
               className: "dataviews-media-field__media-thumbnail--icon",
               icon: getMediaTypeFromMimeType(item.mime_type).icon,
               size: 24
             }
           ),
-          !!filename && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)("div", { className: "dataviews-media-field__media-thumbnail__filename", children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(import_components52.__experimentalTruncate, { className: "dataviews-media-field__media-thumbnail__filename__truncate", children: filename }) })
+          !!filename && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("div", { className: "dataviews-media-field__media-thumbnail__filename", children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components53.__experimentalTruncate, { className: "dataviews-media-field__media-thumbnail__filename__truncate", children: filename }) })
         ]
       }
     ) });
@@ -28380,9 +30419,9 @@ If there's a particular need for this, please submit a feature request at https:
     onError
   }) {
     const imageUrl = getBestImageUrl(item, configSizes);
-    const imgRef = (0, import_element83.useRef)(null);
-    const [loadingState, setLoadingState] = (0, import_element83.useState)("loading");
-    (0, import_element83.useLayoutEffect)(() => {
+    const imgRef = (0, import_element84.useRef)(null);
+    const [loadingState, setLoadingState] = (0, import_element84.useState)("loading");
+    (0, import_element84.useLayoutEffect)(() => {
       if (imgRef.current?.complete) {
         setLoadingState("instant");
       } else {
@@ -28394,14 +30433,14 @@ If there's a particular need for this, please submit a feature request at https:
         setLoadingState("loaded");
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
       "div",
       {
         className: clsx_default("dataviews-media-field__media-thumbnail", {
           "is-loading": loadingState === "loading",
           "is-loaded": loadingState === "loaded"
         }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
           "img",
           {
             ref: imgRef,
@@ -28420,7 +30459,7 @@ If there's a particular need for this, please submit a feature request at https:
     item,
     config
   }) {
-    const [imageError, setImageError] = (0, import_element83.useState)(false);
+    const [imageError, setImageError] = (0, import_element84.useState)(false);
     const _featuredMedia = (0, import_data12.useSelect)(
       (select3) => {
         if (!item.featured_media) {
@@ -28440,9 +30479,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const filename = (0, import_url5.getFilename)(featuredMedia.source_url || "");
     if (imageError || getMediaTypeFromMimeType(featuredMedia.mime_type).type !== "image") {
-      return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(FallbackView, { item: featuredMedia, filename: filename || "" });
+      return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(FallbackView, { item: featuredMedia, filename: filename || "" });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
       ImageView,
       {
         item: featuredMedia,
@@ -28456,7 +30495,7 @@ If there's a particular need for this, please submit a feature request at https:
   var mediaThumbnailField = {
     id: "media_thumbnail",
     type: "media",
-    label: (0, import_i18n65.__)("Thumbnail"),
+    label: (0, import_i18n66.__)("Thumbnail"),
     render: MediaThumbnailView,
     enableSorting: false,
     filterBy: false
@@ -28464,11 +30503,11 @@ If there's a particular need for this, please submit a feature request at https:
   var media_thumbnail_default = mediaThumbnailField;
 
   // packages/media-fields/build-module/mime_type/index.mjs
-  var import_i18n66 = __toESM(require_i18n(), 1);
+  var import_i18n67 = __toESM(require_i18n(), 1);
   var mimeTypeField = {
     id: "mime_type",
     type: "text",
-    label: (0, import_i18n66.__)("File type"),
+    label: (0, import_i18n67.__)("File type"),
     getValue: ({ item }) => item?.mime_type || "",
     render: ({ item }) => item?.mime_type || "-",
     // Disable sorting until REST API support for ordering my `mime_type` is added.
@@ -28490,19 +30529,19 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/media-utils/build-module/components/media-upload-modal/upload-status-popover.mjs
-  var import_element84 = __toESM(require_element(), 1);
-  var import_i18n67 = __toESM(require_i18n(), 1);
-  var import_components53 = __toESM(require_components(), 1);
-  var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
+  var import_element85 = __toESM(require_element(), 1);
+  var import_i18n68 = __toESM(require_i18n(), 1);
+  var import_components54 = __toESM(require_components(), 1);
+  var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
   function UploadStatusPopover({
     uploadingFiles,
     onDismissError,
     onOpenChange
   }) {
-    const [isOpen, setIsOpen] = (0, import_element84.useState)(false);
-    const [prevHadErrors, setPrevHadErrors] = (0, import_element84.useState)(false);
-    const triggerRef = (0, import_element84.useRef)(null);
-    const updateIsOpen = (0, import_element84.useCallback)(
+    const [isOpen, setIsOpen] = (0, import_element85.useState)(false);
+    const [prevHadErrors, setPrevHadErrors] = (0, import_element85.useState)(false);
+    const triggerRef = (0, import_element85.useRef)(null);
+    const updateIsOpen = (0, import_element85.useCallback)(
       (open) => {
         setIsOpen(open);
         onOpenChange?.(open);
@@ -28517,7 +30556,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const hasErrors = errorFiles.length > 0;
     const isUploading = activeFiles.length > 0;
-    (0, import_element84.useEffect)(() => {
+    (0, import_element85.useEffect)(() => {
       if (hasErrors && !prevHadErrors) {
         updateIsOpen(true);
       }
@@ -28528,27 +30567,27 @@ If there's a particular need for this, please submit a feature request at https:
     }
     let buttonLabel, popoverHeading;
     if (isUploading) {
-      buttonLabel = (0, import_i18n67.sprintf)(
+      buttonLabel = (0, import_i18n68.sprintf)(
         // translators: %s: number of files being uploaded
-        (0, import_i18n67._n)("Uploading %s file", "Uploading %s files", activeFiles.length),
+        (0, import_i18n68._n)("Uploading %s file", "Uploading %s files", activeFiles.length),
         activeFiles.length.toLocaleString()
       );
-      popoverHeading = (0, import_i18n67.__)("Uploading");
+      popoverHeading = (0, import_i18n68.__)("Uploading");
     } else if (hasErrors) {
-      buttonLabel = (0, import_i18n67.sprintf)(
+      buttonLabel = (0, import_i18n68.sprintf)(
         // translators: %s: number of upload errors
-        (0, import_i18n67._n)("%s upload error", "%s upload errors", errorFiles.length),
+        (0, import_i18n68._n)("%s upload error", "%s upload errors", errorFiles.length),
         errorFiles.length.toLocaleString()
       );
-      popoverHeading = (0, import_i18n67.__)("Upload errors");
+      popoverHeading = (0, import_i18n68.__)("Upload errors");
     } else {
-      buttonLabel = (0, import_i18n67.__)("Upload complete");
-      popoverHeading = (0, import_i18n67.__)("Upload complete");
+      buttonLabel = (0, import_i18n68.__)("Upload complete");
+      popoverHeading = (0, import_i18n68.__)("Upload complete");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)("div", { className: "media-upload-modal__upload-status", children: [
-      isUploading && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components53.Spinner, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
-        import_components53.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)("div", { className: "media-upload-modal__upload-status", children: [
+      isUploading && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components54.Spinner, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+        import_components54.Button,
         {
           className: "media-upload-modal__upload-status__trigger",
           size: "compact",
@@ -28560,8 +30599,8 @@ If there's a particular need for this, please submit a feature request at https:
           children: buttonLabel
         }
       ),
-      isOpen && /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
-        import_components53.Popover,
+      isOpen && /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
+        import_components54.Popover,
         {
           className: "media-upload-modal__upload-status__popover",
           placement: "top-start",
@@ -28577,15 +30616,15 @@ If there's a particular need for this, please submit a feature request at https:
             updateIsOpen(false);
           },
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("div", { className: "media-upload-modal__upload-status__header", children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("h3", { children: popoverHeading }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("ul", { className: "media-upload-modal__upload-status__list", children: uploadingFiles.map((file) => /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "media-upload-modal__upload-status__header", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("h3", { children: popoverHeading }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("ul", { className: "media-upload-modal__upload-status__list", children: uploadingFiles.map((file) => /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
               "li",
               {
                 className: "media-upload-modal__upload-status__item",
                 children: [
-                  file.status === "uploading" && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components53.Spinner, {}),
-                  file.status === "uploaded" && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components53.Icon, { icon: check_default, size: 16 }),
-                  (file.status === "uploading" || file.status === "uploaded") && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+                  file.status === "uploading" && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components54.Spinner, {}),
+                  file.status === "uploaded" && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components54.Icon, { icon: check_default, size: 16 }),
+                  (file.status === "uploading" || file.status === "uploaded") && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
                     "span",
                     {
                       className: "media-upload-modal__upload-status__filename",
@@ -28593,8 +30632,8 @@ If there's a particular need for this, please submit a feature request at https:
                       children: file.name
                     }
                   ),
-                  file.status === "error" && /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
-                    import_components53.Notice,
+                  file.status === "error" && /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
+                    import_components54.Notice,
                     {
                       status: "error",
                       isDismissible: !!onDismissError,
@@ -28617,38 +30656,38 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/use-invalidate-attachment-resolutions.mjs
-  var import_element85 = __toESM(require_element(), 1);
+  var import_element86 = __toESM(require_element(), 1);
   var import_data13 = __toESM(require_data(), 1);
   function useInvalidateAttachmentResolutions() {
     const registry = (0, import_data13.useRegistry)();
-    return (0, import_element85.useCallback)(
+    return (0, import_element86.useCallback)(
       () => invalidateAttachmentResolutions(registry),
       [registry]
     );
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/use-upload-status.mjs
-  var import_element86 = __toESM(require_element(), 1);
+  var import_element87 = __toESM(require_element(), 1);
   var import_blob2 = __toESM(require_blob(), 1);
   var idCounter = 0;
   var batchIdCounter = 0;
   function useUploadStatus({
     onBatchComplete
   } = {}) {
-    const [uploadingFiles, setUploadingFiles] = (0, import_element86.useState)(
+    const [uploadingFiles, setUploadingFiles] = (0, import_element87.useState)(
       []
     );
-    const clearCompleted = (0, import_element86.useCallback)(() => {
+    const clearCompleted = (0, import_element87.useCallback)(() => {
       setUploadingFiles(
         (prev) => prev.filter((item) => item.status !== "uploaded")
       );
     }, []);
-    const dismissError = (0, import_element86.useCallback)((fileId) => {
+    const dismissError = (0, import_element87.useCallback)((fileId) => {
       setUploadingFiles(
         (prev) => prev.filter((item) => item.id !== fileId)
       );
     }, []);
-    const registerBatch = (0, import_element86.useCallback)(
+    const registerBatch = (0, import_element87.useCallback)(
       (files) => {
         const batchId = String(++batchIdCounter);
         const batchSize = files.length;
@@ -28726,7 +30765,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/index.mjs
-  var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
   var { useEntityRecordsWithPermissions } = unlock4(import_core_data6.privateApis);
   var LAYOUT_PICKER_GRID2 = "pickerGrid";
   var LAYOUT_PICKER_TABLE2 = "pickerTable";
@@ -28782,19 +30821,19 @@ If there's a particular need for this, please submit a feature request at https:
     onSelect,
     onClose,
     onUpload,
-    title = (0, import_i18n68.__)("Select Media"),
+    title = (0, import_i18n69.__)("Select Media"),
     isOpen,
     isDismissible = true,
     modalClass,
     search = true,
-    searchLabel = (0, import_i18n68.__)("Search media")
+    searchLabel = (0, import_i18n69.__)("Search media")
   }) {
-    const [selection, setSelection] = (0, import_element87.useState)(
+    const [selection, setSelection] = (0, import_element88.useState)(
       () => getSelectionFromValue(value)
     );
     const { createSuccessNotice, removeAllNotices } = (0, import_data14.useDispatch)(import_notices.store);
     const invalidateAttachmentResolutions2 = useInvalidateAttachmentResolutions();
-    const [queryParams, setQueryParams] = (0, import_element87.useState)(
+    const [queryParams, setQueryParams] = (0, import_element88.useState)(
       () => defaultQueryParams
     );
     const { view, updateView, isModified, resetToDefault } = useView({
@@ -28805,7 +30844,7 @@ If there's a particular need for this, please submit a feature request at https:
       queryParams,
       onChangeQueryParams: setQueryParams
     });
-    const handleChangeView = (0, import_element87.useCallback)(
+    const handleChangeView = (0, import_element88.useCallback)(
       (nextView) => {
         const normalizedView = { ...nextView };
         if (normalizedView.startPosition === void 0) {
@@ -28815,7 +30854,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [updateView]
     );
-    const queryArgs = (0, import_element87.useMemo)(() => {
+    const queryArgs = (0, import_element88.useMemo)(() => {
       const filters = {};
       view.filters?.forEach((filter) => {
         if (filter.field === "media_type") {
@@ -28871,7 +30910,7 @@ If there's a particular need for this, please submit a feature request at https:
         ...filters
       };
     }, [view, allowedTypes]);
-    const handleBatchComplete = (0, import_element87.useCallback)(
+    const handleBatchComplete = (0, import_element88.useCallback)(
       (attachments) => {
         const uploadedIds = attachments.map((attachment) => String(attachment.id)).filter(Boolean);
         if (multiple) {
@@ -28896,8 +30935,8 @@ If there's a particular need for this, please submit a feature request at https:
       clearCompleted,
       allComplete
     } = useUploadStatus({ onBatchComplete: handleBatchComplete });
-    const isPopoverOpenRef = (0, import_element87.useRef)(false);
-    const handlePopoverOpenChange = (0, import_element87.useCallback)(
+    const isPopoverOpenRef = (0, import_element88.useRef)(false);
+    const handlePopoverOpenChange = (0, import_element88.useCallback)(
       (open) => {
         isPopoverOpenRef.current = open;
         if (!open) {
@@ -28912,7 +30951,7 @@ If there's a particular need for this, please submit a feature request at https:
       totalItems,
       totalPages
     } = useEntityRecordsWithPermissions("postType", "attachment", queryArgs);
-    const fields = (0, import_element87.useMemo)(
+    const fields = (0, import_element88.useMemo)(
       () => [
         // Media field definitions from @wordpress/media-fields
         // Cast is safe because RestAttachment has the same properties as Attachment
@@ -28924,10 +30963,10 @@ If there's a particular need for this, please submit a feature request at https:
         {
           id: "title",
           type: "text",
-          label: (0, import_i18n68.__)("Title"),
+          label: (0, import_i18n69.__)("Title"),
           getValue: ({ item }) => {
             const titleValue = item.title.raw || item.title.rendered;
-            return titleValue || (0, import_i18n68.__)("(no title)");
+            return titleValue || (0, import_i18n69.__)("(no title)");
           }
         },
         alt_text_default,
@@ -28944,11 +30983,11 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       []
     );
-    const actions = (0, import_element87.useMemo)(
+    const actions = (0, import_element88.useMemo)(
       () => [
         {
           id: "select",
-          label: (0, import_i18n68.__)("Select"),
+          label: (0, import_i18n69.__)("Select"),
           isPrimary: true,
           supportsBulk: multiple,
           async callback() {
@@ -28975,15 +31014,15 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       [multiple, onSelect, selection, removeAllNotices]
     );
-    const handleModalClose = (0, import_element87.useCallback)(() => {
+    const handleModalClose = (0, import_element88.useCallback)(() => {
       removeAllNotices("snackbar", NOTICES_CONTEXT);
       onClose?.();
     }, [removeAllNotices, onClose]);
-    const valueRef = (0, import_element87.useRef)(value);
-    (0, import_element87.useEffect)(() => {
+    const valueRef = (0, import_element88.useRef)(value);
+    (0, import_element88.useEffect)(() => {
       valueRef.current = value;
     }, [value]);
-    (0, import_element87.useEffect)(() => {
+    (0, import_element88.useEffect)(() => {
       if (isOpen) {
         setSelection(getSelectionFromValue(valueRef.current));
       } else {
@@ -28991,17 +31030,17 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }, [isOpen]);
     const handleUpload = onUpload || uploadMedia;
-    const prevAllCompleteRef = (0, import_element87.useRef)(false);
-    (0, import_element87.useEffect)(() => {
+    const prevAllCompleteRef = (0, import_element88.useRef)(false);
+    (0, import_element88.useEffect)(() => {
       if (allComplete && !prevAllCompleteRef.current) {
         const completeCount = uploadingFiles.filter(
           (file) => file.status === "uploaded"
         ).length;
         if (completeCount > 0) {
           createSuccessNotice(
-            (0, import_i18n68.sprintf)(
+            (0, import_i18n69.sprintf)(
               // translators: %s: number of files
-              (0, import_i18n68._n)(
+              (0, import_i18n69._n)(
                 "Uploaded %s file",
                 "Uploaded %s files",
                 completeCount
@@ -29021,7 +31060,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       prevAllCompleteRef.current = allComplete;
     }, [allComplete, uploadingFiles, createSuccessNotice, clearCompleted]);
-    const handleFileSelect = (0, import_element87.useCallback)(
+    const handleFileSelect = (0, import_element88.useCallback)(
       (event) => {
         const files = event.target.files;
         if (files && files.length > 0) {
@@ -29037,14 +31076,14 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [allowedTypes, handleUpload, registerBatch]
     );
-    const paginationInfo = (0, import_element87.useMemo)(
+    const paginationInfo = (0, import_element88.useMemo)(
       () => ({
         totalItems,
         totalPages
       }),
       [totalItems, totalPages]
     );
-    const acceptTypes = (0, import_element87.useMemo)(() => {
+    const acceptTypes = (0, import_element88.useMemo)(() => {
       if (allowedTypes?.includes("*")) {
         return void 0;
       }
@@ -29053,8 +31092,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isOpen) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
-      import_components54.Modal,
+    return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
+      import_components55.Modal,
       {
         title,
         onRequestClose: handleModalClose,
@@ -29062,26 +31101,26 @@ If there's a particular need for this, please submit a feature request at https:
         className: modalClass,
         overlayClassName: "media-upload-modal",
         size: "fill",
-        headerActions: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-          import_components54.FormFileUpload,
+        headerActions: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+          import_components55.FormFileUpload,
           {
             accept: acceptTypes,
             multiple: true,
             onChange: handleFileSelect,
-            render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-              import_components54.Button,
+            render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+              import_components55.Button,
               {
                 onClick: openFileDialog,
                 icon: upload_default,
                 __next40pxDefaultSize: true,
-                children: (0, import_i18n68.__)("Upload media")
+                children: (0, import_i18n69.__)("Upload media")
               }
             )
           }
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
-            import_components54.DropZone,
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+            import_components55.DropZone,
             {
               onFilesDrop: (files) => {
                 let filteredFiles = files;
@@ -29104,10 +31143,10 @@ If there's a particular need for this, please submit a feature request at https:
                   });
                 }
               },
-              label: (0, import_i18n68.__)("Drop files to upload")
+              label: (0, import_i18n69.__)("Drop files to upload")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
             dataviews_picker_default,
             {
               data: mediaRecords || [],
@@ -29121,10 +31160,10 @@ If there's a particular need for this, please submit a feature request at https:
               paginationInfo,
               defaultLayouts,
               getItemId: (item) => String(item.id),
-              itemListLabel: (0, import_i18n68.__)("Media items"),
+              itemListLabel: (0, import_i18n69.__)("Media items"),
               onReset: isModified ? resetToDefault : false,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
+                /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
                   Stack,
                   {
                     direction: "row",
@@ -29133,7 +31172,7 @@ If there's a particular need for this, please submit a feature request at https:
                     className: "dataviews__view-actions",
                     gap: "xs",
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
+                      /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
                         Stack,
                         {
                           direction: "row",
@@ -29141,28 +31180,28 @@ If there's a particular need for this, please submit a feature request at https:
                           justify: "start",
                           className: "dataviews__search",
                           children: [
-                            search && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(dataviews_picker_default.Search, { label: searchLabel }),
-                            /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(dataviews_picker_default.FiltersToggle, {})
+                            search && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(dataviews_picker_default.Search, { label: searchLabel }),
+                            /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(dataviews_picker_default.FiltersToggle, {})
                           ]
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(dataviews_picker_default.LayoutSwitcher, {}),
-                        /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(dataviews_picker_default.ViewConfig, {})
+                      /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(dataviews_picker_default.LayoutSwitcher, {}),
+                        /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(dataviews_picker_default.ViewConfig, {})
                       ] })
                     ]
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(dataviews_picker_default.FiltersToggled, { className: "dataviews-filters__container" }),
-                /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(dataviews_picker_default.Layout, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
+                /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(dataviews_picker_default.FiltersToggled, { className: "dataviews-filters__container" }),
+                /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(dataviews_picker_default.Layout, {}),
+                /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
                   "div",
                   {
                     className: clsx_default("media-upload-modal__footer", {
                       "is-uploading": uploadingFiles.length > 0
                     }),
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+                      /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
                         UploadStatusPopover,
                         {
                           uploadingFiles,
@@ -29170,15 +31209,15 @@ If there's a particular need for this, please submit a feature request at https:
                           onOpenChange: handlePopoverOpenChange
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(dataviews_picker_default.Footer, {})
+                      /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(dataviews_picker_default.Footer, {})
                     ]
                   }
                 )
               ]
             }
           ),
-          (0, import_element87.createPortal)(
-            /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+          (0, import_element88.createPortal)(
+            /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
               import_notices.SnackbarNotices,
               {
                 className: "media-upload-modal__snackbar",

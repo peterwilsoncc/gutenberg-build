@@ -1196,7 +1196,7 @@ function clsx() {
 var clsx_default = clsx;
 
 // packages/dataviews/build-module/dataviews/index.mjs
-var import_element78 = __toESM(require_element(), 1);
+var import_element79 = __toESM(require_element(), 1);
 var import_compose14 = __toESM(require_compose(), 1);
 
 // node_modules/@base-ui/utils/safeReact.mjs
@@ -19815,6 +19815,9 @@ var maxTime = Math.pow(10, 8) * 24 * 60 * 60 * 1e3;
 var minTime = -maxTime;
 var millisecondsInWeek = 6048e5;
 var millisecondsInDay = 864e5;
+var millisecondsInMinute = 6e4;
+var millisecondsInHour = 36e5;
+var millisecondsInSecond = 1e3;
 var secondsInHour = 3600;
 var secondsInDay = secondsInHour * 24;
 var secondsInWeek = secondsInDay * 7;
@@ -20094,8 +20097,8 @@ var formatDistance = (token, count, options) => {
 function buildFormatLongFn(args) {
   return (options = {}) => {
     const width = options.width ? String(options.width) : args.defaultWidth;
-    const format6 = args.formats[width] || args.formats[args.defaultWidth];
-    return format6;
+    const format7 = args.formats[width] || args.formats[args.defaultWidth];
+    return format7;
   };
 }
 
@@ -21352,14 +21355,14 @@ function isProtectedDayOfYearToken(token) {
 function isProtectedWeekYearToken(token) {
   return weekYearTokenRE.test(token);
 }
-function warnOrThrowProtectedError(token, format6, input) {
-  const _message = message(token, format6, input);
+function warnOrThrowProtectedError(token, format7, input) {
+  const _message = message(token, format7, input);
   console.warn(_message);
   if (throwTokens.includes(token)) throw new RangeError(_message);
 }
-function message(token, format6, input) {
+function message(token, format7, input) {
   const subject = token[0] === "Y" ? "years" : "days of the month";
-  return `Use \`${token.toLowerCase()}\` instead of \`${token}\` (in \`${format6}\`) for formatting ${subject} to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`;
+  return `Use \`${token.toLowerCase()}\` instead of \`${token}\` (in \`${format7}\`) for formatting ${subject} to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`;
 }
 
 // node_modules/date-fns/format.js
@@ -21428,6 +21431,1747 @@ function cleanEscapedString(input) {
   return matched[1].replace(doubleQuoteRegExp, "'");
 }
 
+// node_modules/date-fns/getDefaultOptions.js
+function getDefaultOptions2() {
+  return Object.assign({}, getDefaultOptions());
+}
+
+// node_modules/date-fns/getISODay.js
+function getISODay(date, options) {
+  const day = toDate(date, options?.in).getDay();
+  return day === 0 ? 7 : day;
+}
+
+// node_modules/date-fns/transpose.js
+function transpose(date, constructor) {
+  const date_ = isConstructor(constructor) ? new constructor(0) : constructFrom(constructor, 0);
+  date_.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
+  date_.setHours(
+    date.getHours(),
+    date.getMinutes(),
+    date.getSeconds(),
+    date.getMilliseconds()
+  );
+  return date_;
+}
+function isConstructor(constructor) {
+  return typeof constructor === "function" && constructor.prototype?.constructor === constructor;
+}
+
+// node_modules/date-fns/parse/_lib/Setter.js
+var TIMEZONE_UNIT_PRIORITY = 10;
+var Setter = class {
+  subPriority = 0;
+  validate(_utcDate, _options) {
+    return true;
+  }
+};
+var ValueSetter = class extends Setter {
+  constructor(value, validateValue, setValue, priority, subPriority) {
+    super();
+    this.value = value;
+    this.validateValue = validateValue;
+    this.setValue = setValue;
+    this.priority = priority;
+    if (subPriority) {
+      this.subPriority = subPriority;
+    }
+  }
+  validate(date, options) {
+    return this.validateValue(date, this.value, options);
+  }
+  set(date, flags, options) {
+    return this.setValue(date, flags, this.value, options);
+  }
+};
+var DateTimezoneSetter = class extends Setter {
+  priority = TIMEZONE_UNIT_PRIORITY;
+  subPriority = -1;
+  constructor(context, reference) {
+    super();
+    this.context = context || ((date) => constructFrom(reference, date));
+  }
+  set(date, flags) {
+    if (flags.timestampIsSet) return date;
+    return constructFrom(date, transpose(date, this.context));
+  }
+};
+
+// node_modules/date-fns/parse/_lib/Parser.js
+var Parser = class {
+  run(dateString, token, match2, options) {
+    const result = this.parse(dateString, token, match2, options);
+    if (!result) {
+      return null;
+    }
+    return {
+      setter: new ValueSetter(
+        result.value,
+        this.validate,
+        this.set,
+        this.priority,
+        this.subPriority
+      ),
+      rest: result.rest
+    };
+  }
+  validate(_utcDate, _value, _options) {
+    return true;
+  }
+};
+
+// node_modules/date-fns/parse/_lib/parsers/EraParser.js
+var EraParser = class extends Parser {
+  priority = 140;
+  parse(dateString, token, match2) {
+    switch (token) {
+      // AD, BC
+      case "G":
+      case "GG":
+      case "GGG":
+        return match2.era(dateString, { width: "abbreviated" }) || match2.era(dateString, { width: "narrow" });
+      // A, B
+      case "GGGGG":
+        return match2.era(dateString, { width: "narrow" });
+      // Anno Domini, Before Christ
+      case "GGGG":
+      default:
+        return match2.era(dateString, { width: "wide" }) || match2.era(dateString, { width: "abbreviated" }) || match2.era(dateString, { width: "narrow" });
+    }
+  }
+  set(date, flags, value) {
+    flags.era = value;
+    date.setFullYear(value, 0, 1);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = ["R", "u", "t", "T"];
+};
+
+// node_modules/date-fns/parse/_lib/constants.js
+var numericPatterns = {
+  month: /^(1[0-2]|0?\d)/,
+  // 0 to 12
+  date: /^(3[0-1]|[0-2]?\d)/,
+  // 0 to 31
+  dayOfYear: /^(36[0-6]|3[0-5]\d|[0-2]?\d?\d)/,
+  // 0 to 366
+  week: /^(5[0-3]|[0-4]?\d)/,
+  // 0 to 53
+  hour23h: /^(2[0-3]|[0-1]?\d)/,
+  // 0 to 23
+  hour24h: /^(2[0-4]|[0-1]?\d)/,
+  // 0 to 24
+  hour11h: /^(1[0-1]|0?\d)/,
+  // 0 to 11
+  hour12h: /^(1[0-2]|0?\d)/,
+  // 0 to 12
+  minute: /^[0-5]?\d/,
+  // 0 to 59
+  second: /^[0-5]?\d/,
+  // 0 to 59
+  singleDigit: /^\d/,
+  // 0 to 9
+  twoDigits: /^\d{1,2}/,
+  // 0 to 99
+  threeDigits: /^\d{1,3}/,
+  // 0 to 999
+  fourDigits: /^\d{1,4}/,
+  // 0 to 9999
+  anyDigitsSigned: /^-?\d+/,
+  singleDigitSigned: /^-?\d/,
+  // 0 to 9, -0 to -9
+  twoDigitsSigned: /^-?\d{1,2}/,
+  // 0 to 99, -0 to -99
+  threeDigitsSigned: /^-?\d{1,3}/,
+  // 0 to 999, -0 to -999
+  fourDigitsSigned: /^-?\d{1,4}/
+  // 0 to 9999, -0 to -9999
+};
+var timezonePatterns = {
+  basicOptionalMinutes: /^([+-])(\d{2})(\d{2})?|Z/,
+  basic: /^([+-])(\d{2})(\d{2})|Z/,
+  basicOptionalSeconds: /^([+-])(\d{2})(\d{2})((\d{2}))?|Z/,
+  extended: /^([+-])(\d{2}):(\d{2})|Z/,
+  extendedOptionalSeconds: /^([+-])(\d{2}):(\d{2})(:(\d{2}))?|Z/
+};
+
+// node_modules/date-fns/parse/_lib/utils.js
+function mapValue(parseFnResult, mapFn) {
+  if (!parseFnResult) {
+    return parseFnResult;
+  }
+  return {
+    value: mapFn(parseFnResult.value),
+    rest: parseFnResult.rest
+  };
+}
+function parseNumericPattern(pattern, dateString) {
+  const matchResult = dateString.match(pattern);
+  if (!matchResult) {
+    return null;
+  }
+  return {
+    value: parseInt(matchResult[0], 10),
+    rest: dateString.slice(matchResult[0].length)
+  };
+}
+function parseTimezonePattern(pattern, dateString) {
+  const matchResult = dateString.match(pattern);
+  if (!matchResult) {
+    return null;
+  }
+  if (matchResult[0] === "Z") {
+    return {
+      value: 0,
+      rest: dateString.slice(1)
+    };
+  }
+  const sign = matchResult[1] === "+" ? 1 : -1;
+  const hours = matchResult[2] ? parseInt(matchResult[2], 10) : 0;
+  const minutes = matchResult[3] ? parseInt(matchResult[3], 10) : 0;
+  const seconds = matchResult[5] ? parseInt(matchResult[5], 10) : 0;
+  return {
+    value: sign * (hours * millisecondsInHour + minutes * millisecondsInMinute + seconds * millisecondsInSecond),
+    rest: dateString.slice(matchResult[0].length)
+  };
+}
+function parseAnyDigitsSigned(dateString) {
+  return parseNumericPattern(numericPatterns.anyDigitsSigned, dateString);
+}
+function parseNDigits(n2, dateString) {
+  switch (n2) {
+    case 1:
+      return parseNumericPattern(numericPatterns.singleDigit, dateString);
+    case 2:
+      return parseNumericPattern(numericPatterns.twoDigits, dateString);
+    case 3:
+      return parseNumericPattern(numericPatterns.threeDigits, dateString);
+    case 4:
+      return parseNumericPattern(numericPatterns.fourDigits, dateString);
+    default:
+      return parseNumericPattern(new RegExp("^\\d{1," + n2 + "}"), dateString);
+  }
+}
+function parseNDigitsSigned(n2, dateString) {
+  switch (n2) {
+    case 1:
+      return parseNumericPattern(numericPatterns.singleDigitSigned, dateString);
+    case 2:
+      return parseNumericPattern(numericPatterns.twoDigitsSigned, dateString);
+    case 3:
+      return parseNumericPattern(numericPatterns.threeDigitsSigned, dateString);
+    case 4:
+      return parseNumericPattern(numericPatterns.fourDigitsSigned, dateString);
+    default:
+      return parseNumericPattern(new RegExp("^-?\\d{1," + n2 + "}"), dateString);
+  }
+}
+function dayPeriodEnumToHours(dayPeriod) {
+  switch (dayPeriod) {
+    case "morning":
+      return 4;
+    case "evening":
+      return 17;
+    case "pm":
+    case "noon":
+    case "afternoon":
+      return 12;
+    case "am":
+    case "midnight":
+    case "night":
+    default:
+      return 0;
+  }
+}
+function normalizeTwoDigitYear(twoDigitYear, currentYear) {
+  const isCommonEra = currentYear > 0;
+  const absCurrentYear = isCommonEra ? currentYear : 1 - currentYear;
+  let result;
+  if (absCurrentYear <= 50) {
+    result = twoDigitYear || 100;
+  } else {
+    const rangeEnd = absCurrentYear + 50;
+    const rangeEndCentury = Math.trunc(rangeEnd / 100) * 100;
+    const isPreviousCentury = twoDigitYear >= rangeEnd % 100;
+    result = twoDigitYear + rangeEndCentury - (isPreviousCentury ? 100 : 0);
+  }
+  return isCommonEra ? result : 1 - result;
+}
+function isLeapYearIndex(year) {
+  return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
+}
+
+// node_modules/date-fns/parse/_lib/parsers/YearParser.js
+var YearParser = class extends Parser {
+  priority = 130;
+  incompatibleTokens = ["Y", "R", "u", "w", "I", "i", "e", "c", "t", "T"];
+  parse(dateString, token, match2) {
+    const valueCallback = (year) => ({
+      year,
+      isTwoDigitYear: token === "yy"
+    });
+    switch (token) {
+      case "y":
+        return mapValue(parseNDigits(4, dateString), valueCallback);
+      case "yo":
+        return mapValue(
+          match2.ordinalNumber(dateString, {
+            unit: "year"
+          }),
+          valueCallback
+        );
+      default:
+        return mapValue(parseNDigits(token.length, dateString), valueCallback);
+    }
+  }
+  validate(_date, value) {
+    return value.isTwoDigitYear || value.year > 0;
+  }
+  set(date, flags, value) {
+    const currentYear = date.getFullYear();
+    if (value.isTwoDigitYear) {
+      const normalizedTwoDigitYear = normalizeTwoDigitYear(
+        value.year,
+        currentYear
+      );
+      date.setFullYear(normalizedTwoDigitYear, 0, 1);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+    const year = !("era" in flags) || flags.era === 1 ? value.year : 1 - value.year;
+    date.setFullYear(year, 0, 1);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+};
+
+// node_modules/date-fns/parse/_lib/parsers/LocalWeekYearParser.js
+var LocalWeekYearParser = class extends Parser {
+  priority = 130;
+  parse(dateString, token, match2) {
+    const valueCallback = (year) => ({
+      year,
+      isTwoDigitYear: token === "YY"
+    });
+    switch (token) {
+      case "Y":
+        return mapValue(parseNDigits(4, dateString), valueCallback);
+      case "Yo":
+        return mapValue(
+          match2.ordinalNumber(dateString, {
+            unit: "year"
+          }),
+          valueCallback
+        );
+      default:
+        return mapValue(parseNDigits(token.length, dateString), valueCallback);
+    }
+  }
+  validate(_date, value) {
+    return value.isTwoDigitYear || value.year > 0;
+  }
+  set(date, flags, value, options) {
+    const currentYear = getWeekYear(date, options);
+    if (value.isTwoDigitYear) {
+      const normalizedTwoDigitYear = normalizeTwoDigitYear(
+        value.year,
+        currentYear
+      );
+      date.setFullYear(
+        normalizedTwoDigitYear,
+        0,
+        options.firstWeekContainsDate
+      );
+      date.setHours(0, 0, 0, 0);
+      return startOfWeek(date, options);
+    }
+    const year = !("era" in flags) || flags.era === 1 ? value.year : 1 - value.year;
+    date.setFullYear(year, 0, options.firstWeekContainsDate);
+    date.setHours(0, 0, 0, 0);
+    return startOfWeek(date, options);
+  }
+  incompatibleTokens = [
+    "y",
+    "R",
+    "u",
+    "Q",
+    "q",
+    "M",
+    "L",
+    "I",
+    "d",
+    "D",
+    "i",
+    "t",
+    "T"
+  ];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/ISOWeekYearParser.js
+var ISOWeekYearParser = class extends Parser {
+  priority = 130;
+  parse(dateString, token) {
+    if (token === "R") {
+      return parseNDigitsSigned(4, dateString);
+    }
+    return parseNDigitsSigned(token.length, dateString);
+  }
+  set(date, _flags, value) {
+    const firstWeekOfYear = constructFrom(date, 0);
+    firstWeekOfYear.setFullYear(value, 0, 4);
+    firstWeekOfYear.setHours(0, 0, 0, 0);
+    return startOfISOWeek(firstWeekOfYear);
+  }
+  incompatibleTokens = [
+    "G",
+    "y",
+    "Y",
+    "u",
+    "Q",
+    "q",
+    "M",
+    "L",
+    "w",
+    "d",
+    "D",
+    "e",
+    "c",
+    "t",
+    "T"
+  ];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/ExtendedYearParser.js
+var ExtendedYearParser = class extends Parser {
+  priority = 130;
+  parse(dateString, token) {
+    if (token === "u") {
+      return parseNDigitsSigned(4, dateString);
+    }
+    return parseNDigitsSigned(token.length, dateString);
+  }
+  set(date, _flags, value) {
+    date.setFullYear(value, 0, 1);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = ["G", "y", "Y", "R", "w", "I", "i", "e", "c", "t", "T"];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/QuarterParser.js
+var QuarterParser = class extends Parser {
+  priority = 120;
+  parse(dateString, token, match2) {
+    switch (token) {
+      // 1, 2, 3, 4
+      case "Q":
+      case "QQ":
+        return parseNDigits(token.length, dateString);
+      // 1st, 2nd, 3rd, 4th
+      case "Qo":
+        return match2.ordinalNumber(dateString, { unit: "quarter" });
+      // Q1, Q2, Q3, Q4
+      case "QQQ":
+        return match2.quarter(dateString, {
+          width: "abbreviated",
+          context: "formatting"
+        }) || match2.quarter(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+      // 1, 2, 3, 4 (narrow quarter; could be not numerical)
+      case "QQQQQ":
+        return match2.quarter(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+      // 1st quarter, 2nd quarter, ...
+      case "QQQQ":
+      default:
+        return match2.quarter(dateString, {
+          width: "wide",
+          context: "formatting"
+        }) || match2.quarter(dateString, {
+          width: "abbreviated",
+          context: "formatting"
+        }) || match2.quarter(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+    }
+  }
+  validate(_date, value) {
+    return value >= 1 && value <= 4;
+  }
+  set(date, _flags, value) {
+    date.setMonth((value - 1) * 3, 1);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = [
+    "Y",
+    "R",
+    "q",
+    "M",
+    "L",
+    "w",
+    "I",
+    "d",
+    "D",
+    "i",
+    "e",
+    "c",
+    "t",
+    "T"
+  ];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/StandAloneQuarterParser.js
+var StandAloneQuarterParser = class extends Parser {
+  priority = 120;
+  parse(dateString, token, match2) {
+    switch (token) {
+      // 1, 2, 3, 4
+      case "q":
+      case "qq":
+        return parseNDigits(token.length, dateString);
+      // 1st, 2nd, 3rd, 4th
+      case "qo":
+        return match2.ordinalNumber(dateString, { unit: "quarter" });
+      // Q1, Q2, Q3, Q4
+      case "qqq":
+        return match2.quarter(dateString, {
+          width: "abbreviated",
+          context: "standalone"
+        }) || match2.quarter(dateString, {
+          width: "narrow",
+          context: "standalone"
+        });
+      // 1, 2, 3, 4 (narrow quarter; could be not numerical)
+      case "qqqqq":
+        return match2.quarter(dateString, {
+          width: "narrow",
+          context: "standalone"
+        });
+      // 1st quarter, 2nd quarter, ...
+      case "qqqq":
+      default:
+        return match2.quarter(dateString, {
+          width: "wide",
+          context: "standalone"
+        }) || match2.quarter(dateString, {
+          width: "abbreviated",
+          context: "standalone"
+        }) || match2.quarter(dateString, {
+          width: "narrow",
+          context: "standalone"
+        });
+    }
+  }
+  validate(_date, value) {
+    return value >= 1 && value <= 4;
+  }
+  set(date, _flags, value) {
+    date.setMonth((value - 1) * 3, 1);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = [
+    "Y",
+    "R",
+    "Q",
+    "M",
+    "L",
+    "w",
+    "I",
+    "d",
+    "D",
+    "i",
+    "e",
+    "c",
+    "t",
+    "T"
+  ];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/MonthParser.js
+var MonthParser = class extends Parser {
+  incompatibleTokens = [
+    "Y",
+    "R",
+    "q",
+    "Q",
+    "L",
+    "w",
+    "I",
+    "D",
+    "i",
+    "e",
+    "c",
+    "t",
+    "T"
+  ];
+  priority = 110;
+  parse(dateString, token, match2) {
+    const valueCallback = (value) => value - 1;
+    switch (token) {
+      // 1, 2, ..., 12
+      case "M":
+        return mapValue(
+          parseNumericPattern(numericPatterns.month, dateString),
+          valueCallback
+        );
+      // 01, 02, ..., 12
+      case "MM":
+        return mapValue(parseNDigits(2, dateString), valueCallback);
+      // 1st, 2nd, ..., 12th
+      case "Mo":
+        return mapValue(
+          match2.ordinalNumber(dateString, {
+            unit: "month"
+          }),
+          valueCallback
+        );
+      // Jan, Feb, ..., Dec
+      case "MMM":
+        return match2.month(dateString, {
+          width: "abbreviated",
+          context: "formatting"
+        }) || match2.month(dateString, { width: "narrow", context: "formatting" });
+      // J, F, ..., D
+      case "MMMMM":
+        return match2.month(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+      // January, February, ..., December
+      case "MMMM":
+      default:
+        return match2.month(dateString, { width: "wide", context: "formatting" }) || match2.month(dateString, {
+          width: "abbreviated",
+          context: "formatting"
+        }) || match2.month(dateString, { width: "narrow", context: "formatting" });
+    }
+  }
+  validate(_date, value) {
+    return value >= 0 && value <= 11;
+  }
+  set(date, _flags, value) {
+    date.setMonth(value, 1);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+};
+
+// node_modules/date-fns/parse/_lib/parsers/StandAloneMonthParser.js
+var StandAloneMonthParser = class extends Parser {
+  priority = 110;
+  parse(dateString, token, match2) {
+    const valueCallback = (value) => value - 1;
+    switch (token) {
+      // 1, 2, ..., 12
+      case "L":
+        return mapValue(
+          parseNumericPattern(numericPatterns.month, dateString),
+          valueCallback
+        );
+      // 01, 02, ..., 12
+      case "LL":
+        return mapValue(parseNDigits(2, dateString), valueCallback);
+      // 1st, 2nd, ..., 12th
+      case "Lo":
+        return mapValue(
+          match2.ordinalNumber(dateString, {
+            unit: "month"
+          }),
+          valueCallback
+        );
+      // Jan, Feb, ..., Dec
+      case "LLL":
+        return match2.month(dateString, {
+          width: "abbreviated",
+          context: "standalone"
+        }) || match2.month(dateString, { width: "narrow", context: "standalone" });
+      // J, F, ..., D
+      case "LLLLL":
+        return match2.month(dateString, {
+          width: "narrow",
+          context: "standalone"
+        });
+      // January, February, ..., December
+      case "LLLL":
+      default:
+        return match2.month(dateString, { width: "wide", context: "standalone" }) || match2.month(dateString, {
+          width: "abbreviated",
+          context: "standalone"
+        }) || match2.month(dateString, { width: "narrow", context: "standalone" });
+    }
+  }
+  validate(_date, value) {
+    return value >= 0 && value <= 11;
+  }
+  set(date, _flags, value) {
+    date.setMonth(value, 1);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = [
+    "Y",
+    "R",
+    "q",
+    "Q",
+    "M",
+    "w",
+    "I",
+    "D",
+    "i",
+    "e",
+    "c",
+    "t",
+    "T"
+  ];
+};
+
+// node_modules/date-fns/setWeek.js
+function setWeek(date, week, options) {
+  const date_ = toDate(date, options?.in);
+  const diff = getWeek(date_, options) - week;
+  date_.setDate(date_.getDate() - diff * 7);
+  return toDate(date_, options?.in);
+}
+
+// node_modules/date-fns/parse/_lib/parsers/LocalWeekParser.js
+var LocalWeekParser = class extends Parser {
+  priority = 100;
+  parse(dateString, token, match2) {
+    switch (token) {
+      case "w":
+        return parseNumericPattern(numericPatterns.week, dateString);
+      case "wo":
+        return match2.ordinalNumber(dateString, { unit: "week" });
+      default:
+        return parseNDigits(token.length, dateString);
+    }
+  }
+  validate(_date, value) {
+    return value >= 1 && value <= 53;
+  }
+  set(date, _flags, value, options) {
+    return startOfWeek(setWeek(date, value, options), options);
+  }
+  incompatibleTokens = [
+    "y",
+    "R",
+    "u",
+    "q",
+    "Q",
+    "M",
+    "L",
+    "I",
+    "d",
+    "D",
+    "i",
+    "t",
+    "T"
+  ];
+};
+
+// node_modules/date-fns/setISOWeek.js
+function setISOWeek(date, week, options) {
+  const _date = toDate(date, options?.in);
+  const diff = getISOWeek(_date, options) - week;
+  _date.setDate(_date.getDate() - diff * 7);
+  return _date;
+}
+
+// node_modules/date-fns/parse/_lib/parsers/ISOWeekParser.js
+var ISOWeekParser = class extends Parser {
+  priority = 100;
+  parse(dateString, token, match2) {
+    switch (token) {
+      case "I":
+        return parseNumericPattern(numericPatterns.week, dateString);
+      case "Io":
+        return match2.ordinalNumber(dateString, { unit: "week" });
+      default:
+        return parseNDigits(token.length, dateString);
+    }
+  }
+  validate(_date, value) {
+    return value >= 1 && value <= 53;
+  }
+  set(date, _flags, value) {
+    return startOfISOWeek(setISOWeek(date, value));
+  }
+  incompatibleTokens = [
+    "y",
+    "Y",
+    "u",
+    "q",
+    "Q",
+    "M",
+    "L",
+    "w",
+    "d",
+    "D",
+    "e",
+    "c",
+    "t",
+    "T"
+  ];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/DateParser.js
+var DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+var DAYS_IN_MONTH_LEAP_YEAR = [
+  31,
+  29,
+  31,
+  30,
+  31,
+  30,
+  31,
+  31,
+  30,
+  31,
+  30,
+  31
+];
+var DateParser = class extends Parser {
+  priority = 90;
+  subPriority = 1;
+  parse(dateString, token, match2) {
+    switch (token) {
+      case "d":
+        return parseNumericPattern(numericPatterns.date, dateString);
+      case "do":
+        return match2.ordinalNumber(dateString, { unit: "date" });
+      default:
+        return parseNDigits(token.length, dateString);
+    }
+  }
+  validate(date, value) {
+    const year = date.getFullYear();
+    const isLeapYear = isLeapYearIndex(year);
+    const month = date.getMonth();
+    if (isLeapYear) {
+      return value >= 1 && value <= DAYS_IN_MONTH_LEAP_YEAR[month];
+    } else {
+      return value >= 1 && value <= DAYS_IN_MONTH[month];
+    }
+  }
+  set(date, _flags, value) {
+    date.setDate(value);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = [
+    "Y",
+    "R",
+    "q",
+    "Q",
+    "w",
+    "I",
+    "D",
+    "i",
+    "e",
+    "c",
+    "t",
+    "T"
+  ];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/DayOfYearParser.js
+var DayOfYearParser = class extends Parser {
+  priority = 90;
+  subpriority = 1;
+  parse(dateString, token, match2) {
+    switch (token) {
+      case "D":
+      case "DD":
+        return parseNumericPattern(numericPatterns.dayOfYear, dateString);
+      case "Do":
+        return match2.ordinalNumber(dateString, { unit: "date" });
+      default:
+        return parseNDigits(token.length, dateString);
+    }
+  }
+  validate(date, value) {
+    const year = date.getFullYear();
+    const isLeapYear = isLeapYearIndex(year);
+    if (isLeapYear) {
+      return value >= 1 && value <= 366;
+    } else {
+      return value >= 1 && value <= 365;
+    }
+  }
+  set(date, _flags, value) {
+    date.setMonth(0, value);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = [
+    "Y",
+    "R",
+    "q",
+    "Q",
+    "M",
+    "L",
+    "w",
+    "I",
+    "d",
+    "E",
+    "i",
+    "e",
+    "c",
+    "t",
+    "T"
+  ];
+};
+
+// node_modules/date-fns/setDay.js
+function setDay(date, day, options) {
+  const defaultOptions2 = getDefaultOptions();
+  const weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions2.weekStartsOn ?? defaultOptions2.locale?.options?.weekStartsOn ?? 0;
+  const date_ = toDate(date, options?.in);
+  const currentDay = date_.getDay();
+  const remainder = day % 7;
+  const dayIndex = (remainder + 7) % 7;
+  const delta = 7 - weekStartsOn;
+  const diff = day < 0 || day > 6 ? day - (currentDay + delta) % 7 : (dayIndex + delta) % 7 - (currentDay + delta) % 7;
+  return addDays(date_, diff, options);
+}
+
+// node_modules/date-fns/parse/_lib/parsers/DayParser.js
+var DayParser = class extends Parser {
+  priority = 90;
+  parse(dateString, token, match2) {
+    switch (token) {
+      // Tue
+      case "E":
+      case "EE":
+      case "EEE":
+        return match2.day(dateString, {
+          width: "abbreviated",
+          context: "formatting"
+        }) || match2.day(dateString, { width: "short", context: "formatting" }) || match2.day(dateString, { width: "narrow", context: "formatting" });
+      // T
+      case "EEEEE":
+        return match2.day(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+      // Tu
+      case "EEEEEE":
+        return match2.day(dateString, { width: "short", context: "formatting" }) || match2.day(dateString, { width: "narrow", context: "formatting" });
+      // Tuesday
+      case "EEEE":
+      default:
+        return match2.day(dateString, { width: "wide", context: "formatting" }) || match2.day(dateString, {
+          width: "abbreviated",
+          context: "formatting"
+        }) || match2.day(dateString, { width: "short", context: "formatting" }) || match2.day(dateString, { width: "narrow", context: "formatting" });
+    }
+  }
+  validate(_date, value) {
+    return value >= 0 && value <= 6;
+  }
+  set(date, _flags, value, options) {
+    date = setDay(date, value, options);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = ["D", "i", "e", "c", "t", "T"];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/LocalDayParser.js
+var LocalDayParser = class extends Parser {
+  priority = 90;
+  parse(dateString, token, match2, options) {
+    const valueCallback = (value) => {
+      const wholeWeekDays = Math.floor((value - 1) / 7) * 7;
+      return (value + options.weekStartsOn + 6) % 7 + wholeWeekDays;
+    };
+    switch (token) {
+      // 3
+      case "e":
+      case "ee":
+        return mapValue(parseNDigits(token.length, dateString), valueCallback);
+      // 3rd
+      case "eo":
+        return mapValue(
+          match2.ordinalNumber(dateString, {
+            unit: "day"
+          }),
+          valueCallback
+        );
+      // Tue
+      case "eee":
+        return match2.day(dateString, {
+          width: "abbreviated",
+          context: "formatting"
+        }) || match2.day(dateString, { width: "short", context: "formatting" }) || match2.day(dateString, { width: "narrow", context: "formatting" });
+      // T
+      case "eeeee":
+        return match2.day(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+      // Tu
+      case "eeeeee":
+        return match2.day(dateString, { width: "short", context: "formatting" }) || match2.day(dateString, { width: "narrow", context: "formatting" });
+      // Tuesday
+      case "eeee":
+      default:
+        return match2.day(dateString, { width: "wide", context: "formatting" }) || match2.day(dateString, {
+          width: "abbreviated",
+          context: "formatting"
+        }) || match2.day(dateString, { width: "short", context: "formatting" }) || match2.day(dateString, { width: "narrow", context: "formatting" });
+    }
+  }
+  validate(_date, value) {
+    return value >= 0 && value <= 6;
+  }
+  set(date, _flags, value, options) {
+    date = setDay(date, value, options);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = [
+    "y",
+    "R",
+    "u",
+    "q",
+    "Q",
+    "M",
+    "L",
+    "I",
+    "d",
+    "D",
+    "E",
+    "i",
+    "c",
+    "t",
+    "T"
+  ];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/StandAloneLocalDayParser.js
+var StandAloneLocalDayParser = class extends Parser {
+  priority = 90;
+  parse(dateString, token, match2, options) {
+    const valueCallback = (value) => {
+      const wholeWeekDays = Math.floor((value - 1) / 7) * 7;
+      return (value + options.weekStartsOn + 6) % 7 + wholeWeekDays;
+    };
+    switch (token) {
+      // 3
+      case "c":
+      case "cc":
+        return mapValue(parseNDigits(token.length, dateString), valueCallback);
+      // 3rd
+      case "co":
+        return mapValue(
+          match2.ordinalNumber(dateString, {
+            unit: "day"
+          }),
+          valueCallback
+        );
+      // Tue
+      case "ccc":
+        return match2.day(dateString, {
+          width: "abbreviated",
+          context: "standalone"
+        }) || match2.day(dateString, { width: "short", context: "standalone" }) || match2.day(dateString, { width: "narrow", context: "standalone" });
+      // T
+      case "ccccc":
+        return match2.day(dateString, {
+          width: "narrow",
+          context: "standalone"
+        });
+      // Tu
+      case "cccccc":
+        return match2.day(dateString, { width: "short", context: "standalone" }) || match2.day(dateString, { width: "narrow", context: "standalone" });
+      // Tuesday
+      case "cccc":
+      default:
+        return match2.day(dateString, { width: "wide", context: "standalone" }) || match2.day(dateString, {
+          width: "abbreviated",
+          context: "standalone"
+        }) || match2.day(dateString, { width: "short", context: "standalone" }) || match2.day(dateString, { width: "narrow", context: "standalone" });
+    }
+  }
+  validate(_date, value) {
+    return value >= 0 && value <= 6;
+  }
+  set(date, _flags, value, options) {
+    date = setDay(date, value, options);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = [
+    "y",
+    "R",
+    "u",
+    "q",
+    "Q",
+    "M",
+    "L",
+    "I",
+    "d",
+    "D",
+    "E",
+    "i",
+    "e",
+    "t",
+    "T"
+  ];
+};
+
+// node_modules/date-fns/setISODay.js
+function setISODay(date, day, options) {
+  const date_ = toDate(date, options?.in);
+  const currentDay = getISODay(date_, options);
+  const diff = day - currentDay;
+  return addDays(date_, diff, options);
+}
+
+// node_modules/date-fns/parse/_lib/parsers/ISODayParser.js
+var ISODayParser = class extends Parser {
+  priority = 90;
+  parse(dateString, token, match2) {
+    const valueCallback = (value) => {
+      if (value === 0) {
+        return 7;
+      }
+      return value;
+    };
+    switch (token) {
+      // 2
+      case "i":
+      case "ii":
+        return parseNDigits(token.length, dateString);
+      // 2nd
+      case "io":
+        return match2.ordinalNumber(dateString, { unit: "day" });
+      // Tue
+      case "iii":
+        return mapValue(
+          match2.day(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.day(dateString, {
+            width: "short",
+            context: "formatting"
+          }) || match2.day(dateString, {
+            width: "narrow",
+            context: "formatting"
+          }),
+          valueCallback
+        );
+      // T
+      case "iiiii":
+        return mapValue(
+          match2.day(dateString, {
+            width: "narrow",
+            context: "formatting"
+          }),
+          valueCallback
+        );
+      // Tu
+      case "iiiiii":
+        return mapValue(
+          match2.day(dateString, {
+            width: "short",
+            context: "formatting"
+          }) || match2.day(dateString, {
+            width: "narrow",
+            context: "formatting"
+          }),
+          valueCallback
+        );
+      // Tuesday
+      case "iiii":
+      default:
+        return mapValue(
+          match2.day(dateString, {
+            width: "wide",
+            context: "formatting"
+          }) || match2.day(dateString, {
+            width: "abbreviated",
+            context: "formatting"
+          }) || match2.day(dateString, {
+            width: "short",
+            context: "formatting"
+          }) || match2.day(dateString, {
+            width: "narrow",
+            context: "formatting"
+          }),
+          valueCallback
+        );
+    }
+  }
+  validate(_date, value) {
+    return value >= 1 && value <= 7;
+  }
+  set(date, _flags, value) {
+    date = setISODay(date, value);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = [
+    "y",
+    "Y",
+    "u",
+    "q",
+    "Q",
+    "M",
+    "L",
+    "w",
+    "d",
+    "D",
+    "E",
+    "e",
+    "c",
+    "t",
+    "T"
+  ];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/AMPMParser.js
+var AMPMParser = class extends Parser {
+  priority = 80;
+  parse(dateString, token, match2) {
+    switch (token) {
+      case "a":
+      case "aa":
+      case "aaa":
+        return match2.dayPeriod(dateString, {
+          width: "abbreviated",
+          context: "formatting"
+        }) || match2.dayPeriod(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+      case "aaaaa":
+        return match2.dayPeriod(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+      case "aaaa":
+      default:
+        return match2.dayPeriod(dateString, {
+          width: "wide",
+          context: "formatting"
+        }) || match2.dayPeriod(dateString, {
+          width: "abbreviated",
+          context: "formatting"
+        }) || match2.dayPeriod(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+    }
+  }
+  set(date, _flags, value) {
+    date.setHours(dayPeriodEnumToHours(value), 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = ["b", "B", "H", "k", "t", "T"];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/AMPMMidnightParser.js
+var AMPMMidnightParser = class extends Parser {
+  priority = 80;
+  parse(dateString, token, match2) {
+    switch (token) {
+      case "b":
+      case "bb":
+      case "bbb":
+        return match2.dayPeriod(dateString, {
+          width: "abbreviated",
+          context: "formatting"
+        }) || match2.dayPeriod(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+      case "bbbbb":
+        return match2.dayPeriod(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+      case "bbbb":
+      default:
+        return match2.dayPeriod(dateString, {
+          width: "wide",
+          context: "formatting"
+        }) || match2.dayPeriod(dateString, {
+          width: "abbreviated",
+          context: "formatting"
+        }) || match2.dayPeriod(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+    }
+  }
+  set(date, _flags, value) {
+    date.setHours(dayPeriodEnumToHours(value), 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = ["a", "B", "H", "k", "t", "T"];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/DayPeriodParser.js
+var DayPeriodParser = class extends Parser {
+  priority = 80;
+  parse(dateString, token, match2) {
+    switch (token) {
+      case "B":
+      case "BB":
+      case "BBB":
+        return match2.dayPeriod(dateString, {
+          width: "abbreviated",
+          context: "formatting"
+        }) || match2.dayPeriod(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+      case "BBBBB":
+        return match2.dayPeriod(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+      case "BBBB":
+      default:
+        return match2.dayPeriod(dateString, {
+          width: "wide",
+          context: "formatting"
+        }) || match2.dayPeriod(dateString, {
+          width: "abbreviated",
+          context: "formatting"
+        }) || match2.dayPeriod(dateString, {
+          width: "narrow",
+          context: "formatting"
+        });
+    }
+  }
+  set(date, _flags, value) {
+    date.setHours(dayPeriodEnumToHours(value), 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = ["a", "b", "t", "T"];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/Hour1to12Parser.js
+var Hour1to12Parser = class extends Parser {
+  priority = 70;
+  parse(dateString, token, match2) {
+    switch (token) {
+      case "h":
+        return parseNumericPattern(numericPatterns.hour12h, dateString);
+      case "ho":
+        return match2.ordinalNumber(dateString, { unit: "hour" });
+      default:
+        return parseNDigits(token.length, dateString);
+    }
+  }
+  validate(_date, value) {
+    return value >= 1 && value <= 12;
+  }
+  set(date, _flags, value) {
+    const isPM = date.getHours() >= 12;
+    if (isPM && value < 12) {
+      date.setHours(value + 12, 0, 0, 0);
+    } else if (!isPM && value === 12) {
+      date.setHours(0, 0, 0, 0);
+    } else {
+      date.setHours(value, 0, 0, 0);
+    }
+    return date;
+  }
+  incompatibleTokens = ["H", "K", "k", "t", "T"];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/Hour0to23Parser.js
+var Hour0to23Parser = class extends Parser {
+  priority = 70;
+  parse(dateString, token, match2) {
+    switch (token) {
+      case "H":
+        return parseNumericPattern(numericPatterns.hour23h, dateString);
+      case "Ho":
+        return match2.ordinalNumber(dateString, { unit: "hour" });
+      default:
+        return parseNDigits(token.length, dateString);
+    }
+  }
+  validate(_date, value) {
+    return value >= 0 && value <= 23;
+  }
+  set(date, _flags, value) {
+    date.setHours(value, 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = ["a", "b", "h", "K", "k", "t", "T"];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/Hour0To11Parser.js
+var Hour0To11Parser = class extends Parser {
+  priority = 70;
+  parse(dateString, token, match2) {
+    switch (token) {
+      case "K":
+        return parseNumericPattern(numericPatterns.hour11h, dateString);
+      case "Ko":
+        return match2.ordinalNumber(dateString, { unit: "hour" });
+      default:
+        return parseNDigits(token.length, dateString);
+    }
+  }
+  validate(_date, value) {
+    return value >= 0 && value <= 11;
+  }
+  set(date, _flags, value) {
+    const isPM = date.getHours() >= 12;
+    if (isPM && value < 12) {
+      date.setHours(value + 12, 0, 0, 0);
+    } else {
+      date.setHours(value, 0, 0, 0);
+    }
+    return date;
+  }
+  incompatibleTokens = ["h", "H", "k", "t", "T"];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/Hour1To24Parser.js
+var Hour1To24Parser = class extends Parser {
+  priority = 70;
+  parse(dateString, token, match2) {
+    switch (token) {
+      case "k":
+        return parseNumericPattern(numericPatterns.hour24h, dateString);
+      case "ko":
+        return match2.ordinalNumber(dateString, { unit: "hour" });
+      default:
+        return parseNDigits(token.length, dateString);
+    }
+  }
+  validate(_date, value) {
+    return value >= 1 && value <= 24;
+  }
+  set(date, _flags, value) {
+    const hours = value <= 24 ? value % 24 : value;
+    date.setHours(hours, 0, 0, 0);
+    return date;
+  }
+  incompatibleTokens = ["a", "b", "h", "H", "K", "t", "T"];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/MinuteParser.js
+var MinuteParser = class extends Parser {
+  priority = 60;
+  parse(dateString, token, match2) {
+    switch (token) {
+      case "m":
+        return parseNumericPattern(numericPatterns.minute, dateString);
+      case "mo":
+        return match2.ordinalNumber(dateString, { unit: "minute" });
+      default:
+        return parseNDigits(token.length, dateString);
+    }
+  }
+  validate(_date, value) {
+    return value >= 0 && value <= 59;
+  }
+  set(date, _flags, value) {
+    date.setMinutes(value, 0, 0);
+    return date;
+  }
+  incompatibleTokens = ["t", "T"];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/SecondParser.js
+var SecondParser = class extends Parser {
+  priority = 50;
+  parse(dateString, token, match2) {
+    switch (token) {
+      case "s":
+        return parseNumericPattern(numericPatterns.second, dateString);
+      case "so":
+        return match2.ordinalNumber(dateString, { unit: "second" });
+      default:
+        return parseNDigits(token.length, dateString);
+    }
+  }
+  validate(_date, value) {
+    return value >= 0 && value <= 59;
+  }
+  set(date, _flags, value) {
+    date.setSeconds(value, 0);
+    return date;
+  }
+  incompatibleTokens = ["t", "T"];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/FractionOfSecondParser.js
+var FractionOfSecondParser = class extends Parser {
+  priority = 30;
+  parse(dateString, token) {
+    const valueCallback = (value) => Math.trunc(value * Math.pow(10, -token.length + 3));
+    return mapValue(parseNDigits(token.length, dateString), valueCallback);
+  }
+  set(date, _flags, value) {
+    date.setMilliseconds(value);
+    return date;
+  }
+  incompatibleTokens = ["t", "T"];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/ISOTimezoneWithZParser.js
+var ISOTimezoneWithZParser = class extends Parser {
+  priority = 10;
+  parse(dateString, token) {
+    switch (token) {
+      case "X":
+        return parseTimezonePattern(
+          timezonePatterns.basicOptionalMinutes,
+          dateString
+        );
+      case "XX":
+        return parseTimezonePattern(timezonePatterns.basic, dateString);
+      case "XXXX":
+        return parseTimezonePattern(
+          timezonePatterns.basicOptionalSeconds,
+          dateString
+        );
+      case "XXXXX":
+        return parseTimezonePattern(
+          timezonePatterns.extendedOptionalSeconds,
+          dateString
+        );
+      case "XXX":
+      default:
+        return parseTimezonePattern(timezonePatterns.extended, dateString);
+    }
+  }
+  set(date, flags, value) {
+    if (flags.timestampIsSet) return date;
+    return constructFrom(
+      date,
+      date.getTime() - getTimezoneOffsetInMilliseconds(date) - value
+    );
+  }
+  incompatibleTokens = ["t", "T", "x"];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/ISOTimezoneParser.js
+var ISOTimezoneParser = class extends Parser {
+  priority = 10;
+  parse(dateString, token) {
+    switch (token) {
+      case "x":
+        return parseTimezonePattern(
+          timezonePatterns.basicOptionalMinutes,
+          dateString
+        );
+      case "xx":
+        return parseTimezonePattern(timezonePatterns.basic, dateString);
+      case "xxxx":
+        return parseTimezonePattern(
+          timezonePatterns.basicOptionalSeconds,
+          dateString
+        );
+      case "xxxxx":
+        return parseTimezonePattern(
+          timezonePatterns.extendedOptionalSeconds,
+          dateString
+        );
+      case "xxx":
+      default:
+        return parseTimezonePattern(timezonePatterns.extended, dateString);
+    }
+  }
+  set(date, flags, value) {
+    if (flags.timestampIsSet) return date;
+    return constructFrom(
+      date,
+      date.getTime() - getTimezoneOffsetInMilliseconds(date) - value
+    );
+  }
+  incompatibleTokens = ["t", "T", "X"];
+};
+
+// node_modules/date-fns/parse/_lib/parsers/TimestampSecondsParser.js
+var TimestampSecondsParser = class extends Parser {
+  priority = 40;
+  parse(dateString) {
+    return parseAnyDigitsSigned(dateString);
+  }
+  set(date, _flags, value) {
+    return [constructFrom(date, value * 1e3), { timestampIsSet: true }];
+  }
+  incompatibleTokens = "*";
+};
+
+// node_modules/date-fns/parse/_lib/parsers/TimestampMillisecondsParser.js
+var TimestampMillisecondsParser = class extends Parser {
+  priority = 20;
+  parse(dateString) {
+    return parseAnyDigitsSigned(dateString);
+  }
+  set(date, _flags, value) {
+    return [constructFrom(date, value), { timestampIsSet: true }];
+  }
+  incompatibleTokens = "*";
+};
+
+// node_modules/date-fns/parse/_lib/parsers.js
+var parsers = {
+  G: new EraParser(),
+  y: new YearParser(),
+  Y: new LocalWeekYearParser(),
+  R: new ISOWeekYearParser(),
+  u: new ExtendedYearParser(),
+  Q: new QuarterParser(),
+  q: new StandAloneQuarterParser(),
+  M: new MonthParser(),
+  L: new StandAloneMonthParser(),
+  w: new LocalWeekParser(),
+  I: new ISOWeekParser(),
+  d: new DateParser(),
+  D: new DayOfYearParser(),
+  E: new DayParser(),
+  e: new LocalDayParser(),
+  c: new StandAloneLocalDayParser(),
+  i: new ISODayParser(),
+  a: new AMPMParser(),
+  b: new AMPMMidnightParser(),
+  B: new DayPeriodParser(),
+  h: new Hour1to12Parser(),
+  H: new Hour0to23Parser(),
+  K: new Hour0To11Parser(),
+  k: new Hour1To24Parser(),
+  m: new MinuteParser(),
+  s: new SecondParser(),
+  S: new FractionOfSecondParser(),
+  X: new ISOTimezoneWithZParser(),
+  x: new ISOTimezoneParser(),
+  t: new TimestampSecondsParser(),
+  T: new TimestampMillisecondsParser()
+};
+
+// node_modules/date-fns/parse.js
+var formattingTokensRegExp2 = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g;
+var longFormattingTokensRegExp2 = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
+var escapedStringRegExp2 = /^'([^]*?)'?$/;
+var doubleQuoteRegExp2 = /''/g;
+var notWhitespaceRegExp = /\S/;
+var unescapedLatinCharacterRegExp2 = /[a-zA-Z]/;
+function parse(dateStr, formatStr, referenceDate, options) {
+  const invalidDate = () => constructFrom(options?.in || referenceDate, NaN);
+  const defaultOptions2 = getDefaultOptions2();
+  const locale = options?.locale ?? defaultOptions2.locale ?? enUS;
+  const firstWeekContainsDate = options?.firstWeekContainsDate ?? options?.locale?.options?.firstWeekContainsDate ?? defaultOptions2.firstWeekContainsDate ?? defaultOptions2.locale?.options?.firstWeekContainsDate ?? 1;
+  const weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions2.weekStartsOn ?? defaultOptions2.locale?.options?.weekStartsOn ?? 0;
+  if (!formatStr)
+    return dateStr ? invalidDate() : toDate(referenceDate, options?.in);
+  const subFnOptions = {
+    firstWeekContainsDate,
+    weekStartsOn,
+    locale
+  };
+  const setters = [new DateTimezoneSetter(options?.in, referenceDate)];
+  const tokens = formatStr.match(longFormattingTokensRegExp2).map((substring) => {
+    const firstCharacter = substring[0];
+    if (firstCharacter in longFormatters) {
+      const longFormatter = longFormatters[firstCharacter];
+      return longFormatter(substring, locale.formatLong);
+    }
+    return substring;
+  }).join("").match(formattingTokensRegExp2);
+  const usedTokens = [];
+  for (let token of tokens) {
+    if (!options?.useAdditionalWeekYearTokens && isProtectedWeekYearToken(token)) {
+      warnOrThrowProtectedError(token, formatStr, dateStr);
+    }
+    if (!options?.useAdditionalDayOfYearTokens && isProtectedDayOfYearToken(token)) {
+      warnOrThrowProtectedError(token, formatStr, dateStr);
+    }
+    const firstCharacter = token[0];
+    const parser = parsers[firstCharacter];
+    if (parser) {
+      const { incompatibleTokens } = parser;
+      if (Array.isArray(incompatibleTokens)) {
+        const incompatibleToken = usedTokens.find(
+          (usedToken) => incompatibleTokens.includes(usedToken.token) || usedToken.token === firstCharacter
+        );
+        if (incompatibleToken) {
+          throw new RangeError(
+            `The format string mustn't contain \`${incompatibleToken.fullToken}\` and \`${token}\` at the same time`
+          );
+        }
+      } else if (parser.incompatibleTokens === "*" && usedTokens.length > 0) {
+        throw new RangeError(
+          `The format string mustn't contain \`${token}\` and any other token at the same time`
+        );
+      }
+      usedTokens.push({ token: firstCharacter, fullToken: token });
+      const parseResult = parser.run(
+        dateStr,
+        token,
+        locale.match,
+        subFnOptions
+      );
+      if (!parseResult) {
+        return invalidDate();
+      }
+      setters.push(parseResult.setter);
+      dateStr = parseResult.rest;
+    } else {
+      if (firstCharacter.match(unescapedLatinCharacterRegExp2)) {
+        throw new RangeError(
+          "Format string contains an unescaped latin alphabet character `" + firstCharacter + "`"
+        );
+      }
+      if (token === "''") {
+        token = "'";
+      } else if (firstCharacter === "'") {
+        token = cleanEscapedString2(token);
+      }
+      if (dateStr.indexOf(token) === 0) {
+        dateStr = dateStr.slice(token.length);
+      } else {
+        return invalidDate();
+      }
+    }
+  }
+  if (dateStr.length > 0 && notWhitespaceRegExp.test(dateStr)) {
+    return invalidDate();
+  }
+  const uniquePrioritySetters = setters.map((setter) => setter.priority).sort((a2, b2) => b2 - a2).filter((priority, index2, array) => array.indexOf(priority) === index2).map(
+    (priority) => setters.filter((setter) => setter.priority === priority).sort((a2, b2) => b2.subPriority - a2.subPriority)
+  ).map((setterArray) => setterArray[0]);
+  let date = toDate(referenceDate, options?.in);
+  if (isNaN(+date)) return invalidDate();
+  const flags = {};
+  for (const setter of uniquePrioritySetters) {
+    if (!setter.validate(date, subFnOptions)) {
+      return invalidDate();
+    }
+    const result = setter.set(date, flags, subFnOptions);
+    if (Array.isArray(result)) {
+      date = result[0];
+      Object.assign(flags, result[1]);
+    } else {
+      date = result;
+    }
+  }
+  return date;
+}
+function cleanEscapedString2(input) {
+  return input.match(escapedStringRegExp2)[1].replace(doubleQuoteRegExp2, "'");
+}
+
 // node_modules/date-fns/subDays.js
 function subDays(date, amount, options) {
   return addDays(date, -amount, options);
@@ -21452,11 +23196,41 @@ function subYears(date, amount, options) {
 var import_i18n24 = __toESM(require_i18n(), 1);
 var import_element46 = __toESM(require_element(), 1);
 var import_date = __toESM(require_date(), 1);
+
+// packages/dataviews/build-module/field-types/utils/parse-time.mjs
+var ZONE_DESIGNATOR = /(?:[Zz]|[+-](?:[01]\d|2[0-3]):?[0-5]\d)$/;
+var TIME_FORMATS = ["HH:mm", "HH:mm:ss"];
+var REFERENCE_DATE = new Date(2e3, 0, 1);
+function parseTime(value) {
+  if (typeof value !== "string") {
+    return null;
+  }
+  const time = value.trim().replace(ZONE_DESIGNATOR, "");
+  for (const timeFormat of TIME_FORMATS) {
+    const parsed = parse(time, timeFormat, REFERENCE_DATE);
+    if (isValid(parsed)) {
+      return parsed.getHours() * 3600 + parsed.getMinutes() * 60 + parsed.getSeconds();
+    }
+  }
+  return null;
+}
+
+// packages/dataviews/build-module/utils/operators.mjs
 var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 var filterTextWrappers = {
   Name: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
   Value: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
 };
+function toComparableTemporals(fieldValue, filterValue) {
+  const filterTime = parseTime(filterValue);
+  if (filterTime !== null) {
+    return [parseTime(fieldValue) ?? NaN, filterTime];
+  }
+  return [
+    (0, import_date.getDate)(fieldValue).getTime(),
+    (0, import_date.getDate)(filterValue).getTime()
+  ];
+}
 function getRelativeDate(value, unit) {
   switch (unit) {
     case "days":
@@ -21577,10 +23351,18 @@ var OPERATORS = [
       filterTextWrappers
     ),
     filter(item, field, filterValue) {
-      if (!Array.isArray(filterValue) || filterValue.length !== 2 || filterValue[0] === void 0 || filterValue[1] === void 0) {
+      if (!Array.isArray(filterValue) || filterValue.length !== 2 || // An unfilled bound is `undefined` from the controls, `''`
+      // when it arrives from a persisted view, or `null` once
+      // `undefined` round-trips through JSON persistence.
+      filterValue.includes(void 0) || filterValue.includes("") || filterValue.includes(null)) {
         return true;
       }
       const fieldValue = field.getValue({ item });
+      const [min2, max2] = filterValue.map(parseTime);
+      if (min2 !== null && max2 !== null) {
+        const value = parseTime(fieldValue);
+        return value !== null && value >= min2 && value <= max2;
+      }
       if (typeof fieldValue === "number" || fieldValue instanceof Date || typeof fieldValue === "string") {
         return fieldValue >= filterValue[0] && fieldValue <= filterValue[1];
       }
@@ -21789,9 +23571,11 @@ var OPERATORS = [
       if (filterValue === void 0) {
         return true;
       }
-      const filterDate = (0, import_date.getDate)(filterValue);
-      const fieldDate = (0, import_date.getDate)(field.getValue({ item }));
-      return fieldDate < filterDate;
+      const [fieldTemporal, filterTemporal] = toComparableTemporals(
+        field.getValue({ item }),
+        filterValue
+      );
+      return fieldTemporal < filterTemporal;
     },
     selection: "single"
   },
@@ -21812,9 +23596,11 @@ var OPERATORS = [
       if (filterValue === void 0) {
         return true;
       }
-      const filterDate = (0, import_date.getDate)(filterValue);
-      const fieldDate = (0, import_date.getDate)(field.getValue({ item }));
-      return fieldDate > filterDate;
+      const [fieldTemporal, filterTemporal] = toComparableTemporals(
+        field.getValue({ item }),
+        filterValue
+      );
+      return fieldTemporal > filterTemporal;
     },
     selection: "single"
   },
@@ -21837,9 +23623,11 @@ var OPERATORS = [
       if (filterValue === void 0) {
         return true;
       }
-      const filterDate = (0, import_date.getDate)(filterValue);
-      const fieldDate = (0, import_date.getDate)(field.getValue({ item }));
-      return fieldDate <= filterDate;
+      const [fieldTemporal, filterTemporal] = toComparableTemporals(
+        field.getValue({ item }),
+        filterValue
+      );
+      return fieldTemporal <= filterTemporal;
     },
     selection: "single"
   },
@@ -21862,9 +23650,11 @@ var OPERATORS = [
       if (filterValue === void 0) {
         return true;
       }
-      const filterDate = (0, import_date.getDate)(filterValue);
-      const fieldDate = (0, import_date.getDate)(field.getValue({ item }));
-      return fieldDate >= filterDate;
+      const [fieldTemporal, filterTemporal] = toComparableTemporals(
+        field.getValue({ item }),
+        filterValue
+      );
+      return fieldTemporal >= filterTemporal;
     },
     selection: "single"
   },
@@ -21953,9 +23743,11 @@ var OPERATORS = [
       if (filterValue === void 0) {
         return true;
       }
-      const filterDate = (0, import_date.getDate)(filterValue);
-      const fieldDate = (0, import_date.getDate)(field.getValue({ item }));
-      return filterDate.getTime() === fieldDate.getTime();
+      const [fieldTemporal, filterTemporal] = toComparableTemporals(
+        field.getValue({ item }),
+        filterValue
+      );
+      return fieldTemporal === filterTemporal;
     },
     selection: "single"
   },
@@ -21976,9 +23768,11 @@ var OPERATORS = [
       if (filterValue === void 0) {
         return true;
       }
-      const filterDate = (0, import_date.getDate)(filterValue);
-      const fieldDate = (0, import_date.getDate)(field.getValue({ item }));
-      return filterDate.getTime() !== fieldDate.getTime();
+      const [fieldTemporal, filterTemporal] = toComparableTemporals(
+        field.getValue({ item }),
+        filterValue
+      );
+      return fieldTemporal !== filterTemporal;
     },
     selection: "single"
   }
@@ -22127,20 +23921,25 @@ function Filter({
       return filterInView?.value?.includes(element.value);
     });
   } else if (Array.isArray(filterInView?.value)) {
-    const label = filterInView.value.map((v2) => {
-      const formattedValue = field?.getValueFormatted({
-        item: { [field.id]: v2 },
-        field
+    const isComplete = !filterInView.value.some(
+      (v2) => v2 === void 0 || v2 === null || v2 === ""
+    );
+    if (isComplete) {
+      const label = filterInView.value.map((v2) => {
+        const formattedValue = field?.getValueFormatted({
+          item: { [field.id]: v2 },
+          field
+        });
+        return formattedValue || String(v2);
       });
-      return formattedValue || String(v2);
-    });
-    activeElements = [
-      {
-        value: filterInView.value,
-        // @ts-ignore
-        label
-      }
-    ];
+      activeElements = [
+        {
+          value: filterInView.value,
+          // @ts-ignore
+          label
+        }
+      ];
+    }
   } else if (typeof filterInView?.value === "object") {
     activeElements = [
       { value: filterInView.value, label: filterInView.value }
@@ -24549,11 +26348,168 @@ function Text3({
   );
 }
 
-// packages/dataviews/build-module/components/dataform-controls/toggle.mjs
+// packages/dataviews/build-module/components/dataform-controls/time.mjs
 var import_components40 = __toESM(require_components(), 1);
 var import_element68 = __toESM(require_element(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
 var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedToggleControl } = unlock3(import_components40.privateApis);
+var { ValidatedInputControl: ValidatedInputControl3 } = unlock3(import_components40.privateApis);
+function getStep(timeFormat, values) {
+  const tokens = (timeFormat ?? "").replace(/\\./g, "");
+  const hasSeconds = tokens.includes("s") || values.some((value) => (parseTime(value) ?? 0) % 60 !== 0);
+  return hasSeconds ? 1 : void 0;
+}
+function toInputValue(value) {
+  const seconds = parseTime(value);
+  if (seconds === null) {
+    return "";
+  }
+  const parts = [
+    Math.floor(seconds / 3600),
+    Math.floor(seconds % 3600 / 60)
+  ];
+  if (seconds % 60 !== 0) {
+    parts.push(seconds % 60);
+  }
+  return parts.map((part) => String(part).padStart(2, "0")).join(":");
+}
+function BetweenControls2({
+  value,
+  onChange,
+  hideLabelFromVision,
+  disabled: disabled2,
+  step,
+  min: min2,
+  max: max2
+}) {
+  const [from = "", to = ""] = value;
+  const onChangeFrom = (0, import_element68.useCallback)(
+    (newValue) => onChange([newValue ?? "", to]),
+    [onChange, to]
+  );
+  const onChangeTo = (0, import_element68.useCallback)(
+    (newValue) => onChange([from, newValue ?? ""]),
+    [onChange, from]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+    import_components40.BaseControl,
+    {
+      help: (0, import_i18n36.__)("The end time must be later than the start time."),
+      children: /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+          ValidatedInputControl3,
+          {
+            type: "time",
+            label: (0, import_i18n36.__)("From"),
+            value: from,
+            onChange: onChangeFrom,
+            hideLabelFromVision,
+            disabled: disabled2,
+            step,
+            min: min2,
+            max: to || max2
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+          ValidatedInputControl3,
+          {
+            type: "time",
+            label: (0, import_i18n36.__)("To"),
+            value: to,
+            onChange: onChangeTo,
+            hideLabelFromVision,
+            disabled: disabled2,
+            step,
+            min: from || min2,
+            max: max2
+          }
+        )
+      ] })
+    }
+  );
+}
+function Time({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision,
+  markWhenOptional,
+  operator,
+  validity
+}) {
+  const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
+  const value = getValue({ item: data });
+  const disabled2 = field.isDisabled({ item: data, field });
+  const timeFormat = field.format?.time;
+  const min2 = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
+  const max2 = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
+  const onChangeControl = (0, import_element68.useCallback)(
+    (newValue) => onChange(
+      setValue({
+        item: data,
+        value: newValue === "" ? void 0 : newValue
+      })
+    ),
+    [data, onChange, setValue]
+  );
+  const onChangeBetweenControls = (0, import_element68.useCallback)(
+    ([from, to]) => onChange(
+      setValue({
+        item: data,
+        // An unfilled bound is stored as `undefined`, which the
+        // `between` operator reads as "do not apply the filter".
+        value: [from || void 0, to || void 0]
+      })
+    ),
+    [data, onChange, setValue]
+  );
+  if (operator === OPERATOR_BETWEEN) {
+    let valueBetween = ["", ""];
+    if (Array.isArray(value) && value.length === 2) {
+      valueBetween = [
+        toInputValue(value[0]),
+        toInputValue(value[1])
+      ];
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+      BetweenControls2,
+      {
+        value: valueBetween,
+        onChange: onChangeBetweenControls,
+        hideLabelFromVision,
+        disabled: disabled2,
+        step: getStep(timeFormat, valueBetween),
+        min: min2,
+        max: max2
+      }
+    );
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+    ValidatedInputControl3,
+    {
+      required: !!isValid2.required,
+      markWhenOptional,
+      customValidity: getCustomValidity(isValid2, validity),
+      type: "time",
+      label,
+      placeholder,
+      help: description,
+      value: toInputValue(value),
+      onChange: onChangeControl,
+      hideLabelFromVision,
+      disabled: disabled2,
+      step: getStep(timeFormat, [value]),
+      min: min2,
+      max: max2
+    }
+  );
+}
+
+// packages/dataviews/build-module/components/dataform-controls/toggle.mjs
+var import_components41 = __toESM(require_components(), 1);
+var import_element69 = __toESM(require_element(), 1);
+var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedToggleControl } = unlock3(import_components41.privateApis);
 function Toggle({
   field,
   onChange,
@@ -24564,12 +26520,12 @@ function Toggle({
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element68.useCallback)(() => {
+  const onChangeControl = (0, import_element69.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
     );
   }, [onChange, setValue, data, getValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
     ValidatedToggleControl,
     {
       required: !!isValid2.required,
@@ -24586,10 +26542,10 @@ function Toggle({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
-var import_components41 = __toESM(require_components(), 1);
-var import_element69 = __toESM(require_element(), 1);
-var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedTextareaControl } = unlock3(import_components41.privateApis);
+var import_components42 = __toESM(require_components(), 1);
+var import_element70 = __toESM(require_element(), 1);
+var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedTextareaControl } = unlock3(import_components42.privateApis);
 function Textarea({
   data,
   field,
@@ -24603,11 +26559,11 @@ function Textarea({
   const disabled2 = field.isDisabled({ item: data, field });
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const value = field.getValue({ item: data });
-  const onChangeControl = (0, import_element69.useCallback)(
+  const onChangeControl = (0, import_element70.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
     ValidatedTextareaControl,
     {
       required: !!isValid2.required,
@@ -24628,12 +26584,12 @@ function Textarea({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/index.mjs
-var import_element71 = __toESM(require_element(), 1);
+var import_element72 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
-var import_components42 = __toESM(require_components(), 1);
+var import_components43 = __toESM(require_components(), 1);
 var import_compose12 = __toESM(require_compose(), 1);
-var import_element70 = __toESM(require_element(), 1);
+var import_element71 = __toESM(require_element(), 1);
 var import_rich_text2 = __toESM(require_rich_text(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/utils.mjs
@@ -24650,7 +26606,7 @@ function getAllowedFormats({
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/format-edit.mjs
 var import_rich_text = __toESM(require_rich_text(), 1);
-var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
 var import_react24 = __toESM(require_react(), 1);
 var EMPTY_CONTEXT = {};
 function Edit({
@@ -24669,7 +26625,7 @@ function Edit({
   const isActive = activeFormat !== void 0;
   const activeObject = (0, import_rich_text.getActiveObject)(value);
   const isObjectActive = activeObject !== void 0 && activeObject.type === name;
-  return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
     EditFunction,
     {
       isActive,
@@ -24694,11 +26650,11 @@ function FormatEdit({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
-var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
 var {
   ValidatedContentEditableControl: RichTextControlShell,
   withIgnoreIMEEvents
-} = unlock3(import_components42.privateApis);
+} = unlock3(import_components43.privateApis);
 var {
   useRichText,
   KeyboardShortcutContext,
@@ -24729,14 +26685,14 @@ function RichTextControl({
   focusOnMount,
   completers = EMPTY_COMPLETERS
 }) {
-  const [selection, setSelection] = (0, import_element70.useState)({
+  const [selection, setSelection] = (0, import_element71.useState)({
     start: void 0,
     end: void 0
   });
-  const [isSelected2, setIsSelected] = (0, import_element70.useState)(false);
-  const anchorRef = (0, import_element70.useRef)(void 0);
-  const inputEvents = (0, import_element70.useRef)(/* @__PURE__ */ new Set());
-  const keyboardShortcuts = (0, import_element70.useRef)(
+  const [isSelected2, setIsSelected] = (0, import_element71.useState)(false);
+  const anchorRef = (0, import_element71.useRef)(void 0);
+  const inputEvents = (0, import_element71.useRef)(/* @__PURE__ */ new Set());
+  const keyboardShortcuts = (0, import_element71.useRef)(
     /* @__PURE__ */ new Set()
   );
   const focusOutside = (0, import_compose12.__experimentalUseFocusOutside)(() => setIsSelected(false));
@@ -24762,7 +26718,7 @@ function RichTextControl({
     __unstableDisableFormats: disableFormats,
     allowedFormats: adjustedAllowedFormats,
     withoutInteractiveFormatting,
-    __unstableFormatTypeHandlerContext: (0, import_element70.useMemo)(
+    __unstableFormatTypeHandlerContext: (0, import_element71.useMemo)(
       () => ({
         richTextIdentifier: id,
         blockClientId: clientId
@@ -24773,16 +26729,16 @@ function RichTextControl({
   function onFocus() {
     anchorRef.current?.focus();
   }
-  const eventListenersPropsRef = (0, import_element70.useRef)({
+  const eventListenersPropsRef = (0, import_element71.useRef)({
     keyboardShortcuts,
     inputEvents
   });
-  const inputRulePropsRef = (0, import_element70.useRef)({
+  const inputRulePropsRef = (0, import_element71.useRef)({
     formatTypes,
     getValue,
     onChange: onRichTextChange
   });
-  (0, import_element70.useInsertionEffect)(() => {
+  (0, import_element71.useInsertionEffect)(() => {
     inputRulePropsRef.current = {
       formatTypes,
       getValue,
@@ -24863,7 +26819,7 @@ function RichTextControl({
     },
     [isSelected2]
   );
-  const { ref: autocompleteRef, ...autocompleteProps } = (0, import_components42.__unstableUseAutocompleteProps)(
+  const { ref: autocompleteRef, ...autocompleteProps } = (0, import_components43.__unstableUseAutocompleteProps)(
     {
       completers,
       record: value,
@@ -24894,7 +26850,7 @@ function RichTextControl({
   return (
     // Focus boundary for the field's selection: `onFocus` selects on entry;
     // the spread `useFocusOutside` handlers deselect once focus leaves.
-    /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
       "div",
       {
         ...focusOutside,
@@ -24902,8 +26858,8 @@ function RichTextControl({
           setIsSelected(true);
           focusOutside.onFocus(event);
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(import_components42.SlotFillProvider, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(import_components43.SlotFillProvider, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
             RichTextControlShell,
             {
               label,
@@ -24925,11 +26881,11 @@ function RichTextControl({
               ref: editableRef
             }
           ),
-          isSelected2 && !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+          isSelected2 && !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
             KeyboardShortcutContext.Provider,
             {
               value: keyboardShortcuts,
-              children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(InputEventContext.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(InputEventContext.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
                 FormatEdit,
                 {
                   value,
@@ -24949,7 +26905,7 @@ function RichTextControl({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/index.mjs
-var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
 function RichText({
   data,
   field,
@@ -24971,11 +26927,11 @@ function RichText({
   const disabled2 = field.isDisabled({ item: data, field });
   const { label, placeholder, description, id, setValue, isValid: isValid2 } = field;
   const value = field.getValue({ item: data }) ?? "";
-  const onChangeControl = (0, import_element71.useCallback)(
+  const onChangeControl = (0, import_element72.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
     RichTextControl,
     {
       label,
@@ -25001,10 +26957,10 @@ function RichText({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
-var import_components43 = __toESM(require_components(), 1);
-var import_element72 = __toESM(require_element(), 1);
-var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedToggleGroupControl } = unlock3(import_components43.privateApis);
+var import_components44 = __toESM(require_components(), 1);
+var import_element73 = __toESM(require_element(), 1);
+var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedToggleGroupControl } = unlock3(import_components44.privateApis);
 function ToggleGroup({
   data,
   field,
@@ -25016,7 +26972,7 @@ function ToggleGroup({
   const { getValue, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element72.useCallback)(
+  const onChangeControl = (0, import_element73.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -25025,13 +26981,13 @@ function ToggleGroup({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_components43.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components44.Spinner, {});
   }
   if (elements.length === 0) {
     return null;
   }
   const selectedOption = elements.find((el) => el.value === value);
-  return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
     ValidatedToggleGroupControl,
     {
       required: !!field.isValid?.required,
@@ -25043,8 +26999,8 @@ function ToggleGroup({
       onChange: onChangeControl,
       value,
       hideLabelFromVision,
-      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
-        import_components43.__experimentalToggleGroupControlOption,
+      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
+        import_components44.__experimentalToggleGroupControlOption,
         {
           label: el.label,
           value: el.value,
@@ -25057,10 +27013,10 @@ function ToggleGroup({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/array.mjs
-var import_components44 = __toESM(require_components(), 1);
-var import_element73 = __toESM(require_element(), 1);
-var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedFormTokenField } = unlock3(import_components44.privateApis);
+var import_components45 = __toESM(require_components(), 1);
+var import_element74 = __toESM(require_element(), 1);
+var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedFormTokenField } = unlock3(import_components45.privateApis);
 function ArrayControl({
   data,
   field,
@@ -25076,7 +27032,7 @@ function ArrayControl({
     elements: field.elements,
     getElements: field.getElements
   });
-  const arrayValueAsElements = (0, import_element73.useMemo)(
+  const arrayValueAsElements = (0, import_element74.useMemo)(
     () => Array.isArray(value) ? value.map((token) => {
       const element = elements?.find(
         (suggestion) => suggestion.value === token
@@ -25085,7 +27041,7 @@ function ArrayControl({
     }) : [],
     [value, elements]
   );
-  const onChangeControl = (0, import_element73.useCallback)(
+  const onChangeControl = (0, import_element74.useCallback)(
     (tokens) => {
       const valueTokens = tokens.map((token) => {
         if (typeof token === "object" && "value" in token) {
@@ -25098,9 +27054,9 @@ function ArrayControl({
     [onChange, setValue, data]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components44.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(import_components45.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
     ValidatedFormTokenField,
     {
       required: !!isValid2?.required,
@@ -25139,9 +27095,9 @@ function ArrayControl({
           const element = elements.find(
             (el) => el.value === item
           );
-          return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("span", { children: element?.label || item });
+          return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)("span", { children: element?.label || item });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("span", { children: item });
+        return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)("span", { children: item });
       }
     }
   );
@@ -25306,35 +27262,35 @@ var w = function(r3) {
 };
 
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
-var import_components45 = __toESM(require_components(), 1);
-var import_element74 = __toESM(require_element(), 1);
-var import_i18n36 = __toESM(require_i18n(), 1);
-var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl3 } = unlock3(import_components45.privateApis);
+var import_components46 = __toESM(require_components(), 1);
+var import_element75 = __toESM(require_element(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
+var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl: ValidatedInputControl4 } = unlock3(import_components46.privateApis);
 var ColorPickerDropdown = ({
   color,
   onColorChange,
   disabled: disabled2
 }) => {
   const validColor = color && w(color).isValid() ? color : "#ffffff";
-  return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
-    import_components45.Dropdown,
+  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+    import_components46.Dropdown,
     {
       className: "dataviews-controls__color-picker-dropdown",
       popoverProps: { resize: false },
-      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
-        import_components45.Button,
+      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+        import_components46.Button,
         {
           onClick: onToggle,
-          "aria-label": (0, import_i18n36.__)("Open color picker"),
+          "aria-label": (0, import_i18n37.__)("Open color picker"),
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
-          icon: () => /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(import_components45.ColorIndicator, { colorValue: validColor })
+          icon: () => /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components46.ColorIndicator, { colorValue: validColor })
         }
       ),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(import_components45.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
-        import_components45.ColorPicker,
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components46.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+        import_components46.ColorPicker,
         {
           color: validColor,
           onChange: onColorChange,
@@ -25355,20 +27311,20 @@ function Color({
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = field.getValue({ item: data }) || "";
-  const handleColorChange = (0, import_element74.useCallback)(
+  const handleColorChange = (0, import_element75.useCallback)(
     (newColor) => {
       onChange(setValue({ item: data, value: newColor }));
     },
     [data, onChange, setValue]
   );
-  const handleInputChange = (0, import_element74.useCallback)(
+  const handleInputChange = (0, import_element75.useCallback)(
     (newValue) => {
       onChange(setValue({ item: data, value: newValue || "" }));
     },
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
-    ValidatedInputControl3,
+  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+    ValidatedInputControl4,
     {
       required: !!field.isValid?.required,
       markWhenOptional,
@@ -25381,7 +27337,7 @@ function Color({
       hideLabelFromVision,
       type: "text",
       disabled: disabled2,
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(import_components45.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components46.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
         ColorPickerDropdown,
         {
           color: value,
@@ -25394,10 +27350,10 @@ function Color({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
-var import_components46 = __toESM(require_components(), 1);
-var import_element75 = __toESM(require_element(), 1);
-var import_i18n37 = __toESM(require_i18n(), 1);
-var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
+var import_components47 = __toESM(require_components(), 1);
+var import_element76 = __toESM(require_element(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
+var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
   field,
@@ -25406,12 +27362,12 @@ function Password({
   markWhenOptional,
   validity
 }) {
-  const [isVisible2, setIsVisible] = (0, import_element75.useState)(false);
+  const [isVisible2, setIsVisible] = (0, import_element76.useState)(false);
   const disabled2 = field.isDisabled({ item: data, field });
-  const toggleVisibility = (0, import_element75.useCallback)(() => {
+  const toggleVisibility = (0, import_element76.useCallback)(() => {
     setIsVisible((prev) => !prev);
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
     ValidatedText,
     {
       ...{
@@ -25422,13 +27378,13 @@ function Password({
         markWhenOptional,
         validity,
         type: isVisible2 ? "text" : "password",
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components46.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
-          import_components46.Button,
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(import_components47.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+          import_components47.Button,
           {
             icon: isVisible2 ? unseen_default : seen_default,
             onClick: toggleVisibility,
             size: "small",
-            label: isVisible2 ? (0, import_i18n37.__)("Hide password") : (0, import_i18n37.__)("Show password"),
+            label: isVisible2 ? (0, import_i18n38.__)("Hide password") : (0, import_i18n38.__)("Show password"),
             disabled: disabled2,
             accessibleWhenDisabled: true
           }
@@ -25444,7 +27400,7 @@ function hasElements(field) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/index.mjs
-var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
 var FORM_CONTROLS = {
   adaptiveSelect: AdaptiveSelect,
   array: ArrayControl,
@@ -25462,6 +27418,7 @@ var FORM_CONTROLS = {
   radio: Radio,
   select: Select,
   text: Text3,
+  time: Time,
   toggle: Toggle,
   textarea: Textarea,
   richtext: RichText,
@@ -25477,7 +27434,7 @@ function createConfiguredControl(config) {
     return null;
   }
   return function ConfiguredControl(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(BaseControlType, { ...props, config: controlConfig });
+    return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(BaseControlType, { ...props, config: controlConfig });
   };
 }
 function getControl(field, fallback) {
@@ -25553,7 +27510,7 @@ var setValueFromId = (id) => ({ value }) => {
 var set_value_from_id_default = setValueFromId;
 
 // packages/dataviews/build-module/field-types/email.mjs
-var import_i18n38 = __toESM(require_i18n(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
 function RenderFromElements({
@@ -25575,13 +27532,13 @@ function RenderFromElements({
 }
 
 // packages/dataviews/build-module/field-types/utils/render-default.mjs
-var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
 function render({
   item,
   field
 }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(RenderFromElements, { item, field });
   }
   return field.getValueFormatted({ item, field });
 }
@@ -25663,7 +27620,7 @@ var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{
 function isValidCustom(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-    return (0, import_i18n38.__)("Value must be a valid email address.");
+    return (0, import_i18n39.__)("Value must be a valid email address.");
   }
   return null;
 }
@@ -25700,7 +27657,7 @@ var email_default = {
 };
 
 // packages/dataviews/build-module/field-types/integer.mjs
-var import_i18n39 = __toESM(require_i18n(), 1);
+var import_i18n40 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/sort-number.mjs
 var sort_number_default = (a2, b2, direction) => {
@@ -25766,7 +27723,7 @@ function getValueFormatted2({
 function isValidCustom2(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-    return (0, import_i18n39.__)("Value must be an integer.");
+    return (0, import_i18n40.__)("Value must be an integer.");
   }
   return null;
 }
@@ -25813,7 +27770,7 @@ var integer_default = {
 };
 
 // packages/dataviews/build-module/field-types/number.mjs
-var import_i18n40 = __toESM(require_i18n(), 1);
+var import_i18n41 = __toESM(require_i18n(), 1);
 var format3 = {
   separatorThousand: ",",
   separatorDecimal: ".",
@@ -25849,7 +27806,7 @@ function isEmpty(value) {
 function isValidCustom3(item, field) {
   const value = field.getValue({ item });
   if (!isEmpty(value) && !Number.isFinite(value)) {
-    return (0, import_i18n40.__)("Value must be a number.");
+    return (0, import_i18n41.__)("Value must be a number.");
   }
   return null;
 }
@@ -25931,19 +27888,16 @@ var text_default = {
 // packages/dataviews/build-module/field-types/datetime.mjs
 var import_date7 = __toESM(require_date(), 1);
 
-// packages/dataviews/build-module/field-types/utils/is-valid-date-boundary.mjs
+// packages/dataviews/build-module/field-types/utils/is-valid-boundary.mjs
 var import_date6 = __toESM(require_date(), 1);
 function parseDateLike(value) {
-  if (!value) {
-    return null;
-  }
   if (!isValid(new Date(value))) {
     return null;
   }
   const parsed = (0, import_date6.getDate)(value);
-  return parsed && isValid(parsed) ? parsed : null;
+  return parsed && isValid(parsed) ? parsed.getTime() : null;
 }
-function validateDateLikeBoundary(item, field, boundary) {
+function validateBoundary(item, field, boundary, parse2) {
   const constraint = field.isValid[boundary]?.constraint;
   if (typeof constraint !== "string") {
     return false;
@@ -25953,15 +27907,24 @@ function validateDateLikeBoundary(item, field, boundary) {
   if (boundaryValue === void 0 || boundaryValue === null || boundaryValue === "") {
     return true;
   }
-  const parsedConstraint = parseDateLike(constraint);
-  const parsedValue = parseDateLike(String(boundaryValue));
-  return !!parsedConstraint && !!parsedValue && (boundary === "min" ? parsedValue.getTime() >= parsedConstraint.getTime() : parsedValue.getTime() <= parsedConstraint.getTime());
+  const parsedConstraint = parse2(constraint);
+  const parsedValue = parse2(String(boundaryValue));
+  if (parsedConstraint === null || parsedValue === null) {
+    return false;
+  }
+  return boundary === "min" ? parsedValue >= parsedConstraint : parsedValue <= parsedConstraint;
 }
 function isValidMinDate(item, field) {
-  return validateDateLikeBoundary(item, field, "min");
+  return validateBoundary(item, field, "min", parseDateLike);
 }
 function isValidMaxDate(item, field) {
-  return validateDateLikeBoundary(item, field, "max");
+  return validateBoundary(item, field, "max", parseDateLike);
+}
+function isValidMinTime(item, field) {
+  return validateBoundary(item, field, "min", parseTime);
+}
+function isValidMaxTime(item, field) {
+  return validateBoundary(item, field, "max", parseTime);
 }
 
 // packages/dataviews/build-module/field-types/datetime.mjs
@@ -26093,8 +28056,83 @@ var date_default = {
   }
 };
 
+// packages/dataviews/build-module/field-types/time.mjs
+var import_date9 = __toESM(require_date(), 1);
+var format6 = {
+  time: (0, import_date9.getSettings)().formats.time
+};
+var ANCHOR_DATE = "2000-01-01";
+function toAnchoredDate(secondsSinceMidnight) {
+  const hours = Math.floor(secondsSinceMidnight / 3600);
+  const minutes = Math.floor(secondsSinceMidnight % 3600 / 60);
+  const seconds = secondsSinceMidnight % 60;
+  const time = [hours, minutes, seconds].map((part) => String(part).padStart(2, "0")).join(":");
+  return (0, import_date9.getDate)(`${ANCHOR_DATE}T${time}`);
+}
+function getValueFormatted6({
+  item,
+  field
+}) {
+  const secondsSinceMidnight = parseTime(field.getValue({ item }));
+  if (secondsSinceMidnight === null) {
+    return "";
+  }
+  let formatTime;
+  if (field.type !== "time") {
+    formatTime = format6;
+  } else {
+    formatTime = field.format;
+  }
+  return (0, import_date9.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
+}
+var sort3 = (a2, b2, direction) => {
+  const timeA = parseTime(a2);
+  const timeB = parseTime(b2);
+  if (timeA === null || timeB === null) {
+    if (timeA === timeB) {
+      return 0;
+    }
+    return timeA === null ? 1 : -1;
+  }
+  return direction === "asc" ? timeA - timeB : timeB - timeA;
+};
+var time_default = {
+  type: "time",
+  render,
+  Edit: "time",
+  sort: sort3,
+  enableSorting: true,
+  enableGlobalSearch: false,
+  defaultOperators: [
+    OPERATOR_ON,
+    OPERATOR_NOT_ON,
+    OPERATOR_BEFORE,
+    OPERATOR_AFTER,
+    OPERATOR_BEFORE_INC,
+    OPERATOR_AFTER_INC,
+    OPERATOR_BETWEEN
+  ],
+  validOperators: [
+    OPERATOR_ON,
+    OPERATOR_NOT_ON,
+    OPERATOR_BEFORE,
+    OPERATOR_AFTER,
+    OPERATOR_BEFORE_INC,
+    OPERATOR_AFTER_INC,
+    OPERATOR_BETWEEN
+  ],
+  format: format6,
+  getValueFormatted: getValueFormatted6,
+  validate: {
+    required: isValidRequired,
+    elements: isValidElements,
+    min: isValidMinTime,
+    max: isValidMaxTime
+  }
+};
+
 // packages/dataviews/build-module/field-types/boolean.mjs
-var import_i18n41 = __toESM(require_i18n(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
 function isValidRequiredForBool(item, field) {
@@ -26103,27 +28141,27 @@ function isValidRequiredForBool(item, field) {
 }
 
 // packages/dataviews/build-module/field-types/boolean.mjs
-function getValueFormatted6({
+function getValueFormatted7({
   item,
   field
 }) {
   const value = field.getValue({ item });
   if (value === true) {
-    return (0, import_i18n41.__)("True");
+    return (0, import_i18n42.__)("True");
   }
   if (value === false) {
-    return (0, import_i18n41.__)("False");
+    return (0, import_i18n42.__)("False");
   }
   return "";
 }
 function isValidCustom4(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-    return (0, import_i18n41.__)("Value must be true, false, or undefined");
+    return (0, import_i18n42.__)("Value must be true, false, or undefined");
   }
   return null;
 }
-var sort3 = (a2, b2, direction) => {
+var sort4 = (a2, b2, direction) => {
   const boolA = Boolean(a2);
   const boolB = Boolean(b2);
   if (boolA === boolB) {
@@ -26138,7 +28176,7 @@ var boolean_default = {
   type: "boolean",
   render,
   Edit: "checkbox",
-  sort: sort3,
+  sort: sort4,
   validate: {
     required: isValidRequiredForBool,
     elements: isValidElements,
@@ -26149,7 +28187,7 @@ var boolean_default = {
   defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
   validOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
   format: {},
-  getValueFormatted: getValueFormatted6
+  getValueFormatted: getValueFormatted7
 };
 
 // packages/dataviews/build-module/field-types/media.mjs
@@ -26171,7 +28209,7 @@ var media_default2 = {
 };
 
 // packages/dataviews/build-module/field-types/array.mjs
-var import_i18n42 = __toESM(require_i18n(), 1);
+var import_i18n43 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
 function isValidRequiredForArray(item, field) {
@@ -26182,7 +28220,7 @@ function isValidRequiredForArray(item, field) {
 }
 
 // packages/dataviews/build-module/field-types/array.mjs
-function getValueFormatted7({
+function getValueFormatted8({
   item,
   field
 }) {
@@ -26191,19 +28229,19 @@ function getValueFormatted7({
   return arr.join(", ");
 }
 function render2({ item, field }) {
-  return getValueFormatted7({ item, field });
+  return getValueFormatted8({ item, field });
 }
 function isValidCustom5(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
-    return (0, import_i18n42.__)("Value must be an array.");
+    return (0, import_i18n43.__)("Value must be an array.");
   }
   if (!value.every((v2) => typeof v2 === "string")) {
-    return (0, import_i18n42.__)("Every value must be a string.");
+    return (0, import_i18n43.__)("Every value must be a string.");
   }
   return null;
 }
-var sort4 = (a2, b2, direction) => {
+var sort5 = (a2, b2, direction) => {
   const arrA = Array.isArray(a2) ? a2 : [];
   const arrB = Array.isArray(b2) ? b2 : [];
   if (arrA.length !== arrB.length) {
@@ -26217,7 +28255,7 @@ var array_default = {
   type: "array",
   render: render2,
   Edit: "array",
-  sort: sort4,
+  sort: sort5,
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -26228,7 +28266,7 @@ var array_default = {
     OPERATOR_IS_NOT_ALL
   ],
   format: {},
-  getValueFormatted: getValueFormatted7,
+  getValueFormatted: getValueFormatted8,
   validate: {
     required: isValidRequiredForArray,
     elements: isValidElements,
@@ -26237,7 +28275,7 @@ var array_default = {
 };
 
 // packages/dataviews/build-module/field-types/password.mjs
-function getValueFormatted8({
+function getValueFormatted9({
   item,
   field
 }) {
@@ -26254,7 +28292,7 @@ var password_default = {
   defaultOperators: [],
   validOperators: [],
   format: {},
-  getValueFormatted: getValueFormatted8,
+  getValueFormatted: getValueFormatted9,
   validate: {
     required: isValidRequired,
     pattern: isValidPattern,
@@ -26297,18 +28335,18 @@ var telephone_default = {
 };
 
 // packages/dataviews/build-module/field-types/color.mjs
-var import_i18n43 = __toESM(require_i18n(), 1);
-var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
+var import_i18n44 = __toESM(require_i18n(), 1);
+var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(RenderFromElements, { item, field });
   }
   const value = get_value_formatted_default_default({ item, field });
   if (!value || !w(value).isValid()) {
     return value;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
       "div",
       {
         style: {
@@ -26321,17 +28359,17 @@ function render3({ item, field }) {
         }
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime129.jsx)("span", { children: value })
+    /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("span", { children: value })
   ] });
 }
 function isValidCustom6(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-    return (0, import_i18n43.__)("Value must be a valid color.");
+    return (0, import_i18n44.__)("Value must be a valid color.");
   }
   return null;
 }
-var sort5 = (a2, b2, direction) => {
+var sort6 = (a2, b2, direction) => {
   const colorA = w(a2);
   const colorB = w(b2);
   if (!colorA.isValid() && !colorB.isValid()) {
@@ -26357,7 +28395,7 @@ var color_default = {
   type: "color",
   render: render3,
   Edit: "color",
-  sort: sort5,
+  sort: sort6,
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
@@ -26409,7 +28447,7 @@ var url_default = {
 };
 
 // packages/dataviews/build-module/field-types/no-type.mjs
-var sort6 = (a2, b2, direction) => {
+var sort7 = (a2, b2, direction) => {
   if (typeof a2 === "number" && typeof b2 === "number") {
     return sort_number_default(a2, b2, direction);
   }
@@ -26419,7 +28457,7 @@ var no_type_default = {
   // type: no type for this one
   render,
   Edit: null,
-  sort: sort6,
+  sort: sort7,
   enableSorting: true,
   enableGlobalSearch: false,
   defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
@@ -26436,12 +28474,12 @@ var no_type_default = {
 function supportsNumericRangeConstraint(type) {
   return type === "integer" || type === "number";
 }
-function supportsDateRangeConstraint(type) {
-  return type === "date" || type === "datetime";
+function supportsStringRangeConstraint(type) {
+  return type === "date" || type === "datetime" || type === "time";
 }
 function normalizeRangeRule(value, fieldType, key) {
   const validator = fieldType.validate[key];
-  if (validator && (typeof value === "number" && supportsNumericRangeConstraint(fieldType.type) || typeof value === "string" && supportsDateRangeConstraint(fieldType.type))) {
+  if (validator && (typeof value === "number" && supportsNumericRangeConstraint(fieldType.type) || typeof value === "string" && supportsStringRangeConstraint(fieldType.type))) {
     return { constraint: value, validate: validator };
   }
   return void 0;
@@ -26531,6 +28569,7 @@ function getFieldTypeByName(type) {
     text_default,
     datetime_default,
     date_default,
+    time_default,
     boolean_default,
     media_default2,
     array_default,
@@ -26548,7 +28587,7 @@ function normalizeFields(fields) {
   return fields.map((field) => {
     const fieldType = getFieldTypeByName(field.type);
     const getValue = field.getValue || get_value_from_id_default(field.id);
-    const sort7 = function(a2, b2, direction) {
+    const sort8 = function(a2, b2, direction) {
       const aValue = getValue({ item: a2 });
       const bValue = getValue({ item: b2 });
       return field.sort ? field.sort(aValue, bValue, direction) : fieldType.sort(aValue, bValue, direction);
@@ -26572,7 +28611,7 @@ function normalizeFields(fields) {
       type: fieldType.type,
       render: field.render ?? fieldType.render,
       Edit: getControl(field, fieldType.Edit),
-      sort: sort7,
+      sort: sort8,
       enableSorting: field.enableSorting ?? fieldType.enableSorting,
       enableGlobalSearch: field.enableGlobalSearch ?? fieldType.enableGlobalSearch,
       isValid: getIsValid(field, fieldType),
@@ -26589,7 +28628,7 @@ function normalizeFields(fields) {
 }
 
 // packages/dataviews/build-module/hooks/use-data.mjs
-var import_element76 = __toESM(require_element(), 1);
+var import_element77 = __toESM(require_element(), 1);
 function useData({
   view,
   data: shownData,
@@ -26599,34 +28638,34 @@ function useData({
   selection
 }) {
   const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element76.useState)(
+  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element77.useState)(
     !isLoading
   );
-  (0, import_element76.useEffect)(() => {
+  (0, import_element77.useEffect)(() => {
     if (!isLoading) {
       setHasInitiallyLoaded(true);
     }
   }, [isLoading]);
-  const previousDataRef = (0, import_element76.useRef)(shownData);
-  const previousPaginationInfoRef = (0, import_element76.useRef)(paginationInfo);
-  (0, import_element76.useEffect)(() => {
+  const previousDataRef = (0, import_element77.useRef)(shownData);
+  const previousPaginationInfoRef = (0, import_element77.useRef)(paginationInfo);
+  (0, import_element77.useEffect)(() => {
     if (!isLoading) {
       previousDataRef.current = shownData;
       previousPaginationInfoRef.current = paginationInfo;
     }
   }, [shownData, isLoading, paginationInfo]);
-  const [visibleEntries, setVisibleEntries] = (0, import_element76.useState)([]);
-  const positionMapRef = (0, import_element76.useRef)(/* @__PURE__ */ new Map());
-  const allLoadedRecordsRef = (0, import_element76.useRef)([]);
-  const prevViewParamsRef = (0, import_element76.useRef)({
+  const [visibleEntries, setVisibleEntries] = (0, import_element77.useState)([]);
+  const positionMapRef = (0, import_element77.useRef)(/* @__PURE__ */ new Map());
+  const allLoadedRecordsRef = (0, import_element77.useRef)([]);
+  const prevViewParamsRef = (0, import_element77.useRef)({
     search: void 0,
     filters: void 0,
     perPage: void 0
   });
-  const scrollDirectionRef = (0, import_element76.useRef)(void 0);
-  const prevStartPositionRef = (0, import_element76.useRef)(void 0);
-  const hasInitializedRef = (0, import_element76.useRef)(false);
-  const allLoadedRecords = (0, import_element76.useMemo)(() => {
+  const scrollDirectionRef = (0, import_element77.useRef)(void 0);
+  const prevStartPositionRef = (0, import_element77.useRef)(void 0);
+  const hasInitializedRef = (0, import_element77.useRef)(false);
+  const allLoadedRecords = (0, import_element77.useMemo)(() => {
     if (view.startPosition !== void 0 && prevStartPositionRef.current !== void 0) {
       if (view.startPosition < prevStartPositionRef.current) {
         scrollDirectionRef.current = "up";
@@ -26748,7 +28787,7 @@ function useData({
 }
 
 // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
-var import_element77 = __toESM(require_element(), 1);
+var import_element78 = __toESM(require_element(), 1);
 var import_compose13 = __toESM(require_compose(), 1);
 function captureAnchorElement(container, anchorElementRef, direction) {
   const containerRect = container.getBoundingClientRect();
@@ -26784,18 +28823,18 @@ function useInfiniteScroll({
   containerRef,
   setVisibleEntries
 }) {
-  const anchorElementRef = (0, import_element77.useRef)(null);
-  const viewRef = (0, import_element77.useRef)(view);
-  const isLoadingRef = (0, import_element77.useRef)(isLoading);
-  const onChangeViewRef = (0, import_element77.useRef)(onChangeView);
-  const totalItemsRef = (0, import_element77.useRef)(paginationInfo.totalItems);
-  (0, import_element77.useLayoutEffect)(() => {
+  const anchorElementRef = (0, import_element78.useRef)(null);
+  const viewRef = (0, import_element78.useRef)(view);
+  const isLoadingRef = (0, import_element78.useRef)(isLoading);
+  const onChangeViewRef = (0, import_element78.useRef)(onChangeView);
+  const totalItemsRef = (0, import_element78.useRef)(paginationInfo.totalItems);
+  (0, import_element78.useLayoutEffect)(() => {
     viewRef.current = view;
     isLoadingRef.current = isLoading;
     onChangeViewRef.current = onChangeView;
     totalItemsRef.current = paginationInfo.totalItems;
   }, [view, isLoading, onChangeView, paginationInfo.totalItems]);
-  const intersectionObserverCallback = (0, import_element77.useCallback)(
+  const intersectionObserverCallback = (0, import_element78.useCallback)(
     (entries) => {
       if (!setVisibleEntries) {
         return;
@@ -26827,7 +28866,7 @@ function useInfiniteScroll({
     },
     [setVisibleEntries]
   );
-  (0, import_element77.useLayoutEffect)(() => {
+  (0, import_element78.useLayoutEffect)(() => {
     const container = containerRef.current;
     const anchor = anchorElementRef.current;
     if (!container || !view.infiniteScrollEnabled || !anchor || isLoading) {
@@ -26847,10 +28886,10 @@ function useInfiniteScroll({
     }
     anchorElementRef.current = null;
   }, [containerRef, isLoading, view.infiniteScrollEnabled]);
-  const intersectionObserverRef = (0, import_element77.useRef)(
+  const intersectionObserverRef = (0, import_element78.useRef)(
     null
   );
-  (0, import_element77.useEffect)(() => {
+  (0, import_element78.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !intersectionObserverCallback) {
       if (intersectionObserverRef.current) {
         intersectionObserverRef.current.disconnect();
@@ -26869,7 +28908,7 @@ function useInfiniteScroll({
       }
     };
   }, [view.infiniteScrollEnabled, intersectionObserverCallback]);
-  (0, import_element77.useEffect)(() => {
+  (0, import_element78.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !containerRef.current) {
       return;
     }
@@ -26929,7 +28968,7 @@ function useInfiniteScroll({
 }
 
 // packages/dataviews/build-module/dataviews/index.mjs
-var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
 var defaultGetItemId = (item) => item.id;
 var defaultIsItemClickable = () => true;
 var EMPTY_ARRAY7 = [];
@@ -26942,10 +28981,10 @@ function DefaultUI({
   search = true,
   searchLabel = void 0
 }) {
-  const { view } = (0, import_element78.useContext)(dataviews_context_default);
+  const { view } = (0, import_element79.useContext)(dataviews_context_default);
   const isInfiniteScroll = view.infiniteScrollEnabled;
-  return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(import_jsx_runtime130.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_jsx_runtime131.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
       Stack,
       {
         direction: "row",
@@ -26956,7 +28995,7 @@ function DefaultUI({
         }),
         gap: "xs",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
             Stack,
             {
               direction: "row",
@@ -26964,21 +29003,21 @@ function DefaultUI({
               gap: "sm",
               className: "dataviews__search",
               children: [
-                search && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(dataviews_search_default, { label: searchLabel }),
-                /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(toggle_default, {})
+                search && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(dataviews_search_default, { label: searchLabel }),
+                /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(toggle_default, {})
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(dataviews_view_config_default, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(dataviews_view_config_default, {}),
             header
           ] })
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
-    /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(DataViewsLayout, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(DataViewsFooter, {})
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(DataViewsLayout, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(DataViewsFooter, {})
   ] });
 }
 function DataViews({
@@ -27005,7 +29044,7 @@ function DataViews({
   empty,
   onReset
 }) {
-  const [selectionState, setSelectionState] = (0, import_element78.useState)([]);
+  const [selectionState, setSelectionState] = (0, import_element79.useState)([]);
   const isUncontrolled = selectionProperty === void 0 || onChangeSelection === void 0;
   const selection = isUncontrolled ? selectionState : selectionProperty;
   const {
@@ -27021,8 +29060,8 @@ function DataViews({
     selection,
     paginationInfo
   });
-  const containerRef = (0, import_element78.useRef)(null);
-  const [containerWidth, setContainerWidth] = (0, import_element78.useState)(0);
+  const containerRef = (0, import_element79.useRef)(null);
+  const [containerWidth, setContainerWidth] = (0, import_element79.useState)(0);
   const resizeObserverRef = (0, import_compose14.useResizeObserver)(
     (resizeObserverEntries) => {
       setContainerWidth(
@@ -27031,7 +29070,7 @@ function DataViews({
     },
     { box: "border-box" }
   );
-  const [openedFilter, setOpenedFilter] = (0, import_element78.useState)(null);
+  const [openedFilter, setOpenedFilter] = (0, import_element79.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === "function" ? value(selection) : value;
     if (isUncontrolled) {
@@ -27041,8 +29080,8 @@ function DataViews({
       onChangeSelection(newValue);
     }
   }
-  const _fields = (0, import_element78.useMemo)(() => normalizeFields(fields), [fields]);
-  const _selection = (0, import_element78.useMemo)(() => {
+  const _fields = (0, import_element79.useMemo)(() => normalizeFields(fields), [fields]);
+  const _selection = (0, import_element79.useMemo)(() => {
     if (view.infiniteScrollEnabled) {
       return selection;
     }
@@ -27051,13 +29090,13 @@ function DataViews({
     );
   }, [selection, data, getItemId3, view.infiniteScrollEnabled]);
   const filters = use_filters_default(_fields, view);
-  const hasPrimaryOrLockedFilters = (0, import_element78.useMemo)(
+  const hasPrimaryOrLockedFilters = (0, import_element79.useMemo)(
     () => (filters || []).some(
       (filter) => filter.isPrimary || filter.isLocked
     ),
     [filters]
   );
-  const [isShowingFilter, setIsShowingFilter] = (0, import_element78.useState)(
+  const [isShowingFilter, setIsShowingFilter] = (0, import_element79.useState)(
     hasPrimaryOrLockedFilters
   );
   const { intersectionObserver } = useInfiniteScroll({
@@ -27068,12 +29107,12 @@ function DataViews({
     containerRef,
     setVisibleEntries
   });
-  (0, import_element78.useEffect)(() => {
+  (0, import_element79.useEffect)(() => {
     if (hasPrimaryOrLockedFilters && !isShowingFilter) {
       setIsShowingFilter(true);
     }
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-  const defaultLayouts = (0, import_element78.useMemo)(
+  const defaultLayouts = (0, import_element79.useMemo)(
     () => Object.fromEntries(
       Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
         return dataViewsLayouts.some(
@@ -27089,7 +29128,7 @@ function DataViews({
   if (!defaultLayouts[view.type]) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
     dataviews_context_default.Provider,
     {
       value: {
@@ -27122,7 +29161,7 @@ function DataViews({
         onReset,
         intersectionObserver
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("div", { className: "dataviews-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "dataviews-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
         DefaultUI,
         {
           header,
@@ -27243,11 +29282,11 @@ function filterSortAndPaginate(data, view, fields) {
 }
 
 // packages/admin-ui/build-module/navigable-region/index.mjs
-var import_element79 = __toESM(require_element(), 1);
-var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
-var NavigableRegion = (0, import_element79.forwardRef)(
+var import_element80 = __toESM(require_element(), 1);
+var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
+var NavigableRegion = (0, import_element80.forwardRef)(
   ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
       Tag,
       {
         ref,
@@ -27265,11 +29304,11 @@ NavigableRegion.displayName = "NavigableRegion";
 var navigable_region_default = NavigableRegion;
 
 // packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
-var import_components47 = __toESM(require_components(), 1);
-var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components47.createSlotFill)("SidebarToggle");
+var import_components48 = __toESM(require_components(), 1);
+var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components48.createSlotFill)("SidebarToggle");
 
 // packages/admin-ui/build-module/page/header.mjs
-var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE7 = "data-wp-hash";
 function getRuntime7() {
   const globalScope = globalThis;
@@ -27365,8 +29404,8 @@ function Header({
   showSidebarToggle = true
 }) {
   const HeadingTag = `h${headingLevel}`;
-  return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(Stack, { direction: "column", className: style_default6.header, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(Stack, { direction: "column", className: style_default6.header, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
       Stack,
       {
         className: style_default6["header-content"],
@@ -27374,15 +29413,15 @@ function Header({
         gap: "sm",
         justify: "space-between",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
-            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
+            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
               SidebarToggleSlot,
               {
                 bubblesVirtually: true,
                 className: style_default6["sidebar-toggle-slot"]
               }
             ),
-            visual && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+            visual && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
               "div",
               {
                 className: style_default6["header-visual"],
@@ -27390,11 +29429,11 @@ function Header({
                 children: visual
               }
             ),
-            title && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+            title && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
               Text,
               {
                 className: style_default6["header-title"],
-                render: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(HeadingTag, {}),
+                render: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(HeadingTag, {}),
                 variant: "heading-lg",
                 children: title
               }
@@ -27402,7 +29441,7 @@ function Header({
             breadcrumbs,
             badges
           ] }),
-          actions && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+          actions && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
             Stack,
             {
               align: "center",
@@ -27415,10 +29454,10 @@ function Header({
         ]
       }
     ),
-    subTitle && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+    subTitle && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
       Text,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("p", {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("p", {}),
         variant: "body-md",
         className: style_default6["header-subtitle"],
         children: subTitle
@@ -27428,7 +29467,7 @@ function Header({
 }
 
 // packages/admin-ui/build-module/page/index.mjs
-var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE8 = "data-wp-hash";
 function getRuntime8() {
   const globalScope = globalThis;
@@ -27529,8 +29568,8 @@ function Page({
 }) {
   const classes = clsx_default(style_default7.page, className);
   const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
-  return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
-    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
+    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
       Header,
       {
         headingLevel,
@@ -27543,7 +29582,7 @@ function Page({
         showSidebarToggle
       }
     ),
-    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
       "div",
       {
         className: clsx_default(
@@ -27560,11 +29599,11 @@ var page_default2 = Page;
 
 // routes/template-list/stage-activation.tsx
 var import_core_data10 = __toESM(require_core_data());
-var import_components53 = __toESM(require_components());
+var import_components54 = __toESM(require_components());
 var import_data14 = __toESM(require_data());
-var import_element87 = __toESM(require_element());
+var import_element88 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
-var import_i18n54 = __toESM(require_i18n());
+var import_i18n55 = __toESM(require_i18n());
 
 // routes/lock-unlock/index.ts
 var import_private_apis4 = __toESM(require_private_apis());
@@ -27637,7 +29676,7 @@ function getActiveViewOverridesForTabLegacy(activeView) {
 }
 
 // routes/template-list/fields/preview.tsx
-var import_i18n44 = __toESM(require_i18n());
+var import_i18n45 = __toESM(require_i18n());
 import { Preview } from "@wordpress/lazy-editor";
 function PreviewField({ item }) {
   const description = item.description;
@@ -27651,16 +29690,16 @@ function PreviewField({ item }) {
   );
 }
 var previewField = {
-  label: (0, import_i18n44.__)("Preview"),
+  label: (0, import_i18n45.__)("Preview"),
   id: "preview",
   render: PreviewField,
   enableSorting: false
 };
 
 // routes/template-list/fields/author.tsx
-var import_components48 = __toESM(require_components());
-var import_i18n45 = __toESM(require_i18n());
-var import_element80 = __toESM(require_element());
+var import_components49 = __toESM(require_components());
+var import_i18n46 = __toESM(require_i18n());
+var import_element81 = __toESM(require_element());
 var import_core_data2 = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
 function useAddedBy(type, id) {
@@ -27675,7 +29714,7 @@ function useAddedBy(type, id) {
     },
     [type, id]
   );
-  return (0, import_element80.useMemo)(() => {
+  return (0, import_element81.useMemo)(() => {
     if (authorText) {
       return {
         text: authorText,
@@ -27690,15 +29729,15 @@ function useAddedBy(type, id) {
       };
     }
     return {
-      text: (0, import_i18n45.__)("Unknown"),
+      text: (0, import_i18n46.__)("Unknown"),
       icon: "admin-users"
     };
   }, [author, authorText]);
 }
 function AuthorField({ item }) {
-  const [isImageLoaded, setIsImageLoaded] = (0, import_element80.useState)(false);
+  const [isImageLoaded, setIsImageLoaded] = (0, import_element81.useState)(false);
   const { text, icon, imageUrl } = useAddedBy(item.type, item.id);
-  return /* @__PURE__ */ React.createElement(import_components48.__experimentalHStack, { alignment: "left", spacing: 0 }, imageUrl && /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ React.createElement(import_components49.__experimentalHStack, { alignment: "left", spacing: 0 }, imageUrl && /* @__PURE__ */ React.createElement(
     "div",
     {
       className: clsx_default(
@@ -27716,17 +29755,17 @@ function AuthorField({ item }) {
         src: imageUrl
       }
     )
-  ), !imageUrl && /* @__PURE__ */ React.createElement("div", { className: "routes-template-list-author-field__icon" }, /* @__PURE__ */ React.createElement(import_components48.Icon, { icon })), /* @__PURE__ */ React.createElement("span", { className: "routes-template-list-author-field__name" }, text));
+  ), !imageUrl && /* @__PURE__ */ React.createElement("div", { className: "routes-template-list-author-field__icon" }, /* @__PURE__ */ React.createElement(import_components49.Icon, { icon })), /* @__PURE__ */ React.createElement("span", { className: "routes-template-list-author-field__name" }, text));
 }
 var authorField = {
-  label: (0, import_i18n45.__)("Author"),
+  label: (0, import_i18n46.__)("Author"),
   id: "author",
   getValue: ({ item }) => item.author_text ?? item.author,
   render: AuthorField
 };
 
 // routes/template-list/fields/description.tsx
-var import_i18n46 = __toESM(require_i18n());
+var import_i18n47 = __toESM(require_i18n());
 var import_html_entities = __toESM(require_html_entities());
 var import_core_data3 = __toESM(require_core_data());
 var { useEntityRecordsWithPermissions } = unlock4(import_core_data3.privateApis);
@@ -27744,7 +29783,7 @@ function useAllDefaultTemplateTypes() {
   });
 }
 var descriptionField = {
-  label: (0, import_i18n46.__)("Description"),
+  label: (0, import_i18n47.__)("Description"),
   id: "description",
   render: function RenderDescription({ item }) {
     const defaultTemplateTypes = useAllDefaultTemplateTypes();
@@ -27758,24 +29797,24 @@ var descriptionField = {
 };
 
 // routes/template-list/fields/active.tsx
-var import_i18n47 = __toESM(require_i18n());
-var import_components49 = __toESM(require_components());
-var { Badge: WCBadge3 } = unlock4(import_components49.privateApis);
+var import_i18n48 = __toESM(require_i18n());
+var import_components50 = __toESM(require_components());
+var { Badge: WCBadge3 } = unlock4(import_components50.privateApis);
 var activeField = {
-  label: (0, import_i18n47.__)("Status"),
+  label: (0, import_i18n48.__)("Status"),
   id: "active",
   type: "boolean",
   getValue: ({ item }) => item._isActive,
   render: function Render({ item }) {
-    const activeLabel = item._isCustom ? (0, import_i18n47._x)("Active when used", "template") : (0, import_i18n47._x)("Active", "template");
+    const activeLabel = item._isCustom ? (0, import_i18n48._x)("Active when used", "template") : (0, import_i18n48._x)("Active", "template");
     const activeIntent = item._isCustom ? "info" : "success";
     const isActive = item._isActive;
-    return /* @__PURE__ */ React.createElement(WCBadge3, { intent: isActive ? activeIntent : "default" }, isActive ? activeLabel : (0, import_i18n47._x)("Inactive", "template"));
+    return /* @__PURE__ */ React.createElement(WCBadge3, { intent: isActive ? activeIntent : "default" }, isActive ? activeLabel : (0, import_i18n48._x)("Inactive", "template"));
   }
 };
 
 // routes/template-list/fields/slug.tsx
-var import_i18n48 = __toESM(require_i18n());
+var import_i18n49 = __toESM(require_i18n());
 var import_core_data4 = __toESM(require_core_data());
 var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions2 } = unlock4(import_core_data4.privateApis);
 function useAllDefaultTemplateTypes2() {
@@ -27792,7 +29831,7 @@ function useAllDefaultTemplateTypes2() {
   });
 }
 var slugField = {
-  label: (0, import_i18n48.__)("Template Type"),
+  label: (0, import_i18n49.__)("Template Type"),
   id: "slug",
   getValue: ({ item }) => item.slug,
   render: function Render2({ item }) {
@@ -27800,12 +29839,12 @@ var slugField = {
     const defaultTemplateType = defaultTemplateTypes?.find(
       (type) => type.slug === item.slug
     );
-    return defaultTemplateType?.title || (0, import_i18n48._x)("Custom", "template type");
+    return defaultTemplateType?.title || (0, import_i18n49._x)("Custom", "template type");
   }
 };
 
 // routes/template-list/use-templates.ts
-var import_element81 = __toESM(require_element());
+var import_element82 = __toESM(require_element());
 var import_data10 = __toESM(require_data());
 var import_core_data5 = __toESM(require_core_data());
 var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions3 } = unlock4(import_core_data5.privateApis);
@@ -27825,7 +29864,7 @@ function useTemplates(activeView = "active") {
   const { records: staticRecords, isResolving: isLoadingStaticData } = useEntityRecordsWithPermissions3("root", "registeredTemplate", {
     per_page: -1
   });
-  const activeTemplates = (0, import_element81.useMemo)(() => {
+  const activeTemplates = (0, import_element82.useMemo)(() => {
     const _active = [...staticRecords];
     if (activeTemplatesOption) {
       for (const activeSlug in activeTemplatesOption) {
@@ -27847,7 +29886,7 @@ function useTemplates(activeView = "active") {
     }
     return _active;
   }, [userRecords, staticRecords, activeTemplatesOption, activeTheme]);
-  const records = (0, import_element81.useMemo)(() => {
+  const records = (0, import_element82.useMemo)(() => {
     function isCustom(record) {
       return record.is_custom ?? // For user templates it's custom if the is_wp_suggestion meta
       // field is not set and the slug is not found in the default
@@ -27890,8 +29929,8 @@ function useTemplates(activeView = "active") {
 }
 
 // routes/template-list/actions/set-active-template.tsx
-var import_i18n49 = __toESM(require_i18n());
-var import_element82 = __toESM(require_element());
+var import_i18n50 = __toESM(require_i18n());
+var import_element83 = __toESM(require_element());
 var import_data11 = __toESM(require_data());
 var import_core_data6 = __toESM(require_core_data());
 function useSetActiveTemplateAction() {
@@ -27900,11 +29939,11 @@ function useSetActiveTemplateAction() {
   );
   const { getEntityRecord } = (0, import_data11.useSelect)(import_core_data6.store);
   const { editEntityRecord, saveEditedEntityRecord } = (0, import_data11.useDispatch)(import_core_data6.store);
-  return (0, import_element82.useMemo)(
+  return (0, import_element83.useMemo)(
     () => ({
       id: "set-active-template",
       label(items) {
-        return items.some((item) => item._isActive) ? (0, import_i18n49.__)("Deactivate") : (0, import_i18n49.__)("Activate");
+        return items.some((item) => item._isActive) ? (0, import_i18n50.__)("Deactivate") : (0, import_i18n50.__)("Activate");
       },
       isPrimary: true,
       icon: pencil_default,
@@ -27948,21 +29987,21 @@ function useSetActiveTemplateAction() {
 }
 
 // routes/template-list/add-new-template/index.tsx
-var import_components52 = __toESM(require_components());
+var import_components53 = __toESM(require_components());
 var import_html_entities4 = __toESM(require_html_entities());
-var import_element86 = __toESM(require_element());
+var import_element87 = __toESM(require_element());
 var import_data13 = __toESM(require_data());
 var import_core_data9 = __toESM(require_core_data());
 var import_compose16 = __toESM(require_compose());
-var import_i18n53 = __toESM(require_i18n());
+var import_i18n54 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_dom22 = __toESM(require_dom());
 import { useNavigate, useInvalidate } from "@wordpress/route";
 
 // routes/template-list/add-new-template/add-custom-template-modal-content.tsx
-var import_element84 = __toESM(require_element());
-var import_i18n51 = __toESM(require_i18n());
-var import_components50 = __toESM(require_components());
+var import_element85 = __toESM(require_element());
+var import_i18n52 = __toESM(require_i18n());
+var import_components51 = __toESM(require_components());
 var import_core_data8 = __toESM(require_core_data());
 var import_html_entities3 = __toESM(require_html_entities());
 var import_compose15 = __toESM(require_compose());
@@ -27973,8 +30012,8 @@ var import_url4 = __toESM(require_url());
 var import_data12 = __toESM(require_data());
 var import_core_data7 = __toESM(require_core_data());
 var import_html_entities2 = __toESM(require_html_entities());
-var import_element83 = __toESM(require_element());
-var import_i18n50 = __toESM(require_i18n());
+var import_element84 = __toESM(require_element());
+var import_i18n51 = __toESM(require_i18n());
 var import_url3 = __toESM(require_url());
 var TEMPLATE_POST_TYPE = "wp_template";
 var EMPTY_OBJECT2 = {};
@@ -28017,7 +30056,7 @@ var usePublicPostTypes = () => {
     (select2) => select2(import_core_data7.store).getPostTypes({ per_page: -1 }),
     []
   );
-  return (0, import_element83.useMemo)(() => {
+  return (0, import_element84.useMemo)(() => {
     const excludedPostTypes = ["attachment"];
     return postTypes?.filter(
       ({ viewable, slug }) => viewable && !excludedPostTypes.includes(slug)
@@ -28034,7 +30073,7 @@ var usePublicTaxonomies = () => {
     (select2) => select2(import_core_data7.store).getTaxonomies({ per_page: -1 }),
     []
   );
-  return (0, import_element83.useMemo)(() => {
+  return (0, import_element84.useMemo)(() => {
     return taxonomies?.filter(
       ({ visibility }) => visibility?.publicly_queryable
     );
@@ -28042,14 +30081,14 @@ var usePublicTaxonomies = () => {
 };
 function usePostTypeArchiveMenuItems() {
   const publicPostTypes = usePublicPostTypes();
-  const postTypesWithArchives = (0, import_element83.useMemo)(
+  const postTypesWithArchives = (0, import_element84.useMemo)(
     () => publicPostTypes?.filter(
       (postType) => postType.has_archive
     ),
     [publicPostTypes]
   );
   const existingTemplates = useExistingTemplates();
-  const postTypeLabels = (0, import_element83.useMemo)(
+  const postTypeLabels = (0, import_element84.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { labels }) => {
       const singularName = labels.singular_name.toLowerCase();
       accumulator[singularName] = (accumulator[singularName] || 0) + 1;
@@ -28057,14 +30096,14 @@ function usePostTypeArchiveMenuItems() {
     }, {}),
     [publicPostTypes]
   );
-  const needsUniqueIdentifier = (0, import_element83.useCallback)(
+  const needsUniqueIdentifier = (0, import_element84.useCallback)(
     ({ labels, slug }) => {
       const singularName = labels.singular_name.toLowerCase();
       return postTypeLabels[singularName] > 1 && singularName !== slug;
     },
     [postTypeLabels]
   );
-  return (0, import_element83.useMemo)(
+  return (0, import_element84.useMemo)(
     () => postTypesWithArchives?.filter(
       (postType) => !(existingTemplates || []).some(
         (existingTemplate) => existingTemplate.slug === "archive-" + postType.slug
@@ -28072,24 +30111,24 @@ function usePostTypeArchiveMenuItems() {
     ).map((postType) => {
       let title;
       if (needsUniqueIdentifier(postType)) {
-        title = (0, import_i18n50.sprintf)(
+        title = (0, import_i18n51.sprintf)(
           // translators: %1s: Name of the post type e.g: "Post"; %2s: Slug of the post type e.g: "book".
-          (0, import_i18n50.__)("Archive: %1$s (%2$s)"),
+          (0, import_i18n51.__)("Archive: %1$s (%2$s)"),
           postType.labels.singular_name,
           postType.slug
         );
       } else {
-        title = (0, import_i18n50.sprintf)(
+        title = (0, import_i18n51.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n50.__)("Archive: %s"),
+          (0, import_i18n51.__)("Archive: %s"),
           postType.labels.singular_name
         );
       }
       return {
         slug: "archive-" + postType.slug,
-        description: (0, import_i18n50.sprintf)(
+        description: (0, import_i18n51.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n50.__)(
+          (0, import_i18n51.__)(
             "Displays an archive with the latest posts of type: %s."
           ),
           postType.labels.singular_name
@@ -28108,7 +30147,7 @@ function usePostTypeArchiveMenuItems() {
 var usePostTypeMenuItems = (onClickMenuItem) => {
   const publicPostTypes = usePublicPostTypes();
   const defaultTemplateTypes = useDefaultTemplateTypes();
-  const templateLabels = (0, import_element83.useMemo)(
+  const templateLabels = (0, import_element84.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { labels }) => {
       const templateName = (labels.template_name || labels.singular_name).toLowerCase();
       accumulator[templateName] = (accumulator[templateName] || 0) + 1;
@@ -28116,14 +30155,14 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
     }, {}),
     [publicPostTypes]
   );
-  const needsUniqueIdentifier = (0, import_element83.useCallback)(
+  const needsUniqueIdentifier = (0, import_element84.useCallback)(
     ({ labels, slug }) => {
       const templateName = (labels.template_name || labels.singular_name).toLowerCase();
       return templateLabels[templateName] > 1 && templateName !== slug;
     },
     [templateLabels]
   );
-  const templatePrefixes = (0, import_element83.useMemo)(
+  const templatePrefixes = (0, import_element84.useMemo)(
     () => publicPostTypes?.reduce((accumulator, { slug }) => {
       let suffix = slug;
       if (slug !== "page") {
@@ -28143,20 +30182,20 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
         ({ slug: _slug }) => _slug === generalTemplateSlug
       );
       const _needsUniqueIdentifier = needsUniqueIdentifier(postType);
-      let menuItemTitle = labels.template_name || (0, import_i18n50.sprintf)(
+      let menuItemTitle = labels.template_name || (0, import_i18n51.sprintf)(
         // translators: %s: Name of the post type e.g: "Post".
-        (0, import_i18n50.__)("Single item: %s"),
+        (0, import_i18n51.__)("Single item: %s"),
         labels.singular_name
       );
       if (_needsUniqueIdentifier) {
-        menuItemTitle = labels.template_name ? (0, import_i18n50.sprintf)(
+        menuItemTitle = labels.template_name ? (0, import_i18n51.sprintf)(
           // translators: 1: Name of the template e.g: "Single Item: Post". 2: Slug of the post type e.g: "book".
-          (0, import_i18n50._x)("%1$s (%2$s)", "post type menu label"),
+          (0, import_i18n51._x)("%1$s (%2$s)", "post type menu label"),
           labels.template_name,
           slug
-        ) : (0, import_i18n50.sprintf)(
+        ) : (0, import_i18n51.sprintf)(
           // translators: 1: Name of the post type e.g: "Post". 2: Slug of the post type e.g: "book".
-          (0, import_i18n50._x)(
+          (0, import_i18n51._x)(
             "Single item: %1$s (%2$s)",
             "post type menu label"
           ),
@@ -28170,9 +30209,9 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
       } : {
         slug: generalTemplateSlug,
         title: menuItemTitle,
-        description: (0, import_i18n50.sprintf)(
+        description: (0, import_i18n51.sprintf)(
           // translators: %s: Name of the post type e.g: "Post".
-          (0, import_i18n50.__)("Displays a single item: %s."),
+          (0, import_i18n51.__)("Displays a single item: %s."),
           labels.singular_name
         ),
         // `icon` is the `menu_icon` property of a post type. We
@@ -28220,7 +30259,7 @@ var usePostTypeMenuItems = (onClickMenuItem) => {
     },
     []
   );
-  const postTypesMenuItems = (0, import_element83.useMemo)(
+  const postTypesMenuItems = (0, import_element84.useMemo)(
     () => menuItems.reduce(
       (accumulator, postType) => {
         const { slug } = postType;
@@ -28241,7 +30280,7 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
   const publicTaxonomies = usePublicTaxonomies();
   const existingTemplates = useExistingTemplates();
   const defaultTemplateTypes = useDefaultTemplateTypes();
-  const templatePrefixes = (0, import_element83.useMemo)(
+  const templatePrefixes = (0, import_element84.useMemo)(
     () => publicTaxonomies?.reduce((accumulator, { slug }) => {
       let suffix = slug;
       if (!["category", "post_tag"].includes(slug)) {
@@ -28288,14 +30327,14 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
       );
       let menuItemTitle = labels.template_name || labels.singular_name;
       if (_needsUniqueIdentifier) {
-        menuItemTitle = labels.template_name ? (0, import_i18n50.sprintf)(
+        menuItemTitle = labels.template_name ? (0, import_i18n51.sprintf)(
           // translators: 1: Name of the template e.g: "Products by Category". 2: Slug of the taxonomy e.g: "product_cat".
-          (0, import_i18n50._x)("%1$s (%2$s)", "taxonomy template menu label"),
+          (0, import_i18n51._x)("%1$s (%2$s)", "taxonomy template menu label"),
           labels.template_name,
           slug
-        ) : (0, import_i18n50.sprintf)(
+        ) : (0, import_i18n51.sprintf)(
           // translators: 1: Name of the taxonomy e.g: "Category". 2: Slug of the taxonomy e.g: "product_cat".
-          (0, import_i18n50._x)("%1$s (%2$s)", "taxonomy menu label"),
+          (0, import_i18n51._x)("%1$s (%2$s)", "taxonomy menu label"),
           labels.singular_name,
           slug
         );
@@ -28306,9 +30345,9 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
       } : {
         slug: generalTemplateSlug,
         title: menuItemTitle,
-        description: (0, import_i18n50.sprintf)(
+        description: (0, import_i18n51.sprintf)(
           // translators: %s: Name of the taxonomy e.g: "Product Categories".
-          (0, import_i18n50.__)("Displays taxonomy: %s."),
+          (0, import_i18n51.__)("Displays taxonomy: %s."),
           labels.singular_name
         ),
         icon: block_meta_default,
@@ -28353,7 +30392,7 @@ var useTaxonomiesMenuItems = (onClickMenuItem) => {
     },
     []
   );
-  const taxonomiesMenuItems = (0, import_element83.useMemo)(
+  const taxonomiesMenuItems = (0, import_element84.useMemo)(
     () => menuItems.reduce(
       (accumulator, taxonomy) => {
         const { slug } = taxonomy;
@@ -28389,7 +30428,7 @@ function useAuthorMenuItem(onClickMenuItem) {
   );
   if (!authorMenuItem) {
     authorMenuItem = {
-      description: (0, import_i18n50.__)(
+      description: (0, import_i18n51.__)(
         "Displays latest posts written by a single author."
       ),
       slug: "author",
@@ -28420,9 +30459,9 @@ function useAuthorMenuItem(onClickMenuItem) {
               suggestion.slug
             );
             return {
-              title: (0, import_i18n50.sprintf)(
+              title: (0, import_i18n51.sprintf)(
                 // translators: %s: Name of the author e.g: "Admin".
-                (0, import_i18n50.__)("Author: %s"),
+                (0, import_i18n51.__)("Author: %s"),
                 suggestion.name
               ),
               slug: templateSlug,
@@ -28431,10 +30470,10 @@ function useAuthorMenuItem(onClickMenuItem) {
           }
         },
         labels: {
-          singular_name: (0, import_i18n50.__)("Author"),
-          search_items: (0, import_i18n50.__)("Search Authors"),
-          not_found: (0, import_i18n50.__)("No authors found."),
-          all_items: (0, import_i18n50.__)("All Authors")
+          singular_name: (0, import_i18n51.__)("Author"),
+          search_items: (0, import_i18n51.__)("Search Authors"),
+          not_found: (0, import_i18n51.__)("No authors found."),
+          all_items: (0, import_i18n51.__)("All Authors")
         },
         hasGeneralTemplate,
         template
@@ -28468,7 +30507,7 @@ var useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters =
     },
     [templatePrefixes, entityName, additionalQueryParameters]
   );
-  const entitiesInfo = (0, import_element83.useMemo)(() => {
+  const entitiesInfo = (0, import_element84.useMemo)(() => {
     return Object.keys(templatePrefixes || {}).reduce(
       (accumulator, slug) => {
         accumulator[slug] = {
@@ -28492,10 +30531,10 @@ function SuggestionListItem({
 }) {
   const baseCssClass = "template-list-custom-template-modal__suggestions_list__list-item";
   return /* @__PURE__ */ React.createElement(
-    import_components50.Composite.Item,
+    import_components51.Composite.Item,
     {
       render: /* @__PURE__ */ React.createElement(
-        import_components50.Button,
+        import_components51.Button,
         {
           __next40pxDefaultSize: true,
           role: "option",
@@ -28509,7 +30548,7 @@ function SuggestionListItem({
       )
     },
     /* @__PURE__ */ React.createElement(
-      import_components50.__experimentalText,
+      import_components51.__experimentalText,
       {
         size: "body",
         lineHeight: 1.53846153846,
@@ -28517,7 +30556,7 @@ function SuggestionListItem({
         className: `${baseCssClass}__title`
       },
       /* @__PURE__ */ React.createElement(
-        import_components50.TextHighlight,
+        import_components51.TextHighlight,
         {
           text: (0, import_html_entities3.decodeEntities)(suggestion.name),
           highlight: search
@@ -28525,7 +30564,7 @@ function SuggestionListItem({
       )
     ),
     suggestion.link && /* @__PURE__ */ React.createElement(
-      import_components50.__experimentalText,
+      import_components51.__experimentalText,
       {
         size: "body",
         lineHeight: 1.53846153846,
@@ -28537,7 +30576,7 @@ function SuggestionListItem({
 }
 function useSearchSuggestions(entityForSuggestions, search) {
   const { config } = entityForSuggestions;
-  const query = (0, import_element84.useMemo)(
+  const query = (0, import_element85.useMemo)(
     () => ({
       order: "asc",
       context: "view",
@@ -28552,8 +30591,8 @@ function useSearchSuggestions(entityForSuggestions, search) {
     entityForSuggestions.slug,
     query
   );
-  const [suggestions, setSuggestions] = (0, import_element84.useState)(EMPTY_ARRAY9);
-  (0, import_element84.useEffect)(() => {
+  const [suggestions, setSuggestions] = (0, import_element85.useState)(EMPTY_ARRAY9);
+  (0, import_element85.useEffect)(() => {
     if (!searchHasResolved) {
       return;
     }
@@ -28581,12 +30620,12 @@ function SuggestionList({
     debouncedSearch
   );
   const { labels } = entityForSuggestions;
-  const [showSearchControl, setShowSearchControl] = (0, import_element84.useState)(false);
+  const [showSearchControl, setShowSearchControl] = (0, import_element85.useState)(false);
   if (!showSearchControl && suggestions?.length > 9) {
     setShowSearchControl(true);
   }
   return /* @__PURE__ */ React.createElement(React.Fragment, null, showSearchControl && /* @__PURE__ */ React.createElement(
-    import_components50.SearchControl,
+    import_components51.SearchControl,
     {
       onChange: setSearch,
       value: search,
@@ -28594,12 +30633,12 @@ function SuggestionList({
       placeholder: labels.search_items
     }
   ), !!suggestions?.length && /* @__PURE__ */ React.createElement(
-    import_components50.Composite,
+    import_components51.Composite,
     {
       orientation: "vertical",
       role: "listbox",
       className: "template-list-custom-template-modal__suggestions_list",
-      "aria-label": (0, import_i18n51.__)("Suggestions list")
+      "aria-label": (0, import_i18n52.__)("Suggestions list")
     },
     suggestions.map((suggestion) => /* @__PURE__ */ React.createElement(
       SuggestionListItem,
@@ -28612,7 +30651,7 @@ function SuggestionList({
       }
     ))
   ), debouncedSearch && !suggestions?.length && /* @__PURE__ */ React.createElement(
-    import_components50.__experimentalText,
+    import_components51.__experimentalText,
     {
       as: "p",
       className: "template-list-custom-template-modal__no-results"
@@ -28626,8 +30665,8 @@ function AddCustomTemplateModalContent({
   onBack,
   containerRef
 }) {
-  const [showSearchEntities, setShowSearchEntities] = (0, import_element84.useState)(false);
-  (0, import_element84.useEffect)(() => {
+  const [showSearchEntities, setShowSearchEntities] = (0, import_element85.useState)(false);
+  (0, import_element85.useEffect)(() => {
     if (containerRef.current) {
       const [firstFocusable] = import_dom21.focus.focusable.find(
         containerRef.current
@@ -28636,26 +30675,26 @@ function AddCustomTemplateModalContent({
     }
   }, [showSearchEntities, containerRef]);
   return /* @__PURE__ */ React.createElement(
-    import_components50.__experimentalVStack,
+    import_components51.__experimentalVStack,
     {
       spacing: 4,
       className: "template-list-custom-template-modal__contents-wrapper",
       alignment: "left"
     },
-    !showSearchEntities && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components50.__experimentalText, { as: "p" }, (0, import_i18n51.__)(
+    !showSearchEntities && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components51.__experimentalText, { as: "p" }, (0, import_i18n52.__)(
       "Select whether to create a single template for all items or a specific one."
     )), /* @__PURE__ */ React.createElement(
-      import_components50.Flex,
+      import_components51.Flex,
       {
         className: "template-list-custom-template-modal__contents",
         gap: "4",
         align: "initial"
       },
       /* @__PURE__ */ React.createElement(
-        import_components50.FlexItem,
+        import_components51.FlexItem,
         {
           isBlock: true,
-          as: import_components50.Button,
+          as: import_components51.Button,
           onClick: () => {
             const {
               slug,
@@ -28672,7 +30711,7 @@ function AddCustomTemplateModalContent({
           }
         },
         /* @__PURE__ */ React.createElement(
-          import_components50.__experimentalText,
+          import_components51.__experimentalText,
           {
             as: "span",
             weight: "var(--wpds-typography-font-weight-emphasis)",
@@ -28681,26 +30720,26 @@ function AddCustomTemplateModalContent({
           entityForSuggestions.labels.all_items
         ),
         /* @__PURE__ */ React.createElement(
-          import_components50.__experimentalText,
+          import_components51.__experimentalText,
           {
             as: "span",
             lineHeight: 1.53846153846
           },
           // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-          (0, import_i18n51.__)("For all items")
+          (0, import_i18n52.__)("For all items")
         )
       ),
       /* @__PURE__ */ React.createElement(
-        import_components50.FlexItem,
+        import_components51.FlexItem,
         {
           isBlock: true,
-          as: import_components50.Button,
+          as: import_components51.Button,
           onClick: () => {
             setShowSearchEntities(true);
           }
         },
         /* @__PURE__ */ React.createElement(
-          import_components50.__experimentalText,
+          import_components51.__experimentalText,
           {
             as: "span",
             weight: "var(--wpds-typography-font-weight-emphasis)",
@@ -28709,25 +30748,25 @@ function AddCustomTemplateModalContent({
           entityForSuggestions.labels.singular_name
         ),
         /* @__PURE__ */ React.createElement(
-          import_components50.__experimentalText,
+          import_components51.__experimentalText,
           {
             as: "span",
             lineHeight: 1.53846153846
           },
           // translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one.
-          (0, import_i18n51.__)("For a specific item")
+          (0, import_i18n52.__)("For a specific item")
         )
       )
-    ), /* @__PURE__ */ React.createElement(import_components50.Flex, { justify: "right" }, /* @__PURE__ */ React.createElement(
-      import_components50.Button,
+    ), /* @__PURE__ */ React.createElement(import_components51.Flex, { justify: "right" }, /* @__PURE__ */ React.createElement(
+      import_components51.Button,
       {
         __next40pxDefaultSize: true,
         variant: "tertiary",
         onClick: onBack
       },
-      (0, import_i18n51.__)("Back")
+      (0, import_i18n52.__)("Back")
     ))),
-    showSearchEntities && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components50.__experimentalText, { as: "p" }, (0, import_i18n51.__)(
+    showSearchEntities && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(import_components51.__experimentalText, { as: "p" }, (0, import_i18n52.__)(
       "This template will be used only for the specific item chosen."
     )), /* @__PURE__ */ React.createElement(
       SuggestionList,
@@ -28735,8 +30774,8 @@ function AddCustomTemplateModalContent({
         entityForSuggestions,
         onSelect
       }
-    ), /* @__PURE__ */ React.createElement(import_components50.Flex, { justify: "right" }, /* @__PURE__ */ React.createElement(
-      import_components50.Button,
+    ), /* @__PURE__ */ React.createElement(import_components51.Flex, { justify: "right" }, /* @__PURE__ */ React.createElement(
+      import_components51.Button,
       {
         __next40pxDefaultSize: true,
         variant: "tertiary",
@@ -28748,7 +30787,7 @@ function AddCustomTemplateModalContent({
           }
         }
       },
-      (0, import_i18n51.__)("Back")
+      (0, import_i18n52.__)("Back")
     )))
   );
 }
@@ -28813,18 +30852,18 @@ function paramCase(input, options) {
 }
 
 // routes/template-list/add-new-template/add-custom-generic-template-modal-content.tsx
-var import_element85 = __toESM(require_element());
-var import_i18n52 = __toESM(require_i18n());
-var import_components51 = __toESM(require_components());
+var import_element86 = __toESM(require_element());
+var import_i18n53 = __toESM(require_i18n());
+var import_components52 = __toESM(require_components());
 function AddCustomGenericTemplateModalContent({
   createTemplate,
   onBack
 }) {
-  const [title, setTitle] = (0, import_element85.useState)("");
-  const defaultTitle = (0, import_i18n52.__)("Custom Template");
-  const [isBusy, setIsBusy] = (0, import_element85.useState)(false);
-  const inputRef = (0, import_element85.useRef)(null);
-  (0, import_element85.useEffect)(() => {
+  const [title, setTitle] = (0, import_element86.useState)("");
+  const defaultTitle = (0, import_i18n53.__)("Custom Template");
+  const [isBusy, setIsBusy] = (0, import_element86.useState)(false);
+  const inputRef = (0, import_element86.useRef)(null);
+  (0, import_element86.useEffect)(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -28847,37 +30886,37 @@ function AddCustomGenericTemplateModalContent({
       setIsBusy(false);
     }
   }
-  return /* @__PURE__ */ React.createElement("form", { onSubmit: onCreateTemplate }, /* @__PURE__ */ React.createElement(import_components51.__experimentalVStack, { spacing: 6 }, /* @__PURE__ */ React.createElement(
-    import_components51.TextControl,
+  return /* @__PURE__ */ React.createElement("form", { onSubmit: onCreateTemplate }, /* @__PURE__ */ React.createElement(import_components52.__experimentalVStack, { spacing: 6 }, /* @__PURE__ */ React.createElement(
+    import_components52.TextControl,
     {
-      label: (0, import_i18n52.__)("Name"),
+      label: (0, import_i18n53.__)("Name"),
       value: title,
       onChange: setTitle,
       placeholder: defaultTitle,
       disabled: isBusy,
       ref: inputRef,
-      help: (0, import_i18n52.__)(
+      help: (0, import_i18n53.__)(
         // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
         'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.'
       )
     }
   ), /* @__PURE__ */ React.createElement(
-    import_components51.__experimentalHStack,
+    import_components52.__experimentalHStack,
     {
       className: "template-list-custom-generic-template__modal-actions",
       justify: "right"
     },
     /* @__PURE__ */ React.createElement(
-      import_components51.Button,
+      import_components52.Button,
       {
         __next40pxDefaultSize: true,
         variant: "tertiary",
         onClick: onBack
       },
-      (0, import_i18n52.__)("Back")
+      (0, import_i18n53.__)("Back")
     ),
     /* @__PURE__ */ React.createElement(
-      import_components51.Button,
+      import_components52.Button,
       {
         __next40pxDefaultSize: true,
         variant: "primary",
@@ -28885,7 +30924,7 @@ function AddCustomGenericTemplateModalContent({
         isBusy,
         "aria-disabled": isBusy
       },
-      (0, import_i18n52.__)("Create")
+      (0, import_i18n53.__)("Create")
     )
   )));
 }
@@ -28933,7 +30972,7 @@ function TemplateListItem({
   children
 }) {
   return /* @__PURE__ */ React.createElement(
-    import_components52.Button,
+    import_components53.Button,
     {
       __next40pxDefaultSize: true,
       className,
@@ -28942,7 +30981,7 @@ function TemplateListItem({
       showTooltip: !!description
     },
     /* @__PURE__ */ React.createElement(
-      import_components52.Flex,
+      import_components53.Flex,
       {
         as: "span",
         align: "center",
@@ -28950,16 +30989,16 @@ function TemplateListItem({
         style: { width: "100%" },
         direction
       },
-      /* @__PURE__ */ React.createElement("div", { className: "template-list-add-new-template__template-icon" }, /* @__PURE__ */ React.createElement(import_components52.Icon, { icon })),
+      /* @__PURE__ */ React.createElement("div", { className: "template-list-add-new-template__template-icon" }, /* @__PURE__ */ React.createElement(import_components53.Icon, { icon })),
       /* @__PURE__ */ React.createElement(
-        import_components52.__experimentalVStack,
+        import_components53.__experimentalVStack,
         {
           className: "template-list-add-new-template__template-name",
           alignment: "center",
           spacing: 0
         },
         /* @__PURE__ */ React.createElement(
-          import_components52.__experimentalText,
+          import_components53.__experimentalText,
           {
             align: "center",
             weight: "var(--wpds-typography-font-weight-emphasis)",
@@ -28978,9 +31017,9 @@ var modalContentMap = {
   customGenericTemplate: 3
 };
 function NewTemplateModal({ onClose }) {
-  const [modalContent, setModalContent] = (0, import_element86.useState)(modalContentMap.templatesList);
-  const [entityForSuggestions, setEntityForSuggestions] = (0, import_element86.useState)();
-  const [isSubmitting, setIsSubmitting] = (0, import_element86.useState)(false);
+  const [modalContent, setModalContent] = (0, import_element87.useState)(modalContentMap.templatesList);
+  const [entityForSuggestions, setEntityForSuggestions] = (0, import_element87.useState)();
+  const [isSubmitting, setIsSubmitting] = (0, import_element87.useState)(false);
   const missingTemplates = useMissingTemplates(
     setEntityForSuggestions,
     () => setModalContent(modalContentMap.customTemplate)
@@ -28989,20 +31028,20 @@ function NewTemplateModal({ onClose }) {
   const invalidate = useInvalidate();
   const { saveEntityRecord } = (0, import_data13.useDispatch)(import_core_data9.store);
   const { createErrorNotice, createSuccessNotice } = (0, import_data13.useDispatch)(import_notices.store);
-  const containerRef = (0, import_element86.useRef)(null);
+  const containerRef = (0, import_element87.useRef)(null);
   const isMobile = (0, import_compose16.useViewportMatch)("medium", "<");
   const homeUrl = (0, import_data13.useSelect)((select2) => {
     return select2(import_core_data9.store).getEntityRecord("root", "__unstableBase")?.home;
   }, []);
   const TEMPLATE_SHORT_DESCRIPTIONS = {
     "front-page": homeUrl,
-    date: (0, import_i18n53.sprintf)(
+    date: (0, import_i18n54.sprintf)(
       // translators: %s: The homepage url.
-      (0, import_i18n53.__)("E.g. %s"),
+      (0, import_i18n54.__)("E.g. %s"),
       homeUrl + "/" + (/* @__PURE__ */ new Date()).getFullYear()
     )
   };
-  (0, import_element86.useEffect)(() => {
+  (0, import_element87.useEffect)(() => {
     if (containerRef.current && modalContent === modalContentMap.templatesList) {
       const [firstFocusable] = import_dom22.focus.focusable.find(
         containerRef.current
@@ -29042,17 +31081,17 @@ function NewTemplateModal({ onClose }) {
       });
       invalidate();
       createSuccessNotice(
-        (0, import_i18n53.sprintf)(
+        (0, import_i18n54.sprintf)(
           // translators: %s: Title of the created post or template, e.g: "Hello world".
-          (0, import_i18n53.__)('"%s" successfully created.'),
-          (0, import_html_entities4.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n53.__)("(no title)")
+          (0, import_i18n54.__)('"%s" successfully created.'),
+          (0, import_html_entities4.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n54.__)("(no title)")
         ),
         {
           type: "snackbar"
         }
       );
     } catch (error) {
-      const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n53.__)("An error occurred while creating the template.");
+      const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, import_i18n54.__)("An error occurred while creating the template.");
       createErrorNotice(errorMessage, {
         type: "snackbar"
       });
@@ -29064,18 +31103,18 @@ function NewTemplateModal({ onClose }) {
     onClose();
     setModalContent(modalContentMap.templatesList);
   };
-  let modalTitle = (0, import_i18n53.__)("Add template");
+  let modalTitle = (0, import_i18n54.__)("Add template");
   if (modalContent === modalContentMap.customTemplate && entityForSuggestions) {
-    modalTitle = (0, import_i18n53.sprintf)(
+    modalTitle = (0, import_i18n54.sprintf)(
       // translators: %s: Name of the post type e.g: "Post".
-      (0, import_i18n53.__)("Add template: %s"),
+      (0, import_i18n54.__)("Add template: %s"),
       entityForSuggestions.labels.singular_name
     );
   } else if (modalContent === modalContentMap.customGenericTemplate) {
-    modalTitle = (0, import_i18n53.__)("Create custom template");
+    modalTitle = (0, import_i18n54.__)("Create custom template");
   }
   return /* @__PURE__ */ React.createElement(
-    import_components52.Modal,
+    import_components53.Modal,
     {
       title: modalTitle,
       className: clsx_default("template-list-add-new-template__modal", {
@@ -29087,7 +31126,7 @@ function NewTemplateModal({ onClose }) {
       ref: containerRef
     },
     modalContent === modalContentMap.templatesList && /* @__PURE__ */ React.createElement(
-      import_components52.__experimentalGrid,
+      import_components53.__experimentalGrid,
       {
         columns: isMobile ? 2 : 3,
         gap: 4,
@@ -29095,7 +31134,7 @@ function NewTemplateModal({ onClose }) {
         justify: "center",
         className: "template-list-add-new-template__template-list__contents"
       },
-      /* @__PURE__ */ React.createElement(import_components52.Flex, { className: "template-list-add-new-template__template-list__prompt" }, (0, import_i18n53.__)(
+      /* @__PURE__ */ React.createElement(import_components53.Flex, { className: "template-list-add-new-template__template-list__prompt" }, (0, import_i18n54.__)(
         "Select what the new template should apply to:"
       )),
       missingTemplates.map((template) => {
@@ -29116,7 +31155,7 @@ function NewTemplateModal({ onClose }) {
       /* @__PURE__ */ React.createElement(
         TemplateListItem,
         {
-          title: (0, import_i18n53.__)("Custom template"),
+          title: (0, import_i18n54.__)("Custom template"),
           direction: "row",
           className: "template-list-add-new-template__custom-template-button",
           icon: pencil_default,
@@ -29125,11 +31164,11 @@ function NewTemplateModal({ onClose }) {
           )
         },
         /* @__PURE__ */ React.createElement(
-          import_components52.__experimentalText,
+          import_components53.__experimentalText,
           {
             lineHeight: 1.53846153846
           },
-          (0, import_i18n53.__)(
+          (0, import_i18n54.__)(
             "A custom template can be manually applied to any post or page."
           )
         )
@@ -29154,7 +31193,7 @@ function NewTemplateModal({ onClose }) {
   );
 }
 function NewTemplate() {
-  const [showModal, setShowModal] = (0, import_element86.useState)(false);
+  const [showModal, setShowModal] = (0, import_element87.useState)(false);
   const { postType } = (0, import_data13.useSelect)((select2) => {
     const { getPostType } = select2(import_core_data9.store);
     return {
@@ -29165,7 +31204,7 @@ function NewTemplate() {
     return null;
   }
   return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(
-    import_components52.Button,
+    import_components53.Button,
     {
       variant: "primary",
       onClick: () => setShowModal(true),
@@ -29218,7 +31257,7 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
   ];
   return missingTemplates;
 }
-var add_new_template_default = (0, import_element86.memo)(NewTemplate);
+var add_new_template_default = (0, import_element87.memo)(NewTemplate);
 
 // routes/template-list/style.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='dbdab75ef0']")) {
@@ -29238,7 +31277,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 
 // routes/template-list/stage-activation.tsx
 var { usePostActions, templateTitleField } = unlock4(import_editor.privateApis);
-var { Tabs } = unlock4(import_components53.privateApis);
+var { Tabs } = unlock4(import_components54.privateApis);
 function getItemId(item) {
   return item.id.toString();
 }
@@ -29253,13 +31292,13 @@ function TemplateListActivation() {
     (select2) => select2(import_core_data10.store).getPostType("wp_template"),
     []
   );
-  const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element87.useState)(null);
+  const [selectedRegisteredTemplate, setSelectedRegisteredTemplate] = (0, import_element88.useState)(null);
   const defaultView = DEFAULT_VIEW;
-  const activeViewOverrides = (0, import_element87.useMemo)(
+  const activeViewOverrides = (0, import_element88.useMemo)(
     () => getActiveViewOverridesForTab(activeView),
     [activeView]
   );
-  const handleQueryParamsChange = (0, import_element87.useCallback)(
+  const handleQueryParamsChange = (0, import_element88.useCallback)(
     (params) => {
       navigate({
         search: {
@@ -29308,7 +31347,7 @@ function TemplateListActivation() {
     },
     [records]
   );
-  const fields = (0, import_element87.useMemo)(() => {
+  const fields = (0, import_element88.useMemo)(() => {
     const elements = [];
     for (const author in users) {
       elements.push({
@@ -29328,10 +31367,10 @@ function TemplateListActivation() {
       }
     ];
   }, [users]);
-  const { data: posts, paginationInfo } = (0, import_element87.useMemo)(() => {
+  const { data: posts, paginationInfo } = (0, import_element88.useMemo)(() => {
     return filterSortAndPaginate(records, view, fields);
   }, [records, view, fields]);
-  const cleanupDeletedPostIdsFromUrl = (0, import_element87.useCallback)(
+  const cleanupDeletedPostIdsFromUrl = (0, import_element88.useCallback)(
     (deletedItems) => {
       const deletedIds = deletedItems.map(
         (item) => item.id.toString()
@@ -29353,7 +31392,7 @@ function TemplateListActivation() {
     },
     [invalidate, searchParams, navigate]
   );
-  const onActionPerformed = (0, import_element87.useCallback)(
+  const onActionPerformed = (0, import_element88.useCallback)(
     (actionId, items) => {
       if (actionId === "move-to-trash" || actionId === "permanently-delete") {
         cleanupDeletedPostIdsFromUrl(items);
@@ -29372,7 +31411,7 @@ function TemplateListActivation() {
     context: "list",
     onActionPerformed
   });
-  const actions = (0, import_element87.useMemo)(() => {
+  const actions = (0, import_element88.useMemo)(() => {
     return [
       setActiveTemplateAction,
       ...postTypeActions?.flatMap((action) => {
@@ -29383,16 +31422,16 @@ function TemplateListActivation() {
       })
     ];
   }, [setActiveTemplateAction, postTypeActions]);
-  const tabs = (0, import_element87.useMemo)(() => {
+  const tabs = (0, import_element88.useMemo)(() => {
     const baseTabs = [
       {
         slug: "active",
-        label: (0, import_i18n54.__)("Active"),
+        label: (0, import_i18n55.__)("Active"),
         icon: published_default
       },
       {
         slug: "user",
-        label: (0, import_i18n54.__)("Created templates"),
+        label: (0, import_i18n55.__)("Created templates"),
         icon: comment_author_avatar_default
       }
     ];
@@ -29408,7 +31447,7 @@ function TemplateListActivation() {
     const authorTabs = Array.from(authorMap.values());
     return [...baseTabs, ...authorTabs];
   }, [staticRecords]);
-  const handleTabChange = (0, import_element87.useCallback)(
+  const handleTabChange = (0, import_element88.useCallback)(
     (viewSlug) => {
       navigate({
         to: `/templates/list/${viewSlug}`
@@ -29437,7 +31476,7 @@ function TemplateListActivation() {
   return /* @__PURE__ */ React.createElement(
     page_default2,
     {
-      title: (0, import_i18n54.__)("Templates"),
+      title: (0, import_i18n55.__)("Templates"),
       className: "template-page",
       actions: /* @__PURE__ */ React.createElement(add_new_template_default, null),
       hasPadding: false
@@ -29488,9 +31527,9 @@ function TemplateListActivation() {
       }
     ),
     selectedRegisteredTemplate && duplicateAction && /* @__PURE__ */ React.createElement(
-      import_components53.Modal,
+      import_components54.Modal,
       {
-        title: (0, import_i18n54.__)("Duplicate"),
+        title: (0, import_i18n55.__)("Duplicate"),
         onRequestClose: () => setSelectedRegisteredTemplate(null),
         size: "small"
       },
@@ -29514,14 +31553,14 @@ import {
   useInvalidate as useInvalidate3
 } from "@wordpress/route";
 var import_core_data12 = __toESM(require_core_data());
-var import_components54 = __toESM(require_components());
+var import_components55 = __toESM(require_components());
 var import_data15 = __toESM(require_data());
-var import_element89 = __toESM(require_element());
+var import_element90 = __toESM(require_element());
 var import_editor2 = __toESM(require_editor());
-var import_i18n55 = __toESM(require_i18n());
+var import_i18n56 = __toESM(require_i18n());
 
 // routes/template-list/use-templates-legacy.ts
-var import_element88 = __toESM(require_element());
+var import_element89 = __toESM(require_element());
 var import_core_data11 = __toESM(require_core_data());
 var { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions4 } = unlock4(import_core_data11.privateApis);
 function useTemplatesLegacy(activeView = "all") {
@@ -29532,7 +31571,7 @@ function useTemplatesLegacy(activeView = "all") {
       per_page: -1
     }
   );
-  const filteredRecords = (0, import_element88.useMemo)(() => {
+  const filteredRecords = (0, import_element89.useMemo)(() => {
     if (!records) {
       return [];
     }
@@ -29553,7 +31592,7 @@ function useTemplatesLegacy(activeView = "all") {
 
 // routes/template-list/stage-legacy.tsx
 var { usePostActions: usePostActions2, templateTitleField: templateTitleField2 } = unlock4(import_editor2.privateApis);
-var { Tabs: Tabs2 } = unlock4(import_components54.privateApis);
+var { Tabs: Tabs2 } = unlock4(import_components55.privateApis);
 function getItemId2(item) {
   return item.id.toString();
 }
@@ -29569,11 +31608,11 @@ function TemplateListLegacy() {
     []
   );
   const defaultView = DEFAULT_VIEW_LEGACY;
-  const activeViewOverrides = (0, import_element89.useMemo)(
+  const activeViewOverrides = (0, import_element90.useMemo)(
     () => getActiveViewOverridesForTabLegacy(activeView),
     [activeView]
   );
-  const handleQueryParamsChange = (0, import_element89.useCallback)(
+  const handleQueryParamsChange = (0, import_element90.useCallback)(
     (params) => {
       navigate({
         search: {
@@ -29622,7 +31661,7 @@ function TemplateListLegacy() {
     },
     [records]
   );
-  const fields = (0, import_element89.useMemo)(() => {
+  const fields = (0, import_element90.useMemo)(() => {
     const elements = [];
     for (const author in users) {
       elements.push({
@@ -29640,10 +31679,10 @@ function TemplateListLegacy() {
       }
     ];
   }, [users]);
-  const { data: posts, paginationInfo } = (0, import_element89.useMemo)(() => {
+  const { data: posts, paginationInfo } = (0, import_element90.useMemo)(() => {
     return filterSortAndPaginate(records, view, fields);
   }, [records, view, fields]);
-  const cleanupDeletedPostIdsFromUrl = (0, import_element89.useCallback)(
+  const cleanupDeletedPostIdsFromUrl = (0, import_element90.useCallback)(
     (deletedItems) => {
       const deletedIds = deletedItems.map(
         (item) => item.id.toString()
@@ -29665,7 +31704,7 @@ function TemplateListLegacy() {
     },
     [invalidate, searchParams, navigate]
   );
-  const onActionPerformed = (0, import_element89.useCallback)(
+  const onActionPerformed = (0, import_element90.useCallback)(
     (actionId, items) => {
       if (actionId === "move-to-trash" || actionId === "permanently-delete") {
         cleanupDeletedPostIdsFromUrl(items);
@@ -29683,7 +31722,7 @@ function TemplateListLegacy() {
     context: "list",
     onActionPerformed
   });
-  const actions = (0, import_element89.useMemo)(() => {
+  const actions = (0, import_element90.useMemo)(() => {
     return postTypeActions?.flatMap((action) => {
       if (action.id === "view-post-revisions") {
         return [];
@@ -29691,11 +31730,11 @@ function TemplateListLegacy() {
       return [action];
     });
   }, [postTypeActions]);
-  const tabs = (0, import_element89.useMemo)(() => {
+  const tabs = (0, import_element90.useMemo)(() => {
     const baseTabs = [
       {
         slug: "all",
-        label: (0, import_i18n55.__)("All templates"),
+        label: (0, import_i18n56.__)("All templates"),
         icon: layout_default
       }
     ];
@@ -29711,7 +31750,7 @@ function TemplateListLegacy() {
     const authorTabs = Array.from(authorMap.values());
     return [...baseTabs, ...authorTabs];
   }, [allRecords]);
-  const handleTabChange = (0, import_element89.useCallback)(
+  const handleTabChange = (0, import_element90.useCallback)(
     (viewSlug) => {
       navigate({
         to: `/templates/list/${viewSlug}`
@@ -29732,7 +31771,7 @@ function TemplateListLegacy() {
   return /* @__PURE__ */ React.createElement(
     page_default2,
     {
-      title: (0, import_i18n55.__)("Templates"),
+      title: (0, import_i18n56.__)("Templates"),
       className: "template-page",
       actions: /* @__PURE__ */ React.createElement(add_new_template_default, null),
       hasPadding: false
