@@ -58760,7 +58760,7 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(import_components95.MenuItem, { ref, shortcut, children: copyMenuItemLabel });
   }
   function BlockSettingsDropdown({
-    block,
+    clientId,
     clientIds,
     children,
     __experimentalSelectBlock,
@@ -61985,7 +61985,7 @@ var wp;
   var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
   var Appender = (0, import_element183.forwardRef)(
     ({ nestingLevel, blockCount, clientId, ...props }, ref) => {
-      const { insertedBlock, setInsertedBlock } = useListViewContext();
+      const { insertedBlockClientId, setInsertedBlockClientId } = useListViewContext();
       const instanceId = (0, import_compose72.useInstanceId)(Appender);
       const { directInsert, hideInserter } = (0, import_data127.useSelect)(
         (select3) => {
@@ -62005,7 +62005,7 @@ var wp;
         context: "list-view"
       });
       const insertedBlockTitle = useBlockDisplayTitle({
-        clientId: insertedBlock?.clientId,
+        clientId: insertedBlockClientId,
         context: "list-view"
       });
       (0, import_element183.useEffect)(() => {
@@ -62047,7 +62047,9 @@ var wp;
             toggleProps: { "aria-describedby": descriptionId },
             onSelectOrClose: (maybeInsertedBlock) => {
               if (maybeInsertedBlock?.clientId) {
-                setInsertedBlock(maybeInsertedBlock);
+                setInsertedBlockClientId(
+                  maybeInsertedBlock.clientId
+                );
               }
             }
           }
@@ -62250,7 +62252,7 @@ var wp;
   var { Badge: WCBadge3 } = unlock(import_components119.privateApis);
   function ListViewBlockSelectButton({
     className,
-    block: { clientId },
+    clientId,
     onClick,
     onContextMenu,
     onMouseDown,
@@ -62386,7 +62388,7 @@ var wp;
     ({
       onClick,
       onToggleExpanded,
-      block,
+      clientId,
       isSelected,
       position,
       siblingBlockCount,
@@ -62395,16 +62397,19 @@ var wp;
       selectedClientIds,
       ...props
     }, ref) => {
-      const { clientId } = block;
-      const { AdditionalBlockContent, insertedBlock, setInsertedBlock } = useListViewContext();
+      const {
+        AdditionalBlockContent,
+        insertedBlockClientId,
+        setInsertedBlockClientId
+      } = useListViewContext();
       const draggableClientIds = selectedClientIds.includes(clientId) ? selectedClientIds : [clientId];
+      const showAdditionalBlockContent = !!AdditionalBlockContent && insertedBlockClientId === clientId;
       return /* @__PURE__ */ (0, import_jsx_runtime327.jsxs)(import_jsx_runtime327.Fragment, { children: [
-        AdditionalBlockContent && /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+        showAdditionalBlockContent && /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
           AdditionalBlockContent,
           {
-            block,
-            insertedBlock,
-            setInsertedBlock
+            insertedBlockClientId,
+            setInsertedBlockClientId
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
@@ -62418,7 +62423,7 @@ var wp;
               {
                 ref,
                 className: "block-editor-list-view-block-contents",
-                block,
+                clientId,
                 onClick,
                 onToggleExpanded,
                 isSelected,
@@ -62555,7 +62560,7 @@ var wp;
   // packages/block-editor/build-module/components/list-view/block.mjs
   var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
   function ListViewBlock({
-    block: { clientId },
+    clientId,
     displacement,
     isAfterDraggedBlocks,
     isDragged,
@@ -62615,8 +62620,8 @@ var wp;
     const blockInformation = useBlockDisplayInformation(clientId);
     const pasteStyles = usePasteStyles();
     const {
-      block,
       blockName,
+      blockVisibility: blockVisibility2,
       blockEditingMode,
       allowRightClickOverrides,
       editedSection,
@@ -62625,16 +62630,16 @@ var wp;
     } = (0, import_data129.useSelect)(
       (select3) => {
         const {
-          getBlock: getBlock2,
           getBlockName: getBlockName2,
+          getBlockAttributes: getBlockAttributes3,
           getBlockEditingMode: getBlockEditingModeForClientId,
           getSettings: getSettings7,
           getEditedContentOnlySection: getEditedContentOnlySection2
         } = unlock(select3(store));
         const settings2 = getSettings7();
         return {
-          block: getBlock2(clientId),
           blockName: getBlockName2(clientId),
+          blockVisibility: getBlockAttributes3(clientId)?.metadata?.blockVisibility,
           blockEditingMode: getBlockEditingModeForClientId(clientId),
           allowRightClickOverrides: settings2.allowRightClickOverrides,
           editedSection: getEditedContentOnlySection2(),
@@ -62661,7 +62666,7 @@ var wp;
       BlockSettingsMenu: BlockSettingsMenu2,
       listViewInstanceId,
       expandedState,
-      setInsertedBlock,
+      setInsertedBlockClientId,
       treeGridElementRef,
       rootClientId
     } = useListViewContext();
@@ -62902,7 +62907,7 @@ var wp;
       rowItemRef: rowRef,
       selectedClientIds
     });
-    if (!block) {
+    if (!blockName) {
       return null;
     }
     const blockPositionDescription = getBlockPositionDescription(
@@ -62915,7 +62920,7 @@ var wp;
       isLocked
     );
     const blockVisibilityDescription = getBlockVisibilityLabel(
-      block?.attributes?.metadata?.blockVisibility,
+      blockVisibility2,
       viewportSettings
     );
     const hasSiblings = siblingBlockCount > 0;
@@ -62992,7 +62997,7 @@ var wp;
                 /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
                   block_contents_default,
                   {
-                    block,
+                    clientId,
                     onClick: selectEditorBlock,
                     onContextMenu: isDisabled ? void 0 : onContextMenu,
                     onMouseDown,
@@ -63057,8 +63062,8 @@ var wp;
               children: ({ ref, tabIndex, onFocus }) => /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
                 BlockSettingsMenu2,
                 {
+                  clientId,
                   clientIds: dropdownClientIds,
-                  block,
                   icon: more_vertical_default,
                   label: (0, import_i18n109.__)("Options"),
                   popoverProps: {
@@ -63076,7 +63081,7 @@ var wp;
                   disableOpenOnArrowDown: true,
                   expand,
                   expandedState,
-                  setInsertedBlock,
+                  setInsertedBlockClientId,
                   __experimentalSelectBlock: updateFocusAndSelection,
                   isContentOnlyListView: !!rootClientId && getBlockEditingMode2(rootClientId) === "contentOnly"
                 }
@@ -63225,7 +63230,7 @@ var wp;
           showBlock && /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
             block_default3,
             {
-              block,
+              clientId,
               selectBlock: selectBlock2,
               isSelected,
               isBranchSelected: isSelectedBranch,
@@ -64198,7 +64203,7 @@ var wp;
     );
     const { updateBlockSelection } = useBlockSelection();
     const [expandedState, setExpandedState] = (0, import_element197.useReducer)(expanded, {});
-    const [insertedBlock, setInsertedBlock] = (0, import_element197.useState)(null);
+    const [insertedBlockClientId, setInsertedBlockClientId] = (0, import_element197.useState)(null);
     const { setSelectedTreeId } = useListViewExpandSelectedItem({
       firstSelectedBlockClientId: selectedClientIds[0],
       setExpandedState
@@ -64326,8 +64331,8 @@ var wp;
         BlockSettingsMenu: BlockSettingsMenu2,
         listViewInstanceId: instanceId,
         AdditionalBlockContent,
-        insertedBlock,
-        setInsertedBlock,
+        insertedBlockClientId,
+        setInsertedBlockClientId,
         treeGridElementRef: elementRef,
         rootClientId
       }),
@@ -64344,8 +64349,8 @@ var wp;
         BlockSettingsMenu2,
         instanceId,
         AdditionalBlockContent,
-        insertedBlock,
-        setInsertedBlock,
+        insertedBlockClientId,
+        setInsertedBlockClientId,
         rootClientId
       ]
     );

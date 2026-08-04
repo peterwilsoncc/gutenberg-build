@@ -54331,8 +54331,7 @@ If there's a particular need for this, please submit a feature request at https:
   function LeafMoreMenu(props) {
     const history = useHistory16();
     const { path } = useLocation22();
-    const { block } = props;
-    const { clientId } = block;
+    const { clientId } = props;
     const { moveBlocksDown, moveBlocksUp, removeBlocks } = (0, import_data57.useDispatch)(import_block_editor20.store);
     const removeLabel = (0, import_i18n127.sprintf)(
       /* translators: %s: block name */
@@ -54344,32 +54343,32 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_i18n127.__)("Go to %s"),
       (0, import_block_editor20.BlockTitle)({ clientId, maximumLength: 25 })
     );
-    const rootClientId = (0, import_data57.useSelect)(
+    const { rootClientId, blockName, attributes } = (0, import_data57.useSelect)(
       (select4) => {
-        const { getBlockRootClientId } = select4(import_block_editor20.store);
-        return getBlockRootClientId(clientId);
+        const { getBlockRootClientId, getBlockName, getBlockAttributes } = select4(import_block_editor20.store);
+        return {
+          rootClientId: getBlockRootClientId(clientId),
+          blockName: getBlockName(clientId),
+          attributes: getBlockAttributes(clientId)
+        };
       },
       [clientId]
     );
-    const onGoToPage = (0, import_element168.useCallback)(
-      (selectedBlock) => {
-        const { attributes, name: name2 } = selectedBlock;
-        if (attributes.kind === "post-type" && attributes.id && attributes.type && history) {
-          history.navigate(
-            `/${attributes.type}/${attributes.id}?canvas=edit`,
-            {
-              state: { backPath: path }
-            }
-          );
-        }
-        if (name2 === "core/page-list-item" && attributes.id && history) {
-          history.navigate(`/page/${attributes.id}?canvas=edit`, {
+    const onGoToPage = (0, import_element168.useCallback)(() => {
+      if (attributes.kind === "post-type" && attributes.id && attributes.type && history) {
+        history.navigate(
+          `/${attributes.type}/${attributes.id}?canvas=edit`,
+          {
             state: { backPath: path }
-          });
-        }
-      },
-      [path, history]
-    );
+          }
+        );
+      }
+      if (blockName === "core/page-list-item" && attributes.id && history) {
+        history.navigate(`/page/${attributes.id}?canvas=edit`, {
+          state: { backPath: path }
+        });
+      }
+    }, [path, history, attributes, blockName]);
     return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
       import_components136.DropdownMenu,
       {
@@ -54403,11 +54402,11 @@ If there's a particular need for this, please submit a feature request at https:
                 children: (0, import_i18n127.__)("Move down")
               }
             ),
-            block.attributes?.type === "page" && block.attributes?.id && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
+            attributes?.type === "page" && attributes?.id && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
               import_components136.MenuItem,
               {
                 onClick: () => {
-                  onGoToPage(block);
+                  onGoToPage();
                   onClose();
                 },
                 children: goToLabel

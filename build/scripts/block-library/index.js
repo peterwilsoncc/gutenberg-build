@@ -46638,17 +46638,15 @@ ${text}
     "core/navigation-submenu"
   ];
   function AddSubmenuItem({
-    block,
+    clientId,
     onClose,
+    isDisabled,
     expandedState,
     expand,
-    setInsertedBlock
+    setInsertedBlockClientId
   }) {
     const { insertBlock, replaceBlock, replaceInnerBlocks } = (0, import_data81.useDispatch)(import_block_editor152.store);
-    const clientId = block.clientId;
-    const isDisabled = !BLOCKS_THAT_CAN_BE_CONVERTED_TO_SUBMENU.includes(
-      block.name
-    );
+    const { getBlock } = (0, import_data81.useSelect)(import_block_editor152.store);
     return /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
       import_components88.MenuItem,
       {
@@ -46660,6 +46658,7 @@ ${text}
             DEFAULT_BLOCK5.name,
             DEFAULT_BLOCK5.attributes
           );
+          const block = getBlock(clientId);
           if (block.name === "core/navigation-submenu") {
             insertBlock(
               newLink,
@@ -46680,9 +46679,9 @@ ${text}
               updateSelectionOnInsert
             );
           }
-          setInsertedBlock(newLink);
-          if (!expandedState[block.clientId]) {
-            expand(block.clientId);
+          setInsertedBlockClientId(newLink.clientId);
+          if (!expandedState[clientId]) {
+            expand(clientId);
           }
           onClose();
         },
@@ -46691,8 +46690,7 @@ ${text}
     );
   }
   function LeafMoreMenu(props) {
-    const { block } = props;
-    const { clientId } = block;
+    const { clientId } = props;
     const {
       moveBlocksDown,
       moveBlocksUp,
@@ -46706,10 +46704,18 @@ ${text}
       (0, import_i18n137.__)("Remove %s"),
       (0, import_block_editor152.BlockTitle)({ clientId, maximumLength: 25 })
     );
-    const { rootClientId, canDuplicate, canInsertBlock, isFirst, isLast } = (0, import_data81.useSelect)(
+    const {
+      blockName,
+      rootClientId,
+      canDuplicate,
+      canInsertBlock,
+      isFirst,
+      isLast
+    } = (0, import_data81.useSelect)(
       (select10) => {
         const {
           getBlockRootClientId,
+          getBlockName,
           canInsertBlockType,
           getDirectInsertBlock,
           getBlockIndex,
@@ -46717,21 +46723,24 @@ ${text}
         } = select10(import_block_editor152.store);
         const { getDefaultBlockName: getDefaultBlockName16 } = select10(import_blocks63.store);
         const _rootClientId = getBlockRootClientId(clientId);
+        const _blockName = getBlockName(clientId);
         const canInsertDefaultBlock = canInsertBlockType(
           getDefaultBlockName16(),
           _rootClientId
         );
         const directInsertBlock = _rootClientId ? getDirectInsertBlock(_rootClientId) : null;
         return {
+          blockName: _blockName,
           rootClientId: _rootClientId,
-          canDuplicate: !!block && (0, import_blocks63.hasBlockSupport)(block.name, "multiple", true) && canInsertBlockType(block.name, _rootClientId),
-          canInsertBlock: (canInsertDefaultBlock || !!directInsertBlock) && !!block && canInsertBlockType(block.name, _rootClientId),
+          canDuplicate: !!_blockName && (0, import_blocks63.hasBlockSupport)(_blockName, "multiple", true) && canInsertBlockType(_blockName, _rootClientId),
+          canInsertBlock: (canInsertDefaultBlock || !!directInsertBlock) && !!_blockName && canInsertBlockType(_blockName, _rootClientId),
           isFirst: getBlockIndex(clientId) === 0,
           isLast: getBlockIndex(clientId) === getBlockCount(_rootClientId) - 1
         };
       },
-      [clientId, block]
+      [clientId]
     );
+    const isSubmenuDisabled = !BLOCKS_THAT_CAN_BE_CONVERTED_TO_SUBMENU.includes(blockName);
     return /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
       import_components88.DropdownMenu,
       {
@@ -46772,11 +46781,12 @@ ${text}
             /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
               AddSubmenuItem,
               {
-                block,
+                clientId,
                 onClose,
+                isDisabled: isSubmenuDisabled,
                 expandedState: props.expandedState,
                 expand: props.expand,
-                setInsertedBlock: props.setInsertedBlock
+                setInsertedBlockClientId: props.setInsertedBlockClientId
               }
             ),
             canDuplicate && /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
@@ -48121,26 +48131,37 @@ ${text}
     "core/navigation-link",
     "core/navigation-submenu"
   ];
-  function NavigationLinkUI({ block, insertedBlock, setInsertedBlock }) {
+  function NavigationLinkUI({
+    insertedBlockClientId,
+    setInsertedBlockClientId
+  }) {
     const { updateBlockAttributes, removeBlock } = (0, import_data89.useDispatch)(import_block_editor160.store);
-    const supportsLinkControls = BLOCKS_WITH_LINK_UI_SUPPORT?.includes(
-      insertedBlock?.name
+    const { insertedBlockName, insertedBlockAttributes } = (0, import_data89.useSelect)(
+      (select10) => {
+        const { getBlockName, getBlockAttributes: getBlockAttributes4 } = select10(import_block_editor160.store);
+        return {
+          insertedBlockName: getBlockName(insertedBlockClientId),
+          insertedBlockAttributes: getBlockAttributes4(
+            insertedBlockClientId
+          )
+        };
+      },
+      [insertedBlockClientId]
     );
-    const blockWasJustInserted = insertedBlock?.clientId === block.clientId;
-    const showLinkControls = supportsLinkControls && blockWasJustInserted;
+    const showLinkControls = BLOCKS_WITH_LINK_UI_SUPPORT?.includes(insertedBlockName);
     const { createBinding, clearBinding } = useEntityBinding({
-      clientId: insertedBlock?.clientId,
-      attributes: insertedBlock?.attributes || {}
+      clientId: insertedBlockClientId,
+      attributes: insertedBlockAttributes || {}
     });
     if (!showLinkControls) {
       return null;
     }
     const cleanupInsertedBlock = () => {
       const shouldAutoSelectBlock = false;
-      if (!insertedBlock?.attributes?.url && insertedBlock?.clientId) {
-        removeBlock(insertedBlock.clientId, shouldAutoSelectBlock);
+      if (!insertedBlockAttributes?.url && insertedBlockClientId) {
+        removeBlock(insertedBlockClientId, shouldAutoSelectBlock);
       }
-      setInsertedBlock(null);
+      setInsertedBlockClientId(null);
     };
     const setInsertedBlockAttributes = (_insertedBlockClientId) => (_updatedAttributes) => {
       if (!_insertedBlockClientId) {
@@ -48150,16 +48171,16 @@ ${text}
     };
     const handleSetInsertedBlock = (newBlock) => {
       const shouldAutoSelectBlock = false;
-      if (insertedBlock?.clientId && newBlock) {
-        removeBlock(insertedBlock.clientId, shouldAutoSelectBlock);
+      if (insertedBlockClientId && newBlock) {
+        removeBlock(insertedBlockClientId, shouldAutoSelectBlock);
       }
-      setInsertedBlock(newBlock);
+      setInsertedBlockClientId(newBlock?.clientId ?? null);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime346.jsx)(
       LinkUI,
       {
-        clientId: insertedBlock?.clientId,
-        link: insertedBlock?.attributes,
+        clientId: insertedBlockClientId,
+        link: insertedBlockAttributes,
         onBlockInsert: handleSetInsertedBlock,
         onClose: () => {
           cleanupInsertedBlock();
@@ -48167,15 +48188,15 @@ ${text}
         onChange: (updatedValue) => {
           const { isEntityLink, attributes: updatedAttributes } = updateAttributes(
             updatedValue,
-            setInsertedBlockAttributes(insertedBlock?.clientId),
-            insertedBlock?.attributes
+            setInsertedBlockAttributes(insertedBlockClientId),
+            insertedBlockAttributes
           );
           if (isEntityLink) {
             createBinding(updatedAttributes);
           } else {
             clearBinding();
           }
-          setInsertedBlock(null);
+          setInsertedBlockClientId(null);
         }
       }
     );
