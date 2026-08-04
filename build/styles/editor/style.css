@@ -385,7 +385,7 @@ body.is-fullscreen-mode .interface-interface-skeleton {
 
 @media (min-width: 782px) {
   .has-footer .interface-interface-skeleton__body {
-    padding-bottom: 25px;
+    padding-bottom: calc(var(--wpds-dimension-size-md, 32px) + 1px);
   }
 }
 .interface-interface-skeleton__content {
@@ -474,7 +474,7 @@ body.is-fullscreen-mode .interface-interface-skeleton {
   z-index: 30;
   display: flex;
   background: #fff;
-  height: 24px;
+  height: var(--wpds-dimension-size-md, 32px);
   align-items: center;
   font-size: 13px;
   padding: 0 18px;
@@ -5310,7 +5310,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 }
 .media-editor__snackbar {
   position: fixed;
-  bottom: 24px;
+  bottom: var(--wpds-dimension-size-md, 32px);
   left: 0;
   right: 0;
   padding-inline: 16px;
@@ -5392,7 +5392,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 
 .media-editor-modal__snackbar {
   position: fixed;
-  bottom: 24px;
+  bottom: var(--wpds-dimension-size-md, 32px);
   left: 0;
   right: 0;
   padding-inline: 16px;

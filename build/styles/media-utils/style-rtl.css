@@ -353,7 +353,7 @@
 
 .media-upload-modal__snackbar {
   position: fixed;
-  bottom: 24px;
+  bottom: var(--wpds-dimension-size-md, 32px);
   right: 0;
   left: 0;
   padding-inline: 16px;
