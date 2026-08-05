@@ -49558,13 +49558,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     scripts = [],
     onFocus,
     tabIndex,
-    allowPopups = false
+    allowPopups = false,
+    allowForms = false
   }) {
     const ref = (0, import_element171.useRef)(null);
     const [width, setWidth] = (0, import_element171.useState)(0);
     const [height, setHeight] = (0, import_element171.useState)(0);
     const sandbox = clsx_default("allow-scripts", "allow-presentation", {
-      "allow-popups": allowPopups
+      "allow-popups": allowPopups,
+      "allow-forms": allowForms
     });
     const srcDoc = (0, import_element171.useMemo)(() => buildSandBoxDocument({
       html,
@@ -49636,13 +49638,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     scripts = [],
     onFocus,
     tabIndex,
-    allowPopups = false
+    allowPopups = false,
+    allowForms = false
   }) {
     const ref = (0, import_element171.useRef)(null);
     const [width, setWidth] = (0, import_element171.useState)(0);
     const [height, setHeight] = (0, import_element171.useState)(0);
     const sandbox = clsx_default("allow-scripts", "allow-same-origin", "allow-presentation", {
-      "allow-popups": allowPopups
+      "allow-popups": allowPopups,
+      "allow-forms": allowForms
     });
     function isFrameAccessible() {
       try {
