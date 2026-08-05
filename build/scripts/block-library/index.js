@@ -13918,18 +13918,7 @@ var wp;
   var import_block_editor24 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime196 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_BLOCK = {
-    name: "core/button",
-    attributesToCopy: [
-      "backgroundColor",
-      "border",
-      "className",
-      "fontFamily",
-      "fontSize",
-      "gradient",
-      "style",
-      "textColor",
-      "width"
-    ]
+    name: "core/button"
   };
   function ButtonsEdit({ attributes, className }) {
     const { fontSize, layout, style: style2 } = attributes;
