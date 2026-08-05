@@ -29896,7 +29896,6 @@ If there's a particular need for this, please submit a feature request at https:
         _embedded: { ...data?._embedded, "wp:attached-to": void 0 }
       });
       setValue(null);
-      setOptions([]);
     };
     const onValueChange = async (filterValue) => {
       setIsLoading(true);
@@ -29920,6 +29919,7 @@ If there's a particular need for this, please submit a feature request at https:
       setOptions(suggestions.concat(includeCurrent ? defaultPost : []));
       setIsLoading(false);
     };
+    const debouncedValueChange = (0, import_compose15.useDebounce)((0, import_compose15.useEvent)(onValueChange), 300);
     const handleSelectOption = (selectedPostId) => {
       if (!selectedPostId) {
         handleDetach();
@@ -29952,38 +29952,19 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     };
-    const help = (0, import_element81.createInterpolateElement)(
-      (0, import_i18n54.__)(
-        "Search for a post or page to attach this media to or <button>detach current</button>."
-      ),
-      {
-        button: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
-          import_components49.Button,
-          {
-            __next40pxDefaultSize: true,
-            onClick: handleDetach,
-            variant: "link",
-            accessibleWhenDisabled: true,
-            disabled: !value
-          }
-        )
-      }
-    );
     return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
       import_components49.ComboboxControl,
       {
         className: "dataviews-media-field__attached-to",
         isLoading,
         label: (0, import_i18n54.__)("Attached to"),
-        help,
+        help: (0, import_i18n54.__)("Attach this file to a single post or page."),
         value,
         options,
-        onFilterValueChange: (0, import_compose15.debounce)(
-          (filterValue) => onValueChange(filterValue),
-          300
-        ),
+        onFilterValueChange: (filterValue) => debouncedValueChange(filterValue),
         onChange: handleSelectOption,
-        hideLabelFromVision: true
+        hideLabelFromVision: true,
+        expandOnFocus: false
       }
     );
   }
