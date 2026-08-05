@@ -53302,13 +53302,10 @@ ${text}
   var transforms_default22 = transforms21;
 
   // packages/block-library/build-module/paragraph/index.mjs
-  var { fieldsKey: fieldsKey14, formKey: formKey14, editableRootKey } = unlock(import_blocks78.privateApis);
+  var { fieldsKey: fieldsKey14, formKey: formKey14 } = unlock(import_blocks78.privateApis);
   var { name: name63 } = block_default62;
   var settings62 = {
     icon: paragraph_default,
-    // Opt into the editing host behaviour privately. It's a Symbol setting
-    // rather than a public `supports` key so it stays an internal detail.
-    [editableRootKey]: true,
     example: {
       attributes: {
         content: (0, import_i18n161.__)(
