@@ -1,3 +1,4 @@
+(function() {
 "use strict";
 var wp;
 (wp ||= {}).richText = (() => {
@@ -3133,5 +3134,7 @@ var wp;
   function __experimentalRichText() {
   }
   return __toCommonJS(index_exports);
+})();
+(window.wp ||= {}).richText = wp.richText;
 })();
 //# sourceMappingURL=index.js.map

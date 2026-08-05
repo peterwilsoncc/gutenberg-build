@@ -1,3 +1,4 @@
+(function() {
 "use strict";
 var wp;
 (wp ||= {}).blockEditor = (() => {
@@ -99441,4 +99442,6 @@ is-plain-object/dist/is-plain-object.mjs:
    * Released under the MIT License.
    *)
 */
+(window.wp ||= {}).blockEditor = wp.blockEditor;
+})();
 //# sourceMappingURL=index.js.map

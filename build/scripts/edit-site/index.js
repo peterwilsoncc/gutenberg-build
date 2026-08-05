@@ -1,3 +1,4 @@
+(function() {
 "use strict";
 var wp;
 (wp ||= {}).editSite = (() => {
@@ -60734,4 +60735,6 @@ is-plain-object/dist/is-plain-object.mjs:
    * Released under the MIT License.
    *)
 */
+(window.wp ||= {}).editSite = wp.editSite;
+})();
 //# sourceMappingURL=index.js.map
