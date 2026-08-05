@@ -6276,6 +6276,7 @@ var wp;
   var DESKTOP_DEVICE_TYPE = "Desktop";
   var TABLET_DEVICE_TYPE = "Tablet";
   var MOBILE_DEVICE_TYPE = "Mobile";
+  var DEVICE_PREVIEW_WIDTH_OFFSET = 1;
   var VIEWPORT_STATE_BY_DEVICE_TYPE = {
     Desktop: "default",
     Tablet: "@tablet",
@@ -6283,25 +6284,36 @@ var wp;
   };
   function getDeviceTypeByCanvasWidth(canvasWidth2, viewportSettings) {
     const width = getViewportBreakpointValueInPixels2(canvasWidth2);
-    if (width && width <= getViewportBreakpointValueInPixels2(
-      getCanvasWidthByDeviceType("Mobile", viewportSettings)
-    )) {
+    const breakpoints = getViewportBreakpoints2(viewportSettings);
+    if (width && width <= getViewportBreakpointValueInPixels2(breakpoints.mobile)) {
       return MOBILE_DEVICE_TYPE;
     }
-    if (width && width <= getViewportBreakpointValueInPixels2(
-      getCanvasWidthByDeviceType("Tablet", viewportSettings)
-    )) {
+    if (width && width <= getViewportBreakpointValueInPixels2(breakpoints.tablet)) {
       return TABLET_DEVICE_TYPE;
     }
     return DESKTOP_DEVICE_TYPE;
   }
   function getCanvasWidthByDeviceType(deviceType, viewportSettings) {
     const viewportKey = VIEWPORT_KEY_BY_DEVICE_TYPE[deviceType];
-    if (viewportKey) {
-      return getViewportBreakpointValueInPixels2(
-        getViewportBreakpoints2(viewportSettings)[viewportKey]
-      );
+    if (!viewportKey) {
+      return void 0;
     }
+    const breakpoints = getViewportBreakpoints2(viewportSettings);
+    const width = getViewportBreakpointValueInPixels2(
+      breakpoints[viewportKey]
+    );
+    if (width === void 0) {
+      return void 0;
+    }
+    let lowerBreakpoint = 0;
+    if (deviceType === TABLET_DEVICE_TYPE) {
+      lowerBreakpoint = getViewportBreakpointValueInPixels2(breakpoints.mobile) ?? 0;
+    }
+    const offset4 = Math.min(
+      DEVICE_PREVIEW_WIDTH_OFFSET,
+      (width - lowerBreakpoint) / 2
+    );
+    return width - offset4;
   }
 
   // packages/editor/build-module/store/selectors.mjs
