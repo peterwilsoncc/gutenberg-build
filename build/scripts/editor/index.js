@@ -57722,7 +57722,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
   var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
   var PLACEMENT_CONTROL_IDLE_MS = 300;
-  function MediaEditorSidebar({ tabs }) {
+  function MediaEditorSidebar({
+    tabs,
+    activeTabId,
+    onTabChange
+  }) {
     return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
       complementary_area_default,
       {
@@ -57735,6 +57739,13 @@ If there's a particular need for this, please submit a feature request at https:
         panelClassName: "media-editor__sidebar-panel",
         headerClassName: "media-editor__sidebar-header",
         closeLabel: (0, import_i18n143.__)("Close media panel"),
+        render: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+          tabs_exports.Root,
+          {
+            value: activeTabId,
+            onValueChange: (value) => onTabChange(value)
+          }
+        ),
         header: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(tabs_exports.List, { variant: "minimal", children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(tabs_exports.Tab, { value: tab.id, children: tab.title }, tab.id)) }),
         children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(tabs_exports.Panel, { value: tab.id, tabIndex: -1, children: tab.panel }, tab.id))
       }
@@ -57748,12 +57759,12 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element167.useState)(false);
     return /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)(
-      import_components92.Flex,
+      Stack,
       {
         className: "media-editor__header-actions",
         justify: "flex-end",
-        expanded: false,
-        gap: 2,
+        align: "center",
+        gap: "sm",
         children: [
           isImage && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
             import_components92.Button,
@@ -57819,11 +57830,11 @@ If there's a particular need for this, please submit a feature request at https:
       endGesture();
     };
     return /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)(
-      import_components92.Flex,
+      Stack,
       {
         className: "media-editor__history-actions",
-        expanded: false,
-        gap: 2,
+        align: "center",
+        gap: "sm",
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
             import_components92.Button,
@@ -57875,12 +57886,12 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const saveDisabled = isSaving || !hasMedia || !hasChanges;
     return /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)(
-      import_components92.Flex,
+      Stack,
       {
         className: "media-editor__footer-actions",
         justify: "flex-end",
-        expanded: false,
-        gap: 2,
+        align: "center",
+        gap: "sm",
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
             import_components92.Button,
@@ -58127,40 +58138,39 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: handleChange,
         settings: { fields: fields2 },
         children: [
-          !media ? /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("div", { className: "media-editor", children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components92.Spinner, {}) }) }) : /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)(
-            tabs_exports.Root,
-            {
-              className: "media-editor",
-              value: activeTabId,
-              onValueChange: (value) => setSelectedTabId(value),
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(MediaEditorSidebar, { tabs }),
-                /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
-                  interface_skeleton_default,
-                  {
-                    className: "media-editor__skeleton",
-                    labels: {
-                      body: isImage ? (0, import_i18n143.__)("Image editor") : (0, import_i18n143.__)("Media preview"),
-                      sidebar: (0, import_i18n143.__)("Media details")
-                    },
-                    content: /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)("div", { className: "media-editor__content", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
-                        MediaEditorCanvas,
-                        {
-                          focusOnMount: true,
-                          isPlacementActive,
-                          onGestureStart: handleCanvasGestureStart,
-                          onGestureEnd: handleCanvasGestureEnd
-                        }
-                      ) : /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(MediaPreview2, {}) }),
-                      isImage && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("div", { className: "media-editor__canvas-toolbar", children: ruler })
-                    ] }),
-                    sidebar: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
-                  }
-                )
-              ]
-            }
-          ),
+          /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components92.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)(import_jsx_runtime288.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+              MediaEditorSidebar,
+              {
+                tabs,
+                activeTabId,
+                onTabChange: setSelectedTabId
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+              interface_skeleton_default,
+              {
+                className: "media-editor__skeleton",
+                labels: {
+                  body: isImage ? (0, import_i18n143.__)("Image editor") : (0, import_i18n143.__)("Media preview"),
+                  sidebar: (0, import_i18n143.__)("Media details")
+                },
+                content: /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)("div", { className: "media-editor__content", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+                    MediaEditorCanvas,
+                    {
+                      focusOnMount: true,
+                      isPlacementActive,
+                      onGestureStart: handleCanvasGestureStart,
+                      onGestureEnd: handleCanvasGestureEnd
+                    }
+                  ) : /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(MediaPreview2, {}) }),
+                  isImage && /* @__PURE__ */ (0, import_jsx_runtime288.jsx)("div", { className: "media-editor__canvas-toolbar", children: ruler })
+                ] }),
+                sidebar: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
+              }
+            )
+          ] }) }),
           /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
             import_components92.__experimentalConfirmDialog,
             {
