@@ -80806,7 +80806,7 @@ ${text}
       name: "video",
       title: (0, import_i18n277.__)("Video"),
       description: (0, import_i18n277.__)(
-        "Embed a video from your media library or upload a new one."
+        "A video with customizable playback and interaction controls."
       ),
       icon: video_default,
       attributes: { controls: true },
