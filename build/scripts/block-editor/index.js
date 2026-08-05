@@ -14791,19 +14791,29 @@ var wp;
     }
     return !!clientId && selectionStart.clientId === clientId;
   }
+  var getSelectedBlockAncestors = (0, import_data5.createSelector)(
+    (state) => {
+      const ancestors = /* @__PURE__ */ new Set();
+      for (const clientId of getSelectedBlockClientIds(state)) {
+        let current = clientId;
+        while (current = state.blocks.parents.get(current)) {
+          if (ancestors.has(current)) {
+            break;
+          }
+          ancestors.add(current);
+        }
+      }
+      return ancestors;
+    },
+    (state) => getSelectedBlockClientIds.getDependants(state)
+  );
   function hasSelectedInnerBlock(state, clientId, deep = false) {
     const selectedBlockClientIds = getSelectedBlockClientIds(state);
     if (!selectedBlockClientIds.length) {
       return false;
     }
     if (deep) {
-      return selectedBlockClientIds.some(
-        (id) => (
-          // Pass true because we don't care about order and it's more
-          // performant.
-          getBlockParents(state, id, true).includes(clientId)
-        )
-      );
+      return getSelectedBlockAncestors(state).has(clientId);
     }
     return selectedBlockClientIds.some(
       (id) => getBlockRootClientId(state, id) === clientId
@@ -26893,7 +26903,9 @@ var wp;
           clientId,
           checkDeep
         );
-        const sectionBlockClientId = _isSectionBlock(clientId) ? clientId : getParentSectionBlock2(clientId);
+        const isSectionBlock22 = _isSectionBlock(clientId);
+        const sectionBlockClientId = isSectionBlock22 ? clientId : getParentSectionBlock2(clientId);
+        const isSelectionWithinCurrentSection2 = isBlockSelected2(sectionBlockClientId) || !!sectionBlockClientId && hasSelectedInnerBlock2(sectionBlockClientId, checkDeep);
         const multiple = (0, import_blocks23.hasBlockSupport)(blockName, "multiple", true);
         const blocksWithSameName = multiple ? [] : getBlocksByName2(blockName);
         const isInvalid = blocksWithSameName.length && blocksWithSameName[0] !== clientId;
@@ -26902,9 +26914,9 @@ var wp;
           mode: getBlockMode2(clientId),
           isSelectionEnabled: isSelectionEnabled22(),
           isLocked: !!getTemplateLock2(rootClientId),
-          isSectionBlock: _isSectionBlock(clientId),
+          isSectionBlock: isSectionBlock22,
           isWithinSectionBlock: !!sectionBlockClientId,
-          isSelectionWithinCurrentSection: isBlockSelected2(sectionBlockClientId) || hasSelectedInnerBlock2(sectionBlockClientId, checkDeep),
+          isSelectionWithinCurrentSection: isSelectionWithinCurrentSection2,
           blockType: blockType2,
           canRemove: canRemove2,
           canMove: canMove2,
