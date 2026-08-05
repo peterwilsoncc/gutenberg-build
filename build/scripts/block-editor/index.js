@@ -61973,6 +61973,7 @@ var wp;
 
   // packages/block-editor/build-module/components/list-view/index.mjs
   var import_compose77 = __toESM(require_compose(), 1);
+  var import_is_shallow_equal3 = __toESM(require_is_shallow_equal(), 1);
   var import_components123 = __toESM(require_components(), 1);
   var import_data138 = __toESM(require_data(), 1);
   var import_deprecated14 = __toESM(require_deprecated(), 1);
@@ -61996,6 +61997,12 @@ var wp;
   var ListViewContext = (0, import_element182.createContext)({});
   ListViewContext.displayName = "ListViewContext";
   var useListViewContext = () => (0, import_element182.useContext)(ListViewContext);
+  var ListViewTreeStateContext = (0, import_element182.createContext)({});
+  ListViewTreeStateContext.displayName = "ListViewTreeStateContext";
+  var useListViewTreeState = () => (0, import_element182.useContext)(ListViewTreeStateContext);
+  var ListViewInsertedBlockContext = (0, import_element182.createContext)(null);
+  ListViewInsertedBlockContext.displayName = "ListViewInsertedBlockContext";
+  var useInsertedBlockClientId = () => (0, import_element182.useContext)(ListViewInsertedBlockContext);
 
   // packages/block-editor/build-module/components/list-view/aria-referenced-text.mjs
   var import_react15 = __toESM(require_react(), 1);
@@ -62007,7 +62014,8 @@ var wp;
   var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
   var Appender = (0, import_element183.forwardRef)(
     ({ nestingLevel, blockCount, clientId, ...props }, ref) => {
-      const { insertedBlockClientId, setInsertedBlockClientId } = useListViewContext();
+      const { setInsertedBlockClientId } = useListViewContext();
+      const insertedBlockClientId = useInsertedBlockClientId();
       const instanceId = (0, import_compose72.useInstanceId)(Appender);
       const { directInsert, hideInserter } = (0, import_data127.useSelect)(
         (select3) => {
@@ -62429,34 +62437,32 @@ var wp;
 
   // packages/block-editor/build-module/components/list-view/block-contents.mjs
   var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
+  function InsertedBlockContent({ clientId }) {
+    const { AdditionalBlockContent, setInsertedBlockClientId } = useListViewContext();
+    const insertedBlockClientId = useInsertedBlockClientId();
+    if (!AdditionalBlockContent || insertedBlockClientId !== clientId) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
+      AdditionalBlockContent,
+      {
+        insertedBlockClientId,
+        setInsertedBlockClientId
+      }
+    );
+  }
   var ListViewBlockContents = (0, import_element188.forwardRef)(
     ({
       onClick,
       onToggleExpanded,
       clientId,
-      isSelected,
-      position,
-      siblingBlockCount,
-      level,
       isExpanded,
       selectedClientIds,
       ...props
     }, ref) => {
-      const {
-        AdditionalBlockContent,
-        insertedBlockClientId,
-        setInsertedBlockClientId
-      } = useListViewContext();
       const draggableClientIds = selectedClientIds.includes(clientId) ? selectedClientIds : [clientId];
-      const showAdditionalBlockContent = !!AdditionalBlockContent && insertedBlockClientId === clientId;
       return /* @__PURE__ */ (0, import_jsx_runtime327.jsxs)(import_jsx_runtime327.Fragment, { children: [
-        showAdditionalBlockContent && /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
-          AdditionalBlockContent,
-          {
-            insertedBlockClientId,
-            setInsertedBlockClientId
-          }
-        ),
+        /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(InsertedBlockContent, { clientId }),
         /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(
           block_draggable_default,
           {
@@ -62471,10 +62477,6 @@ var wp;
                 clientId,
                 onClick,
                 onToggleExpanded,
-                isSelected,
-                position,
-                siblingBlockCount,
-                level,
                 draggable,
                 onDragStart,
                 onDragEnd,
@@ -62714,7 +62716,6 @@ var wp;
     const {
       BlockSettingsMenu: BlockSettingsMenu2,
       listViewInstanceId,
-      expansionState,
       updateExpansion,
       setInsertedBlockClientId,
       treeGridElementRef,
@@ -62834,8 +62835,7 @@ var wp;
         event.preventDefault();
         const { firstBlockClientId } = getBlocksToUpdate();
         const blockParents = getBlockParents2(firstBlockClientId, false);
-        updateExpansion({ type: "clear" });
-        updateExpansion({ type: "expand", clientIds: blockParents });
+        updateExpansion({ type: "replace", clientIds: blockParents });
       } else if (isMatch("core/block-editor/group", event)) {
         const { blocksToUpdate } = getBlocksToUpdate();
         if (blocksToUpdate.length > 1 && isGroupable2(blocksToUpdate)) {
@@ -62910,7 +62910,7 @@ var wp;
         }
         updateExpansion({
           type: isExpanded ? "collapse" : "expand",
-          clientIds: clientId
+          clientIds: [clientId]
         });
       },
       [clientId, updateExpansion, isExpanded]
@@ -63054,10 +63054,6 @@ var wp;
                     onContextMenu: isDisabled ? void 0 : onContextMenu,
                     onMouseDown,
                     onToggleExpanded: isDisabled ? void 0 : toggleExpanded,
-                    isSelected,
-                    position,
-                    siblingBlockCount,
-                    level,
                     ref,
                     tabIndex: getListViewBlockTabIndex(tabIndex),
                     onFocus,
@@ -63131,7 +63127,6 @@ var wp;
                     size: "small"
                   },
                   disableOpenOnArrowDown: true,
-                  expansionState,
                   updateExpansion,
                   setInsertedBlockClientId,
                   __experimentalSelectBlock: updateFocusAndSelection,
@@ -63189,7 +63184,6 @@ var wp;
       fixedListWindow,
       isExpanded,
       parentId,
-      shouldShowInnerBlocks = true,
       isSyncedBranch = false,
       showAppender: showAppenderProp = true
     } = props;
@@ -63216,7 +63210,7 @@ var wp;
       blockIndexes,
       expansionState,
       draggedClientIds
-    } = useListViewContext();
+    } = useListViewTreeState();
     if (!canParentExpand) {
       return null;
     }
@@ -63261,7 +63255,7 @@ var wp;
       const position = index2 + 1;
       const updatedPath = path.length > 0 ? `${path}_${position}` : `${position}`;
       const hasNestedBlocks = !!innerBlocks?.length;
-      const shouldExpand = hasNestedBlocks && shouldShowInnerBlocks ? expansionState[clientId] ?? isExpanded : void 0;
+      const shouldExpand = hasNestedBlocks ? expansionState[clientId] ?? isExpanded : void 0;
       const isSelected = isClientIdSelected(clientId, selectedClientIds);
       const isSelectedBranch = isBranchSelected || isSelected && hasNestedBlocks;
       const showBlock = isDragged || blockInView || isSelected && clientId === selectedClientIds[0] || index2 === 0 || index2 === blockCount - 1;
@@ -63299,7 +63293,6 @@ var wp;
               showBlockMovers,
               path: updatedPath,
               isExpanded: isDragged ? false : shouldExpand,
-              listPosition: blockListPosition,
               selectedClientIds,
               isSyncedBranch: syncedBranch,
               displacement,
@@ -63737,8 +63730,7 @@ var wp;
     (0, import_element194.useEffect)(() => {
       if (expandedBlock2) {
         const blockParents = getBlockParents2(expandedBlock2, false);
-        updateExpansion({ type: "clear" });
-        updateExpansion({ type: "expand", clientIds: blockParents });
+        updateExpansion({ type: "replace", clientIds: blockParents });
       }
     }, [updateExpansion, expandedBlock2, getBlockParents2]);
   }
@@ -63909,7 +63901,6 @@ var wp;
   };
   function useListViewDropZone({
     dropZoneElement,
-    expansionState,
     updateExpansion
   }) {
     const {
@@ -63925,15 +63916,15 @@ var wp;
     const rtl = (0, import_i18n112.isRTL)();
     const previousRootClientId = (0, import_compose75.usePrevious)(targetRootClientId);
     const maybeExpandBlock = (0, import_element195.useCallback)(
-      (_expansionState, _target) => {
+      (_target) => {
         const { rootClientId } = _target || {};
         if (!rootClientId) {
           return;
         }
-        if (_target?.dropPosition === "inside" && !_expansionState[rootClientId]) {
+        if (_target?.dropPosition === "inside") {
           updateExpansion({
             type: "expand",
-            clientIds: rootClientId
+            clientIds: [rootClientId]
           });
         }
       },
@@ -63949,13 +63940,8 @@ var wp;
         throttledMaybeExpandBlock.cancel();
         return;
       }
-      throttledMaybeExpandBlock(expansionState, target);
-    }, [
-      expansionState,
-      previousRootClientId,
-      target,
-      throttledMaybeExpandBlock
-    ]);
+      throttledMaybeExpandBlock(target);
+    }, [previousRootClientId, target, throttledMaybeExpandBlock]);
     const draggedBlockClientIds = getDraggedBlockClientIds2();
     const throttled = (0, import_compose75.useThrottle)(
       (0, import_element195.useCallback)(
@@ -64205,18 +64191,24 @@ var wp;
   // packages/block-editor/build-module/components/list-view/index.mjs
   var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
   var expansion = (state, action) => {
-    if (action.type === "clear") {
-      return {};
+    const { type, clientIds } = action;
+    if (type === "replace") {
+      const next = Object.fromEntries(
+        clientIds.map((id) => [id, true])
+      );
+      return (0, import_is_shallow_equal3.isShallowEqual)(state, next) ? state : next;
     }
-    const clientIds = [action.clientIds].flat().filter(Boolean);
-    if (!clientIds.length) {
+    if (type !== "expand" && type !== "collapse") {
+      return state;
+    }
+    const isExpand = type === "expand";
+    const changed = clientIds.filter((id) => state[id] !== isExpand);
+    if (!changed.length) {
       return state;
     }
     return {
       ...state,
-      ...Object.fromEntries(
-        clientIds.map((id) => [id, action.type === "expand"])
-      )
+      ...Object.fromEntries(changed.map((id) => [id, isExpand]))
     };
   };
   function ListViewComponent({
@@ -64279,7 +64271,6 @@ var wp;
     );
     const { ref: dropZoneRef, target: blockDropTarget } = useListViewDropZone({
       dropZoneElement,
-      expansionState,
       updateExpansion
     });
     const elementRef = (0, import_element197.useRef)();
@@ -64303,10 +64294,16 @@ var wp;
       ref
     ]);
     const expandRow = (0, import_element197.useCallback)((row) => {
-      updateExpansion({ type: "expand", clientIds: row?.dataset?.block });
+      const clientId = row?.dataset?.block;
+      if (clientId) {
+        updateExpansion({ type: "expand", clientIds: [clientId] });
+      }
     }, []);
     const collapseRow = (0, import_element197.useCallback)((row) => {
-      updateExpansion({ type: "collapse", clientIds: row?.dataset?.block });
+      const clientId = row?.dataset?.block;
+      if (clientId) {
+        updateExpansion({ type: "collapse", clientIds: [clientId] });
+      }
     }, []);
     const focusRow = (0, import_element197.useCallback)(
       (event, startRow, endRow) => {
@@ -64342,20 +64339,31 @@ var wp;
     }, [blockDropTarget, blockIndexes, firstDraggedBlockClientId]);
     const contextValue = (0, import_element197.useMemo)(
       () => ({
+        AdditionalBlockContent,
+        BlockSettingsMenu: BlockSettingsMenu2,
+        listViewInstanceId: instanceId,
+        rootClientId,
+        setInsertedBlockClientId,
+        treeGridElementRef: elementRef,
+        updateExpansion
+      }),
+      [
+        AdditionalBlockContent,
+        BlockSettingsMenu2,
+        instanceId,
+        rootClientId,
+        setInsertedBlockClientId,
+        updateExpansion
+      ]
+    );
+    const treeStateContextValue = (0, import_element197.useMemo)(
+      () => ({
         blockDropPosition,
         blockDropTargetIndex,
         blockIndexes,
         draggedClientIds,
         expansionState,
-        updateExpansion,
-        firstDraggedBlockIndex,
-        BlockSettingsMenu: BlockSettingsMenu2,
-        listViewInstanceId: instanceId,
-        AdditionalBlockContent,
-        insertedBlockClientId,
-        setInsertedBlockClientId,
-        treeGridElementRef: elementRef,
-        rootClientId
+        firstDraggedBlockIndex
       }),
       [
         blockDropPosition,
@@ -64363,14 +64371,7 @@ var wp;
         blockIndexes,
         draggedClientIds,
         expansionState,
-        updateExpansion,
-        firstDraggedBlockIndex,
-        BlockSettingsMenu2,
-        instanceId,
-        AdditionalBlockContent,
-        insertedBlockClientId,
-        setInsertedBlockClientId,
-        rootClientId
+        firstDraggedBlockIndex
       ]
     );
     const [fixedListWindow] = (0, import_compose77.__experimentalUseFixedWindowList)(
@@ -64420,16 +64421,28 @@ var wp;
             "--wp-admin--list-view-dragged-items-height": draggedClientIds?.length ? `${BLOCK_LIST_ITEM_HEIGHT * (draggedClientIds.length - 1)}px` : null
           },
           children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(ListViewContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-            branch_default,
+            ListViewInsertedBlockContext.Provider,
             {
-              blocks: clientIdsTree,
-              parentId: rootClientId,
-              selectBlock: selectEditorBlock,
-              showBlockMovers,
-              fixedListWindow,
-              selectedClientIds,
-              isExpanded,
-              showAppender
+              value: insertedBlockClientId,
+              children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+                ListViewTreeStateContext.Provider,
+                {
+                  value: treeStateContextValue,
+                  children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+                    branch_default,
+                    {
+                      blocks: clientIdsTree,
+                      parentId: rootClientId,
+                      selectBlock: selectEditorBlock,
+                      showBlockMovers,
+                      fixedListWindow,
+                      selectedClientIds,
+                      isExpanded,
+                      showAppender
+                    }
+                  )
+                }
+              )
             }
           ) })
         }
@@ -69775,7 +69788,7 @@ var wp;
   var import_compose88 = __toESM(require_compose(), 1);
   var import_dom69 = __toESM(require_dom(), 1);
   var import_keycodes19 = __toESM(require_keycodes(), 1);
-  var import_is_shallow_equal3 = __toESM(require_is_shallow_equal(), 1);
+  var import_is_shallow_equal4 = __toESM(require_is_shallow_equal(), 1);
   var import_data149 = __toESM(require_data(), 1);
   var import_preferences4 = __toESM(require_preferences(), 1);
   var import_deprecated21 = __toESM(require_deprecated(), 1);
@@ -70822,7 +70835,7 @@ var wp;
     const isEntity = handleEntities && !!internalControlValue?.id;
     const baseId = (0, import_compose88.useInstanceId)(LinkControl, "link-control");
     const helpTextId = isEntity ? `${baseId}__help` : null;
-    const valueHasChanges = value && !(0, import_is_shallow_equal3.isShallowEqualObjects)(internalControlValue, value);
+    const valueHasChanges = value && !(0, import_is_shallow_equal4.isShallowEqualObjects)(internalControlValue, value);
     const [isEditingLink, setIsEditingLink] = (0, import_element224.useState)(
       forceIsEditingLink !== void 0 ? forceIsEditingLink : !value || !value.url
     );
@@ -96546,7 +96559,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/spacing-visualizer.mjs
   var import_element320 = __toESM(require_element(), 1);
-  var import_is_shallow_equal4 = __toESM(require_is_shallow_equal(), 1);
+  var import_is_shallow_equal5 = __toESM(require_is_shallow_equal(), 1);
   var import_jsx_runtime519 = __toESM(require_jsx_runtime(), 1);
   function SpacingVisualizer({ clientId, value, computeStyle, forceShow }) {
     const blockElement = useBlockElement(clientId);
@@ -96574,7 +96587,7 @@ var wp;
     const previousValueRef = (0, import_element320.useRef)(value);
     const [isActive, setIsActive] = (0, import_element320.useState)(false);
     (0, import_element320.useEffect)(() => {
-      if ((0, import_is_shallow_equal4.isShallowEqual)(value, previousValueRef.current) || forceShow) {
+      if ((0, import_is_shallow_equal5.isShallowEqual)(value, previousValueRef.current) || forceShow) {
         return;
       }
       setIsActive(true);

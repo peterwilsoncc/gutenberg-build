@@ -46645,7 +46645,6 @@ ${text}
     clientId,
     onClose,
     isDisabled,
-    expansionState,
     updateExpansion,
     setInsertedBlockClientId
   }) {
@@ -46684,17 +46683,19 @@ ${text}
             );
           }
           setInsertedBlockClientId(newLink.clientId);
-          if (!expansionState[clientId]) {
-            updateExpansion({ type: "expand", clientIds: clientId });
-          }
+          updateExpansion({ type: "expand", clientIds: [clientId] });
           onClose();
         },
         children: (0, import_i18n137.__)("Add submenu link")
       }
     );
   }
-  function LeafMoreMenu(props) {
-    const { clientId } = props;
+  function LeafMoreMenu({
+    clientId,
+    updateExpansion,
+    setInsertedBlockClientId,
+    ...props
+  }) {
     const {
       moveBlocksDown,
       moveBlocksUp,
@@ -46788,9 +46789,8 @@ ${text}
                 clientId,
                 onClose,
                 isDisabled: isSubmenuDisabled,
-                expansionState: props.expansionState,
-                updateExpansion: props.updateExpansion,
-                setInsertedBlockClientId: props.setInsertedBlockClientId
+                updateExpansion,
+                setInsertedBlockClientId
               }
             ),
             canDuplicate && /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
