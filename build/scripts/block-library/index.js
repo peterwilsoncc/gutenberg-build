@@ -81103,7 +81103,7 @@ ${text}
           }
         ) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(import_block_editor298.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime560.jsxs)(
+      !isGif && /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(import_block_editor298.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime560.jsxs)(
         import_components184.__experimentalToolsPanel,
         {
           label: (0, import_i18n275.__)("Settings"),
