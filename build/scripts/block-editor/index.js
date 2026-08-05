@@ -16480,16 +16480,24 @@ var wp;
         return;
       }
     }
+    const blocksWithTemplates = applyBlockTypeTemplates(blocks2);
     registry.batch(() => {
       dispatch({
         type: "REPLACE_BLOCKS",
         clientIds,
-        blocks: blocks2,
+        blocks: blocksWithTemplates,
         time: Date.now(),
         indexToSelect,
         initialPosition: initialPosition2,
         meta
       });
+      selectBlockTypeTemplate(
+        select3,
+        dispatch,
+        blocks2,
+        blocksWithTemplates,
+        initialPosition2
+      );
       dispatch.ensureDefaultBlock();
     });
   };
@@ -16549,7 +16557,47 @@ var wp;
       meta
     );
   }
-  var insertBlocks = (blocks2, index2, rootClientId, updateSelection = true, initialPosition2 = 0, meta) => ({ select: select3, dispatch }) => {
+  function applyBlockTypeTemplates(blocks2, expandedTypes = /* @__PURE__ */ new Set()) {
+    let hasChanges = false;
+    const result = blocks2.map((block) => {
+      let { innerBlocks } = block;
+      if (innerBlocks?.length) {
+        innerBlocks = applyBlockTypeTemplates(innerBlocks, expandedTypes);
+      } else if (!expandedTypes.has(block.name)) {
+        const { template: template2 } = (0, import_blocks8.getBlockType)(block.name) ?? {};
+        if (template2?.length) {
+          innerBlocks = applyBlockTypeTemplates(
+            (0, import_blocks8.synchronizeBlocksWithTemplate)([], template2),
+            new Set(expandedTypes).add(block.name)
+          );
+        }
+      }
+      if (innerBlocks === block.innerBlocks) {
+        return block;
+      }
+      hasChanges = true;
+      return { ...block, innerBlocks };
+    });
+    return hasChanges ? result : blocks2;
+  }
+  function selectBlockTypeTemplate(select3, dispatch, originalBlocks, blocksWithTemplates, initialPosition2) {
+    const selectedClientId = select3.getSelectedBlockClientId();
+    if (!selectedClientId) {
+      return;
+    }
+    const index2 = blocksWithTemplates.findIndex(
+      (block2) => block2.clientId === selectedClientId
+    );
+    if (index2 === -1 || blocksWithTemplates[index2] === originalBlocks[index2] || !blocksWithTemplates[index2].innerBlocks.length || !(0, import_blocks8.getBlockType)(blocksWithTemplates[index2].name)?.templateInsertUpdatesSelection) {
+      return;
+    }
+    let block = blocksWithTemplates[index2];
+    while (block.innerBlocks[0]) {
+      block = block.innerBlocks[0];
+    }
+    dispatch.selectBlock(block.clientId, initialPosition2);
+  }
+  var insertBlocks = (blocks2, index2, rootClientId, updateSelection = true, initialPosition2 = 0, meta) => ({ select: select3, dispatch, registry }) => {
     if (initialPosition2 !== null && typeof initialPosition2 === "object") {
       meta = initialPosition2;
       initialPosition2 = 0;
@@ -16573,15 +16621,25 @@ var wp;
       }
     }
     if (allowedBlocks.length) {
-      dispatch({
-        type: "INSERT_BLOCKS",
-        blocks: allowedBlocks,
-        index: index2,
-        rootClientId,
-        time: Date.now(),
-        updateSelection,
-        initialPosition: updateSelection ? initialPosition2 : null,
-        meta
+      const blocksWithTemplates = applyBlockTypeTemplates(allowedBlocks);
+      registry.batch(() => {
+        dispatch({
+          type: "INSERT_BLOCKS",
+          blocks: blocksWithTemplates,
+          index: index2,
+          rootClientId,
+          time: Date.now(),
+          updateSelection,
+          initialPosition: updateSelection ? initialPosition2 : null,
+          meta
+        });
+        selectBlockTypeTemplate(
+          select3,
+          dispatch,
+          allowedBlocks,
+          blocksWithTemplates,
+          initialPosition2
+        );
       });
     }
   };
@@ -20955,9 +21013,9 @@ var wp;
         const {
           getAllBlockBindingsSources,
           getBlockBindingsSourceFieldsList,
-          getBlockType: getBlockType30
+          getBlockType: getBlockType31
         } = unlock(select3(import_blocks15.store));
-        const _attribute = getBlockType30(blockName).attributes?.[attribute];
+        const _attribute = getBlockType31(blockName).attributes?.[attribute];
         if (_attribute?.enum) {
           return {};
         }
@@ -21157,9 +21215,9 @@ var wp;
           return null;
         }
         const { getBlockName: getBlockName2, getBlockAttributes: getBlockAttributes3, getBlock: getBlock2 } = select3(store);
-        const { getBlockType: getBlockType30, getActiveBlockVariation } = select3(import_blocks16.store);
+        const { getBlockType: getBlockType31, getActiveBlockVariation } = select3(import_blocks16.store);
         const blockName = getBlockName2(clientId);
-        const blockType = getBlockType30(blockName);
+        const blockType = getBlockType31(blockName);
         if (!blockType) {
           return null;
         }
@@ -47432,7 +47490,7 @@ var wp;
   var import_notices4 = __toESM(require_notices(), 1);
   function useNotifyCopy() {
     const { getBlockName: getBlockName2 } = (0, import_data48.useSelect)(store);
-    const { getBlockType: getBlockType30 } = (0, import_data48.useSelect)(import_blocks28.store);
+    const { getBlockType: getBlockType31 } = (0, import_data48.useSelect)(import_blocks28.store);
     const { createSuccessNotice } = (0, import_data48.useDispatch)(import_notices4.store);
     return (0, import_element96.useCallback)(
       (eventType, selectedBlockClientIds) => {
@@ -47441,7 +47499,7 @@ var wp;
           notice = (0, import_i18n37.__)("Styles copied to clipboard.");
         } else if (selectedBlockClientIds.length === 1) {
           const clientId = selectedBlockClientIds[0];
-          const title = getBlockType30(getBlockName2(clientId))?.title;
+          const title = getBlockType31(getBlockName2(clientId))?.title;
           if (eventType === "copy") {
             notice = (0, import_i18n37.sprintf)(
               // Translators: %s: Name of the block being copied, e.g. "Paragraph".
@@ -47480,7 +47538,7 @@ var wp;
           type: "snackbar"
         });
       },
-      [createSuccessNotice, getBlockName2, getBlockType30]
+      [createSuccessNotice, getBlockName2, getBlockType31]
     );
   }
 
@@ -52953,7 +53011,7 @@ var wp;
       getBlockSelectionEnd: getBlockSelectionEnd2,
       getPreviousBlockClientId: getPreviousBlockClientId2
     } = (0, import_data66.useSelect)(store);
-    const { getActiveBlockVariation, getBlockType: getBlockType30 } = (0, import_data66.useSelect)(import_blocks39.store);
+    const { getActiveBlockVariation, getBlockType: getBlockType31 } = (0, import_data66.useSelect)(import_blocks39.store);
     if (!hasItems && (isAppender || targetRootClientId || clientId)) {
       return null;
     }
@@ -53009,7 +53067,7 @@ var wp;
         selectBlockOnInsert
       );
       onSelectOrClose?.(newBlock);
-      const blockTypeToInsert = getBlockType30(blockName);
+      const blockTypeToInsert = getBlockType31(blockName);
       let blockLabelToInsert;
       if (blockTypeToInsert) {
         blockLabelToInsert = (0, import_blocks39.__experimentalGetBlockLabel)(
@@ -54247,12 +54305,32 @@ var wp;
   var import_element140 = __toESM(require_element(), 1);
   var import_data75 = __toESM(require_data(), 1);
   var import_blocks41 = __toESM(require_blocks(), 1);
+  var import_deprecated10 = __toESM(require_deprecated(), 1);
   function useInnerBlockTemplateSync(clientId, template2, templateLock, templateInsertUpdatesSelection) {
+    if (template2 !== void 0) {
+      (0, import_deprecated10.default)(
+        "The template prop of InnerBlocks and useInnerBlocksProps",
+        {
+          since: "7.2",
+          alternative: "a `template` declared in the block type settings"
+        }
+      );
+    }
+    if (templateInsertUpdatesSelection !== void 0) {
+      (0, import_deprecated10.default)(
+        "The templateInsertUpdatesSelection prop of InnerBlocks and useInnerBlocksProps",
+        {
+          since: "7.2",
+          alternative: "`templateInsertUpdatesSelection` declared in the block type settings"
+        }
+      );
+    }
     const registry = (0, import_data75.useRegistry)();
     const existingTemplateRef = (0, import_element140.useRef)(null);
     (0, import_element140.useLayoutEffect)(() => {
       let isCancelled = false;
       const {
+        getBlockName: getBlockName2,
         getBlocks: getBlocks2,
         getSelectedBlocksInitialCaretPosition: getSelectedBlocksInitialCaretPosition2,
         isBlockSelected: isBlockSelected2
@@ -54262,19 +54340,26 @@ var wp;
         if (isCancelled) {
           return;
         }
+        let resolvedTemplate = template2;
+        let resolvedUpdatesSelection = templateInsertUpdatesSelection;
+        if (template2 === void 0) {
+          const blockType = (0, import_blocks41.getBlockType)(getBlockName2(clientId));
+          resolvedTemplate = blockType?.template;
+          resolvedUpdatesSelection = blockType?.templateInsertUpdatesSelection;
+        }
         const currentInnerBlocks = getBlocks2(clientId);
-        const shouldApplyTemplate = currentInnerBlocks.length === 0 || templateLock === "all" || templateLock === "contentOnly";
-        const hasTemplateChanged = !(0, import_es64.default)(
-          template2,
+        const hasAppliedTemplate = (0, import_es64.default)(
+          resolvedTemplate,
           existingTemplateRef.current
         );
-        if (!shouldApplyTemplate || !hasTemplateChanged) {
+        const shouldApplyTemplate = currentInnerBlocks.length === 0 || templateLock === "all" || templateLock === "contentOnly";
+        if (!shouldApplyTemplate || hasAppliedTemplate) {
           return;
         }
-        existingTemplateRef.current = template2;
+        existingTemplateRef.current = resolvedTemplate;
         const nextBlocks = (0, import_blocks41.synchronizeBlocksWithTemplate)(
           currentInnerBlocks,
-          template2
+          resolvedTemplate
         );
         if (!(0, import_es64.default)(nextBlocks, currentInnerBlocks)) {
           __unstableMarkNextChangeAsNotPersistent2({
@@ -54283,7 +54368,7 @@ var wp;
           replaceInnerBlocks2(
             clientId,
             nextBlocks,
-            currentInnerBlocks.length === 0 && templateInsertUpdatesSelection && nextBlocks.length !== 0 && isBlockSelected2(clientId),
+            currentInnerBlocks.length === 0 && resolvedUpdatesSelection && nextBlocks.length !== 0 && isBlockSelected2(clientId),
             // This ensures the "initialPosition" doesn't change when applying the template
             // If we're supposed to focus the block, we'll focus the first inner block
             // otherwise, we won't apply any auto-focus.
@@ -54731,7 +54816,7 @@ var wp;
       "replace"
     ];
   }
-  function isDropTargetValid(getBlockType30, allowedBlocks, draggedBlockNames, targetBlockName) {
+  function isDropTargetValid(getBlockType31, allowedBlocks, draggedBlockNames, targetBlockName) {
     let areBlocksAllowed = true;
     if (allowedBlocks) {
       const allowedBlockNames = allowedBlocks?.map(({ name }) => name);
@@ -54740,7 +54825,7 @@ var wp;
       );
     }
     const draggedBlockTypes = draggedBlockNames.map(
-      (name) => getBlockType30(name)
+      (name) => getBlockType31(name)
     );
     const targetMatchesDraggedBlockParents = draggedBlockTypes.every(
       (block) => {
@@ -54772,7 +54857,7 @@ var wp;
       index: null,
       operation: "insert"
     });
-    const { getBlockType: getBlockType30, getBlockVariations: getBlockVariations2, getGroupingBlockName } = (0, import_data78.useSelect)(import_blocks44.store);
+    const { getBlockType: getBlockType31, getBlockVariations: getBlockVariations2, getGroupingBlockName } = (0, import_data78.useSelect)(import_blocks44.store);
     const {
       canInsertBlockType: canInsertBlockType2,
       getBlockListSettings: getBlockListSettings2,
@@ -54826,7 +54911,7 @@ var wp;
             draggedBlockClientIds
           );
           const isBlockDroppingAllowed = isDropTargetValid(
-            getBlockType30,
+            getBlockType31,
             allowedBlocks,
             draggedBlockNames,
             targetBlockName
@@ -54933,7 +55018,7 @@ var wp;
           targetRootClientId,
           getBlockNamesByClientId2,
           getDraggedBlockClientIds2,
-          getBlockType30,
+          getBlockType31,
           getSectionRootClientId2,
           isZoomOut2,
           getBlocks2,
@@ -55093,7 +55178,7 @@ var wp;
             isDropZoneDisabled: isZoomOut2() && sectionRootClientId !== ""
           };
         }
-        const { hasBlockSupport: hasBlockSupport45, getBlockType: getBlockType30 } = select3(import_blocks45.store);
+        const { hasBlockSupport: hasBlockSupport45, getBlockType: getBlockType31 } = select3(import_blocks45.store);
         const blockName = getBlockName2(clientId);
         const blockEditingMode = getBlockEditingMode2(clientId);
         const parentClientId2 = getBlockRootClientId2(clientId);
@@ -55110,7 +55195,7 @@ var wp;
             false
           ),
           name: blockName,
-          blockType: getBlockType30(blockName),
+          blockType: getBlockType31(blockName),
           parentLock: getTemplateLock2(parentClientId2),
           parentClientId: parentClientId2,
           isDropZoneDisabled: _isDropZoneDisabled,
@@ -55522,7 +55607,7 @@ var wp;
   // packages/block-editor/build-module/components/inspector-controls/fill.mjs
   var import_components70 = __toESM(require_components(), 1);
   var import_warning5 = __toESM(require_warning(), 1);
-  var import_deprecated10 = __toESM(require_deprecated(), 1);
+  var import_deprecated11 = __toESM(require_deprecated(), 1);
   var import_element148 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls/groups.mjs
@@ -55709,7 +55794,7 @@ var wp;
     resetAllFilter
   }) {
     if (__experimentalGroup) {
-      (0, import_deprecated10.default)(
+      (0, import_deprecated11.default)(
         "`__experimentalGroup` property in `InspectorControlsFill`",
         {
           since: "6.2",
@@ -55787,7 +55872,7 @@ var wp;
   var import_components73 = __toESM(require_components(), 1);
   var import_element151 = __toESM(require_element(), 1);
   var import_warning6 = __toESM(require_warning(), 1);
-  var import_deprecated11 = __toESM(require_deprecated(), 1);
+  var import_deprecated12 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls/block-support-tools-panel.mjs
   var import_components71 = __toESM(require_components(), 1);
@@ -55915,7 +56000,7 @@ var wp;
   var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
   function InspectorControlsSlot({ __experimentalGroup, group = "default", label, fillProps, ...props }, ref) {
     if (__experimentalGroup) {
-      (0, import_deprecated11.default)(
+      (0, import_deprecated12.default)(
         "`__experimentalGroup` property in `InspectorControlsSlot`",
         {
           since: "6.2",
@@ -55997,9 +56082,9 @@ var wp;
           getBlock: getBlock2,
           __experimentalGetParsedPattern: __experimentalGetParsedPattern2
         } = blockEditorSelect;
-        const { getBlockType: getBlockType30, getActiveBlockVariation } = select3(import_blocks47.store);
+        const { getBlockType: getBlockType31, getActiveBlockVariation } = select3(import_blocks47.store);
         const blockName = getBlockName2(clientId);
-        const blockType = getBlockType30(blockName);
+        const blockType = getBlockType31(blockName);
         if (!blockType) {
           return null;
         }
@@ -56563,7 +56648,7 @@ var wp;
       isDraggable,
       icon,
       visibleInserter,
-      getBlockType: getBlockType30
+      getBlockType: getBlockType31
     } = (0, import_data88.useSelect)(
       (select3) => {
         const {
@@ -56625,14 +56710,14 @@ var wp;
           ])[0];
           const rootAllowedBlocks = getAllowedBlocks2(targetRootClientId);
           dropTargetValid = isDropTargetValid(
-            getBlockType30,
+            getBlockType31,
             rootAllowedBlocks,
             draggedBlockNames,
             targetRootBlockName
           );
         } else {
           dropTargetValid = isDropTargetValid(
-            getBlockType30,
+            getBlockType31,
             allowedBlocks,
             draggedBlockNames,
             targetBlockName
@@ -56660,7 +56745,7 @@ var wp;
       getAllowedBlocks2,
       getBlockNamesByClientId2,
       getBlockRootClientId2,
-      getBlockType30,
+      getBlockType31,
       visibleInserter
     ]);
     if (!isDraggable) {
@@ -57915,7 +58000,7 @@ var wp;
           isUngroupable: isUngroupable2,
           isGroupable: isGroupable2
         } = select3(store);
-        const { getGroupingBlockName, getBlockType: getBlockType30 } = select3(import_blocks56.store);
+        const { getGroupingBlockName, getBlockType: getBlockType31 } = select3(import_blocks56.store);
         const clientIds = selectedClientIds?.length ? selectedClientIds : getSelectedBlockClientIds2();
         const blocksSelection = getBlocksByClientId2(clientIds);
         const [firstSelectedBlock] = blocksSelection;
@@ -57926,7 +58011,7 @@ var wp;
           isUngroupable: _isUngroupable,
           blocksSelection,
           groupingBlockName: getGroupingBlockName(),
-          onUngroup: _isUngroupable && getBlockType30(firstSelectedBlock.name)?.transforms?.ungroup
+          onUngroup: _isUngroupable && getBlockType31(firstSelectedBlock.name)?.transforms?.ungroup
         };
       },
       [selectedClientIds]
@@ -59128,7 +59213,7 @@ var wp;
   var import_components99 = __toESM(require_components(), 1);
   var import_element168 = __toESM(require_element(), 1);
   var import_data108 = __toESM(require_data(), 1);
-  var import_deprecated12 = __toESM(require_deprecated(), 1);
+  var import_deprecated13 = __toESM(require_deprecated(), 1);
   var import_dom60 = __toESM(require_dom(), 1);
   var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
   var import_keycodes12 = __toESM(require_keycodes(), 1);
@@ -59165,7 +59250,7 @@ var wp;
       const tabbables = import_dom60.focus.tabbable.find(toolbarRef.current);
       const onlyToolbarItem = hasOnlyToolbarItem(tabbables);
       if (!onlyToolbarItem) {
-        (0, import_deprecated12.default)("Using custom components as toolbar controls", {
+        (0, import_deprecated13.default)("Using custom components as toolbar controls", {
           since: "5.6",
           alternative: "ToolbarItem, ToolbarButton or ToolbarDropdownMenu components",
           link: "https://developer.wordpress.org/block-editor/components/toolbar-button/#inside-blockcontrols"
@@ -61914,7 +61999,7 @@ var wp;
   var import_components117 = __toESM(require_components(), 1);
   var import_i18n105 = __toESM(require_i18n(), 1);
   var import_keycodes14 = __toESM(require_keycodes(), 1);
-  var import_deprecated13 = __toESM(require_deprecated(), 1);
+  var import_deprecated14 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
   var ColorSelectorSVGIcon = () => /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_components117.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 20", children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_components117.Path, { d: "M7.434 5l3.18 9.16H8.538l-.692-2.184H4.628l-.705 2.184H2L5.18 5h2.254zm-1.13 1.904h-.115l-1.148 3.593H7.44L6.304 6.904zM14.348 7.006c1.853 0 2.9.876 2.9 2.374v4.78h-1.79v-.914h-.114c-.362.64-1.123 1.022-2.031 1.022-1.346 0-2.292-.826-2.292-2.108 0-1.27.972-2.006 2.71-2.107l1.696-.102V9.38c0-.584-.42-.914-1.18-.914-.667 0-1.112.228-1.264.647h-1.701c.12-1.295 1.307-2.107 3.066-2.107zm1.079 4.1l-1.416.09c-.793.056-1.18.342-1.18.844 0 .52.45.837 1.091.837.857 0 1.505-.545 1.505-1.256v-.515z" }) });
   var ColorSelectorIcon = ({ style, className }) => {
@@ -61946,7 +62031,7 @@ var wp;
     ) });
   };
   var BlockColorsStyleSelector = ({ children, ...other }) => {
-    (0, import_deprecated13.default)(`wp.blockEditor.BlockColorsStyleSelector`, {
+    (0, import_deprecated14.default)(`wp.blockEditor.BlockColorsStyleSelector`, {
       alternative: "block supports API",
       since: "6.1",
       version: "6.3"
@@ -61965,7 +62050,7 @@ var wp;
   var color_style_selector_default = BlockColorsStyleSelector;
 
   // packages/block-editor/build-module/components/block-navigation/dropdown.mjs
-  var import_deprecated15 = __toESM(require_deprecated(), 1);
+  var import_deprecated16 = __toESM(require_deprecated(), 1);
   var import_components124 = __toESM(require_components(), 1);
   var import_i18n114 = __toESM(require_i18n(), 1);
   var import_data139 = __toESM(require_data(), 1);
@@ -61976,7 +62061,7 @@ var wp;
   var import_is_shallow_equal3 = __toESM(require_is_shallow_equal(), 1);
   var import_components123 = __toESM(require_components(), 1);
   var import_data138 = __toESM(require_data(), 1);
-  var import_deprecated14 = __toESM(require_deprecated(), 1);
+  var import_deprecated15 = __toESM(require_deprecated(), 1);
   var import_element197 = __toESM(require_element(), 1);
   var import_i18n113 = __toESM(require_i18n(), 1);
 
@@ -62312,7 +62397,7 @@ var wp;
           isSectionBlock: isSectionBlock2,
           isLockedBlock: isLockedBlock2
         } = unlock(select3(store));
-        const { getBlockType: getBlockType30, getActiveBlockVariation } = select3(import_blocks77.store);
+        const { getBlockType: getBlockType31, getActiveBlockVariation } = select3(import_blocks77.store);
         const attributes = getBlockAttributes3(clientId);
         const blockName = getBlockName2(clientId);
         let blockIcon = symbol_default;
@@ -62323,7 +62408,7 @@ var wp;
             void 0,
             getBlock2(clientId)?.innerContent
           );
-          blockIcon = match2?.icon || getBlockType30(blockName)?.icon;
+          blockIcon = match2?.icon || getBlockType31(blockName)?.icon;
         }
         return {
           icon: blockIcon,
@@ -63580,7 +63665,7 @@ var wp;
       hasMultiSelection: hasMultiSelection2,
       hasSelectedBlock: hasSelectedBlock2
     } = (0, import_data132.useSelect)(store);
-    const { getBlockType: getBlockType30 } = (0, import_data132.useSelect)(import_blocks79.store);
+    const { getBlockType: getBlockType31 } = (0, import_data132.useSelect)(import_blocks79.store);
     const updateBlockSelection = (0, import_element192.useCallback)(
       async (event, clientId, destinationClientId, focusPosition) => {
         if (!event?.shiftKey && event?.keyCode !== import_keycodes17.ESCAPE) {
@@ -63634,7 +63719,7 @@ var wp;
         );
         let label;
         if (selectionDiff.length === 1) {
-          const title = getBlockType30(
+          const title = getBlockType31(
             getBlockName2(selectionDiff[0])
           )?.title;
           if (title) {
@@ -63658,7 +63743,7 @@ var wp;
       [
         clearSelectedBlock2,
         getBlockName2,
-        getBlockType30,
+        getBlockType31,
         getBlockParents2,
         getBlockSelectionStart2,
         getSelectedBlockClientIds2,
@@ -64225,7 +64310,7 @@ var wp;
     additionalBlockContent: AdditionalBlockContent
   }, ref) {
     if (blocks2) {
-      (0, import_deprecated14.default)(
+      (0, import_deprecated15.default)(
         "`blocks` property in `wp.blockEditor.__experimentalListView`",
         {
           since: "6.3",
@@ -64491,7 +64576,7 @@ var wp;
     );
   }
   function BlockNavigationDropdown({ isDisabled, ...props }, ref) {
-    (0, import_deprecated15.default)("wp.blockEditor.BlockNavigationDropdown", {
+    (0, import_deprecated16.default)("wp.blockEditor.BlockNavigationDropdown", {
       since: "6.1",
       alternative: "wp.components.Dropdown and wp.blockEditor.ListView"
     });
@@ -67559,7 +67644,7 @@ var wp;
   var import_element209 = __toESM(require_element(), 1);
   var import_components152 = __toESM(require_components(), 1);
   var import_i18n142 = __toESM(require_i18n(), 1);
-  var import_deprecated16 = __toESM(require_deprecated(), 1);
+  var import_deprecated17 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime361 = __toESM(require_jsx_runtime(), 1);
   var RANGE_CONTROL_CUSTOM_SETTINGS = {
     px: { max: 1e3, step: 1 },
@@ -67596,7 +67681,7 @@ var wp;
     onChange,
     value
   }) {
-    (0, import_deprecated16.default)("wp.blockEditor.HeightControl", {
+    (0, import_deprecated17.default)("wp.blockEditor.HeightControl", {
       since: "7.0",
       version: "7.2",
       alternative: "wp.blockEditor.DimensionControl"
@@ -67690,7 +67775,7 @@ var wp;
 
   // packages/block-editor/build-module/components/image-editor/index.mjs
   var import_components158 = __toESM(require_components(), 1);
-  var import_deprecated17 = __toESM(require_deprecated(), 1);
+  var import_deprecated18 = __toESM(require_deprecated(), 1);
 
   // node_modules/react-easy-crop/index.module.js
   var React117 = __toESM(require_react());
@@ -69489,7 +69574,7 @@ var wp;
     onFinishEditing,
     borderProps
   }) {
-    (0, import_deprecated17.default)("wp.blockEditor.__experimentalImageEditor", {
+    (0, import_deprecated18.default)("wp.blockEditor.__experimentalImageEditor", {
       since: "7.1",
       hint: "The Media Editor modal is now the default crop experience for core blocks. This component will be removed in a future major release."
     });
@@ -69791,7 +69876,7 @@ var wp;
   var import_is_shallow_equal4 = __toESM(require_is_shallow_equal(), 1);
   var import_data149 = __toESM(require_data(), 1);
   var import_preferences4 = __toESM(require_preferences(), 1);
-  var import_deprecated21 = __toESM(require_deprecated(), 1);
+  var import_deprecated22 = __toESM(require_deprecated(), 1);
   var import_url6 = __toESM(require_url(), 1);
 
   // packages/block-editor/build-module/components/link-control/settings-drawer.mjs
@@ -69845,7 +69930,7 @@ var wp;
   // packages/block-editor/build-module/components/link-control/search-input.mjs
   var import_element220 = __toESM(require_element(), 1);
   var import_i18n155 = __toESM(require_i18n(), 1);
-  var import_deprecated20 = __toESM(require_deprecated(), 1);
+  var import_deprecated21 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/link-control/search-results.mjs
   var import_i18n154 = __toESM(require_i18n(), 1);
@@ -69898,7 +69983,7 @@ var wp;
   var import_dom67 = __toESM(require_dom(), 1);
   var import_url3 = __toESM(require_url(), 1);
   var import_compose86 = __toESM(require_compose(), 1);
-  var import_deprecated18 = __toESM(require_deprecated(), 1);
+  var import_deprecated19 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime376 = __toESM(require_jsx_runtime(), 1);
   var TYPES = {
     post: {
@@ -70022,7 +70107,7 @@ var wp;
   }
   var search_item_default = LinkControlSearchItem;
   var __experimentalLinkControlSearchItem = (props) => {
-    (0, import_deprecated18.default)("wp.blockEditor.__experimentalLinkControlSearchItem", {
+    (0, import_deprecated19.default)("wp.blockEditor.__experimentalLinkControlSearchItem", {
       since: "6.8"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(LinkControlSearchItem, { ...props });
@@ -70049,7 +70134,7 @@ var wp;
   ];
 
   // packages/block-editor/build-module/components/link-control/search-results.mjs
-  var import_deprecated19 = __toESM(require_deprecated(), 1);
+  var import_deprecated20 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime377 = __toESM(require_jsx_runtime(), 1);
   function LinkControlSearchResults({
     withCreateSuggestion,
@@ -70133,7 +70218,7 @@ var wp;
   }
   var search_results_default2 = LinkControlSearchResults;
   var __experimentalLinkControlSearchResults = (props) => {
-    (0, import_deprecated19.default)("wp.blockEditor.__experimentalLinkControlSearchResults", {
+    (0, import_deprecated20.default)("wp.blockEditor.__experimentalLinkControlSearchResults", {
       since: "6.8"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime377.jsx)(LinkControlSearchResults, { ...props });
@@ -70356,7 +70441,7 @@ var wp;
   );
   var search_input_default = LinkControlSearchInput;
   var __experimentalLinkControlSearchInput = (props) => {
-    (0, import_deprecated20.default)("wp.blockEditor.__experimentalLinkControlSearchInput", {
+    (0, import_deprecated21.default)("wp.blockEditor.__experimentalLinkControlSearchInput", {
       since: "6.8"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(LinkControlSearchInput, { ...props });
@@ -71234,7 +71319,7 @@ var wp;
   LinkControl.ViewerFill = ViewerFill;
   LinkControl.DEFAULT_LINK_SETTINGS = DEFAULT_LINK_SETTINGS;
   var DeprecatedExperimentalLinkControl = (props) => {
-    (0, import_deprecated21.default)("wp.blockEditor.__experimentalLinkControl", {
+    (0, import_deprecated22.default)("wp.blockEditor.__experimentalLinkControl", {
       since: "6.8",
       alternative: "wp.blockEditor.LinkControl"
     });
@@ -71611,13 +71696,13 @@ var wp;
   var import_i18n166 = __toESM(require_i18n(), 1);
   var import_element228 = __toESM(require_element(), 1);
   var import_data152 = __toESM(require_data(), 1);
-  var import_deprecated23 = __toESM(require_deprecated(), 1);
+  var import_deprecated24 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/url-popover/index.mjs
   var import_i18n165 = __toESM(require_i18n(), 1);
   var import_element227 = __toESM(require_element(), 1);
   var import_components175 = __toESM(require_components(), 1);
-  var import_deprecated22 = __toESM(require_deprecated(), 1);
+  var import_deprecated23 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/url-popover/link-viewer.mjs
   var import_i18n162 = __toESM(require_i18n(), 1);
@@ -72119,7 +72204,7 @@ var wp;
       ...popoverProps3
     }, ref) => {
       if (position !== void 0) {
-        (0, import_deprecated22.default)("`position` prop in wp.blockEditor.URLPopover", {
+        (0, import_deprecated23.default)("`position` prop in wp.blockEditor.URLPopover", {
           since: "6.2",
           alternative: "`placement` prop"
         });
@@ -72284,7 +72369,7 @@ var wp;
     style
   }) {
     if (deprecatedOnHTMLDrop) {
-      (0, import_deprecated23.default)("wp.blockEditor.MediaPlaceholder onHTMLDrop prop", {
+      (0, import_deprecated24.default)("wp.blockEditor.MediaPlaceholder onHTMLDrop prop", {
         since: "6.2",
         version: "6.4"
       });
@@ -72679,7 +72764,7 @@ var wp;
   var import_rich_text19 = __toESM(require_rich_text(), 1);
   var import_components180 = __toESM(require_components(), 1);
   var import_blocks87 = __toESM(require_blocks(), 1);
-  var import_deprecated27 = __toESM(require_deprecated(), 1);
+  var import_deprecated28 = __toESM(require_deprecated(), 1);
   var import_i18n169 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/rich-text/format-toolbar-container.mjs
@@ -73427,7 +73512,7 @@ var wp;
   // packages/block-editor/build-module/components/rich-text/content.mjs
   var import_element233 = __toESM(require_element(), 1);
   var import_blocks85 = __toESM(require_blocks(), 1);
-  var import_deprecated24 = __toESM(require_deprecated(), 1);
+  var import_deprecated25 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime395 = __toESM(require_jsx_runtime(), 1);
   function valueToHTMLString(value, multiline) {
     if (rich_text_default.isEmpty(value)) {
@@ -73435,7 +73520,7 @@ var wp;
       return multilineTag ? `<${multilineTag}></${multilineTag}>` : "";
     }
     if (Array.isArray(value)) {
-      (0, import_deprecated24.default)("wp.blockEditor.RichText value prop as children type", {
+      (0, import_deprecated25.default)("wp.blockEditor.RichText value prop as children type", {
         since: "6.1",
         version: "6.3",
         alternative: "value prop as string",
@@ -73463,11 +73548,11 @@ var wp;
   var import_element235 = __toESM(require_element(), 1);
   var import_blocks86 = __toESM(require_blocks(), 1);
   var import_rich_text18 = __toESM(require_rich_text(), 1);
-  var import_deprecated26 = __toESM(require_deprecated(), 1);
+  var import_deprecated27 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/rich-text/multiline.mjs
   var import_element234 = __toESM(require_element(), 1);
-  var import_deprecated25 = __toESM(require_deprecated(), 1);
+  var import_deprecated26 = __toESM(require_deprecated(), 1);
   var import_data154 = __toESM(require_data(), 1);
   var import_keycodes26 = __toESM(require_keycodes(), 1);
   var import_rich_text17 = __toESM(require_rich_text(), 1);
@@ -73481,7 +73566,7 @@ var wp;
     multiline,
     ...props
   }, forwardedRef) {
-    (0, import_deprecated25.default)("wp.blockEditor.RichText multiline prop", {
+    (0, import_deprecated26.default)("wp.blockEditor.RichText multiline prop", {
       since: "6.1",
       version: "6.3",
       alternative: "nested blocks (InnerBlocks)",
@@ -73591,7 +73676,7 @@ var wp;
       let value = props.value;
       let onChange = props.onChange;
       if (Array.isArray(value)) {
-        (0, import_deprecated26.default)("wp.blockEditor.RichText value prop as children type", {
+        (0, import_deprecated27.default)("wp.blockEditor.RichText value prop as children type", {
           since: "6.1",
           version: "6.3",
           alternative: "value prop as string",
@@ -73678,7 +73763,7 @@ var wp;
     ...props
   }, forwardedRef) {
     if (onSplit) {
-      (0, import_deprecated27.default)("wp.blockEditor.RichText onSplit prop", {
+      (0, import_deprecated28.default)("wp.blockEditor.RichText onSplit prop", {
         since: "6.4",
         alternative: 'block.json support key: "splitting"'
       });
@@ -75037,18 +75122,18 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/preview-options/index.mjs
-  var import_deprecated28 = __toESM(require_deprecated(), 1);
+  var import_deprecated29 = __toESM(require_deprecated(), 1);
   function PreviewOptions() {
-    (0, import_deprecated28.default)("wp.blockEditor.PreviewOptions", {
+    (0, import_deprecated29.default)("wp.blockEditor.PreviewOptions", {
       version: "6.5"
     });
     return null;
   }
 
   // packages/block-editor/build-module/components/use-resize-canvas/index.mjs
-  var import_deprecated29 = __toESM(require_deprecated(), 1);
+  var import_deprecated30 = __toESM(require_deprecated(), 1);
   function useResizeCanvas() {
-    (0, import_deprecated29.default)("wp.blockEditor.useResizeCanvas", {
+    (0, import_deprecated30.default)("wp.blockEditor.useResizeCanvas", {
       since: "7.1",
       hint: "Device preview is now handled by the editor canvas. This hook no longer does anything."
     });
@@ -84256,10 +84341,10 @@ var wp;
   var block_inspector_default = BlockInspector;
 
   // packages/block-editor/build-module/components/copy-handler/index.mjs
-  var import_deprecated30 = __toESM(require_deprecated(), 1);
+  var import_deprecated31 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime454 = __toESM(require_jsx_runtime(), 1);
   var __unstableUseClipboardHandler = () => {
-    (0, import_deprecated30.default)("__unstableUseClipboardHandler", {
+    (0, import_deprecated31.default)("__unstableUseClipboardHandler", {
       alternative: "BlockCanvas or WritingFlow",
       since: "6.4",
       version: "6.7"
@@ -84267,7 +84352,7 @@ var wp;
     return useClipboardHandler();
   };
   function CopyHandler(props) {
-    (0, import_deprecated30.default)("CopyHandler", {
+    (0, import_deprecated31.default)("CopyHandler", {
       alternative: "BlockCanvas or WritingFlow",
       since: "6.4",
       version: "6.7"
@@ -84340,9 +84425,9 @@ var wp;
   var library_default = (0, import_element273.forwardRef)(PublicInserterLibrary);
 
   // packages/block-editor/build-module/components/selection-scroll-into-view/index.mjs
-  var import_deprecated31 = __toESM(require_deprecated(), 1);
+  var import_deprecated32 = __toESM(require_deprecated(), 1);
   function MultiSelectScrollIntoView() {
-    (0, import_deprecated31.default)("wp.blockEditor.MultiSelectScrollIntoView", {
+    (0, import_deprecated32.default)("wp.blockEditor.MultiSelectScrollIntoView", {
       hint: "This behaviour is now built-in.",
       since: "5.8"
     });
@@ -84506,7 +84591,7 @@ var wp;
 
   // packages/block-editor/build-module/components/recursion-provider/index.mjs
   var import_element274 = __toESM(require_element(), 1);
-  var import_deprecated32 = __toESM(require_deprecated(), 1);
+  var import_deprecated33 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime457 = __toESM(require_jsx_runtime(), 1);
   var RenderedRefsContext = (0, import_element274.createContext)({});
   RenderedRefsContext.displayName = "RenderedRefsContext";
@@ -84535,14 +84620,14 @@ var wp;
     return Boolean(previouslyRenderedBlocks[blockName]?.has(uniqueId2));
   }
   var DeprecatedExperimentalRecursionProvider = (props) => {
-    (0, import_deprecated32.default)("wp.blockEditor.__experimentalRecursionProvider", {
+    (0, import_deprecated33.default)("wp.blockEditor.__experimentalRecursionProvider", {
       since: "6.5",
       alternative: "wp.blockEditor.RecursionProvider"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime457.jsx)(RecursionProvider, { ...props });
   };
   var DeprecatedExperimentalUseHasRecursion = (...args) => {
-    (0, import_deprecated32.default)("wp.blockEditor.__experimentalUseHasRecursion", {
+    (0, import_deprecated33.default)("wp.blockEditor.__experimentalUseHasRecursion", {
       since: "6.5",
       alternative: "wp.blockEditor.useHasRecursion"
     });
@@ -84656,10 +84741,10 @@ var wp;
   var publish_date_time_picker_default = (0, import_element275.forwardRef)(PublicPublishDateTimePicker);
 
   // packages/block-editor/build-module/components/tool-selector/index.mjs
-  var import_deprecated33 = __toESM(require_deprecated(), 1);
+  var import_deprecated34 = __toESM(require_deprecated(), 1);
   var import_element276 = __toESM(require_element(), 1);
   function ToolSelector() {
-    (0, import_deprecated33.default)("wp.blockEditor.ToolSelector", {
+    (0, import_deprecated34.default)("wp.blockEditor.ToolSelector", {
       since: "6.9",
       hint: "The ToolSelector component no longer renders anything."
     });
@@ -96555,7 +96640,7 @@ var wp;
   var import_element321 = __toESM(require_element(), 1);
   var import_data189 = __toESM(require_data(), 1);
   var import_blocks116 = __toESM(require_blocks(), 1);
-  var import_deprecated34 = __toESM(require_deprecated(), 1);
+  var import_deprecated35 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/hooks/spacing-visualizer.mjs
   var import_element320 = __toESM(require_element(), 1);
@@ -96831,7 +96916,7 @@ var wp;
     return { className, style: inlineStyleOverrides };
   }
   function useCustomSides() {
-    (0, import_deprecated34.default)("wp.blockEditor.__experimentalUseCustomSides", {
+    (0, import_deprecated35.default)("wp.blockEditor.__experimentalUseCustomSides", {
       since: "6.3",
       version: "6.4"
     });
