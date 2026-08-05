@@ -32423,14 +32423,14 @@ function CalendarDateRangeControl({
   const toInputRef = (0, import_element101.useRef)(null);
   const updateDateRange = (0, import_element101.useCallback)(
     (fromDate, toDate2) => {
-      if (fromDate && toDate2) {
-        onChangeCallback([
-          formatDate(fromDate),
-          formatDate(toDate2)
-        ]);
-      } else if (!fromDate && !toDate2) {
+      if (!fromDate && !toDate2) {
         onChangeCallback(void 0);
+        return;
       }
+      onChangeCallback([
+        formatDate(fromDate),
+        formatDate(toDate2)
+      ]);
     },
     [onChangeCallback]
   );
