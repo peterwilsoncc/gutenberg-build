@@ -94743,6 +94743,7 @@ If there's a particular need for this, please submit a feature request at https:
 	pointer-events: auto;
 	overflow: visible;
 	width: max-content;
+	--label-base-transform: translate(-11px, -100%);
 }
 /* Avatar positioned above a highlighted block as a label. */
 .collaborators-overlay-block-label.editor-avatar {
@@ -94752,6 +94753,7 @@ If there's a particular need for this, please submit a feature request at https:
 	pointer-events: auto;
 	overflow: visible;
 	width: max-content;
+	--label-base-transform: translateY(calc(-100% - ${GRID_UNIT_10}));
 }
 
 @keyframes collaborators-overlay-cursor-blink {
@@ -94762,7 +94764,8 @@ If there's a particular need for this, please submit a feature request at https:
 .collaborators-overlay-cursor-highlighted .collaborators-overlay-user-cursor {
 	animation: collaborators-overlay-cursor-highlight 0.6s ease-in-out 3;
 }
-.collaborators-overlay-cursor-highlighted .collaborators-overlay-user-label {
+.collaborators-overlay-cursor-highlighted .collaborators-overlay-user-label,
+.collaborators-overlay-cursor-highlighted .collaborators-overlay-block-label {
 	animation: collaborators-overlay-label-highlight 0.6s ease-in-out 3;
 }
 @keyframes collaborators-overlay-cursor-highlight {
@@ -94777,11 +94780,11 @@ If there's a particular need for this, please submit a feature request at https:
 }
 @keyframes collaborators-overlay-label-highlight {
 	0%, 100% {
-		transform: translate(-11px, -100%) scale(1);
+		transform: var(--label-base-transform) scale(1);
 		filter: drop-shadow(0 0 0 transparent);
 	}
 	50% {
-		transform: translate(-11px, -100%) scale(1.1);
+		transform: var(--label-base-transform) scale(1.1);
 		filter: drop-shadow(0 0 6px currentColor);
 	}
 }
@@ -94802,7 +94805,8 @@ If there's a particular need for this, please submit a feature request at https:
 }
 @media (prefers-reduced-motion: reduce) {
 	.collaborators-overlay-user-label,
-	.collaborators-overlay-user-cursor {
+	.collaborators-overlay-user-cursor,
+	.collaborators-overlay-block-label {
 		animation: none;
 	}
 }
@@ -94871,149 +94875,6 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     return [recomputeToken, rerenderOnNextFrame];
   }
-
-  // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
-  var { useActiveCollaborators, useResolvedSelection } = unlock(import_core_data112.privateApis);
-  var { SelectionType } = unlock(import_core_data112.privateApis);
-  function useBlockHighlighting(overlayElement, blockEditorDocument, postId2, postType2, delayMs) {
-    const highlightedBlockIds = (0, import_element295.useRef)(/* @__PURE__ */ new Set());
-    const userStates = useActiveCollaborators(
-      postId2 ?? null,
-      postType2 ?? null
-    );
-    const resolveSelection = useResolvedSelection(
-      postId2 ?? null,
-      postType2 ?? null
-    );
-    const [highlights, setHighlights] = (0, import_element295.useState)(
-      []
-    );
-    const [recomputeToken, rerenderHighlightsAfterDelay] = useDebouncedRecompute(delayMs);
-    const [resizeToken, rerenderHighlightsOnResize] = useRequestAnimationFrameRecompute();
-    (0, import_element295.useEffect)(() => {
-      if (!blockEditorDocument) {
-        setHighlights([]);
-        return;
-      }
-      const currentHighlightedIds = highlightedBlockIds.current;
-      const seen = /* @__PURE__ */ new Set();
-      const blocksToHighlight = userStates.filter((userState) => {
-        const isWholeBlockSelected = userState.editorState?.selection?.type === SelectionType.WholeBlock;
-        return !userState.isMe && isWholeBlockSelected;
-      }).map((userState) => {
-        let localClientId;
-        try {
-          ({ localClientId } = resolveSelection(
-            userState.editorState?.selection
-          ));
-        } catch {
-          return null;
-        }
-        if (!localClientId) {
-          return null;
-        }
-        return {
-          blockId: localClientId,
-          color: userState.isMe ? "var(--wp-admin-theme-color)" : getAvatarBorderColor(userState.collaboratorInfo.id),
-          userName: userState.collaboratorInfo.name,
-          avatarUrl: getAvatarUrl(
-            userState.collaboratorInfo.avatar_urls
-          )
-        };
-      }).filter((block) => {
-        if (!block) {
-          return false;
-        }
-        if (seen.has(block.blockId)) {
-          return false;
-        }
-        seen.add(block.blockId);
-        return true;
-      });
-      const selectedBlockIds = new Set(
-        blocksToHighlight.map((block) => block.blockId)
-      );
-      for (const blockId of currentHighlightedIds) {
-        if (!selectedBlockIds.has(blockId)) {
-          const blockElement = getBlockElementById(
-            blockEditorDocument,
-            blockId
-          );
-          if (blockElement) {
-            blockElement.classList.remove("is-collaborator-selected");
-            blockElement.style.removeProperty(
-              "--collaborator-outline-color"
-            );
-          }
-          currentHighlightedIds.delete(blockId);
-        }
-      }
-      const results = [];
-      const overlayRect = overlayElement?.getBoundingClientRect() ?? null;
-      blocksToHighlight.forEach((block) => {
-        const { color, blockId, userName, avatarUrl } = block;
-        const blockElement = getBlockElementById(
-          blockEditorDocument,
-          blockId
-        );
-        if (!blockElement) {
-          return;
-        }
-        blockElement.classList.add("is-collaborator-selected");
-        blockElement.style.setProperty(
-          "--collaborator-outline-color",
-          color
-        );
-        currentHighlightedIds.add(blockId);
-        if (overlayRect) {
-          const blockRect = blockElement.getBoundingClientRect();
-          results.push({
-            blockId,
-            userName,
-            avatarUrl,
-            color,
-            x: blockRect.left - overlayRect.left,
-            y: blockRect.top - overlayRect.top
-          });
-        }
-      });
-      setHighlights(results);
-      return () => {
-        for (const blockId of currentHighlightedIds) {
-          const el = getBlockElementById(blockEditorDocument, blockId);
-          if (el) {
-            el.classList.remove("is-collaborator-selected");
-            el.style.removeProperty("--collaborator-outline-color");
-          }
-        }
-        currentHighlightedIds.clear();
-      };
-    }, [
-      userStates,
-      blockEditorDocument,
-      overlayElement,
-      recomputeToken,
-      resizeToken,
-      resolveSelection
-    ]);
-    return {
-      highlights,
-      rerenderHighlightsAfterDelay,
-      rerenderHighlightsOnResize
-    };
-  }
-  var getBlockElementById = (blockEditorDocument, blockId) => {
-    return blockEditorDocument.querySelector(`[data-block="${blockId}"]`);
-  };
-
-  // packages/editor/build-module/components/collaborators-overlay/use-render-cursors.mjs
-  var import_core_data114 = __toESM(require_core_data(), 1);
-  var import_data206 = __toESM(require_data(), 1);
-  var import_element296 = __toESM(require_element(), 1);
-  var import_preferences20 = __toESM(require_preferences(), 1);
-
-  // packages/editor/build-module/components/collaborators-overlay/compute-selection.mjs
-  var import_core_data113 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/cursor-dom-utils.mjs
   var MAX_NODE_OFFSET_COUNT = 500;
@@ -95109,34 +94970,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return rects.length > 0 ? rects : null;
   };
-  var getFullBlockSelectionRects = (blockElement, editorDocument, overlayRect) => {
-    const range = editorDocument.createRange();
-    range.selectNodeContents(blockElement);
-    const clientRects = range.getClientRects();
-    const rects = [];
-    for (const rect of clientRects) {
-      if (rect.width === 0 && rect.height === 0) {
-        continue;
-      }
-      rects.push({
-        x: rect.left - overlayRect.left,
-        y: rect.top - overlayRect.top,
-        width: rect.width,
-        height: rect.height
-      });
-    }
-    if (rects.length === 0) {
-      const blockRect = blockElement.getBoundingClientRect();
-      if (blockRect.width > 0 && blockRect.height > 0) {
-        rects.push({
-          x: blockRect.left - overlayRect.left,
-          y: blockRect.top - overlayRect.top,
-          width: blockRect.width,
-          height: blockRect.height
-        });
-      }
-    }
-    return rects;
+  var blockContainerOf = (el) => {
+    const parent = el.parentElement;
+    return parent?.hasAttribute("data-block") ? parent : el;
   };
   var getBlocksBetween = (startBlockId, endBlockId, editorDocument) => {
     const allBlocks = editorDocument.querySelectorAll("[data-block]");
@@ -95159,9 +94995,34 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const result = [];
     for (let i3 = startIndex + 1; i3 < endIndex; i3++) {
-      result.push(allBlocks[i3]);
+      const block = allBlocks[i3];
+      if (!result.some((r4) => r4.contains(block))) {
+        result.push(block);
+      }
     }
     return result;
+  };
+  var getOrderedBlockRange = (startId, endId, doc) => {
+    const startEl = doc.querySelector(
+      `[data-block="${startId}"]`
+    );
+    const endEl = doc.querySelector(
+      `[data-block="${endId}"]`
+    );
+    if (!startEl || !endEl) {
+      return null;
+    }
+    const rawFirstEl = isNodeBefore(endEl, startEl) ? endEl : startEl;
+    const rawLastEl = isNodeBefore(endEl, startEl) ? startEl : endEl;
+    const firstEl = blockContainerOf(rawFirstEl);
+    const lastEl = blockContainerOf(rawLastEl);
+    const firstId = firstEl.getAttribute("data-block");
+    const lastId = lastEl.getAttribute("data-block");
+    const sameContainer = firstId === lastId;
+    const middleEls = sameContainer ? [] : getBlocksBetween(firstId, lastId, doc).filter(
+      (el) => !firstEl.contains(el) && !lastEl.contains(el)
+    );
+    return { firstEl, firstId, lastEl, lastId, middleEls, sameContainer };
   };
   var findInnerBlockOffset = (blockElement, offset4, editorDocument) => {
     const treeWalker = editorDocument.createTreeWalker(
@@ -95218,9 +95079,223 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return { node: blockElement, offset: 0 };
   };
-  var isNodeBefore = (a3, b3) => a3.compareDocumentPosition(b3) === Node.DOCUMENT_POSITION_FOLLOWING;
+  var isNodeBefore = (a3, b3) => (
+    // eslint-disable-next-line no-bitwise
+    !!(a3.compareDocumentPosition(b3) & Node.DOCUMENT_POSITION_FOLLOWING)
+  );
+
+  // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
+  var { useActiveCollaborators, useResolvedSelection } = unlock(import_core_data112.privateApis);
+  var { SelectionType } = unlock(import_core_data112.privateApis);
+  function useBlockHighlighting(overlayElement, blockEditorDocument, postId2, postType2, delayMs) {
+    const highlightedBlockIds = (0, import_element295.useRef)(/* @__PURE__ */ new Set());
+    const userStates = useActiveCollaborators(
+      postId2 ?? null,
+      postType2 ?? null
+    );
+    const resolveSelection = useResolvedSelection(
+      postId2 ?? null,
+      postType2 ?? null
+    );
+    const [highlights, setHighlights] = (0, import_element295.useState)(
+      []
+    );
+    const [recomputeToken, rerenderHighlightsAfterDelay] = useDebouncedRecompute(delayMs);
+    const [resizeToken, rerenderHighlightsOnResize] = useRequestAnimationFrameRecompute();
+    (0, import_element295.useEffect)(() => {
+      if (!blockEditorDocument) {
+        setHighlights([]);
+        return;
+      }
+      const currentHighlightedIds = highlightedBlockIds.current;
+      const seen = /* @__PURE__ */ new Set();
+      const blocksToHighlight = userStates.filter((userState) => {
+        if (userState.isMe) {
+          return false;
+        }
+        const selType = userState.editorState?.selection?.type;
+        return selType === SelectionType.WholeBlock || selType === SelectionType.SelectionInMultipleBlocks;
+      }).flatMap((userState) => {
+        const selection = userState.editorState?.selection;
+        if (selection.type === SelectionType.WholeBlock) {
+          let localClientId;
+          try {
+            ({ localClientId } = resolveSelection(selection));
+          } catch {
+            return [];
+          }
+          if (!localClientId) {
+            return [];
+          }
+          return [
+            {
+              blockId: localClientId,
+              clientId: userState.clientId,
+              userId: userState.collaboratorInfo.id,
+              color: getAvatarBorderColor(
+                userState.collaboratorInfo.id
+              ),
+              userName: userState.collaboratorInfo.name,
+              avatarUrl: getAvatarUrl(
+                userState.collaboratorInfo.avatar_urls
+              ),
+              alwaysOutline: true
+            }
+          ];
+        }
+        const resolveEndpointId = (endpoint) => {
+          try {
+            return resolveSelection(endpoint).localClientId;
+          } catch {
+            return null;
+          }
+        };
+        const startId = resolveEndpointId(selection.startEndpoint);
+        const endId = resolveEndpointId(selection.endEndpoint);
+        if (!startId || !endId) {
+          return [];
+        }
+        const range = getOrderedBlockRange(
+          startId,
+          endId,
+          blockEditorDocument
+        );
+        if (!range) {
+          return [];
+        }
+        const { firstId, lastId, middleEls, sameContainer } = range;
+        const color = getAvatarBorderColor(
+          userState.collaboratorInfo.id
+        );
+        const userName = userState.collaboratorInfo.name;
+        const avatarUrl = getAvatarUrl(
+          userState.collaboratorInfo.avatar_urls
+        );
+        if (sameContainer) {
+          return [
+            {
+              blockId: firstId,
+              clientId: userState.clientId,
+              userId: userState.collaboratorInfo.id,
+              color,
+              userName,
+              avatarUrl,
+              alwaysOutline: false
+            }
+          ];
+        }
+        const intermediateIds = middleEls.map((el) => el.getAttribute("data-block")).filter((id) => Boolean(id));
+        return [firstId, ...intermediateIds, lastId].map(
+          (blockId) => ({
+            blockId,
+            clientId: userState.clientId,
+            userId: userState.collaboratorInfo.id,
+            color,
+            userName,
+            avatarUrl,
+            alwaysOutline: false
+          })
+        );
+      }).filter((block) => {
+        if (seen.has(block.blockId)) {
+          return false;
+        }
+        seen.add(block.blockId);
+        return true;
+      });
+      const selectedBlockIds = new Set(
+        blocksToHighlight.map((block) => block.blockId)
+      );
+      for (const blockId of currentHighlightedIds) {
+        if (!selectedBlockIds.has(blockId)) {
+          const blockElement = getBlockElementById(
+            blockEditorDocument,
+            blockId
+          );
+          if (blockElement) {
+            blockElement.classList.remove("is-collaborator-selected");
+            blockElement.style.removeProperty(
+              "--collaborator-outline-color"
+            );
+          }
+          currentHighlightedIds.delete(blockId);
+        }
+      }
+      const results = [];
+      const overlayRect = overlayElement?.getBoundingClientRect() ?? null;
+      const usersWithAvatar = /* @__PURE__ */ new Set();
+      blocksToHighlight.forEach((block) => {
+        const { color, blockId, userName, avatarUrl } = block;
+        const blockElement = getBlockElementById(
+          blockEditorDocument,
+          blockId
+        );
+        if (!blockElement) {
+          return;
+        }
+        blockElement.classList.remove("is-collaborator-selected");
+        blockElement.style.removeProperty("--collaborator-outline-color");
+        currentHighlightedIds.delete(blockId);
+        const isNonTextBlock = !blockElement.innerText?.trim();
+        if (block.alwaysOutline || isNonTextBlock) {
+          blockElement.classList.add("is-collaborator-selected");
+          blockElement.style.setProperty(
+            "--collaborator-outline-color",
+            color
+          );
+          currentHighlightedIds.add(blockId);
+        }
+        if (overlayRect && !usersWithAvatar.has(block.userId)) {
+          usersWithAvatar.add(block.userId);
+          const blockRect = blockElement.getBoundingClientRect();
+          results.push({
+            blockId,
+            clientId: block.clientId,
+            userName,
+            avatarUrl,
+            color,
+            x: blockRect.left - overlayRect.left,
+            y: blockRect.top - overlayRect.top
+          });
+        }
+      });
+      setHighlights(results);
+      return () => {
+        for (const blockId of currentHighlightedIds) {
+          const el = getBlockElementById(blockEditorDocument, blockId);
+          if (el) {
+            el.classList.remove("is-collaborator-selected");
+            el.style.removeProperty("--collaborator-outline-color");
+          }
+        }
+        currentHighlightedIds.clear();
+      };
+    }, [
+      userStates,
+      blockEditorDocument,
+      overlayElement,
+      recomputeToken,
+      resizeToken,
+      resolveSelection
+    ]);
+    return {
+      highlights,
+      rerenderHighlightsAfterDelay,
+      rerenderHighlightsOnResize
+    };
+  }
+  var getBlockElementById = (blockEditorDocument, blockId) => {
+    return blockEditorDocument.querySelector(`[data-block="${blockId}"]`);
+  };
+
+  // packages/editor/build-module/components/collaborators-overlay/use-render-cursors.mjs
+  var import_core_data114 = __toESM(require_core_data(), 1);
+  var import_data206 = __toESM(require_data(), 1);
+  var import_element296 = __toESM(require_element(), 1);
+  var import_preferences20 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/compute-selection.mjs
+  var import_core_data113 = __toESM(require_core_data(), 1);
   var { SelectionDirection, SelectionType: SelectionType2 } = unlock(
     import_core_data113.privateApis
   );
@@ -95235,9 +95310,22 @@ If there's a particular need for this, please submit a feature request at https:
       return blockElement;
     }
     const attrKey = CSS.escape(resolvedSelection.attributeKey);
-    return blockElement.querySelector(
+    const byKey = blockElement.querySelector(
       `[data-wp-block-attribute-key="${attrKey}"]`
-    ) ?? blockElement;
+    );
+    if (byKey) {
+      return byKey;
+    }
+    const editable = blockElement.querySelector(
+      '[contenteditable="true"]'
+    );
+    if (editable) {
+      return editable;
+    }
+    const textEl = blockElement.querySelector(
+      "p, h1, h2, h3, h4, h5, h6, pre, blockquote, td, th, li, figcaption"
+    );
+    return textEl ?? blockElement;
   }
   function computeSelectionVisual(selection, start2, end, overlayContext) {
     if (selection.type === SelectionType2.None || selection.type === SelectionType2.WholeBlock) {
@@ -95269,45 +95357,120 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function computeTextSelection(selection, start2, end, overlayContext) {
-    if (!start2.localClientId || !end.localClientId || start2.richTextOffset === null || end.richTextOffset === null) {
+    if (!start2.localClientId || !end.localClientId) {
       return {};
     }
     const isReverse = selection.selectionDirection === SelectionDirection.Backward;
     const activeEnd = isReverse ? start2 : end;
-    let allRects;
-    let activeEndBlock = null;
     if (selection.type === SelectionType2.SelectionInOneBlock) {
+      if (start2.richTextOffset === null || end.richTextOffset === null) {
+        return {};
+      }
       const result = computeSingleBlockRects(start2, end, overlayContext);
-      allRects = result.rects;
-      activeEndBlock = result.blockElement;
-    } else {
-      const result = computeMultiBlockRects(start2, end, overlayContext);
-      allRects = result.rects;
-      activeEndBlock = activeEnd.localClientId === result.firstBlockClientId ? result.firstBlock : result.lastBlock;
-    }
-    if (allRects.length > 0) {
+      if (result.rects.length > 0) {
+        return {
+          coords: getCursorPosition(
+            activeEnd.richTextOffset,
+            result.blockElement,
+            overlayContext.editorDocument,
+            overlayContext.overlayRect
+          ),
+          selectionRects: result.rects
+        };
+      }
       return {
         coords: getCursorPosition(
-          activeEnd.richTextOffset,
-          activeEndBlock,
+          start2.richTextOffset,
+          resolveTargetElement(overlayContext.editorDocument, start2),
           overlayContext.editorDocument,
           overlayContext.overlayRect
-        ),
-        selectionRects: allRects
+        )
       };
     }
-    const startBlock = resolveTargetElement(
-      overlayContext.editorDocument,
-      start2
-    );
+    return computeMultiBlockOverlayRects(start2, end, overlayContext);
+  }
+  function blockBoundingRect(blockEl, overlayRect) {
+    const r4 = blockEl.getBoundingClientRect();
     return {
-      coords: getCursorPosition(
-        start2.richTextOffset,
-        startBlock,
-        overlayContext.editorDocument,
-        overlayContext.overlayRect
-      )
+      x: r4.left - overlayRect.left,
+      y: r4.top - overlayRect.top,
+      width: r4.width,
+      height: r4.height
     };
+  }
+  function computeMultiBlockOverlayRects(start2, end, overlayContext) {
+    const { editorDocument, overlayRect } = overlayContext;
+    const range = getOrderedBlockRange(
+      start2.localClientId,
+      end.localClientId,
+      editorDocument
+    );
+    if (!range) {
+      return {};
+    }
+    const docFirst = range.firstId === start2.localClientId ? start2 : end;
+    const docLast = range.firstId === start2.localClientId ? end : start2;
+    const {
+      firstEl: docFirstEl,
+      lastEl: docLastEl,
+      middleEls,
+      sameContainer
+    } = range;
+    if (sameContainer) {
+      return docFirstEl.innerText?.trim() ? {
+        selectionRects: [
+          blockBoundingRect(docFirstEl, overlayRect)
+        ]
+      } : {};
+    }
+    const MAX = Number.MAX_SAFE_INTEGER;
+    const rects = [];
+    if (docFirstEl.innerText?.trim()) {
+      const firstOffset = docFirst.richTextOffset;
+      if (firstOffset === null || firstOffset === 0) {
+        rects.push(blockBoundingRect(docFirstEl, overlayRect));
+      } else {
+        const el = resolveTargetElement(editorDocument, docFirst);
+        const textRects = el ? getSelectionRects(
+          el,
+          firstOffset,
+          MAX,
+          editorDocument,
+          overlayRect
+        ) : null;
+        rects.push(
+          ...textRects ?? [
+            blockBoundingRect(docFirstEl, overlayRect)
+          ]
+        );
+      }
+    }
+    for (const blockEl of middleEls) {
+      if (blockEl.innerText?.trim()) {
+        rects.push(blockBoundingRect(blockEl, overlayRect));
+      }
+    }
+    if (docLastEl.innerText?.trim()) {
+      const lastOffset = docLast.richTextOffset;
+      if (lastOffset === null) {
+        rects.push(blockBoundingRect(docLastEl, overlayRect));
+      } else if (lastOffset > 0) {
+        const el = resolveTargetElement(editorDocument, docLast);
+        const textRects = el ? getSelectionRects(
+          el,
+          0,
+          lastOffset,
+          editorDocument,
+          overlayRect
+        ) : null;
+        rects.push(
+          ...textRects ?? [
+            blockBoundingRect(docLastEl, overlayRect)
+          ]
+        );
+      }
+    }
+    return rects.length > 0 ? { selectionRects: rects } : {};
   }
   function computeSingleBlockRects(start2, end, overlayContext) {
     const blockElement = resolveTargetElement(
@@ -95326,71 +95489,6 @@ If there's a particular need for this, please submit a feature request at https:
         overlayContext.overlayRect
       ) ?? [],
       blockElement
-    };
-  }
-  function computeMultiBlockRects(start2, end, overlayContext) {
-    let docFirst = start2;
-    let docLast = end;
-    let firstBlock = resolveTargetElement(
-      overlayContext.editorDocument,
-      docFirst
-    );
-    let lastBlock = resolveTargetElement(
-      overlayContext.editorDocument,
-      docLast
-    );
-    if (firstBlock && lastBlock && isNodeBefore(lastBlock, firstBlock)) {
-      docFirst = end;
-      docLast = start2;
-      [firstBlock, lastBlock] = [lastBlock, firstBlock];
-    }
-    if (!firstBlock || !lastBlock || docFirst.richTextOffset === null || docLast.richTextOffset === null || !docFirst.localClientId || !docLast.localClientId) {
-      return {
-        rects: [],
-        firstBlock: null,
-        lastBlock: null,
-        firstBlockClientId: null
-      };
-    }
-    const allRects = [];
-    const startRects = getSelectionRects(
-      firstBlock,
-      docFirst.richTextOffset,
-      Number.MAX_SAFE_INTEGER,
-      overlayContext.editorDocument,
-      overlayContext.overlayRect
-    );
-    if (startRects) {
-      allRects.push(...startRects);
-    }
-    const intermediateBlocks = getBlocksBetween(
-      docFirst.localClientId,
-      docLast.localClientId,
-      overlayContext.editorDocument
-    );
-    for (const intermediateBlock of intermediateBlocks) {
-      const rects = getFullBlockSelectionRects(
-        intermediateBlock,
-        overlayContext.editorDocument,
-        overlayContext.overlayRect
-      );
-      allRects.push(...rects);
-    }
-    const endRects = getSelectionRects(
-      lastBlock,
-      0,
-      docLast.richTextOffset,
-      overlayContext.editorDocument,
-      overlayContext.overlayRect
-    );
-    if (endRects) {
-      allRects.push(...endRects);
-    }
-    return {
-      rects: allRects,
-      firstBlock,
-      lastBlock,
-      firstBlockClientId: docFirst.localClientId
     };
   }
 
@@ -95448,7 +95546,7 @@ If there's a particular need for this, please submit a feature request at https:
           } catch {
             return;
           }
-        } else if (selection.type === SelectionType3.SelectionInOneBlock || selection.type === SelectionType3.SelectionInMultipleBlocks) {
+        } else if (selection.type === SelectionType3.SelectionInOneBlock) {
           try {
             start2 = resolveSelection({
               type: SelectionType3.Cursor,
@@ -95461,6 +95559,40 @@ If there's a particular need for this, please submit a feature request at https:
           } catch {
             return;
           }
+        } else if (selection.type === SelectionType3.SelectionInMultipleBlocks) {
+          const resolveEndpoint = (endpoint) => resolveSelection(endpoint);
+          try {
+            start2 = resolveEndpoint(selection.startEndpoint);
+            end = resolveEndpoint(selection.endEndpoint);
+          } catch {
+            return;
+          }
+          const promote = (r4) => {
+            if (!r4.localClientId) {
+              return r4;
+            }
+            const el = blockEditorDocument.querySelector(
+              `[data-block="${r4.localClientId}"]`
+            );
+            if (!el) {
+              return r4;
+            }
+            const container = blockContainerOf(el);
+            const containerId = container.getAttribute("data-block");
+            if (!containerId || containerId === r4.localClientId) {
+              return r4;
+            }
+            return {
+              ...r4,
+              localClientId: containerId,
+              richTextOffset: null,
+              attributeKey: null
+            };
+          };
+          start2 = promote(start2);
+          if (end) {
+            end = promote(end);
+          }
         }
         const userName = user.collaboratorInfo.name;
         const clientId = user.clientId;
@@ -95472,14 +95604,16 @@ If there's a particular need for this, please submit a feature request at https:
           end,
           overlayContext
         );
-        if (selectionVisual.coords) {
+        const hasCoords = Boolean(selectionVisual.coords);
+        const hasRects = (selectionVisual.selectionRects?.length ?? 0) > 0;
+        if (hasCoords || hasRects) {
           const cursorData = {
             userName,
             clientId,
             color,
             avatarUrl,
             isMe: user.isMe,
-            ...selectionVisual.coords
+            ...selectionVisual.coords ?? {}
           };
           if (selectionVisual.selectionRects) {
             cursorData.selectionRects = selectionVisual.selectionRects;
@@ -95565,7 +95699,10 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       const refs = cursorRefsMap.current;
-      const currentIds = new Set(cursors.map((c6) => c6.clientId));
+      const currentIds = /* @__PURE__ */ new Set([
+        ...cursors.map((c6) => c6.clientId),
+        ...highlights.map((h3) => h3.clientId)
+      ]);
       for (const id of refs.keys()) {
         if (!currentIds.has(id)) {
           cursorRegistry.unregisterCursor(id);
@@ -95576,7 +95713,7 @@ If there's a particular need for this, please submit a feature request at https:
         cursorRegistry.registerCursor(id, el);
       }
       return () => cursorRegistry.removeAll();
-    }, [cursors, cursorRegistry]);
+    }, [cursors, highlights, cursorRegistry]);
     const setCursorRef = (0, import_element297.useCallback)(
       (clientId) => (el) => {
         if (el) {
@@ -95604,7 +95741,7 @@ If there's a particular need for this, please submit a feature request at https:
           },
           `${cursor.clientId}-sel-${index2}`
         )),
-        /* @__PURE__ */ (0, import_jsx_runtime498.jsxs)(
+        cursor.x !== void 0 && /* @__PURE__ */ (0, import_jsx_runtime498.jsxs)(
           "div",
           {
             ref: setCursorRef(cursor.clientId),
@@ -95641,18 +95778,25 @@ If there's a particular need for this, please submit a feature request at https:
         )
       ] }, cursor.clientId)),
       highlights.map((highlight) => /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
-        component_default,
+        "div",
         {
-          className: "collaborators-overlay-block-label",
-          variant: "badge",
-          size: "small",
-          src: highlight.avatarUrl,
-          name: highlight.userName,
-          borderColor: highlight.color,
+          ref: setCursorRef(highlight.clientId),
           style: {
+            position: "absolute",
             left: `${highlight.x}px`,
             top: `${highlight.y}px`
-          }
+          },
+          children: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
+            component_default,
+            {
+              className: "collaborators-overlay-block-label",
+              variant: "badge",
+              size: "small",
+              src: highlight.avatarUrl,
+              name: highlight.userName,
+              borderColor: highlight.color
+            }
+          )
         },
         highlight.blockId
       ))

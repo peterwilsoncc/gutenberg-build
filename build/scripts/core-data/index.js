@@ -1592,30 +1592,30 @@ var wp;
         cursorPosition
       };
     } else if (isSelectionInOneBlock) {
-      const cursorStartPosition2 = getCursorPosition(
+      const cursorStartPosition = getCursorPosition(
         selectionStart,
         yBlocks
       );
-      const cursorEndPosition2 = getCursorPosition(selectionEnd, yBlocks);
-      if (!cursorStartPosition2 || !cursorEndPosition2) {
+      const cursorEndPosition = getCursorPosition(selectionEnd, yBlocks);
+      if (!cursorStartPosition || !cursorEndPosition) {
         return noSelection;
       }
       return {
         type: "selection-in-one-block",
-        cursorStartPosition: cursorStartPosition2,
-        cursorEndPosition: cursorEndPosition2,
+        cursorStartPosition,
+        cursorEndPosition,
         selectionDirection
       };
     }
-    const cursorStartPosition = getCursorPosition(selectionStart, yBlocks);
-    const cursorEndPosition = getCursorPosition(selectionEnd, yBlocks);
-    if (!cursorStartPosition || !cursorEndPosition) {
+    const startEndpoint = getSelectionEndpoint(selectionStart, yBlocks);
+    const endEndpoint = getSelectionEndpoint(selectionEnd, yBlocks);
+    if (!startEndpoint || !endEndpoint) {
       return noSelection;
     }
     return {
       type: "selection-in-multiple-blocks",
-      cursorStartPosition,
-      cursorEndPosition,
+      startEndpoint,
+      endEndpoint,
       selectionDirection
     };
   }
@@ -1642,6 +1642,18 @@ var wp;
       absoluteOffset: selection.offset,
       attributeKey: selection.attributeKey
     };
+  }
+  function getSelectionEndpoint(selection, blocks) {
+    const cursorPosition = getCursorPosition(selection, blocks);
+    if (cursorPosition) {
+      return { type: "cursor", cursorPosition };
+    }
+    const path = getBlockPathForLocalClientId(selection.clientId);
+    const blockPosition = path ? createRelativePositionForBlockPath(path, blocks) : null;
+    if (blockPosition) {
+      return { type: "whole-block", blockPosition };
+    }
+    return null;
   }
   function getBlockPathForLocalClientId(clientId) {
     const { getBlockIndex, getBlockRootClientId, getBlockName } = (0, import_data3.select)(import_block_editor2.store);
@@ -1720,12 +1732,12 @@ var wp;
           selection2.cursorEndPosition
         ) && selection1.selectionDirection === selection2.selectionDirection;
       case "selection-in-multiple-blocks":
-        return areCursorPositionsEqual(
-          selection1.cursorStartPosition,
-          selection2.cursorStartPosition
-        ) && areCursorPositionsEqual(
-          selection1.cursorEndPosition,
-          selection2.cursorEndPosition
+        return areEndpointsEqual(
+          selection1.startEndpoint,
+          selection2.startEndpoint
+        ) && areEndpointsEqual(
+          selection1.endEndpoint,
+          selection2.endEndpoint
         ) && selection1.selectionDirection === selection2.selectionDirection;
       case "whole-block":
         return import_sync7.Y.compareRelativePositions(
@@ -1735,6 +1747,21 @@ var wp;
       default:
         return false;
     }
+  }
+  function areEndpointsEqual(ep1, ep2) {
+    if (ep1.type !== ep2.type) {
+      return false;
+    }
+    if (ep1.type === "cursor" && ep2.type === "cursor") {
+      return areCursorPositionsEqual(
+        ep1.cursorPosition,
+        ep2.cursorPosition
+      );
+    }
+    return import_sync7.Y.compareRelativePositions(
+      ep1.blockPosition,
+      ep2.blockPosition
+    );
   }
   function areCursorPositionsEqual(cursorPosition1, cursorPosition2) {
     const isRelativePositionEqual = import_sync7.Y.compareRelativePositions(
@@ -1902,6 +1929,13 @@ var wp;
         return {
           richTextOffset: null,
           localClientId: localClientId2,
+          attributeKey: null
+        };
+      }
+      if (selection.type === SelectionType.SelectionInMultipleBlocks) {
+        return {
+          richTextOffset: null,
+          localClientId: null,
           attributeKey: null
         };
       }
