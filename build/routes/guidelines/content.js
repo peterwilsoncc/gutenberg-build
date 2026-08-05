@@ -13523,7 +13523,7 @@ function PropertiesSection({
   ).length;
   const visibleLockedFields = lockedFields.filter(
     ({ isVisibleFlag }) => (
-      // @ts-expect-error
+      // @ts-expect-error A string key cannot index `View`.
       view[isVisibleFlag] ?? true
     )
   );
@@ -25804,7 +25804,7 @@ function Filter({
       activeElements = [
         {
           value: filterInView.value,
-          // @ts-ignore
+          // @ts-expect-error `label` is a `string[]` here, but the element type expects a `string`.
           label
         }
       ];
@@ -33232,11 +33232,8 @@ function blockSlug(blockName) {
 }
 function useContentBlocks() {
   return (0, import_data6.useSelect)(
-    (s2) => (
-      // @ts-ignore - getBlockTypes is untyped in this context.
-      s2(import_blocks.store).getBlockTypes().filter(
-        (block) => isContentBlock(block.name)
-      )
+    (s2) => s2(import_blocks.store).getBlockTypes().filter(
+      (block) => isContentBlock(block.name)
     ),
     []
   );

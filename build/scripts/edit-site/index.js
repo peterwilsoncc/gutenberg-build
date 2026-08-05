@@ -19157,7 +19157,7 @@ var wp;
     // used only when backgroundSize is 'contain'.
   };
   function setBackgroundStyleDefaults(backgroundStyle) {
-    if (!backgroundStyle || // @ts-expect-error
+    if (!backgroundStyle || // @ts-expect-error `backgroundImage` is a union whose other members have no `url`.
     !backgroundStyle?.backgroundImage?.url) {
       return;
     }
@@ -20459,7 +20459,7 @@ var wp;
       }
       const hasLayoutSupport = !!blockType?.supports?.layout || !!blockType?.supports?.__experimentalLayout;
       const fallbackGapValue = (
-        // @ts-expect-error
+        // @ts-expect-error `blockGap` support is typed as `boolean | AxialDirection[]`.
         blockType?.supports?.spacing?.blockGap?.__experimentalDefault
       );
       const blockStyleVariations = getBlockStyles(name2);
@@ -23387,7 +23387,7 @@ var wp;
     ).length;
     const visibleLockedFields = lockedFields.filter(
       ({ isVisibleFlag }) => (
-        // @ts-expect-error
+        // @ts-expect-error A string key cannot index `View`.
         view[isVisibleFlag] ?? true
       )
     );
@@ -35668,7 +35668,7 @@ If there's a particular need for this, please submit a feature request at https:
         activeElements = [
           {
             value: filterInView.value,
-            // @ts-ignore
+            // @ts-expect-error `label` is a `string[]` here, but the element type expects a `string`.
             label
           }
         ];

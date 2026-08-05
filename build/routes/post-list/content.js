@@ -13465,7 +13465,7 @@ function PropertiesSection({
   ).length;
   const visibleLockedFields = lockedFields.filter(
     ({ isVisibleFlag }) => (
-      // @ts-expect-error
+      // @ts-expect-error A string key cannot index `View`.
       view[isVisibleFlag] ?? true
     )
   );
@@ -25746,7 +25746,7 @@ function Filter({
       activeElements = [
         {
           value: filterInView.value,
-          // @ts-ignore
+          // @ts-expect-error `label` is a `string[]` here, but the element type expects a `string`.
           label
         }
       ];

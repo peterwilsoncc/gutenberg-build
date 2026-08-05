@@ -7743,7 +7743,7 @@ var wp;
     );
     const ids = (0, import_element4.useMemo)(
       () => data?.map(
-        // @ts-ignore
+        // @ts-expect-error `data` is `unknown[]`, so the callback signature does not line up.
         (record) => record[entityConfig?.key ?? "id"]
       ) ?? [],
       [data, entityConfig?.key]
@@ -7759,7 +7759,7 @@ var wp;
     );
     const dataWithPermissions = (0, import_element4.useMemo)(
       () => data?.map((record, index) => ({
-        // @ts-ignore
+        // @ts-expect-error `record` is `unknown`, which cannot be spread.
         ...record,
         permissions: permissions[index]
       })) ?? [],

@@ -13860,7 +13860,11 @@ function FontCollection({ slug }) {
     setFilters({ ...filters, search: value });
     setPage(1);
   };
-  const debouncedUpdateSearchInput = (0, import_compose3.debounce)(handleUpdateSearchInput, 300);
+  const debouncedUpdateSearchInput = (0, import_compose3.debounce)(
+    // @ts-expect-error `debounce` expects a `(...args: unknown[]) => unknown` callback.
+    handleUpdateSearchInput,
+    300
+  );
   const handleToggleVariant = (font2, face) => {
     const newFontsToInstall = toggleFont(font2, face, fontsToInstall);
     setFontsToInstall(newFontsToInstall);

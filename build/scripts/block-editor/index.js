@@ -11655,7 +11655,7 @@ var wp;
     // used only when backgroundSize is 'contain'.
   };
   function setBackgroundStyleDefaults(backgroundStyle) {
-    if (!backgroundStyle || // @ts-expect-error
+    if (!backgroundStyle || // @ts-expect-error `backgroundImage` is a union whose other members have no `url`.
     !backgroundStyle?.backgroundImage?.url) {
       return;
     }
@@ -12832,7 +12832,7 @@ var wp;
       }
       const hasLayoutSupport2 = !!blockType?.supports?.layout || !!blockType?.supports?.__experimentalLayout;
       const fallbackGapValue = (
-        // @ts-expect-error
+        // @ts-expect-error `blockGap` support is typed as `boolean | AxialDirection[]`.
         blockType?.supports?.spacing?.blockGap?.__experimentalDefault
       );
       const blockStyleVariations = getBlockStyles2(name);

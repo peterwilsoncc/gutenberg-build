@@ -4408,7 +4408,7 @@ var wp;
     // used only when backgroundSize is 'contain'.
   };
   function setBackgroundStyleDefaults(backgroundStyle) {
-    if (!backgroundStyle || // @ts-expect-error
+    if (!backgroundStyle || // @ts-expect-error `backgroundImage` is a union whose other members have no `url`.
     !backgroundStyle?.backgroundImage?.url) {
       return;
     }
@@ -5710,7 +5710,7 @@ var wp;
       }
       const hasLayoutSupport = !!blockType?.supports?.layout || !!blockType?.supports?.__experimentalLayout;
       const fallbackGapValue = (
-        // @ts-expect-error
+        // @ts-expect-error `blockGap` support is typed as `boolean | AxialDirection[]`.
         blockType?.supports?.spacing?.blockGap?.__experimentalDefault
       );
       const blockStyleVariations = getBlockStyles(name2);
@@ -31171,7 +31171,7 @@ var wp;
     ).length;
     const visibleLockedFields = lockedFields.filter(
       ({ isVisibleFlag }) => (
-        // @ts-expect-error
+        // @ts-expect-error A string key cannot index `View`.
         view[isVisibleFlag] ?? true
       )
     );
@@ -43830,7 +43830,7 @@ If there's a particular need for this, please submit a feature request at https:
         activeElements = [
           {
             value: filterInView.value,
-            // @ts-ignore
+            // @ts-expect-error `label` is a `string[]` here, but the element type expects a `string`.
             label
           }
         ];
@@ -62520,7 +62520,11 @@ If there's a particular need for this, please submit a feature request at https:
       setFilters({ ...filters, search: value });
       setPage(1);
     };
-    const debouncedUpdateSearchInput = (0, import_compose31.debounce)(handleUpdateSearchInput, 300);
+    const debouncedUpdateSearchInput = (0, import_compose31.debounce)(
+      // @ts-expect-error `debounce` expects a `(...args: unknown[]) => unknown` callback.
+      handleUpdateSearchInput,
+      300
+    );
     const handleToggleVariant = (font2, face) => {
       const newFontsToInstall = toggleFont(font2, face, fontsToInstall);
       setFontsToInstall(newFontsToInstall);
@@ -80653,7 +80657,6 @@ If there's a particular need for this, please submit a feature request at https:
     const actions2 = [
       postTypeConfig.viewable ? view_post_default : void 0,
       !!postTypeConfig.supports?.revisions ? view_post_revisions_default : void 0,
-      // @ts-ignore
       canDuplicate,
       postTypeConfig.slug === "wp_template_part" && canCreate && currentTheme?.is_block_theme ? duplicate_template_part_default : void 0,
       canCreate && postTypeConfig.slug === "wp_block" ? duplicate_pattern_default : void 0,
@@ -99630,13 +99633,12 @@ If there's a particular need for this, please submit a feature request at https:
         getCurrentPostLastRevisionId: getCurrentPostLastRevisionId2,
         getCurrentPostRevisionsCount: getCurrentPostRevisionsCount2,
         getEditorSettings: getEditorSettings2
-        // @ts-ignore
       } = select9(store);
       return {
         lastRevisionId: getCurrentPostLastRevisionId2(),
         revisionsCount: getCurrentPostRevisionsCount2(),
         disableVisualRevisions: (
-          // @ts-ignore
+          // @ts-expect-error Editor settings are typed as a bare `Object`.
           !!getEditorSettings2().disableVisualRevisions
         )
       };

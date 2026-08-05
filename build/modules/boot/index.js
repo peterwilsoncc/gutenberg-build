@@ -9734,7 +9734,7 @@ function DropdownItem({
 }) {
   const menuItems = (0, import_data2.useSelect)(
     (select) => (
-      // @ts-ignore
+      // @ts-expect-error Store types are not available when selecting by store name.
       select(STORE_NAME).getMenuItems()
     ),
     []
@@ -10000,7 +10000,7 @@ function useSidebarParent() {
   const router = useRouter();
   const menuItems = (0, import_data3.useSelect)(
     (select) => (
-      // @ts-ignore
+      // @ts-expect-error Store types are not available when selecting by store name.
       select(STORE_NAME).getMenuItems()
     ),
     []
@@ -10042,7 +10042,7 @@ function Navigation() {
   const [parentId, setParentId, parentDropdownId, setParentDropdownId] = useSidebarParent();
   const menuItems = (0, import_data4.useSelect)(
     (select) => (
-      // @ts-ignore
+      // @ts-expect-error Store types are not available when selecting by store name.
       select(STORE_NAME).getMenuItems()
     ),
     []

@@ -12098,7 +12098,7 @@ function AiPluginCallout() {
   };
   return /* @__PURE__ */ React.createElement("div", { className: "ai-plugin-callout" }, /* @__PURE__ */ React.createElement("div", { className: "ai-plugin-callout__content" }, /* @__PURE__ */ React.createElement("p", null, (0, import_element33.createInterpolateElement)(getMessage(), {
     strong: /* @__PURE__ */ React.createElement("strong", null),
-    // @ts-ignore children are injected by createInterpolateElement at runtime.
+    // @ts-expect-error `children` is injected by `createInterpolateElement` at runtime.
     a: /* @__PURE__ */ React.createElement(import_components3.ExternalLink, { href: AI_PLUGIN_URL })
   })), !hideButtons && (showInstallActivate ? /* @__PURE__ */ React.createElement(
     import_components3.Button,

@@ -1158,7 +1158,7 @@ var wp;
         }
         render() {
           return (
-            // @ts-ignore
+            // @ts-expect-error `LibraryManagedAttributes` cannot see the injected timeout props.
             /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
               OriginalComponent,
               {
