@@ -67055,13 +67055,14 @@ var wp;
     )) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime358.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
       import_components150.__experimentalToolsPanel,
       {
         className: clsx_default(
           "block-editor-panel-color-gradient-settings",
           className
         ),
+        hasInnerWrapper: true,
         label: showTitle ? title : void 0,
         resetAll: () => {
           batch(() => {
@@ -67084,7 +67085,7 @@ var wp;
         panelId,
         __experimentalFirstVisibleItemClass: "first",
         __experimentalLastVisibleItemClass: "last",
-        children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime358.jsxs)("div", { className: "block-editor-panel-color-gradient-settings__inner-wrapper", children: [
           /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
             ColorGradientSettingsDropdown,
             {
@@ -67101,11 +67102,10 @@ var wp;
             }
           ),
           !!children && /* @__PURE__ */ (0, import_jsx_runtime358.jsxs)(import_jsx_runtime358.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(import_components150.__experimentalSpacer, { marginY: 4 }),
-            " ",
+            /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(import_components150.__experimentalSpacer, { marginTop: 4, marginBottom: 0 }),
             children
           ] })
-        ]
+        ] })
       }
     );
   };
