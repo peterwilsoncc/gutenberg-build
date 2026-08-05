@@ -71819,6 +71819,7 @@ var wp;
     const [selectedSuggestion, setSelectedSuggestion] = (0, import_element226.useState)(null);
     const [isSuggestionsListOpen, setIsSuggestionsListOpen] = (0, import_element226.useState)(false);
     const [isLoading, setIsLoading] = (0, import_element226.useState)(false);
+    const [isComposing, setIsComposing] = (0, import_element226.useState)(false);
     const fallbackInputRef = (0, import_element226.useRef)();
     const suggestionNodesRef = (0, import_element226.useRef)([]);
     const suggestionsRequestRef = (0, import_element226.useRef)(null);
@@ -71887,11 +71888,12 @@ var wp;
     });
     const debouncedUpdateSuggestions = (0, import_compose90.useDebounce)(updateSuggestions, 200);
     (0, import_element226.useEffect)(() => {
-      if (!disableSuggestions && (value.length || showInitialSuggestions)) {
+      if (!disableSuggestions && !isComposing && (value.length || showInitialSuggestions)) {
         debouncedUpdateSuggestions(value);
       }
     }, [
       value,
+      isComposing,
       disableSuggestions,
       showInitialSuggestions,
       debouncedUpdateSuggestions
@@ -71927,6 +71929,13 @@ var wp;
     }
     function handleChange(newValue) {
       onChange(newValue);
+    }
+    function handleCompositionStart() {
+      setIsComposing(true);
+      debouncedUpdateSuggestions.cancel();
+    }
+    function handleCompositionEnd() {
+      setIsComposing(false);
     }
     function handleFocus() {
       if (value && !disableSuggestions && !suggestions.length && suggestionsRequestRef.current === null) {
@@ -71994,6 +72003,8 @@ var wp;
       name: inputId,
       autoComplete: "off",
       onChange: disabled2 ? noop20 : handleChange,
+      onCompositionStart: disabled2 ? noop20 : handleCompositionStart,
+      onCompositionEnd: disabled2 ? noop20 : handleCompositionEnd,
       onFocus: disabled2 ? noop20 : handleFocus,
       onKeyDown: disabled2 ? noop20 : handleKeyDown,
       placeholder,
