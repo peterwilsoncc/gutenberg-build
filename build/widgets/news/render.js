@@ -10627,6 +10627,15 @@ var LAYOUT_ACTIVITY = "activity";
 var LAYOUT_PICKER_GRID = "pickerGrid";
 var LAYOUT_PICKER_TABLE = "pickerTable";
 var LAYOUT_PICKER_ACTIVITY = "pickerActivity";
+var MEDIA_ASPECT_RATIOS = [
+  "1/1",
+  "4/3",
+  "3/4",
+  "3/2",
+  "2/3",
+  "16/9",
+  "9/16"
+];
 
 // packages/dataviews/build-module/components/dataviews-context/index.mjs
 var DataViewsContext = (0, import_element26.createContext)({
@@ -11676,11 +11685,20 @@ function ColumnPrimary({
   level,
   titleField,
   mediaField,
+  mediaAspectRatio,
   descriptionField,
   onClickItem,
   renderItemLink,
   isItemClickable
 }) {
+  let mediaSizes = "32px";
+  if (mediaAspectRatio) {
+    const [ratioWidth, ratioHeight] = mediaAspectRatio.split("/").map(Number);
+    mediaSizes = `${Math.min(
+      60,
+      Math.round(32 * ratioWidth / ratioHeight)
+    )}px`;
+  }
   return /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(Stack, { direction: "row", gap: "md", align: "flex-start", justify: "flex-start", children: [
     mediaField && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
       ItemClickWrapper,
@@ -11696,7 +11714,7 @@ function ColumnPrimary({
           {
             item,
             field: mediaField,
-            config: { sizes: "32px" }
+            config: { sizes: mediaSizes }
           }
         )
       }
@@ -12126,6 +12144,7 @@ function TableRow({
   view,
   titleField,
   mediaField,
+  mediaAspectRatio,
   descriptionField,
   selection,
   getItemId,
@@ -12186,6 +12205,7 @@ function TableRow({
             level,
             titleField: showTitle ? titleField : void 0,
             mediaField: showMedia ? mediaField : void 0,
+            mediaAspectRatio,
             descriptionField: showDescription ? descriptionField : void 0,
             isItemClickable,
             onClickItem,
@@ -12336,6 +12356,10 @@ function ViewTable({
   };
   const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   const isRtl = (0, import_i18n10.isRTL)();
+  const mediaAspectRatio = view.layout?.aspectRatio && MEDIA_ASPECT_RATIOS.includes(view.layout.aspectRatio) ? view.layout.aspectRatio : void 0;
+  const tableStyle = {
+    "--wp-dataviews-media-aspect-ratio": mediaAspectRatio ?? "1/1"
+  };
   if (!hasData) {
     return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
       "div",
@@ -12357,8 +12381,10 @@ function ViewTable({
             view.layout.density
           ),
           "has-bulk-actions": hasBulkActions,
-          "is-refreshing": !isInfiniteScroll && isDelayedLoading
+          "is-refreshing": !isInfiniteScroll && isDelayedLoading,
+          "has-media-aspect-ratio": !!mediaAspectRatio
         }),
+        style: tableStyle,
         "aria-busy": isLoading,
         "aria-describedby": tableNoticeId,
         role: isInfiniteScroll ? "feed" : void 0,
@@ -12519,6 +12545,7 @@ function ViewTable({
                     view,
                     titleField,
                     mediaField,
+                    mediaAspectRatio,
                     descriptionField,
                     selection,
                     getItemId,
@@ -12547,6 +12574,7 @@ function ViewTable({
                 view,
                 titleField,
                 mediaField,
+                mediaAspectRatio,
                 descriptionField,
                 selection,
                 getItemId,
@@ -12631,14 +12659,15 @@ function useGridColumns() {
 // packages/dataviews/build-module/components/dataviews-layouts/utils/grid-items.mjs
 var import_element37 = __toESM(require_element(), 1);
 var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
-var GridItems = (0, import_element37.forwardRef)(({ className, previewSize, ...props }, ref) => {
+var GridItems = (0, import_element37.forwardRef)(({ className, previewSize, style, ...props }, ref) => {
   return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
     "div",
     {
       ref,
       className: clsx_default("dataviews-view-grid-items", className),
       style: {
-        gridTemplateColumns: previewSize && `repeat(auto-fill, minmax(${previewSize}px, 1fr))`
+        gridTemplateColumns: previewSize && `repeat(auto-fill, minmax(${previewSize}px, 1fr))`,
+        ...style
       },
       ...props
     }
@@ -12920,6 +12949,9 @@ function CompositeGrid({
 }) {
   const { paginationInfo, resizeObserverRef } = (0, import_element39.useContext)(dataviews_context_default);
   const gridColumns = useGridColumns();
+  const gridStyle = {
+    "--wp-dataviews-media-aspect-ratio": view.layout?.aspectRatio && MEDIA_ASPECT_RATIOS.includes(view.layout.aspectRatio) ? view.layout.aspectRatio : "1/1"
+  };
   const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data);
   const titleField = fields.find(
     (field) => field.id === view?.titleField
@@ -12970,6 +13002,7 @@ function CompositeGrid({
                 }
               ),
               previewSize: view.layout?.previewSize,
+              style: gridStyle,
               "aria-busy": isLoading,
               ref: resizeObserverRef
             }
@@ -13056,6 +13089,7 @@ function CompositeGrid({
         import_components8.Composite,
         {
           role: "grid",
+          style: gridStyle,
           className: clsx_default("dataviews-view-grid", className, {
             [`has-${view.layout?.density}-density`]: view.layout?.density && ["compact", "comfortable"].includes(
               view.layout.density
