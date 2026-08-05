@@ -12014,10 +12014,7 @@ function PropertiesSection({
     (f2) => visibleFieldIds.includes(f2.id)
   ).length;
   const visibleLockedFields = lockedFields.filter(
-    ({ isVisibleFlag }) => (
-      // @ts-expect-error A string key cannot index `View`.
-      view[isVisibleFlag] ?? true
-    )
+    ({ isVisibleFlag }) => view[isVisibleFlag] ?? true
   );
   const totalVisibleFields = visibleLockedFields.length + visibleRegularFieldsCount;
   const isSingleVisibleLockedField = totalVisibleFields === 1 && visibleLockedFields.length === 1;

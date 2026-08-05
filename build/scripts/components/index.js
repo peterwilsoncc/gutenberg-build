@@ -26641,7 +26641,7 @@ This message will only show in development mode. It won't appear in production. 
       if (isDragging2) {
         document.documentElement.style.cursor = dragCursor;
       } else {
-        document.documentElement.style.cursor = null;
+        document.documentElement.style.removeProperty("cursor");
       }
     }, [isDragging2, dragCursor]);
     return dragCursor;
@@ -27343,7 +27343,6 @@ This message will only show in development mode. It won't appear in production. 
     }
     if ((0, import_element32.isValidElement)(icon)) {
       return (0, import_element32.cloneElement)(icon, {
-        // @ts-expect-error `size` is forwarded but is not in the icon component overloads.
         size: size4,
         width: size4,
         height: size4,

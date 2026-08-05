@@ -11654,9 +11654,11 @@ var wp;
     backgroundPosition: "50% 50%"
     // used only when backgroundSize is 'contain'.
   };
+  function hasImageUrl(backgroundImage) {
+    return typeof backgroundImage === "object" && backgroundImage !== null && "url" in backgroundImage && !!backgroundImage.url;
+  }
   function setBackgroundStyleDefaults(backgroundStyle) {
-    if (!backgroundStyle || // @ts-expect-error `backgroundImage` is a union whose other members have no `url`.
-    !backgroundStyle?.backgroundImage?.url) {
+    if (!backgroundStyle || !hasImageUrl(backgroundStyle.backgroundImage)) {
       return;
     }
     let backgroundStylesWithDefaults;
@@ -12831,10 +12833,8 @@ var wp;
         }
       }
       const hasLayoutSupport2 = !!blockType?.supports?.layout || !!blockType?.supports?.__experimentalLayout;
-      const fallbackGapValue = (
-        // @ts-expect-error `blockGap` support is typed as `boolean | AxialDirection[]`.
-        blockType?.supports?.spacing?.blockGap?.__experimentalDefault
-      );
+      const blockGapSupport = blockType?.supports?.spacing?.blockGap;
+      const fallbackGapValue = typeof blockGapSupport === "object" && !Array.isArray(blockGapSupport) ? blockGapSupport.__experimentalDefault : void 0;
       const blockStyleVariations = getBlockStyles2(name);
       const styleVariationSelectors = {};
       blockStyleVariations?.forEach((variation) => {
