@@ -17127,7 +17127,6 @@ var wp;
         "div",
         {
           ...navigateRegionsProps,
-          ref: navigateRegionsProps.ref,
           className: clsx_default(
             "edit-site-layout",
             navigateRegionsProps.className,
