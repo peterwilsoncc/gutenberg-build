@@ -14789,7 +14789,7 @@ var wp;
     if (selectionStart.clientId !== selectionEnd.clientId) {
       return false;
     }
-    return selectionStart.clientId === clientId;
+    return !!clientId && selectionStart.clientId === clientId;
   }
   function hasSelectedInnerBlock(state, clientId, deep = false) {
     const selectedBlockClientIds = getSelectedBlockClientIds(state);
