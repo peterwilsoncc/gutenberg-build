@@ -29478,7 +29478,6 @@ var wp;
         _embedded: { ...data?._embedded, "wp:attached-to": void 0 }
       });
       setValue(null);
-      setOptions([]);
     };
     const onValueChange = async (filterValue) => {
       setIsLoading(true);
@@ -29502,6 +29501,7 @@ var wp;
       setOptions(suggestions.concat(includeCurrent ? defaultPost : []));
       setIsLoading(false);
     };
+    const debouncedValueChange = (0, import_compose5.useDebounce)((0, import_compose5.useEvent)(onValueChange), 300);
     const handleSelectOption = (selectedPostId) => {
       if (!selectedPostId) {
         handleDetach();
@@ -29534,38 +29534,19 @@ var wp;
         }
       }
     };
-    const help = (0, import_element66.createInterpolateElement)(
-      (0, import_i18n67.__)(
-        "Search for a post or page to attach this media to or <button>detach current</button>."
-      ),
-      {
-        button: /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
-          import_components22.Button,
-          {
-            __next40pxDefaultSize: true,
-            onClick: handleDetach,
-            variant: "link",
-            accessibleWhenDisabled: true,
-            disabled: !value
-          }
-        )
-      }
-    );
     return /* @__PURE__ */ (0, import_jsx_runtime169.jsx)(
       import_components22.ComboboxControl,
       {
         className: "dataviews-media-field__attached-to",
         isLoading,
         label: (0, import_i18n67.__)("Attached to"),
-        help,
+        help: (0, import_i18n67.__)("Attach this file to a single post or page."),
         value,
         options,
-        onFilterValueChange: (0, import_compose5.debounce)(
-          (filterValue) => onValueChange(filterValue),
-          300
-        ),
+        onFilterValueChange: (filterValue) => debouncedValueChange(filterValue),
         onChange: handleSelectOption,
-        hideLabelFromVision: true
+        hideLabelFromVision: true,
+        expandOnFocus: false
       }
     );
   }
@@ -35458,7 +35439,7 @@ var wp;
     });
     return ref;
   }
-  function useEvent(callback) {
+  function useEvent2(callback) {
     const ref = (0, import_react18.useRef)(() => {
       throw new Error("Cannot call an event handler while rendering.");
     });
@@ -35574,7 +35555,7 @@ var wp;
     return (0, import_react18.useReducer)(() => [], []);
   }
   function useBooleanEvent(booleanOrCallback) {
-    return useEvent(typeof booleanOrCallback === "function" ? booleanOrCallback : () => booleanOrCallback);
+    return useEvent2(typeof booleanOrCallback === "function" ? booleanOrCallback : () => booleanOrCallback);
   }
   function useWrapElement(props, callback, deps = []) {
     const wrapElement = (0, import_react18.useCallback)((element) => {
@@ -35609,7 +35590,7 @@ var wp;
       addGlobalEventListener("scroll", resetMouseMoving, true);
       hasInstalledGlobalEventListeners = true;
     }, []);
-    return useEvent(() => mouseMoving);
+    return useEvent2(() => mouseMoving);
   }
   var mouseMoving = false;
   var previousScreenX = 0;
@@ -35764,7 +35745,7 @@ var wp;
     return tabIndexProp ?? 0;
   }
   function useDisableEvent(onEvent, disabled2) {
-    return useEvent((event) => {
+    return useEvent2((event) => {
       onEvent?.(event);
       if (event.defaultPrevented) return;
       if (disabled2) {
@@ -35801,7 +35782,7 @@ var wp;
     const [focusVisible, setFocusVisible] = (0, import_react19.useState)(false);
     const focusVisibleRef = (0, import_react19.useRef)(false);
     const nativeSubmitObserverCleanupRef = (0, import_react19.useRef)(null);
-    const cleanupFocusVisible = useEvent((element) => {
+    const cleanupFocusVisible = useEvent2((element) => {
       nativeSubmitObserverCleanupRef.current?.();
       nativeSubmitObserverCleanupRef.current = null;
       focusVisibleRef.current = false;
@@ -35865,7 +35846,7 @@ var wp;
       setFocusVisible(true);
     };
     const onKeyDownCaptureProp = props.onKeyDownCapture;
-    const onKeyDownCapture = useEvent((event) => {
+    const onKeyDownCapture = useEvent2((event) => {
       onKeyDownCaptureProp?.(event);
       if (event.defaultPrevented) return;
       if (!focusable2) return;
@@ -35880,7 +35861,7 @@ var wp;
       queueBeforeEvent(element, "focusout", applyFocusVisible);
     });
     const onFocusCaptureProp = props.onFocusCapture;
-    const onFocusCapture = useEvent((event) => {
+    const onFocusCapture = useEvent2((event) => {
       onFocusCaptureProp?.(event);
       if (event.defaultPrevented) return;
       if (!focusable2) return;
@@ -35894,7 +35875,7 @@ var wp;
       else setFocusVisible(false);
     });
     const onBlurProp = props.onBlur;
-    const onBlur = useEvent((event) => {
+    const onBlur = useEvent2((event) => {
       onBlurProp?.(event);
       if (!focusable2) return;
       if (!isFocusEventOutside(event)) return;
@@ -35902,7 +35883,7 @@ var wp;
       setFocusVisible(false);
     });
     const autoFocusOnShow = (0, import_react19.useContext)(FocusableContext);
-    const autoFocusRef = useEvent((element) => {
+    const autoFocusRef = useEvent2((element) => {
       if (!focusable2) return;
       if (!autoFocus) return;
       if (!element) return;
@@ -35992,7 +35973,7 @@ var wp;
       setActive(false);
     }, [disabled2]);
     const onKeyDownProp = props.onKeyDown;
-    const onKeyDown = useEvent((event) => {
+    const onKeyDown = useEvent2((event) => {
       onKeyDownProp?.(event);
       const element = event.currentTarget;
       if (event.defaultPrevented) return;
@@ -36029,7 +36010,7 @@ var wp;
       }
     });
     const onKeyUpProp = props.onKeyUp;
-    const onKeyUp = useEvent((event) => {
+    const onKeyUp = useEvent2((event) => {
       onKeyUpProp?.(event);
       if (isDuplicate) return;
       const isSpace = clickOnSpace && event.key === " ";
@@ -36048,7 +36029,7 @@ var wp;
       queueMicrotask(() => fireClickEvent(element, eventInit));
     });
     const onBlurProp = props.onBlur;
-    const onBlur = useEvent((event) => {
+    const onBlur = useEvent2((event) => {
       onBlurProp?.(event);
       if (!activeRef.current) return;
       activeRef.current = false;
@@ -37065,7 +37046,7 @@ If there's a particular need for this, please submit a feature request at https:
     return [React76.useMemo(() => ({
       ...store4,
       useState: useState161
-    }), [store4, useState161]), useEvent(() => {
+    }), [store4, useState161]), useEvent2(() => {
       setStore((store5) => createStore2({
         ...props,
         ...store5.getState()
@@ -37191,7 +37172,7 @@ If there's a particular need for this, please submit a feature request at https:
     const onFocusProp = props.onFocus;
     const hasFocusedComposite = (0, import_react23.useRef)(false);
     const cancelScheduledFocusRedirectRef = (0, import_react23.useRef)(null);
-    const onFocus = useEvent((event) => {
+    const onFocus = useEvent2((event) => {
       onFocusProp?.(event);
       if (event.defaultPrevented) return;
       if (isPortalEvent(event)) return;
@@ -37238,7 +37219,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
     });
     const onBlurCaptureProp = props.onBlurCapture;
-    const onBlurCapture = useEvent((event) => {
+    const onBlurCapture = useEvent2((event) => {
       onBlurCaptureProp?.(event);
       if (event.defaultPrevented) return;
       if (store4?.getState()?.virtualFocus && hasFocusedComposite.current) {
@@ -37250,7 +37231,7 @@ If there's a particular need for this, please submit a feature request at https:
     const onKeyDownProp = props.onKeyDown;
     const preventScrollOnKeyDownProp = useBooleanEvent(preventScrollOnKeyDown);
     const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-    const onKeyDown = useEvent((event) => {
+    const onKeyDown = useEvent2((event) => {
       onKeyDownProp?.(event);
       if (event.defaultPrevented) return;
       if (!isSelfTarget(event)) return;
@@ -37360,7 +37341,7 @@ If there's a particular need for this, please submit a feature request at https:
     return event.key === "Shift" || event.key === "Control" || event.key === "Alt" || event.key === "Meta";
   }
   function useKeyboardEventProxy(store4, onKeyboardEvent, previousElementRef) {
-    return useEvent((event) => {
+    return useEvent2((event) => {
       onKeyboardEvent?.(event);
       if (event.defaultPrevented) return;
       if (event.isPropagationStopped()) return;
@@ -37469,7 +37450,7 @@ If there's a particular need for this, please submit a feature request at https:
     const onKeyDownCapture = useKeyboardEventProxy(store4, props.onKeyDownCapture, previousElementRef);
     const onKeyUpCapture = useKeyboardEventProxy(store4, props.onKeyUpCapture, previousElementRef);
     const onFocusCaptureProp = props.onFocusCapture;
-    const onFocusCapture = useEvent((event) => {
+    const onFocusCapture = useEvent2((event) => {
       onFocusCaptureProp?.(event);
       if (event.defaultPrevented) return;
       if (!store4) return;
@@ -37483,7 +37464,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     });
     const onFocusProp = props.onFocus;
-    const onFocus = useEvent((event) => {
+    const onFocus = useEvent2((event) => {
       onFocusProp?.(event);
       if (event.defaultPrevented) return;
       if (!composite) return;
@@ -37495,7 +37476,7 @@ If there's a particular need for this, please submit a feature request at https:
       } else if (isSelfTarget(event)) store4.setActiveId(null);
     });
     const onBlurCaptureProp = props.onBlurCapture;
-    const onBlurCapture = useEvent((event) => {
+    const onBlurCapture = useEvent2((event) => {
       onBlurCaptureProp?.(event);
       if (event.defaultPrevented) return;
       if (!store4) return;
@@ -37516,7 +37497,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const onKeyDownProp = props.onKeyDown;
     const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-    const onKeyDown = useEvent((event) => {
+    const onKeyDown = useEvent2((event) => {
       onKeyDownProp?.(event);
       if (event.nativeEvent.isComposing) return;
       if (event.defaultPrevented) return;
@@ -37947,7 +37928,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isMouseMoving = useIsMouseMoving();
     const onMouseMoveProp = props.onMouseMove;
     const focusOnHoverProp = useBooleanEvent(focusOnHover);
-    const onMouseMove = useEvent((event) => {
+    const onMouseMove = useEvent2((event) => {
       onMouseMoveProp?.(event);
       if (event.defaultPrevented) return;
       if (!isMouseMoving()) return;
@@ -37960,7 +37941,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const onMouseLeaveProp = props.onMouseLeave;
     const blurOnHoverEndProp = useBooleanEvent(blurOnHoverEnd);
-    const onMouseLeave = useEvent((event) => {
+    const onMouseLeave = useEvent2((event) => {
       onMouseLeaveProp?.(event);
       if (event.defaultPrevented) return;
       if (!isMouseMoving()) return;
@@ -38103,7 +38084,7 @@ If there's a particular need for this, please submit a feature request at https:
       autoSelect,
       storeValue
     ]);
-    const getAutoSelectIdProp = useEvent(getAutoSelectId);
+    const getAutoSelectIdProp = useEvent2(getAutoSelectId);
     const autoSelectIdRef = (0, import_react29.useRef)(null);
     const autoSelectMovedRef = (0, import_react29.useRef)(void 0);
     const userScrolledRef = (0, import_react29.useRef)(false);
@@ -38231,7 +38212,7 @@ If there's a particular need for this, please submit a feature request at https:
     const onChangeProp = props.onChange;
     const showOnChangeProp = useBooleanEvent(showOnChange ?? canShow);
     const setValueOnChangeProp = useBooleanEvent(setValueOnChange ?? !store4.tag);
-    const onChange = useEvent((event) => {
+    const onChange = useEvent2((event) => {
       onChangeProp?.(event);
       if (event.defaultPrevented) return;
       if (!store4) return;
@@ -38262,7 +38243,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!autoSelect || !canAutoSelectRef.current) store4.setActiveId(null);
     });
     const onCompositionEndProp = props.onCompositionEnd;
-    const onCompositionEnd = useEvent((event) => {
+    const onCompositionEnd = useEvent2((event) => {
       canAutoSelectRef.current = true;
       composingRef.current = false;
       onCompositionEndProp?.(event);
@@ -38274,7 +38255,7 @@ If there's a particular need for this, please submit a feature request at https:
     const blurActiveItemOnClickProp = useBooleanEvent(blurActiveItemOnClick ?? (() => store4.getState().includesBaseElement));
     const setValueOnClickProp = useBooleanEvent(setValueOnClick);
     const showOnClickProp = useBooleanEvent(showOnClick ?? canShow);
-    const onMouseDown = useEvent((event) => {
+    const onMouseDown = useEvent2((event) => {
       onMouseDownProp?.(event);
       if (event.defaultPrevented) return;
       if (event.button) return;
@@ -38286,7 +38267,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const onKeyDownProp = props.onKeyDown;
     const showOnKeyPressProp = useBooleanEvent(showOnKeyPress ?? canShow);
-    const onKeyDown = useEvent((event) => {
+    const onKeyDown = useEvent2((event) => {
       onKeyDownProp?.(event);
       if (!event.repeat) canAutoSelectRef.current = false;
       if (event.defaultPrevented) return;
@@ -38309,7 +38290,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     });
     const onBlurProp = props.onBlur;
-    const onBlur = useEvent((event) => {
+    const onBlur = useEvent2((event) => {
       canAutoSelectRef.current = false;
       onBlurProp?.(event);
     });
@@ -38397,7 +38378,7 @@ If there's a particular need for this, please submit a feature request at https:
     const selectValueOnClickProp = useBooleanEvent(selectValueOnClick);
     const resetValueOnSelectProp = useBooleanEvent(resetValueOnSelect ?? resetValueOnSelectState ?? multiSelectable);
     const hideOnClickProp = useBooleanEvent(hideOnClick);
-    const onClick = useEvent((event) => {
+    const onClick = useEvent2((event) => {
       onClickProp?.(event);
       if (event.defaultPrevented) return;
       if (isDownloading(event)) return;
@@ -38416,7 +38397,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (hideOnClickProp(event)) store4?.hide();
     });
     const onKeyDownProp = props.onKeyDown;
-    const onKeyDown = useEvent((event) => {
+    const onKeyDown = useEvent2((event) => {
       onKeyDownProp?.(event);
       if (event.defaultPrevented) return;
       const baseElement = store4?.getState().baseElement;
