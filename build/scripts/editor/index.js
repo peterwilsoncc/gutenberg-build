@@ -7788,6 +7788,7 @@ var wp;
   __export(private_actions_exports, {
     createTemplate: () => createTemplate,
     hideBlockTypes: () => hideBlockTypes,
+    openRevision: () => openRevision,
     registerEntityAction: () => registerEntityAction,
     registerEntityField: () => registerEntityField,
     registerPostTypeSchema: () => registerPostTypeSchema,
@@ -8381,7 +8382,19 @@ var wp;
       if (!revisions) {
         return null;
       }
-      return revisions.find((r4) => r4[revisionKey] === revisionId2) ?? null;
+      const revision = revisions.find(
+        (record) => record[revisionKey] === revisionId2
+      );
+      if (revision) {
+        return revision;
+      }
+      return select9(import_core_data3.store).getRevision(
+        "postType",
+        postType2,
+        postId2,
+        revisionId2,
+        { context: "edit" }
+      ) ?? null;
     }
   );
   function getSelectedNote(state2) {
@@ -78560,6 +78573,76 @@ If there's a particular need for this, please submit a feature request at https:
         dispatch8.setCurrentRevisionId(revisions[0][revisionKey]);
       }
     });
+  };
+  function createRevisionsLoadFailedNotice(registry) {
+    registry.dispatch(import_notices19.store).createNotice("warning", (0, import_i18n204.__)("Revisions could not be loaded."), {
+      type: "snackbar",
+      id: "editor-revisions-load-failed"
+    });
+  }
+  var openRevision = (revisionId2) => async ({ dispatch: dispatch8, select: select9, registry }) => {
+    dispatch8.setCurrentRevisionId(revisionId2);
+    const postType2 = select9.getCurrentPostType();
+    const postId2 = select9.getCurrentPostId();
+    const entityConfig = registry.select(import_core_data56.store).getEntityConfig("postType", postType2);
+    const revisionKey = entityConfig?.revisionKey || "id";
+    const revisions = await registry.resolveSelect(import_core_data56.store).getRevisions("postType", postType2, postId2, {
+      per_page: -1,
+      context: "edit",
+      orderby: "date",
+      order: "desc",
+      _fields: revisionKey
+    });
+    if (select9.getCurrentRevisionId() !== revisionId2) {
+      return;
+    }
+    if (!revisions) {
+      createRevisionsLoadFailedNotice(registry);
+      return;
+    }
+    const index2 = revisions.findIndex(
+      (revision) => revision[revisionKey] === revisionId2
+    );
+    if (index2 === -1) {
+      let revision;
+      try {
+        revision = await (0, import_api_fetch7.default)({
+          path: (0, import_url14.addQueryArgs)(
+            entityConfig.getRevisionsUrl(postId2, revisionId2),
+            { context: "edit" }
+          )
+        });
+      } catch (error2) {
+        if (select9.getCurrentRevisionId() !== revisionId2) {
+          return;
+        }
+        if (error2?.data?.status !== 404) {
+          createRevisionsLoadFailedNotice(registry);
+          return;
+        }
+        dispatch8.setCurrentRevisionId(null);
+        registry.dispatch(import_notices19.store).createNotice("warning", (0, import_i18n204.__)("Invalid revision ID."), {
+          type: "snackbar",
+          id: "editor-revision-invalid"
+        });
+        return;
+      }
+      if (select9.getCurrentRevisionId() !== revisionId2) {
+        return;
+      }
+      if (!revision) {
+        createRevisionsLoadFailedNotice(registry);
+        return;
+      }
+      await registry.dispatch(import_core_data56.store).receiveRevisions("postType", postType2, postId2, revision, {
+        context: "edit"
+      });
+      return;
+    }
+    const page = Math.floor(index2 / select9.getRevisionsPerPage()) + 1;
+    if (page !== select9.getRevisionPage()) {
+      dispatch8({ type: "SET_REVISION_PAGE", page });
+    }
   };
   function setShowRevisionDiff(showDiff) {
     return {
