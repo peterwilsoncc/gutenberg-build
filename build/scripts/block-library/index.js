@@ -68005,7 +68005,7 @@ ${text}
     }, []);
     const canOverrideBlocks = (0, import_element128.useMemo)(() => {
       const supportedBlockTypes = Object.keys(supportedBlockTypesRaw);
-      const hasOverridableBlocks = (_blocks) => _blocks.some((block) => {
+      const hasOverridableBlocks = (_blocks) => _blocks?.some((block) => {
         if (supportedBlockTypes.includes(block.name) && isOverridableBlock(block)) {
           return true;
         }
