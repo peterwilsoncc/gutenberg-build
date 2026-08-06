@@ -30148,9 +30148,27 @@ var wp;
     "@wordpress/dataviews"
   );
 
+  // packages/dataviews/build-module/utils/kebab-case.mjs
+  function kebabCase2(str3) {
+    let input = str3?.toString?.() ?? "";
+    input = input.replace(/['\u2019]/, "");
+    return paramCase(input, {
+      splitRegexp: [
+        /(?!(?:1ST|2ND|3RD|[4-9]TH)(?![a-z]))([a-z0-9])([A-Z])/g,
+        // fooBar => foo-bar, 3Bar => 3-bar
+        /(?!(?:1st|2nd|3rd|[4-9]th)(?![a-z]))([0-9])([a-z])/g,
+        // 3bar => 3-bar
+        /([A-Za-z])([0-9])/g,
+        // Foo3 => foo-3, foo3 => foo-3
+        /([A-Z])([A-Z][a-z])/g
+        // FOOBar => foo-bar
+      ]
+    });
+  }
+
   // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
   var import_jsx_runtime178 = __toESM(require_jsx_runtime(), 1);
-  var { Menu, kebabCase: kebabCase2 } = unlock5(import_components28.privateApis);
+  var { Menu } = unlock5(import_components28.privateApis);
   function ButtonTrigger({
     action,
     onClick,

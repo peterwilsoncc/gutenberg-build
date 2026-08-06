@@ -10736,9 +10736,85 @@ var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptIn
   "@wordpress/dataviews"
 );
 
+// node_modules/tslib/tslib.es6.mjs
+var __assign = function() {
+  __assign = Object.assign || function __assign2(t2) {
+    for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
+      s2 = arguments[i2];
+      for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2)) t2[p2] = s2[p2];
+    }
+    return t2;
+  };
+  return __assign.apply(this, arguments);
+};
+
+// node_modules/lower-case/dist.es2015/index.js
+function lowerCase(str) {
+  return str.toLowerCase();
+}
+
+// node_modules/no-case/dist.es2015/index.js
+var DEFAULT_SPLIT_REGEXP = [/([a-z0-9])([A-Z])/g, /([A-Z])([A-Z][a-z])/g];
+var DEFAULT_STRIP_REGEXP = /[^A-Z0-9]+/gi;
+function noCase(input, options) {
+  if (options === void 0) {
+    options = {};
+  }
+  var _a = options.splitRegexp, splitRegexp = _a === void 0 ? DEFAULT_SPLIT_REGEXP : _a, _b = options.stripRegexp, stripRegexp = _b === void 0 ? DEFAULT_STRIP_REGEXP : _b, _c = options.transform, transform = _c === void 0 ? lowerCase : _c, _d = options.delimiter, delimiter = _d === void 0 ? " " : _d;
+  var result = replace(replace(input, splitRegexp, "$1\0$2"), stripRegexp, "\0");
+  var start = 0;
+  var end = result.length;
+  while (result.charAt(start) === "\0")
+    start++;
+  while (result.charAt(end - 1) === "\0")
+    end--;
+  return result.slice(start, end).split("\0").map(transform).join(delimiter);
+}
+function replace(input, re, value) {
+  if (re instanceof RegExp)
+    return input.replace(re, value);
+  return re.reduce(function(input2, re2) {
+    return input2.replace(re2, value);
+  }, input);
+}
+
+// node_modules/dot-case/dist.es2015/index.js
+function dotCase(input, options) {
+  if (options === void 0) {
+    options = {};
+  }
+  return noCase(input, __assign({ delimiter: "." }, options));
+}
+
+// node_modules/param-case/dist.es2015/index.js
+function paramCase(input, options) {
+  if (options === void 0) {
+    options = {};
+  }
+  return dotCase(input, __assign({ delimiter: "-" }, options));
+}
+
+// packages/dataviews/build-module/utils/kebab-case.mjs
+function kebabCase(str) {
+  let input = str?.toString?.() ?? "";
+  input = input.replace(/['\u2019]/, "");
+  return paramCase(input, {
+    splitRegexp: [
+      /(?!(?:1ST|2ND|3RD|[4-9]TH)(?![a-z]))([a-z0-9])([A-Z])/g,
+      // fooBar => foo-bar, 3Bar => 3-bar
+      /(?!(?:1st|2nd|3rd|[4-9]th)(?![a-z]))([0-9])([a-z])/g,
+      // 3bar => 3-bar
+      /([A-Za-z])([0-9])/g,
+      // Foo3 => foo-3, foo3 => foo-3
+      /([A-Z])([A-Z][a-z])/g
+      // FOOBar => foo-bar
+    ]
+  });
+}
+
 // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
 var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
-var { Menu, kebabCase } = unlock2(import_components2.privateApis);
+var { Menu } = unlock2(import_components2.privateApis);
 function ButtonTrigger({
   action,
   onClick,
