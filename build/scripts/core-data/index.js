@@ -7960,6 +7960,7 @@ var wp;
 
   // packages/core-data/build-module/footnotes/index.mjs
   var import_rich_text4 = __toESM(require_rich_text(), 1);
+  var import_warning2 = __toESM(require_warning(), 1);
 
   // packages/core-data/build-module/footnotes/get-rich-text-values-cached.mjs
   var import_block_editor6 = __toESM(require_block_editor(), 1);
@@ -8010,7 +8011,17 @@ var wp;
       return output;
     }
     const newOrder = getFootnotesOrder(blocks);
-    const footnotes = meta.footnotes ? JSON.parse(meta.footnotes) : [];
+    let parsed;
+    try {
+      parsed = JSON.parse(meta.footnotes || "[]");
+    } catch {
+    }
+    let footnotes = [];
+    if (Array.isArray(parsed)) {
+      footnotes = parsed;
+    } else {
+      (0, import_warning2.default)("Footnotes post meta is not a JSON array; ignoring it.");
+    }
     const currentOrder = footnotes.map((fn) => fn.id);
     if (currentOrder.join("") === newOrder.join("")) {
       return output;

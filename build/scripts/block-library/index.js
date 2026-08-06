@@ -81397,7 +81397,12 @@ ${text}
       postId
     );
     const footnotesSupported = "string" === typeof meta?.footnotes;
-    const footnotes = meta?.footnotes ? JSON.parse(meta.footnotes) : [];
+    let parsed;
+    try {
+      parsed = JSON.parse(meta?.footnotes || "[]");
+    } catch {
+    }
+    const footnotes = Array.isArray(parsed) ? parsed : [];
     const blockProps = (0, import_block_editor300.useBlockProps)();
     if (!footnotesSupported) {
       return /* @__PURE__ */ (0, import_jsx_runtime562.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(
