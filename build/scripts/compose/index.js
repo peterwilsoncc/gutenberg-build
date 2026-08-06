@@ -1,3 +1,4 @@
+(function() {
 "use strict";
 var wp;
 (wp ||= {}).compose = (() => {
@@ -2541,5 +2542,7 @@ var wp;
     return (0, import_element29.useSyncExternalStore)(subscribe, getValue, getValue);
   }
   return __toCommonJS(index_exports);
+})();
+(window.wp ||= {}).compose = wp.compose;
 })();
 //# sourceMappingURL=index.js.map
