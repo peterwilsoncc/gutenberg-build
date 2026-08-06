@@ -10726,7 +10726,7 @@ function ActionButton({
       action,
       onClick: async () => {
         setActionInProgress(action.id);
-        await action.callback(selectedItems, {
+        await action.callback(selectedEligibleItems, {
           registry
         });
         setActionInProgress(null);
