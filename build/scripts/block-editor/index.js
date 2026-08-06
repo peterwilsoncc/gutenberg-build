@@ -62366,7 +62366,6 @@ var wp;
 
   // packages/block-editor/build-module/components/list-view/block-select-button.mjs
   var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge3 } = unlock(import_components119.privateApis);
   function ListViewBlockSelectButton({
     className,
     clientId,
@@ -62458,15 +62457,15 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(ListViewExpander, { onClick: onToggleExpanded }),
             /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(block_icon_default, { icon, showColors: true, context: "list-view" }),
             /* @__PURE__ */ (0, import_jsx_runtime326.jsxs)(
-              import_components119.__experimentalHStack,
+              Stack,
               {
-                alignment: "center",
+                align: "center",
                 className: "block-editor-list-view-block-select-button__label-wrapper",
                 justify: "flex-start",
-                spacing: 1,
+                gap: "xs",
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("span", { className: "block-editor-list-view-block-select-button__title", children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(import_components119.__experimentalTruncate, { ellipsizeMode: "auto", children: blockTitle }) }),
-                  !!anchor && /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("span", { className: "block-editor-list-view-block-select-button__anchor-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(WCBadge3, { className: "block-editor-list-view-block-select-button__anchor", children: anchor }) }),
+                  !!anchor && /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("span", { className: "block-editor-list-view-block-select-button__anchor-wrapper", children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("span", { className: "block-editor-list-view-block-select-button__anchor", children: anchor }) }),
                   isSticky && /* @__PURE__ */ (0, import_jsx_runtime326.jsx)("span", { className: "block-editor-list-view-block-select-button__sticky", children: /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(icon_default, { icon: pin_small_default }) }),
                   images.length ? /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
                     "span",
@@ -63626,12 +63625,12 @@ var wp;
                           }
                         ),
                         /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
-                          import_components122.__experimentalHStack,
+                          Stack,
                           {
-                            alignment: "center",
+                            align: "center",
                             className: "block-editor-list-view-block-select-button__label-wrapper",
                             justify: "flex-start",
-                            spacing: 1,
+                            gap: "xs",
                             children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)("span", { className: "block-editor-list-view-block-select-button__title", children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_components122.__experimentalTruncate, { ellipsizeMode: "auto", children: blockTitle }) })
                           }
                         )
@@ -70532,7 +70531,7 @@ var wp;
 
   // packages/block-editor/build-module/components/link-control/link-preview.mjs
   var import_jsx_runtime379 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge4 } = unlock(import_components166.privateApis);
+  var { Badge: WCBadge3 } = unlock(import_components166.privateApis);
   function LinkPreview({
     value,
     onEditClick,
@@ -70637,7 +70636,7 @@ var wp;
                           gap: 1,
                           children: value.badges.map(
                             (badge, index2) => /* @__PURE__ */ (0, import_jsx_runtime379.jsx)(
-                              WCBadge4,
+                              WCBadge3,
                               {
                                 intent: badge.intent,
                                 children: badge.label
@@ -81045,7 +81044,7 @@ var wp;
   var import_components212 = __toESM(require_components(), 1);
   var import_i18n202 = __toESM(require_i18n(), 1);
   var import_jsx_runtime436 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge5 } = unlock(import_components212.privateApis);
+  var { Badge: WCBadge4 } = unlock(import_components212.privateApis);
   function StateControlBadges({
     viewportStates = [],
     pseudoStates = [],
@@ -81092,7 +81091,7 @@ var wp;
         wrap: "wrap",
         children: activeStates.map((state) => {
           const badge = /* @__PURE__ */ (0, import_jsx_runtime436.jsxs)(
-            WCBadge5,
+            WCBadge4,
             {
               className: "block-editor-global-styles-state-control__badge",
               intent: "info",
@@ -101451,7 +101450,7 @@ var wp;
   var import_components285 = __toESM(require_components(), 1);
   var import_dom75 = __toESM(require_dom(), 1);
   var import_jsx_runtime542 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge6 } = unlock(import_components285.privateApis);
+  var { Badge: WCBadge5 } = unlock(import_components285.privateApis);
   function LinkPreview2({ title, url, image, badges }) {
     return /* @__PURE__ */ (0, import_jsx_runtime542.jsxs)(import_components285.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
       /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(import_components285.FlexItem, { className: "link-preview-button__content", children: /* @__PURE__ */ (0, import_jsx_runtime542.jsxs)(import_components285.__experimentalHStack, { alignment: "top", children: [
@@ -101491,7 +101490,7 @@ var wp;
                   className: "link-preview-button__badges",
                   alignment: "left",
                   children: badges.map((badge) => /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(
-                    WCBadge6,
+                    WCBadge5,
                     {
                       intent: badge.intent,
                       children: badge.label

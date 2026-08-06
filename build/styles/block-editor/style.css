@@ -2997,6 +2997,12 @@ iframe[name=editor-canvas] {
 .block-editor-list-view-leaf .block-editor-inserter__toggle:active {
   color: #fff;
 }
+.block-editor-list-view-leaf .block-editor-list-view-block-select-button__label-wrapper {
+  width: 100%;
+}
+.block-editor-list-view-leaf .block-editor-list-view-block-select-button__label-wrapper > * {
+  min-width: 0;
+}
 .block-editor-list-view-leaf .block-editor-list-view-block-select-button__label-wrapper svg {
   left: 2px;
   position: relative;
@@ -3019,6 +3025,17 @@ iframe[name=editor-canvas] {
   position: absolute;
   right: 0;
   transform: translateY(-50%);
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 2px 8px;
+  border-radius: 2px;
+  background: #f0f0f0;
+  color: #2f2f2f;
+  font-size: 12px;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .block-editor-list-view-leaf.is-selected .block-editor-list-view-block-select-button__anchor {
   background: rgba(0, 0, 0, 0.3);
