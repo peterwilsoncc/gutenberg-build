@@ -44,7 +44,7 @@ return array(
 		'description'  => 'This is not just a widget, it symbolizes the hope and enthusiasm of an entire generation summed up in two words sung most famously by Louis Armstrong: Hello, Dolly. When activated you will randomly see a lyric from Hello, Dolly in the dashboard.',
 		'help'         => null,
 		'icon'         => 'core/audio',
-		'actions'      => array( array( 'id' => 'plugin-page', 'label' => 'WordPress.org plugin page', 'href' => 'https://wordpress.org/plugins/hello-dolly/', 'openInNewTab' => true ), array( 'id' => 'download-lyrics', 'label' => 'Download lyrics', 'href' => 'hello-dolly-lyrics.txt', 'download' => 'hello-dolly-lyrics.txt' ) ),
+		'actions'      => array( array( 'id' => 'plugin-page', 'label' => 'WordPress.org plugin page', 'href' => 'https://wordpress.org/plugins/hello-dolly/', 'openInNewTab' => true ) ),
 		'has_render'   => true,
 		'has_widget'   => true,
 		'presentation' => 'full-bleed',
