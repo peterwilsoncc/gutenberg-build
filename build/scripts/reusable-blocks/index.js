@@ -1,4 +1,3 @@
-(function() {
 var wp;
 (wp ||= {}).reusableBlocks = (() => {
   var __create = Object.create;
@@ -544,7 +543,5 @@ var wp;
     ] }) });
   }
   return __toCommonJS(index_exports);
-})();
-(window.wp ||= {}).reusableBlocks = wp.reusableBlocks;
 })();
 //# sourceMappingURL=index.js.map

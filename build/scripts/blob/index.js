@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).blob = (() => {
@@ -70,7 +69,5 @@ var wp;
     window.URL.revokeObjectURL(url);
   }
   return __toCommonJS(index_exports);
-})();
-(window.wp ||= {}).blob = wp.blob;
 })();
 //# sourceMappingURL=index.js.map

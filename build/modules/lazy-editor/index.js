@@ -1017,11 +1017,9 @@ var BACKGROUND_BLOCK_DEFAULT_VALUES = {
   backgroundPosition: "50% 50%"
   // used only when backgroundSize is 'contain'.
 };
-function hasImageUrl(backgroundImage) {
-  return typeof backgroundImage === "object" && backgroundImage !== null && "url" in backgroundImage && !!backgroundImage.url;
-}
 function setBackgroundStyleDefaults(backgroundStyle) {
-  if (!backgroundStyle || !hasImageUrl(backgroundStyle.backgroundImage)) {
+  if (!backgroundStyle || // @ts-expect-error
+  !backgroundStyle?.backgroundImage?.url) {
     return;
   }
   let backgroundStylesWithDefaults;
@@ -2321,8 +2319,10 @@ var getBlockSelectors = (blockTypes, variationInstanceId) => {
       }
     }
     const hasLayoutSupport = !!blockType?.supports?.layout || !!blockType?.supports?.__experimentalLayout;
-    const blockGapSupport = blockType?.supports?.spacing?.blockGap;
-    const fallbackGapValue = typeof blockGapSupport === "object" && !Array.isArray(blockGapSupport) ? blockGapSupport.__experimentalDefault : void 0;
+    const fallbackGapValue = (
+      // @ts-expect-error
+      blockType?.supports?.spacing?.blockGap?.__experimentalDefault
+    );
     const blockStyleVariations = getBlockStyles(name);
     const styleVariationSelectors = {};
     blockStyleVariations?.forEach((variation) => {

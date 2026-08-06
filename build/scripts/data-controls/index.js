@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).dataControls = (() => {
@@ -113,7 +112,5 @@ var wp;
     }
   };
   return __toCommonJS(index_exports);
-})();
-(window.wp ||= {}).dataControls = wp.dataControls;
 })();
 //# sourceMappingURL=index.js.map

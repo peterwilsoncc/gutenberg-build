@@ -1,4 +1,3 @@
-(function() {
 var wp;
 (wp ||= {}).blockDirectory = (() => {
   var __create = Object.create;
@@ -1893,7 +1892,7 @@ var wp;
   function getNearestOverflowAncestor(node) {
     const parentNode = getParentNode(node);
     if (isLastTraversableNode(parentNode)) {
-      return (node.ownerDocument || node).body;
+      return node.ownerDocument ? node.ownerDocument.body : node.body;
     }
     if (isHTMLElement(parentNode) && isOverflowElement(parentNode)) {
       return parentNode;
@@ -2640,12 +2639,12 @@ var wp;
     return oppositeSideMap[side] + placement.slice(side.length);
   }
   function expandPaddingObject(padding) {
-    var _padding$top, _padding$right, _padding$bottom, _padding$left;
     return {
-      top: (_padding$top = padding.top) != null ? _padding$top : 0,
-      right: (_padding$right = padding.right) != null ? _padding$right : 0,
-      bottom: (_padding$bottom = padding.bottom) != null ? _padding$bottom : 0,
-      left: (_padding$left = padding.left) != null ? _padding$left : 0
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+      ...padding
     };
   }
   function getPaddingObject(padding) {
@@ -3690,9 +3689,13 @@ var wp;
           y: reference.y
         };
     }
-    const alignment = getAlignment(placement);
-    if (alignment) {
-      coords[alignmentAxis] += commonAlign * (alignment === "end" ? 1 : -1) * (rtl && isVertical ? -1 : 1);
+    switch (getAlignment(placement)) {
+      case "start":
+        coords[alignmentAxis] -= commonAlign * (rtl && isVertical ? -1 : 1);
+        break;
+      case "end":
+        coords[alignmentAxis] += commonAlign * (rtl && isVertical ? -1 : 1);
+        break;
     }
     return coords;
   }
@@ -3732,7 +3735,10 @@ var wp;
       height: rects.floating.height
     } : rects.reference;
     const offsetParent = await (platform3.getOffsetParent == null ? void 0 : platform3.getOffsetParent(elements.floating));
-    const offsetScale = await (platform3.isElement == null ? void 0 : platform3.isElement(offsetParent)) && await (platform3.getScale == null ? void 0 : platform3.getScale(offsetParent)) || {
+    const offsetScale = await (platform3.isElement == null ? void 0 : platform3.isElement(offsetParent)) ? await (platform3.getScale == null ? void 0 : platform3.getScale(offsetParent)) || {
+      x: 1,
+      y: 1
+    } : {
       x: 1,
       y: 1
     };
@@ -4111,16 +4117,23 @@ var wp;
           y
         };
         const overflow = await platform3.detectOverflow(state, detectOverflowOptions);
-        const crossAxis = getSideAxis(placement);
+        const crossAxis = getSideAxis(getSide(placement));
         const mainAxis = getOppositeAxis(crossAxis);
         let mainAxisCoord = coords[mainAxis];
         let crossAxisCoord = coords[crossAxis];
-        const clampCoord = (axis, coord) => clamp(coord + overflow[axis === "y" ? "top" : "left"], coord, coord - overflow[axis === "y" ? "bottom" : "right"]);
         if (checkMainAxis) {
-          mainAxisCoord = clampCoord(mainAxis, mainAxisCoord);
+          const minSide = mainAxis === "y" ? "top" : "left";
+          const maxSide = mainAxis === "y" ? "bottom" : "right";
+          const min2 = mainAxisCoord + overflow[minSide];
+          const max2 = mainAxisCoord - overflow[maxSide];
+          mainAxisCoord = clamp(min2, mainAxisCoord, max2);
         }
         if (checkCrossAxis) {
-          crossAxisCoord = clampCoord(crossAxis, crossAxisCoord);
+          const minSide = crossAxis === "y" ? "top" : "left";
+          const maxSide = crossAxis === "y" ? "bottom" : "right";
+          const min2 = crossAxisCoord + overflow[minSide];
+          const max2 = crossAxisCoord - overflow[maxSide];
+          crossAxisCoord = clamp(min2, crossAxisCoord, max2);
         }
         const limitedCoords = limiter.fn({
           ...state,
@@ -4148,7 +4161,6 @@ var wp;
     return {
       options,
       fn(state) {
-        var _rawOffset$mainAxis, _rawOffset$crossAxis;
         const {
           x,
           y,
@@ -4174,8 +4186,9 @@ var wp;
           mainAxis: rawOffset,
           crossAxis: 0
         } : {
-          mainAxis: (_rawOffset$mainAxis = rawOffset.mainAxis) != null ? _rawOffset$mainAxis : 0,
-          crossAxis: (_rawOffset$crossAxis = rawOffset.crossAxis) != null ? _rawOffset$crossAxis : 0
+          mainAxis: 0,
+          crossAxis: 0,
+          ...rawOffset
         };
         if (checkMainAxis) {
           const len = mainAxis === "y" ? "height" : "width";
@@ -4214,6 +4227,7 @@ var wp;
       name: "size",
       options,
       async fn(state) {
+        var _state$middlewareData, _state$middlewareData2;
         const {
           placement,
           rects,
@@ -4246,21 +4260,24 @@ var wp;
         const maximumClippingWidth = width - overflow.left - overflow.right;
         const overflowAvailableHeight = min(height - overflow[heightSide], maximumClippingHeight);
         const overflowAvailableWidth = min(width - overflow[widthSide], maximumClippingWidth);
-        const shiftData = state.middlewareData.shift;
-        const noShift = !shiftData;
+        const noShift = !state.middlewareData.shift;
         let availableHeight = overflowAvailableHeight;
         let availableWidth = overflowAvailableWidth;
-        if (shiftData != null && shiftData.enabled.x) {
+        if ((_state$middlewareData = state.middlewareData.shift) != null && _state$middlewareData.enabled.x) {
           availableWidth = maximumClippingWidth;
         }
-        if (shiftData != null && shiftData.enabled.y) {
+        if ((_state$middlewareData2 = state.middlewareData.shift) != null && _state$middlewareData2.enabled.y) {
           availableHeight = maximumClippingHeight;
         }
         if (noShift && !alignment) {
+          const xMin = max(overflow.left, 0);
+          const xMax = max(overflow.right, 0);
+          const yMin = max(overflow.top, 0);
+          const yMax = max(overflow.bottom, 0);
           if (isYAxis) {
-            availableWidth = width - 2 * max(overflow.left, overflow.right);
+            availableWidth = width - 2 * (xMin !== 0 || xMax !== 0 ? xMin + xMax : max(overflow.left, overflow.right));
           } else {
-            availableHeight = height - 2 * max(overflow.top, overflow.bottom);
+            availableHeight = height - 2 * (yMin !== 0 || yMax !== 0 ? yMin + yMax : max(overflow.top, overflow.bottom));
           }
         }
         await apply({
@@ -4342,7 +4359,10 @@ var wp;
     if (isFixed === void 0) {
       isFixed = false;
     }
-    return !!floatingOffsetParent && isFixed && floatingOffsetParent === getWindow(element);
+    if (!floatingOffsetParent || isFixed && floatingOffsetParent !== getWindow(element)) {
+      return false;
+    }
+    return isFixed;
   }
   function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetParent) {
     if (includeScale === void 0) {
@@ -4368,12 +4388,12 @@ var wp;
     let y = (clientRect.top + visualOffsets.y) / scale.y;
     let width = clientRect.width / scale.x;
     let height = clientRect.height / scale.y;
-    if (domElement && offsetParent) {
+    if (domElement) {
       const win = getWindow(domElement);
-      const offsetWin = isElement(offsetParent) ? getWindow(offsetParent) : offsetParent;
+      const offsetWin = offsetParent && isElement(offsetParent) ? getWindow(offsetParent) : offsetParent;
       let currentWin = win;
       let currentIFrame = getFrameElement(currentWin);
-      while (currentIFrame && offsetWin !== currentWin) {
+      while (currentIFrame && offsetParent && offsetWin !== currentWin) {
         const iframeScale = getScale(currentIFrame);
         const iframeRect = currentIFrame.getBoundingClientRect();
         const css = getComputedStyle2(currentIFrame);
@@ -4432,7 +4452,7 @@ var wp;
     let scale = createCoords(1);
     const offsets = createCoords(0);
     const isOffsetParentAnElement = isHTMLElement(offsetParent);
-    if (isOffsetParentAnElement || !isFixed) {
+    if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
       if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) {
         scroll = getNodeScroll(offsetParent);
       }
@@ -4452,14 +4472,15 @@ var wp;
     };
   }
   function getClientRects(element) {
-    return element.getClientRects ? Array.from(element.getClientRects()) : [];
+    return Array.from(element.getClientRects());
   }
-  function getDocumentRect(html) {
-    const scroll = getNodeScroll(html);
-    const body = html.ownerDocument.body;
+  function getDocumentRect(element) {
+    const html = getDocumentElement(element);
+    const scroll = getNodeScroll(element);
+    const body = element.ownerDocument.body;
     const width = max(html.scrollWidth, html.clientWidth, body.scrollWidth, body.clientWidth);
     const height = max(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
-    let x = -scroll.scrollLeft + getWindowScrollBarX(html);
+    let x = -scroll.scrollLeft + getWindowScrollBarX(element);
     const y = -scroll.scrollTop;
     if (getComputedStyle2(body).direction === "rtl") {
       x += max(html.clientWidth, body.clientWidth) - width;
@@ -4472,11 +4493,7 @@ var wp;
     };
   }
   var SCROLLBAR_MAX = 25;
-  function getViewportRect(element, strategy, rootBoundary) {
-    if (rootBoundary === void 0) {
-      rootBoundary = "viewport";
-    }
-    const isLayoutViewport = rootBoundary === "layoutViewport";
+  function getViewportRect(element, strategy) {
     const win = getWindow(element);
     const html = getDocumentElement(element);
     const visualViewport = win.visualViewport;
@@ -4485,19 +4502,12 @@ var wp;
     let x = 0;
     let y = 0;
     if (visualViewport) {
-      const layoutRelativeClientCoords = !isWebKit() || strategy === "fixed";
-      if (isLayoutViewport) {
-        if (!layoutRelativeClientCoords) {
-          x = -visualViewport.offsetLeft;
-          y = -visualViewport.offsetTop;
-        }
-      } else {
-        width = visualViewport.width;
-        height = visualViewport.height;
-        if (layoutRelativeClientCoords) {
-          x = visualViewport.offsetLeft;
-          y = visualViewport.offsetTop;
-        }
+      width = visualViewport.width;
+      height = visualViewport.height;
+      const visualViewportBased = isWebKit();
+      if (!visualViewportBased || visualViewportBased && strategy === "fixed") {
+        x = visualViewport.offsetLeft;
+        y = visualViewport.offsetTop;
       }
     }
     const windowScrollbarX = getWindowScrollBarX(html);
@@ -4506,11 +4516,12 @@ var wp;
       const body = doc.body;
       const bodyStyles = getComputedStyle(body);
       const bodyMarginInline = doc.compatMode === "CSS1Compat" ? parseFloat(bodyStyles.marginLeft) + parseFloat(bodyStyles.marginRight) || 0 : 0;
-      const reservedWidth = Math.abs(html.clientWidth - body.clientWidth - bodyMarginInline);
-      const gutter = getComputedStyle(html).scrollbarGutter === "stable both-edges" ? reservedWidth / 2 : reservedWidth;
-      if (gutter <= SCROLLBAR_MAX) {
-        width -= gutter;
+      const clippingStableScrollbarWidth = Math.abs(html.clientWidth - body.clientWidth - bodyMarginInline);
+      if (clippingStableScrollbarWidth <= SCROLLBAR_MAX) {
+        width -= clippingStableScrollbarWidth;
       }
+    } else if (windowScrollbarX <= SCROLLBAR_MAX) {
+      width += windowScrollbarX;
     }
     return {
       width,
@@ -4523,7 +4534,7 @@ var wp;
     const clientRect = getBoundingClientRect(element, true, strategy === "fixed");
     const top = clientRect.top + element.clientTop;
     const left = clientRect.left + element.clientLeft;
-    const scale = getScale(element);
+    const scale = isHTMLElement(element) ? getScale(element) : createCoords(1);
     const width = element.clientWidth * scale.x;
     const height = element.clientHeight * scale.y;
     const x = left * scale.x;
@@ -4537,8 +4548,8 @@ var wp;
   }
   function getClientRectFromClippingAncestor(element, clippingAncestor, strategy) {
     let rect;
-    if (clippingAncestor === "viewport" || clippingAncestor === "layoutViewport") {
-      rect = getViewportRect(element, strategy, clippingAncestor);
+    if (clippingAncestor === "viewport") {
+      rect = getViewportRect(element, strategy);
     } else if (clippingAncestor === "document") {
       rect = getDocumentRect(getDocumentElement(element));
     } else if (isElement(clippingAncestor)) {
@@ -4554,24 +4565,33 @@ var wp;
     }
     return rectToClientRect(rect);
   }
+  function hasFixedPositionAncestor(element, stopNode) {
+    const parentNode = getParentNode(element);
+    if (parentNode === stopNode || !isElement(parentNode) || isLastTraversableNode(parentNode)) {
+      return false;
+    }
+    return getComputedStyle2(parentNode).position === "fixed" || hasFixedPositionAncestor(parentNode, stopNode);
+  }
   function getClippingElementAncestors(element, cache) {
     const cachedResult = cache.get(element);
     if (cachedResult) {
       return cachedResult;
     }
     let result = getOverflowAncestors(element, [], false).filter((el) => isElement(el) && getNodeName(el) !== "body");
-    let lastKeptComputedStyle = null;
+    let currentContainingBlockComputedStyle = null;
     const elementIsFixed = getComputedStyle2(element).position === "fixed";
     let currentNode = elementIsFixed ? getParentNode(element) : element;
     while (isElement(currentNode) && !isLastTraversableNode(currentNode)) {
       const computedStyle = getComputedStyle2(currentNode);
       const currentNodeIsContaining = isContainingBlock(currentNode);
-      const lastPosition = lastKeptComputedStyle ? lastKeptComputedStyle.position : elementIsFixed ? "fixed" : "";
-      const shouldDropCurrentNode = !currentNodeIsContaining && (lastPosition === "fixed" || lastPosition === "absolute" && computedStyle.position === "static");
+      if (!currentNodeIsContaining && computedStyle.position === "fixed") {
+        currentContainingBlockComputedStyle = null;
+      }
+      const shouldDropCurrentNode = elementIsFixed ? !currentNodeIsContaining && !currentContainingBlockComputedStyle : !currentNodeIsContaining && computedStyle.position === "static" && !!currentContainingBlockComputedStyle && (currentContainingBlockComputedStyle.position === "absolute" || currentContainingBlockComputedStyle.position === "fixed") || isOverflowElement(currentNode) && !currentNodeIsContaining && hasFixedPositionAncestor(element, currentNode);
       if (shouldDropCurrentNode) {
         result = result.filter((ancestor) => ancestor !== currentNode);
       } else {
-        lastKeptComputedStyle = computedStyle;
+        currentContainingBlockComputedStyle = computedStyle;
       }
       currentNode = getParentNode(currentNode);
     }
@@ -4626,7 +4646,10 @@ var wp;
       scrollTop: 0
     };
     const offsets = createCoords(0);
-    if (isOffsetParentAnElement || !isFixed) {
+    function setLeftRTLScrollbarOffset() {
+      offsets.x = getWindowScrollBarX(documentElement);
+    }
+    if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
       if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) {
         scroll = getNodeScroll(offsetParent);
       }
@@ -4634,10 +4657,12 @@ var wp;
         const offsetRect = getBoundingClientRect(offsetParent, true, isFixed, offsetParent);
         offsets.x = offsetRect.x + offsetParent.clientLeft;
         offsets.y = offsetRect.y + offsetParent.clientTop;
+      } else if (documentElement) {
+        setLeftRTLScrollbarOffset();
       }
     }
-    if (!isOffsetParentAnElement && documentElement) {
-      offsets.x = getWindowScrollBarX(documentElement);
+    if (isFixed && !isOffsetParentAnElement && documentElement) {
+      setLeftRTLScrollbarOffset();
     }
     const htmlOffset = documentElement && !isOffsetParentAnElement && !isFixed ? getHTMLOffset(documentElement, scroll) : createCoords(0);
     const x = rect.left + scroll.scrollLeft - offsets.x - htmlOffset.x;
@@ -4721,7 +4746,7 @@ var wp;
   function rectsAreEqual(a, b) {
     return a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
   }
-  function observeMove(element, onMove, ancestorResize) {
+  function observeMove(element, onMove) {
     let io = null;
     let timeoutId;
     const root = getDocumentElement(element);
@@ -4764,9 +4789,6 @@ var wp;
       let isFirstUpdate = true;
       function handleObserve(entries) {
         const ratio = entries[0].intersectionRatio;
-        if (!rectsAreEqual(elementRectForRootMargin, element.getBoundingClientRect())) {
-          return refresh();
-        }
         if (ratio !== threshold) {
           if (!isFirstUpdate) {
             return refresh();
@@ -4778,6 +4800,9 @@ var wp;
           } else {
             refresh(false, ratio);
           }
+        }
+        if (ratio === 1 && !rectsAreEqual(elementRectForRootMargin, element.getBoundingClientRect())) {
+          refresh();
         }
         isFirstUpdate = false;
       }
@@ -4792,14 +4817,8 @@ var wp;
       }
       io.observe(element);
     }
-    const win = getWindow(element);
-    const handleResize = () => refresh(ancestorResize);
-    win.addEventListener("resize", handleResize);
     refresh(true);
-    return () => {
-      win.removeEventListener("resize", handleResize);
-      cleanup();
-    };
+    return cleanup;
   }
   function autoUpdate(reference, floating, update2, options) {
     if (options === void 0) {
@@ -4815,10 +4834,12 @@ var wp;
     const referenceEl = unwrapElement(reference);
     const ancestors = ancestorScroll || ancestorResize ? [...referenceEl ? getOverflowAncestors(referenceEl) : [], ...floating ? getOverflowAncestors(floating) : []] : [];
     ancestors.forEach((ancestor) => {
-      ancestorScroll && ancestor.addEventListener("scroll", update2);
+      ancestorScroll && ancestor.addEventListener("scroll", update2, {
+        passive: true
+      });
       ancestorResize && ancestor.addEventListener("resize", update2);
     });
-    const cleanupIo = referenceEl && layoutShift ? observeMove(referenceEl, update2, ancestorResize) : null;
+    const cleanupIo = referenceEl && layoutShift ? observeMove(referenceEl, update2) : null;
     let reobserveFrame = -1;
     let resizeObserver = null;
     if (elementResize) {
@@ -4877,9 +4898,11 @@ var wp;
   var limitShift2 = limitShift;
   var computePosition2 = (reference, floating, options) => {
     const cache = /* @__PURE__ */ new Map();
-    const mergedOptions = options != null ? options : {};
+    const mergedOptions = {
+      platform: platform2,
+      ...options
+    };
     const platformWithCache = {
-      ...platform2,
       ...mergedOptions.platform,
       _c: cache
     };
@@ -9657,32 +9680,16 @@ var wp;
   function getDownloadableBlockLabel({ title, rating, ratingCount }, { hasNotice, isInstalled, isInstalling: isInstalling2 }) {
     const stars = Math.round(rating / 0.5) * 0.5;
     if (!isInstalled && hasNotice) {
-      return (0, import_i18n4.sprintf)(
-        /* translators: %s: block title */
-        (0, import_i18n4.__)("Retry installing %s."),
-        (0, import_html_entities.decodeEntities)(title)
-      );
+      return (0, import_i18n4.sprintf)("Retry installing %s.", (0, import_html_entities.decodeEntities)(title));
     }
     if (isInstalled) {
-      return (0, import_i18n4.sprintf)(
-        /* translators: %s: block title */
-        (0, import_i18n4.__)("Add %s."),
-        (0, import_html_entities.decodeEntities)(title)
-      );
+      return (0, import_i18n4.sprintf)("Add %s.", (0, import_html_entities.decodeEntities)(title));
     }
     if (isInstalling2) {
-      return (0, import_i18n4.sprintf)(
-        /* translators: %s: block title */
-        (0, import_i18n4.__)("Installing %s."),
-        (0, import_html_entities.decodeEntities)(title)
-      );
+      return (0, import_i18n4.sprintf)("Installing %s.", (0, import_html_entities.decodeEntities)(title));
     }
     if (ratingCount < 1) {
-      return (0, import_i18n4.sprintf)(
-        /* translators: %s: block title */
-        (0, import_i18n4.__)("Install %s."),
-        (0, import_html_entities.decodeEntities)(title)
-      );
+      return (0, import_i18n4.sprintf)("Install %s.", (0, import_html_entities.decodeEntities)(title));
     }
     return (0, import_i18n4.sprintf)(
       /* translators: 1: block title, 2: average rating, 3: total ratings count. */
@@ -10255,6 +10262,4 @@ use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.developme
    * LICENSE file in the root directory of this source tree.
    *)
 */
-(window.wp ||= {}).blockDirectory = wp.blockDirectory;
-})();
 //# sourceMappingURL=index.js.map

@@ -1,4 +1,3 @@
-(function() {
 var wp;
 (wp ||= {}).coreCommands = (() => {
   var __create = Object.create;
@@ -738,7 +737,5 @@ var wp;
     );
   }
   return __toCommonJS(index_exports);
-})();
-(window.wp ||= {}).coreCommands = wp.coreCommands;
 })();
 //# sourceMappingURL=index.js.map

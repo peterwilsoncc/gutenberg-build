@@ -120,9 +120,9 @@ class Gutenberg_View_Config_Data {
 	 * Applies the entity view configuration filter and returns the result.
 	 *
 	 * Exposes the container through the dynamic
-	 * `get_entity_view_config_{$kind}_{$name}` filter (with the dynamic portions
-	 * lowercased), so that core and third parties can provide the configuration for a specific entity,
-	 * then reconciles the filtered container back into a plain configuration array,
+	 * `get_entity_view_config_{$kind}_{$name}` filter so that core and third
+	 * parties can provide the configuration for a specific entity, then
+	 * reconciles the filtered container back into a plain configuration array,
 	 * limited to the documented configuration keys.
 	 *
 	 * @since 7.1.0
@@ -136,9 +136,7 @@ class Gutenberg_View_Config_Data {
 		 * Filters the view configuration for a given entity.
 		 *
 		 * The dynamic portions of the hook name, `$kind` and `$name`, refer to the
-		 * entity kind (e.g. `postType`) and the entity name (e.g. `page`),
-		 * lowercased — so the `postType`/`page` entity maps to the
-		 * `get_entity_view_config_posttype_page` hook.
+		 * entity kind (e.g. `postType`) and the entity name (e.g. `page`).
 		 *
 		 * Callbacks receive a Gutenberg_View_Config_Data object and change the
 		 * configuration through its methods. Each write method takes the schema
@@ -182,7 +180,7 @@ class Gutenberg_View_Config_Data {
 		 * }
 		 */
 		apply_filters(
-			gutenberg_get_entity_view_config_hook_name( $kind, $name ),
+			"get_entity_view_config_{$kind}_{$name}",
 			$this,
 			array(
 				'kind' => $kind,
@@ -352,13 +350,13 @@ class Gutenberg_View_Config_Data {
 	 *
 	 * ```php
 	 * array(
-	 *   'default_view' => array( 'titleField' => 'newTitleField', 'fields' => array( 'newField' ) ),
+	 *   'default_view' => array( 'search' => 'new search', 'fields' => array( 'newField' ) ),
 	 *   'default_layouts' => array( 'grid' => array( 'layout' => array( 'badgeFields' => array( 'newField' ) ) ) ),
 	 *   'view_list' => array( array( 'slug' => 'table', 'title' => 'New title' ) ),
 	 * )
 	 * ```
 	 *
-	 * - default_view will be updated so the titleField is 'newTitleField' and the newField is appended to the list of fields.
+	 * - default_view will be updated so the search string is 'new search' and the newField is appended to the list of fields.
 	 * - default_layouts will be updated so that newField is appended to the badgeFields.
 	 * - view_list will be updated so that the view with slug 'table' has its title changed to 'New title'.
 	 *

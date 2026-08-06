@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).autop = (() => {
@@ -280,7 +279,5 @@ var wp;
     return html;
   }
   return __toCommonJS(index_exports);
-})();
-(window.wp ||= {}).autop = wp.autop;
 })();
 //# sourceMappingURL=index.js.map
