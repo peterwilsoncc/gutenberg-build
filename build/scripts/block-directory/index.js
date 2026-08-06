@@ -9657,16 +9657,32 @@ var wp;
   function getDownloadableBlockLabel({ title, rating, ratingCount }, { hasNotice, isInstalled, isInstalling: isInstalling2 }) {
     const stars = Math.round(rating / 0.5) * 0.5;
     if (!isInstalled && hasNotice) {
-      return (0, import_i18n4.sprintf)("Retry installing %s.", (0, import_html_entities.decodeEntities)(title));
+      return (0, import_i18n4.sprintf)(
+        /* translators: %s: block title */
+        (0, import_i18n4.__)("Retry installing %s."),
+        (0, import_html_entities.decodeEntities)(title)
+      );
     }
     if (isInstalled) {
-      return (0, import_i18n4.sprintf)("Add %s.", (0, import_html_entities.decodeEntities)(title));
+      return (0, import_i18n4.sprintf)(
+        /* translators: %s: block title */
+        (0, import_i18n4.__)("Add %s."),
+        (0, import_html_entities.decodeEntities)(title)
+      );
     }
     if (isInstalling2) {
-      return (0, import_i18n4.sprintf)("Installing %s.", (0, import_html_entities.decodeEntities)(title));
+      return (0, import_i18n4.sprintf)(
+        /* translators: %s: block title */
+        (0, import_i18n4.__)("Installing %s."),
+        (0, import_html_entities.decodeEntities)(title)
+      );
     }
     if (ratingCount < 1) {
-      return (0, import_i18n4.sprintf)("Install %s.", (0, import_html_entities.decodeEntities)(title));
+      return (0, import_i18n4.sprintf)(
+        /* translators: %s: block title */
+        (0, import_i18n4.__)("Install %s."),
+        (0, import_html_entities.decodeEntities)(title)
+      );
     }
     return (0, import_i18n4.sprintf)(
       /* translators: 1: block title, 2: average rating, 3: total ratings count. */
