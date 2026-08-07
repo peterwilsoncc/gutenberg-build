@@ -55830,38 +55830,36 @@ var wp;
       group = __experimentalGroup;
     }
     const context = useBlockEditContext();
+    const isSelectedBlock = context[mayDisplayControlsKey];
+    const isPatternEditing = context[mayDisplayPatternEditingControlsKey];
+    const isInListViewTree = context[isInListViewBlockSupportTreeKey];
     const Fill5 = groups_default[group]?.Fill;
     if (!Fill5) {
       (0, import_warning5.default)(`Unknown InspectorControls group "${group}" provided.`);
       return null;
     }
-    if (context[mayDisplayPatternEditingControlsKey]) {
+    if (isPatternEditing) {
       const isTemplatePart9 = context.name === "core/template-part";
       const isPatternEditingGroup = PATTERN_EDITING_GROUPS.includes(group);
       const canShowGroup = isTemplatePart9 || isPatternEditingGroup;
       if (!canShowGroup) {
         return null;
       }
-    }
-    if (!context[mayDisplayPatternEditingControlsKey] && !context[mayDisplayControlsKey]) {
+    } else if (!isSelectedBlock) {
       return null;
     }
-    if (group === "content" && !!context[isInListViewBlockSupportTreeKey] && !!context[mayDisplayPatternEditingControlsKey]) {
-      if (context[mayDisplayControlsKey]) {
-        return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(import_components70.__experimentalStyleProvider, { document, children: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(Fill, { children }) });
+    const rendersInListView = group === "content" && isPatternEditing && isInListViewTree;
+    if (rendersInListView && !isSelectedBlock) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(import_components70.__experimentalStyleProvider, { document, children: rendersInListView ? /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(Fill, { children }) : /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(Fill5, { children: (fillProps) => /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
+      ToolsPanelInspectorControl,
+      {
+        fillProps,
+        resetAllFilter,
+        children
       }
-      return null;
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(import_components70.__experimentalStyleProvider, { document, children: /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(Fill5, { children: (fillProps) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
-        ToolsPanelInspectorControl,
-        {
-          fillProps,
-          children,
-          resetAllFilter
-        }
-      );
-    } }) });
+    ) }) });
   }
   function RegisterResetAll({ resetAllFilter, children }) {
     const { registerResetAllFilter, deregisterResetAllFilter } = (0, import_element148.useContext)(import_components70.__experimentalToolsPanelContext);
