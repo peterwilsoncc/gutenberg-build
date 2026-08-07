@@ -7851,7 +7851,7 @@ var wp;
   var import_url14 = __toESM(require_url(), 1);
   var import_api_fetch7 = __toESM(require_api_fetch(), 1);
   var import_blocks19 = __toESM(require_blocks(), 1);
-  var import_html_entities12 = __toESM(require_html_entities(), 1);
+  var import_html_entities13 = __toESM(require_html_entities(), 1);
   var import_date16 = __toESM(require_date(), 1);
 
   // packages/editor/build-module/store/utils/is-template-revertable.mjs
@@ -22245,6 +22245,7 @@ var wp;
   var import_data9 = __toESM(require_data(), 1);
   var import_element48 = __toESM(require_element(), 1);
   var import_i18n17 = __toESM(require_i18n(), 1);
+  var import_html_entities3 = __toESM(require_html_entities(), 1);
   var import_a11y2 = __toESM(require_a11y(), 1);
   var import_media_utils2 = __toESM(require_media_utils(), 1);
   var import_notices2 = __toESM(require_notices(), 1);
@@ -25311,7 +25312,7 @@ var wp;
     "application/x-gzip"
   ];
   function MediaTitle({ attachment }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_components4.__experimentalTruncate, { className: "fields__media-edit-filename", children: attachment.title.rendered });
+    return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_components4.__experimentalTruncate, { className: "fields__media-edit-filename", children: (0, import_html_entities3.decodeEntities)(attachment.title.rendered) });
   }
   function MediaEditPlaceholder(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(MediaPickerButton, { ...props, children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("span", { className: "fields__media-edit-placeholder", children: props.label }) });
@@ -25423,7 +25424,9 @@ var wp;
                       label: !isBlob ? (0, import_i18n17.sprintf)(
                         /* translators: %s: The title of the media item. */
                         (0, import_i18n17.__)("Replace %s"),
-                        attachment.title.rendered
+                        (0, import_html_entities3.decodeEntities)(
+                          attachment.title.rendered
+                        )
                       ) : (0, import_i18n17.__)("Replace"),
                       showTooltip: true,
                       onFilesDrop,
@@ -26316,15 +26319,15 @@ var wp;
   var import_element50 = __toESM(require_element(), 1);
   var import_core_data9 = __toESM(require_core_data(), 1);
   var import_compose3 = __toESM(require_compose(), 1);
-  var import_html_entities4 = __toESM(require_html_entities(), 1);
+  var import_html_entities5 = __toESM(require_html_entities(), 1);
   var import_i18n23 = __toESM(require_i18n(), 1);
   var import_url6 = __toESM(require_url(), 1);
 
   // packages/fields/build-module/fields/parent/utils.mjs
-  var import_html_entities3 = __toESM(require_html_entities(), 1);
+  var import_html_entities4 = __toESM(require_html_entities(), 1);
   var import_i18n22 = __toESM(require_i18n(), 1);
   function getTitleWithFallbackName(post2) {
-    return typeof post2.title === "object" && "rendered" in post2.title && post2.title.rendered ? (0, import_html_entities3.decodeEntities)(post2.title.rendered) : `#${post2?.id} (${(0, import_i18n22.__)("no title")})`;
+    return typeof post2.title === "object" && "rendered" in post2.title && post2.title.rendered ? (0, import_html_entities4.decodeEntities)(post2.title.rendered) : `#${post2?.id} (${(0, import_i18n22.__)("no title")})`;
   }
 
   // packages/fields/build-module/fields/parent/parent-edit.mjs
@@ -26423,7 +26426,7 @@ var wp;
         const mappedNodes = tree2.map((treeNode) => [
           {
             value: treeNode.id,
-            label: "\u2014 ".repeat(level) + (0, import_html_entities4.decodeEntities)(treeNode.name),
+            label: "\u2014 ".repeat(level) + (0, import_html_entities5.decodeEntities)(treeNode.name),
             rawName: treeNode.name
           },
           ...getOptionsFromTree(treeNode.children || [], level + 1)
@@ -27181,7 +27184,7 @@ var wp;
   var notes_default = notesField;
 
   // packages/fields/build-module/fields/excerpt/index.mjs
-  var import_html_entities5 = __toESM(require_html_entities(), 1);
+  var import_html_entities6 = __toESM(require_html_entities(), 1);
   var import_i18n42 = __toESM(require_i18n(), 1);
   var import_components11 = __toESM(require_components(), 1);
   var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
@@ -27202,9 +27205,9 @@ var wp;
     render: ({ item }) => {
       let excerpt;
       if (typeof item.excerpt === "string") {
-        excerpt = !!item.excerpt ? (0, import_html_entities5.decodeEntities)(item.excerpt) : (0, import_i18n42.__)("Add an excerpt");
+        excerpt = !!item.excerpt ? (0, import_html_entities6.decodeEntities)(item.excerpt) : (0, import_i18n42.__)("Add an excerpt");
       } else {
-        excerpt = (0, import_html_entities5.decodeEntities)(item.excerpt?.raw || "");
+        excerpt = (0, import_html_entities6.decodeEntities)(item.excerpt?.raw || "");
       }
       return /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(import_components11.__experimentalText, { align: "left", numberOfLines: 3, truncate: true, children: excerpt });
     },
@@ -27218,14 +27221,14 @@ var wp;
   var excerpt_default = excerptField;
 
   // packages/fields/build-module/fields/description/index.mjs
-  var import_html_entities6 = __toESM(require_html_entities(), 1);
+  var import_html_entities7 = __toESM(require_html_entities(), 1);
   var import_i18n43 = __toESM(require_i18n(), 1);
   var import_jsx_runtime155 = __toESM(require_jsx_runtime(), 1);
   var isCustomTemplate = (item) => item.source === "custom" && !item.has_theme_file && item.is_custom;
-  var getValue = ({ item }) => (0, import_html_entities6.decodeEntities)(item.description || "");
+  var getValue = ({ item }) => (0, import_html_entities7.decodeEntities)(item.description || "");
   var render = ({ item }) => {
     const { description } = item;
-    return description && /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(Text, { children: (0, import_html_entities6.decodeEntities)(description) });
+    return description && /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(Text, { children: (0, import_html_entities7.decodeEntities)(description) });
   };
   var descriptionField = {
     id: "description",
@@ -28418,7 +28421,7 @@ var wp;
   var import_element60 = __toESM(require_element(), 1);
   var import_data24 = __toESM(require_data(), 1);
   var import_components17 = __toESM(require_components(), 1);
-  var import_html_entities7 = __toESM(require_html_entities(), 1);
+  var import_html_entities8 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime162 = __toESM(require_jsx_runtime(), 1);
   var permanentlyDeletePost = {
     id: "permanently-delete",
@@ -28452,7 +28455,7 @@ var wp;
           (0, import_i18n59.__)(
             'Are you sure you want to permanently delete "%s"?'
           ),
-          (0, import_html_entities7.decodeEntities)(getItemTitle(items[0]))
+          (0, import_html_entities8.decodeEntities)(getItemTitle(items[0]))
         ) }),
         /* @__PURE__ */ (0, import_jsx_runtime162.jsxs)(import_components17.__experimentalHStack, { justify: "right", children: [
           /* @__PURE__ */ (0, import_jsx_runtime162.jsx)(
@@ -28850,7 +28853,7 @@ var wp;
   var import_element62 = __toESM(require_element(), 1);
   var import_components19 = __toESM(require_components(), 1);
   var import_patterns5 = __toESM(require_patterns(), 1);
-  var import_html_entities8 = __toESM(require_html_entities(), 1);
+  var import_html_entities9 = __toESM(require_html_entities(), 1);
 
   // packages/fields/build-module/mutation/index.mjs
   var import_notices10 = __toESM(require_notices(), 1);
@@ -28979,7 +28982,7 @@ var wp;
                         return isResetting ? (0, import_i18n62.sprintf)(
                           /* translators: %s: The template/part's name. */
                           (0, import_i18n62.__)('"%s" reset.'),
-                          (0, import_html_entities8.decodeEntities)(
+                          (0, import_html_entities9.decodeEntities)(
                             getItemTitle(item)
                           )
                         ) : (0, import_i18n62.sprintf)(
@@ -28988,7 +28991,7 @@ var wp;
                             '"%s" deleted.',
                             "template part"
                           ),
-                          (0, import_html_entities8.decodeEntities)(
+                          (0, import_html_entities9.decodeEntities)(
                             getItemTitle(item)
                           )
                         );
@@ -55994,7 +55997,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/media-categories/index.mjs
   var import_i18n143 = __toESM(require_i18n(), 1);
   var import_data47 = __toESM(require_data(), 1);
-  var import_html_entities9 = __toESM(require_html_entities(), 1);
+  var import_html_entities10 = __toESM(require_html_entities(), 1);
   var import_core_data30 = __toESM(require_core_data(), 1);
   var getExternalLink = (url, text) => `<a ${getExternalLinkAttributes(url)}>${text}</a>`;
   var getExternalLinkAttributes = (url) => `href="${url}" target="_blank" rel="noopener"`;
@@ -56022,7 +56025,7 @@ If there's a particular need for this, please submit a feature request at https:
       license_url: licenseUrl
     } = item;
     const fullLicense = getOpenverseLicense(license, licenseVersion);
-    const _creator = (0, import_html_entities9.decodeEntities)(creator);
+    const _creator = (0, import_html_entities10.decodeEntities)(creator);
     let _caption;
     if (_creator) {
       _caption = title ? (0, import_i18n143.sprintf)(
@@ -56030,7 +56033,7 @@ If there's a particular need for this, please submit a feature request at https:
         (0, import_i18n143._x)('"%1$s" by %2$s/ %3$s', "caption"),
         getExternalLink(
           foreignLandingUrl,
-          (0, import_html_entities9.decodeEntities)(title)
+          (0, import_html_entities10.decodeEntities)(title)
         ),
         creatorUrl ? getExternalLink(creatorUrl, _creator) : _creator,
         licenseUrl ? getExternalLink(
@@ -56053,7 +56056,7 @@ If there's a particular need for this, please submit a feature request at https:
         (0, import_i18n143._x)('"%1$s"/ %2$s', "caption"),
         getExternalLink(
           foreignLandingUrl,
-          (0, import_html_entities9.decodeEntities)(title)
+          (0, import_html_entities10.decodeEntities)(title)
         ),
         licenseUrl ? getExternalLink(
           `${licenseUrl}?ref=openverse`,
@@ -75941,7 +75944,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_notices16 = __toESM(require_notices(), 1);
   var import_block_editor24 = __toESM(require_block_editor(), 1);
   var import_core_data48 = __toESM(require_core_data(), 1);
-  var import_html_entities10 = __toESM(require_html_entities(), 1);
+  var import_html_entities11 = __toESM(require_html_entities(), 1);
 
   // packages/editor/build-module/components/pattern-rename-modal/index.mjs
   var import_data69 = __toESM(require_data(), 1);
@@ -76400,7 +76403,7 @@ If there's a particular need for this, please submit a feature request at https:
         label: (0, import_i18n193.sprintf)(
           /* translators: %s: template title */
           (0, import_i18n193.__)("Edit template: %s"),
-          (0, import_html_entities10.decodeEntities)(template2.title)
+          (0, import_html_entities11.decodeEntities)(template2.title)
         ),
         icon: layout_default,
         category: "edit",
@@ -76451,11 +76454,11 @@ If there's a particular need for this, please submit a feature request at https:
       const label = template2.type === TEMPLATE_POST_TYPE ? (0, import_i18n193.sprintf)(
         /* translators: %s: template title */
         (0, import_i18n193.__)("Reset template: %s"),
-        (0, import_html_entities10.decodeEntities)(template2.title)
+        (0, import_html_entities11.decodeEntities)(template2.title)
       ) : (0, import_i18n193.sprintf)(
         /* translators: %s: template part title */
         (0, import_i18n193.__)("Reset template part: %s"),
-        (0, import_html_entities10.decodeEntities)(template2.title)
+        (0, import_html_entities11.decodeEntities)(template2.title)
       );
       commands.push({
         name: "core/reset-template",
@@ -77384,7 +77387,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data51 = __toESM(require_core_data(), 1);
   var import_components154 = __toESM(require_components(), 1);
   var import_i18n199 = __toESM(require_i18n(), 1);
-  var import_html_entities11 = __toESM(require_html_entities(), 1);
+  var import_html_entities12 = __toESM(require_html_entities(), 1);
   var import_element213 = __toESM(require_element(), 1);
   var import_jsx_runtime368 = __toESM(require_jsx_runtime(), 1);
   function ConvertToRegularBlocks({ clientId, onClose }) {
@@ -77406,7 +77409,7 @@ If there's a particular need for this, please submit a feature request at https:
         ) : null;
         return {
           canRemove: canRemoveBlock(clientId),
-          templatePartTitle: entity?.title?.rendered ? (0, import_html_entities11.decodeEntities)(entity.title.rendered) : null
+          templatePartTitle: entity?.title?.rendered ? (0, import_html_entities12.decodeEntities)(entity.title.rendered) : null
         };
       },
       [clientId]
@@ -78308,7 +78311,7 @@ If there's a particular need for this, please submit a feature request at https:
           (e3) => e3.message
         )?.message;
         registry.dispatch(import_notices19.store).createErrorNotice(
-          (0, import_html_entities12.decodeEntities)(
+          (0, import_html_entities13.decodeEntities)(
             firstMessage || (0, import_i18n204.__)("Saving failed.")
           ),
           {
@@ -78334,7 +78337,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }).catch(
       (error2) => registry.dispatch(import_notices19.store).createErrorNotice(
-        (0, import_html_entities12.decodeEntities)(
+        (0, import_html_entities13.decodeEntities)(
           error2?.message || (0, import_i18n204.__)("Saving failed.")
         ),
         {
@@ -78483,11 +78486,11 @@ If there's a particular need for this, please submit a feature request at https:
         successMessage = isResetting ? (0, import_i18n204.sprintf)(
           /* translators: %s: The template/part's name. */
           (0, import_i18n204.__)('"%s" reset.'),
-          (0, import_html_entities12.decodeEntities)(title)
+          (0, import_html_entities13.decodeEntities)(title)
         ) : (0, import_i18n204.sprintf)(
           /* translators: %s: The template/part's name. */
           (0, import_i18n204._x)('"%s" deleted.', "template part"),
-          (0, import_html_entities12.decodeEntities)(title)
+          (0, import_html_entities13.decodeEntities)(title)
         );
       } else {
         successMessage = isResetting ? (0, import_i18n204.__)("Items reset.") : (0, import_i18n204.__)("Items deleted.");
@@ -79442,7 +79445,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/autocompleters/link.mjs
   var import_api_fetch9 = __toESM(require_api_fetch(), 1);
   var import_url15 = __toESM(require_url(), 1);
-  var import_html_entities13 = __toESM(require_html_entities(), 1);
+  var import_html_entities14 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime375 = __toESM(require_jsx_runtime(), 1);
   var SHOWN_SUGGESTIONS = 10;
   var link_default2 = {
@@ -79467,7 +79470,7 @@ If there's a particular need for this, please submit a feature request at https:
     getOptionLabel(item) {
       return /* @__PURE__ */ (0, import_jsx_runtime375.jsxs)(import_jsx_runtime375.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(icon_default, { icon: item.subtype === "page" ? page_default : post_default }),
-        (0, import_html_entities13.decodeEntities)(item.title)
+        (0, import_html_entities14.decodeEntities)(item.title)
       ] });
     },
     getOptionCompletion(item) {
@@ -79583,7 +79586,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_commands3 = __toESM(require_commands(), 1);
   var import_element227 = __toESM(require_element(), 1);
   var import_compose37 = __toESM(require_compose(), 1);
-  var import_html_entities15 = __toESM(require_html_entities(), 1);
+  var import_html_entities16 = __toESM(require_html_entities(), 1);
   var import_dom23 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/utils/pageTypeBadge.mjs
@@ -81339,7 +81342,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/document-bar/useEditedSectionDetails.mjs
   var import_data98 = __toESM(require_data(), 1);
-  var import_html_entities14 = __toESM(require_html_entities(), 1);
+  var import_html_entities15 = __toESM(require_html_entities(), 1);
   var import_block_editor40 = __toESM(require_block_editor(), 1);
   var import_core_data63 = __toESM(require_core_data(), 1);
   function useEditedSectionDetails() {
@@ -81377,7 +81380,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (entity?.title) {
           return {
             patternName: attributes.ref,
-            patternTitle: (0, import_html_entities14.decodeEntities)(entity.title),
+            patternTitle: (0, import_html_entities15.decodeEntities)(entity.title),
             type: "synced-pattern"
           };
         }
@@ -81394,7 +81397,7 @@ If there's a particular need for this, please submit a feature request at https:
           if (entity?.title) {
             return {
               patternName: attributes.slug,
-              patternTitle: (0, import_html_entities14.decodeEntities)(entity.title),
+              patternTitle: (0, import_html_entities15.decodeEntities)(entity.title),
               type: "template-part"
             };
           }
@@ -81547,7 +81550,7 @@ If there's a particular need for this, please submit a feature request at https:
                       /* @__PURE__ */ (0, import_jsx_runtime386.jsx)("span", { className: "editor-document-bar__post-title", children: title ? (0, import_dom23.__unstableStripHTML)(title) : (0, import_i18n212.__)("No title") }),
                       unlockedPatternInfo && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)("span", { className: "editor-document-bar__post-type-label", children: unlockedPatternInfo.type === "template-part" ? `\xB7 ${(0, import_i18n212.__)("Template Part")}` : `\xB7 ${(0, import_i18n212.__)("Pattern")}` }),
                       !unlockedPatternInfo && pageTypeBadge && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)("span", { className: "editor-document-bar__post-type-label", children: `\xB7 ${pageTypeBadge}` }),
-                      !unlockedPatternInfo && postTypeLabel && !props.title && !pageTypeBadge && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)("span", { className: "editor-document-bar__post-type-label", children: `\xB7 ${(0, import_html_entities15.decodeEntities)(
+                      !unlockedPatternInfo && postTypeLabel && !props.title && !pageTypeBadge && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)("span", { className: "editor-document-bar__post-type-label", children: `\xB7 ${(0, import_html_entities16.decodeEntities)(
                         postTypeLabel
                       )}` })
                     ] })
@@ -82130,7 +82133,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n218 = __toESM(require_i18n(), 1);
   var import_data107 = __toESM(require_data(), 1);
   var import_core_data66 = __toESM(require_core_data(), 1);
-  var import_html_entities16 = __toESM(require_html_entities(), 1);
+  var import_html_entities17 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime395 = __toESM(require_jsx_runtime(), 1);
   function EntityRecordItem({ record, checked, onChange }) {
     const { name: name2, kind, title, key } = record;
@@ -82166,7 +82169,7 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(import_components168.PanelRow, { children: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
         import_components168.CheckboxControl,
         {
-          label: (0, import_html_entities16.decodeEntities)(entityRecordTitle) || (0, import_i18n218.__)("Untitled"),
+          label: (0, import_html_entities17.decodeEntities)(entityRecordTitle) || (0, import_i18n218.__)("Untitled"),
           checked,
           onChange,
           className: "entities-saved-states__change-control"
@@ -82794,7 +82797,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose41 = __toESM(require_compose(), 1);
   var import_element239 = __toESM(require_element(), 1);
   var import_data116 = __toESM(require_data(), 1);
-  var import_html_entities18 = __toESM(require_html_entities(), 1);
+  var import_html_entities19 = __toESM(require_html_entities(), 1);
   var import_core_data71 = __toESM(require_core_data(), 1);
   var import_block_editor47 = __toESM(require_block_editor(), 1);
   var import_url16 = __toESM(require_url(), 1);
@@ -82819,7 +82822,7 @@ If there's a particular need for this, please submit a feature request at https:
   var post_panel_row_default = PostPanelRow;
 
   // packages/editor/build-module/utils/terms.mjs
-  var import_html_entities17 = __toESM(require_html_entities(), 1);
+  var import_html_entities18 = __toESM(require_html_entities(), 1);
   function buildTermsTree2(flatTerms) {
     const flatTermsWithParentAndChildren = flatTerms.map((term) => {
       return {
@@ -82856,7 +82859,7 @@ If there's a particular need for this, please submit a feature request at https:
     return fillWithChildren(termsByParent["0"] || []);
   }
   var unescapeString = (arg) => {
-    return (0, import_html_entities17.decodeEntities)(arg);
+    return (0, import_html_entities18.decodeEntities)(arg);
   };
   var unescapeTerm = (term) => {
     return {
@@ -82871,7 +82874,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/page-attributes/parent.mjs
   var import_jsx_runtime402 = __toESM(require_jsx_runtime(), 1);
   function getTitle(post2) {
-    return post2?.title?.rendered ? (0, import_html_entities18.decodeEntities)(post2.title.rendered) : `#${post2.id} (${(0, import_i18n224.__)("no title")})`;
+    return post2?.title?.rendered ? (0, import_html_entities19.decodeEntities)(post2.title.rendered) : `#${post2.id} (${(0, import_i18n224.__)("no title")})`;
   }
   var getItemPriority2 = (name2, searchValue) => {
     const normalizedName = (0, import_remove_accents4.default)(name2 || "").toLowerCase();
@@ -82940,7 +82943,7 @@ If there's a particular need for this, please submit a feature request at https:
         const mappedNodes = tree2.map((treeNode) => [
           {
             value: treeNode.id,
-            label: "\u2014 ".repeat(level) + (0, import_html_entities18.decodeEntities)(treeNode.name),
+            label: "\u2014 ".repeat(level) + (0, import_html_entities19.decodeEntities)(treeNode.name),
             rawName: treeNode.name
           },
           ...getOptionsFromTree(treeNode.children || [], level + 1)
@@ -83845,7 +83848,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-template/block-theme.mjs
   var import_data126 = __toESM(require_data(), 1);
-  var import_html_entities20 = __toESM(require_html_entities(), 1);
+  var import_html_entities21 = __toESM(require_html_entities(), 1);
   var import_components188 = __toESM(require_components(), 1);
   var import_element245 = __toESM(require_element(), 1);
   var import_i18n231 = __toESM(require_i18n(), 1);
@@ -83855,7 +83858,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-template/swap-template-button.mjs
   var import_element243 = __toESM(require_element(), 1);
-  var import_html_entities19 = __toESM(require_html_entities(), 1);
+  var import_html_entities20 = __toESM(require_html_entities(), 1);
   var import_block_editor50 = __toESM(require_block_editor(), 1);
   var import_components185 = __toESM(require_components(), 1);
   var import_i18n228 = __toESM(require_i18n(), 1);
@@ -83958,7 +83961,7 @@ If there's a particular need for this, please submit a feature request at https:
       () => availableTemplates.map((template2) => ({
         name: template2.slug,
         blocks: (0, import_blocks26.parse)(template2.content.raw),
-        title: (0, import_html_entities19.decodeEntities)(template2.title.rendered),
+        title: (0, import_html_entities20.decodeEntities)(template2.title.rendered),
         id: template2.id,
         isDefault: template2.isDefault
       })),
@@ -84156,7 +84159,7 @@ If there's a particular need for this, please submit a feature request at https:
           tooltipPosition: "middle left"
         },
         label: (0, import_i18n231.__)("Template options"),
-        text: (0, import_html_entities20.decodeEntities)(template2.title),
+        text: (0, import_html_entities21.decodeEntities)(template2.title),
         icon: null,
         children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(import_jsx_runtime420.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime420.jsxs)(import_components188.MenuGroup, { children: [
@@ -84244,7 +84247,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n232 = __toESM(require_i18n(), 1);
   var import_element246 = __toESM(require_element(), 1);
   var import_data127 = __toESM(require_data(), 1);
-  var import_html_entities21 = __toESM(require_html_entities(), 1);
+  var import_html_entities22 = __toESM(require_html_entities(), 1);
   var import_core_data79 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-author/constants.mjs
@@ -84284,7 +84287,7 @@ If there's a particular need for this, please submit a feature request at https:
       const fetchedAuthors = (authors ?? []).map((author) => {
         return {
           value: author.id,
-          label: (0, import_html_entities21.decodeEntities)(author.name)
+          label: (0, import_html_entities22.decodeEntities)(author.name)
         };
       });
       const foundAuthor = fetchedAuthors.findIndex(
@@ -84295,7 +84298,7 @@ If there's a particular need for this, please submit a feature request at https:
         currentAuthor = [
           {
             value: postAuthor.id,
-            label: (0, import_html_entities21.decodeEntities)(postAuthor.name)
+            label: (0, import_html_entities22.decodeEntities)(postAuthor.name)
           }
         ];
       } else if (foundAuthor < 0 && !postAuthor) {
@@ -84399,7 +84402,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n235 = __toESM(require_i18n(), 1);
   var import_components191 = __toESM(require_components(), 1);
   var import_element248 = __toESM(require_element(), 1);
-  var import_html_entities22 = __toESM(require_html_entities(), 1);
+  var import_html_entities23 = __toESM(require_html_entities(), 1);
   var import_block_editor51 = __toESM(require_block_editor(), 1);
   var import_data132 = __toESM(require_data(), 1);
   var import_core_data81 = __toESM(require_core_data(), 1);
@@ -84411,7 +84414,7 @@ If there's a particular need for this, please submit a feature request at https:
         postAuthor: select9(import_core_data81.store).getUser(id, BASE_QUERY)
       };
     }, []);
-    const authorName = (0, import_html_entities22.decodeEntities)(postAuthor?.name) || (0, import_i18n235.__)("(No author)");
+    const authorName = (0, import_html_entities23.decodeEntities)(postAuthor?.name) || (0, import_i18n235.__)("(No author)");
     return /* @__PURE__ */ (0, import_jsx_runtime426.jsx)(
       import_components191.Button,
       {
@@ -84659,7 +84662,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components195 = __toESM(require_components(), 1);
   var import_data136 = __toESM(require_data(), 1);
   var import_element250 = __toESM(require_element(), 1);
-  var import_html_entities23 = __toESM(require_html_entities(), 1);
+  var import_html_entities24 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime430 = __toESM(require_jsx_runtime(), 1);
   function PostExcerpt({
     hideLabelFromVision = false,
@@ -84688,7 +84691,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { editPost: editPost2 } = (0, import_data136.useDispatch)(store);
     const [localExcerpt, setLocalExcerpt] = (0, import_element250.useState)(
-      (0, import_html_entities23.decodeEntities)(excerpt)
+      (0, import_html_entities24.decodeEntities)(excerpt)
     );
     const updatePost2 = (value) => {
       editPost2({ [usedAttribute]: value });
@@ -84730,7 +84733,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element251 = __toESM(require_element(), 1);
   var import_block_editor53 = __toESM(require_block_editor(), 1);
   var import_core_data83 = __toESM(require_core_data(), 1);
-  var import_html_entities24 = __toESM(require_html_entities(), 1);
+  var import_html_entities25 = __toESM(require_html_entities(), 1);
 
   // packages/editor/build-module/components/post-excerpt/plugin.mjs
   var import_components196 = __toESM(require_components(), 1);
@@ -84841,7 +84844,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!shouldRender) {
       return false;
     }
-    const excerptText = !!excerpt && /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(import_components197.__experimentalText, { align: "left", numberOfLines: 4, truncate: allowEditing, children: (0, import_html_entities24.decodeEntities)(excerpt) });
+    const excerptText = !!excerpt && /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(import_components197.__experimentalText, { align: "left", numberOfLines: 4, truncate: allowEditing, children: (0, import_html_entities25.decodeEntities)(excerpt) });
     if (!allowEditing) {
       return excerptText;
     }
@@ -86182,7 +86185,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data162 = __toESM(require_data(), 1);
   var import_url19 = __toESM(require_url(), 1);
   var import_core_data97 = __toESM(require_core_data(), 1);
-  var import_html_entities26 = __toESM(require_html_entities(), 1);
+  var import_html_entities27 = __toESM(require_html_entities(), 1);
 
   // packages/editor/build-module/components/post-visibility/index.mjs
   var import_i18n251 = __toESM(require_i18n(), 1);
@@ -86868,7 +86871,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose50 = __toESM(require_compose(), 1);
   var import_core_data95 = __toESM(require_core_data(), 1);
   var import_a11y9 = __toESM(require_a11y(), 1);
-  var import_html_entities25 = __toESM(require_html_entities(), 1);
+  var import_html_entities26 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime452 = __toESM(require_jsx_runtime(), 1);
   var { normalizeTextString } = unlock(import_components212.privateApis);
   var { RECEIVE_INTERMEDIATE_RESULTS } = unlock(import_core_data95.privateApis);
@@ -87079,7 +87082,7 @@ If there's a particular need for this, please submit a feature request at https:
                     const termId = parseInt(term.id, 10);
                     onChange(termId);
                   },
-                  label: (0, import_html_entities25.decodeEntities)(term.name)
+                  label: (0, import_html_entities26.decodeEntities)(term.name)
                 }
               ),
               !!term.children.length && /* @__PURE__ */ (0, import_jsx_runtime452.jsx)("div", { className: "editor-post-taxonomies__hierarchical-terms-subchoices", children: renderTerms(term.children) })
@@ -87499,7 +87502,7 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime455.jsxs)("div", { className: "components-site-card", children: [
         siteIcon,
         /* @__PURE__ */ (0, import_jsx_runtime455.jsxs)("div", { className: "components-site-info", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime455.jsx)("span", { className: "components-site-name", children: (0, import_html_entities26.decodeEntities)(siteTitle) || (0, import_i18n260.__)("(Untitled)") }),
+          /* @__PURE__ */ (0, import_jsx_runtime455.jsx)("span", { className: "components-site-name", children: (0, import_html_entities27.decodeEntities)(siteTitle) || (0, import_i18n260.__)("(Untitled)") }),
           /* @__PURE__ */ (0, import_jsx_runtime455.jsx)("span", { className: "components-site-home", children: siteHome })
         ] })
       ] }),
@@ -87556,7 +87559,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element262 = __toESM(require_element(), 1);
   var import_data163 = __toESM(require_data(), 1);
   var import_url20 = __toESM(require_url(), 1);
-  var import_html_entities27 = __toESM(require_html_entities(), 1);
+  var import_html_entities28 = __toESM(require_html_entities(), 1);
   var import_compose51 = __toESM(require_compose(), 1);
   var import_core_data98 = __toESM(require_core_data(), 1);
   var import_jsx_runtime456 = __toESM(require_jsx_runtime(), 1);
@@ -87633,7 +87636,7 @@ If there's a particular need for this, please submit a feature request at https:
     ] }) : (0, import_i18n261.__)("is now live.");
     return /* @__PURE__ */ (0, import_jsx_runtime456.jsxs)("div", { className: "post-publish-panel__postpublish", children: [
       /* @__PURE__ */ (0, import_jsx_runtime456.jsxs)(import_components216.PanelBody, { className: "post-publish-panel__postpublish-header", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(import_components216.ExternalLink, { ref: postLinkRef, href: link, children: (0, import_html_entities27.decodeEntities)(post2.title) || (0, import_i18n261.__)("(no title)") }),
+        /* @__PURE__ */ (0, import_jsx_runtime456.jsx)(import_components216.ExternalLink, { ref: postLinkRef, href: link, children: (0, import_html_entities28.decodeEntities)(post2.title) || (0, import_i18n261.__)("(no title)") }),
         " ",
         postPublishNonLinkHeader
       ] }),
@@ -88684,7 +88687,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-title/index.mjs
   var import_i18n270 = __toESM(require_i18n(), 1);
   var import_element271 = __toESM(require_element(), 1);
-  var import_html_entities28 = __toESM(require_html_entities(), 1);
+  var import_html_entities29 = __toESM(require_html_entities(), 1);
   var import_data179 = __toESM(require_data(), 1);
   var import_block_editor59 = __toESM(require_block_editor(), 1);
   var import_keycodes15 = __toESM(require_keycodes(), 1);
@@ -88767,7 +88770,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { title, setTitle: onUpdate } = usePostTitle();
     const [selection, setSelection] = (0, import_element271.useState)({});
     const { clearSelectedBlock: clearSelectedBlock2, insertBlocks: insertBlocks2, insertDefaultBlock: insertDefaultBlock2 } = (0, import_data179.useDispatch)(import_block_editor59.store);
-    const decodedPlaceholder = (0, import_html_entities28.decodeEntities)(placeholder) || (0, import_i18n270.__)("Add title");
+    const decodedPlaceholder = (0, import_html_entities29.decodeEntities)(placeholder) || (0, import_i18n270.__)("Add title");
     const {
       value,
       onChange,
@@ -88877,7 +88880,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/post-title/post-title-raw.mjs
   var import_components224 = __toESM(require_components(), 1);
   var import_i18n271 = __toESM(require_i18n(), 1);
-  var import_html_entities29 = __toESM(require_html_entities(), 1);
+  var import_html_entities30 = __toESM(require_html_entities(), 1);
   var import_data180 = __toESM(require_data(), 1);
   var import_block_editor60 = __toESM(require_block_editor(), 1);
   var import_element272 = __toESM(require_element(), 1);
@@ -88906,7 +88909,7 @@ If there's a particular need for this, please submit a feature request at https:
       "is-selected": isSelected2,
       "is-raw-text": true
     });
-    const decodedPlaceholder = (0, import_html_entities29.decodeEntities)(placeholder) || (0, import_i18n271.__)("Add title");
+    const decodedPlaceholder = (0, import_html_entities30.decodeEntities)(placeholder) || (0, import_i18n271.__)("Add title");
     return /* @__PURE__ */ (0, import_jsx_runtime468.jsx)(
       import_components224.TextareaControl,
       {
@@ -90897,7 +90900,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor85 = __toESM(require_block_editor(), 1);
   var import_compose78 = __toESM(require_compose(), 1);
   var import_element311 = __toESM(require_element(), 1);
-  var import_html_entities30 = __toESM(require_html_entities(), 1);
+  var import_html_entities31 = __toESM(require_html_entities(), 1);
   var import_notices32 = __toESM(require_notices(), 1);
   var import_theme = __toESM(require_theme(), 1);
 
@@ -95866,7 +95869,7 @@ If there's a particular need for this, please submit a feature request at https:
         footer: !isPreviewMode && !isDistractionFree && isLargeViewport && showBlockBreadcrumbs && mode === "visual" && /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(
           import_block_editor85.BlockBreadcrumb,
           {
-            rootLabelText: postTypeLabel ? (0, import_html_entities30.decodeEntities)(postTypeLabel) : void 0
+            rootLabelText: postTypeLabel ? (0, import_html_entities31.decodeEntities)(postTypeLabel) : void 0
           }
         ),
         actions: !isPreviewMode ? customSavePanel || /* @__PURE__ */ (0, import_jsx_runtime515.jsx)(
@@ -95938,16 +95941,16 @@ If there's a particular need for this, please submit a feature request at https:
   var import_notices33 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/utils/get-item-title.mjs
-  var import_html_entities31 = __toESM(require_html_entities(), 1);
+  var import_html_entities32 = __toESM(require_html_entities(), 1);
   function getItemTitle2(item) {
     if (typeof item.title === "string") {
-      return (0, import_html_entities31.decodeEntities)(item.title);
+      return (0, import_html_entities32.decodeEntities)(item.title);
     }
     if (item.title && "rendered" in item.title) {
-      return (0, import_html_entities31.decodeEntities)(item.title.rendered);
+      return (0, import_html_entities32.decodeEntities)(item.title.rendered);
     }
     if (item.title && "raw" in item.title) {
-      return (0, import_html_entities31.decodeEntities)(item.title.raw);
+      return (0, import_html_entities32.decodeEntities)(item.title.raw);
     }
     return "";
   }
@@ -96723,7 +96726,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose79 = __toESM(require_compose(), 1);
   var import_data236 = __toESM(require_data(), 1);
   var import_core_data127 = __toESM(require_core_data(), 1);
-  var import_html_entities32 = __toESM(require_html_entities(), 1);
+  var import_html_entities33 = __toESM(require_html_entities(), 1);
   var import_components265 = __toESM(require_components(), 1);
   var import_element319 = __toESM(require_element(), 1);
   var import_block_editor87 = __toESM(require_block_editor(), 1);
@@ -96773,7 +96776,7 @@ If there's a particular need for this, please submit a feature request at https:
         title: newValue
       });
     };
-    const decodedTitle = (0, import_html_entities32.decodeEntities)(postsPageTitle);
+    const decodedTitle = (0, import_html_entities33.decodeEntities)(postsPageTitle);
     return /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(post_panel_row_default, { label: (0, import_i18n318.__)("Blog title"), ref: setPopoverAnchor, children: /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(
       import_components265.Dropdown,
       {
@@ -97930,7 +97933,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n328 = __toESM(require_i18n(), 1);
   var import_data250 = __toESM(require_data(), 1);
   var import_element327 = __toESM(require_element(), 1);
-  var import_html_entities33 = __toESM(require_html_entities(), 1);
+  var import_html_entities34 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime537 = __toESM(require_jsx_runtime(), 1);
   var { Tabs: Tabs2 } = unlock(import_components272.privateApis);
   var SidebarHeader = (_, ref) => {
@@ -97948,7 +97951,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (isRevisionsMode2) {
       documentLabel = (0, import_i18n328.__)("Revision");
     } else if (postTypeLabel) {
-      documentLabel = (0, import_html_entities33.decodeEntities)(postTypeLabel);
+      documentLabel = (0, import_html_entities34.decodeEntities)(postTypeLabel);
     } else {
       documentLabel = (0, import_i18n328._x)("Document", "noun, panel");
     }
@@ -97980,7 +97983,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components273 = __toESM(require_components(), 1);
   var import_element328 = __toESM(require_element(), 1);
   var import_i18n329 = __toESM(require_i18n(), 1);
-  var import_html_entities34 = __toESM(require_html_entities(), 1);
+  var import_html_entities35 = __toESM(require_html_entities(), 1);
   var import_keycodes20 = __toESM(require_keycodes(), 1);
   var import_notices35 = __toESM(require_notices(), 1);
   var import_preferences27 = __toESM(require_preferences(), 1);
@@ -98043,7 +98046,7 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     };
-    const templateName = (0, import_html_entities34.decodeEntities)(template2.title);
+    const templateName = (0, import_html_entities35.decodeEntities)(template2.title);
     const previewContent = !!blocks?.length && /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(import_block_editor91.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(import_block_editor91.BlockPreview, { blocks }) });
     const renderPreview = () => {
       if (!previewContent) {
@@ -98144,7 +98147,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components274 = __toESM(require_components(), 1);
   var import_element329 = __toESM(require_element(), 1);
   var import_i18n330 = __toESM(require_i18n(), 1);
-  var import_html_entities35 = __toESM(require_html_entities(), 1);
+  var import_html_entities36 = __toESM(require_html_entities(), 1);
   var import_notices36 = __toESM(require_notices(), 1);
   var import_preferences28 = __toESM(require_preferences(), 1);
   var import_jsx_runtime539 = __toESM(require_jsx_runtime(), 1);
@@ -98203,7 +98206,7 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     };
-    const templateName = template2 ? (0, import_html_entities35.decodeEntities)(template2.title) : void 0;
+    const templateName = template2 ? (0, import_html_entities36.decodeEntities)(template2.title) : void 0;
     const previewContent = !!blocks?.length && /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(import_block_editor92.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(import_block_editor92.BlockPreview, { blocks }) });
     return /* @__PURE__ */ (0, import_jsx_runtime539.jsxs)(import_jsx_runtime539.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(
@@ -99442,7 +99445,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor101 = __toESM(require_block_editor(), 1);
   var import_notices37 = __toESM(require_notices(), 1);
   var import_dom30 = __toESM(require_dom(), 1);
-  var import_html_entities36 = __toESM(require_html_entities(), 1);
+  var import_html_entities37 = __toESM(require_html_entities(), 1);
   var import_rich_text9 = __toESM(require_rich_text(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/board-store.mjs
@@ -99690,7 +99693,7 @@ If there's a particular need for this, please submit a feature request at https:
     } = (0, import_data262.useSelect)(import_block_editor101.store);
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data262.useDispatch)(import_block_editor101.store);
     const onError = (error2) => {
-      const errorMessage = error2.message && error2.code !== "unknown_error" ? (0, import_html_entities36.decodeEntities)(error2.message) : (0, import_i18n340.__)("An error occurred while performing an update.");
+      const errorMessage = error2.message && error2.code !== "unknown_error" ? (0, import_html_entities37.decodeEntities)(error2.message) : (0, import_i18n340.__)("An error occurred while performing an update.");
       createNotice("error", errorMessage, {
         type: "snackbar",
         isDismissible: true

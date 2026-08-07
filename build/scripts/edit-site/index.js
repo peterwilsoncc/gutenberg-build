@@ -40456,6 +40456,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data41 = __toESM(require_data(), 1);
   var import_element131 = __toESM(require_element(), 1);
   var import_i18n73 = __toESM(require_i18n(), 1);
+  var import_html_entities4 = __toESM(require_html_entities(), 1);
   var import_a11y3 = __toESM(require_a11y(), 1);
   var import_media_utils = __toESM(require_media_utils(), 1);
   var import_notices4 = __toESM(require_notices(), 1);
@@ -40622,7 +40623,7 @@ If there's a particular need for this, please submit a feature request at https:
     "application/x-gzip"
   ];
   function MediaTitle({ attachment }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components72.__experimentalTruncate, { className: "fields__media-edit-filename", children: attachment.title.rendered });
+    return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components72.__experimentalTruncate, { className: "fields__media-edit-filename", children: (0, import_html_entities4.decodeEntities)(attachment.title.rendered) });
   }
   function MediaEditPlaceholder(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(MediaPickerButton, { ...props, children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("span", { className: "fields__media-edit-placeholder", children: props.label }) });
@@ -40734,7 +40735,9 @@ If there's a particular need for this, please submit a feature request at https:
                       label: !isBlob ? (0, import_i18n73.sprintf)(
                         /* translators: %s: The title of the media item. */
                         (0, import_i18n73.__)("Replace %s"),
-                        attachment.title.rendered
+                        (0, import_html_entities4.decodeEntities)(
+                          attachment.title.rendered
+                        )
                       ) : (0, import_i18n73.__)("Replace"),
                       showTooltip: true,
                       onFilesDrop,
@@ -41335,6 +41338,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/edit-site/build-module/components/sidebar-identity/index.mjs
+  var import_html_entities5 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
   var fields = [
     {
@@ -41343,7 +41347,8 @@ If there's a particular need for this, please submit a feature request at https:
       label: (0, import_i18n74.__)("Site Title"),
       description: (0, import_i18n74.__)(
         "Displays in your site's layout via the Site Title block."
-      )
+      ),
+      getValue: ({ item }) => (0, import_html_entities5.decodeEntities)(item.title ?? "")
     },
     {
       id: "description",
@@ -41351,7 +41356,8 @@ If there's a particular need for this, please submit a feature request at https:
       label: (0, import_i18n74.__)("Site Tagline"),
       description: (0, import_i18n74.__)(
         "In a few words, explain what this site is about. Displays in your site's layout via the Site Tagline block."
-      )
+      ),
+      getValue: ({ item }) => (0, import_html_entities5.decodeEntities)(item.description ?? "")
     },
     {
       id: "site_logo",
@@ -53686,7 +53692,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n132 = __toESM(require_i18n(), 1);
   var import_core_data40 = __toESM(require_core_data(), 1);
   var import_data62 = __toESM(require_data(), 1);
-  var import_html_entities7 = __toESM(require_html_entities(), 1);
+  var import_html_entities9 = __toESM(require_html_entities(), 1);
   var import_components138 = __toESM(require_components(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/constants.mjs
@@ -53699,7 +53705,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/single-navigation-menu.mjs
   var import_i18n129 = __toESM(require_i18n(), 1);
-  var import_html_entities5 = __toESM(require_html_entities(), 1);
+  var import_html_entities7 = __toESM(require_html_entities(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/more-menu.mjs
   var import_components135 = __toESM(require_components(), 1);
@@ -54121,18 +54127,18 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/build-navigation-label.mjs
   var import_i18n128 = __toESM(require_i18n(), 1);
-  var import_html_entities4 = __toESM(require_html_entities(), 1);
+  var import_html_entities6 = __toESM(require_html_entities(), 1);
   function buildNavigationLabel(title, id, status) {
     if (!title?.rendered) {
       return (0, import_i18n128.sprintf)((0, import_i18n128.__)("(no title %s)"), id);
     }
     if (status === "publish") {
-      return (0, import_html_entities4.decodeEntities)(title?.rendered);
+      return (0, import_html_entities6.decodeEntities)(title?.rendered);
     }
     return (0, import_i18n128.sprintf)(
       // translators: 1: title of the menu. 2: status of the menu (draft, pending, etc.).
       (0, import_i18n128._x)("%1$s (%2$s)", "menu label"),
-      (0, import_html_entities4.decodeEntities)(title?.rendered),
+      (0, import_html_entities6.decodeEntities)(title?.rendered),
       status
     );
   }
@@ -54154,7 +54160,7 @@ If there's a particular need for this, please submit a feature request at https:
           ScreenNavigationMoreMenu,
           {
             menuId: navigationMenu?.id,
-            menuTitle: (0, import_html_entities5.decodeEntities)(menuTitle),
+            menuTitle: (0, import_html_entities7.decodeEntities)(menuTitle),
             onDelete: handleDelete,
             onSave: handleSave,
             onDuplicate: handleDuplicate
@@ -54186,7 +54192,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components137 = __toESM(require_components(), 1);
   var import_i18n130 = __toESM(require_i18n(), 1);
   var import_data60 = __toESM(require_data(), 1);
-  var import_html_entities6 = __toESM(require_html_entities(), 1);
+  var import_html_entities8 = __toESM(require_html_entities(), 1);
   var import_router24 = __toESM(require_router(), 1);
   var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
   var { useLocation: useLocation23 } = unlock(import_router24.privateApis);
@@ -54249,7 +54255,7 @@ If there's a particular need for this, please submit a feature request at https:
             ScreenNavigationMoreMenu,
             {
               menuId: navigationMenu?.id,
-              menuTitle: (0, import_html_entities6.decodeEntities)(menuTitle),
+              menuTitle: (0, import_html_entities8.decodeEntities)(menuTitle),
               onDelete: _handleDelete,
               onSave: _handleSave,
               onDuplicate: _handleDuplicate
@@ -54431,12 +54437,12 @@ If there's a particular need for this, please submit a feature request at https:
       return (0, import_i18n132.sprintf)((0, import_i18n132.__)("(no title %s)"), id);
     }
     if (status === "publish") {
-      return (0, import_html_entities7.decodeEntities)(title);
+      return (0, import_html_entities9.decodeEntities)(title);
     }
     return (0, import_i18n132.sprintf)(
       // translators: 1: title of the menu. 2: status of the menu (draft, pending, etc.).
       (0, import_i18n132._x)("%1$s (%2$s)", "menu label"),
-      (0, import_html_entities7.decodeEntities)(title),
+      (0, import_html_entities9.decodeEntities)(title),
       status
     );
   }
@@ -55873,7 +55879,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data48 = __toESM(require_core_data(), 1);
   var import_data72 = __toESM(require_data(), 1);
   var import_element179 = __toESM(require_element(), 1);
-  var import_html_entities8 = __toESM(require_html_entities(), 1);
+  var import_html_entities10 = __toESM(require_html_entities(), 1);
   var import_i18n137 = __toESM(require_i18n(), 1);
   var import_notices7 = __toESM(require_notices(), 1);
   var import_router28 = __toESM(require_router(), 1);
@@ -55934,7 +55940,7 @@ If there's a particular need for this, please submit a feature request at https:
           title: (0, import_i18n137.sprintf)(
             // translators: %s: The pattern category's name.
             (0, import_i18n137._x)('Delete "%s"?', "pattern category"),
-            (0, import_html_entities8.decodeEntities)(category.label)
+            (0, import_html_entities10.decodeEntities)(category.label)
           ),
           size: "medium",
           __experimentalHideHeader: false,
@@ -55943,7 +55949,7 @@ If there's a particular need for this, please submit a feature request at https:
             (0, import_i18n137.__)(
               'Are you sure you want to delete the category "%s"? The patterns will not be deleted.'
             ),
-            (0, import_html_entities8.decodeEntities)(category.label)
+            (0, import_html_entities10.decodeEntities)(category.label)
           )
         }
       )
@@ -56609,7 +56615,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/page-templates/index.mjs
   var import_i18n149 = __toESM(require_i18n(), 1);
-  var import_html_entities13 = __toESM(require_html_entities(), 1);
+  var import_html_entities15 = __toESM(require_html_entities(), 1);
   var import_element189 = __toESM(require_element(), 1);
   var import_core_data58 = __toESM(require_core_data(), 1);
   var import_router34 = __toESM(require_router(), 1);
@@ -56622,7 +56628,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/add-new-template/index.mjs
   var import_components148 = __toESM(require_components(), 1);
-  var import_html_entities11 = __toESM(require_html_entities(), 1);
+  var import_html_entities13 = __toESM(require_html_entities(), 1);
   var import_element187 = __toESM(require_element(), 1);
   var import_data78 = __toESM(require_data(), 1);
   var import_core_data56 = __toESM(require_core_data(), 1);
@@ -56637,7 +56643,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n145 = __toESM(require_i18n(), 1);
   var import_components146 = __toESM(require_components(), 1);
   var import_core_data55 = __toESM(require_core_data(), 1);
-  var import_html_entities10 = __toESM(require_html_entities(), 1);
+  var import_html_entities12 = __toESM(require_html_entities(), 1);
   var import_compose29 = __toESM(require_compose(), 1);
   var import_dom25 = __toESM(require_dom(), 1);
   var import_url21 = __toESM(require_url(), 1);
@@ -56645,7 +56651,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/add-new-template/utils.mjs
   var import_data77 = __toESM(require_data(), 1);
   var import_core_data54 = __toESM(require_core_data(), 1);
-  var import_html_entities9 = __toESM(require_html_entities(), 1);
+  var import_html_entities11 = __toESM(require_html_entities(), 1);
   var import_element184 = __toESM(require_element(), 1);
   var import_i18n144 = __toESM(require_i18n(), 1);
   var import_url20 = __toESM(require_url(), 1);
@@ -56663,7 +56669,7 @@ If there's a particular need for this, please submit a feature request at https:
   var mapToIHasNameAndId = (entities, path) => {
     return (entities || []).map((entity) => ({
       ...entity,
-      name: (0, import_html_entities9.decodeEntities)(getValueFromObjectPath2(entity, path))
+      name: (0, import_html_entities11.decodeEntities)(getValueFromObjectPath2(entity, path))
     }));
   };
   var useExistingTemplates = () => {
@@ -57185,7 +57191,7 @@ If there's a particular need for this, please submit a feature request at https:
               children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
                 import_components146.TextHighlight,
                 {
-                  text: (0, import_html_entities10.decodeEntities)(suggestion.name),
+                  text: (0, import_html_entities12.decodeEntities)(suggestion.name),
                   highlight: search
                 }
               )
@@ -57678,7 +57684,7 @@ If there's a particular need for this, please submit a feature request at https:
           (0, import_i18n147.sprintf)(
             // translators: %s: Title of the created post or template, e.g: "Hello world".
             (0, import_i18n147.__)('"%s" successfully created.'),
-            (0, import_html_entities11.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n147.__)("(no title)")
+            (0, import_html_entities13.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n147.__)("(no title)")
           ),
           {
             type: "snackbar"
@@ -57863,7 +57869,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components149 = __toESM(require_components(), 1);
   var import_i18n148 = __toESM(require_i18n(), 1);
   var import_element188 = __toESM(require_element(), 1);
-  var import_html_entities12 = __toESM(require_html_entities(), 1);
+  var import_html_entities14 = __toESM(require_html_entities(), 1);
   var import_blocks13 = __toESM(require_blocks(), 1);
   var import_block_editor27 = __toESM(require_block_editor(), 1);
   var import_editor36 = __toESM(require_editor(), 1);
@@ -57923,9 +57929,9 @@ If there's a particular need for this, please submit a feature request at https:
       const defaultTemplateType = defaultTemplateTypes.find(
         (type) => type.slug === item.slug
       );
-      return item.description ? (0, import_html_entities12.decodeEntities)(item.description) : defaultTemplateType?.description;
+      return item.description ? (0, import_html_entities14.decodeEntities)(item.description) : defaultTemplateType?.description;
     } : ({ item }) => {
-      return item.description && (0, import_html_entities12.decodeEntities)(item.description);
+      return item.description && (0, import_html_entities14.decodeEntities)(item.description);
     },
     enableSorting: false,
     enableGlobalSearch: true
@@ -58247,7 +58253,7 @@ If there's a particular need for this, please submit a feature request at https:
                 (0, import_i18n149.sprintf)(
                   // translators: %s: Title of the created post or template, e.g: "Hello world".
                   (0, import_i18n149.__)('"%s" successfully created.'),
-                  (0, import_html_entities13.decodeEntities)(_title) || (0, import_i18n149.__)("(no title)")
+                  (0, import_html_entities15.decodeEntities)(_title) || (0, import_i18n149.__)("(no title)")
                 ),
                 {
                   type: "snackbar",
@@ -58359,7 +58365,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/edit-site/build-module/components/add-new-template-legacy/index.mjs
   var import_components153 = __toESM(require_components(), 1);
-  var import_html_entities16 = __toESM(require_html_entities(), 1);
+  var import_html_entities18 = __toESM(require_html_entities(), 1);
   var import_element193 = __toESM(require_element(), 1);
   var import_data82 = __toESM(require_data(), 1);
   var import_core_data61 = __toESM(require_core_data(), 1);
@@ -58374,7 +58380,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n151 = __toESM(require_i18n(), 1);
   var import_components151 = __toESM(require_components(), 1);
   var import_core_data60 = __toESM(require_core_data(), 1);
-  var import_html_entities15 = __toESM(require_html_entities(), 1);
+  var import_html_entities17 = __toESM(require_html_entities(), 1);
   var import_compose32 = __toESM(require_compose(), 1);
   var import_dom27 = __toESM(require_dom(), 1);
   var import_url24 = __toESM(require_url(), 1);
@@ -58382,7 +58388,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/add-new-template-legacy/utils.mjs
   var import_data81 = __toESM(require_data(), 1);
   var import_core_data59 = __toESM(require_core_data(), 1);
-  var import_html_entities14 = __toESM(require_html_entities(), 1);
+  var import_html_entities16 = __toESM(require_html_entities(), 1);
   var import_element190 = __toESM(require_element(), 1);
   var import_i18n150 = __toESM(require_i18n(), 1);
   var import_url23 = __toESM(require_url(), 1);
@@ -58400,7 +58406,7 @@ If there's a particular need for this, please submit a feature request at https:
   var mapToIHasNameAndId2 = (entities, path) => {
     return (entities || []).map((entity) => ({
       ...entity,
-      name: (0, import_html_entities14.decodeEntities)(getValueFromObjectPath3(entity, path))
+      name: (0, import_html_entities16.decodeEntities)(getValueFromObjectPath3(entity, path))
     }));
   };
   var useExistingTemplates2 = () => {
@@ -58997,7 +59003,7 @@ If there's a particular need for this, please submit a feature request at https:
               children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
                 import_components151.TextHighlight,
                 {
-                  text: (0, import_html_entities15.decodeEntities)(suggestion.name),
+                  text: (0, import_html_entities17.decodeEntities)(suggestion.name),
                   highlight: search
                 }
               )
@@ -59490,7 +59496,7 @@ If there's a particular need for this, please submit a feature request at https:
           (0, import_i18n153.sprintf)(
             // translators: %s: Title of the created post or template, e.g: "Hello world".
             (0, import_i18n153.__)('"%s" successfully created.'),
-            (0, import_html_entities16.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n153.__)("(no title)")
+            (0, import_html_entities18.decodeEntities)(newTemplate.title?.rendered || title) || (0, import_i18n153.__)("(no title)")
           ),
           {
             type: "snackbar"
@@ -59908,7 +59914,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element195 = __toESM(require_element(), 1);
   var import_core_data64 = __toESM(require_core_data(), 1);
   var import_notices11 = __toESM(require_notices(), 1);
-  var import_html_entities17 = __toESM(require_html_entities(), 1);
+  var import_html_entities19 = __toESM(require_html_entities(), 1);
   var import_blocks14 = __toESM(require_blocks(), 1);
   var import_jsx_runtime327 = __toESM(require_jsx_runtime(), 1);
   function AddNewPostModal({ postType: postType2, onSave, onClose }) {
@@ -59950,7 +59956,7 @@ If there's a particular need for this, please submit a feature request at https:
           (0, import_i18n155.sprintf)(
             // translators: %s: Title of the created post or template, e.g: "Hello world".
             (0, import_i18n155.__)('"%s" successfully created.'),
-            (0, import_html_entities17.decodeEntities)(newPage.title?.rendered || title) || (0, import_i18n155.__)("(no title)")
+            (0, import_html_entities19.decodeEntities)(newPage.title?.rendered || title) || (0, import_i18n155.__)("(no title)")
           ),
           { type: "snackbar" }
         );
