@@ -9454,7 +9454,9 @@ var wp;
       }
       case "SELECT_BLOCK":
       case "SELECTION_CHANGE": {
-        if (state?.clientId && state.clientId !== action.clientId) {
+        const startClientId = action.clientId ?? action.start?.clientId;
+        const endClientId = action.clientId ?? action.end?.clientId;
+        if (state?.clientId && (startClientId !== endClientId || state.clientId !== startClientId)) {
           return void 0;
         }
         break;
