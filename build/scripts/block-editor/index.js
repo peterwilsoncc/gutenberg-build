@@ -14830,6 +14830,9 @@ var wp;
     (state) => getSelectedBlockClientIds.getDependants(state)
   );
   function hasSelectedInnerBlock(state, clientId, deep = false) {
+    if (!clientId) {
+      return false;
+    }
     const selectedBlockClientIds = getSelectedBlockClientIds(state);
     if (!selectedBlockClientIds.length) {
       return false;
@@ -26995,7 +26998,7 @@ var wp;
         );
         const isSectionBlock22 = _isSectionBlock(clientId);
         const sectionBlockClientId = isSectionBlock22 ? clientId : getParentSectionBlock2(clientId);
-        const isSelectionWithinCurrentSection2 = isBlockSelected2(sectionBlockClientId) || !!sectionBlockClientId && hasSelectedInnerBlock2(sectionBlockClientId, checkDeep);
+        const isSelectionWithinCurrentSection2 = isBlockSelected2(sectionBlockClientId) || hasSelectedInnerBlock2(sectionBlockClientId, checkDeep);
         const multiple = (0, import_blocks24.hasBlockSupport)(blockName, "multiple", true);
         const blocksWithSameName = multiple ? [] : getBlocksByName2(blockName);
         const isInvalid = blocksWithSameName.length && blocksWithSameName[0] !== clientId;
