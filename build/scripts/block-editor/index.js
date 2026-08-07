@@ -69959,6 +69959,7 @@ var wp;
   // packages/block-editor/build-module/components/link-control/search-results.mjs
   var import_i18n154 = __toESM(require_i18n(), 1);
   var import_components164 = __toESM(require_components(), 1);
+  var import_deprecated20 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/link-control/search-create-button.mjs
   var import_i18n151 = __toESM(require_i18n(), 1);
@@ -70158,7 +70159,6 @@ var wp;
   ];
 
   // packages/block-editor/build-module/components/link-control/search-results.mjs
-  var import_deprecated20 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime377 = __toESM(require_jsx_runtime(), 1);
   function LinkControlSearchResults({
     withCreateSuggestion,
