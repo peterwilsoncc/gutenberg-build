@@ -1779,6 +1779,20 @@ function getResponsiveStyleNodes(node, responsiveMediaQueries) {
     }
   );
 }
+function getElementStylesByName(styleNode, responsiveMediaQueries) {
+  const elementStylesByName = { ...styleNode?.elements ?? {} };
+  Object.keys(responsiveMediaQueries).forEach((breakpointKey) => {
+    Object.entries(styleNode?.[breakpointKey]?.elements ?? {}).forEach(
+      ([elementName, styles]) => {
+        elementStylesByName[elementName] = {
+          ...elementStylesByName[elementName] ?? {},
+          [breakpointKey]: styles
+        };
+      }
+    );
+  });
+  return elementStylesByName;
+}
 var getNodesWithStyles = (tree, blockSelectors) => {
   const nodes = [];
   if (!tree?.styles) {
@@ -1846,7 +1860,10 @@ var getNodesWithStyles = (tree, blockSelectors) => {
               });
             }
             Object.entries(
-              typedVariation?.elements ?? {}
+              getElementStylesByName(
+                typedVariation,
+                responsiveMediaQueries
+              )
             ).forEach(([element, elementStyles]) => {
               if (elementStyles && import_blocks.__EXPERIMENTAL_ELEMENTS[element]) {
                 variationNodesToAdd.push({
@@ -1899,7 +1916,10 @@ var getNodesWithStyles = (tree, blockSelectors) => {
                   styles: variationBlockStyleNodes
                 });
                 Object.entries(
-                  variationBlockStyles.elements ?? {}
+                  getElementStylesByName(
+                    variationBlockStyles,
+                    responsiveMediaQueries
+                  )
                 ).forEach(
                   ([
                     variationBlockElement,
@@ -1935,22 +1955,22 @@ var getNodesWithStyles = (tree, blockSelectors) => {
         });
       }
       nodes.push(...variationStyleNodesToAdd);
-      Object.entries(typedNode?.elements ?? {}).forEach(
-        ([elementName, value]) => {
-          if (typeof blockSelectors !== "string" && value && blockSelectors?.[blockName] && import_blocks.__EXPERIMENTAL_ELEMENTS[elementName]) {
-            nodes.push({
-              styles: value,
-              selector: blockSelectors[blockName]?.selector.split(",").map((sel) => {
-                const elementSelectors = import_blocks.__EXPERIMENTAL_ELEMENTS[elementName].split(",");
-                return elementSelectors.map(
-                  (elementSelector) => sel + " " + elementSelector
-                );
-              }).join(","),
-              elementName
-            });
-          }
+      Object.entries(
+        getElementStylesByName(typedNode, responsiveMediaQueries)
+      ).forEach(([elementName, value]) => {
+        if (typeof blockSelectors !== "string" && value && blockSelectors?.[blockName] && import_blocks.__EXPERIMENTAL_ELEMENTS[elementName]) {
+          nodes.push({
+            styles: value,
+            selector: blockSelectors[blockName]?.selector.split(",").map((sel) => {
+              const elementSelectors = import_blocks.__EXPERIMENTAL_ELEMENTS[elementName].split(",");
+              return elementSelectors.map(
+                (elementSelector) => sel + " " + elementSelector
+              );
+            }).join(","),
+            elementName
+          });
         }
-      );
+      });
       nodes.push(...variationNodesToAdd);
     }
   );
