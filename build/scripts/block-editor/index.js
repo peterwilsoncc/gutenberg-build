@@ -91934,6 +91934,7 @@ var wp;
   var import_components250 = __toESM(require_components(), 1);
   var import_compose101 = __toESM(require_compose(), 1);
   var import_element298 = __toESM(require_element(), 1);
+  var import_keycodes29 = __toESM(require_keycodes(), 1);
   var import_rich_text23 = __toESM(require_rich_text(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/utils.mjs
@@ -91995,10 +91996,9 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
   var import_jsx_runtime490 = __toESM(require_jsx_runtime(), 1);
-  var {
-    ValidatedContentEditableControl: RichTextControlShell,
-    withIgnoreIMEEvents
-  } = unlock4(import_components250.privateApis);
+  var { ValidatedContentEditableControl: RichTextControlShell } = unlock4(
+    import_components250.privateApis
+  );
   var {
     useRichText: useRichText2,
     KeyboardShortcutContext: KeyboardShortcutContext2,
@@ -92094,7 +92094,7 @@ var wp;
         if (disabled2) {
           return;
         }
-        const onKeyDown = withIgnoreIMEEvents((event) => {
+        const onKeyDown = (0, import_keycodes29.withIgnoreIMEEvents)((event) => {
           if (event.key !== "Enter" || event.defaultPrevented || event.metaKey || event.ctrlKey) {
             return;
           }

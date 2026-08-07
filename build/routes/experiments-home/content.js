@@ -267,6 +267,13 @@ var require_data = __commonJS({
   }
 });
 
+// package-external:@wordpress/keycodes
+var require_keycodes = __commonJS({
+  "package-external:@wordpress/keycodes"(exports, module) {
+    module.exports = window.wp.keycodes;
+  }
+});
+
 // node_modules/fast-deep-equal/es6/index.js
 var require_es6 = __commonJS({
   "node_modules/fast-deep-equal/es6/index.js"(exports, module) {
@@ -17375,6 +17382,7 @@ var import_element52 = __toESM(require_element(), 1);
 var import_components17 = __toESM(require_components(), 1);
 var import_compose = __toESM(require_compose(), 1);
 var import_element51 = __toESM(require_element(), 1);
+var import_keycodes = __toESM(require_keycodes(), 1);
 var import_rich_text2 = __toESM(require_rich_text(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/utils.mjs
@@ -17436,10 +17444,9 @@ function FormatEdit({
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
 var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
-var {
-  ValidatedContentEditableControl: RichTextControlShell,
-  withIgnoreIMEEvents
-} = unlock2(import_components17.privateApis);
+var { ValidatedContentEditableControl: RichTextControlShell } = unlock2(
+  import_components17.privateApis
+);
 var {
   useRichText,
   KeyboardShortcutContext,
@@ -17535,7 +17542,7 @@ function RichTextControl({
       if (disabled2) {
         return;
       }
-      const onKeyDown = withIgnoreIMEEvents((event) => {
+      const onKeyDown = (0, import_keycodes.withIgnoreIMEEvents)((event) => {
         if (event.key !== "Enter" || event.defaultPrevented || event.metaKey || event.ctrlKey) {
           return;
         }

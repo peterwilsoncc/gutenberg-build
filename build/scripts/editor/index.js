@@ -46506,6 +46506,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components69 = __toESM(require_components(), 1);
   var import_compose18 = __toESM(require_compose(), 1);
   var import_element124 = __toESM(require_element(), 1);
+  var import_keycodes3 = __toESM(require_keycodes(), 1);
   var import_rich_text2 = __toESM(require_rich_text(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/utils.mjs
@@ -46567,10 +46568,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
   var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
-  var {
-    ValidatedContentEditableControl: RichTextControlShell,
-    withIgnoreIMEEvents
-  } = unlock5(import_components69.privateApis);
+  var { ValidatedContentEditableControl: RichTextControlShell } = unlock5(
+    import_components69.privateApis
+  );
   var {
     useRichText,
     KeyboardShortcutContext,
@@ -46666,7 +46666,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (disabled2) {
           return;
         }
-        const onKeyDown = withIgnoreIMEEvents((event) => {
+        const onKeyDown = (0, import_keycodes3.withIgnoreIMEEvents)((event) => {
           if (event.key !== "Enter" || event.defaultPrevented || event.metaKey || event.ctrlKey) {
             return;
           }
@@ -51216,7 +51216,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_core_data30 = __toESM(require_core_data(), 1);
   var import_element167 = __toESM(require_element(), 1);
   var import_i18n143 = __toESM(require_i18n(), 1);
-  var import_keycodes4 = __toESM(require_keycodes(), 1);
+  var import_keycodes5 = __toESM(require_keycodes(), 1);
   var import_notices15 = __toESM(require_notices(), 1);
 
   // packages/interface/build-module/index.mjs
@@ -57445,7 +57445,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components91 = __toESM(require_components(), 1);
   var import_element165 = __toESM(require_element(), 1);
   var import_i18n141 = __toESM(require_i18n(), 1);
-  var import_keycodes3 = __toESM(require_keycodes(), 1);
+  var import_keycodes4 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
   var SHORTCUTS = [
     {
@@ -57503,20 +57503,20 @@ If there's a particular need for this, please submit a feature request at https:
     let keys;
     if (Array.isArray(character)) {
       if (modifier) {
-        const sample = import_keycodes3.displayShortcutList[modifier](character[0]);
+        const sample = import_keycodes4.displayShortcutList[modifier](character[0]);
         keys = [...sample.slice(0, -1), ...character];
       } else {
         keys = character;
       }
     } else {
-      keys = modifier ? import_keycodes3.displayShortcutList[modifier](character) : [character];
+      keys = modifier ? import_keycodes4.displayShortcutList[modifier](character) : [character];
     }
     const charString = Array.isArray(character) ? character.join("") : character;
     let label;
     if (ariaLabel) {
       label = ariaLabel;
     } else if (modifier) {
-      label = import_keycodes3.shortcutAriaLabel[modifier](charString);
+      label = import_keycodes4.shortcutAriaLabel[modifier](charString);
     } else {
       label = charString;
     }
@@ -57923,7 +57923,7 @@ If there's a particular need for this, please submit a feature request at https:
               icon: undo_default,
               label: (0, import_i18n143.__)("Undo"),
               showTooltip: true,
-              shortcut: import_keycodes4.displayShortcut.primary("z"),
+              shortcut: import_keycodes5.displayShortcut.primary("z"),
               disabled: isUndoRedoDisabled || !hasUndo,
               accessibleWhenDisabled: true,
               onClick: handleUndo
@@ -57936,7 +57936,7 @@ If there's a particular need for this, please submit a feature request at https:
               icon: redo_default,
               label: (0, import_i18n143.__)("Redo"),
               showTooltip: true,
-              shortcut: (0, import_keycodes4.isAppleOS)() ? import_keycodes4.displayShortcut.primaryShift("z") : import_keycodes4.displayShortcut.primary("y"),
+              shortcut: (0, import_keycodes5.isAppleOS)() ? import_keycodes5.displayShortcut.primaryShift("z") : import_keycodes5.displayShortcut.primary("y"),
               disabled: isUndoRedoDisabled || !hasRedo,
               accessibleWhenDisabled: true,
               onClick: handleRedo
@@ -58156,8 +58156,8 @@ If there's a particular need for this, please submit a feature request at https:
       discardAndClose();
     };
     const handleKeyDown = (event) => {
-      const isUndoShortcut = import_keycodes4.isKeyboardEvent.primary(event, "z");
-      const isRedoShortcut = import_keycodes4.isKeyboardEvent.primaryShift(event, "z") || !(0, import_keycodes4.isAppleOS)() && import_keycodes4.isKeyboardEvent.primary(event, "y");
+      const isUndoShortcut = import_keycodes5.isKeyboardEvent.primary(event, "z");
+      const isRedoShortcut = import_keycodes5.isKeyboardEvent.primaryShift(event, "z") || !(0, import_keycodes5.isAppleOS)() && import_keycodes5.isKeyboardEvent.primary(event, "y");
       if ((isUndoShortcut || isRedoShortcut) && isImage) {
         const target = event.target;
         const isMetadataField = (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) && !target.closest(`[${CROP_CONTROL_ATTR}]`);
@@ -60918,7 +60918,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/variations/variation.mjs
   var import_element177 = __toESM(require_element(), 1);
-  var import_keycodes5 = __toESM(require_keycodes(), 1);
+  var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_i18n155 = __toESM(require_i18n(), 1);
   var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
   function Variation({
@@ -60949,7 +60949,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [variation, base, properties]);
     const selectVariation = () => setUserConfig(variation);
     const selectOnEnter = (event) => {
-      if (event.keyCode === import_keycodes5.ENTER) {
+      if (event.keyCode === import_keycodes6.ENTER) {
         event.preventDefault();
         selectVariation();
       }
@@ -75278,7 +75278,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_date16 = __toESM(require_date(), 1);
   var import_core_data44 = __toESM(require_core_data(), 1);
   var import_data62 = __toESM(require_data(), 1);
-  var import_keycodes6 = __toESM(require_keycodes(), 1);
+  var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime348 = __toESM(require_jsx_runtime(), 1);
   var { Badge: WCBadge2 } = unlock7(import_components142.privateApis);
   var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
@@ -75381,7 +75381,7 @@ If there's a particular need for this, please submit a feature request at https:
               role: "option",
               onKeyDown: (event) => {
                 const { keyCode } = event;
-                if (keyCode === import_keycodes6.ENTER || keyCode === import_keycodes6.SPACE) {
+                if (keyCode === import_keycodes7.ENTER || keyCode === import_keycodes7.SPACE) {
                   onChange(revision);
                 }
               },
@@ -79519,13 +79519,13 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/keyboard-shortcut-help-modal/shortcut.mjs
   var import_element214 = __toESM(require_element(), 1);
-  var import_keycodes7 = __toESM(require_keycodes(), 1);
+  var import_keycodes8 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime366 = __toESM(require_jsx_runtime(), 1);
   function KeyCombination({ keyCombination, forceAriaLabel }) {
-    const shortcut = keyCombination.modifier ? import_keycodes7.displayShortcutList[keyCombination.modifier](
+    const shortcut = keyCombination.modifier ? import_keycodes8.displayShortcutList[keyCombination.modifier](
       keyCombination.character
     ) : keyCombination.character;
-    const ariaLabel = keyCombination.modifier ? import_keycodes7.shortcutAriaLabel[keyCombination.modifier](
+    const ariaLabel = keyCombination.modifier ? import_keycodes8.shortcutAriaLabel[keyCombination.modifier](
       keyCombination.character
     ) : keyCombination.character;
     return /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
@@ -82145,7 +82145,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/styles-canvas/index.mjs
   var import_components163 = __toESM(require_components(), 1);
-  var import_keycodes10 = __toESM(require_keycodes(), 1);
+  var import_keycodes11 = __toESM(require_keycodes(), 1);
   var import_i18n212 = __toESM(require_i18n(), 1);
   var import_data99 = __toESM(require_data(), 1);
   var import_compose38 = __toESM(require_compose(), 1);
@@ -82160,7 +82160,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor38 = __toESM(require_block_editor(), 1);
   var import_data96 = __toESM(require_data(), 1);
   var import_element226 = __toESM(require_element(), 1);
-  var import_keycodes8 = __toESM(require_keycodes(), 1);
+  var import_keycodes9 = __toESM(require_keycodes(), 1);
   var import_media_utils7 = __toESM(require_media_utils(), 1);
   var import_core_data64 = __toESM(require_core_data(), 1);
 
@@ -83236,7 +83236,7 @@ If there's a particular need for this, please submit a feature request at https:
           return;
         }
         const { keyCode } = event;
-        if (onClick && (keyCode === import_keycodes8.ENTER || keyCode === import_keycodes8.SPACE)) {
+        if (onClick && (keyCode === import_keycodes9.ENTER || keyCode === import_keycodes9.SPACE)) {
           event.preventDefault();
           onClick(event);
         }
@@ -83612,20 +83612,20 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/resizable-editor/resize-handle.mjs
   var import_i18n211 = __toESM(require_i18n(), 1);
-  var import_keycodes9 = __toESM(require_keycodes(), 1);
+  var import_keycodes10 = __toESM(require_keycodes(), 1);
   var import_components161 = __toESM(require_components(), 1);
   var import_jsx_runtime385 = __toESM(require_jsx_runtime(), 1);
   var DELTA_DISTANCE = 20;
   function ResizeHandle({ direction, resizeWidthBy }) {
     function handleKeyDown(event) {
       const { keyCode } = event;
-      if (keyCode !== import_keycodes9.LEFT && keyCode !== import_keycodes9.RIGHT) {
+      if (keyCode !== import_keycodes10.LEFT && keyCode !== import_keycodes10.RIGHT) {
         return;
       }
       event.preventDefault();
-      if (direction === "left" && keyCode === import_keycodes9.LEFT || direction === "right" && keyCode === import_keycodes9.RIGHT) {
+      if (direction === "left" && keyCode === import_keycodes10.LEFT || direction === "right" && keyCode === import_keycodes10.RIGHT) {
         resizeWidthBy(DELTA_DISTANCE);
-      } else if (direction === "left" && keyCode === import_keycodes9.RIGHT || direction === "right" && keyCode === import_keycodes9.LEFT) {
+      } else if (direction === "left" && keyCode === import_keycodes10.RIGHT || direction === "right" && keyCode === import_keycodes10.LEFT) {
         resizeWidthBy(-DELTA_DISTANCE);
       }
     }
@@ -83840,7 +83840,7 @@ If there's a particular need for this, please submit a feature request at https:
       resetStylesNavigation2();
     };
     const closeOnEscape = (event) => {
-      if (event.keyCode === import_keycodes10.ESCAPE && !event.defaultPrevented) {
+      if (event.keyCode === import_keycodes11.ESCAPE && !event.defaultPrevented) {
         event.preventDefault();
         onCloseCanvas();
       }
@@ -84351,7 +84351,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n215 = __toESM(require_i18n(), 1);
   var import_block_editor44 = __toESM(require_block_editor(), 1);
   var import_keyboard_shortcuts5 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_keycodes11 = __toESM(require_keycodes(), 1);
+  var import_keycodes12 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime391 = __toESM(require_jsx_runtime(), 1);
   function EditorKeyboardShortcutsRegister() {
     const { registerShortcut } = (0, import_data104.useDispatch)(import_keyboard_shortcuts5.store);
@@ -84395,7 +84395,7 @@ If there's a particular need for this, please submit a feature request at https:
         // history shortcut. It's a fine alias for both Windows and Linux.
         // Since there's no conflict for Ctrl+Shift+Z on both Windows and
         // Linux, we keep it as the default for consistency.
-        aliases: (0, import_keycodes11.isAppleOS)() ? [] : [
+        aliases: (0, import_keycodes12.isAppleOS)() ? [] : [
           {
             modifier: "primary",
             character: "y"
@@ -84490,11 +84490,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n216 = __toESM(require_i18n(), 1);
   var import_components166 = __toESM(require_components(), 1);
   var import_data105 = __toESM(require_data(), 1);
-  var import_keycodes12 = __toESM(require_keycodes(), 1);
+  var import_keycodes13 = __toESM(require_keycodes(), 1);
   var import_element233 = __toESM(require_element(), 1);
   var import_jsx_runtime392 = __toESM(require_jsx_runtime(), 1);
   function EditorHistoryRedo(props, ref) {
-    const shortcut = (0, import_keycodes12.isAppleOS)() ? import_keycodes12.displayShortcut.primaryShift("z") : import_keycodes12.displayShortcut.primary("y");
+    const shortcut = (0, import_keycodes13.isAppleOS)() ? import_keycodes13.displayShortcut.primaryShift("z") : import_keycodes13.displayShortcut.primary("y");
     const hasRedo = (0, import_data105.useSelect)(
       (select9) => select9(store).hasEditorRedo(),
       []
@@ -84521,7 +84521,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n217 = __toESM(require_i18n(), 1);
   var import_components167 = __toESM(require_components(), 1);
   var import_data106 = __toESM(require_data(), 1);
-  var import_keycodes13 = __toESM(require_keycodes(), 1);
+  var import_keycodes14 = __toESM(require_keycodes(), 1);
   var import_element234 = __toESM(require_element(), 1);
   var import_jsx_runtime393 = __toESM(require_jsx_runtime(), 1);
   function EditorHistoryUndo(props, ref) {
@@ -84538,7 +84538,7 @@ If there's a particular need for this, please submit a feature request at https:
         ref,
         icon: !(0, import_i18n217.isRTL)() ? undo_default : redo_default,
         label: (0, import_i18n217.__)("Undo"),
-        shortcut: import_keycodes13.displayShortcut.primary("z"),
+        shortcut: import_keycodes14.displayShortcut.primary("z"),
         "aria-disabled": !hasUndo,
         onClick: hasUndo ? undo2 : void 0,
         className: "editor-history__undo"
@@ -90002,7 +90002,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data166 = __toESM(require_data(), 1);
   var import_element266 = __toESM(require_element(), 1);
   var import_i18n263 = __toESM(require_i18n(), 1);
-  var import_keycodes14 = __toESM(require_keycodes(), 1);
+  var import_keycodes15 = __toESM(require_keycodes(), 1);
   var import_preferences14 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/post-status/index.mjs
@@ -90370,7 +90370,7 @@ If there's a particular need for this, please submit a feature request at https:
           })]: isSaving
         }) : void 0,
         onClick: isDisabled ? void 0 : () => savePost2(),
-        shortcut: isDisabled ? void 0 : import_keycodes14.displayShortcut.primary("s"),
+        shortcut: isDisabled ? void 0 : import_keycodes15.displayShortcut.primary("s"),
         variant: "tertiary",
         size: "compact",
         icon: isLargeViewport ? void 0 : cloud_upload_default,
@@ -90855,7 +90855,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_html_entities28 = __toESM(require_html_entities(), 1);
   var import_data177 = __toESM(require_data(), 1);
   var import_block_editor59 = __toESM(require_block_editor(), 1);
-  var import_keycodes15 = __toESM(require_keycodes(), 1);
+  var import_keycodes16 = __toESM(require_keycodes(), 1);
   var import_blocks27 = __toESM(require_blocks(), 1);
   var import_rich_text6 = __toESM(require_rich_text(), 1);
   var import_compose57 = __toESM(require_compose(), 1);
@@ -90977,7 +90977,7 @@ If there's a particular need for this, please submit a feature request at https:
       insertDefaultBlock2(void 0, void 0, 0);
     }
     function onKeyDown(event) {
-      if (event.keyCode === import_keycodes15.ENTER) {
+      if (event.keyCode === import_keycodes16.ENTER) {
         event.preventDefault();
         onEnterPress();
       }
@@ -93331,7 +93331,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/more-menu/index.mjs
   var import_i18n288 = __toESM(require_i18n(), 1);
   var import_data201 = __toESM(require_data(), 1);
-  var import_keycodes16 = __toESM(require_keycodes(), 1);
+  var import_keycodes17 = __toESM(require_keycodes(), 1);
   var import_components240 = __toESM(require_components(), 1);
   var import_preferences16 = __toESM(require_preferences(), 1);
 
@@ -93509,7 +93509,7 @@ If there's a particular need for this, please submit a feature request at https:
             messageDeactivated: (0, import_i18n288.__)(
               "Distraction free mode deactivated."
             ),
-            shortcut: import_keycodes16.displayShortcut.primaryShift(
+            shortcut: import_keycodes17.displayShortcut.primaryShift(
               "\\"
             )
           }
@@ -93545,7 +93545,7 @@ If there's a particular need for this, please submit a feature request at https:
           import_components240.MenuItem,
           {
             onClick: () => openModal2("editor/keyboard-shortcut-help"),
-            shortcut: import_keycodes16.displayShortcut.access("h"),
+            shortcut: import_keycodes17.displayShortcut.access("h"),
             children: (0, import_i18n288.__)("Keyboard shortcuts")
           }
         ),
@@ -93910,7 +93910,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor72 = __toESM(require_block_editor(), 1);
   var import_preferences19 = __toESM(require_preferences(), 1);
   var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_keycodes17 = __toESM(require_keycodes(), 1);
+  var import_keycodes18 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime494 = __toESM(require_jsx_runtime(), 1);
   var ZoomOutToggle = ({ disabled: disabled2 }) => {
     const { isZoomOut, showIconLabels, isDistractionFree } = (0, import_data205.useSelect)(
@@ -93940,7 +93940,7 @@ If there's a particular need for this, please submit a feature request at https:
         keyCombination: {
           // `primaryShift+0` (`ctrl+shift+0`) is the shortcut for switching
           // to input mode in Windows, so apply a different key combination.
-          modifier: (0, import_keycodes17.isAppleOS)() ? "primaryShift" : "secondary",
+          modifier: (0, import_keycodes18.isAppleOS)() ? "primaryShift" : "secondary",
           character: "0"
         }
       });
@@ -96129,7 +96129,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose69 = __toESM(require_compose(), 1);
   var import_element300 = __toESM(require_element(), 1);
   var import_preferences22 = __toESM(require_preferences(), 1);
-  var import_keycodes18 = __toESM(require_keycodes(), 1);
+  var import_keycodes19 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime502 = __toESM(require_jsx_runtime(), 1);
   var { PrivateInserterLibrary } = unlock(import_block_editor75.privateApis);
   function InserterSidebar() {
@@ -96175,7 +96175,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [inserterSidebarToggleRef2, setIsInserterOpened2]);
     const closeOnEscape = (0, import_element300.useCallback)(
       (event) => {
-        if (event.keyCode === import_keycodes18.ESCAPE && !event.defaultPrevented) {
+        if (event.keyCode === import_keycodes19.ESCAPE && !event.defaultPrevented) {
           event.preventDefault();
           closeInserterSidebar();
         }
@@ -96213,7 +96213,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element301 = __toESM(require_element(), 1);
   var import_i18n298 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts9 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_keycodes19 = __toESM(require_keycodes(), 1);
+  var import_keycodes20 = __toESM(require_keycodes(), 1);
 
   // packages/editor/build-module/components/list-view-sidebar/list-view-outline.mjs
   var import_components247 = __toESM(require_components(), 1);
@@ -96252,7 +96252,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [getListViewToggleRef2, setIsListViewOpened2]);
     const closeOnEscape = (0, import_element301.useCallback)(
       (event) => {
-        if (event.keyCode === import_keycodes19.ESCAPE && !event.defaultPrevented) {
+        if (event.keyCode === import_keycodes20.ESCAPE && !event.defaultPrevented) {
           event.preventDefault();
           closeListView();
         }
@@ -100527,7 +100527,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element329 = __toESM(require_element(), 1);
   var import_i18n328 = __toESM(require_i18n(), 1);
   var import_html_entities34 = __toESM(require_html_entities(), 1);
-  var import_keycodes20 = __toESM(require_keycodes(), 1);
+  var import_keycodes21 = __toESM(require_keycodes(), 1);
   var import_notices36 = __toESM(require_notices(), 1);
   var import_preferences27 = __toESM(require_preferences(), 1);
   var import_jsx_runtime538 = __toESM(require_jsx_runtime(), 1);
@@ -100610,7 +100610,7 @@ If there's a particular need for this, please submit a feature request at https:
                   "aria-label": tooltipText,
                   onClick: () => setIsSwapModalOpen(true),
                   onKeyDown: (event) => {
-                    if (event.keyCode === import_keycodes20.ENTER || event.keyCode === import_keycodes20.SPACE) {
+                    if (event.keyCode === import_keycodes21.ENTER || event.keyCode === import_keycodes21.SPACE) {
                       event.preventDefault();
                       setIsSwapModalOpen(true);
                     }
@@ -101210,7 +101210,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components276 = __toESM(require_components(), 1);
   var import_i18n335 = __toESM(require_i18n(), 1);
   var import_compose81 = __toESM(require_compose(), 1);
-  var import_keycodes21 = __toESM(require_keycodes(), 1);
+  var import_keycodes22 = __toESM(require_keycodes(), 1);
   var import_dom28 = __toESM(require_dom(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-mention-completer.mjs
@@ -101296,7 +101296,7 @@ If there's a particular need for this, please submit a feature request at https:
           submit();
         },
         onKeyDown: (event) => {
-          if (import_keycodes21.isKeyboardEvent.primary(event, "Enter")) {
+          if (import_keycodes22.isKeyboardEvent.primary(event, "Enter")) {
             event.preventDefault();
             submit();
             return;
@@ -101347,7 +101347,7 @@ If there's a particular need for this, please submit a feature request at https:
                     variant: "primary",
                     type: "submit",
                     disabled: isDisabled,
-                    shortcut: import_keycodes21.displayShortcut.primary("Enter"),
+                    shortcut: import_keycodes22.displayShortcut.primary("Enter"),
                     children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components276.__experimentalTruncate, { children: labels?.submit ?? (0, import_i18n335.__)("Add note") })
                   }
                 )

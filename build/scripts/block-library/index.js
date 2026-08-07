@@ -24459,8 +24459,8 @@ var wp;
   var import_i18n56 = __toESM(require_i18n(), 1);
   var import_element35 = __toESM(require_element(), 1);
   var import_data30 = __toESM(require_data(), 1);
+  var import_keycodes2 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime244 = __toESM(require_jsx_runtime(), 1);
-  var { withIgnoreIMEEvents } = unlock(import_components35.privateApis);
   function DetailsEdit({ attributes, setAttributes, clientId }) {
     const { name: name122, showContent, summary, allowedBlocks, placeholder: placeholder2 } = attributes;
     const blockProps = (0, import_block_editor71.useBlockProps)();
@@ -24543,7 +24543,7 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
               "summary",
               {
-                onKeyDown: withIgnoreIMEEvents(handleSummaryKeyDown),
+                onKeyDown: (0, import_keycodes2.withIgnoreIMEEvents)(handleSummaryKeyDown),
                 onKeyUp: handleSummaryKeyUp,
                 children: /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
                   import_block_editor71.RichText,
@@ -40947,7 +40947,7 @@ ${text}
   var import_components65 = __toESM(require_components(), 1);
   var import_compose31 = __toESM(require_compose(), 1);
   var import_data62 = __toESM(require_data(), 1);
-  var import_keycodes4 = __toESM(require_keycodes(), 1);
+  var import_keycodes5 = __toESM(require_keycodes(), 1);
 
   // packages/block-library/build-module/list-item/hooks/use-outdent-list-item.mjs
   var import_element64 = __toESM(require_element(), 1);
@@ -41099,7 +41099,7 @@ ${text}
   var import_blocks48 = __toESM(require_blocks(), 1);
   var import_compose29 = __toESM(require_compose(), 1);
   var import_rich_text5 = __toESM(require_rich_text(), 1);
-  var import_keycodes2 = __toESM(require_keycodes(), 1);
+  var import_keycodes3 = __toESM(require_keycodes(), 1);
   var import_data59 = __toESM(require_data(), 1);
   var import_block_editor130 = __toESM(require_block_editor(), 1);
   var { subscribeOwnedListener } = unlock(import_rich_text5.privateApis);
@@ -41115,7 +41115,7 @@ ${text}
     const outdentListItem = useOutdentListItem();
     return (0, import_compose29.useRefEffect)((element) => {
       function onKeyDown(event) {
-        if (event.defaultPrevented || event.keyCode !== import_keycodes2.ENTER) {
+        if (event.defaultPrevented || event.keyCode !== import_keycodes3.ENTER) {
           return;
         }
         const { content } = getBlockAttributes4(clientId) ?? {};
@@ -41166,7 +41166,7 @@ ${text}
   // packages/block-library/build-module/list-item/hooks/use-space.mjs
   var import_compose30 = __toESM(require_compose(), 1);
   var import_rich_text6 = __toESM(require_rich_text(), 1);
-  var import_keycodes3 = __toESM(require_keycodes(), 1);
+  var import_keycodes4 = __toESM(require_keycodes(), 1);
   var import_block_editor131 = __toESM(require_block_editor(), 1);
   var import_data60 = __toESM(require_data(), 1);
   var { subscribeOwnedListener: subscribeOwnedListener2 } = unlock(import_rich_text6.privateApis);
@@ -41178,7 +41178,7 @@ ${text}
       (element) => {
         function onKeyDown(event) {
           const { keyCode, shiftKey, altKey, metaKey, ctrlKey } = event;
-          if (event.defaultPrevented || keyCode !== import_keycodes3.SPACE && keyCode !== import_keycodes3.TAB || // Only override when no modifiers are pressed.
+          if (event.defaultPrevented || keyCode !== import_keycodes4.SPACE && keyCode !== import_keycodes4.TAB || // Only override when no modifiers are pressed.
           altKey || metaKey || ctrlKey) {
             return;
           }
@@ -41186,7 +41186,7 @@ ${text}
           const selectionEnd = getSelectionEnd();
           if (selectionStart.offset === 0 && selectionEnd.offset === 0) {
             if (shiftKey) {
-              if (keyCode === import_keycodes3.TAB) {
+              if (keyCode === import_keycodes4.TAB) {
                 if (outdentListItem()) {
                   event.preventDefault();
                 }
@@ -41364,7 +41364,7 @@ ${text}
         {
           icon: (0, import_i18n110.isRTL)() ? format_outdent_rtl_default : format_outdent_default,
           title: (0, import_i18n110.__)("Outdent"),
-          shortcut: import_keycodes4.displayShortcut.shift("Tab"),
+          shortcut: import_keycodes5.displayShortcut.shift("Tab"),
           description: (0, import_i18n110.__)("Outdent list item"),
           disabled: !canOutdent,
           onClick: () => outdentListItem()
@@ -50182,7 +50182,7 @@ ${text}
   var import_blocks65 = __toESM(require_blocks(), 1);
   var import_data94 = __toESM(require_data(), 1);
   var import_components96 = __toESM(require_components(), 1);
-  var import_keycodes5 = __toESM(require_keycodes(), 1);
+  var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_i18n152 = __toESM(require_i18n(), 1);
   var import_block_editor167 = __toESM(require_block_editor(), 1);
   var import_url17 = __toESM(require_url(), 1);
@@ -50359,7 +50359,7 @@ ${text}
       customBackgroundColor
     } = getColors(context, !isTopLevelLink);
     function onKeyDown(event) {
-      if (import_keycodes5.isKeyboardEvent.primary(event, "k")) {
+      if (import_keycodes6.isKeyboardEvent.primary(event, "k")) {
         event.preventDefault();
         event.stopPropagation();
         setIsLinkOpen(true);
@@ -50418,7 +50418,7 @@ ${text}
             name: "link",
             icon: link_default,
             title: (0, import_i18n152.__)("Link"),
-            shortcut: import_keycodes5.displayShortcut.primary("k"),
+            shortcut: import_keycodes6.displayShortcut.primary("k"),
             onClick: () => {
               setIsLinkOpen(true);
             }
@@ -50921,7 +50921,7 @@ ${text}
   // packages/block-library/build-module/navigation-submenu/edit.mjs
   var import_data95 = __toESM(require_data(), 1);
   var import_components98 = __toESM(require_components(), 1);
-  var import_keycodes6 = __toESM(require_keycodes(), 1);
+  var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_i18n154 = __toESM(require_i18n(), 1);
   var import_block_editor170 = __toESM(require_block_editor(), 1);
   var import_url18 = __toESM(require_url(), 1);
@@ -51059,7 +51059,7 @@ ${text}
       customBackgroundColor
     } = getColors(context, parentCount > 0);
     function onKeyDown(event) {
-      if (import_keycodes6.isKeyboardEvent.primary(event, "k")) {
+      if (import_keycodes7.isKeyboardEvent.primary(event, "k")) {
         event.preventDefault();
         event.stopPropagation();
         setIsLinkOpen(true);
@@ -51121,7 +51121,7 @@ ${text}
             name: "link",
             icon: link_default,
             title: (0, import_i18n154.__)("Link"),
-            shortcut: import_keycodes6.displayShortcut.primary("k"),
+            shortcut: import_keycodes7.displayShortcut.primary("k"),
             onClick: () => {
               setIsLinkOpen(true);
             }
@@ -52905,7 +52905,7 @@ ${text}
   var import_element99 = __toESM(require_element(), 1);
   var import_compose41 = __toESM(require_compose(), 1);
   var import_rich_text7 = __toESM(require_rich_text(), 1);
-  var import_keycodes7 = __toESM(require_keycodes(), 1);
+  var import_keycodes8 = __toESM(require_keycodes(), 1);
   var import_data101 = __toESM(require_data(), 1);
   var import_block_editor179 = __toESM(require_block_editor(), 1);
   var import_blocks75 = __toESM(require_blocks(), 1);
@@ -52928,7 +52928,7 @@ ${text}
         if (event.defaultPrevented) {
           return;
         }
-        if (event.keyCode !== import_keycodes7.ENTER) {
+        if (event.keyCode !== import_keycodes8.ENTER) {
           return;
         }
         const { content, clientId } = propsRef.current;
@@ -58317,7 +58317,7 @@ ${text}
   var import_block_editor196 = __toESM(require_block_editor(), 1);
   var import_components108 = __toESM(require_components(), 1);
   var import_i18n177 = __toESM(require_i18n(), 1);
-  var import_keycodes8 = __toESM(require_keycodes(), 1);
+  var import_keycodes9 = __toESM(require_keycodes(), 1);
   var import_data111 = __toESM(require_data(), 1);
   var import_blocks86 = __toESM(require_blocks(), 1);
   var import_jsx_runtime384 = __toESM(require_jsx_runtime(), 1);
@@ -58411,7 +58411,7 @@ ${text}
           ),
           renderToggle: ({ isOpen, onToggle }) => {
             const openOnArrowDown = (event) => {
-              if (!isOpen && event.keyCode === import_keycodes8.DOWN) {
+              if (!isOpen && event.keyCode === import_keycodes9.DOWN) {
                 event.preventDefault();
                 onToggle();
               }
@@ -71137,7 +71137,7 @@ ${text}
   var import_blocks112 = __toESM(require_blocks(), 1);
 
   // packages/block-library/build-module/social-link/edit.mjs
-  var import_keycodes9 = __toESM(require_keycodes(), 1);
+  var import_keycodes10 = __toESM(require_keycodes(), 1);
   var import_data142 = __toESM(require_data(), 1);
   var import_block_editor247 = __toESM(require_block_editor(), 1);
   var import_element134 = __toESM(require_element(), 1);
@@ -71451,7 +71451,7 @@ ${text}
                 hideLabelFromVision: true,
                 disableSuggestions: true,
                 onKeyDown: (event) => {
-                  if (!!url || event.defaultPrevented || ![import_keycodes9.BACKSPACE, import_keycodes9.DELETE].includes(
+                  if (!!url || event.defaultPrevented || ![import_keycodes10.BACKSPACE, import_keycodes10.DELETE].includes(
                     event.keyCode
                   )) {
                     return;
@@ -71523,7 +71523,7 @@ ${text}
       ref: (0, import_compose58.useMergeRefs)([setPopoverAnchor, ref]),
       onClick: () => setPopover(true),
       onKeyDown: (event) => {
-        if (event.keyCode === import_keycodes9.ENTER) {
+        if (event.keyCode === import_keycodes10.ENTER) {
           event.preventDefault();
           setPopover(true);
         }

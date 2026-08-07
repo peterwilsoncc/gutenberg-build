@@ -38454,6 +38454,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components62 = __toESM(require_components(), 1);
   var import_compose16 = __toESM(require_compose(), 1);
   var import_element110 = __toESM(require_element(), 1);
+  var import_keycodes5 = __toESM(require_keycodes(), 1);
   var import_rich_text2 = __toESM(require_rich_text(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/utils.mjs
@@ -38515,10 +38516,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
   var import_jsx_runtime190 = __toESM(require_jsx_runtime(), 1);
-  var {
-    ValidatedContentEditableControl: RichTextControlShell,
-    withIgnoreIMEEvents
-  } = unlock4(import_components62.privateApis);
+  var { ValidatedContentEditableControl: RichTextControlShell } = unlock4(
+    import_components62.privateApis
+  );
   var {
     useRichText,
     KeyboardShortcutContext,
@@ -38614,7 +38614,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (disabled2) {
           return;
         }
-        const onKeyDown = withIgnoreIMEEvents((event) => {
+        const onKeyDown = (0, import_keycodes5.withIgnoreIMEEvents)((event) => {
           if (event.key !== "Enter" || event.defaultPrevented || event.metaKey || event.ctrlKey) {
             return;
           }
@@ -45076,7 +45076,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/variations/variation.mjs
   var import_element141 = __toESM(require_element(), 1);
-  var import_keycodes5 = __toESM(require_keycodes(), 1);
+  var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_i18n85 = __toESM(require_i18n(), 1);
   var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
   function Variation({
@@ -45107,7 +45107,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [variation, base, properties]);
     const selectVariation = () => setUserConfig(variation);
     const selectOnEnter = (event) => {
-      if (event.keyCode === import_keycodes5.ENTER) {
+      if (event.keyCode === import_keycodes6.ENTER) {
         event.preventDefault();
         selectVariation();
       }
@@ -55896,7 +55896,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_date11 = __toESM(require_date(), 1);
   var import_core_data35 = __toESM(require_core_data(), 1);
   var import_data53 = __toESM(require_data(), 1);
-  var import_keycodes6 = __toESM(require_keycodes(), 1);
+  var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime275 = __toESM(require_jsx_runtime(), 1);
   var { Badge: WCBadge } = unlock6(import_components122.privateApis);
   var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;

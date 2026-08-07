@@ -19915,6 +19915,7 @@ var import_element60 = __toESM(require_element(), 1);
 var import_components18 = __toESM(require_components(), 1);
 var import_compose2 = __toESM(require_compose(), 1);
 var import_element59 = __toESM(require_element(), 1);
+var import_keycodes = __toESM(require_keycodes(), 1);
 var import_rich_text2 = __toESM(require_rich_text(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/utils.mjs
@@ -19976,10 +19977,9 @@ function FormatEdit({
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
 var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
-var {
-  ValidatedContentEditableControl: RichTextControlShell,
-  withIgnoreIMEEvents
-} = unlock2(import_components18.privateApis);
+var { ValidatedContentEditableControl: RichTextControlShell } = unlock2(
+  import_components18.privateApis
+);
 var {
   useRichText,
   KeyboardShortcutContext,
@@ -20075,7 +20075,7 @@ function RichTextControl({
       if (disabled2) {
         return;
       }
-      const onKeyDown = withIgnoreIMEEvents((event) => {
+      const onKeyDown = (0, import_keycodes.withIgnoreIMEEvents)((event) => {
         if (event.key !== "Enter" || event.defaultPrevented || event.metaKey || event.ctrlKey) {
           return;
         }
@@ -24155,7 +24155,7 @@ var import_data8 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
 var import_element97 = __toESM(require_element(), 1);
 var import_i18n38 = __toESM(require_i18n(), 1);
-var import_keycodes2 = __toESM(require_keycodes(), 1);
+var import_keycodes3 = __toESM(require_keycodes(), 1);
 var import_notices2 = __toESM(require_notices(), 1);
 
 // packages/interface/build-module/components/complementary-area/index.mjs
@@ -30319,7 +30319,7 @@ function MediaEditorCropPanel({
 var import_components40 = __toESM(require_components(), 1);
 var import_element95 = __toESM(require_element(), 1);
 var import_i18n36 = __toESM(require_i18n(), 1);
-var import_keycodes = __toESM(require_keycodes(), 1);
+var import_keycodes2 = __toESM(require_keycodes(), 1);
 var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
 var SHORTCUTS = [
   {
@@ -30377,20 +30377,20 @@ function KeyCombinationDisplay({
   let keys;
   if (Array.isArray(character)) {
     if (modifier) {
-      const sample = import_keycodes.displayShortcutList[modifier](character[0]);
+      const sample = import_keycodes2.displayShortcutList[modifier](character[0]);
       keys = [...sample.slice(0, -1), ...character];
     } else {
       keys = character;
     }
   } else {
-    keys = modifier ? import_keycodes.displayShortcutList[modifier](character) : [character];
+    keys = modifier ? import_keycodes2.displayShortcutList[modifier](character) : [character];
   }
   const charString = Array.isArray(character) ? character.join("") : character;
   let label;
   if (ariaLabel) {
     label = ariaLabel;
   } else if (modifier) {
-    label = import_keycodes.shortcutAriaLabel[modifier](charString);
+    label = import_keycodes2.shortcutAriaLabel[modifier](charString);
   } else {
     label = charString;
   }
@@ -30797,7 +30797,7 @@ function HistoryActions({
             icon: undo_default,
             label: (0, import_i18n38.__)("Undo"),
             showTooltip: true,
-            shortcut: import_keycodes2.displayShortcut.primary("z"),
+            shortcut: import_keycodes3.displayShortcut.primary("z"),
             disabled: isUndoRedoDisabled || !hasUndo,
             accessibleWhenDisabled: true,
             onClick: handleUndo
@@ -30810,7 +30810,7 @@ function HistoryActions({
             icon: redo_default,
             label: (0, import_i18n38.__)("Redo"),
             showTooltip: true,
-            shortcut: (0, import_keycodes2.isAppleOS)() ? import_keycodes2.displayShortcut.primaryShift("z") : import_keycodes2.displayShortcut.primary("y"),
+            shortcut: (0, import_keycodes3.isAppleOS)() ? import_keycodes3.displayShortcut.primaryShift("z") : import_keycodes3.displayShortcut.primary("y"),
             disabled: isUndoRedoDisabled || !hasRedo,
             accessibleWhenDisabled: true,
             onClick: handleRedo
@@ -31030,8 +31030,8 @@ function MediaEditorContent({
     discardAndClose();
   };
   const handleKeyDown = (event) => {
-    const isUndoShortcut = import_keycodes2.isKeyboardEvent.primary(event, "z");
-    const isRedoShortcut = import_keycodes2.isKeyboardEvent.primaryShift(event, "z") || !(0, import_keycodes2.isAppleOS)() && import_keycodes2.isKeyboardEvent.primary(event, "y");
+    const isUndoShortcut = import_keycodes3.isKeyboardEvent.primary(event, "z");
+    const isRedoShortcut = import_keycodes3.isKeyboardEvent.primaryShift(event, "z") || !(0, import_keycodes3.isAppleOS)() && import_keycodes3.isKeyboardEvent.primary(event, "y");
     if ((isUndoShortcut || isRedoShortcut) && isImage) {
       const target = event.target;
       const isMetadataField = (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) && !target.closest(`[${CROP_CONTROL_ATTR}]`);

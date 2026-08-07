@@ -791,6 +791,13 @@ var wp;
     }
   });
 
+  // package-external:@wordpress/keycodes
+  var require_keycodes = __commonJS({
+    "package-external:@wordpress/keycodes"(exports, module) {
+      module.exports = window.wp.keycodes;
+    }
+  });
+
   // package-external:@wordpress/rich-text
   var require_rich_text = __commonJS({
     "package-external:@wordpress/rich-text"(exports, module) {
@@ -802,13 +809,6 @@ var wp;
   var require_a11y = __commonJS({
     "package-external:@wordpress/a11y"(exports, module) {
       module.exports = window.wp.a11y;
-    }
-  });
-
-  // package-external:@wordpress/keycodes
-  var require_keycodes = __commonJS({
-    "package-external:@wordpress/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
     }
   });
 
@@ -26622,6 +26622,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/input-control/input-field.mjs
   var import_element29 = __toESM(require_element(), 1);
+  var import_keycodes = __toESM(require_keycodes(), 1);
 
   // packages/components/build-module/input-control/utils.mjs
   var import_element27 = __toESM(require_element(), 1);
@@ -26873,22 +26874,6 @@ This message will only show in development mode. It won't appear in production. 
     };
   }
 
-  // packages/components/build-module/utils/with-ignore-ime-events.mjs
-  function withIgnoreIMEEvents(handler) {
-    return (event) => {
-      const {
-        isComposing
-      } = "nativeEvent" in event ? event.nativeEvent : event;
-      if (isComposing || // Workaround for Mac Safari where the final Enter/Backspace of an IME composition
-      // is `isComposing=false`, even though it's technically still part of the composition.
-      // These can only be detected by keyCode.
-      event.keyCode === 229) {
-        return;
-      }
-      handler(event);
-    };
-  }
-
   // packages/components/build-module/input-control/input-field.mjs
   var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
   var noop4 = () => {
@@ -27031,7 +27016,7 @@ This message will only show in development mode. It won't appear in production. 
       id: id3,
       onBlur: handleOnBlur,
       onChange: handleOnChange,
-      onKeyDown: withIgnoreIMEEvents(handleOnKeyDown),
+      onKeyDown: (0, import_keycodes.withIgnoreIMEEvents)(handleOnKeyDown),
       ref,
       inputSize: size4,
       value: value ?? "",
@@ -28222,7 +28207,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_compose18 = __toESM(require_compose(), 1);
   var import_rich_text2 = __toESM(require_rich_text(), 1);
   var import_a11y2 = __toESM(require_a11y(), 1);
-  var import_keycodes = __toESM(require_keycodes(), 1);
+  var import_keycodes2 = __toESM(require_keycodes(), 1);
 
   // packages/components/build-module/autocomplete/autocompleter-ui.mjs
   var import_react_dom6 = __toESM(require_react_dom(), 1);
@@ -29909,7 +29894,7 @@ This message will only show in development mode. It won't appear in production. 
             type: "SELECT",
             index: newIndex
           });
-          if ((0, import_keycodes.isAppleOS)()) {
+          if ((0, import_keycodes2.isAppleOS)()) {
             (0, import_a11y2.speak)(get_node_text_default(filteredOptions[newIndex].label), "assertive");
           }
           break;
@@ -29990,7 +29975,7 @@ This message will only show in development mode. It won't appear in production. 
     return {
       listBoxId,
       activeId,
-      onKeyDown: withIgnoreIMEEvents(handleKeyDown),
+      onKeyDown: (0, import_keycodes2.withIgnoreIMEEvents)(handleKeyDown),
       popover: showPopover && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(AutocompleterUI, {
         autocompleter,
         className: className2,
@@ -38909,6 +38894,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_element116 = __toESM(require_element(), 1);
   var import_compose47 = __toESM(require_compose(), 1);
   var import_a11y5 = __toESM(require_a11y(), 1);
+  var import_keycodes3 = __toESM(require_keycodes(), 1);
 
   // packages/components/build-module/combobox-control/styles.mjs
   var InputWrapperFlex = /* @__PURE__ */ createStyled(component_default3, false ? {
@@ -39287,7 +39273,7 @@ This message will only show in development mode. It won't appear in production. 
       setSelectedSuggestion(matchingSuggestions[nextIndex]);
       setIsExpanded(true);
     };
-    const onKeyDown = withIgnoreIMEEvents((event) => {
+    const onKeyDown = (0, import_keycodes3.withIgnoreIMEEvents)((event) => {
       let preventDefault = false;
       if (event.defaultPrevented) {
         return;
@@ -39551,6 +39537,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_compose50 = __toESM(require_compose(), 1);
   var import_i18n38 = __toESM(require_i18n(), 1);
   var import_dom6 = __toESM(require_dom(), 1);
+  var import_keycodes4 = __toESM(require_keycodes(), 1);
 
   // packages/components/build-module/modal/aria-helper.mjs
   var LIVE_REGION_ARIA_ROLES = /* @__PURE__ */ new Set(["alert", "status", "log", "marquee", "timer"]);
@@ -39800,7 +39787,7 @@ This message will only show in development mode. It won't appear in production. 
       /* @__PURE__ */ (0, import_jsx_runtime188.jsx)("div", {
         ref: (0, import_compose50.useMergeRefs)([ref, forwardedRef]),
         className: clsx_default("components-modal__screen-overlay", overlayClassname, overlayClassnameProp),
-        onKeyDown: withIgnoreIMEEvents(handleEscapeKeyDown),
+        onKeyDown: (0, import_keycodes4.withIgnoreIMEEvents)(handleEscapeKeyDown),
         ...shouldCloseOnClickOutside ? overlayPressHandlers : {},
         children: /* @__PURE__ */ (0, import_jsx_runtime188.jsx)(style_provider_default, {
           document,
@@ -45263,6 +45250,7 @@ This message will only show in development mode. It won't appear in production. 
   var import_a11y6 = __toESM(require_a11y(), 1);
   var import_is_shallow_equal2 = __toESM(require_is_shallow_equal(), 1);
   var import_deprecated17 = __toESM(require_deprecated(), 1);
+  var import_keycodes5 = __toESM(require_keycodes(), 1);
 
   // packages/components/build-module/form-token-field/token.mjs
   var import_compose58 = __toESM(require_compose(), 1);
@@ -45915,7 +45903,7 @@ This message will only show in development mode. It won't appear in production. 
     const matchingSuggestions = getMatchingSuggestions();
     if (!disabled) {
       tokenFieldProps = Object.assign({}, tokenFieldProps, {
-        onKeyDown: withIgnoreIMEEvents(onKeyDown),
+        onKeyDown: (0, import_keycodes5.withIgnoreIMEEvents)(onKeyDown),
         onKeyPress,
         onFocus: onFocusHandler
       });
@@ -51785,7 +51773,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/tree-grid/index.mjs
   var import_dom9 = __toESM(require_dom(), 1);
   var import_element197 = __toESM(require_element(), 1);
-  var import_keycodes2 = __toESM(require_keycodes(), 1);
+  var import_keycodes6 = __toESM(require_keycodes(), 1);
 
   // packages/components/build-module/tree-grid/roving-tab-index.mjs
   var import_element192 = __toESM(require_element(), 1);
@@ -51960,7 +51948,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         altKey
       } = event;
       const hasModifierKeyPressed = metaKey || ctrlKey || altKey;
-      if (hasModifierKeyPressed || ![import_keycodes2.UP, import_keycodes2.DOWN, import_keycodes2.LEFT, import_keycodes2.RIGHT, import_keycodes2.HOME, import_keycodes2.END].includes(keyCode)) {
+      if (hasModifierKeyPressed || ![import_keycodes6.UP, import_keycodes6.DOWN, import_keycodes6.LEFT, import_keycodes6.RIGHT, import_keycodes6.HOME, import_keycodes6.END].includes(keyCode)) {
         return;
       }
       event.stopPropagation();
@@ -51980,16 +51968,16 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       const focusablesInRow = getRowFocusables(activeRow);
       const currentColumnIndex = focusablesInRow.indexOf(activeElement);
       const canExpandCollapse = 0 === currentColumnIndex;
-      const cannotFocusNextColumn = canExpandCollapse && (activeRow.getAttribute("data-expanded") === "false" || activeRow.getAttribute("aria-expanded") === "false") && keyCode === import_keycodes2.RIGHT;
-      if ([import_keycodes2.LEFT, import_keycodes2.RIGHT].includes(keyCode)) {
+      const cannotFocusNextColumn = canExpandCollapse && (activeRow.getAttribute("data-expanded") === "false" || activeRow.getAttribute("aria-expanded") === "false") && keyCode === import_keycodes6.RIGHT;
+      if ([import_keycodes6.LEFT, import_keycodes6.RIGHT].includes(keyCode)) {
         let nextIndex;
-        if (keyCode === import_keycodes2.LEFT) {
+        if (keyCode === import_keycodes6.LEFT) {
           nextIndex = Math.max(0, currentColumnIndex - 1);
         } else {
           nextIndex = Math.min(currentColumnIndex + 1, focusablesInRow.length - 1);
         }
         if (canExpandCollapse) {
-          if (keyCode === import_keycodes2.LEFT) {
+          if (keyCode === import_keycodes6.LEFT) {
             if (activeRow.getAttribute("data-expanded") === "true" || activeRow.getAttribute("aria-expanded") === "true") {
               onCollapseRow(activeRow);
               event.preventDefault();
@@ -52008,7 +51996,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
             }
             getRowFocusables(parentRow)?.[0]?.focus();
           }
-          if (keyCode === import_keycodes2.RIGHT) {
+          if (keyCode === import_keycodes6.RIGHT) {
             if (activeRow.getAttribute("data-expanded") === "false" || activeRow.getAttribute("aria-expanded") === "false") {
               onExpandRow(activeRow);
               event.preventDefault();
@@ -52027,11 +52015,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
         focusablesInRow[nextIndex].focus();
         event.preventDefault();
-      } else if ([import_keycodes2.UP, import_keycodes2.DOWN].includes(keyCode)) {
+      } else if ([import_keycodes6.UP, import_keycodes6.DOWN].includes(keyCode)) {
         const rows = Array.from(treeGridElement.querySelectorAll('[role="row"]'));
         const currentRowIndex = rows.indexOf(activeRow);
         let nextRowIndex;
-        if (keyCode === import_keycodes2.UP) {
+        if (keyCode === import_keycodes6.UP) {
           nextRowIndex = Math.max(0, currentRowIndex - 1);
         } else {
           nextRowIndex = Math.min(currentRowIndex + 1, rows.length - 1);
@@ -52049,11 +52037,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         focusablesInNextRow[nextIndex].focus();
         onFocusRow(event, activeRow, rows[nextRowIndex]);
         event.preventDefault();
-      } else if ([import_keycodes2.HOME, import_keycodes2.END].includes(keyCode)) {
+      } else if ([import_keycodes6.HOME, import_keycodes6.END].includes(keyCode)) {
         const rows = Array.from(treeGridElement.querySelectorAll('[role="row"]'));
         const currentRowIndex = rows.indexOf(activeRow);
         let nextRowIndex;
-        if (keyCode === import_keycodes2.HOME) {
+        if (keyCode === import_keycodes6.HOME) {
           nextRowIndex = 0;
         } else {
           nextRowIndex = rows.length - 1;
@@ -52190,7 +52178,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/higher-order/navigate-regions/index.mjs
   var import_element200 = __toESM(require_element(), 1);
   var import_compose76 = __toESM(require_compose(), 1);
-  var import_keycodes3 = __toESM(require_keycodes(), 1);
+  var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
   var defaultShortcuts = {
     previous: [{
@@ -52248,14 +52236,14 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           modifier,
           character: character2
         }) => {
-          return import_keycodes3.isKeyboardEvent[modifier](event, character2);
+          return import_keycodes7.isKeyboardEvent[modifier](event, character2);
         })) {
           focusRegion(-1);
         } else if (shortcuts.next.some(({
           modifier,
           character: character2
         }) => {
-          return import_keycodes3.isKeyboardEvent[modifier](event, character2);
+          return import_keycodes7.isKeyboardEvent[modifier](event, character2);
         })) {
           focusRegion(1);
         }
@@ -57344,7 +57332,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     Tabs,
     Menu: Menu3,
     kebabCase,
-    withIgnoreIMEEvents,
     Badge: badge_default,
     normalizeTextString,
     DateCalendar,

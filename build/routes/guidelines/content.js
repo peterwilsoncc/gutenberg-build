@@ -28570,6 +28570,7 @@ var import_element87 = __toESM(require_element(), 1);
 var import_components45 = __toESM(require_components(), 1);
 var import_compose12 = __toESM(require_compose(), 1);
 var import_element86 = __toESM(require_element(), 1);
+var import_keycodes3 = __toESM(require_keycodes(), 1);
 var import_rich_text2 = __toESM(require_rich_text(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/utils.mjs
@@ -28631,10 +28632,9 @@ function FormatEdit({
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
 var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
-var {
-  ValidatedContentEditableControl: RichTextControlShell,
-  withIgnoreIMEEvents
-} = unlock2(import_components45.privateApis);
+var { ValidatedContentEditableControl: RichTextControlShell } = unlock2(
+  import_components45.privateApis
+);
 var {
   useRichText,
   KeyboardShortcutContext,
@@ -28730,7 +28730,7 @@ function RichTextControl({
       if (disabled2) {
         return;
       }
-      const onKeyDown = withIgnoreIMEEvents((event) => {
+      const onKeyDown = (0, import_keycodes3.withIgnoreIMEEvents)((event) => {
         if (event.key !== "Enter" || event.defaultPrevented || event.metaKey || event.ctrlKey) {
           return;
         }
