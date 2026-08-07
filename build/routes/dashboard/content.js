@@ -34973,7 +34973,6 @@ function usePlaceholdersNeeded(data, isInfiniteScroll, gridColumns) {
 
 // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
 var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
-var { Badge: WCBadge } = unlock3(import_components11.privateApis);
 function chunk(array, size4) {
   const chunks = [];
   for (let i2 = 0, j2 = array.length; i2 < j2; i2 += size4) {
@@ -35136,19 +35135,22 @@ var GridItem = (0, import_element143.forwardRef)(
                 align: "top",
                 justify: "flex-start",
                 children: badgeFields.map((field) => {
-                  return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
-                    WCBadge,
-                    {
-                      className: "dataviews-view-grid__field-value",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
-                        field.render,
-                        {
-                          item,
-                          field
-                        }
-                      )
-                    },
-                    field.id
+                  return (
+                    /* @ts-expect-error `Badge` is text-only, but a badge field renders whatever its `render` returns. */
+                    /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
+                      Badge,
+                      {
+                        className: "dataviews-view-grid__field-value",
+                        children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(
+                          field.render,
+                          {
+                            item,
+                            field
+                          }
+                        )
+                      },
+                      field.id
+                    )
                   );
                 })
               }
@@ -36748,7 +36750,6 @@ function DataViewsPickerFooter() {
 
 // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
 var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
-var { Badge: WCBadge2 } = unlock3(import_components17.privateApis);
 function GridItem3({
   view,
   selection,
@@ -36835,19 +36836,22 @@ function GridItem3({
               align: "top",
               justify: "flex-start",
               children: badgeFields.map((field) => {
-                return /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
-                  WCBadge2,
-                  {
-                    className: "dataviews-view-picker-grid__field-value",
-                    children: /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
-                      field.render,
-                      {
-                        item,
-                        field
-                      }
-                    )
-                  },
-                  field.id
+                return (
+                  /* @ts-expect-error `Badge` is text-only, but a badge field renders whatever its `render` returns. */
+                  /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
+                    Badge,
+                    {
+                      className: "dataviews-view-picker-grid__field-value",
+                      children: /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(
+                        field.render,
+                        {
+                          item,
+                          field
+                        }
+                      )
+                    },
+                    field.id
+                  )
                 );
               })
             }

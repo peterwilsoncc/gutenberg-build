@@ -31887,7 +31887,6 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
   var import_jsx_runtime187 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge2 } = unlock5(import_components34.privateApis);
   function chunk(array, size4) {
     const chunks = [];
     for (let i3 = 0, j2 = array.length; i3 < j2; i3 += size4) {
@@ -32050,19 +32049,22 @@ var wp;
                   align: "top",
                   justify: "flex-start",
                   children: badgeFields.map((field) => {
-                    return /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
-                      WCBadge2,
-                      {
-                        className: "dataviews-view-grid__field-value",
-                        children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
-                          field.render,
-                          {
-                            item,
-                            field
-                          }
-                        )
-                      },
-                      field.id
+                    return (
+                      /* @ts-expect-error `Badge` is text-only, but a badge field renders whatever its `render` returns. */
+                      /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
+                        Badge,
+                        {
+                          className: "dataviews-view-grid__field-value",
+                          children: /* @__PURE__ */ (0, import_jsx_runtime187.jsx)(
+                            field.render,
+                            {
+                              item,
+                              field
+                            }
+                          )
+                        },
+                        field.id
+                      )
                     );
                   })
                 }
@@ -33662,7 +33664,6 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/picker-grid/index.mjs
   var import_jsx_runtime195 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge3 } = unlock5(import_components40.privateApis);
   function GridItem3({
     view,
     selection,
@@ -33749,19 +33750,22 @@ var wp;
                 align: "top",
                 justify: "flex-start",
                 children: badgeFields.map((field) => {
-                  return /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
-                    WCBadge3,
-                    {
-                      className: "dataviews-view-picker-grid__field-value",
-                      children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
-                        field.render,
-                        {
-                          item,
-                          field
-                        }
-                      )
-                    },
-                    field.id
+                  return (
+                    /* @ts-expect-error `Badge` is text-only, but a badge field renders whatever its `render` returns. */
+                    /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+                      Badge,
+                      {
+                        className: "dataviews-view-picker-grid__field-value",
+                        children: /* @__PURE__ */ (0, import_jsx_runtime195.jsx)(
+                          field.render,
+                          {
+                            item,
+                            field
+                          }
+                        )
+                      },
+                      field.id
+                    )
                   );
                 })
               }
@@ -75276,7 +75280,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data62 = __toESM(require_data(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime348 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge4 } = unlock7(import_components142.privateApis);
+  var { Badge: WCBadge2 } = unlock7(import_components142.privateApis);
   var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
   function ChangesSummary({ revision, previousRevision }) {
     const changes = getGlobalStylesChanges(
@@ -75420,7 +75424,7 @@ If there's a particular need for this, please submit a feature request at https:
                   )
                 ] }) }),
                 isSelected2 && (areStylesEqual ? /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
-                  WCBadge4,
+                  WCBadge2,
                   {
                     className: "global-styles-ui-screen-revisions__active-badge",
                     intent: "info",
@@ -98999,7 +99003,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-card-panel/index.mjs
   var import_jsx_runtime521 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge5 } = unlock(import_components259.privateApis);
+  var { Badge: WCBadge3 } = unlock(import_components259.privateApis);
   var { getTemplateInfo: getTemplateInfo4 } = unlock(import_core_data127.privateApis);
   function PostCardPanel({
     postType: postType2,
@@ -99096,7 +99100,7 @@ If there's a particular need for this, please submit a feature request at https:
                 as: "h2",
                 children: [
                   /* @__PURE__ */ (0, import_jsx_runtime521.jsx)("span", { className: "editor-post-card-panel__title-name", children: title }),
-                  pageTypeBadge && postIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(WCBadge5, { children: pageTypeBadge })
+                  pageTypeBadge && postIds.length === 1 && /* @__PURE__ */ (0, import_jsx_runtime521.jsx)(WCBadge3, { children: pageTypeBadge })
                 ]
               }
             ),

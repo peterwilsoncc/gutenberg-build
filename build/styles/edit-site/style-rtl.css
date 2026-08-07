@@ -4570,6 +4570,7 @@ button.font-library__upload-area {
 .edit-site-page-patterns-dataviews .dataviews-view-grid__badge-fields .dataviews-view-grid__field-value:has(.fields-field__pattern-sync-status-fully) {
   background: rgba(var(--wp-block-synced-color--rgb), 0.04);
   color: var(--wp-block-synced-color);
+  border-color: currentColor;
 }
 
 .dataviews-action-modal__duplicate-pattern [role=dialog] > [role=document] {
