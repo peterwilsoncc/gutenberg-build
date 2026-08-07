@@ -75185,39 +75185,40 @@ var wp;
   var import_blocks89 = __toESM(require_blocks(), 1);
   var import_jsx_runtime413 = __toESM(require_jsx_runtime(), 1);
   function IsolatedEditButton({
-    block,
+    attributes = {},
     onNavigateToEntityRecord,
-    isSyncedPattern,
     isTemplatePartBlock
   }) {
-    const blockAttributes = block?.attributes || {};
+    const { ref, theme: theme2, slug } = attributes;
+    const entityId = isTemplatePartBlock ? theme2 && slug && `${theme2}//${slug}` : ref;
     const handleClick = () => {
-      if (isSyncedPattern) {
-        onNavigateToEntityRecord({
-          postId: blockAttributes.ref,
-          postType: "wp_block"
-        });
-      } else if (isTemplatePartBlock) {
-        const { theme: theme2, slug } = blockAttributes;
-        const templatePartId = theme2 && slug ? `${theme2}//${slug}` : null;
-        if (templatePartId) {
-          onNavigateToEntityRecord({
-            postId: templatePartId,
-            postType: "wp_template_part"
-          });
-        }
+      if (!entityId) {
+        return;
       }
+      onNavigateToEntityRecord({
+        postId: entityId,
+        postType: isTemplatePartBlock ? "wp_template_part" : "wp_block"
+      });
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(import_components188.__experimentalVStack, { className: "block-editor-block-inspector-edit-contents", expanded: true, children: /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
-      import_components188.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
+      Stack,
       {
-        className: "block-editor-block-inspector-edit-contents__button",
-        __next40pxDefaultSize: true,
-        variant: "secondary",
-        onClick: handleClick,
-        children: (0, import_i18n178.__)("Edit original")
+        direction: "column",
+        className: "block-editor-block-inspector-edit-contents",
+        children: /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
+          import_components188.Button,
+          {
+            className: "block-editor-block-inspector-edit-contents__button",
+            __next40pxDefaultSize: true,
+            variant: "secondary",
+            onClick: handleClick,
+            accessibleWhenDisabled: true,
+            disabled: !entityId,
+            children: (0, import_i18n178.__)("Edit original")
+          }
+        )
       }
-    ) });
+    );
   }
   function InlineEditButton({
     clientId,
@@ -75235,22 +75236,29 @@ var wp;
         selectBlock2(clientId);
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(import_components188.__experimentalVStack, { className: "block-editor-block-inspector-edit-contents", expanded: true, children: /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
-      import_components188.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
+      Stack,
       {
-        className: "block-editor-block-inspector-edit-contents__button",
-        __next40pxDefaultSize: true,
-        variant: "secondary",
-        onClick: handleClick,
-        children: editedContentOnlySection2 ? (
-          /* translators: Button label to leave pattern editing mode. */
-          (0, import_i18n178.__)("Exit pattern")
-        ) : (
-          /* translators: Button label to enter pattern editing mode. */
-          (0, import_i18n178.__)("Edit pattern")
+        direction: "column",
+        className: "block-editor-block-inspector-edit-contents",
+        children: /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
+          import_components188.Button,
+          {
+            className: "block-editor-block-inspector-edit-contents__button",
+            __next40pxDefaultSize: true,
+            variant: "secondary",
+            onClick: handleClick,
+            children: editedContentOnlySection2 ? (
+              /* translators: Button label to leave pattern editing mode. */
+              (0, import_i18n178.__)("Exit pattern")
+            ) : (
+              /* translators: Button label to enter pattern editing mode. */
+              (0, import_i18n178.__)("Edit pattern")
+            )
+          }
         )
       }
-    ) });
+    );
   }
   function EditContents({ clientId }) {
     const {
@@ -75281,9 +75289,8 @@ var wp;
       return /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
         IsolatedEditButton,
         {
-          block,
+          attributes: block?.attributes,
           onNavigateToEntityRecord,
-          isSyncedPattern,
           isTemplatePartBlock
         }
       );
