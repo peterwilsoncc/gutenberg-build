@@ -5059,11 +5059,8 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
   border: none;
   min-height: 40px;
 }
-.edit-site-sidebar-navigation-item.components-item:hover, .edit-site-sidebar-navigation-item.components-item:focus, .edit-site-sidebar-navigation-item.components-item[aria-current=true] {
+.edit-site-sidebar-navigation-item.components-item:focus, .edit-site-sidebar-navigation-item.components-item[aria-current=true], .edit-site-sidebar-navigation-item.components-item.edit-site-sidebar-navigation-item.components-item:hover {
   color: var(--wpds-color-foreground-interactive-neutral-weak-active, #1e1e1e);
-}
-.edit-site-sidebar-navigation-item.components-item:hover .edit-site-sidebar-navigation-item__drilldown-indicator, .edit-site-sidebar-navigation-item.components-item:focus .edit-site-sidebar-navigation-item__drilldown-indicator, .edit-site-sidebar-navigation-item.components-item[aria-current=true] .edit-site-sidebar-navigation-item__drilldown-indicator {
-  fill: var(--wpds-color-foreground-interactive-neutral-weak-active, #1e1e1e);
 }
 .edit-site-sidebar-navigation-item.components-item[aria-current=true] {
   background: var(--wpds-color-background-interactive-neutral-weak-active, #ededed);
@@ -5073,9 +5070,6 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
 .edit-site-sidebar-navigation-item.components-item:focus-visible {
   --wp-components-color-accent: var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9));
   transform: translateZ(0);
-}
-.edit-site-sidebar-navigation-item.components-item .edit-site-sidebar-navigation-item__drilldown-indicator {
-  fill: var(--wpds-color-foreground-interactive-neutral-weak, #707070);
 }
 .edit-site-sidebar-navigation-item.components-item.with-suffix {
   padding-right: 16px;
