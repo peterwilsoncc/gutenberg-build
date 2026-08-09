@@ -9681,15 +9681,15 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/font-list/stage.tsx
-var import_i18n47 = __toESM(require_i18n());
-var import_components60 = __toESM(require_components());
+var import_i18n48 = __toESM(require_i18n());
+var import_components62 = __toESM(require_components());
 var import_editor = __toESM(require_editor());
 var import_core_data12 = __toESM(require_core_data());
 var import_data13 = __toESM(require_data());
 var import_element52 = __toESM(require_element());
 
 // packages/global-styles-ui/build-module/global-styles-ui.mjs
-var import_components59 = __toESM(require_components(), 1);
+var import_components61 = __toESM(require_components(), 1);
 var import_blocks5 = __toESM(require_blocks(), 1);
 var import_data12 = __toESM(require_data(), 1);
 var import_block_editor14 = __toESM(require_block_editor(), 1);
@@ -24885,53 +24885,64 @@ var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
 var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
-var import_i18n42 = __toESM(require_i18n(), 1);
+var import_i18n43 = __toESM(require_i18n(), 1);
+var import_components55 = __toESM(require_components(), 1);
+
+// packages/global-styles-ui/build-module/presets/preset-group.mjs
 var import_components54 = __toESM(require_components(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
 var import_element48 = __toESM(require_element(), 1);
 
-// packages/global-styles-ui/build-module/font-sizes/confirm-reset-font-sizes-dialog.mjs
+// packages/global-styles-ui/build-module/presets/dialogs/confirm-reset-dialog.mjs
 var import_components53 = __toESM(require_components(), 1);
 var import_i18n41 = __toESM(require_i18n(), 1);
 var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
+// packages/global-styles-ui/build-module/presets/preset-group.mjs
 var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu3 } = unlock3(import_components54.privateApis);
 
+// packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
+var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
+
 // packages/global-styles-ui/build-module/font-sizes/font-size.mjs
-var import_i18n46 = __toESM(require_i18n(), 1);
-var import_components58 = __toESM(require_components(), 1);
+var import_i18n47 = __toESM(require_i18n(), 1);
+var import_components60 = __toESM(require_components(), 1);
 var import_element50 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
 var import_block_editor13 = __toESM(require_block_editor(), 1);
-var import_i18n43 = __toESM(require_i18n(), 1);
-var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
-
-// packages/global-styles-ui/build-module/font-sizes/confirm-delete-font-size-dialog.mjs
-var import_components55 = __toESM(require_components(), 1);
 var import_i18n44 = __toESM(require_i18n(), 1);
 var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-sizes/rename-font-size-dialog.mjs
+// packages/global-styles-ui/build-module/size-control/index.mjs
 var import_components56 = __toESM(require_components(), 1);
-var import_i18n45 = __toESM(require_i18n(), 1);
-var import_element49 = __toESM(require_element(), 1);
 var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/size-control/index.mjs
+// packages/global-styles-ui/build-module/presets/preset-edit-header.mjs
 var import_components57 = __toESM(require_components(), 1);
 var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
+var { Menu: Menu4 } = unlock3(import_components57.privateApis);
 
-// packages/global-styles-ui/build-module/font-sizes/font-size.mjs
+// packages/global-styles-ui/build-module/presets/dialogs/confirm-delete-dialog.mjs
+var import_components58 = __toESM(require_components(), 1);
+var import_i18n45 = __toESM(require_i18n(), 1);
 var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu4 } = unlock3(import_components58.privateApis);
 
-// packages/global-styles-ui/build-module/global-styles-ui.mjs
+// packages/global-styles-ui/build-module/presets/dialogs/rename-dialog.mjs
+var import_components59 = __toESM(require_components(), 1);
+var import_i18n46 = __toESM(require_i18n(), 1);
+var import_element49 = __toESM(require_element(), 1);
 var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/with-global-styles-provider.mjs
+// packages/global-styles-ui/build-module/font-sizes/font-size.mjs
 var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
+
+// packages/global-styles-ui/build-module/global-styles-ui.mjs
+var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
+
+// packages/global-styles-ui/build-module/with-global-styles-provider.mjs
+var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 function withGlobalStylesProvider(Component) {
   return function WrappedComponent({
     value,
@@ -24939,13 +24950,13 @@ function withGlobalStylesProvider(Component) {
     onChange,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
       GlobalStylesProvider,
       {
         value,
         baseValue,
         onChange,
-        children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(Component, { ...props })
+        children: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(Component, { ...props })
       }
     );
   };
@@ -24961,7 +24972,7 @@ var ColorVariations2 = withGlobalStylesProvider(ColorVariations);
 var TypographyVariations2 = withGlobalStylesProvider(TypographyVariations);
 
 // packages/global-styles-ui/build-module/font-library/font-library.mjs
-var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 function FontLibrary({
   value,
   baseValue,
@@ -24971,21 +24982,21 @@ function FontLibrary({
   let content;
   switch (activeTab) {
     case "upload-fonts":
-      content = /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(upload_fonts_default, {});
+      content = /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(upload_fonts_default, {});
       break;
     case "installed-fonts":
-      content = /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(installed_fonts_default, {});
+      content = /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(installed_fonts_default, {});
       break;
     default:
-      content = /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(font_collection_default, { slug: activeTab });
+      content = /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(font_collection_default, { slug: activeTab });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
     GlobalStylesProvider,
     {
       value,
       baseValue,
       onChange,
-      children: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(context_default, { children: content })
+      children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(context_default, { children: content })
     }
   );
 }
@@ -25006,7 +25017,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 }
 
 // routes/font-list/stage.tsx
-var { Tabs: Tabs2 } = unlock4(import_components60.privateApis);
+var { Tabs: Tabs2 } = unlock4(import_components62.privateApis);
 var { useGlobalStyles } = unlock4(import_editor.privateApis);
 function FontLibraryPage() {
   const { records: collections = [] } = (0, import_core_data12.useEntityRecords)("root", "fontCollection", {
@@ -25026,22 +25037,22 @@ function FontLibraryPage() {
   const tabs = [
     {
       id: "installed-fonts",
-      title: (0, import_i18n47._x)("Library", "Font library")
+      title: (0, import_i18n48._x)("Library", "Font library")
     }
   ];
   if (canUserCreate) {
     tabs.push({
       id: "upload-fonts",
-      title: (0, import_i18n47._x)("Upload", "noun")
+      title: (0, import_i18n48._x)("Upload", "noun")
     });
     tabs.push(
       ...(collections || []).map(({ slug, name: name2 }) => ({
         id: slug,
-        title: collections && collections.length === 1 && slug === "google-fonts" ? (0, import_i18n47.__)("Install Fonts") : name2
+        title: collections && collections.length === 1 && slug === "google-fonts" ? (0, import_i18n48.__)("Install Fonts") : name2
       }))
     );
   }
-  return /* @__PURE__ */ React.createElement(page_default, { title: (0, import_i18n47.__)("Fonts"), className: "font-library-page" }, /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ React.createElement(page_default, { title: (0, import_i18n48.__)("Fonts"), className: "font-library-page" }, /* @__PURE__ */ React.createElement(
     Tabs2,
     {
       selectedTabId: activeTab,
