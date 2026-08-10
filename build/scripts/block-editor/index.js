@@ -93464,7 +93464,10 @@ var wp;
   }
   function isValidCustom5(item, field) {
     const value = field.getValue({ item });
-    if (![void 0, "", null].includes(value) && !Array.isArray(value)) {
+    if ([void 0, "", null].includes(value)) {
+      return null;
+    }
+    if (!Array.isArray(value)) {
       return (0, import_i18n234.__)("Value must be an array.");
     }
     if (!value.every((v2) => typeof v2 === "string")) {
