@@ -2032,7 +2032,7 @@ var wp;
   ViewportMatchWidthContext.displayName = "ViewportMatchWidthContext";
   var useViewportMatch = (breakpoint, operator = ">=", view = typeof window !== "undefined" ? window : void 0) => {
     const simulatedWidth = (0, import_element21.useContext)(ViewportMatchWidthContext);
-    const mediaQuery = !simulatedWidth && `(${CONDITIONS[operator]}: ${BREAKPOINTS[breakpoint]}px)`;
+    const mediaQuery = !simulatedWidth && `screen and (${CONDITIONS[operator]}: ${BREAKPOINTS[breakpoint]}px)`;
     const mediaQueryResult = useMediaQuery(mediaQuery || void 0, view);
     if (simulatedWidth) {
       return OPERATOR_EVALUATORS[operator](
