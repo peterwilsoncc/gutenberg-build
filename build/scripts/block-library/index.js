@@ -60442,6 +60442,7 @@ ${text}
   // packages/block-library/build-module/post-navigation-link/index.mjs
   var { name: name77 } = block_default76;
   var settings76 = {
+    icon: next_default,
     edit: PostNavigationLinkEdit,
     variations: variations_default14,
     deprecated: deprecated_default37,
