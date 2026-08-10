@@ -139,7 +139,7 @@ var wp;
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         function useSyncExternalStore$2(subscribe, getSnapshot) {
-          didWarnOld18Alpha || void 0 === React47.startTransition || (didWarnOld18Alpha = true, console.error(
+          didWarnOld18Alpha || void 0 === React48.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
           var value = getSnapshot();
@@ -187,8 +187,8 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React47 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState16 = React47.useState, useEffect18 = React47.useEffect, useLayoutEffect3 = React47.useLayoutEffect, useDebugValue2 = React47.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-        exports.useSyncExternalStore = void 0 !== React47.useSyncExternalStore ? React47.useSyncExternalStore : shim;
+        var React48 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState16 = React48.useState, useEffect18 = React48.useEffect, useLayoutEffect3 = React48.useLayoutEffect, useDebugValue2 = React48.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        exports.useSyncExternalStore = void 0 !== React48.useSyncExternalStore ? React48.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
     }
@@ -215,14 +215,14 @@ var wp;
           return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React47 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef23 = React47.useRef, useEffect18 = React47.useEffect, useMemo16 = React47.useMemo, useDebugValue2 = React47.useDebugValue;
+        var React48 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef23 = React48.useRef, useEffect18 = React48.useEffect, useMemo17 = React48.useMemo, useDebugValue2 = React48.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
           var instRef = useRef23(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo16(
+          instRef = useMemo17(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -2948,8 +2948,8 @@ var wp;
           const isScrollableY = lastTraversableNode || scrollRe.test(style.overflowY);
           const canScrollX = isScrollableX && target.clientWidth > 0 && target.scrollWidth > target.clientWidth;
           const canScrollY = isScrollableY && target.clientHeight > 0 && target.scrollHeight > target.clientHeight;
-          const isRTL3 = style.direction === "rtl";
-          const pressedVerticalScrollbar = canScrollY && (isRTL3 ? event.offsetX <= target.offsetWidth - target.clientWidth : event.offsetX > target.clientWidth);
+          const isRTL4 = style.direction === "rtl";
+          const pressedVerticalScrollbar = canScrollY && (isRTL4 ? event.offsetX <= target.offsetWidth - target.clientWidth : event.offsetX > target.clientWidth);
           const pressedHorizontalScrollbar = canScrollX && event.offsetY > target.clientHeight;
           if (pressedVerticalScrollbar || pressedHorizontalScrollbar) {
             return;
@@ -7306,7 +7306,7 @@ var wp;
   }
 
   // node_modules/@base-ui/react/utils/usePopupViewport.mjs
-  var React32 = __toESM(require_react(), 1);
+  var React33 = __toESM(require_react(), 1);
   var ReactDOM6 = __toESM(require_react_dom(), 1);
 
   // node_modules/@base-ui/utils/usePreviousValue.mjs
@@ -7477,8 +7477,25 @@ var wp;
     positionerElement.style.setProperty("--positioner-height", height);
   }
 
-  // node_modules/@base-ui/react/utils/usePopupViewport.mjs
+  // node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
+  var React32 = __toESM(require_react(), 1);
   var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
+  var DirectionProvider = function DirectionProvider2(props) {
+    const {
+      direction = "ltr"
+    } = props;
+    const contextValue = React32.useMemo(() => ({
+      direction
+    }), [direction]);
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(DirectionContext.Provider, {
+      value: contextValue,
+      children: props.children
+    });
+  };
+  if (true) DirectionProvider.displayName = "DirectionProvider";
+
+  // node_modules/@base-ui/react/utils/usePopupViewport.mjs
+  var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
   function usePopupViewport(parameters) {
     const {
       store: store2,
@@ -7496,15 +7513,15 @@ var wp;
     const positionerElement = store2.useState("positionerElement");
     const previousActiveTrigger = usePreviousValue(open ? activeTrigger : null);
     const currentContentKey = usePopupContentKey(activeTriggerId, payload);
-    const capturedNodeRef = React32.useRef(null);
-    const [previousContentNode, setPreviousContentNode] = React32.useState(null);
-    const [newTriggerOffset, setNewTriggerOffset] = React32.useState(null);
-    const currentContainerRef = React32.useRef(null);
-    const previousContainerRef = React32.useRef(null);
+    const capturedNodeRef = React33.useRef(null);
+    const [previousContentNode, setPreviousContentNode] = React33.useState(null);
+    const [newTriggerOffset, setNewTriggerOffset] = React33.useState(null);
+    const currentContainerRef = React33.useRef(null);
+    const previousContainerRef = React33.useRef(null);
     const onAnimationsFinished = useAnimationsFinished(currentContainerRef, true, false);
     const cleanupFrame = useAnimationFrame();
-    const [previousContentDimensions, setPreviousContentDimensions] = React32.useState(null);
-    const [showStartingStyleAttribute, setShowStartingStyleAttribute] = React32.useState(false);
+    const [previousContentDimensions, setPreviousContentDimensions] = React33.useState(null);
+    const [showStartingStyleAttribute, setShowStartingStyleAttribute] = React33.useState(false);
     useIsoLayoutEffect(() => {
       store2.set("hasViewport", true);
       return () => {
@@ -7524,7 +7541,7 @@ var wp;
         setPreviousContentDimensions(previousDimensions);
       }
     });
-    const lastHandledTriggerRef = React32.useRef(null);
+    const lastHandledTriggerRef = React33.useRef(null);
     useIsoLayoutEffect(() => {
       if (!open || !mounted) {
         lastHandledTriggerRef.current = null;
@@ -7563,14 +7580,14 @@ var wp;
     const isTransitioning = previousContentNode != null;
     let childrenToRender;
     if (!isTransitioning) {
-      childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", {
+      childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", {
         "data-current": true,
         ref: currentContainerRef,
         children
       }, currentContentKey);
     } else {
-      childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(React32.Fragment, {
-        children: [/* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", {
+      childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(React33.Fragment, {
+        children: [/* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", {
           "data-previous": true,
           inert: inertValue(true),
           ref: previousContainerRef,
@@ -7582,7 +7599,7 @@ var wp;
             position: "absolute"
           },
           "data-ending-style": showStartingStyleAttribute ? void 0 : ""
-        }, "previous"), /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", {
+        }, "previous"), /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", {
           "data-current": true,
           ref: currentContainerRef,
           "data-starting-style": showStartingStyleAttribute ? "" : void 0,
@@ -7648,10 +7665,10 @@ var wp;
     };
   }
   function usePopupContentKey(activeTriggerId, payload) {
-    const [contentKey, setContentKey] = React32.useState(0);
-    const previousActiveTriggerIdRef = React32.useRef(activeTriggerId);
-    const previousPayloadRef = React32.useRef(payload);
-    const pendingPayloadUpdateRef = React32.useRef(false);
+    const [contentKey, setContentKey] = React33.useState(0);
+    const previousActiveTriggerIdRef = React33.useRef(activeTriggerId);
+    const previousPayloadRef = React33.useRef(payload);
+    const pendingPayloadUpdateRef = React33.useRef(false);
     useIsoLayoutEffect(() => {
       const previousActiveTriggerId = previousActiveTriggerIdRef.current;
       const previousPayload = previousPayloadRef.current;
@@ -7671,10 +7688,10 @@ var wp;
   }
 
   // node_modules/@base-ui/react/utils/FloatingPortalLite.mjs
-  var React33 = __toESM(require_react(), 1);
+  var React34 = __toESM(require_react(), 1);
   var ReactDOM7 = __toESM(require_react_dom(), 1);
-  var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
-  var FloatingPortalLite = /* @__PURE__ */ React33.forwardRef(function FloatingPortalLite2(componentProps, forwardedRef) {
+  var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
+  var FloatingPortalLite = /* @__PURE__ */ React34.forwardRef(function FloatingPortalLite2(componentProps, forwardedRef) {
     const {
       children,
       container,
@@ -7695,7 +7712,7 @@ var wp;
     if (!portalSubtree && !portalNode) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(React33.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(React34.Fragment, {
       children: [portalSubtree, portalNode && /* @__PURE__ */ ReactDOM7.createPortal(children, portalNode)]
     });
   });
@@ -7717,14 +7734,14 @@ var wp;
   });
 
   // node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
-  var React36 = __toESM(require_react(), 1);
+  var React37 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/tooltip/root/TooltipRootContext.mjs
-  var React34 = __toESM(require_react(), 1);
-  var TooltipRootContext = /* @__PURE__ */ React34.createContext(void 0);
+  var React35 = __toESM(require_react(), 1);
+  var TooltipRootContext = /* @__PURE__ */ React35.createContext(void 0);
   if (true) TooltipRootContext.displayName = "TooltipRootContext";
   function useTooltipRootContext(optional) {
-    const context = React34.useContext(TooltipRootContext);
+    const context = React35.useContext(TooltipRootContext);
     if (context === void 0 && !optional) {
       throw new Error(true ? "Base UI: TooltipRootContext is missing. Tooltip parts must be placed within <Tooltip.Root>." : formatErrorMessage_default(72));
     }
@@ -7732,7 +7749,7 @@ var wp;
   }
 
   // node_modules/@base-ui/react/tooltip/store/TooltipStore.mjs
-  var React35 = __toESM(require_react(), 1);
+  var React36 = __toESM(require_react(), 1);
   var selectors2 = {
     ...popupStoreSelectors,
     disabled: createSelector((state) => state.disabled),
@@ -7754,7 +7771,7 @@ var wp;
       };
       state.floatingRootContext = createPopupFloatingRootContext(triggerElements, floatingId, nested);
       super(state, {
-        popupRef: /* @__PURE__ */ React35.createRef(),
+        popupRef: /* @__PURE__ */ React36.createRef(),
         onOpenChange: void 0,
         onOpenChangeComplete: void 0,
         triggerElements
@@ -7792,7 +7809,7 @@ var wp;
   }
 
   // node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
-  var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
   var TooltipRoot = fastComponent(function TooltipRoot2(props) {
     const {
       disabled: disabled2 = false,
@@ -7839,7 +7856,7 @@ var wp;
     const isInstantPhase = store2.useState("isInstantPhase");
     const instantType = store2.useState("instantType");
     const lastOpenChangeReason = store2.useState("lastOpenChangeReason");
-    const previousInstantTypeRef = React36.useRef(null);
+    const previousInstantTypeRef = React37.useRef(null);
     useIsoLayoutEffect(() => {
       if (openState && disabled2) {
         store2.setOpen(false, createChangeEventDetails(reason_parts_exports.disabled));
@@ -7863,17 +7880,17 @@ var wp;
         }
       }
     }, [store2, activeTriggerId, open]);
-    const handleImperativeClose = React36.useCallback(() => {
+    const handleImperativeClose = React37.useCallback(() => {
       store2.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction));
     }, [store2]);
-    React36.useImperativeHandle(actionsRef, () => ({
+    React37.useImperativeHandle(actionsRef, () => ({
       unmount: forceUnmount,
       close: handleImperativeClose
     }), [forceUnmount, handleImperativeClose]);
     const shouldRenderInteractions = open || mounted || !disabled2 && trackCursorAxis !== "none";
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(TooltipRootContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(TooltipRootContext.Provider, {
       value: store2,
-      children: [shouldRenderInteractions && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(TooltipInteractions, {
+      children: [shouldRenderInteractions && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(TooltipInteractions, {
         store: store2,
         disabled: disabled2,
         trackCursorAxis
@@ -7897,9 +7914,9 @@ var wp;
       enabled: !disabled2 && trackCursorAxis !== "none",
       axis: trackCursorAxis === "none" ? void 0 : trackCursorAxis
     });
-    const activeTriggerProps = React36.useMemo(() => mergeProps(clientPoint.reference, dismiss.reference), [clientPoint.reference, dismiss.reference]);
-    const inactiveTriggerProps = React36.useMemo(() => mergeProps(clientPoint.trigger, dismiss.trigger), [clientPoint.trigger, dismiss.trigger]);
-    const popupProps = React36.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, clientPoint.floating, dismiss.floating), [clientPoint.floating, dismiss.floating]);
+    const activeTriggerProps = React37.useMemo(() => mergeProps(clientPoint.reference, dismiss.reference), [clientPoint.reference, dismiss.reference]);
+    const inactiveTriggerProps = React37.useMemo(() => mergeProps(clientPoint.trigger, dismiss.trigger), [clientPoint.trigger, dismiss.trigger]);
+    const popupProps = React37.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, clientPoint.floating, dismiss.floating), [clientPoint.floating, dismiss.floating]);
     usePopupInteractionProps(store2, {
       activeTriggerProps,
       inactiveTriggerProps,
@@ -7909,14 +7926,14 @@ var wp;
   }
 
   // node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
-  var React38 = __toESM(require_react(), 1);
+  var React39 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/tooltip/provider/TooltipProviderContext.mjs
-  var React37 = __toESM(require_react(), 1);
-  var TooltipProviderContext = /* @__PURE__ */ React37.createContext(void 0);
+  var React38 = __toESM(require_react(), 1);
+  var TooltipProviderContext = /* @__PURE__ */ React38.createContext(void 0);
   if (true) TooltipProviderContext.displayName = "TooltipProviderContext";
   function useTooltipProviderContext() {
-    return React37.useContext(TooltipProviderContext);
+    return React38.useContext(TooltipProviderContext);
   }
 
   // node_modules/@base-ui/react/tooltip/trigger/TooltipTriggerDataAttributes.mjs
@@ -7986,7 +8003,7 @@ var wp;
     const isTriggerActive = store2.useState("isTriggerActive", thisTriggerId);
     const isOpenedByThisTrigger = store2.useState("isOpenedByTrigger", thisTriggerId);
     const floatingRootContext = store2.useState("floatingRootContext");
-    const triggerElementRef = React38.useRef(null);
+    const triggerElementRef = React39.useRef(null);
     const delayWithDefault = delay ?? OPEN_DELAY;
     const closeDelayWithDefault = closeDelay ?? 0;
     const {
@@ -8012,9 +8029,9 @@ var wp;
     const disabledRef = useValueAsRef(disabled2);
     const trackCursorAxis = store2.useState("trackCursorAxis");
     const disableHoverablePopup = store2.useState("disableHoverablePopup");
-    const isNestedTriggerHoveredRef = React38.useRef(false);
+    const isNestedTriggerHoveredRef = React39.useRef(false);
     const nestedTriggerOpenTimeout = useTimeout();
-    const pointerTypeRef = React38.useRef(void 0);
+    const pointerTypeRef = React39.useRef(void 0);
     function getOpenDelay() {
       const providerDelay = providerContext?.delay;
       const groupOpenValue = typeof delayRef.current === "object" ? delayRef.current.open : void 0;
@@ -8147,14 +8164,14 @@ var wp;
   if (true) TooltipTrigger.displayName = "TooltipTrigger";
 
   // node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
-  var React40 = __toESM(require_react(), 1);
+  var React41 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/tooltip/portal/TooltipPortalContext.mjs
-  var React39 = __toESM(require_react(), 1);
-  var TooltipPortalContext = /* @__PURE__ */ React39.createContext(void 0);
+  var React40 = __toESM(require_react(), 1);
+  var TooltipPortalContext = /* @__PURE__ */ React40.createContext(void 0);
   if (true) TooltipPortalContext.displayName = "TooltipPortalContext";
   function useTooltipPortalContext() {
-    const value = React39.useContext(TooltipPortalContext);
+    const value = React40.useContext(TooltipPortalContext);
     if (value === void 0) {
       throw new Error(true ? "Base UI: <Tooltip.Portal> is missing." : formatErrorMessage_default(70));
     }
@@ -8162,8 +8179,8 @@ var wp;
   }
 
   // node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
-  var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
-  var TooltipPortal = /* @__PURE__ */ React40.forwardRef(function TooltipPortal2(props, forwardedRef) {
+  var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+  var TooltipPortal = /* @__PURE__ */ React41.forwardRef(function TooltipPortal2(props, forwardedRef) {
     const {
       keepMounted = false,
       ...portalProps
@@ -8174,9 +8191,9 @@ var wp;
     if (!shouldRender) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(TooltipPortalContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(TooltipPortalContext.Provider, {
       value: keepMounted,
-      children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(FloatingPortalLite, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(FloatingPortalLite, {
         ref: forwardedRef,
         ...portalProps
       })
@@ -8185,14 +8202,14 @@ var wp;
   if (true) TooltipPortal.displayName = "TooltipPortal";
 
   // node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
-  var React42 = __toESM(require_react(), 1);
+  var React43 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/tooltip/positioner/TooltipPositionerContext.mjs
-  var React41 = __toESM(require_react(), 1);
-  var TooltipPositionerContext = /* @__PURE__ */ React41.createContext(void 0);
+  var React42 = __toESM(require_react(), 1);
+  var TooltipPositionerContext = /* @__PURE__ */ React42.createContext(void 0);
   if (true) TooltipPositionerContext.displayName = "TooltipPositionerContext";
   function useTooltipPositionerContext() {
-    const context = React41.useContext(TooltipPositionerContext);
+    const context = React42.useContext(TooltipPositionerContext);
     if (context === void 0) {
       throw new Error(true ? "Base UI: TooltipPositionerContext is missing. TooltipPositioner parts must be placed within <Tooltip.Positioner>." : formatErrorMessage_default(71));
     }
@@ -8200,8 +8217,8 @@ var wp;
   }
 
   // node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
-  var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
-  var TooltipPositioner = /* @__PURE__ */ React42.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
+  var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+  var TooltipPositioner = /* @__PURE__ */ React43.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -8248,7 +8265,7 @@ var wp;
       collisionAvoidance,
       adaptiveOrigin: hasViewport ? adaptiveOrigin : void 0
     });
-    const state = React42.useMemo(() => ({
+    const state = React43.useMemo(() => ({
       open,
       side: positioning.side,
       align: positioning.align,
@@ -8263,7 +8280,7 @@ var wp;
       hidden: !mounted,
       inert: !open || trackCursorAxis === "both" || disableHoverablePopup
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(TooltipPositionerContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(TooltipPositionerContext.Provider, {
       value: positioning,
       children: element
     });
@@ -8271,12 +8288,12 @@ var wp;
   if (true) TooltipPositioner.displayName = "TooltipPositioner";
 
   // node_modules/@base-ui/react/tooltip/popup/TooltipPopup.mjs
-  var React43 = __toESM(require_react(), 1);
+  var React44 = __toESM(require_react(), 1);
   var stateAttributesMapping = {
     ...popupStateMapping,
     ...transitionStatusMapping
   };
-  var TooltipPopup = /* @__PURE__ */ React43.forwardRef(function TooltipPopup2(componentProps, forwardedRef) {
+  var TooltipPopup = /* @__PURE__ */ React44.forwardRef(function TooltipPopup2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -8327,8 +8344,8 @@ var wp;
   if (true) TooltipPopup.displayName = "TooltipPopup";
 
   // node_modules/@base-ui/react/tooltip/arrow/TooltipArrow.mjs
-  var React44 = __toESM(require_react(), 1);
-  var TooltipArrow = /* @__PURE__ */ React44.forwardRef(function TooltipArrow2(componentProps, forwardedRef) {
+  var React45 = __toESM(require_react(), 1);
+  var TooltipArrow = /* @__PURE__ */ React45.forwardRef(function TooltipArrow2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -8366,25 +8383,25 @@ var wp;
   if (true) TooltipArrow.displayName = "TooltipArrow";
 
   // node_modules/@base-ui/react/tooltip/provider/TooltipProvider.mjs
-  var React45 = __toESM(require_react(), 1);
-  var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+  var React46 = __toESM(require_react(), 1);
+  var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
   var TooltipProvider = function TooltipProvider2(props) {
     const {
       delay,
       closeDelay,
       timeout = 400
     } = props;
-    const contextValue = React45.useMemo(() => ({
+    const contextValue = React46.useMemo(() => ({
       delay,
       closeDelay
     }), [delay, closeDelay]);
-    const delayValue = React45.useMemo(() => ({
+    const delayValue = React46.useMemo(() => ({
       open: delay,
       close: closeDelay
     }), [delay, closeDelay]);
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(TooltipProviderContext.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TooltipProviderContext.Provider, {
       value: contextValue,
-      children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(FloatingDelayGroup, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(FloatingDelayGroup, {
         delay: delayValue,
         timeoutMs: timeout,
         children: props.children
@@ -8394,7 +8411,7 @@ var wp;
   if (true) TooltipProvider.displayName = "TooltipProvider";
 
   // node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
-  var React46 = __toESM(require_react(), 1);
+  var React47 = __toESM(require_react(), 1);
 
   // node_modules/@base-ui/react/tooltip/viewport/TooltipViewportCssVars.mjs
   var TooltipViewportCssVars = /* @__PURE__ */ (function(TooltipViewportCssVars2) {
@@ -8409,7 +8426,7 @@ var wp;
       "data-activation-direction": value
     } : null
   };
-  var TooltipViewport = /* @__PURE__ */ React46.forwardRef(function TooltipViewport2(componentProps, forwardedRef) {
+  var TooltipViewport = /* @__PURE__ */ React47.forwardRef(function TooltipViewport2(componentProps, forwardedRef) {
     const {
       render,
       className,
@@ -8493,28 +8510,28 @@ var wp;
 
   // packages/icons/build-module/library/chevron-down.mjs
   var import_primitives = __toESM(require_primitives(), 1);
-  var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
-  var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_primitives.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
+  var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+  var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
 
   // packages/icons/build-module/library/chevron-left.mjs
   var import_primitives2 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
-  var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_primitives2.Path, { d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z" }) });
+  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+  var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives2.Path, { d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z" }) });
 
   // packages/icons/build-module/library/chevron-right.mjs
   var import_primitives3 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-  var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_primitives3.Path, { d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z" }) });
+  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+  var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives3.Path, { d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z" }) });
 
   // packages/icons/build-module/library/chevron-up.mjs
   var import_primitives4 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
-  var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_primitives4.Path, { d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z" }) });
+  var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+  var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives4.Path, { d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z" }) });
 
   // packages/icons/build-module/library/fullscreen.mjs
   var import_primitives5 = __toESM(require_primitives(), 1);
-  var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
-  var fullscreen_default = /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_primitives5.Path, { d: "M6 4a2 2 0 0 0-2 2v3h1.5V6a.5.5 0 0 1 .5-.5h3V4H6Zm3 14.5H6a.5.5 0 0 1-.5-.5v-3H4v3a2 2 0 0 0 2 2h3v-1.5Zm6 1.5v-1.5h3a.5.5 0 0 0 .5-.5v-3H20v3a2 2 0 0 1-2 2h-3Zm3-16a2 2 0 0 1 2 2v3h-1.5V6a.5.5 0 0 0-.5-.5h-3V4h3Z" }) });
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+  var fullscreen_default = /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_primitives5.Path, { d: "M6 4a2 2 0 0 0-2 2v3h1.5V6a.5.5 0 0 1 .5-.5h3V4H6Zm3 14.5H6a.5.5 0 0 1-.5-.5v-3H4v3a2 2 0 0 0 2 2h3v-1.5Zm6 1.5v-1.5h3a.5.5 0 0 0 .5-.5v-3H20v3a2 2 0 0 1-2 2h-3Zm3-16a2 2 0 0 1 2 2v3h-1.5V6a.5.5 0 0 0-.5-.5h-3V4h3Z" }) });
 
   // packages/ui/build-module/utils/render-slot-with-children.mjs
   var import_element10 = __toESM(require_element(), 1);
@@ -8818,10 +8835,10 @@ var wp;
   }
 
   // packages/ui/build-module/tooltip/portal.mjs
-  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
   var Portal = (0, import_element12.forwardRef)(
     function TooltipPortal3({ container, ...restProps }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
         index_parts_exports.Portal,
         {
           container: container ?? getWpCompatOverlaySlot(),
@@ -8834,7 +8851,7 @@ var wp;
 
   // packages/ui/build-module/tooltip/positioner.mjs
   var import_element13 = __toESM(require_element(), 1);
-  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE3 = "data-wp-hash";
   function getRuntime3() {
     const globalScope = globalThis;
@@ -8925,7 +8942,7 @@ var wp;
   var style_default2 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
   var Positioner = (0, import_element13.forwardRef)(
     function TooltipPositioner3({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
         index_parts_exports.Positioner,
         {
           ref,
@@ -8944,7 +8961,7 @@ var wp;
   );
 
   // packages/ui/build-module/tooltip/popup.mjs
-  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE4 = "data-wp-hash";
   function getRuntime4() {
     const globalScope = globalThis;
@@ -9031,7 +9048,7 @@ var wp;
   var style_default3 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
   var POPUP_COLOR = { background: "#1e1e1e" };
   var Popup = (0, import_element14.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
-    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
       index_parts_exports.Popup,
       {
         ref,
@@ -9042,31 +9059,38 @@ var wp;
     ) });
     const positionedPopup = renderSlotWithChildren(
       positioner,
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Positioner, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Positioner, {}),
       popupContent
     );
-    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Portal, {}), positionedPopup);
+    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Portal, {}), positionedPopup);
   });
 
   // packages/ui/build-module/tooltip/trigger.mjs
   var import_element15 = __toESM(require_element(), 1);
-  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
   var Trigger = (0, import_element15.forwardRef)(
     function TooltipTrigger3(props, ref) {
-      return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(index_parts_exports.Trigger, { ref, ...props });
+      return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(index_parts_exports.Trigger, { ref, ...props });
     }
   );
 
+  // packages/ui/build-module/utils/direction-provider.mjs
+  var import_i18n = __toESM(require_i18n(), 1);
+  var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+  function DirectionProvider3({ children }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(DirectionProvider, { direction: (0, import_i18n.isRTL)() ? "rtl" : "ltr", children });
+  }
+
   // packages/ui/build-module/tooltip/root.mjs
-  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
   function Root(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(index_parts_exports.Root, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(index_parts_exports.Root, { ...props }) });
   }
 
   // packages/ui/build-module/tooltip/provider.mjs
-  var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
   function Provider({ ...props }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(index_parts_exports.Provider, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(index_parts_exports.Provider, { ...props });
   }
 
   // packages/ui/build-module/visually-hidden/visually-hidden.mjs
@@ -9175,10 +9199,10 @@ var wp;
 
   // packages/admin-ui/build-module/navigable-region/index.mjs
   var import_element17 = __toESM(require_element(), 1);
-  var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
   var NavigableRegion = (0, import_element17.forwardRef)(
     ({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
         Tag,
         {
           ref,
@@ -9527,7 +9551,7 @@ var wp;
 
   // packages/edit-post/build-module/components/layout/index.mjs
   var import_plugins = __toESM(require_plugins(), 1);
-  var import_i18n14 = __toESM(require_i18n(), 1);
+  var import_i18n15 = __toESM(require_i18n(), 1);
   var import_element29 = __toESM(require_element(), 1);
   var import_notices3 = __toESM(require_notices(), 1);
   var import_preferences10 = __toESM(require_preferences(), 1);
@@ -9547,11 +9571,11 @@ var wp;
   // packages/edit-post/build-module/components/back-button/fullscreen-mode-close.mjs
   var import_data2 = __toESM(require_data(), 1);
   var import_components = __toESM(require_components(), 1);
-  var import_i18n = __toESM(require_i18n(), 1);
+  var import_i18n2 = __toESM(require_i18n(), 1);
   var import_url = __toESM(require_url(), 1);
   var import_editor = __toESM(require_editor(), 1);
   var import_core_data = __toESM(require_core_data(), 1);
-  var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
   function FullscreenModeClose({ showTooltip, icon, href, initialPost }) {
     const postType = (0, import_data2.useSelect)(
       (select3) => {
@@ -9567,8 +9591,8 @@ var wp;
     const buttonHref = href ?? (0, import_url.addQueryArgs)("edit.php", {
       post_type: postType.slug
     });
-    const buttonLabel = postType?.labels?.view_items ?? (0, import_i18n.__)("Back");
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+    const buttonLabel = postType?.labels?.view_items ?? (0, import_i18n2.__)("Back");
+    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
       import_components.Button,
       {
         size: "compact",
@@ -9576,7 +9600,7 @@ var wp;
         label: buttonLabel,
         showTooltip,
         tooltipPosition: "bottom",
-        icon: icon ?? ((0, import_i18n.isRTL)() ? chevron_right_default : chevron_left_default)
+        icon: icon ?? ((0, import_i18n2.isRTL)() ? chevron_right_default : chevron_left_default)
       }
     );
   }
@@ -9590,7 +9614,7 @@ var wp;
   );
 
   // packages/edit-post/build-module/components/back-button/index.mjs
-  var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
   var { BackButton: BackButtonFill } = unlock2(import_editor2.privateApis);
   var slideX = {
     hidden: { x: "-100%" },
@@ -9598,12 +9622,12 @@ var wp;
     hover: { x: 0, transition: { type: "tween", delay: 0.2 } }
   };
   function BackButton({ initialPost }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(BackButtonFill, { children: ({ length }) => length <= 1 && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(BackButtonFill, { children: ({ length }) => length <= 1 && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
       import_components2.__unstableMotion.div,
       {
         variants: slideX,
         transition: { type: "tween", delay: 0.8 },
-        children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
           fullscreen_mode_close_default,
           {
             showTooltip: true,
@@ -9664,7 +9688,7 @@ var wp;
   var import_element19 = __toESM(require_element(), 1);
   var import_data7 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
-  var import_i18n3 = __toESM(require_i18n(), 1);
+  var import_i18n4 = __toESM(require_i18n(), 1);
 
   // packages/edit-post/build-module/store/index.mjs
   var import_data6 = __toESM(require_data(), 1);
@@ -9771,7 +9795,7 @@ var wp;
   var import_hooks = __toESM(require_hooks(), 1);
   var import_core_data3 = __toESM(require_core_data(), 1);
   var import_notices = __toESM(require_notices(), 1);
-  var import_i18n2 = __toESM(require_i18n(), 1);
+  var import_i18n3 = __toESM(require_i18n(), 1);
 
   // packages/edit-post/build-module/utils/meta-boxes.mjs
   var getMetaBoxContainer = (location) => {
@@ -10010,13 +10034,13 @@ var wp;
     const isFullscreen = registry.select(import_preferences.store).get("core/edit-post", "fullscreenMode");
     registry.dispatch(import_preferences.store).toggle("core/edit-post", "fullscreenMode");
     registry.dispatch(import_notices.store).createInfoNotice(
-      isFullscreen ? (0, import_i18n2.__)("Fullscreen mode deactivated.") : (0, import_i18n2.__)("Fullscreen mode activated."),
+      isFullscreen ? (0, import_i18n3.__)("Fullscreen mode deactivated.") : (0, import_i18n3.__)("Fullscreen mode activated."),
       {
         id: "core/edit-post/toggle-fullscreen-mode/notice",
         type: "snackbar",
         actions: [
           {
-            label: (0, import_i18n2.__)("Undo"),
+            label: (0, import_i18n3.__)("Undo"),
             onClick: () => {
               registry.dispatch(import_preferences.store).toggle(
                 "core/edit-post",
@@ -10330,7 +10354,7 @@ var wp;
       registerShortcut({
         name: "core/edit-post/toggle-fullscreen",
         category: "global",
-        description: (0, import_i18n3.__)("Enable or disable fullscreen mode."),
+        description: (0, import_i18n4.__)("Enable or disable fullscreen mode."),
         keyCombination: {
           modifier: "secondary",
           character: "f"
@@ -10346,11 +10370,11 @@ var wp;
 
   // packages/edit-post/build-module/components/init-pattern-modal/index.mjs
   var import_data8 = __toESM(require_data(), 1);
-  var import_i18n4 = __toESM(require_i18n(), 1);
+  var import_i18n5 = __toESM(require_i18n(), 1);
   var import_components3 = __toESM(require_components(), 1);
   var import_element20 = __toESM(require_element(), 1);
   var import_editor6 = __toESM(require_editor(), 1);
-  var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
   function InitPatternModal() {
     const { editPost } = (0, import_data8.useDispatch)(import_editor6.store);
     const { isCleanNewPost } = (0, import_data8.useSelect)(import_editor6.store);
@@ -10360,15 +10384,15 @@ var wp;
     if (!isModalOpen) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
       import_components3.Modal,
       {
-        title: (0, import_i18n4.__)("Create pattern"),
+        title: (0, import_i18n5.__)("Create pattern"),
         onRequestClose: () => {
           setIsModalOpen(false);
         },
         overlayClassName: "patterns-create-modal",
-        children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
           "form",
           {
             onSubmit: (event) => {
@@ -10381,22 +10405,22 @@ var wp;
                 }
               });
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
                 import_components3.TextControl,
                 {
-                  label: (0, import_i18n4.__)("Name"),
+                  label: (0, import_i18n5.__)("Name"),
                   value: title,
                   onChange: setTitle,
-                  placeholder: (0, import_i18n4.__)("My pattern"),
+                  placeholder: (0, import_i18n5.__)("My pattern"),
                   className: "patterns-create-modal__name-input"
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
                 import_components3.ToggleControl,
                 {
-                  label: (0, import_i18n4._x)("Synced", "pattern (singular)"),
-                  help: (0, import_i18n4.__)(
+                  label: (0, import_i18n5._x)("Synced", "pattern (singular)"),
+                  help: (0, import_i18n5.__)(
                     "Sync this pattern across multiple locations."
                   ),
                   checked: !syncType,
@@ -10405,7 +10429,7 @@ var wp;
                   }
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Stack, { justify: "end", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Stack, { justify: "end", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
                 import_components3.Button,
                 {
                   __next40pxDefaultSize: true,
@@ -10413,7 +10437,7 @@ var wp;
                   type: "submit",
                   disabled: !title,
                   accessibleWhenDisabled: true,
-                  children: (0, import_i18n4.__)("Create")
+                  children: (0, import_i18n5.__)("Create")
                 }
               ) })
             ] })
@@ -10584,7 +10608,7 @@ var wp;
   var import_components4 = __toESM(require_components(), 1);
   var import_data11 = __toESM(require_data(), 1);
   var import_block_editor = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
   var { useNativeUndo } = unlock2(import_block_editor.privateApis);
   function MetaBoxesArea({ location }) {
     const container = (0, import_element23.useRef)(null);
@@ -10609,16 +10633,16 @@ var wp;
       "is-loading": isSaving
     });
     const nativeUndoRef = useNativeUndo();
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: classes, ref: nativeUndoRef, children: [
-      isSaving && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_components4.Spinner, { className: "edit-post-meta-boxes-area__spinner" }),
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: classes, ref: nativeUndoRef, children: [
+      isSaving && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_components4.Spinner, { className: "edit-post-meta-boxes-area__spinner" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
         "div",
         {
           className: "edit-post-meta-boxes-area__container",
           ref: container
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "edit-post-meta-boxes-area__clear" })
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "edit-post-meta-boxes-area__clear" })
     ] });
   }
   var meta_boxes_area_default = MetaBoxesArea;
@@ -10651,20 +10675,20 @@ var wp;
   }
 
   // packages/edit-post/build-module/components/meta-boxes/index.mjs
-  var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
   function MetaBoxes({ location }) {
     const metaBoxes2 = (0, import_data13.useSelect)(
       (select3) => select3(store).getMetaBoxesPerLocation(location),
       [location]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(import_jsx_runtime27.Fragment, { children: [
-      (metaBoxes2 ?? []).map(({ id }) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(MetaBoxVisibility, { id }, id)),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(meta_boxes_area_default, { location })
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(import_jsx_runtime29.Fragment, { children: [
+      (metaBoxes2 ?? []).map(({ id }) => /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(MetaBoxVisibility, { id }, id)),
+      /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(meta_boxes_area_default, { location })
     ] });
   }
 
   // packages/edit-post/build-module/components/more-menu/index.mjs
-  var import_i18n10 = __toESM(require_i18n(), 1);
+  var import_i18n11 = __toESM(require_i18n(), 1);
   var import_compose = __toESM(require_compose(), 1);
   var import_editor15 = __toESM(require_editor(), 1);
   var import_keycodes = __toESM(require_keycodes(), 1);
@@ -10674,9 +10698,9 @@ var wp;
   var import_components5 = __toESM(require_components(), 1);
   var import_core_data6 = __toESM(require_core_data(), 1);
   var import_data14 = __toESM(require_data(), 1);
-  var import_i18n5 = __toESM(require_i18n(), 1);
+  var import_i18n6 = __toESM(require_i18n(), 1);
   var import_url4 = __toESM(require_url(), 1);
-  var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
   function ManagePatternsMenuItem() {
     const url = (0, import_data14.useSelect)((select3) => {
       const { canUser } = select3(import_core_data6.store);
@@ -10691,51 +10715,51 @@ var wp;
         name: "wp_template"
       }) ? patternsUrl : defaultUrl;
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_components5.MenuItem, { role: "menuitem", href: url, children: (0, import_i18n5.__)("Manage patterns") });
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_components5.MenuItem, { role: "menuitem", href: url, children: (0, import_i18n6.__)("Manage patterns") });
   }
   var manage_patterns_menu_item_default = ManagePatternsMenuItem;
 
   // packages/edit-post/build-module/components/more-menu/welcome-guide-menu-item.mjs
   var import_data15 = __toESM(require_data(), 1);
   var import_preferences3 = __toESM(require_preferences(), 1);
-  var import_i18n6 = __toESM(require_i18n(), 1);
+  var import_i18n7 = __toESM(require_i18n(), 1);
   var import_editor10 = __toESM(require_editor(), 1);
-  var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideMenuItem() {
     const isEditingTemplate2 = (0, import_data15.useSelect)(
       (select3) => select3(import_editor10.store).getCurrentPostType() === "wp_template",
       []
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
       import_preferences3.PreferenceToggleMenuItem,
       {
         scope: "core/edit-post",
         name: isEditingTemplate2 ? "welcomeGuideTemplate" : "welcomeGuide",
-        label: (0, import_i18n6.__)("Welcome Guide")
+        label: (0, import_i18n7.__)("Welcome Guide")
       }
     );
   }
 
   // packages/edit-post/build-module/components/preferences-modal/index.mjs
-  var import_i18n9 = __toESM(require_i18n(), 1);
+  var import_i18n10 = __toESM(require_i18n(), 1);
   var import_preferences7 = __toESM(require_preferences(), 1);
   var import_editor14 = __toESM(require_editor(), 1);
 
   // packages/edit-post/build-module/components/preferences-modal/meta-boxes-section.mjs
-  var import_i18n8 = __toESM(require_i18n(), 1);
+  var import_i18n9 = __toESM(require_i18n(), 1);
   var import_data18 = __toESM(require_data(), 1);
   var import_editor13 = __toESM(require_editor(), 1);
   var import_preferences6 = __toESM(require_preferences(), 1);
 
   // packages/edit-post/build-module/components/preferences-modal/enable-custom-fields.mjs
   var import_element25 = __toESM(require_element(), 1);
-  var import_i18n7 = __toESM(require_i18n(), 1);
+  var import_i18n8 = __toESM(require_i18n(), 1);
   var import_components6 = __toESM(require_components(), 1);
   var import_data16 = __toESM(require_data(), 1);
   var import_editor11 = __toESM(require_editor(), 1);
   var import_preferences4 = __toESM(require_preferences(), 1);
   var import_url5 = __toESM(require_url(), 1);
-  var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
   var { PreferenceBaseOption } = unlock2(import_preferences4.privateApis);
   function submitCustomFieldsForm() {
     const customFieldsForm = document.getElementById(
@@ -10746,11 +10770,11 @@ var wp;
   }
   function CustomFieldsConfirmation({ willEnable }) {
     const [isReloading, setIsReloading] = (0, import_element25.useState)(false);
-    return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(import_jsx_runtime30.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("p", { className: "edit-post-preferences-modal__custom-fields-confirmation-message", children: (0, import_i18n7.__)(
+    return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_jsx_runtime32.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("p", { className: "edit-post-preferences-modal__custom-fields-confirmation-message", children: (0, import_i18n8.__)(
         "A page reload is required for this change. Make sure your content is saved before reloading."
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
         import_components6.Button,
         {
           __next40pxDefaultSize: true,
@@ -10762,7 +10786,7 @@ var wp;
             setIsReloading(true);
             submitCustomFieldsForm();
           },
-          children: willEnable ? (0, import_i18n7.__)("Show & Reload Page") : (0, import_i18n7.__)("Hide & Reload Page")
+          children: willEnable ? (0, import_i18n8.__)("Show & Reload Page") : (0, import_i18n8.__)("Hide & Reload Page")
         }
       )
     ] });
@@ -10772,13 +10796,13 @@ var wp;
       return !!select3(import_editor11.store).getEditorSettings().enableCustomFields;
     }, []);
     const [isChecked, setIsChecked] = (0, import_element25.useState)(areCustomFieldsEnabled);
-    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
       PreferenceBaseOption,
       {
         label,
         isChecked,
         onChange: setIsChecked,
-        children: isChecked !== areCustomFieldsEnabled && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(CustomFieldsConfirmation, { willEnable: isChecked })
+        children: isChecked !== areCustomFieldsEnabled && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(CustomFieldsConfirmation, { willEnable: isChecked })
       }
     );
   }
@@ -10787,7 +10811,7 @@ var wp;
   var import_data17 = __toESM(require_data(), 1);
   var import_editor12 = __toESM(require_editor(), 1);
   var import_preferences5 = __toESM(require_preferences(), 1);
-  var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
   var { PreferenceBaseOption: PreferenceBaseOption2 } = unlock2(import_preferences5.privateApis);
   function EnablePanelOption(props) {
     const { toggleEditorPanelEnabled: toggleEditorPanelEnabled2 } = (0, import_data17.useDispatch)(import_editor12.store);
@@ -10804,7 +10828,7 @@ var wp;
     if (isRemoved) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
       PreferenceBaseOption2,
       {
         isChecked,
@@ -10815,7 +10839,7 @@ var wp;
   }
 
   // packages/edit-post/build-module/components/preferences-modal/meta-boxes-section.mjs
-  var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
   var { PreferencesModalSection } = unlock2(import_preferences6.privateApis);
   function MetaBoxesSection(sectionProps) {
     const { areCustomFieldsRegistered, metaBoxes: metaBoxes2 } = (0, import_data18.useSelect)((select3) => {
@@ -10832,9 +10856,9 @@ var wp;
     if (!areCustomFieldsRegistered && thirdPartyMetaBoxes.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(PreferencesModalSection, { ...sectionProps, children: [
-      areCustomFieldsRegistered && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(EnableCustomFieldsOption, { label: (0, import_i18n8.__)("Custom fields") }),
-      thirdPartyMetaBoxes.map(({ id, title }) => /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(PreferencesModalSection, { ...sectionProps, children: [
+      areCustomFieldsRegistered && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(EnableCustomFieldsOption, { label: (0, import_i18n9.__)("Custom fields") }),
+      thirdPartyMetaBoxes.map(({ id, title }) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
         EnablePanelOption,
         {
           label: title,
@@ -10846,50 +10870,50 @@ var wp;
   }
 
   // packages/edit-post/build-module/components/preferences-modal/index.mjs
-  var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
   var { PreferenceToggleControl } = unlock2(import_preferences7.privateApis);
   var { PreferencesModal } = unlock2(import_editor14.privateApis);
   function EditPostPreferencesModal() {
     const extraSections = {
-      general: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(MetaBoxesSection, { title: (0, import_i18n9.__)("Advanced") }),
-      appearance: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
+      general: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(MetaBoxesSection, { title: (0, import_i18n10.__)("Advanced") }),
+      appearance: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
         PreferenceToggleControl,
         {
           scope: "core/edit-post",
           featureName: "themeStyles",
-          help: (0, import_i18n9.__)("Make the editor look like your theme."),
-          label: (0, import_i18n9.__)("Use theme styles")
+          help: (0, import_i18n10.__)("Make the editor look like your theme."),
+          label: (0, import_i18n10.__)("Use theme styles")
         }
       )
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(PreferencesModal, { extraSections });
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(PreferencesModal, { extraSections });
   }
 
   // packages/edit-post/build-module/components/more-menu/index.mjs
-  var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
   var { ToolsMoreMenuGroup, ViewMoreMenuGroup } = unlock2(import_editor15.privateApis);
   var MoreMenu = () => {
     const isLargeViewport = (0, import_compose.useViewportMatch)("large");
-    return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(import_jsx_runtime34.Fragment, { children: [
-      isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(ViewMoreMenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_jsx_runtime36.Fragment, { children: [
+      isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(ViewMoreMenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
         import_preferences8.PreferenceToggleMenuItem,
         {
           scope: "core/edit-post",
           name: "fullscreenMode",
-          label: (0, import_i18n10.__)("Fullscreen mode"),
-          info: (0, import_i18n10.__)("Show and hide the admin user interface"),
-          messageActivated: (0, import_i18n10.__)("Fullscreen mode activated."),
-          messageDeactivated: (0, import_i18n10.__)(
+          label: (0, import_i18n11.__)("Fullscreen mode"),
+          info: (0, import_i18n11.__)("Show and hide the admin user interface"),
+          messageActivated: (0, import_i18n11.__)("Fullscreen mode activated."),
+          messageDeactivated: (0, import_i18n11.__)(
             "Fullscreen mode deactivated."
           ),
           shortcut: import_keycodes.displayShortcut.secondary("f")
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(ToolsMoreMenuGroup, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(manage_patterns_menu_item_default, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(WelcomeGuideMenuItem, {})
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(ToolsMoreMenuGroup, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(manage_patterns_menu_item_default, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(WelcomeGuideMenuItem, {})
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(EditPostPreferencesModal, {})
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(EditPostPreferencesModal, {})
     ] });
   };
   var more_menu_default = MoreMenu;
@@ -10900,85 +10924,85 @@ var wp;
   // packages/edit-post/build-module/components/welcome-guide/default.mjs
   var import_data19 = __toESM(require_data(), 1);
   var import_components7 = __toESM(require_components(), 1);
-  var import_i18n11 = __toESM(require_i18n(), 1);
+  var import_i18n12 = __toESM(require_i18n(), 1);
   var import_element26 = __toESM(require_element(), 1);
 
   // packages/edit-post/build-module/components/welcome-guide/image.mjs
-  var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideImage({ nonAnimatedSrc, animatedSrc }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("picture", { className: "edit-post-welcome-guide__image", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("picture", { className: "edit-post-welcome-guide__image", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
         "source",
         {
           srcSet: nonAnimatedSrc,
           media: "(prefers-reduced-motion: reduce)"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("img", { src: animatedSrc, width: "312", height: "240", alt: "" })
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("img", { src: animatedSrc, width: "312", height: "240", alt: "" })
     ] });
   }
 
   // packages/edit-post/build-module/components/welcome-guide/default.mjs
-  var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideDefault() {
     const { toggleFeature: toggleFeature2 } = (0, import_data19.useDispatch)(store);
-    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
       import_components7.Guide,
       {
         className: "edit-post-welcome-guide",
-        contentLabel: (0, import_i18n11.__)("Welcome to the editor"),
-        finishButtonText: (0, import_i18n11.__)("Get started"),
+        contentLabel: (0, import_i18n12.__)("Welcome to the editor"),
+        finishButtonText: (0, import_i18n12.__)("Get started"),
         onFinish: () => toggleFeature2("welcomeGuide"),
         pages: [
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/welcome-canvas.svg",
                 animatedSrc: "https://s.w.org/images/block-editor/welcome-canvas.gif"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_jsx_runtime36.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("h1", { className: "edit-post-welcome-guide__heading", children: (0, import_i18n11.__)("Welcome to the editor") }),
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("p", { className: "edit-post-welcome-guide__text", children: (0, import_i18n11.__)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(import_jsx_runtime38.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("h1", { className: "edit-post-welcome-guide__heading", children: (0, import_i18n12.__)("Welcome to the editor") }),
+              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("p", { className: "edit-post-welcome-guide__text", children: (0, import_i18n12.__)(
                 "In the WordPress editor, each paragraph, image, or video is presented as a distinct \u201Cblock\u201D of content."
               ) })
             ] })
           },
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/welcome-editor.svg",
                 animatedSrc: "https://s.w.org/images/block-editor/welcome-editor.gif"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_jsx_runtime36.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("h1", { className: "edit-post-welcome-guide__heading", children: (0, import_i18n11.__)("Customize each block") }),
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("p", { className: "edit-post-welcome-guide__text", children: (0, import_i18n11.__)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(import_jsx_runtime38.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("h1", { className: "edit-post-welcome-guide__heading", children: (0, import_i18n12.__)("Customize each block") }),
+              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("p", { className: "edit-post-welcome-guide__text", children: (0, import_i18n12.__)(
                 "Each block comes with its own set of controls for changing things like color, width, and alignment. These will show and hide automatically when you have a block selected."
               ) })
             ] })
           },
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/welcome-library.svg",
                 animatedSrc: "https://s.w.org/images/block-editor/welcome-library.gif"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_jsx_runtime36.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("h1", { className: "edit-post-welcome-guide__heading", children: (0, import_i18n11.__)("Explore all blocks") }),
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("p", { className: "edit-post-welcome-guide__text", children: (0, import_element26.createInterpolateElement)(
-                (0, import_i18n11.__)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(import_jsx_runtime38.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("h1", { className: "edit-post-welcome-guide__heading", children: (0, import_i18n12.__)("Explore all blocks") }),
+              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("p", { className: "edit-post-welcome-guide__text", children: (0, import_element26.createInterpolateElement)(
+                (0, import_i18n12.__)(
                   "All of the blocks available to you live in the block library. You\u2019ll find it wherever you see the <InserterIconImage /> icon."
                 ),
                 {
-                  InserterIconImage: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                  InserterIconImage: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
                     "img",
                     {
-                      alt: (0, import_i18n11.__)("inserter"),
+                      alt: (0, import_i18n12.__)("inserter"),
                       src: "data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='18' height='18' rx='2' fill='%231E1E1E'/%3E%3Cpath d='M9.22727 4V14M4 8.77273H14' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E%0A"
                     }
                   )
@@ -10987,24 +11011,24 @@ var wp;
             ] })
           },
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/welcome-documentation.svg",
                 animatedSrc: "https://s.w.org/images/block-editor/welcome-documentation.gif"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_jsx_runtime36.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("h1", { className: "edit-post-welcome-guide__heading", children: (0, import_i18n11.__)("Learn more") }),
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("p", { className: "edit-post-welcome-guide__text", children: (0, import_element26.createInterpolateElement)(
-                (0, import_i18n11.__)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(import_jsx_runtime38.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("h1", { className: "edit-post-welcome-guide__heading", children: (0, import_i18n12.__)("Learn more") }),
+              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("p", { className: "edit-post-welcome-guide__text", children: (0, import_element26.createInterpolateElement)(
+                (0, import_i18n12.__)(
                   "New to the block editor? Want to learn more about using it? <a>Here's a detailed guide.</a>"
                 ),
                 {
-                  a: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                  a: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
                     import_components7.ExternalLink,
                     {
-                      href: (0, import_i18n11.__)(
+                      href: (0, import_i18n12.__)(
                         "https://wordpress.org/documentation/article/wordpress-block-editor/"
                       )
                     }
@@ -11021,29 +11045,29 @@ var wp;
   // packages/edit-post/build-module/components/welcome-guide/template.mjs
   var import_data20 = __toESM(require_data(), 1);
   var import_components8 = __toESM(require_components(), 1);
-  var import_i18n12 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+  var import_i18n13 = __toESM(require_i18n(), 1);
+  var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideTemplate() {
     const { toggleFeature: toggleFeature2 } = (0, import_data20.useDispatch)(store);
-    return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
       import_components8.Guide,
       {
         className: "edit-template-welcome-guide",
-        contentLabel: (0, import_i18n12.__)("Welcome to the template editor"),
-        finishButtonText: (0, import_i18n12.__)("Get started"),
+        contentLabel: (0, import_i18n13.__)("Welcome to the template editor"),
+        finishButtonText: (0, import_i18n13.__)("Get started"),
         onFinish: () => toggleFeature2("welcomeGuideTemplate"),
         pages: [
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/welcome-template-editor.svg",
                 animatedSrc: "https://s.w.org/images/block-editor/welcome-template-editor.gif"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(import_jsx_runtime37.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("h1", { className: "edit-post-welcome-guide__heading", children: (0, import_i18n12.__)("Welcome to the template editor") }),
-              /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("p", { className: "edit-post-welcome-guide__text", children: (0, import_i18n12.__)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_jsx_runtime39.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("h1", { className: "edit-post-welcome-guide__heading", children: (0, import_i18n13.__)("Welcome to the template editor") }),
+              /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("p", { className: "edit-post-welcome-guide__text", children: (0, import_i18n13.__)(
                 "Templates help define the layout of the site. You can customize all aspects of your posts and pages using blocks and patterns in this editor."
               ) })
             ] })
@@ -11054,7 +11078,7 @@ var wp;
   }
 
   // packages/edit-post/build-module/components/welcome-guide/index.mjs
-  var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuide({ postType }) {
     const { isActive, isEditingTemplate: isEditingTemplate2 } = (0, import_data21.useSelect)(
       (select3) => {
@@ -11071,12 +11095,12 @@ var wp;
     if (!isActive) {
       return null;
     }
-    return isEditingTemplate2 ? /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(WelcomeGuideTemplate, {}) : /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(WelcomeGuideDefault, {});
+    return isEditingTemplate2 ? /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(WelcomeGuideTemplate, {}) : /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(WelcomeGuideDefault, {});
   }
 
   // packages/edit-post/build-module/commands/use-commands.mjs
   var import_data22 = __toESM(require_data(), 1);
-  var import_i18n13 = __toESM(require_i18n(), 1);
+  var import_i18n14 = __toESM(require_i18n(), 1);
   var import_commands = __toESM(require_commands(), 1);
   var import_preferences9 = __toESM(require_preferences(), 1);
   var import_notices2 = __toESM(require_notices(), 1);
@@ -11091,20 +11115,20 @@ var wp;
     const { createInfoNotice } = (0, import_data22.useDispatch)(import_notices2.store);
     (0, import_commands.useCommand)({
       name: "core/toggle-fullscreen-mode",
-      label: isFullscreen ? (0, import_i18n13.__)("Exit fullscreen") : (0, import_i18n13.__)("Enter fullscreen"),
+      label: isFullscreen ? (0, import_i18n14.__)("Exit fullscreen") : (0, import_i18n14.__)("Enter fullscreen"),
       icon: fullscreen_default,
       category: "command",
       callback: ({ close }) => {
         toggle("core/edit-post", "fullscreenMode");
         close();
         createInfoNotice(
-          isFullscreen ? (0, import_i18n13.__)("Fullscreen off.") : (0, import_i18n13.__)("Fullscreen on."),
+          isFullscreen ? (0, import_i18n14.__)("Fullscreen off.") : (0, import_i18n14.__)("Fullscreen on."),
           {
             id: "core/edit-post/toggle-fullscreen-mode/notice",
             type: "snackbar",
             actions: [
               {
-                label: (0, import_i18n13.__)("Undo"),
+                label: (0, import_i18n14.__)("Undo"),
                 onClick: () => {
                   toggle("core/edit-post", "fullscreenMode");
                 }
@@ -11265,7 +11289,7 @@ var wp;
   };
 
   // packages/edit-post/build-module/components/layout/index.mjs
-  var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
   var { useCommandContext } = unlock2(import_commands2.privateApis);
   var { useDrag } = unlock2(import_components9.privateApis);
   var { Editor, FullscreenMode, UploadProgressSnackbar } = unlock2(import_editor18.privateApis);
@@ -11419,14 +11443,14 @@ var wp;
     if (!hasAnyVisible) {
       return;
     }
-    const contents = /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+    const contents = /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
       "div",
       {
         className: "edit-post-layout__metaboxes edit-post-meta-boxes-main__liner",
         hidden: !isOpen,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(MetaBoxes, { location: "normal" }),
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(MetaBoxes, { location: "advanced" })
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(MetaBoxes, { location: "normal" }),
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(MetaBoxes, { location: "advanced" })
         ]
       }
     );
@@ -11434,8 +11458,8 @@ var wp;
     const usedOpenHeight = isShort ? "auto" : openHeight;
     const usedHeight = isOpen ? usedOpenHeight : min2;
     const usedAriaValueNow = max2 === void 0 || isAutoHeight ? 50 : getAriaValueNow(usedHeight);
-    const paneLabel = (0, import_i18n14.__)("Meta Boxes");
-    const toggle = /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+    const paneLabel = (0, import_i18n15.__)("Meta Boxes");
+    const toggle = /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
       "button",
       {
         "aria-expanded": isOpen,
@@ -11447,35 +11471,35 @@ var wp;
         ...!isShort && bindDragGesture(persistIsOpen),
         children: [
           paneLabel,
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_components9.Icon, { icon: isOpen ? chevron_up_default : chevron_down_default })
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_components9.Icon, { icon: isOpen ? chevron_up_default : chevron_down_default })
         ]
       }
     );
-    const separator = !isShort && /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_jsx_runtime39.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(tooltip_exports.Root, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+    const separator = !isShort && /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_jsx_runtime41.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(tooltip_exports.Root, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
           tooltip_exports.Trigger,
           {
-            render: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+            render: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
               "button",
               {
                 ref: separatorRef,
                 role: "separator",
                 "aria-valuenow": usedAriaValueNow,
-                "aria-label": (0, import_i18n14.__)("Drag to resize"),
+                "aria-label": (0, import_i18n15.__)("Drag to resize"),
                 "aria-describedby": separatorHelpId,
                 ...bindDragGesture()
               }
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(tooltip_exports.Popup, { children: (0, import_i18n14.__)("Drag to resize") })
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(tooltip_exports.Popup, { children: (0, import_i18n15.__)("Drag to resize") })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(VisuallyHidden, { id: separatorHelpId, children: (0, import_i18n14.__)(
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(VisuallyHidden, { id: separatorHelpId, children: (0, import_i18n15.__)(
         "Use up and down arrow keys to resize the meta box pane."
       ) })
     ] });
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
       navigable_region_default,
       {
         ariaLabel: paneLabel,
@@ -11486,7 +11510,7 @@ var wp;
         ),
         style: { height: usedHeight },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "edit-post-meta-boxes-main__presenter", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { className: "edit-post-meta-boxes-main__presenter", children: [
             toggle,
             separator
           ] }),
@@ -11597,9 +11621,9 @@ var wp;
     });
     function onPluginAreaError(name) {
       createErrorNotice(
-        (0, import_i18n14.sprintf)(
+        (0, import_i18n15.sprintf)(
           /* translators: %s: plugin name */
-          (0, import_i18n14.__)(
+          (0, import_i18n15.__)(
             'The "%s" plugin has encountered an error and cannot be rendered.'
           ),
           name
@@ -11624,17 +11648,17 @@ var wp;
               const newItem = items[0];
               const title = typeof newItem.title === "string" ? newItem.title : newItem.title?.rendered;
               createSuccessNotice(
-                (0, import_i18n14.sprintf)(
+                (0, import_i18n15.sprintf)(
                   // translators: %s: Title of the created post or template, e.g: "Hello world".
-                  (0, import_i18n14.__)('"%s" successfully created.'),
-                  (0, import_html_entities.decodeEntities)(title) || (0, import_i18n14.__)("(no title)")
+                  (0, import_i18n15.__)('"%s" successfully created.'),
+                  (0, import_html_entities.decodeEntities)(title) || (0, import_i18n15.__)("(no title)")
                 ),
                 {
                   type: "snackbar",
                   id: "duplicate-post-action",
                   actions: [
                     {
-                      label: (0, import_i18n14.__)("Edit"),
+                      label: (0, import_i18n15.__)("Edit"),
                       onClick: () => {
                         const postId = newItem.id;
                         document.location.href = (0, import_url6.addQueryArgs)("post.php", {
@@ -11658,11 +11682,11 @@ var wp;
         id: initialPostId
       };
     }, [initialPostType, initialPostId]);
-    const backButton = (0, import_compose2.useViewportMatch)("medium") && isFullscreenActive ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(back_button_default, { initialPost }) : null;
+    const backButton = (0, import_compose2.useViewportMatch)("medium") && isFullscreenActive ? /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(back_button_default, { initialPost }) : null;
     const adminPrimary = (0, import_element29.useMemo)(() => getAdminThemeColors().primary, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_components9.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(tooltip_exports.Provider, { children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_theme.ThemeProvider, { isRoot: true, color: { primary: adminPrimary }, children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_editor18.ErrorBoundary, { canCopyContent: true, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(WelcomeGuide, { postType: currentPostType }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { ...navigateRegionsProps, children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_components9.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(tooltip_exports.Provider, { children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_theme.ThemeProvider, { isRoot: true, color: { primary: adminPrimary }, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_editor18.ErrorBoundary, { canCopyContent: true, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(WelcomeGuide, { postType: currentPostType }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { ...navigateRegionsProps, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
         Editor,
         {
           settings: editorSettings,
@@ -11674,30 +11698,30 @@ var wp;
           forceIsDirty: hasActiveMetaboxes,
           autoFocus: !isWelcomeGuideVisible,
           onActionPerformed,
-          extraSidebarPanels: showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(MetaBoxes, { location: "side" }),
-          extraContent: !isDistractionFree && showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(MetaBoxesMain, {}),
+          extraSidebarPanels: showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(MetaBoxes, { location: "side" }),
+          extraContent: !isDistractionFree && showMetaBoxes && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(MetaBoxesMain, {}),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_editor18.PostLockedModal, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(EditorInitialization, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_editor18.PostLockedModal, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(EditorInitialization, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
               FullscreenMode,
               {
                 isActive: isFullscreenActive
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(BrowserURL, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_editor18.UnsavedChangesWarning, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_editor18.AutosaveMonitor, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_editor18.LocalAutosaveMonitor, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(keyboard_shortcuts_default, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_editor18.EditorKeyboardShortcutsRegister, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(BlockKeyboardShortcuts, {}),
-            currentPostType === "wp_block" && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(InitPatternModal, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_plugins.PluginArea, { onError: onPluginAreaError }),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(more_menu_default, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(BrowserURL, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_editor18.UnsavedChangesWarning, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_editor18.AutosaveMonitor, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_editor18.LocalAutosaveMonitor, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(keyboard_shortcuts_default, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_editor18.EditorKeyboardShortcutsRegister, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(BlockKeyboardShortcuts, {}),
+            currentPostType === "wp_block" && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(InitPatternModal, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_plugins.PluginArea, { onError: onPluginAreaError }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(more_menu_default, {}),
             backButton,
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_notices3.SnackbarNotices, { className: "edit-post-layout__snackbar" }),
-            /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(UploadProgressSnackbar, {})
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_notices3.SnackbarNotices, { className: "edit-post-layout__snackbar" }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(UploadProgressSnackbar, {})
           ]
         }
       ) })
@@ -11709,7 +11733,7 @@ var wp;
   var import_editor19 = __toESM(require_editor(), 1);
   var import_url7 = __toESM(require_url(), 1);
   var import_deprecated3 = __toESM(require_deprecated(), 1);
-  var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
   var { PluginPostExcerpt } = unlock2(import_editor19.privateApis);
   var isSiteEditor = (0, import_url7.getPath)(window.location.href)?.includes(
     "site-editor.php"
@@ -11725,56 +11749,56 @@ var wp;
       return null;
     }
     deprecateSlot("PluginBlockSettingsMenuItem");
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_editor19.PluginBlockSettingsMenuItem, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_editor19.PluginBlockSettingsMenuItem, { ...props });
   }
   function PluginDocumentSettingPanel(props) {
     if (isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginDocumentSettingPanel");
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_editor19.PluginDocumentSettingPanel, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_editor19.PluginDocumentSettingPanel, { ...props });
   }
   function PluginMoreMenuItem(props) {
     if (isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginMoreMenuItem");
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_editor19.PluginMoreMenuItem, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_editor19.PluginMoreMenuItem, { ...props });
   }
   function PluginPrePublishPanel(props) {
     if (isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginPrePublishPanel");
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_editor19.PluginPrePublishPanel, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_editor19.PluginPrePublishPanel, { ...props });
   }
   function PluginPostPublishPanel(props) {
     if (isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginPostPublishPanel");
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_editor19.PluginPostPublishPanel, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_editor19.PluginPostPublishPanel, { ...props });
   }
   function PluginPostStatusInfo(props) {
     if (isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginPostStatusInfo");
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_editor19.PluginPostStatusInfo, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_editor19.PluginPostStatusInfo, { ...props });
   }
   function PluginSidebar(props) {
     if (isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginSidebar");
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_editor19.PluginSidebar, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_editor19.PluginSidebar, { ...props });
   }
   function PluginSidebarMoreMenuItem(props) {
     if (isSiteEditor) {
       return null;
     }
     deprecateSlot("PluginSidebarMoreMenuItem");
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_editor19.PluginSidebarMoreMenuItem, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_editor19.PluginSidebarMoreMenuItem, { ...props });
   }
   function __experimentalPluginPostExcerpt() {
     if (isSiteEditor) {
@@ -11789,7 +11813,7 @@ var wp;
   }
 
   // packages/edit-post/build-module/index.mjs
-  var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
   var {
     BackButton: __experimentalMainDashboardButton,
     registerCoreBlockBindingsSources
@@ -11871,7 +11895,7 @@ var wp;
         }
       }
       root.render(
-        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_element30.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_element30.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
           layout_default,
           {
             settings,
