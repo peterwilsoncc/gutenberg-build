@@ -24994,7 +24994,6 @@ function InterfaceSkeleton({
   labels,
   className
 }, ref) {
-  const [secondarySidebarResizeListener, secondarySidebarSize] = (0, import_compose9.useResizeObserver)();
   const isMobileViewport = (0, import_compose9.useViewportMatch)("medium", "<");
   const disableMotion = (0, import_compose9.useReducedMotion)();
   const defaultTransition = {
@@ -25056,28 +25055,23 @@ function InterfaceSkeleton({
                 animate: "open",
                 exit: "closed",
                 variants: {
-                  open: { width: secondarySidebarSize.width },
+                  open: { width: "auto" },
                   closed: { width: 0 }
                 },
                 transition: defaultTransition,
-                children: /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
                   import_components35.__unstableMotion.div,
                   {
                     style: {
-                      position: "absolute",
-                      width: isMobileViewport ? "100vw" : "fit-content",
-                      height: "100%",
-                      left: 0
+                      width: isMobileViewport ? "100vw" : "max-content",
+                      height: "100%"
                     },
                     variants: {
                       open: { x: 0 },
                       closed: { x: "-100%" }
                     },
                     transition: defaultTransition,
-                    children: [
-                      secondarySidebarResizeListener,
-                      secondarySidebar
-                    ]
+                    children: secondarySidebar
                   }
                 )
               }
