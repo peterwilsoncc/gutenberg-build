@@ -223,6 +223,35 @@ function useWidgetTypes(records) {
           );
         });
       }
+      for (const widgetType of results) {
+        for (const action of widgetType?.actions ?? []) {
+          if (typeof action.icon !== "string") {
+            continue;
+          }
+          const reference = action.icon;
+          void resolveIcon(reference).then((resolved) => {
+            if (cancelled) {
+              return;
+            }
+            setWidgetTypes(
+              (prev) => prev.map((type) => {
+                if (type.name !== widgetType?.name) {
+                  return type;
+                }
+                return {
+                  ...type,
+                  actions: type.actions?.map(
+                    (entry) => entry.id === action.id && entry.icon === reference ? {
+                      ...entry,
+                      icon: resolved ?? void 0
+                    } : entry
+                  )
+                };
+              })
+            );
+          });
+        }
+      }
     });
     return () => {
       cancelled = true;
