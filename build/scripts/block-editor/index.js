@@ -26206,13 +26206,12 @@ var wp;
   // packages/block-editor/build-module/components/block-visibility/use-block-visibility.mjs
   var import_compose17 = __toESM(require_compose(), 1);
   var { getViewportBreakpoints: getViewportBreakpoints4 } = unlock(privateApis);
-  function useBlockVisibility(options = {}) {
-    const {
-      blockVisibility: blockVisibility2 = void 0,
-      deviceType = BLOCK_VISIBILITY_VIEWPORTS.desktop.key,
-      viewportSettings,
-      view = window
-    } = options;
+  function useBlockVisibility({
+    blockVisibility: blockVisibility2,
+    deviceType = "desktop",
+    viewportSettings,
+    view = window
+  } = {}) {
     const viewportBreakpoints = getViewportBreakpoints4(viewportSettings);
     const mobileMediaQuery = viewportBreakpoints.mobile ? `(width <= ${viewportBreakpoints.mobile})` : void 0;
     const isMobileViewport = (0, import_compose17.useMediaQuery)(mobileMediaQuery, view);
@@ -26222,18 +26221,18 @@ var wp;
     }
     const isTabletViewport = (0, import_compose17.useMediaQuery)(tabletMediaQuery, view);
     let currentViewport;
-    if (deviceType === BLOCK_VISIBILITY_VIEWPORTS.mobile.key && viewportBreakpoints.mobile) {
-      currentViewport = BLOCK_VISIBILITY_VIEWPORTS.mobile.key;
-    } else if (deviceType === BLOCK_VISIBILITY_VIEWPORTS.tablet.key && viewportBreakpoints.tablet) {
-      currentViewport = BLOCK_VISIBILITY_VIEWPORTS.tablet.key;
+    if (deviceType === "mobile" && viewportBreakpoints.mobile) {
+      currentViewport = "mobile";
+    } else if (deviceType === "tablet" && viewportBreakpoints.tablet) {
+      currentViewport = "tablet";
     } else if (isMobileViewport) {
-      currentViewport = BLOCK_VISIBILITY_VIEWPORTS.mobile.key;
+      currentViewport = "mobile";
     } else if (isTabletViewport && viewportBreakpoints.tablet) {
-      currentViewport = BLOCK_VISIBILITY_VIEWPORTS.tablet.key;
+      currentViewport = "tablet";
     } else {
-      currentViewport = BLOCK_VISIBILITY_VIEWPORTS.desktop.key;
+      currentViewport = "desktop";
     }
-    const isBlockCurrentlyHidden = blockVisibility2 === false || blockVisibility2?.viewport?.[currentViewport] === false;
+    const isBlockCurrentlyHidden = blockVisibility2 === false || typeof blockVisibility2 === "object" && blockVisibility2?.viewport?.[currentViewport] === false;
     return { isBlockCurrentlyHidden, currentViewport };
   }
 
