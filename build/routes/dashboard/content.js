@@ -33192,13 +33192,6 @@ var import_element131 = __toESM(require_element(), 1);
 var import_data2 = __toESM(require_data(), 1);
 var import_compose14 = __toESM(require_compose(), 1);
 
-// packages/dataviews/build-module/lock-unlock.mjs
-var import_private_apis3 = __toESM(require_private_apis(), 1);
-var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-  "@wordpress/dataviews"
-);
-
 // node_modules/tslib/tslib.es6.mjs
 var __assign = function() {
   __assign = Object.assign || function __assign2(t2) {
@@ -33257,7 +33250,7 @@ function paramCase(input, options) {
   return dotCase(input, __assign({ delimiter: "-" }, options));
 }
 
-// packages/dataviews/build-module/utils/kebab-case.mjs
+// packages/kebab-case/build-module/index.mjs
 function kebabCase(str) {
   let input = str?.toString?.() ?? "";
   input = input.replace(/['\u2019]/, "");
@@ -33274,6 +33267,13 @@ function kebabCase(str) {
     ]
   });
 }
+
+// packages/dataviews/build-module/lock-unlock.mjs
+var import_private_apis3 = __toESM(require_private_apis(), 1);
+var { lock: lock3, unlock: unlock3 } = (0, import_private_apis3.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/dataviews"
+);
 
 // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
 var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);

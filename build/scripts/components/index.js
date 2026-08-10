@@ -28228,22 +28228,6 @@ This message will only show in development mode. It won't appear in production. 
   var normalizeTextString = (value) => {
     return (0, import_remove_accents.default)(value).normalize("NFKC").toLocaleLowerCase().replace(ALL_UNICODE_DASH_CHARACTERS, "-");
   };
-  function kebabCase(str) {
-    let input = str?.toString?.() ?? "";
-    input = input.replace(/['\u2019]/, "");
-    return paramCase(input, {
-      splitRegexp: [
-        /(?!(?:1ST|2ND|3RD|[4-9]TH)(?![a-z]))([a-z0-9])([A-Z])/g,
-        // fooBar => foo-bar, 3Bar => 3-bar
-        /(?!(?:1st|2nd|3rd|[4-9]th)(?![a-z]))([0-9])([a-z])/g,
-        // 3bar => 3-bar
-        /([A-Za-z])([0-9])/g,
-        // Foo3 => foo-3, foo3 => foo-3
-        /([A-Z])([A-Z][a-z])/g
-        // FOOBar => foo-bar
-      ]
-    });
-  }
   function escapeRegExp(string) {
     return string.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
   }
@@ -36877,6 +36861,24 @@ This message will only show in development mode. It won't appear in production. 
   var import_element112 = __toESM(require_element(), 1);
   var import_i18n35 = __toESM(require_i18n(), 1);
   var import_compose44 = __toESM(require_compose(), 1);
+
+  // packages/kebab-case/build-module/index.mjs
+  function kebabCase(str) {
+    let input = str?.toString?.() ?? "";
+    input = input.replace(/['\u2019]/, "");
+    return paramCase(input, {
+      splitRegexp: [
+        /(?!(?:1ST|2ND|3RD|[4-9]TH)(?![a-z]))([a-z0-9])([A-Z])/g,
+        // fooBar => foo-bar, 3Bar => 3-bar
+        /(?!(?:1st|2nd|3rd|[4-9]th)(?![a-z]))([0-9])([a-z])/g,
+        // 3bar => 3-bar
+        /([A-Za-z])([0-9])/g,
+        // Foo3 => foo-3, foo3 => foo-3
+        /([A-Z])([A-Z][a-z])/g
+        // FOOBar => foo-bar
+      ]
+    });
+  }
 
   // packages/components/build-module/item-group/context.mjs
   var import_element104 = __toESM(require_element(), 1);
@@ -57331,9 +57333,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ComponentsContext,
     Tabs,
     Menu: Menu3,
-    kebabCase,
     Badge: badge_default,
-    normalizeTextString,
     DateCalendar,
     DateRangeCalendar,
     TZDate,

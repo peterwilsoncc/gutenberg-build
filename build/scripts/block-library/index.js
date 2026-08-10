@@ -6281,7 +6281,7 @@ var wp;
 
   // packages/block-library/build-module/audio/edit.mjs
   var import_blob2 = __toESM(require_blob(), 1);
-  var import_components8 = __toESM(require_components(), 1);
+  var import_components7 = __toESM(require_components(), 1);
   var import_block_editor15 = __toESM(require_block_editor(), 1);
   var import_i18n10 = __toESM(require_i18n(), 1);
   var import_data8 = __toESM(require_data(), 1);
@@ -6357,10 +6357,101 @@ var wp;
   }
 
   // packages/block-library/build-module/embed/util.mjs
-  var import_components6 = __toESM(require_components(), 1);
   var import_element5 = __toESM(require_element(), 1);
   var import_blocks3 = __toESM(require_blocks(), 1);
   var import_url2 = __toESM(require_url(), 1);
+
+  // node_modules/tslib/tslib.es6.mjs
+  var __assign = function() {
+    __assign = Object.assign || function __assign2(t2) {
+      for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
+        s2 = arguments[i2];
+        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2)) t2[p2] = s2[p2];
+      }
+      return t2;
+    };
+    return __assign.apply(this, arguments);
+  };
+
+  // node_modules/lower-case/dist.es2015/index.js
+  function lowerCase(str) {
+    return str.toLowerCase();
+  }
+
+  // node_modules/no-case/dist.es2015/index.js
+  var DEFAULT_SPLIT_REGEXP = [/([a-z0-9])([A-Z])/g, /([A-Z])([A-Z][a-z])/g];
+  var DEFAULT_STRIP_REGEXP = /[^A-Z0-9]+/gi;
+  function noCase(input, options2) {
+    if (options2 === void 0) {
+      options2 = {};
+    }
+    var _a = options2.splitRegexp, splitRegexp = _a === void 0 ? DEFAULT_SPLIT_REGEXP : _a, _b = options2.stripRegexp, stripRegexp = _b === void 0 ? DEFAULT_STRIP_REGEXP : _b, _c = options2.transform, transform = _c === void 0 ? lowerCase : _c, _d = options2.delimiter, delimiter = _d === void 0 ? " " : _d;
+    var result = replace(replace(input, splitRegexp, "$1\0$2"), stripRegexp, "\0");
+    var start = 0;
+    var end = result.length;
+    while (result.charAt(start) === "\0")
+      start++;
+    while (result.charAt(end - 1) === "\0")
+      end--;
+    return result.slice(start, end).split("\0").map(transform).join(delimiter);
+  }
+  function replace(input, re, value) {
+    if (re instanceof RegExp)
+      return input.replace(re, value);
+    return re.reduce(function(input2, re2) {
+      return input2.replace(re2, value);
+    }, input);
+  }
+
+  // node_modules/upper-case-first/dist.es2015/index.js
+  function upperCaseFirst(input) {
+    return input.charAt(0).toUpperCase() + input.substr(1);
+  }
+
+  // node_modules/capital-case/dist.es2015/index.js
+  function capitalCaseTransform(input) {
+    return upperCaseFirst(input.toLowerCase());
+  }
+  function capitalCase(input, options2) {
+    if (options2 === void 0) {
+      options2 = {};
+    }
+    return noCase(input, __assign({ delimiter: " ", transform: capitalCaseTransform }, options2));
+  }
+
+  // node_modules/dot-case/dist.es2015/index.js
+  function dotCase(input, options2) {
+    if (options2 === void 0) {
+      options2 = {};
+    }
+    return noCase(input, __assign({ delimiter: "." }, options2));
+  }
+
+  // node_modules/param-case/dist.es2015/index.js
+  function paramCase(input, options2) {
+    if (options2 === void 0) {
+      options2 = {};
+    }
+    return dotCase(input, __assign({ delimiter: "-" }, options2));
+  }
+
+  // packages/kebab-case/build-module/index.mjs
+  function kebabCase(str) {
+    let input = str?.toString?.() ?? "";
+    input = input.replace(/['\u2019]/, "");
+    return paramCase(input, {
+      splitRegexp: [
+        /(?!(?:1ST|2ND|3RD|[4-9]TH)(?![a-z]))([a-z0-9])([A-Z])/g,
+        // fooBar => foo-bar, 3Bar => 3-bar
+        /(?!(?:1st|2nd|3rd|[4-9]th)(?![a-z]))([0-9])([a-z])/g,
+        // 3bar => 3-bar
+        /([A-Za-z])([0-9])/g,
+        // Foo3 => foo-3, foo3 => foo-3
+        /([A-Z])([A-Z][a-z])/g
+        // FOOBar => foo-bar
+      ]
+    });
+  }
 
   // packages/block-library/build-module/embed/block.json
   var block_default7 = {
@@ -6433,17 +6524,9 @@ var wp;
   ];
   var WP_EMBED_TYPE = "wp-embed";
 
-  // packages/block-library/build-module/lock-unlock.mjs
-  var import_private_apis = __toESM(require_private_apis(), 1);
-  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-    "@wordpress/block-library"
-  );
-
   // packages/block-library/build-module/embed/util.mjs
   var import_jsx_runtime175 = __toESM(require_jsx_runtime(), 1);
   var { name: DEFAULT_EMBED_BLOCK } = block_default7;
-  var { kebabCase } = unlock(import_components6.privateApis);
   var getEmbedInfoByProvider = (provider) => (0, import_blocks3.getBlockVariations)(DEFAULT_EMBED_BLOCK)?.find(
     ({ name: name122 }) => name122 === provider
   );
@@ -6612,7 +6695,7 @@ var wp;
   var import_compose4 = __toESM(require_compose(), 1);
   var import_i18n9 = __toESM(require_i18n(), 1);
   var import_block_editor14 = __toESM(require_block_editor(), 1);
-  var import_components7 = __toESM(require_components(), 1);
+  var import_components6 = __toESM(require_components(), 1);
   var import_blocks4 = __toESM(require_blocks(), 1);
   var import_jsx_runtime176 = __toESM(require_jsx_runtime(), 1);
   function Caption({
@@ -6658,7 +6741,7 @@ var wp;
     );
     return /* @__PURE__ */ (0, import_jsx_runtime176.jsxs)(import_jsx_runtime176.Fragment, { children: [
       showToolbarButton && /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(import_block_editor14.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime176.jsx)(
-        import_components7.ToolbarButton,
+        import_components6.ToolbarButton,
         {
           onClick: () => {
             setShowCaption(!showCaption);
@@ -6804,7 +6887,7 @@ var wp;
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(import_block_editor15.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime177.jsxs)(
-        import_components8.__experimentalToolsPanel,
+        import_components7.__experimentalToolsPanel,
         {
           label: (0, import_i18n10.__)("Settings"),
           resetAll: () => {
@@ -6817,7 +6900,7 @@ var wp;
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
-              import_components8.__experimentalToolsPanelItem,
+              import_components7.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n10.__)("Autoplay"),
                 isShownByDefault: true,
@@ -6826,7 +6909,7 @@ var wp;
                   autoplay: false
                 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
-                  import_components8.ToggleControl,
+                  import_components7.ToggleControl,
                   {
                     label: (0, import_i18n10.__)("Autoplay"),
                     onChange: toggleAttribute("autoplay"),
@@ -6837,7 +6920,7 @@ var wp;
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
-              import_components8.__experimentalToolsPanelItem,
+              import_components7.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n10.__)("Loop"),
                 isShownByDefault: true,
@@ -6846,7 +6929,7 @@ var wp;
                   loop: false
                 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
-                  import_components8.ToggleControl,
+                  import_components7.ToggleControl,
                   {
                     label: (0, import_i18n10.__)("Loop"),
                     onChange: toggleAttribute("loop"),
@@ -6856,7 +6939,7 @@ var wp;
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
-              import_components8.__experimentalToolsPanelItem,
+              import_components7.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n10.__)("Preload"),
                 isShownByDefault: true,
@@ -6865,7 +6948,7 @@ var wp;
                   preload: void 0
                 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
-                  import_components8.SelectControl,
+                  import_components7.SelectControl,
                   {
                     label: (0, import_i18n10._x)(
                       "Preload",
@@ -6900,7 +6983,7 @@ var wp;
             src: src ?? temporaryURL
           }
         ),
-        !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(import_components8.Spinner, {}),
+        !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(import_components7.Spinner, {}),
         /* @__PURE__ */ (0, import_jsx_runtime177.jsx)(
           Caption,
           {
@@ -7070,6 +7153,13 @@ var wp;
   };
   var transforms_default = transforms;
 
+  // packages/block-library/build-module/lock-unlock.mjs
+  var import_private_apis = __toESM(require_private_apis(), 1);
+  var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+    "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+    "@wordpress/block-library"
+  );
+
   // packages/block-library/build-module/audio/index.mjs
   var { fieldsKey, formKey } = unlock(import_blocks6.privateApis);
   var { name: name7 } = block_default8;
@@ -7213,7 +7303,7 @@ var wp;
   // packages/block-library/build-module/breadcrumbs/edit.mjs
   var import_i18n12 = __toESM(require_i18n(), 1);
   var import_block_editor17 = __toESM(require_block_editor(), 1);
-  var import_components9 = __toESM(require_components(), 1);
+  var import_components8 = __toESM(require_components(), 1);
   var import_data9 = __toESM(require_data(), 1);
   var import_core_data4 = __toESM(require_core_data(), 1);
   var import_element8 = __toESM(require_element(), 1);
@@ -7306,7 +7396,7 @@ var wp;
     const disabledRef = (0, import_compose5.useDisabled)();
     const blockProps = (0, import_block_editor17.useBlockProps)({ ref: disabledRef });
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(import_components9.Spinner, {}) });
+      return /* @__PURE__ */ (0, import_jsx_runtime179.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(import_components8.Spinner, {}) });
     }
     let _showTerms;
     if (!isPostTypeHierarchical && !post?.parent) {
@@ -7350,7 +7440,7 @@ var wp;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime179.jsxs)(import_jsx_runtime179.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(import_block_editor17.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime179.jsxs)(
-        import_components9.__experimentalToolsPanel,
+        import_components8.__experimentalToolsPanel,
         {
           label: (0, import_i18n12.__)("Settings"),
           resetAll: () => {
@@ -7363,7 +7453,7 @@ var wp;
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-              import_components9.__experimentalToolsPanelItem,
+              import_components8.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n12.__)("Show home breadcrumb"),
                 isShownByDefault: true,
@@ -7372,7 +7462,7 @@ var wp;
                   showHomeItem: true
                 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-                  import_components9.ToggleControl,
+                  import_components8.ToggleControl,
                   {
                     label: (0, import_i18n12.__)("Show home breadcrumb"),
                     onChange: (value) => setAttributes({ showHomeItem: value }),
@@ -7382,7 +7472,7 @@ var wp;
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-              import_components9.__experimentalToolsPanelItem,
+              import_components8.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n12.__)("Show current breadcrumb"),
                 isShownByDefault: true,
@@ -7391,7 +7481,7 @@ var wp;
                   showCurrentItem: true
                 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-                  import_components9.ToggleControl,
+                  import_components8.ToggleControl,
                   {
                     label: (0, import_i18n12.__)("Show current breadcrumb"),
                     onChange: (value) => setAttributes({ showCurrentItem: value }),
@@ -7401,7 +7491,7 @@ var wp;
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-              import_components9.__experimentalToolsPanelItem,
+              import_components8.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n12.__)("Separator"),
                 isShownByDefault: true,
@@ -7410,7 +7500,7 @@ var wp;
                   separator: separatorDefaultValue
                 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-                  import_components9.TextControl,
+                  import_components8.TextControl,
                   {
                     autoComplete: "off",
                     label: (0, import_i18n12.__)("Separator"),
@@ -7432,7 +7522,7 @@ var wp;
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime179.jsxs)(import_block_editor17.InspectorControls, { group: "advanced", children: [
         /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-          import_components9.CheckboxControl,
+          import_components8.CheckboxControl,
           {
             label: (0, import_i18n12.__)("Show on homepage"),
             checked: showOnHomePage,
@@ -7443,7 +7533,7 @@ var wp;
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(
-          import_components9.CheckboxControl,
+          import_components8.CheckboxControl,
           {
             label: (0, import_i18n12.__)("Prefer taxonomy terms"),
             checked: prefersTaxonomy,
@@ -7466,7 +7556,7 @@ var wp;
           },
           html: prevContentRef.current
         }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime179.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(import_components9.Spinner, {}) })),
+      ) : /* @__PURE__ */ (0, import_jsx_runtime179.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)(import_components8.Spinner, {}) })),
       status === "error" && /* @__PURE__ */ (0, import_jsx_runtime179.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime179.jsx)("p", { children: (0, import_i18n12.sprintf)(
         /* translators: %s: error message returned when rendering the block. */
         (0, import_i18n12.__)("Error: %s"),
@@ -9131,7 +9221,7 @@ var wp;
   // packages/block-library/build-module/button/edit.mjs
   var import_i18n14 = __toESM(require_i18n(), 1);
   var import_element20 = __toESM(require_element(), 1);
-  var import_components10 = __toESM(require_components(), 1);
+  var import_components9 = __toESM(require_components(), 1);
   var import_block_editor21 = __toESM(require_block_editor(), 1);
   var import_keycodes = __toESM(require_keycodes(), 1);
   var import_blocks7 = __toESM(require_blocks(), 1);
@@ -13325,7 +13415,7 @@ var wp;
         }
       ),
       hasBlockControls && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(import_block_editor21.BlockControls, { group: "block", children: isLinkTag && !lockUrlControls && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
-        import_components10.ToolbarButton,
+        import_components9.ToolbarButton,
         {
           name: "link",
           icon: !isURLSet ? link_default : link_off_default,
@@ -13336,7 +13426,7 @@ var wp;
         }
       ) }),
       isLinkTag && isSelected && (isEditingURL || isURLSet) && !lockUrlControls && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
-        import_components10.Popover,
+        import_components9.Popover,
         {
           placement: "bottom",
           onClose: () => {
@@ -13389,7 +13479,7 @@ var wp;
           }
         ),
         isLinkTag && /* @__PURE__ */ (0, import_jsx_runtime193.jsx)(
-          import_components10.TextControl,
+          import_components9.TextControl,
           {
             label: (0, import_i18n14.__)("Link relation"),
             help: (0, import_element20.createInterpolateElement)(
@@ -14114,7 +14204,7 @@ var wp;
   };
 
   // packages/block-library/build-module/calendar/edit.mjs
-  var import_components11 = __toESM(require_components(), 1);
+  var import_components10 = __toESM(require_components(), 1);
   var import_data12 = __toESM(require_data(), 1);
   var import_server_side_render3 = __toESM(require_server_side_render(), 1);
   var import_block_editor26 = __toESM(require_block_editor(), 1);
@@ -14173,10 +14263,10 @@ var wp;
     const disabledRef = (0, import_compose10.useDisabled)();
     const blockProps = (0, import_block_editor26.useBlockProps)({ ref: disabledRef });
     if (!hasPosts) {
-      return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(import_components11.Placeholder, { icon: calendar_default, label: (0, import_i18n17.__)("Calendar"), children: !hasPostsResolved ? /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(import_components11.Spinner, {}) : (0, import_i18n17.__)("No published posts found.") }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(import_components10.Placeholder, { icon: calendar_default, label: (0, import_i18n17.__)("Calendar"), children: !hasPostsResolved ? /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(import_components10.Spinner, {}) : (0, import_i18n17.__)("No published posts found.") }) });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime198.jsxs)(import_jsx_runtime198.Fragment, { children: [
-      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(import_components11.Spinner, {}) }),
+      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)(import_components10.Spinner, {}) }),
       status === "error" && /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("p", { children: (0, import_i18n17.sprintf)(
         /* translators: %s: error message returned when rendering the block. */
         (0, import_i18n17.__)("Error: %s"),
@@ -14325,7 +14415,7 @@ var wp;
   };
 
   // packages/block-library/build-module/categories/edit.mjs
-  var import_components12 = __toESM(require_components(), 1);
+  var import_components11 = __toESM(require_components(), 1);
   var import_compose11 = __toESM(require_compose(), 1);
   var import_block_editor27 = __toESM(require_block_editor(), 1);
   var import_html_entities2 = __toESM(require_html_entities(), 1);
@@ -14463,7 +14553,7 @@ var wp;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(TagName2, { ...blockProps, children: [
       /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(import_block_editor27.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime199.jsxs)(
-        import_components12.__experimentalToolsPanel,
+        import_components11.__experimentalToolsPanel,
         {
           label: (0, import_i18n18.__)("Settings"),
           resetAll: () => {
@@ -14480,7 +14570,7 @@ var wp;
           dropdownMenuProps,
           children: [
             Array.isArray(taxonomies) && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
-              import_components12.__experimentalToolsPanelItem,
+              import_components11.__experimentalToolsPanelItem,
               {
                 hasValue: () => {
                   return taxonomySlug !== "category";
@@ -14491,7 +14581,7 @@ var wp;
                 },
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
-                  import_components12.SelectControl,
+                  import_components11.SelectControl,
                   {
                     label: (0, import_i18n18.__)("Taxonomy"),
                     options: taxonomies.map((t2) => ({
@@ -14507,14 +14597,14 @@ var wp;
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
-              import_components12.__experimentalToolsPanelItem,
+              import_components11.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!displayAsDropdown,
                 label: (0, import_i18n18.__)("Display as dropdown"),
                 onDeselect: () => setAttributes({ displayAsDropdown: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
-                  import_components12.ToggleControl,
+                  import_components11.ToggleControl,
                   {
                     label: (0, import_i18n18.__)("Display as dropdown"),
                     checked: displayAsDropdown,
@@ -14524,14 +14614,14 @@ var wp;
               }
             ),
             displayAsDropdown && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
-              import_components12.__experimentalToolsPanelItem,
+              import_components11.__experimentalToolsPanelItem,
               {
                 hasValue: () => !showLabel,
                 label: (0, import_i18n18.__)("Show label"),
                 onDeselect: () => setAttributes({ showLabel: true }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
-                  import_components12.ToggleControl,
+                  import_components11.ToggleControl,
                   {
                     className: "wp-block-categories__indentation",
                     label: (0, import_i18n18.__)("Show label"),
@@ -14542,14 +14632,14 @@ var wp;
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
-              import_components12.__experimentalToolsPanelItem,
+              import_components11.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!showPostCounts,
                 label: (0, import_i18n18.__)("Show post counts"),
                 onDeselect: () => setAttributes({ showPostCounts: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
-                  import_components12.ToggleControl,
+                  import_components11.ToggleControl,
                   {
                     label: (0, import_i18n18.__)("Show post counts"),
                     checked: showPostCounts,
@@ -14559,14 +14649,14 @@ var wp;
               }
             ),
             isHierarchicalTaxonomy && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
-              import_components12.__experimentalToolsPanelItem,
+              import_components11.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!showOnlyTopLevel,
                 label: (0, import_i18n18.__)("Show only top level terms"),
                 onDeselect: () => setAttributes({ showOnlyTopLevel: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
-                  import_components12.ToggleControl,
+                  import_components11.ToggleControl,
                   {
                     label: (0, import_i18n18.__)("Show only top level terms"),
                     checked: showOnlyTopLevel,
@@ -14578,14 +14668,14 @@ var wp;
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
-              import_components12.__experimentalToolsPanelItem,
+              import_components11.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!showEmpty,
                 label: (0, import_i18n18.__)("Show empty terms"),
                 onDeselect: () => setAttributes({ showEmpty: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
-                  import_components12.ToggleControl,
+                  import_components11.ToggleControl,
                   {
                     label: (0, import_i18n18.__)("Show empty terms"),
                     checked: showEmpty,
@@ -14595,14 +14685,14 @@ var wp;
               }
             ),
             isHierarchicalTaxonomy && !showOnlyTopLevel && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
-              import_components12.__experimentalToolsPanelItem,
+              import_components11.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!showHierarchy,
                 label: (0, import_i18n18.__)("Show hierarchy"),
                 onDeselect: () => setAttributes({ showHierarchy: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(
-                  import_components12.ToggleControl,
+                  import_components11.ToggleControl,
                   {
                     label: (0, import_i18n18.__)("Show hierarchy"),
                     checked: showHierarchy,
@@ -14614,7 +14704,7 @@ var wp;
           ]
         }
       ) }),
-      isResolving && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(import_components12.Placeholder, { icon: pin_default, label: (0, import_i18n18.__)("Terms"), children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(import_components12.Spinner, {}) }),
+      isResolving && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(import_components11.Placeholder, { icon: pin_default, label: (0, import_i18n18.__)("Terms"), children: /* @__PURE__ */ (0, import_jsx_runtime199.jsx)(import_components11.Spinner, {}) }),
       !isResolving && categories?.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime199.jsx)("p", { children: taxonomy.labels.no_terms }),
       !isResolving && categories?.length > 0 && (displayAsDropdown ? renderCategoryDropdown() : renderCategoryList())
     ] });
@@ -14679,13 +14769,13 @@ var wp;
   // packages/block-library/build-module/freeform/edit.mjs
   var import_block_editor30 = __toESM(require_block_editor(), 1);
   var import_data16 = __toESM(require_data(), 1);
-  var import_components15 = __toESM(require_components(), 1);
+  var import_components14 = __toESM(require_components(), 1);
   var import_element22 = __toESM(require_element(), 1);
   var import_i18n22 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/freeform/convert-to-blocks-button.mjs
   var import_i18n20 = __toESM(require_i18n(), 1);
-  var import_components13 = __toESM(require_components(), 1);
+  var import_components12 = __toESM(require_components(), 1);
   var import_data14 = __toESM(require_data(), 1);
   var import_blocks12 = __toESM(require_blocks(), 1);
   var import_block_editor28 = __toESM(require_block_editor(), 1);
@@ -14699,7 +14789,7 @@ var wp;
       [clientId]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime200.jsx)(
-      import_components13.ToolbarButton,
+      import_components12.ToolbarButton,
       {
         onClick: () => replaceBlocks(
           block.clientId,
@@ -14713,7 +14803,7 @@ var wp;
 
   // packages/block-library/build-module/freeform/modal.mjs
   var import_block_editor29 = __toESM(require_block_editor(), 1);
-  var import_components14 = __toESM(require_components(), 1);
+  var import_components13 = __toESM(require_components(), 1);
   var import_element21 = __toESM(require_element(), 1);
   var import_i18n21 = __toESM(require_i18n(), 1);
   var import_data15 = __toESM(require_data(), 1);
@@ -14725,7 +14815,7 @@ var wp;
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
-      import_components14.Button,
+      import_components13.Button,
       {
         size: "compact",
         onClick,
@@ -14770,7 +14860,7 @@ var wp;
     const [isModalFullScreen, setIsModalFullScreen] = (0, import_element21.useState)(false);
     const id = `editor-${clientId}`;
     return /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(
-      import_components14.Modal,
+      import_components13.Modal,
       {
         title: (0, import_i18n21.__)("Classic Editor"),
         onRequestClose: onClose,
@@ -14788,14 +14878,14 @@ var wp;
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(ClassicEdit, { id, defaultValue: content }),
           /* @__PURE__ */ (0, import_jsx_runtime201.jsxs)(
-            import_components14.Flex,
+            import_components13.Flex,
             {
               className: "block-editor-freeform-modal__actions",
               justify: "flex-end",
               expanded: false,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(import_components14.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
-                  import_components14.Button,
+                /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(import_components13.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
+                  import_components13.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "tertiary",
@@ -14803,8 +14893,8 @@ var wp;
                     children: (0, import_i18n21.__)("Cancel")
                   }
                 ) }),
-                /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(import_components14.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
-                  import_components14.Button,
+                /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(import_components13.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime201.jsx)(
+                  import_components13.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "primary",
@@ -14838,9 +14928,9 @@ var wp;
       [clientId]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime202.jsxs)(import_jsx_runtime202.Fragment, { children: [
-      canRemove && /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(import_block_editor30.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(import_components15.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(convert_to_blocks_button_default, { clientId }) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(import_block_editor30.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(import_components15.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
-        import_components15.ToolbarButton,
+      canRemove && /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(import_block_editor30.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(import_components14.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(convert_to_blocks_button_default, { clientId }) }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(import_block_editor30.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(import_components14.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
+        import_components14.ToolbarButton,
         {
           ref: editButtonRef,
           onClick: () => setOpen(true),
@@ -14849,7 +14939,7 @@ var wp;
       ) }) }),
       /* @__PURE__ */ (0, import_jsx_runtime202.jsxs)("div", { ...(0, import_block_editor30.useBlockProps)(), children: [
         content ? /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(import_element22.RawHTML, { children: content }) : /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
-          import_components15.Placeholder,
+          import_components14.Placeholder,
           {
             icon: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(import_block_editor30.BlockIcon, { icon: classic_default }),
             label: (0, import_i18n22.__)("Classic"),
@@ -14857,7 +14947,7 @@ var wp;
               "Use the classic editor to add content."
             ),
             children: /* @__PURE__ */ (0, import_jsx_runtime202.jsx)(
-              import_components15.Button,
+              import_components14.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "primary",
@@ -15236,18 +15326,18 @@ var wp;
 
   // packages/block-library/build-module/column/edit.mjs
   var import_block_editor34 = __toESM(require_block_editor(), 1);
-  var import_components16 = __toESM(require_components(), 1);
+  var import_components15 = __toESM(require_components(), 1);
   var import_data17 = __toESM(require_data(), 1);
   var import_i18n25 = __toESM(require_i18n(), 1);
   var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
   function ColumnInspectorControls({ width, setAttributes }) {
     const [availableUnits] = (0, import_block_editor34.useSettings)("spacing.units");
-    const units = (0, import_components16.__experimentalUseCustomUnits)({
+    const units = (0, import_components15.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || ["%", "px", "em", "rem", "vw"]
     });
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
-      import_components16.__experimentalToolsPanel,
+      import_components15.__experimentalToolsPanel,
       {
         label: (0, import_i18n25.__)("Settings"),
         resetAll: () => {
@@ -15255,14 +15345,14 @@ var wp;
         },
         dropdownMenuProps,
         children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
-          import_components16.__experimentalToolsPanelItem,
+          import_components15.__experimentalToolsPanelItem,
           {
             hasValue: () => width !== void 0,
             label: (0, import_i18n25.__)("Width"),
             onDeselect: () => setAttributes({ width: void 0 }),
             isShownByDefault: true,
             children: /* @__PURE__ */ (0, import_jsx_runtime207.jsx)(
-              import_components16.__experimentalUnitControl,
+              import_components15.__experimentalUnitControl,
               {
                 label: (0, import_i18n25.__)("Width"),
                 __unstableInputWidth: "calc(50% - 8px)",
@@ -15638,7 +15728,7 @@ var wp;
 
   // packages/block-library/build-module/columns/edit.mjs
   var import_i18n26 = __toESM(require_i18n(), 1);
-  var import_components17 = __toESM(require_components(), 1);
+  var import_components16 = __toESM(require_components(), 1);
   var import_block_editor37 = __toESM(require_block_editor(), 1);
   var import_data18 = __toESM(require_data(), 1);
   var import_blocks17 = __toESM(require_blocks(), 1);
@@ -15773,7 +15863,7 @@ var wp;
     }
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime210.jsxs)(
-      import_components17.__experimentalToolsPanel,
+      import_components16.__experimentalToolsPanel,
       {
         label: (0, import_i18n26.__)("Settings"),
         resetAll: () => {
@@ -15783,9 +15873,9 @@ var wp;
         },
         dropdownMenuProps,
         children: [
-          canInsertColumnBlock && /* @__PURE__ */ (0, import_jsx_runtime210.jsxs)(import_components17.__experimentalVStack, { spacing: 4, style: { gridColumn: "1 / -1" }, children: [
+          canInsertColumnBlock && /* @__PURE__ */ (0, import_jsx_runtime210.jsxs)(import_components16.__experimentalVStack, { spacing: 4, style: { gridColumn: "1 / -1" }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
-              import_components17.RangeControl,
+              import_components16.RangeControl,
               {
                 label: (0, import_i18n26.__)("Columns"),
                 value: count,
@@ -15794,12 +15884,12 @@ var wp;
                 max: Math.max(6, count)
               }
             ),
-            count > 6 && /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(import_components17.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n26.__)(
+            count > 6 && /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(import_components16.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n26.__)(
               "This column count exceeds the recommended amount and may cause visual breakage."
             ) })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
-            import_components17.__experimentalToolsPanelItem,
+            import_components16.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n26.__)("Stack on mobile"),
               isShownByDefault: true,
@@ -15808,7 +15898,7 @@ var wp;
                 isStackedOnMobile: true
               }),
               children: /* @__PURE__ */ (0, import_jsx_runtime210.jsx)(
-                import_components17.ToggleControl,
+                import_components16.ToggleControl,
                 {
                   label: (0, import_i18n26.__)("Stack on mobile"),
                   checked: isStackedOnMobile,
@@ -16025,7 +16115,7 @@ var wp;
   }
 
   // packages/block-library/build-module/columns/variations.mjs
-  var import_components18 = __toESM(require_components(), 1);
+  var import_components17 = __toESM(require_components(), 1);
   var import_i18n27 = __toESM(require_i18n(), 1);
   var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
   var variations2 = [
@@ -16034,13 +16124,13 @@ var wp;
       title: (0, import_i18n27.__)("100"),
       description: (0, import_i18n27.__)("One column"),
       icon: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
-        import_components18.SVG,
+        import_components17.SVG,
         {
           xmlns: "http://www.w3.org/2000/svg",
           width: "48",
           height: "48",
           viewBox: "0 0 48 48",
-          children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components18.Path, { d: "M0 10a2 2 0 0 1 2-2h44a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Z" })
+          children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components17.Path, { d: "M0 10a2 2 0 0 1 2-2h44a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Z" })
         }
       ),
       innerBlocks: [["core/column"]],
@@ -16051,13 +16141,13 @@ var wp;
       title: (0, import_i18n27.__)("50 / 50"),
       description: (0, import_i18n27.__)("Two columns; equal split"),
       icon: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
-        import_components18.SVG,
+        import_components17.SVG,
         {
           xmlns: "http://www.w3.org/2000/svg",
           width: "48",
           height: "48",
           viewBox: "0 0 48 48",
-          children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components18.Path, { d: "M0 10a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Zm25 0a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H27a2 2 0 0 1-2-2V10Z" })
+          children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components17.Path, { d: "M0 10a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Zm25 0a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H27a2 2 0 0 1-2-2V10Z" })
         }
       ),
       isDefault: true,
@@ -16069,13 +16159,13 @@ var wp;
       title: (0, import_i18n27.__)("33 / 66"),
       description: (0, import_i18n27.__)("Two columns; one-third, two-thirds split"),
       icon: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
-        import_components18.SVG,
+        import_components17.SVG,
         {
           xmlns: "http://www.w3.org/2000/svg",
           width: "48",
           height: "48",
           viewBox: "0 0 48 48",
-          children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components18.Path, { d: "M0 10a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Zm17 0a2 2 0 0 1 2-2h27a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H19a2 2 0 0 1-2-2V10Z" })
+          children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components17.Path, { d: "M0 10a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Zm17 0a2 2 0 0 1 2-2h27a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H19a2 2 0 0 1-2-2V10Z" })
         }
       ),
       innerBlocks: [
@@ -16089,13 +16179,13 @@ var wp;
       title: (0, import_i18n27.__)("66 / 33"),
       description: (0, import_i18n27.__)("Two columns; two-thirds, one-third split"),
       icon: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
-        import_components18.SVG,
+        import_components17.SVG,
         {
           xmlns: "http://www.w3.org/2000/svg",
           width: "48",
           height: "48",
           viewBox: "0 0 48 48",
-          children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components18.Path, { d: "M0 10a2 2 0 0 1 2-2h27a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Zm33 0a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H35a2 2 0 0 1-2-2V10Z" })
+          children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components17.Path, { d: "M0 10a2 2 0 0 1 2-2h27a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Zm33 0a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H35a2 2 0 0 1-2-2V10Z" })
         }
       ),
       innerBlocks: [
@@ -16109,13 +16199,13 @@ var wp;
       title: (0, import_i18n27.__)("33 / 33 / 33"),
       description: (0, import_i18n27.__)("Three columns; equal split"),
       icon: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
-        import_components18.SVG,
+        import_components17.SVG,
         {
           xmlns: "http://www.w3.org/2000/svg",
           width: "48",
           height: "48",
           viewBox: "0 0 48 48",
-          children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components18.Path, { d: "M0 10a2 2 0 0 1 2-2h10.531c1.105 0 1.969.895 1.969 2v28c0 1.105-.864 2-1.969 2H2a2 2 0 0 1-2-2V10Zm16.5 0c0-1.105.864-2 1.969-2H29.53c1.105 0 1.969.895 1.969 2v28c0 1.105-.864 2-1.969 2H18.47c-1.105 0-1.969-.895-1.969-2V10Zm17 0c0-1.105.864-2 1.969-2H46a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H35.469c-1.105 0-1.969-.895-1.969-2V10Z" })
+          children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components17.Path, { d: "M0 10a2 2 0 0 1 2-2h10.531c1.105 0 1.969.895 1.969 2v28c0 1.105-.864 2-1.969 2H2a2 2 0 0 1-2-2V10Zm16.5 0c0-1.105.864-2 1.969-2H29.53c1.105 0 1.969.895 1.969 2v28c0 1.105-.864 2-1.969 2H18.47c-1.105 0-1.969-.895-1.969-2V10Zm17 0c0-1.105.864-2 1.969-2H46a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H35.469c-1.105 0-1.969-.895-1.969-2V10Z" })
         }
       ),
       innerBlocks: [
@@ -16130,13 +16220,13 @@ var wp;
       title: (0, import_i18n27.__)("25 / 50 / 25"),
       description: (0, import_i18n27.__)("Three columns; wide center column"),
       icon: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(
-        import_components18.SVG,
+        import_components17.SVG,
         {
           xmlns: "http://www.w3.org/2000/svg",
           width: "48",
           height: "48",
           viewBox: "0 0 48 48",
-          children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components18.Path, { d: "M0 10a2 2 0 0 1 2-2h7.531c1.105 0 1.969.895 1.969 2v28c0 1.105-.864 2-1.969 2H2a2 2 0 0 1-2-2V10Zm13.5 0c0-1.105.864-2 1.969-2H32.53c1.105 0 1.969.895 1.969 2v28c0 1.105-.864 2-1.969 2H15.47c-1.105 0-1.969-.895-1.969-2V10Zm23 0c0-1.105.864-2 1.969-2H46a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2h-7.531c-1.105 0-1.969-.895-1.969-2V10Z" })
+          children: /* @__PURE__ */ (0, import_jsx_runtime212.jsx)(import_components17.Path, { d: "M0 10a2 2 0 0 1 2-2h7.531c1.105 0 1.969.895 1.969 2v28c0 1.105-.864 2-1.969 2H2a2 2 0 0 1-2-2V10Zm13.5 0c0-1.105.864-2 1.969-2H32.53c1.105 0 1.969.895 1.969 2v28c0 1.105-.864 2-1.969 2H15.47c-1.105 0-1.969-.895-1.969-2V10Zm23 0c0-1.105.864-2 1.969-2H46a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2h-7.531c-1.105 0-1.969-.895-1.969-2V10Z" })
         }
       ),
       innerBlocks: [
@@ -16529,7 +16619,7 @@ var wp;
   // packages/block-library/build-module/comments/edit/comments-legacy.mjs
   var import_block_editor43 = __toESM(require_block_editor(), 1);
   var import_i18n32 = __toESM(require_i18n(), 1);
-  var import_components20 = __toESM(require_components(), 1);
+  var import_components19 = __toESM(require_components(), 1);
 
   // packages/block-library/build-module/comments/edit/placeholder.mjs
   var import_block_editor42 = __toESM(require_block_editor(), 1);
@@ -16541,7 +16631,7 @@ var wp;
   // packages/block-library/build-module/post-comments-form/form.mjs
   var import_i18n30 = __toESM(require_i18n(), 1);
   var import_block_editor41 = __toESM(require_block_editor(), 1);
-  var import_components19 = __toESM(require_components(), 1);
+  var import_components18 = __toESM(require_components(), 1);
   var import_compose14 = __toESM(require_compose(), 1);
   var import_core_data7 = __toESM(require_core_data(), 1);
   var import_data19 = __toESM(require_data(), 1);
@@ -16608,7 +16698,7 @@ var wp;
       if ("closed" === commentStatus) {
         const actions = [
           /* @__PURE__ */ (0, import_jsx_runtime215.jsx)(
-            import_components19.Button,
+            import_components18.Button,
             {
               __next40pxDefaultSize: true,
               onClick: () => setCommentStatus("open"),
@@ -16756,7 +16846,7 @@ var wp;
     const { textAlign } = attributes;
     const actions = [
       /* @__PURE__ */ (0, import_jsx_runtime217.jsx)(
-        import_components20.Button,
+        import_components19.Button,
         {
           __next40pxDefaultSize: true,
           onClick: () => void setAttributes({ legacy: false }),
@@ -16976,7 +17066,7 @@ var wp;
 
   // packages/block-library/build-module/comment-author-avatar/edit.mjs
   var import_block_editor46 = __toESM(require_block_editor(), 1);
-  var import_components21 = __toESM(require_components(), 1);
+  var import_components20 = __toESM(require_components(), 1);
   var import_core_data9 = __toESM(require_core_data(), 1);
   var import_data21 = __toESM(require_data(), 1);
   var import_i18n33 = __toESM(require_i18n(), 1);
@@ -17011,8 +17101,8 @@ var wp;
       const { __experimentalDiscussionSettings } = select10(import_block_editor46.store).getSettings();
       return __experimentalDiscussionSettings?.avatarURL;
     }, []);
-    const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(import_block_editor46.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(import_components21.PanelBody, { title: (0, import_i18n33.__)("Settings"), children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
-      import_components21.RangeControl,
+    const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(import_block_editor46.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(import_components20.PanelBody, { title: (0, import_i18n33.__)("Settings"), children: /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
+      import_components20.RangeControl,
       {
         label: (0, import_i18n33.__)("Image size"),
         onChange: (newWidth) => setAttributes({
@@ -17026,7 +17116,7 @@ var wp;
       }
     ) }) });
     const resizableAvatar = /* @__PURE__ */ (0, import_jsx_runtime220.jsx)(
-      import_components21.ResizableBox,
+      import_components20.ResizableBox,
       {
         size: {
           width,
@@ -17156,7 +17246,7 @@ var wp;
   var import_data22 = __toESM(require_data(), 1);
   var import_block_editor47 = __toESM(require_block_editor(), 1);
   var import_core_data10 = __toESM(require_core_data(), 1);
-  var import_components22 = __toESM(require_components(), 1);
+  var import_components21 = __toESM(require_components(), 1);
   var import_jsx_runtime221 = __toESM(require_jsx_runtime(), 1);
   function Edit7(props) {
     const {
@@ -17181,7 +17271,7 @@ var wp;
       [commentId]
     );
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(import_block_editor47.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime221.jsxs)(
-      import_components22.__experimentalToolsPanel,
+      import_components21.__experimentalToolsPanel,
       {
         label: (0, import_i18n34.__)("Settings"),
         resetAll: () => {
@@ -17193,7 +17283,7 @@ var wp;
         dropdownMenuProps,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
-            import_components22.__experimentalToolsPanelItem,
+            import_components21.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n34.__)("Link to authors URL"),
               isShownByDefault: true,
@@ -17202,7 +17292,7 @@ var wp;
                 isLink: true
               }),
               children: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
-                import_components22.ToggleControl,
+                import_components21.ToggleControl,
                 {
                   label: (0, import_i18n34.__)("Link to authors URL"),
                   onChange: () => setAttributes({ isLink: !isLink }),
@@ -17212,7 +17302,7 @@ var wp;
             }
           ),
           isLink && /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
-            import_components22.__experimentalToolsPanelItem,
+            import_components21.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n34.__)("Open in new tab"),
               isShownByDefault: true,
@@ -17221,7 +17311,7 @@ var wp;
                 linkTarget: "_self"
               }),
               children: /* @__PURE__ */ (0, import_jsx_runtime221.jsx)(
-                import_components22.ToggleControl,
+                import_components21.ToggleControl,
                 {
                   label: (0, import_i18n34.__)("Open in new tab"),
                   onChange: (value) => setAttributes({
@@ -17425,7 +17515,7 @@ var wp;
   // packages/block-library/build-module/comment-content/edit.mjs
   var import_i18n35 = __toESM(require_i18n(), 1);
   var import_element25 = __toESM(require_element(), 1);
-  var import_components23 = __toESM(require_components(), 1);
+  var import_components22 = __toESM(require_components(), 1);
   var import_core_data11 = __toESM(require_core_data(), 1);
   var import_block_editor48 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
@@ -17444,7 +17534,7 @@ var wp;
     if (!commentId || !content) {
       return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_jsx_runtime222.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)("p", { children: (0, import_i18n35._x)("Comment Content", "block title") }) }) });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_jsx_runtime222.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_components23.Disabled, { children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_element25.RawHTML, { children: content.rendered }, "html") }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_jsx_runtime222.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_components22.Disabled, { children: /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(import_element25.RawHTML, { children: content.rendered }, "html") }) }) });
   }
 
   // packages/block-library/build-module/comment-content/deprecated.mjs
@@ -17586,7 +17676,7 @@ var wp;
   var import_core_data12 = __toESM(require_core_data(), 1);
   var import_date = __toESM(require_date(), 1);
   var import_block_editor49 = __toESM(require_block_editor(), 1);
-  var import_components24 = __toESM(require_components(), 1);
+  var import_components23 = __toESM(require_components(), 1);
   var import_i18n36 = __toESM(require_i18n(), 1);
   var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
   function Edit9({
@@ -17603,7 +17693,7 @@ var wp;
       "date_format"
     );
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(import_block_editor49.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime223.jsxs)(
-      import_components24.__experimentalToolsPanel,
+      import_components23.__experimentalToolsPanel,
       {
         label: (0, import_i18n36.__)("Settings"),
         resetAll: () => {
@@ -17615,7 +17705,7 @@ var wp;
         dropdownMenuProps,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
-            import_components24.__experimentalToolsPanelItem,
+            import_components23.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n36.__)("Date format"),
               hasValue: () => format3 !== void 0,
@@ -17632,14 +17722,14 @@ var wp;
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
-            import_components24.__experimentalToolsPanelItem,
+            import_components23.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n36.__)("Link to comment"),
               hasValue: () => !isLink,
               onDeselect: () => setAttributes({ isLink: true }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(
-                import_components24.ToggleControl,
+                import_components23.ToggleControl,
                 {
                   label: (0, import_i18n36.__)("Link to comment"),
                   onChange: () => setAttributes({ isLink: !isLink }),
@@ -17793,7 +17883,7 @@ var wp;
 
   // packages/block-library/build-module/comment-edit-link/edit.mjs
   var import_block_editor50 = __toESM(require_block_editor(), 1);
-  var import_components25 = __toESM(require_components(), 1);
+  var import_components24 = __toESM(require_components(), 1);
   var import_i18n37 = __toESM(require_i18n(), 1);
   var import_jsx_runtime224 = __toESM(require_jsx_runtime(), 1);
   function Edit10(props) {
@@ -17803,7 +17893,7 @@ var wp;
     const blockProps = (0, import_block_editor50.useBlockProps)();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(import_block_editor50.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
-      import_components25.__experimentalToolsPanel,
+      import_components24.__experimentalToolsPanel,
       {
         label: (0, import_i18n37.__)("Settings"),
         resetAll: () => {
@@ -17813,14 +17903,14 @@ var wp;
         },
         dropdownMenuProps,
         children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
-          import_components25.__experimentalToolsPanelItem,
+          import_components24.__experimentalToolsPanelItem,
           {
             label: (0, import_i18n37.__)("Open in new tab"),
             isShownByDefault: true,
             hasValue: () => linkTarget === "_blank",
             onDeselect: () => setAttributes({ linkTarget: "_self" }),
             children: /* @__PURE__ */ (0, import_jsx_runtime224.jsx)(
-              import_components25.ToggleControl,
+              import_components24.ToggleControl,
               {
                 label: (0, import_i18n37.__)("Open in new tab"),
                 onChange: (value) => setAttributes({
@@ -18120,7 +18210,7 @@ var wp;
   var import_data24 = __toESM(require_data(), 1);
   var import_i18n39 = __toESM(require_i18n(), 1);
   var import_block_editor53 = __toESM(require_block_editor(), 1);
-  var import_components26 = __toESM(require_components(), 1);
+  var import_components25 = __toESM(require_components(), 1);
   var import_core_data13 = __toESM(require_core_data(), 1);
 
   // packages/block-library/build-module/comment-template/hooks.mjs
@@ -18376,7 +18466,7 @@ var wp;
       commentOrder === "desc" && topLevelComments ? [...topLevelComments].reverse() : topLevelComments
     );
     if (!topLevelComments) {
-      return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("p", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(import_components26.Spinner, {}) });
+      return /* @__PURE__ */ (0, import_jsx_runtime226.jsx)("p", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime226.jsx)(import_components25.Spinner, {}) });
     }
     if (!postId) {
       commentTree = getCommentsPlaceholder({
@@ -18625,15 +18715,15 @@ var wp;
   var import_i18n43 = __toESM(require_i18n(), 1);
   var import_block_editor56 = __toESM(require_block_editor(), 1);
   var import_data25 = __toESM(require_data(), 1);
-  var import_components28 = __toESM(require_components(), 1);
+  var import_components27 = __toESM(require_components(), 1);
 
   // packages/block-library/build-module/comments-pagination/comments-pagination-arrow-controls.mjs
   var import_i18n42 = __toESM(require_i18n(), 1);
-  var import_components27 = __toESM(require_components(), 1);
+  var import_components26 = __toESM(require_components(), 1);
   var import_jsx_runtime229 = __toESM(require_jsx_runtime(), 1);
   function CommentsPaginationArrowControls({ value, onChange }) {
     return /* @__PURE__ */ (0, import_jsx_runtime229.jsxs)(
-      import_components27.__experimentalToggleGroupControl,
+      import_components26.__experimentalToggleGroupControl,
       {
         label: (0, import_i18n42.__)("Arrow"),
         value,
@@ -18644,7 +18734,7 @@ var wp;
         isBlock: true,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
-            import_components27.__experimentalToggleGroupControlOption,
+            import_components26.__experimentalToggleGroupControlOption,
             {
               value: "none",
               label: (0, import_i18n42._x)(
@@ -18654,7 +18744,7 @@ var wp;
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
-            import_components27.__experimentalToggleGroupControlOption,
+            import_components26.__experimentalToggleGroupControlOption,
             {
               value: "arrow",
               label: (0, import_i18n42._x)(
@@ -18664,7 +18754,7 @@ var wp;
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime229.jsx)(
-            import_components27.__experimentalToggleGroupControlOption,
+            import_components26.__experimentalToggleGroupControlOption,
             {
               value: "chevron",
               label: (0, import_i18n42._x)(
@@ -18710,13 +18800,13 @@ var wp;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime230.jsxs)(import_jsx_runtime230.Fragment, { children: [
       hasNextPreviousBlocks && /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(import_block_editor56.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
-        import_components28.__experimentalToolsPanel,
+        import_components27.__experimentalToolsPanel,
         {
           label: (0, import_i18n43.__)("Settings"),
           dropdownMenuProps,
           resetAll: () => setAttributes({ paginationArrow: "none" }),
           children: /* @__PURE__ */ (0, import_jsx_runtime230.jsx)(
-            import_components28.__experimentalToolsPanelItem,
+            import_components27.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n43.__)("Arrow"),
               hasValue: () => paginationArrow !== "none",
@@ -19050,7 +19140,7 @@ var wp;
   var import_block_editor60 = __toESM(require_block_editor(), 1);
   var import_i18n46 = __toESM(require_i18n(), 1);
   var import_core_data14 = __toESM(require_core_data(), 1);
-  var import_components29 = __toESM(require_components(), 1);
+  var import_components28 = __toESM(require_components(), 1);
   var import_element28 = __toESM(require_element(), 1);
   var import_data26 = __toESM(require_data(), 1);
   var import_api_fetch2 = __toESM(require_api_fetch(), 1);
@@ -19116,7 +19206,7 @@ var wp;
       }
     ) });
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(import_block_editor60.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime234.jsxs)(
-      import_components29.__experimentalToolsPanel,
+      import_components28.__experimentalToolsPanel,
       {
         label: (0, import_i18n46.__)("Settings"),
         resetAll: () => {
@@ -19128,14 +19218,14 @@ var wp;
         dropdownMenuProps,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
-            import_components29.__experimentalToolsPanelItem,
+            import_components28.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n46.__)("Show post title"),
               isShownByDefault: true,
               hasValue: () => !showPostTitle,
               onDeselect: () => setAttributes({ showPostTitle: true }),
               children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
-                import_components29.ToggleControl,
+                import_components28.ToggleControl,
                 {
                   label: (0, import_i18n46.__)("Show post title"),
                   checked: showPostTitle,
@@ -19145,14 +19235,14 @@ var wp;
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
-            import_components29.__experimentalToolsPanelItem,
+            import_components28.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n46.__)("Show comments count"),
               isShownByDefault: true,
               hasValue: () => !showCommentsCount,
               onDeselect: () => setAttributes({ showCommentsCount: true }),
               children: /* @__PURE__ */ (0, import_jsx_runtime234.jsx)(
-                import_components29.ToggleControl,
+                import_components28.ToggleControl,
                 {
                   label: (0, import_i18n46.__)("Show comments count"),
                   checked: showCommentsCount,
@@ -21211,7 +21301,7 @@ var wp;
   // packages/block-library/build-module/cover/edit/index.mjs
   var import_core_data16 = __toESM(require_core_data(), 1);
   var import_element34 = __toESM(require_element(), 1);
-  var import_components34 = __toESM(require_components(), 1);
+  var import_components33 = __toESM(require_components(), 1);
   var import_compose18 = __toESM(require_compose(), 1);
   var import_block_editor68 = __toESM(require_block_editor(), 1);
   var import_i18n53 = __toESM(require_i18n(), 1);
@@ -21222,7 +21312,7 @@ var wp;
 
   // packages/block-library/build-module/cover/edit/inspector-controls.mjs
   var import_element30 = __toESM(require_element(), 1);
-  var import_components31 = __toESM(require_components(), 1);
+  var import_components30 = __toESM(require_components(), 1);
   var import_compose17 = __toESM(require_compose(), 1);
   var import_block_editor64 = __toESM(require_block_editor(), 1);
   var import_i18n49 = __toESM(require_i18n(), 1);
@@ -21356,7 +21446,7 @@ var wp;
   // packages/block-library/build-module/utils/poster-image.mjs
   var import_block_editor63 = __toESM(require_block_editor(), 1);
   var import_notices3 = __toESM(require_notices(), 1);
-  var import_components30 = __toESM(require_components(), 1);
+  var import_components29 = __toESM(require_components(), 1);
   var import_blob5 = __toESM(require_blob(), 1);
   var import_i18n48 = __toESM(require_i18n(), 1);
   var import_element29 = __toESM(require_element(), 1);
@@ -21399,19 +21489,19 @@ var wp;
     };
     const getPosterButtonContent = () => {
       if (!poster && isLoading) {
-        return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(import_components30.Spinner, {});
+        return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(import_components29.Spinner, {});
       }
       return !poster ? (0, import_i18n48.__)("Set poster image") : (0, import_i18n48.__)("Replace");
     };
     return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(import_block_editor63.MediaUploadCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(
-      import_components30.__experimentalToolsPanelItem,
+      import_components29.__experimentalToolsPanelItem,
       {
         label: (0, import_i18n48.__)("Poster image"),
         isShownByDefault: true,
         hasValue: () => !!poster,
         onDeselect: () => onChange(void 0),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(import_components30.BaseControl.VisualLabel, { children: (0, import_i18n48.__)("Poster image") }),
+          /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(import_components29.BaseControl.VisualLabel, { children: (0, import_i18n48.__)("Poster image") }),
           /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
             import_block_editor63.MediaUpload,
             {
@@ -21420,7 +21510,7 @@ var wp;
               allowedTypes: POSTER_IMAGE_ALLOWED_MEDIA_TYPES,
               render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)("div", { className: "block-library-poster-image__container", children: [
                 poster && /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(
-                  import_components30.Button,
+                  import_components29.Button,
                   {
                     __next40pxDefaultSize: true,
                     onClick: open,
@@ -21440,12 +21530,12 @@ var wp;
                           className: "block-library-poster-image__preview-image"
                         }
                       ),
-                      isLoading && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(import_components30.Spinner, {})
+                      isLoading && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(import_components29.Spinner, {})
                     ]
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime236.jsxs)(
-                  import_components30.__experimentalHStack,
+                  import_components29.__experimentalHStack,
                   {
                     className: clsx_default(
                       "block-library-poster-image__actions",
@@ -21455,7 +21545,7 @@ var wp;
                     ),
                     children: [
                       /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
-                        import_components30.Button,
+                        import_components29.Button,
                         {
                           __next40pxDefaultSize: true,
                           onClick: open,
@@ -21479,7 +21569,7 @@ var wp;
                         "There is no poster image currently selected."
                       ) }),
                       !!poster && /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
-                        import_components30.Button,
+                        import_components29.Button,
                         {
                           __next40pxDefaultSize: true,
                           onClick: () => {
@@ -21495,7 +21585,7 @@ var wp;
                     ]
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(import_components30.DropZone, { onFilesDrop: onDropFiles })
+                /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(import_components29.DropZone, { onFilesDrop: onDropFiles })
               ] })
             }
           )
@@ -21519,11 +21609,11 @@ var wp;
     unit = "px",
     value = ""
   }) {
-    const instanceId = (0, import_compose17.useInstanceId)(import_components31.__experimentalUnitControl);
+    const instanceId = (0, import_compose17.useInstanceId)(import_components30.__experimentalUnitControl);
     const inputId = `block-cover-height-input-${instanceId}`;
     const isPx = unit === "px";
     const [availableUnits] = (0, import_block_editor64.useSettings)("spacing.units");
-    const units = (0, import_components31.__experimentalUseCustomUnits)({
+    const units = (0, import_components30.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || ["px", "em", "rem", "vw", "vh"],
       defaultValues: { px: 430, "%": 20, em: 20, rem: 20, vw: 20, vh: 50 }
     });
@@ -21535,12 +21625,12 @@ var wp;
       onChange(inputValue);
     };
     const computedValue = (0, import_element30.useMemo)(() => {
-      const [parsedQuantity] = (0, import_components31.__experimentalParseQuantityAndUnitFromRawValue)(value);
+      const [parsedQuantity] = (0, import_components30.__experimentalParseQuantityAndUnitFromRawValue)(value);
       return [parsedQuantity, unit].join("");
     }, [unit, value]);
     const min = isPx ? COVER_MIN_HEIGHT : 0;
     return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-      import_components31.__experimentalUnitControl,
+      import_components30.__experimentalUnitControl,
       {
         label: (0, import_i18n49.__)("Minimum height"),
         id: inputId,
@@ -21607,7 +21697,7 @@ var wp;
       styleKey: "minHeight",
       rootValue: void 0
     });
-    const [stateMinHeightValue, stateMinHeightUnit] = (0, import_components31.__experimentalParseQuantityAndUnitFromRawValue)(stateMinHeight || "");
+    const [stateMinHeightValue, stateMinHeightUnit] = (0, import_components30.__experimentalParseQuantityAndUnitFromRawValue)(stateMinHeight || "");
     const activeMinHeight = hasSelectedStyleState ? stateMinHeightValue : minHeight;
     const activeMinHeightUnit = hasSelectedStyleState ? stateMinHeightUnit || minHeightUnit : minHeightUnit;
     const activeAspectRatio = getActiveDimensionValue({
@@ -21700,7 +21790,7 @@ var wp;
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)(import_jsx_runtime237.Fragment, { children: [
       (!!url || useFeaturedImage) && /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(import_block_editor64.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)(
-        import_components31.__experimentalToolsPanel,
+        import_components30.__experimentalToolsPanel,
         {
           label: (0, import_i18n49.__)("Settings"),
           resetAll: () => {
@@ -21717,7 +21807,7 @@ var wp;
           children: [
             isImageBackground && /* @__PURE__ */ (0, import_jsx_runtime237.jsxs)(import_jsx_runtime237.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-                import_components31.__experimentalToolsPanelItem,
+                import_components30.__experimentalToolsPanelItem,
                 {
                   label: (0, import_i18n49.__)("Fixed background"),
                   isShownByDefault: true,
@@ -21727,7 +21817,7 @@ var wp;
                     focalPoint: void 0
                   }),
                   children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-                    import_components31.ToggleControl,
+                    import_components30.ToggleControl,
                     {
                       label: (0, import_i18n49.__)("Fixed background"),
                       checked: !!hasParallax,
@@ -21737,7 +21827,7 @@ var wp;
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-                import_components31.__experimentalToolsPanelItem,
+                import_components30.__experimentalToolsPanelItem,
                 {
                   label: (0, import_i18n49.__)("Repeated background"),
                   isShownByDefault: true,
@@ -21746,7 +21836,7 @@ var wp;
                     isRepeated: false
                   }),
                   children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-                    import_components31.ToggleControl,
+                    import_components30.ToggleControl,
                     {
                       label: (0, import_i18n49.__)("Repeated background"),
                       checked: isRepeated,
@@ -21757,7 +21847,7 @@ var wp;
               )
             ] }),
             showFocalPointPicker && /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-              import_components31.__experimentalToolsPanelItem,
+              import_components30.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n49.__)("Focal point"),
                 isShownByDefault: true,
@@ -21766,7 +21856,7 @@ var wp;
                   focalPoint: void 0
                 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-                  import_components31.FocalPointPicker,
+                  import_components30.FocalPointPicker,
                   {
                     label: (0, import_i18n49.__)("Focal point"),
                     url,
@@ -21790,14 +21880,14 @@ var wp;
               }
             ),
             !useFeaturedImage && url && !isVideoBackground && /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-              import_components31.__experimentalToolsPanelItem,
+              import_components30.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n49.__)("Alternative text"),
                 isShownByDefault: true,
                 hasValue: () => !!alt,
                 onDeselect: () => setAttributes({ alt: "" }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-                  import_components31.TextareaControl,
+                  import_components30.TextareaControl,
                   {
                     label: (0, import_i18n49.__)("Alternative text"),
                     value: alt,
@@ -21866,7 +21956,7 @@ var wp;
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-          import_components31.__experimentalToolsPanelItem,
+          import_components30.__experimentalToolsPanelItem,
           {
             hasValue: () => {
               return dimRatio === void 0 ? false : dimRatio !== (url ? 50 : 100);
@@ -21879,7 +21969,7 @@ var wp;
             isShownByDefault: true,
             panelId: clientId,
             children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-              import_components31.RangeControl,
+              import_components30.RangeControl,
               {
                 label: (0, import_i18n49.__)("Overlay opacity"),
                 value: dimRatio,
@@ -21894,7 +21984,7 @@ var wp;
         )
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(import_block_editor64.InspectorControls, { group: "dimensions", children: /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
-        import_components31.__experimentalToolsPanelItem,
+        import_components30.__experimentalToolsPanelItem,
         {
           className: "single-column",
           hasValue: () => !!activeMinHeight,
@@ -21952,11 +22042,11 @@ var wp;
   var import_element32 = __toESM(require_element(), 1);
   var import_block_editor65 = __toESM(require_block_editor(), 1);
   var import_i18n51 = __toESM(require_i18n(), 1);
-  var import_components33 = __toESM(require_components(), 1);
+  var import_components32 = __toESM(require_components(), 1);
 
   // packages/block-library/build-module/cover/edit/embed-video-url-input.mjs
   var import_element31 = __toESM(require_element(), 1);
-  var import_components32 = __toESM(require_components(), 1);
+  var import_components31 = __toESM(require_components(), 1);
   var import_i18n50 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/cover/embed-video-utils.mjs
@@ -22106,7 +22196,7 @@ var wp;
       onClose();
     };
     return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
-      import_components32.__experimentalConfirmDialog,
+      import_components31.__experimentalConfirmDialog,
       {
         isOpen: true,
         onConfirm: handleConfirm,
@@ -22114,9 +22204,9 @@ var wp;
         confirmButtonText: (0, import_i18n50.__)("Add video"),
         size: "medium",
         children: /* @__PURE__ */ (0, import_jsx_runtime238.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-          error2 && /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(import_components32.Notice, { status: "error", isDismissible: false, children: error2 }),
+          error2 && /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(import_components31.Notice, { status: "error", isDismissible: false, children: error2 }),
           /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(
-            import_components32.TextControl,
+            import_components31.TextControl,
             {
               type: "url",
               label: (0, import_i18n50.__)("Video URL"),
@@ -22224,7 +22314,7 @@ var wp;
           }
         ),
         showEditMediaButton && /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
-          import_components33.ToolbarButton,
+          import_components32.ToolbarButton,
           {
             ref: editMediaButtonRef,
             icon: crop_default,
@@ -22248,7 +22338,7 @@ var wp;
           onReset: onClearMedia,
           variant: "toolbar",
           children: ({ onClose }) => hasAllowedVideoProviders ? /* @__PURE__ */ (0, import_jsx_runtime239.jsx)(
-            import_components33.MenuItem,
+            import_components32.MenuItem,
             {
               icon: link_default,
               onClick: () => {
@@ -23620,7 +23710,7 @@ var wp;
           children: [
             resizeListener,
             !url && useFeaturedImage && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
-              import_components34.Placeholder,
+              import_components33.Placeholder,
               {
                 className: "wp-block-cover__image--placeholder-image",
                 withIllustration: true
@@ -23670,7 +23760,7 @@ var wp;
                 className: "wp-block-cover__video-background wp-block-cover__embed-background",
                 style: mediaStyle,
                 children: /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
-                  import_components34.SandBox,
+                  import_components33.SandBox,
                   {
                     allowSameOrigin: true,
                     html: embedHtml,
@@ -23682,7 +23772,7 @@ var wp;
                 )
               }
             ),
-            isEmbedVideoBackground && !embedHtml && isFetchingEmbed && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components34.Spinner, {}),
+            isEmbedVideoBackground && !embedHtml && isFetchingEmbed && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components33.Spinner, {}),
             showOverlay && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
               "span",
               {
@@ -23704,7 +23794,7 @@ var wp;
                 style: { backgroundImage: gradientValue, ...bgStyle }
               }
             ),
-            (isUploadingMedia || isSwappingMedia) && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components34.Spinner, {}),
+            (isUploadingMedia || isSwappingMedia) && /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(import_components33.Spinner, {}),
             /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
               CoverPlaceholder,
               {
@@ -24455,7 +24545,7 @@ var wp;
 
   // packages/block-library/build-module/details/edit.mjs
   var import_block_editor71 = __toESM(require_block_editor(), 1);
-  var import_components35 = __toESM(require_components(), 1);
+  var import_components34 = __toESM(require_components(), 1);
   var import_i18n56 = __toESM(require_i18n(), 1);
   var import_element35 = __toESM(require_element(), 1);
   var import_data30 = __toESM(require_data(), 1);
@@ -24487,7 +24577,7 @@ var wp;
     };
     return /* @__PURE__ */ (0, import_jsx_runtime244.jsxs)(import_jsx_runtime244.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(import_block_editor71.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
-        import_components35.__experimentalToolsPanel,
+        import_components34.__experimentalToolsPanel,
         {
           label: (0, import_i18n56.__)("Settings"),
           resetAll: () => {
@@ -24497,7 +24587,7 @@ var wp;
           },
           dropdownMenuProps,
           children: /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
-            import_components35.__experimentalToolsPanelItem,
+            import_components34.__experimentalToolsPanelItem,
             {
               isShownByDefault: true,
               label: (0, import_i18n56.__)("Open by default"),
@@ -24508,7 +24598,7 @@ var wp;
                 });
               },
               children: /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
-                import_components35.ToggleControl,
+                import_components34.ToggleControl,
                 {
                   label: (0, import_i18n56.__)("Open by default"),
                   checked: showContent,
@@ -24522,7 +24612,7 @@ var wp;
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(import_block_editor71.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
-        import_components35.TextControl,
+        import_components34.TextControl,
         {
           label: (0, import_i18n56.__)("Name attribute"),
           value: name122 || "",
@@ -24697,7 +24787,7 @@ var wp;
 
   // packages/block-library/build-module/embed/embed-controls.mjs
   var import_i18n58 = __toESM(require_i18n(), 1);
-  var import_components36 = __toESM(require_components(), 1);
+  var import_components35 = __toESM(require_components(), 1);
   var import_block_editor73 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime246 = __toESM(require_jsx_runtime(), 1);
   function getResponsiveHelp(checked) {
@@ -24717,8 +24807,8 @@ var wp;
   }) => {
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime246.jsxs)(import_jsx_runtime246.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(import_block_editor73.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(import_components36.ToolbarGroup, { children: showEditButton && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
-        import_components36.ToolbarButton,
+      /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(import_block_editor73.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(import_components35.ToolbarGroup, { children: showEditButton && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
+        import_components35.ToolbarButton,
         {
           className: "components-toolbar__control",
           label: (0, import_i18n58.__)("Edit URL"),
@@ -24727,7 +24817,7 @@ var wp;
         }
       ) }) }),
       themeSupportsResponsive && blockSupportsResponsive && /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(import_block_editor73.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
-        import_components36.__experimentalToolsPanel,
+        import_components35.__experimentalToolsPanel,
         {
           label: (0, import_i18n58.__)("Media settings"),
           resetAll: () => {
@@ -24735,7 +24825,7 @@ var wp;
           },
           dropdownMenuProps,
           children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
-            import_components36.__experimentalToolsPanelItem,
+            import_components35.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n58.__)("Media settings"),
               isShownByDefault: true,
@@ -24744,7 +24834,7 @@ var wp;
                 toggleResponsive(!allowResponsive);
               },
               children: /* @__PURE__ */ (0, import_jsx_runtime246.jsx)(
-                import_components36.ToggleControl,
+                import_components35.ToggleControl,
                 {
                   label: (0, import_i18n58.__)("Resize for smaller devices"),
                   checked: allowResponsive,
@@ -24761,99 +24851,99 @@ var wp;
   var embed_controls_default = EmbedControls;
 
   // packages/block-library/build-module/embed/icons.mjs
-  var import_components37 = __toESM(require_components(), 1);
+  var import_components36 = __toESM(require_components(), 1);
   var import_jsx_runtime247 = __toESM(require_jsx_runtime(), 1);
-  var embedContentIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V9.8l4.7-5.3H19c.3 0 .5.2.5.5v14zm-6-9.5L16 12l-2.5 2.8 1.1 1L18 12l-3.5-3.5-1 1zm-3 0l-1-1L6 12l3.5 3.8 1.1-1L8 12l2.5-2.5z" }) });
-  var embedAudioIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V9.8l4.7-5.3H19c.3 0 .5.2.5.5v14zM13.2 7.7c-.4.4-.7 1.1-.7 1.9v3.7c-.4-.3-.8-.4-1.3-.4-1.2 0-2.2 1-2.2 2.2 0 1.2 1 2.2 2.2 2.2.5 0 1-.2 1.4-.5.9-.6 1.4-1.6 1.4-2.6V9.6c0-.4.1-.6.2-.8.3-.3 1-.3 1.6-.3h.2V7h-.2c-.7 0-1.8 0-2.6.7z" }) });
-  var embedPhotoIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9.2 4.5H19c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V9.8l4.6-5.3zm9.8 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z" }) });
-  var embedVideoIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V9.8l4.7-5.3H19c.3 0 .5.2.5.5v14zM10 15l5-3-5-3v6z" }) });
+  var embedContentIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V9.8l4.7-5.3H19c.3 0 .5.2.5.5v14zm-6-9.5L16 12l-2.5 2.8 1.1 1L18 12l-3.5-3.5-1 1zm-3 0l-1-1L6 12l3.5 3.8 1.1-1L8 12l2.5-2.5z" }) });
+  var embedAudioIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V9.8l4.7-5.3H19c.3 0 .5.2.5.5v14zM13.2 7.7c-.4.4-.7 1.1-.7 1.9v3.7c-.4-.3-.8-.4-1.3-.4-1.2 0-2.2 1-2.2 2.2 0 1.2 1 2.2 2.2 2.2.5 0 1-.2 1.4-.5.9-.6 1.4-1.6 1.4-2.6V9.6c0-.4.1-.6.2-.8.3-.3 1-.3 1.6-.3h.2V7h-.2c-.7 0-1.8 0-2.6.7z" }) });
+  var embedPhotoIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9.2 4.5H19c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V9.8l4.6-5.3zm9.8 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z" }) });
+  var embedVideoIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V9.8l4.7-5.3H19c.3 0 .5.2.5.5v14zM10 15l5-3-5-3v6z" }) });
   var embedTwitterIcon = {
     foreground: "#000000",
-    src: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z" }) })
+    src: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M13.982 10.622 20.54 3h-1.554l-5.693 6.618L8.745 3H3.5l6.876 10.007L3.5 21h1.554l6.012-6.989L15.868 21h5.245l-7.131-10.378Zm-2.128 2.474-.697-.997-5.543-7.93H8l4.474 6.4.697.996 5.815 8.318h-2.387l-4.745-6.787Z" }) })
   };
   var embedYouTubeIcon = {
     foreground: "#ff0000",
-    src: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M21.8 8s-.195-1.377-.795-1.984c-.76-.797-1.613-.8-2.004-.847-2.798-.203-6.996-.203-6.996-.203h-.01s-4.197 0-6.996.202c-.39.046-1.242.05-2.003.846C2.395 6.623 2.2 8 2.2 8S2 9.62 2 11.24v1.517c0 1.618.2 3.237.2 3.237s.195 1.378.795 1.985c.76.797 1.76.77 2.205.855 1.6.153 6.8.2 6.8.2s4.203-.005 7-.208c.392-.047 1.244-.05 2.005-.847.6-.607.795-1.985.795-1.985s.2-1.618.2-3.237v-1.517C22 9.62 21.8 8 21.8 8zM9.935 14.595v-5.62l5.403 2.82-5.403 2.8z" }) })
+    src: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M21.8 8s-.195-1.377-.795-1.984c-.76-.797-1.613-.8-2.004-.847-2.798-.203-6.996-.203-6.996-.203h-.01s-4.197 0-6.996.202c-.39.046-1.242.05-2.003.846C2.395 6.623 2.2 8 2.2 8S2 9.62 2 11.24v1.517c0 1.618.2 3.237.2 3.237s.195 1.378.795 1.985c.76.797 1.76.77 2.205.855 1.6.153 6.8.2 6.8.2s4.203-.005 7-.208c.392-.047 1.244-.05 2.005-.847.6-.607.795-1.985.795-1.985s.2-1.618.2-3.237v-1.517C22 9.62 21.8 8 21.8 8zM9.935 14.595v-5.62l5.403 2.82-5.403 2.8z" }) })
   };
   var embedFacebookIcon = {
     foreground: "#3b5998",
-    src: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M20 3H4c-.6 0-1 .4-1 1v16c0 .5.4 1 1 1h8.6v-7h-2.3v-2.7h2.3v-2c0-2.3 1.4-3.6 3.5-3.6 1 0 1.8.1 2.1.1v2.4h-1.4c-1.1 0-1.3.5-1.3 1.3v1.7h2.7l-.4 2.8h-2.3v7H20c.5 0 1-.4 1-1V4c0-.6-.4-1-1-1z" }) })
+    src: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M20 3H4c-.6 0-1 .4-1 1v16c0 .5.4 1 1 1h8.6v-7h-2.3v-2.7h2.3v-2c0-2.3 1.4-3.6 3.5-3.6 1 0 1.8.1 2.1.1v2.4h-1.4c-1.1 0-1.3.5-1.3 1.3v1.7h2.7l-.4 2.8h-2.3v7H20c.5 0 1-.4 1-1V4c0-.6-.4-1-1-1z" }) })
   };
-  var embedInstagramIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.G, { children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M12 4.622c2.403 0 2.688.01 3.637.052.877.04 1.354.187 1.67.31.42.163.72.358 1.036.673.315.315.51.615.673 1.035.123.317.27.794.31 1.67.043.95.052 1.235.052 3.638s-.01 2.688-.052 3.637c-.04.877-.187 1.354-.31 1.67-.163.42-.358.72-.673 1.036-.315.315-.615.51-1.035.673-.317.123-.794.27-1.67.31-.95.043-1.234.052-3.638.052s-2.688-.01-3.637-.052c-.877-.04-1.354-.187-1.67-.31-.42-.163-.72-.358-1.036-.673-.315-.315-.51-.615-.673-1.035-.123-.317-.27-.794-.31-1.67-.043-.95-.052-1.235-.052-3.638s.01-2.688.052-3.637c.04-.877.187-1.354.31-1.67.163-.42.358-.72.673-1.036.315-.315.615-.51 1.035-.673.317-.123.794-.27 1.67-.31.95-.043 1.235-.052 3.638-.052M12 3c-2.444 0-2.75.01-3.71.054s-1.613.196-2.185.418c-.592.23-1.094.538-1.594 1.04-.5.5-.807 1-1.037 1.593-.223.572-.375 1.226-.42 2.184C3.01 9.25 3 9.555 3 12s.01 2.75.054 3.71.196 1.613.418 2.186c.23.592.538 1.094 1.038 1.594s1.002.808 1.594 1.038c.572.222 1.227.375 2.185.418.96.044 1.266.054 3.71.054s2.75-.01 3.71-.054 1.613-.196 2.186-.418c.592-.23 1.094-.538 1.594-1.038s.808-1.002 1.038-1.594c.222-.572.375-1.227.418-2.185.044-.96.054-1.266.054-3.71s-.01-2.75-.054-3.71-.196-1.613-.418-2.186c-.23-.592-.538-1.094-1.038-1.594s-1.002-.808-1.594-1.038c-.572-.222-1.227-.375-2.185-.418C14.75 3.01 14.445 3 12 3zm0 4.378c-2.552 0-4.622 2.07-4.622 4.622s2.07 4.622 4.622 4.622 4.622-2.07 4.622-4.622S14.552 7.378 12 7.378zM12 15c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3zm4.804-8.884c-.596 0-1.08.484-1.08 1.08s.484 1.08 1.08 1.08c.596 0 1.08-.484 1.08-1.08s-.483-1.08-1.08-1.08z" }) }) });
+  var embedInstagramIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.G, { children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M12 4.622c2.403 0 2.688.01 3.637.052.877.04 1.354.187 1.67.31.42.163.72.358 1.036.673.315.315.51.615.673 1.035.123.317.27.794.31 1.67.043.95.052 1.235.052 3.638s-.01 2.688-.052 3.637c-.04.877-.187 1.354-.31 1.67-.163.42-.358.72-.673 1.036-.315.315-.615.51-1.035.673-.317.123-.794.27-1.67.31-.95.043-1.234.052-3.638.052s-2.688-.01-3.637-.052c-.877-.04-1.354-.187-1.67-.31-.42-.163-.72-.358-1.036-.673-.315-.315-.51-.615-.673-1.035-.123-.317-.27-.794-.31-1.67-.043-.95-.052-1.235-.052-3.638s.01-2.688.052-3.637c.04-.877.187-1.354.31-1.67.163-.42.358-.72.673-1.036.315-.315.615-.51 1.035-.673.317-.123.794-.27 1.67-.31.95-.043 1.235-.052 3.638-.052M12 3c-2.444 0-2.75.01-3.71.054s-1.613.196-2.185.418c-.592.23-1.094.538-1.594 1.04-.5.5-.807 1-1.037 1.593-.223.572-.375 1.226-.42 2.184C3.01 9.25 3 9.555 3 12s.01 2.75.054 3.71.196 1.613.418 2.186c.23.592.538 1.094 1.038 1.594s1.002.808 1.594 1.038c.572.222 1.227.375 2.185.418.96.044 1.266.054 3.71.054s2.75-.01 3.71-.054 1.613-.196 2.186-.418c.592-.23 1.094-.538 1.594-1.038s.808-1.002 1.038-1.594c.222-.572.375-1.227.418-2.185.044-.96.054-1.266.054-3.71s-.01-2.75-.054-3.71-.196-1.613-.418-2.186c-.23-.592-.538-1.094-1.038-1.594s-1.002-.808-1.594-1.038c-.572-.222-1.227-.375-2.185-.418C14.75 3.01 14.445 3 12 3zm0 4.378c-2.552 0-4.622 2.07-4.622 4.622s2.07 4.622 4.622 4.622 4.622-2.07 4.622-4.622S14.552 7.378 12 7.378zM12 15c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3zm4.804-8.884c-.596 0-1.08.484-1.08 1.08s.484 1.08 1.08 1.08c.596 0 1.08-.484 1.08-1.08s-.483-1.08-1.08-1.08z" }) }) });
   var embedWordPressIcon = {
     foreground: "#0073AA",
-    src: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.G, { children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" }) }) })
+    src: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.G, { children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" }) }) })
   };
   var embedSpotifyIcon = {
     foreground: "#1db954",
-    src: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2m4.586 14.424c-.18.295-.563.387-.857.207-2.35-1.434-5.305-1.76-8.786-.963-.335.077-.67-.133-.746-.47-.077-.334.132-.67.47-.745 3.808-.87 7.076-.496 9.712 1.115.293.18.386.563.206.857M17.81 13.7c-.226.367-.706.482-1.072.257-2.687-1.652-6.785-2.13-9.965-1.166-.413.127-.848-.106-.973-.517-.125-.413.108-.848.52-.973 3.632-1.102 8.147-.568 11.234 1.328.366.226.48.707.256 1.072m.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71c-.493.15-1.016-.13-1.166-.624-.148-.495.13-1.017.625-1.167 3.532-1.073 9.404-.866 13.115 1.337.445.264.59.838.327 1.282-.264.443-.838.59-1.282.325" }) })
+    src: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2m4.586 14.424c-.18.295-.563.387-.857.207-2.35-1.434-5.305-1.76-8.786-.963-.335.077-.67-.133-.746-.47-.077-.334.132-.67.47-.745 3.808-.87 7.076-.496 9.712 1.115.293.18.386.563.206.857M17.81 13.7c-.226.367-.706.482-1.072.257-2.687-1.652-6.785-2.13-9.965-1.166-.413.127-.848-.106-.973-.517-.125-.413.108-.848.52-.973 3.632-1.102 8.147-.568 11.234 1.328.366.226.48.707.256 1.072m.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71c-.493.15-1.016-.13-1.166-.624-.148-.495.13-1.017.625-1.167 3.532-1.073 9.404-.866 13.115 1.337.445.264.59.838.327 1.282-.264.443-.838.59-1.282.325" }) })
   };
-  var embedFlickrIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "m6.5 7c-2.75 0-5 2.25-5 5s2.25 5 5 5 5-2.25 5-5-2.25-5-5-5zm11 0c-2.75 0-5 2.25-5 5s2.25 5 5 5 5-2.25 5-5-2.25-5-5-5z" }) });
+  var embedFlickrIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "m6.5 7c-2.75 0-5 2.25-5 5s2.25 5 5 5 5-2.25 5-5-2.25-5-5-5zm11 0c-2.75 0-5 2.25-5 5s2.25 5 5 5 5-2.25 5-5-2.25-5-5-5z" }) });
   var embedVimeoIcon = {
     foreground: "#1ab7ea",
-    src: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.G, { children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M22.396 7.164c-.093 2.026-1.507 4.8-4.245 8.32C15.323 19.16 12.93 21 10.97 21c-1.214 0-2.24-1.12-3.08-3.36-.56-2.052-1.118-4.105-1.68-6.158-.622-2.24-1.29-3.36-2.004-3.36-.156 0-.7.328-1.634.98l-.978-1.26c1.027-.903 2.04-1.806 3.037-2.71C6 3.95 7.03 3.328 7.716 3.265c1.62-.156 2.616.95 2.99 3.32.404 2.558.685 4.148.84 4.77.468 2.12.982 3.18 1.543 3.18.435 0 1.09-.687 1.963-2.064.872-1.376 1.34-2.422 1.402-3.142.125-1.187-.343-1.782-1.4-1.782-.5 0-1.013.115-1.542.34 1.023-3.35 2.977-4.976 5.862-4.883 2.14.063 3.148 1.45 3.024 4.16z" }) }) })
+    src: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.G, { children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M22.396 7.164c-.093 2.026-1.507 4.8-4.245 8.32C15.323 19.16 12.93 21 10.97 21c-1.214 0-2.24-1.12-3.08-3.36-.56-2.052-1.118-4.105-1.68-6.158-.622-2.24-1.29-3.36-2.004-3.36-.156 0-.7.328-1.634.98l-.978-1.26c1.027-.903 2.04-1.806 3.037-2.71C6 3.95 7.03 3.328 7.716 3.265c1.62-.156 2.616.95 2.99 3.32.404 2.558.685 4.148.84 4.77.468 2.12.982 3.18 1.543 3.18.435 0 1.09-.687 1.963-2.064.872-1.376 1.34-2.422 1.402-3.142.125-1.187-.343-1.782-1.4-1.782-.5 0-1.013.115-1.542.34 1.023-3.35 2.977-4.976 5.862-4.883 2.14.063 3.148 1.45 3.024 4.16z" }) }) })
   };
-  var embedRedditIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M22 12.068a2.184 2.184 0 0 0-2.186-2.186c-.592 0-1.13.233-1.524.609-1.505-1.075-3.566-1.774-5.86-1.864l1.004-4.695 3.261.699A1.56 1.56 0 1 0 18.255 3c-.61-.001-1.147.357-1.398.877l-3.638-.77a.382.382 0 0 0-.287.053.348.348 0 0 0-.161.251l-1.112 5.233c-2.33.072-4.426.77-5.95 1.864a2.201 2.201 0 0 0-1.523-.61 2.184 2.184 0 0 0-.896 4.176c-.036.215-.053.43-.053.663 0 3.37 3.924 6.111 8.763 6.111s8.763-2.724 8.763-6.11c0-.216-.017-.449-.053-.664A2.207 2.207 0 0 0 22 12.068Zm-15.018 1.56a1.56 1.56 0 0 1 3.118 0c0 .86-.699 1.558-1.559 1.558-.86.018-1.559-.699-1.559-1.559Zm8.728 4.139c-1.076 1.075-3.119 1.147-3.71 1.147-.61 0-2.652-.09-3.71-1.147a.4.4 0 0 1 0-.573.4.4 0 0 1 .574 0c.68.68 2.114.914 3.136.914 1.022 0 2.473-.233 3.136-.914a.4.4 0 0 1 .574 0 .436.436 0 0 1 0 .573Zm-.287-2.563a1.56 1.56 0 0 1 0-3.118c.86 0 1.56.699 1.56 1.56 0 .841-.7 1.558-1.56 1.558Z" }) });
+  var embedRedditIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M22 12.068a2.184 2.184 0 0 0-2.186-2.186c-.592 0-1.13.233-1.524.609-1.505-1.075-3.566-1.774-5.86-1.864l1.004-4.695 3.261.699A1.56 1.56 0 1 0 18.255 3c-.61-.001-1.147.357-1.398.877l-3.638-.77a.382.382 0 0 0-.287.053.348.348 0 0 0-.161.251l-1.112 5.233c-2.33.072-4.426.77-5.95 1.864a2.201 2.201 0 0 0-1.523-.61 2.184 2.184 0 0 0-.896 4.176c-.036.215-.053.43-.053.663 0 3.37 3.924 6.111 8.763 6.111s8.763-2.724 8.763-6.11c0-.216-.017-.449-.053-.664A2.207 2.207 0 0 0 22 12.068Zm-15.018 1.56a1.56 1.56 0 0 1 3.118 0c0 .86-.699 1.558-1.559 1.558-.86.018-1.559-.699-1.559-1.559Zm8.728 4.139c-1.076 1.075-3.119 1.147-3.71 1.147-.61 0-2.652-.09-3.71-1.147a.4.4 0 0 1 0-.573.4.4 0 0 1 .574 0c.68.68 2.114.914 3.136.914 1.022 0 2.473-.233 3.136-.914a.4.4 0 0 1 .574 0 .436.436 0 0 1 0 .573Zm-.287-2.563a1.56 1.56 0 0 1 0-3.118c.86 0 1.56.699 1.56 1.56 0 .841-.7 1.558-1.56 1.558Z" }) });
   var embedTumblrIcon = {
     foreground: "#35465c",
-    src: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M19 3H5a2 2 0 00-2 2v14c0 1.1.9 2 2 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-5.69 14.66c-2.72 0-3.1-1.9-3.1-3.16v-3.56H8.49V8.99c1.7-.62 2.54-1.99 2.64-2.87 0-.06.06-.41.06-.58h1.9v3.1h2.17v2.3h-2.18v3.1c0 .47.13 1.3 1.2 1.26h1.1v2.36c-1.01.02-2.07 0-2.07 0z" }) })
+    src: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M19 3H5a2 2 0 00-2 2v14c0 1.1.9 2 2 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-5.69 14.66c-2.72 0-3.1-1.9-3.1-3.16v-3.56H8.49V8.99c1.7-.62 2.54-1.99 2.64-2.87 0-.06.06-.41.06-.58h1.9v3.1h2.17v2.3h-2.18v3.1c0 .47.13 1.3 1.2 1.26h1.1v2.36c-1.01.02-2.07 0-2.07 0z" }) })
   };
-  var embedAmazonIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(import_components37.SVG, { viewBox: "0 0 24 24", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M18.42 14.58c-.51-.66-1.05-1.23-1.05-2.5V7.87c0-1.8.15-3.45-1.2-4.68-1.05-1.02-2.79-1.35-4.14-1.35-2.6 0-5.52.96-6.12 4.14-.06.36.18.54.4.57l2.66.3c.24-.03.42-.27.48-.5.24-1.12 1.17-1.63 2.2-1.63.56 0 1.22.21 1.55.7.4.56.33 1.31.33 1.97v.36c-1.59.18-3.66.27-5.16.93a4.63 4.63 0 0 0-2.93 4.44c0 2.82 1.8 4.23 4.1 4.23 1.95 0 3.03-.45 4.53-1.98.51.72.66 1.08 1.59 1.83.18.09.45.09.63-.1v.04l2.1-1.8c.24-.21.2-.48.03-.75zm-5.4-1.2c-.45.75-1.14 1.23-1.92 1.23-1.05 0-1.65-.81-1.65-1.98 0-2.31 2.1-2.73 4.08-2.73v.6c0 1.05.03 1.92-.5 2.88z" }),
-    /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M21.69 19.2a17.62 17.62 0 0 1-21.6-1.57c-.23-.2 0-.5.28-.33a23.88 23.88 0 0 0 20.93 1.3c.45-.19.84.3.39.6z" }),
-    /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M22.8 17.96c-.36-.45-2.22-.2-3.1-.12-.23.03-.3-.18-.05-.36 1.5-1.05 3.96-.75 4.26-.39.3.36-.1 2.82-1.5 4.02-.21.18-.42.1-.3-.15.3-.8 1.02-2.58.69-3z" })
+  var embedAmazonIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(import_components36.SVG, { viewBox: "0 0 24 24", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M18.42 14.58c-.51-.66-1.05-1.23-1.05-2.5V7.87c0-1.8.15-3.45-1.2-4.68-1.05-1.02-2.79-1.35-4.14-1.35-2.6 0-5.52.96-6.12 4.14-.06.36.18.54.4.57l2.66.3c.24-.03.42-.27.48-.5.24-1.12 1.17-1.63 2.2-1.63.56 0 1.22.21 1.55.7.4.56.33 1.31.33 1.97v.36c-1.59.18-3.66.27-5.16.93a4.63 4.63 0 0 0-2.93 4.44c0 2.82 1.8 4.23 4.1 4.23 1.95 0 3.03-.45 4.53-1.98.51.72.66 1.08 1.59 1.83.18.09.45.09.63-.1v.04l2.1-1.8c.24-.21.2-.48.03-.75zm-5.4-1.2c-.45.75-1.14 1.23-1.92 1.23-1.05 0-1.65-.81-1.65-1.98 0-2.31 2.1-2.73 4.08-2.73v.6c0 1.05.03 1.92-.5 2.88z" }),
+    /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M21.69 19.2a17.62 17.62 0 0 1-21.6-1.57c-.23-.2 0-.5.28-.33a23.88 23.88 0 0 0 20.93 1.3c.45-.19.84.3.39.6z" }),
+    /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M22.8 17.96c-.36-.45-2.22-.2-3.1-.12-.23.03-.3-.18-.05-.36 1.5-1.05 3.96-.75 4.26-.39.3.36-.1 2.82-1.5 4.02-.21.18-.42.1-.3-.15.3-.8 1.02-2.58.69-3z" })
   ] });
-  var embedAnimotoIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(import_components37.SVG, { viewBox: "0 0 24 24", children: [
+  var embedAnimotoIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(import_components36.SVG, { viewBox: "0 0 24 24", children: [
     /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
-      import_components37.Path,
+      import_components36.Path,
       {
         d: "m.0206909 21 19.8160091-13.07806 3.5831 6.20826z",
         fill: "#4bc7ee"
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
-      import_components37.Path,
+      import_components36.Path,
       {
         d: "m23.7254 19.0205-10.1074-17.18468c-.6421-1.114428-1.7087-1.114428-2.3249 0l-11.2931 19.16418h22.5655c1.279 0 1.8019-.8905 1.1599-1.9795z",
         fill: "#d4cdcb"
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
-      import_components37.Path,
+      import_components36.Path,
       {
         d: "m.0206909 21 15.2439091-16.38571 4.3029 7.32271z",
         fill: "#c3d82e"
       }
     ),
     /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
-      import_components37.Path,
+      import_components36.Path,
       {
         d: "m13.618 1.83582c-.6421-1.114428-1.7087-1.114428-2.3249 0l-11.2931 19.16418 15.2646-16.38573z",
         fill: "#e4ecb0"
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "m.0206909 21 19.5468091-9.063 1.6621 2.8344z", fill: "#209dbd" }),
+    /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "m.0206909 21 19.5468091-9.063 1.6621 2.8344z", fill: "#209dbd" }),
     /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
-      import_components37.Path,
+      import_components36.Path,
       {
         d: "m.0206909 21 17.9209091-11.82623 1.6259 2.76323z",
         fill: "#7cb3c9"
       }
     )
   ] });
-  var embedDailymotionIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
-    import_components37.Path,
+  var embedDailymotionIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+    import_components36.Path,
     {
       d: "M11.903 16.568c-1.82 0-3.124-1.281-3.124-2.967a2.987 2.987 0 0 1 2.989-2.989c1.663 0 2.944 1.304 2.944 3.034 0 1.663-1.281 2.922-2.81 2.922ZM17.997 3l-3.308.73v5.107c-.809-1.034-2.045-1.37-3.505-1.37-1.529 0-2.9.561-4.023 1.662-1.259 1.214-1.933 2.764-1.933 4.495 0 1.888.72 3.506 2.113 4.742 1.056.944 2.314 1.415 3.775 1.415 1.438 0 2.517-.382 3.573-1.415v1.415h3.308V3Z",
       fill: "#333436"
     }
   ) });
-  var embedPinterestIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M12.289,2C6.617,2,3.606,5.648,3.606,9.622c0,1.846,1.025,4.146,2.666,4.878c0.25,0.111,0.381,0.063,0.439-0.169 c0.044-0.175,0.267-1.029,0.365-1.428c0.032-0.128,0.017-0.237-0.091-0.362C6.445,11.911,6.01,10.75,6.01,9.668 c0-2.777,2.194-5.464,5.933-5.464c3.23,0,5.49,2.108,5.49,5.122c0,3.407-1.794,5.768-4.13,5.768c-1.291,0-2.257-1.021-1.948-2.277 c0.372-1.495,1.089-3.112,1.089-4.191c0-0.967-0.542-1.775-1.663-1.775c-1.319,0-2.379,1.309-2.379,3.059 c0,1.115,0.394,1.869,0.394,1.869s-1.302,5.279-1.54,6.261c-0.405,1.666,0.053,4.368,0.094,4.604 c0.021,0.126,0.167,0.169,0.25,0.063c0.129-0.165,1.699-2.419,2.142-4.051c0.158-0.59,0.817-2.995,0.817-2.995 c0.43,0.784,1.681,1.446,3.013,1.446c3.963,0,6.822-3.494,6.822-7.833C20.394,5.112,16.849,2,12.289,2" }) });
-  var embedWolframIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 44 44", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.Path, { d: "M32.59521,22.001l4.31885-4.84473-6.34131-1.38379.646-6.459-5.94336,2.61035L22,6.31934l-3.27344,5.60351L12.78418,9.3125l.645,6.458L7.08643,17.15234,11.40479,21.999,7.08594,26.84375l6.34131,1.38379-.64551,6.458,5.94287-2.60938L22,37.68066l3.27344-5.60351,5.94287,2.61035-.64551-6.458,6.34277-1.38183Zm.44385,2.75244L30.772,23.97827l-1.59558-2.07391,1.97888.735Zm-8.82147,6.1579L22.75,33.424V30.88977l1.52228-2.22168ZM18.56226,13.48816,19.819,15.09534l-2.49219-.88642L15.94037,12.337Zm6.87719.00116,2.62043-1.15027-1.38654,1.86981L24.183,15.0946Zm3.59357,2.6029-1.22546,1.7381.07525-2.73486,1.44507-1.94867ZM22,29.33008l-2.16406-3.15686L22,23.23688l2.16406,2.93634Zm-4.25458-9.582-.10528-3.836,3.60986,1.284v3.73242Zm5.00458-2.552,3.60986-1.284-.10528,3.836L22.75,20.92853Zm-7.78174-1.10559-.29352-2.94263,1.44245,1.94739.07519,2.73321Zm2.30982,5.08319,3.50817,1.18164-2.16247,2.9342-3.678-1.08447Zm2.4486,7.49285L21.25,30.88977v2.53485L19.78052,30.91Zm3.48707-6.31121,3.50817-1.18164,2.33228,3.03137-3.678,1.08447Zm10.87219-4.28113-2.714,3.04529L28.16418,19.928l1.92176-2.72565ZM24.06036,12.81769l-2.06012,2.6322-2.059-2.63318L22,9.292ZM9.91455,18.07227l4.00079-.87195,1.921,2.72735-3.20794,1.19019Zm2.93024,4.565,1.9801-.73462L13.228,23.97827l-2.26838.77429Zm-1.55591,3.58819L13.701,25.4021l2.64935.78058-2.14447.67853Zm3.64868,1.977L18.19,27.17334l.08313,3.46332L14.52979,32.2793Zm10.7876,2.43549.08447-3.464,3.25165,1.03052.407,4.07684Zm4.06824-3.77478-2.14545-.68,2.65063-.781,2.41266.825Z" }) });
+  var embedPinterestIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { width: "24", height: "24", viewBox: "0 0 24 24", version: "1.1", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M12.289,2C6.617,2,3.606,5.648,3.606,9.622c0,1.846,1.025,4.146,2.666,4.878c0.25,0.111,0.381,0.063,0.439-0.169 c0.044-0.175,0.267-1.029,0.365-1.428c0.032-0.128,0.017-0.237-0.091-0.362C6.445,11.911,6.01,10.75,6.01,9.668 c0-2.777,2.194-5.464,5.933-5.464c3.23,0,5.49,2.108,5.49,5.122c0,3.407-1.794,5.768-4.13,5.768c-1.291,0-2.257-1.021-1.948-2.277 c0.372-1.495,1.089-3.112,1.089-4.191c0-0.967-0.542-1.775-1.663-1.775c-1.319,0-2.379,1.309-2.379,3.059 c0,1.115,0.394,1.869,0.394,1.869s-1.302,5.279-1.54,6.261c-0.405,1.666,0.053,4.368,0.094,4.604 c0.021,0.126,0.167,0.169,0.25,0.063c0.129-0.165,1.699-2.419,2.142-4.051c0.158-0.59,0.817-2.995,0.817-2.995 c0.43,0.784,1.681,1.446,3.013,1.446c3.963,0,6.822-3.494,6.822-7.833C20.394,5.112,16.849,2,12.289,2" }) });
+  var embedWolframIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 44 44", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.Path, { d: "M32.59521,22.001l4.31885-4.84473-6.34131-1.38379.646-6.459-5.94336,2.61035L22,6.31934l-3.27344,5.60351L12.78418,9.3125l.645,6.458L7.08643,17.15234,11.40479,21.999,7.08594,26.84375l6.34131,1.38379-.64551,6.458,5.94287-2.60938L22,37.68066l3.27344-5.60351,5.94287,2.61035-.64551-6.458,6.34277-1.38183Zm.44385,2.75244L30.772,23.97827l-1.59558-2.07391,1.97888.735Zm-8.82147,6.1579L22.75,33.424V30.88977l1.52228-2.22168ZM18.56226,13.48816,19.819,15.09534l-2.49219-.88642L15.94037,12.337Zm6.87719.00116,2.62043-1.15027-1.38654,1.86981L24.183,15.0946Zm3.59357,2.6029-1.22546,1.7381.07525-2.73486,1.44507-1.94867ZM22,29.33008l-2.16406-3.15686L22,23.23688l2.16406,2.93634Zm-4.25458-9.582-.10528-3.836,3.60986,1.284v3.73242Zm5.00458-2.552,3.60986-1.284-.10528,3.836L22.75,20.92853Zm-7.78174-1.10559-.29352-2.94263,1.44245,1.94739.07519,2.73321Zm2.30982,5.08319,3.50817,1.18164-2.16247,2.9342-3.678-1.08447Zm2.4486,7.49285L21.25,30.88977v2.53485L19.78052,30.91Zm3.48707-6.31121,3.50817-1.18164,2.33228,3.03137-3.678,1.08447Zm10.87219-4.28113-2.714,3.04529L28.16418,19.928l1.92176-2.72565ZM24.06036,12.81769l-2.06012,2.6322-2.059-2.63318L22,9.292ZM9.91455,18.07227l4.00079-.87195,1.921,2.72735-3.20794,1.19019Zm2.93024,4.565,1.9801-.73462L13.228,23.97827l-2.26838.77429Zm-1.55591,3.58819L13.701,25.4021l2.64935.78058-2.14447.67853Zm3.64868,1.977L18.19,27.17334l.08313,3.46332L14.52979,32.2793Zm10.7876,2.43549.08447-3.464,3.25165,1.03052.407,4.07684Zm4.06824-3.77478-2.14545-.68,2.65063-.781,2.41266.825Z" }) });
   var embedPocketCastsIcon = {
     foreground: "#f43e37",
     src: /* @__PURE__ */ (0, import_jsx_runtime247.jsxs)(
-      import_components37.SVG,
+      import_components36.SVG,
       {
         width: "24",
         height: "24",
@@ -24862,7 +24952,7 @@ var wp;
         xmlns: "http://www.w3.org/2000/svg",
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
-            import_components37.Path,
+            import_components36.Path,
             {
               fillRule: "evenodd",
               clipRule: "evenodd",
@@ -24870,7 +24960,7 @@ var wp;
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
-            import_components37.Path,
+            import_components36.Path,
             {
               fillRule: "evenodd",
               clipRule: "evenodd",
@@ -24882,8 +24972,8 @@ var wp;
       }
     )
   };
-  var embedBlueskyIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components37.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
-    import_components37.Path,
+  var embedBlueskyIcon = /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(import_components36.SVG, { viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime247.jsx)(
+    import_components36.Path,
     {
       fill: "#0a7aff",
       d: "M6.3,4.2c2.3,1.7,4.8,5.3,5.7,7.2.9-1.9,3.4-5.4,5.7-7.2,1.7-1.3,4.3-2.2,4.3.9s-.4,5.2-.6,5.9c-.7,2.6-3.3,3.2-5.6,2.8,4,.7,5.1,3,2.9,5.3-5,5.2-6.7-2.8-6.7-2.8,0,0-1.7,8-6.7,2.8-2.2-2.3-1.2-4.6,2.9-5.3-2.3.4-4.9-.3-5.6-2.8-.2-.7-.6-5.3-.6-5.9,0-3.1,2.7-2.1,4.3-.9h0Z"
@@ -24891,14 +24981,14 @@ var wp;
   ) });
 
   // packages/block-library/build-module/embed/embed-loading.mjs
-  var import_components38 = __toESM(require_components(), 1);
+  var import_components37 = __toESM(require_components(), 1);
   var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
-  var EmbedLoading = () => /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", { className: "wp-block-embed is-loading", children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(import_components38.Spinner, {}) });
+  var EmbedLoading = () => /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("div", { className: "wp-block-embed is-loading", children: /* @__PURE__ */ (0, import_jsx_runtime248.jsx)(import_components37.Spinner, {}) });
   var embed_loading_default = EmbedLoading;
 
   // packages/block-library/build-module/embed/embed-placeholder.mjs
   var import_i18n59 = __toESM(require_i18n(), 1);
-  var import_components39 = __toESM(require_components(), 1);
+  var import_components38 = __toESM(require_components(), 1);
   var import_block_editor74 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime249 = __toESM(require_jsx_runtime(), 1);
   function EmbedPlaceholder({
@@ -24912,7 +25002,7 @@ var wp;
     tryAgain
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)(
-      import_components39.Placeholder,
+      import_components38.Placeholder,
       {
         icon: /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(import_block_editor74.BlockIcon, { icon: icon4, showColors: true }),
         label,
@@ -24923,7 +25013,7 @@ var wp;
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)("form", { onSubmit, children: [
             /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
-              import_components39.__experimentalInputControl,
+              import_components38.__experimentalInputControl,
               {
                 type: "url",
                 value: value || "",
@@ -24934,7 +25024,7 @@ var wp;
                 onChange
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(import_components39.Button, { __next40pxDefaultSize: true, variant: "primary", type: "submit", children: (0, import_i18n59._x)("Embed", "button label") })
+            /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(import_components38.Button, { __next40pxDefaultSize: true, variant: "primary", type: "submit", children: (0, import_i18n59._x)("Embed", "button label") })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("div", { className: "wp-block-embed__learn-more", children: /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
             Link,
@@ -24956,7 +25046,7 @@ var wp;
                 /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("div", { className: "components-placeholder__instructions", children: (0, import_i18n59.__)("Sorry, this content could not be embedded.") }),
                 /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)(Stack, { direction: "row", gap: "md", justify: "flex-start", children: [
                   /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
-                    import_components39.Button,
+                    import_components38.Button,
                     {
                       __next40pxDefaultSize: true,
                       variant: "secondary",
@@ -24965,7 +25055,7 @@ var wp;
                     }
                   ),
                   fallback2 && /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(
-                    import_components39.Button,
+                    import_components38.Button,
                     {
                       __next40pxDefaultSize: true,
                       variant: "secondary",
@@ -24984,7 +25074,7 @@ var wp;
 
   // packages/block-library/build-module/embed/embed-preview.mjs
   var import_i18n60 = __toESM(require_i18n(), 1);
-  var import_components40 = __toESM(require_components(), 1);
+  var import_components39 = __toESM(require_components(), 1);
   var import_block_editor75 = __toESM(require_block_editor(), 1);
   var import_element37 = __toESM(require_element(), 1);
   var import_url6 = __toESM(require_url(), 1);
@@ -25074,7 +25164,7 @@ var wp;
     );
     const embedWrapper = "wp-embed" === type ? /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(WpEmbedPreview, { html }) : /* @__PURE__ */ (0, import_jsx_runtime251.jsxs)("div", { className: "wp-block-embed__wrapper", children: [
       /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(
-        import_components40.SandBox,
+        import_components39.SandBox,
         {
           allowSameOrigin: true,
           html,
@@ -25093,7 +25183,7 @@ var wp;
       )
     ] });
     return /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(import_jsx_runtime251.Fragment, { children: previewable ? embedWrapper : /* @__PURE__ */ (0, import_jsx_runtime251.jsxs)(
-      import_components40.Placeholder,
+      import_components39.Placeholder,
       {
         icon: /* @__PURE__ */ (0, import_jsx_runtime251.jsx)(import_block_editor75.BlockIcon, { icon: icon4, showColors: true }),
         label,
@@ -26152,7 +26242,7 @@ ${url}
 
   // packages/block-library/build-module/file/edit.mjs
   var import_blob8 = __toESM(require_blob(), 1);
-  var import_components42 = __toESM(require_components(), 1);
+  var import_components41 = __toESM(require_components(), 1);
   var import_data32 = __toESM(require_data(), 1);
   var import_block_editor81 = __toESM(require_block_editor(), 1);
   var import_element39 = __toESM(require_element(), 1);
@@ -26164,7 +26254,7 @@ ${url}
 
   // packages/block-library/build-module/file/inspector.mjs
   var import_i18n64 = __toESM(require_i18n(), 1);
-  var import_components41 = __toESM(require_components(), 1);
+  var import_components40 = __toESM(require_components(), 1);
   var import_block_editor80 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
   function FileBlockInspector({
@@ -26190,7 +26280,7 @@ ${url}
     }
     return /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(import_jsx_runtime256.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(import_block_editor80.InspectorControls, { children: [
       href.endsWith(".pdf") && /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(
-        import_components41.__experimentalToolsPanel,
+        import_components40.__experimentalToolsPanel,
         {
           label: (0, import_i18n64.__)("PDF settings"),
           resetAll: () => {
@@ -26200,14 +26290,14 @@ ${url}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-              import_components41.__experimentalToolsPanelItem,
+              import_components40.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n64.__)("Show inline embed"),
                 isShownByDefault: true,
                 hasValue: () => !displayPreview,
                 onDeselect: () => changeDisplayPreview(true),
                 children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-                  import_components41.ToggleControl,
+                  import_components40.ToggleControl,
                   {
                     label: (0, import_i18n64.__)("Show inline embed"),
                     help: displayPreview ? (0, import_i18n64.__)(
@@ -26220,14 +26310,14 @@ ${url}
               }
             ),
             displayPreview && /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-              import_components41.__experimentalToolsPanelItem,
+              import_components40.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n64.__)("Height in pixels"),
                 isShownByDefault: true,
                 hasValue: () => previewHeight !== 600,
                 onDeselect: () => changePreviewHeight(600),
                 children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-                  import_components41.RangeControl,
+                  import_components40.RangeControl,
                   {
                     label: (0, import_i18n64.__)("Height in pixels"),
                     min: MIN_PREVIEW_HEIGHT,
@@ -26245,7 +26335,7 @@ ${url}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime256.jsxs)(
-        import_components41.__experimentalToolsPanel,
+        import_components40.__experimentalToolsPanel,
         {
           label: (0, import_i18n64.__)("Settings"),
           resetAll: () => {
@@ -26256,14 +26346,14 @@ ${url}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-              import_components41.__experimentalToolsPanelItem,
+              import_components40.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n64.__)("Link to"),
                 isShownByDefault: true,
                 hasValue: () => textLinkHref !== href,
                 onDeselect: () => changeLinkDestinationOption(href),
                 children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-                  import_components41.SelectControl,
+                  import_components40.SelectControl,
                   {
                     label: (0, import_i18n64.__)("Link to"),
                     value: textLinkHref,
@@ -26274,14 +26364,14 @@ ${url}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-              import_components41.__experimentalToolsPanelItem,
+              import_components40.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n64.__)("Open in new tab"),
                 isShownByDefault: true,
                 hasValue: () => !!openInNewWindow,
                 onDeselect: () => changeOpenInNewWindow(false),
                 children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-                  import_components41.ToggleControl,
+                  import_components40.ToggleControl,
                   {
                     label: (0, import_i18n64.__)("Open in new tab"),
                     checked: openInNewWindow,
@@ -26291,14 +26381,14 @@ ${url}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-              import_components41.__experimentalToolsPanelItem,
+              import_components40.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n64.__)("Show download button"),
                 isShownByDefault: true,
                 hasValue: () => !showDownloadButton,
                 onDeselect: () => changeShowDownloadButton(true),
                 children: /* @__PURE__ */ (0, import_jsx_runtime256.jsx)(
-                  import_components41.ToggleControl,
+                  import_components40.ToggleControl,
                   {
                     label: (0, import_i18n64.__)("Show download button"),
                     checked: showDownloadButton,
@@ -26355,7 +26445,7 @@ ${url}
       });
     });
     return /* @__PURE__ */ (0, import_jsx_runtime257.jsx)(
-      import_components42.ToolbarButton,
+      import_components41.ToolbarButton,
       {
         className: "components-clipboard-toolbar-button",
         ref,
@@ -26465,7 +26555,7 @@ ${url}
     const attachmentPage = media && media.link;
     const blockProps = (0, import_block_editor81.useBlockProps)({
       className: clsx_default(
-        !!temporaryURL && (0, import_components42.__unstableGetAnimateClassName)({ type: "loading" }),
+        !!temporaryURL && (0, import_components41.__unstableGetAnimateClassName)({ type: "loading" }),
         {
           "is-transient": !!temporaryURL
         }
@@ -26533,7 +26623,7 @@ ${url}
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime257.jsxs)("div", { ...blockProps, children: [
         displayPreviewInEditor && /* @__PURE__ */ (0, import_jsx_runtime257.jsxs)(
-          import_components42.ResizableBox,
+          import_components41.ResizableBox,
           {
             size: { height: previewHeight, width: "100%" },
             minHeight: MIN_PREVIEW_HEIGHT,
@@ -26956,7 +27046,7 @@ ${url}
   // packages/block-library/build-module/form/edit.mjs
   var import_i18n69 = __toESM(require_i18n(), 1);
   var import_block_editor83 = __toESM(require_block_editor(), 1);
-  var import_components43 = __toESM(require_components(), 1);
+  var import_components42 = __toESM(require_components(), 1);
   var import_data34 = __toESM(require_data(), 1);
   var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
   var Edit13 = ({ attributes, setAttributes, clientId }) => {
@@ -26986,14 +27076,14 @@ ${url}
     });
     return /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(import_jsx_runtime259.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(import_block_editor83.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(
-        import_components43.__experimentalToolsPanel,
+        import_components42.__experimentalToolsPanel,
         {
           dropdownMenuProps,
           label: (0, import_i18n69.__)("Settings"),
           resetAll: resetAllSettings,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
-              import_components43.__experimentalToolsPanelItem,
+              import_components42.__experimentalToolsPanelItem,
               {
                 hasValue: () => submissionMethod !== "email",
                 label: (0, import_i18n69.__)("Submissions method"),
@@ -27002,7 +27092,7 @@ ${url}
                 }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
-                  import_components43.SelectControl,
+                  import_components42.SelectControl,
                   {
                     label: (0, import_i18n69.__)("Submissions method"),
                     options: [
@@ -27028,7 +27118,7 @@ ${url}
               }
             ),
             submissionMethod === "email" && /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
-              import_components43.__experimentalToolsPanelItem,
+              import_components42.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!email,
                 label: (0, import_i18n69.__)("Email for form submissions"),
@@ -27039,7 +27129,7 @@ ${url}
                 }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
-                  import_components43.TextControl,
+                  import_components42.TextControl,
                   {
                     autoComplete: "off",
                     label: (0, import_i18n69.__)("Email for form submissions"),
@@ -27065,7 +27155,7 @@ ${url}
       ) }),
       submissionMethod !== "email" && /* @__PURE__ */ (0, import_jsx_runtime259.jsxs)(import_block_editor83.InspectorControls, { group: "advanced", children: [
         /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
-          import_components43.SelectControl,
+          import_components42.SelectControl,
           {
             label: (0, import_i18n69.__)("Method"),
             options: [
@@ -27080,7 +27170,7 @@ ${url}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
-          import_components43.TextControl,
+          import_components42.TextControl,
           {
             autoComplete: "off",
             label: (0, import_i18n69.__)("Form action"),
@@ -27736,7 +27826,7 @@ ${url}
   // packages/block-library/build-module/form-input/edit.mjs
   var import_i18n73 = __toESM(require_i18n(), 1);
   var import_block_editor87 = __toESM(require_block_editor(), 1);
-  var import_components44 = __toESM(require_components(), 1);
+  var import_components43 = __toESM(require_components(), 1);
   var import_element40 = __toESM(require_element(), 1);
   var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
   function InputFieldBlock({ attributes, setAttributes, className }) {
@@ -27753,7 +27843,7 @@ ${url}
     const isCheckboxOrRadio = type === "checkbox" || type === "radio";
     const controls = /* @__PURE__ */ (0, import_jsx_runtime264.jsxs)(import_jsx_runtime264.Fragment, { children: [
       "hidden" !== type && /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(import_block_editor87.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime264.jsxs)(
-        import_components44.__experimentalToolsPanel,
+        import_components43.__experimentalToolsPanel,
         {
           label: (0, import_i18n73.__)("Settings"),
           resetAll: () => {
@@ -27765,14 +27855,14 @@ ${url}
           dropdownMenuProps,
           children: [
             "checkbox" !== type && /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(
-              import_components44.__experimentalToolsPanelItem,
+              import_components43.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n73.__)("Inline label"),
                 hasValue: () => !!inlineLabel,
                 onDeselect: () => setAttributes({ inlineLabel: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(
-                  import_components44.CheckboxControl,
+                  import_components43.CheckboxControl,
                   {
                     label: (0, import_i18n73.__)("Inline label"),
                     checked: inlineLabel,
@@ -27786,14 +27876,14 @@ ${url}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(
-              import_components44.__experimentalToolsPanelItem,
+              import_components43.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n73.__)("Required"),
                 hasValue: () => !!required,
                 onDeselect: () => setAttributes({ required: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(
-                  import_components44.CheckboxControl,
+                  import_components43.CheckboxControl,
                   {
                     label: (0, import_i18n73.__)("Required"),
                     checked: required,
@@ -27811,7 +27901,7 @@ ${url}
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime264.jsxs)(import_block_editor87.InspectorControls, { group: "advanced", children: [
         /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(
-          import_components44.TextControl,
+          import_components43.TextControl,
           {
             autoComplete: "off",
             label: (0, import_i18n73.__)("Name"),
@@ -27827,7 +27917,7 @@ ${url}
           }
         ),
         "hidden" === type && /* @__PURE__ */ (0, import_jsx_runtime264.jsx)(
-          import_components44.TextControl,
+          import_components43.TextControl,
           {
             autoComplete: "off",
             label: (0, import_i18n73.__)("Value"),
@@ -29323,7 +29413,7 @@ ${url}
   var deprecated_default19 = [v72, v62, v52, v42, v34, v28, v118];
 
   // packages/block-library/build-module/gallery/edit.mjs
-  var import_components46 = __toESM(require_components(), 1);
+  var import_components45 = __toESM(require_components(), 1);
   var import_block_editor98 = __toESM(require_block_editor(), 1);
   var import_element45 = __toESM(require_element(), 1);
   var import_i18n82 = __toESM(require_i18n(), 1);
@@ -30430,7 +30520,7 @@ ${url}
   // packages/block-library/build-module/gallery/dynamic-gallery.mjs
   var import_i18n81 = __toESM(require_i18n(), 1);
   var import_element44 = __toESM(require_element(), 1);
-  var import_components45 = __toESM(require_components(), 1);
+  var import_components44 = __toESM(require_components(), 1);
   var import_block_editor97 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
   var ORDER_OPTIONS = [
@@ -30449,7 +30539,7 @@ ${url}
   ];
   function OrderControl({ orderby, order, onChange }) {
     return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
-      import_components45.SelectControl,
+      import_components44.SelectControl,
       {
         label: (0, import_i18n81.__)("Order by"),
         value: `${orderby}/${order}`,
@@ -30463,7 +30553,7 @@ ${url}
   }
   function DetachGalleryDialog({ onConfirm, onCancel }) {
     return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
-      import_components45.__experimentalConfirmDialog,
+      import_components44.__experimentalConfirmDialog,
       {
         isOpen: true,
         title: (0, import_i18n81.__)("Detach Gallery"),
@@ -30510,7 +30600,7 @@ ${url}
     if (isDynamic) {
       return /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(import_jsx_runtime274.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(
-          import_components45.__experimentalToolsPanel,
+          import_components44.__experimentalToolsPanel,
           {
             label: (0, import_i18n81.__)("Source"),
             resetAll: resetSource,
@@ -30519,7 +30609,7 @@ ${url}
               /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)("div", { className: "wp-block-gallery__source-settings", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("p", { className: "wp-block-gallery__source-description", children: sourceDescriptor?.description ?? (0, import_i18n81.__)("Dynamic images.") }),
                 /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
-                  import_components45.Button,
+                  import_components44.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "secondary",
@@ -30531,7 +30621,7 @@ ${url}
                 )
               ] }),
               hasMoreImagesThanCap && /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
-                import_components45.Notice,
+                import_components44.Notice,
                 {
                   className: "wp-block-gallery__source-notice",
                   status: "warning",
@@ -30547,7 +30637,7 @@ ${url}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
-                import_components45.__experimentalToolsPanelItem,
+                import_components44.__experimentalToolsPanelItem,
                 {
                   isShownByDefault: true,
                   label: (0, import_i18n81.__)("Order by"),
@@ -30582,8 +30672,8 @@ ${url}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(import_jsx_runtime274.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(import_components45.PanelBody, { title: (0, import_i18n81.__)("Source"), children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("div", { className: "wp-block-gallery__source-settings", children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
-        import_components45.Button,
+      /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(import_components44.PanelBody, { title: (0, import_i18n81.__)("Source"), children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("div", { className: "wp-block-gallery__source-settings", children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
+        import_components44.Button,
         {
           __next40pxDefaultSize: true,
           variant: "secondary",
@@ -30592,7 +30682,7 @@ ${url}
         }
       ) }) }),
       isConfirming && /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
-        import_components45.__experimentalConfirmDialog,
+        import_components44.__experimentalConfirmDialog,
         {
           isOpen: true,
           title: (0, import_i18n81.__)("Use images attached to the post?"),
@@ -30649,7 +30739,7 @@ ${url}
     return /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(import_jsx_runtime274.Fragment, { children: [
       blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)(import_jsx_runtime274.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(import_block_editor97.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
-          import_components45.ToolbarButton,
+          import_components44.ToolbarButton,
           {
             onClick: () => setIsConfirmingDetach(true),
             disabled: isResolvingDynamic,
@@ -30674,12 +30764,12 @@ ${url}
             imageBlocks: dynamicImageBlocks
           }
         ) }) : /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
-          import_components45.Placeholder,
+          import_components44.Placeholder,
           {
             icon: sharedIcon,
             label: (0, import_i18n81.__)("Gallery"),
             instructions: emptyInstructions,
-            children: isResolvingDynamic && /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(import_components45.Spinner, {})
+            children: isResolvingDynamic && /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(import_components44.Spinner, {})
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
@@ -31172,7 +31262,7 @@ ${url}
             onError: onUploadError,
             ...mediaPlaceholderProps,
             children: blockEditingMode === "default" && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-              import_components46.Button,
+              import_components45.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "secondary",
@@ -31196,7 +31286,7 @@ ${url}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime275.jsxs)(
-          import_components46.__experimentalToolsPanel,
+          import_components45.__experimentalToolsPanel,
           {
             label: (0, import_i18n82.__)("Settings"),
             resetAll: () => {
@@ -31217,14 +31307,14 @@ ${url}
             dropdownMenuProps,
             children: [
               displayedImageCount > 1 && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                import_components46.__experimentalToolsPanelItem,
+                import_components45.__experimentalToolsPanelItem,
                 {
                   isShownByDefault: true,
                   label: (0, import_i18n82.__)("Columns"),
                   hasValue: () => !!columns && columns !== displayedImageCount,
                   onDeselect: () => setColumnsNumber(void 0),
                   children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                    import_components46.RangeControl,
+                    import_components45.RangeControl,
                     {
                       label: (0, import_i18n82.__)("Columns"),
                       value: columns ? columns : defaultColumnsNumber(
@@ -31242,14 +31332,14 @@ ${url}
                 }
               ),
               imageSizeOptions?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                import_components46.__experimentalToolsPanelItem,
+                import_components45.__experimentalToolsPanelItem,
                 {
                   isShownByDefault: true,
                   label: (0, import_i18n82.__)("Resolution"),
                   hasValue: () => sizeSlug !== DEFAULT_MEDIA_SIZE_SLUG2,
                   onDeselect: () => updateImagesSize(DEFAULT_MEDIA_SIZE_SLUG2),
                   children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                    import_components46.SelectControl,
+                    import_components45.SelectControl,
                     {
                       label: (0, import_i18n82.__)("Resolution"),
                       help: (0, import_i18n82.__)(
@@ -31264,14 +31354,14 @@ ${url}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                import_components46.__experimentalToolsPanelItem,
+                import_components45.__experimentalToolsPanelItem,
                 {
                   isShownByDefault: true,
                   label: (0, import_i18n82.__)("Crop images to fit"),
                   hasValue: () => !imageCrop,
                   onDeselect: () => setAttributes({ imageCrop: true }),
                   children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                    import_components46.ToggleControl,
+                    import_components45.ToggleControl,
                     {
                       label: (0, import_i18n82.__)("Crop images to fit"),
                       checked: !!imageCrop,
@@ -31281,14 +31371,14 @@ ${url}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                import_components46.__experimentalToolsPanelItem,
+                import_components45.__experimentalToolsPanelItem,
                 {
                   isShownByDefault: true,
                   label: (0, import_i18n82.__)("Randomize order"),
                   hasValue: () => !!randomOrder,
                   onDeselect: () => setAttributes({ randomOrder: false }),
                   children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                    import_components46.ToggleControl,
+                    import_components45.ToggleControl,
                     {
                       label: (0, import_i18n82.__)("Randomize order"),
                       checked: !!randomOrder,
@@ -31298,14 +31388,14 @@ ${url}
                 }
               ),
               hasLinkTo && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                import_components46.__experimentalToolsPanelItem,
+                import_components45.__experimentalToolsPanelItem,
                 {
                   isShownByDefault: true,
                   label: (0, import_i18n82.__)("Open images in new tab"),
                   hasValue: () => !!linkTarget,
                   onDeselect: () => toggleOpenInNewTab(false),
                   children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                    import_components46.ToggleControl,
+                    import_components45.ToggleControl,
                     {
                       label: (0, import_i18n82.__)("Open images in new tab"),
                       checked: linkTarget === "_blank",
@@ -31315,14 +31405,14 @@ ${url}
                 }
               ),
               aspectRatioOptions.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                import_components46.__experimentalToolsPanelItem,
+                import_components45.__experimentalToolsPanelItem,
                 {
                   hasValue: () => !!aspectRatio && aspectRatio !== "auto",
                   label: (0, import_i18n82.__)("Aspect ratio"),
                   onDeselect: () => setAspectRatio("auto"),
                   isShownByDefault: true,
                   children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                    import_components46.SelectControl,
+                    import_components45.SelectControl,
                     {
                       label: (0, import_i18n82.__)("Aspect ratio"),
                       help: (0, import_i18n82.__)(
@@ -31336,7 +31426,7 @@ ${url}
                 }
               ),
               lightboxSetting?.allowEditing && hasLightboxImages && /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                import_components46.__experimentalToolsPanelItem,
+                import_components45.__experimentalToolsPanelItem,
                 {
                   label: (0, import_i18n82.__)("Navigation button type"),
                   isShownByDefault: true,
@@ -31345,7 +31435,7 @@ ${url}
                     navigationButtonType: "icon"
                   }),
                   children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                    import_components46.__experimentalToggleGroupControl,
+                    import_components45.__experimentalToggleGroupControl,
                     {
                       label: (0, import_i18n82.__)("Navigation button type"),
                       value: navigationButtonType,
@@ -31358,7 +31448,7 @@ ${url}
                       ),
                       children: NAVIGATION_BUTTON_TYPE_OPTIONS.map(
                         (option) => /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-                          import_components46.__experimentalToggleGroupControlOption,
+                          import_components45.__experimentalToggleGroupControlOption,
                           {
                             value: option.value,
                             label: option.label
@@ -31374,10 +31464,10 @@ ${url}
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(import_block_editor98.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(import_components46.ToolbarDropdownMenu, { icon: link_default, label: (0, import_i18n82.__)("Link"), children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(import_components46.MenuGroup, { children: linkOptions.map((linkItem) => {
+      /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(import_block_editor98.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(import_components45.ToolbarDropdownMenu, { icon: link_default, label: (0, import_i18n82.__)("Link"), children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(import_components45.MenuGroup, { children: linkOptions.map((linkItem) => {
         const isOptionSelected = linkTo === linkItem.value;
         return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(
-          import_components46.MenuItem,
+          import_components45.MenuItem,
           {
             isSelected: isOptionSelected,
             className: clsx_default(
@@ -32229,49 +32319,49 @@ ${url}
   var import_block_editor101 = __toESM(require_block_editor(), 1);
   var import_i18n84 = __toESM(require_i18n(), 1);
   var import_blocks33 = __toESM(require_blocks(), 1);
-  var import_components47 = __toESM(require_components(), 1);
+  var import_components46 = __toESM(require_components(), 1);
   var import_element46 = __toESM(require_element(), 1);
   var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
   var getGroupPlaceholderIcons = (name122 = "group") => {
     const icons = {
       group: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(
-        import_components47.SVG,
+        import_components46.SVG,
         {
           xmlns: "http://www.w3.org/2000/svg",
           width: "48",
           height: "48",
           viewBox: "0 0 48 48",
-          children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components47.Path, { d: "M0 10a2 2 0 0 1 2-2h44a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Z" })
+          children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components46.Path, { d: "M0 10a2 2 0 0 1 2-2h44a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Z" })
         }
       ),
       "group-row": /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(
-        import_components47.SVG,
+        import_components46.SVG,
         {
           xmlns: "http://www.w3.org/2000/svg",
           width: "48",
           height: "48",
           viewBox: "0 0 48 48",
-          children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components47.Path, { d: "M0 10a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Zm25 0a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H27a2 2 0 0 1-2-2V10Z" })
+          children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components46.Path, { d: "M0 10a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Zm25 0a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H27a2 2 0 0 1-2-2V10Z" })
         }
       ),
       "group-stack": /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(
-        import_components47.SVG,
+        import_components46.SVG,
         {
           xmlns: "http://www.w3.org/2000/svg",
           width: "48",
           height: "48",
           viewBox: "0 0 48 48",
-          children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components47.Path, { d: "M0 10a2 2 0 0 1 2-2h44a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Zm0 17a2 2 0 0 1 2-2h44a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V27Z" })
+          children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components46.Path, { d: "M0 10a2 2 0 0 1 2-2h44a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Zm0 17a2 2 0 0 1 2-2h44a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V27Z" })
         }
       ),
       "group-grid": /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(
-        import_components47.SVG,
+        import_components46.SVG,
         {
           xmlns: "http://www.w3.org/2000/svg",
           width: "48",
           height: "48",
           viewBox: "0 0 48 48",
-          children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components47.Path, { d: "M0 10a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Zm25 0a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H27a2 2 0 0 1-2-2V10ZM0 27a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V27Zm25 0a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H27a2 2 0 0 1-2-2V27Z" })
+          children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(import_components46.Path, { d: "M0 10a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V10Zm25 0a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H27a2 2 0 0 1-2-2V10ZM0 27a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V27Zm25 0a2 2 0 0 1 2-2h19a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H27a2 2 0 0 1-2-2V27Z" })
         }
       )
     };
@@ -32319,7 +32409,7 @@ ${url}
       }
     }, [onSelect, variations22]);
     return /* @__PURE__ */ (0, import_jsx_runtime278.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(
-      import_components47.Placeholder,
+      import_components46.Placeholder,
       {
         instructions: (0, import_i18n84.__)("Group blocks together. Select a layout:"),
         children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(
@@ -32329,7 +32419,7 @@ ${url}
             className: "wp-block-group-placeholder__variations",
             "aria-label": (0, import_i18n84.__)("Block variations"),
             children: variations22.map((variation) => /* @__PURE__ */ (0, import_jsx_runtime278.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(
-              import_components47.Button,
+              import_components46.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
@@ -33579,7 +33669,7 @@ ${url}
 
   // packages/block-library/build-module/home-link/edit.mjs
   var import_block_editor107 = __toESM(require_block_editor(), 1);
-  var import_components48 = __toESM(require_components(), 1);
+  var import_components47 = __toESM(require_components(), 1);
   var import_i18n91 = __toESM(require_i18n(), 1);
   var import_data43 = __toESM(require_data(), 1);
   var import_core_data22 = __toESM(require_core_data(), 1);
@@ -33626,7 +33716,7 @@ ${url}
     });
     return /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(import_jsx_runtime284.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(import_block_editor107.InspectorControls, { group: "content", children: /* @__PURE__ */ (0, import_jsx_runtime284.jsxs)(
-        import_components48.__experimentalToolsPanel,
+        import_components47.__experimentalToolsPanel,
         {
           label: (0, import_i18n91.__)("Settings"),
           resetAll: () => {
@@ -33639,14 +33729,14 @@ ${url}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
-              import_components48.__experimentalToolsPanelItem,
+              import_components47.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!label,
                 label: (0, import_i18n91.__)("Text"),
                 onDeselect: () => setAttributes({ label: "" }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
-                  import_components48.TextControl,
+                  import_components47.TextControl,
                   {
                     label: (0, import_i18n91.__)("Text"),
                     value: label ? (0, import_dom9.__unstableStripHTML)(label) : "",
@@ -33659,14 +33749,14 @@ ${url}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
-              import_components48.__experimentalToolsPanelItem,
+              import_components47.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!opensInNewTab,
                 label: (0, import_i18n91.__)("Open in new tab"),
                 onDeselect: () => setAttributes({ opensInNewTab: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
-                  import_components48.CheckboxControl,
+                  import_components47.CheckboxControl,
                   {
                     label: (0, import_i18n91.__)("Open in new tab"),
                     checked: opensInNewTab,
@@ -33676,7 +33766,7 @@ ${url}
               }
             ),
             onNavigateToEntityRecord && (frontPageId || frontPageTemplateId) && /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
-              import_components48.Button,
+              import_components47.Button,
               {
                 variant: "secondary",
                 onClick: () => {
@@ -33698,7 +33788,7 @@ ${url}
               }
             ),
             homeUrl && /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
-              import_components48.Button,
+              import_components47.Button,
               {
                 variant: "secondary",
                 href: homeUrl,
@@ -33711,14 +33801,14 @@ ${url}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
-              import_components48.__experimentalToolsPanelItem,
+              import_components47.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!description,
                 label: (0, import_i18n91.__)("Description"),
                 onDeselect: () => setAttributes({ description: "" }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
-                  import_components48.TextareaControl,
+                  import_components47.TextareaControl,
                   {
                     label: (0, import_i18n91.__)("Description"),
                     value: description || "",
@@ -33803,20 +33893,20 @@ ${url}
   var import_blocks37 = __toESM(require_blocks(), 1);
   var import_data46 = __toESM(require_data(), 1);
   var import_deprecated23 = __toESM(require_deprecated(), 1);
-  var import_components51 = __toESM(require_components(), 1);
+  var import_components50 = __toESM(require_components(), 1);
 
   // packages/block-library/build-module/html/modal.mjs
   var import_i18n94 = __toESM(require_i18n(), 1);
   var import_element50 = __toESM(require_element(), 1);
   var import_data45 = __toESM(require_data(), 1);
-  var import_components50 = __toESM(require_components(), 1);
+  var import_components49 = __toESM(require_components(), 1);
   var import_block_editor110 = __toESM(require_block_editor(), 1);
   var import_compose21 = __toESM(require_compose(), 1);
 
   // packages/block-library/build-module/html/preview.mjs
   var import_element49 = __toESM(require_element(), 1);
   var import_block_editor109 = __toESM(require_block_editor(), 1);
-  var import_components49 = __toESM(require_components(), 1);
+  var import_components48 = __toESM(require_components(), 1);
   var import_data44 = __toESM(require_data(), 1);
   var import_i18n93 = __toESM(require_i18n(), 1);
   var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
@@ -33844,7 +33934,7 @@ ${url}
     );
     return /* @__PURE__ */ (0, import_jsx_runtime286.jsxs)(import_jsx_runtime286.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
-        import_components49.SandBox,
+        import_components48.SandBox,
         {
           html: content,
           styles,
@@ -33900,7 +33990,7 @@ ${js}
 
   // packages/block-library/build-module/html/modal.mjs
   var import_jsx_runtime287 = __toESM(require_jsx_runtime(), 1);
-  var { Tabs } = unlock(import_components50.privateApis);
+  var { Tabs } = unlock(import_components49.privateApis);
   var { useNativeUndo } = unlock(import_block_editor110.privateApis);
   function HTMLEditModal({ onRequestClose, content, onUpdate }) {
     const { html, css, js } = parseContent(content);
@@ -33934,7 +34024,7 @@ ${js}
       setIsFullscreen((prevState) => !prevState);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(import_jsx_runtime287.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-      import_components50.Modal,
+      import_components49.Modal,
       {
         title: (0, import_i18n94.__)("Edit HTML"),
         onRequestClose,
@@ -33944,9 +34034,9 @@ ${js}
         shouldCloseOnClickOutside: false,
         isFullScreen: isFullscreen,
         __experimentalHideHeader: true,
-        children: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(Tabs, { orientation: "horizontal", defaultTabId: "html", children: /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(import_components50.__experimentalVStack, { expanded: true, children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(Tabs, { orientation: "horizontal", defaultTabId: "html", children: /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(import_components49.__experimentalVStack, { expanded: true, children: [
           /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(
-            import_components50.__experimentalHStack,
+            import_components49.__experimentalHStack,
             {
               justify: "space-between",
               className: "block-library-html__modal-header",
@@ -33957,7 +34047,7 @@ ${js}
                   canUserUseUnfilteredHTML && /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(Tabs.Tab, { tabId: "js", children: (0, import_i18n94.__)("JavaScript") })
                 ] }) }),
                 !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime287.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-                  import_components50.Button,
+                  import_components49.Button,
                   {
                     __next40pxDefaultSize: true,
                     icon: isFullscreen ? square_default : fullscreen_default,
@@ -33972,7 +34062,7 @@ ${js}
             }
           ),
           hasRestrictedContent && /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-            import_components50.Notice,
+            import_components49.Notice,
             {
               status: "warning",
               isDismissible: false,
@@ -33983,7 +34073,7 @@ ${js}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(
-            import_components50.Flex,
+            import_components49.Flex,
             {
               direction: isMobileViewport ? "column" : "row",
               className: "block-library-html__modal-tabs",
@@ -34072,7 +34162,7 @@ ${js}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime287.jsxs)(
-            import_components50.__experimentalHStack,
+            import_components49.__experimentalHStack,
             {
               alignment: "center",
               justify: "flex-end",
@@ -34080,7 +34170,7 @@ ${js}
               className: "block-library-html__modal-footer",
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-                  import_components50.Button,
+                  import_components49.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "tertiary",
@@ -34089,7 +34179,7 @@ ${js}
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime287.jsx)(
-                  import_components50.Button,
+                  import_components49.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "primary",
@@ -34161,7 +34251,7 @@ ${nextContent}
     if (!content?.trim()) {
       return /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)("div", { ...blockProps, children: [
         /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
-          import_components51.Placeholder,
+          import_components50.Placeholder,
           {
             icon: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_block_editor111.BlockIcon, { icon: code_default }),
             label: (0, import_i18n95.__)("Custom HTML"),
@@ -34169,7 +34259,7 @@ ${nextContent}
               "Add custom HTML code and preview how it looks."
             ),
             children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
-              import_components51.Button,
+              import_components50.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "primary",
@@ -34190,9 +34280,9 @@ ${nextContent}
       ] });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime288.jsxs)("div", { ...blockProps, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_block_editor111.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components51.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components51.ToolbarButton, { onClick: () => setIsModalOpen(true), children: (0, import_i18n95.__)("Edit code") }) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_block_editor111.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components51.__experimentalVStack, { className: "block-library-html__edit-code", expanded: true, children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
-        import_components51.Button,
+      /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_block_editor111.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components50.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components50.ToolbarButton, { onClick: () => setIsModalOpen(true), children: (0, import_i18n95.__)("Edit code") }) }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_block_editor111.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(import_components50.__experimentalVStack, { className: "block-library-html__edit-code", expanded: true, children: /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
+        import_components50.Button,
         {
           className: "block-library-html__edit-code-button",
           __next40pxDefaultSize: true,
@@ -34296,7 +34386,7 @@ ${text}
 
   // packages/block-library/build-module/icon/edit.mjs
   var import_i18n99 = __toESM(require_i18n(), 1);
-  var import_components54 = __toESM(require_components(), 1);
+  var import_components53 = __toESM(require_components(), 1);
   var import_block_editor112 = __toESM(require_block_editor(), 1);
   var import_element54 = __toESM(require_element(), 1);
   var import_primitives164 = __toESM(require_primitives(), 1);
@@ -34305,7 +34395,7 @@ ${text}
 
   // packages/block-library/build-module/icon/components/custom-inserter/index.mjs
   var import_i18n98 = __toESM(require_i18n(), 1);
-  var import_components53 = __toESM(require_components(), 1);
+  var import_components52 = __toESM(require_components(), 1);
   var import_element53 = __toESM(require_element(), 1);
   var import_compose23 = __toESM(require_compose(), 1);
   var import_data47 = __toESM(require_data(), 1);
@@ -34313,7 +34403,7 @@ ${text}
 
   // packages/block-library/build-module/icon/components/custom-inserter/icon-grid.mjs
   var import_i18n97 = __toESM(require_i18n(), 1);
-  var import_components52 = __toESM(require_components(), 1);
+  var import_components51 = __toESM(require_components(), 1);
   var import_compose22 = __toESM(require_compose(), 1);
   var import_element52 = __toESM(require_element(), 1);
   var import_dom10 = __toESM(require_dom(), 1);
@@ -34343,7 +34433,7 @@ ${text}
         "aria-label": (0, import_i18n97.__)("Icon library"),
         children: shownIcons.map((icon4) => {
           return /* @__PURE__ */ (0, import_jsx_runtime289.jsxs)(
-            import_components52.Button,
+            import_components51.Button,
             {
               ref: icon4.name === value ? selectedIconRef : void 0,
               className: "wp-block-icon__inserter-grid-icons-list-item",
@@ -34447,7 +34537,7 @@ ${text}
       return icons;
     }, [searchInput, icons]);
     return /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-      import_components53.Modal,
+      import_components52.Modal,
       {
         className: "wp-block-icon__inserter-modal",
         title: (0, import_i18n98.__)("Icon library"),
@@ -34469,7 +34559,7 @@ ${text}
                   className: "wp-block-icon__inserter-sidebar",
                   children: [
                     /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
-                      import_components53.SearchControl,
+                      import_components52.SearchControl,
                       {
                         value: searchInput,
                         onChange: debouncedSetSearchInput
@@ -34502,7 +34592,7 @@ ${text}
                         className: "wp-block-icon__inserter-loading",
                         role: "status",
                         "aria-label": (0, import_i18n98.__)("Loading\u2026"),
-                        children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(import_components53.Spinner, {})
+                        children: /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(import_components52.Spinner, {})
                       }
                     ) : /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
                       IconGrid,
@@ -34573,7 +34663,7 @@ ${text}
     const blockControls = /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)(import_jsx_runtime291.Fragment, { children: [
       icon4 && /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)(import_block_editor112.BlockControls, { group: "block", children: [
         /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-          import_components54.ToolbarButton,
+          import_components53.ToolbarButton,
           {
             icon: flip_horizontal_default,
             label: (0, import_i18n99.__)("Flip horizontal"),
@@ -34584,7 +34674,7 @@ ${text}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-          import_components54.ToolbarButton,
+          import_components53.ToolbarButton,
           {
             icon: flip_vertical_default,
             label: (0, import_i18n99.__)("Flip vertical"),
@@ -34595,7 +34685,7 @@ ${text}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-          import_components54.ToolbarButton,
+          import_components53.ToolbarButton,
           {
             icon: rotate_right_default,
             label: (0, import_i18n99.__)("Rotate"),
@@ -34607,7 +34697,7 @@ ${text}
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime291.jsxs)(import_block_editor112.BlockControls, { group: "other", children: [
         /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-          import_components54.ToolbarButton,
+          import_components53.ToolbarButton,
           {
             onClick: () => {
               setInserterOpen(true);
@@ -34619,18 +34709,18 @@ ${text}
         // With content only mode active, the inspector is hidden, so users need another way
         // to edit these attributes.
         /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-          import_components54.DropdownMenu,
+          import_components53.DropdownMenu,
           {
             icon: "",
             toggleProps: {
-              as: import_components54.ToolbarButton
+              as: import_components53.ToolbarButton
             },
             popoverProps: {
               className: "is-alternate"
             },
             text: (0, import_i18n99.__)("Label"),
             children: () => /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-              import_components54.TextControl,
+              import_components53.TextControl,
               {
                 className: "wp-block-icon__toolbar-content",
                 label: (0, import_i18n99.__)("Label"),
@@ -34649,7 +34739,7 @@ ${text}
     ] });
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const inspectorControls = icon4 && /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(import_jsx_runtime291.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(import_block_editor112.InspectorControls, { group: "settings", children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-      import_components54.__experimentalToolsPanel,
+      import_components53.__experimentalToolsPanel,
       {
         label: (0, import_i18n99.__)("Settings"),
         resetAll: () => setAttributes({
@@ -34657,14 +34747,14 @@ ${text}
         }),
         dropdownMenuProps,
         children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-          import_components54.__experimentalToolsPanelItem,
+          import_components53.__experimentalToolsPanelItem,
           {
             label: (0, import_i18n99.__)("Label"),
             isShownByDefault: true,
             hasValue: () => !!ariaLabel,
             onDeselect: () => setAttributes({ ariaLabel: void 0 }),
             children: /* @__PURE__ */ (0, import_jsx_runtime291.jsx)(
-              import_components54.TextControl,
+              import_components53.TextControl,
               {
                 label: (0, import_i18n99.__)("Label"),
                 help: (0, import_i18n99.__)(
@@ -34822,9 +34912,9 @@ ${text}
   };
 
   // packages/block-library/build-module/icon/icon.mjs
-  var import_components56 = __toESM(require_components(), 1);
+  var import_components55 = __toESM(require_components(), 1);
   var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
-  var icon3 = /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(import_components56.SVG, { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", fill: "none", children: /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(import_components56.Path, { d: "M6 9.5h3.5V6H6v3.5Zm5 .5a1 1 0 0 1-.898.995L10 11H5.5l-.103-.005a1 1 0 0 1-.892-.893L4.5 10V5.5a1 1 0 0 1 1-1H10a1 1 0 0 1 1 1V10ZM18.25 7.75a2 2 0 1 0-4 0 2 2 0 0 0 4 0Zm1.5 0a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM6.88 13.535a1 1 0 0 1 1.74 0l2.534 4.472a1 1 0 0 1-.87 1.493H5.216a1 1 0 0 1-.87-1.493l2.534-4.472ZM6.074 18h3.352L7.75 15.041l-1.676 2.96ZM14.952 13h2.596a1 1 0 0 1 .866.5l1.298 2.25a1 1 0 0 1 0 1L18.414 19l-.074.11a1 1 0 0 1-.792.39h-2.596a1 1 0 0 1-.792-.39l-.074-.11-1.298-2.25a1.001 1.001 0 0 1 0-1l1.298-2.25a1 1 0 0 1 .866-.5Zm-.72 3.25 1.01 1.75h2.017l1.009-1.75-1.01-1.75h-2.017l-1.01 1.75Z" }) });
+  var icon3 = /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(import_components55.SVG, { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", fill: "none", children: /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(import_components55.Path, { d: "M6 9.5h3.5V6H6v3.5Zm5 .5a1 1 0 0 1-.898.995L10 11H5.5l-.103-.005a1 1 0 0 1-.892-.893L4.5 10V5.5a1 1 0 0 1 1-1H10a1 1 0 0 1 1 1V10ZM18.25 7.75a2 2 0 1 0-4 0 2 2 0 0 0 4 0Zm1.5 0a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM6.88 13.535a1 1 0 0 1 1.74 0l2.534 4.472a1 1 0 0 1-.87 1.493H5.216a1 1 0 0 1-.87-1.493l2.534-4.472ZM6.074 18h3.352L7.75 15.041l-1.676 2.96ZM14.952 13h2.596a1 1 0 0 1 .866.5l1.298 2.25a1 1 0 0 1 0 1L18.414 19l-.074.11a1 1 0 0 1-.792.39h-2.596a1 1 0 0 1-.792-.39l-.074-.11-1.298-2.25a1.001 1.001 0 0 1 0-1l1.298-2.25a1 1 0 0 1 .866-.5Zm-.72 3.25 1.01 1.75h2.017l1.009-1.75-1.01-1.75h-2.017l-1.01 1.75Z" }) });
   var icon_default2 = icon3;
 
   // packages/block-library/build-module/icon/variations.mjs
@@ -36074,7 +36164,7 @@ ${text}
   // packages/block-library/build-module/image/edit.mjs
   var import_blob12 = __toESM(require_blob(), 1);
   var import_blocks40 = __toESM(require_blocks(), 1);
-  var import_components59 = __toESM(require_components(), 1);
+  var import_components58 = __toESM(require_components(), 1);
   var import_data52 = __toESM(require_data(), 1);
   var import_block_editor117 = __toESM(require_block_editor(), 1);
   var import_element59 = __toESM(require_element(), 1);
@@ -36085,7 +36175,7 @@ ${text}
   var import_upload_media = __toESM(require_upload_media(), 1);
 
   // packages/block-library/build-module/image/image.mjs
-  var import_components58 = __toESM(require_components(), 1);
+  var import_components57 = __toESM(require_components(), 1);
   var import_compose24 = __toESM(require_compose(), 1);
   var import_data51 = __toESM(require_data(), 1);
   var import_block_editor116 = __toESM(require_block_editor(), 1);
@@ -36097,7 +36187,7 @@ ${text}
   var import_core_data26 = __toESM(require_core_data(), 1);
 
   // packages/block-library/build-module/utils/media-control.mjs
-  var import_components57 = __toESM(require_components(), 1);
+  var import_components56 = __toESM(require_components(), 1);
   var import_block_editor114 = __toESM(require_block_editor(), 1);
   var import_dom11 = __toESM(require_dom(), 1);
   var import_element55 = __toESM(require_element(), 1);
@@ -36121,7 +36211,7 @@ ${text}
     className,
     label
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components57.__experimentalItemGroup, { ...itemGroupProps, as: "span", children: /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(import_components57.__experimentalHStack, { justify: "flex-start", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components56.__experimentalItemGroup, { ...itemGroupProps, as: "span", children: /* @__PURE__ */ (0, import_jsx_runtime294.jsxs)(import_components56.__experimentalHStack, { justify: "flex-start", children: [
       /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
         "span",
         {
@@ -36131,7 +36221,7 @@ ${text}
           }
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components57.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components57.__experimentalTruncate, { numberOfLines: 1, className, children: filename ?? label }) })
+      /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components56.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components56.__experimentalTruncate, { numberOfLines: 1, className, children: filename ?? label }) })
     ] }) });
   }
   function MediaControl({
@@ -36188,12 +36278,12 @@ ${text}
                   label: mediaUrl ? (0, import_url10.getFilename)(filename) || emptyLabel : emptyLabel
                 }
               ),
-              renderToggle: (props) => /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components57.Button, { ...props, __next40pxDefaultSize: true, children: isUploading ? /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components57.Spinner, {}) : props.children }),
+              renderToggle: (props) => /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components56.Button, { ...props, __next40pxDefaultSize: true, children: isUploading ? /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components56.Spinner, {}) : props.children }),
               onReset
             }
           ),
           mediaUrl && onReset && /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
-            import_components57.Button,
+            import_components56.Button,
             {
               label: (0, import_i18n100.__)("Reset"),
               className: "block-library-utils__media-control__reset",
@@ -36205,7 +36295,7 @@ ${text}
               }
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components57.DropZone, { onFilesDrop })
+          /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(import_components56.DropZone, { onFilesDrop })
         ]
       }
     );
@@ -36483,8 +36573,8 @@ ${text}
     const [isAltDialogOpen, setIsAltDialogOpen] = (0, import_element57.useState)(false);
     const [isTitleDialogOpen, setIsTitleDialogOpen] = (0, import_element57.useState)(false);
     return /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(import_jsx_runtime295.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components58.ToolbarItem, { ref: setPopoverAnchor, children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-        import_components58.DropdownMenu,
+      /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components57.ToolbarItem, { ref: setPopoverAnchor, children: (toggleProps) => /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
+        import_components57.DropdownMenu,
         {
           icon: chevron_down_default,
           label: (0, import_i18n101.__)("More"),
@@ -36495,7 +36585,7 @@ ${text}
           popoverProps: WRITEMODE_POPOVER_PROPS,
           children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(import_jsx_runtime295.Fragment, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-              import_components58.MenuItem,
+              import_components57.MenuItem,
               {
                 onClick: () => {
                   setIsAltDialogOpen(true);
@@ -36509,7 +36599,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-              import_components58.MenuItem,
+              import_components57.MenuItem,
               {
                 onClick: () => {
                   setIsTitleDialogOpen(true);
@@ -36523,7 +36613,7 @@ ${text}
         }
       ) }),
       isAltDialogOpen && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-        import_components58.Popover,
+        import_components57.Popover,
         {
           placement: "bottom-start",
           anchor: popoverAnchor,
@@ -36531,7 +36621,7 @@ ${text}
           offset: 13,
           variant: "toolbar",
           children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)("div", { className: "wp-block-image__toolbar_content_textarea__container", children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-            import_components58.TextareaControl,
+            import_components57.TextareaControl,
             {
               className: "wp-block-image__toolbar_content_textarea",
               label: (0, import_i18n101.__)("Alternative text"),
@@ -36540,7 +36630,7 @@ ${text}
               disabled: lockAltControls,
               help: lockAltControls ? /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_jsx_runtime295.Fragment, { children: lockAltControlsMessage }) : /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(import_jsx_runtime295.Fragment, { children: [
                 /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-                  import_components58.ExternalLink,
+                  import_components57.ExternalLink,
                   {
                     href: (
                       // translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations.
@@ -36561,7 +36651,7 @@ ${text}
         }
       ),
       isTitleDialogOpen && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-        import_components58.Popover,
+        import_components57.Popover,
         {
           placement: "bottom-start",
           anchor: popoverAnchor,
@@ -36569,7 +36659,7 @@ ${text}
           offset: 13,
           variant: "toolbar",
           children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)("div", { className: "wp-block-image__toolbar_content_textarea__container", children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-            import_components58.TextControl,
+            import_components57.TextControl,
             {
               className: "wp-block-image__toolbar_content_textarea",
               label: (0, import_i18n101.__)("Title attribute"),
@@ -36583,7 +36673,7 @@ ${text}
                   "Describe the role of this image on the page. <a>(Note: many devices and browsers do not display this text.)</a>"
                 ),
                 {
-                  a: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components58.ExternalLink, { href: "https://www.w3.org/TR/html52/dom.html#the-title-attribute" })
+                  a: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components57.ExternalLink, { href: "https://www.w3.org/TR/html52/dom.html#the-title-attribute" })
                 }
               )
             }
@@ -36866,7 +36956,7 @@ ${text}
         (0, import_blocks39.switchToBlockType)(getBlock(clientId), "core/cover")
       );
     }
-    const dimensionsUnitsOptions = (0, import_components58.__experimentalUseCustomUnits)({
+    const dimensionsUnitsOptions = (0, import_components57.__experimentalUseCustomUnits)({
       availableUnits: ["px"]
     });
     const [lightboxSetting] = (0, import_block_editor116.useSettings)("lightbox");
@@ -37092,7 +37182,7 @@ ${text}
           }
         ),
         allowCrop && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-          import_components58.ToolbarButton,
+          import_components57.ToolbarButton,
           {
             ref: cropButtonRef,
             onClick: openImageMediaEditorModal,
@@ -37103,7 +37193,7 @@ ${text}
           }
         ),
         showCoverControls && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-          import_components58.ToolbarButton,
+          import_components57.ToolbarButton,
           {
             icon: overlay_text_default,
             label: (0, import_i18n101.__)("Add text over image"),
@@ -37111,8 +37201,8 @@ ${text}
           }
         )
       ] }),
-      canUploadExternalImage && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_block_editor116.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components58.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-        import_components58.ToolbarButton,
+      canUploadExternalImage && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_block_editor116.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components57.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
+        import_components57.ToolbarButton,
         {
           onClick: uploadExternal,
           icon: upload_default,
@@ -37134,7 +37224,7 @@ ${text}
         }
       ) }),
       !hasDataFormBlockFields && isSingleSelected && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_block_editor116.InspectorControls, { group: "content", children: /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(
-        import_components58.__experimentalToolsPanel,
+        import_components57.__experimentalToolsPanel,
         {
           label: (0, import_i18n101.__)("Media"),
           resetAll: () => {
@@ -37144,7 +37234,7 @@ ${text}
           dropdownMenuProps,
           children: [
             !lockUrlControls && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-              import_components58.__experimentalToolsPanelItem,
+              import_components57.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n101.__)("Image"),
                 hasValue: () => !!url,
@@ -37169,21 +37259,21 @@ ${text}
               }
             ),
             !isDecorative && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-              import_components58.__experimentalToolsPanelItem,
+              import_components57.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n101.__)("Alternative text"),
                 isShownByDefault: true,
                 hasValue: () => !!alt,
                 onDeselect: () => setAttributes({ alt: void 0 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-                  import_components58.TextareaControl,
+                  import_components57.TextareaControl,
                   {
                     label: (0, import_i18n101.__)("Alternative text"),
                     value: alt || "",
                     onChange: updateAlt,
                     readOnly: lockAltControls,
                     help: lockAltControls ? /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_jsx_runtime295.Fragment, { children: lockAltControlsMessage }) : /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-                      import_components58.ExternalLink,
+                      import_components57.ExternalLink,
                       {
                         href: (
                           // translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations.
@@ -37201,14 +37291,14 @@ ${text}
               }
             ),
             !lockAltControls && !lightboxChecked && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-              import_components58.__experimentalToolsPanelItem,
+              import_components57.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n101.__)("Mark as decorative"),
                 isShownByDefault: true,
                 hasValue: () => !!isDecorative,
                 onDeselect: () => setAttributes({ isDecorative: false }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-                  import_components58.CheckboxControl,
+                  import_components57.CheckboxControl,
                   {
                     label: (0, import_i18n101.__)("Mark as decorative"),
                     checked: !!isDecorative,
@@ -37245,7 +37335,7 @@ ${text}
           children: [
             dimensionsControl,
             !hasSelectedStyleState && url && scale && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-              import_components58.__experimentalToolsPanelItem,
+              import_components57.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n101.__)("Focal point"),
                 isShownByDefault: true,
@@ -37255,7 +37345,7 @@ ${text}
                 }),
                 panelId: clientId,
                 children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-                  import_components58.FocalPointPicker,
+                  import_components57.FocalPointPicker,
                   {
                     label: (0, import_i18n101.__)("Focal point"),
                     url,
@@ -37273,7 +37363,7 @@ ${text}
         }
       ),
       !!imageSizeOptions.length && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_block_editor116.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-        import_components58.__experimentalToolsPanel,
+        import_components57.__experimentalToolsPanel,
         {
           label: (0, import_i18n101.__)("Settings"),
           resetAll: resetSettings,
@@ -37290,7 +37380,7 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_block_editor116.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-        import_components58.TextControl,
+        import_components57.TextControl,
         {
           label: (0, import_i18n101.__)("Title attribute"),
           value: title || "",
@@ -37301,7 +37391,7 @@ ${text}
               "Describe the role of this image on the page. <a>(Note: many devices and browsers do not display this text.)</a>"
             ),
             {
-              a: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components58.ExternalLink, { href: "https://www.w3.org/TR/html52/dom.html#the-title-attribute" })
+              a: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components57.ExternalLink, { href: "https://www.w3.org/TR/html52/dom.html#the-title-attribute" })
             }
           )
         }
@@ -37336,11 +37426,11 @@ ${text}
       // Show a placeholder during upload when the blob URL can't be loaded. This can
       // happen when the user uploads a HEIC image in a browser that doesn't support them.
       /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-        import_components58.Placeholder,
+        import_components57.Placeholder,
         {
           className: "wp-block-image__placeholder",
           withIllustration: true,
-          children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components58.Spinner, {})
+          children: /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components57.Spinner, {})
         }
       )
     ) : /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(import_jsx_runtime295.Fragment, { children: [
@@ -37383,7 +37473,7 @@ ${text}
           }
         }
       ),
-      (isUploading || isSwappingMedia) && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components58.Spinner, {})
+      (isUploading || isSwappingMedia) && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components57.Spinner, {})
     ] }) });
     let resizableBox;
     if (isResizable && isSingleSelected && !isUploading && !SIZED_LAYOUTS.includes(parentLayoutType)) {
@@ -37414,7 +37504,7 @@ ${text}
         }
       }
       resizableBox = /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(
-        import_components58.ResizableBox,
+        import_components57.ResizableBox,
         {
           ref: effectResizeableBoxPlacement,
           style: {
@@ -37482,7 +37572,7 @@ ${text}
         type: "snackbar"
       });
     };
-    const featuredImageControl = !isDescendentOfQueryLoop && postId && id ? /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_block_editor116.BlockSettingsMenuControls, { children: ({ canEdit, selectedClientIds }) => canEdit && selectedClientIds.length === 1 && clientId === selectedClientIds[0] && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components58.MenuItem, { onClick: setPostFeatureImage, children: (0, import_i18n101.__)("Set as featured image") }) }) : null;
+    const featuredImageControl = !isDescendentOfQueryLoop && postId && id ? /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_block_editor116.BlockSettingsMenuControls, { children: ({ canEdit, selectedClientIds }) => canEdit && selectedClientIds.length === 1 && clientId === selectedClientIds[0] && /* @__PURE__ */ (0, import_jsx_runtime295.jsx)(import_components57.MenuItem, { onClick: setPostFeatureImage, children: (0, import_i18n101.__)("Set as featured image") }) }) : null;
     return /* @__PURE__ */ (0, import_jsx_runtime295.jsxs)(import_jsx_runtime295.Fragment, { children: [
       mediaControls,
       controls,
@@ -37802,7 +37892,7 @@ ${text}
     const pinnedHeight = height === "auto" ? void 0 : height;
     const placeholder2 = (content) => {
       return /* @__PURE__ */ (0, import_jsx_runtime297.jsxs)(
-        import_components59.Placeholder,
+        import_components58.Placeholder,
         {
           className: clsx_default("block-editor-media-placeholder", {
             [borderProps.className]: !!borderProps.className && !isSingleSelected
@@ -38602,7 +38692,7 @@ ${text}
 
   // packages/block-library/build-module/latest-comments/edit.mjs
   var import_block_editor119 = __toESM(require_block_editor(), 1);
-  var import_components60 = __toESM(require_components(), 1);
+  var import_components59 = __toESM(require_components(), 1);
   var import_i18n104 = __toESM(require_i18n(), 1);
   var import_server_side_render4 = __toESM(require_server_side_render(), 1);
   var import_compose27 = __toESM(require_compose(), 1);
@@ -38627,7 +38717,7 @@ ${text}
     const blockProps = (0, import_block_editor119.useBlockProps)({ ref: disabledRef });
     return /* @__PURE__ */ (0, import_jsx_runtime299.jsxs)(import_jsx_runtime299.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(import_block_editor119.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime299.jsxs)(
-        import_components60.__experimentalToolsPanel,
+        import_components59.__experimentalToolsPanel,
         {
           label: (0, import_i18n104.__)("Settings"),
           resetAll: () => {
@@ -38641,14 +38731,14 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
-              import_components60.__experimentalToolsPanelItem,
+              import_components59.__experimentalToolsPanelItem,
               {
                 hasValue: () => !displayAvatar,
                 label: (0, import_i18n104.__)("Display avatar"),
                 onDeselect: () => setAttributes({ displayAvatar: true }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
-                  import_components60.ToggleControl,
+                  import_components59.ToggleControl,
                   {
                     label: (0, import_i18n104.__)("Display avatar"),
                     checked: displayAvatar,
@@ -38660,14 +38750,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
-              import_components60.__experimentalToolsPanelItem,
+              import_components59.__experimentalToolsPanelItem,
               {
                 hasValue: () => !displayDate,
                 label: (0, import_i18n104.__)("Display date"),
                 onDeselect: () => setAttributes({ displayDate: true }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
-                  import_components60.ToggleControl,
+                  import_components59.ToggleControl,
                   {
                     label: (0, import_i18n104.__)("Display date"),
                     checked: displayDate,
@@ -38677,14 +38767,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
-              import_components60.__experimentalToolsPanelItem,
+              import_components59.__experimentalToolsPanelItem,
               {
                 hasValue: () => displayContent !== "excerpt",
                 label: (0, import_i18n104.__)("Display content"),
                 onDeselect: () => setAttributes({ displayContent: "excerpt" }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
-                  import_components60.SelectControl,
+                  import_components59.SelectControl,
                   {
                     label: (0, import_i18n104.__)("Display content"),
                     value: displayContent,
@@ -38701,14 +38791,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
-              import_components60.__experimentalToolsPanelItem,
+              import_components59.__experimentalToolsPanelItem,
               {
                 hasValue: () => commentsToShow !== 5,
                 label: (0, import_i18n104.__)("Number of comments"),
                 onDeselect: () => setAttributes({ commentsToShow: 5 }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
-                  import_components60.RangeControl,
+                  import_components59.RangeControl,
                   {
                     label: (0, import_i18n104.__)("Number of comments"),
                     value: commentsToShow,
@@ -38723,7 +38813,7 @@ ${text}
           ]
         }
       ) }),
-      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime299.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(import_components60.Spinner, {}) }),
+      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime299.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(import_components59.Spinner, {}) }),
       status === "error" && /* @__PURE__ */ (0, import_jsx_runtime299.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)("p", { children: (0, import_i18n104.sprintf)(
         /* translators: %s: error message returned when rendering the block. */
         (0, import_i18n104.__)("Error: %s"),
@@ -39071,7 +39161,7 @@ ${text}
   ];
 
   // packages/block-library/build-module/latest-posts/edit.mjs
-  var import_components61 = __toESM(require_components(), 1);
+  var import_components60 = __toESM(require_components(), 1);
   var import_i18n105 = __toESM(require_i18n(), 1);
   var import_date2 = __toESM(require_date(), 1);
   var import_block_editor120 = __toESM(require_block_editor(), 1);
@@ -39199,7 +39289,7 @@ ${text}
     };
     return /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(import_jsx_runtime300.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(
-        import_components61.__experimentalToolsPanel,
+        import_components60.__experimentalToolsPanel,
         {
           label: (0, import_i18n105.__)("Post content"),
           resetAll: () => setAttributes({
@@ -39210,14 +39300,14 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-              import_components61.__experimentalToolsPanelItem,
+              import_components60.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!displayPostContent,
                 label: (0, import_i18n105.__)("Display post content"),
                 onDeselect: () => setAttributes({ displayPostContent: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-                  import_components61.ToggleControl,
+                  import_components60.ToggleControl,
                   {
                     label: (0, import_i18n105.__)("Display post content"),
                     checked: displayPostContent,
@@ -39227,7 +39317,7 @@ ${text}
               }
             ),
             displayPostContent && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-              import_components61.__experimentalToolsPanelItem,
+              import_components60.__experimentalToolsPanelItem,
               {
                 hasValue: () => displayPostContentRadio !== "excerpt",
                 label: (0, import_i18n105.__)("Content length"),
@@ -39236,7 +39326,7 @@ ${text}
                 }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-                  import_components61.RadioControl,
+                  import_components60.RadioControl,
                   {
                     label: (0, import_i18n105.__)("Content length"),
                     selected: displayPostContentRadio,
@@ -39255,7 +39345,7 @@ ${text}
               }
             ),
             displayPostContent && displayPostContentRadio === "excerpt" && /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-              import_components61.__experimentalToolsPanelItem,
+              import_components60.__experimentalToolsPanelItem,
               {
                 hasValue: () => excerptLength !== DEFAULT_EXCERPT_LENGTH,
                 label: (0, import_i18n105.__)("Max number of words"),
@@ -39264,7 +39354,7 @@ ${text}
                 }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-                  import_components61.RangeControl,
+                  import_components60.RangeControl,
                   {
                     label: (0, import_i18n105.__)("Max number of words"),
                     value: excerptLength,
@@ -39279,7 +39369,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(
-        import_components61.__experimentalToolsPanel,
+        import_components60.__experimentalToolsPanel,
         {
           label: (0, import_i18n105.__)("Post meta"),
           resetAll: () => setAttributes({
@@ -39289,14 +39379,14 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-              import_components61.__experimentalToolsPanelItem,
+              import_components60.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!displayAuthor,
                 label: (0, import_i18n105.__)("Display author name"),
                 onDeselect: () => setAttributes({ displayAuthor: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-                  import_components61.ToggleControl,
+                  import_components60.ToggleControl,
                   {
                     label: (0, import_i18n105.__)("Display author name"),
                     checked: displayAuthor,
@@ -39306,14 +39396,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-              import_components61.__experimentalToolsPanelItem,
+              import_components60.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!displayPostDate,
                 label: (0, import_i18n105.__)("Display post date"),
                 onDeselect: () => setAttributes({ displayPostDate: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-                  import_components61.ToggleControl,
+                  import_components60.ToggleControl,
                   {
                     label: (0, import_i18n105.__)("Display post date"),
                     checked: displayPostDate,
@@ -39326,7 +39416,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(
-        import_components61.__experimentalToolsPanel,
+        import_components60.__experimentalToolsPanel,
         {
           label: (0, import_i18n105.__)("Featured image"),
           resetAll: () => setAttributes({
@@ -39340,14 +39430,14 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-              import_components61.__experimentalToolsPanelItem,
+              import_components60.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!displayFeaturedImage,
                 label: (0, import_i18n105.__)("Display featured image"),
                 onDeselect: () => setAttributes({ displayFeaturedImage: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-                  import_components61.ToggleControl,
+                  import_components60.ToggleControl,
                   {
                     label: (0, import_i18n105.__)("Display featured image"),
                     checked: displayFeaturedImage,
@@ -39358,7 +39448,7 @@ ${text}
             ),
             displayFeaturedImage && /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(import_jsx_runtime300.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-                import_components61.__experimentalToolsPanelItem,
+                import_components60.__experimentalToolsPanelItem,
                 {
                   hasValue: () => featuredImageSizeSlug !== "thumbnail" || featuredImageSizeWidth !== null || featuredImageSizeHeight !== null,
                   label: (0, import_i18n105.__)("Image size"),
@@ -39400,7 +39490,7 @@ ${text}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-                import_components61.__experimentalToolsPanelItem,
+                import_components60.__experimentalToolsPanelItem,
                 {
                   hasValue: () => !!featuredImageAlign,
                   label: (0, import_i18n105.__)("Image alignment"),
@@ -39409,7 +39499,7 @@ ${text}
                   }),
                   isShownByDefault: true,
                   children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-                    import_components61.__experimentalToggleGroupControl,
+                    import_components60.__experimentalToggleGroupControl,
                     {
                       className: "editor-latest-posts-image-alignment-control",
                       label: (0, import_i18n105.__)("Image alignment"),
@@ -39420,7 +39510,7 @@ ${text}
                       children: imageAlignmentOptions.map(
                         ({ value, icon: icon4, label }) => {
                           return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-                            import_components61.__experimentalToggleGroupControlOptionIcon,
+                            import_components60.__experimentalToggleGroupControlOptionIcon,
                             {
                               value,
                               icon: icon4,
@@ -39435,7 +39525,7 @@ ${text}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-                import_components61.__experimentalToolsPanelItem,
+                import_components60.__experimentalToolsPanelItem,
                 {
                   hasValue: () => !!addLinkToFeaturedImage,
                   label: (0, import_i18n105.__)("Add link to featured image"),
@@ -39444,7 +39534,7 @@ ${text}
                   }),
                   isShownByDefault: true,
                   children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-                    import_components61.ToggleControl,
+                    import_components60.ToggleControl,
                     {
                       label: (0, import_i18n105.__)("Add link to featured image"),
                       checked: addLinkToFeaturedImage,
@@ -39460,7 +39550,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-        import_components61.__experimentalToolsPanel,
+        import_components60.__experimentalToolsPanel,
         {
           label: (0, import_i18n105.__)("Sorting and filtering"),
           resetAll: () => setAttributes({
@@ -39472,7 +39562,7 @@ ${text}
           }),
           dropdownMenuProps,
           children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-            import_components61.__experimentalToolsPanelItem,
+            import_components60.__experimentalToolsPanelItem,
             {
               hasValue: () => order !== "desc" || orderBy !== "date" || postsToShow !== 5 || categories?.length > 0 || !!selectedAuthor,
               label: (0, import_i18n105.__)("Sort and filter"),
@@ -39485,7 +39575,7 @@ ${text}
               }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-                import_components61.QueryControls,
+                import_components60.QueryControls,
                 {
                   ...{ order, orderBy },
                   numberOfItems: postsToShow,
@@ -39592,7 +39682,7 @@ ${text}
     if (!hasPosts) {
       return /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)("div", { ...blockProps, children: [
         inspectorControls,
-        /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_components61.Placeholder, { icon: pin_default, label: (0, import_i18n105.__)("Latest Posts"), children: !Array.isArray(latestPosts) ? /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_components61.Spinner, {}) : (0, import_i18n105.__)("No posts found.") })
+        /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_components60.Placeholder, { icon: pin_default, label: (0, import_i18n105.__)("Latest Posts"), children: !Array.isArray(latestPosts) ? /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_components60.Spinner, {}) : (0, import_i18n105.__)("No posts found.") })
       ] });
     }
     const displayPosts = latestPosts.length > postsToShow ? latestPosts.slice(0, postsToShow) : latestPosts;
@@ -39621,7 +39711,7 @@ ${text}
     const dateFormat = (0, import_date2.getSettings)().formats.date;
     return /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(import_jsx_runtime300.Fragment, { children: [
       inspectorControls,
-      /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_block_editor120.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_components61.ToolbarGroup, { controls: layoutControls }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_block_editor120.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_components60.ToolbarGroup, { controls: layoutControls }) }),
       /* @__PURE__ */ (0, import_jsx_runtime300.jsx)("ul", { ...blockProps, children: displayPosts.map((post) => {
         const titleTrimmed = post.title.rendered.trim();
         let excerpt = post.excerpt.rendered;
@@ -40110,7 +40200,7 @@ ${text}
 
   // packages/block-library/build-module/list/edit.mjs
   var import_block_editor123 = __toESM(require_block_editor(), 1);
-  var import_components63 = __toESM(require_components(), 1);
+  var import_components62 = __toESM(require_components(), 1);
   var import_data55 = __toESM(require_data(), 1);
   var import_i18n107 = __toESM(require_i18n(), 1);
   var import_blocks44 = __toESM(require_blocks(), 1);
@@ -40120,7 +40210,7 @@ ${text}
   // packages/block-library/build-module/list/ordered-list-settings.mjs
   var import_i18n106 = __toESM(require_i18n(), 1);
   var import_block_editor122 = __toESM(require_block_editor(), 1);
-  var import_components62 = __toESM(require_components(), 1);
+  var import_components61 = __toESM(require_components(), 1);
   var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
   var LIST_STYLE_OPTIONS = [
     {
@@ -40147,7 +40237,7 @@ ${text}
   var OrderedListSettings = ({ setAttributes, reversed, start, type }) => {
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(import_block_editor122.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime302.jsxs)(
-      import_components62.__experimentalToolsPanel,
+      import_components61.__experimentalToolsPanel,
       {
         label: (0, import_i18n106.__)("Settings"),
         resetAll: () => {
@@ -40160,7 +40250,7 @@ ${text}
         dropdownMenuProps,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
-            import_components62.__experimentalToolsPanelItem,
+            import_components61.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n106.__)("List style"),
               isShownByDefault: true,
@@ -40169,7 +40259,7 @@ ${text}
                 type: void 0
               }),
               children: /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
-                import_components62.SelectControl,
+                import_components61.SelectControl,
                 {
                   label: (0, import_i18n106.__)("List style"),
                   options: LIST_STYLE_OPTIONS,
@@ -40180,7 +40270,7 @@ ${text}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
-            import_components62.__experimentalToolsPanelItem,
+            import_components61.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n106.__)("Start value"),
               isShownByDefault: true,
@@ -40189,7 +40279,7 @@ ${text}
                 start: void 0
               }),
               children: /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
-                import_components62.TextControl,
+                import_components61.TextControl,
                 {
                   label: (0, import_i18n106.__)("Start value"),
                   type: "number",
@@ -40208,7 +40298,7 @@ ${text}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
-            import_components62.__experimentalToolsPanelItem,
+            import_components61.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n106.__)("Reverse order"),
               isShownByDefault: true,
@@ -40217,7 +40307,7 @@ ${text}
                 reversed: void 0
               }),
               children: /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
-                import_components62.ToggleControl,
+                import_components61.ToggleControl,
                 {
                   label: (0, import_i18n106.__)("Reverse order"),
                   checked: reversed || false,
@@ -40300,7 +40390,7 @@ ${text}
       [clientId]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(import_jsx_runtime304.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(
-      import_components63.ToolbarButton,
+      import_components62.ToolbarButton,
       {
         icon: (0, import_i18n107.isRTL)() ? format_outdent_rtl_default : format_outdent_default,
         title: (0, import_i18n107.__)("Outdent"),
@@ -40326,7 +40416,7 @@ ${text}
     useMigrateOnLoad(attributes, clientId);
     const controls = /* @__PURE__ */ (0, import_jsx_runtime304.jsxs)(import_block_editor123.BlockControls, { group: "block", children: [
       /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(
-        import_components63.ToolbarButton,
+        import_components62.ToolbarButton,
         {
           icon: (0, import_i18n107.isRTL)() ? format_list_bullets_rtl_default : format_list_bullets_default,
           title: (0, import_i18n107.__)("Unordered"),
@@ -40338,7 +40428,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime304.jsx)(
-        import_components63.ToolbarButton,
+        import_components62.ToolbarButton,
         {
           icon: (0, import_i18n107.isRTL)() ? format_list_numbered_rtl_default : format_list_numbered_default,
           title: (0, import_i18n107.__)("Ordered"),
@@ -40643,11 +40733,11 @@ ${text}
   // packages/block-library/build-module/math/edit.mjs
   var import_i18n109 = __toESM(require_i18n(), 1);
   var import_block_editor125 = __toESM(require_block_editor(), 1);
-  var import_components64 = __toESM(require_components(), 1);
+  var import_components63 = __toESM(require_components(), 1);
   var import_element63 = __toESM(require_element(), 1);
   var import_data56 = __toESM(require_data(), 1);
   var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedTextareaControl } = unlock(import_components64.privateApis);
+  var { ValidatedTextareaControl } = unlock(import_components63.privateApis);
   function MathEdit({ attributes, setAttributes, isSelected }) {
     const { latex, mathML } = attributes;
     const [blockRef, setBlockRef] = (0, import_element63.useState)();
@@ -40686,7 +40776,7 @@ ${text}
         }
       ) : "\u200B",
       isSelected && /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
-        import_components64.Popover,
+        import_components63.Popover,
         {
           placement: "bottom-start",
           offset: 8,
@@ -40944,7 +41034,7 @@ ${text}
   // packages/block-library/build-module/list-item/edit.mjs
   var import_block_editor133 = __toESM(require_block_editor(), 1);
   var import_i18n110 = __toESM(require_i18n(), 1);
-  var import_components65 = __toESM(require_components(), 1);
+  var import_components64 = __toESM(require_components(), 1);
   var import_compose31 = __toESM(require_compose(), 1);
   var import_data62 = __toESM(require_data(), 1);
   var import_keycodes5 = __toESM(require_keycodes(), 1);
@@ -41360,7 +41450,7 @@ ${text}
     );
     return /* @__PURE__ */ (0, import_jsx_runtime309.jsxs)(import_jsx_runtime309.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(
-        import_components65.ToolbarButton,
+        import_components64.ToolbarButton,
         {
           icon: (0, import_i18n110.isRTL)() ? format_outdent_rtl_default : format_outdent_default,
           title: (0, import_i18n110.__)("Outdent"),
@@ -41371,7 +41461,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(
-        import_components65.ToolbarButton,
+        import_components64.ToolbarButton,
         {
           icon: (0, import_i18n110.isRTL)() ? format_indent_rtl_default : format_indent_default,
           title: (0, import_i18n110.__)("Indent"),
@@ -41499,7 +41589,7 @@ ${text}
 
   // packages/block-library/build-module/loginout/edit.mjs
   var import_block_editor136 = __toESM(require_block_editor(), 1);
-  var import_components66 = __toESM(require_components(), 1);
+  var import_components65 = __toESM(require_components(), 1);
   var import_i18n112 = __toESM(require_i18n(), 1);
   var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
   function LoginOutEdit({ attributes, setAttributes }) {
@@ -41507,7 +41597,7 @@ ${text}
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime311.jsxs)(import_jsx_runtime311.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(import_block_editor136.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime311.jsxs)(
-        import_components66.__experimentalToolsPanel,
+        import_components65.__experimentalToolsPanel,
         {
           label: (0, import_i18n112.__)("Settings"),
           resetAll: () => {
@@ -41519,14 +41609,14 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
-              import_components66.__experimentalToolsPanelItem,
+              import_components65.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n112.__)("Display login as form"),
                 isShownByDefault: true,
                 hasValue: () => displayLoginAsForm,
                 onDeselect: () => setAttributes({ displayLoginAsForm: false }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
-                  import_components66.ToggleControl,
+                  import_components65.ToggleControl,
                   {
                     label: (0, import_i18n112.__)("Display login as form"),
                     checked: displayLoginAsForm,
@@ -41538,14 +41628,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
-              import_components66.__experimentalToolsPanelItem,
+              import_components65.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n112.__)("Redirect to current URL"),
                 isShownByDefault: true,
                 hasValue: () => !redirectToCurrent,
                 onDeselect: () => setAttributes({ redirectToCurrent: true }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
-                  import_components66.ToggleControl,
+                  import_components65.ToggleControl,
                   {
                     label: (0, import_i18n112.__)("Redirect to current URL"),
                     checked: redirectToCurrent,
@@ -42596,12 +42686,12 @@ ${text}
   var import_data64 = __toESM(require_data(), 1);
   var import_element67 = __toESM(require_element(), 1);
   var import_block_editor139 = __toESM(require_block_editor(), 1);
-  var import_components68 = __toESM(require_components(), 1);
+  var import_components67 = __toESM(require_components(), 1);
   var import_blob15 = __toESM(require_blob(), 1);
   var import_core_data29 = __toESM(require_core_data(), 1);
 
   // packages/block-library/build-module/media-text/media-container.mjs
-  var import_components67 = __toESM(require_components(), 1);
+  var import_components66 = __toESM(require_components(), 1);
   var import_block_editor138 = __toESM(require_block_editor(), 1);
   var import_i18n114 = __toESM(require_i18n(), 1);
   var import_compose33 = __toESM(require_compose(), 1);
@@ -42628,7 +42718,7 @@ ${text}
     ({ isSelected, isStackedOnMobile, ...props }, ref) => {
       const isMobile = (0, import_compose33.useViewportMatch)("small", "<");
       return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-        import_components67.ResizableBox,
+        import_components66.ResizableBox,
         {
           ref,
           showHandle: isSelected && (!isMobile || !isStackedOnMobile),
@@ -42782,10 +42872,10 @@ ${text}
               }
             ),
             (mediaTypeRenderers[mediaType] || noop3)(),
-            isTemporaryMedia2 && /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(import_components67.Spinner, {}),
+            isTemporaryMedia2 && /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(import_components66.Spinner, {}),
             !useFeaturedImage && /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(PlaceholderContainer, { ...props }),
             !featuredImageURL && useFeaturedImage && /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
-              import_components67.Placeholder,
+              import_components66.Placeholder,
               {
                 className: "wp-block-media-text--placeholder-image",
                 style: positionStyles,
@@ -43038,7 +43128,7 @@ ${text}
     };
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const mediaTextGeneralSettings = /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)(
-      import_components68.__experimentalToolsPanel,
+      import_components67.__experimentalToolsPanel,
       {
         label: (0, import_i18n115.__)("Settings"),
         resetAll: () => {
@@ -43054,14 +43144,14 @@ ${text}
         dropdownMenuProps,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-            import_components68.__experimentalToolsPanelItem,
+            import_components67.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n115.__)("Media width"),
               isShownByDefault: true,
               hasValue: () => mediaWidth !== 50,
               onDeselect: () => setAttributes({ mediaWidth: 50 }),
               children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-                import_components68.RangeControl,
+                import_components67.RangeControl,
                 {
                   label: (0, import_i18n115.__)("Media width"),
                   value: temporaryMediaWidth || mediaWidth,
@@ -43073,14 +43163,14 @@ ${text}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-            import_components68.__experimentalToolsPanelItem,
+            import_components67.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n115.__)("Stack on mobile"),
               isShownByDefault: true,
               hasValue: () => !isStackedOnMobile,
               onDeselect: () => setAttributes({ isStackedOnMobile: true }),
               children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-                import_components68.ToggleControl,
+                import_components67.ToggleControl,
                 {
                   label: (0, import_i18n115.__)("Stack on mobile"),
                   checked: isStackedOnMobile,
@@ -43092,14 +43182,14 @@ ${text}
             }
           ),
           mediaType === "image" && /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-            import_components68.__experimentalToolsPanelItem,
+            import_components67.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n115.__)("Crop image to fill"),
               isShownByDefault: true,
               hasValue: () => !!imageFill,
               onDeselect: () => setAttributes({ imageFill: false }),
               children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-                import_components68.ToggleControl,
+                import_components67.ToggleControl,
                 {
                   label: (0, import_i18n115.__)("Crop image to fill"),
                   checked: !!imageFill,
@@ -43111,14 +43201,14 @@ ${text}
             }
           ),
           imageFill && (mediaUrl || featuredImageURL) && mediaType === "image" && /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-            import_components68.__experimentalToolsPanelItem,
+            import_components67.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n115.__)("Focal point"),
               isShownByDefault: true,
               hasValue: () => !!focalPoint,
               onDeselect: () => setAttributes({ focalPoint: void 0 }),
               children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-                import_components68.FocalPointPicker,
+                import_components67.FocalPointPicker,
                 {
                   label: (0, import_i18n115.__)("Focal point"),
                   url: useFeaturedImage && featuredImageURL ? featuredImageURL : mediaUrl,
@@ -43131,21 +43221,21 @@ ${text}
             }
           ),
           mediaType === "image" && mediaUrl && !useFeaturedImage && /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-            import_components68.__experimentalToolsPanelItem,
+            import_components67.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n115.__)("Alternative text"),
               isShownByDefault: true,
               hasValue: () => !!mediaAlt,
               onDeselect: () => setAttributes({ mediaAlt: "" }),
               children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-                import_components68.TextareaControl,
+                import_components67.TextareaControl,
                 {
                   label: (0, import_i18n115.__)("Alternative text"),
                   value: mediaAlt,
                   onChange: onMediaAltChange,
                   help: /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)(import_jsx_runtime314.Fragment, { children: [
                     /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-                      import_components68.ExternalLink,
+                      import_components67.ExternalLink,
                       {
                         href: (
                           // translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations.
@@ -43198,7 +43288,7 @@ ${text}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-            import_components68.ToolbarButton,
+            import_components67.ToolbarButton,
             {
               icon: pull_left_default,
               title: (0, import_i18n115.__)("Show media on left"),
@@ -43207,7 +43297,7 @@ ${text}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(
-            import_components68.ToolbarButton,
+            import_components67.ToolbarButton,
             {
               icon: pull_right_default,
               title: (0, import_i18n115.__)("Show media on right"),
@@ -43780,7 +43870,7 @@ ${text}
   // packages/block-library/build-module/missing/edit.mjs
   var import_i18n117 = __toESM(require_i18n(), 1);
   var import_element68 = __toESM(require_element(), 1);
-  var import_components69 = __toESM(require_components(), 1);
+  var import_components68 = __toESM(require_components(), 1);
   var import_blocks54 = __toESM(require_blocks(), 1);
   var import_data65 = __toESM(require_data(), 1);
   var import_block_editor141 = __toESM(require_block_editor(), 1);
@@ -43815,7 +43905,7 @@ ${text}
     const actions = [];
     let messageHTML;
     const convertToHtmlButton = /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(
-      import_components69.Button,
+      import_components68.Button,
       {
         __next40pxDefaultSize: true,
         onClick: convertToHTML,
@@ -43935,7 +44025,7 @@ ${text}
 
   // packages/block-library/build-module/more/edit.mjs
   var import_i18n118 = __toESM(require_i18n(), 1);
-  var import_components70 = __toESM(require_components(), 1);
+  var import_components69 = __toESM(require_components(), 1);
   var import_block_editor142 = __toESM(require_block_editor(), 1);
   var import_blocks56 = __toESM(require_blocks(), 1);
   var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
@@ -43948,7 +44038,7 @@ ${text}
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(import_jsx_runtime318.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(import_block_editor142.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-        import_components70.__experimentalToolsPanel,
+        import_components69.__experimentalToolsPanel,
         {
           label: (0, import_i18n118.__)("Settings"),
           resetAll: () => {
@@ -43958,14 +44048,14 @@ ${text}
           },
           dropdownMenuProps,
           children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-            import_components70.__experimentalToolsPanelItem,
+            import_components69.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n118.__)("Hide excerpt"),
               isShownByDefault: true,
               hasValue: () => noTeaser,
               onDeselect: () => setAttributes({ noTeaser: false }),
               children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
-                import_components70.ToggleControl,
+                import_components69.ToggleControl,
                 {
                   label: (0, import_i18n118.__)(
                     "Hide the excerpt on the full content page"
@@ -44275,7 +44365,7 @@ ${text}
   var import_block_editor164 = __toESM(require_block_editor(), 1);
   var import_core_data53 = __toESM(require_core_data(), 1);
   var import_data92 = __toESM(require_data(), 1);
-  var import_components95 = __toESM(require_components(), 1);
+  var import_components94 = __toESM(require_components(), 1);
   var import_i18n150 = __toESM(require_i18n(), 1);
   var import_a11y2 = __toESM(require_a11y(), 1);
   var import_blocks64 = __toESM(require_blocks(), 1);
@@ -44390,7 +44480,7 @@ ${text}
   }
 
   // packages/block-library/build-module/navigation/edit/placeholder/index.mjs
-  var import_components72 = __toESM(require_components(), 1);
+  var import_components71 = __toESM(require_components(), 1);
   var import_i18n122 = __toESM(require_i18n(), 1);
   var import_a11y = __toESM(require_a11y(), 1);
   var import_element72 = __toESM(require_element(), 1);
@@ -44415,7 +44505,7 @@ ${text}
   var placeholder_preview_default = PlaceholderPreview;
 
   // packages/block-library/build-module/navigation/edit/navigation-menu-selector.mjs
-  var import_components71 = __toESM(require_components(), 1);
+  var import_components70 = __toESM(require_components(), 1);
   var import_i18n121 = __toESM(require_i18n(), 1);
   var import_html_entities3 = __toESM(require_html_entities(), 1);
   var import_element71 = __toESM(require_element(), 1);
@@ -44517,14 +44607,14 @@ ${text}
       noMenuSelected
     ]);
     const NavigationMenuSelectorDropdown = /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
-      import_components71.DropdownMenu,
+      import_components70.DropdownMenu,
       {
         label: selectorLabel,
         icon: more_vertical_default,
         toggleProps: { size: "small" },
         children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime321.jsxs)(import_jsx_runtime321.Fragment, { children: [
-          showNavigationMenus && hasNavigationMenus && /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(import_components71.MenuGroup, { label: (0, import_i18n121.__)("Menus"), children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
-            import_components71.MenuItemsChoice,
+          showNavigationMenus && hasNavigationMenus && /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(import_components70.MenuGroup, { label: (0, import_i18n121.__)("Menus"), children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+            import_components70.MenuItemsChoice,
             {
               value: currentMenuId,
               onSelect: (menuId) => {
@@ -44534,10 +44624,10 @@ ${text}
               choices: menuChoices
             }
           ) }),
-          showClassicMenus && hasClassicMenus && /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(import_components71.MenuGroup, { label: (0, import_i18n121.__)("Import Classic Menus"), children: classicMenus?.map((menu) => {
+          showClassicMenus && hasClassicMenus && /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(import_components70.MenuGroup, { label: (0, import_i18n121.__)("Import Classic Menus"), children: classicMenus?.map((menu) => {
             const label = (0, import_html_entities3.decodeEntities)(menu.name);
             return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
-              import_components71.MenuItem,
+              import_components70.MenuItem,
               {
                 onClick: async () => {
                   setIsUpdatingMenuRef(true);
@@ -44555,8 +44645,8 @@ ${text}
               menu.id
             );
           }) }),
-          canUserCreateNavigationMenus && /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(import_components71.MenuGroup, { label: (0, import_i18n121.__)("Tools"), children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
-            import_components71.MenuItem,
+          canUserCreateNavigationMenus && /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(import_components70.MenuGroup, { label: (0, import_i18n121.__)("Tools"), children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
+            import_components70.MenuItem,
             {
               onClick: async () => {
                 setIsUpdatingMenuRef(true);
@@ -44600,7 +44690,7 @@ ${text}
       }
     }, [hasResolvedMenus, isResolvingMenus, isSelected]);
     const isResolvingActions = isResolvingMenus && isResolvingCanUserCreateNavigationMenus;
-    return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_jsx_runtime322.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_components72.Placeholder, { className: "wp-block-navigation-placeholder", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_jsx_runtime322.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime322.jsxs)(import_components71.Placeholder, { className: "wp-block-navigation-placeholder", children: [
       /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(placeholder_preview_default, { isVisible: !isSelected }),
       /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
         "div",
@@ -44614,7 +44704,7 @@ ${text}
               (0, import_i18n122.__)("Navigation")
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime322.jsx)("hr", {}),
-            isResolvingActions && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_components72.Spinner, {}),
+            isResolvingActions && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(import_components71.Spinner, {}),
             /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
               navigation_menu_selector_default,
               {
@@ -44626,7 +44716,7 @@ ${text}
             ),
             /* @__PURE__ */ (0, import_jsx_runtime322.jsx)("hr", {}),
             canUserCreateNavigationMenus && /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(
-              import_components72.Button,
+              import_components71.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
@@ -44641,7 +44731,7 @@ ${text}
   }
 
   // packages/block-library/build-module/navigation/edit/responsive-wrapper.mjs
-  var import_components73 = __toESM(require_components(), 1);
+  var import_components72 = __toESM(require_components(), 1);
   var import_i18n123 = __toESM(require_i18n(), 1);
   var import_block_editor143 = __toESM(require_block_editor(), 1);
   var import_data67 = __toESM(require_data(), 1);
@@ -44749,7 +44839,7 @@ ${text}
     };
     return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(import_jsx_runtime324.Fragment, { children: [
       !isOpen && /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(
-        import_components73.Button,
+        import_components72.Button,
         {
           __next40pxDefaultSize: true,
           "aria-haspopup": "true",
@@ -44775,7 +44865,7 @@ ${text}
               tabIndex: "-1",
               children: /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("div", { ...dialogProps, children: [
                 /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)(
-                  import_components73.Button,
+                  import_components72.Button,
                   {
                     __next40pxDefaultSize: true,
                     className: "wp-block-navigation__responsive-container-close",
@@ -44879,7 +44969,7 @@ ${text}
   }
 
   // packages/block-library/build-module/navigation/edit/navigation-menu-name-control.mjs
-  var import_components74 = __toESM(require_components(), 1);
+  var import_components73 = __toESM(require_components(), 1);
   var import_core_data35 = __toESM(require_core_data(), 1);
   var import_i18n124 = __toESM(require_i18n(), 1);
   var import_jsx_runtime326 = __toESM(require_jsx_runtime(), 1);
@@ -44890,7 +44980,7 @@ ${text}
       "title"
     );
     return /* @__PURE__ */ (0, import_jsx_runtime326.jsx)(
-      import_components74.TextControl,
+      import_components73.TextControl,
       {
         label: (0, import_i18n124.__)("Menu name"),
         value: title,
@@ -44901,7 +44991,7 @@ ${text}
 
   // packages/block-library/build-module/navigation/edit/unsaved-inner-blocks.mjs
   var import_block_editor145 = __toESM(require_block_editor(), 1);
-  var import_components75 = __toESM(require_components(), 1);
+  var import_components74 = __toESM(require_components(), 1);
   var import_core_data36 = __toESM(require_core_data(), 1);
   var import_data69 = __toESM(require_data(), 1);
   var import_element74 = __toESM(require_element(), 1);
@@ -44956,7 +45046,7 @@ ${text}
       originalBlocksRef?.current,
       blocks
     );
-    const isDisabled = (0, import_element74.useContext)(import_components75.Disabled.Context);
+    const isDisabled = (0, import_element74.useContext)(import_components74.Disabled.Context);
     const innerBlocksProps = (0, import_block_editor145.useInnerBlocksProps)(
       {
         className: "wp-block-navigation__container"
@@ -44997,12 +45087,12 @@ ${text}
       innerBlocksAreDirty,
       hasSelection
     ]);
-    const Wrapper = isSaving ? import_components75.Disabled : "div";
+    const Wrapper = isSaving ? import_components74.Disabled : "div";
     return /* @__PURE__ */ (0, import_jsx_runtime327.jsx)(Wrapper, { ...innerBlocksProps });
   }
 
   // packages/block-library/build-module/navigation/edit/navigation-menu-delete-control.mjs
-  var import_components76 = __toESM(require_components(), 1);
+  var import_components75 = __toESM(require_components(), 1);
   var import_core_data37 = __toESM(require_core_data(), 1);
   var import_data70 = __toESM(require_data(), 1);
   var import_element75 = __toESM(require_element(), 1);
@@ -45014,7 +45104,7 @@ ${text}
     const { deleteEntityRecord } = (0, import_data70.useDispatch)(import_core_data37.store);
     return /* @__PURE__ */ (0, import_jsx_runtime328.jsxs)(import_jsx_runtime328.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
-        import_components76.Button,
+        import_components75.Button,
         {
           __next40pxDefaultSize: true,
           className: "wp-block-navigation-delete-menu-button",
@@ -45027,7 +45117,7 @@ ${text}
         }
       ),
       isConfirmDialogVisible && /* @__PURE__ */ (0, import_jsx_runtime328.jsx)(
-        import_components76.__experimentalConfirmDialog,
+        import_components75.__experimentalConfirmDialog,
         {
           isOpen: true,
           onConfirm: () => {
@@ -45081,20 +45171,20 @@ ${text}
   var use_navigation_notice_default = useNavigationNotice;
 
   // packages/block-library/build-module/navigation/edit/overlay-menu-preview.mjs
-  var import_components77 = __toESM(require_components(), 1);
+  var import_components76 = __toESM(require_components(), 1);
   var import_i18n126 = __toESM(require_i18n(), 1);
   var import_jsx_runtime329 = __toESM(require_jsx_runtime(), 1);
   function OverlayMenuPreview({ setAttributes, hasIcon, icon: icon4 }) {
     return /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(import_jsx_runtime329.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
-        import_components77.__experimentalToolsPanelItem,
+        import_components76.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n126.__)("Show icon button"),
           isShownByDefault: true,
           hasValue: () => !hasIcon,
           onDeselect: () => setAttributes({ hasIcon: true }),
           children: /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
-            import_components77.ToggleControl,
+            import_components76.ToggleControl,
             {
               label: (0, import_i18n126.__)("Show icon button"),
               help: (0, import_i18n126.__)(
@@ -45107,14 +45197,14 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
-        import_components77.__experimentalToolsPanelItem,
+        import_components76.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n126.__)("Icon"),
           isShownByDefault: true,
           hasValue: () => icon4 !== "handle",
           onDeselect: () => setAttributes({ icon: "handle" }),
           children: /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(
-            import_components77.__experimentalToggleGroupControl,
+            import_components76.__experimentalToggleGroupControl,
             {
               className: "wp-block-navigation__overlay-menu-icon-toggle-group",
               label: (0, import_i18n126.__)("Icon"),
@@ -45123,7 +45213,7 @@ ${text}
               isBlock: true,
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
-                  import_components77.__experimentalToggleGroupControlOption,
+                  import_components76.__experimentalToggleGroupControlOption,
                   {
                     value: "handle",
                     "aria-label": (0, import_i18n126.__)("handle"),
@@ -45131,7 +45221,7 @@ ${text}
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime329.jsx)(
-                  import_components77.__experimentalToggleGroupControlOption,
+                  import_components76.__experimentalToggleGroupControlOption,
                   {
                     value: "menu",
                     "aria-label": (0, import_i18n126.__)("menu"),
@@ -45147,7 +45237,7 @@ ${text}
   }
 
   // packages/block-library/build-module/navigation/edit/overlay-panel.mjs
-  var import_components84 = __toESM(require_components(), 1);
+  var import_components83 = __toESM(require_components(), 1);
   var import_i18n134 = __toESM(require_i18n(), 1);
   var import_element81 = __toESM(require_element(), 1);
 
@@ -45156,7 +45246,7 @@ ${text}
   var import_compose34 = __toESM(require_compose(), 1);
   var import_core_data39 = __toESM(require_core_data(), 1);
   var import_data73 = __toESM(require_data(), 1);
-  var import_components79 = __toESM(require_components(), 1);
+  var import_components78 = __toESM(require_components(), 1);
   var import_i18n129 = __toESM(require_i18n(), 1);
   var import_html_entities4 = __toESM(require_html_entities(), 1);
   var import_notices12 = __toESM(require_notices(), 1);
@@ -45168,80 +45258,6 @@ ${text}
   var import_block_editor146 = __toESM(require_block_editor(), 1);
   var import_i18n127 = __toESM(require_i18n(), 1);
   var import_blocks59 = __toESM(require_blocks(), 1);
-
-  // node_modules/tslib/tslib.es6.mjs
-  var __assign = function() {
-    __assign = Object.assign || function __assign2(t2) {
-      for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
-        s2 = arguments[i2];
-        for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2)) t2[p2] = s2[p2];
-      }
-      return t2;
-    };
-    return __assign.apply(this, arguments);
-  };
-
-  // node_modules/lower-case/dist.es2015/index.js
-  function lowerCase(str) {
-    return str.toLowerCase();
-  }
-
-  // node_modules/no-case/dist.es2015/index.js
-  var DEFAULT_SPLIT_REGEXP = [/([a-z0-9])([A-Z])/g, /([A-Z])([A-Z][a-z])/g];
-  var DEFAULT_STRIP_REGEXP = /[^A-Z0-9]+/gi;
-  function noCase(input, options2) {
-    if (options2 === void 0) {
-      options2 = {};
-    }
-    var _a = options2.splitRegexp, splitRegexp = _a === void 0 ? DEFAULT_SPLIT_REGEXP : _a, _b = options2.stripRegexp, stripRegexp = _b === void 0 ? DEFAULT_STRIP_REGEXP : _b, _c = options2.transform, transform = _c === void 0 ? lowerCase : _c, _d = options2.delimiter, delimiter = _d === void 0 ? " " : _d;
-    var result = replace(replace(input, splitRegexp, "$1\0$2"), stripRegexp, "\0");
-    var start = 0;
-    var end = result.length;
-    while (result.charAt(start) === "\0")
-      start++;
-    while (result.charAt(end - 1) === "\0")
-      end--;
-    return result.slice(start, end).split("\0").map(transform).join(delimiter);
-  }
-  function replace(input, re, value) {
-    if (re instanceof RegExp)
-      return input.replace(re, value);
-    return re.reduce(function(input2, re2) {
-      return input2.replace(re2, value);
-    }, input);
-  }
-
-  // node_modules/upper-case-first/dist.es2015/index.js
-  function upperCaseFirst(input) {
-    return input.charAt(0).toUpperCase() + input.substr(1);
-  }
-
-  // node_modules/capital-case/dist.es2015/index.js
-  function capitalCaseTransform(input) {
-    return upperCaseFirst(input.toLowerCase());
-  }
-  function capitalCase(input, options2) {
-    if (options2 === void 0) {
-      options2 = {};
-    }
-    return noCase(input, __assign({ delimiter: " ", transform: capitalCaseTransform }, options2));
-  }
-
-  // node_modules/dot-case/dist.es2015/index.js
-  function dotCase(input, options2) {
-    if (options2 === void 0) {
-      options2 = {};
-    }
-    return noCase(input, __assign({ delimiter: "." }, options2));
-  }
-
-  // node_modules/param-case/dist.es2015/index.js
-  function paramCase(input, options2) {
-    if (options2 === void 0) {
-      options2 = {};
-    }
-    return dotCase(input, __assign({ delimiter: "-" }, options2));
-  }
 
   // packages/block-library/build-module/navigation/edit/utils.mjs
   function getComputedStyle3(node) {
@@ -45373,7 +45389,7 @@ ${text}
   }
 
   // packages/block-library/build-module/navigation/edit/deleted-overlay-warning.mjs
-  var import_components78 = __toESM(require_components(), 1);
+  var import_components77 = __toESM(require_components(), 1);
   var import_i18n128 = __toESM(require_i18n(), 1);
   var import_element78 = __toESM(require_element(), 1);
   var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
@@ -45384,7 +45400,7 @@ ${text}
       ),
       {
         clearButton: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
-          import_components78.Button,
+          import_components77.Button,
           {
             __next40pxDefaultSize: true,
             onClick: onClear,
@@ -45394,7 +45410,7 @@ ${text}
           }
         ),
         createButton: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
-          import_components78.Button,
+          import_components77.Button,
           {
             __next40pxDefaultSize: true,
             onClick: onCreate,
@@ -45407,7 +45423,7 @@ ${text}
       }
     );
     return /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
-      import_components78.Notice,
+      import_components77.Notice,
       {
         status: "warning",
         isDismissible: false,
@@ -45589,7 +45605,7 @@ ${text}
         }
       ),
       hasResolved && (overlayTemplateParts.length === 0 || isCreating && overlayTemplateParts.length === 1) ? /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_jsx_runtime331.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-        import_components79.Button,
+        import_components78.Button,
         {
           __next40pxDefaultSize: true,
           variant: "secondary",
@@ -45602,7 +45618,7 @@ ${text}
         }
       ) }) : /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_jsx_runtime331.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-          import_components79.Button,
+          import_components78.Button,
           {
             size: "small",
             icon: plus_default,
@@ -45616,13 +45632,13 @@ ${text}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(
-          import_components79.__experimentalHStack,
+          import_components78.__experimentalHStack,
           {
             alignment: "flex-start",
             className: "wp-block-navigation__overlay-selector-controls",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components79.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-                import_components79.SelectControl,
+              /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components78.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+                import_components78.SelectControl,
                 {
                   label: (0, import_i18n129.__)("Overlay template"),
                   hideLabelFromVision: true,
@@ -45635,8 +45651,8 @@ ${text}
                   help: helpText
                 }
               ) }),
-              overlay && hasResolved && selectedTemplatePart && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components79.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-                import_components79.Button,
+              overlay && hasResolved && selectedTemplatePart && /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(import_components78.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
+                import_components78.Button,
                 {
                   __next40pxDefaultSize: true,
                   variant: "secondary",
@@ -45662,12 +45678,12 @@ ${text}
         )
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-        import_components79.__experimentalHStack,
+        import_components78.__experimentalHStack,
         {
           alignment: "flex-start",
           className: "wp-block-navigation__overlay-help-text-wrapper",
           children: /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
-            import_components79.__experimentalText,
+            import_components78.__experimentalText,
             {
               variant: "muted",
               isBlock: true,
@@ -45683,7 +45699,7 @@ ${text}
   }
 
   // packages/block-library/build-module/navigation/edit/overlay-visibility-control.mjs
-  var import_components80 = __toESM(require_components(), 1);
+  var import_components79 = __toESM(require_components(), 1);
   var import_i18n130 = __toESM(require_i18n(), 1);
   var import_jsx_runtime332 = __toESM(require_jsx_runtime(), 1);
   function OverlayVisibilityControl({
@@ -45691,7 +45707,7 @@ ${text}
     setAttributes
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime332.jsxs)(
-      import_components80.__experimentalToggleGroupControl,
+      import_components79.__experimentalToggleGroupControl,
       {
         label: (0, import_i18n130.__)("Overlay Visibility"),
         "aria-label": (0, import_i18n130.__)("Configure overlay visibility"),
@@ -45702,20 +45718,20 @@ ${text}
         onChange: (value) => setAttributes({ overlayMenu: value }),
         isBlock: true,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(import_components80.__experimentalToggleGroupControlOption, { value: "never", label: (0, import_i18n130.__)("Off") }),
-          /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(import_components80.__experimentalToggleGroupControlOption, { value: "mobile", label: (0, import_i18n130.__)("Mobile") }),
-          /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(import_components80.__experimentalToggleGroupControlOption, { value: "always", label: (0, import_i18n130.__)("Always") })
+          /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(import_components79.__experimentalToggleGroupControlOption, { value: "never", label: (0, import_i18n130.__)("Off") }),
+          /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(import_components79.__experimentalToggleGroupControlOption, { value: "mobile", label: (0, import_i18n130.__)("Mobile") }),
+          /* @__PURE__ */ (0, import_jsx_runtime332.jsx)(import_components79.__experimentalToggleGroupControlOption, { value: "always", label: (0, import_i18n130.__)("Always") })
         ]
       }
     );
   }
 
   // packages/block-library/build-module/navigation/edit/overlay-menu-preview-button.mjs
-  var import_components82 = __toESM(require_components(), 1);
+  var import_components81 = __toESM(require_components(), 1);
   var import_i18n132 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/navigation/edit/overlay-menu-preview-controls.mjs
-  var import_components81 = __toESM(require_components(), 1);
+  var import_components80 = __toESM(require_components(), 1);
   var import_i18n131 = __toESM(require_i18n(), 1);
   var import_jsx_runtime333 = __toESM(require_jsx_runtime(), 1);
   function OverlayMenuPreviewControls({
@@ -45723,9 +45739,9 @@ ${text}
     icon: icon4,
     setAttributes
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_components81.__experimentalVStack, { spacing: 4, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(import_components80.__experimentalVStack, { spacing: 4, children: [
       /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-        import_components81.ToggleControl,
+        import_components80.ToggleControl,
         {
           label: (0, import_i18n131.__)("Show icon button"),
           help: (0, import_i18n131.__)(
@@ -45736,7 +45752,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime333.jsxs)(
-        import_components81.__experimentalToggleGroupControl,
+        import_components80.__experimentalToggleGroupControl,
         {
           className: "wp-block-navigation__overlay-menu-icon-toggle-group",
           label: (0, import_i18n131.__)("Icon"),
@@ -45745,7 +45761,7 @@ ${text}
           isBlock: true,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-              import_components81.__experimentalToggleGroupControlOption,
+              import_components80.__experimentalToggleGroupControlOption,
               {
                 value: "handle",
                 "aria-label": (0, import_i18n131.__)("handle"),
@@ -45753,7 +45769,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime333.jsx)(
-              import_components81.__experimentalToggleGroupControlOption,
+              import_components80.__experimentalToggleGroupControlOption,
               {
                 value: "menu",
                 "aria-label": (0, import_i18n131.__)("menu"),
@@ -45784,7 +45800,7 @@ ${text}
     }
     return /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(import_jsx_runtime334.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime334.jsxs)(
-        import_components82.Button,
+        import_components81.Button,
         {
           __next40pxDefaultSize: true,
           className: overlayMenuPreviewClasses,
@@ -45805,7 +45821,7 @@ ${text}
         }
       ),
       overlayMenuPreview && /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
-        import_components82.__experimentalVStack,
+        import_components81.__experimentalVStack,
         {
           id: overlayMenuPreviewId,
           spacing: 4,
@@ -45828,7 +45844,7 @@ ${text}
   var import_core_data40 = __toESM(require_core_data(), 1);
   var import_element80 = __toESM(require_element(), 1);
   var import_blocks60 = __toESM(require_blocks(), 1);
-  var import_components83 = __toESM(require_components(), 1);
+  var import_components82 = __toESM(require_components(), 1);
   var import_i18n133 = __toESM(require_i18n(), 1);
   var import_block_editor147 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime335 = __toESM(require_jsx_runtime(), 1);
@@ -45884,7 +45900,7 @@ ${text}
       return null;
     }
     if (!hasResolved) {
-      return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)("div", { className: "wp-block-navigation__overlay-preview-loading", children: /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(import_components83.Spinner, {}) });
+      return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)("div", { className: "wp-block-navigation__overlay-preview-loading", children: /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(import_components82.Spinner, {}) });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime335.jsx)(
       "div",
@@ -45928,7 +45944,7 @@ ${text}
     hasOverlays
   }) {
     const [isCreatingOverlay, setIsCreatingOverlay] = (0, import_element81.useState)(false);
-    return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(import_components84.PanelBody, { title: (0, import_i18n134.__)("Overlay"), initialOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime336.jsxs)(import_components84.__experimentalVStack, { spacing: 4, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(import_components83.PanelBody, { title: (0, import_i18n134.__)("Overlay"), initialOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime336.jsxs)(import_components83.__experimentalVStack, { spacing: 4, children: [
       /* @__PURE__ */ (0, import_jsx_runtime336.jsx)(
         OverlayVisibilityControl,
         {
@@ -46335,7 +46351,7 @@ ${text}
   var import_element85 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/navigation/edit/use-generate-default-navigation-title.mjs
-  var import_components85 = __toESM(require_components(), 1);
+  var import_components84 = __toESM(require_components(), 1);
   var import_core_data44 = __toESM(require_core_data(), 1);
   var import_data78 = __toESM(require_data(), 1);
   var import_element84 = __toESM(require_element(), 1);
@@ -46419,7 +46435,7 @@ ${text}
     { per_page: -1, status: "publish" }
   ];
   function useGenerateDefaultNavigationTitle(clientId) {
-    const isDisabled = (0, import_element84.useContext)(import_components85.Disabled.Context);
+    const isDisabled = (0, import_element84.useContext)(import_components84.Disabled.Context);
     const area = useTemplatePartAreaLabel(isDisabled ? void 0 : clientId);
     const registry = (0, import_data78.useRegistry)();
     return (0, import_element84.useCallback)(async () => {
@@ -46552,7 +46568,7 @@ ${text}
 
   // packages/block-library/build-module/navigation/edit/manage-menus-button.mjs
   var import_url13 = __toESM(require_url(), 1);
-  var import_components86 = __toESM(require_components(), 1);
+  var import_components85 = __toESM(require_components(), 1);
   var import_i18n137 = __toESM(require_i18n(), 1);
   var import_jsx_runtime337 = __toESM(require_jsx_runtime(), 1);
   var ManageMenusButton = ({
@@ -46560,9 +46576,9 @@ ${text}
     disabled: disabled2,
     isMenuItem = false
   }) => {
-    let ComponentName = import_components86.Button;
+    let ComponentName = import_components85.Button;
     if (isMenuItem) {
-      ComponentName = import_components86.MenuItem;
+      ComponentName = import_components85.MenuItem;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(
       ComponentName,
@@ -46581,14 +46597,14 @@ ${text}
 
   // packages/block-library/build-module/navigation/edit/menu-inspector-controls.mjs
   var import_block_editor162 = __toESM(require_block_editor(), 1);
-  var import_components94 = __toESM(require_components(), 1);
+  var import_components93 = __toESM(require_components(), 1);
   var import_data90 = __toESM(require_data(), 1);
   var import_i18n148 = __toESM(require_i18n(), 1);
   var import_element91 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/navigation/edit/deleted-navigation-warning.mjs
   var import_block_editor151 = __toESM(require_block_editor(), 1);
-  var import_components87 = __toESM(require_components(), 1);
+  var import_components86 = __toESM(require_components(), 1);
   var import_i18n138 = __toESM(require_i18n(), 1);
   var import_element86 = __toESM(require_element(), 1);
   var import_jsx_runtime338 = __toESM(require_jsx_runtime(), 1);
@@ -46604,7 +46620,7 @@ ${text}
       ),
       {
         button: /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(
-          import_components87.Button,
+          import_components86.Button,
           {
             __next40pxDefaultSize: true,
             onClick: handleButtonClick,
@@ -46615,13 +46631,13 @@ ${text}
         )
       }
     );
-    return isNotice ? /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(import_components87.Notice, { status: "warning", isDismissible: false, children: message }) : /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(import_block_editor151.Warning, { children: message });
+    return isNotice ? /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(import_components86.Notice, { status: "warning", isDismissible: false, children: message }) : /* @__PURE__ */ (0, import_jsx_runtime338.jsx)(import_block_editor151.Warning, { children: message });
   }
   var deleted_navigation_warning_default = DeletedNavigationWarning;
 
   // packages/block-library/build-module/navigation/edit/leaf-more-menu.mjs
   var import_blocks63 = __toESM(require_blocks(), 1);
-  var import_components88 = __toESM(require_components(), 1);
+  var import_components87 = __toESM(require_components(), 1);
   var import_data81 = __toESM(require_data(), 1);
   var import_i18n139 = __toESM(require_i18n(), 1);
   var import_block_editor152 = __toESM(require_block_editor(), 1);
@@ -46644,7 +46660,7 @@ ${text}
     const { insertBlock, replaceBlock, replaceInnerBlocks } = (0, import_data81.useDispatch)(import_block_editor152.store);
     const { getBlock } = (0, import_data81.useSelect)(import_block_editor152.store);
     return /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
-      import_components88.MenuItem,
+      import_components87.MenuItem,
       {
         icon: add_submenu_default,
         disabled: isDisabled,
@@ -46740,7 +46756,7 @@ ${text}
     );
     const isSubmenuDisabled = !BLOCKS_THAT_CAN_BE_CONVERTED_TO_SUBMENU.includes(blockName);
     return /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
-      import_components88.DropdownMenu,
+      import_components87.DropdownMenu,
       {
         icon: more_vertical_default,
         label: (0, import_i18n139.__)("Options"),
@@ -46749,9 +46765,9 @@ ${text}
         noIcons: true,
         ...props,
         children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)(import_jsx_runtime339.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)(import_components88.MenuGroup, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)(import_components87.MenuGroup, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
-              import_components88.MenuItem,
+              import_components87.MenuItem,
               {
                 icon: chevron_up_default,
                 disabled: isFirst,
@@ -46764,7 +46780,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
-              import_components88.MenuItem,
+              import_components87.MenuItem,
               {
                 icon: chevron_down_default,
                 disabled: isLast,
@@ -46787,7 +46803,7 @@ ${text}
               }
             ),
             canDuplicate && /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
-              import_components88.MenuItem,
+              import_components87.MenuItem,
               {
                 onClick: () => {
                   duplicateBlocks([clientId]);
@@ -46798,7 +46814,7 @@ ${text}
             ),
             canInsertBlock && /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)(import_jsx_runtime339.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
-                import_components88.MenuItem,
+                import_components87.MenuItem,
                 {
                   onClick: () => {
                     insertBeforeBlock(clientId);
@@ -46808,7 +46824,7 @@ ${text}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
-                import_components88.MenuItem,
+                import_components87.MenuItem,
                 {
                   onClick: () => {
                     insertAfterBlock(clientId);
@@ -46819,8 +46835,8 @@ ${text}
               )
             ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(import_components88.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
-            import_components88.MenuItem,
+          /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(import_components87.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
+            import_components87.MenuItem,
             {
               onClick: () => {
                 removeBlocks([clientId], false);
@@ -46839,7 +46855,7 @@ ${text}
   var import_data89 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/navigation-link/shared/controls.mjs
-  var import_components92 = __toESM(require_components(), 1);
+  var import_components91 = __toESM(require_components(), 1);
   var import_i18n145 = __toESM(require_i18n(), 1);
   var import_dom16 = __toESM(require_dom(), 1);
   var import_block_editor158 = __toESM(require_block_editor(), 1);
@@ -47037,7 +47053,7 @@ ${text}
 
   // packages/block-library/build-module/navigation-link/link-ui/index.mjs
   var import_dom15 = __toESM(require_dom(), 1);
-  var import_components91 = __toESM(require_components(), 1);
+  var import_components90 = __toESM(require_components(), 1);
   var import_i18n143 = __toESM(require_i18n(), 1);
   var import_block_editor155 = __toESM(require_block_editor(), 1);
   var import_element89 = __toESM(require_element(), 1);
@@ -47046,7 +47062,7 @@ ${text}
   var import_url15 = __toESM(require_url(), 1);
 
   // packages/block-library/build-module/navigation-link/link-ui/page-creator.mjs
-  var import_components90 = __toESM(require_components(), 1);
+  var import_components89 = __toESM(require_components(), 1);
   var import_i18n141 = __toESM(require_i18n(), 1);
   var import_data83 = __toESM(require_data(), 1);
   var import_core_data46 = __toESM(require_core_data(), 1);
@@ -47055,13 +47071,13 @@ ${text}
   var import_element88 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/navigation-link/link-ui/dialog-wrapper.mjs
-  var import_components89 = __toESM(require_components(), 1);
+  var import_components88 = __toESM(require_components(), 1);
   var import_i18n140 = __toESM(require_i18n(), 1);
   var import_compose35 = __toESM(require_compose(), 1);
   var import_jsx_runtime340 = __toESM(require_jsx_runtime(), 1);
   function BackButton({ className, onBack }) {
     return /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
-      import_components89.Button,
+      import_components88.Button,
       {
         className,
         icon: (0, import_i18n140.isRTL)() ? chevron_right_small_default : chevron_left_small_default,
@@ -47186,9 +47202,9 @@ ${text}
         title: (0, import_i18n141.__)("Create page"),
         description: (0, import_i18n141.__)("Create a new page to add to your Navigation."),
         onBack,
-        children: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(import_components90.__experimentalVStack, { className: "link-ui-page-creator__inner", spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)("form", { onSubmit: createPage, children: /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(import_components90.__experimentalVStack, { spacing: 4, children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(import_components89.__experimentalVStack, { className: "link-ui-page-creator__inner", spacing: 4, children: /* @__PURE__ */ (0, import_jsx_runtime341.jsx)("form", { onSubmit: createPage, children: /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(import_components89.__experimentalVStack, { spacing: 4, children: [
           /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
-            import_components90.TextControl,
+            import_components89.TextControl,
             {
               label: (0, import_i18n141.__)("Title"),
               onChange: setTitle,
@@ -47197,7 +47213,7 @@ ${text}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
-            import_components90.CheckboxControl,
+            import_components89.CheckboxControl,
             {
               label: (0, import_i18n141.__)("Publish"),
               help: (0, import_i18n141.__)(
@@ -47207,10 +47223,10 @@ ${text}
               onChange: setShouldPublish
             }
           ),
-          lastError && /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(import_components90.Notice, { status: "error", isDismissible: false, children: lastError.message }),
-          /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(import_components90.__experimentalHStack, { spacing: 2, justify: "flex-end", children: [
+          lastError && /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(import_components89.Notice, { status: "error", isDismissible: false, children: lastError.message }),
+          /* @__PURE__ */ (0, import_jsx_runtime341.jsxs)(import_components89.__experimentalHStack, { spacing: 2, justify: "flex-end", children: [
             /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
-              import_components90.Button,
+              import_components89.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
@@ -47221,7 +47237,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime341.jsx)(
-              import_components90.Button,
+              import_components89.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "primary",
@@ -47400,7 +47416,7 @@ ${text}
     }, [shouldFocusPane]);
     const blockEditingMode = (0, import_block_editor155.useBlockEditingMode)();
     return /* @__PURE__ */ (0, import_jsx_runtime343.jsxs)(
-      import_components91.Popover,
+      import_components90.Popover,
       {
         ref,
         placement: "bottom",
@@ -47509,9 +47525,9 @@ ${text}
     if (!canAddPage && !canAddBlock) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime343.jsxs)(import_components91.__experimentalVStack, { spacing: 0, className: "link-ui-tools", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime343.jsxs)(import_components90.__experimentalVStack, { spacing: 0, className: "link-ui-tools", children: [
       canAddPage && /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
-        import_components91.Button,
+        import_components90.Button,
         {
           __next40pxDefaultSize: true,
           ref: addPageButtonRef,
@@ -47525,7 +47541,7 @@ ${text}
         }
       ),
       canAddBlock && /* @__PURE__ */ (0, import_jsx_runtime343.jsx)(
-        import_components91.Button,
+        import_components90.Button,
         {
           __next40pxDefaultSize: true,
           ref: addBlockButtonRef,
@@ -47841,7 +47857,7 @@ ${text}
     const isViewableUrl = !!url && (!isHashLink2(url) || isRelativePath2(url) && !url.startsWith("/"));
     const viewUrl = isViewableUrl && url.startsWith("/") && homeUrl ? homeUrl + url : url;
     return /* @__PURE__ */ (0, import_jsx_runtime344.jsxs)(
-      import_components92.__experimentalToolsPanel,
+      import_components91.__experimentalToolsPanel,
       {
         label: (0, import_i18n145.__)("Settings"),
         resetAll: () => {
@@ -47856,14 +47872,14 @@ ${text}
         dropdownMenuProps,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
-            import_components92.__experimentalToolsPanelItem,
+            import_components91.__experimentalToolsPanelItem,
             {
               hasValue: () => !!label,
               label: (0, import_i18n145.__)("Text"),
               onDeselect: () => setAttributes({ label: "" }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
-                import_components92.TextControl,
+                import_components91.TextControl,
                 {
                   label: (0, import_i18n145.__)("Text"),
                   value: label ? (0, import_dom16.__unstableStripHTML)(label) : "",
@@ -47877,7 +47893,7 @@ ${text}
           ),
           isLinkEditable && /* @__PURE__ */ (0, import_jsx_runtime344.jsxs)(import_jsx_runtime344.Fragment, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
-              import_components92.__experimentalToolsPanelItem,
+              import_components91.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!url,
                 label: (0, import_i18n145.__)("Link to"),
@@ -47904,14 +47920,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
-              import_components92.__experimentalToolsPanelItem,
+              import_components91.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!opensInNewTab,
                 label: (0, import_i18n145.__)("Open in new tab"),
                 onDeselect: () => setAttributes({ opensInNewTab: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
-                  import_components92.CheckboxControl,
+                  import_components91.CheckboxControl,
                   {
                     label: (0, import_i18n145.__)("Open in new tab"),
                     checked: opensInNewTab,
@@ -47921,7 +47937,7 @@ ${text}
               }
             ),
             !!url && hasUrlBinding && isBoundEntityAvailable && entityRecord?.id && attributes.kind === "post-type" && onNavigateToEntityRecord && /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
-              import_components92.Button,
+              import_components91.Button,
               {
                 variant: "secondary",
                 onClick: () => {
@@ -47936,7 +47952,7 @@ ${text}
               }
             ),
             isViewableUrl && /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
-              import_components92.Button,
+              import_components91.Button,
               {
                 variant: "secondary",
                 href: viewUrl,
@@ -47950,14 +47966,14 @@ ${text}
             )
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
-            import_components92.__experimentalToolsPanelItem,
+            import_components91.__experimentalToolsPanelItem,
             {
               hasValue: () => !!description,
               label: (0, import_i18n145.__)("Description"),
               onDeselect: () => setAttributes({ description: "" }),
               isShownByDefault: !isContentOnly,
               children: /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
-                import_components92.TextareaControl,
+                import_components91.TextareaControl,
                 {
                   label: (0, import_i18n145.__)("Description"),
                   value: description || "",
@@ -47972,14 +47988,14 @@ ${text}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
-            import_components92.__experimentalToolsPanelItem,
+            import_components91.__experimentalToolsPanelItem,
             {
               hasValue: () => !!rel,
               label: (0, import_i18n145.__)("Rel attribute"),
               onDeselect: () => setAttributes({ rel: "" }),
               isShownByDefault: !isContentOnly,
               children: /* @__PURE__ */ (0, import_jsx_runtime344.jsx)(
-                import_components92.TextControl,
+                import_components91.TextControl,
                 {
                   label: (0, import_i18n145.__)("Rel attribute"),
                   value: rel || "",
@@ -48200,7 +48216,7 @@ ${text}
   }
 
   // packages/block-library/build-module/navigation/edit/navigation-list-view-header.mjs
-  var import_components93 = __toESM(require_components(), 1);
+  var import_components92 = __toESM(require_components(), 1);
   var import_i18n147 = __toESM(require_i18n(), 1);
   var import_block_editor161 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime347 = __toESM(require_jsx_runtime(), 1);
@@ -48224,9 +48240,9 @@ ${text}
       clientId,
       context: "list-view"
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime347.jsxs)(import_components93.__experimentalHStack, { className: "wp-block-navigation-off-canvas-editor__header", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime347.jsxs)(import_components92.__experimentalHStack, { className: "wp-block-navigation-off-canvas-editor__header", children: [
       /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(
-        import_components93.__experimentalHeading,
+        import_components92.__experimentalHeading,
         {
           className: "wp-block-navigation-off-canvas-editor__title",
           level: 2,
@@ -48283,7 +48299,7 @@ ${text}
       return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(deleted_navigation_warning_default, { onCreateNew, isNotice: true });
     }
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(import_components94.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(import_components93.Spinner, {});
     }
     const description = navigationMenu ? (0, import_i18n148.sprintf)(
       /* translators: %s: The name of a menu. */
@@ -48329,7 +48345,7 @@ ${text}
     const showBlockTitle = isSelectionWithinCurrentSection;
     const { isOpened, expandRevision, handleToggle } = useListViewPanelState(clientId);
     if (!showBlockTitle) {
-      return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(import_block_editor162.InspectorControls, { group: "list", children: /* @__PURE__ */ (0, import_jsx_runtime348.jsxs)(import_components94.PanelBody, { title: null, children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(import_block_editor162.InspectorControls, { group: "list", children: /* @__PURE__ */ (0, import_jsx_runtime348.jsxs)(import_components93.PanelBody, { title: null, children: [
         /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(
           NavigationListViewHeader,
           {
@@ -48354,7 +48370,7 @@ ${text}
       ] }) });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime348.jsx)(import_block_editor162.InspectorControls, { group: "list", children: /* @__PURE__ */ (0, import_jsx_runtime348.jsxs)(
-      import_components94.PanelBody,
+      import_components93.PanelBody,
       {
         title: blockTitle,
         opened: isOpened,
@@ -48479,8 +48495,8 @@ ${text}
       });
       insertBlock(newBlock, blockCount, clientId);
     }, [clientId, insertBlock, getBlockCount]);
-    return /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(import_block_editor164.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(import_components95.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
-      import_components95.ToolbarButton,
+    return /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(import_block_editor164.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(import_components94.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
+      import_components94.ToolbarButton,
       {
         name: "add-page",
         icon: page_default,
@@ -48997,7 +49013,7 @@ ${text}
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const stylingInspectorControls = /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(import_jsx_runtime351.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(import_block_editor164.InspectorControls, { children: hasSubmenus && /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
-        import_components95.__experimentalToolsPanel,
+        import_components94.__experimentalToolsPanel,
         {
           label: (0, import_i18n150.__)("Display"),
           resetAll: () => {
@@ -49013,7 +49029,7 @@ ${text}
           children: hasSubmenus && /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(import_jsx_runtime351.Fragment, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("h3", { className: "wp-block-navigation__submenu-header", children: (0, import_i18n150.__)("Submenus") }),
             /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
-              import_components95.__experimentalToolsPanelItem,
+              import_components94.__experimentalToolsPanelItem,
               {
                 hasValue: () => submenuVisibility !== "hover",
                 label: (0, import_i18n150.__)("Submenu Visibility"),
@@ -49022,7 +49038,7 @@ ${text}
                 }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(
-                  import_components95.__experimentalToggleGroupControl,
+                  import_components94.__experimentalToggleGroupControl,
                   {
                     label: (0, import_i18n150.__)("Submenu Visibility"),
                     value: submenuVisibility,
@@ -49041,21 +49057,21 @@ ${text}
                     isBlock: true,
                     children: [
                       /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
-                        import_components95.__experimentalToggleGroupControlOption,
+                        import_components94.__experimentalToggleGroupControlOption,
                         {
                           value: "hover",
                           label: (0, import_i18n150.__)("Hover")
                         }
                       ),
                       /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
-                        import_components95.__experimentalToggleGroupControlOption,
+                        import_components94.__experimentalToggleGroupControlOption,
                         {
                           value: "click",
                           label: (0, import_i18n150.__)("Click")
                         }
                       ),
                       orientation === "vertical" && /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
-                        import_components95.__experimentalToggleGroupControlOption,
+                        import_components94.__experimentalToggleGroupControlOption,
                         {
                           value: "always",
                           label: (0, import_i18n150.__)("Always")
@@ -49067,7 +49083,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
-              import_components95.__experimentalToolsPanelItem,
+              import_components94.__experimentalToolsPanelItem,
               {
                 hasValue: () => !showSubmenuIcon,
                 label: (0, import_i18n150.__)("Show arrow"),
@@ -49077,7 +49093,7 @@ ${text}
                 isDisabled: submenuVisibility === "click" || submenuVisibility === "always",
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
-                  import_components95.ToggleControl,
+                  import_components94.ToggleControl,
                   {
                     checked: showSubmenuIcon,
                     onChange: (value) => {
@@ -49092,7 +49108,7 @@ ${text}
               }
             ),
             submenuAccessibilityNotice && /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
-              import_components95.Notice,
+              import_components94.Notice,
               {
                 spokenMessage: null,
                 status: "warning",
@@ -49291,7 +49307,7 @@ ${text}
             ...blockProps,
             "aria-describedby": !isPlaceholder && !isLoading ? accessibleDescriptionId : void 0,
             children: [
-              isLoading && !isHiddenByDefault && /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("div", { className: "wp-block-navigation__loading-indicator-container", children: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(import_components95.Spinner, { className: "wp-block-navigation__loading-indicator" }) }),
+              isLoading && !isHiddenByDefault && /* @__PURE__ */ (0, import_jsx_runtime351.jsx)("div", { className: "wp-block-navigation__loading-indicator-container", children: /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(import_components94.Spinner, { className: "wp-block-navigation__loading-indicator" }) }),
               (!isLoading || isHiddenByDefault) && /* @__PURE__ */ (0, import_jsx_runtime351.jsxs)(import_jsx_runtime351.Fragment, { children: [
                 /* @__PURE__ */ (0, import_jsx_runtime351.jsx)(
                   AccessibleMenuDescription,
@@ -50181,7 +50197,7 @@ ${text}
   // packages/block-library/build-module/navigation-link/edit.mjs
   var import_blocks65 = __toESM(require_blocks(), 1);
   var import_data94 = __toESM(require_data(), 1);
-  var import_components96 = __toESM(require_components(), 1);
+  var import_components95 = __toESM(require_components(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_i18n152 = __toESM(require_i18n(), 1);
   var import_block_editor167 = __toESM(require_block_editor(), 1);
@@ -50411,9 +50427,9 @@ ${text}
     const missingText = getMissingText(type);
     const invalidLinkHelpText = getInvalidLinkHelpText();
     return /* @__PURE__ */ (0, import_jsx_runtime354.jsxs)(import_jsx_runtime354.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(import_block_editor167.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime354.jsxs)(import_components96.ToolbarGroup, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(import_block_editor167.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime354.jsxs)(import_components95.ToolbarGroup, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(
-          import_components96.ToolbarButton,
+          import_components95.ToolbarButton,
           {
             name: "link",
             icon: link_default,
@@ -50425,7 +50441,7 @@ ${text}
           }
         ),
         !isAtMaxNesting && /* @__PURE__ */ (0, import_jsx_runtime354.jsx)(
-          import_components96.ToolbarButton,
+          import_components95.ToolbarButton,
           {
             name: "submenu",
             icon: add_submenu_default,
@@ -50920,7 +50936,7 @@ ${text}
 
   // packages/block-library/build-module/navigation-submenu/edit.mjs
   var import_data95 = __toESM(require_data(), 1);
-  var import_components98 = __toESM(require_components(), 1);
+  var import_components97 = __toESM(require_components(), 1);
   var import_keycodes7 = __toESM(require_keycodes(), 1);
   var import_i18n154 = __toESM(require_i18n(), 1);
   var import_block_editor170 = __toESM(require_block_editor(), 1);
@@ -50931,17 +50947,17 @@ ${text}
   var import_compose40 = __toESM(require_compose(), 1);
 
   // packages/block-library/build-module/navigation-submenu/icons.mjs
-  var import_components97 = __toESM(require_components(), 1);
+  var import_components96 = __toESM(require_components(), 1);
   var import_jsx_runtime357 = __toESM(require_jsx_runtime(), 1);
   var ItemSubmenuIcon = () => /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(
-    import_components97.SVG,
+    import_components96.SVG,
     {
       xmlns: "http://www.w3.org/2000/svg",
       width: "12",
       height: "12",
       viewBox: "0 0 12 12",
       fill: "none",
-      children: /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(import_components97.Path, { d: "M1.50002 4L6.00002 8L10.5 4", strokeWidth: "1.5" })
+      children: /* @__PURE__ */ (0, import_jsx_runtime357.jsx)(import_components96.Path, { d: "M1.50002 4L6.00002 8L10.5 4", strokeWidth: "1.5" })
     }
   );
 
@@ -51114,9 +51130,9 @@ ${text}
     }, [hasChildren, prevHasChildren]);
     const canConvertToLink = !selectedBlockHasChildren || onlyDescendantIsEmptyLink;
     return /* @__PURE__ */ (0, import_jsx_runtime358.jsxs)(import_jsx_runtime358.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(import_block_editor170.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime358.jsxs)(import_components98.ToolbarGroup, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(import_block_editor170.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime358.jsxs)(import_components97.ToolbarGroup, { children: [
         !openSubmenusOnClick && /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
-          import_components98.ToolbarButton,
+          import_components97.ToolbarButton,
           {
             name: "link",
             icon: link_default,
@@ -51128,7 +51144,7 @@ ${text}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime358.jsx)(
-          import_components98.ToolbarButton,
+          import_components97.ToolbarButton,
           {
             name: "revert",
             icon: remove_submenu_default,
@@ -51419,7 +51435,7 @@ ${text}
 
   // packages/block-library/build-module/navigation-overlay-close/edit.mjs
   var import_block_editor173 = __toESM(require_block_editor(), 1);
-  var import_components99 = __toESM(require_components(), 1);
+  var import_components98 = __toESM(require_components(), 1);
   var import_i18n157 = __toESM(require_i18n(), 1);
   var import_jsx_runtime362 = __toESM(require_jsx_runtime(), 1);
   function NavigationOverlayCloseEdit({
@@ -51436,20 +51452,20 @@ ${text}
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime362.jsxs)(import_jsx_runtime362.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(import_block_editor173.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
-        import_components99.__experimentalToolsPanel,
+        import_components98.__experimentalToolsPanel,
         {
           label: (0, import_i18n157.__)("Settings"),
           resetAll: () => setAttributes({ displayMode: "icon" }),
           dropdownMenuProps,
           children: /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
-            import_components99.__experimentalToolsPanelItem,
+            import_components98.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n157.__)("Display Mode"),
               isShownByDefault: true,
               hasValue: () => displayMode !== "icon",
               onDeselect: () => setAttributes({ displayMode: "icon" }),
               children: /* @__PURE__ */ (0, import_jsx_runtime362.jsxs)(
-                import_components99.__experimentalToggleGroupControl,
+                import_components98.__experimentalToggleGroupControl,
                 {
                   label: (0, import_i18n157.__)("Display Mode"),
                   value: displayMode,
@@ -51457,21 +51473,21 @@ ${text}
                   isBlock: true,
                   children: [
                     /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
-                      import_components99.__experimentalToggleGroupControlOption,
+                      import_components98.__experimentalToggleGroupControlOption,
                       {
                         value: "icon",
                         label: (0, import_i18n157.__)("Icon")
                       }
                     ),
                     /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
-                      import_components99.__experimentalToggleGroupControlOption,
+                      import_components98.__experimentalToggleGroupControlOption,
                       {
                         value: "text",
                         label: (0, import_i18n157.__)("Text")
                       }
                     ),
                     /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
-                      import_components99.__experimentalToggleGroupControlOption,
+                      import_components98.__experimentalToggleGroupControlOption,
                       {
                         value: "both",
                         label: (0, import_i18n157.__)("Both")
@@ -51885,7 +51901,7 @@ ${text}
   // packages/block-library/build-module/page-list/edit.mjs
   var import_blocks74 = __toESM(require_blocks(), 1);
   var import_block_editor176 = __toESM(require_block_editor(), 1);
-  var import_components100 = __toESM(require_components(), 1);
+  var import_components99 = __toESM(require_components(), 1);
   var import_i18n159 = __toESM(require_i18n(), 1);
   var import_element97 = __toESM(require_element(), 1);
   var import_core_data56 = __toESM(require_core_data(), 1);
@@ -51993,7 +52009,7 @@ ${text}
   };
   function DetachPageListDialog({ isBusy, onConfirm, onCancel }) {
     return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-      import_components100.__experimentalConfirmDialog,
+      import_components99.__experimentalConfirmDialog,
       {
         isOpen: true,
         title: (0, import_i18n159.__)("Detach Page List"),
@@ -52018,13 +52034,13 @@ ${text}
     parentPageID
   }) {
     if (!hasResolvedPages) {
-      return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)("div", { className: "wp-block-page-list__loading-indicator-container", children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components100.Spinner, { className: "wp-block-page-list__loading-indicator" }) }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)("div", { className: "wp-block-page-list__loading-indicator-container", children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components99.Spinner, { className: "wp-block-page-list__loading-indicator" }) }) });
     }
     if (pages === null) {
-      return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components100.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n159.__)("Page List: Cannot retrieve Pages.") }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components99.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n159.__)("Page List: Cannot retrieve Pages.") }) });
     }
     if (pages.length === 0) {
-      return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components100.Notice, { status: "info", isDismissible: false, children: (0, import_i18n159.__)("Page List: Cannot retrieve Pages.") }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components99.Notice, { status: "info", isDismissible: false, children: (0, import_i18n159.__)("Page List: Cannot retrieve Pages.") }) });
     }
     if (blockList.length === 0) {
       const parentPageDetails = pages.find(
@@ -52037,7 +52053,7 @@ ${text}
           parentPageDetails.title.rendered
         ) }) });
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components100.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n159.__)("Page List: Cannot retrieve Pages.") }) });
+      return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_components99.Notice, { status: "warning", isDismissible: false, children: (0, import_i18n159.__)("Page List: Cannot retrieve Pages.") }) });
     }
     if (pages.length > 0) {
       return /* @__PURE__ */ (0, import_jsx_runtime365.jsx)("ul", { ...innerBlocksProps });
@@ -52205,7 +52221,7 @@ ${text}
     }, [hasSelectedChild, hasDraggedChild, parentClientId, selectBlock]);
     return /* @__PURE__ */ (0, import_jsx_runtime365.jsxs)(import_jsx_runtime365.Fragment, { children: [
       (pagesTree.length > 0 || allowConvertToLinks) && /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_block_editor176.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime365.jsxs)(
-        import_components100.__experimentalToolsPanel,
+        import_components99.__experimentalToolsPanel,
         {
           label: (0, import_i18n159.__)("Settings"),
           resetAll: () => {
@@ -52214,14 +52230,14 @@ ${text}
           dropdownMenuProps,
           children: [
             pagesTree.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-              import_components100.__experimentalToolsPanelItem,
+              import_components99.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n159.__)("Parent Page"),
                 hasValue: () => parentPageID !== 0,
                 onDeselect: () => setAttributes({ parentPageID: 0 }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-                  import_components100.ComboboxControl,
+                  import_components99.ComboboxControl,
                   {
                     className: "editor-page-attributes__parent",
                     label: (0, import_i18n159.__)("Parent"),
@@ -52238,7 +52254,7 @@ ${text}
               }
             ),
             allowConvertToLinks && /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-              import_components100.Button,
+              import_components99.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "secondary",
@@ -52257,7 +52273,7 @@ ${text}
       ) }),
       allowConvertToLinks && /* @__PURE__ */ (0, import_jsx_runtime365.jsxs)(import_jsx_runtime365.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(import_block_editor176.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime365.jsx)(
-          import_components100.ToolbarButton,
+          import_components99.ToolbarButton,
           {
             title: (0, import_i18n159.__)("Detach"),
             disabled: !hasResolvedPages,
@@ -52375,17 +52391,17 @@ ${text}
   var import_dom17 = __toESM(require_dom(), 1);
 
   // packages/block-library/build-module/navigation-link/icons.mjs
-  var import_components101 = __toESM(require_components(), 1);
+  var import_components100 = __toESM(require_components(), 1);
   var import_jsx_runtime366 = __toESM(require_jsx_runtime(), 1);
   var ItemSubmenuIcon2 = () => /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(
-    import_components101.SVG,
+    import_components100.SVG,
     {
       xmlns: "http://www.w3.org/2000/svg",
       width: "12",
       height: "12",
       viewBox: "0 0 12 12",
       fill: "none",
-      children: /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(import_components101.Path, { d: "M1.50002 4L6.00002 8L10.5 4", strokeWidth: "1.5" })
+      children: /* @__PURE__ */ (0, import_jsx_runtime366.jsx)(import_components100.Path, { d: "M1.50002 4L6.00002 8L10.5 4", strokeWidth: "1.5" })
     }
   );
 
@@ -52895,7 +52911,7 @@ ${text}
 
   // packages/block-library/build-module/paragraph/edit.mjs
   var import_i18n161 = __toESM(require_i18n(), 1);
-  var import_components102 = __toESM(require_components(), 1);
+  var import_components101 = __toESM(require_components(), 1);
   var import_block_editor181 = __toESM(require_block_editor(), 1);
   var import_data103 = __toESM(require_data(), 1);
   var import_blocks76 = __toESM(require_blocks(), 1);
@@ -53029,7 +53045,7 @@ ${text}
   var { PrivateBlockContext: PrivateBlockContext2 } = unlock(import_block_editor181.privateApis);
   function ParagraphRTLControl({ direction, setDirection }) {
     return (0, import_i18n161.isRTL)() && /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
-      import_components102.ToolbarButton,
+      import_components101.ToolbarButton,
       {
         icon: format_ltr_default,
         title: (0, import_i18n161._x)("Left to right", "editor button"),
@@ -53071,7 +53087,7 @@ ${text}
       false
     );
     return /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(import_block_editor181.InspectorControls, { group: "typography", children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
-      import_components102.__experimentalToolsPanelItem,
+      import_components101.__experimentalToolsPanelItem,
       {
         hasValue: () => !!dropCap,
         label: (0, import_i18n161.__)("Drop cap"),
@@ -53080,7 +53096,7 @@ ${text}
         resetAllFilter: () => ({ dropCap: false }),
         panelId: clientId,
         children: /* @__PURE__ */ (0, import_jsx_runtime369.jsx)(
-          import_components102.ToggleControl,
+          import_components101.ToggleControl,
           {
             label: (0, import_i18n161.__)("Drop cap"),
             checked: !!dropCap,
@@ -53464,7 +53480,7 @@ ${text}
   // packages/block-library/build-module/playlist/edit.mjs
   var import_element104 = __toESM(require_element(), 1);
   var import_block_editor183 = __toESM(require_block_editor(), 1);
-  var import_components103 = __toESM(require_components(), 1);
+  var import_components102 = __toESM(require_components(), 1);
   var import_data104 = __toESM(require_data(), 1);
   var import_notices14 = __toESM(require_notices(), 1);
   var import_i18n166 = __toESM(require_i18n(), 1);
@@ -55543,7 +55559,7 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_block_editor183.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)(
-        import_components103.__experimentalToolsPanel,
+        import_components102.__experimentalToolsPanel,
         {
           label: (0, import_i18n166.__)("Settings"),
           resetAll: () => {
@@ -55560,14 +55576,14 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-              import_components103.__experimentalToolsPanelItem,
+              import_components102.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n166.__)("Show tracklist"),
                 isShownByDefault: true,
                 hasValue: () => showTracklist !== true,
                 onDeselect: () => setAttributes({ showTracklist: true }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-                  import_components103.ToggleControl,
+                  import_components102.ToggleControl,
                   {
                     label: (0, import_i18n166.__)("Show tracklist"),
                     onChange: toggleAttribute("showTracklist"),
@@ -55578,14 +55594,14 @@ ${text}
             ),
             showTracklist && /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)(import_jsx_runtime372.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-                import_components103.__experimentalToolsPanelItem,
+                import_components102.__experimentalToolsPanelItem,
                 {
                   label: (0, import_i18n166.__)("Show artist name in tracklist"),
                   isShownByDefault: true,
                   hasValue: () => showArtists !== true,
                   onDeselect: () => setAttributes({ showArtists: true }),
                   children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-                    import_components103.ToggleControl,
+                    import_components102.ToggleControl,
                     {
                       label: (0, import_i18n166.__)(
                         "Show artist name in tracklist"
@@ -55599,7 +55615,7 @@ ${text}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-                import_components103.__experimentalToolsPanelItem,
+                import_components102.__experimentalToolsPanelItem,
                 {
                   label: (0, import_i18n166.__)(
                     "Show track numbers in tracklist"
@@ -55608,7 +55624,7 @@ ${text}
                   hasValue: () => showNumbers !== true,
                   onDeselect: () => setAttributes({ showNumbers: true }),
                   children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-                    import_components103.ToggleControl,
+                    import_components102.ToggleControl,
                     {
                       label: (0, import_i18n166.__)(
                         "Show track numbers in tracklist"
@@ -55622,7 +55638,7 @@ ${text}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-                import_components103.__experimentalToolsPanelItem,
+                import_components102.__experimentalToolsPanelItem,
                 {
                   label: (0, import_i18n166.__)(
                     "Show track duration in tracklist"
@@ -55631,7 +55647,7 @@ ${text}
                   hasValue: () => showTrackLength !== true,
                   onDeselect: () => setAttributes({ showTrackLength: true }),
                   children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-                    import_components103.ToggleControl,
+                    import_components102.ToggleControl,
                     {
                       label: (0, import_i18n166.__)(
                         "Show track duration in tracklist"
@@ -55646,14 +55662,14 @@ ${text}
               )
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-              import_components103.__experimentalToolsPanelItem,
+              import_components102.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n166.__)("Show tracklist images"),
                 isShownByDefault: true,
                 hasValue: () => showImages !== true,
                 onDeselect: () => setAttributes({ showImages: true }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-                  import_components103.ToggleControl,
+                  import_components102.ToggleControl,
                   {
                     label: (0, import_i18n166.__)("Show tracklist images"),
                     onChange: toggleAttribute("showImages"),
@@ -55663,14 +55679,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-              import_components103.__experimentalToolsPanelItem,
+              import_components102.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n166.__)("Show track image on play button"),
                 isShownByDefault: true,
                 hasValue: () => showPlayButtonArtwork === true,
                 onDeselect: () => setAttributes({ showPlayButtonArtwork: false }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-                  import_components103.ToggleControl,
+                  import_components102.ToggleControl,
                   {
                     label: (0, import_i18n166.__)("Show track image on play button"),
                     onChange: toggleAttribute(
@@ -55682,14 +55698,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-              import_components103.__experimentalToolsPanelItem,
+              import_components102.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n166.__)("Order"),
                 isShownByDefault: true,
                 hasValue: () => order !== "asc",
                 onDeselect: () => setAttributes({ order: "asc" }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-                  import_components103.SelectControl,
+                  import_components102.SelectControl,
                   {
                     label: (0, import_i18n166.__)("Order"),
                     value: order,
@@ -55706,7 +55722,7 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_block_editor183.InspectorControls, { group: "styles", children: /* @__PURE__ */ (0, import_jsx_runtime372.jsxs)(
-        import_components103.__experimentalToolsPanel,
+        import_components102.__experimentalToolsPanel,
         {
           label: (0, import_i18n166.__)("Waveform"),
           resetAll: () => {
@@ -55731,7 +55747,7 @@ ${text}
               }
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-              import_components103.__experimentalToolsPanelItem,
+              import_components102.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n166.__)("Shape"),
                 isShownByDefault: true,
@@ -55739,7 +55755,7 @@ ${text}
                 onDeselect: () => onChangeWaveformStyle(DEFAULT_WAVEFORM_STYLE),
                 panelId: waveformPanelId,
                 children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
-                  import_components103.SelectControl,
+                  import_components102.SelectControl,
                   {
                     label: (0, import_i18n166.__)("Shape"),
                     value: waveformStyle,
@@ -55765,7 +55781,7 @@ ${text}
             onError: onUploadError
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_components103.Disabled, { isDisabled: !isSelected, children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(import_components102.Disabled, { isDisabled: !isSelected, children: /* @__PURE__ */ (0, import_jsx_runtime372.jsx)(
           WaveformPlayer,
           {
             src: currentTrackData?.src,
@@ -55925,7 +55941,7 @@ ${text}
   var import_blob17 = __toESM(require_blob(), 1);
   var import_element105 = __toESM(require_element(), 1);
   var import_block_editor185 = __toESM(require_block_editor(), 1);
-  var import_components104 = __toESM(require_components(), 1);
+  var import_components103 = __toESM(require_components(), 1);
   var import_data105 = __toESM(require_data(), 1);
   var import_notices15 = __toESM(require_notices(), 1);
   var import_i18n167 = __toESM(require_i18n(), 1);
@@ -56036,9 +56052,9 @@ ${text}
           variant: "toolbar"
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_block_editor185.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime374.jsxs)(import_components104.PanelBody, { title: (0, import_i18n167.__)("Settings"), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_block_editor185.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime374.jsxs)(import_components103.PanelBody, { title: (0, import_i18n167.__)("Settings"), children: [
         /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
-          import_components104.TextControl,
+          import_components103.TextControl,
           {
             label: (0, import_i18n167.__)("Artist"),
             value: artist ? (0, import_dom18.__unstableStripHTML)(artist) : "",
@@ -56048,7 +56064,7 @@ ${text}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
-          import_components104.TextControl,
+          import_components103.TextControl,
           {
             label: (0, import_i18n167.__)("Album"),
             value: album ? (0, import_dom18.__unstableStripHTML)(album) : "",
@@ -56058,7 +56074,7 @@ ${text}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
-          import_components104.TextControl,
+          import_components103.TextControl,
           {
             label: (0, import_i18n167.__)("Title"),
             value: title ? (0, import_dom18.__unstableStripHTML)(title) : "",
@@ -56067,8 +56083,8 @@ ${text}
             }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_block_editor185.MediaUploadCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime374.jsxs)(import_components104.BaseControl, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_components104.BaseControl.VisualLabel, { children: (0, import_i18n167.__)("Track image") }),
+        /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_block_editor185.MediaUploadCheck, { children: /* @__PURE__ */ (0, import_jsx_runtime374.jsxs)(import_components103.BaseControl, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_components103.BaseControl.VisualLabel, { children: (0, import_i18n167.__)("Track image") }),
           /* @__PURE__ */ (0, import_jsx_runtime374.jsxs)("div", { className: "editor-video-poster-control", children: [
             !!image && /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
               "img",
@@ -56086,7 +56102,7 @@ ${text}
                 onSelect: onSelectTrackImage,
                 allowedTypes: TRACK_IMAGE_ALLOWED_MEDIA_TYPES,
                 render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
-                  import_components104.Button,
+                  import_components103.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "primary",
@@ -56098,7 +56114,7 @@ ${text}
               }
             ),
             !!image && /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
-              import_components104.Button,
+              import_components103.Button,
               {
                 __next40pxDefaultSize: true,
                 onClick: onRemoveTrackImage,
@@ -56109,7 +56125,7 @@ ${text}
           ] })
         ] }) }),
         !!image && /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
-          import_components104.TextareaControl,
+          import_components103.TextareaControl,
           {
             label: (0, import_i18n167.__)("Alternative text"),
             value: imageAlt || "",
@@ -56133,7 +56149,7 @@ ${text}
         )
       ] }) }),
       /* @__PURE__ */ (0, import_jsx_runtime374.jsxs)("li", { ...blockProps, children: [
-        !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_components104.Spinner, {}),
+        !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_components103.Spinner, {}),
         /* @__PURE__ */ (0, import_jsx_runtime374.jsxs)(
           "button",
           {
@@ -56308,7 +56324,7 @@ ${text}
 
   // packages/block-library/build-module/post-author/edit.mjs
   var import_block_editor187 = __toESM(require_block_editor(), 1);
-  var import_components105 = __toESM(require_components(), 1);
+  var import_components104 = __toESM(require_components(), 1);
   var import_compose44 = __toESM(require_compose(), 1);
   var import_core_data58 = __toESM(require_core_data(), 1);
   var import_data106 = __toESM(require_data(), 1);
@@ -56484,7 +56500,7 @@ ${text}
       return [...currentAuthor, ...fetchedAuthors];
     }, [authors, value]);
     return /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
-      import_components105.ComboboxControl,
+      import_components104.ComboboxControl,
       {
         label: (0, import_i18n169.__)("Author"),
         options: authorOptions,
@@ -56574,7 +56590,7 @@ ${text}
     }
     return /* @__PURE__ */ (0, import_jsx_runtime375.jsxs)(import_jsx_runtime375.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(import_block_editor187.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime375.jsxs)(
-        import_components105.__experimentalToolsPanel,
+        import_components104.__experimentalToolsPanel,
         {
           label: (0, import_i18n169.__)("Settings"),
           resetAll: () => {
@@ -56595,14 +56611,14 @@ ${text}
               }
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
-              import_components105.__experimentalToolsPanelItem,
+              import_components104.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n169.__)("Show avatar"),
                 isShownByDefault: true,
                 hasValue: () => !showAvatar,
                 onDeselect: () => setAttributes({ showAvatar: true }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
-                  import_components105.ToggleControl,
+                  import_components104.ToggleControl,
                   {
                     label: (0, import_i18n169.__)("Show avatar"),
                     checked: showAvatar,
@@ -56614,14 +56630,14 @@ ${text}
               }
             ),
             showAvatar && /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
-              import_components105.__experimentalToolsPanelItem,
+              import_components104.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n169.__)("Avatar size"),
                 isShownByDefault: true,
                 hasValue: () => avatarSize !== 48,
                 onDeselect: () => setAttributes({ avatarSize: 48 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
-                  import_components105.SelectControl,
+                  import_components104.SelectControl,
                   {
                     label: (0, import_i18n169.__)("Avatar size"),
                     value: avatarSize,
@@ -56636,14 +56652,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
-              import_components105.__experimentalToolsPanelItem,
+              import_components104.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n169.__)("Show bio"),
                 isShownByDefault: true,
                 hasValue: () => !!showBio,
                 onDeselect: () => setAttributes({ showBio: void 0 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
-                  import_components105.ToggleControl,
+                  import_components104.ToggleControl,
                   {
                     label: (0, import_i18n169.__)("Show bio"),
                     checked: !!showBio,
@@ -56653,14 +56669,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
-              import_components105.__experimentalToolsPanelItem,
+              import_components104.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n169.__)("Link author name to author page"),
                 isShownByDefault: true,
                 hasValue: () => !!isLink,
                 onDeselect: () => setAttributes({ isLink: false }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
-                  import_components105.ToggleControl,
+                  import_components104.ToggleControl,
                   {
                     label: (0, import_i18n169.__)("Link author name to author page"),
                     checked: isLink,
@@ -56670,14 +56686,14 @@ ${text}
               }
             ),
             isLink && /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
-              import_components105.__experimentalToolsPanelItem,
+              import_components104.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n169.__)("Link target"),
                 isShownByDefault: true,
                 hasValue: () => linkTarget !== "_self",
                 onDeselect: () => setAttributes({ linkTarget: "_self" }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
-                  import_components105.ToggleControl,
+                  import_components104.ToggleControl,
                   {
                     label: (0, import_i18n169.__)("Open in new tab"),
                     onChange: (value) => setAttributes({
@@ -56694,17 +56710,17 @@ ${text}
       blockTypes.some(
         (blockType) => blockType.name === "core/group"
       ) && /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(InspectorControlsLastItem, { children: /* @__PURE__ */ (0, import_jsx_runtime375.jsxs)(
-        import_components105.__experimentalVStack,
+        import_components104.__experimentalVStack,
         {
           className: "wp-block-post-author__transform",
           alignment: "left",
           spacing: 4,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(import_components105.__experimentalText, { as: "p", children: (0, import_i18n169.__)(
+            /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(import_components104.__experimentalText, { as: "p", children: (0, import_i18n169.__)(
               "This block is no longer supported. Recreate its design with the Avatar, Author Name and Author Biography blocks."
             ) }),
             /* @__PURE__ */ (0, import_jsx_runtime375.jsx)(
-              import_components105.Button,
+              import_components104.Button,
               {
                 variant: "primary",
                 onClick: transformBlock,
@@ -56871,7 +56887,7 @@ ${text}
   var import_data107 = __toESM(require_data(), 1);
   var import_i18n171 = __toESM(require_i18n(), 1);
   var import_core_data59 = __toESM(require_core_data(), 1);
-  var import_components106 = __toESM(require_components(), 1);
+  var import_components105 = __toESM(require_components(), 1);
   var import_jsx_runtime376 = __toESM(require_jsx_runtime(), 1);
   function PostAuthorNameEdit(props) {
     useDeprecatedTextAlign(props);
@@ -56909,7 +56925,7 @@ ${text}
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)(import_jsx_runtime376.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(import_block_editor188.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)(
-        import_components106.__experimentalToolsPanel,
+        import_components105.__experimentalToolsPanel,
         {
           label: (0, import_i18n171.__)("Settings"),
           resetAll: () => {
@@ -56921,14 +56937,14 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
-              import_components106.__experimentalToolsPanelItem,
+              import_components105.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n171.__)("Link to author archive"),
                 isShownByDefault: true,
                 hasValue: () => isLink,
                 onDeselect: () => setAttributes({ isLink: false }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
-                  import_components106.ToggleControl,
+                  import_components105.ToggleControl,
                   {
                     label: (0, import_i18n171.__)("Link to author archive"),
                     onChange: () => setAttributes({ isLink: !isLink }),
@@ -56938,14 +56954,14 @@ ${text}
               }
             ),
             isLink && /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
-              import_components106.__experimentalToolsPanelItem,
+              import_components105.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n171.__)("Open in new tab"),
                 isShownByDefault: true,
                 hasValue: () => linkTarget !== "_self",
                 onDeselect: () => setAttributes({ linkTarget: "_self" }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
-                  import_components106.ToggleControl,
+                  import_components105.ToggleControl,
                   {
                     label: (0, import_i18n171.__)("Open in new tab"),
                     onChange: (value) => setAttributes({
@@ -57287,7 +57303,7 @@ ${text}
 
   // packages/block-library/build-module/post-comment/edit.mjs
   var import_i18n173 = __toESM(require_i18n(), 1);
-  var import_components107 = __toESM(require_components(), 1);
+  var import_components106 = __toESM(require_components(), 1);
   var import_element107 = __toESM(require_element(), 1);
   var import_block_editor190 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime378 = __toESM(require_jsx_runtime(), 1);
@@ -57297,7 +57313,7 @@ ${text}
     const innerBlocksProps = (0, import_block_editor190.useInnerBlocksProps)(blockProps);
     if (!commentId) {
       return /* @__PURE__ */ (0, import_jsx_runtime378.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime378.jsxs)(
-        import_components107.Placeholder,
+        import_components106.Placeholder,
         {
           icon: block_default_default,
           label: (0, import_i18n173._x)("Post Comment", "block title"),
@@ -57306,14 +57322,14 @@ ${text}
           ),
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(
-              import_components107.TextControl,
+              import_components106.TextControl,
               {
                 value: commentId,
                 onChange: (val) => setCommentIdInput(parseInt(val))
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime378.jsx)(
-              import_components107.Button,
+              import_components106.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "primary",
@@ -58321,7 +58337,7 @@ ${text}
   var import_element111 = __toESM(require_element(), 1);
   var import_date3 = __toESM(require_date(), 1);
   var import_block_editor196 = __toESM(require_block_editor(), 1);
-  var import_components108 = __toESM(require_components(), 1);
+  var import_components107 = __toESM(require_components(), 1);
   var import_i18n177 = __toESM(require_i18n(), 1);
   var import_keycodes9 = __toESM(require_keycodes(), 1);
   var import_data111 = __toESM(require_data(), 1);
@@ -58393,8 +58409,8 @@ ${text}
       );
     }
     return /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)(import_jsx_runtime384.Fragment, { children: [
-      (blockEditingMode === "default" || !isDescendentOfQueryLoop) && activeBlockVariationName !== "post-date-modified" && (!isDescendentOfQueryLoop || !activeBlockVariationName) && /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_block_editor196.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_components108.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
-        import_components108.Dropdown,
+      (blockEditingMode === "default" || !isDescendentOfQueryLoop) && activeBlockVariationName !== "post-date-modified" && (!isDescendentOfQueryLoop || !activeBlockVariationName) && /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_block_editor196.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_components107.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
+        import_components107.Dropdown,
         {
           popoverProps,
           renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
@@ -58423,7 +58439,7 @@ ${text}
               }
             };
             return /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
-              import_components108.ToolbarButton,
+              import_components107.ToolbarButton,
               {
                 "aria-expanded": isOpen,
                 icon: pencil_default,
@@ -58436,7 +58452,7 @@ ${text}
         }
       ) }) }),
       /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(import_block_editor196.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)(
-        import_components108.__experimentalToolsPanel,
+        import_components107.__experimentalToolsPanel,
         {
           label: (0, import_i18n177.__)("Settings"),
           resetAll: () => {
@@ -58449,7 +58465,7 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
-              import_components108.__experimentalToolsPanelItem,
+              import_components107.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!format3,
                 label: (0, import_i18n177.__)("Date Format"),
@@ -58466,7 +58482,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
-              import_components108.__experimentalToolsPanelItem,
+              import_components107.__experimentalToolsPanelItem,
               {
                 hasValue: () => isLink !== false,
                 label: postType?.labels?.singular_name ? (0, import_i18n177.sprintf)(
@@ -58477,7 +58493,7 @@ ${text}
                 onDeselect: () => setAttributes({ isLink: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime384.jsx)(
-                  import_components108.ToggleControl,
+                  import_components107.ToggleControl,
                   {
                     label: postType?.labels?.singular_name ? (0, import_i18n177.sprintf)(
                       // translators: %s: Name of the post type e.g: "post".
@@ -58945,7 +58961,7 @@ ${text}
   var import_core_data64 = __toESM(require_core_data(), 1);
   var import_element112 = __toESM(require_element(), 1);
   var import_block_editor197 = __toESM(require_block_editor(), 1);
-  var import_components109 = __toESM(require_components(), 1);
+  var import_components108 = __toESM(require_components(), 1);
   var import_i18n179 = __toESM(require_i18n(), 1);
   var import_data112 = __toESM(require_data(), 1);
   var import_jsx_runtime385 = __toESM(require_jsx_runtime(), 1);
@@ -59038,7 +59054,7 @@ ${text}
     ) : /* @__PURE__ */ (0, import_jsx_runtime385.jsx)("p", { className: excerptClassName, children: !isTrimmed ? rawOrRenderedExcerpt || (0, import_i18n179.__)("No excerpt found") : trimmedExcerpt + ELLIPSIS });
     return /* @__PURE__ */ (0, import_jsx_runtime385.jsxs)(import_jsx_runtime385.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(import_block_editor197.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime385.jsxs)(
-        import_components109.__experimentalToolsPanel,
+        import_components108.__experimentalToolsPanel,
         {
           label: (0, import_i18n179.__)("Settings"),
           resetAll: () => {
@@ -59050,14 +59066,14 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
-              import_components109.__experimentalToolsPanelItem,
+              import_components108.__experimentalToolsPanelItem,
               {
                 hasValue: () => showMoreOnNewLine !== true,
                 label: (0, import_i18n179.__)("Show link on new line"),
                 onDeselect: () => setAttributes({ showMoreOnNewLine: true }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
-                  import_components109.ToggleControl,
+                  import_components108.ToggleControl,
                   {
                     label: (0, import_i18n179.__)("Show link on new line"),
                     checked: showMoreOnNewLine,
@@ -59069,14 +59085,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
-              import_components109.__experimentalToolsPanelItem,
+              import_components108.__experimentalToolsPanelItem,
               {
                 hasValue: () => excerptLength !== 55,
                 label: (0, import_i18n179.__)("Max number of words"),
                 onDeselect: () => setAttributes({ excerptLength: 55 }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
-                  import_components109.RangeControl,
+                  import_components108.RangeControl,
                   {
                     label: (0, import_i18n179.__)("Max number of words"),
                     value: excerptLength,
@@ -59332,7 +59348,7 @@ ${text}
   var import_blob18 = __toESM(require_blob(), 1);
   var import_core_data65 = __toESM(require_core_data(), 1);
   var import_data113 = __toESM(require_data(), 1);
-  var import_components112 = __toESM(require_components(), 1);
+  var import_components111 = __toESM(require_components(), 1);
   var import_block_editor201 = __toESM(require_block_editor(), 1);
   var import_element113 = __toESM(require_element(), 1);
   var import_i18n182 = __toESM(require_i18n(), 1);
@@ -59340,7 +59356,7 @@ ${text}
 
   // packages/block-library/build-module/post-featured-image/dimension-controls.mjs
   var import_i18n180 = __toESM(require_i18n(), 1);
-  var import_components110 = __toESM(require_components(), 1);
+  var import_components109 = __toESM(require_components(), 1);
   var import_block_editor198 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime386 = __toESM(require_jsx_runtime(), 1);
   var { DimensionsTool: DimensionsTool2 } = unlock(import_block_editor198.privateApis);
@@ -59404,7 +59420,7 @@ ${text}
       styleKey: "objectFit"
     });
     const [availableUnits] = (0, import_block_editor198.useSettings)("spacing.units");
-    const units = (0, import_components110.__experimentalUseCustomUnits)({
+    const units = (0, import_components109.__experimentalUseCustomUnits)({
       availableUnits: availableUnits || ["px", "%", "vw", "em", "rem"]
     });
     const setDimensionAttributes = (nextDimensions) => {
@@ -59445,7 +59461,7 @@ ${text}
   var dimension_controls_default = DimensionControls;
 
   // packages/block-library/build-module/post-featured-image/overlay-controls.mjs
-  var import_components111 = __toESM(require_components(), 1);
+  var import_components110 = __toESM(require_components(), 1);
   var import_block_editor199 = __toESM(require_block_editor(), 1);
   var import_compose46 = __toESM(require_compose(), 1);
   var import_i18n181 = __toESM(require_i18n(), 1);
@@ -59490,7 +59506,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
-        import_components111.__experimentalToolsPanelItem,
+        import_components110.__experimentalToolsPanelItem,
         {
           hasValue: () => dimRatio !== void 0,
           label: (0, import_i18n181.__)("Overlay opacity"),
@@ -59501,7 +59517,7 @@ ${text}
           isShownByDefault: true,
           panelId: clientId,
           children: /* @__PURE__ */ (0, import_jsx_runtime387.jsx)(
-            import_components111.RangeControl,
+            import_components110.RangeControl,
             {
               label: (0, import_i18n181.__)("Overlay opacity"),
               value: dimRatio,
@@ -59678,7 +59694,7 @@ ${text}
     const aspectRatioStyle = aspectRatio === "auto" ? void 0 : aspectRatio;
     const placeholder2 = (content) => {
       return /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
-        import_components112.Placeholder,
+        import_components111.Placeholder,
         {
           className: clsx_default(
             "block-editor-media-placeholder",
@@ -59765,7 +59781,7 @@ ${text}
         }
       ),
       (featuredImage || isDescendentOfQueryLoop || !postId) && /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(import_block_editor201.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime389.jsxs)(
-        import_components112.__experimentalToolsPanel,
+        import_components111.__experimentalToolsPanel,
         {
           label: (0, import_i18n182.__)("Settings"),
           resetAll: () => {
@@ -59779,7 +59795,7 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
-              import_components112.__experimentalToolsPanelItem,
+              import_components111.__experimentalToolsPanelItem,
               {
                 label: postType?.labels?.singular_name ? (0, import_i18n182.sprintf)(
                   // translators: %s: Name of the post type e.g: "post".
@@ -59792,7 +59808,7 @@ ${text}
                   isLink: false
                 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
-                  import_components112.ToggleControl,
+                  import_components111.ToggleControl,
                   {
                     label: (0, import_i18n182.__)("Make image a link"),
                     onChange: () => setAttributes({ isLink: !isLink }),
@@ -59802,7 +59818,7 @@ ${text}
               }
             ),
             isLink && /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
-              import_components112.__experimentalToolsPanelItem,
+              import_components111.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n182.__)("Open in new tab"),
                 isShownByDefault: true,
@@ -59811,7 +59827,7 @@ ${text}
                   linkTarget: "_self"
                 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
-                  import_components112.ToggleControl,
+                  import_components111.ToggleControl,
                   {
                     label: (0, import_i18n182.__)("Open in new tab"),
                     onChange: (value) => setAttributes({
@@ -59823,7 +59839,7 @@ ${text}
               }
             ),
             isLink && /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
-              import_components112.__experimentalToolsPanelItem,
+              import_components111.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n182.__)("Link relation"),
                 isShownByDefault: true,
@@ -59832,7 +59848,7 @@ ${text}
                   rel: ""
                 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
-                  import_components112.TextControl,
+                  import_components111.TextControl,
                   {
                     label: (0, import_i18n182.__)("Link relation"),
                     help: (0, import_element113.createInterpolateElement)(
@@ -59840,7 +59856,7 @@ ${text}
                         "The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document."
                       ),
                       {
-                        a: /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(import_components112.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
+                        a: /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(import_components111.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
                       }
                     ),
                     value: rel,
@@ -59898,7 +59914,7 @@ ${text}
           placeholder: placeholder2,
           mediaLibraryButton: ({ open }) => {
             return /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(
-              import_components112.Button,
+              import_components111.Button,
               {
                 __next40pxDefaultSize: true,
                 icon: upload_default,
@@ -59929,7 +59945,7 @@ ${text}
             style: imageStyles
           }
         ),
-        temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(import_components112.Spinner, {})
+        temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime389.jsx)(import_components111.Spinner, {})
       ] });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime389.jsxs)(import_jsx_runtime389.Fragment, { children: [
@@ -60044,7 +60060,7 @@ ${text}
   };
 
   // packages/block-library/build-module/post-navigation-link/edit.mjs
-  var import_components113 = __toESM(require_components(), 1);
+  var import_components112 = __toESM(require_components(), 1);
   var import_block_editor202 = __toESM(require_block_editor(), 1);
   var import_i18n183 = __toESM(require_i18n(), 1);
   var import_data114 = __toESM(require_data(), 1);
@@ -60101,7 +60117,7 @@ ${text}
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime390.jsxs)(import_jsx_runtime390.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(import_block_editor202.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime390.jsxs)(
-        import_components113.__experimentalToolsPanel,
+        import_components112.__experimentalToolsPanel,
         {
           label: (0, import_i18n183.__)("Settings"),
           resetAll: () => {
@@ -60114,14 +60130,14 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
-              import_components113.__experimentalToolsPanelItem,
+              import_components112.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n183.__)("Display the title as a link"),
                 isShownByDefault: true,
                 hasValue: () => showTitle,
                 onDeselect: () => setAttributes({ showTitle: false }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
-                  import_components113.ToggleControl,
+                  import_components112.ToggleControl,
                   {
                     label: (0, import_i18n183.__)("Display the title as a link"),
                     help: (0, import_i18n183.__)(
@@ -60136,7 +60152,7 @@ ${text}
               }
             ),
             showTitle && /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
-              import_components113.__experimentalToolsPanelItem,
+              import_components112.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n183.__)(
                   "Include the label as part of the link"
@@ -60145,7 +60161,7 @@ ${text}
                 hasValue: () => !!linkLabel,
                 onDeselect: () => setAttributes({ linkLabel: false }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
-                  import_components113.ToggleControl,
+                  import_components112.ToggleControl,
                   {
                     label: (0, import_i18n183.__)(
                       "Include the label as part of the link"
@@ -60159,14 +60175,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
-              import_components113.__experimentalToolsPanelItem,
+              import_components112.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n183.__)("Arrow"),
                 isShownByDefault: true,
                 hasValue: () => arrow !== "none",
                 onDeselect: () => setAttributes({ arrow: "none" }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime390.jsxs)(
-                  import_components113.__experimentalToggleGroupControl,
+                  import_components112.__experimentalToggleGroupControl,
                   {
                     label: (0, import_i18n183.__)("Arrow"),
                     value: arrow,
@@ -60179,7 +60195,7 @@ ${text}
                     isBlock: true,
                     children: [
                       /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
-                        import_components113.__experimentalToggleGroupControlOption,
+                        import_components112.__experimentalToggleGroupControlOption,
                         {
                           value: "none",
                           label: (0, import_i18n183._x)(
@@ -60189,7 +60205,7 @@ ${text}
                         }
                       ),
                       /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
-                        import_components113.__experimentalToggleGroupControlOption,
+                        import_components112.__experimentalToggleGroupControlOption,
                         {
                           value: "arrow",
                           label: (0, import_i18n183._x)(
@@ -60199,7 +60215,7 @@ ${text}
                         }
                       ),
                       /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
-                        import_components113.__experimentalToggleGroupControlOption,
+                        import_components112.__experimentalToggleGroupControlOption,
                         {
                           value: "chevron",
                           label: (0, import_i18n183._x)(
@@ -60217,7 +60233,7 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(import_block_editor202.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime390.jsx)(
-        import_components113.SelectControl,
+        import_components112.SelectControl,
         {
           label: (0, import_i18n183.__)("Filter by taxonomy"),
           value: taxonomy,
@@ -60482,7 +60498,7 @@ ${text}
   var import_data115 = __toESM(require_data(), 1);
   var import_i18n186 = __toESM(require_i18n(), 1);
   var import_block_editor203 = __toESM(require_block_editor(), 1);
-  var import_components114 = __toESM(require_components(), 1);
+  var import_components113 = __toESM(require_components(), 1);
   var import_core_data67 = __toESM(require_core_data(), 1);
   var import_jsx_runtime391 = __toESM(require_jsx_runtime(), 1);
   function PostTemplateInnerBlocks({ classList }) {
@@ -60710,7 +60726,7 @@ ${text}
       })
     });
     if (!posts) {
-      return /* @__PURE__ */ (0, import_jsx_runtime391.jsx)("p", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(import_components114.Spinner, {}) });
+      return /* @__PURE__ */ (0, import_jsx_runtime391.jsx)("p", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(import_components113.Spinner, {}) });
     }
     if (!posts.length) {
       return /* @__PURE__ */ (0, import_jsx_runtime391.jsxs)("p", { ...blockProps, children: [
@@ -60739,7 +60755,7 @@ ${text}
       }
     ];
     return /* @__PURE__ */ (0, import_jsx_runtime391.jsxs)(import_jsx_runtime391.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(import_block_editor203.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(import_components114.ToolbarGroup, { controls: displayLayoutControls }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(import_block_editor203.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime391.jsx)(import_components113.ToolbarGroup, { controls: displayLayoutControls }) }),
       /* @__PURE__ */ (0, import_jsx_runtime391.jsx)("ul", { ...blockProps, children: blockContexts && blockContexts.map((blockContext) => /* @__PURE__ */ (0, import_jsx_runtime391.jsxs)(
         import_block_editor203.BlockContextProvider,
         {
@@ -60896,7 +60912,7 @@ ${text}
   // packages/block-library/build-module/post-terms/edit.mjs
   var import_block_editor205 = __toESM(require_block_editor(), 1);
   var import_blocks88 = __toESM(require_blocks(), 1);
-  var import_components115 = __toESM(require_components(), 1);
+  var import_components114 = __toESM(require_components(), 1);
   var import_data117 = __toESM(require_data(), 1);
   var import_html_entities10 = __toESM(require_html_entities(), 1);
   var import_i18n187 = __toESM(require_i18n(), 1);
@@ -60981,7 +60997,7 @@ ${text}
     });
     return /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)(import_jsx_runtime393.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(import_block_editor205.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
-        import_components115.TextControl,
+        import_components114.TextControl,
         {
           autoComplete: "off",
           label: (0, import_i18n187.__)("Separator"),
@@ -60993,7 +61009,7 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime393.jsxs)("div", { ...blockProps, children: [
-        isLoading && hasPost && /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(import_components115.Spinner, {}),
+        isLoading && hasPost && /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(import_components114.Spinner, {}),
         !isLoading && (isSelected || prefix) && /* @__PURE__ */ (0, import_jsx_runtime393.jsx)(
           import_block_editor205.RichText,
           {
@@ -61240,7 +61256,7 @@ ${text}
   var import_i18n188 = __toESM(require_i18n(), 1);
   var import_element115 = __toESM(require_element(), 1);
   var import_block_editor206 = __toESM(require_block_editor(), 1);
-  var import_components116 = __toESM(require_components(), 1);
+  var import_components115 = __toESM(require_components(), 1);
   var import_blocks89 = __toESM(require_blocks(), 1);
   var import_core_data70 = __toESM(require_core_data(), 1);
   var import_wordcount = __toESM(require_wordcount(), 1);
@@ -61322,7 +61338,7 @@ ${text}
     const blockProps = (0, import_block_editor206.useBlockProps)();
     return /* @__PURE__ */ (0, import_jsx_runtime394.jsxs)(import_jsx_runtime394.Fragment, { children: [
       displayMode === "time" && /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(import_block_editor206.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
-        import_components116.__experimentalToolsPanel,
+        import_components115.__experimentalToolsPanel,
         {
           label: (0, import_i18n188.__)("Settings"),
           resetAll: () => {
@@ -61332,7 +61348,7 @@ ${text}
           },
           dropdownMenuProps,
           children: /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
-            import_components116.__experimentalToolsPanelItem,
+            import_components115.__experimentalToolsPanelItem,
             {
               isShownByDefault: true,
               label: (0, import_i18n188._x)(
@@ -61346,7 +61362,7 @@ ${text}
                 });
               },
               children: /* @__PURE__ */ (0, import_jsx_runtime394.jsx)(
-                import_components116.ToggleControl,
+                import_components115.ToggleControl,
                 {
                   label: (0, import_i18n188.__)("Display as range"),
                   checked: !!displayAsRange,
@@ -61568,7 +61584,7 @@ ${text}
 
   // packages/block-library/build-module/post-title/edit.mjs
   var import_block_editor207 = __toESM(require_block_editor(), 1);
-  var import_components117 = __toESM(require_components(), 1);
+  var import_components116 = __toESM(require_components(), 1);
   var import_i18n190 = __toESM(require_i18n(), 1);
   var import_blocks90 = __toESM(require_blocks(), 1);
   var import_core_data71 = __toESM(require_core_data(), 1);
@@ -61670,7 +61686,7 @@ ${text}
           }
         ) }),
         /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(import_block_editor207.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime395.jsxs)(
-          import_components117.__experimentalToolsPanel,
+          import_components116.__experimentalToolsPanel,
           {
             label: (0, import_i18n190.__)("Settings"),
             resetAll: () => {
@@ -61683,14 +61699,14 @@ ${text}
             dropdownMenuProps,
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-                import_components117.__experimentalToolsPanelItem,
+                import_components116.__experimentalToolsPanelItem,
                 {
                   label: (0, import_i18n190.__)("Make title a link"),
                   isShownByDefault: true,
                   hasValue: () => isLink,
                   onDeselect: () => setAttributes({ isLink: false }),
                   children: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-                    import_components117.ToggleControl,
+                    import_components116.ToggleControl,
                     {
                       label: (0, import_i18n190.__)("Make title a link"),
                       onChange: () => setAttributes({ isLink: !isLink }),
@@ -61701,7 +61717,7 @@ ${text}
               ),
               isLink && /* @__PURE__ */ (0, import_jsx_runtime395.jsxs)(import_jsx_runtime395.Fragment, { children: [
                 /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-                  import_components117.__experimentalToolsPanelItem,
+                  import_components116.__experimentalToolsPanelItem,
                   {
                     label: (0, import_i18n190.__)("Open in new tab"),
                     isShownByDefault: true,
@@ -61710,7 +61726,7 @@ ${text}
                       linkTarget: "_self"
                     }),
                     children: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-                      import_components117.ToggleControl,
+                      import_components116.ToggleControl,
                       {
                         label: (0, import_i18n190.__)("Open in new tab"),
                         onChange: (value) => setAttributes({
@@ -61722,14 +61738,14 @@ ${text}
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-                  import_components117.__experimentalToolsPanelItem,
+                  import_components116.__experimentalToolsPanelItem,
                   {
                     label: (0, import_i18n190.__)("Link relation"),
                     isShownByDefault: true,
                     hasValue: () => !!rel,
                     onDeselect: () => setAttributes({ rel: "" }),
                     children: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(
-                      import_components117.TextControl,
+                      import_components116.TextControl,
                       {
                         label: (0, import_i18n190.__)("Link relation"),
                         help: (0, import_element116.createInterpolateElement)(
@@ -61737,7 +61753,7 @@ ${text}
                             "The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document."
                           ),
                           {
-                            a: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(import_components117.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
+                            a: /* @__PURE__ */ (0, import_jsx_runtime395.jsx)(import_components116.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
                           }
                         ),
                         value: rel,
@@ -63132,7 +63148,7 @@ ${text}
   var import_core_data78 = __toESM(require_core_data(), 1);
 
   // packages/block-library/build-module/query/edit/inspector-controls/enhanced-pagination-control.mjs
-  var import_components118 = __toESM(require_components(), 1);
+  var import_components117 = __toESM(require_components(), 1);
   var import_i18n196 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/query/utils.mjs
@@ -63444,7 +63460,7 @@ ${text}
       );
     }
     return /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(import_jsx_runtime401.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
-      import_components118.ToggleControl,
+      import_components117.ToggleControl,
       {
         label: (0, import_i18n196.__)("Reload full page"),
         help,
@@ -63460,7 +63476,7 @@ ${text}
   }
 
   // packages/block-library/build-module/query/edit/inspector-controls/index.mjs
-  var import_components128 = __toESM(require_components(), 1);
+  var import_components127 = __toESM(require_components(), 1);
   var import_data125 = __toESM(require_data(), 1);
   var import_core_data77 = __toESM(require_core_data(), 1);
   var import_i18n206 = __toESM(require_i18n(), 1);
@@ -63468,7 +63484,7 @@ ${text}
   var import_element120 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/query/edit/inspector-controls/order-control.mjs
-  var import_components119 = __toESM(require_components(), 1);
+  var import_components118 = __toESM(require_components(), 1);
   var import_i18n197 = __toESM(require_i18n(), 1);
   var import_jsx_runtime402 = __toESM(require_jsx_runtime(), 1);
   var defaultOrderByOptions = [
@@ -63498,7 +63514,7 @@ ${text}
     onChange
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime402.jsx)(
-      import_components119.SelectControl,
+      import_components118.SelectControl,
       {
         label: (0, import_i18n197.__)("Order by"),
         value: `${orderBy}/${order}`,
@@ -63514,7 +63530,7 @@ ${text}
 
   // packages/block-library/build-module/query/edit/inspector-controls/author-control.mjs
   var import_i18n198 = __toESM(require_i18n(), 1);
-  var import_components120 = __toESM(require_components(), 1);
+  var import_components119 = __toESM(require_components(), 1);
   var import_data121 = __toESM(require_data(), 1);
   var import_core_data73 = __toESM(require_core_data(), 1);
   var import_jsx_runtime403 = __toESM(require_jsx_runtime(), 1);
@@ -63566,7 +63582,7 @@ ${text}
       onChange({ author: ids.join(",") });
     };
     return /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(
-      import_components120.FormTokenField,
+      import_components119.FormTokenField,
       {
         label: (0, import_i18n198.__)("Authors"),
         value: sanitizedValue,
@@ -63580,7 +63596,7 @@ ${text}
 
   // packages/block-library/build-module/query/edit/inspector-controls/parent-control.mjs
   var import_i18n199 = __toESM(require_i18n(), 1);
-  var import_components121 = __toESM(require_components(), 1);
+  var import_components120 = __toESM(require_components(), 1);
   var import_data122 = __toESM(require_data(), 1);
   var import_core_data74 = __toESM(require_core_data(), 1);
   var import_element118 = __toESM(require_element(), 1);
@@ -63694,7 +63710,7 @@ ${text}
       onChange({ parents: ids });
     };
     return /* @__PURE__ */ (0, import_jsx_runtime404.jsx)(
-      import_components121.FormTokenField,
+      import_components120.FormTokenField,
       {
         label: (0, import_i18n199.__)("Parents"),
         value,
@@ -63708,7 +63724,7 @@ ${text}
   var parent_control_default = ParentControl;
 
   // packages/block-library/build-module/query/edit/inspector-controls/taxonomy-controls.mjs
-  var import_components122 = __toESM(require_components(), 1);
+  var import_components121 = __toESM(require_components(), 1);
   var import_data123 = __toESM(require_data(), 1);
   var import_core_data75 = __toESM(require_core_data(), 1);
   var import_element119 = __toESM(require_element(), 1);
@@ -63738,7 +63754,7 @@ ${text}
     if (!taxonomies?.length) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(import_components122.__experimentalVStack, { spacing: 4, children: taxonomies.map((taxonomy) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(import_components121.__experimentalVStack, { spacing: 4, children: taxonomies.map((taxonomy) => {
       const includeTermIds = taxQuery?.include?.[taxonomy.slug] || [];
       const excludeTermIds = taxQuery?.exclude?.[taxonomy.slug] || [];
       const onChangeTaxQuery = (newTermIds, key) => {
@@ -63877,7 +63893,7 @@ ${text}
       onChange(Array.from(newTermIds));
     };
     return /* @__PURE__ */ (0, import_jsx_runtime405.jsx)("div", { className: "block-library-query-inspector__taxonomy-control", children: /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
-      import_components122.FormTokenField,
+      import_components121.FormTokenField,
       {
         label,
         value,
@@ -63891,7 +63907,7 @@ ${text}
   }
 
   // packages/block-library/build-module/query/edit/inspector-controls/format-controls.mjs
-  var import_components123 = __toESM(require_components(), 1);
+  var import_components122 = __toESM(require_components(), 1);
   var import_data124 = __toESM(require_data(), 1);
   var import_core_data76 = __toESM(require_core_data(), 1);
   var import_i18n201 = __toESM(require_i18n(), 1);
@@ -63941,7 +63957,7 @@ ${text}
     ).filter(Boolean);
     const suggestions = formats.filter((item) => !normalizedFormats.includes(item.value)).map((item) => item.label);
     return /* @__PURE__ */ (0, import_jsx_runtime406.jsx)(
-      import_components123.FormTokenField,
+      import_components122.FormTokenField,
       {
         label: (0, import_i18n201.__)("Formats"),
         value: values,
@@ -63958,7 +63974,7 @@ ${text}
   }
 
   // packages/block-library/build-module/query/edit/inspector-controls/sticky-control.mjs
-  var import_components124 = __toESM(require_components(), 1);
+  var import_components123 = __toESM(require_components(), 1);
   var import_i18n202 = __toESM(require_i18n(), 1);
   var import_jsx_runtime407 = __toESM(require_jsx_runtime(), 1);
   var stickyOptions = [
@@ -63969,7 +63985,7 @@ ${text}
   ];
   function StickyControl({ value, onChange }) {
     return /* @__PURE__ */ (0, import_jsx_runtime407.jsx)(
-      import_components124.SelectControl,
+      import_components123.SelectControl,
       {
         label: (0, import_i18n202.__)("Sticky posts"),
         options: stickyOptions,
@@ -63983,14 +63999,14 @@ ${text}
   }
 
   // packages/block-library/build-module/query/edit/inspector-controls/per-page-control.mjs
-  var import_components125 = __toESM(require_components(), 1);
+  var import_components124 = __toESM(require_components(), 1);
   var import_i18n203 = __toESM(require_i18n(), 1);
   var import_jsx_runtime408 = __toESM(require_jsx_runtime(), 1);
   var MIN_POSTS_PER_PAGE = 1;
   var MAX_POSTS_PER_PAGE = 100;
   var PerPageControl = ({ perPage, offset = 0, onChange }) => {
     return /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
-      import_components125.RangeControl,
+      import_components124.RangeControl,
       {
         label: (0, import_i18n203.__)("Items per page"),
         min: MIN_POSTS_PER_PAGE,
@@ -64008,14 +64024,14 @@ ${text}
   var per_page_control_default = PerPageControl;
 
   // packages/block-library/build-module/query/edit/inspector-controls/offset-controls.mjs
-  var import_components126 = __toESM(require_components(), 1);
+  var import_components125 = __toESM(require_components(), 1);
   var import_i18n204 = __toESM(require_i18n(), 1);
   var import_jsx_runtime409 = __toESM(require_jsx_runtime(), 1);
   var MIN_OFFSET = 0;
   var MAX_OFFSET = 100;
   var OffsetControl = ({ offset = 0, onChange }) => {
     return /* @__PURE__ */ (0, import_jsx_runtime409.jsx)(
-      import_components126.__experimentalNumberControl,
+      import_components125.__experimentalNumberControl,
       {
         label: (0, import_i18n204._x)("Offset", "Number of posts to skip in a query"),
         value: offset,
@@ -64032,12 +64048,12 @@ ${text}
   var offset_controls_default = OffsetControl;
 
   // packages/block-library/build-module/query/edit/inspector-controls/pages-control.mjs
-  var import_components127 = __toESM(require_components(), 1);
+  var import_components126 = __toESM(require_components(), 1);
   var import_i18n205 = __toESM(require_i18n(), 1);
   var import_jsx_runtime410 = __toESM(require_jsx_runtime(), 1);
   var PagesControl = ({ pages, onChange }) => {
     return /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(
-      import_components127.__experimentalNumberControl,
+      import_components126.__experimentalNumberControl,
       {
         label: (0, import_i18n205.__)("Max pages to show"),
         value: pages,
@@ -64169,7 +64185,7 @@ ${text}
     const hasInheritanceWarning = isSingular && inherit;
     return /* @__PURE__ */ (0, import_jsx_runtime411.jsxs)(import_jsx_runtime411.Fragment, { children: [
       showSettingsPanel && /* @__PURE__ */ (0, import_jsx_runtime411.jsxs)(
-        import_components128.__experimentalToolsPanel,
+        import_components127.__experimentalToolsPanel,
         {
           label: (0, import_i18n206.__)("Settings"),
           resetAll: () => {
@@ -64184,15 +64200,15 @@ ${text}
           dropdownMenuProps,
           children: [
             showInheritControl && /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-              import_components128.__experimentalToolsPanelItem,
+              import_components127.__experimentalToolsPanelItem,
               {
                 hasValue: () => !inherit,
                 label: (0, import_i18n206.__)("Query type"),
                 onDeselect: () => setQuery({ inherit: true }),
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime411.jsxs)(import_components128.__experimentalVStack, { spacing: 4, children: [
+                children: /* @__PURE__ */ (0, import_jsx_runtime411.jsxs)(import_components127.__experimentalVStack, { spacing: 4, children: [
                   /* @__PURE__ */ (0, import_jsx_runtime411.jsxs)(
-                    import_components128.__experimentalToggleGroupControl,
+                    import_components127.__experimentalToggleGroupControl,
                     {
                       label: (0, import_i18n206.__)("Query type"),
                       isBlock: true,
@@ -64209,14 +64225,14 @@ ${text}
                       value: !!inherit ? "default" : "custom",
                       children: [
                         /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-                          import_components128.__experimentalToggleGroupControlOption,
+                          import_components127.__experimentalToggleGroupControlOption,
                           {
                             value: "default",
                             label: (0, import_i18n206.__)("Default")
                           }
                         ),
                         /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-                          import_components128.__experimentalToggleGroupControlOption,
+                          import_components127.__experimentalToggleGroupControlOption,
                           {
                             value: "custom",
                             label: (0, import_i18n206.__)("Custom")
@@ -64226,7 +64242,7 @@ ${text}
                     }
                   ),
                   hasInheritanceWarning && /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-                    import_components128.Notice,
+                    import_components127.Notice,
                     {
                       status: "warning",
                       isDismissible: false,
@@ -64239,14 +64255,14 @@ ${text}
               }
             ),
             showPostTypeControl && /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-              import_components128.__experimentalToolsPanelItem,
+              import_components127.__experimentalToolsPanelItem,
               {
                 hasValue: () => postType !== "post",
                 label: postTypeControlLabel,
                 onDeselect: () => onPostTypeChange("post"),
                 isShownByDefault: true,
                 children: postTypesSelectOptions.length > 2 ? /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-                  import_components128.SelectControl,
+                  import_components127.SelectControl,
                   {
                     options: postTypesSelectOptions,
                     value: postType,
@@ -64255,7 +64271,7 @@ ${text}
                     help: postTypeControlHelp
                   }
                 ) : /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-                  import_components128.__experimentalToggleGroupControl,
+                  import_components127.__experimentalToggleGroupControl,
                   {
                     isBlock: true,
                     value: postType,
@@ -64264,7 +64280,7 @@ ${text}
                     help: postTypeControlHelp,
                     children: postTypesSelectOptions.map(
                       (option) => /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-                        import_components128.__experimentalToggleGroupControlOption,
+                        import_components127.__experimentalToggleGroupControlOption,
                         {
                           value: option.value,
                           label: option.label
@@ -64277,7 +64293,7 @@ ${text}
               }
             ),
             showOrderControl && /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-              import_components128.__experimentalToolsPanelItem,
+              import_components127.__experimentalToolsPanelItem,
               {
                 hasValue: () => order !== "desc" || orderBy !== "date",
                 label: (0, import_i18n206.__)("Order by"),
@@ -64293,7 +64309,7 @@ ${text}
               }
             ),
             showStickyControl && /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-              import_components128.__experimentalToolsPanelItem,
+              import_components127.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!sticky,
                 label: (0, import_i18n206.__)("Sticky posts"),
@@ -64312,7 +64328,7 @@ ${text}
         }
       ),
       !inherit && showDisplayPanel && /* @__PURE__ */ (0, import_jsx_runtime411.jsxs)(
-        import_components128.__experimentalToolsPanel,
+        import_components127.__experimentalToolsPanel,
         {
           className: "block-library-query-toolspanel__display",
           label: (0, import_i18n206.__)("Display"),
@@ -64325,7 +64341,7 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-              import_components128.__experimentalToolsPanelItem,
+              import_components127.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n206.__)("Items per page"),
                 hasValue: () => perPage > 0,
@@ -64340,7 +64356,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-              import_components128.__experimentalToolsPanelItem,
+              import_components127.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n206._x)(
                   "Offset",
@@ -64358,7 +64374,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-              import_components128.__experimentalToolsPanelItem,
+              import_components127.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n206.__)("Max pages to show"),
                 hasValue: () => pages > 0,
@@ -64370,7 +64386,7 @@ ${text}
         }
       ),
       !inherit && showFiltersPanel && /* @__PURE__ */ (0, import_jsx_runtime411.jsxs)(
-        import_components128.__experimentalToolsPanel,
+        import_components127.__experimentalToolsPanel,
         {
           className: "block-library-query-toolspanel__filters",
           label: (0, import_i18n206.__)("Filters"),
@@ -64388,7 +64404,7 @@ ${text}
           dropdownMenuProps,
           children: [
             showTaxControl && /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-              import_components128.__experimentalToolsPanelItem,
+              import_components127.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n206.__)("Taxonomies"),
                 hasValue: () => Object.values(taxQuery || {}).some(
@@ -64407,7 +64423,7 @@ ${text}
               }
             ),
             showAuthorControl && /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-              import_components128.__experimentalToolsPanelItem,
+              import_components127.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!authorIds,
                 label: (0, import_i18n206.__)("Authors"),
@@ -64422,7 +64438,7 @@ ${text}
               }
             ),
             showSearchControl && /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-              import_components128.__experimentalToolsPanelItem,
+              import_components127.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!querySearch,
                 label: (0, import_i18n206.__)("Keyword"),
@@ -64431,7 +64447,7 @@ ${text}
                   setQuerySearch("");
                 },
                 children: /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-                  import_components128.TextControl,
+                  import_components127.TextControl,
                   {
                     label: (0, import_i18n206.__)("Keyword"),
                     value: querySearch,
@@ -64444,7 +64460,7 @@ ${text}
               }
             ),
             showParentControl && /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-              import_components128.__experimentalToolsPanelItem,
+              import_components127.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!parents?.length,
                 label: (0, import_i18n206.__)("Parents"),
@@ -64460,7 +64476,7 @@ ${text}
               }
             ),
             showFormatControl && /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-              import_components128.__experimentalToolsPanelItem,
+              import_components127.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!format3?.length,
                 label: (0, import_i18n206.__)("Formats"),
@@ -64475,13 +64491,13 @@ ${text}
               }
             ),
             showExcludeCurrentControl && /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-              import_components128.__experimentalToolsPanelItem,
+              import_components127.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n206.__)("Exclude"),
                 hasValue: () => excludeCurrent !== null,
                 onDeselect: () => setQuery({ excludeCurrent: null }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime411.jsx)(
-                  import_components128.ToggleControl,
+                  import_components127.ToggleControl,
                   {
                     label: (0, import_i18n206.__)("Exclude current"),
                     help: (0, import_i18n206.sprintf)(
@@ -64508,7 +64524,7 @@ ${text}
   }
 
   // packages/block-library/build-module/query/edit/enhanced-pagination-modal.mjs
-  var import_components129 = __toESM(require_components(), 1);
+  var import_components128 = __toESM(require_components(), 1);
   var import_i18n207 = __toESM(require_i18n(), 1);
   var import_element121 = __toESM(require_element(), 1);
   var import_data126 = __toESM(require_data(), 1);
@@ -64544,7 +64560,7 @@ ${text}
       'If you still want to prevent full page reloads, remove that block, then disable "Reload full page" again in the Query Block settings.'
     );
     return isOpen && /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(
-      import_components129.Modal,
+      import_components128.Modal,
       {
         title: (0, import_i18n207.__)("Query block: Reload full page enabled"),
         className: "wp-block-query__enhanced-pagination-modal",
@@ -64555,10 +64571,10 @@ ${text}
         focusOnMount: "firstElement",
         isDismissible: false,
         onRequestClose: closeModal,
-        children: /* @__PURE__ */ (0, import_jsx_runtime412.jsxs)(import_components129.__experimentalVStack, { alignment: "right", spacing: 5, children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime412.jsxs)(import_components128.__experimentalVStack, { alignment: "right", spacing: 5, children: [
           /* @__PURE__ */ (0, import_jsx_runtime412.jsx)("span", { id: modalDescriptionId, children: notice }),
           /* @__PURE__ */ (0, import_jsx_runtime412.jsx)(
-            import_components129.Button,
+            import_components128.Button,
             {
               __next40pxDefaultSize: true,
               variant: "primary",
@@ -64572,7 +64588,7 @@ ${text}
   }
 
   // packages/block-library/build-module/query/edit/query-toolbar.mjs
-  var import_components131 = __toESM(require_components(), 1);
+  var import_components130 = __toESM(require_components(), 1);
   var import_i18n209 = __toESM(require_i18n(), 1);
   var import_data128 = __toESM(require_data(), 1);
   var import_block_editor216 = __toESM(require_block_editor(), 1);
@@ -64580,7 +64596,7 @@ ${text}
   // packages/block-library/build-module/query/edit/pattern-selection.mjs
   var import_element122 = __toESM(require_element(), 1);
   var import_data127 = __toESM(require_data(), 1);
-  var import_components130 = __toESM(require_components(), 1);
+  var import_components129 = __toESM(require_components(), 1);
   var import_block_editor215 = __toESM(require_block_editor(), 1);
   var import_i18n208 = __toESM(require_i18n(), 1);
   var import_jsx_runtime413 = __toESM(require_jsx_runtime(), 1);
@@ -64590,7 +64606,7 @@ ${text}
     setIsPatternSelectionModalOpen
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
-      import_components130.Modal,
+      import_components129.Modal,
       {
         overlayClassName: "block-library-query-pattern__selection-modal",
         title: (0, import_i18n208.__)("Choose a pattern"),
@@ -64643,7 +64659,7 @@ ${text}
     };
     return /* @__PURE__ */ (0, import_jsx_runtime413.jsxs)("div", { className: "block-library-query-pattern__selection-content", children: [
       showSearch && /* @__PURE__ */ (0, import_jsx_runtime413.jsx)("div", { className: "block-library-query-pattern__selection-search", children: /* @__PURE__ */ (0, import_jsx_runtime413.jsx)(
-        import_components130.SearchControl,
+        import_components129.SearchControl,
         {
           onChange: setSearchValue,
           value: searchValue,
@@ -64670,14 +64686,14 @@ ${text}
       return null;
     }
     const buttonLabel = hasInnerBlocks ? (0, import_i18n209.__)("Change design") : (0, import_i18n209.__)("Choose pattern");
-    return /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(import_block_editor216.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(import_components131.__experimentalDropdownContentWrapper, { children: /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
-      import_components131.Dropdown,
+    return /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(import_block_editor216.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(import_components130.__experimentalDropdownContentWrapper, { children: /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
+      import_components130.Dropdown,
       {
         contentClassName: "block-editor-block-settings-menu__popover",
         focusOnMount: "firstElement",
         expandOnMobile: true,
         renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime414.jsx)(
-          import_components131.ToolbarButton,
+          import_components130.ToolbarButton,
           {
             "aria-haspopup": "true",
             "aria-expanded": isOpen,
@@ -64851,7 +64867,7 @@ ${text}
   var import_blocks98 = __toESM(require_blocks(), 1);
   var import_element124 = __toESM(require_element(), 1);
   var import_block_editor218 = __toESM(require_block_editor(), 1);
-  var import_components132 = __toESM(require_components(), 1);
+  var import_components131 = __toESM(require_components(), 1);
   var import_i18n211 = __toESM(require_i18n(), 1);
   var import_compose52 = __toESM(require_compose(), 1);
   var import_jsx_runtime416 = __toESM(require_jsx_runtime(), 1);
@@ -64909,7 +64925,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime416.jsxs)(
-        import_components132.Placeholder,
+        import_components131.Placeholder,
         {
           className: "block-editor-media-placeholder",
           icon: !isSmallContainer && icon4,
@@ -64918,7 +64934,7 @@ ${text}
           withIllustration: isSmallContainer,
           children: [
             !!hasPatterns && !isSmallContainer && /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(
-              import_components132.Button,
+              import_components131.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "primary",
@@ -64927,7 +64943,7 @@ ${text}
               }
             ),
             !isSmallContainer && /* @__PURE__ */ (0, import_jsx_runtime416.jsx)(
-              import_components132.Button,
+              import_components131.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "secondary",
@@ -65010,12 +65026,12 @@ ${text}
   var import_i18n212 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/query/icons.mjs
-  var import_components133 = __toESM(require_components(), 1);
+  var import_components132 = __toESM(require_components(), 1);
   var import_jsx_runtime419 = __toESM(require_jsx_runtime(), 1);
-  var titleDate = /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components133.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components133.Path, { d: "M41 9H7v3h34V9zm-22 5H7v1h12v-1zM7 26h12v1H7v-1zm34-5H7v3h34v-3zM7 38h12v1H7v-1zm34-5H7v3h34v-3z" }) });
-  var titleExcerpt = /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components133.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components133.Path, { d: "M41 9H7v3h34V9zm-4 5H7v1h30v-1zm4 3H7v1h34v-1zM7 20h30v1H7v-1zm0 12h30v1H7v-1zm34 3H7v1h34v-1zM7 38h30v1H7v-1zm34-11H7v3h34v-3z" }) });
-  var titleDateExcerpt = /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components133.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components133.Path, { d: "M41 9H7v3h34V9zm-22 5H7v1h12v-1zm22 3H7v1h34v-1zM7 20h34v1H7v-1zm0 12h12v1H7v-1zm34 3H7v1h34v-1zM7 38h34v1H7v-1zm34-11H7v3h34v-3z" }) });
-  var imageDateTitle = /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components133.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components133.Path, { d: "M7 9h34v6H7V9zm12 8H7v1h12v-1zm18 3H7v1h30v-1zm0 18H7v1h30v-1zM7 35h12v1H7v-1zm34-8H7v6h34v-6z" }) });
+  var titleDate = /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components132.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components132.Path, { d: "M41 9H7v3h34V9zm-22 5H7v1h12v-1zM7 26h12v1H7v-1zm34-5H7v3h34v-3zM7 38h12v1H7v-1zm34-5H7v3h34v-3z" }) });
+  var titleExcerpt = /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components132.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components132.Path, { d: "M41 9H7v3h34V9zm-4 5H7v1h30v-1zm4 3H7v1h34v-1zM7 20h30v1H7v-1zm0 12h30v1H7v-1zm34 3H7v1h34v-1zM7 38h30v1H7v-1zm34-11H7v3h34v-3z" }) });
+  var titleDateExcerpt = /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components132.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components132.Path, { d: "M41 9H7v3h34V9zm-22 5H7v1h12v-1zm22 3H7v1h34v-1zM7 20h34v1H7v-1zm0 12h12v1H7v-1zm34 3H7v1h34v-1zM7 38h34v1H7v-1zm34-11H7v3h34v-3z" }) });
+  var imageDateTitle = /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components132.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime419.jsx)(import_components132.Path, { d: "M7 9h34v6H7V9zm12 8H7v1h12v-1zm18 3H7v1h30v-1zm0 18H7v1h30v-1zM7 35h12v1H7v-1zm34-8H7v6h34v-6z" }) });
 
   // packages/block-library/build-module/query/variations.mjs
   var postDate = [
@@ -65843,16 +65859,16 @@ ${text}
   var import_i18n216 = __toESM(require_i18n(), 1);
   var import_block_editor224 = __toESM(require_block_editor(), 1);
   var import_data132 = __toESM(require_data(), 1);
-  var import_components136 = __toESM(require_components(), 1);
+  var import_components135 = __toESM(require_components(), 1);
   var import_element126 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/query-pagination/query-pagination-arrow-controls.mjs
   var import_i18n214 = __toESM(require_i18n(), 1);
-  var import_components134 = __toESM(require_components(), 1);
+  var import_components133 = __toESM(require_components(), 1);
   var import_jsx_runtime423 = __toESM(require_jsx_runtime(), 1);
   function QueryPaginationArrowControls({ value, onChange }) {
     return /* @__PURE__ */ (0, import_jsx_runtime423.jsxs)(
-      import_components134.__experimentalToggleGroupControl,
+      import_components133.__experimentalToggleGroupControl,
       {
         label: (0, import_i18n214.__)("Arrow"),
         value,
@@ -65863,7 +65879,7 @@ ${text}
         isBlock: true,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
-            import_components134.__experimentalToggleGroupControlOption,
+            import_components133.__experimentalToggleGroupControlOption,
             {
               value: "none",
               label: (0, import_i18n214._x)(
@@ -65873,7 +65889,7 @@ ${text}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
-            import_components134.__experimentalToggleGroupControlOption,
+            import_components133.__experimentalToggleGroupControlOption,
             {
               value: "arrow",
               label: (0, import_i18n214._x)(
@@ -65883,7 +65899,7 @@ ${text}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
-            import_components134.__experimentalToggleGroupControlOption,
+            import_components133.__experimentalToggleGroupControlOption,
             {
               value: "chevron",
               label: (0, import_i18n214._x)(
@@ -65899,11 +65915,11 @@ ${text}
 
   // packages/block-library/build-module/query-pagination/query-pagination-label-control.mjs
   var import_i18n215 = __toESM(require_i18n(), 1);
-  var import_components135 = __toESM(require_components(), 1);
+  var import_components134 = __toESM(require_components(), 1);
   var import_jsx_runtime424 = __toESM(require_jsx_runtime(), 1);
   function QueryPaginationLabelControl({ value, onChange }) {
     return /* @__PURE__ */ (0, import_jsx_runtime424.jsx)(
-      import_components135.ToggleControl,
+      import_components134.ToggleControl,
       {
         label: (0, import_i18n215.__)("Show label text"),
         help: (0, import_i18n215.__)('Make label text visible, e.g. "Next Page".'),
@@ -65950,7 +65966,7 @@ ${text}
     ]);
     return /* @__PURE__ */ (0, import_jsx_runtime425.jsxs)(import_jsx_runtime425.Fragment, { children: [
       hasNextPreviousBlocks && /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(import_block_editor224.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime425.jsxs)(
-        import_components136.__experimentalToolsPanel,
+        import_components135.__experimentalToolsPanel,
         {
           label: (0, import_i18n216.__)("Settings"),
           resetAll: () => {
@@ -65962,7 +65978,7 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(
-              import_components136.__experimentalToolsPanelItem,
+              import_components135.__experimentalToolsPanelItem,
               {
                 hasValue: () => paginationArrow !== "none",
                 label: (0, import_i18n216.__)("Pagination arrow"),
@@ -65980,7 +65996,7 @@ ${text}
               }
             ),
             paginationArrow !== "none" && /* @__PURE__ */ (0, import_jsx_runtime425.jsx)(
-              import_components136.__experimentalToolsPanelItem,
+              import_components135.__experimentalToolsPanelItem,
               {
                 hasValue: () => !showLabel,
                 label: (0, import_i18n216.__)("Show text"),
@@ -66215,7 +66231,7 @@ ${text}
   // packages/block-library/build-module/query-pagination-numbers/edit.mjs
   var import_i18n218 = __toESM(require_i18n(), 1);
   var import_block_editor228 = __toESM(require_block_editor(), 1);
-  var import_components137 = __toESM(require_components(), 1);
+  var import_components136 = __toESM(require_components(), 1);
   var import_jsx_runtime429 = __toESM(require_jsx_runtime(), 1);
   var createPaginationItem = (content, Tag = "a", extraClass = "") => /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(Tag, { className: `page-numbers ${extraClass}`, children: content }, content);
   var previewPaginationNumbers = (midSize) => {
@@ -66244,20 +66260,20 @@ ${text}
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime429.jsxs)(import_jsx_runtime429.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(import_block_editor228.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
-        import_components137.__experimentalToolsPanel,
+        import_components136.__experimentalToolsPanel,
         {
           label: (0, import_i18n218.__)("Settings"),
           resetAll: () => setAttributes({ midSize: 2 }),
           dropdownMenuProps,
           children: /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
-            import_components137.__experimentalToolsPanelItem,
+            import_components136.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n218.__)("Number of links"),
               hasValue: () => midSize !== 2,
               onDeselect: () => setAttributes({ midSize: 2 }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime429.jsx)(
-                import_components137.RangeControl,
+                import_components136.RangeControl,
                 {
                   label: (0, import_i18n218.__)("Number of links"),
                   help: (0, import_i18n218.__)(
@@ -66500,7 +66516,7 @@ ${text}
 
   // packages/block-library/build-module/query-title/edit.mjs
   var import_block_editor230 = __toESM(require_block_editor(), 1);
-  var import_components138 = __toESM(require_components(), 1);
+  var import_components137 = __toESM(require_components(), 1);
   var import_i18n220 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/query-title/use-archive-label.mjs
@@ -66650,7 +66666,7 @@ ${text}
       }
       titleElement = /* @__PURE__ */ (0, import_jsx_runtime431.jsxs)(import_jsx_runtime431.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(import_block_editor230.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
-          import_components138.__experimentalToolsPanel,
+          import_components137.__experimentalToolsPanel,
           {
             label: (0, import_i18n220.__)("Settings"),
             resetAll: () => setAttributes({
@@ -66658,14 +66674,14 @@ ${text}
             }),
             dropdownMenuProps,
             children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
-              import_components138.__experimentalToolsPanelItem,
+              import_components137.__experimentalToolsPanelItem,
               {
                 hasValue: () => !showPrefix,
                 label: (0, import_i18n220.__)("Show archive type in title"),
                 onDeselect: () => setAttributes({ showPrefix: true }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
-                  import_components138.ToggleControl,
+                  import_components137.ToggleControl,
                   {
                     label: (0, import_i18n220.__)("Show archive type in title"),
                     onChange: () => setAttributes({
@@ -66684,7 +66700,7 @@ ${text}
     if (type === "search") {
       titleElement = /* @__PURE__ */ (0, import_jsx_runtime431.jsxs)(import_jsx_runtime431.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(import_block_editor230.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
-          import_components138.__experimentalToolsPanel,
+          import_components137.__experimentalToolsPanel,
           {
             label: (0, import_i18n220.__)("Settings"),
             resetAll: () => setAttributes({
@@ -66692,14 +66708,14 @@ ${text}
             }),
             dropdownMenuProps,
             children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
-              import_components138.__experimentalToolsPanelItem,
+              import_components137.__experimentalToolsPanelItem,
               {
                 hasValue: () => !showSearchTerm,
                 label: (0, import_i18n220.__)("Show search term in title"),
                 onDeselect: () => setAttributes({ showSearchTerm: true }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
-                  import_components138.ToggleControl,
+                  import_components137.ToggleControl,
                   {
                     label: (0, import_i18n220.__)("Show search term in title"),
                     onChange: () => setAttributes({
@@ -66732,7 +66748,7 @@ ${text}
       }
       titleElement = /* @__PURE__ */ (0, import_jsx_runtime431.jsxs)(import_jsx_runtime431.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(import_block_editor230.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
-          import_components138.__experimentalToolsPanel,
+          import_components137.__experimentalToolsPanel,
           {
             label: (0, import_i18n220.__)("Settings"),
             resetAll: () => setAttributes({
@@ -66740,14 +66756,14 @@ ${text}
             }),
             dropdownMenuProps,
             children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
-              import_components138.__experimentalToolsPanelItem,
+              import_components137.__experimentalToolsPanelItem,
               {
                 hasValue: () => !showPrefix,
                 label: (0, import_i18n220.__)("Show post type label"),
                 onDeselect: () => setAttributes({ showPrefix: true }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
-                  import_components138.ToggleControl,
+                  import_components137.ToggleControl,
                   {
                     label: (0, import_i18n220.__)("Show post type label"),
                     onChange: () => setAttributes({
@@ -67019,14 +67035,14 @@ ${text}
 
   // packages/block-library/build-module/query-total/edit.mjs
   var import_block_editor231 = __toESM(require_block_editor(), 1);
-  var import_components140 = __toESM(require_components(), 1);
+  var import_components139 = __toESM(require_components(), 1);
   var import_i18n222 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/query-total/icons.mjs
-  var import_components139 = __toESM(require_components(), 1);
+  var import_components138 = __toESM(require_components(), 1);
   var import_jsx_runtime432 = __toESM(require_jsx_runtime(), 1);
   var resultsFound = /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
-    import_components139.SVG,
+    import_components138.SVG,
     {
       xmlns: "http://www.w3.org/2000/svg",
       viewBox: "0 0 24 24",
@@ -67034,11 +67050,11 @@ ${text}
       height: "24",
       "aria-hidden": "true",
       focusable: "false",
-      children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components139.Path, { d: "M4 11h4v2H4v-2zm6 0h6v2h-6v-2zm8 0h2v2h-2v-2z" })
+      children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components138.Path, { d: "M4 11h4v2H4v-2zm6 0h6v2h-6v-2zm8 0h2v2h-2v-2z" })
     }
   );
   var displayingResults = /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
-    import_components139.SVG,
+    import_components138.SVG,
     {
       xmlns: "http://www.w3.org/2000/svg",
       viewBox: "0 0 24 24",
@@ -67046,11 +67062,11 @@ ${text}
       height: "24",
       "aria-hidden": "true",
       focusable: "false",
-      children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components139.Path, { d: "M4 13h2v-2H4v2zm4 0h10v-2H8v2zm12 0h2v-2h-2v2z" })
+      children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components138.Path, { d: "M4 13h2v-2H4v2zm4 0h10v-2H8v2zm12 0h2v-2h-2v2z" })
     }
   );
   var queryTotal = /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(
-    import_components139.SVG,
+    import_components138.SVG,
     {
       xmlns: "http://www.w3.org/2000/svg",
       viewBox: "0 0 24 24",
@@ -67058,7 +67074,7 @@ ${text}
       height: "24",
       "aria-hidden": "true",
       focusable: "false",
-      children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components139.Path, { d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v12Zm-7-6-4.1 5h8.8v-3h-1.5v1.5h-4.2l2.9-3.5-2.9-3.5h4.2V10h1.5V7H7.4l4.1 5Z" })
+      children: /* @__PURE__ */ (0, import_jsx_runtime432.jsx)(import_components138.Path, { d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v12Zm-7-6-4.1 5h8.8v-3h-1.5v1.5h-4.2l2.9-3.5-2.9-3.5h4.2V10h1.5V7H7.4l4.1 5Z" })
     }
   );
 
@@ -67095,8 +67111,8 @@ ${text}
         }
       }
     ];
-    const controls = /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(import_block_editor231.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(import_components140.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(
-      import_components140.ToolbarDropdownMenu,
+    const controls = /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(import_block_editor231.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(import_components139.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime433.jsx)(
+      import_components139.ToolbarDropdownMenu,
       {
         icon: getButtonPositionIcon(),
         label: (0, import_i18n222.__)("Change display type"),
@@ -67417,7 +67433,7 @@ ${text}
   // packages/block-library/build-module/quote/edit.mjs
   var import_i18n223 = __toESM(require_i18n(), 1);
   var import_block_editor233 = __toESM(require_block_editor(), 1);
-  var import_components141 = __toESM(require_components(), 1);
+  var import_components140 = __toESM(require_components(), 1);
   var import_data135 = __toESM(require_data(), 1);
   var import_element127 = __toESM(require_element(), 1);
   var import_deprecated49 = __toESM(require_deprecated(), 1);
@@ -67484,7 +67500,7 @@ ${text}
           }
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime435.jsxs)(import_components141.BlockQuotation, { ...innerBlocksProps, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime435.jsxs)(import_components140.BlockQuotation, { ...innerBlocksProps, children: [
         innerBlocksProps.children,
         /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
           Caption,
@@ -67909,7 +67925,7 @@ ${text}
   var import_data136 = __toESM(require_data(), 1);
   var import_element128 = __toESM(require_element(), 1);
   var import_core_data81 = __toESM(require_core_data(), 1);
-  var import_components142 = __toESM(require_components(), 1);
+  var import_components141 = __toESM(require_components(), 1);
   var import_i18n225 = __toESM(require_i18n(), 1);
   var import_block_editor236 = __toESM(require_block_editor(), 1);
   var import_patterns = __toESM(require_patterns(), 1);
@@ -67967,9 +67983,9 @@ ${text}
       [recordId]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime437.jsxs)(import_jsx_runtime437.Fragment, { children: [
-      canUserEdit && !!handleEditOriginal && /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_block_editor236.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_components142.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_components142.ToolbarButton, { onClick: handleEditOriginal, children: (0, import_i18n225.__)("Edit original") }) }) }),
-      canOverrideBlocks && /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_block_editor236.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_components142.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(
-        import_components142.ToolbarButton,
+      canUserEdit && !!handleEditOriginal && /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_block_editor236.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_components141.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_components141.ToolbarButton, { onClick: handleEditOriginal, children: (0, import_i18n225.__)("Edit original") }) }) }),
+      canOverrideBlocks && /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_block_editor236.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_components141.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(
+        import_components141.ToolbarButton,
         {
           onClick: resetContent,
           disabled: !hasContent,
@@ -68052,7 +68068,7 @@ ${text}
       children = /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_block_editor236.Warning, { children: (0, import_i18n225.__)("Block has been deleted or is unavailable.") });
     }
     if (!hasResolved) {
-      children = /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_components142.Placeholder, { children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_components142.Spinner, {}) });
+      children = /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_components141.Placeholder, { children: /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(import_components141.Spinner, {}) });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime437.jsxs)(import_jsx_runtime437.Fragment, { children: [
       hasResolved && !isMissing && /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(
@@ -68273,7 +68289,7 @@ ${text}
 
   // packages/block-library/build-module/read-more/edit.mjs
   var import_block_editor237 = __toESM(require_block_editor(), 1);
-  var import_components143 = __toESM(require_components(), 1);
+  var import_components142 = __toESM(require_components(), 1);
   var import_blocks103 = __toESM(require_blocks(), 1);
   var import_i18n226 = __toESM(require_i18n(), 1);
   var import_jsx_runtime438 = __toESM(require_jsx_runtime(), 1);
@@ -68286,20 +68302,20 @@ ${text}
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime438.jsxs)(import_jsx_runtime438.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(import_block_editor237.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(
-        import_components143.__experimentalToolsPanel,
+        import_components142.__experimentalToolsPanel,
         {
           label: (0, import_i18n226.__)("Settings"),
           resetAll: () => setAttributes({ linkTarget: "_self" }),
           dropdownMenuProps,
           children: /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(
-            import_components143.__experimentalToolsPanelItem,
+            import_components142.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n226.__)("Open in new tab"),
               isShownByDefault: true,
               hasValue: () => linkTarget !== "_self",
               onDeselect: () => setAttributes({ linkTarget: "_self" }),
               children: /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(
-                import_components143.ToggleControl,
+                import_components142.ToggleControl,
                 {
                   label: (0, import_i18n226.__)("Open in new tab"),
                   onChange: (value) => setAttributes({
@@ -68439,7 +68455,7 @@ ${text}
 
   // packages/block-library/build-module/rss/edit.mjs
   var import_block_editor238 = __toESM(require_block_editor(), 1);
-  var import_components144 = __toESM(require_components(), 1);
+  var import_components143 = __toESM(require_components(), 1);
   var import_element129 = __toESM(require_element(), 1);
   var import_i18n228 = __toESM(require_i18n(), 1);
   var import_url21 = __toESM(require_url(), 1);
@@ -68486,7 +68502,7 @@ ${text}
     const label = (0, import_i18n228.__)("RSS URL");
     if (isEditing) {
       return /* @__PURE__ */ (0, import_jsx_runtime439.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-        import_components144.Placeholder,
+        import_components143.Placeholder,
         {
           icon: rss_default,
           label,
@@ -68500,7 +68516,7 @@ ${text}
               className: "wp-block-rss__placeholder-form",
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-                  import_components144.__experimentalInputControl,
+                  import_components143.__experimentalInputControl,
                   {
                     label,
                     type: "url",
@@ -68512,7 +68528,7 @@ ${text}
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-                  import_components144.Button,
+                  import_components143.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "primary",
@@ -68546,9 +68562,9 @@ ${text}
       }
     ];
     return /* @__PURE__ */ (0, import_jsx_runtime439.jsxs)(import_jsx_runtime439.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(import_block_editor238.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(import_components144.ToolbarGroup, { controls: toolbarControls }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(import_block_editor238.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(import_components143.ToolbarGroup, { controls: toolbarControls }) }),
       /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(import_block_editor238.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime439.jsxs)(
-        import_components144.__experimentalToolsPanel,
+        import_components143.__experimentalToolsPanel,
         {
           label: (0, import_i18n228.__)("Settings"),
           resetAll: () => {
@@ -68565,14 +68581,14 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-              import_components144.__experimentalToolsPanelItem,
+              import_components143.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n228.__)("Number of items"),
                 hasValue: () => itemsToShow !== 5,
                 onDeselect: () => setAttributes({ itemsToShow: 5 }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-                  import_components144.RangeControl,
+                  import_components143.RangeControl,
                   {
                     label: (0, import_i18n228.__)("Number of items"),
                     value: itemsToShow,
@@ -68585,14 +68601,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-              import_components144.__experimentalToolsPanelItem,
+              import_components143.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n228.__)("Display author"),
                 hasValue: () => !!displayAuthor,
                 onDeselect: () => setAttributes({ displayAuthor: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-                  import_components144.ToggleControl,
+                  import_components143.ToggleControl,
                   {
                     label: (0, import_i18n228.__)("Display author"),
                     checked: displayAuthor,
@@ -68602,14 +68618,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-              import_components144.__experimentalToolsPanelItem,
+              import_components143.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n228.__)("Display date"),
                 hasValue: () => !!displayDate,
                 onDeselect: () => setAttributes({ displayDate: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-                  import_components144.ToggleControl,
+                  import_components143.ToggleControl,
                   {
                     label: (0, import_i18n228.__)("Display date"),
                     checked: displayDate,
@@ -68619,14 +68635,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-              import_components144.__experimentalToolsPanelItem,
+              import_components143.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n228.__)("Display excerpt"),
                 hasValue: () => !!displayExcerpt,
                 onDeselect: () => setAttributes({ displayExcerpt: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-                  import_components144.ToggleControl,
+                  import_components143.ToggleControl,
                   {
                     label: (0, import_i18n228.__)("Display excerpt"),
                     checked: displayExcerpt,
@@ -68636,14 +68652,14 @@ ${text}
               }
             ),
             displayExcerpt && /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-              import_components144.__experimentalToolsPanelItem,
+              import_components143.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n228.__)("Max number of words in excerpt"),
                 hasValue: () => excerptLength !== 55,
                 onDeselect: () => setAttributes({ excerptLength: 55 }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-                  import_components144.RangeControl,
+                  import_components143.RangeControl,
                   {
                     label: (0, import_i18n228.__)("Max number of words in excerpt"),
                     value: excerptLength,
@@ -68656,14 +68672,14 @@ ${text}
               }
             ),
             blockLayout === "grid" && /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-              import_components144.__experimentalToolsPanelItem,
+              import_components143.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n228.__)("Columns"),
                 hasValue: () => columns !== 2,
                 onDeselect: () => setAttributes({ columns: 2 }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-                  import_components144.RangeControl,
+                  import_components143.RangeControl,
                   {
                     label: (0, import_i18n228.__)("Columns"),
                     value: columns,
@@ -68676,14 +68692,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-              import_components144.__experimentalToolsPanelItem,
+              import_components143.__experimentalToolsPanelItem,
               {
                 label: (0, import_i18n228.__)("Open links in new tab"),
                 hasValue: () => !!openInNewTab,
                 onDeselect: () => setAttributes({ openInNewTab: false }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-                  import_components144.ToggleControl,
+                  import_components143.ToggleControl,
                   {
                     label: (0, import_i18n228.__)("Open links in new tab"),
                     checked: openInNewTab,
@@ -68696,7 +68712,7 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(import_block_editor238.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(
-        import_components144.TextControl,
+        import_components143.TextControl,
         {
           label: (0, import_i18n228.__)("Link relation"),
           help: (0, import_element129.createInterpolateElement)(
@@ -68704,14 +68720,14 @@ ${text}
               "The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document."
             ),
             {
-              a: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(import_components144.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
+              a: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(import_components143.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
             }
           ),
           value: rel || "",
           onChange: (value) => setAttributes({ rel: value })
         }
       ) }),
-      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime439.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(import_components144.Spinner, {}) }),
+      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime439.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)(import_components143.Spinner, {}) }),
       status === "error" && /* @__PURE__ */ (0, import_jsx_runtime439.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime439.jsx)("p", { children: (0, import_i18n228.sprintf)(
         /* translators: %s: error message returned when rendering the block. */
         (0, import_i18n228.__)("Error: %s"),
@@ -68851,7 +68867,7 @@ ${text}
   var import_block_editor239 = __toESM(require_block_editor(), 1);
   var import_data138 = __toESM(require_data(), 1);
   var import_element130 = __toESM(require_element(), 1);
-  var import_components145 = __toESM(require_components(), 1);
+  var import_components144 = __toESM(require_components(), 1);
   var import_compose54 = __toESM(require_compose(), 1);
   var import_i18n229 = __toESM(require_i18n(), 1);
   var import_dom19 = __toESM(require_dom(), 1);
@@ -68947,7 +68963,7 @@ ${text}
         wideSize: layout?.wideSize
       }
     });
-    const unitControlInstanceId = (0, import_compose54.useInstanceId)(import_components145.__experimentalUnitControl);
+    const unitControlInstanceId = (0, import_compose54.useInstanceId)(import_components144.__experimentalUnitControl);
     const unitControlInputId = `wp-block-search__width-${unitControlInstanceId}`;
     const isButtonPositionInside = "button-inside" === buttonPosition;
     const isButtonPositionOutside = "button-outside" === buttonPosition;
@@ -68956,7 +68972,7 @@ ${text}
     const isSearchFieldHidden = hasOnlyButton && !isSelected;
     const searchFieldRef = (0, import_element130.useRef)();
     const buttonRef = (0, import_element130.useRef)();
-    const units = (0, import_components145.__experimentalUseCustomUnits)({
+    const units = (0, import_components144.__experimentalUseCustomUnits)({
       availableUnits: ["%", "px"],
       defaultValues: { "%": PC_WIDTH_DEFAULT, px: PX_WIDTH_DEFAULT }
     });
@@ -69082,7 +69098,7 @@ ${text}
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const controls = /* @__PURE__ */ (0, import_jsx_runtime440.jsxs)(import_jsx_runtime440.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(import_block_editor239.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime440.jsxs)(
-        import_components145.__experimentalToolsPanel,
+        import_components144.__experimentalToolsPanel,
         {
           label: (0, import_i18n229.__)("Settings"),
           resetAll: () => {
@@ -69097,7 +69113,7 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
-              import_components145.__experimentalToolsPanelItem,
+              import_components144.__experimentalToolsPanelItem,
               {
                 hasValue: () => !showLabel,
                 label: (0, import_i18n229.__)("Show label"),
@@ -69108,7 +69124,7 @@ ${text}
                 },
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
-                  import_components145.ToggleControl,
+                  import_components144.ToggleControl,
                   {
                     checked: showLabel,
                     label: (0, import_i18n229.__)("Show label"),
@@ -69120,7 +69136,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
-              import_components145.__experimentalToolsPanelItem,
+              import_components144.__experimentalToolsPanelItem,
               {
                 hasValue: () => buttonPosition !== "button-outside",
                 label: (0, import_i18n229.__)("Button position"),
@@ -69131,7 +69147,7 @@ ${text}
                 },
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
-                  import_components145.SelectControl,
+                  import_components144.SelectControl,
                   {
                     value: buttonPosition,
                     label: (0, import_i18n229.__)("Button position"),
@@ -69146,7 +69162,7 @@ ${text}
               }
             ),
             buttonPosition !== "no-button" && /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
-              import_components145.__experimentalToolsPanelItem,
+              import_components144.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!buttonUseIcon,
                 label: (0, import_i18n229.__)("Use button with icon"),
@@ -69157,7 +69173,7 @@ ${text}
                 },
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
-                  import_components145.ToggleControl,
+                  import_components144.ToggleControl,
                   {
                     checked: buttonUseIcon,
                     label: (0, import_i18n229.__)("Use button with icon"),
@@ -69169,7 +69185,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
-              import_components145.__experimentalToolsPanelItem,
+              import_components144.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!width,
                 label: (0, import_i18n229.__)("Width"),
@@ -69180,9 +69196,9 @@ ${text}
                   });
                 },
                 isShownByDefault: true,
-                children: /* @__PURE__ */ (0, import_jsx_runtime440.jsxs)(import_components145.__experimentalVStack, { children: [
+                children: /* @__PURE__ */ (0, import_jsx_runtime440.jsxs)(import_components144.__experimentalVStack, { children: [
                   /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
-                    import_components145.__experimentalUnitControl,
+                    import_components144.__experimentalUnitControl,
                     {
                       label: (0, import_i18n229.__)("Width"),
                       id: unitControlInputId,
@@ -69207,7 +69223,7 @@ ${text}
                     }
                   ),
                   /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
-                    import_components145.__experimentalToggleGroupControl,
+                    import_components144.__experimentalToggleGroupControl,
                     {
                       label: (0, import_i18n229.__)("Percentage Width"),
                       value: PERCENTAGE_WIDTHS.includes(width) && widthUnit === "%" ? width : void 0,
@@ -69221,7 +69237,7 @@ ${text}
                       isBlock: true,
                       children: PERCENTAGE_WIDTHS.map((widthValue) => {
                         return /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
-                          import_components145.__experimentalToggleGroupControlOption,
+                          import_components144.__experimentalToggleGroupControlOption,
                           {
                             value: widthValue,
                             label: (0, import_i18n229.sprintf)(
@@ -69242,7 +69258,7 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(import_block_editor239.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime440.jsx)(
-        import_components145.SelectControl,
+        import_components144.SelectControl,
         {
           label: (0, import_i18n229.__)("HTML element"),
           value: tagName ?? "",
@@ -69326,7 +69342,7 @@ ${text}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime440.jsxs)(
-          import_components145.ResizableBox,
+          import_components144.ResizableBox,
           {
             size: {
               width: width === void 0 ? "auto" : `${width}${widthUnit}`,
@@ -69430,7 +69446,7 @@ ${text}
 
   // packages/block-library/build-module/separator/edit.mjs
   var import_block_editor240 = __toESM(require_block_editor(), 1);
-  var import_components146 = __toESM(require_components(), 1);
+  var import_components145 = __toESM(require_components(), 1);
   var import_i18n232 = __toESM(require_i18n(), 1);
 
   // packages/block-library/build-module/separator/use-deprecated-opacity.mjs
@@ -69456,7 +69472,7 @@ ${text}
   var import_jsx_runtime441 = __toESM(require_jsx_runtime(), 1);
   var HtmlElementControl = ({ tagName, setAttributes }) => {
     return /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(
-      import_components146.SelectControl,
+      import_components145.SelectControl,
       {
         label: (0, import_i18n232.__)("HTML element"),
         value: tagName,
@@ -69493,7 +69509,7 @@ ${text}
       color: currentColor,
       backgroundColor: currentColor
     };
-    const Wrapper = tagName === "hr" ? import_components146.HorizontalRule : tagName;
+    const Wrapper = tagName === "hr" ? import_components145.HorizontalRule : tagName;
     return /* @__PURE__ */ (0, import_jsx_runtime441.jsxs)(import_jsx_runtime441.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(import_block_editor240.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime441.jsx)(
         HtmlElementControl,
@@ -69701,12 +69717,12 @@ ${text}
   var import_i18n233 = __toESM(require_i18n(), 1);
   var import_block_editor243 = __toESM(require_block_editor(), 1);
   var import_compose56 = __toESM(require_compose(), 1);
-  var import_components147 = __toESM(require_components(), 1);
+  var import_components146 = __toESM(require_components(), 1);
   var import_jsx_runtime444 = __toESM(require_jsx_runtime(), 1);
   function ShortcodeEdit({ attributes, setAttributes }) {
     const instanceId = (0, import_compose56.useInstanceId)(ShortcodeEdit);
     const inputId = `blocks-shortcode-input-${instanceId}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime444.jsx)("div", { ...(0, import_block_editor243.useBlockProps)(), children: /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(import_components147.Placeholder, { icon: shortcode_default, label: (0, import_i18n233.__)("Shortcode"), children: /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime444.jsx)("div", { ...(0, import_block_editor243.useBlockProps)(), children: /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(import_components146.Placeholder, { icon: shortcode_default, label: (0, import_i18n233.__)("Shortcode"), children: /* @__PURE__ */ (0, import_jsx_runtime444.jsx)(
       import_block_editor243.PlainText,
       {
         className: "blocks-shortcode__textarea",
@@ -69904,7 +69920,7 @@ ${text}
   var import_blob19 = __toESM(require_blob(), 1);
   var import_element133 = __toESM(require_element(), 1);
   var import_i18n234 = __toESM(require_i18n(), 1);
-  var import_components148 = __toESM(require_components(), 1);
+  var import_components147 = __toESM(require_components(), 1);
   var import_compose57 = __toESM(require_compose(), 1);
   var import_block_editor244 = __toESM(require_block_editor(), 1);
   var import_data139 = __toESM(require_data(), 1);
@@ -69989,7 +70005,7 @@ ${text}
           }
         }
       ),
-      (0, import_blob19.isBlobURL)(logoUrl) && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_components148.Spinner, {})
+      (0, import_blob19.isBlobURL)(logoUrl) && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_components147.Spinner, {})
     ] });
     let imgWrapper = img;
     if (isLink) {
@@ -70057,20 +70073,20 @@ ${text}
     );
     return /* @__PURE__ */ (0, import_jsx_runtime446.jsxs)(import_jsx_runtime446.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_block_editor244.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime446.jsxs)(
-        import_components148.__experimentalToolsPanel,
+        import_components147.__experimentalToolsPanel,
         {
           label: (0, import_i18n234.__)("Settings"),
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-              import_components148.__experimentalToolsPanelItem,
+              import_components147.__experimentalToolsPanelItem,
               {
                 isShownByDefault: true,
                 hasValue: () => !!width,
                 label: (0, import_i18n234.__)("Image width"),
                 onDeselect: () => setAttributes({ width: void 0 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-                  import_components148.RangeControl,
+                  import_components147.RangeControl,
                   {
                     label: (0, import_i18n234.__)("Image width"),
                     onChange: (newWidth) => setAttributes({ width: newWidth }),
@@ -70087,14 +70103,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-              import_components148.__experimentalToolsPanelItem,
+              import_components147.__experimentalToolsPanelItem,
               {
                 isShownByDefault: true,
                 hasValue: () => !isLink,
                 label: (0, import_i18n234.__)("Link image to home"),
                 onDeselect: () => setAttributes({ isLink: true }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-                  import_components148.ToggleControl,
+                  import_components147.ToggleControl,
                   {
                     label: (0, import_i18n234.__)("Link image to home"),
                     onChange: () => setAttributes({ isLink: !isLink }),
@@ -70104,14 +70120,14 @@ ${text}
               }
             ),
             isLink && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-              import_components148.__experimentalToolsPanelItem,
+              import_components147.__experimentalToolsPanelItem,
               {
                 isShownByDefault: true,
                 hasValue: () => linkTarget === "_blank",
                 label: (0, import_i18n234.__)("Open in new tab"),
                 onDeselect: () => setAttributes({ linkTarget: "_self" }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-                  import_components148.ToggleControl,
+                  import_components147.ToggleControl,
                   {
                     label: (0, import_i18n234.__)("Open in new tab"),
                     onChange: (value) => setAttributes({
@@ -70123,7 +70139,7 @@ ${text}
               }
             ),
             canUserEdit && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-              import_components148.__experimentalToolsPanelItem,
+              import_components147.__experimentalToolsPanelItem,
               {
                 isShownByDefault: true,
                 hasValue: () => !!shouldSyncIcon,
@@ -70133,7 +70149,7 @@ ${text}
                   setIcon(void 0);
                 },
                 children: /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-                  import_components148.ToggleControl,
+                  import_components147.ToggleControl,
                   {
                     label: (0, import_i18n234.__)("Use as Site Icon"),
                     onChange: (value) => {
@@ -70150,7 +70166,7 @@ ${text}
         }
       ) }),
       canEditImage && openMediaEditorModal && shouldShowCropAndDimensions && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_block_editor244.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-        import_components148.ToolbarButton,
+        import_components147.ToolbarButton,
         {
           ref: cropButtonRef,
           onClick: () => openMediaEditorModal({
@@ -70164,7 +70180,7 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-        import_components148.ResizableBox,
+        import_components147.ResizableBox,
         {
           size: {
             width: currentWidth,
@@ -70323,7 +70339,7 @@ ${text}
     let logoImage;
     const isLoading = siteLogoId === void 0 || isRequestingMediaItem;
     if (isLoading) {
-      logoImage = /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_components148.Spinner, {});
+      logoImage = /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_components147.Spinner, {});
     }
     (0, import_element133.useEffect)(() => {
       if (logoUrl && temporaryURL) {
@@ -70349,7 +70365,7 @@ ${text}
             canUserEdit
           }
         ),
-        canUserEdit && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_components148.DropZone, { onFilesDrop })
+        canUserEdit && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_components147.DropZone, { onFilesDrop })
       ] });
     }
     const placeholder2 = (content) => {
@@ -70358,7 +70374,7 @@ ${text}
         className
       );
       return /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-        import_components148.Placeholder,
+        import_components147.Placeholder,
         {
           className: placeholderClassName,
           preview: logoImage,
@@ -70376,7 +70392,7 @@ ${text}
     });
     const blockProps = (0, import_block_editor244.useBlockProps)({ className: classes });
     const mediaInspectorPanel = (canUserEdit || logoUrl) && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_block_editor244.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-      import_components148.__experimentalToolsPanel,
+      import_components147.__experimentalToolsPanel,
       {
         label: (0, import_i18n234.__)("Media"),
         dropdownMenuProps,
@@ -70399,7 +70415,7 @@ ${text}
             )
           }
         ) : /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-          import_components148.__experimentalToolsPanelItem,
+          import_components147.__experimentalToolsPanelItem,
           {
             hasValue: () => !!logoUrl,
             label: (0, import_i18n234.__)("Logo"),
@@ -70426,7 +70442,7 @@ ${text}
       controls,
       mediaInspectorPanel,
       (!!logoUrl || !!temporaryURL) && logoImage,
-      (isLoading || !temporaryURL && !logoUrl && !canUserEdit) && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_components148.Placeholder, { className: "site-logo_placeholder", withIllustration: true, children: isLoading && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)("span", { className: "components-placeholder__preview", children: /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_components148.Spinner, {}) }) }),
+      (isLoading || !temporaryURL && !logoUrl && !canUserEdit) && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_components147.Placeholder, { className: "site-logo_placeholder", withIllustration: true, children: isLoading && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)("span", { className: "components-placeholder__preview", children: /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_components147.Spinner, {}) }) }),
       !isLoading && !temporaryURL && !logoUrl && canUserEdit && /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
         import_block_editor244.MediaPlaceholder,
         {
@@ -70436,7 +70452,7 @@ ${text}
           placeholder: placeholder2,
           mediaLibraryButton: ({ open }) => {
             return /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
-              import_components148.Button,
+              import_components147.Button,
               {
                 __next40pxDefaultSize: true,
                 icon: upload_default,
@@ -70635,9 +70651,9 @@ ${text}
   }
 
   // packages/block-library/build-module/site-tagline/icon.mjs
-  var import_components149 = __toESM(require_components(), 1);
+  var import_components148 = __toESM(require_components(), 1);
   var import_jsx_runtime448 = __toESM(require_jsx_runtime(), 1);
-  var icon_default4 = /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(import_components149.SVG, { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", children: /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(import_components149.Path, { d: "M4 10.5h16V9H4v1.5ZM4 15h9v-1.5H4V15Z" }) });
+  var icon_default4 = /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(import_components148.SVG, { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", children: /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(import_components148.Path, { d: "M4 10.5h16V9H4v1.5ZM4 15h9v-1.5H4V15Z" }) });
 
   // packages/block-library/build-module/site-tagline/deprecated.mjs
   var v220 = {
@@ -70846,7 +70862,7 @@ ${text}
   var import_core_data85 = __toESM(require_core_data(), 1);
   var import_i18n236 = __toESM(require_i18n(), 1);
   var import_block_editor246 = __toESM(require_block_editor(), 1);
-  var import_components150 = __toESM(require_components(), 1);
+  var import_components149 = __toESM(require_components(), 1);
   var import_blocks109 = __toESM(require_blocks(), 1);
   var import_html_entities14 = __toESM(require_html_entities(), 1);
   var import_jsx_runtime449 = __toESM(require_jsx_runtime(), 1);
@@ -70912,7 +70928,7 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(import_block_editor246.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime449.jsxs)(
-        import_components150.__experimentalToolsPanel,
+        import_components149.__experimentalToolsPanel,
         {
           label: (0, import_i18n236.__)("Settings"),
           resetAll: () => {
@@ -70924,14 +70940,14 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
-              import_components150.__experimentalToolsPanelItem,
+              import_components149.__experimentalToolsPanelItem,
               {
                 hasValue: () => !isLink,
                 label: (0, import_i18n236.__)("Make title link to home"),
                 onDeselect: () => setAttributes({ isLink: true }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
-                  import_components150.ToggleControl,
+                  import_components149.ToggleControl,
                   {
                     label: (0, import_i18n236.__)("Make title link to home"),
                     onChange: () => setAttributes({ isLink: !isLink }),
@@ -70941,14 +70957,14 @@ ${text}
               }
             ),
             isLink && /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
-              import_components150.__experimentalToolsPanelItem,
+              import_components149.__experimentalToolsPanelItem,
               {
                 hasValue: () => linkTarget !== "_self",
                 label: (0, import_i18n236.__)("Open in new tab"),
                 onDeselect: () => setAttributes({ linkTarget: "_self" }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime449.jsx)(
-                  import_components150.ToggleControl,
+                  import_components149.ToggleControl,
                   {
                     label: (0, import_i18n236.__)("Open in new tab"),
                     onChange: (value) => setAttributes({
@@ -71147,7 +71163,7 @@ ${text}
   var import_data142 = __toESM(require_data(), 1);
   var import_block_editor247 = __toESM(require_block_editor(), 1);
   var import_element134 = __toESM(require_element(), 1);
-  var import_components151 = __toESM(require_components(), 1);
+  var import_components150 = __toESM(require_components(), 1);
   var import_compose58 = __toESM(require_compose(), 1);
   var import_i18n238 = __toESM(require_i18n(), 1);
   var import_blocks111 = __toESM(require_blocks(), 1);
@@ -71464,8 +71480,8 @@ ${text}
                   }
                   removeBlock(clientId);
                 },
-                suffix: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(import_components151.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
-                  import_components151.Button,
+                suffix: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(import_components150.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
+                  import_components150.Button,
                   {
                     icon: keyboard_return_default,
                     label: (0, import_i18n238.__)("Apply"),
@@ -71540,11 +71556,11 @@ ${text}
       // With content only mode active, the inspector is hidden, so users need another way
       // to edit this attribute.
       /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(import_block_editor247.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
-        import_components151.Dropdown,
+        import_components150.Dropdown,
         {
           popoverProps: { placement: "bottom-start" },
           renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
-            import_components151.ToolbarButton,
+            import_components150.ToolbarButton,
             {
               onClick: onToggle,
               "aria-haspopup": "true",
@@ -71553,7 +71569,7 @@ ${text}
             }
           ),
           renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
-            import_components151.TextControl,
+            import_components150.TextControl,
             {
               className: "wp-block-social-link__toolbar_content_text",
               label: (0, import_i18n238.__)("Text"),
@@ -71568,7 +71584,7 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(import_block_editor247.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
-        import_components151.__experimentalToolsPanel,
+        import_components150.__experimentalToolsPanel,
         {
           label: (0, import_i18n238.__)("Settings"),
           resetAll: () => {
@@ -71576,7 +71592,7 @@ ${text}
           },
           dropdownMenuProps,
           children: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
-            import_components151.__experimentalToolsPanelItem,
+            import_components150.__experimentalToolsPanelItem,
             {
               isShownByDefault: true,
               label: (0, import_i18n238.__)("Text"),
@@ -71585,7 +71601,7 @@ ${text}
                 setAttributes({ label: void 0 });
               },
               children: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
-                import_components151.TextControl,
+                import_components150.TextControl,
                 {
                   label: (0, import_i18n238.__)("Text"),
                   help: (0, import_i18n238.__)(
@@ -71601,7 +71617,7 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(import_block_editor247.InspectorControls, { group: "advanced", children: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
-        import_components151.TextControl,
+        import_components150.TextControl,
         {
           label: (0, import_i18n238.__)("Link relation"),
           help: (0, import_element134.createInterpolateElement)(
@@ -71609,7 +71625,7 @@ ${text}
               "The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document."
             ),
             {
-              a: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(import_components151.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
+              a: /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(import_components150.ExternalLink, { href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" })
             }
           ),
           value: rel || "",
@@ -71627,7 +71643,7 @@ ${text}
           },
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime498.jsxs)("button", { "aria-haspopup": "dialog", ...blockProps, role: "button", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(import_components151.Icon, { icon: icon4 }),
+              /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(import_components150.Icon, { icon: icon4 }),
               /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
                 "span",
                 {
@@ -72141,7 +72157,7 @@ ${text}
   // packages/block-library/build-module/social-links/edit.mjs
   var import_element135 = __toESM(require_element(), 1);
   var import_block_editor249 = __toESM(require_block_editor(), 1);
-  var import_components152 = __toESM(require_components(), 1);
+  var import_components151 = __toESM(require_components(), 1);
   var import_i18n241 = __toESM(require_i18n(), 1);
   var import_data143 = __toESM(require_data(), 1);
   var import_jsx_runtime500 = __toESM(require_jsx_runtime(), 1);
@@ -72256,7 +72272,7 @@ ${text}
     const showColorControls = colorGradientSettings.hasColorsOrGradients && !hasSelectedStyleState;
     return /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(import_jsx_runtime500.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(import_block_editor249.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime500.jsxs)(
-        import_components152.__experimentalToolsPanel,
+        import_components151.__experimentalToolsPanel,
         {
           label: (0, import_i18n241.__)("Settings"),
           resetAll: () => {
@@ -72269,14 +72285,14 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
-              import_components152.__experimentalToolsPanelItem,
+              import_components151.__experimentalToolsPanelItem,
               {
                 isShownByDefault: true,
                 hasValue: () => !!size,
                 label: (0, import_i18n241.__)("Icon size"),
                 onDeselect: () => setAttributes({ size: void 0 }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
-                  import_components152.SelectControl,
+                  import_components151.SelectControl,
                   {
                     label: (0, import_i18n241.__)("Icon size"),
                     onChange: (newSize) => {
@@ -72291,14 +72307,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
-              import_components152.__experimentalToolsPanelItem,
+              import_components151.__experimentalToolsPanelItem,
               {
                 isShownByDefault: true,
                 label: (0, import_i18n241.__)("Show text"),
                 hasValue: () => !!showLabels,
                 onDeselect: () => setAttributes({ showLabels: false }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
-                  import_components152.ToggleControl,
+                  import_components151.ToggleControl,
                   {
                     label: (0, import_i18n241.__)("Show text"),
                     checked: showLabels,
@@ -72308,14 +72324,14 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
-              import_components152.__experimentalToolsPanelItem,
+              import_components151.__experimentalToolsPanelItem,
               {
                 isShownByDefault: true,
                 label: (0, import_i18n241.__)("Open links in new tab"),
                 hasValue: () => !!openInNewTab,
                 onDeselect: () => setAttributes({ openInNewTab: false }),
                 children: /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(
-                  import_components152.ToggleControl,
+                  import_components151.ToggleControl,
                   {
                     label: (0, import_i18n241.__)("Open links in new tab"),
                     checked: openInNewTab,
@@ -72590,14 +72606,14 @@ ${text}
 
   // packages/block-library/build-module/spacer/edit.mjs
   var import_block_editor253 = __toESM(require_block_editor(), 1);
-  var import_components154 = __toESM(require_components(), 1);
+  var import_components153 = __toESM(require_components(), 1);
   var import_element136 = __toESM(require_element(), 1);
   var import_data144 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/spacer/controls.mjs
   var import_i18n242 = __toESM(require_i18n(), 1);
   var import_block_editor252 = __toESM(require_block_editor(), 1);
-  var import_components153 = __toESM(require_components(), 1);
+  var import_components152 = __toESM(require_components(), 1);
   var import_compose59 = __toESM(require_compose(), 1);
 
   // packages/block-library/build-module/spacer/constants.mjs
@@ -72607,18 +72623,18 @@ ${text}
   var import_jsx_runtime503 = __toESM(require_jsx_runtime(), 1);
   var { useSpacingSizes } = unlock(import_block_editor252.privateApis);
   function DimensionInput({ label, onChange, isResizing, value = "" }) {
-    const inputId = (0, import_compose59.useInstanceId)(import_components153.__experimentalUnitControl, "block-spacer-height-input");
+    const inputId = (0, import_compose59.useInstanceId)(import_components152.__experimentalUnitControl, "block-spacer-height-input");
     const spacingSizes = useSpacingSizes();
     const [spacingUnits] = (0, import_block_editor252.useSettings)("spacing.units");
     const availableUnits = spacingUnits ? spacingUnits.filter((unit) => unit !== "%") : ["px", "em", "rem", "vw", "vh"];
-    const units = (0, import_components153.__experimentalUseCustomUnits)({
+    const units = (0, import_components152.__experimentalUseCustomUnits)({
       availableUnits,
       defaultValues: { px: 100, em: 10, rem: 10, vw: 10, vh: 25 }
     });
-    const [parsedQuantity, parsedUnit] = (0, import_components153.__experimentalParseQuantityAndUnitFromRawValue)(value);
+    const [parsedQuantity, parsedUnit] = (0, import_components152.__experimentalParseQuantityAndUnitFromRawValue)(value);
     const computedValue = (0, import_block_editor252.isValueSpacingPreset)(value) ? value : [parsedQuantity, isResizing ? "px" : parsedUnit].join("");
     return /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(import_jsx_runtime503.Fragment, { children: spacingSizes?.length < 2 ? /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
-      import_components153.__experimentalUnitControl,
+      import_components152.__experimentalUnitControl,
       {
         id: inputId,
         isResetValueOnUnitChange: true,
@@ -72653,7 +72669,7 @@ ${text}
   }) {
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     return /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(import_block_editor252.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime503.jsxs)(
-      import_components153.__experimentalToolsPanel,
+      import_components152.__experimentalToolsPanel,
       {
         label: (0, import_i18n242.__)("Settings"),
         resetAll: () => {
@@ -72665,7 +72681,7 @@ ${text}
         dropdownMenuProps,
         children: [
           orientation === "horizontal" && /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
-            import_components153.__experimentalToolsPanelItem,
+            import_components152.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n242.__)("Width"),
               isShownByDefault: true,
@@ -72683,7 +72699,7 @@ ${text}
             }
           ),
           orientation !== "horizontal" && /* @__PURE__ */ (0, import_jsx_runtime503.jsx)(
-            import_components153.__experimentalToolsPanelItem,
+            import_components152.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n242.__)("Height"),
               isShownByDefault: true,
@@ -72725,7 +72741,7 @@ ${text}
       return `${getCurrentSize(elt)}px`;
     };
     return /* @__PURE__ */ (0, import_jsx_runtime504.jsx)(
-      import_components154.ResizableBox,
+      import_components153.ResizableBox,
       {
         className: clsx_default("block-library-spacer__resize-container", {
           "resize-horizontal": orientation === "horizontal",
@@ -73090,14 +73106,14 @@ ${text}
 
   // packages/block-library/build-module/tab-panel/controls.mjs
   var import_block_editor257 = __toESM(require_block_editor(), 1);
-  var import_components156 = __toESM(require_components(), 1);
+  var import_components155 = __toESM(require_components(), 1);
   var import_i18n244 = __toESM(require_i18n(), 1);
   var import_data147 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/tabs/tab-toolbar-controls.mjs
   var import_i18n243 = __toESM(require_i18n(), 1);
   var import_block_editor256 = __toESM(require_block_editor(), 1);
-  var import_components155 = __toESM(require_components(), 1);
+  var import_components154 = __toESM(require_components(), 1);
   var import_data146 = __toESM(require_data(), 1);
 
   // packages/block-library/build-module/tabs/use-tab-actions.mjs
@@ -73198,9 +73214,9 @@ ${text}
       },
       [tabsClientId]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(import_block_editor256.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime506.jsxs)(import_components155.ToolbarGroup, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(import_block_editor256.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime506.jsxs)(import_components154.ToolbarGroup, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(
-        import_components155.ToolbarButton,
+        import_components154.ToolbarButton,
         {
           className: "components-toolbar__control",
           onClick: () => insertTab(),
@@ -73208,7 +73224,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime506.jsx)(
-        import_components155.ToolbarButton,
+        import_components154.ToolbarButton,
         {
           className: "components-toolbar__control",
           onClick: () => removeTab(),
@@ -73227,7 +73243,7 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime507.jsxs)(import_jsx_runtime507.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(TabToolbarControls, { tabsClientId }),
       /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(import_block_editor257.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(
-        import_components156.__experimentalToolsPanel,
+        import_components155.__experimentalToolsPanel,
         {
           label: (0, import_i18n244.__)("Settings"),
           resetAll: () => {
@@ -73237,7 +73253,7 @@ ${text}
           },
           dropdownMenuProps,
           children: /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(
-            import_components156.__experimentalToolsPanelItem,
+            import_components155.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n244.__)("Default tab"),
               hasValue: () => isDefaultTab && blockIndex !== 0,
@@ -73248,7 +73264,7 @@ ${text}
               },
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime507.jsx)(
-                import_components156.CheckboxControl,
+                import_components155.CheckboxControl,
                 {
                   label: (0, import_i18n244.__)("Default tab"),
                   checked: isDefaultTab,
@@ -74184,7 +74200,7 @@ ${text}
   var import_element138 = __toESM(require_element(), 1);
   var import_block_editor263 = __toESM(require_block_editor(), 1);
   var import_i18n247 = __toESM(require_i18n(), 1);
-  var import_components157 = __toESM(require_components(), 1);
+  var import_components156 = __toESM(require_components(), 1);
 
   // packages/block-library/build-module/table/state.mjs
   var INHERITED_COLUMN_ATTRIBUTES = ["align"];
@@ -74637,7 +74653,7 @@ ${text}
           }
         ) }),
         /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(import_block_editor263.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
-          import_components157.ToolbarDropdownMenu,
+          import_components156.ToolbarDropdownMenu,
           {
             icon: table_default,
             label: (0, import_i18n247.__)("Edit table"),
@@ -74646,7 +74662,7 @@ ${text}
         ) })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(import_block_editor263.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime513.jsxs)(
-        import_components157.__experimentalToolsPanel,
+        import_components156.__experimentalToolsPanel,
         {
           label: (0, import_i18n247.__)("Settings"),
           resetAll: () => {
@@ -74659,14 +74675,14 @@ ${text}
           dropdownMenuProps,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
-              import_components157.__experimentalToolsPanelItem,
+              import_components156.__experimentalToolsPanelItem,
               {
                 hasValue: () => hasFixedLayout !== true,
                 label: (0, import_i18n247.__)("Fixed width table cells"),
                 onDeselect: () => setAttributes({ hasFixedLayout: true }),
                 isShownByDefault: true,
                 children: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
-                  import_components157.ToggleControl,
+                  import_components156.ToggleControl,
                   {
                     label: (0, import_i18n247.__)("Fixed width table cells"),
                     checked: !!hasFixedLayout,
@@ -74677,14 +74693,14 @@ ${text}
             ),
             !isEmpty && /* @__PURE__ */ (0, import_jsx_runtime513.jsxs)(import_jsx_runtime513.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
-                import_components157.__experimentalToolsPanelItem,
+                import_components156.__experimentalToolsPanelItem,
                 {
                   hasValue: () => head && head.length,
                   label: (0, import_i18n247.__)("Header section"),
                   onDeselect: () => setAttributes({ head: [] }),
                   isShownByDefault: true,
                   children: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
-                    import_components157.ToggleControl,
+                    import_components156.ToggleControl,
                     {
                       label: (0, import_i18n247.__)("Header section"),
                       checked: !!(head && head.length),
@@ -74694,14 +74710,14 @@ ${text}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
-                import_components157.__experimentalToolsPanelItem,
+                import_components156.__experimentalToolsPanelItem,
                 {
                   hasValue: () => foot && foot.length,
                   label: (0, import_i18n247.__)("Footer section"),
                   onDeselect: () => setAttributes({ foot: [] }),
                   isShownByDefault: true,
                   children: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
-                    import_components157.ToggleControl,
+                    import_components156.ToggleControl,
                     {
                       label: (0, import_i18n247.__)("Footer section"),
                       checked: !!(foot && foot.length),
@@ -74725,7 +74741,7 @@ ${text}
               // This is required in the editor only to overcome
               // the fact the editor rewrites individual border
               // widths into a shorthand format.
-              "has-individual-borders": (0, import_components157.__experimentalHasSplitBorders)(
+              "has-individual-borders": (0, import_components156.__experimentalHasSplitBorders)(
                 attributes?.style?.border
               )
             }
@@ -74735,7 +74751,7 @@ ${text}
         }
       ),
       isEmpty ? /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
-        import_components157.Placeholder,
+        import_components156.Placeholder,
         {
           label: (0, import_i18n247.__)("Table"),
           icon: /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(import_block_editor263.BlockIcon, { icon: block_table_default, showColors: true }),
@@ -74747,7 +74763,7 @@ ${text}
               onSubmit: onCreateTable,
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
-                  import_components157.TextControl,
+                  import_components156.TextControl,
                   {
                     type: "number",
                     label: (0, import_i18n247.__)("Column count"),
@@ -74758,7 +74774,7 @@ ${text}
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
-                  import_components157.TextControl,
+                  import_components156.TextControl,
                   {
                     type: "number",
                     label: (0, import_i18n247.__)("Row count"),
@@ -74769,7 +74785,7 @@ ${text}
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime513.jsx)(
-                  import_components157.Button,
+                  import_components156.Button,
                   {
                     __next40pxDefaultSize: true,
                     variant: "primary",
@@ -75417,7 +75433,7 @@ ${text}
   // packages/block-library/build-module/table-of-contents/edit.mjs
   var import_block_editor266 = __toESM(require_block_editor(), 1);
   var import_blocks117 = __toESM(require_blocks(), 1);
-  var import_components158 = __toESM(require_components(), 1);
+  var import_components157 = __toESM(require_components(), 1);
   var import_data151 = __toESM(require_data(), 1);
   var import_element140 = __toESM(require_element(), 1);
   var import_i18n249 = __toESM(require_i18n(), 1);
@@ -75637,9 +75653,9 @@ ${text}
     const [isConfirmingDetach, setIsConfirmingDetach] = (0, import_element140.useState)(false);
     return /* @__PURE__ */ (0, import_jsx_runtime516.jsxs)(import_jsx_runtime516.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime516.jsxs)(import_block_editor266.BlockControls, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime516.jsxs)(import_components158.ToolbarGroup, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime516.jsxs)(import_components157.ToolbarGroup, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
-            import_components158.ToolbarButton,
+            import_components157.ToolbarButton,
             {
               icon: (0, import_i18n249.isRTL)() ? format_list_bullets_rtl_default : format_list_bullets_default,
               title: (0, import_i18n249.__)("Unordered"),
@@ -75649,7 +75665,7 @@ ${text}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
-            import_components158.ToolbarButton,
+            import_components157.ToolbarButton,
             {
               icon: (0, import_i18n249.isRTL)() ? format_list_numbered_rtl_default : format_list_numbered_default,
               title: (0, import_i18n249.__)("Ordered"),
@@ -75659,8 +75675,8 @@ ${text}
             }
           )
         ] }),
-        canInsertList && /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(import_components158.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
-          import_components158.ToolbarButton,
+        canInsertList && /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(import_components157.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
+          import_components157.ToolbarButton,
           {
             onClick: () => setIsConfirmingDetach(true),
             children: (0, import_i18n249.__)("Detach")
@@ -75668,7 +75684,7 @@ ${text}
         ) })
       ] }),
       isConfirmingDetach && /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
-        import_components158.__experimentalConfirmDialog,
+        import_components157.__experimentalConfirmDialog,
         {
           isOpen: true,
           title: (0, import_i18n249.__)("Detach Table of Contents"),
@@ -75730,7 +75746,7 @@ ${text}
       }
     );
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(import_block_editor266.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime516.jsxs)(
-      import_components158.__experimentalToolsPanel,
+      import_components157.__experimentalToolsPanel,
       {
         label: (0, import_i18n249.__)("Settings"),
         resetAll: () => {
@@ -75743,14 +75759,14 @@ ${text}
         dropdownMenuProps,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
-            import_components158.__experimentalToolsPanelItem,
+            import_components157.__experimentalToolsPanelItem,
             {
               hasValue: () => !!onlyIncludeCurrentPage,
               label: (0, import_i18n249.__)("Only include current page"),
               onDeselect: () => setAttributes({ onlyIncludeCurrentPage: false }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
-                import_components158.ToggleControl,
+                import_components157.ToggleControl,
                 {
                   label: (0, import_i18n249.__)("Only include current page"),
                   checked: onlyIncludeCurrentPage,
@@ -75765,14 +75781,14 @@ ${text}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
-            import_components158.__experimentalToolsPanelItem,
+            import_components157.__experimentalToolsPanelItem,
             {
               hasValue: () => !!maxLevel,
               label: (0, import_i18n249.__)("Limit heading levels"),
               onDeselect: () => setAttributes({ maxLevel: void 0 }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
-                import_components158.SelectControl,
+                import_components157.SelectControl,
                 {
                   label: (0, import_i18n249.__)("Include headings down to level"),
                   value: maxLevel || "",
@@ -75803,7 +75819,7 @@ ${text}
     if (headings.length === 0) {
       return /* @__PURE__ */ (0, import_jsx_runtime516.jsxs)(import_jsx_runtime516.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime516.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(
-          import_components158.Placeholder,
+          import_components157.Placeholder,
           {
             icon: /* @__PURE__ */ (0, import_jsx_runtime516.jsx)(import_block_editor266.BlockIcon, { icon: table_of_contents_default }),
             label: (0, import_i18n249.__)("Table of Contents"),
@@ -75923,14 +75939,14 @@ ${text}
   // packages/block-library/build-module/tab-list/edit.mjs
   var import_i18n252 = __toESM(require_i18n(), 1);
   var import_block_editor269 = __toESM(require_block_editor(), 1);
-  var import_components160 = __toESM(require_components(), 1);
+  var import_components159 = __toESM(require_components(), 1);
   var import_data153 = __toESM(require_data(), 1);
   var import_element141 = __toESM(require_element(), 1);
 
   // packages/block-library/build-module/tab-list/tab-movers.mjs
   var import_i18n251 = __toESM(require_i18n(), 1);
   var import_block_editor268 = __toESM(require_block_editor(), 1);
-  var import_components159 = __toESM(require_components(), 1);
+  var import_components158 = __toESM(require_components(), 1);
   var import_data152 = __toESM(require_data(), 1);
   var import_jsx_runtime518 = __toESM(require_jsx_runtime(), 1);
   function TabMovers({ tabsClientId }) {
@@ -75954,7 +75970,7 @@ ${text}
     );
     return /* @__PURE__ */ (0, import_jsx_runtime518.jsxs)(import_block_editor268.BlockControls, { group: "parent", children: [
       /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
-        import_components159.ToolbarButton,
+        import_components158.ToolbarButton,
         {
           className: "wp-block-tab-list__mover-button",
           icon: (0, import_i18n251.isRTL)() ? chevron_right_default : chevron_left_default,
@@ -75965,7 +75981,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(
-        import_components159.ToolbarButton,
+        import_components158.ToolbarButton,
         {
           className: "wp-block-tab-list__mover-button",
           icon: (0, import_i18n251.isRTL)() ? chevron_left_default : chevron_right_default,
@@ -76082,7 +76098,7 @@ ${text}
     };
     return /* @__PURE__ */ (0, import_jsx_runtime519.jsxs)(import_jsx_runtime519.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(import_block_editor269.InspectorControls, { group: "settings", children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
-        import_components160.__experimentalToolsPanel,
+        import_components159.__experimentalToolsPanel,
         {
           label: (0, import_i18n252.__)("Settings"),
           resetAll: () => setAttributes({
@@ -76090,14 +76106,14 @@ ${text}
           }),
           dropdownMenuProps,
           children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
-            import_components160.__experimentalToolsPanelItem,
+            import_components159.__experimentalToolsPanelItem,
             {
               label: (0, import_i18n252.__)("Label"),
               isShownByDefault: true,
               hasValue: () => !!ariaLabel,
               onDeselect: () => setAttributes({ ariaLabel: void 0 }),
               children: /* @__PURE__ */ (0, import_jsx_runtime519.jsx)(
-                import_components160.TextControl,
+                import_components159.TextControl,
                 {
                   label: (0, import_i18n252.__)("Label"),
                   help: (0, import_i18n252.__)(
@@ -76560,7 +76576,7 @@ ${text}
   };
 
   // packages/block-library/build-module/tag-cloud/edit.mjs
-  var import_components161 = __toESM(require_components(), 1);
+  var import_components160 = __toESM(require_components(), 1);
   var import_data155 = __toESM(require_data(), 1);
   var import_i18n254 = __toESM(require_i18n(), 1);
   var import_block_editor274 = __toESM(require_block_editor(), 1);
@@ -76582,7 +76598,7 @@ ${text}
     } = attributes;
     const [availableUnits] = (0, import_block_editor274.useSettings)("spacing.units");
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-    const units = (0, import_components161.__experimentalUseCustomUnits)({
+    const units = (0, import_components160.__experimentalUseCustomUnits)({
       availableUnits: availableUnits ? [...availableUnits, "pt"] : ["%", "px", "em", "rem", "pt"]
     });
     const taxonomies = (0, import_data155.useSelect)(
@@ -76604,7 +76620,7 @@ ${text}
       return [selectOption, ...taxonomyOptions];
     };
     const onFontSizeChange = (fontSizeLabel, newValue) => {
-      const [quantity, newUnit] = (0, import_components161.__experimentalParseQuantityAndUnitFromRawValue)(newValue);
+      const [quantity, newUnit] = (0, import_components160.__experimentalParseQuantityAndUnitFromRawValue)(newValue);
       if (!Number.isFinite(quantity)) {
         return;
       }
@@ -76613,7 +76629,7 @@ ${text}
         smallestFontSize,
         largestFontSize
       }).forEach(([attribute, currentValue]) => {
-        const [currentQuantity, currentUnit] = (0, import_components161.__experimentalParseQuantityAndUnitFromRawValue)(currentValue);
+        const [currentQuantity, currentUnit] = (0, import_components160.__experimentalParseQuantityAndUnitFromRawValue)(currentValue);
         if (attribute !== fontSizeLabel && currentUnit !== newUnit) {
           updateObj[attribute] = `${currentQuantity}${newUnit}`;
         }
@@ -76621,7 +76637,7 @@ ${text}
       setAttributes(updateObj);
     };
     const inspectorControls = /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_block_editor274.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime523.jsxs)(
-      import_components161.__experimentalToolsPanel,
+      import_components160.__experimentalToolsPanel,
       {
         label: (0, import_i18n254.__)("Settings"),
         resetAll: () => {
@@ -76636,14 +76652,14 @@ ${text}
         dropdownMenuProps,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
-            import_components161.__experimentalToolsPanelItem,
+            import_components160.__experimentalToolsPanelItem,
             {
               hasValue: () => taxonomy !== "post_tag",
               label: (0, import_i18n254.__)("Taxonomy"),
               onDeselect: () => setAttributes({ taxonomy: "post_tag" }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
-                import_components161.SelectControl,
+                import_components160.SelectControl,
                 {
                   label: (0, import_i18n254.__)("Taxonomy"),
                   options: getTaxonomyOptions(),
@@ -76654,7 +76670,7 @@ ${text}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
-            import_components161.__experimentalToolsPanelItem,
+            import_components160.__experimentalToolsPanelItem,
             {
               hasValue: () => smallestFontSize !== "8pt" || largestFontSize !== "22pt",
               label: (0, import_i18n254.__)("Font size"),
@@ -76663,9 +76679,9 @@ ${text}
                 largestFontSize: "22pt"
               }),
               isShownByDefault: true,
-              children: /* @__PURE__ */ (0, import_jsx_runtime523.jsxs)(import_components161.Flex, { gap: 4, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_components161.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
-                  import_components161.__experimentalUnitControl,
+              children: /* @__PURE__ */ (0, import_jsx_runtime523.jsxs)(import_components160.Flex, { gap: 4, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_components160.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
+                  import_components160.__experimentalUnitControl,
                   {
                     label: (0, import_i18n254.__)("Smallest size"),
                     value: smallestFontSize,
@@ -76680,8 +76696,8 @@ ${text}
                     max: MAX_FONT_SIZE
                   }
                 ) }),
-                /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_components161.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
-                  import_components161.__experimentalUnitControl,
+                /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_components160.FlexItem, { isBlock: true, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
+                  import_components160.__experimentalUnitControl,
                   {
                     label: (0, import_i18n254.__)("Largest size"),
                     value: largestFontSize,
@@ -76700,14 +76716,14 @@ ${text}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
-            import_components161.__experimentalToolsPanelItem,
+            import_components160.__experimentalToolsPanelItem,
             {
               hasValue: () => numberOfTags !== 45,
               label: (0, import_i18n254.__)("Number of tags"),
               onDeselect: () => setAttributes({ numberOfTags: 45 }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
-                import_components161.RangeControl,
+                import_components160.RangeControl,
                 {
                   label: (0, import_i18n254.__)("Number of tags"),
                   value: numberOfTags,
@@ -76720,14 +76736,14 @@ ${text}
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
-            import_components161.__experimentalToolsPanelItem,
+            import_components160.__experimentalToolsPanelItem,
             {
               hasValue: () => showTagCounts !== false,
               label: (0, import_i18n254.__)("Show tag counts"),
               onDeselect: () => setAttributes({ showTagCounts: false }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(
-                import_components161.ToggleControl,
+                import_components160.ToggleControl,
                 {
                   label: (0, import_i18n254.__)("Show tag counts"),
                   checked: showTagCounts,
@@ -76748,7 +76764,7 @@ ${text}
     const blockProps = (0, import_block_editor274.useBlockProps)({ ref: disabledRef });
     return /* @__PURE__ */ (0, import_jsx_runtime523.jsxs)(import_jsx_runtime523.Fragment, { children: [
       inspectorControls,
-      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime523.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_components161.Spinner, {}) }),
+      status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime523.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)(import_components160.Spinner, {}) }),
       status === "error" && /* @__PURE__ */ (0, import_jsx_runtime523.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime523.jsx)("p", { children: (0, import_i18n254.sprintf)(
         /* translators: %s: error message returned when rendering the block. */
         (0, import_i18n254.__)("Error: %s"),
@@ -76821,7 +76837,7 @@ ${text}
   var import_blocks123 = __toESM(require_blocks(), 1);
   var import_data162 = __toESM(require_data(), 1);
   var import_block_editor279 = __toESM(require_block_editor(), 1);
-  var import_components167 = __toESM(require_components(), 1);
+  var import_components166 = __toESM(require_components(), 1);
   var import_i18n261 = __toESM(require_i18n(), 1);
   var import_core_data92 = __toESM(require_core_data(), 1);
   var import_element149 = __toESM(require_element(), 1);
@@ -76829,7 +76845,7 @@ ${text}
 
   // packages/block-library/build-module/template-part/edit/placeholder.mjs
   var import_i18n257 = __toESM(require_i18n(), 1);
-  var import_components163 = __toESM(require_components(), 1);
+  var import_components162 = __toESM(require_components(), 1);
   var import_element145 = __toESM(require_element(), 1);
   var import_data157 = __toESM(require_data(), 1);
   var import_core_data88 = __toESM(require_core_data(), 1);
@@ -76932,7 +76948,7 @@ ${text}
   // packages/block-library/build-module/template-part/edit/title-modal.mjs
   var import_element144 = __toESM(require_element(), 1);
   var import_i18n256 = __toESM(require_i18n(), 1);
-  var import_components162 = __toESM(require_components(), 1);
+  var import_components161 = __toESM(require_components(), 1);
   var import_jsx_runtime524 = __toESM(require_jsx_runtime(), 1);
   function TitleModal({ areaLabel, onClose, onSubmit }) {
     const [title, setTitle] = (0, import_element144.useState)("");
@@ -76941,7 +76957,7 @@ ${text}
       onSubmit(title);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime524.jsx)(
-      import_components162.Modal,
+      import_components161.Modal,
       {
         title: (0, import_i18n256.sprintf)(
           // Translators: %s as template part area title ("Header", "Footer", etc.).
@@ -76951,9 +76967,9 @@ ${text}
         onRequestClose: onClose,
         focusOnMount: "firstContentElement",
         size: "small",
-        children: /* @__PURE__ */ (0, import_jsx_runtime524.jsx)("form", { onSubmit: submitForCreation, children: /* @__PURE__ */ (0, import_jsx_runtime524.jsxs)(import_components162.__experimentalVStack, { spacing: "5", children: [
+        children: /* @__PURE__ */ (0, import_jsx_runtime524.jsx)("form", { onSubmit: submitForCreation, children: /* @__PURE__ */ (0, import_jsx_runtime524.jsxs)(import_components161.__experimentalVStack, { spacing: "5", children: [
           /* @__PURE__ */ (0, import_jsx_runtime524.jsx)(
-            import_components162.TextControl,
+            import_components161.TextControl,
             {
               label: (0, import_i18n256.__)("Name"),
               value: title,
@@ -76961,9 +76977,9 @@ ${text}
               placeholder: (0, import_i18n256.__)("Custom Template Part")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime524.jsxs)(import_components162.__experimentalHStack, { justify: "right", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime524.jsxs)(import_components161.__experimentalHStack, { justify: "right", children: [
             /* @__PURE__ */ (0, import_jsx_runtime524.jsx)(
-              import_components162.Button,
+              import_components161.Button,
               {
                 __next40pxDefaultSize: true,
                 variant: "tertiary",
@@ -76975,7 +76991,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime524.jsx)(
-              import_components162.Button,
+              import_components161.Button,
               {
                 variant: "primary",
                 type: "submit",
@@ -77025,7 +77041,7 @@ ${text}
       setAttributes
     );
     return /* @__PURE__ */ (0, import_jsx_runtime525.jsxs)(
-      import_components163.Placeholder,
+      import_components162.Placeholder,
       {
         icon: getTemplatePartIcon(areaObject.icon),
         label: areaObject.label,
@@ -77039,9 +77055,9 @@ ${text}
           areaObject.label.toLowerCase()
         ),
         children: [
-          isResolving && /* @__PURE__ */ (0, import_jsx_runtime525.jsx)(import_components163.Spinner, {}),
+          isResolving && /* @__PURE__ */ (0, import_jsx_runtime525.jsx)(import_components162.Spinner, {}),
           !isResolving && !!(templateParts.length || blockPatterns.length) && /* @__PURE__ */ (0, import_jsx_runtime525.jsx)(
-            import_components163.Button,
+            import_components162.Button,
             {
               __next40pxDefaultSize: true,
               variant: "primary",
@@ -77050,7 +77066,7 @@ ${text}
             }
           ),
           !isResolving && isBlockBasedTheme && canCreateTemplatePart && /* @__PURE__ */ (0, import_jsx_runtime525.jsx)(
-            import_components163.Button,
+            import_components162.Button,
             {
               __next40pxDefaultSize: true,
               variant: "secondary",
@@ -77081,7 +77097,7 @@ ${text}
   var import_notices19 = __toESM(require_notices(), 1);
   var import_data158 = __toESM(require_data(), 1);
   var import_block_editor276 = __toESM(require_block_editor(), 1);
-  var import_components164 = __toESM(require_components(), 1);
+  var import_components163 = __toESM(require_components(), 1);
 
   // packages/block-library/build-module/template-part/edit/utils/map-template-part-to-block-pattern.mjs
   var import_blocks120 = __toESM(require_blocks(), 1);
@@ -77141,7 +77157,7 @@ ${text}
     const hasBlockPatterns = !!filteredBlockPatterns.length;
     return /* @__PURE__ */ (0, import_jsx_runtime526.jsxs)("div", { className: "block-library-template-part__selection-content", children: [
       /* @__PURE__ */ (0, import_jsx_runtime526.jsx)("div", { className: "block-library-template-part__selection-search", children: /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(
-        import_components164.SearchControl,
+        import_components163.SearchControl,
         {
           onChange: setSearchValue,
           value: searchValue,
@@ -77161,13 +77177,13 @@ ${text}
           }
         )
       ] }),
-      !hasTemplateParts && !hasBlockPatterns && /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(import_components164.__experimentalHStack, { alignment: "center", children: /* @__PURE__ */ (0, import_jsx_runtime526.jsx)("p", { children: (0, import_i18n258.__)("No results found.") }) })
+      !hasTemplateParts && !hasBlockPatterns && /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(import_components163.__experimentalHStack, { alignment: "center", children: /* @__PURE__ */ (0, import_jsx_runtime526.jsx)("p", { children: (0, import_i18n258.__)("No results found.") }) })
     ] });
   }
 
   // packages/block-library/build-module/template-part/edit/advanced-controls.mjs
   var import_core_data90 = __toESM(require_core_data(), 1);
-  var import_components166 = __toESM(require_components(), 1);
+  var import_components165 = __toESM(require_components(), 1);
   var import_i18n260 = __toESM(require_i18n(), 1);
   var import_data160 = __toESM(require_data(), 1);
   var import_block_editor277 = __toESM(require_block_editor(), 1);
@@ -77176,7 +77192,7 @@ ${text}
   var import_i18n259 = __toESM(require_i18n(), 1);
   var import_element147 = __toESM(require_element(), 1);
   var import_data159 = __toESM(require_data(), 1);
-  var import_components165 = __toESM(require_components(), 1);
+  var import_components164 = __toESM(require_components(), 1);
   var import_core_data89 = __toESM(require_core_data(), 1);
   var import_notices20 = __toESM(require_notices(), 1);
 
@@ -77297,7 +77313,7 @@ ${text}
       ];
     }, [sidebars]);
     if (!hasResolved) {
-      return /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(import_components165.__experimentalSpacer, { marginBottom: "0" });
+      return /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(import_components164.__experimentalSpacer, { marginBottom: "0" });
     }
     if (hasResolved && !options2.length) {
       return null;
@@ -77344,9 +77360,9 @@ ${text}
       }
       setIsBusy(false);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(import_components165.__experimentalSpacer, { marginBottom: "4", children: /* @__PURE__ */ (0, import_jsx_runtime527.jsxs)(import_components165.__experimentalHStack, { as: "form", onSubmit: createFromWidgets, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(import_components165.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
-        import_components165.SelectControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(import_components164.__experimentalSpacer, { marginBottom: "4", children: /* @__PURE__ */ (0, import_jsx_runtime527.jsxs)(import_components164.__experimentalHStack, { as: "form", onSubmit: createFromWidgets, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(import_components164.FlexBlock, { children: /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
+        import_components164.SelectControl,
         {
           label: (0, import_i18n259.__)("Import widget area"),
           value: selectedSidebar,
@@ -77356,14 +77372,14 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
-        import_components165.FlexItem,
+        import_components164.FlexItem,
         {
           style: {
             marginBottom: "8px",
             marginTop: "auto"
           },
           children: /* @__PURE__ */ (0, import_jsx_runtime527.jsx)(
-            import_components165.Button,
+            import_components164.Button,
             {
               __next40pxDefaultSize: true,
               variant: "primary",
@@ -77415,7 +77431,7 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime528.jsxs)(import_jsx_runtime528.Fragment, { children: [
       isEntityAvailable && /* @__PURE__ */ (0, import_jsx_runtime528.jsxs)(import_jsx_runtime528.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(
-          import_components166.TextControl,
+          import_components165.TextControl,
           {
             label: (0, import_i18n260.__)("Title"),
             value: title,
@@ -77426,7 +77442,7 @@ ${text}
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime528.jsx)(
-          import_components166.SelectControl,
+          import_components165.SelectControl,
           {
             label: (0, import_i18n260.__)("Area"),
             labelPosition: "top",
@@ -77638,7 +77654,7 @@ ${text}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(
-      import_components167.MenuItem,
+      import_components166.MenuItem,
       {
         onClick: () => {
           setIsTemplatePartSelectionOpen(true);
@@ -77655,7 +77671,7 @@ ${text}
     if (!canReplace) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_components167.PanelBody, { title: (0, import_i18n261.__)("Design"), children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_components166.PanelBody, { title: (0, import_i18n261.__)("Design"), children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(
       import_block_editor279.__experimentalBlockPatternsList,
       {
         label: (0, import_i18n261.__)("Templates"),
@@ -77763,7 +77779,7 @@ ${text}
     return /* @__PURE__ */ (0, import_jsx_runtime530.jsxs)(import_jsx_runtime530.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime530.jsxs)(import_block_editor279.RecursionProvider, { uniqueId: templatePartId, children: [
         isEntityAvailable && onNavigateToEntityRecord && canUserEdit && /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_block_editor279.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(
-          import_components167.ToolbarButton,
+          import_components166.ToolbarButton,
           {
             onClick: () => {
               onNavigateToEntityRecord({
@@ -77833,10 +77849,10 @@ ${text}
             layout
           }
         ),
-        !isPlaceholder && !isResolved && /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_components167.Spinner, {}) })
+        !isPlaceholder && !isResolved && /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(TagName2, { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(import_components166.Spinner, {}) })
       ] }),
       isTemplatePartSelectionOpen && /* @__PURE__ */ (0, import_jsx_runtime530.jsx)(
-        import_components167.Modal,
+        import_components166.Modal,
         {
           overlayClassName: "block-editor-template-part__selection-modal",
           title: (0, import_i18n261.sprintf)(
@@ -78028,16 +78044,16 @@ ${text}
   // packages/block-library/build-module/term-count/edit.mjs
   var import_i18n262 = __toESM(require_i18n(), 1);
   var import_block_editor280 = __toESM(require_block_editor(), 1);
-  var import_components169 = __toESM(require_components(), 1);
+  var import_components168 = __toESM(require_components(), 1);
 
   // packages/block-library/build-module/term-count/icons.mjs
-  var import_components168 = __toESM(require_components(), 1);
+  var import_components167 = __toESM(require_components(), 1);
   var import_jsx_runtime531 = __toESM(require_jsx_runtime(), 1);
-  var bareNumber = /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components168.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components168.Path, { d: "M 10 6 L 9.609375 9 L 7 9 L 7 10.5 L 9.4121094 10.5 L 9.0878906 13 L 7 13 L 7 14.5 L 8.890625 14.5 L 8.5 17.5 L 10 17.5 L 10.390625 14.5 L 12.890625 14.5 L 12.5 17.5 L 14 17.5 L 14.390625 14.5 L 17 14.5 L 17 13 L 14.587891 13 L 14.912109 10.5 L 17 10.5 L 17 9 L 15.109375 9 L 15.5 6 L 14 6 L 13.609375 9 L 11.109375 9 L 11.5 6 L 10 6 z M 10.912109 10.5 L 13.412109 10.5 L 13.087891 13 L 10.587891 13 L 10.912109 10.5 z" }) });
-  var numberInParenthesis = /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components168.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components168.Path, { d: "M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z M 18.5,3 c 0,0 1.5,4.004036 1.5,9 0,4.995964 -1.5,9 -1.5,9 H 20 c 0,0 1.5,-4.004036 1.5,-9 C 21.5,7.004036 20,3 20,3 Z M 5.5,21 C 5.5,21 4,16.995964 4,12 4,7.0040356 5.5,3 5.5,3 H 4 c 0,0 -1.5,4.004036 -1.5,9 0,4.995964 1.5,9 1.5,9 z" }) });
-  var numberInSquareBrackets = /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components168.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components168.Path, { d: "M 21.5,21 V 3 H 18 v 1.5 h 2 v 15 H 18 V 21 Z M 2.5,3 V 21 H 6 V 19.5 H 4 V 4.5 H 6 V 3 Z M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z" }) });
-  var numberInCurlyBrackets = /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components168.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components168.Path, { d: "M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z M 18.5,21 c 1.104567,0 2,-0.895433 2,-2 v -4 c 0,-1.104567 0.895433,-2 2,-2 v -2 c -1.104567,0 -2,-0.895433 -2,-2 V 5 c 0,-1.104567 -0.895433,-2 -2,-2 H 17 v 1.5 h 1.5 A 0.5,0.5 0 0 1 19,5 v 5 c 0,1.104567 0.895433,2 2,2 -1.104567,0 -2,0.895433 -2,2 v 5 c 0,0.276142 -0.223858,0.5 -0.5,0.5 H 17 V 21 Z M 5.5,3 c -1.1045668,0 -2,0.8954327 -2,2 v 4 c 0,1.104567 -0.8954332,2 -2,2 v 2 c 1.1045668,0 2,0.895433 2,2 v 4 c 0,1.104567 0.8954332,2 2,2 H 7 V 19.5 H 5.5 A 0.5,0.5 0 0 1 5,19 V 14 C 5,12.895433 4.1045668,12 3,12 4.1045668,12 5,11.104567 5,10 V 5 C 5,4.7238579 5.2238579,4.5 5.5,4.5 H 7 V 3 Z" }) });
-  var numberInAngleBrackets = /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components168.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components168.Path, { d: "M 18.970703,16.53125 23.5,12 18.970703,7.46875 17.910156,8.53125 21.378906,12 17.910156,15.46875 Z M 5.0292969,7.46875 0.5,12 5.0292969,16.53125 6.0898438,15.46875 2.6210938,12 6.0898438,8.53125 Z M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z" }) });
+  var bareNumber = /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components167.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components167.Path, { d: "M 10 6 L 9.609375 9 L 7 9 L 7 10.5 L 9.4121094 10.5 L 9.0878906 13 L 7 13 L 7 14.5 L 8.890625 14.5 L 8.5 17.5 L 10 17.5 L 10.390625 14.5 L 12.890625 14.5 L 12.5 17.5 L 14 17.5 L 14.390625 14.5 L 17 14.5 L 17 13 L 14.587891 13 L 14.912109 10.5 L 17 10.5 L 17 9 L 15.109375 9 L 15.5 6 L 14 6 L 13.609375 9 L 11.109375 9 L 11.5 6 L 10 6 z M 10.912109 10.5 L 13.412109 10.5 L 13.087891 13 L 10.587891 13 L 10.912109 10.5 z" }) });
+  var numberInParenthesis = /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components167.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components167.Path, { d: "M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z M 18.5,3 c 0,0 1.5,4.004036 1.5,9 0,4.995964 -1.5,9 -1.5,9 H 20 c 0,0 1.5,-4.004036 1.5,-9 C 21.5,7.004036 20,3 20,3 Z M 5.5,21 C 5.5,21 4,16.995964 4,12 4,7.0040356 5.5,3 5.5,3 H 4 c 0,0 -1.5,4.004036 -1.5,9 0,4.995964 1.5,9 1.5,9 z" }) });
+  var numberInSquareBrackets = /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components167.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components167.Path, { d: "M 21.5,21 V 3 H 18 v 1.5 h 2 v 15 H 18 V 21 Z M 2.5,3 V 21 H 6 V 19.5 H 4 V 4.5 H 6 V 3 Z M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z" }) });
+  var numberInCurlyBrackets = /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components167.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components167.Path, { d: "M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z M 18.5,21 c 1.104567,0 2,-0.895433 2,-2 v -4 c 0,-1.104567 0.895433,-2 2,-2 v -2 c -1.104567,0 -2,-0.895433 -2,-2 V 5 c 0,-1.104567 -0.895433,-2 -2,-2 H 17 v 1.5 h 1.5 A 0.5,0.5 0 0 1 19,5 v 5 c 0,1.104567 0.895433,2 2,2 -1.104567,0 -2,0.895433 -2,2 v 5 c 0,0.276142 -0.223858,0.5 -0.5,0.5 H 17 V 21 Z M 5.5,3 c -1.1045668,0 -2,0.8954327 -2,2 v 4 c 0,1.104567 -0.8954332,2 -2,2 v 2 c 1.1045668,0 2,0.895433 2,2 v 4 c 0,1.104567 0.8954332,2 2,2 H 7 V 19.5 H 5.5 A 0.5,0.5 0 0 1 5,19 V 14 C 5,12.895433 4.1045668,12 3,12 4.1045668,12 5,11.104567 5,10 V 5 C 5,4.7238579 5.2238579,4.5 5.5,4.5 H 7 V 3 Z" }) });
+  var numberInAngleBrackets = /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components167.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components167.Path, { d: "M 18.970703,16.53125 23.5,12 18.970703,7.46875 17.910156,8.53125 21.378906,12 17.910156,15.46875 Z M 5.0292969,7.46875 0.5,12 5.0292969,16.53125 6.0898438,15.46875 2.6210938,12 6.0898438,8.53125 Z M 10,6 9.609375,9 H 7 v 1.5 H 9.4121094 L 9.0878906,13 H 7 v 1.5 H 8.890625 L 8.5,17.5 H 10 l 0.390625,-3 h 2.5 L 12.5,17.5 H 14 l 0.390625,-3 H 17 V 13 h -2.412109 l 0.324218,-2.5 H 17 V 9 H 15.109375 L 15.5,6 H 14 l -0.390625,3 h -2.5 L 11.5,6 Z m 0.912109,4.5 h 2.5 L 13.087891,13 h -2.5 z" }) });
 
   // packages/block-library/build-module/term-count/use-term-count.mjs
   var import_core_data95 = __toESM(require_core_data(), 1);
@@ -78150,7 +78166,7 @@ ${text}
     };
     return /* @__PURE__ */ (0, import_jsx_runtime532.jsxs)(import_jsx_runtime532.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime532.jsx)(import_block_editor280.BlockControls, { group: "block", children: /* @__PURE__ */ (0, import_jsx_runtime532.jsx)(
-        import_components169.ToolbarDropdownMenu,
+        import_components168.ToolbarDropdownMenu,
         {
           icon: BRACKET_TYPES[bracketType]?.icon ?? bareNumber,
           label: (0, import_i18n262.__)("Change bracket type"),
@@ -78472,7 +78488,7 @@ ${text}
   // packages/block-library/build-module/term-name/edit.mjs
   var import_i18n264 = __toESM(require_i18n(), 1);
   var import_block_editor282 = __toESM(require_block_editor(), 1);
-  var import_components170 = __toESM(require_components(), 1);
+  var import_components169 = __toESM(require_components(), 1);
   var import_html_entities16 = __toESM(require_html_entities(), 1);
 
   // packages/block-library/build-module/term-name/use-term-name.mjs
@@ -78577,7 +78593,7 @@ ${text}
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(import_block_editor282.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(
-        import_components170.__experimentalToolsPanel,
+        import_components169.__experimentalToolsPanel,
         {
           label: (0, import_i18n264.__)("Settings"),
           resetAll: () => {
@@ -78587,14 +78603,14 @@ ${text}
           },
           dropdownMenuProps,
           children: /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(
-            import_components170.__experimentalToolsPanelItem,
+            import_components169.__experimentalToolsPanelItem,
             {
               hasValue: () => !!isLink,
               label: (0, import_i18n264.__)("Make term name a link"),
               onDeselect: () => setAttributes({ isLink: false }),
               isShownByDefault: true,
               children: /* @__PURE__ */ (0, import_jsx_runtime534.jsx)(
-                import_components170.ToggleControl,
+                import_components169.ToggleControl,
                 {
                   label: (0, import_i18n264.__)("Make term name a link"),
                   onChange: () => setAttributes({ isLink: !isLink }),
@@ -78750,7 +78766,7 @@ ${text}
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/index.mjs
   var import_i18n269 = __toESM(require_i18n(), 1);
-  var import_components178 = __toESM(require_components(), 1);
+  var import_components177 = __toESM(require_components(), 1);
   var import_block_editor284 = __toESM(require_block_editor(), 1);
 
   // packages/block-library/build-module/terms-query/utils.mjs
@@ -78770,7 +78786,7 @@ ${text}
   }
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/taxonomy-control.mjs
-  var import_components171 = __toESM(require_components(), 1);
+  var import_components170 = __toESM(require_components(), 1);
   var import_jsx_runtime535 = __toESM(require_jsx_runtime(), 1);
   function TaxonomyControl({ value, onChange, ...props }) {
     const taxonomies = usePublicTaxonomies();
@@ -78779,7 +78795,7 @@ ${text}
       value: taxonomy.slug
     }));
     return /* @__PURE__ */ (0, import_jsx_runtime535.jsx)(
-      import_components171.SelectControl,
+      import_components170.SelectControl,
       {
         options: taxonomyOptions,
         value,
@@ -78791,11 +78807,11 @@ ${text}
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/order-control.mjs
   var import_i18n265 = __toESM(require_i18n(), 1);
-  var import_components172 = __toESM(require_components(), 1);
+  var import_components171 = __toESM(require_components(), 1);
   var import_jsx_runtime536 = __toESM(require_jsx_runtime(), 1);
   function OrderControl3({ orderBy, order, onChange, ...props }) {
     return /* @__PURE__ */ (0, import_jsx_runtime536.jsx)(
-      import_components172.SelectControl,
+      import_components171.SelectControl,
       {
         options: [
           {
@@ -78826,11 +78842,11 @@ ${text}
   }
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/empty-terms-control.mjs
-  var import_components173 = __toESM(require_components(), 1);
+  var import_components172 = __toESM(require_components(), 1);
   var import_jsx_runtime537 = __toESM(require_jsx_runtime(), 1);
   function EmptyTermsControl({ value, onChange, ...props }) {
     return /* @__PURE__ */ (0, import_jsx_runtime537.jsx)(
-      import_components173.ToggleControl,
+      import_components172.ToggleControl,
       {
         checked: !value,
         onChange: (showEmpty) => onChange(!showEmpty),
@@ -78840,19 +78856,19 @@ ${text}
   }
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/nested-terms-control.mjs
-  var import_components174 = __toESM(require_components(), 1);
+  var import_components173 = __toESM(require_components(), 1);
   var import_jsx_runtime538 = __toESM(require_jsx_runtime(), 1);
   function NestedTermsControl({ value, onChange, ...props }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(import_components174.ToggleControl, { checked: value, onChange, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(import_components173.ToggleControl, { checked: value, onChange, ...props });
   }
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/inherit-control.mjs
-  var import_components175 = __toESM(require_components(), 1);
+  var import_components174 = __toESM(require_components(), 1);
   var import_i18n266 = __toESM(require_i18n(), 1);
   var import_jsx_runtime539 = __toESM(require_jsx_runtime(), 1);
   function InheritControl({ value, onChange, label }) {
     return /* @__PURE__ */ (0, import_jsx_runtime539.jsxs)(
-      import_components175.__experimentalToggleGroupControl,
+      import_components174.__experimentalToggleGroupControl,
       {
         label,
         isBlock: true,
@@ -78867,13 +78883,13 @@ ${text}
         value: value ? "default" : "custom",
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(
-            import_components175.__experimentalToggleGroupControlOption,
+            import_components174.__experimentalToggleGroupControlOption,
             {
               value: "default",
               label: (0, import_i18n266.__)("Default")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(import_components175.__experimentalToggleGroupControlOption, { value: "custom", label: (0, import_i18n266.__)("Custom") })
+          /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(import_components174.__experimentalToggleGroupControlOption, { value: "custom", label: (0, import_i18n266.__)("Custom") })
         ]
       }
     );
@@ -78881,11 +78897,11 @@ ${text}
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/max-terms-control.mjs
   var import_i18n267 = __toESM(require_i18n(), 1);
-  var import_components176 = __toESM(require_components(), 1);
+  var import_components175 = __toESM(require_components(), 1);
   var import_jsx_runtime540 = __toESM(require_jsx_runtime(), 1);
   function MaxTermsControl({ value, onChange, ...props }) {
     return /* @__PURE__ */ (0, import_jsx_runtime540.jsx)(
-      import_components176.RangeControl,
+      import_components175.RangeControl,
       {
         value,
         min: 0,
@@ -78926,7 +78942,7 @@ ${text}
   }
 
   // packages/block-library/build-module/terms-query/edit/inspector-controls/include-control.mjs
-  var import_components177 = __toESM(require_components(), 1);
+  var import_components176 = __toESM(require_components(), 1);
   var import_data169 = __toESM(require_data(), 1);
   var import_core_data99 = __toESM(require_core_data(), 1);
   var import_element151 = __toESM(require_element(), 1);
@@ -79043,7 +79059,7 @@ ${text}
       onChange(ids);
     };
     return /* @__PURE__ */ (0, import_jsx_runtime542.jsx)(
-      import_components177.FormTokenField,
+      import_components176.FormTokenField,
       {
         value,
         onInputChange: debouncedSearch,
@@ -79093,7 +79109,7 @@ ${text}
     const includeControlLabel = (0, import_i18n269.__)("Selected terms");
     return /* @__PURE__ */ (0, import_jsx_runtime543.jsxs)(import_jsx_runtime543.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(import_block_editor284.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime543.jsxs)(
-        import_components178.__experimentalToolsPanel,
+        import_components177.__experimentalToolsPanel,
         {
           label: (0, import_i18n269.__)("Settings"),
           resetAll: () => {
@@ -79113,7 +79129,7 @@ ${text}
           dropdownMenuProps,
           children: [
             displayInheritControl && /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(
-              import_components178.__experimentalToolsPanelItem,
+              import_components177.__experimentalToolsPanelItem,
               {
                 hasValue: () => inherit !== false,
                 label: queryTypeControlLabel,
@@ -79130,7 +79146,7 @@ ${text}
               }
             ),
             !inheritQuery && /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(
-              import_components178.__experimentalToolsPanelItem,
+              import_components177.__experimentalToolsPanelItem,
               {
                 hasValue: () => taxonomy !== "category",
                 label: taxonomyControlLabel,
@@ -79152,7 +79168,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(
-              import_components178.__experimentalToolsPanelItem,
+              import_components177.__experimentalToolsPanelItem,
               {
                 hasValue: () => orderBy !== "name" || order !== "asc",
                 label: orderByControlLabel,
@@ -79178,7 +79194,7 @@ ${text}
               }
             ),
             !inheritQuery && /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(
-              import_components178.__experimentalToolsPanelItem,
+              import_components177.__experimentalToolsPanelItem,
               {
                 hasValue: () => !!include?.length,
                 label: includeControlLabel,
@@ -79200,7 +79216,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(
-              import_components178.__experimentalToolsPanelItem,
+              import_components177.__experimentalToolsPanelItem,
               {
                 hasValue: () => hideEmpty !== true,
                 label: emptyTermsControlLabel,
@@ -79217,7 +79233,7 @@ ${text}
               }
             ),
             displayShowNestedControl && /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(
-              import_components178.__experimentalToolsPanelItem,
+              import_components177.__experimentalToolsPanelItem,
               {
                 hasValue: () => showNested !== false,
                 label: nestedTermsControlLabel,
@@ -79238,7 +79254,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime543.jsx)(
-              import_components178.__experimentalToolsPanelItem,
+              import_components177.__experimentalToolsPanelItem,
               {
                 hasValue: () => perPage !== 10,
                 label: maxTermsControlLabel,
@@ -79376,10 +79392,10 @@ ${text}
 
   // packages/block-library/build-module/terms-query/variations.mjs
   var import_i18n270 = __toESM(require_i18n(), 1);
-  var import_components179 = __toESM(require_components(), 1);
+  var import_components178 = __toESM(require_components(), 1);
   var import_jsx_runtime548 = __toESM(require_jsx_runtime(), 1);
-  var titleDate2 = /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components179.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components179.Path, { d: "M 41,9 H 7 v 3 h 34 z m 0,9 H 7 v 3 h 34 z m 0,18 H 7 v 3 h 34 z m 0,-9 H 7 v 3 h 34 z" }) });
-  var titleExcerpt2 = /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components179.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components179.Path, { d: "m 36,36 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 H 36 Z M 31,9 H 7 v 3 h 24 z m 0,9 H 7 v 3 h 24 z m 0,18 H 7 v 3 h 24 z m 0,-9 H 7 v 3 h 24 z" }) });
+  var titleDate2 = /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components178.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components178.Path, { d: "M 41,9 H 7 v 3 h 34 z m 0,9 H 7 v 3 h 34 z m 0,18 H 7 v 3 h 34 z m 0,-9 H 7 v 3 h 34 z" }) });
+  var titleExcerpt2 = /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components178.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 48 48", children: /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(import_components178.Path, { d: "m 36,36 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 h -5 z m 0,-9 h 5 v 3 H 36 Z M 31,9 H 7 v 3 h 24 z m 0,9 H 7 v 3 h 24 z m 0,18 H 7 v 3 h 24 z m 0,-9 H 7 v 3 h 24 z" }) });
   var termName = [
     "core/term-name",
     {
@@ -79509,7 +79525,7 @@ ${text}
   };
 
   // packages/block-library/build-module/term-template/edit.mjs
-  var import_components180 = __toESM(require_components(), 1);
+  var import_components179 = __toESM(require_components(), 1);
   var import_element153 = __toESM(require_element(), 1);
   var import_data172 = __toESM(require_data(), 1);
   var import_i18n271 = __toESM(require_i18n(), 1);
@@ -79626,7 +79642,7 @@ ${text}
     }));
     return /* @__PURE__ */ (0, import_jsx_runtime549.jsxs)(import_jsx_runtime549.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(import_block_editor289.BlockControls, { children: /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(
-        import_components180.ToolbarGroup,
+        import_components179.ToolbarGroup,
         {
           controls: [
             {
@@ -79711,7 +79727,7 @@ ${text}
 
   // packages/block-library/build-module/text-columns/edit.mjs
   var import_i18n272 = __toESM(require_i18n(), 1);
-  var import_components181 = __toESM(require_components(), 1);
+  var import_components180 = __toESM(require_components(), 1);
   var import_block_editor291 = __toESM(require_block_editor(), 1);
   var import_deprecated61 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime551 = __toESM(require_jsx_runtime(), 1);
@@ -79730,8 +79746,8 @@ ${text}
           controls: ["center", "wide", "full"]
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime551.jsx)(import_block_editor291.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime551.jsx)(import_components181.PanelBody, { children: /* @__PURE__ */ (0, import_jsx_runtime551.jsx)(
-        import_components181.RangeControl,
+      /* @__PURE__ */ (0, import_jsx_runtime551.jsx)(import_block_editor291.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime551.jsx)(import_components180.PanelBody, { children: /* @__PURE__ */ (0, import_jsx_runtime551.jsx)(
+        import_components180.RangeControl,
         {
           label: (0, import_i18n272.__)("Columns"),
           value: columns,
@@ -80403,7 +80419,7 @@ ${text}
 
   // packages/block-library/build-module/video/edit.mjs
   var import_blob20 = __toESM(require_blob(), 1);
-  var import_components184 = __toESM(require_components(), 1);
+  var import_components183 = __toESM(require_components(), 1);
   var import_block_editor298 = __toESM(require_block_editor(), 1);
   var import_element156 = __toESM(require_element(), 1);
   var import_i18n278 = __toESM(require_i18n(), 1);
@@ -80413,7 +80429,7 @@ ${text}
 
   // packages/block-library/build-module/video/edit-common-settings.mjs
   var import_i18n275 = __toESM(require_i18n(), 1);
-  var import_components182 = __toESM(require_components(), 1);
+  var import_components181 = __toESM(require_components(), 1);
   var import_element154 = __toESM(require_element(), 1);
   var import_jsx_runtime558 = __toESM(require_jsx_runtime(), 1);
   var options = [
@@ -80456,7 +80472,7 @@ ${text}
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime558.jsxs)(import_jsx_runtime558.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-        import_components182.__experimentalToolsPanelItem,
+        import_components181.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n275.__)("Autoplay"),
           isShownByDefault: true,
@@ -80465,7 +80481,7 @@ ${text}
             setAttributes({ autoplay: false, muted: false });
           },
           children: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-            import_components182.ToggleControl,
+            import_components181.ToggleControl,
             {
               label: (0, import_i18n275.__)("Autoplay"),
               onChange: toggleFactory.autoplay,
@@ -80476,7 +80492,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-        import_components182.__experimentalToolsPanelItem,
+        import_components181.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n275.__)("Loop"),
           isShownByDefault: true,
@@ -80485,7 +80501,7 @@ ${text}
             setAttributes({ loop: false });
           },
           children: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-            import_components182.ToggleControl,
+            import_components181.ToggleControl,
             {
               label: (0, import_i18n275.__)("Loop"),
               onChange: toggleFactory.loop,
@@ -80495,7 +80511,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-        import_components182.__experimentalToolsPanelItem,
+        import_components181.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n275.__)("Muted"),
           isShownByDefault: true,
@@ -80504,7 +80520,7 @@ ${text}
             setAttributes({ muted: false });
           },
           children: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-            import_components182.ToggleControl,
+            import_components181.ToggleControl,
             {
               label: (0, import_i18n275.__)("Muted"),
               onChange: toggleFactory.muted,
@@ -80516,7 +80532,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-        import_components182.__experimentalToolsPanelItem,
+        import_components181.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n275.__)("Playback controls"),
           isShownByDefault: true,
@@ -80525,7 +80541,7 @@ ${text}
             setAttributes({ controls: true });
           },
           children: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-            import_components182.ToggleControl,
+            import_components181.ToggleControl,
             {
               label: (0, import_i18n275.__)("Playback controls"),
               onChange: toggleFactory.controls,
@@ -80535,7 +80551,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-        import_components182.__experimentalToolsPanelItem,
+        import_components181.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n275.__)("Play inline"),
           isShownByDefault: true,
@@ -80544,7 +80560,7 @@ ${text}
             setAttributes({ playsInline: false });
           },
           children: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-            import_components182.ToggleControl,
+            import_components181.ToggleControl,
             {
               label: (0, import_i18n275.__)("Play inline"),
               onChange: toggleFactory.playsInline,
@@ -80558,7 +80574,7 @@ ${text}
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-        import_components182.__experimentalToolsPanelItem,
+        import_components181.__experimentalToolsPanelItem,
         {
           label: (0, import_i18n275.__)("Preload"),
           isShownByDefault: true,
@@ -80567,7 +80583,7 @@ ${text}
             setAttributes({ preload: "metadata" });
           },
           children: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-            import_components182.SelectControl,
+            import_components181.SelectControl,
             {
               label: (0, import_i18n275.__)("Preload"),
               value: preload,
@@ -80584,13 +80600,13 @@ ${text}
 
   // packages/block-library/build-module/video/tracks-editor.mjs
   var import_i18n276 = __toESM(require_i18n(), 1);
-  var import_components183 = __toESM(require_components(), 1);
+  var import_components182 = __toESM(require_components(), 1);
   var import_block_editor297 = __toESM(require_block_editor(), 1);
   var import_data173 = __toESM(require_data(), 1);
   var import_element155 = __toESM(require_element(), 1);
   var import_url23 = __toESM(require_url(), 1);
   var import_jsx_runtime559 = __toESM(require_jsx_runtime(), 1);
-  var { Badge: WCBadge } = unlock(import_components183.privateApis);
+  var { Badge: WCBadge } = unlock(import_components182.privateApis);
   var ALLOWED_TYPES = ["text/vtt"];
   var DEFAULT_KIND = "subtitles";
   var KIND_OPTIONS = [
@@ -80610,15 +80626,15 @@ ${text}
   function TrackList({ tracks, onEditPress }) {
     const content = tracks.map((track, index) => {
       return /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(
-        import_components183.__experimentalHStack,
+        import_components182.__experimentalHStack,
         {
           className: "block-library-video-tracks-editor__track-list-track",
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime559.jsx)("span", { children: track.label }),
-            /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(import_components183.__experimentalHStack, { justify: "flex-end", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(import_components182.__experimentalHStack, { justify: "flex-end", children: [
               track.default && /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(WCBadge, { children: (0, import_i18n276.__)("Default") }),
               /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-                import_components183.Button,
+                import_components182.Button,
                 {
                   __next40pxDefaultSize: true,
                   variant: "tertiary",
@@ -80638,7 +80654,7 @@ ${text}
       );
     });
     return /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-      import_components183.MenuGroup,
+      import_components182.MenuGroup,
       {
         label: (0, import_i18n276.__)("Text tracks"),
         className: "block-library-video-tracks-editor__track-list",
@@ -80660,7 +80676,7 @@ ${text}
     const { src, label, srcLang, kind, default: isDefaultTrack } = trackState;
     const fileName = src.startsWith("blob:") ? "" : (0, import_url23.getFilename)(src) || "";
     return /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(
-      import_components183.__experimentalVStack,
+      import_components182.__experimentalVStack,
       {
         className: "block-library-video-tracks-editor__single-track-editor",
         spacing: "4",
@@ -80671,9 +80687,9 @@ ${text}
             ": ",
             /* @__PURE__ */ (0, import_jsx_runtime559.jsx)("b", { children: fileName })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(import_components183.__experimentalGrid, { columns: 2, gap: 4, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(import_components182.__experimentalGrid, { columns: 2, gap: 4, children: [
             /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-              import_components183.TextControl,
+              import_components182.TextControl,
               {
                 onChange: (newLabel) => setTrackState((prevTrackState) => ({
                   ...prevTrackState,
@@ -80685,7 +80701,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-              import_components183.TextControl,
+              import_components182.TextControl,
               {
                 onChange: (newSrcLang) => setTrackState((prevTrackState) => ({
                   ...prevTrackState,
@@ -80697,9 +80713,9 @@ ${text}
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(import_components183.__experimentalVStack, { spacing: "4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(import_components182.__experimentalVStack, { spacing: "4", children: [
             /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-              import_components183.SelectControl,
+              import_components182.SelectControl,
               {
                 className: "block-library-video-tracks-editor__single-track-editor-kind-select",
                 options: KIND_OPTIONS,
@@ -80712,7 +80728,7 @@ ${text}
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-              import_components183.ToggleControl,
+              import_components182.ToggleControl,
               {
                 label: (0, import_i18n276.__)("Set as default track"),
                 checked: isDefaultTrack,
@@ -80723,9 +80739,9 @@ ${text}
                 }))
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(import_components183.__experimentalHStack, { className: "block-library-video-tracks-editor__single-track-editor-buttons-container", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(import_components182.__experimentalHStack, { className: "block-library-video-tracks-editor__single-track-editor-buttons-container", children: [
               /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-                import_components183.Button,
+                import_components182.Button,
                 {
                   __next40pxDefaultSize: true,
                   isDestructive: true,
@@ -80735,7 +80751,7 @@ ${text}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-                import_components183.Button,
+                import_components182.Button,
                 {
                   __next40pxDefaultSize: true,
                   variant: "primary",
@@ -80804,7 +80820,7 @@ ${text}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-      import_components183.Dropdown,
+      import_components182.Dropdown,
       {
         contentClassName: "block-library-video-tracks-editor",
         focusOnMount: true,
@@ -80818,8 +80834,8 @@ ${text}
             }
             onToggle();
           };
-          return /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(import_components183.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-            import_components183.ToolbarButton,
+          return /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(import_components182.ToolbarGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
+            import_components182.ToolbarButton,
             {
               "aria-expanded": isOpen,
               "aria-haspopup": "true",
@@ -80859,7 +80875,7 @@ ${text}
                 "Tracks can be subtitles, captions, chapters, or descriptions. They help make your content more accessible to a wider range of users."
               ) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(import_components183.NavigableMenu, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime559.jsxs)(import_components182.NavigableMenu, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
                 TrackList,
                 {
@@ -80868,7 +80884,7 @@ ${text}
                 }
               ),
               /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-                import_components183.MenuGroup,
+                import_components182.MenuGroup,
                 {
                   className: "block-library-video-tracks-editor__add-tracks-container",
                   label: (0, import_i18n276.__)("Add tracks"),
@@ -80881,7 +80897,7 @@ ${text}
                         value: tracks.map(({ id }) => id),
                         multiple: true,
                         render: ({ open }) => /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-                          import_components183.MenuItem,
+                          import_components182.MenuItem,
                           {
                             icon: media_default,
                             onClick: open,
@@ -80891,14 +80907,14 @@ ${text}
                       }
                     ),
                     /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-                      import_components183.FormFileUpload,
+                      import_components182.FormFileUpload,
                       {
                         onChange: uploadFiles,
                         accept: ".vtt,text/vtt",
                         multiple: true,
                         render: ({ openFileDialog }) => {
                           return /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-                            import_components183.MenuItem,
+                            import_components182.MenuItem,
                             {
                               icon: upload_default,
                               onClick: openFileDialog,
@@ -81049,7 +81065,7 @@ ${text}
     }
     const placeholder2 = (content) => {
       return /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(
-        import_components184.Placeholder,
+        import_components183.Placeholder,
         {
           className: "block-editor-media-placeholder",
           withIllustration: !isSingleSelected,
@@ -81110,7 +81126,7 @@ ${text}
         ) })
       ] }),
       !isGif && /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(import_block_editor298.InspectorControls, { children: /* @__PURE__ */ (0, import_jsx_runtime560.jsxs)(
-        import_components184.__experimentalToolsPanel,
+        import_components183.__experimentalToolsPanel,
         {
           label: (0, import_i18n278.__)("Settings"),
           resetAll: () => {
@@ -81164,7 +81180,7 @@ ${text}
             children: /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(Tracks, { tracks })
           }
         ),
-        !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(import_components184.Spinner, {}),
+        !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(import_components183.Spinner, {}),
         /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(
           Caption,
           {
@@ -81382,7 +81398,7 @@ ${text}
   var import_block_editor300 = __toESM(require_block_editor(), 1);
   var import_core_data101 = __toESM(require_core_data(), 1);
   var import_i18n280 = __toESM(require_i18n(), 1);
-  var import_components185 = __toESM(require_components(), 1);
+  var import_components184 = __toESM(require_components(), 1);
   var import_jsx_runtime562 = __toESM(require_jsx_runtime(), 1);
   function FootnotesEdit({ context: { postType, postId } }) {
     const [meta, updateMeta] = (0, import_core_data101.useEntityProp)(
@@ -81401,7 +81417,7 @@ ${text}
     const blockProps = (0, import_block_editor300.useBlockProps)();
     if (!footnotesSupported) {
       return /* @__PURE__ */ (0, import_jsx_runtime562.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(
-        import_components185.Placeholder,
+        import_components184.Placeholder,
         {
           icon: /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(import_block_editor300.BlockIcon, { icon: format_list_numbered_default }),
           label: (0, import_i18n280.__)("Footnotes"),
@@ -81413,7 +81429,7 @@ ${text}
     }
     if (!footnotes.length) {
       return /* @__PURE__ */ (0, import_jsx_runtime562.jsx)("div", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(
-        import_components185.Placeholder,
+        import_components184.Placeholder,
         {
           icon: /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(import_block_editor300.BlockIcon, { icon: format_list_numbered_default }),
           label: (0, import_i18n280.__)("Footnotes"),
