@@ -8259,7 +8259,7 @@ textarea.editor-post-text-editor::placeholder {
 
 @media (prefers-reduced-motion: no-preference) {
   .editor-resizable-editor:not(.is-resizing) {
-    transition: width 0.2s ease-out, height 0.2s ease-out;
+    transition: width 0.2s ease-out;
   }
 }
 
