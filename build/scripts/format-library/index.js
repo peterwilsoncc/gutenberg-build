@@ -3490,39 +3490,8 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(DirectionProvider, { direction: (0, import_i18n3.isRTL)() ? "rtl" : "ltr", children });
   }
 
-  // packages/ui/build-module/utils/use-schedule-validation.mjs
-  var import_element4 = __toESM(require_element(), 1);
-  function useScheduleValidation(validate) {
-    const validateRef = (0, import_element4.useRef)(validate);
-    validateRef.current = validate;
-    const timerRef = (0, import_element4.useRef)(null);
-    const unmountedRef = (0, import_element4.useRef)(false);
-    const scheduleValidation = (0, import_element4.useCallback)(() => {
-      if (unmountedRef.current) {
-        return;
-      }
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-      timerRef.current = setTimeout(() => {
-        validateRef.current();
-        timerRef.current = null;
-      }, 0);
-    }, []);
-    (0, import_element4.useEffect)(() => {
-      unmountedRef.current = false;
-      return () => {
-        unmountedRef.current = true;
-        if (timerRef.current) {
-          clearTimeout(timerRef.current);
-        }
-      };
-    }, []);
-    return scheduleValidation;
-  }
-
   // packages/ui/build-module/visually-hidden/visually-hidden.mjs
-  var import_element5 = __toESM(require_element(), 1);
+  var import_element4 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE2 = "data-wp-hash";
   function getRuntime2() {
     const globalScope = globalThis;
@@ -3607,7 +3576,7 @@ var wp;
     registerStyle2("fa606a57ae", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f37b9e2e191ebd66__visually-hidden{word-wrap:normal;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal}}}");
   }
   var style_default2 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
-  var VisuallyHidden = (0, import_element5.forwardRef)(
+  var VisuallyHidden = (0, import_element4.forwardRef)(
     function VisuallyHidden2({ render, ...restProps }, ref) {
       const element = useRender({
         render,
@@ -3624,6 +3593,37 @@ var wp;
       return element;
     }
   );
+
+  // packages/ui/build-module/utils/use-schedule-validation.mjs
+  var import_element5 = __toESM(require_element(), 1);
+  function useScheduleValidation(validate) {
+    const validateRef = (0, import_element5.useRef)(validate);
+    validateRef.current = validate;
+    const timerRef = (0, import_element5.useRef)(null);
+    const unmountedRef = (0, import_element5.useRef)(false);
+    const scheduleValidation = (0, import_element5.useCallback)(() => {
+      if (unmountedRef.current) {
+        return;
+      }
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+      timerRef.current = setTimeout(() => {
+        validateRef.current();
+        timerRef.current = null;
+      }, 0);
+    }, []);
+    (0, import_element5.useEffect)(() => {
+      unmountedRef.current = false;
+      return () => {
+        unmountedRef.current = true;
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+        }
+      };
+    }, []);
+    return scheduleValidation;
+  }
 
   // packages/ui/build-module/link/link.mjs
   var import_element6 = __toESM(require_element(), 1);

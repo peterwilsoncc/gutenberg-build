@@ -20960,39 +20960,8 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(index_parts_exports3.Provider, { ...props });
   }
 
-  // packages/ui/build-module/utils/use-schedule-validation.mjs
-  var import_element37 = __toESM(require_element(), 1);
-  function useScheduleValidation(validate) {
-    const validateRef = (0, import_element37.useRef)(validate);
-    validateRef.current = validate;
-    const timerRef = (0, import_element37.useRef)(null);
-    const unmountedRef = (0, import_element37.useRef)(false);
-    const scheduleValidation = (0, import_element37.useCallback)(() => {
-      if (unmountedRef.current) {
-        return;
-      }
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-      timerRef.current = setTimeout(() => {
-        validateRef.current();
-        timerRef.current = null;
-      }, 0);
-    }, []);
-    (0, import_element37.useEffect)(() => {
-      unmountedRef.current = false;
-      return () => {
-        unmountedRef.current = true;
-        if (timerRef.current) {
-          clearTimeout(timerRef.current);
-        }
-      };
-    }, []);
-    return scheduleValidation;
-  }
-
   // packages/ui/build-module/visually-hidden/visually-hidden.mjs
-  var import_element38 = __toESM(require_element(), 1);
+  var import_element37 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
   function getRuntime15() {
     const globalScope = globalThis;
@@ -21077,7 +21046,7 @@ var wp;
     registerStyle15("fa606a57ae", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f37b9e2e191ebd66__visually-hidden{word-wrap:normal;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal}}}");
   }
   var style_default14 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
-  var VisuallyHidden = (0, import_element38.forwardRef)(
+  var VisuallyHidden = (0, import_element37.forwardRef)(
     function VisuallyHidden2({ render: render5, ...restProps }, ref) {
       const element = useRender({
         render: render5,
@@ -21094,6 +21063,37 @@ var wp;
       return element;
     }
   );
+
+  // packages/ui/build-module/utils/use-schedule-validation.mjs
+  var import_element38 = __toESM(require_element(), 1);
+  function useScheduleValidation(validate) {
+    const validateRef = (0, import_element38.useRef)(validate);
+    validateRef.current = validate;
+    const timerRef = (0, import_element38.useRef)(null);
+    const unmountedRef = (0, import_element38.useRef)(false);
+    const scheduleValidation = (0, import_element38.useCallback)(() => {
+      if (unmountedRef.current) {
+        return;
+      }
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+      timerRef.current = setTimeout(() => {
+        validateRef.current();
+        timerRef.current = null;
+      }, 0);
+    }, []);
+    (0, import_element38.useEffect)(() => {
+      unmountedRef.current = false;
+      return () => {
+        unmountedRef.current = true;
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+        }
+      };
+    }, []);
+    return scheduleValidation;
+  }
 
   // packages/ui/build-module/link/link.mjs
   var import_element39 = __toESM(require_element(), 1);

@@ -12776,39 +12776,8 @@ function Provider({ ...props }) {
   return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(index_parts_exports3.Provider, { ...props });
 }
 
-// packages/ui/build-module/utils/use-schedule-validation.mjs
-var import_element32 = __toESM(require_element(), 1);
-function useScheduleValidation(validate) {
-  const validateRef = (0, import_element32.useRef)(validate);
-  validateRef.current = validate;
-  const timerRef = (0, import_element32.useRef)(null);
-  const unmountedRef = (0, import_element32.useRef)(false);
-  const scheduleValidation = (0, import_element32.useCallback)(() => {
-    if (unmountedRef.current) {
-      return;
-    }
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-    timerRef.current = setTimeout(() => {
-      validateRef.current();
-      timerRef.current = null;
-    }, 0);
-  }, []);
-  (0, import_element32.useEffect)(() => {
-    unmountedRef.current = false;
-    return () => {
-      unmountedRef.current = true;
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-    };
-  }, []);
-  return scheduleValidation;
-}
-
 // packages/ui/build-module/visually-hidden/visually-hidden.mjs
-var import_element33 = __toESM(require_element(), 1);
+var import_element32 = __toESM(require_element(), 1);
 var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
 function getRuntime13() {
   const globalScope = globalThis;
@@ -12893,7 +12862,7 @@ if (typeof process === "undefined" || true) {
   registerStyle13("fa606a57ae", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f37b9e2e191ebd66__visually-hidden{word-wrap:normal;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal}}}");
 }
 var style_default12 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
-var VisuallyHidden = (0, import_element33.forwardRef)(
+var VisuallyHidden = (0, import_element32.forwardRef)(
   function VisuallyHidden2({ render: render4, ...restProps }, ref) {
     const element = useRender({
       render: render4,
@@ -12910,6 +12879,37 @@ var VisuallyHidden = (0, import_element33.forwardRef)(
     return element;
   }
 );
+
+// packages/ui/build-module/utils/use-schedule-validation.mjs
+var import_element33 = __toESM(require_element(), 1);
+function useScheduleValidation(validate) {
+  const validateRef = (0, import_element33.useRef)(validate);
+  validateRef.current = validate;
+  const timerRef = (0, import_element33.useRef)(null);
+  const unmountedRef = (0, import_element33.useRef)(false);
+  const scheduleValidation = (0, import_element33.useCallback)(() => {
+    if (unmountedRef.current) {
+      return;
+    }
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = setTimeout(() => {
+      validateRef.current();
+      timerRef.current = null;
+    }, 0);
+  }, []);
+  (0, import_element33.useEffect)(() => {
+    unmountedRef.current = false;
+    return () => {
+      unmountedRef.current = true;
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
+  return scheduleValidation;
+}
 
 // packages/ui/build-module/link/link.mjs
 var import_element34 = __toESM(require_element(), 1);
