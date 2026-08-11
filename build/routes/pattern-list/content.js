@@ -176,9 +176,9 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React82 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef52 = React82.useRef, useEffect36 = React82.useEffect, useMemo50 = React82.useMemo, useDebugValue2 = React82.useDebugValue;
+      var React82 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef53 = React82.useRef, useEffect36 = React82.useEffect, useMemo50 = React82.useMemo, useDebugValue2 = React82.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
-        var instRef = useRef52(null);
+        var instRef = useRef53(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -1176,8 +1176,8 @@ function clsx() {
 var clsx_default = clsx;
 
 // packages/dataviews/build-module/dataviews/index.mjs
-var import_element90 = __toESM(require_element(), 1);
-var import_compose16 = __toESM(require_compose(), 1);
+var import_element91 = __toESM(require_element(), 1);
+var import_compose17 = __toESM(require_compose(), 1);
 
 // packages/ui/build-module/badge/badge.mjs
 var import_element12 = __toESM(require_element(), 1);
@@ -29166,8 +29166,338 @@ var DataViewsViewConfig = (0, import_element66.memo)(_DataViewsViewConfig);
 var dataviews_view_config_default = DataViewsViewConfig;
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-var import_components29 = __toESM(require_components(), 1);
+var import_element71 = __toESM(require_element(), 1);
+
+// packages/dataviews/build-module/components/validated-form-controls/control-with-error.mjs
+var import_i18n35 = __toESM(require_i18n(), 1);
 var import_element67 = __toESM(require_element(), 1);
+
+// packages/dataviews/build-module/components/validated-form-controls/validity-indicator.mjs
+var import_components29 = __toESM(require_components(), 1);
+var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+function ValidityIndicator({
+  id,
+  type,
+  message: message2
+}) {
+  const ICON = {
+    valid: published_default,
+    invalid: error_default
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime98.jsxs)(
+    "p",
+    {
+      id,
+      className: clsx_default(
+        "dataviews-validated-control__indicator",
+        `is-${type}`
+      ),
+      children: [
+        type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(import_components29.Spinner, { className: "dataviews-validated-control__indicator-spinner" }) : /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+          import_components29.Icon,
+          {
+            className: "dataviews-validated-control__indicator-icon",
+            icon: ICON[type],
+            size: 16,
+            fill: "currentColor"
+          }
+        ),
+        message2
+      ]
+    }
+  );
+}
+
+// packages/dataviews/build-module/components/validated-form-controls/control-with-error.mjs
+var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+function appendRequiredIndicator(label, required, markWhenOptional) {
+  let suffix;
+  if (required && !markWhenOptional) {
+    suffix = `(${(0, import_i18n35.__)("Required")})`;
+  } else if (!required && markWhenOptional) {
+    suffix = `(${(0, import_i18n35.__)("Optional")})`;
+  }
+  if (!suffix) {
+    return label;
+  }
+  if (typeof label === "string") {
+    return `${label} ${suffix}`;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(import_jsx_runtime99.Fragment, { children: [
+    label,
+    " ",
+    suffix
+  ] });
+}
+var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
+var className = "dataviews-validated-control";
+function UnforwardedControlWithError({
+  required,
+  markWhenOptional,
+  customValidity,
+  getValidityTarget,
+  children
+}, forwardedRef) {
+  const [errorMessage, setErrorMessage] = (0, import_element67.useState)();
+  const [statusMessage, setStatusMessage] = (0, import_element67.useState)();
+  const [showMessage, setShowMessage] = (0, import_element67.useState)(false);
+  const [isTouched, setIsTouched] = (0, import_element67.useState)(false);
+  (0, import_element67.useEffect)(() => {
+    const validityTarget = getValidityTarget();
+    const handler = () => {
+      setShowMessage(true);
+      validityTarget?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
+    };
+    validityTarget?.addEventListener("invalid", handler);
+    return () => validityTarget?.removeEventListener("invalid", handler);
+  }, [getValidityTarget]);
+  (0, import_element67.useEffect)(() => {
+    const validityTarget = getValidityTarget();
+    const suppressNativePopover = (event) => {
+      event.preventDefault();
+      if (!event.isTrusted) {
+        return;
+      }
+      const target = event.target;
+      const firstErrorInForm = Array.from(
+        target.form?.elements ?? []
+      ).find((el) => !el.validity.valid);
+      if (!target.form || firstErrorInForm === target) {
+        target.focus();
+      }
+    };
+    const radioSibilings = validityTarget?.type === "radio" && validityTarget?.name ? Array.from(
+      validityTarget?.closest(`.${className}`)?.querySelectorAll(
+        `input[type="radio"][name="${validityTarget?.name}"]`
+      ) ?? []
+    ).filter((sibling) => sibling !== validityTarget) : [];
+    validityTarget?.addEventListener("invalid", suppressNativePopover);
+    radioSibilings.forEach(
+      (sibling) => sibling.addEventListener("invalid", suppressNativePopover)
+    );
+    return () => {
+      validityTarget?.removeEventListener(
+        "invalid",
+        suppressNativePopover
+      );
+      radioSibilings.forEach(
+        (sibling) => sibling.removeEventListener("invalid", suppressNativePopover)
+      );
+    };
+  }, [getValidityTarget]);
+  (0, import_element67.useEffect)(() => {
+    const validityTarget = getValidityTarget();
+    if (!customValidity?.type) {
+      validityTarget?.setCustomValidity("");
+      setErrorMessage(validityTarget?.validationMessage);
+      setStatusMessage(void 0);
+      return;
+    }
+    switch (customValidity.type) {
+      case "validating": {
+        validityTarget?.setCustomValidity("");
+        setErrorMessage(void 0);
+        setStatusMessage({
+          type: "validating",
+          message: customValidity.message
+        });
+        break;
+      }
+      case "valid": {
+        validityTarget?.setCustomValidity("");
+        setErrorMessage(validityTarget?.validationMessage);
+        setStatusMessage({
+          type: "valid",
+          message: customValidity.message
+        });
+        break;
+      }
+      case "invalid": {
+        validityTarget?.setCustomValidity(
+          customValidity.message ?? ""
+        );
+        setErrorMessage(validityTarget?.validationMessage);
+        setStatusMessage(void 0);
+        break;
+      }
+    }
+  }, [customValidity, getValidityTarget]);
+  (0, import_element67.useEffect)(() => {
+    if (!isTouched || showMessage) {
+      return;
+    }
+    if (customValidity?.type === "validating") {
+      const timer = setTimeout(() => {
+        setShowMessage(true);
+      }, 1e3);
+      return () => clearTimeout(timer);
+    }
+    setShowMessage(true);
+  }, [isTouched, customValidity?.type, showMessage]);
+  const onBlur = (event) => {
+    if (isTouched) {
+      return;
+    }
+    if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget)) {
+      setIsTouched(true);
+      getValidityTarget()?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
+    }
+  };
+  const messageId = (0, import_element67.useId)();
+  const message2 = (() => {
+    if (errorMessage) {
+      return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+        ValidityIndicator,
+        {
+          id: messageId,
+          type: "invalid",
+          message: errorMessage
+        }
+      );
+    }
+    if (statusMessage?.type) {
+      return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+        ValidityIndicator,
+        {
+          id: messageId,
+          type: statusMessage.type,
+          message: statusMessage.message
+        }
+      );
+    }
+    return null;
+  })();
+  const visibleMessage = showMessage ? message2 : null;
+  (0, import_element67.useEffect)(() => {
+    const target = getValidityTarget();
+    if (!target) {
+      return;
+    }
+    function setDescribedBy(el, shouldAdd) {
+      const ids = (el.getAttribute("aria-describedby") ?? "").split(" ").filter((id) => id && id !== messageId);
+      if (shouldAdd) {
+        ids.push(messageId);
+      }
+      if (ids.length) {
+        el.setAttribute("aria-describedby", ids.join(" "));
+      } else {
+        el.removeAttribute("aria-describedby");
+      }
+    }
+    setDescribedBy(target, !!visibleMessage);
+    return () => setDescribedBy(target, false);
+  }, [visibleMessage, messageId, getValidityTarget]);
+  return /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)("div", { className, ref: forwardedRef, onBlur, children: [
+    (0, import_element67.cloneElement)(children, {
+      label: appendRequiredIndicator(
+        children.props.label,
+        required,
+        markWhenOptional
+      ),
+      required
+    }),
+    visibleMessage
+  ] });
+}
+var ControlWithError = (0, import_element67.forwardRef)(UnforwardedControlWithError);
+ControlWithError.displayName = "ControlWithError";
+
+// packages/dataviews/build-module/components/validated-form-controls/checkbox-control.mjs
+var import_element68 = __toESM(require_element(), 1);
+var import_compose13 = __toESM(require_compose(), 1);
+var import_components30 = __toESM(require_components(), 1);
+var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
+var UnforwardedValidatedCheckboxControl = ({
+  required,
+  customValidity,
+  markWhenOptional,
+  ...restProps
+}, forwardedRef) => {
+  const validityTargetRef = (0, import_element68.useRef)(null);
+  const mergedRefs = (0, import_compose13.useMergeRefs)([forwardedRef, validityTargetRef]);
+  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+    ControlWithError,
+    {
+      required,
+      markWhenOptional,
+      ref: mergedRefs,
+      customValidity,
+      getValidityTarget: () => validityTargetRef.current?.querySelector(
+        'input[type="checkbox"]'
+      ),
+      children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+        import_components30.CheckboxControl,
+        {
+          ...restProps
+        }
+      )
+    }
+  );
+};
+var ValidatedCheckboxControl = (0, import_element68.forwardRef)(UnforwardedValidatedCheckboxControl);
+ValidatedCheckboxControl.displayName = "ValidatedCheckboxControl";
+
+// packages/dataviews/build-module/components/validated-form-controls/number-control.mjs
+var import_element69 = __toESM(require_element(), 1);
+var import_compose14 = __toESM(require_compose(), 1);
+var import_components31 = __toESM(require_components(), 1);
+var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
+var UnforwardedValidatedNumberControl = ({
+  required,
+  customValidity,
+  markWhenOptional,
+  ...restProps
+}, forwardedRef) => {
+  const validityTargetRef = (0, import_element69.useRef)(null);
+  const mergedRefs = (0, import_compose14.useMergeRefs)([forwardedRef, validityTargetRef]);
+  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+    ControlWithError,
+    {
+      required,
+      markWhenOptional,
+      customValidity,
+      getValidityTarget: () => validityTargetRef.current,
+      children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components31.__experimentalNumberControl, { ref: mergedRefs, ...restProps })
+    }
+  );
+};
+var ValidatedNumberControl = (0, import_element69.forwardRef)(UnforwardedValidatedNumberControl);
+ValidatedNumberControl.displayName = "ValidatedNumberControl";
+
+// packages/dataviews/build-module/components/validated-form-controls/select-control.mjs
+var import_element70 = __toESM(require_element(), 1);
+var import_compose15 = __toESM(require_compose(), 1);
+var import_components32 = __toESM(require_components(), 1);
+var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
+var UnforwardedValidatedSelectControl = ({
+  required,
+  customValidity,
+  markWhenOptional,
+  ...restProps
+}, forwardedRef) => {
+  const validityTargetRef = (0, import_element70.useRef)(null);
+  const mergedRefs = (0, import_compose15.useMergeRefs)([forwardedRef, validityTargetRef]);
+  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+    ControlWithError,
+    {
+      required,
+      markWhenOptional,
+      customValidity,
+      getValidityTarget: () => validityTargetRef.current,
+      children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+        import_components32.SelectControl,
+        {
+          ref: mergedRefs,
+          // A runtime boolean cannot statically discriminate
+          // SelectControl's single/multiple props union.
+          ...restProps
+        }
+      )
+    }
+  );
+};
+var ValidatedSelectControl = (0, import_element70.forwardRef)(UnforwardedValidatedSelectControl);
+ValidatedSelectControl.displayName = "ValidatedSelectControl";
 
 // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.mjs
 function getCustomValidity(isValid2, validity) {
@@ -29196,8 +29526,7 @@ function getCustomValidity(isValid2, validity) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedCheckboxControl } = unlock3(import_components29.privateApis);
+var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
 function Checkbox({
   field,
   onChange,
@@ -29208,12 +29537,12 @@ function Checkbox({
 }) {
   const { getValue, setValue, label, description, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element67.useCallback)(() => {
+  const onChangeControl = (0, import_element71.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
     );
   }, [data, getValue, onChange, setValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
     ValidatedCheckboxControl,
     {
       required: !!field.isValid?.required,
@@ -29230,10 +29559,10 @@ function Checkbox({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/combobox.mjs
-var import_components30 = __toESM(require_components(), 1);
-var import_element68 = __toESM(require_element(), 1);
-var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedComboboxControl } = unlock3(import_components30.privateApis);
+var import_components33 = __toESM(require_components(), 1);
+var import_element72 = __toESM(require_element(), 1);
+var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedComboboxControl } = unlock3(import_components33.privateApis);
 function Combobox3({
   data,
   field,
@@ -29243,7 +29572,7 @@ function Combobox3({
 }) {
   const { label, description, placeholder, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data }) ?? "";
-  const onChangeControl = (0, import_element68.useCallback)(
+  const onChangeControl = (0, import_element72.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue ?? "" })),
     [data, onChange, setValue]
   );
@@ -29252,9 +29581,9 @@ function Combobox3({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_components30.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components33.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
     ValidatedComboboxControl,
     {
       required: !!field.isValid?.required,
@@ -29273,28 +29602,28 @@ function Combobox3({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
-var import_components32 = __toESM(require_components(), 1);
-var import_element71 = __toESM(require_element(), 1);
-var import_i18n36 = __toESM(require_i18n(), 1);
+var import_components35 = __toESM(require_components(), 1);
+var import_element75 = __toESM(require_element(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 var import_date4 = __toESM(require_date(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
-var import_components31 = __toESM(require_components(), 1);
-var import_element69 = __toESM(require_element(), 1);
-var import_i18n35 = __toESM(require_i18n(), 1);
-var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
+var import_components34 = __toESM(require_components(), 1);
+var import_element73 = __toESM(require_element(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
+var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
 var TIME_UNITS_OPTIONS = {
   [OPERATOR_IN_THE_PAST]: [
-    { value: "days", label: (0, import_i18n35.__)("Days") },
-    { value: "weeks", label: (0, import_i18n35.__)("Weeks") },
-    { value: "months", label: (0, import_i18n35.__)("Months") },
-    { value: "years", label: (0, import_i18n35.__)("Years") }
+    { value: "days", label: (0, import_i18n36.__)("Days") },
+    { value: "weeks", label: (0, import_i18n36.__)("Weeks") },
+    { value: "months", label: (0, import_i18n36.__)("Months") },
+    { value: "years", label: (0, import_i18n36.__)("Years") }
   ],
   [OPERATOR_OVER]: [
-    { value: "days", label: (0, import_i18n35.__)("Days ago") },
-    { value: "weeks", label: (0, import_i18n35.__)("Weeks ago") },
-    { value: "months", label: (0, import_i18n35.__)("Months ago") },
-    { value: "years", label: (0, import_i18n35.__)("Years ago") }
+    { value: "days", label: (0, import_i18n36.__)("Days ago") },
+    { value: "weeks", label: (0, import_i18n36.__)("Weeks ago") },
+    { value: "months", label: (0, import_i18n36.__)("Months ago") },
+    { value: "years", label: (0, import_i18n36.__)("Years ago") }
   ]
 };
 function RelativeDateControl({
@@ -29310,7 +29639,7 @@ function RelativeDateControl({
   const disabled2 = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
-  const onChangeValue = (0, import_element69.useCallback)(
+  const onChangeValue = (0, import_element73.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -29319,7 +29648,7 @@ function RelativeDateControl({
     ),
     [onChange, setValue, data, unit]
   );
-  const onChangeUnit = (0, import_element69.useCallback)(
+  const onChangeUnit = (0, import_element73.useCallback)(
     (newUnit) => onChange(
       setValue({
         item: data,
@@ -29328,17 +29657,17 @@ function RelativeDateControl({
     ),
     [onChange, setValue, data, relValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
-    import_components31.BaseControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+    import_components34.BaseControl,
     {
       id,
       className: clsx_default(className2, "dataviews-controls__relative-date"),
       label,
       hideLabelFromVision,
       help: description,
-      children: /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(Stack, { direction: "row", gap: "sm", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
-          import_components31.__experimentalNumberControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime105.jsxs)(Stack, { direction: "row", gap: "sm", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+          import_components34.__experimentalNumberControl,
           {
             className: "dataviews-controls__relative-date-number",
             spinControls: "none",
@@ -29349,11 +29678,11 @@ function RelativeDateControl({
             disabled: disabled2
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
-          import_components31.SelectControl,
+        /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+          import_components34.SelectControl,
           {
             className: "dataviews-controls__relative-date-unit",
-            label: (0, import_i18n35.__)("Unit"),
+            label: (0, import_i18n36.__)("Unit"),
             value: unit,
             options,
             onChange: onChangeUnit,
@@ -29367,11 +29696,11 @@ function RelativeDateControl({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/utils/use-disabled-date-matchers.mjs
-var import_element70 = __toESM(require_element(), 1);
+var import_element74 = __toESM(require_element(), 1);
 function useDisabledDateMatchers(isValid2, parseDateFn) {
   const minConstraint = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
   const maxConstraint = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
-  const disabledMatchers = (0, import_element70.useMemo)(() => {
+  const disabledMatchers = (0, import_element74.useMemo)(() => {
     const matchers = [];
     if (minConstraint) {
       const minDate = parseDateFn(minConstraint);
@@ -29401,8 +29730,8 @@ function parseDateTime(dateTimeString) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
-var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl } = unlock3(import_components32.privateApis);
+var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl } = unlock3(import_components35.privateApis);
 var formatDateTime = (value) => {
   if (!value) {
     return "";
@@ -29423,26 +29752,26 @@ function CalendarDateTimeControl({
   const disabled2 = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
-  const [calendarMonth, setCalendarMonth] = (0, import_element71.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element75.useState)(() => {
     const parsedDate = parseDateTime(value);
     return parsedDate || /* @__PURE__ */ new Date();
   });
-  const inputControlRef = (0, import_element71.useRef)(null);
-  const validationTimeoutRef = (0, import_element71.useRef)(void 0);
-  const previousFocusRef = (0, import_element71.useRef)(null);
+  const inputControlRef = (0, import_element75.useRef)(null);
+  const validationTimeoutRef = (0, import_element75.useRef)(void 0);
+  const previousFocusRef = (0, import_element75.useRef)(null);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
-  const onChangeCallback = (0, import_element71.useCallback)(
+  const onChangeCallback = (0, import_element75.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  (0, import_element71.useEffect)(() => {
+  (0, import_element75.useEffect)(() => {
     return () => {
       if (validationTimeoutRef.current) {
         clearTimeout(validationTimeoutRef.current);
       }
     };
   }, []);
-  const onSelectDate = (0, import_element71.useCallback)(
+  const onSelectDate = (0, import_element75.useCallback)(
     (newDate) => {
       let dateTimeValue;
       if (newDate) {
@@ -29476,7 +29805,7 @@ function CalendarDateTimeControl({
     },
     [onChangeCallback, value]
   );
-  const handleManualDateTimeChange = (0, import_element71.useCallback)(
+  const handleManualDateTimeChange = (0, import_element75.useCallback)(
     (newValue) => {
       if (newValue) {
         const dateTime = (0, import_date4.getDate)(newValue);
@@ -29498,26 +29827,26 @@ function CalendarDateTimeControl({
   } = (0, import_date4.getSettings)();
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n36.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n37.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n36.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n37.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
-    import_components32.BaseControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+    import_components35.BaseControl,
     {
       id,
       label: displayLabel,
       help: description,
       hideLabelFromVision,
-      children: /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime106.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
           ValidatedInputControl,
           {
             ref: inputControlRef,
             required: !!isValid2?.required,
             customValidity: getCustomValidity(isValid2, validity),
             type: "datetime-local",
-            label: (0, import_i18n36.__)("Date time"),
+            label: (0, import_i18n37.__)("Date time"),
             hideLabelFromVision: true,
             value: formatDateTime(value),
             onChange: handleManualDateTimeChange,
@@ -29526,7 +29855,7 @@ function CalendarDateTimeControl({
             max: maxConstraint ? formatDateTime(maxConstraint) : void 0
           }
         ),
-        !compact && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+        !compact && /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
           Calendar,
           {
             style: { width: "100%" },
@@ -29554,7 +29883,7 @@ function DateTime({
   config
 }) {
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
       RelativeDateControl,
       {
         className: "dataviews-controls__datetime",
@@ -29566,7 +29895,7 @@ function DateTime({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
     CalendarDateTimeControl,
     {
       data,
@@ -29581,21 +29910,21 @@ function DateTime({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/date.mjs
-var import_components33 = __toESM(require_components(), 1);
-var import_element72 = __toESM(require_element(), 1);
-var import_i18n37 = __toESM(require_i18n(), 1);
+var import_components36 = __toESM(require_components(), 1);
+var import_element76 = __toESM(require_element(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
 var import_date5 = __toESM(require_date(), 1);
 import { speak as speak2 } from "@wordpress/a11y";
-var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
 var DATE_PRESETS = [
   {
     id: "today",
-    label: (0, import_i18n37.__)("Today"),
+    label: (0, import_i18n38.__)("Today"),
     getValue: () => (0, import_date5.getDate)(null)
   },
   {
     id: "yesterday",
-    label: (0, import_i18n37.__)("Yesterday"),
+    label: (0, import_i18n38.__)("Yesterday"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return subDays(today, 1);
@@ -29603,7 +29932,7 @@ var DATE_PRESETS = [
   },
   {
     id: "past-week",
-    label: (0, import_i18n37.__)("Past week"),
+    label: (0, import_i18n38.__)("Past week"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return subDays(today, 7);
@@ -29611,7 +29940,7 @@ var DATE_PRESETS = [
   },
   {
     id: "past-month",
-    label: (0, import_i18n37.__)("Past month"),
+    label: (0, import_i18n38.__)("Past month"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return subMonths(today, 1);
@@ -29621,7 +29950,7 @@ var DATE_PRESETS = [
 var DATE_RANGE_PRESETS = [
   {
     id: "last-7-days",
-    label: (0, import_i18n37.__)("Last 7 days"),
+    label: (0, import_i18n38.__)("Last 7 days"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [subDays(today, 7), today];
@@ -29629,7 +29958,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "last-30-days",
-    label: (0, import_i18n37.__)("Last 30 days"),
+    label: (0, import_i18n38.__)("Last 30 days"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [subDays(today, 30), today];
@@ -29637,7 +29966,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "month-to-date",
-    label: (0, import_i18n37.__)("Month to date"),
+    label: (0, import_i18n38.__)("Month to date"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [startOfMonth(today), today];
@@ -29645,7 +29974,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "last-year",
-    label: (0, import_i18n37.__)("Last year"),
+    label: (0, import_i18n38.__)("Last year"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [subYears(today, 1), today];
@@ -29653,7 +29982,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "year-to-date",
-    label: (0, import_i18n37.__)("Year to date"),
+    label: (0, import_i18n38.__)("Year to date"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [startOfYear(today), today];
@@ -29682,8 +30011,8 @@ function ValidatedDateControl({
   children
 }) {
   const { isValid: isValid2 } = field;
-  const [customValidity, setCustomValidity] = (0, import_element72.useState)(void 0);
-  const validateRefs = (0, import_element72.useCallback)(() => {
+  const [customValidity, setCustomValidity] = (0, import_element76.useState)(void 0);
+  const validateRefs = (0, import_element76.useCallback)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     for (const ref of refs) {
       const input = ref.current;
@@ -29697,7 +30026,7 @@ function ValidatedDateControl({
     }
     setCustomValidity(void 0);
   }, [inputRefs]);
-  (0, import_element72.useEffect)(() => {
+  (0, import_element76.useEffect)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     const result = validity ? getCustomValidity(isValid2, validity) : void 0;
     for (const ref of refs) {
@@ -29709,7 +30038,7 @@ function ValidatedDateControl({
       }
     }
   }, [inputRefs, isValid2, validity]);
-  (0, import_element72.useEffect)(() => {
+  (0, import_element76.useEffect)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     const handleInvalid = (event) => {
       event.preventDefault();
@@ -29724,7 +30053,7 @@ function ValidatedDateControl({
       }
     };
   }, [inputRefs, setIsTouched]);
-  (0, import_element72.useEffect)(() => {
+  (0, import_element76.useEffect)(() => {
     if (!isTouched) {
       return;
     }
@@ -29735,7 +30064,7 @@ function ValidatedDateControl({
       validateRefs();
     }
   }, [isTouched, isValid2, validity, validateRefs]);
-  (0, import_element72.useEffect)(() => {
+  (0, import_element76.useEffect)(() => {
     if (isTouched && customValidity?.message) {
       speak2(customValidity.message);
     }
@@ -29748,9 +30077,9 @@ function ValidatedDateControl({
       setIsTouched(true);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)("div", { onBlur, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)("div", { onBlur, children: [
     children,
-    customValidity && /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(
+    customValidity && /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(
       "p",
       {
         className: clsx_default(
@@ -29758,8 +30087,8 @@ function ValidatedDateControl({
           customValidity.type === "invalid" ? "is-invalid" : void 0
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-            import_components33.Icon,
+          /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+            import_components36.Icon,
             {
               className: "components-validated-control__indicator-icon",
               icon: error_default,
@@ -29791,24 +30120,24 @@ function CalendarDateControl({
     format: fieldFormat
   } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const [selectedPresetId, setSelectedPresetId] = (0, import_element72.useState)(
+  const [selectedPresetId, setSelectedPresetId] = (0, import_element76.useState)(
     null
   );
   const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
-  const [calendarMonth, setCalendarMonth] = (0, import_element72.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element76.useState)(() => {
     const parsedDate = parseDate(value);
     return parsedDate || /* @__PURE__ */ new Date();
   });
-  const [isTouched, setIsTouched] = (0, import_element72.useState)(false);
-  const validityTargetRef = (0, import_element72.useRef)(null);
+  const [isTouched, setIsTouched] = (0, import_element76.useState)(false);
+  const validityTargetRef = (0, import_element76.useRef)(null);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
-  const onChangeCallback = (0, import_element72.useCallback)(
+  const onChangeCallback = (0, import_element76.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  const onSelectDate = (0, import_element72.useCallback)(
+  const onSelectDate = (0, import_element76.useCallback)(
     (newDate) => {
       const dateValue = newDate ? format(newDate, "yyyy-MM-dd") : void 0;
       onChangeCallback(dateValue);
@@ -29817,7 +30146,7 @@ function CalendarDateControl({
     },
     [onChangeCallback]
   );
-  const handlePresetClick = (0, import_element72.useCallback)(
+  const handlePresetClick = (0, import_element76.useCallback)(
     (preset) => {
       const presetDate = preset.getValue();
       const dateValue = formatDate(presetDate);
@@ -29828,7 +30157,7 @@ function CalendarDateControl({
     },
     [onChangeCallback]
   );
-  const handleManualDateChange = (0, import_element72.useCallback)(
+  const handleManualDateChange = (0, import_element76.useCallback)(
     (newValue) => {
       onChangeCallback(newValue);
       if (newValue) {
@@ -29847,11 +30176,11 @@ function CalendarDateControl({
   } = (0, import_date5.getSettings)();
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n37.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n38.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n37.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n38.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
     ValidatedDateControl,
     {
       field,
@@ -29859,16 +30188,16 @@ function CalendarDateControl({
       inputRefs: validityTargetRef,
       isTouched,
       setIsTouched,
-      children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-        import_components33.BaseControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+        import_components36.BaseControl,
         {
           id,
           className: "dataviews-controls__date",
           label: displayLabel,
           help: description,
           hideLabelFromVision,
-          children: /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -29878,8 +30207,8 @@ function CalendarDateControl({
                 children: [
                   DATE_PRESETS.map((preset) => {
                     const isSelected2 = selectedPresetId === preset.id;
-                    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-                      import_components33.Button,
+                    return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+                      import_components36.Button,
                       {
                         className: "dataviews-controls__date-preset",
                         variant: "tertiary",
@@ -29893,8 +30222,8 @@ function CalendarDateControl({
                       preset.id
                     );
                   }),
-                  /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-                    import_components33.Button,
+                  /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+                    import_components36.Button,
                     {
                       className: "dataviews-controls__date-preset",
                       variant: "tertiary",
@@ -29902,18 +30231,18 @@ function CalendarDateControl({
                       size: "small",
                       disabled: !!selectedPresetId || disabled2,
                       accessibleWhenDisabled: true,
-                      children: (0, import_i18n37.__)("Custom")
+                      children: (0, import_i18n38.__)("Custom")
                     }
                   )
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-              import_components33.__experimentalInputControl,
+            /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+              import_components36.__experimentalInputControl,
               {
                 ref: validityTargetRef,
                 type: "date",
-                label: (0, import_i18n37.__)("Date"),
+                label: (0, import_i18n38.__)("Date"),
                 hideLabelFromVision: true,
                 value,
                 onChange: handleManualDateChange,
@@ -29923,7 +30252,7 @@ function CalendarDateControl({
                 max: maxConstraint
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
               Calendar,
               {
                 style: { width: "100%" },
@@ -29968,7 +30297,7 @@ function CalendarDateRangeControl({
   }
   const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
-  const onChangeCallback = (0, import_element72.useCallback)(
+  const onChangeCallback = (0, import_element76.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -29979,10 +30308,10 @@ function CalendarDateRangeControl({
     },
     [data, onChange, setValue]
   );
-  const [selectedPresetId, setSelectedPresetId] = (0, import_element72.useState)(
+  const [selectedPresetId, setSelectedPresetId] = (0, import_element76.useState)(
     null
   );
-  const selectedRange = (0, import_element72.useMemo)(() => {
+  const selectedRange = (0, import_element76.useMemo)(() => {
     if (!value) {
       return null;
     }
@@ -29992,13 +30321,13 @@ function CalendarDateRangeControl({
       to: parseDate(to) || void 0
     };
   }, [value]);
-  const [calendarMonth, setCalendarMonth] = (0, import_element72.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element76.useState)(() => {
     return selectedRange?.from || /* @__PURE__ */ new Date();
   });
-  const [isTouched, setIsTouched] = (0, import_element72.useState)(false);
-  const fromInputRef = (0, import_element72.useRef)(null);
-  const toInputRef = (0, import_element72.useRef)(null);
-  const updateDateRange = (0, import_element72.useCallback)(
+  const [isTouched, setIsTouched] = (0, import_element76.useState)(false);
+  const fromInputRef = (0, import_element76.useRef)(null);
+  const toInputRef = (0, import_element76.useRef)(null);
+  const updateDateRange = (0, import_element76.useCallback)(
     (fromDate, toDate2) => {
       if (!fromDate && !toDate2) {
         onChangeCallback(void 0);
@@ -30011,7 +30340,7 @@ function CalendarDateRangeControl({
     },
     [onChangeCallback]
   );
-  const onSelectCalendarRange = (0, import_element72.useCallback)(
+  const onSelectCalendarRange = (0, import_element76.useCallback)(
     (newRange) => {
       updateDateRange(newRange?.from, newRange?.to);
       setSelectedPresetId(null);
@@ -30019,7 +30348,7 @@ function CalendarDateRangeControl({
     },
     [updateDateRange]
   );
-  const handlePresetClick = (0, import_element72.useCallback)(
+  const handlePresetClick = (0, import_element76.useCallback)(
     (preset) => {
       const [startDate, endDate] = preset.getValue();
       setCalendarMonth(startDate);
@@ -30029,7 +30358,7 @@ function CalendarDateRangeControl({
     },
     [updateDateRange]
   );
-  const handleManualDateChange = (0, import_element72.useCallback)(
+  const handleManualDateChange = (0, import_element76.useCallback)(
     (fromOrTo, newValue) => {
       const [currentFrom, currentTo] = value || [
         void 0,
@@ -30052,11 +30381,11 @@ function CalendarDateRangeControl({
   const { timezone } = (0, import_date5.getSettings)();
   let displayLabel = label;
   if (field.isValid?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n37.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n38.__)("Required")})`;
   } else if (!field.isValid?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n37.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n38.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
     ValidatedDateControl,
     {
       field,
@@ -30064,16 +30393,16 @@ function CalendarDateRangeControl({
       inputRefs: [fromInputRef, toInputRef],
       isTouched,
       setIsTouched,
-      children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-        import_components33.BaseControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+        import_components36.BaseControl,
         {
           id,
           className: "dataviews-controls__date",
           label: displayLabel,
           help: description,
           hideLabelFromVision,
-          children: /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -30083,8 +30412,8 @@ function CalendarDateRangeControl({
                 children: [
                   DATE_RANGE_PRESETS.map((preset) => {
                     const isSelected2 = selectedPresetId === preset.id;
-                    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-                      import_components33.Button,
+                    return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+                      import_components36.Button,
                       {
                         className: "dataviews-controls__date-preset",
                         variant: "tertiary",
@@ -30098,8 +30427,8 @@ function CalendarDateRangeControl({
                       preset.id
                     );
                   }),
-                  /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-                    import_components33.Button,
+                  /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+                    import_components36.Button,
                     {
                       className: "dataviews-controls__date-preset",
                       variant: "tertiary",
@@ -30107,13 +30436,13 @@ function CalendarDateRangeControl({
                       size: "small",
                       accessibleWhenDisabled: true,
                       disabled: !!selectedPresetId || disabled2,
-                      children: (0, import_i18n37.__)("Custom")
+                      children: (0, import_i18n38.__)("Custom")
                     }
                   )
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -30121,12 +30450,12 @@ function CalendarDateRangeControl({
                 justify: "space-between",
                 className: "dataviews-controls__date-range-inputs",
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-                    import_components33.__experimentalInputControl,
+                  /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+                    import_components36.__experimentalInputControl,
                     {
                       ref: fromInputRef,
                       type: "date",
-                      label: (0, import_i18n37.__)("From"),
+                      label: (0, import_i18n38.__)("From"),
                       hideLabelFromVision: true,
                       value: value?.[0],
                       onChange: (newValue) => handleManualDateChange("from", newValue),
@@ -30136,12 +30465,12 @@ function CalendarDateRangeControl({
                       max: maxConstraint
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-                    import_components33.__experimentalInputControl,
+                  /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+                    import_components36.__experimentalInputControl,
                     {
                       ref: toInputRef,
                       type: "date",
-                      label: (0, import_i18n37.__)("To"),
+                      label: (0, import_i18n38.__)("To"),
                       hideLabelFromVision: true,
                       value: value?.[1],
                       onChange: (newValue) => handleManualDateChange("to", newValue),
@@ -30154,7 +30483,7 @@ function CalendarDateRangeControl({
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
               RangeCalendar,
               {
                 style: { width: "100%" },
@@ -30183,7 +30512,7 @@ function DateControl({
   validity
 }) {
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
       RelativeDateControl,
       {
         className: "dataviews-controls__date",
@@ -30196,7 +30525,7 @@ function DateControl({
     );
   }
   if (operator === OPERATOR_BETWEEN) {
-    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
       CalendarDateRangeControl,
       {
         data,
@@ -30208,7 +30537,7 @@ function DateControl({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
     CalendarDateControl,
     {
       data,
@@ -30223,306 +30552,8 @@ function DateControl({
 
 // packages/dataviews/build-module/components/dataform-controls/select.mjs
 var import_components37 = __toESM(require_components(), 1);
-var import_element76 = __toESM(require_element(), 1);
-
-// packages/dataviews/build-module/components/validated-form-controls/control-with-error.mjs
-var import_i18n38 = __toESM(require_i18n(), 1);
-var import_element73 = __toESM(require_element(), 1);
-
-// packages/dataviews/build-module/components/validated-form-controls/validity-indicator.mjs
-var import_components34 = __toESM(require_components(), 1);
-var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
-function ValidityIndicator({
-  id,
-  type,
-  message: message2
-}) {
-  const ICON = {
-    valid: published_default,
-    invalid: error_default
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(
-    "p",
-    {
-      id,
-      className: clsx_default(
-        "dataviews-validated-control__indicator",
-        `is-${type}`
-      ),
-      children: [
-        type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(import_components34.Spinner, { className: "dataviews-validated-control__indicator-spinner" }) : /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
-          import_components34.Icon,
-          {
-            className: "dataviews-validated-control__indicator-icon",
-            icon: ICON[type],
-            size: 16,
-            fill: "currentColor"
-          }
-        ),
-        message2
-      ]
-    }
-  );
-}
-
-// packages/dataviews/build-module/components/validated-form-controls/control-with-error.mjs
-var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
-function appendRequiredIndicator(label, required, markWhenOptional) {
-  let suffix;
-  if (required && !markWhenOptional) {
-    suffix = `(${(0, import_i18n38.__)("Required")})`;
-  } else if (!required && markWhenOptional) {
-    suffix = `(${(0, import_i18n38.__)("Optional")})`;
-  }
-  if (!suffix) {
-    return label;
-  }
-  if (typeof label === "string") {
-    return `${label} ${suffix}`;
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(import_jsx_runtime104.Fragment, { children: [
-    label,
-    " ",
-    suffix
-  ] });
-}
-var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
-var className = "dataviews-validated-control";
-function UnforwardedControlWithError({
-  required,
-  markWhenOptional,
-  customValidity,
-  getValidityTarget,
-  children
-}, forwardedRef) {
-  const [errorMessage, setErrorMessage] = (0, import_element73.useState)();
-  const [statusMessage, setStatusMessage] = (0, import_element73.useState)();
-  const [showMessage, setShowMessage] = (0, import_element73.useState)(false);
-  const [isTouched, setIsTouched] = (0, import_element73.useState)(false);
-  (0, import_element73.useEffect)(() => {
-    const validityTarget = getValidityTarget();
-    const handler = () => {
-      setShowMessage(true);
-      validityTarget?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
-    };
-    validityTarget?.addEventListener("invalid", handler);
-    return () => validityTarget?.removeEventListener("invalid", handler);
-  }, [getValidityTarget]);
-  (0, import_element73.useEffect)(() => {
-    const validityTarget = getValidityTarget();
-    const suppressNativePopover = (event) => {
-      event.preventDefault();
-      if (!event.isTrusted) {
-        return;
-      }
-      const target = event.target;
-      const firstErrorInForm = Array.from(
-        target.form?.elements ?? []
-      ).find((el) => !el.validity.valid);
-      if (!target.form || firstErrorInForm === target) {
-        target.focus();
-      }
-    };
-    const radioSibilings = validityTarget?.type === "radio" && validityTarget?.name ? Array.from(
-      validityTarget?.closest(`.${className}`)?.querySelectorAll(
-        `input[type="radio"][name="${validityTarget?.name}"]`
-      ) ?? []
-    ).filter((sibling) => sibling !== validityTarget) : [];
-    validityTarget?.addEventListener("invalid", suppressNativePopover);
-    radioSibilings.forEach(
-      (sibling) => sibling.addEventListener("invalid", suppressNativePopover)
-    );
-    return () => {
-      validityTarget?.removeEventListener(
-        "invalid",
-        suppressNativePopover
-      );
-      radioSibilings.forEach(
-        (sibling) => sibling.removeEventListener("invalid", suppressNativePopover)
-      );
-    };
-  }, [getValidityTarget]);
-  (0, import_element73.useEffect)(() => {
-    const validityTarget = getValidityTarget();
-    if (!customValidity?.type) {
-      validityTarget?.setCustomValidity("");
-      setErrorMessage(validityTarget?.validationMessage);
-      setStatusMessage(void 0);
-      return;
-    }
-    switch (customValidity.type) {
-      case "validating": {
-        validityTarget?.setCustomValidity("");
-        setErrorMessage(void 0);
-        setStatusMessage({
-          type: "validating",
-          message: customValidity.message
-        });
-        break;
-      }
-      case "valid": {
-        validityTarget?.setCustomValidity("");
-        setErrorMessage(validityTarget?.validationMessage);
-        setStatusMessage({
-          type: "valid",
-          message: customValidity.message
-        });
-        break;
-      }
-      case "invalid": {
-        validityTarget?.setCustomValidity(
-          customValidity.message ?? ""
-        );
-        setErrorMessage(validityTarget?.validationMessage);
-        setStatusMessage(void 0);
-        break;
-      }
-    }
-  }, [customValidity, getValidityTarget]);
-  (0, import_element73.useEffect)(() => {
-    if (!isTouched || showMessage) {
-      return;
-    }
-    if (customValidity?.type === "validating") {
-      const timer = setTimeout(() => {
-        setShowMessage(true);
-      }, 1e3);
-      return () => clearTimeout(timer);
-    }
-    setShowMessage(true);
-  }, [isTouched, customValidity?.type, showMessage]);
-  const onBlur = (event) => {
-    if (isTouched) {
-      return;
-    }
-    if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget)) {
-      setIsTouched(true);
-      getValidityTarget()?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
-    }
-  };
-  const messageId = (0, import_element73.useId)();
-  const message2 = (() => {
-    if (errorMessage) {
-      return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
-        ValidityIndicator,
-        {
-          id: messageId,
-          type: "invalid",
-          message: errorMessage
-        }
-      );
-    }
-    if (statusMessage?.type) {
-      return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
-        ValidityIndicator,
-        {
-          id: messageId,
-          type: statusMessage.type,
-          message: statusMessage.message
-        }
-      );
-    }
-    return null;
-  })();
-  const visibleMessage = showMessage ? message2 : null;
-  (0, import_element73.useEffect)(() => {
-    const target = getValidityTarget();
-    if (!target) {
-      return;
-    }
-    function setDescribedBy(el, shouldAdd) {
-      const ids = (el.getAttribute("aria-describedby") ?? "").split(" ").filter((id) => id && id !== messageId);
-      if (shouldAdd) {
-        ids.push(messageId);
-      }
-      if (ids.length) {
-        el.setAttribute("aria-describedby", ids.join(" "));
-      } else {
-        el.removeAttribute("aria-describedby");
-      }
-    }
-    setDescribedBy(target, !!visibleMessage);
-    return () => setDescribedBy(target, false);
-  }, [visibleMessage, messageId, getValidityTarget]);
-  return /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("div", { className, ref: forwardedRef, onBlur, children: [
-    (0, import_element73.cloneElement)(children, {
-      label: appendRequiredIndicator(
-        children.props.label,
-        required,
-        markWhenOptional
-      ),
-      required
-    }),
-    visibleMessage
-  ] });
-}
-var ControlWithError = (0, import_element73.forwardRef)(UnforwardedControlWithError);
-ControlWithError.displayName = "ControlWithError";
-
-// packages/dataviews/build-module/components/validated-form-controls/number-control.mjs
-var import_element74 = __toESM(require_element(), 1);
-var import_compose13 = __toESM(require_compose(), 1);
-var import_components35 = __toESM(require_components(), 1);
-var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
-var UnforwardedValidatedNumberControl = ({
-  required,
-  customValidity,
-  markWhenOptional,
-  ...restProps
-}, forwardedRef) => {
-  const validityTargetRef = (0, import_element74.useRef)(null);
-  const mergedRefs = (0, import_compose13.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
-    ControlWithError,
-    {
-      required,
-      markWhenOptional,
-      customValidity,
-      getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(import_components35.__experimentalNumberControl, { ref: mergedRefs, ...restProps })
-    }
-  );
-};
-var ValidatedNumberControl = (0, import_element74.forwardRef)(UnforwardedValidatedNumberControl);
-ValidatedNumberControl.displayName = "ValidatedNumberControl";
-
-// packages/dataviews/build-module/components/validated-form-controls/select-control.mjs
-var import_element75 = __toESM(require_element(), 1);
-var import_compose14 = __toESM(require_compose(), 1);
-var import_components36 = __toESM(require_components(), 1);
-var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
-var UnforwardedValidatedSelectControl = ({
-  required,
-  customValidity,
-  markWhenOptional,
-  ...restProps
-}, forwardedRef) => {
-  const validityTargetRef = (0, import_element75.useRef)(null);
-  const mergedRefs = (0, import_compose14.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
-    ControlWithError,
-    {
-      required,
-      markWhenOptional,
-      customValidity,
-      getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
-        import_components36.SelectControl,
-        {
-          ref: mergedRefs,
-          // A runtime boolean cannot statically discriminate
-          // SelectControl's single/multiple props union.
-          ...restProps
-        }
-      )
-    }
-  );
-};
-var ValidatedSelectControl = (0, import_element75.forwardRef)(UnforwardedValidatedSelectControl);
-ValidatedSelectControl.displayName = "ValidatedSelectControl";
-
-// packages/dataviews/build-module/components/dataform-controls/select.mjs
-var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
+var import_element77 = __toESM(require_element(), 1);
+var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
 function Select2({
   data,
   field,
@@ -30535,7 +30566,7 @@ function Select2({
   const disabled2 = field.isDisabled({ item: data, field });
   const isMultiple = type === "array";
   const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
-  const onChangeControl = (0, import_element76.useCallback)(
+  const onChangeControl = (0, import_element77.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -30544,9 +30575,9 @@ function Select2({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_components37.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_components37.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
     ValidatedSelectControl,
     {
       required: !!field.isValid?.required,
@@ -30565,7 +30596,7 @@ function Select2({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/adaptive-select.mjs
-var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
 var ELEMENTS_THRESHOLD = 10;
 function AdaptiveSelect(props) {
   const { field } = props;
@@ -30574,9 +30605,9 @@ function AdaptiveSelect(props) {
     getElements: field.getElements
   });
   if (elements.length >= ELEMENTS_THRESHOLD) {
-    return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(Combobox3, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(Combobox3, { ...props });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(Select2, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(Select2, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/email.mjs
@@ -30584,8 +30615,8 @@ var import_components39 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.mjs
 var import_components38 = __toESM(require_components(), 1);
-var import_element77 = __toESM(require_element(), 1);
-var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
+var import_element78 = __toESM(require_element(), 1);
+var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedInputControl: ValidatedInputControl2 } = unlock3(import_components38.privateApis);
 function ValidatedText({
   data,
@@ -30601,7 +30632,7 @@ function ValidatedText({
   const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data });
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element77.useCallback)(
+  const onChangeControl = (0, import_element78.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -30610,7 +30641,7 @@ function ValidatedText({
     ),
     [data, setValue, onChange]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
     ValidatedInputControl2,
     {
       required: !!isValid2.required,
@@ -30634,36 +30665,8 @@ function ValidatedText({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/email.mjs
-var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
-function Email({
-  data,
-  field,
-  onChange,
-  hideLabelFromVision,
-  markWhenOptional,
-  validity
-}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
-    ValidatedText,
-    {
-      ...{
-        data,
-        field,
-        onChange,
-        hideLabelFromVision,
-        markWhenOptional,
-        validity,
-        type: "email",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(import_components39.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(import_components39.Icon, { icon: envelope_default }) })
-      }
-    }
-  );
-}
-
-// packages/dataviews/build-module/components/dataform-controls/telephone.mjs
-var import_components40 = __toESM(require_components(), 1);
 var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
-function Telephone({
+function Email({
   data,
   field,
   onChange,
@@ -30681,17 +30684,17 @@ function Telephone({
         hideLabelFromVision,
         markWhenOptional,
         validity,
-        type: "tel",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components40.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components40.Icon, { icon: mobile_default }) })
+        type: "email",
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components39.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components39.Icon, { icon: envelope_default }) })
       }
     }
   );
 }
 
-// packages/dataviews/build-module/components/dataform-controls/url.mjs
-var import_components41 = __toESM(require_components(), 1);
+// packages/dataviews/build-module/components/dataform-controls/telephone.mjs
+var import_components40 = __toESM(require_components(), 1);
 var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
-function Url({
+function Telephone({
   data,
   field,
   onChange,
@@ -30709,8 +30712,36 @@ function Url({
         hideLabelFromVision,
         markWhenOptional,
         validity,
+        type: "tel",
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_components40.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_components40.Icon, { icon: mobile_default }) })
+      }
+    }
+  );
+}
+
+// packages/dataviews/build-module/components/dataform-controls/url.mjs
+var import_components41 = __toESM(require_components(), 1);
+var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
+function Url({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision,
+  markWhenOptional,
+  validity
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+    ValidatedText,
+    {
+      ...{
+        data,
+        field,
+        onChange,
+        hideLabelFromVision,
+        markWhenOptional,
+        validity,
         type: "url",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_components41.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_components41.Icon, { icon: link_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_components41.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_components41.Icon, { icon: link_default }) })
       }
     }
   );
@@ -30718,9 +30749,9 @@ function Url({
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
 var import_components42 = __toESM(require_components(), 1);
-var import_element78 = __toESM(require_element(), 1);
+var import_element79 = __toESM(require_element(), 1);
 var import_i18n39 = __toESM(require_i18n(), 1);
-var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
     return "";
@@ -30735,20 +30766,20 @@ function BetweenControls({
   step
 }) {
   const [min3 = "", max3 = ""] = value;
-  const onChangeMin = (0, import_element78.useCallback)(
+  const onChangeMin = (0, import_element79.useCallback)(
     (newValue) => onChange([toNumberOrEmpty(newValue), max3]),
     [onChange, max3]
   );
-  const onChangeMax = (0, import_element78.useCallback)(
+  const onChangeMax = (0, import_element79.useCallback)(
     (newValue) => onChange([min3, toNumberOrEmpty(newValue)]),
     [onChange, min3]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
     import_components42.BaseControl,
     {
       help: (0, import_i18n39.__)("The max. value must be greater than the min. value."),
-      children: /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(import_components42.Flex, { direction: "row", gap: 4, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(import_components42.Flex, { direction: "row", gap: 4, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
           import_components42.__experimentalNumberControl,
           {
             label: (0, import_i18n39.__)("Min."),
@@ -30759,7 +30790,7 @@ function BetweenControls({
             step
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
           import_components42.__experimentalNumberControl,
           {
             label: (0, import_i18n39.__)("Max."),
@@ -30788,7 +30819,7 @@ function ValidatedNumber({
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data }) ?? "";
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element78.useCallback)(
+  const onChangeControl = (0, import_element79.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -30802,7 +30833,7 @@ function ValidatedNumber({
     },
     [data, onChange, setValue]
   );
-  const onChangeBetweenControls = (0, import_element78.useCallback)(
+  const onChangeBetweenControls = (0, import_element79.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -30820,7 +30851,7 @@ function ValidatedNumber({
     )) {
       valueBetween = value;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
       BetweenControls,
       {
         value: valueBetween,
@@ -30830,7 +30861,7 @@ function ValidatedNumber({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
     ValidatedNumberControl,
     {
       required: !!isValid2.required,
@@ -30850,21 +30881,21 @@ function ValidatedNumber({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/integer.mjs
-var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
 function Integer(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(ValidatedNumber, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(ValidatedNumber, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/number.mjs
-var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
 function Number2(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(ValidatedNumber, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(ValidatedNumber, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/radio.mjs
 var import_components43 = __toESM(require_components(), 1);
-var import_element79 = __toESM(require_element(), 1);
-var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
+var import_element80 = __toESM(require_element(), 1);
+var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedRadioControl } = unlock3(import_components43.privateApis);
 function Radio({
   data,
@@ -30881,14 +30912,14 @@ function Radio({
     getElements: field.getElements
   });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element79.useCallback)(
+  const onChangeControl = (0, import_element80.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_components43.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components43.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
     ValidatedRadioControl,
     {
       required: !!field.isValid?.required,
@@ -30906,8 +30937,8 @@ function Radio({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/text.mjs
-var import_element80 = __toESM(require_element(), 1);
-var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
+var import_element81 = __toESM(require_element(), 1);
+var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
 function Text3({
   data,
   field,
@@ -30918,7 +30949,7 @@ function Text3({
   validity
 }) {
   const { prefix, suffix } = config || {};
-  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
     ValidatedText,
     {
       ...{
@@ -30928,8 +30959,8 @@ function Text3({
         hideLabelFromVision,
         markWhenOptional,
         validity,
-        prefix: prefix ? (0, import_element80.createElement)(prefix) : void 0,
-        suffix: suffix ? (0, import_element80.createElement)(suffix) : void 0
+        prefix: prefix ? (0, import_element81.createElement)(prefix) : void 0,
+        suffix: suffix ? (0, import_element81.createElement)(suffix) : void 0
       }
     }
   );
@@ -30937,9 +30968,9 @@ function Text3({
 
 // packages/dataviews/build-module/components/dataform-controls/time.mjs
 var import_components44 = __toESM(require_components(), 1);
-var import_element81 = __toESM(require_element(), 1);
+var import_element82 = __toESM(require_element(), 1);
 var import_i18n40 = __toESM(require_i18n(), 1);
-var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedInputControl: ValidatedInputControl3 } = unlock3(import_components44.privateApis);
 function getStep(timeFormat, values) {
   const tokens = (timeFormat ?? "").replace(/\\./g, "");
@@ -30970,20 +31001,20 @@ function BetweenControls2({
   max: max3
 }) {
   const [from = "", to = ""] = value;
-  const onChangeFrom = (0, import_element81.useCallback)(
+  const onChangeFrom = (0, import_element82.useCallback)(
     (newValue) => onChange([newValue ?? "", to]),
     [onChange, to]
   );
-  const onChangeTo = (0, import_element81.useCallback)(
+  const onChangeTo = (0, import_element82.useCallback)(
     (newValue) => onChange([from, newValue ?? ""]),
     [onChange, from]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
     import_components44.BaseControl,
     {
       help: (0, import_i18n40.__)("The end time must be later than the start time."),
-      children: /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
           ValidatedInputControl3,
           {
             type: "time",
@@ -30997,7 +31028,7 @@ function BetweenControls2({
             max: to || max3
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
           ValidatedInputControl3,
           {
             type: "time",
@@ -31030,7 +31061,7 @@ function Time({
   const timeFormat = field.format?.time;
   const min3 = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
   const max3 = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
-  const onChangeControl = (0, import_element81.useCallback)(
+  const onChangeControl = (0, import_element82.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -31039,7 +31070,7 @@ function Time({
     ),
     [data, onChange, setValue]
   );
-  const onChangeBetweenControls = (0, import_element81.useCallback)(
+  const onChangeBetweenControls = (0, import_element82.useCallback)(
     ([from, to]) => onChange(
       setValue({
         item: data,
@@ -31058,7 +31089,7 @@ function Time({
         toInputValue(value[1])
       ];
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
       BetweenControls2,
       {
         value: valueBetween,
@@ -31071,7 +31102,7 @@ function Time({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
     ValidatedInputControl3,
     {
       required: !!isValid2.required,
@@ -31094,8 +31125,8 @@ function Time({
 
 // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
 var import_components45 = __toESM(require_components(), 1);
-var import_element82 = __toESM(require_element(), 1);
-var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
+var import_element83 = __toESM(require_element(), 1);
+var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedToggleControl } = unlock3(import_components45.privateApis);
 function Toggle({
   field,
@@ -31107,12 +31138,12 @@ function Toggle({
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element82.useCallback)(() => {
+  const onChangeControl = (0, import_element83.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
     );
   }, [onChange, setValue, data, getValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
     ValidatedToggleControl,
     {
       required: !!isValid2.required,
@@ -31130,8 +31161,8 @@ function Toggle({
 
 // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
 var import_components46 = __toESM(require_components(), 1);
-var import_element83 = __toESM(require_element(), 1);
-var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
+var import_element84 = __toESM(require_element(), 1);
+var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedTextareaControl } = unlock3(import_components46.privateApis);
 function Textarea({
   data,
@@ -31146,11 +31177,11 @@ function Textarea({
   const disabled2 = field.isDisabled({ item: data, field });
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const value = field.getValue({ item: data });
-  const onChangeControl = (0, import_element83.useCallback)(
+  const onChangeControl = (0, import_element84.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
     ValidatedTextareaControl,
     {
       required: !!isValid2.required,
@@ -31172,8 +31203,8 @@ function Textarea({
 
 // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
 var import_components47 = __toESM(require_components(), 1);
-var import_element84 = __toESM(require_element(), 1);
-var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
+var import_element85 = __toESM(require_element(), 1);
+var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedToggleGroupControl } = unlock3(import_components47.privateApis);
 function ToggleGroup({
   data,
@@ -31186,7 +31217,7 @@ function ToggleGroup({
   const { getValue, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element84.useCallback)(
+  const onChangeControl = (0, import_element85.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -31195,13 +31226,13 @@ function ToggleGroup({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_components47.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_components47.Spinner, {});
   }
   if (elements.length === 0) {
     return null;
   }
   const selectedOption = elements.find((el) => el.value === value);
-  return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
     ValidatedToggleGroupControl,
     {
       required: !!field.isValid?.required,
@@ -31213,7 +31244,7 @@ function ToggleGroup({
       onChange: onChangeControl,
       value,
       hideLabelFromVision,
-      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
         import_components47.__experimentalToggleGroupControlOption,
         {
           label: el.label,
@@ -31228,8 +31259,8 @@ function ToggleGroup({
 
 // packages/dataviews/build-module/components/dataform-controls/array.mjs
 var import_components48 = __toESM(require_components(), 1);
-var import_element85 = __toESM(require_element(), 1);
-var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
+var import_element86 = __toESM(require_element(), 1);
+var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedFormTokenField } = unlock3(import_components48.privateApis);
 function ArrayControl({
   data,
@@ -31246,7 +31277,7 @@ function ArrayControl({
     elements: field.elements,
     getElements: field.getElements
   });
-  const arrayValueAsElements = (0, import_element85.useMemo)(
+  const arrayValueAsElements = (0, import_element86.useMemo)(
     () => Array.isArray(value) ? value.map((token) => {
       const element = elements?.find(
         (suggestion) => suggestion.value === token
@@ -31255,7 +31286,7 @@ function ArrayControl({
     }) : [],
     [value, elements]
   );
-  const onChangeControl = (0, import_element85.useCallback)(
+  const onChangeControl = (0, import_element86.useCallback)(
     (tokens) => {
       const valueTokens = tokens.map((token) => {
         if (typeof token === "object" && "value" in token) {
@@ -31268,9 +31299,9 @@ function ArrayControl({
     [onChange, setValue, data]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_components48.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_components48.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
     ValidatedFormTokenField,
     {
       required: !!isValid2?.required,
@@ -31309,9 +31340,9 @@ function ArrayControl({
           const element = elements.find(
             (el) => el.value === item
           );
-          return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("span", { children: element?.label || item });
+          return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("span", { children: element?.label || item });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("span", { children: item });
+        return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("span", { children: item });
       }
     }
   );
@@ -31477,9 +31508,9 @@ var w = function(r3) {
 
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
 var import_components49 = __toESM(require_components(), 1);
-var import_element86 = __toESM(require_element(), 1);
+var import_element87 = __toESM(require_element(), 1);
 var import_i18n41 = __toESM(require_i18n(), 1);
-var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedInputControl: ValidatedInputControl4 } = unlock3(import_components49.privateApis);
 var ColorPickerDropdown = ({
   color,
@@ -31487,12 +31518,12 @@ var ColorPickerDropdown = ({
   disabled: disabled2
 }) => {
   const validColor = color && w(color).isValid() ? color : "#ffffff";
-  return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
     import_components49.Dropdown,
     {
       className: "dataviews-controls__color-picker-dropdown",
       popoverProps: { resize: false },
-      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
         import_components49.Button,
         {
           onClick: onToggle,
@@ -31500,10 +31531,10 @@ var ColorPickerDropdown = ({
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
-          icon: () => /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_components49.ColorIndicator, { colorValue: validColor })
+          icon: () => /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components49.ColorIndicator, { colorValue: validColor })
         }
       ),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_components49.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components49.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
         import_components49.ColorPicker,
         {
           color: validColor,
@@ -31525,19 +31556,19 @@ function Color({
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = field.getValue({ item: data }) || "";
-  const handleColorChange = (0, import_element86.useCallback)(
+  const handleColorChange = (0, import_element87.useCallback)(
     (newColor) => {
       onChange(setValue({ item: data, value: newColor }));
     },
     [data, onChange, setValue]
   );
-  const handleInputChange = (0, import_element86.useCallback)(
+  const handleInputChange = (0, import_element87.useCallback)(
     (newValue) => {
       onChange(setValue({ item: data, value: newValue || "" }));
     },
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
     ValidatedInputControl4,
     {
       required: !!field.isValid?.required,
@@ -31551,7 +31582,7 @@ function Color({
       hideLabelFromVision,
       type: "text",
       disabled: disabled2,
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_components49.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components49.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
         ColorPickerDropdown,
         {
           color: value,
@@ -31565,9 +31596,9 @@ function Color({
 
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
 var import_components50 = __toESM(require_components(), 1);
-var import_element87 = __toESM(require_element(), 1);
+var import_element88 = __toESM(require_element(), 1);
 var import_i18n42 = __toESM(require_i18n(), 1);
-var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
   field,
@@ -31576,12 +31607,12 @@ function Password({
   markWhenOptional,
   validity
 }) {
-  const [isVisible2, setIsVisible] = (0, import_element87.useState)(false);
+  const [isVisible2, setIsVisible] = (0, import_element88.useState)(false);
   const disabled2 = field.isDisabled({ item: data, field });
-  const toggleVisibility = (0, import_element87.useCallback)(() => {
+  const toggleVisibility = (0, import_element88.useCallback)(() => {
     setIsVisible((prev) => !prev);
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
     ValidatedText,
     {
       ...{
@@ -31592,7 +31623,7 @@ function Password({
         markWhenOptional,
         validity,
         type: isVisible2 ? "text" : "password",
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components50.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(import_components50.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
           import_components50.Button,
           {
             icon: isVisible2 ? unseen_default : seen_default,
@@ -31614,7 +31645,7 @@ function hasElements(field) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/index.mjs
-var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
 var FORM_CONTROLS = {
   adaptiveSelect: AdaptiveSelect,
   array: ArrayControl,
@@ -31647,7 +31678,7 @@ function createConfiguredControl(config) {
     return null;
   }
   return function ConfiguredControl(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(BaseControlType, { ...props, config: controlConfig });
+    return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(BaseControlType, { ...props, config: controlConfig });
   };
 }
 function getControl(field, fallback) {
@@ -31745,13 +31776,13 @@ function RenderFromElements({
 }
 
 // packages/dataviews/build-module/field-types/utils/render-default.mjs
-var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
 function render({
   item,
   field
 }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(RenderFromElements, { item, field });
   }
   return field.getValueFormatted({ item, field });
 }
@@ -32552,17 +32583,17 @@ var telephone_default = {
 
 // packages/dataviews/build-module/field-types/color.mjs
 var import_i18n48 = __toESM(require_i18n(), 1);
-var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(RenderFromElements, { item, field });
   }
   const value = get_value_formatted_default_default({ item, field });
   if (!value || !w(value).isValid()) {
     return value;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
       "div",
       {
         style: {
@@ -32575,7 +32606,7 @@ function render3({ item, field }) {
         }
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("span", { children: value })
+    /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("span", { children: value })
   ] });
 }
 function isValidCustom6(item, field) {
@@ -32844,7 +32875,7 @@ function normalizeFields(fields) {
 }
 
 // packages/dataviews/build-module/hooks/use-data.mjs
-var import_element88 = __toESM(require_element(), 1);
+var import_element89 = __toESM(require_element(), 1);
 function useData({
   view,
   data: shownData,
@@ -32854,34 +32885,34 @@ function useData({
   selection
 }) {
   const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element88.useState)(
+  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element89.useState)(
     !isLoading
   );
-  (0, import_element88.useEffect)(() => {
+  (0, import_element89.useEffect)(() => {
     if (!isLoading) {
       setHasInitiallyLoaded(true);
     }
   }, [isLoading]);
-  const previousDataRef = (0, import_element88.useRef)(shownData);
-  const previousPaginationInfoRef = (0, import_element88.useRef)(paginationInfo);
-  (0, import_element88.useEffect)(() => {
+  const previousDataRef = (0, import_element89.useRef)(shownData);
+  const previousPaginationInfoRef = (0, import_element89.useRef)(paginationInfo);
+  (0, import_element89.useEffect)(() => {
     if (!isLoading) {
       previousDataRef.current = shownData;
       previousPaginationInfoRef.current = paginationInfo;
     }
   }, [shownData, isLoading, paginationInfo]);
-  const [visibleEntries, setVisibleEntries] = (0, import_element88.useState)([]);
-  const positionMapRef = (0, import_element88.useRef)(/* @__PURE__ */ new Map());
-  const allLoadedRecordsRef = (0, import_element88.useRef)([]);
-  const prevViewParamsRef = (0, import_element88.useRef)({
+  const [visibleEntries, setVisibleEntries] = (0, import_element89.useState)([]);
+  const positionMapRef = (0, import_element89.useRef)(/* @__PURE__ */ new Map());
+  const allLoadedRecordsRef = (0, import_element89.useRef)([]);
+  const prevViewParamsRef = (0, import_element89.useRef)({
     search: void 0,
     filters: void 0,
     perPage: void 0
   });
-  const scrollDirectionRef = (0, import_element88.useRef)(void 0);
-  const prevStartPositionRef = (0, import_element88.useRef)(void 0);
-  const hasInitializedRef = (0, import_element88.useRef)(false);
-  const allLoadedRecords = (0, import_element88.useMemo)(() => {
+  const scrollDirectionRef = (0, import_element89.useRef)(void 0);
+  const prevStartPositionRef = (0, import_element89.useRef)(void 0);
+  const hasInitializedRef = (0, import_element89.useRef)(false);
+  const allLoadedRecords = (0, import_element89.useMemo)(() => {
     if (view.startPosition !== void 0 && prevStartPositionRef.current !== void 0) {
       if (view.startPosition < prevStartPositionRef.current) {
         scrollDirectionRef.current = "up";
@@ -33003,8 +33034,8 @@ function useData({
 }
 
 // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
-var import_element89 = __toESM(require_element(), 1);
-var import_compose15 = __toESM(require_compose(), 1);
+var import_element90 = __toESM(require_element(), 1);
+var import_compose16 = __toESM(require_compose(), 1);
 function captureAnchorElement(container, anchorElementRef, direction) {
   const containerRect = container.getBoundingClientRect();
   const centerY = containerRect.top + containerRect.height / 2;
@@ -33039,18 +33070,18 @@ function useInfiniteScroll({
   containerRef,
   setVisibleEntries
 }) {
-  const anchorElementRef = (0, import_element89.useRef)(null);
-  const viewRef = (0, import_element89.useRef)(view);
-  const isLoadingRef = (0, import_element89.useRef)(isLoading);
-  const onChangeViewRef = (0, import_element89.useRef)(onChangeView);
-  const totalItemsRef = (0, import_element89.useRef)(paginationInfo.totalItems);
-  (0, import_element89.useLayoutEffect)(() => {
+  const anchorElementRef = (0, import_element90.useRef)(null);
+  const viewRef = (0, import_element90.useRef)(view);
+  const isLoadingRef = (0, import_element90.useRef)(isLoading);
+  const onChangeViewRef = (0, import_element90.useRef)(onChangeView);
+  const totalItemsRef = (0, import_element90.useRef)(paginationInfo.totalItems);
+  (0, import_element90.useLayoutEffect)(() => {
     viewRef.current = view;
     isLoadingRef.current = isLoading;
     onChangeViewRef.current = onChangeView;
     totalItemsRef.current = paginationInfo.totalItems;
   }, [view, isLoading, onChangeView, paginationInfo.totalItems]);
-  const intersectionObserverCallback = (0, import_element89.useCallback)(
+  const intersectionObserverCallback = (0, import_element90.useCallback)(
     (entries) => {
       if (!setVisibleEntries) {
         return;
@@ -33082,7 +33113,7 @@ function useInfiniteScroll({
     },
     [setVisibleEntries]
   );
-  (0, import_element89.useLayoutEffect)(() => {
+  (0, import_element90.useLayoutEffect)(() => {
     const container = containerRef.current;
     const anchor = anchorElementRef.current;
     if (!container || !view.infiniteScrollEnabled || !anchor || isLoading) {
@@ -33102,10 +33133,10 @@ function useInfiniteScroll({
     }
     anchorElementRef.current = null;
   }, [containerRef, isLoading, view.infiniteScrollEnabled]);
-  const intersectionObserverRef = (0, import_element89.useRef)(
+  const intersectionObserverRef = (0, import_element90.useRef)(
     null
   );
-  (0, import_element89.useEffect)(() => {
+  (0, import_element90.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !intersectionObserverCallback) {
       if (intersectionObserverRef.current) {
         intersectionObserverRef.current.disconnect();
@@ -33124,14 +33155,14 @@ function useInfiniteScroll({
       }
     };
   }, [view.infiniteScrollEnabled, intersectionObserverCallback]);
-  (0, import_element89.useEffect)(() => {
+  (0, import_element90.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !containerRef.current) {
       return;
     }
     let lastScrollTop = 0;
     const BOTTOM_THRESHOLD = 600;
     const TOP_THRESHOLD = 800;
-    const handleScroll = (0, import_compose15.throttle)((event) => {
+    const handleScroll = (0, import_compose16.throttle)((event) => {
       const currentView = viewRef.current;
       const totalItems = totalItemsRef.current;
       const target = event.target;
@@ -33184,7 +33215,7 @@ function useInfiniteScroll({
 }
 
 // packages/dataviews/build-module/dataviews/index.mjs
-var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
 var defaultGetItemId = (item) => item.id;
 var defaultIsItemClickable = () => true;
 var EMPTY_ARRAY6 = [];
@@ -33197,10 +33228,10 @@ function DefaultUI({
   search = true,
   searchLabel = void 0
 }) {
-  const { view } = (0, import_element90.useContext)(dataviews_context_default);
+  const { view } = (0, import_element91.useContext)(dataviews_context_default);
   const isInfiniteScroll = view.infiniteScrollEnabled;
-  return /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(import_jsx_runtime128.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)(import_jsx_runtime129.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)(
       Stack,
       {
         direction: "row",
@@ -33211,7 +33242,7 @@ function DefaultUI({
         }),
         gap: "xs",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)(
             Stack,
             {
               direction: "row",
@@ -33219,21 +33250,21 @@ function DefaultUI({
               gap: "sm",
               className: "dataviews__search",
               children: [
-                search && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(dataviews_search_default, { label: searchLabel }),
-                /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(toggle_default, {})
+                search && /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(dataviews_search_default, { label: searchLabel }),
+                /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(toggle_default, {})
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(dataviews_view_config_default, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime129.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(dataviews_view_config_default, {}),
             header
           ] })
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
-    /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(DataViewsLayout, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(DataViewsFooter, {})
+    /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
+    /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(DataViewsLayout, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(DataViewsFooter, {})
   ] });
 }
 function DataViews({
@@ -33260,7 +33291,7 @@ function DataViews({
   empty,
   onReset
 }) {
-  const [selectionState, setSelectionState] = (0, import_element90.useState)([]);
+  const [selectionState, setSelectionState] = (0, import_element91.useState)([]);
   const isUncontrolled = selectionProperty === void 0 || onChangeSelection === void 0;
   const selection = isUncontrolled ? selectionState : selectionProperty;
   const {
@@ -33276,9 +33307,9 @@ function DataViews({
     selection,
     paginationInfo
   });
-  const containerRef = (0, import_element90.useRef)(null);
-  const [containerWidth, setContainerWidth] = (0, import_element90.useState)(0);
-  const resizeObserverRef = (0, import_compose16.useResizeObserver)(
+  const containerRef = (0, import_element91.useRef)(null);
+  const [containerWidth, setContainerWidth] = (0, import_element91.useState)(0);
+  const resizeObserverRef = (0, import_compose17.useResizeObserver)(
     (resizeObserverEntries) => {
       setContainerWidth(
         resizeObserverEntries[0].borderBoxSize[0].inlineSize
@@ -33286,7 +33317,7 @@ function DataViews({
     },
     { box: "border-box" }
   );
-  const [openedFilter, setOpenedFilter] = (0, import_element90.useState)(null);
+  const [openedFilter, setOpenedFilter] = (0, import_element91.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === "function" ? value(selection) : value;
     if (isUncontrolled) {
@@ -33296,8 +33327,8 @@ function DataViews({
       onChangeSelection(newValue);
     }
   }
-  const _fields = (0, import_element90.useMemo)(() => normalizeFields(fields), [fields]);
-  const _selection = (0, import_element90.useMemo)(() => {
+  const _fields = (0, import_element91.useMemo)(() => normalizeFields(fields), [fields]);
+  const _selection = (0, import_element91.useMemo)(() => {
     if (view.infiniteScrollEnabled) {
       return selection;
     }
@@ -33306,13 +33337,13 @@ function DataViews({
     );
   }, [selection, data, getItemId, view.infiniteScrollEnabled]);
   const filters = use_filters_default(_fields, view);
-  const hasPrimaryOrLockedFilters = (0, import_element90.useMemo)(
+  const hasPrimaryOrLockedFilters = (0, import_element91.useMemo)(
     () => (filters || []).some(
       (filter) => filter.isPrimary || filter.isLocked
     ),
     [filters]
   );
-  const [isShowingFilter, setIsShowingFilter] = (0, import_element90.useState)(
+  const [isShowingFilter, setIsShowingFilter] = (0, import_element91.useState)(
     hasPrimaryOrLockedFilters
   );
   const { intersectionObserver } = useInfiniteScroll({
@@ -33323,12 +33354,12 @@ function DataViews({
     containerRef,
     setVisibleEntries
   });
-  (0, import_element90.useEffect)(() => {
+  (0, import_element91.useEffect)(() => {
     if (hasPrimaryOrLockedFilters && !isShowingFilter) {
       setIsShowingFilter(true);
     }
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-  const defaultLayouts = (0, import_element90.useMemo)(
+  const defaultLayouts = (0, import_element91.useMemo)(
     () => Object.fromEntries(
       Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
         return dataViewsLayouts.some(
@@ -33344,7 +33375,7 @@ function DataViews({
   if (!defaultLayouts[view.type]) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
     dataviews_context_default.Provider,
     {
       value: {
@@ -33377,7 +33408,7 @@ function DataViews({
         onReset,
         intersectionObserver
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("div", { className: "dataviews-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)("div", { className: "dataviews-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
         DefaultUI,
         {
           header,
@@ -33498,11 +33529,11 @@ function filterSortAndPaginate(data, view, fields) {
 }
 
 // packages/admin-ui/build-module/navigable-region/index.mjs
-var import_element91 = __toESM(require_element(), 1);
-var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
-var NavigableRegion = (0, import_element91.forwardRef)(
+var import_element92 = __toESM(require_element(), 1);
+var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
+var NavigableRegion = (0, import_element92.forwardRef)(
   ({ children, className: className2, ariaLabel, as: Tag = "div", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
       Tag,
       {
         ref,
@@ -33524,7 +33555,7 @@ var import_components51 = __toESM(require_components(), 1);
 var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components51.createSlotFill)("SidebarToggle");
 
 // packages/admin-ui/build-module/page/header.mjs
-var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
 function getRuntime11() {
   const globalScope = globalThis;
@@ -33620,8 +33651,8 @@ function Header({
   showSidebarToggle = true
 }) {
   const HeadingTag = `h${headingLevel}`;
-  return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(Stack, { direction: "column", className: style_default10.header, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(Stack, { direction: "column", className: style_default10.header, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
       Stack,
       {
         className: style_default10["header-content"],
@@ -33629,15 +33660,15 @@ function Header({
         gap: "sm",
         justify: "space-between",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
-            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
+            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
               SidebarToggleSlot,
               {
                 bubblesVirtually: true,
                 className: style_default10["sidebar-toggle-slot"]
               }
             ),
-            visual && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+            visual && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
               "div",
               {
                 className: style_default10["header-visual"],
@@ -33645,11 +33676,11 @@ function Header({
                 children: visual
               }
             ),
-            title && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+            title && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
               Text,
               {
                 className: style_default10["header-title"],
-                render: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(HeadingTag, {}),
+                render: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(HeadingTag, {}),
                 variant: "heading-lg",
                 children: title
               }
@@ -33657,7 +33688,7 @@ function Header({
             breadcrumbs,
             badges
           ] }),
-          actions && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+          actions && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
             Stack,
             {
               align: "center",
@@ -33670,10 +33701,10 @@ function Header({
         ]
       }
     ),
-    subTitle && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+    subTitle && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
       Text,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("p", {}),
+        render: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("p", {}),
         variant: "body-md",
         className: style_default10["header-subtitle"],
         children: subTitle
@@ -33683,7 +33714,7 @@ function Header({
 }
 
 // packages/admin-ui/build-module/page/index.mjs
-var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
 function getRuntime12() {
   const globalScope = globalThis;
@@ -33784,8 +33815,8 @@ function Page({
 }) {
   const classes = clsx_default(style_default11.page, className2);
   const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
-  return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
-    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
+    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
       Header,
       {
         headingLevel,
@@ -33798,7 +33829,7 @@ function Page({
         showSidebarToggle
       }
     ),
-    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
       "div",
       {
         className: clsx_default(
@@ -33817,7 +33848,7 @@ var page_default = Page;
 var import_core_data4 = __toESM(require_core_data());
 var import_components52 = __toESM(require_components());
 var import_data11 = __toESM(require_data());
-var import_element94 = __toESM(require_element());
+var import_element95 = __toESM(require_element());
 var import_editor = __toESM(require_editor());
 var import_patterns3 = __toESM(require_patterns());
 var import_i18n53 = __toESM(require_i18n());
@@ -33935,14 +33966,14 @@ var patternStatusField = {
 var import_i18n52 = __toESM(require_i18n());
 var import_data9 = __toESM(require_data());
 var import_core_data2 = __toESM(require_core_data());
-var import_element92 = __toESM(require_element());
+var import_element93 = __toESM(require_element());
 var OPERATOR_IS3 = "is";
 function CategoryField({ item }) {
   const blockPatternCategories = (0, import_data9.useSelect)(
     (select2) => select2(import_core_data2.store).getBlockPatternCategories(),
     []
   );
-  const categoryLabels = (0, import_element92.useMemo)(() => {
+  const categoryLabels = (0, import_element93.useMemo)(() => {
     if (!item.categories || !Array.isArray(item.categories)) {
       return [];
     }
@@ -33967,7 +33998,7 @@ function usePatternCategories() {
     (select2) => select2(import_core_data2.store).getBlockPatternCategories(),
     []
   );
-  return (0, import_element92.useMemo)(() => {
+  return (0, import_element93.useMemo)(() => {
     const categoryMap = /* @__PURE__ */ new Map();
     userPatternCategories?.forEach((cat) => {
       if (!categoryMap.has(cat.name)) {
@@ -34011,7 +34042,7 @@ function usePatternCategoryField() {
 // routes/pattern-list/use-patterns.ts
 var import_data10 = __toESM(require_data());
 var import_core_data3 = __toESM(require_core_data());
-var import_element93 = __toESM(require_element());
+var import_element94 = __toESM(require_element());
 var import_patterns2 = __toESM(require_patterns());
 var import_block_editor = __toESM(require_block_editor());
 
@@ -34235,7 +34266,7 @@ var selectPatterns = (0, import_data10.createSelector)(
   ]
 );
 function useAugmentPatternsWithPermissions(patterns) {
-  const idsAndTypes = (0, import_element93.useMemo)(
+  const idsAndTypes = (0, import_element94.useMemo)(
     () => patterns?.filter((record) => record.type !== PATTERN_TYPES.theme).map((record) => [
       record.type,
       record._recordId,
@@ -34262,7 +34293,7 @@ function useAugmentPatternsWithPermissions(patterns) {
     },
     [idsAndTypes]
   );
-  return (0, import_element93.useMemo)(
+  return (0, import_element94.useMemo)(
     () => patterns?.map((record) => ({
       ...record,
       permissions: permissions?.[record.id] ?? {}
@@ -34340,8 +34371,8 @@ function PatternList() {
     }),
     []
   );
-  const [showPatternModal, setShowPatternModal] = (0, import_element94.useState)(false);
-  const handleQueryParamsChange = (0, import_element94.useCallback)(
+  const [showPatternModal, setShowPatternModal] = (0, import_element95.useState)(false);
+  const handleQueryParamsChange = (0, import_element95.useCallback)(
     (params) => {
       navigate({
         search: {
@@ -34370,15 +34401,15 @@ function PatternList() {
       invalidate();
     }
   };
-  const categoryFilter = (0, import_element94.useMemo)(() => {
+  const categoryFilter = (0, import_element95.useMemo)(() => {
     const filter = view.filters?.find((f2) => f2.field === "category");
     return filter?.value || "all-patterns";
   }, [view.filters]);
-  const syncStatusFilter = (0, import_element94.useMemo)(() => {
+  const syncStatusFilter = (0, import_element95.useMemo)(() => {
     const filter = view.filters?.find((f2) => f2.field === "sync-status");
     return filter?.value;
   }, [view.filters]);
-  const patternType = (0, import_element94.useMemo)(() => {
+  const patternType = (0, import_element95.useMemo)(() => {
     if (type === "my-patterns") {
       return PATTERN_TYPES2.user;
     } else if (type === "registered") {
@@ -34396,7 +34427,7 @@ function PatternList() {
   );
   const patternsWithPermissions = useAugmentPatternsWithPermissions(patterns);
   const patternCategoryField = usePatternCategoryField();
-  const fields = (0, import_element94.useMemo)(() => {
+  const fields = (0, import_element95.useMemo)(() => {
     const patternFields = [
       previewField,
       patternTitleField,
@@ -34407,7 +34438,7 @@ function PatternList() {
     }
     return patternFields;
   }, [type, patternCategoryField]);
-  const { data: posts, paginationInfo } = (0, import_element94.useMemo)(() => {
+  const { data: posts, paginationInfo } = (0, import_element95.useMemo)(() => {
     const viewWithoutFilters = { ...view };
     delete viewWithoutFilters.search;
     viewWithoutFilters.filters = [];
@@ -34418,7 +34449,7 @@ function PatternList() {
     );
   }, [patternsWithPermissions, view, fields]);
   const { totalItems, totalPages } = paginationInfo;
-  const cleanupDeletedPostIdsFromUrl = (0, import_element94.useCallback)(
+  const cleanupDeletedPostIdsFromUrl = (0, import_element95.useCallback)(
     (deletedItems) => {
       const deletedIds = deletedItems.map((item) => item.id);
       const currentPostIds = searchParams.postIds || [];
@@ -34447,7 +34478,7 @@ function PatternList() {
       }
     }
   });
-  const actions = (0, import_element94.useMemo)(() => {
+  const actions = (0, import_element95.useMemo)(() => {
     return [
       ...postTypeActions?.flatMap((action) => {
         if (action.id === "view-post-revisions") {
@@ -34457,7 +34488,7 @@ function PatternList() {
       })
     ];
   }, [postTypeActions]);
-  const handleTabChange = (0, import_element94.useCallback)(
+  const handleTabChange = (0, import_element95.useCallback)(
     (typeSlug) => {
       navigate({
         to: `/patterns/list/${typeSlug}`
