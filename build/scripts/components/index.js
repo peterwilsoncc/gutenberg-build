@@ -87,7 +87,7 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         function useSyncExternalStore$2(subscribe2, getSnapshot) {
-          didWarnOld18Alpha || void 0 === React40.startTransition || (didWarnOld18Alpha = true, console.error(
+          didWarnOld18Alpha || void 0 === React13.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
           var value = getSnapshot();
@@ -97,11 +97,11 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState78({
+          cachedValue = useState75({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-          useLayoutEffect25(
+          useLayoutEffect24(
             function() {
               inst.value = value;
               inst.getSnapshot = getSnapshot;
@@ -109,7 +109,7 @@ var wp;
             },
             [subscribe2, value, getSnapshot]
           );
-          useEffect73(
+          useEffect72(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe2(function() {
@@ -135,8 +135,8 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React40 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState78 = React40.useState, useEffect73 = React40.useEffect, useLayoutEffect25 = React40.useLayoutEffect, useDebugValue = React40.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-        exports.useSyncExternalStore = void 0 !== React40.useSyncExternalStore ? React40.useSyncExternalStore : shim;
+        var React13 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState75 = React13.useState, useEffect72 = React13.useEffect, useLayoutEffect24 = React13.useLayoutEffect, useDebugValue = React13.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        exports.useSyncExternalStore = void 0 !== React13.useSyncExternalStore ? React13.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
     }
@@ -739,14 +739,14 @@ var wp;
                 searchWord = escapeRegExpFn(searchWord);
               }
               var regex = new RegExp(searchWord, caseSensitive ? "g" : "gi");
-              var match4 = void 0;
-              while (match4 = regex.exec(textToHighlight)) {
-                var _start = match4.index;
+              var match3 = void 0;
+              while (match3 = regex.exec(textToHighlight)) {
+                var _start = match3.index;
                 var _end = regex.lastIndex;
                 if (_end > _start) {
                   chunks.push({ highlight: false, start: _start, end: _end });
                 }
-                if (match4.index === regex.lastIndex) {
+                if (match3.index === regex.lastIndex) {
                   regex.lastIndex++;
                 }
               }
@@ -1279,8 +1279,8 @@ var wp;
       var chars = Object.keys(characterMap).join("|");
       var allAccents = new RegExp(chars, "g");
       var firstAccent = new RegExp(chars, "");
-      function matcher(match4) {
-        return characterMap[match4];
+      function matcher(match3) {
+        return characterMap[match3];
       }
       var removeAccents4 = function(string) {
         return string.replace(allAccents, matcher);
@@ -1547,7 +1547,7 @@ var wp;
           if (sideOrCorner) {
             return sideOrCorner;
           }
-          var legacyDirection = match4("position-keyword", tokens.positionKeywords, 1);
+          var legacyDirection = match3("position-keyword", tokens.positionKeywords, 1);
           if (legacyDirection) {
             return {
               type: "directional",
@@ -1557,10 +1557,10 @@ var wp;
           return matchAngle();
         }
         function matchSideOrCorner() {
-          return match4("directional", tokens.sideOrCorner, 1);
+          return match3("directional", tokens.sideOrCorner, 1);
         }
         function matchAngle() {
-          return match4("angular", tokens.angleValue, 1) || match4("angular", tokens.radianValue, 1);
+          return match3("angular", tokens.angleValue, 1) || match3("angular", tokens.radianValue, 1);
         }
         function matchListRadialOrientations() {
           var radialOrientations, radialOrientation = matchRadialOrientation(), lookaheadCache;
@@ -1612,24 +1612,24 @@ var wp;
           return radialType;
         }
         function matchCircle() {
-          var circle = match4("shape", /^(circle)/i, 0);
+          var circle = match3("shape", /^(circle)/i, 0);
           if (circle) {
             circle.style = matchLength() || matchExtentKeyword();
           }
           return circle;
         }
         function matchEllipse() {
-          var ellipse = match4("shape", /^(ellipse)/i, 0);
+          var ellipse = match3("shape", /^(ellipse)/i, 0);
           if (ellipse) {
             ellipse.style = matchPositioning() || matchDistance() || matchExtentKeyword();
           }
           return ellipse;
         }
         function matchExtentKeyword() {
-          return match4("extent-keyword", tokens.extentKeywords, 1);
+          return match3("extent-keyword", tokens.extentKeywords, 1);
         }
         function matchAtPosition() {
-          if (match4("position", /^at/, 0)) {
+          if (match3("position", /^at/, 0)) {
             var positioning = matchPositioning();
             if (!positioning) {
               error("Missing positioning value");
@@ -1679,10 +1679,10 @@ var wp;
           return matchHexColor() || matchHSLAColor() || matchHSLColor() || matchRGBAColor() || matchRGBColor() || matchVarColor() || matchLiteralColor();
         }
         function matchLiteralColor() {
-          return match4("literal", tokens.literalColor, 0);
+          return match3("literal", tokens.literalColor, 0);
         }
         function matchHexColor() {
-          return match4("hex", tokens.hexColor, 1);
+          return match3("hex", tokens.hexColor, 1);
         }
         function matchRGBColor() {
           return matchCall(tokens.rgbColor, function() {
@@ -1761,10 +1761,10 @@ var wp;
           return scan(tokens.number)[1];
         }
         function matchDistance() {
-          return match4("%", tokens.percentageValue, 1) || matchPositionKeyword() || matchCalc() || matchLength();
+          return match3("%", tokens.percentageValue, 1) || matchPositionKeyword() || matchCalc() || matchLength();
         }
         function matchPositionKeyword() {
-          return match4("position-keyword", tokens.positionKeywords, 1);
+          return match3("position-keyword", tokens.positionKeywords, 1);
         }
         function matchCalc() {
           return matchCall(tokens.calcValue, function() {
@@ -1791,9 +1791,9 @@ var wp;
           });
         }
         function matchLength() {
-          return match4("px", tokens.pixelValue, 1) || match4("em", tokens.emValue, 1);
+          return match3("px", tokens.pixelValue, 1) || match3("em", tokens.emValue, 1);
         }
-        function match4(type, pattern, captureIndex) {
+        function match3(type, pattern, captureIndex) {
           var captures = scan(pattern);
           if (captures) {
             return {
@@ -2262,21 +2262,21 @@ var wp;
   }
   var defaultWarnOnceKey = {};
   var warningMessages = /* @__PURE__ */ new WeakMap();
-  function warnOnce(message2, key) {
+  function warnOnce(message, key) {
     const warningKey = key || defaultWarnOnceKey;
     let messages = warningMessages.get(warningKey);
     if (!messages) {
       messages = /* @__PURE__ */ new Set();
       warningMessages.set(warningKey, messages);
     }
-    if (messages.has(message2)) return;
-    messages.add(message2);
-    console.warn(message2);
+    if (messages.has(message)) return;
+    messages.add(message);
+    console.warn(message);
   }
-  function invariant(condition, message2) {
+  function invariant(condition, message) {
     if (condition) return;
-    if (typeof message2 !== "string") throw new Error("Invariant failed");
-    throw new Error(message2);
+    if (typeof message !== "string") throw new Error("Invariant failed");
+    throw new Error(message);
   }
   function getKeys(obj) {
     return Object.keys(obj);
@@ -3076,16 +3076,16 @@ var wp;
   function createStoreContext(providers = [], scopedProviders = []) {
     const context = React.createContext(void 0);
     const scopedContext = React.createContext(void 0);
-    const useContext68 = () => React.useContext(context);
+    const useContext67 = () => React.useContext(context);
     const useScopedContext = (onlyScoped = false) => {
       const scoped = React.useContext(scopedContext);
-      const store = useContext68();
+      const store = useContext67();
       if (onlyScoped) return scoped;
       return scoped || store;
     };
     const useProviderContext = () => {
       const scoped = React.useContext(scopedContext);
-      const store = useContext68();
+      const store = useContext67();
       if (scoped && scoped === store) return;
       return store;
     };
@@ -3107,7 +3107,7 @@ var wp;
     return {
       context,
       scopedContext,
-      useContext: useContext68,
+      useContext: useContext67,
       useScopedContext,
       useProviderContext,
       ContextProvider,
@@ -4694,11 +4694,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore(createStore2, props) {
     const [store, setStore] = React2.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store), [store]);
-    const useState78 = React2.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+    const useState75 = React2.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
     return [React2.useMemo(() => ({
       ...store,
-      useState: useState78
-    }), [store, useState78]), useEvent(() => {
+      useState: useState75
+    }), [store, useState75]), useEvent(() => {
       setStore((store2) => createStore2({
         ...props,
         ...store2.getState()
@@ -8003,11 +8003,11 @@ If there's a particular need for this, please submit a feature request at https:
       const largestPossiblePadding = clientSize / 2 - arrowDimensions[length2] / 2 - 1;
       const minPadding = min(paddingObject[minProp], largestPossiblePadding);
       const maxPadding = min(paddingObject[maxProp], largestPossiblePadding);
-      const max3 = clientSize - arrowDimensions[length2] - maxPadding;
+      const max2 = clientSize - arrowDimensions[length2] - maxPadding;
       const center = clientSize / 2 - arrowDimensions[length2] / 2 + centerToReference;
-      const offset4 = clamp(minPadding, center, max3);
+      const offset4 = clamp(minPadding, center, max2);
       const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset4 && rects.reference[length2] / 2 - (center < minPadding ? minPadding : maxPadding) - arrowDimensions[length2] / 2 < 0;
-      const alignmentOffset = shouldAddOffset ? center < minPadding ? center - minPadding : center - max3 : 0;
+      const alignmentOffset = shouldAddOffset ? center < minPadding ? center - minPadding : center - max2 : 0;
       return {
         [axis]: coords[axis] + alignmentOffset,
         data: {
@@ -12636,13 +12636,13 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/node_modules/framer-motion/dist/es/utils/warn-once.mjs
   var warned = /* @__PURE__ */ new Set();
-  function warnOnce2(condition, message2, element) {
-    if (condition || warned.has(message2))
+  function warnOnce2(condition, message, element) {
+    if (condition || warned.has(message))
       return;
-    console.warn(message2);
+    console.warn(message);
     if (element)
       console.warn(element);
-    warned.add(message2);
+    warned.add(message);
   }
 
   // packages/components/node_modules/framer-motion/dist/es/render/components/create-proxy.mjs
@@ -12833,14 +12833,14 @@ If there's a particular need for this, please submit a feature request at https:
   var warning = noop2;
   var invariant2 = noop2;
   if (true) {
-    warning = (check, message2) => {
+    warning = (check, message) => {
       if (!check && typeof console !== "undefined") {
-        console.warn(message2);
+        console.warn(message);
       }
     };
-    invariant2 = (check, message2) => {
+    invariant2 = (check, message) => {
       if (!check) {
-        throw new Error(message2);
+        throw new Error(message);
       }
     };
   }
@@ -13062,10 +13062,10 @@ If there's a particular need for this, please submit a feature request at https:
     /^var\(--(?:([\w-]+)|([\w-]+), ?([a-zA-Z\d ()%#.,-]+))\)/u
   );
   function parseCSSVariable(current) {
-    const match4 = splitCSSVariableRegex.exec(current);
-    if (!match4)
+    const match3 = splitCSSVariableRegex.exec(current);
+    if (!match3)
       return [,];
-    const [, token1, token2, fallback] = match4;
+    const [, token1, token2, fallback] = match3;
     return [`--${token1 !== null && token1 !== void 0 ? token1 : token2}`, fallback];
   }
   var maxDepth = 4;
@@ -13083,11 +13083,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/components/node_modules/framer-motion/dist/es/utils/clamp.mjs
-  var clamp2 = (min3, max3, v3) => {
-    if (v3 > max3)
-      return max3;
-    if (v3 < min3)
-      return min3;
+  var clamp2 = (min2, max2, v3) => {
+    if (v3 > max2)
+      return max2;
+    if (v3 < min2)
+      return min2;
     return v3;
   };
 
@@ -14160,19 +14160,19 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/components/node_modules/framer-motion/dist/es/animation/generators/inertia.mjs
-  function inertia({ keyframes: keyframes4, velocity = 0, power = 0.8, timeConstant = 325, bounceDamping = 10, bounceStiffness = 500, modifyTarget, min: min3, max: max3, restDelta = 0.5, restSpeed }) {
+  function inertia({ keyframes: keyframes4, velocity = 0, power = 0.8, timeConstant = 325, bounceDamping = 10, bounceStiffness = 500, modifyTarget, min: min2, max: max2, restDelta = 0.5, restSpeed }) {
     const origin = keyframes4[0];
     const state = {
       done: false,
       value: origin
     };
-    const isOutOfBounds = (v3) => min3 !== void 0 && v3 < min3 || max3 !== void 0 && v3 > max3;
+    const isOutOfBounds = (v3) => min2 !== void 0 && v3 < min2 || max2 !== void 0 && v3 > max2;
     const nearestBoundary = (v3) => {
-      if (min3 === void 0)
-        return max3;
-      if (max3 === void 0)
-        return min3;
-      return Math.abs(min3 - v3) < Math.abs(max3 - v3) ? min3 : max3;
+      if (min2 === void 0)
+        return max2;
+      if (max2 === void 0)
+        return min2;
+      return Math.abs(min2 - v3) < Math.abs(max2 - v3) ? min2 : max2;
     };
     let amplitude = power * velocity;
     const ideal = origin + amplitude;
@@ -14483,10 +14483,10 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/components/node_modules/framer-motion/dist/es/utils/offsets/fill.mjs
   function fillOffset(offset4, remaining) {
-    const min3 = offset4[offset4.length - 1];
+    const min2 = offset4[offset4.length - 1];
     for (let i3 = 1; i3 <= remaining; i3++) {
       const offsetProgress = progress(0, remaining, i3);
-      offset4.push(mixNumber(min3, 1, offsetProgress));
+      offset4.push(mixNumber(min2, 1, offsetProgress));
     }
   }
 
@@ -15189,11 +15189,11 @@ If there's a particular need for this, please submit a feature request at https:
       return this.getAll("startTime");
     }
     get duration() {
-      let max3 = 0;
+      let max2 = 0;
       for (let i3 = 0; i3 < this.animations.length; i3++) {
-        max3 = Math.max(max3, this.animations[i3].duration);
+        max2 = Math.max(max2, this.animations[i3].duration);
       }
-      return max3;
+      return max2;
     }
     runAll(methodName) {
       this.animations.forEach((controls) => controls[methodName]());
@@ -16462,18 +16462,18 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/components/node_modules/framer-motion/dist/es/gestures/drag/utils/constraints.mjs
-  function applyConstraints(point, { min: min3, max: max3 }, elastic) {
-    if (min3 !== void 0 && point < min3) {
-      point = elastic ? mixNumber(min3, point, elastic.min) : Math.max(point, min3);
-    } else if (max3 !== void 0 && point > max3) {
-      point = elastic ? mixNumber(max3, point, elastic.max) : Math.min(point, max3);
+  function applyConstraints(point, { min: min2, max: max2 }, elastic) {
+    if (min2 !== void 0 && point < min2) {
+      point = elastic ? mixNumber(min2, point, elastic.min) : Math.max(point, min2);
+    } else if (max2 !== void 0 && point > max2) {
+      point = elastic ? mixNumber(max2, point, elastic.max) : Math.min(point, max2);
     }
     return point;
   }
-  function calcRelativeAxisConstraints(axis, min3, max3) {
+  function calcRelativeAxisConstraints(axis, min2, max2) {
     return {
-      min: min3 !== void 0 ? axis.min + min3 : void 0,
-      max: max3 !== void 0 ? axis.max + max3 - (axis.max - axis.min) : void 0
+      min: min2 !== void 0 ? axis.min + min2 : void 0,
+      max: max2 !== void 0 ? axis.max + max2 - (axis.max - axis.min) : void 0
     };
   }
   function calcRelativeConstraints(layoutBox, { top, left, bottom, right }) {
@@ -16483,12 +16483,12 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function calcViewportAxisConstraints(layoutAxis, constraintsAxis) {
-    let min3 = constraintsAxis.min - layoutAxis.min;
-    let max3 = constraintsAxis.max - layoutAxis.max;
+    let min2 = constraintsAxis.min - layoutAxis.min;
+    let max2 = constraintsAxis.max - layoutAxis.max;
     if (constraintsAxis.max - constraintsAxis.min < layoutAxis.max - layoutAxis.min) {
-      [min3, max3] = [max3, min3];
+      [min2, max2] = [max2, min2];
     }
-    return { min: min3, max: max3 };
+    return { min: min2, max: max2 };
   }
   function calcViewportConstraints(layoutBox, constraintsBox) {
     return {
@@ -16935,8 +16935,8 @@ If there's a particular need for this, please submit a feature request at https:
         const { projection } = this.visualElement;
         const axisValue = this.getAxisMotionValue(axis);
         if (projection && projection.layout) {
-          const { min: min3, max: max3 } = projection.layout.layoutBox[axis];
-          axisValue.set(point[axis] - mixNumber(min3, max3, 0.5));
+          const { min: min2, max: max2 } = projection.layout.layoutBox[axis];
+          axisValue.set(point[axis] - mixNumber(min2, max2, 0.5));
         }
       });
     }
@@ -16970,8 +16970,8 @@ If there's a particular need for this, please submit a feature request at https:
         if (!shouldDrag(axis, drag2, null))
           return;
         const axisValue = this.getAxisMotionValue(axis);
-        const { min: min3, max: max3 } = this.constraints[axis];
-        axisValue.set(mixNumber(min3, max3, boxProgress[axis]));
+        const { min: min2, max: max2 } = this.constraints[axis];
+        axisValue.set(mixNumber(min2, max2, boxProgress[axis]));
       });
     }
     addListeners() {
@@ -17355,13 +17355,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var easeCrossfadeIn = /* @__PURE__ */ compress(0, 0.5, circOut);
   var easeCrossfadeOut = /* @__PURE__ */ compress(0.5, 0.95, noop2);
-  function compress(min3, max3, easing) {
+  function compress(min2, max2, easing) {
     return (p3) => {
-      if (p3 < min3)
+      if (p3 < min2)
         return 0;
-      if (p3 > max3)
+      if (p3 > max2)
         return 1;
-      return easing(progress(min3, max3, p3));
+      return easing(progress(min2, max2, p3));
     };
   }
 
@@ -21528,7 +21528,7 @@ If there's a particular need for this, please submit a feature request at https:
       case "animation":
       case "animationName": {
         if (typeof value === "string") {
-          return value.replace(animationRegex, function(match4, p1, p22) {
+          return value.replace(animationRegex, function(match3, p1, p22) {
             cursor = {
               name: p1,
               styles: p22,
@@ -21672,9 +21672,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     labelPattern.lastIndex = 0;
     var identifierName = "";
-    var match4;
-    while ((match4 = labelPattern.exec(styles3)) !== null) {
-      identifierName += "-" + match4[1];
+    var match3;
+    while ((match3 = labelPattern.exec(styles3)) !== null) {
+      identifierName += "-" + match3[1];
     }
     var name = murmur2(styles3) + identifierName;
     return {
@@ -21786,10 +21786,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return React7.createElement.apply(null, createElementArgArray);
   };
-  (function(_jsx260) {
+  (function(_jsx257) {
     var JSX;
     /* @__PURE__ */ (function(_JSX) {
-    })(JSX || (JSX = _jsx260.JSX || (_jsx260.JSX = {})));
+    })(JSX || (JSX = _jsx257.JSX || (_jsx257.JSX = {})));
   })(jsx36 || (jsx36 = {}));
   function css() {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -22916,11 +22916,11 @@ If there's a particular need for this, please submit a feature request at https:
       end--;
     return result.slice(start, end).split("\0").map(transform).join(delimiter2);
   }
-  function replace2(input, re4, value) {
-    if (re4 instanceof RegExp)
-      return input.replace(re4, value);
-    return re4.reduce(function(input2, re5) {
-      return input2.replace(re5, value);
+  function replace2(input, re3, value) {
+    if (re3 instanceof RegExp)
+      return input.replace(re3, value);
+    return re3.reduce(function(input2, re4) {
+      return input2.replace(re4, value);
     }, input);
   }
 
@@ -22987,15 +22987,15 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return namespaces;
   }
-  function hasConnectNamespace(Component7, match4) {
+  function hasConnectNamespace(Component7, match3) {
     if (!Component7) {
       return false;
     }
-    if (typeof match4 === "string") {
-      return getConnectNamespace(Component7).includes(match4);
+    if (typeof match3 === "string") {
+      return getConnectNamespace(Component7).includes(match3);
     }
-    if (Array.isArray(match4)) {
-      return match4.some((result) => getConnectNamespace(Component7).includes(result));
+    if (Array.isArray(match3)) {
+      return match3.some((result) => getConnectNamespace(Component7).includes(result));
     }
     return false;
   }
@@ -25280,8 +25280,8 @@ If there's a particular need for this, please submit a feature request at https:
   var input_base_default = contextConnect(InputBase, "InputBase");
 
   // node_modules/@use-gesture/core/dist/maths-0ab39ae9.esm.js
-  function clamp3(v3, min3, max3) {
-    return Math.max(min3, Math.min(v3, max3));
+  function clamp3(v3, min2, max2) {
+    return Math.max(min2, Math.min(v3, max2));
   }
   var V = {
     toVector(v3, fallback) {
@@ -25307,10 +25307,10 @@ If there's a particular need for this, please submit a feature request at https:
     if (dimension === 0 || Math.abs(dimension) === Infinity) return Math.pow(distance2, constant * 5);
     return distance2 * dimension * constant / (dimension + constant * distance2);
   }
-  function rubberbandIfOutOfBounds(position2, min3, max3, constant = 0.15) {
-    if (constant === 0) return clamp3(position2, min3, max3);
-    if (position2 < min3) return -rubberband(min3 - position2, max3 - min3, constant) + min3;
-    if (position2 > max3) return +rubberband(position2 - max3, max3 - min3, constant) + max3;
+  function rubberbandIfOutOfBounds(position2, min2, max2, constant = 0.15) {
+    if (constant === 0) return clamp3(position2, min2, max2);
+    if (position2 < min2) return -rubberband(min2 - position2, max2 - min2, constant) + min2;
+    if (position2 > max2) return +rubberband(position2 - max2, max2 - min2, constant) + max2;
     return position2;
   }
   function computeRubberband(bounds, [Vx, Vy], [Rx, Ry]) {
@@ -27597,15 +27597,15 @@ This message will only show in development mode. It won't appear in production. 
     const split = (value + "").split(".");
     return split[1] !== void 0 ? split[1].length : 0;
   }
-  function clamp4(value, min3, max3) {
+  function clamp4(value, min2, max2) {
     const baseValue = getNumber(value);
-    return Math.max(min3, Math.min(baseValue, max3));
+    return Math.max(min2, Math.min(baseValue, max2));
   }
-  function ensureValidStep(value, min3, step) {
+  function ensureValidStep(value, min2, step) {
     const baseValue = getNumber(value);
-    const minValue = getNumber(min3);
+    const minValue = getNumber(min2);
     const stepValue = getNumber(step);
-    const precision = Math.max(getPrecision(step), getPrecision(min3));
+    const precision = Math.max(getPrecision(step), getPrecision(min2));
     const tare = minValue % stepValue ? minValue : 0;
     const rounded2 = Math.round((baseValue - tare) / stepValue) * stepValue;
     const fromMin = rounded2 + tare;
@@ -27789,8 +27789,8 @@ This message will only show in development mode. It won't appear in production. 
       isDragEnabled = true,
       isShiftStepEnabled = true,
       label,
-      max: max3 = Infinity,
-      min: min3 = -Infinity,
+      max: max2 = Infinity,
+      min: min2 = -Infinity,
       required = false,
       shiftStep = 10,
       step = 1,
@@ -27816,9 +27816,9 @@ This message will only show in development mode. It won't appear in production. 
     const baseSpin = ensureNumber(spinFactor) * baseStep;
     const constrainValue = (value, stepOverride) => {
       if (!isStepAny) {
-        value = ensureValidStep(value, min3, stepOverride ?? baseStep);
+        value = ensureValidStep(value, min2, stepOverride ?? baseStep);
       }
-      return `${clamp4(value, min3, max3)}`;
+      return `${clamp4(value, min2, max2)}`;
     };
     const baseValue = constrainValue(0);
     const autoComplete = typeProp === "number" ? "off" : void 0;
@@ -27910,8 +27910,8 @@ This message will only show in development mode. It won't appear in production. 
       hideHTMLArrows: spinControls !== "native",
       isDragEnabled,
       label,
-      max: max3 === Infinity ? void 0 : max3,
-      min: min3 === -Infinity ? void 0 : min3,
+      max: max2 === Infinity ? void 0 : max2,
+      min: min2 === -Infinity ? void 0 : min2,
       ref: mergedRef,
       required,
       step,
@@ -29915,13 +29915,13 @@ This message will only show in development mode. It won't appear in production. 
       function getTextAfterSelection() {
         return textContent ? (0, import_rich_text2.getTextContent)((0, import_rich_text2.slice)(record, void 0, (0, import_rich_text2.getTextContent)(record).length)) : "";
       }
-      const match4 = getAutocompleteMatch(textContent, completers, {
+      const match3 = getAutocompleteMatch(textContent, completers, {
         matchCount: filteredOptions.length,
         isBackspacing: backspacingRef.current,
         getTextAfterSelection,
         lastCompletion: lastCompletionRef.current
       });
-      if (!match4) {
+      if (!match3) {
         if (autocompleter) {
           dispatch({
             type: "RESET"
@@ -29932,7 +29932,7 @@ This message will only show in development mode. It won't appear in production. 
       const {
         completer,
         filterValue: query
-      } = match4;
+      } = match3;
       if (!autocompleter && !isTextChange) {
         return;
       }
@@ -31291,30 +31291,30 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/range-control/utils.mjs
   var import_element69 = __toESM(require_element(), 1);
-  function floatClamp(value, min3, max3) {
+  function floatClamp(value, min2, max2) {
     if (typeof value !== "number") {
       return null;
     }
-    return parseFloat(`${clamp4(value, min3, max3)}`);
+    return parseFloat(`${clamp4(value, min2, max2)}`);
   }
   function useControlledRangeValue(settings) {
     const {
-      min: min3,
-      max: max3,
+      min: min2,
+      max: max2,
       value: valueProp,
       initial
     } = settings;
-    const [state, setInternalState] = use_controlled_state_default(floatClamp(valueProp, min3, max3), {
-      initial: floatClamp(initial ?? null, min3, max3),
+    const [state, setInternalState] = use_controlled_state_default(floatClamp(valueProp, min2, max2), {
+      initial: floatClamp(initial ?? null, min2, max2),
       fallback: null
     });
     const setState = (0, import_element69.useCallback)((nextValue) => {
       if (nextValue === null) {
         setInternalState(null);
       } else {
-        setInternalState(floatClamp(nextValue, min3, max3));
+        setInternalState(floatClamp(nextValue, min2, max2));
       }
-    }, [min3, max3, setInternalState]);
+    }, [min2, max2, setInternalState]);
     return [state, setState];
   }
 
@@ -31588,8 +31588,8 @@ This message will only show in development mode. It won't appear in production. 
     const {
       disabled = false,
       marks = false,
-      min: min3 = 0,
-      max: max3 = 100,
+      min: min2 = 0,
+      max: max2 = 100,
       step = 1,
       value = 0,
       ...restProps
@@ -31601,8 +31601,8 @@ This message will only show in development mode. It won't appear in production. 
       }), marks && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(Marks, {
         disabled,
         marks,
-        min: min3,
-        max: max3,
+        min: min2,
+        max: max2,
         step,
         value
       })]
@@ -31612,16 +31612,16 @@ This message will only show in development mode. It won't appear in production. 
     const {
       disabled = false,
       marks = false,
-      min: min3 = 0,
-      max: max3 = 100,
+      min: min2 = 0,
+      max: max2 = 100,
       step: stepProp = 1,
       value = 0
     } = props;
     const step = stepProp === "any" ? 1 : stepProp;
     const marksData = useMarks({
       marks,
-      min: min3,
-      max: max3,
+      min: min2,
+      max: max2,
       step,
       value
     });
@@ -31638,31 +31638,31 @@ This message will only show in development mode. It won't appear in production. 
   }
   function useMarks({
     marks,
-    min: min3 = 0,
-    max: max3 = 100,
+    min: min2 = 0,
+    max: max2 = 100,
     step = 1,
     value = 0
   }) {
     if (!marks) {
       return [];
     }
-    const range = max3 - min3;
+    const range = max2 - min2;
     if (!Array.isArray(marks)) {
       marks = [];
       const count = 1 + Math.round(range / step);
       while (count > marks.push({
-        value: step * marks.length + min3
+        value: step * marks.length + min2
       })) {
       }
     }
     const placedMarks = [];
     marks.forEach((mark, index2) => {
-      if (mark.value < min3 || mark.value > max3) {
+      if (mark.value < min2 || mark.value > max2) {
         return;
       }
       const key = `mark-${index2}`;
       const isFilled = mark.value <= value;
-      const offset4 = `${(mark.value - min3) / range * 100}%`;
+      const offset4 = `${(mark.value - min2) / range * 100}%`;
       const offsetStyle = {
         [(0, import_i18n12.isRTL)() ? "right" : "left"]: offset4
       };
@@ -31767,8 +31767,8 @@ This message will only show in development mode. It won't appear in production. 
       isShiftStepEnabled = true,
       label,
       marks = false,
-      max: max3 = 100,
-      min: min3 = 0,
+      max: max2 = 100,
+      min: min2 = 0,
       onBlur = noop9,
       onChange = noop9,
       onFocus = noop9,
@@ -31786,8 +31786,8 @@ This message will only show in development mode. It won't appear in production. 
       ...otherProps
     } = props;
     const [value, setValue] = useControlledRangeValue({
-      min: min3,
-      max: max3,
+      min: min2,
+      max: max2,
       value: valueProp ?? null,
       initial: initialPosition
     });
@@ -31806,8 +31806,8 @@ This message will only show in development mode. It won't appear in production. 
     const isValueReset = value === null;
     const currentValue = value !== void 0 ? value : currentInput;
     const inputSliderValue = isValueReset ? "" : currentValue;
-    const rangeFillValue = isValueReset ? (max3 - min3) / 2 + min3 : value;
-    const fillValue = isValueReset ? 50 : (value - min3) / (max3 - min3) * 100;
+    const rangeFillValue = isValueReset ? (max2 - min2) / 2 + min2 : value;
+    const fillValue = isValueReset ? 50 : (value - min2) / (max2 - min2) * 100;
     const fillValueOffset = `${clamp4(fillValue, 0, 100)}%`;
     const classes = clsx_default("components-range-control", className2);
     const wrapperClasses = clsx_default("components-range-control__wrapper", !!marks && "is-marked");
@@ -31823,8 +31823,8 @@ This message will only show in development mode. It won't appear in production. 
       let nextValue = parseFloat(next2);
       setValue(nextValue);
       if (!isNaN(nextValue)) {
-        if (nextValue < min3 || nextValue > max3) {
-          nextValue = floatClamp(nextValue, min3, max3);
+        if (nextValue < min2 || nextValue > max2) {
+          nextValue = floatClamp(nextValue, min2, max2);
         }
         onChange(nextValue);
         isResetPendent.current = false;
@@ -31881,8 +31881,8 @@ This message will only show in development mode. It won't appear in production. 
             disabled,
             id: `${id3}`,
             label,
-            max: max3,
-            min: min3,
+            max: max2,
+            min: min2,
             onBlur: handleOnBlur,
             onChange: handleOnRangeChange,
             onFocus: handleOnFocus,
@@ -31895,8 +31895,8 @@ This message will only show in development mode. It won't appear in production. 
             "aria-hidden": true,
             disabled,
             marks,
-            max: max3,
-            min: min3,
+            max: max2,
+            min: min2,
             railColor,
             step,
             value: rangeFillValue
@@ -31936,8 +31936,8 @@ This message will only show in development mode. It won't appear in production. 
           disabled,
           inputMode: "decimal",
           isShiftStepEnabled,
-          max: max3,
-          min: min3,
+          max: max2,
+          min: min2,
           onBlur: handleOnInputNumberBlur,
           onChange: handleOnChange,
           shiftStep,
@@ -32075,8 +32075,8 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/color-picker/input-with-slider.mjs
   var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
   var InputWithSlider = ({
-    min: min3,
-    max: max3,
+    min: min2,
+    max: max2,
     label,
     abbreviation,
     onChange,
@@ -32096,8 +32096,8 @@ This message will only show in development mode. It won't appear in production. 
     return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(component_default9, {
       spacing: 4,
       children: [/* @__PURE__ */ (0, import_jsx_runtime131.jsx)(NumberControlWrapper, {
-        min: min3,
-        max: max3,
+        min: min2,
+        max: max2,
         label,
         hideLabelFromVision: true,
         value,
@@ -32113,8 +32113,8 @@ This message will only show in development mode. It won't appear in production. 
       }), /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(RangeControl2, {
         label,
         hideLabelFromVision: true,
-        min: min3,
-        max: max3,
+        min: min2,
+        max: max2,
         value,
         onChange,
         withInputField: false
@@ -33835,8 +33835,8 @@ This message will only show in development mode. It won't appear in production. 
     const matchedUnit = unitMatch?.[1]?.toLowerCase();
     let unitToReturn;
     if (hasUnits(allowedUnits)) {
-      const match4 = allowedUnits.find((item) => item.value === matchedUnit);
-      unitToReturn = match4?.value;
+      const match3 = allowedUnits.find((item) => item.value === matchedUnit);
+      unitToReturn = match3?.value;
     } else {
       unitToReturn = DEFAULT_UNIT.value;
     }
@@ -35252,11 +35252,11 @@ This message will only show in development mode. It won't appear in production. 
     if (!isValuePreset(value, presetKey)) {
       return void 0;
     }
-    const match4 = value.match(new RegExp(`^var:preset\\|${presetKey}\\|(.+)$`));
-    if (!match4) {
+    const match3 = value.match(new RegExp(`^var:preset\\|${presetKey}\\|(.+)$`));
+    if (!match3) {
       return void 0;
     }
-    const slug = match4[1];
+    const slug = match3[1];
     const index2 = presets.findIndex((preset) => {
       return preset.slug === slug;
     });
@@ -35552,7 +35552,7 @@ This message will only show in development mode. It won't appear in production. 
     setSelectedUnits,
     sides: sides3,
     side,
-    min: min3 = 0,
+    min: min2 = 0,
     presets,
     presetKey,
     placeholder: placeholderProp,
@@ -35642,7 +35642,7 @@ This message will only show in development mode. It won't appear in production. 
           text: LABELS[side],
           children: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(StyledUnitControl, {
             ...props,
-            min: min3,
+            min: min2,
             className: "component-box-control__unit-control",
             id: inputId,
             isPressEnterToChange: true,
@@ -35662,7 +35662,7 @@ This message will only show in development mode. It won't appear in production. 
           onChange: (newValue) => {
             handleOnValueChange(newValue !== void 0 ? [newValue, computedUnit].join("") : void 0);
           },
-          min: isFinite(min3) ? min3 : 0,
+          min: isFinite(min2) ? min2 : 0,
           max: CUSTOM_VALUE_SETTINGS[computedUnit ?? "px"]?.max ?? 10,
           step: CUSTOM_VALUE_SETTINGS[computedUnit ?? "px"]?.step ?? 0.1,
           value: parsedQuantity ?? 0,
@@ -38979,7 +38979,7 @@ This message will only show in development mode. It won't appear in production. 
   function SuggestionsList({
     selectedIndex,
     scrollIntoView,
-    match: match4,
+    match: match3,
     onHover,
     onSelect,
     suggestions = [],
@@ -39007,7 +39007,7 @@ This message will only show in development mode. It won't appear in production. 
       };
     };
     const computeSuggestionMatch = (suggestion) => {
-      const matchText = displayTransform(match4).normalize("NFKC").toLocaleLowerCase();
+      const matchText = displayTransform(match3).normalize("NFKC").toLocaleLowerCase();
       if (matchText.length === 0) {
         return null;
       }
@@ -39243,9 +39243,9 @@ This message will only show in development mode. It won't appear in production. 
     const matchingSuggestions = (0, import_element116.useMemo)(() => {
       const startsWithMatch = [];
       const containsMatch = [];
-      const match4 = normalizeTextString(inputValue);
+      const match3 = normalizeTextString(inputValue);
       options2.forEach((option) => {
-        const index2 = normalizeTextString(option.label).indexOf(match4);
+        const index2 = normalizeTextString(option.label).indexOf(match3);
         if (index2 === 0) {
           startsWithMatch.push(option);
         } else if (index2 > 0) {
@@ -39349,12 +39349,12 @@ This message will only show in development mode. It won't appear in production. 
     (0, import_element116.useEffect)(() => {
       const hasMatchingSuggestions = matchingSuggestions.length > 0;
       if (isExpanded) {
-        const message2 = hasMatchingSuggestions ? (0, import_i18n37.sprintf)(
+        const message = hasMatchingSuggestions ? (0, import_i18n37.sprintf)(
           /* translators: %d: number of results. */
           (0, import_i18n37._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions.length),
           matchingSuggestions.length
         ) : (0, import_i18n37.__)("No results.");
-        (0, import_a11y5.speak)(message2, "polite");
+        (0, import_a11y5.speak)(message, "polite");
       }
     }, [matchingSuggestions, isExpanded]);
     return /* @__PURE__ */ (0, import_jsx_runtime186.jsx)(DetectOutside, {
@@ -40413,8 +40413,6 @@ This message will only show in development mode. It won't appear in production. 
   var daysInYear = 365.2425;
   var maxTime = Math.pow(10, 8) * 24 * 60 * 60 * 1e3;
   var minTime = -maxTime;
-  var millisecondsInWeek = 6048e5;
-  var millisecondsInDay = 864e5;
   var secondsInHour = 3600;
   var secondsInDay = secondsInHour * 24;
   var secondsInWeek = secondsInDay * 7;
@@ -40487,50 +40485,6 @@ This message will only show in development mode. It won't appear in production. 
     return _date;
   }
 
-  // node_modules/date-fns/startOfISOWeek.js
-  function startOfISOWeek(date, options2) {
-    return startOfWeek(date, { ...options2, weekStartsOn: 1 });
-  }
-
-  // node_modules/date-fns/getISOWeekYear.js
-  function getISOWeekYear(date, options2) {
-    const _date = toDate(date, options2?.in);
-    const year = _date.getFullYear();
-    const fourthOfJanuaryOfNextYear = constructFrom(_date, 0);
-    fourthOfJanuaryOfNextYear.setFullYear(year + 1, 0, 4);
-    fourthOfJanuaryOfNextYear.setHours(0, 0, 0, 0);
-    const startOfNextYear = startOfISOWeek(fourthOfJanuaryOfNextYear);
-    const fourthOfJanuaryOfThisYear = constructFrom(_date, 0);
-    fourthOfJanuaryOfThisYear.setFullYear(year, 0, 4);
-    fourthOfJanuaryOfThisYear.setHours(0, 0, 0, 0);
-    const startOfThisYear = startOfISOWeek(fourthOfJanuaryOfThisYear);
-    if (_date.getTime() >= startOfNextYear.getTime()) {
-      return year + 1;
-    } else if (_date.getTime() >= startOfThisYear.getTime()) {
-      return year;
-    } else {
-      return year - 1;
-    }
-  }
-
-  // node_modules/date-fns/_lib/getTimezoneOffsetInMilliseconds.js
-  function getTimezoneOffsetInMilliseconds(date) {
-    const _date = toDate(date);
-    const utcDate = new Date(
-      Date.UTC(
-        _date.getFullYear(),
-        _date.getMonth(),
-        _date.getDate(),
-        _date.getHours(),
-        _date.getMinutes(),
-        _date.getSeconds(),
-        _date.getMilliseconds()
-      )
-    );
-    utcDate.setUTCFullYear(_date.getFullYear());
-    return +date - +utcDate;
-  }
-
   // node_modules/date-fns/_lib/normalizeDates.js
   function normalizeDates(context, ...dates) {
     const normalize2 = constructFrom.bind(
@@ -40547,29 +40501,6 @@ This message will only show in development mode. It won't appear in production. 
     return _date;
   }
 
-  // node_modules/date-fns/differenceInCalendarDays.js
-  function differenceInCalendarDays(laterDate, earlierDate, options2) {
-    const [laterDate_, earlierDate_] = normalizeDates(
-      options2?.in,
-      laterDate,
-      earlierDate
-    );
-    const laterStartOfDay = startOfDay(laterDate_);
-    const earlierStartOfDay = startOfDay(earlierDate_);
-    const laterTimestamp = +laterStartOfDay - getTimezoneOffsetInMilliseconds(laterStartOfDay);
-    const earlierTimestamp = +earlierStartOfDay - getTimezoneOffsetInMilliseconds(earlierStartOfDay);
-    return Math.round((laterTimestamp - earlierTimestamp) / millisecondsInDay);
-  }
-
-  // node_modules/date-fns/startOfISOWeekYear.js
-  function startOfISOWeekYear(date, options2) {
-    const year = getISOWeekYear(date, options2);
-    const fourthOfJanuary = constructFrom(options2?.in || date, 0);
-    fourthOfJanuary.setFullYear(year, 0, 4);
-    fourthOfJanuary.setHours(0, 0, 0, 0);
-    return startOfISOWeek(fourthOfJanuary);
-  }
-
   // node_modules/date-fns/addWeeks.js
   function addWeeks(date, amount, options2) {
     return addDays(date, amount * 7, options2);
@@ -40580,32 +40511,6 @@ This message will only show in development mode. It won't appear in production. 
     return addMonths(date, amount * 12, options2);
   }
 
-  // node_modules/date-fns/max.js
-  function max2(dates, options2) {
-    let result;
-    let context = options2?.in;
-    dates.forEach((date) => {
-      if (!context && typeof date === "object")
-        context = constructFrom.bind(null, date);
-      const date_ = toDate(date, context);
-      if (!result || result < date_ || isNaN(+date_)) result = date_;
-    });
-    return constructFrom(context, result || NaN);
-  }
-
-  // node_modules/date-fns/min.js
-  function min2(dates, options2) {
-    let result;
-    let context = options2?.in;
-    dates.forEach((date) => {
-      if (!context && typeof date === "object")
-        context = constructFrom.bind(null, date);
-      const date_ = toDate(date, context);
-      if (!result || result > date_ || isNaN(+date_)) result = date_;
-    });
-    return constructFrom(context, result || NaN);
-  }
-
   // node_modules/date-fns/isSameDay.js
   function isSameDay(laterDate, earlierDate, options2) {
     const [dateLeft_, dateRight_] = normalizeDates(
@@ -40614,28 +40519,6 @@ This message will only show in development mode. It won't appear in production. 
       earlierDate
     );
     return +startOfDay(dateLeft_) === +startOfDay(dateRight_);
-  }
-
-  // node_modules/date-fns/isDate.js
-  function isDate(value) {
-    return value instanceof Date || typeof value === "object" && Object.prototype.toString.call(value) === "[object Date]";
-  }
-
-  // node_modules/date-fns/isValid.js
-  function isValid(date) {
-    return !(!isDate(date) && typeof date !== "number" || isNaN(+toDate(date)));
-  }
-
-  // node_modules/date-fns/differenceInCalendarMonths.js
-  function differenceInCalendarMonths(laterDate, earlierDate, options2) {
-    const [laterDate_, earlierDate_] = normalizeDates(
-      options2?.in,
-      laterDate,
-      earlierDate
-    );
-    const yearsDiff = laterDate_.getFullYear() - earlierDate_.getFullYear();
-    const monthsDiff = laterDate_.getMonth() - earlierDate_.getMonth();
-    return yearsDiff * 12 + monthsDiff;
   }
 
   // node_modules/date-fns/endOfMonth.js
@@ -40731,45 +40614,6 @@ This message will only show in development mode. It won't appear in production. 
     return _date;
   }
 
-  // node_modules/date-fns/endOfYear.js
-  function endOfYear(date, options2) {
-    const _date = toDate(date, options2?.in);
-    const year = _date.getFullYear();
-    _date.setFullYear(year + 1, 0, 0);
-    _date.setHours(23, 59, 59, 999);
-    return _date;
-  }
-
-  // node_modules/date-fns/startOfYear.js
-  function startOfYear(date, options2) {
-    const date_ = toDate(date, options2?.in);
-    date_.setFullYear(date_.getFullYear(), 0, 1);
-    date_.setHours(0, 0, 0, 0);
-    return date_;
-  }
-
-  // node_modules/date-fns/eachYearOfInterval.js
-  function eachYearOfInterval(interval, options2) {
-    const { start, end } = normalizeInterval(options2?.in, interval);
-    let reversed = +start > +end;
-    const endTime = reversed ? +start : +end;
-    const date = reversed ? end : start;
-    date.setHours(0, 0, 0, 0);
-    date.setMonth(0, 1);
-    let step = options2?.step ?? 1;
-    if (!step) return [];
-    if (step < 0) {
-      step = -step;
-      reversed = !reversed;
-    }
-    const dates = [];
-    while (+date <= endTime) {
-      dates.push(constructFrom(start, date));
-      date.setFullYear(date.getFullYear() + step);
-    }
-    return reversed ? dates.reverse() : dates;
-  }
-
   // node_modules/date-fns/endOfWeek.js
   function endOfWeek(date, options2) {
     const defaultOptions3 = getDefaultOptions();
@@ -40782,1433 +40626,6 @@ This message will only show in development mode. It won't appear in production. 
     return _date;
   }
 
-  // node_modules/date-fns/endOfISOWeek.js
-  function endOfISOWeek(date, options2) {
-    return endOfWeek(date, { ...options2, weekStartsOn: 1 });
-  }
-
-  // node_modules/date-fns/locale/en-US/_lib/formatDistance.js
-  var formatDistanceLocale = {
-    lessThanXSeconds: {
-      one: "less than a second",
-      other: "less than {{count}} seconds"
-    },
-    xSeconds: {
-      one: "1 second",
-      other: "{{count}} seconds"
-    },
-    halfAMinute: "half a minute",
-    lessThanXMinutes: {
-      one: "less than a minute",
-      other: "less than {{count}} minutes"
-    },
-    xMinutes: {
-      one: "1 minute",
-      other: "{{count}} minutes"
-    },
-    aboutXHours: {
-      one: "about 1 hour",
-      other: "about {{count}} hours"
-    },
-    xHours: {
-      one: "1 hour",
-      other: "{{count}} hours"
-    },
-    xDays: {
-      one: "1 day",
-      other: "{{count}} days"
-    },
-    aboutXWeeks: {
-      one: "about 1 week",
-      other: "about {{count}} weeks"
-    },
-    xWeeks: {
-      one: "1 week",
-      other: "{{count}} weeks"
-    },
-    aboutXMonths: {
-      one: "about 1 month",
-      other: "about {{count}} months"
-    },
-    xMonths: {
-      one: "1 month",
-      other: "{{count}} months"
-    },
-    aboutXYears: {
-      one: "about 1 year",
-      other: "about {{count}} years"
-    },
-    xYears: {
-      one: "1 year",
-      other: "{{count}} years"
-    },
-    overXYears: {
-      one: "over 1 year",
-      other: "over {{count}} years"
-    },
-    almostXYears: {
-      one: "almost 1 year",
-      other: "almost {{count}} years"
-    }
-  };
-  var formatDistance = (token2, count, options2) => {
-    let result;
-    const tokenValue = formatDistanceLocale[token2];
-    if (typeof tokenValue === "string") {
-      result = tokenValue;
-    } else if (count === 1) {
-      result = tokenValue.one;
-    } else {
-      result = tokenValue.other.replace("{{count}}", count.toString());
-    }
-    if (options2?.addSuffix) {
-      if (options2.comparison && options2.comparison > 0) {
-        return "in " + result;
-      } else {
-        return result + " ago";
-      }
-    }
-    return result;
-  };
-
-  // node_modules/date-fns/locale/_lib/buildFormatLongFn.js
-  function buildFormatLongFn(args) {
-    return (options2 = {}) => {
-      const width = options2.width ? String(options2.width) : args.defaultWidth;
-      const format2 = args.formats[width] || args.formats[args.defaultWidth];
-      return format2;
-    };
-  }
-
-  // node_modules/date-fns/locale/en-US/_lib/formatLong.js
-  var dateFormats = {
-    full: "EEEE, MMMM do, y",
-    long: "MMMM do, y",
-    medium: "MMM d, y",
-    short: "MM/dd/yyyy"
-  };
-  var timeFormats = {
-    full: "h:mm:ss a zzzz",
-    long: "h:mm:ss a z",
-    medium: "h:mm:ss a",
-    short: "h:mm a"
-  };
-  var dateTimeFormats = {
-    full: "{{date}} 'at' {{time}}",
-    long: "{{date}} 'at' {{time}}",
-    medium: "{{date}}, {{time}}",
-    short: "{{date}}, {{time}}"
-  };
-  var formatLong = {
-    date: buildFormatLongFn({
-      formats: dateFormats,
-      defaultWidth: "full"
-    }),
-    time: buildFormatLongFn({
-      formats: timeFormats,
-      defaultWidth: "full"
-    }),
-    dateTime: buildFormatLongFn({
-      formats: dateTimeFormats,
-      defaultWidth: "full"
-    })
-  };
-
-  // node_modules/date-fns/locale/en-US/_lib/formatRelative.js
-  var formatRelativeLocale = {
-    lastWeek: "'last' eeee 'at' p",
-    yesterday: "'yesterday at' p",
-    today: "'today at' p",
-    tomorrow: "'tomorrow at' p",
-    nextWeek: "eeee 'at' p",
-    other: "P"
-  };
-  var formatRelative = (token2, _date, _baseDate, _options) => formatRelativeLocale[token2];
-
-  // node_modules/date-fns/locale/_lib/buildLocalizeFn.js
-  function buildLocalizeFn(args) {
-    return (value, options2) => {
-      const context = options2?.context ? String(options2.context) : "standalone";
-      let valuesArray;
-      if (context === "formatting" && args.formattingValues) {
-        const defaultWidth = args.defaultFormattingWidth || args.defaultWidth;
-        const width = options2?.width ? String(options2.width) : defaultWidth;
-        valuesArray = args.formattingValues[width] || args.formattingValues[defaultWidth];
-      } else {
-        const defaultWidth = args.defaultWidth;
-        const width = options2?.width ? String(options2.width) : args.defaultWidth;
-        valuesArray = args.values[width] || args.values[defaultWidth];
-      }
-      const index2 = args.argumentCallback ? args.argumentCallback(value) : value;
-      return valuesArray[index2];
-    };
-  }
-
-  // node_modules/date-fns/locale/en-US/_lib/localize.js
-  var eraValues = {
-    narrow: ["B", "A"],
-    abbreviated: ["BC", "AD"],
-    wide: ["Before Christ", "Anno Domini"]
-  };
-  var quarterValues = {
-    narrow: ["1", "2", "3", "4"],
-    abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-    wide: ["1st quarter", "2nd quarter", "3rd quarter", "4th quarter"]
-  };
-  var monthValues = {
-    narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
-    abbreviated: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    ],
-    wide: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December"
-    ]
-  };
-  var dayValues = {
-    narrow: ["S", "M", "T", "W", "T", "F", "S"],
-    short: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-    abbreviated: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-    wide: [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ]
-  };
-  var dayPeriodValues = {
-    narrow: {
-      am: "a",
-      pm: "p",
-      midnight: "mi",
-      noon: "n",
-      morning: "morning",
-      afternoon: "afternoon",
-      evening: "evening",
-      night: "night"
-    },
-    abbreviated: {
-      am: "AM",
-      pm: "PM",
-      midnight: "midnight",
-      noon: "noon",
-      morning: "morning",
-      afternoon: "afternoon",
-      evening: "evening",
-      night: "night"
-    },
-    wide: {
-      am: "a.m.",
-      pm: "p.m.",
-      midnight: "midnight",
-      noon: "noon",
-      morning: "morning",
-      afternoon: "afternoon",
-      evening: "evening",
-      night: "night"
-    }
-  };
-  var formattingDayPeriodValues = {
-    narrow: {
-      am: "a",
-      pm: "p",
-      midnight: "mi",
-      noon: "n",
-      morning: "in the morning",
-      afternoon: "in the afternoon",
-      evening: "in the evening",
-      night: "at night"
-    },
-    abbreviated: {
-      am: "AM",
-      pm: "PM",
-      midnight: "midnight",
-      noon: "noon",
-      morning: "in the morning",
-      afternoon: "in the afternoon",
-      evening: "in the evening",
-      night: "at night"
-    },
-    wide: {
-      am: "a.m.",
-      pm: "p.m.",
-      midnight: "midnight",
-      noon: "noon",
-      morning: "in the morning",
-      afternoon: "in the afternoon",
-      evening: "in the evening",
-      night: "at night"
-    }
-  };
-  var ordinalNumber = (dirtyNumber, _options) => {
-    const number2 = Number(dirtyNumber);
-    const rem100 = number2 % 100;
-    if (rem100 > 20 || rem100 < 10) {
-      switch (rem100 % 10) {
-        case 1:
-          return number2 + "st";
-        case 2:
-          return number2 + "nd";
-        case 3:
-          return number2 + "rd";
-      }
-    }
-    return number2 + "th";
-  };
-  var localize = {
-    ordinalNumber,
-    era: buildLocalizeFn({
-      values: eraValues,
-      defaultWidth: "wide"
-    }),
-    quarter: buildLocalizeFn({
-      values: quarterValues,
-      defaultWidth: "wide",
-      argumentCallback: (quarter) => quarter - 1
-    }),
-    month: buildLocalizeFn({
-      values: monthValues,
-      defaultWidth: "wide"
-    }),
-    day: buildLocalizeFn({
-      values: dayValues,
-      defaultWidth: "wide"
-    }),
-    dayPeriod: buildLocalizeFn({
-      values: dayPeriodValues,
-      defaultWidth: "wide",
-      formattingValues: formattingDayPeriodValues,
-      defaultFormattingWidth: "wide"
-    })
-  };
-
-  // node_modules/date-fns/locale/_lib/buildMatchFn.js
-  function buildMatchFn(args) {
-    return (string, options2 = {}) => {
-      const width = options2.width;
-      const matchPattern = width && args.matchPatterns[width] || args.matchPatterns[args.defaultMatchWidth];
-      const matchResult = string.match(matchPattern);
-      if (!matchResult) {
-        return null;
-      }
-      const matchedString = matchResult[0];
-      const parsePatterns = width && args.parsePatterns[width] || args.parsePatterns[args.defaultParseWidth];
-      const key = Array.isArray(parsePatterns) ? findIndex(parsePatterns, (pattern) => pattern.test(matchedString)) : (
-        // [TODO] -- I challenge you to fix the type
-        findKey(parsePatterns, (pattern) => pattern.test(matchedString))
-      );
-      let value;
-      value = args.valueCallback ? args.valueCallback(key) : key;
-      value = options2.valueCallback ? (
-        // [TODO] -- I challenge you to fix the type
-        options2.valueCallback(value)
-      ) : value;
-      const rest = string.slice(matchedString.length);
-      return { value, rest };
-    };
-  }
-  function findKey(object, predicate) {
-    for (const key in object) {
-      if (Object.prototype.hasOwnProperty.call(object, key) && predicate(object[key])) {
-        return key;
-      }
-    }
-    return void 0;
-  }
-  function findIndex(array, predicate) {
-    for (let key = 0; key < array.length; key++) {
-      if (predicate(array[key])) {
-        return key;
-      }
-    }
-    return void 0;
-  }
-
-  // node_modules/date-fns/locale/_lib/buildMatchPatternFn.js
-  function buildMatchPatternFn(args) {
-    return (string, options2 = {}) => {
-      const matchResult = string.match(args.matchPattern);
-      if (!matchResult) return null;
-      const matchedString = matchResult[0];
-      const parseResult = string.match(args.parsePattern);
-      if (!parseResult) return null;
-      let value = args.valueCallback ? args.valueCallback(parseResult[0]) : parseResult[0];
-      value = options2.valueCallback ? options2.valueCallback(value) : value;
-      const rest = string.slice(matchedString.length);
-      return { value, rest };
-    };
-  }
-
-  // node_modules/date-fns/locale/en-US/_lib/match.js
-  var matchOrdinalNumberPattern = /^(\d+)(th|st|nd|rd)?/i;
-  var parseOrdinalNumberPattern = /\d+/i;
-  var matchEraPatterns = {
-    narrow: /^(b|a)/i,
-    abbreviated: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)/i,
-    wide: /^(before christ|before common era|anno domini|common era)/i
-  };
-  var parseEraPatterns = {
-    any: [/^b/i, /^(a|c)/i]
-  };
-  var matchQuarterPatterns = {
-    narrow: /^[1234]/i,
-    abbreviated: /^q[1234]/i,
-    wide: /^[1234](th|st|nd|rd)? quarter/i
-  };
-  var parseQuarterPatterns = {
-    any: [/1/i, /2/i, /3/i, /4/i]
-  };
-  var matchMonthPatterns = {
-    narrow: /^[jfmasond]/i,
-    abbreviated: /^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i,
-    wide: /^(january|february|march|april|may|june|july|august|september|october|november|december)/i
-  };
-  var parseMonthPatterns = {
-    narrow: [
-      /^j/i,
-      /^f/i,
-      /^m/i,
-      /^a/i,
-      /^m/i,
-      /^j/i,
-      /^j/i,
-      /^a/i,
-      /^s/i,
-      /^o/i,
-      /^n/i,
-      /^d/i
-    ],
-    any: [
-      /^ja/i,
-      /^f/i,
-      /^mar/i,
-      /^ap/i,
-      /^may/i,
-      /^jun/i,
-      /^jul/i,
-      /^au/i,
-      /^s/i,
-      /^o/i,
-      /^n/i,
-      /^d/i
-    ]
-  };
-  var matchDayPatterns = {
-    narrow: /^[smtwf]/i,
-    short: /^(su|mo|tu|we|th|fr|sa)/i,
-    abbreviated: /^(sun|mon|tue|wed|thu|fri|sat)/i,
-    wide: /^(sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i
-  };
-  var parseDayPatterns = {
-    narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
-    any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
-  };
-  var matchDayPeriodPatterns = {
-    narrow: /^(a|p|mi|n|(in the|at) (morning|afternoon|evening|night))/i,
-    any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i
-  };
-  var parseDayPeriodPatterns = {
-    any: {
-      am: /^a/i,
-      pm: /^p/i,
-      midnight: /^mi/i,
-      noon: /^no/i,
-      morning: /morning/i,
-      afternoon: /afternoon/i,
-      evening: /evening/i,
-      night: /night/i
-    }
-  };
-  var match2 = {
-    ordinalNumber: buildMatchPatternFn({
-      matchPattern: matchOrdinalNumberPattern,
-      parsePattern: parseOrdinalNumberPattern,
-      valueCallback: (value) => parseInt(value, 10)
-    }),
-    era: buildMatchFn({
-      matchPatterns: matchEraPatterns,
-      defaultMatchWidth: "wide",
-      parsePatterns: parseEraPatterns,
-      defaultParseWidth: "any"
-    }),
-    quarter: buildMatchFn({
-      matchPatterns: matchQuarterPatterns,
-      defaultMatchWidth: "wide",
-      parsePatterns: parseQuarterPatterns,
-      defaultParseWidth: "any",
-      valueCallback: (index2) => index2 + 1
-    }),
-    month: buildMatchFn({
-      matchPatterns: matchMonthPatterns,
-      defaultMatchWidth: "wide",
-      parsePatterns: parseMonthPatterns,
-      defaultParseWidth: "any"
-    }),
-    day: buildMatchFn({
-      matchPatterns: matchDayPatterns,
-      defaultMatchWidth: "wide",
-      parsePatterns: parseDayPatterns,
-      defaultParseWidth: "any"
-    }),
-    dayPeriod: buildMatchFn({
-      matchPatterns: matchDayPeriodPatterns,
-      defaultMatchWidth: "any",
-      parsePatterns: parseDayPeriodPatterns,
-      defaultParseWidth: "any"
-    })
-  };
-
-  // node_modules/date-fns/locale/en-US.js
-  var enUS = {
-    code: "en-US",
-    formatDistance,
-    formatLong,
-    formatRelative,
-    localize,
-    match: match2,
-    options: {
-      weekStartsOn: 0,
-      firstWeekContainsDate: 1
-    }
-  };
-
-  // node_modules/date-fns/getDayOfYear.js
-  function getDayOfYear(date, options2) {
-    const _date = toDate(date, options2?.in);
-    const diff = differenceInCalendarDays(_date, startOfYear(_date));
-    const dayOfYear = diff + 1;
-    return dayOfYear;
-  }
-
-  // node_modules/date-fns/getISOWeek.js
-  function getISOWeek(date, options2) {
-    const _date = toDate(date, options2?.in);
-    const diff = +startOfISOWeek(_date) - +startOfISOWeekYear(_date);
-    return Math.round(diff / millisecondsInWeek) + 1;
-  }
-
-  // node_modules/date-fns/getWeekYear.js
-  function getWeekYear(date, options2) {
-    const _date = toDate(date, options2?.in);
-    const year = _date.getFullYear();
-    const defaultOptions3 = getDefaultOptions();
-    const firstWeekContainsDate = options2?.firstWeekContainsDate ?? options2?.locale?.options?.firstWeekContainsDate ?? defaultOptions3.firstWeekContainsDate ?? defaultOptions3.locale?.options?.firstWeekContainsDate ?? 1;
-    const firstWeekOfNextYear = constructFrom(options2?.in || date, 0);
-    firstWeekOfNextYear.setFullYear(year + 1, 0, firstWeekContainsDate);
-    firstWeekOfNextYear.setHours(0, 0, 0, 0);
-    const startOfNextYear = startOfWeek(firstWeekOfNextYear, options2);
-    const firstWeekOfThisYear = constructFrom(options2?.in || date, 0);
-    firstWeekOfThisYear.setFullYear(year, 0, firstWeekContainsDate);
-    firstWeekOfThisYear.setHours(0, 0, 0, 0);
-    const startOfThisYear = startOfWeek(firstWeekOfThisYear, options2);
-    if (+_date >= +startOfNextYear) {
-      return year + 1;
-    } else if (+_date >= +startOfThisYear) {
-      return year;
-    } else {
-      return year - 1;
-    }
-  }
-
-  // node_modules/date-fns/startOfWeekYear.js
-  function startOfWeekYear(date, options2) {
-    const defaultOptions3 = getDefaultOptions();
-    const firstWeekContainsDate = options2?.firstWeekContainsDate ?? options2?.locale?.options?.firstWeekContainsDate ?? defaultOptions3.firstWeekContainsDate ?? defaultOptions3.locale?.options?.firstWeekContainsDate ?? 1;
-    const year = getWeekYear(date, options2);
-    const firstWeek = constructFrom(options2?.in || date, 0);
-    firstWeek.setFullYear(year, 0, firstWeekContainsDate);
-    firstWeek.setHours(0, 0, 0, 0);
-    const _date = startOfWeek(firstWeek, options2);
-    return _date;
-  }
-
-  // node_modules/date-fns/getWeek.js
-  function getWeek(date, options2) {
-    const _date = toDate(date, options2?.in);
-    const diff = +startOfWeek(_date, options2) - +startOfWeekYear(_date, options2);
-    return Math.round(diff / millisecondsInWeek) + 1;
-  }
-
-  // node_modules/date-fns/_lib/addLeadingZeros.js
-  function addLeadingZeros(number2, targetLength) {
-    const sign = number2 < 0 ? "-" : "";
-    const output = Math.abs(number2).toString().padStart(targetLength, "0");
-    return sign + output;
-  }
-
-  // node_modules/date-fns/_lib/format/lightFormatters.js
-  var lightFormatters = {
-    // Year
-    y(date, token2) {
-      const signedYear = date.getFullYear();
-      const year = signedYear > 0 ? signedYear : 1 - signedYear;
-      return addLeadingZeros(token2 === "yy" ? year % 100 : year, token2.length);
-    },
-    // Month
-    M(date, token2) {
-      const month = date.getMonth();
-      return token2 === "M" ? String(month + 1) : addLeadingZeros(month + 1, 2);
-    },
-    // Day of the month
-    d(date, token2) {
-      return addLeadingZeros(date.getDate(), token2.length);
-    },
-    // AM or PM
-    a(date, token2) {
-      const dayPeriodEnumValue = date.getHours() / 12 >= 1 ? "pm" : "am";
-      switch (token2) {
-        case "a":
-        case "aa":
-          return dayPeriodEnumValue.toUpperCase();
-        case "aaa":
-          return dayPeriodEnumValue;
-        case "aaaaa":
-          return dayPeriodEnumValue[0];
-        case "aaaa":
-        default:
-          return dayPeriodEnumValue === "am" ? "a.m." : "p.m.";
-      }
-    },
-    // Hour [1-12]
-    h(date, token2) {
-      return addLeadingZeros(date.getHours() % 12 || 12, token2.length);
-    },
-    // Hour [0-23]
-    H(date, token2) {
-      return addLeadingZeros(date.getHours(), token2.length);
-    },
-    // Minute
-    m(date, token2) {
-      return addLeadingZeros(date.getMinutes(), token2.length);
-    },
-    // Second
-    s(date, token2) {
-      return addLeadingZeros(date.getSeconds(), token2.length);
-    },
-    // Fraction of second
-    S(date, token2) {
-      const numberOfDigits = token2.length;
-      const milliseconds = date.getMilliseconds();
-      const fractionalSeconds = Math.trunc(
-        milliseconds * Math.pow(10, numberOfDigits - 3)
-      );
-      return addLeadingZeros(fractionalSeconds, token2.length);
-    }
-  };
-
-  // node_modules/date-fns/_lib/format/formatters.js
-  var dayPeriodEnum = {
-    am: "am",
-    pm: "pm",
-    midnight: "midnight",
-    noon: "noon",
-    morning: "morning",
-    afternoon: "afternoon",
-    evening: "evening",
-    night: "night"
-  };
-  var formatters = {
-    // Era
-    G: function(date, token2, localize2) {
-      const era = date.getFullYear() > 0 ? 1 : 0;
-      switch (token2) {
-        // AD, BC
-        case "G":
-        case "GG":
-        case "GGG":
-          return localize2.era(era, { width: "abbreviated" });
-        // A, B
-        case "GGGGG":
-          return localize2.era(era, { width: "narrow" });
-        // Anno Domini, Before Christ
-        case "GGGG":
-        default:
-          return localize2.era(era, { width: "wide" });
-      }
-    },
-    // Year
-    y: function(date, token2, localize2) {
-      if (token2 === "yo") {
-        const signedYear = date.getFullYear();
-        const year = signedYear > 0 ? signedYear : 1 - signedYear;
-        return localize2.ordinalNumber(year, { unit: "year" });
-      }
-      return lightFormatters.y(date, token2);
-    },
-    // Local week-numbering year
-    Y: function(date, token2, localize2, options2) {
-      const signedWeekYear = getWeekYear(date, options2);
-      const weekYear = signedWeekYear > 0 ? signedWeekYear : 1 - signedWeekYear;
-      if (token2 === "YY") {
-        const twoDigitYear = weekYear % 100;
-        return addLeadingZeros(twoDigitYear, 2);
-      }
-      if (token2 === "Yo") {
-        return localize2.ordinalNumber(weekYear, { unit: "year" });
-      }
-      return addLeadingZeros(weekYear, token2.length);
-    },
-    // ISO week-numbering year
-    R: function(date, token2) {
-      const isoWeekYear = getISOWeekYear(date);
-      return addLeadingZeros(isoWeekYear, token2.length);
-    },
-    // Extended year. This is a single number designating the year of this calendar system.
-    // The main difference between `y` and `u` localizers are B.C. years:
-    // | Year | `y` | `u` |
-    // |------|-----|-----|
-    // | AC 1 |   1 |   1 |
-    // | BC 1 |   1 |   0 |
-    // | BC 2 |   2 |  -1 |
-    // Also `yy` always returns the last two digits of a year,
-    // while `uu` pads single digit years to 2 characters and returns other years unchanged.
-    u: function(date, token2) {
-      const year = date.getFullYear();
-      return addLeadingZeros(year, token2.length);
-    },
-    // Quarter
-    Q: function(date, token2, localize2) {
-      const quarter = Math.ceil((date.getMonth() + 1) / 3);
-      switch (token2) {
-        // 1, 2, 3, 4
-        case "Q":
-          return String(quarter);
-        // 01, 02, 03, 04
-        case "QQ":
-          return addLeadingZeros(quarter, 2);
-        // 1st, 2nd, 3rd, 4th
-        case "Qo":
-          return localize2.ordinalNumber(quarter, { unit: "quarter" });
-        // Q1, Q2, Q3, Q4
-        case "QQQ":
-          return localize2.quarter(quarter, {
-            width: "abbreviated",
-            context: "formatting"
-          });
-        // 1, 2, 3, 4 (narrow quarter; could be not numerical)
-        case "QQQQQ":
-          return localize2.quarter(quarter, {
-            width: "narrow",
-            context: "formatting"
-          });
-        // 1st quarter, 2nd quarter, ...
-        case "QQQQ":
-        default:
-          return localize2.quarter(quarter, {
-            width: "wide",
-            context: "formatting"
-          });
-      }
-    },
-    // Stand-alone quarter
-    q: function(date, token2, localize2) {
-      const quarter = Math.ceil((date.getMonth() + 1) / 3);
-      switch (token2) {
-        // 1, 2, 3, 4
-        case "q":
-          return String(quarter);
-        // 01, 02, 03, 04
-        case "qq":
-          return addLeadingZeros(quarter, 2);
-        // 1st, 2nd, 3rd, 4th
-        case "qo":
-          return localize2.ordinalNumber(quarter, { unit: "quarter" });
-        // Q1, Q2, Q3, Q4
-        case "qqq":
-          return localize2.quarter(quarter, {
-            width: "abbreviated",
-            context: "standalone"
-          });
-        // 1, 2, 3, 4 (narrow quarter; could be not numerical)
-        case "qqqqq":
-          return localize2.quarter(quarter, {
-            width: "narrow",
-            context: "standalone"
-          });
-        // 1st quarter, 2nd quarter, ...
-        case "qqqq":
-        default:
-          return localize2.quarter(quarter, {
-            width: "wide",
-            context: "standalone"
-          });
-      }
-    },
-    // Month
-    M: function(date, token2, localize2) {
-      const month = date.getMonth();
-      switch (token2) {
-        case "M":
-        case "MM":
-          return lightFormatters.M(date, token2);
-        // 1st, 2nd, ..., 12th
-        case "Mo":
-          return localize2.ordinalNumber(month + 1, { unit: "month" });
-        // Jan, Feb, ..., Dec
-        case "MMM":
-          return localize2.month(month, {
-            width: "abbreviated",
-            context: "formatting"
-          });
-        // J, F, ..., D
-        case "MMMMM":
-          return localize2.month(month, {
-            width: "narrow",
-            context: "formatting"
-          });
-        // January, February, ..., December
-        case "MMMM":
-        default:
-          return localize2.month(month, { width: "wide", context: "formatting" });
-      }
-    },
-    // Stand-alone month
-    L: function(date, token2, localize2) {
-      const month = date.getMonth();
-      switch (token2) {
-        // 1, 2, ..., 12
-        case "L":
-          return String(month + 1);
-        // 01, 02, ..., 12
-        case "LL":
-          return addLeadingZeros(month + 1, 2);
-        // 1st, 2nd, ..., 12th
-        case "Lo":
-          return localize2.ordinalNumber(month + 1, { unit: "month" });
-        // Jan, Feb, ..., Dec
-        case "LLL":
-          return localize2.month(month, {
-            width: "abbreviated",
-            context: "standalone"
-          });
-        // J, F, ..., D
-        case "LLLLL":
-          return localize2.month(month, {
-            width: "narrow",
-            context: "standalone"
-          });
-        // January, February, ..., December
-        case "LLLL":
-        default:
-          return localize2.month(month, { width: "wide", context: "standalone" });
-      }
-    },
-    // Local week of year
-    w: function(date, token2, localize2, options2) {
-      const week = getWeek(date, options2);
-      if (token2 === "wo") {
-        return localize2.ordinalNumber(week, { unit: "week" });
-      }
-      return addLeadingZeros(week, token2.length);
-    },
-    // ISO week of year
-    I: function(date, token2, localize2) {
-      const isoWeek = getISOWeek(date);
-      if (token2 === "Io") {
-        return localize2.ordinalNumber(isoWeek, { unit: "week" });
-      }
-      return addLeadingZeros(isoWeek, token2.length);
-    },
-    // Day of the month
-    d: function(date, token2, localize2) {
-      if (token2 === "do") {
-        return localize2.ordinalNumber(date.getDate(), { unit: "date" });
-      }
-      return lightFormatters.d(date, token2);
-    },
-    // Day of year
-    D: function(date, token2, localize2) {
-      const dayOfYear = getDayOfYear(date);
-      if (token2 === "Do") {
-        return localize2.ordinalNumber(dayOfYear, { unit: "dayOfYear" });
-      }
-      return addLeadingZeros(dayOfYear, token2.length);
-    },
-    // Day of week
-    E: function(date, token2, localize2) {
-      const dayOfWeek = date.getDay();
-      switch (token2) {
-        // Tue
-        case "E":
-        case "EE":
-        case "EEE":
-          return localize2.day(dayOfWeek, {
-            width: "abbreviated",
-            context: "formatting"
-          });
-        // T
-        case "EEEEE":
-          return localize2.day(dayOfWeek, {
-            width: "narrow",
-            context: "formatting"
-          });
-        // Tu
-        case "EEEEEE":
-          return localize2.day(dayOfWeek, {
-            width: "short",
-            context: "formatting"
-          });
-        // Tuesday
-        case "EEEE":
-        default:
-          return localize2.day(dayOfWeek, {
-            width: "wide",
-            context: "formatting"
-          });
-      }
-    },
-    // Local day of week
-    e: function(date, token2, localize2, options2) {
-      const dayOfWeek = date.getDay();
-      const localDayOfWeek = (dayOfWeek - options2.weekStartsOn + 8) % 7 || 7;
-      switch (token2) {
-        // Numerical value (Nth day of week with current locale or weekStartsOn)
-        case "e":
-          return String(localDayOfWeek);
-        // Padded numerical value
-        case "ee":
-          return addLeadingZeros(localDayOfWeek, 2);
-        // 1st, 2nd, ..., 7th
-        case "eo":
-          return localize2.ordinalNumber(localDayOfWeek, { unit: "day" });
-        case "eee":
-          return localize2.day(dayOfWeek, {
-            width: "abbreviated",
-            context: "formatting"
-          });
-        // T
-        case "eeeee":
-          return localize2.day(dayOfWeek, {
-            width: "narrow",
-            context: "formatting"
-          });
-        // Tu
-        case "eeeeee":
-          return localize2.day(dayOfWeek, {
-            width: "short",
-            context: "formatting"
-          });
-        // Tuesday
-        case "eeee":
-        default:
-          return localize2.day(dayOfWeek, {
-            width: "wide",
-            context: "formatting"
-          });
-      }
-    },
-    // Stand-alone local day of week
-    c: function(date, token2, localize2, options2) {
-      const dayOfWeek = date.getDay();
-      const localDayOfWeek = (dayOfWeek - options2.weekStartsOn + 8) % 7 || 7;
-      switch (token2) {
-        // Numerical value (same as in `e`)
-        case "c":
-          return String(localDayOfWeek);
-        // Padded numerical value
-        case "cc":
-          return addLeadingZeros(localDayOfWeek, token2.length);
-        // 1st, 2nd, ..., 7th
-        case "co":
-          return localize2.ordinalNumber(localDayOfWeek, { unit: "day" });
-        case "ccc":
-          return localize2.day(dayOfWeek, {
-            width: "abbreviated",
-            context: "standalone"
-          });
-        // T
-        case "ccccc":
-          return localize2.day(dayOfWeek, {
-            width: "narrow",
-            context: "standalone"
-          });
-        // Tu
-        case "cccccc":
-          return localize2.day(dayOfWeek, {
-            width: "short",
-            context: "standalone"
-          });
-        // Tuesday
-        case "cccc":
-        default:
-          return localize2.day(dayOfWeek, {
-            width: "wide",
-            context: "standalone"
-          });
-      }
-    },
-    // ISO day of week
-    i: function(date, token2, localize2) {
-      const dayOfWeek = date.getDay();
-      const isoDayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek;
-      switch (token2) {
-        // 2
-        case "i":
-          return String(isoDayOfWeek);
-        // 02
-        case "ii":
-          return addLeadingZeros(isoDayOfWeek, token2.length);
-        // 2nd
-        case "io":
-          return localize2.ordinalNumber(isoDayOfWeek, { unit: "day" });
-        // Tue
-        case "iii":
-          return localize2.day(dayOfWeek, {
-            width: "abbreviated",
-            context: "formatting"
-          });
-        // T
-        case "iiiii":
-          return localize2.day(dayOfWeek, {
-            width: "narrow",
-            context: "formatting"
-          });
-        // Tu
-        case "iiiiii":
-          return localize2.day(dayOfWeek, {
-            width: "short",
-            context: "formatting"
-          });
-        // Tuesday
-        case "iiii":
-        default:
-          return localize2.day(dayOfWeek, {
-            width: "wide",
-            context: "formatting"
-          });
-      }
-    },
-    // AM or PM
-    a: function(date, token2, localize2) {
-      const hours = date.getHours();
-      const dayPeriodEnumValue = hours / 12 >= 1 ? "pm" : "am";
-      switch (token2) {
-        case "a":
-        case "aa":
-          return localize2.dayPeriod(dayPeriodEnumValue, {
-            width: "abbreviated",
-            context: "formatting"
-          });
-        case "aaa":
-          return localize2.dayPeriod(dayPeriodEnumValue, {
-            width: "abbreviated",
-            context: "formatting"
-          }).toLowerCase();
-        case "aaaaa":
-          return localize2.dayPeriod(dayPeriodEnumValue, {
-            width: "narrow",
-            context: "formatting"
-          });
-        case "aaaa":
-        default:
-          return localize2.dayPeriod(dayPeriodEnumValue, {
-            width: "wide",
-            context: "formatting"
-          });
-      }
-    },
-    // AM, PM, midnight, noon
-    b: function(date, token2, localize2) {
-      const hours = date.getHours();
-      let dayPeriodEnumValue;
-      if (hours === 12) {
-        dayPeriodEnumValue = dayPeriodEnum.noon;
-      } else if (hours === 0) {
-        dayPeriodEnumValue = dayPeriodEnum.midnight;
-      } else {
-        dayPeriodEnumValue = hours / 12 >= 1 ? "pm" : "am";
-      }
-      switch (token2) {
-        case "b":
-        case "bb":
-          return localize2.dayPeriod(dayPeriodEnumValue, {
-            width: "abbreviated",
-            context: "formatting"
-          });
-        case "bbb":
-          return localize2.dayPeriod(dayPeriodEnumValue, {
-            width: "abbreviated",
-            context: "formatting"
-          }).toLowerCase();
-        case "bbbbb":
-          return localize2.dayPeriod(dayPeriodEnumValue, {
-            width: "narrow",
-            context: "formatting"
-          });
-        case "bbbb":
-        default:
-          return localize2.dayPeriod(dayPeriodEnumValue, {
-            width: "wide",
-            context: "formatting"
-          });
-      }
-    },
-    // in the morning, in the afternoon, in the evening, at night
-    B: function(date, token2, localize2) {
-      const hours = date.getHours();
-      let dayPeriodEnumValue;
-      if (hours >= 17) {
-        dayPeriodEnumValue = dayPeriodEnum.evening;
-      } else if (hours >= 12) {
-        dayPeriodEnumValue = dayPeriodEnum.afternoon;
-      } else if (hours >= 4) {
-        dayPeriodEnumValue = dayPeriodEnum.morning;
-      } else {
-        dayPeriodEnumValue = dayPeriodEnum.night;
-      }
-      switch (token2) {
-        case "B":
-        case "BB":
-        case "BBB":
-          return localize2.dayPeriod(dayPeriodEnumValue, {
-            width: "abbreviated",
-            context: "formatting"
-          });
-        case "BBBBB":
-          return localize2.dayPeriod(dayPeriodEnumValue, {
-            width: "narrow",
-            context: "formatting"
-          });
-        case "BBBB":
-        default:
-          return localize2.dayPeriod(dayPeriodEnumValue, {
-            width: "wide",
-            context: "formatting"
-          });
-      }
-    },
-    // Hour [1-12]
-    h: function(date, token2, localize2) {
-      if (token2 === "ho") {
-        let hours = date.getHours() % 12;
-        if (hours === 0) hours = 12;
-        return localize2.ordinalNumber(hours, { unit: "hour" });
-      }
-      return lightFormatters.h(date, token2);
-    },
-    // Hour [0-23]
-    H: function(date, token2, localize2) {
-      if (token2 === "Ho") {
-        return localize2.ordinalNumber(date.getHours(), { unit: "hour" });
-      }
-      return lightFormatters.H(date, token2);
-    },
-    // Hour [0-11]
-    K: function(date, token2, localize2) {
-      const hours = date.getHours() % 12;
-      if (token2 === "Ko") {
-        return localize2.ordinalNumber(hours, { unit: "hour" });
-      }
-      return addLeadingZeros(hours, token2.length);
-    },
-    // Hour [1-24]
-    k: function(date, token2, localize2) {
-      let hours = date.getHours();
-      if (hours === 0) hours = 24;
-      if (token2 === "ko") {
-        return localize2.ordinalNumber(hours, { unit: "hour" });
-      }
-      return addLeadingZeros(hours, token2.length);
-    },
-    // Minute
-    m: function(date, token2, localize2) {
-      if (token2 === "mo") {
-        return localize2.ordinalNumber(date.getMinutes(), { unit: "minute" });
-      }
-      return lightFormatters.m(date, token2);
-    },
-    // Second
-    s: function(date, token2, localize2) {
-      if (token2 === "so") {
-        return localize2.ordinalNumber(date.getSeconds(), { unit: "second" });
-      }
-      return lightFormatters.s(date, token2);
-    },
-    // Fraction of second
-    S: function(date, token2) {
-      return lightFormatters.S(date, token2);
-    },
-    // Timezone (ISO-8601. If offset is 0, output is always `'Z'`)
-    X: function(date, token2, _localize) {
-      const timezoneOffset = date.getTimezoneOffset();
-      if (timezoneOffset === 0) {
-        return "Z";
-      }
-      switch (token2) {
-        // Hours and optional minutes
-        case "X":
-          return formatTimezoneWithOptionalMinutes(timezoneOffset);
-        // Hours, minutes and optional seconds without `:` delimiter
-        // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
-        // so this token always has the same output as `XX`
-        case "XXXX":
-        case "XX":
-          return formatTimezone(timezoneOffset);
-        // Hours, minutes and optional seconds with `:` delimiter
-        // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
-        // so this token always has the same output as `XXX`
-        case "XXXXX":
-        case "XXX":
-        // Hours and minutes with `:` delimiter
-        default:
-          return formatTimezone(timezoneOffset, ":");
-      }
-    },
-    // Timezone (ISO-8601. If offset is 0, output is `'+00:00'` or equivalent)
-    x: function(date, token2, _localize) {
-      const timezoneOffset = date.getTimezoneOffset();
-      switch (token2) {
-        // Hours and optional minutes
-        case "x":
-          return formatTimezoneWithOptionalMinutes(timezoneOffset);
-        // Hours, minutes and optional seconds without `:` delimiter
-        // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
-        // so this token always has the same output as `xx`
-        case "xxxx":
-        case "xx":
-          return formatTimezone(timezoneOffset);
-        // Hours, minutes and optional seconds with `:` delimiter
-        // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
-        // so this token always has the same output as `xxx`
-        case "xxxxx":
-        case "xxx":
-        // Hours and minutes with `:` delimiter
-        default:
-          return formatTimezone(timezoneOffset, ":");
-      }
-    },
-    // Timezone (GMT)
-    O: function(date, token2, _localize) {
-      const timezoneOffset = date.getTimezoneOffset();
-      switch (token2) {
-        // Short
-        case "O":
-        case "OO":
-        case "OOO":
-          return "GMT" + formatTimezoneShort(timezoneOffset, ":");
-        // Long
-        case "OOOO":
-        default:
-          return "GMT" + formatTimezone(timezoneOffset, ":");
-      }
-    },
-    // Timezone (specific non-location)
-    z: function(date, token2, _localize) {
-      const timezoneOffset = date.getTimezoneOffset();
-      switch (token2) {
-        // Short
-        case "z":
-        case "zz":
-        case "zzz":
-          return "GMT" + formatTimezoneShort(timezoneOffset, ":");
-        // Long
-        case "zzzz":
-        default:
-          return "GMT" + formatTimezone(timezoneOffset, ":");
-      }
-    },
-    // Seconds timestamp
-    t: function(date, token2, _localize) {
-      const timestamp = Math.trunc(+date / 1e3);
-      return addLeadingZeros(timestamp, token2.length);
-    },
-    // Milliseconds timestamp
-    T: function(date, token2, _localize) {
-      return addLeadingZeros(+date, token2.length);
-    }
-  };
-  function formatTimezoneShort(offset4, delimiter2 = "") {
-    const sign = offset4 > 0 ? "-" : "+";
-    const absOffset = Math.abs(offset4);
-    const hours = Math.trunc(absOffset / 60);
-    const minutes = absOffset % 60;
-    if (minutes === 0) {
-      return sign + String(hours);
-    }
-    return sign + String(hours) + delimiter2 + addLeadingZeros(minutes, 2);
-  }
-  function formatTimezoneWithOptionalMinutes(offset4, delimiter2) {
-    if (offset4 % 60 === 0) {
-      const sign = offset4 > 0 ? "-" : "+";
-      return sign + addLeadingZeros(Math.abs(offset4) / 60, 2);
-    }
-    return formatTimezone(offset4, delimiter2);
-  }
-  function formatTimezone(offset4, delimiter2 = "") {
-    const sign = offset4 > 0 ? "-" : "+";
-    const absOffset = Math.abs(offset4);
-    const hours = addLeadingZeros(Math.trunc(absOffset / 60), 2);
-    const minutes = addLeadingZeros(absOffset % 60, 2);
-    return sign + hours + delimiter2 + minutes;
-  }
-
-  // node_modules/date-fns/_lib/format/longFormatters.js
-  var dateLongFormatter = (pattern, formatLong2) => {
-    switch (pattern) {
-      case "P":
-        return formatLong2.date({ width: "short" });
-      case "PP":
-        return formatLong2.date({ width: "medium" });
-      case "PPP":
-        return formatLong2.date({ width: "long" });
-      case "PPPP":
-      default:
-        return formatLong2.date({ width: "full" });
-    }
-  };
-  var timeLongFormatter = (pattern, formatLong2) => {
-    switch (pattern) {
-      case "p":
-        return formatLong2.time({ width: "short" });
-      case "pp":
-        return formatLong2.time({ width: "medium" });
-      case "ppp":
-        return formatLong2.time({ width: "long" });
-      case "pppp":
-      default:
-        return formatLong2.time({ width: "full" });
-    }
-  };
-  var dateTimeLongFormatter = (pattern, formatLong2) => {
-    const matchResult = pattern.match(/(P+)(p+)?/) || [];
-    const datePattern = matchResult[1];
-    const timePattern = matchResult[2];
-    if (!timePattern) {
-      return dateLongFormatter(pattern, formatLong2);
-    }
-    let dateTimeFormat;
-    switch (datePattern) {
-      case "P":
-        dateTimeFormat = formatLong2.dateTime({ width: "short" });
-        break;
-      case "PP":
-        dateTimeFormat = formatLong2.dateTime({ width: "medium" });
-        break;
-      case "PPP":
-        dateTimeFormat = formatLong2.dateTime({ width: "long" });
-        break;
-      case "PPPP":
-      default:
-        dateTimeFormat = formatLong2.dateTime({ width: "full" });
-        break;
-    }
-    return dateTimeFormat.replace("{{date}}", dateLongFormatter(datePattern, formatLong2)).replace("{{time}}", timeLongFormatter(timePattern, formatLong2));
-  };
-  var longFormatters = {
-    p: timeLongFormatter,
-    P: dateTimeLongFormatter
-  };
-
-  // node_modules/date-fns/_lib/protectedTokens.js
-  var dayOfYearTokenRE = /^D+$/;
-  var weekYearTokenRE = /^Y+$/;
-  var throwTokens = ["D", "DD", "YY", "YYYY"];
-  function isProtectedDayOfYearToken(token2) {
-    return dayOfYearTokenRE.test(token2);
-  }
-  function isProtectedWeekYearToken(token2) {
-    return weekYearTokenRE.test(token2);
-  }
-  function warnOrThrowProtectedError(token2, format2, input) {
-    const _message = message(token2, format2, input);
-    console.warn(_message);
-    if (throwTokens.includes(token2)) throw new RangeError(_message);
-  }
-  function message(token2, format2, input) {
-    const subject = token2[0] === "Y" ? "years" : "days of the month";
-    return `Use \`${token2.toLowerCase()}\` instead of \`${token2}\` (in \`${format2}\`) for formatting ${subject} to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`;
-  }
-
-  // node_modules/date-fns/format.js
-  var formattingTokensRegExp = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g;
-  var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
-  var escapedStringRegExp = /^'([^]*?)'?$/;
-  var doubleQuoteRegExp = /''/g;
-  var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
-  function format(date, formatStr, options2) {
-    const defaultOptions3 = getDefaultOptions();
-    const locale = options2?.locale ?? defaultOptions3.locale ?? enUS;
-    const firstWeekContainsDate = options2?.firstWeekContainsDate ?? options2?.locale?.options?.firstWeekContainsDate ?? defaultOptions3.firstWeekContainsDate ?? defaultOptions3.locale?.options?.firstWeekContainsDate ?? 1;
-    const weekStartsOn = options2?.weekStartsOn ?? options2?.locale?.options?.weekStartsOn ?? defaultOptions3.weekStartsOn ?? defaultOptions3.locale?.options?.weekStartsOn ?? 0;
-    const originalDate = toDate(date, options2?.in);
-    if (!isValid(originalDate)) {
-      throw new RangeError("Invalid time value");
-    }
-    let parts = formatStr.match(longFormattingTokensRegExp).map((substring) => {
-      const firstCharacter = substring[0];
-      if (firstCharacter === "p" || firstCharacter === "P") {
-        const longFormatter = longFormatters[firstCharacter];
-        return longFormatter(substring, locale.formatLong);
-      }
-      return substring;
-    }).join("").match(formattingTokensRegExp).map((substring) => {
-      if (substring === "''") {
-        return { isToken: false, value: "'" };
-      }
-      const firstCharacter = substring[0];
-      if (firstCharacter === "'") {
-        return { isToken: false, value: cleanEscapedString(substring) };
-      }
-      if (formatters[firstCharacter]) {
-        return { isToken: true, value: substring };
-      }
-      if (firstCharacter.match(unescapedLatinCharacterRegExp)) {
-        throw new RangeError(
-          "Format string contains an unescaped latin alphabet character `" + firstCharacter + "`"
-        );
-      }
-      return { isToken: false, value: substring };
-    });
-    if (locale.localize.preprocessor) {
-      parts = locale.localize.preprocessor(originalDate, parts);
-    }
-    const formatterOptions = {
-      firstWeekContainsDate,
-      weekStartsOn,
-      locale
-    };
-    return parts.map((part) => {
-      if (!part.isToken) return part.value;
-      const token2 = part.value;
-      if (!options2?.useAdditionalWeekYearTokens && isProtectedWeekYearToken(token2) || !options2?.useAdditionalDayOfYearTokens && isProtectedDayOfYearToken(token2)) {
-        warnOrThrowProtectedError(token2, formatStr, String(date));
-      }
-      const formatter = formatters[token2[0]];
-      return formatter(originalDate, token2, locale.localize, formatterOptions);
-    }).join("");
-  }
-  function cleanEscapedString(input) {
-    const matched = input.match(escapedStringRegExp);
-    if (!matched) {
-      return input;
-    }
-    return matched[1].replace(doubleQuoteRegExp, "'");
-  }
-
   // node_modules/date-fns/getDaysInMonth.js
   function getDaysInMonth(date, options2) {
     const _date = toDate(date, options2?.in);
@@ -42218,16 +40635,6 @@ This message will only show in development mode. It won't appear in production. 
     lastDayOfMonth.setFullYear(year, monthIndex + 1, 0);
     lastDayOfMonth.setHours(0, 0, 0, 0);
     return lastDayOfMonth.getDate();
-  }
-
-  // node_modules/date-fns/getMonth.js
-  function getMonth(date, options2) {
-    return toDate(date, options2?.in).getMonth();
-  }
-
-  // node_modules/date-fns/getYear.js
-  function getYear(date, options2) {
-    return toDate(date, options2?.in).getFullYear();
   }
 
   // node_modules/date-fns/isAfter.js
@@ -42260,16 +40667,6 @@ This message will only show in development mode. It won't appear in production. 
       earlierDate
     );
     return laterDate_.getFullYear() === earlierDate_.getFullYear() && laterDate_.getMonth() === earlierDate_.getMonth();
-  }
-
-  // node_modules/date-fns/isSameYear.js
-  function isSameYear(laterDate, earlierDate, options2) {
-    const [laterDate_, earlierDate_] = normalizeDates(
-      options2?.in,
-      laterDate,
-      earlierDate
-    );
-    return laterDate_.getFullYear() === earlierDate_.getFullYear();
   }
 
   // node_modules/date-fns/subDays.js
@@ -42349,7 +40746,7 @@ This message will only show in development mode. It won't appear in production. 
     Day22[Day22["SATURDAY"] = 6] = "SATURDAY";
     return Day22;
   })({});
-  var inRange = (date, min3, max3) => (isEqual(date, min3) || isAfter(date, min3)) && (isEqual(date, max3) || isBefore(date, max3));
+  var inRange = (date, min2, max2) => (isEqual(date, min2) || isAfter(date, min2)) && (isEqual(date, max2) || isBefore(date, max2));
   var clearTime2 = (date) => set(date, {
     hours: 0,
     minutes: 0,
@@ -44049,8 +42446,8 @@ This message will only show in development mode. It won't appear in production. 
     }) => ({
       color: color2,
       brightness: w(color2).brightness()
-    })).reduce(([min3, max3], current) => {
-      return [current.brightness <= min3.brightness ? current : min3, current.brightness >= max3.brightness ? current : max3];
+    })).reduce(([min2, max2], current) => {
+      return [current.brightness <= min2.brightness ? current : min2, current.brightness >= max2.brightness ? current : max2];
     }, [{
       brightness: 1,
       color: ""
@@ -45776,7 +44173,7 @@ This message will only show in development mode. It won't appear in production. 
       return token2;
     }
     function getMatchingSuggestions(searchValue = incompleteTokenValue, _suggestions = suggestions, _value = value, _maxSuggestions = maxSuggestions, _saveTransform = saveTransform) {
-      let match4 = _saveTransform(searchValue);
+      let match3 = _saveTransform(searchValue);
       const startsWithMatch = [];
       const containsMatch = [];
       const normalizedValue = _value.map((item) => {
@@ -45785,12 +44182,12 @@ This message will only show in development mode. It won't appear in production. 
         }
         return item.value;
       });
-      if (match4.length === 0) {
+      if (match3.length === 0) {
         _suggestions = _suggestions.filter((suggestion) => !normalizedValue.includes(suggestion));
       } else {
-        match4 = match4.normalize("NFKC").toLocaleLowerCase();
+        match3 = match3.normalize("NFKC").toLocaleLowerCase();
         _suggestions.forEach((suggestion) => {
-          const index2 = suggestion.normalize("NFKC").toLocaleLowerCase().indexOf(match4);
+          const index2 = suggestion.normalize("NFKC").toLocaleLowerCase().indexOf(match3);
           if (normalizedValue.indexOf(suggestion) === -1) {
             if (index2 === 0) {
               startsWithMatch.push(suggestion);
@@ -45839,12 +44236,12 @@ This message will only show in development mode. It won't appear in production. 
         }
       }
       if (inputHasMinimumChars) {
-        const message2 = hasMatchingSuggestions ? (0, import_i18n57.sprintf)(
+        const message = hasMatchingSuggestions ? (0, import_i18n57.sprintf)(
           /* translators: %d: number of results. */
           (0, import_i18n57._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions2.length),
           matchingSuggestions2.length
         ) : (0, import_i18n57.__)("No results.");
-        debouncedSpeak(message2, "assertive");
+        debouncedSpeak(message, "assertive");
       }
     }
     function renderTokensAndInput() {
@@ -46512,12 +44909,12 @@ This message will only show in development mode. It won't appear in production. 
     }
     return result;
   }
-  function match3(str, options2) {
+  function match2(str, options2) {
     var keys = [];
-    var re4 = pathToRegexp(str, keys, options2);
-    return regexpToFunction(re4, keys, options2);
+    var re3 = pathToRegexp(str, keys, options2);
+    return regexpToFunction(re3, keys, options2);
   }
-  function regexpToFunction(re4, keys, options2) {
+  function regexpToFunction(re3, keys, options2) {
     if (options2 === void 0) {
       options2 = {};
     }
@@ -46525,7 +44922,7 @@ This message will only show in development mode. It won't appear in production. 
       return x2;
     } : _a;
     return function(pathname) {
-      var m3 = re4.exec(pathname);
+      var m3 = re3.exec(pathname);
       if (!m3)
         return false;
       var path = m3[0], index2 = m3.index;
@@ -46646,7 +45043,7 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/navigator/utils/router.mjs
   function matchPath(path, pattern) {
-    const matchingFunction = match3(pattern, {
+    const matchingFunction = match2(pattern, {
       decode: decodeURIComponent
     });
     return matchingFunction(path);
@@ -47099,7 +45496,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     } = useContextSystem(props, "Navigator.Screen");
     const {
       location,
-      match: match4,
+      match: match3,
       addScreen: addScreen2,
       removeScreen: removeScreen2
     } = (0, import_element151.useContext)(NavigatorContext);
@@ -47109,7 +45506,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       focusTargetSelector,
       skipFocus
     } = location;
-    const isMatch = match4 === screenId;
+    const isMatch = match3 === screenId;
     const wrapperRef = (0, import_element151.useRef)(null);
     const skipAnimationAndFocusRestoration = !!isInitial && !isBack;
     (0, import_element151.useEffect)(() => {
@@ -47400,8 +45797,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime234 = __toESM(require_jsx_runtime(), 1);
   var noop19 = () => {
   };
-  function useSpokenMessage(message2, politeness) {
-    const spokenMessage = typeof message2 === "string" ? message2 : (0, import_element155.renderToString)(message2);
+  function useSpokenMessage(message, politeness) {
+    const spokenMessage = typeof message === "string" ? message : (0, import_element155.renderToString)(message);
     (0, import_element155.useEffect)(() => {
       if (spokenMessage) {
         (0, import_a11y7.speak)(spokenMessage, politeness);
@@ -48262,10 +46659,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     };
     return function(d3, b3) {
       extendStatics(d3, b3);
-      function __63() {
+      function __62() {
         this.constructor = d3;
       }
-      d3.prototype = b3 === null ? Object.create(b3) : (__63.prototype = b3.prototype, new __63());
+      d3.prototype = b3 === null ? Object.create(b3) : (__62.prototype = b3.prototype, new __62());
     };
   })();
   var __assign2 = function() {
@@ -48375,10 +46772,10 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     };
     return function(d3, b3) {
       extendStatics(d3, b3);
-      function __63() {
+      function __62() {
         this.constructor = d3;
       }
-      d3.prototype = b3 === null ? Object.create(b3) : (__63.prototype = b3.prototype, new __63());
+      d3.prototype = b3 === null ? Object.create(b3) : (__62.prototype = b3.prototype, new __62());
     };
   })();
   var __assign3 = function() {
@@ -48396,8 +46793,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     width: "auto",
     height: "auto"
   };
-  var clamp5 = (0, import_fast_memoize.default)(function(n3, min3, max3) {
-    return Math.max(Math.min(n3, max3), min3);
+  var clamp5 = (0, import_fast_memoize.default)(function(n3, min2, max2) {
+    return Math.max(Math.min(n3, max2), min2);
   });
   var snap = (0, import_fast_memoize.default)(function(n3, size4) {
     return Math.round(n3 / size4) * size4;
@@ -48806,12 +47203,12 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
         return { newWidth, newHeight };
       };
-      Resizable2.prototype.calculateNewSizeFromAspectRatio = function(newWidth, newHeight, max3, min3) {
+      Resizable2.prototype.calculateNewSizeFromAspectRatio = function(newWidth, newHeight, max2, min2) {
         var _a = this.props, lockAspectRatio = _a.lockAspectRatio, lockAspectRatioExtraHeight = _a.lockAspectRatioExtraHeight, lockAspectRatioExtraWidth = _a.lockAspectRatioExtraWidth;
-        var computedMinWidth = typeof min3.width === "undefined" ? 10 : min3.width;
-        var computedMaxWidth = typeof max3.width === "undefined" || max3.width < 0 ? newWidth : max3.width;
-        var computedMinHeight = typeof min3.height === "undefined" ? 10 : min3.height;
-        var computedMaxHeight = typeof max3.height === "undefined" || max3.height < 0 ? newHeight : max3.height;
+        var computedMinWidth = typeof min2.width === "undefined" ? 10 : min2.width;
+        var computedMaxWidth = typeof max2.width === "undefined" || max2.width < 0 ? newWidth : max2.width;
+        var computedMinHeight = typeof min2.height === "undefined" ? 10 : min2.height;
+        var computedMaxHeight = typeof max2.height === "undefined" || max2.height < 0 ? newHeight : max2.height;
         var extraHeight = lockAspectRatioExtraHeight || 0;
         var extraWidth = lockAspectRatioExtraWidth || 0;
         if (lockAspectRatio) {
@@ -48928,11 +47325,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         var clientY = isTouchEvent(event) ? event.touches[0].clientY : event.clientY;
         var _b = this.state, direction = _b.direction, original = _b.original, width = _b.width, height = _b.height;
         var parentSize = this.getParentSize();
-        var max3 = calculateNewMax(parentSize, this.window.innerWidth, this.window.innerHeight, maxWidth, maxHeight, minWidth, minHeight);
-        maxWidth = max3.maxWidth;
-        maxHeight = max3.maxHeight;
-        minWidth = max3.minWidth;
-        minHeight = max3.minHeight;
+        var max2 = calculateNewMax(parentSize, this.window.innerWidth, this.window.innerHeight, maxWidth, maxHeight, minWidth, minHeight);
+        maxWidth = max2.maxWidth;
+        maxHeight = max2.maxHeight;
+        minWidth = max2.minWidth;
+        minHeight = max2.minHeight;
         var _c = this.calculateNewSizeFromDirection(clientX, clientY), newHeight = _c.newHeight, newWidth = _c.newWidth;
         var boundaryMax = this.calculateNewMaxFromBoundary(maxWidth, maxHeight);
         var newSize = this.calculateNewSizeFromAspectRatio(newWidth, newHeight, { width: boundaryMax.maxWidth, height: boundaryMax.maxHeight }, { width: minWidth, height: minHeight });
@@ -49946,8 +48343,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_warning9 = __toESM(require_warning(), 1);
   var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
   var NOTICE_TIMEOUT = 6e3;
-  function useSpokenMessage2(message2, politeness) {
-    const spokenMessage = typeof message2 === "string" ? message2 : (0, import_element173.renderToString)(message2);
+  function useSpokenMessage2(message, politeness) {
+    const spokenMessage = typeof message === "string" ? message : (0, import_element173.renderToString)(message);
     (0, import_element173.useEffect)(() => {
       if (spokenMessage) {
         (0, import_a11y9.speak)(spokenMessage, politeness);
@@ -50273,7 +48670,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const {
       // Prevent passing legacy props to `input`.
       __nextHasNoMarginBottom: _2,
-      __next40pxDefaultSize: __63,
+      __next40pxDefaultSize: __62,
       label,
       hideLabelFromVision,
       value,
@@ -53466,3201 +51863,47 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   }
   var badge_default = Badge;
 
-  // node_modules/@date-fns/tz/tzName/index.js
-  function tzName(timeZone, date, format2 = "long") {
-    return new Intl.DateTimeFormat("en-US", {
-      // Enforces engine to render the time. Without the option JavaScriptCore omits it.
-      hour: "numeric",
-      timeZone,
-      timeZoneName: format2
-    }).format(date).split(/\s/g).slice(2).join(" ");
-  }
-
-  // node_modules/@date-fns/tz/tzOffset/index.js
-  var offsetFormatCache = {};
-  var offsetCache = {};
-  function tzOffset(timeZone, date) {
-    try {
-      const format2 = offsetFormatCache[timeZone] ||= new Intl.DateTimeFormat("en-US", {
-        timeZone,
-        timeZoneName: "longOffset"
-      }).format;
-      const offsetStr = format2(date).split("GMT")[1];
-      if (offsetStr in offsetCache) return offsetCache[offsetStr];
-      return calcOffset(offsetStr, offsetStr.split(":"));
-    } catch {
-      if (timeZone in offsetCache) return offsetCache[timeZone];
-      const captures = timeZone?.match(offsetRe);
-      if (captures) return calcOffset(timeZone, captures.slice(1));
-      return NaN;
-    }
-  }
-  var offsetRe = /([+-]\d\d):?(\d\d)?/;
-  function calcOffset(cacheStr, values) {
-    const hours = +(values[0] || 0);
-    const minutes = +(values[1] || 0);
-    const seconds = +(values[2] || 0) / 60;
-    return offsetCache[cacheStr] = hours * 60 + minutes > 0 ? hours * 60 + minutes + seconds : hours * 60 - minutes - seconds;
-  }
-
-  // node_modules/@date-fns/tz/date/mini.js
-  var TZDateMini = class _TZDateMini extends Date {
-    //#region static
-    constructor(...args) {
-      super();
-      if (args.length > 1 && typeof args[args.length - 1] === "string") {
-        this.timeZone = args.pop();
-      }
-      this.internal = /* @__PURE__ */ new Date();
-      if (isNaN(tzOffset(this.timeZone, this))) {
-        this.setTime(NaN);
-      } else {
-        if (!args.length) {
-          this.setTime(Date.now());
-        } else if (typeof args[0] === "number" && (args.length === 1 || args.length === 2 && typeof args[1] !== "number")) {
-          this.setTime(args[0]);
-        } else if (typeof args[0] === "string") {
-          this.setTime(+new Date(args[0]));
-        } else if (args[0] instanceof Date) {
-          this.setTime(+args[0]);
-        } else {
-          this.setTime(+new Date(...args));
-          adjustToSystemTZ(this, args);
-        }
-      }
-    }
-    static tz(tz, ...args) {
-      return args.length ? new _TZDateMini(...args, tz) : new _TZDateMini(Date.now(), tz);
-    }
-    //#endregion
-    //#region time zone
-    withTimeZone(timeZone) {
-      return new _TZDateMini(+this, timeZone);
-    }
-    getTimezoneOffset() {
-      const offset4 = -tzOffset(this.timeZone, this);
-      return offset4 > 0 ? Math.floor(offset4) : Math.ceil(offset4);
-    }
-    //#endregion
-    //#region time
-    setTime(_time) {
-      Date.prototype.setTime.apply(this, arguments);
-      syncToInternal(this);
-      return +this;
-    }
-    //#endregion
-    //#region date-fns integration
-    [/* @__PURE__ */ Symbol.for("constructDateFrom")](date) {
-      return new _TZDateMini(+new Date(date), this.timeZone);
-    }
-    //#endregion
-  };
-  var re3 = /^(get|set)(?!UTC)/;
-  Object.getOwnPropertyNames(Date.prototype).forEach((method) => {
-    if (!re3.test(method)) return;
-    const utcMethod = method.replace(re3, "$1UTC");
-    if (!TZDateMini.prototype[utcMethod]) return;
-    if (method.startsWith("get")) {
-      TZDateMini.prototype[method] = function() {
-        return this.internal[utcMethod]();
-      };
-    } else {
-      TZDateMini.prototype[method] = function() {
-        Date.prototype[utcMethod].apply(this.internal, arguments);
-        syncFromInternal(this);
-        return +this;
-      };
-      TZDateMini.prototype[utcMethod] = function() {
-        Date.prototype[utcMethod].apply(this, arguments);
-        syncToInternal(this);
-        return +this;
-      };
-    }
-  });
-  function syncToInternal(date) {
-    date.internal.setTime(+date);
-    date.internal.setUTCSeconds(date.internal.getUTCSeconds() - // Round after converting minutes to seconds to avoid fractional offset
-    // precision errors from historical offsets.
-    Math.round(-tzOffset(date.timeZone, date) * 60));
-  }
-  function syncFromInternal(date) {
-    Date.prototype.setFullYear.call(date, date.internal.getUTCFullYear(), date.internal.getUTCMonth(), date.internal.getUTCDate());
-    Date.prototype.setHours.call(date, date.internal.getUTCHours(), date.internal.getUTCMinutes(), date.internal.getUTCSeconds(), date.internal.getUTCMilliseconds());
-    adjustToSystemTZ(date);
-  }
-  function adjustToSystemTZ(date, constructorArgs) {
-    const expectedInternalTime = Array.isArray(constructorArgs) ? constructorArgsToInternalTime(constructorArgs) : +date.internal;
-    const offsetWithSeconds = tzOffset(date.timeZone, date);
-    const offset4 = offsetWithSeconds > 0 ? Math.floor(offsetWithSeconds) : Math.ceil(offsetWithSeconds);
-    const prevHour = /* @__PURE__ */ new Date(+date);
-    prevHour.setUTCHours(prevHour.getUTCHours() - 1);
-    const systemOffset = -(/* @__PURE__ */ new Date(+date)).getTimezoneOffset();
-    const prevHourSystemOffset = -(/* @__PURE__ */ new Date(+prevHour)).getTimezoneOffset();
-    const systemDSTChange = systemOffset - prevHourSystemOffset;
-    let systemOffsetForDiff = systemOffset;
-    if (systemDSTChange && systemOffset !== offset4) {
-      const systemHour = Date.prototype.getHours.apply(date);
-      const expectedHour = Array.isArray(constructorArgs) ? constructorArgs[3] || 0 : date.internal.getUTCHours();
-      if (systemHour !== expectedHour) {
-        const testDate = /* @__PURE__ */ new Date(+date);
-        const testOffsetDiff = systemOffset - offset4;
-        if (testOffsetDiff) testDate.setUTCMinutes(testDate.getUTCMinutes() + testOffsetDiff);
-        const testOffsetWithSeconds = tzOffset(date.timeZone, testDate);
-        const testOffset = testOffsetWithSeconds > 0 ? Math.floor(testOffsetWithSeconds) : Math.ceil(testOffsetWithSeconds);
-        if (testOffset === offset4) systemOffsetForDiff = prevHourSystemOffset;
-      }
-    }
-    const offsetDiff = systemOffsetForDiff - offset4;
-    if (offsetDiff)
-      Date.prototype.setUTCMinutes.call(date, Date.prototype.getUTCMinutes.call(date) + offsetDiff);
-    const systemDate = /* @__PURE__ */ new Date(+date);
-    systemDate.setUTCSeconds(0);
-    const systemSecondsOffset = systemOffset > 0 ? systemDate.getSeconds() : (systemDate.getSeconds() - 60) % 60;
-    const secondsOffset = Math.round(-(tzOffset(date.timeZone, date) * 60)) % 60;
-    if (secondsOffset || systemSecondsOffset)
-      Date.prototype.setUTCSeconds.call(date, Date.prototype.getUTCSeconds.call(date) + secondsOffset + systemSecondsOffset);
-    const postOffsetWithSeconds = tzOffset(date.timeZone, date);
-    const postOffset = postOffsetWithSeconds > 0 ? Math.floor(postOffsetWithSeconds) : Math.ceil(postOffsetWithSeconds);
-    const postSystemOffset = -(/* @__PURE__ */ new Date(+date)).getTimezoneOffset();
-    const postOffsetDiff = postSystemOffset - postOffset;
-    const offsetChanged = postOffset !== offset4;
-    const postDiff = postOffsetDiff - offsetDiff;
-    const targetDSTShift = postOffset - offset4;
-    const postOffsetCandidate = expectedInternalTime - postOffset * 60 * 1e3;
-    const normalizedTargetDSTGap = targetDSTShift > 0 && targetInternalTime(date) - expectedInternalTime === targetDSTShift * 60 * 1e3 && targetInternalTime(date, postOffsetCandidate) !== expectedInternalTime;
-    if (offsetChanged && postDiff && !normalizedTargetDSTGap) {
-      Date.prototype.setUTCMinutes.call(date, Date.prototype.getUTCMinutes.call(date) + postDiff);
-      const newOffsetWithSeconds = tzOffset(date.timeZone, date);
-      const newOffset = newOffsetWithSeconds > 0 ? Math.floor(newOffsetWithSeconds) : Math.ceil(newOffsetWithSeconds);
-      const offsetChange = postOffset - newOffset;
-      if (offsetChange && postDiff < 0) {
-        Date.prototype.setUTCMinutes.call(date, Date.prototype.getUTCMinutes.call(date) + offsetChange);
-      }
-    }
-    syncToInternal(date);
-    const expectedTime = constructorArgs ? expectedInternalTime : expectedInternalTime + secondsOffset * 1e3;
-    const drift = expectedTime - +date.internal;
-    if (drift && Math.abs(drift) < 30 * 60 * 1e3) {
-      Date.prototype.setTime.call(date, +date + drift);
-      syncToInternal(date);
-    }
-  }
-  function constructorArgsToInternalTime(args) {
-    return Date.UTC(args[0], args.length > 1 ? args[1] : 0, args.length > 2 ? args[2] : 1, ...args.slice(3));
-  }
-  function targetInternalTime(date, time2) {
-    const internal = new Date(time2 ?? +date);
-    internal.setUTCSeconds(internal.getUTCSeconds() - Math.round(-tzOffset(date.timeZone, internal) * 60));
-    return +internal;
-  }
-
-  // node_modules/@date-fns/tz/date/index.js
-  var TZDate = class _TZDate extends TZDateMini {
-    //#region static
-    static tz(tz, ...args) {
-      return args.length ? new _TZDate(...args, tz) : new _TZDate(Date.now(), tz);
-    }
-    //#endregion
-    //#region representation
-    toISOString() {
-      const [sign, hours, minutes] = this.tzComponents();
-      const tz = `${sign}${hours}:${minutes}`;
-      return this.internal.toISOString().slice(0, -1) + tz;
-    }
-    toString() {
-      return `${this.toDateString()} ${this.toTimeString()}`;
-    }
-    toDateString() {
-      const [day, date, month, year] = this.internal.toUTCString().split(" ");
-      return `${day?.slice(0, -1)} ${month} ${date} ${year}`;
-    }
-    toTimeString() {
-      const time2 = this.internal.toUTCString().split(" ")[4];
-      const [sign, hours, minutes] = this.tzComponents();
-      return `${time2} GMT${sign}${hours}${minutes} (${tzName(this.timeZone, this)})`;
-    }
-    toLocaleString(locales, options2) {
-      return Date.prototype.toLocaleString.call(this, locales, {
-        ...options2,
-        timeZone: options2?.timeZone || this.timeZone
-      });
-    }
-    toLocaleDateString(locales, options2) {
-      return Date.prototype.toLocaleDateString.call(this, locales, {
-        ...options2,
-        timeZone: options2?.timeZone || this.timeZone
-      });
-    }
-    toLocaleTimeString(locales, options2) {
-      return Date.prototype.toLocaleTimeString.call(this, locales, {
-        ...options2,
-        timeZone: options2?.timeZone || this.timeZone
-      });
-    }
-    //#endregion
-    //#region private
-    tzComponents() {
-      const offset4 = this.getTimezoneOffset();
-      const sign = offset4 > 0 ? "-" : "+";
-      const hours = String(Math.floor(Math.abs(offset4) / 60)).padStart(2, "0");
-      const minutes = String(Math.abs(offset4) % 60).padStart(2, "0");
-      return [sign, hours, minutes];
-    }
-    //#endregion
-    withTimeZone(timeZone) {
-      return new _TZDate(+this, timeZone);
-    }
-    //#region date-fns integration
-    [/* @__PURE__ */ Symbol.for("constructDateFrom")](date) {
-      return new _TZDate(+new Date(date), this.timeZone);
-    }
-    //#endregion
-  };
-
-  // node_modules/react-day-picker/dist/esm/helpers/getBroadcastWeeksInMonth.js
-  var FIVE_WEEKS = 5;
-  var FOUR_WEEKS = 4;
-  function getBroadcastWeeksInMonth(month, dateLib) {
-    const firstDayOfMonth = dateLib.startOfMonth(month);
-    const firstDayOfWeek = firstDayOfMonth.getDay() > 0 ? firstDayOfMonth.getDay() : 7;
-    const broadcastStartDate = dateLib.addDays(month, -firstDayOfWeek + 1);
-    const lastDateOfLastWeek = dateLib.addDays(broadcastStartDate, FIVE_WEEKS * 7 - 1);
-    const numberOfWeeks = dateLib.getMonth(month) === dateLib.getMonth(lastDateOfLastWeek) ? FIVE_WEEKS : FOUR_WEEKS;
-    return numberOfWeeks;
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/startOfBroadcastWeek.js
-  function startOfBroadcastWeek(date, dateLib) {
-    const firstOfMonth = dateLib.startOfMonth(date);
-    const dayOfWeek = firstOfMonth.getDay();
-    if (dayOfWeek === 1) {
-      return firstOfMonth;
-    } else if (dayOfWeek === 0) {
-      return dateLib.addDays(firstOfMonth, -1 * 6);
-    } else {
-      return dateLib.addDays(firstOfMonth, -1 * (dayOfWeek - 1));
-    }
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/endOfBroadcastWeek.js
-  function endOfBroadcastWeek(date, dateLib) {
-    const startDate = startOfBroadcastWeek(date, dateLib);
-    const numberOfWeeks = getBroadcastWeeksInMonth(date, dateLib);
-    const endDate = dateLib.addDays(startDate, numberOfWeeks * 7 - 1);
-    return endDate;
-  }
-
-  // node_modules/react-day-picker/dist/esm/locale/en-US.js
-  var enUS2 = {
-    ...enUS,
-    labels: {
-      labelDayButton: (date, modifiers, options2, dateLib) => {
-        let formatDate4;
-        if (dateLib && typeof dateLib.format === "function") {
-          formatDate4 = dateLib.format.bind(dateLib);
-        } else {
-          formatDate4 = (d3, pattern) => format(d3, pattern, { locale: enUS, ...options2 });
-        }
-        let label = formatDate4(date, "PPPP");
-        if (modifiers.today)
-          label = `Today, ${label}`;
-        if (modifiers.selected)
-          label = `${label}, selected`;
-        return label;
-      },
-      labelMonthDropdown: "Choose the Month",
-      labelNext: "Go to the Next Month",
-      labelPrevious: "Go to the Previous Month",
-      labelWeekNumber: (weekNumber) => `Week ${weekNumber}`,
-      labelYearDropdown: "Choose the Year",
-      labelGrid: (date, options2, dateLib) => {
-        let formatDate4;
-        if (dateLib && typeof dateLib.format === "function") {
-          formatDate4 = dateLib.format.bind(dateLib);
-        } else {
-          formatDate4 = (d3, pattern) => format(d3, pattern, { locale: enUS, ...options2 });
-        }
-        return formatDate4(date, "LLLL yyyy");
-      },
-      labelGridcell: (date, modifiers, options2, dateLib) => {
-        let formatDate4;
-        if (dateLib && typeof dateLib.format === "function") {
-          formatDate4 = dateLib.format.bind(dateLib);
-        } else {
-          formatDate4 = (d3, pattern) => format(d3, pattern, { locale: enUS, ...options2 });
-        }
-        let label = formatDate4(date, "PPPP");
-        if (modifiers?.today) {
-          label = `Today, ${label}`;
-        }
-        return label;
-      },
-      labelNav: "Navigation bar",
-      labelWeekNumberHeader: "Week Number",
-      labelWeekday: (date, options2, dateLib) => {
-        let formatDate4;
-        if (dateLib && typeof dateLib.format === "function") {
-          formatDate4 = dateLib.format.bind(dateLib);
-        } else {
-          formatDate4 = (d3, pattern) => format(d3, pattern, { locale: enUS, ...options2 });
-        }
-        return formatDate4(date, "cccc");
-      }
-    }
-  };
-
-  // node_modules/react-day-picker/dist/esm/classes/DateLib.js
-  var DateLib = class _DateLib {
-    /**
-     * Creates an instance of `DateLib`.
-     *
-     * @param options Configuration options for the date library.
-     * @param overrides Custom overrides for the date library functions.
-     */
-    constructor(options2, overrides) {
-      this.Date = Date;
-      this.today = () => {
-        if (this.overrides?.today) {
-          return this.overrides.today();
-        }
-        if (this.options.timeZone) {
-          return TZDate.tz(this.options.timeZone);
-        }
-        return new this.Date();
-      };
-      this.newDate = (year, monthIndex, date) => {
-        if (this.overrides?.newDate) {
-          return this.overrides.newDate(year, monthIndex, date);
-        }
-        if (this.options.timeZone) {
-          return new TZDate(year, monthIndex, date, this.options.timeZone);
-        }
-        return new Date(year, monthIndex, date);
-      };
-      this.addDays = (date, amount) => {
-        return this.overrides?.addDays ? this.overrides.addDays(date, amount) : addDays(date, amount);
-      };
-      this.addMonths = (date, amount) => {
-        return this.overrides?.addMonths ? this.overrides.addMonths(date, amount) : addMonths(date, amount);
-      };
-      this.addWeeks = (date, amount) => {
-        return this.overrides?.addWeeks ? this.overrides.addWeeks(date, amount) : addWeeks(date, amount);
-      };
-      this.addYears = (date, amount) => {
-        return this.overrides?.addYears ? this.overrides.addYears(date, amount) : addYears(date, amount);
-      };
-      this.differenceInCalendarDays = (dateLeft, dateRight) => {
-        return this.overrides?.differenceInCalendarDays ? this.overrides.differenceInCalendarDays(dateLeft, dateRight) : differenceInCalendarDays(dateLeft, dateRight);
-      };
-      this.differenceInCalendarMonths = (dateLeft, dateRight) => {
-        return this.overrides?.differenceInCalendarMonths ? this.overrides.differenceInCalendarMonths(dateLeft, dateRight) : differenceInCalendarMonths(dateLeft, dateRight);
-      };
-      this.eachMonthOfInterval = (interval) => {
-        return this.overrides?.eachMonthOfInterval ? this.overrides.eachMonthOfInterval(interval) : eachMonthOfInterval(interval);
-      };
-      this.eachYearOfInterval = (interval) => {
-        const years = this.overrides?.eachYearOfInterval ? this.overrides.eachYearOfInterval(interval) : eachYearOfInterval(interval);
-        const uniqueYears = new Set(years.map((d3) => this.getYear(d3)));
-        if (uniqueYears.size === years.length) {
-          return years;
-        }
-        const yearsArray = [];
-        uniqueYears.forEach((y3) => {
-          yearsArray.push(new Date(y3, 0, 1));
-        });
-        return yearsArray;
-      };
-      this.endOfBroadcastWeek = (date) => {
-        return this.overrides?.endOfBroadcastWeek ? this.overrides.endOfBroadcastWeek(date) : endOfBroadcastWeek(date, this);
-      };
-      this.endOfISOWeek = (date) => {
-        return this.overrides?.endOfISOWeek ? this.overrides.endOfISOWeek(date) : endOfISOWeek(date);
-      };
-      this.endOfMonth = (date) => {
-        return this.overrides?.endOfMonth ? this.overrides.endOfMonth(date) : endOfMonth(date);
-      };
-      this.endOfWeek = (date, options3) => {
-        return this.overrides?.endOfWeek ? this.overrides.endOfWeek(date, options3) : endOfWeek(date, this.options);
-      };
-      this.endOfYear = (date) => {
-        return this.overrides?.endOfYear ? this.overrides.endOfYear(date) : endOfYear(date);
-      };
-      this.format = (date, formatStr, _options) => {
-        const formatted = this.overrides?.format ? this.overrides.format(date, formatStr, this.options) : format(date, formatStr, this.options);
-        if (this.options.numerals && this.options.numerals !== "latn") {
-          return this.replaceDigits(formatted);
-        }
-        return formatted;
-      };
-      this.getISOWeek = (date) => {
-        return this.overrides?.getISOWeek ? this.overrides.getISOWeek(date) : getISOWeek(date);
-      };
-      this.getMonth = (date, _options) => {
-        return this.overrides?.getMonth ? this.overrides.getMonth(date, this.options) : getMonth(date, this.options);
-      };
-      this.getYear = (date, _options) => {
-        return this.overrides?.getYear ? this.overrides.getYear(date, this.options) : getYear(date, this.options);
-      };
-      this.getWeek = (date, _options) => {
-        return this.overrides?.getWeek ? this.overrides.getWeek(date, this.options) : getWeek(date, this.options);
-      };
-      this.isAfter = (date, dateToCompare) => {
-        return this.overrides?.isAfter ? this.overrides.isAfter(date, dateToCompare) : isAfter(date, dateToCompare);
-      };
-      this.isBefore = (date, dateToCompare) => {
-        return this.overrides?.isBefore ? this.overrides.isBefore(date, dateToCompare) : isBefore(date, dateToCompare);
-      };
-      this.isDate = (value) => {
-        return this.overrides?.isDate ? this.overrides.isDate(value) : isDate(value);
-      };
-      this.isSameDay = (dateLeft, dateRight) => {
-        return this.overrides?.isSameDay ? this.overrides.isSameDay(dateLeft, dateRight) : isSameDay(dateLeft, dateRight);
-      };
-      this.isSameMonth = (dateLeft, dateRight) => {
-        return this.overrides?.isSameMonth ? this.overrides.isSameMonth(dateLeft, dateRight) : isSameMonth(dateLeft, dateRight);
-      };
-      this.isSameYear = (dateLeft, dateRight) => {
-        return this.overrides?.isSameYear ? this.overrides.isSameYear(dateLeft, dateRight) : isSameYear(dateLeft, dateRight);
-      };
-      this.max = (dates) => {
-        return this.overrides?.max ? this.overrides.max(dates) : max2(dates);
-      };
-      this.min = (dates) => {
-        return this.overrides?.min ? this.overrides.min(dates) : min2(dates);
-      };
-      this.setMonth = (date, month) => {
-        return this.overrides?.setMonth ? this.overrides.setMonth(date, month) : setMonth(date, month);
-      };
-      this.setYear = (date, year) => {
-        return this.overrides?.setYear ? this.overrides.setYear(date, year) : setYear(date, year);
-      };
-      this.startOfBroadcastWeek = (date, _dateLib) => {
-        return this.overrides?.startOfBroadcastWeek ? this.overrides.startOfBroadcastWeek(date, this) : startOfBroadcastWeek(date, this);
-      };
-      this.startOfDay = (date) => {
-        return this.overrides?.startOfDay ? this.overrides.startOfDay(date) : startOfDay(date);
-      };
-      this.startOfISOWeek = (date) => {
-        return this.overrides?.startOfISOWeek ? this.overrides.startOfISOWeek(date) : startOfISOWeek(date);
-      };
-      this.startOfMonth = (date) => {
-        return this.overrides?.startOfMonth ? this.overrides.startOfMonth(date) : startOfMonth(date);
-      };
-      this.startOfWeek = (date, _options) => {
-        return this.overrides?.startOfWeek ? this.overrides.startOfWeek(date, this.options) : startOfWeek(date, this.options);
-      };
-      this.startOfYear = (date) => {
-        return this.overrides?.startOfYear ? this.overrides.startOfYear(date) : startOfYear(date);
-      };
-      this.options = { locale: enUS2, ...options2 };
-      this.overrides = overrides;
-    }
-    /**
-     * Generates a mapping of Arabic digits (0-9) to the target numbering system
-     * digits.
-     *
-     * @since 9.5.0
-     * @returns A record mapping Arabic digits to the target numerals.
-     */
-    getDigitMap() {
-      const { numerals = "latn" } = this.options;
-      const formatter = new Intl.NumberFormat("en-US", {
-        numberingSystem: numerals
-      });
-      const digitMap = {};
-      for (let i3 = 0; i3 < 10; i3++) {
-        digitMap[i3.toString()] = formatter.format(i3);
-      }
-      return digitMap;
-    }
-    /**
-     * Replaces Arabic digits in a string with the target numbering system digits.
-     *
-     * @since 9.5.0
-     * @param input The string containing Arabic digits.
-     * @returns The string with digits replaced.
-     */
-    replaceDigits(input) {
-      const digitMap = this.getDigitMap();
-      return input.replace(/\d/g, (digit) => digitMap[digit] || digit);
-    }
-    /**
-     * Formats a number using the configured numbering system.
-     *
-     * @since 9.5.0
-     * @param value The number to format.
-     * @returns The formatted number as a string.
-     */
-    formatNumber(value) {
-      return this.replaceDigits(value.toString());
-    }
-    /**
-     * Returns the preferred ordering for month and year labels for the current
-     * locale.
-     */
-    getMonthYearOrder() {
-      const code = this.options.locale?.code;
-      if (!code) {
-        return "month-first";
-      }
-      return _DateLib.yearFirstLocales.has(code) ? "year-first" : "month-first";
-    }
-    /**
-     * Formats the month/year pair respecting locale conventions.
-     *
-     * @since 9.11.0
-     */
-    formatMonthYear(date) {
-      const { locale, timeZone, numerals } = this.options;
-      const localeCode = locale?.code;
-      if (localeCode && _DateLib.yearFirstLocales.has(localeCode)) {
-        try {
-          const intl = new Intl.DateTimeFormat(localeCode, {
-            month: "long",
-            year: "numeric",
-            timeZone,
-            numberingSystem: numerals
-          });
-          const formatted = intl.format(date);
-          return formatted;
-        } catch {
-        }
-      }
-      const pattern = this.getMonthYearOrder() === "year-first" ? "y LLLL" : "LLLL y";
-      return this.format(date, pattern);
-    }
-  };
-  DateLib.yearFirstLocales = /* @__PURE__ */ new Set([
-    "eu",
-    "hu",
-    "ja",
-    "ja-Hira",
-    "ja-JP",
-    "ko",
-    "ko-KR",
-    "lt",
-    "lt-LT",
-    "lv",
-    "lv-LV",
-    "mn",
-    "mn-MN",
-    "zh",
-    "zh-CN",
-    "zh-HK",
-    "zh-TW"
-  ]);
-  var defaultDateLib = new DateLib();
-
-  // node_modules/react-day-picker/dist/esm/classes/CalendarDay.js
-  var CalendarDay = class {
-    constructor(date, displayMonth, dateLib = defaultDateLib) {
-      this.date = date;
-      this.displayMonth = displayMonth;
-      this.outside = Boolean(displayMonth && !dateLib.isSameMonth(date, displayMonth));
-      this.dateLib = dateLib;
-      this.isoDate = dateLib.format(date, "yyyy-MM-dd");
-      this.displayMonthId = dateLib.format(displayMonth, "yyyy-MM");
-      this.dateMonthId = dateLib.format(date, "yyyy-MM");
-    }
-    /**
-     * Checks if this day is equal to another `CalendarDay`, considering both the
-     * date and the displayed month.
-     *
-     * @param day The `CalendarDay` to compare with.
-     * @returns `true` if the days are equal, otherwise `false`.
-     */
-    isEqualTo(day) {
-      return this.dateLib.isSameDay(day.date, this.date) && this.dateLib.isSameMonth(day.displayMonth, this.displayMonth);
-    }
-  };
-
-  // node_modules/react-day-picker/dist/esm/classes/CalendarMonth.js
-  var CalendarMonth = class {
-    constructor(month, weeks) {
-      this.date = month;
-      this.weeks = weeks;
-    }
-  };
-
-  // node_modules/react-day-picker/dist/esm/classes/CalendarWeek.js
-  var CalendarWeek = class {
-    constructor(weekNumber, days) {
-      this.days = days;
-      this.weekNumber = weekNumber;
-    }
-  };
-
-  // node_modules/react-day-picker/dist/esm/components/custom-components.js
-  var custom_components_exports = {};
-  __export(custom_components_exports, {
-    Button: () => Button4,
-    CaptionLabel: () => CaptionLabel,
-    Chevron: () => Chevron,
-    Day: () => Day3,
-    DayButton: () => DayButton2,
-    Dropdown: () => Dropdown2,
-    DropdownNav: () => DropdownNav,
-    Footer: () => Footer2,
-    Month: () => Month,
-    MonthCaption: () => MonthCaption,
-    MonthGrid: () => MonthGrid,
-    Months: () => Months,
-    MonthsDropdown: () => MonthsDropdown,
-    Nav: () => Nav,
-    NextMonthButton: () => NextMonthButton,
-    Option: () => Option3,
-    PreviousMonthButton: () => PreviousMonthButton,
-    Root: () => Root5,
-    Select: () => Select4,
-    Week: () => Week,
-    WeekNumber: () => WeekNumber,
-    WeekNumberHeader: () => WeekNumberHeader,
-    Weekday: () => Weekday,
-    Weekdays: () => Weekdays,
-    Weeks: () => Weeks,
-    YearsDropdown: () => YearsDropdown
-  });
-
-  // node_modules/react-day-picker/dist/esm/components/Button.js
-  var import_react119 = __toESM(require_react(), 1);
-  function Button4(props) {
-    return import_react119.default.createElement("button", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/CaptionLabel.js
-  var import_react120 = __toESM(require_react(), 1);
-  function CaptionLabel(props) {
-    return import_react120.default.createElement("span", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Chevron.js
-  var import_react121 = __toESM(require_react(), 1);
-  function Chevron(props) {
-    const { size: size4 = 24, orientation = "left", className: className2 } = props;
-    return (
-      // biome-ignore lint/a11y/noSvgWithoutTitle: handled by the parent component
-      import_react121.default.createElement(
-        "svg",
-        { className: className2, width: size4, height: size4, viewBox: "0 0 24 24" },
-        orientation === "up" && import_react121.default.createElement("polygon", { points: "6.77 17 12.5 11.43 18.24 17 20 15.28 12.5 8 5 15.28" }),
-        orientation === "down" && import_react121.default.createElement("polygon", { points: "6.77 8 12.5 13.57 18.24 8 20 9.72 12.5 17 5 9.72" }),
-        orientation === "left" && import_react121.default.createElement("polygon", { points: "16 18.112 9.81111111 12 16 5.87733333 14.0888889 4 6 12 14.0888889 20" }),
-        orientation === "right" && import_react121.default.createElement("polygon", { points: "8 18.112 14.18888889 12 8 5.87733333 9.91111111 4 18 12 9.91111111 20" })
-      )
-    );
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Day.js
-  var import_react122 = __toESM(require_react(), 1);
-  function Day3(props) {
-    const { day, modifiers, ...tdProps } = props;
-    return import_react122.default.createElement("td", { ...tdProps });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/DayButton.js
-  var import_react123 = __toESM(require_react(), 1);
-  function DayButton2(props) {
-    const { day, modifiers, ...buttonProps } = props;
-    const ref = import_react123.default.useRef(null);
-    import_react123.default.useEffect(() => {
-      if (modifiers.focused)
-        ref.current?.focus();
-    }, [modifiers.focused]);
-    return import_react123.default.createElement("button", { ref, ...buttonProps });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Dropdown.js
-  var import_react124 = __toESM(require_react(), 1);
-
-  // node_modules/react-day-picker/dist/esm/UI.js
-  var UI2;
-  (function(UI3) {
-    UI3["Root"] = "root";
-    UI3["Chevron"] = "chevron";
-    UI3["Day"] = "day";
-    UI3["DayButton"] = "day_button";
-    UI3["CaptionLabel"] = "caption_label";
-    UI3["Dropdowns"] = "dropdowns";
-    UI3["Dropdown"] = "dropdown";
-    UI3["DropdownRoot"] = "dropdown_root";
-    UI3["Footer"] = "footer";
-    UI3["MonthGrid"] = "month_grid";
-    UI3["MonthCaption"] = "month_caption";
-    UI3["MonthsDropdown"] = "months_dropdown";
-    UI3["Month"] = "month";
-    UI3["Months"] = "months";
-    UI3["Nav"] = "nav";
-    UI3["NextMonthButton"] = "button_next";
-    UI3["PreviousMonthButton"] = "button_previous";
-    UI3["Week"] = "week";
-    UI3["Weeks"] = "weeks";
-    UI3["Weekday"] = "weekday";
-    UI3["Weekdays"] = "weekdays";
-    UI3["WeekNumber"] = "week_number";
-    UI3["WeekNumberHeader"] = "week_number_header";
-    UI3["YearsDropdown"] = "years_dropdown";
-  })(UI2 || (UI2 = {}));
-  var DayFlag;
-  (function(DayFlag2) {
-    DayFlag2["disabled"] = "disabled";
-    DayFlag2["hidden"] = "hidden";
-    DayFlag2["outside"] = "outside";
-    DayFlag2["focused"] = "focused";
-    DayFlag2["today"] = "today";
-  })(DayFlag || (DayFlag = {}));
-  var SelectionState;
-  (function(SelectionState2) {
-    SelectionState2["range_end"] = "range_end";
-    SelectionState2["range_middle"] = "range_middle";
-    SelectionState2["range_start"] = "range_start";
-    SelectionState2["selected"] = "selected";
-  })(SelectionState || (SelectionState = {}));
-  var Animation;
-  (function(Animation2) {
-    Animation2["weeks_before_enter"] = "weeks_before_enter";
-    Animation2["weeks_before_exit"] = "weeks_before_exit";
-    Animation2["weeks_after_enter"] = "weeks_after_enter";
-    Animation2["weeks_after_exit"] = "weeks_after_exit";
-    Animation2["caption_after_enter"] = "caption_after_enter";
-    Animation2["caption_after_exit"] = "caption_after_exit";
-    Animation2["caption_before_enter"] = "caption_before_enter";
-    Animation2["caption_before_exit"] = "caption_before_exit";
-  })(Animation || (Animation = {}));
-
-  // node_modules/react-day-picker/dist/esm/components/Dropdown.js
-  function Dropdown2(props) {
-    const { options: options2, className: className2, components, classNames, ...selectProps } = props;
-    const cssClassSelect = [classNames[UI2.Dropdown], className2].join(" ");
-    const selectedOption = options2?.find(({ value }) => value === selectProps.value);
-    return import_react124.default.createElement(
-      "span",
-      { "data-disabled": selectProps.disabled, className: classNames[UI2.DropdownRoot] },
-      import_react124.default.createElement(components.Select, { className: cssClassSelect, ...selectProps }, options2?.map(({ value, label, disabled }) => import_react124.default.createElement(components.Option, { key: value, value, disabled }, label))),
-      import_react124.default.createElement(
-        "span",
-        { className: classNames[UI2.CaptionLabel], "aria-hidden": true },
-        selectedOption?.label,
-        import_react124.default.createElement(components.Chevron, { orientation: "down", size: 18, className: classNames[UI2.Chevron] })
-      )
-    );
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/DropdownNav.js
-  var import_react125 = __toESM(require_react(), 1);
-  function DropdownNav(props) {
-    return import_react125.default.createElement("div", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Footer.js
-  var import_react126 = __toESM(require_react(), 1);
-  function Footer2(props) {
-    return import_react126.default.createElement("div", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Month.js
-  var import_react127 = __toESM(require_react(), 1);
-  function Month(props) {
-    const { calendarMonth, displayIndex, ...divProps } = props;
-    return import_react127.default.createElement("div", { ...divProps }, props.children);
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/MonthCaption.js
-  var import_react128 = __toESM(require_react(), 1);
-  function MonthCaption(props) {
-    const { calendarMonth, displayIndex, ...divProps } = props;
-    return import_react128.default.createElement("div", { ...divProps });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/MonthGrid.js
-  var import_react129 = __toESM(require_react(), 1);
-  function MonthGrid(props) {
-    return import_react129.default.createElement("table", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Months.js
-  var import_react130 = __toESM(require_react(), 1);
-  function Months(props) {
-    return import_react130.default.createElement("div", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/MonthsDropdown.js
-  var import_react132 = __toESM(require_react(), 1);
-
-  // node_modules/react-day-picker/dist/esm/useDayPicker.js
-  var import_react131 = __toESM(require_react(), 1);
-  var dayPickerContext = (0, import_react131.createContext)(void 0);
-  function useDayPicker() {
-    const context = (0, import_react131.useContext)(dayPickerContext);
-    if (context === void 0) {
-      throw new Error("useDayPicker() must be used within a custom component.");
-    }
-    return context;
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/MonthsDropdown.js
-  function MonthsDropdown(props) {
-    const { components } = useDayPicker();
-    return import_react132.default.createElement(components.Dropdown, { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Nav.js
-  var import_react133 = __toESM(require_react(), 1);
-  function Nav(props) {
-    const { onPreviousClick, onNextClick, previousMonth, nextMonth, ...navProps } = props;
-    const { components, classNames, labels: { labelPrevious: labelPrevious2, labelNext: labelNext2 } } = useDayPicker();
-    const handleNextClick = (0, import_react133.useCallback)((e3) => {
-      if (nextMonth) {
-        onNextClick?.(e3);
-      }
-    }, [nextMonth, onNextClick]);
-    const handlePreviousClick = (0, import_react133.useCallback)((e3) => {
-      if (previousMonth) {
-        onPreviousClick?.(e3);
-      }
-    }, [previousMonth, onPreviousClick]);
-    return import_react133.default.createElement(
-      "nav",
-      { ...navProps },
-      import_react133.default.createElement(
-        components.PreviousMonthButton,
-        { type: "button", className: classNames[UI2.PreviousMonthButton], tabIndex: previousMonth ? void 0 : -1, "aria-disabled": previousMonth ? void 0 : true, "aria-label": labelPrevious2(previousMonth), onClick: handlePreviousClick },
-        import_react133.default.createElement(components.Chevron, { disabled: previousMonth ? void 0 : true, className: classNames[UI2.Chevron], orientation: "left" })
-      ),
-      import_react133.default.createElement(
-        components.NextMonthButton,
-        { type: "button", className: classNames[UI2.NextMonthButton], tabIndex: nextMonth ? void 0 : -1, "aria-disabled": nextMonth ? void 0 : true, "aria-label": labelNext2(nextMonth), onClick: handleNextClick },
-        import_react133.default.createElement(components.Chevron, { disabled: nextMonth ? void 0 : true, orientation: "right", className: classNames[UI2.Chevron] })
-      )
-    );
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/NextMonthButton.js
-  var import_react134 = __toESM(require_react(), 1);
-  function NextMonthButton(props) {
-    const { components } = useDayPicker();
-    return import_react134.default.createElement(components.Button, { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Option.js
-  var import_react135 = __toESM(require_react(), 1);
-  function Option3(props) {
-    return import_react135.default.createElement("option", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/PreviousMonthButton.js
-  var import_react136 = __toESM(require_react(), 1);
-  function PreviousMonthButton(props) {
-    const { components } = useDayPicker();
-    return import_react136.default.createElement(components.Button, { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Root.js
-  var import_react137 = __toESM(require_react(), 1);
-  function Root5(props) {
-    const { rootRef, ...rest } = props;
-    return import_react137.default.createElement("div", { ...rest, ref: rootRef });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Select.js
-  var import_react138 = __toESM(require_react(), 1);
-  function Select4(props) {
-    return import_react138.default.createElement("select", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Week.js
-  var import_react139 = __toESM(require_react(), 1);
-  function Week(props) {
-    const { week, ...trProps } = props;
-    return import_react139.default.createElement("tr", { ...trProps });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Weekday.js
-  var import_react140 = __toESM(require_react(), 1);
-  function Weekday(props) {
-    return import_react140.default.createElement("th", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Weekdays.js
-  var import_react141 = __toESM(require_react(), 1);
-  function Weekdays(props) {
-    return import_react141.default.createElement(
-      "thead",
-      { "aria-hidden": true },
-      import_react141.default.createElement("tr", { ...props })
-    );
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/WeekNumber.js
-  var import_react142 = __toESM(require_react(), 1);
-  function WeekNumber(props) {
-    const { week, ...thProps } = props;
-    return import_react142.default.createElement("th", { ...thProps });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/WeekNumberHeader.js
-  var import_react143 = __toESM(require_react(), 1);
-  function WeekNumberHeader(props) {
-    return import_react143.default.createElement("th", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Weeks.js
-  var import_react144 = __toESM(require_react(), 1);
-  function Weeks(props) {
-    return import_react144.default.createElement("tbody", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/YearsDropdown.js
-  var import_react145 = __toESM(require_react(), 1);
-  function YearsDropdown(props) {
-    const { components } = useDayPicker();
-    return import_react145.default.createElement(components.Dropdown, { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/DayPicker.js
-  var import_react150 = __toESM(require_react(), 1);
-
-  // node_modules/react-day-picker/dist/esm/utils/rangeIncludesDate.js
-  function rangeIncludesDate(range, date, excludeEnds = false, dateLib = defaultDateLib) {
-    let { from: from2, to } = range;
-    const { differenceInCalendarDays: differenceInCalendarDays2, isSameDay: isSameDay2 } = dateLib;
-    if (from2 && to) {
-      const isRangeInverted = differenceInCalendarDays2(to, from2) < 0;
-      if (isRangeInverted) {
-        [from2, to] = [to, from2];
-      }
-      const isInRange = differenceInCalendarDays2(date, from2) >= (excludeEnds ? 1 : 0) && differenceInCalendarDays2(to, date) >= (excludeEnds ? 1 : 0);
-      return isInRange;
-    }
-    if (!excludeEnds && to) {
-      return isSameDay2(to, date);
-    }
-    if (!excludeEnds && from2) {
-      return isSameDay2(from2, date);
-    }
-    return false;
-  }
-
-  // node_modules/react-day-picker/dist/esm/utils/typeguards.js
-  function isDateInterval(matcher) {
-    return Boolean(matcher && typeof matcher === "object" && "before" in matcher && "after" in matcher);
-  }
-  function isDateRange(value) {
-    return Boolean(value && typeof value === "object" && "from" in value);
-  }
-  function isDateAfterType(value) {
-    return Boolean(value && typeof value === "object" && "after" in value);
-  }
-  function isDateBeforeType(value) {
-    return Boolean(value && typeof value === "object" && "before" in value);
-  }
-  function isDayOfWeekType(value) {
-    return Boolean(value && typeof value === "object" && "dayOfWeek" in value);
-  }
-  function isDatesArray(value, dateLib) {
-    return Array.isArray(value) && value.every(dateLib.isDate);
-  }
-
-  // node_modules/react-day-picker/dist/esm/utils/dateMatchModifiers.js
-  function dateMatchModifiers(date, matchers, dateLib = defaultDateLib) {
-    const matchersArr = !Array.isArray(matchers) ? [matchers] : matchers;
-    const { isSameDay: isSameDay2, differenceInCalendarDays: differenceInCalendarDays2, isAfter: isAfter2 } = dateLib;
-    return matchersArr.some((matcher) => {
-      if (typeof matcher === "boolean") {
-        return matcher;
-      }
-      if (dateLib.isDate(matcher)) {
-        return isSameDay2(date, matcher);
-      }
-      if (isDatesArray(matcher, dateLib)) {
-        return matcher.some((matcherDate) => isSameDay2(date, matcherDate));
-      }
-      if (isDateRange(matcher)) {
-        return rangeIncludesDate(matcher, date, false, dateLib);
-      }
-      if (isDayOfWeekType(matcher)) {
-        if (!Array.isArray(matcher.dayOfWeek)) {
-          return matcher.dayOfWeek === date.getDay();
-        }
-        return matcher.dayOfWeek.includes(date.getDay());
-      }
-      if (isDateInterval(matcher)) {
-        const diffBefore = differenceInCalendarDays2(matcher.before, date);
-        const diffAfter = differenceInCalendarDays2(matcher.after, date);
-        const isDayBefore = diffBefore > 0;
-        const isDayAfter = diffAfter < 0;
-        const isClosedInterval = isAfter2(matcher.before, matcher.after);
-        if (isClosedInterval) {
-          return isDayAfter && isDayBefore;
-        } else {
-          return isDayBefore || isDayAfter;
-        }
-      }
-      if (isDateAfterType(matcher)) {
-        return differenceInCalendarDays2(date, matcher.after) > 0;
-      }
-      if (isDateBeforeType(matcher)) {
-        return differenceInCalendarDays2(matcher.before, date) > 0;
-      }
-      if (typeof matcher === "function") {
-        return matcher(date);
-      }
-      return false;
-    });
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/createGetModifiers.js
-  function createGetModifiers(days, props, navStart, navEnd, dateLib) {
-    const { disabled, hidden, modifiers, showOutsideDays, broadcastCalendar, today = dateLib.today() } = props;
-    const { isSameDay: isSameDay2, isSameMonth: isSameMonth2, startOfMonth: startOfMonth2, isBefore: isBefore2, endOfMonth: endOfMonth2, isAfter: isAfter2 } = dateLib;
-    const computedNavStart = navStart && startOfMonth2(navStart);
-    const computedNavEnd = navEnd && endOfMonth2(navEnd);
-    const internalModifiersMap = {
-      [DayFlag.focused]: [],
-      [DayFlag.outside]: [],
-      [DayFlag.disabled]: [],
-      [DayFlag.hidden]: [],
-      [DayFlag.today]: []
-    };
-    const customModifiersMap = {};
-    for (const day of days) {
-      const { date, displayMonth } = day;
-      const isOutside = Boolean(displayMonth && !isSameMonth2(date, displayMonth));
-      const isBeforeNavStart = Boolean(computedNavStart && isBefore2(date, computedNavStart));
-      const isAfterNavEnd = Boolean(computedNavEnd && isAfter2(date, computedNavEnd));
-      const isDisabled = Boolean(disabled && dateMatchModifiers(date, disabled, dateLib));
-      const isHidden2 = Boolean(hidden && dateMatchModifiers(date, hidden, dateLib)) || isBeforeNavStart || isAfterNavEnd || // Broadcast calendar will show outside days as default
-      !broadcastCalendar && !showOutsideDays && isOutside || broadcastCalendar && showOutsideDays === false && isOutside;
-      const isToday = isSameDay2(date, today);
-      if (isOutside)
-        internalModifiersMap.outside.push(day);
-      if (isDisabled)
-        internalModifiersMap.disabled.push(day);
-      if (isHidden2)
-        internalModifiersMap.hidden.push(day);
-      if (isToday)
-        internalModifiersMap.today.push(day);
-      if (modifiers) {
-        Object.keys(modifiers).forEach((name) => {
-          const modifierValue = modifiers?.[name];
-          const isMatch = modifierValue ? dateMatchModifiers(date, modifierValue, dateLib) : false;
-          if (!isMatch)
-            return;
-          if (customModifiersMap[name]) {
-            customModifiersMap[name].push(day);
-          } else {
-            customModifiersMap[name] = [day];
-          }
-        });
-      }
-    }
-    return (day) => {
-      const dayFlags = {
-        [DayFlag.focused]: false,
-        [DayFlag.disabled]: false,
-        [DayFlag.hidden]: false,
-        [DayFlag.outside]: false,
-        [DayFlag.today]: false
-      };
-      const customModifiers = {};
-      for (const name in internalModifiersMap) {
-        const days2 = internalModifiersMap[name];
-        dayFlags[name] = days2.some((d3) => d3 === day);
-      }
-      for (const name in customModifiersMap) {
-        customModifiers[name] = customModifiersMap[name].some((d3) => d3 === day);
-      }
-      return {
-        ...dayFlags,
-        // custom modifiers should override all the previous ones
-        ...customModifiers
-      };
-    };
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getClassNamesForModifiers.js
-  function getClassNamesForModifiers(modifiers, classNames, modifiersClassNames = {}) {
-    const modifierClassNames = Object.entries(modifiers).filter(([, active]) => active === true).reduce((previousValue, [key]) => {
-      if (modifiersClassNames[key]) {
-        previousValue.push(modifiersClassNames[key]);
-      } else if (classNames[DayFlag[key]]) {
-        previousValue.push(classNames[DayFlag[key]]);
-      } else if (classNames[SelectionState[key]]) {
-        previousValue.push(classNames[SelectionState[key]]);
-      }
-      return previousValue;
-    }, [classNames[UI2.Day]]);
-    return modifierClassNames;
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getComponents.js
-  function getComponents(customComponents) {
-    return {
-      ...custom_components_exports,
-      ...customComponents
-    };
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getDataAttributes.js
-  function getDataAttributes(props) {
-    const dataAttributes = {
-      "data-mode": props.mode ?? void 0,
-      "data-required": "required" in props ? props.required : void 0,
-      "data-multiple-months": props.numberOfMonths && props.numberOfMonths > 1 || void 0,
-      "data-week-numbers": props.showWeekNumber || void 0,
-      "data-broadcast-calendar": props.broadcastCalendar || void 0,
-      "data-nav-layout": props.navLayout || void 0
-    };
-    Object.entries(props).forEach(([key, val]) => {
-      if (key.startsWith("data-")) {
-        dataAttributes[key] = val;
-      }
-    });
-    return dataAttributes;
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getDefaultClassNames.js
-  function getDefaultClassNames() {
-    const classNames = {};
-    for (const key in UI2) {
-      classNames[UI2[key]] = `rdp-${UI2[key]}`;
-    }
-    for (const key in DayFlag) {
-      classNames[DayFlag[key]] = `rdp-${DayFlag[key]}`;
-    }
-    for (const key in SelectionState) {
-      classNames[SelectionState[key]] = `rdp-${SelectionState[key]}`;
-    }
-    for (const key in Animation) {
-      classNames[Animation[key]] = `rdp-${Animation[key]}`;
-    }
-    return classNames;
-  }
-
-  // node_modules/react-day-picker/dist/esm/formatters/index.js
-  var formatters_exports = {};
-  __export(formatters_exports, {
-    formatCaption: () => formatCaption,
-    formatDay: () => formatDay,
-    formatMonthCaption: () => formatMonthCaption,
-    formatMonthDropdown: () => formatMonthDropdown,
-    formatWeekNumber: () => formatWeekNumber,
-    formatWeekNumberHeader: () => formatWeekNumberHeader,
-    formatWeekdayName: () => formatWeekdayName,
-    formatYearCaption: () => formatYearCaption,
-    formatYearDropdown: () => formatYearDropdown
-  });
-
-  // node_modules/react-day-picker/dist/esm/formatters/formatCaption.js
-  function formatCaption(month, options2, dateLib) {
-    const lib = dateLib ?? new DateLib(options2);
-    return lib.formatMonthYear(month);
-  }
-  var formatMonthCaption = formatCaption;
-
-  // node_modules/react-day-picker/dist/esm/formatters/formatDay.js
-  function formatDay(date, options2, dateLib) {
-    return (dateLib ?? new DateLib(options2)).format(date, "d");
-  }
-
-  // node_modules/react-day-picker/dist/esm/formatters/formatMonthDropdown.js
-  function formatMonthDropdown(month, dateLib = defaultDateLib) {
-    return dateLib.format(month, "LLLL");
-  }
-
-  // node_modules/react-day-picker/dist/esm/formatters/formatWeekdayName.js
-  function formatWeekdayName(weekday, options2, dateLib) {
-    return (dateLib ?? new DateLib(options2)).format(weekday, "cccccc");
-  }
-
-  // node_modules/react-day-picker/dist/esm/formatters/formatWeekNumber.js
-  function formatWeekNumber(weekNumber, dateLib = defaultDateLib) {
-    if (weekNumber < 10) {
-      return dateLib.formatNumber(`0${weekNumber.toLocaleString()}`);
-    }
-    return dateLib.formatNumber(`${weekNumber.toLocaleString()}`);
-  }
-
-  // node_modules/react-day-picker/dist/esm/formatters/formatWeekNumberHeader.js
-  function formatWeekNumberHeader() {
-    return ``;
-  }
-
-  // node_modules/react-day-picker/dist/esm/formatters/formatYearDropdown.js
-  function formatYearDropdown(year, dateLib = defaultDateLib) {
-    return dateLib.format(year, "yyyy");
-  }
-  var formatYearCaption = formatYearDropdown;
-
-  // node_modules/react-day-picker/dist/esm/helpers/getFormatters.js
-  function getFormatters(customFormatters) {
-    if (customFormatters?.formatMonthCaption && !customFormatters.formatCaption) {
-      customFormatters.formatCaption = customFormatters.formatMonthCaption;
-    }
-    if (customFormatters?.formatYearCaption && !customFormatters.formatYearDropdown) {
-      customFormatters.formatYearDropdown = customFormatters.formatYearCaption;
-    }
-    return {
-      ...formatters_exports,
-      ...customFormatters
-    };
-  }
-
-  // node_modules/react-day-picker/dist/esm/labels/index.js
-  var labels_exports = {};
-  __export(labels_exports, {
-    labelCaption: () => labelCaption,
-    labelDay: () => labelDay,
-    labelDayButton: () => labelDayButton,
-    labelGrid: () => labelGrid,
-    labelGridcell: () => labelGridcell,
-    labelMonthDropdown: () => labelMonthDropdown,
-    labelNav: () => labelNav,
-    labelNext: () => labelNext,
-    labelPrevious: () => labelPrevious,
-    labelWeekNumber: () => labelWeekNumber,
-    labelWeekNumberHeader: () => labelWeekNumberHeader,
-    labelWeekday: () => labelWeekday,
-    labelYearDropdown: () => labelYearDropdown
-  });
-
-  // node_modules/react-day-picker/dist/esm/labels/labelDayButton.js
-  function labelDayButton(date, modifiers, options2, dateLib) {
-    let label = (dateLib ?? new DateLib(options2)).format(date, "PPPP");
-    if (modifiers.today)
-      label = `Today, ${label}`;
-    if (modifiers.selected)
-      label = `${label}, selected`;
-    return label;
-  }
-  var labelDay = labelDayButton;
-
-  // node_modules/react-day-picker/dist/esm/labels/labelGrid.js
-  function labelGrid(date, options2, dateLib) {
-    const lib = dateLib ?? new DateLib(options2);
-    return lib.formatMonthYear(date);
-  }
-  var labelCaption = labelGrid;
-
-  // node_modules/react-day-picker/dist/esm/labels/labelGridcell.js
-  function labelGridcell(date, modifiers, options2, dateLib) {
-    let label = (dateLib ?? new DateLib(options2)).format(date, "PPPP");
-    if (modifiers?.today) {
-      label = `Today, ${label}`;
-    }
-    return label;
-  }
-
-  // node_modules/react-day-picker/dist/esm/labels/labelMonthDropdown.js
-  function labelMonthDropdown(_options) {
-    return "Choose the Month";
-  }
-
-  // node_modules/react-day-picker/dist/esm/labels/labelNav.js
-  function labelNav() {
-    return "";
-  }
-
-  // node_modules/react-day-picker/dist/esm/labels/labelNext.js
-  var defaultLabel = "Go to the Next Month";
-  function labelNext(_month, _options) {
-    return defaultLabel;
-  }
-
-  // node_modules/react-day-picker/dist/esm/labels/labelPrevious.js
-  function labelPrevious(_month) {
-    return "Go to the Previous Month";
-  }
-
-  // node_modules/react-day-picker/dist/esm/labels/labelWeekday.js
-  function labelWeekday(date, options2, dateLib) {
-    return (dateLib ?? new DateLib(options2)).format(date, "cccc");
-  }
-
-  // node_modules/react-day-picker/dist/esm/labels/labelWeekNumber.js
-  function labelWeekNumber(weekNumber, _options) {
-    return `Week ${weekNumber}`;
-  }
-
-  // node_modules/react-day-picker/dist/esm/labels/labelWeekNumberHeader.js
-  function labelWeekNumberHeader(_options) {
-    return "Week Number";
-  }
-
-  // node_modules/react-day-picker/dist/esm/labels/labelYearDropdown.js
-  function labelYearDropdown(_options) {
-    return "Choose the Year";
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getLabels.js
-  var resolveLabel = (defaultLabel2, customLabel, localeLabel) => {
-    if (customLabel)
-      return customLabel;
-    if (localeLabel) {
-      return typeof localeLabel === "function" ? localeLabel : (..._args) => localeLabel;
-    }
-    return defaultLabel2;
-  };
-  function getLabels(customLabels, options2) {
-    const localeLabels = options2.locale?.labels ?? {};
-    return {
-      ...labels_exports,
-      ...customLabels ?? {},
-      labelDayButton: resolveLabel(labelDayButton, customLabels?.labelDayButton, localeLabels.labelDayButton),
-      labelMonthDropdown: resolveLabel(labelMonthDropdown, customLabels?.labelMonthDropdown, localeLabels.labelMonthDropdown),
-      labelNext: resolveLabel(labelNext, customLabels?.labelNext, localeLabels.labelNext),
-      labelPrevious: resolveLabel(labelPrevious, customLabels?.labelPrevious, localeLabels.labelPrevious),
-      labelWeekNumber: resolveLabel(labelWeekNumber, customLabels?.labelWeekNumber, localeLabels.labelWeekNumber),
-      labelYearDropdown: resolveLabel(labelYearDropdown, customLabels?.labelYearDropdown, localeLabels.labelYearDropdown),
-      labelGrid: resolveLabel(labelGrid, customLabels?.labelGrid, localeLabels.labelGrid),
-      labelGridcell: resolveLabel(labelGridcell, customLabels?.labelGridcell, localeLabels.labelGridcell),
-      labelNav: resolveLabel(labelNav, customLabels?.labelNav, localeLabels.labelNav),
-      labelWeekNumberHeader: resolveLabel(labelWeekNumberHeader, customLabels?.labelWeekNumberHeader, localeLabels.labelWeekNumberHeader),
-      labelWeekday: resolveLabel(labelWeekday, customLabels?.labelWeekday, localeLabels.labelWeekday)
-    };
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getMonthOptions.js
-  function getMonthOptions(displayMonth, navStart, navEnd, formatters2, dateLib) {
-    const { startOfMonth: startOfMonth2, startOfYear: startOfYear2, endOfYear: endOfYear2, eachMonthOfInterval: eachMonthOfInterval2, getMonth: getMonth2 } = dateLib;
-    const months = eachMonthOfInterval2({
-      start: startOfYear2(displayMonth),
-      end: endOfYear2(displayMonth)
-    });
-    const options2 = months.map((month) => {
-      const label = formatters2.formatMonthDropdown(month, dateLib);
-      const value = getMonth2(month);
-      const disabled = navStart && month < startOfMonth2(navStart) || navEnd && month > startOfMonth2(navEnd) || false;
-      return { value, label, disabled };
-    });
-    return options2;
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getStyleForModifiers.js
-  function getStyleForModifiers(dayModifiers, styles3 = {}, modifiersStyles = {}) {
-    let style2 = { ...styles3?.[UI2.Day] };
-    Object.entries(dayModifiers).filter(([, active]) => active === true).forEach(([modifier]) => {
-      style2 = {
-        ...style2,
-        ...modifiersStyles?.[modifier]
-      };
-    });
-    return style2;
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getWeekdays.js
-  function getWeekdays(dateLib, ISOWeek, broadcastCalendar, today) {
-    const referenceToday = today ?? dateLib.today();
-    const start = broadcastCalendar ? dateLib.startOfBroadcastWeek(referenceToday, dateLib) : ISOWeek ? dateLib.startOfISOWeek(referenceToday) : dateLib.startOfWeek(referenceToday);
-    const days = [];
-    for (let i3 = 0; i3 < 7; i3++) {
-      const day = dateLib.addDays(start, i3);
-      days.push(day);
-    }
-    return days;
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getYearOptions.js
-  function getYearOptions(navStart, navEnd, formatters2, dateLib, reverse = false) {
-    if (!navStart)
-      return void 0;
-    if (!navEnd)
-      return void 0;
-    const { startOfYear: startOfYear2, endOfYear: endOfYear2, eachYearOfInterval: eachYearOfInterval2, getYear: getYear2 } = dateLib;
-    const firstNavYear = startOfYear2(navStart);
-    const lastNavYear = endOfYear2(navEnd);
-    const years = eachYearOfInterval2({ start: firstNavYear, end: lastNavYear });
-    if (reverse)
-      years.reverse();
-    return years.map((year) => {
-      const label = formatters2.formatYearDropdown(year, dateLib);
-      return {
-        value: getYear2(year),
-        label,
-        disabled: false
-      };
-    });
-  }
-
-  // node_modules/react-day-picker/dist/esm/noonDateLib.js
-  function createNoonOverrides(timeZone, options2 = {}) {
-    const { weekStartsOn, locale } = options2;
-    const fallbackWeekStartsOn = weekStartsOn ?? locale?.options?.weekStartsOn ?? 0;
-    const toNoonTZDate = (date) => {
-      const normalizedDate = typeof date === "number" || typeof date === "string" ? new Date(date) : date;
-      return new TZDate(normalizedDate.getFullYear(), normalizedDate.getMonth(), normalizedDate.getDate(), 12, 0, 0, timeZone);
-    };
-    const toCalendarDate = (date) => {
-      const zoned = toNoonTZDate(date);
-      return new Date(zoned.getFullYear(), zoned.getMonth(), zoned.getDate(), 0, 0, 0, 0);
-    };
-    return {
-      today: () => {
-        return toNoonTZDate(TZDate.tz(timeZone));
-      },
-      newDate: (year, monthIndex, date) => {
-        return new TZDate(year, monthIndex, date, 12, 0, 0, timeZone);
-      },
-      startOfDay: (date) => {
-        return toNoonTZDate(date);
-      },
-      startOfWeek: (date, options3) => {
-        const base = toNoonTZDate(date);
-        const weekStartsOnValue = options3?.weekStartsOn ?? fallbackWeekStartsOn;
-        const diff = (base.getDay() - weekStartsOnValue + 7) % 7;
-        base.setDate(base.getDate() - diff);
-        return base;
-      },
-      startOfISOWeek: (date) => {
-        const base = toNoonTZDate(date);
-        const diff = (base.getDay() - 1 + 7) % 7;
-        base.setDate(base.getDate() - diff);
-        return base;
-      },
-      startOfMonth: (date) => {
-        const base = toNoonTZDate(date);
-        base.setDate(1);
-        return base;
-      },
-      startOfYear: (date) => {
-        const base = toNoonTZDate(date);
-        base.setMonth(0, 1);
-        return base;
-      },
-      endOfWeek: (date, options3) => {
-        const base = toNoonTZDate(date);
-        const weekStartsOnValue = options3?.weekStartsOn ?? fallbackWeekStartsOn;
-        const endDow = (weekStartsOnValue + 6) % 7;
-        const diff = (endDow - base.getDay() + 7) % 7;
-        base.setDate(base.getDate() + diff);
-        return base;
-      },
-      endOfISOWeek: (date) => {
-        const base = toNoonTZDate(date);
-        const diff = (7 - base.getDay()) % 7;
-        base.setDate(base.getDate() + diff);
-        return base;
-      },
-      endOfMonth: (date) => {
-        const base = toNoonTZDate(date);
-        base.setMonth(base.getMonth() + 1, 0);
-        return base;
-      },
-      endOfYear: (date) => {
-        const base = toNoonTZDate(date);
-        base.setMonth(11, 31);
-        return base;
-      },
-      eachMonthOfInterval: (interval) => {
-        const start = toNoonTZDate(interval.start);
-        const end = toNoonTZDate(interval.end);
-        const result = [];
-        const cursor2 = new TZDate(start.getFullYear(), start.getMonth(), 1, 12, 0, 0, timeZone);
-        const endKey = end.getFullYear() * 12 + end.getMonth();
-        while (cursor2.getFullYear() * 12 + cursor2.getMonth() <= endKey) {
-          result.push(new TZDate(cursor2, timeZone));
-          cursor2.setMonth(cursor2.getMonth() + 1, 1);
-        }
-        return result;
-      },
-      // Normalize to noon once before arithmetic (avoid DST/midnight edge cases),
-      // mutate the same TZDate, and return it.
-      addDays: (date, amount) => {
-        const base = toNoonTZDate(date);
-        base.setDate(base.getDate() + amount);
-        return base;
-      },
-      addWeeks: (date, amount) => {
-        const base = toNoonTZDate(date);
-        base.setDate(base.getDate() + amount * 7);
-        return base;
-      },
-      addMonths: (date, amount) => {
-        const base = toNoonTZDate(date);
-        base.setMonth(base.getMonth() + amount);
-        return base;
-      },
-      addYears: (date, amount) => {
-        const base = toNoonTZDate(date);
-        base.setFullYear(base.getFullYear() + amount);
-        return base;
-      },
-      eachYearOfInterval: (interval) => {
-        const start = toNoonTZDate(interval.start);
-        const end = toNoonTZDate(interval.end);
-        const years = [];
-        const cursor2 = new TZDate(start.getFullYear(), 0, 1, 12, 0, 0, timeZone);
-        while (cursor2.getFullYear() <= end.getFullYear()) {
-          years.push(new TZDate(cursor2, timeZone));
-          cursor2.setFullYear(cursor2.getFullYear() + 1, 0, 1);
-        }
-        return years;
-      },
-      getWeek: (date, options3) => {
-        const base = toCalendarDate(date);
-        return getWeek(base, {
-          weekStartsOn: options3?.weekStartsOn ?? fallbackWeekStartsOn,
-          firstWeekContainsDate: options3?.firstWeekContainsDate ?? locale?.options?.firstWeekContainsDate ?? 1
-        });
-      },
-      getISOWeek: (date) => {
-        const base = toCalendarDate(date);
-        return getISOWeek(base);
-      },
-      differenceInCalendarDays: (dateLeft, dateRight) => {
-        const left = toCalendarDate(dateLeft);
-        const right = toCalendarDate(dateRight);
-        return differenceInCalendarDays(left, right);
-      },
-      differenceInCalendarMonths: (dateLeft, dateRight) => {
-        const left = toCalendarDate(dateLeft);
-        const right = toCalendarDate(dateRight);
-        return differenceInCalendarMonths(left, right);
-      }
-    };
-  }
-
-  // node_modules/react-day-picker/dist/esm/useAnimation.js
-  var import_react146 = __toESM(require_react(), 1);
-  var asHtmlElement = (element) => {
-    if (element instanceof HTMLElement)
-      return element;
-    return null;
-  };
-  var queryMonthEls = (element) => [
-    ...element.querySelectorAll("[data-animated-month]") ?? []
-  ];
-  var queryMonthEl = (element) => asHtmlElement(element.querySelector("[data-animated-month]"));
-  var queryCaptionEl = (element) => asHtmlElement(element.querySelector("[data-animated-caption]"));
-  var queryWeeksEl = (element) => asHtmlElement(element.querySelector("[data-animated-weeks]"));
-  var queryNavEl = (element) => asHtmlElement(element.querySelector("[data-animated-nav]"));
-  var queryWeekdaysEl = (element) => asHtmlElement(element.querySelector("[data-animated-weekdays]"));
-  function useAnimation(rootElRef, enabled, { classNames, months, focused, dateLib }) {
-    const previousRootElSnapshotRef = (0, import_react146.useRef)(null);
-    const previousMonthsRef = (0, import_react146.useRef)(months);
-    const animatingRef = (0, import_react146.useRef)(false);
-    (0, import_react146.useLayoutEffect)(() => {
-      const previousMonths = previousMonthsRef.current;
-      previousMonthsRef.current = months;
-      if (!enabled || !rootElRef.current || // safety check because the ref can be set to anything by consumers
-      !(rootElRef.current instanceof HTMLElement) || // validation required for the animation to work as expected
-      months.length === 0 || previousMonths.length === 0 || months.length !== previousMonths.length) {
-        return;
-      }
-      const isSameMonth2 = dateLib.isSameMonth(months[0].date, previousMonths[0].date);
-      const isAfterPreviousMonth = dateLib.isAfter(months[0].date, previousMonths[0].date);
-      const captionAnimationClass = isAfterPreviousMonth ? classNames[Animation.caption_after_enter] : classNames[Animation.caption_before_enter];
-      const weeksAnimationClass = isAfterPreviousMonth ? classNames[Animation.weeks_after_enter] : classNames[Animation.weeks_before_enter];
-      const previousRootElSnapshot = previousRootElSnapshotRef.current;
-      const rootElSnapshot = rootElRef.current.cloneNode(true);
-      if (rootElSnapshot instanceof HTMLElement) {
-        const currentMonthElsSnapshot = queryMonthEls(rootElSnapshot);
-        currentMonthElsSnapshot.forEach((currentMonthElSnapshot) => {
-          if (!(currentMonthElSnapshot instanceof HTMLElement))
-            return;
-          const previousMonthElSnapshot = queryMonthEl(currentMonthElSnapshot);
-          if (previousMonthElSnapshot && currentMonthElSnapshot.contains(previousMonthElSnapshot)) {
-            currentMonthElSnapshot.removeChild(previousMonthElSnapshot);
-          }
-          const captionEl = queryCaptionEl(currentMonthElSnapshot);
-          if (captionEl) {
-            captionEl.classList.remove(captionAnimationClass);
-          }
-          const weeksEl = queryWeeksEl(currentMonthElSnapshot);
-          if (weeksEl) {
-            weeksEl.classList.remove(weeksAnimationClass);
-          }
-        });
-        previousRootElSnapshotRef.current = rootElSnapshot;
-      } else {
-        previousRootElSnapshotRef.current = null;
-      }
-      if (animatingRef.current || isSameMonth2 || // skip animation if a day is focused because it can cause issues to the animation and is better for a11y
-      focused) {
-        return;
-      }
-      const previousMonthEls = previousRootElSnapshot instanceof HTMLElement ? queryMonthEls(previousRootElSnapshot) : [];
-      const currentMonthEls = queryMonthEls(rootElRef.current);
-      if (currentMonthEls?.every((el) => el instanceof HTMLElement) && previousMonthEls && previousMonthEls.every((el) => el instanceof HTMLElement)) {
-        animatingRef.current = true;
-        const cleanUpFunctions = [];
-        rootElRef.current.style.isolation = "isolate";
-        const navEl = queryNavEl(rootElRef.current);
-        if (navEl) {
-          navEl.style.zIndex = "1";
-        }
-        currentMonthEls.forEach((currentMonthEl, index2) => {
-          const previousMonthEl = previousMonthEls[index2];
-          if (!previousMonthEl) {
-            return;
-          }
-          currentMonthEl.style.position = "relative";
-          currentMonthEl.style.overflow = "hidden";
-          const captionEl = queryCaptionEl(currentMonthEl);
-          if (captionEl) {
-            captionEl.classList.add(captionAnimationClass);
-          }
-          const weeksEl = queryWeeksEl(currentMonthEl);
-          if (weeksEl) {
-            weeksEl.classList.add(weeksAnimationClass);
-          }
-          const cleanUp = () => {
-            animatingRef.current = false;
-            if (rootElRef.current) {
-              rootElRef.current.style.isolation = "";
-            }
-            if (navEl) {
-              navEl.style.zIndex = "";
-            }
-            if (captionEl) {
-              captionEl.classList.remove(captionAnimationClass);
-            }
-            if (weeksEl) {
-              weeksEl.classList.remove(weeksAnimationClass);
-            }
-            currentMonthEl.style.position = "";
-            currentMonthEl.style.overflow = "";
-            if (currentMonthEl.contains(previousMonthEl)) {
-              currentMonthEl.removeChild(previousMonthEl);
-            }
-          };
-          cleanUpFunctions.push(cleanUp);
-          previousMonthEl.style.pointerEvents = "none";
-          previousMonthEl.style.position = "absolute";
-          previousMonthEl.style.overflow = "hidden";
-          previousMonthEl.setAttribute("aria-hidden", "true");
-          const previousWeekdaysEl = queryWeekdaysEl(previousMonthEl);
-          if (previousWeekdaysEl) {
-            previousWeekdaysEl.style.opacity = "0";
-          }
-          const previousCaptionEl = queryCaptionEl(previousMonthEl);
-          if (previousCaptionEl) {
-            previousCaptionEl.classList.add(isAfterPreviousMonth ? classNames[Animation.caption_before_exit] : classNames[Animation.caption_after_exit]);
-            previousCaptionEl.addEventListener("animationend", cleanUp);
-          }
-          const previousWeeksEl = queryWeeksEl(previousMonthEl);
-          if (previousWeeksEl) {
-            previousWeeksEl.classList.add(isAfterPreviousMonth ? classNames[Animation.weeks_before_exit] : classNames[Animation.weeks_after_exit]);
-          }
-          currentMonthEl.insertBefore(previousMonthEl, currentMonthEl.firstChild);
-        });
-      }
-    });
-  }
-
-  // node_modules/react-day-picker/dist/esm/useCalendar.js
-  var import_react148 = __toESM(require_react(), 1);
-
-  // node_modules/react-day-picker/dist/esm/helpers/getDates.js
-  function getDates(displayMonths, maxDate, props, dateLib) {
-    const firstMonth = displayMonths[0];
-    const lastMonth = displayMonths[displayMonths.length - 1];
-    const { ISOWeek, fixedWeeks, broadcastCalendar } = props ?? {};
-    const { addDays: addDays2, differenceInCalendarDays: differenceInCalendarDays2, differenceInCalendarMonths: differenceInCalendarMonths2, endOfBroadcastWeek: endOfBroadcastWeek2, endOfISOWeek: endOfISOWeek2, endOfMonth: endOfMonth2, endOfWeek: endOfWeek2, isAfter: isAfter2, startOfBroadcastWeek: startOfBroadcastWeek2, startOfISOWeek: startOfISOWeek2, startOfWeek: startOfWeek2 } = dateLib;
-    const startWeekFirstDate = broadcastCalendar ? startOfBroadcastWeek2(firstMonth, dateLib) : ISOWeek ? startOfISOWeek2(firstMonth) : startOfWeek2(firstMonth);
-    const displayMonthsWeekEnd = broadcastCalendar ? endOfBroadcastWeek2(lastMonth) : ISOWeek ? endOfISOWeek2(endOfMonth2(lastMonth)) : endOfWeek2(endOfMonth2(lastMonth));
-    const constraintWeekEnd = maxDate && (broadcastCalendar ? endOfBroadcastWeek2(maxDate) : ISOWeek ? endOfISOWeek2(maxDate) : endOfWeek2(maxDate));
-    const gridEndDate = constraintWeekEnd && isAfter2(displayMonthsWeekEnd, constraintWeekEnd) ? constraintWeekEnd : displayMonthsWeekEnd;
-    const nOfDays = differenceInCalendarDays2(gridEndDate, startWeekFirstDate);
-    const nOfMonths = differenceInCalendarMonths2(lastMonth, firstMonth) + 1;
-    const dates = [];
-    for (let i3 = 0; i3 <= nOfDays; i3++) {
-      const date = addDays2(startWeekFirstDate, i3);
-      dates.push(date);
-    }
-    const nrOfDaysWithFixedWeeks = broadcastCalendar ? 35 : 42;
-    const extraDates = nrOfDaysWithFixedWeeks * nOfMonths;
-    if (fixedWeeks && dates.length < extraDates) {
-      const daysToAdd = extraDates - dates.length;
-      for (let i3 = 0; i3 < daysToAdd; i3++) {
-        const date = addDays2(dates[dates.length - 1], 1);
-        dates.push(date);
-      }
-    }
-    return dates;
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getDays.js
-  function getDays(calendarMonths) {
-    const initialDays = [];
-    return calendarMonths.reduce((days, month) => {
-      const weekDays = month.weeks.reduce((weekDays2, week) => {
-        return weekDays2.concat(week.days.slice());
-      }, initialDays.slice());
-      return days.concat(weekDays.slice());
-    }, initialDays.slice());
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getDisplayMonths.js
-  function getDisplayMonths(firstDisplayedMonth, calendarEndMonth, props, dateLib) {
-    const { numberOfMonths = 1 } = props;
-    const months = [];
-    for (let i3 = 0; i3 < numberOfMonths; i3++) {
-      const month = dateLib.addMonths(firstDisplayedMonth, i3);
-      if (calendarEndMonth && month > calendarEndMonth) {
-        break;
-      }
-      months.push(month);
-    }
-    return months;
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getInitialMonth.js
-  function getInitialMonth(props, navStart, navEnd, dateLib) {
-    const { month, defaultMonth, today = dateLib.today(), numberOfMonths = 1 } = props;
-    let initialMonth = month || defaultMonth || today;
-    const { differenceInCalendarMonths: differenceInCalendarMonths2, addMonths: addMonths2, startOfMonth: startOfMonth2 } = dateLib;
-    if (navEnd && differenceInCalendarMonths2(navEnd, initialMonth) < numberOfMonths - 1) {
-      const offset4 = -1 * (numberOfMonths - 1);
-      initialMonth = addMonths2(navEnd, offset4);
-    }
-    if (navStart && differenceInCalendarMonths2(initialMonth, navStart) < 0) {
-      initialMonth = navStart;
-    }
-    return startOfMonth2(initialMonth);
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getMonths.js
-  function getMonths(displayMonths, dates, props, dateLib) {
-    const { addDays: addDays2, endOfBroadcastWeek: endOfBroadcastWeek2, endOfISOWeek: endOfISOWeek2, endOfMonth: endOfMonth2, endOfWeek: endOfWeek2, getISOWeek: getISOWeek2, getWeek: getWeek2, startOfBroadcastWeek: startOfBroadcastWeek2, startOfISOWeek: startOfISOWeek2, startOfWeek: startOfWeek2 } = dateLib;
-    const dayPickerMonths = displayMonths.reduce((months, month) => {
-      const firstDateOfFirstWeek = props.broadcastCalendar ? startOfBroadcastWeek2(month, dateLib) : props.ISOWeek ? startOfISOWeek2(month) : startOfWeek2(month);
-      const lastDateOfLastWeek = props.broadcastCalendar ? endOfBroadcastWeek2(month) : props.ISOWeek ? endOfISOWeek2(endOfMonth2(month)) : endOfWeek2(endOfMonth2(month));
-      const monthDates = dates.filter((date) => {
-        return date >= firstDateOfFirstWeek && date <= lastDateOfLastWeek;
-      });
-      const nrOfDaysWithFixedWeeks = props.broadcastCalendar ? 35 : 42;
-      if (props.fixedWeeks && monthDates.length < nrOfDaysWithFixedWeeks) {
-        const extraDates = dates.filter((date) => {
-          const daysToAdd = nrOfDaysWithFixedWeeks - monthDates.length;
-          return date > lastDateOfLastWeek && date <= addDays2(lastDateOfLastWeek, daysToAdd);
-        });
-        monthDates.push(...extraDates);
-      }
-      const weeks = monthDates.reduce((weeks2, date) => {
-        const weekNumber = props.ISOWeek ? getISOWeek2(date) : getWeek2(date);
-        const week = weeks2.find((week2) => week2.weekNumber === weekNumber);
-        const day = new CalendarDay(date, month, dateLib);
-        if (!week) {
-          weeks2.push(new CalendarWeek(weekNumber, [day]));
-        } else {
-          week.days.push(day);
-        }
-        return weeks2;
-      }, []);
-      const dayPickerMonth = new CalendarMonth(month, weeks);
-      months.push(dayPickerMonth);
-      return months;
-    }, []);
-    if (!props.reverseMonths) {
-      return dayPickerMonths;
-    } else {
-      return dayPickerMonths.reverse();
-    }
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getNavMonth.js
-  function getNavMonths(props, dateLib) {
-    let { startMonth, endMonth } = props;
-    const { startOfYear: startOfYear2, startOfDay: startOfDay2, startOfMonth: startOfMonth2, endOfMonth: endOfMonth2, addYears: addYears2, endOfYear: endOfYear2, newDate, today } = dateLib;
-    const { fromYear, toYear, fromMonth, toMonth } = props;
-    if (!startMonth && fromMonth) {
-      startMonth = fromMonth;
-    }
-    if (!startMonth && fromYear) {
-      startMonth = dateLib.newDate(fromYear, 0, 1);
-    }
-    if (!endMonth && toMonth) {
-      endMonth = toMonth;
-    }
-    if (!endMonth && toYear) {
-      endMonth = newDate(toYear, 11, 31);
-    }
-    const hasYearDropdown = props.captionLayout === "dropdown" || props.captionLayout === "dropdown-years";
-    if (startMonth) {
-      startMonth = startOfMonth2(startMonth);
-    } else if (fromYear) {
-      startMonth = newDate(fromYear, 0, 1);
-    } else if (!startMonth && hasYearDropdown) {
-      startMonth = startOfYear2(addYears2(props.today ?? today(), -100));
-    }
-    if (endMonth) {
-      endMonth = endOfMonth2(endMonth);
-    } else if (toYear) {
-      endMonth = newDate(toYear, 11, 31);
-    } else if (!endMonth && hasYearDropdown) {
-      endMonth = endOfYear2(props.today ?? today());
-    }
-    return [
-      startMonth ? startOfDay2(startMonth) : startMonth,
-      endMonth ? startOfDay2(endMonth) : endMonth
-    ];
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getNextMonth.js
-  function getNextMonth(firstDisplayedMonth, calendarEndMonth, options2, dateLib) {
-    if (options2.disableNavigation) {
-      return void 0;
-    }
-    const { pagedNavigation, numberOfMonths = 1 } = options2;
-    const { startOfMonth: startOfMonth2, addMonths: addMonths2, differenceInCalendarMonths: differenceInCalendarMonths2 } = dateLib;
-    const offset4 = pagedNavigation ? numberOfMonths : 1;
-    const month = startOfMonth2(firstDisplayedMonth);
-    if (!calendarEndMonth) {
-      return addMonths2(month, offset4);
-    }
-    const monthsDiff = differenceInCalendarMonths2(calendarEndMonth, firstDisplayedMonth);
-    if (monthsDiff < numberOfMonths) {
-      return void 0;
-    }
-    return addMonths2(month, offset4);
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getPreviousMonth.js
-  function getPreviousMonth(firstDisplayedMonth, calendarStartMonth, options2, dateLib) {
-    if (options2.disableNavigation) {
-      return void 0;
-    }
-    const { pagedNavigation, numberOfMonths } = options2;
-    const { startOfMonth: startOfMonth2, addMonths: addMonths2, differenceInCalendarMonths: differenceInCalendarMonths2 } = dateLib;
-    const offset4 = pagedNavigation ? numberOfMonths ?? 1 : 1;
-    const month = startOfMonth2(firstDisplayedMonth);
-    if (!calendarStartMonth) {
-      return addMonths2(month, -offset4);
-    }
-    const monthsDiff = differenceInCalendarMonths2(month, calendarStartMonth);
-    if (monthsDiff <= 0) {
-      return void 0;
-    }
-    return addMonths2(month, -offset4);
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getWeeks.js
-  function getWeeks(months) {
-    const initialWeeks = [];
-    return months.reduce((weeks, month) => {
-      return weeks.concat(month.weeks.slice());
-    }, initialWeeks.slice());
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/useControlledValue.js
-  var import_react147 = __toESM(require_react(), 1);
-  function useControlledValue2(defaultValue2, controlledValue) {
-    const [uncontrolledValue, setValue] = (0, import_react147.useState)(defaultValue2);
-    const value = controlledValue === void 0 ? uncontrolledValue : controlledValue;
-    return [value, setValue];
-  }
-
-  // node_modules/react-day-picker/dist/esm/useCalendar.js
-  function useCalendar(props, dateLib) {
-    const [navStart, navEnd] = getNavMonths(props, dateLib);
-    const { startOfMonth: startOfMonth2, endOfMonth: endOfMonth2 } = dateLib;
-    const initialMonth = getInitialMonth(props, navStart, navEnd, dateLib);
-    const [firstMonth, setFirstMonth] = useControlledValue2(
-      initialMonth,
-      // initialMonth is always computed from props.month if provided
-      props.month ? initialMonth : void 0
-    );
-    (0, import_react148.useEffect)(() => {
-      const newInitialMonth = getInitialMonth(props, navStart, navEnd, dateLib);
-      setFirstMonth(newInitialMonth);
-    }, [props.timeZone]);
-    const { months, weeks, days, previousMonth, nextMonth } = (0, import_react148.useMemo)(() => {
-      const displayMonths = getDisplayMonths(firstMonth, navEnd, { numberOfMonths: props.numberOfMonths }, dateLib);
-      const dates = getDates(displayMonths, props.endMonth ? endOfMonth2(props.endMonth) : void 0, {
-        ISOWeek: props.ISOWeek,
-        fixedWeeks: props.fixedWeeks,
-        broadcastCalendar: props.broadcastCalendar
-      }, dateLib);
-      const months2 = getMonths(displayMonths, dates, {
-        broadcastCalendar: props.broadcastCalendar,
-        fixedWeeks: props.fixedWeeks,
-        ISOWeek: props.ISOWeek,
-        reverseMonths: props.reverseMonths
-      }, dateLib);
-      const weeks2 = getWeeks(months2);
-      const days2 = getDays(months2);
-      const previousMonth2 = getPreviousMonth(firstMonth, navStart, props, dateLib);
-      const nextMonth2 = getNextMonth(firstMonth, navEnd, props, dateLib);
-      return {
-        months: months2,
-        weeks: weeks2,
-        days: days2,
-        previousMonth: previousMonth2,
-        nextMonth: nextMonth2
-      };
-    }, [
-      dateLib,
-      firstMonth.getTime(),
-      navEnd?.getTime(),
-      navStart?.getTime(),
-      props.disableNavigation,
-      props.broadcastCalendar,
-      props.endMonth?.getTime(),
-      props.fixedWeeks,
-      props.ISOWeek,
-      props.numberOfMonths,
-      props.pagedNavigation,
-      props.reverseMonths
-    ]);
-    const { disableNavigation, onMonthChange } = props;
-    const isDayInCalendar = (day) => weeks.some((week) => week.days.some((d3) => d3.isEqualTo(day)));
-    const goToMonth = (date) => {
-      if (disableNavigation) {
-        return;
-      }
-      let newMonth = startOfMonth2(date);
-      if (navStart && newMonth < startOfMonth2(navStart)) {
-        newMonth = startOfMonth2(navStart);
-      }
-      if (navEnd && newMonth > startOfMonth2(navEnd)) {
-        newMonth = startOfMonth2(navEnd);
-      }
-      setFirstMonth(newMonth);
-      onMonthChange?.(newMonth);
-    };
-    const goToDay = (day) => {
-      if (isDayInCalendar(day)) {
-        return;
-      }
-      goToMonth(day.date);
-    };
-    const calendar = {
-      months,
-      weeks,
-      days,
-      navStart,
-      navEnd,
-      previousMonth,
-      nextMonth,
-      goToMonth,
-      goToDay
-    };
-    return calendar;
-  }
-
-  // node_modules/react-day-picker/dist/esm/useFocus.js
-  var import_react149 = __toESM(require_react(), 1);
-
-  // node_modules/react-day-picker/dist/esm/helpers/calculateFocusTarget.js
-  var FocusTargetPriority;
-  (function(FocusTargetPriority2) {
-    FocusTargetPriority2[FocusTargetPriority2["Today"] = 0] = "Today";
-    FocusTargetPriority2[FocusTargetPriority2["Selected"] = 1] = "Selected";
-    FocusTargetPriority2[FocusTargetPriority2["LastFocused"] = 2] = "LastFocused";
-    FocusTargetPriority2[FocusTargetPriority2["FocusedModifier"] = 3] = "FocusedModifier";
-  })(FocusTargetPriority || (FocusTargetPriority = {}));
-  function isFocusableDay(modifiers) {
-    return !modifiers[DayFlag.disabled] && !modifiers[DayFlag.hidden] && !modifiers[DayFlag.outside];
-  }
-  function calculateFocusTarget(days, getModifiers, isSelected2, lastFocused) {
-    let focusTarget;
-    let foundFocusTargetPriority = -1;
-    for (const day of days) {
-      const modifiers = getModifiers(day);
-      if (isFocusableDay(modifiers)) {
-        if (modifiers[DayFlag.focused] && foundFocusTargetPriority < FocusTargetPriority.FocusedModifier) {
-          focusTarget = day;
-          foundFocusTargetPriority = FocusTargetPriority.FocusedModifier;
-        } else if (lastFocused?.isEqualTo(day) && foundFocusTargetPriority < FocusTargetPriority.LastFocused) {
-          focusTarget = day;
-          foundFocusTargetPriority = FocusTargetPriority.LastFocused;
-        } else if (isSelected2(day.date) && foundFocusTargetPriority < FocusTargetPriority.Selected) {
-          focusTarget = day;
-          foundFocusTargetPriority = FocusTargetPriority.Selected;
-        } else if (modifiers[DayFlag.today] && foundFocusTargetPriority < FocusTargetPriority.Today) {
-          focusTarget = day;
-          foundFocusTargetPriority = FocusTargetPriority.Today;
-        }
-      }
-    }
-    if (!focusTarget) {
-      focusTarget = days.find((day) => isFocusableDay(getModifiers(day)));
-    }
-    return focusTarget;
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getFocusableDate.js
-  function getFocusableDate(moveBy, moveDir, refDate, navStart, navEnd, props, dateLib) {
-    const { ISOWeek, broadcastCalendar } = props;
-    const { addDays: addDays2, addMonths: addMonths2, addWeeks: addWeeks2, addYears: addYears2, endOfBroadcastWeek: endOfBroadcastWeek2, endOfISOWeek: endOfISOWeek2, endOfWeek: endOfWeek2, max: max3, min: min3, startOfBroadcastWeek: startOfBroadcastWeek2, startOfISOWeek: startOfISOWeek2, startOfWeek: startOfWeek2 } = dateLib;
-    const moveFns = {
-      day: addDays2,
-      week: addWeeks2,
-      month: addMonths2,
-      year: addYears2,
-      startOfWeek: (date) => broadcastCalendar ? startOfBroadcastWeek2(date, dateLib) : ISOWeek ? startOfISOWeek2(date) : startOfWeek2(date),
-      endOfWeek: (date) => broadcastCalendar ? endOfBroadcastWeek2(date) : ISOWeek ? endOfISOWeek2(date) : endOfWeek2(date)
-    };
-    let focusableDate = moveFns[moveBy](refDate, moveDir === "after" ? 1 : -1);
-    if (moveDir === "before" && navStart) {
-      focusableDate = max3([navStart, focusableDate]);
-    } else if (moveDir === "after" && navEnd) {
-      focusableDate = min3([navEnd, focusableDate]);
-    }
-    return focusableDate;
-  }
-
-  // node_modules/react-day-picker/dist/esm/helpers/getNextFocus.js
-  function getNextFocus(moveBy, moveDir, refDay, calendarStartMonth, calendarEndMonth, props, dateLib, attempt = 0) {
-    if (attempt > 365) {
-      return void 0;
-    }
-    const focusableDate = getFocusableDate(moveBy, moveDir, refDay.date, calendarStartMonth, calendarEndMonth, props, dateLib);
-    const isDisabled = Boolean(props.disabled && dateMatchModifiers(focusableDate, props.disabled, dateLib));
-    const isHidden2 = Boolean(props.hidden && dateMatchModifiers(focusableDate, props.hidden, dateLib));
-    const targetMonth = focusableDate;
-    const focusDay = new CalendarDay(focusableDate, targetMonth, dateLib);
-    if (!isDisabled && !isHidden2) {
-      return focusDay;
-    }
-    return getNextFocus(moveBy, moveDir, focusDay, calendarStartMonth, calendarEndMonth, props, dateLib, attempt + 1);
-  }
-
-  // node_modules/react-day-picker/dist/esm/useFocus.js
-  function useFocus(props, calendar, getModifiers, isSelected2, dateLib) {
-    const { autoFocus } = props;
-    const [lastFocused, setLastFocused] = (0, import_react149.useState)();
-    const focusTarget = calculateFocusTarget(calendar.days, getModifiers, isSelected2 || (() => false), lastFocused);
-    const [focusedDay, setFocused] = (0, import_react149.useState)(autoFocus ? focusTarget : void 0);
-    const blur = () => {
-      setLastFocused(focusedDay);
-      setFocused(void 0);
-    };
-    const moveFocus = (moveBy, moveDir) => {
-      if (!focusedDay)
-        return;
-      const nextFocus = getNextFocus(moveBy, moveDir, focusedDay, calendar.navStart, calendar.navEnd, props, dateLib);
-      if (!nextFocus)
-        return;
-      if (props.disableNavigation) {
-        const isNextInCalendar = calendar.days.some((day) => day.isEqualTo(nextFocus));
-        if (!isNextInCalendar) {
-          return;
-        }
-      }
-      calendar.goToDay(nextFocus);
-      setFocused(nextFocus);
-    };
-    const isFocusTarget = (day) => {
-      return Boolean(focusTarget?.isEqualTo(day));
-    };
-    const useFocus2 = {
-      isFocusTarget,
-      setFocused,
-      focused: focusedDay,
-      blur,
-      moveFocus
-    };
-    return useFocus2;
-  }
-
-  // node_modules/react-day-picker/dist/esm/selection/useMulti.js
-  function useMulti(props, dateLib) {
-    const { selected: initiallySelected, required, onSelect } = props;
-    const [internallySelected, setSelected] = useControlledValue2(initiallySelected, onSelect ? initiallySelected : void 0);
-    const selected = !onSelect ? internallySelected : initiallySelected;
-    const { isSameDay: isSameDay2 } = dateLib;
-    const isSelected2 = (date) => {
-      return selected?.some((d3) => isSameDay2(d3, date)) ?? false;
-    };
-    const { min: min3, max: max3 } = props;
-    const select = (triggerDate, modifiers, e3) => {
-      let newDates = [...selected ?? []];
-      if (isSelected2(triggerDate)) {
-        if (selected?.length === min3) {
-          return;
-        }
-        if (required && selected?.length === 1) {
-          return;
-        }
-        newDates = selected?.filter((d3) => !isSameDay2(d3, triggerDate));
-      } else {
-        if (selected?.length === max3) {
-          newDates = [triggerDate];
-        } else {
-          newDates = [...newDates, triggerDate];
-        }
-      }
-      if (!onSelect) {
-        setSelected(newDates);
-      }
-      onSelect?.(newDates, triggerDate, modifiers, e3);
-      return newDates;
-    };
-    return {
-      selected,
-      select,
-      isSelected: isSelected2
-    };
-  }
-
-  // node_modules/react-day-picker/dist/esm/utils/addToRange.js
-  function addToRange(date, initialRange, min3 = 0, max3 = 0, required = false, dateLib = defaultDateLib) {
-    const { from: from2, to } = initialRange || {};
-    const { isSameDay: isSameDay2, isAfter: isAfter2, isBefore: isBefore2 } = dateLib;
-    let range;
-    if (!from2 && !to) {
-      range = { from: date, to: min3 > 0 ? void 0 : date };
-    } else if (from2 && !to) {
-      if (isSameDay2(from2, date)) {
-        if (min3 === 0) {
-          range = { from: from2, to: date };
-        } else if (required) {
-          range = { from: from2, to: void 0 };
-        } else {
-          range = void 0;
-        }
-      } else if (isBefore2(date, from2)) {
-        range = { from: date, to: from2 };
-      } else {
-        range = { from: from2, to: date };
-      }
-    } else if (from2 && to) {
-      if (isSameDay2(from2, date) && isSameDay2(to, date)) {
-        if (required) {
-          range = { from: from2, to };
-        } else {
-          range = void 0;
-        }
-      } else if (isSameDay2(from2, date)) {
-        range = { from: from2, to: min3 > 0 ? void 0 : date };
-      } else if (isSameDay2(to, date)) {
-        range = { from: date, to: min3 > 0 ? void 0 : date };
-      } else if (isBefore2(date, from2)) {
-        range = { from: date, to };
-      } else if (isAfter2(date, from2)) {
-        range = { from: from2, to: date };
-      } else if (isAfter2(date, to)) {
-        range = { from: from2, to: date };
-      } else {
-        throw new Error("Invalid range");
-      }
-    }
-    if (range?.from && range?.to) {
-      const diff = dateLib.differenceInCalendarDays(range.to, range.from);
-      if (max3 > 0 && diff > max3) {
-        range = { from: date, to: void 0 };
-      } else if (min3 > 1 && diff < min3) {
-        range = { from: date, to: void 0 };
-      }
-    }
-    return range;
-  }
-
-  // node_modules/react-day-picker/dist/esm/utils/rangeContainsDayOfWeek.js
-  function rangeContainsDayOfWeek(range, dayOfWeek, dateLib = defaultDateLib) {
-    const dayOfWeekArr = !Array.isArray(dayOfWeek) ? [dayOfWeek] : dayOfWeek;
-    let date = range.from;
-    const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
-    const totalDaysLimit = Math.min(totalDays, 6);
-    for (let i3 = 0; i3 <= totalDaysLimit; i3++) {
-      if (dayOfWeekArr.includes(date.getDay())) {
-        return true;
-      }
-      date = dateLib.addDays(date, 1);
-    }
-    return false;
-  }
-
-  // node_modules/react-day-picker/dist/esm/utils/rangeOverlaps.js
-  function rangeOverlaps(rangeLeft, rangeRight, dateLib = defaultDateLib) {
-    return rangeIncludesDate(rangeLeft, rangeRight.from, false, dateLib) || rangeIncludesDate(rangeLeft, rangeRight.to, false, dateLib) || rangeIncludesDate(rangeRight, rangeLeft.from, false, dateLib) || rangeIncludesDate(rangeRight, rangeLeft.to, false, dateLib);
-  }
-
-  // node_modules/react-day-picker/dist/esm/utils/rangeContainsModifiers.js
-  function rangeContainsModifiers(range, modifiers, dateLib = defaultDateLib) {
-    const matchers = Array.isArray(modifiers) ? modifiers : [modifiers];
-    const nonFunctionMatchers = matchers.filter((matcher) => typeof matcher !== "function");
-    const nonFunctionMatchersResult = nonFunctionMatchers.some((matcher) => {
-      if (typeof matcher === "boolean")
-        return matcher;
-      if (dateLib.isDate(matcher)) {
-        return rangeIncludesDate(range, matcher, false, dateLib);
-      }
-      if (isDatesArray(matcher, dateLib)) {
-        return matcher.some((date) => rangeIncludesDate(range, date, false, dateLib));
-      }
-      if (isDateRange(matcher)) {
-        if (matcher.from && matcher.to) {
-          return rangeOverlaps(range, { from: matcher.from, to: matcher.to }, dateLib);
-        }
-        return false;
-      }
-      if (isDayOfWeekType(matcher)) {
-        return rangeContainsDayOfWeek(range, matcher.dayOfWeek, dateLib);
-      }
-      if (isDateInterval(matcher)) {
-        const isClosedInterval = dateLib.isAfter(matcher.before, matcher.after);
-        if (isClosedInterval) {
-          return rangeOverlaps(range, {
-            from: dateLib.addDays(matcher.after, 1),
-            to: dateLib.addDays(matcher.before, -1)
-          }, dateLib);
-        }
-        return dateMatchModifiers(range.from, matcher, dateLib) || dateMatchModifiers(range.to, matcher, dateLib);
-      }
-      if (isDateAfterType(matcher) || isDateBeforeType(matcher)) {
-        return dateMatchModifiers(range.from, matcher, dateLib) || dateMatchModifiers(range.to, matcher, dateLib);
-      }
-      return false;
-    });
-    if (nonFunctionMatchersResult) {
-      return true;
-    }
-    const functionMatchers = matchers.filter((matcher) => typeof matcher === "function");
-    if (functionMatchers.length) {
-      let date = range.from;
-      const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
-      for (let i3 = 0; i3 <= totalDays; i3++) {
-        if (functionMatchers.some((matcher) => matcher(date))) {
-          return true;
-        }
-        date = dateLib.addDays(date, 1);
-      }
-    }
-    return false;
-  }
-
-  // node_modules/react-day-picker/dist/esm/selection/useRange.js
-  function useRange(props, dateLib) {
-    const { disabled, excludeDisabled, resetOnSelect, selected: initiallySelected, required, onSelect } = props;
-    const [internallySelected, setSelected] = useControlledValue2(initiallySelected, onSelect ? initiallySelected : void 0);
-    const selected = !onSelect ? internallySelected : initiallySelected;
-    const isSelected2 = (date) => selected && rangeIncludesDate(selected, date, false, dateLib);
-    const select = (triggerDate, modifiers, e3) => {
-      const { min: min3, max: max3 } = props;
-      let newRange;
-      if (triggerDate) {
-        const selectedFrom = selected?.from;
-        const selectedTo = selected?.to;
-        const hasFullRange = !!selectedFrom && !!selectedTo;
-        const isClickingSingleDayRange = !!selectedFrom && !!selectedTo && dateLib.isSameDay(selectedFrom, selectedTo) && dateLib.isSameDay(triggerDate, selectedFrom);
-        if (resetOnSelect && (hasFullRange || !selected?.from)) {
-          if (!required && isClickingSingleDayRange) {
-            newRange = void 0;
-          } else {
-            newRange = { from: triggerDate, to: void 0 };
-          }
-        } else {
-          newRange = addToRange(triggerDate, selected, min3, max3, required, dateLib);
-        }
-      }
-      if (excludeDisabled && disabled && newRange?.from && newRange.to) {
-        if (rangeContainsModifiers({ from: newRange.from, to: newRange.to }, disabled, dateLib)) {
-          newRange.from = triggerDate;
-          newRange.to = void 0;
-        }
-      }
-      if (!onSelect) {
-        setSelected(newRange);
-      }
-      onSelect?.(newRange, triggerDate, modifiers, e3);
-      return newRange;
-    };
-    return {
-      selected,
-      select,
-      isSelected: isSelected2
-    };
-  }
-
-  // node_modules/react-day-picker/dist/esm/selection/useSingle.js
-  function useSingle(props, dateLib) {
-    const { selected: initiallySelected, required, onSelect } = props;
-    const [internallySelected, setSelected] = useControlledValue2(initiallySelected, onSelect ? initiallySelected : void 0);
-    const selected = !onSelect ? internallySelected : initiallySelected;
-    const { isSameDay: isSameDay2 } = dateLib;
-    const isSelected2 = (compareDate) => {
-      return selected ? isSameDay2(selected, compareDate) : false;
-    };
-    const select = (triggerDate, modifiers, e3) => {
-      let newDate = triggerDate;
-      if (!required && selected && selected && isSameDay2(triggerDate, selected)) {
-        newDate = void 0;
-      }
-      if (!onSelect) {
-        setSelected(newDate);
-      }
-      if (required) {
-        onSelect?.(newDate, triggerDate, modifiers, e3);
-      } else {
-        onSelect?.(newDate, triggerDate, modifiers, e3);
-      }
-      return newDate;
-    };
-    return {
-      selected,
-      select,
-      isSelected: isSelected2
-    };
-  }
-
-  // node_modules/react-day-picker/dist/esm/useSelection.js
-  function useSelection(props, dateLib) {
-    const single = useSingle(props, dateLib);
-    const multi = useMulti(props, dateLib);
-    const range = useRange(props, dateLib);
-    switch (props.mode) {
-      case "single":
-        return single;
-      case "multiple":
-        return multi;
-      case "range":
-        return range;
-      default:
-        return void 0;
-    }
-  }
-
-  // node_modules/react-day-picker/dist/esm/utils/toTimeZone.js
-  function toTimeZone(date, timeZone) {
-    if (date instanceof TZDate && date.timeZone === timeZone) {
-      return date;
-    }
-    return new TZDate(date, timeZone);
-  }
-
-  // node_modules/react-day-picker/dist/esm/utils/convertMatchersToTimeZone.js
-  function toZoneNoon(date, timeZone, noonSafe) {
-    if (!noonSafe)
-      return toTimeZone(date, timeZone);
-    const zoned = toTimeZone(date, timeZone);
-    const noonZoned = new TZDate(zoned.getFullYear(), zoned.getMonth(), zoned.getDate(), 12, 0, 0, timeZone);
-    return new Date(noonZoned.getTime());
-  }
-  function convertMatcher(matcher, timeZone, noonSafe) {
-    if (typeof matcher === "boolean" || typeof matcher === "function") {
-      return matcher;
-    }
-    if (matcher instanceof Date) {
-      return toZoneNoon(matcher, timeZone, noonSafe);
-    }
-    if (Array.isArray(matcher)) {
-      return matcher.map((value) => value instanceof Date ? toZoneNoon(value, timeZone, noonSafe) : value);
-    }
-    if (isDateRange(matcher)) {
-      return {
-        ...matcher,
-        from: matcher.from ? toTimeZone(matcher.from, timeZone) : matcher.from,
-        to: matcher.to ? toTimeZone(matcher.to, timeZone) : matcher.to
-      };
-    }
-    if (isDateInterval(matcher)) {
-      return {
-        before: toZoneNoon(matcher.before, timeZone, noonSafe),
-        after: toZoneNoon(matcher.after, timeZone, noonSafe)
-      };
-    }
-    if (isDateAfterType(matcher)) {
-      return {
-        after: toZoneNoon(matcher.after, timeZone, noonSafe)
-      };
-    }
-    if (isDateBeforeType(matcher)) {
-      return {
-        before: toZoneNoon(matcher.before, timeZone, noonSafe)
-      };
-    }
-    return matcher;
-  }
-  function convertMatchersToTimeZone(matchers, timeZone, noonSafe) {
-    if (!matchers) {
-      return matchers;
-    }
-    if (Array.isArray(matchers)) {
-      return matchers.map((matcher) => convertMatcher(matcher, timeZone, noonSafe));
-    }
-    return convertMatcher(matchers, timeZone, noonSafe);
-  }
-
-  // node_modules/react-day-picker/dist/esm/DayPicker.js
-  function DayPicker(initialProps) {
-    let props = initialProps;
-    const timeZone = props.timeZone;
-    if (timeZone) {
-      props = {
-        ...initialProps,
-        timeZone
-      };
-      if (props.today) {
-        props.today = toTimeZone(props.today, timeZone);
-      }
-      if (props.month) {
-        props.month = toTimeZone(props.month, timeZone);
-      }
-      if (props.defaultMonth) {
-        props.defaultMonth = toTimeZone(props.defaultMonth, timeZone);
-      }
-      if (props.startMonth) {
-        props.startMonth = toTimeZone(props.startMonth, timeZone);
-      }
-      if (props.endMonth) {
-        props.endMonth = toTimeZone(props.endMonth, timeZone);
-      }
-      if (props.mode === "single" && props.selected) {
-        props.selected = toTimeZone(props.selected, timeZone);
-      } else if (props.mode === "multiple" && props.selected) {
-        props.selected = props.selected?.map((date) => toTimeZone(date, timeZone));
-      } else if (props.mode === "range" && props.selected) {
-        props.selected = {
-          from: props.selected.from ? toTimeZone(props.selected.from, timeZone) : props.selected.from,
-          to: props.selected.to ? toTimeZone(props.selected.to, timeZone) : props.selected.to
-        };
-      }
-      if (props.disabled !== void 0) {
-        props.disabled = convertMatchersToTimeZone(props.disabled, timeZone);
-      }
-      if (props.hidden !== void 0) {
-        props.hidden = convertMatchersToTimeZone(props.hidden, timeZone);
-      }
-      if (props.modifiers) {
-        const nextModifiers = {};
-        Object.keys(props.modifiers).forEach((key) => {
-          nextModifiers[key] = convertMatchersToTimeZone(props.modifiers?.[key], timeZone);
-        });
-        props.modifiers = nextModifiers;
-      }
-    }
-    const { components, formatters: formatters2, labels, dateLib, locale, classNames } = (0, import_react150.useMemo)(() => {
-      const locale2 = { ...enUS2, ...props.locale };
-      const weekStartsOn = props.broadcastCalendar ? 1 : props.weekStartsOn;
-      const noonOverrides = props.noonSafe && props.timeZone ? createNoonOverrides(props.timeZone, {
-        weekStartsOn,
-        locale: locale2
-      }) : void 0;
-      const overrides = props.dateLib && noonOverrides ? { ...noonOverrides, ...props.dateLib } : props.dateLib ?? noonOverrides;
-      const dateLib2 = new DateLib({
-        locale: locale2,
-        weekStartsOn,
-        firstWeekContainsDate: props.firstWeekContainsDate,
-        useAdditionalWeekYearTokens: props.useAdditionalWeekYearTokens,
-        useAdditionalDayOfYearTokens: props.useAdditionalDayOfYearTokens,
-        timeZone: props.timeZone,
-        numerals: props.numerals
-      }, overrides);
-      return {
-        dateLib: dateLib2,
-        components: getComponents(props.components),
-        formatters: getFormatters(props.formatters),
-        labels: getLabels(props.labels, dateLib2.options),
-        locale: locale2,
-        classNames: { ...getDefaultClassNames(), ...props.classNames }
-      };
-    }, [
-      props.locale,
-      props.broadcastCalendar,
-      props.weekStartsOn,
-      props.firstWeekContainsDate,
-      props.useAdditionalWeekYearTokens,
-      props.useAdditionalDayOfYearTokens,
-      props.timeZone,
-      props.numerals,
-      props.dateLib,
-      props.noonSafe,
-      props.components,
-      props.formatters,
-      props.labels,
-      props.classNames
-    ]);
-    if (!props.today) {
-      props = { ...props, today: dateLib.today() };
-    }
-    const { captionLayout, mode: mode2, navLayout, numberOfMonths = 1, onDayBlur, onDayClick, onDayFocus, onDayKeyDown, onDayMouseEnter, onDayMouseLeave, onNextClick, onPrevClick, showWeekNumber, styles: styles3 } = props;
-    const { formatCaption: formatCaption2, formatDay: formatDay2, formatMonthDropdown: formatMonthDropdown2, formatWeekNumber: formatWeekNumber2, formatWeekNumberHeader: formatWeekNumberHeader2, formatWeekdayName: formatWeekdayName2, formatYearDropdown: formatYearDropdown2 } = formatters2;
-    const calendar = useCalendar(props, dateLib);
-    const { days, months, navStart, navEnd, previousMonth, nextMonth, goToMonth } = calendar;
-    const getModifiers = createGetModifiers(days, props, navStart, navEnd, dateLib);
-    const { isSelected: isSelected2, select, selected: selectedValue } = useSelection(props, dateLib) ?? {};
-    const { blur, focused, isFocusTarget, moveFocus, setFocused } = useFocus(props, calendar, getModifiers, isSelected2 ?? (() => false), dateLib);
-    const { labelDayButton: labelDayButton2, labelGridcell: labelGridcell2, labelGrid: labelGrid2, labelMonthDropdown: labelMonthDropdown2, labelNav: labelNav2, labelPrevious: labelPrevious2, labelNext: labelNext2, labelWeekday: labelWeekday2, labelWeekNumber: labelWeekNumber2, labelWeekNumberHeader: labelWeekNumberHeader2, labelYearDropdown: labelYearDropdown2 } = labels;
-    const weekdays = (0, import_react150.useMemo)(() => getWeekdays(dateLib, props.ISOWeek, props.broadcastCalendar, props.today), [dateLib, props.ISOWeek, props.broadcastCalendar, props.today]);
-    const isInteractive = mode2 !== void 0 || onDayClick !== void 0;
-    const handlePreviousClick = (0, import_react150.useCallback)(() => {
-      if (!previousMonth)
-        return;
-      goToMonth(previousMonth);
-      onPrevClick?.(previousMonth);
-    }, [previousMonth, goToMonth, onPrevClick]);
-    const handleNextClick = (0, import_react150.useCallback)(() => {
-      if (!nextMonth)
-        return;
-      goToMonth(nextMonth);
-      onNextClick?.(nextMonth);
-    }, [goToMonth, nextMonth, onNextClick]);
-    const handleDayClick = (0, import_react150.useCallback)((day, m3) => (e3) => {
-      e3.preventDefault();
-      e3.stopPropagation();
-      setFocused(day);
-      if (m3.disabled) {
-        return;
-      }
-      select?.(day.date, m3, e3);
-      onDayClick?.(day.date, m3, e3);
-    }, [select, onDayClick, setFocused]);
-    const handleDayFocus = (0, import_react150.useCallback)((day, m3) => (e3) => {
-      setFocused(day);
-      onDayFocus?.(day.date, m3, e3);
-    }, [onDayFocus, setFocused]);
-    const handleDayBlur = (0, import_react150.useCallback)((day, m3) => (e3) => {
-      blur();
-      onDayBlur?.(day.date, m3, e3);
-    }, [blur, onDayBlur]);
-    const handleDayKeyDown = (0, import_react150.useCallback)((day, modifiers) => (e3) => {
-      const keyMap = {
-        ArrowLeft: [
-          e3.shiftKey ? "month" : "day",
-          props.dir === "rtl" ? "after" : "before"
-        ],
-        ArrowRight: [
-          e3.shiftKey ? "month" : "day",
-          props.dir === "rtl" ? "before" : "after"
-        ],
-        ArrowDown: [e3.shiftKey ? "year" : "week", "after"],
-        ArrowUp: [e3.shiftKey ? "year" : "week", "before"],
-        PageUp: [e3.shiftKey ? "year" : "month", "before"],
-        PageDown: [e3.shiftKey ? "year" : "month", "after"],
-        Home: ["startOfWeek", "before"],
-        End: ["endOfWeek", "after"]
-      };
-      if (keyMap[e3.key]) {
-        e3.preventDefault();
-        e3.stopPropagation();
-        const [moveBy, moveDir] = keyMap[e3.key];
-        moveFocus(moveBy, moveDir);
-      }
-      onDayKeyDown?.(day.date, modifiers, e3);
-    }, [moveFocus, onDayKeyDown, props.dir]);
-    const handleDayMouseEnter = (0, import_react150.useCallback)((day, modifiers) => (e3) => {
-      onDayMouseEnter?.(day.date, modifiers, e3);
-    }, [onDayMouseEnter]);
-    const handleDayMouseLeave = (0, import_react150.useCallback)((day, modifiers) => (e3) => {
-      onDayMouseLeave?.(day.date, modifiers, e3);
-    }, [onDayMouseLeave]);
-    const handleMonthChange = (0, import_react150.useCallback)((date) => (e3) => {
-      const selectedMonth = Number(e3.target.value);
-      const month = dateLib.setMonth(dateLib.startOfMonth(date), selectedMonth);
-      goToMonth(month);
-    }, [dateLib, goToMonth]);
-    const handleYearChange = (0, import_react150.useCallback)((date) => (e3) => {
-      const selectedYear = Number(e3.target.value);
-      const month = dateLib.setYear(dateLib.startOfMonth(date), selectedYear);
-      goToMonth(month);
-    }, [dateLib, goToMonth]);
-    const { className: className2, style: style2 } = (0, import_react150.useMemo)(() => ({
-      className: [classNames[UI2.Root], props.className].filter(Boolean).join(" "),
-      style: { ...styles3?.[UI2.Root], ...props.style }
-    }), [classNames, props.className, props.style, styles3]);
-    const dataAttributes = getDataAttributes(props);
-    const rootElRef = (0, import_react150.useRef)(null);
-    useAnimation(rootElRef, Boolean(props.animate), {
-      classNames,
-      months,
-      focused,
-      dateLib
-    });
-    const contextValue = {
-      dayPickerProps: props,
-      selected: selectedValue,
-      select,
-      isSelected: isSelected2,
-      months,
-      nextMonth,
-      previousMonth,
-      goToMonth,
-      getModifiers,
-      components,
-      classNames,
-      styles: styles3,
-      labels,
-      formatters: formatters2
-    };
-    return import_react150.default.createElement(
-      dayPickerContext.Provider,
-      { value: contextValue },
-      import_react150.default.createElement(
-        components.Root,
-        { rootRef: props.animate ? rootElRef : void 0, className: className2, style: style2, dir: props.dir, id: props.id, lang: props.lang ?? locale.code, nonce: props.nonce, title: props.title, role: props.role, "aria-label": props["aria-label"], "aria-labelledby": props["aria-labelledby"], ...dataAttributes },
-        import_react150.default.createElement(
-          components.Months,
-          { className: classNames[UI2.Months], style: styles3?.[UI2.Months] },
-          !props.hideNavigation && !navLayout && import_react150.default.createElement(components.Nav, { "data-animated-nav": props.animate ? "true" : void 0, className: classNames[UI2.Nav], style: styles3?.[UI2.Nav], "aria-label": labelNav2(), onPreviousClick: handlePreviousClick, onNextClick: handleNextClick, previousMonth, nextMonth }),
-          months.map((calendarMonth, displayIndex) => {
-            return import_react150.default.createElement(
-              components.Month,
-              {
-                "data-animated-month": props.animate ? "true" : void 0,
-                className: classNames[UI2.Month],
-                style: styles3?.[UI2.Month],
-                // biome-ignore lint/suspicious/noArrayIndexKey: breaks animation
-                key: displayIndex,
-                displayIndex,
-                calendarMonth
-              },
-              navLayout === "around" && !props.hideNavigation && displayIndex === 0 && import_react150.default.createElement(
-                components.PreviousMonthButton,
-                { type: "button", className: classNames[UI2.PreviousMonthButton], tabIndex: previousMonth ? void 0 : -1, "aria-disabled": previousMonth ? void 0 : true, "aria-label": labelPrevious2(previousMonth), onClick: handlePreviousClick, "data-animated-button": props.animate ? "true" : void 0 },
-                import_react150.default.createElement(components.Chevron, { disabled: previousMonth ? void 0 : true, className: classNames[UI2.Chevron], orientation: props.dir === "rtl" ? "right" : "left" })
-              ),
-              import_react150.default.createElement(components.MonthCaption, { "data-animated-caption": props.animate ? "true" : void 0, className: classNames[UI2.MonthCaption], style: styles3?.[UI2.MonthCaption], calendarMonth, displayIndex }, captionLayout?.startsWith("dropdown") ? import_react150.default.createElement(
-                components.DropdownNav,
-                { className: classNames[UI2.Dropdowns], style: styles3?.[UI2.Dropdowns] },
-                (() => {
-                  const monthControl = captionLayout === "dropdown" || captionLayout === "dropdown-months" ? import_react150.default.createElement(components.MonthsDropdown, { key: "month", className: classNames[UI2.MonthsDropdown], "aria-label": labelMonthDropdown2(), classNames, components, disabled: Boolean(props.disableNavigation), onChange: handleMonthChange(calendarMonth.date), options: getMonthOptions(calendarMonth.date, navStart, navEnd, formatters2, dateLib), style: styles3?.[UI2.Dropdown], value: dateLib.getMonth(calendarMonth.date) }) : import_react150.default.createElement("span", { key: "month" }, formatMonthDropdown2(calendarMonth.date, dateLib));
-                  const yearControl = captionLayout === "dropdown" || captionLayout === "dropdown-years" ? import_react150.default.createElement(components.YearsDropdown, { key: "year", className: classNames[UI2.YearsDropdown], "aria-label": labelYearDropdown2(dateLib.options), classNames, components, disabled: Boolean(props.disableNavigation), onChange: handleYearChange(calendarMonth.date), options: getYearOptions(navStart, navEnd, formatters2, dateLib, Boolean(props.reverseYears)), style: styles3?.[UI2.Dropdown], value: dateLib.getYear(calendarMonth.date) }) : import_react150.default.createElement("span", { key: "year" }, formatYearDropdown2(calendarMonth.date, dateLib));
-                  const controls = dateLib.getMonthYearOrder() === "year-first" ? [yearControl, monthControl] : [monthControl, yearControl];
-                  return controls;
-                })(),
-                import_react150.default.createElement("span", { role: "status", "aria-live": "polite", style: {
-                  border: 0,
-                  clip: "rect(0 0 0 0)",
-                  height: "1px",
-                  margin: "-1px",
-                  overflow: "hidden",
-                  padding: 0,
-                  position: "absolute",
-                  width: "1px",
-                  whiteSpace: "nowrap",
-                  wordWrap: "normal"
-                } }, formatCaption2(calendarMonth.date, dateLib.options, dateLib))
-              ) : import_react150.default.createElement(components.CaptionLabel, { className: classNames[UI2.CaptionLabel], role: "status", "aria-live": "polite" }, formatCaption2(calendarMonth.date, dateLib.options, dateLib))),
-              navLayout === "around" && !props.hideNavigation && displayIndex === numberOfMonths - 1 && import_react150.default.createElement(
-                components.NextMonthButton,
-                { type: "button", className: classNames[UI2.NextMonthButton], tabIndex: nextMonth ? void 0 : -1, "aria-disabled": nextMonth ? void 0 : true, "aria-label": labelNext2(nextMonth), onClick: handleNextClick, "data-animated-button": props.animate ? "true" : void 0 },
-                import_react150.default.createElement(components.Chevron, { disabled: nextMonth ? void 0 : true, className: classNames[UI2.Chevron], orientation: props.dir === "rtl" ? "left" : "right" })
-              ),
-              displayIndex === numberOfMonths - 1 && navLayout === "after" && !props.hideNavigation && import_react150.default.createElement(components.Nav, { "data-animated-nav": props.animate ? "true" : void 0, className: classNames[UI2.Nav], style: styles3?.[UI2.Nav], "aria-label": labelNav2(), onPreviousClick: handlePreviousClick, onNextClick: handleNextClick, previousMonth, nextMonth }),
-              import_react150.default.createElement(
-                components.MonthGrid,
-                { role: "grid", "aria-multiselectable": mode2 === "multiple" || mode2 === "range", "aria-label": labelGrid2(calendarMonth.date, dateLib.options, dateLib) || void 0, className: classNames[UI2.MonthGrid], style: styles3?.[UI2.MonthGrid] },
-                !props.hideWeekdays && import_react150.default.createElement(
-                  components.Weekdays,
-                  { "data-animated-weekdays": props.animate ? "true" : void 0, className: classNames[UI2.Weekdays], style: styles3?.[UI2.Weekdays] },
-                  showWeekNumber && import_react150.default.createElement(components.WeekNumberHeader, { "aria-label": labelWeekNumberHeader2(dateLib.options), className: classNames[UI2.WeekNumberHeader], style: styles3?.[UI2.WeekNumberHeader], scope: "col" }, formatWeekNumberHeader2()),
-                  weekdays.map((weekday) => import_react150.default.createElement(components.Weekday, { "aria-label": labelWeekday2(weekday, dateLib.options, dateLib), className: classNames[UI2.Weekday], key: String(weekday), style: styles3?.[UI2.Weekday], scope: "col" }, formatWeekdayName2(weekday, dateLib.options, dateLib)))
-                ),
-                import_react150.default.createElement(components.Weeks, { "data-animated-weeks": props.animate ? "true" : void 0, className: classNames[UI2.Weeks], style: styles3?.[UI2.Weeks] }, calendarMonth.weeks.map((week) => {
-                  return import_react150.default.createElement(
-                    components.Week,
-                    { className: classNames[UI2.Week], key: week.weekNumber, style: styles3?.[UI2.Week], week },
-                    showWeekNumber && import_react150.default.createElement(components.WeekNumber, { week, style: styles3?.[UI2.WeekNumber], "aria-label": labelWeekNumber2(week.weekNumber, {
-                      locale
-                    }), className: classNames[UI2.WeekNumber], scope: "row", role: "rowheader" }, formatWeekNumber2(week.weekNumber, dateLib)),
-                    week.days.map((day) => {
-                      const { date } = day;
-                      const modifiers = getModifiers(day);
-                      modifiers[DayFlag.focused] = !modifiers.hidden && Boolean(focused?.isEqualTo(day));
-                      modifiers[SelectionState.selected] = isSelected2?.(date) || modifiers.selected;
-                      if (isDateRange(selectedValue)) {
-                        const { from: from2, to } = selectedValue;
-                        modifiers[SelectionState.range_start] = Boolean(from2 && to && dateLib.isSameDay(date, from2));
-                        modifiers[SelectionState.range_end] = Boolean(from2 && to && dateLib.isSameDay(date, to));
-                        modifiers[SelectionState.range_middle] = rangeIncludesDate(selectedValue, date, true, dateLib);
-                      }
-                      const style3 = getStyleForModifiers(modifiers, styles3, props.modifiersStyles);
-                      const className3 = getClassNamesForModifiers(modifiers, classNames, props.modifiersClassNames);
-                      const ariaLabel = !isInteractive && !modifiers.hidden ? labelGridcell2(date, modifiers, dateLib.options, dateLib) : void 0;
-                      return import_react150.default.createElement(components.Day, { key: `${day.isoDate}_${day.displayMonthId}`, day, modifiers, className: className3.join(" "), style: style3, role: "gridcell", "aria-selected": modifiers.selected || void 0, "aria-label": ariaLabel, "data-day": day.isoDate, "data-month": day.outside ? day.dateMonthId : void 0, "data-selected": modifiers.selected || void 0, "data-disabled": modifiers.disabled || void 0, "data-hidden": modifiers.hidden || void 0, "data-outside": day.outside || void 0, "data-focused": modifiers.focused || void 0, "data-today": modifiers.today || void 0 }, !modifiers.hidden && isInteractive ? import_react150.default.createElement(components.DayButton, { className: classNames[UI2.DayButton], style: styles3?.[UI2.DayButton], type: "button", day, modifiers, disabled: !modifiers.focused && modifiers.disabled || void 0, "aria-disabled": modifiers.focused && modifiers.disabled || void 0, tabIndex: isFocusTarget(day) ? 0 : -1, "aria-label": labelDayButton2(date, modifiers, dateLib.options, dateLib), onClick: handleDayClick(day, modifiers), onBlur: handleDayBlur(day, modifiers), onFocus: handleDayFocus(day, modifiers), onKeyDown: handleDayKeyDown(day, modifiers), onMouseEnter: handleDayMouseEnter(day, modifiers), onMouseLeave: handleDayMouseLeave(day, modifiers) }, formatDay2(date, dateLib.options, dateLib)) : !modifiers.hidden && formatDay2(day.date, dateLib.options, dateLib));
-                    })
-                  );
-                }))
-              )
-            );
-          })
-        ),
-        props.footer && import_react150.default.createElement(components.Footer, { className: classNames[UI2.Footer], style: styles3?.[UI2.Footer], role: "status", "aria-live": "polite" }, props.footer)
-      )
-    );
-  }
-
-  // packages/components/build-module/calendar/date-calendar/index.mjs
-  var import_element225 = __toESM(require_element(), 1);
-
-  // packages/components/build-module/calendar/utils/day-cell.mjs
-  var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
-  var PreviewDashStartAndEnd = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("svg", {
-      viewBox: "0 0 32 32",
-      xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
-      stroke: "currentColor",
-      strokeDasharray: "3.7677",
-      strokeDashoffset: "3.2",
-      strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("path", {
-        d: "M29.5,0.5 h-27 a2,2 0 0 0 -2,2 v27 a2,2 0 0 0 2,2 h27 a2,2 0 0 0 2,-2 v-27 a2,2 0 0 0 -2,-2"
-      })
-    });
-  };
-  var PreviewDashStart = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("svg", {
-      viewBox: "0 0 32 32",
-      xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
-      stroke: "currentColor",
-      strokeDasharray: "3.84516",
-      strokeDashoffset: "1.9226",
-      strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("path", {
-        d: "M32,0.5 h-29.5 a2,2 0 0 0 -2,2 v27 a2,2 0 0 0 2,2 h30"
-      })
-    });
-  };
-  var PreviewDashMiddle = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime307.jsxs)("svg", {
-      viewBox: "0 0 32 32",
-      xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
-      stroke: "currentColor",
-      strokeDasharray: "3.9 4",
-      strokeDashoffset: "2",
-      strokeWidth: "1",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime307.jsx)("line", {
-        x1: "0",
-        y1: "0.5",
-        x2: "100",
-        y2: "0.5"
-      }), /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("line", {
-        x1: "0",
-        y1: "31.5",
-        x2: "100",
-        y2: "31.5"
-      })]
-    });
-  };
-  var PreviewDashEnd = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("svg", {
-      viewBox: "0 0 32 32",
-      xmlns: "http://www.w3.org/2000/svg",
-      fill: "none",
-      stroke: "currentColor",
-      strokeDasharray: "3.84516",
-      strokeDashoffset: "1.9226",
-      strokeWidth: "1",
-      children: /* @__PURE__ */ (0, import_jsx_runtime307.jsx)("path", {
-        d: "M0,0.5 h29.5 a2,2 0 0 1 2,2 v27 a2,2 0 0 1 -2,2 h-29.5"
-      })
-    });
-  };
-  function Day4(props) {
-    const {
-      day,
-      modifiers,
-      children,
-      ...tdProps
-    } = props;
-    let PreviewDash;
-    if (modifiers.preview_start && modifiers.preview_end) {
-      PreviewDash = PreviewDashStartAndEnd;
-    } else if (modifiers.preview_start) {
-      PreviewDash = PreviewDashStart;
-    } else if (modifiers.preview_end) {
-      PreviewDash = PreviewDashEnd;
-    } else if (modifiers.preview) {
-      PreviewDash = PreviewDashMiddle;
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime307.jsxs)("td", {
-      ...tdProps,
-      children: [PreviewDash && /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(PreviewDash, {}), children]
-    });
-  }
-
-  // packages/components/build-module/calendar/utils/constants.mjs
-  var CLASSNAMES = {
-    root: "components-calendar",
-    day: "components-calendar__day",
-    day_button: "components-calendar__day-button",
-    outside: "components-calendar__day--outside",
-    caption_label: "components-calendar__caption-label",
-    button_next: "components-calendar__button-next",
-    button_previous: "components-calendar__button-previous",
-    chevron: "components-calendar__chevron",
-    nav: "components-calendar__nav",
-    month_caption: "components-calendar__month-caption",
-    months: "components-calendar__months",
-    month_grid: "components-calendar__month-grid",
-    weekday: "components-calendar__weekday",
-    today: "components-calendar__day--today",
-    selected: "components-calendar__day--selected",
-    disabled: "components-calendar__day--disabled",
-    hidden: "components-calendar__day--hidden",
-    range_start: "components-calendar__range-start",
-    range_end: "components-calendar__range-end",
-    range_middle: "components-calendar__range-middle",
-    weeks_before_enter: "components-calendar__weeks-before-enter",
-    weeks_before_exit: "components-calendar__weeks-before-exit",
-    weeks_after_enter: "components-calendar__weeks-after-enter",
-    weeks_after_exit: "components-calendar__weeks-after-exit",
-    caption_after_enter: "components-calendar__caption-after-enter",
-    caption_after_exit: "components-calendar__caption-after-exit",
-    caption_before_enter: "components-calendar__caption-before-enter",
-    caption_before_exit: "components-calendar__caption-before-exit"
-  };
-  var MODIFIER_CLASSNAMES = {
-    preview: "components-calendar__day--preview",
-    preview_start: "components-calendar__day--preview-start",
-    preview_end: "components-calendar__day--preview-end"
-  };
-  var COMMON_PROPS = {
-    animate: true,
-    // Only show days in the current month
-    showOutsideDays: false,
-    // Hide week number column
-    showWeekNumber: false,
-    // Show weekdays row
-    hideWeekdays: false,
-    // Month and year caption are not interactive
-    captionLayout: "label",
-    // Show a variable number of weeks depending on the month
-    fixedWeeks: false,
-    // Show navigation buttons
-    hideNavigation: false,
-    // Class names
-    classNames: CLASSNAMES,
-    // Default role
-    role: "application",
-    components: {
-      Day: Day4
-    }
-  };
-
-  // packages/components/build-module/calendar/utils/misc.mjs
-  function clampNumberOfMonths(numberOfMonths) {
-    return Math.min(3, Math.max(1, numberOfMonths));
-  }
-
-  // packages/components/build-module/calendar/utils/use-localization-props.mjs
-  var import_i18n74 = __toESM(require_i18n(), 1);
-  var import_element224 = __toESM(require_element(), 1);
-  function isLocaleRTL(localeCode) {
-    const localeObj = new Intl.Locale(localeCode);
-    const direction = localeObj.getTextInfo?.().direction;
-    if (direction) {
-      return direction === "rtl";
-    }
-    return [
-      "ar",
-      // Arabic
-      "he",
-      // Hebrew
-      "fa",
-      // Persian (Farsi)
-      "ur",
-      // Urdu
-      "ps",
-      // Pashto
-      "syr",
-      // Syriac
-      "dv",
-      // Divehi
-      "ku",
-      // Kurdish (Sorani)
-      "yi"
-      // Yiddish
-    ].includes(localeObj.language);
-  }
-  var useLocalizationProps = ({
-    locale,
-    timeZone,
-    mode: mode2
-  }) => {
-    return (0, import_element224.useMemo)(() => {
-      const monthNameFormatter = new Intl.DateTimeFormat(locale.code, {
-        year: "numeric",
-        month: "long",
-        timeZone
-      });
-      const weekdayNarrowFormatter = new Intl.DateTimeFormat(locale.code, {
-        weekday: "narrow",
-        timeZone
-      });
-      const weekdayLongFormatter = new Intl.DateTimeFormat(locale.code, {
-        weekday: "long",
-        timeZone
-      });
-      const fullDateFormatter = new Intl.DateTimeFormat(locale.code, {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        timeZone
-      });
-      return {
-        "aria-label": mode2 === "single" ? (0, import_i18n74.__)("Date calendar") : (0, import_i18n74.__)("Date range calendar"),
-        labels: {
-          /**
-           * The label for the month grid.
-           * @param date
-           */
-          labelGrid: (date) => monthNameFormatter.format(date),
-          /**
-           * The label for the gridcell, when the calendar is not interactive.
-           * @param date
-           * @param modifiers
-           */
-          labelGridcell: (date, modifiers) => {
-            const formattedDate = fullDateFormatter.format(date);
-            let label = formattedDate;
-            if (modifiers?.today) {
-              label = (0, import_i18n74.sprintf)(
-                // translators: %s is the full date (e.g. "Monday, April 29, 2025")
-                (0, import_i18n74.__)("Today, %s"),
-                formattedDate
-              );
-            }
-            return label;
-          },
-          /** The label for the "next month" button. */
-          labelNext: () => (0, import_i18n74.__)("Go to the Next Month"),
-          /** The label for the "previous month" button. */
-          labelPrevious: () => (0, import_i18n74.__)("Go to the Previous Month"),
-          /**
-           * The label for the day button.
-           * @param date
-           * @param modifiers
-           */
-          labelDayButton: (date, modifiers) => {
-            const formattedDate = fullDateFormatter.format(date);
-            let label = formattedDate;
-            if (modifiers?.today) {
-              label = (0, import_i18n74.sprintf)(
-                // translators: %s is the full date (e.g. "Monday, April 29, 2025")
-                (0, import_i18n74.__)("Today, %s"),
-                formattedDate
-              );
-            }
-            if (modifiers?.selected) {
-              label = (0, import_i18n74.sprintf)(
-                // translators: %s is the full date (e.g. "Monday, April 29, 2025")
-                (0, import_i18n74.__)("%s, selected"),
-                formattedDate
-              );
-            }
-            return label;
-          },
-          /**
-           * The label for the weekday.
-           * @param date
-           */
-          labelWeekday: (date) => weekdayLongFormatter.format(date)
-        },
-        locale,
-        dir: isLocaleRTL(locale.code) ? "rtl" : "ltr",
-        formatters: {
-          formatWeekdayName: (date) => {
-            return weekdayNarrowFormatter.format(date);
-          },
-          formatCaption: (date) => {
-            return monthNameFormatter.format(date);
-          }
-        },
-        timeZone
-      };
-    }, [locale, timeZone, mode2]);
-  };
-
-  // packages/components/build-module/calendar/date-calendar/index.mjs
-  var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
-  var DateCalendar = ({
-    defaultSelected,
-    selected: selectedProp,
-    onSelect,
-    numberOfMonths = 1,
-    locale = enUS2,
-    timeZone,
-    ...props
-  }) => {
-    const localizationProps = useLocalizationProps({
-      locale,
-      timeZone,
-      mode: "single"
-    });
-    const onChange = (0, import_element225.useCallback)((selected2, triggerDate, modifiers, e3) => {
-      onSelect?.(selected2 ?? void 0, triggerDate, modifiers, e3);
-    }, [onSelect]);
-    const [selected, setSelected] = useControlledValue({
-      defaultValue: defaultSelected,
-      value: selectedProp,
-      onChange
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(DayPicker, {
-      ...COMMON_PROPS,
-      ...localizationProps,
-      ...props,
-      mode: "single",
-      numberOfMonths: clampNumberOfMonths(numberOfMonths),
-      selected: selected ?? void 0,
-      onSelect: setSelected
-    });
-  };
-
-  // packages/components/build-module/calendar/date-range-calendar/index.mjs
-  var import_element226 = __toESM(require_element(), 1);
-  var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
-  function usePreviewRange({
-    selected,
-    hoveredDate,
-    excludeDisabled,
-    min: min3,
-    max: max3,
-    disabled
-  }) {
-    return (0, import_element226.useMemo)(() => {
-      if (!hoveredDate || !selected?.from) {
-        return;
-      }
-      let previewHighlight;
-      let potentialNewRange;
-      if (hoveredDate < selected.from) {
-        previewHighlight = {
-          from: hoveredDate,
-          to: selected.from
-        };
-        potentialNewRange = {
-          from: hoveredDate,
-          to: selected.to ?? selected.from
-        };
-      } else if (selected.to && hoveredDate > selected.from && hoveredDate < selected.to) {
-        previewHighlight = {
-          from: selected.from,
-          to: hoveredDate
-        };
-        potentialNewRange = {
-          from: selected.from,
-          to: hoveredDate
-        };
-      } else if (hoveredDate > selected.from) {
-        previewHighlight = {
-          from: selected.to ?? selected.from,
-          to: hoveredDate
-        };
-        potentialNewRange = {
-          from: selected.from,
-          to: hoveredDate
-        };
-      }
-      if (min3 !== void 0 && min3 > 0 && potentialNewRange && differenceInCalendarDays(potentialNewRange.to, potentialNewRange.from) < min3) {
-        previewHighlight = {
-          from: hoveredDate,
-          to: hoveredDate
-        };
-      }
-      if (max3 !== void 0 && max3 > 0 && potentialNewRange && differenceInCalendarDays(potentialNewRange.to, potentialNewRange.from) > max3) {
-        previewHighlight = {
-          from: hoveredDate,
-          to: hoveredDate
-        };
-      }
-      if (excludeDisabled && disabled && potentialNewRange && rangeContainsModifiers(potentialNewRange, disabled)) {
-        previewHighlight = {
-          from: hoveredDate,
-          to: hoveredDate
-        };
-      }
-      return previewHighlight;
-    }, [selected, hoveredDate, excludeDisabled, min3, max3, disabled]);
-  }
-  var DateRangeCalendar = ({
-    defaultSelected,
-    selected: selectedProp,
-    onSelect,
-    numberOfMonths = 1,
-    excludeDisabled,
-    min: min3,
-    max: max3,
-    disabled,
-    locale = enUS2,
-    timeZone,
-    ...props
-  }) => {
-    const localizationProps = useLocalizationProps({
-      locale,
-      timeZone,
-      mode: "range"
-    });
-    const onChange = (0, import_element226.useCallback)((selected2, triggerDate, modifiers2, e3) => {
-      onSelect?.(selected2 ?? void 0, triggerDate, modifiers2, e3);
-    }, [onSelect]);
-    const [selected, setSelected] = useControlledValue({
-      defaultValue: defaultSelected,
-      value: selectedProp,
-      onChange
-    });
-    const [hoveredDate, setHoveredDate] = (0, import_element226.useState)(void 0);
-    const previewRange = usePreviewRange({
-      selected,
-      hoveredDate,
-      excludeDisabled,
-      min: min3,
-      max: max3,
-      disabled
-    });
-    const modifiers = (0, import_element226.useMemo)(() => {
-      return {
-        preview: previewRange,
-        preview_start: previewRange?.from,
-        preview_end: previewRange?.to
-      };
-    }, [previewRange]);
-    return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(DayPicker, {
-      ...COMMON_PROPS,
-      ...localizationProps,
-      ...props,
-      mode: "range",
-      numberOfMonths: clampNumberOfMonths(numberOfMonths),
-      disabled,
-      excludeDisabled,
-      min: min3,
-      max: max3,
-      selected: selected ?? void 0,
-      onSelect: setSelected,
-      onDayMouseEnter: (date) => setHoveredDate(date),
-      onDayMouseLeave: () => setHoveredDate(void 0),
-      modifiers,
-      modifiersClassNames: MODIFIER_CLASSNAMES
-    });
-  };
-
   // packages/components/build-module/validated-form-controls/components/checkbox-control.mjs
   var import_compose86 = __toESM(require_compose(), 1);
-  var import_element228 = __toESM(require_element(), 1);
+  var import_element225 = __toESM(require_element(), 1);
 
   // packages/components/build-module/validated-form-controls/control-with-error.mjs
-  var import_i18n75 = __toESM(require_i18n(), 1);
-  var import_element227 = __toESM(require_element(), 1);
+  var import_i18n74 = __toESM(require_i18n(), 1);
+  var import_element224 = __toESM(require_element(), 1);
 
   // packages/components/build-module/validated-form-controls/validity-indicator.mjs
-  var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
   function ValidityIndicator({
     id: id3,
     type,
-    message: message2
+    message
   }) {
     const ICON = {
       valid: published_default,
       invalid: error_default
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime310.jsxs)("p", {
+    return /* @__PURE__ */ (0, import_jsx_runtime307.jsxs)("p", {
       id: id3,
       className: clsx_default("components-validated-control__indicator", `is-${type}`),
-      children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(spinner_default, {
+      children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(spinner_default, {
         className: "components-validated-control__indicator-spinner"
-      }) : /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(icon_default3, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(icon_default3, {
         className: "components-validated-control__indicator-icon",
         icon: ICON[type],
         size: 16,
         fill: "currentColor"
-      }), message2]
+      }), message]
     });
   }
 
   // packages/components/build-module/validated-form-controls/control-with-error.mjs
-  var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
   function appendRequiredIndicator(label, required, markWhenOptional) {
     let suffix;
     if (required && !markWhenOptional) {
-      suffix = `(${(0, import_i18n75.__)("Required")})`;
+      suffix = `(${(0, import_i18n74.__)("Required")})`;
     } else if (!required && markWhenOptional) {
-      suffix = `(${(0, import_i18n75.__)("Optional")})`;
+      suffix = `(${(0, import_i18n74.__)("Optional")})`;
     }
     if (!suffix) {
       return label;
@@ -56668,7 +51911,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (typeof label === "string") {
       return `${label} ${suffix}`;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime311.jsxs)(import_jsx_runtime311.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime308.jsxs)(import_jsx_runtime308.Fragment, {
       children: [label, " ", suffix]
     });
   }
@@ -56681,11 +51924,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     getValidityTarget,
     children
   }, forwardedRef) {
-    const [errorMessage, setErrorMessage] = (0, import_element227.useState)();
-    const [statusMessage, setStatusMessage] = (0, import_element227.useState)();
-    const [showMessage, setShowMessage] = (0, import_element227.useState)(false);
-    const [isTouched, setIsTouched] = (0, import_element227.useState)(false);
-    (0, import_element227.useEffect)(() => {
+    const [errorMessage, setErrorMessage] = (0, import_element224.useState)();
+    const [statusMessage, setStatusMessage] = (0, import_element224.useState)();
+    const [showMessage, setShowMessage] = (0, import_element224.useState)(false);
+    const [isTouched, setIsTouched] = (0, import_element224.useState)(false);
+    (0, import_element224.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const handler = () => {
         setShowMessage(true);
@@ -56694,7 +51937,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       validityTarget?.addEventListener("invalid", handler);
       return () => validityTarget?.removeEventListener("invalid", handler);
     }, [getValidityTarget]);
-    (0, import_element227.useEffect)(() => {
+    (0, import_element224.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {
         event.preventDefault();
@@ -56715,7 +51958,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         radioSibilings.forEach((sibling) => sibling.removeEventListener("invalid", suppressNativePopover));
       };
     }, [getValidityTarget]);
-    (0, import_element227.useEffect)(() => {
+    (0, import_element224.useEffect)(() => {
       const validityTarget = getValidityTarget();
       if (!customValidity?.type) {
         validityTarget?.setCustomValidity("");
@@ -56750,7 +51993,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         }
       }
     }, [customValidity, getValidityTarget]);
-    (0, import_element227.useEffect)(() => {
+    (0, import_element224.useEffect)(() => {
       if (!isTouched || showMessage) {
         return;
       }
@@ -56771,17 +52014,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         getValidityTarget()?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       }
     };
-    const messageId = (0, import_element227.useId)();
-    const message2 = (() => {
+    const messageId = (0, import_element224.useId)();
+    const message = (() => {
       if (errorMessage) {
-        return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(ValidityIndicator, {
+        return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(ValidityIndicator, {
           id: messageId,
           type: "invalid",
           message: errorMessage
         });
       }
       if (statusMessage?.type) {
-        return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(ValidityIndicator, {
+        return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(ValidityIndicator, {
           id: messageId,
           type: statusMessage.type,
           message: statusMessage.message
@@ -56789,8 +52032,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       }
       return null;
     })();
-    const visibleMessage = showMessage ? message2 : null;
-    (0, import_element227.useEffect)(() => {
+    const visibleMessage = showMessage ? message : null;
+    (0, import_element224.useEffect)(() => {
       const target = getValidityTarget();
       if (!target) {
         return;
@@ -56809,36 +52052,36 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       setDescribedBy(target, !!visibleMessage);
       return () => setDescribedBy(target, false);
     }, [visibleMessage, messageId, getValidityTarget]);
-    return /* @__PURE__ */ (0, import_jsx_runtime311.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime308.jsxs)("div", {
       className,
       ref: forwardedRef,
       onBlur,
-      children: [(0, import_element227.cloneElement)(children, {
+      children: [(0, import_element224.cloneElement)(children, {
         label: appendRequiredIndicator(children.props.label, required, markWhenOptional),
         required
       }), visibleMessage]
     });
   }
-  var ControlWithError = (0, import_element227.forwardRef)(UnforwardedControlWithError);
+  var ControlWithError = (0, import_element224.forwardRef)(UnforwardedControlWithError);
   ControlWithError.displayName = "ControlWithError";
 
   // packages/components/build-module/validated-form-controls/components/checkbox-control.mjs
-  var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedCheckboxControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element228.useRef)(null);
+    const validityTargetRef = (0, import_element225.useRef)(null);
     const mergedRefs = (0, import_compose86.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       ref: mergedRefs,
       customValidity,
       getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="checkbox"]'),
-      children: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(
         checkbox_control_default,
         {
           ...restProps
@@ -56846,22 +52089,22 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       )
     });
   };
-  var ValidatedCheckboxControl = (0, import_element228.forwardRef)(UnforwardedValidatedCheckboxControl);
+  var ValidatedCheckboxControl = (0, import_element225.forwardRef)(UnforwardedValidatedCheckboxControl);
   ValidatedCheckboxControl.displayName = "ValidatedCheckboxControl";
 
   // packages/components/build-module/validated-form-controls/components/combobox-control.mjs
   var import_compose87 = __toESM(require_compose(), 1);
-  var import_element229 = __toESM(require_element(), 1);
-  var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
+  var import_element226 = __toESM(require_element(), 1);
+  var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedComboboxControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element229.useRef)(null);
+    const validityTargetRef = (0, import_element226.useRef)(null);
     const mergedRefs = (0, import_compose87.useMergeRefs)([forwardedRef, validityTargetRef]);
-    (0, import_element229.useEffect)(() => {
+    (0, import_element226.useEffect)(() => {
       const input = validityTargetRef.current?.querySelector('input[role="combobox"]');
       if (input) {
         input.required = required ?? false;
@@ -56869,43 +52112,43 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }, [required]);
     return (
       // TODO: Bug - Missing value error is not cleared immediately on change, waits for blur.
-      /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(ControlWithError, {
+      /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         ref: mergedRefs,
         customValidity,
         getValidityTarget: () => validityTargetRef.current?.querySelector('input[role="combobox"]'),
-        children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(combobox_control_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(combobox_control_default, {
           ...restProps
         })
       })
     );
   };
-  var ValidatedComboboxControl = (0, import_element229.forwardRef)(UnforwardedValidatedComboboxControl);
+  var ValidatedComboboxControl = (0, import_element226.forwardRef)(UnforwardedValidatedComboboxControl);
   ValidatedComboboxControl.displayName = "ValidatedComboboxControl";
 
   // packages/components/build-module/validated-form-controls/components/form-token-field.mjs
-  var import_element230 = __toESM(require_element(), 1);
-  var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
+  var import_element227 = __toESM(require_element(), 1);
+  var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedFormTokenField = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element230.useRef)(null);
-    return /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)("div", {
+    const validityTargetRef = (0, import_element227.useRef)(null);
+    return /* @__PURE__ */ (0, import_jsx_runtime311.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
       ref: forwardedRef,
-      children: [/* @__PURE__ */ (0, import_jsx_runtime314.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime311.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(FormTokenField, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(FormTokenField, {
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime314.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime311.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "text",
         ref: validityTargetRef,
@@ -56920,94 +52163,94 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   };
-  var ValidatedFormTokenField = (0, import_element230.forwardRef)(UnforwardedValidatedFormTokenField);
+  var ValidatedFormTokenField = (0, import_element227.forwardRef)(UnforwardedValidatedFormTokenField);
   ValidatedFormTokenField.displayName = "ValidatedFormTokenField";
 
   // packages/components/build-module/validated-form-controls/components/input-control.mjs
-  var import_element231 = __toESM(require_element(), 1);
+  var import_element228 = __toESM(require_element(), 1);
   var import_compose88 = __toESM(require_compose(), 1);
-  var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedInputControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element231.useRef)(null);
+    const validityTargetRef = (0, import_element228.useRef)(null);
     const mergedRefs = (0, import_compose88.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(input_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(input_control_default, {
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedInputControl = (0, import_element231.forwardRef)(UnforwardedValidatedInputControl);
+  var ValidatedInputControl = (0, import_element228.forwardRef)(UnforwardedValidatedInputControl);
   ValidatedInputControl.displayName = "ValidatedInputControl";
 
   // packages/components/build-module/validated-form-controls/components/number-control.mjs
-  var import_element232 = __toESM(require_element(), 1);
+  var import_element229 = __toESM(require_element(), 1);
   var import_compose89 = __toESM(require_compose(), 1);
-  var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedNumberControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element232.useRef)(null);
+    const validityTargetRef = (0, import_element229.useRef)(null);
     const mergedRefs = (0, import_compose89.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(number_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(number_control_default, {
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedNumberControl = (0, import_element232.forwardRef)(UnforwardedValidatedNumberControl);
+  var ValidatedNumberControl = (0, import_element229.forwardRef)(UnforwardedValidatedNumberControl);
   ValidatedNumberControl.displayName = "ValidatedNumberControl";
 
   // packages/components/build-module/validated-form-controls/components/radio-control.mjs
   var import_compose90 = __toESM(require_compose(), 1);
-  var import_element233 = __toESM(require_element(), 1);
-  var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
+  var import_element230 = __toESM(require_element(), 1);
+  var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedRadioControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element233.useRef)(null);
+    const validityTargetRef = (0, import_element230.useRef)(null);
     const mergedRefs = (0, import_compose90.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       ref: mergedRefs,
       customValidity,
       getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="radio"]'),
-      children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(radio_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(radio_control_default, {
         ...restProps
       })
     });
   };
-  var ValidatedRadioControl = (0, import_element233.forwardRef)(UnforwardedValidatedRadioControl);
+  var ValidatedRadioControl = (0, import_element230.forwardRef)(UnforwardedValidatedRadioControl);
   ValidatedRadioControl.displayName = "ValidatedRadioControl";
 
   // packages/components/build-module/validated-form-controls/components/content-editable-control.mjs
-  var import_element235 = __toESM(require_element(), 1);
+  var import_element232 = __toESM(require_element(), 1);
 
   // packages/components/build-module/content-editable-control/index.mjs
   var import_compose91 = __toESM(require_compose(), 1);
-  var import_element234 = __toESM(require_element(), 1);
-  var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
+  var import_element231 = __toESM(require_element(), 1);
+  var import_jsx_runtime315 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE26 = "data-wp-hash";
   function getRuntime26() {
     const globalScope = globalThis;
@@ -57107,18 +52350,18 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       help
     });
     const labelId = `${controlProps.id}__label`;
-    const editableRef = (0, import_element234.useRef)(null);
+    const editableRef = (0, import_element231.useRef)(null);
     const mergedRefs = (0, import_compose91.useMergeRefs)([editableRef, forwardedRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime318.jsxs)(base_control_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime315.jsxs)(base_control_default, {
       ...baseControlProps,
-      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(component_default2, {
+      children: [hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(component_default2, {
         id: labelId,
         children: label
-      }) : /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(base_control_default.VisualLabel, {
+      }) : /* @__PURE__ */ (0, import_jsx_runtime315.jsx)(base_control_default.VisualLabel, {
         id: labelId,
         onClick: () => editableRef.current?.focus(),
         children: label
-      }), /* @__PURE__ */ (0, import_jsx_runtime318.jsx)("div", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime315.jsx)("div", {
         className: style_module_default24.editable,
         role: "textbox",
         "aria-multiline": true,
@@ -57134,11 +52377,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   }
-  var ContentEditableControl = (0, import_element234.forwardRef)(UnforwardedContentEditableControl);
+  var ContentEditableControl = (0, import_element231.forwardRef)(UnforwardedContentEditableControl);
   var content_editable_control_default = ContentEditableControl;
 
   // packages/components/build-module/validated-form-controls/components/content-editable-control.mjs
-  var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedContentEditableControl = ({
     required,
     customValidity,
@@ -57147,21 +52390,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     className: className2,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element235.useRef)(null);
-    return /* @__PURE__ */ (0, import_jsx_runtime319.jsxs)("div", {
+    const validityTargetRef = (0, import_element232.useRef)(null);
+    return /* @__PURE__ */ (0, import_jsx_runtime316.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime319.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime316.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(content_editable_control_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(content_editable_control_default, {
           ref: forwardedRef,
           className: clsx_default("components-validated-control__content-editable", className2),
           "aria-invalid": customValidity?.type === "invalid" || void 0,
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime319.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime316.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "text",
         ref: validityTargetRef,
@@ -57176,111 +52419,111 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   };
-  var ValidatedContentEditableControl = (0, import_element235.forwardRef)(UnforwardedValidatedContentEditableControl);
+  var ValidatedContentEditableControl = (0, import_element232.forwardRef)(UnforwardedValidatedContentEditableControl);
   ValidatedContentEditableControl.displayName = "ValidatedContentEditableControl";
 
   // packages/components/build-module/validated-form-controls/components/text-control.mjs
   var import_compose92 = __toESM(require_compose(), 1);
-  var import_element236 = __toESM(require_element(), 1);
-  var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
+  var import_element233 = __toESM(require_element(), 1);
+  var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element236.useRef)(null);
+    const validityTargetRef = (0, import_element233.useRef)(null);
     const mergedRefs = (0, import_compose92.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(text_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime317.jsx)(text_control_default, {
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedTextControl = (0, import_element236.forwardRef)(UnforwardedValidatedTextControl);
+  var ValidatedTextControl = (0, import_element233.forwardRef)(UnforwardedValidatedTextControl);
   ValidatedTextControl.displayName = "ValidatedTextControl";
 
   // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
-  var import_element237 = __toESM(require_element(), 1);
+  var import_element234 = __toESM(require_element(), 1);
   var import_compose93 = __toESM(require_compose(), 1);
-  var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedTextareaControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element237.useRef)(null);
+    const validityTargetRef = (0, import_element234.useRef)(null);
     const mergedRefs = (0, import_compose93.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(textarea_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(textarea_control_default, {
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedTextareaControl = (0, import_element237.forwardRef)(UnforwardedValidatedTextareaControl);
+  var ValidatedTextareaControl = (0, import_element234.forwardRef)(UnforwardedValidatedTextareaControl);
   ValidatedTextareaControl.displayName = "ValidatedTextareaControl";
 
   // packages/components/build-module/validated-form-controls/components/toggle-control.mjs
-  var import_element238 = __toESM(require_element(), 1);
+  var import_element235 = __toESM(require_element(), 1);
   var import_compose94 = __toESM(require_compose(), 1);
-  var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedToggleControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element238.useRef)(null);
+    const validityTargetRef = (0, import_element235.useRef)(null);
     const mergedRefs = (0, import_compose94.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(ControlWithError, {
+    return /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(ControlWithError, {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(toggle_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime319.jsx)(toggle_control_default, {
         ref: mergedRefs,
         required,
         ...restProps
       })
     });
   };
-  var ValidatedToggleControl = (0, import_element238.forwardRef)(UnforwardedValidatedToggleControl);
+  var ValidatedToggleControl = (0, import_element235.forwardRef)(UnforwardedValidatedToggleControl);
   ValidatedToggleControl.displayName = "ValidatedToggleControl";
 
   // packages/components/build-module/validated-form-controls/components/toggle-group-control.mjs
-  var import_element239 = __toESM(require_element(), 1);
-  var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
+  var import_element236 = __toESM(require_element(), 1);
+  var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedToggleGroupControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element239.useRef)(null);
-    const nameAttr = (0, import_element239.useId)();
-    return /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)("div", {
+    const validityTargetRef = (0, import_element236.useRef)(null);
+    const nameAttr = (0, import_element236.useId)();
+    return /* @__PURE__ */ (0, import_jsx_runtime320.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime323.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime320.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(component_default12, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(component_default12, {
           ref: forwardedRef,
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime320.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "radio",
         ref: validityTargetRef,
@@ -57296,7 +52539,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   };
-  var ValidatedToggleGroupControl = (0, import_element239.forwardRef)(UnforwardedValidatedToggleGroupControl);
+  var ValidatedToggleGroupControl = (0, import_element236.forwardRef)(UnforwardedValidatedToggleGroupControl);
   ValidatedToggleGroupControl.displayName = "ValidatedToggleGroupControl";
 
   // packages/components/build-module/private-apis.mjs
@@ -57308,9 +52551,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     Tabs,
     Menu: Menu3,
     Badge: badge_default,
-    DateCalendar,
-    DateRangeCalendar,
-    TZDate,
     useDrag,
     ValidatedInputControl,
     ValidatedCheckboxControl,

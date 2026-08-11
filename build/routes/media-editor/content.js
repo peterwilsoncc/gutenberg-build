@@ -72,7 +72,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       function useSyncExternalStore$2(subscribe2, getSnapshot2) {
-        didWarnOld18Alpha || void 0 === React74.startTransition || (didWarnOld18Alpha = true, console.error(
+        didWarnOld18Alpha || void 0 === React102.startTransition || (didWarnOld18Alpha = true, console.error(
           "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
         ));
         var value = getSnapshot2();
@@ -82,11 +82,11 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState43({
+        cachedValue = useState47({
           inst: { value, getSnapshot: getSnapshot2 }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-        useLayoutEffect6(
+        useLayoutEffect7(
           function() {
             inst.value = value;
             inst.getSnapshot = getSnapshot2;
@@ -94,7 +94,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot2]
         );
-        useEffect37(
+        useEffect39(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -120,8 +120,8 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot2();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React74 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState43 = React74.useState, useEffect37 = React74.useEffect, useLayoutEffect6 = React74.useLayoutEffect, useDebugValue2 = React74.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-      exports.useSyncExternalStore = void 0 !== React74.useSyncExternalStore ? React74.useSyncExternalStore : shim;
+      var React102 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState47 = React102.useState, useEffect39 = React102.useEffect, useLayoutEffect7 = React102.useLayoutEffect, useDebugValue2 = React102.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      exports.useSyncExternalStore = void 0 !== React102.useSyncExternalStore ? React102.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
   }
@@ -148,14 +148,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React74 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef53 = React74.useRef, useEffect37 = React74.useEffect, useMemo47 = React74.useMemo, useDebugValue2 = React74.useDebugValue;
+      var React102 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef55 = React102.useRef, useEffect39 = React102.useEffect, useMemo52 = React102.useMemo, useDebugValue2 = React102.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot2, getServerSnapshot2, selector, isEqual) {
-        var instRef = useRef53(null);
+        var instRef = useRef55(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo47(
+        instRef = useMemo52(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -191,7 +191,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot2, getServerSnapshot2, selector, isEqual]
         );
         var value = useSyncExternalStore3(subscribe2, instRef[0], instRef[1]);
-        useEffect37(
+        useEffect39(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -511,7 +511,7 @@ var require_api_fetch = __commonJS({
 });
 
 // packages/admin-ui/build-module/breadcrumbs/index.mjs
-var import_i18n3 = __toESM(require_i18n(), 1);
+var import_i18n5 = __toESM(require_i18n(), 1);
 import { Link as RouterLink } from "@wordpress/route";
 
 // node_modules/clsx/dist/clsx.mjs
@@ -7964,12 +7964,12 @@ var baseArrow = (options) => ({
     const largestPossiblePadding = clientSize / 2 - arrowDimensions[length2] / 2 - 1;
     const minPadding = Math.min(paddingObject[minProp], largestPossiblePadding);
     const maxPadding = Math.min(paddingObject[maxProp], largestPossiblePadding);
-    const min3 = minPadding;
-    const max3 = clientSize - arrowDimensions[length2] - maxPadding;
+    const min4 = minPadding;
+    const max4 = clientSize - arrowDimensions[length2] - maxPadding;
     const center = clientSize / 2 - arrowDimensions[length2] / 2 + centerToReference;
-    const offset4 = clamp(min3, center, max3);
-    const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset4 && rects.reference[length2] / 2 - (center < min3 ? minPadding : maxPadding) - arrowDimensions[length2] / 2 < 0;
-    const alignmentOffset = shouldAddOffset ? center < min3 ? center - min3 : center - max3 : 0;
+    const offset4 = clamp(min4, center, max4);
+    const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset4 && rects.reference[length2] / 2 - (center < min4 ? minPadding : maxPadding) - arrowDimensions[length2] / 2 < 0;
+    const alignmentOffset = shouldAddOffset ? center < min4 ? center - min4 : center - max4 : 0;
     return {
       [axis]: coords[axis] + alignmentOffset,
       data: {
@@ -8478,6 +8478,37 @@ function usePositioner(componentProps, state, {
   });
 }
 
+// node_modules/@base-ui/react/button/Button.mjs
+var React42 = __toESM(require_react(), 1);
+var Button = /* @__PURE__ */ React42.forwardRef(function Button2(componentProps, forwardedRef) {
+  const {
+    render: render4,
+    className: className2,
+    disabled: disabled2 = false,
+    focusableWhenDisabled = false,
+    nativeButton = true,
+    style,
+    ...elementProps
+  } = componentProps;
+  const {
+    getButtonProps,
+    buttonRef
+  } = useButton({
+    disabled: disabled2,
+    focusableWhenDisabled,
+    native: nativeButton
+  });
+  const state = {
+    disabled: disabled2
+  };
+  return useRenderElement("button", componentProps, {
+    state,
+    ref: [forwardedRef, buttonRef],
+    props: [elementProps, getButtonProps]
+  });
+});
+if (true) Button.displayName = "Button";
+
 // node_modules/@base-ui/react/collapsible/index.parts.mjs
 var index_parts_exports = {};
 __export(index_parts_exports, {
@@ -8487,7 +8518,7 @@ __export(index_parts_exports, {
 });
 
 // node_modules/@base-ui/react/collapsible/root/CollapsibleRoot.mjs
-var React42 = __toESM(require_react(), 1);
+var React43 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/collapsible/root/stateAttributesMapping.mjs
 var collapsibleStateAttributesMapping = {
@@ -8497,7 +8528,7 @@ var collapsibleStateAttributesMapping = {
 
 // node_modules/@base-ui/react/collapsible/root/CollapsibleRoot.mjs
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
-var CollapsibleRoot = /* @__PURE__ */ React42.forwardRef(function CollapsibleRoot2(componentProps, forwardedRef) {
+var CollapsibleRoot = /* @__PURE__ */ React43.forwardRef(function CollapsibleRoot2(componentProps, forwardedRef) {
   const {
     render: render4,
     className: className2,
@@ -8515,12 +8546,12 @@ var CollapsibleRoot = /* @__PURE__ */ React42.forwardRef(function CollapsibleRoo
     onOpenChange,
     disabled: disabled2
   });
-  const state = React42.useMemo(() => ({
+  const state = React43.useMemo(() => ({
     open: collapsible.open,
     disabled: collapsible.disabled,
     transitionStatus: collapsible.transitionStatus
   }), [collapsible.open, collapsible.disabled, collapsible.transitionStatus]);
-  const contextValue = React42.useMemo(() => ({
+  const contextValue = React43.useMemo(() => ({
     ...collapsible,
     onOpenChange,
     state
@@ -8539,12 +8570,12 @@ var CollapsibleRoot = /* @__PURE__ */ React42.forwardRef(function CollapsibleRoo
 if (true) CollapsibleRoot.displayName = "CollapsibleRoot";
 
 // node_modules/@base-ui/react/collapsible/trigger/CollapsibleTrigger.mjs
-var React43 = __toESM(require_react(), 1);
+var React44 = __toESM(require_react(), 1);
 var stateAttributesMapping = {
   ...triggerOpenStateMapping,
   ...transitionStatusMapping
 };
-var CollapsibleTrigger = /* @__PURE__ */ React43.forwardRef(function CollapsibleTrigger2(componentProps, forwardedRef) {
+var CollapsibleTrigger = /* @__PURE__ */ React44.forwardRef(function CollapsibleTrigger2(componentProps, forwardedRef) {
   const {
     panelId,
     open,
@@ -8583,7 +8614,7 @@ var CollapsibleTrigger = /* @__PURE__ */ React43.forwardRef(function Collapsible
 if (true) CollapsibleTrigger.displayName = "CollapsibleTrigger";
 
 // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanel.mjs
-var React44 = __toESM(require_react(), 1);
+var React45 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanelCssVars.mjs
 var CollapsiblePanelCssVars = /* @__PURE__ */ (function(CollapsiblePanelCssVars2) {
@@ -8593,7 +8624,7 @@ var CollapsiblePanelCssVars = /* @__PURE__ */ (function(CollapsiblePanelCssVars2
 })({});
 
 // node_modules/@base-ui/react/collapsible/panel/CollapsiblePanel.mjs
-var CollapsiblePanel = /* @__PURE__ */ React44.forwardRef(function CollapsiblePanel2(componentProps, forwardedRef) {
+var CollapsiblePanel = /* @__PURE__ */ React45.forwardRef(function CollapsiblePanel2(componentProps, forwardedRef) {
   const {
     className: className2,
     hiddenUntilFound: hiddenUntilFoundProp,
@@ -8693,7 +8724,7 @@ var CollapsiblePanel = /* @__PURE__ */ React44.forwardRef(function CollapsiblePa
 if (true) CollapsiblePanel.displayName = "CollapsiblePanel";
 
 // node_modules/@base-ui/react/internals/composite/item/useCompositeItem.mjs
-var React45 = __toESM(require_react(), 1);
+var React46 = __toESM(require_react(), 1);
 function useCompositeItem(params = {}) {
   const {
     highlightItemOnHover,
@@ -8705,7 +8736,7 @@ function useCompositeItem(params = {}) {
     index: index2
   } = useCompositeListItem(params);
   const isHighlighted = highlightedIndex === index2;
-  const itemRef = React45.useRef(null);
+  const itemRef = React46.useRef(null);
   const mergedRef = useMergedRefs(ref, itemRef);
   const compositeProps = {
     tabIndex: isHighlighted ? 0 : -1,
@@ -8731,13 +8762,13 @@ function useCompositeItem(params = {}) {
 }
 
 // node_modules/@base-ui/react/utils/usePopupViewport.mjs
-var React49 = __toESM(require_react(), 1);
+var React50 = __toESM(require_react(), 1);
 var ReactDOM6 = __toESM(require_react_dom(), 1);
 
 // node_modules/@base-ui/utils/usePreviousValue.mjs
-var React46 = __toESM(require_react(), 1);
+var React47 = __toESM(require_react(), 1);
 function usePreviousValue(value) {
-  const [state, setState] = React46.useState({
+  const [state, setState] = React47.useState({
     current: value,
     previous: null
   });
@@ -8751,7 +8782,7 @@ function usePreviousValue(value) {
 }
 
 // node_modules/@base-ui/react/utils/usePopupAutoResize.mjs
-var React47 = __toESM(require_react(), 1);
+var React48 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/utils/getCssDimensions.mjs
 function getCssDimensions2(element) {
@@ -8786,12 +8817,12 @@ function usePopupAutoResize(parameters) {
   } = parameters;
   const runOnceAnimationsFinish = useAnimationsFinished(popupElement, true, false);
   const animationFrame = useAnimationFrame();
-  const committedDimensionsRef = React47.useRef(null);
-  const isInitialRenderRef = React47.useRef(true);
-  const restoreAnchoringStylesRef = React47.useRef(NOOP);
+  const committedDimensionsRef = React48.useRef(null);
+  const isInitialRenderRef = React48.useRef(true);
+  const restoreAnchoringStylesRef = React48.useRef(NOOP);
   const onMeasureLayout = useStableCallback(onMeasureLayoutParam);
   const onMeasureLayoutComplete = useStableCallback(onMeasureLayoutCompleteParam);
-  const anchoringStyles = React47.useMemo(() => {
+  const anchoringStyles = React48.useMemo(() => {
     let isOriginSide = side === "top";
     let isPhysicalLeft = side === "left";
     if (direction === "rtl") {
@@ -8903,13 +8934,13 @@ function setPositionerCssSize(positionerElement, size4) {
 }
 
 // node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
-var React48 = __toESM(require_react(), 1);
+var React49 = __toESM(require_react(), 1);
 var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 var DirectionProvider = function DirectionProvider2(props) {
   const {
     direction = "ltr"
   } = props;
-  const contextValue = React48.useMemo(() => ({
+  const contextValue = React49.useMemo(() => ({
     direction
   }), [direction]);
   return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(DirectionContext.Provider, {
@@ -8938,15 +8969,15 @@ function usePopupViewport(parameters) {
   const positionerElement = store3.useState("positionerElement");
   const previousActiveTrigger = usePreviousValue(open ? activeTrigger : null);
   const currentContentKey = usePopupContentKey(activeTriggerId, payload);
-  const capturedNodeRef = React49.useRef(null);
-  const [previousContentNode, setPreviousContentNode] = React49.useState(null);
-  const [newTriggerOffset, setNewTriggerOffset] = React49.useState(null);
-  const currentContainerRef = React49.useRef(null);
-  const previousContainerRef = React49.useRef(null);
+  const capturedNodeRef = React50.useRef(null);
+  const [previousContentNode, setPreviousContentNode] = React50.useState(null);
+  const [newTriggerOffset, setNewTriggerOffset] = React50.useState(null);
+  const currentContainerRef = React50.useRef(null);
+  const previousContainerRef = React50.useRef(null);
   const onAnimationsFinished = useAnimationsFinished(currentContainerRef, true, false);
   const cleanupFrame = useAnimationFrame();
-  const [previousContentDimensions, setPreviousContentDimensions] = React49.useState(null);
-  const [showStartingStyleAttribute, setShowStartingStyleAttribute] = React49.useState(false);
+  const [previousContentDimensions, setPreviousContentDimensions] = React50.useState(null);
+  const [showStartingStyleAttribute, setShowStartingStyleAttribute] = React50.useState(false);
   useIsoLayoutEffect(() => {
     store3.set("hasViewport", true);
     return () => {
@@ -8966,7 +8997,7 @@ function usePopupViewport(parameters) {
       setPreviousContentDimensions(previousDimensions);
     }
   });
-  const lastHandledTriggerRef = React49.useRef(null);
+  const lastHandledTriggerRef = React50.useRef(null);
   useIsoLayoutEffect(() => {
     if (!open || !mounted) {
       lastHandledTriggerRef.current = null;
@@ -9011,7 +9042,7 @@ function usePopupViewport(parameters) {
       children
     }, currentContentKey);
   } else {
-    childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(React49.Fragment, {
+    childrenToRender = /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(React50.Fragment, {
       children: [/* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", {
         "data-previous": true,
         inert: inertValue(true),
@@ -9090,10 +9121,10 @@ function calculateRelativePosition(from, to) {
   };
 }
 function usePopupContentKey(activeTriggerId, payload) {
-  const [contentKey, setContentKey] = React49.useState(0);
-  const previousActiveTriggerIdRef = React49.useRef(activeTriggerId);
-  const previousPayloadRef = React49.useRef(payload);
-  const pendingPayloadUpdateRef = React49.useRef(false);
+  const [contentKey, setContentKey] = React50.useState(0);
+  const previousActiveTriggerIdRef = React50.useRef(activeTriggerId);
+  const previousPayloadRef = React50.useRef(payload);
+  const pendingPayloadUpdateRef = React50.useRef(false);
   useIsoLayoutEffect(() => {
     const previousActiveTriggerId = previousActiveTriggerIdRef.current;
     const previousPayload = previousPayloadRef.current;
@@ -9118,21 +9149,21 @@ function isElementDisabled(element) {
 }
 
 // node_modules/@base-ui/react/internals/csp-context/CSPContext.mjs
-var React50 = __toESM(require_react(), 1);
-var CSPContext = /* @__PURE__ */ React50.createContext(void 0);
+var React51 = __toESM(require_react(), 1);
+var CSPContext = /* @__PURE__ */ React51.createContext(void 0);
 if (true) CSPContext.displayName = "CSPContext";
 var DEFAULT_CSP_CONTEXT_VALUE = {
   disableStyleElements: false
 };
 function useCSPContext() {
-  return React50.useContext(CSPContext) ?? DEFAULT_CSP_CONTEXT_VALUE;
+  return React51.useContext(CSPContext) ?? DEFAULT_CSP_CONTEXT_VALUE;
 }
 
 // node_modules/@base-ui/react/internals/composite/root/CompositeRoot.mjs
-var React52 = __toESM(require_react(), 1);
+var React53 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/internals/composite/root/useCompositeRoot.mjs
-var React51 = __toESM(require_react(), 1);
+var React52 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/internals/composite/constants.mjs
 var ACTIVE_COMPOSITE_ITEM = "data-composite-item-active";
@@ -9154,12 +9185,12 @@ function useCompositeRoot(params) {
     disabledIndices,
     modifierKeys = EMPTY_ARRAY2
   } = params;
-  const [internalHighlightedIndex, internalSetHighlightedIndex] = React51.useState(0);
+  const [internalHighlightedIndex, internalSetHighlightedIndex] = React52.useState(0);
   const isGrid = grid != null;
-  const rootRef = React51.useRef(null);
+  const rootRef = React52.useRef(null);
   const mergedRef = useMergedRefs(rootRef, externalRef);
-  const elementsRef = React51.useRef([]);
-  const hasSetDefaultIndexRef = React51.useRef(false);
+  const elementsRef = React52.useRef([]);
+  const hasSetDefaultIndexRef = React52.useRef(false);
   const highlightedIndex = externalHighlightedIndex ?? internalHighlightedIndex;
   const onHighlightedIndexChange = useStableCallback((index2, shouldScrollIntoView = false) => {
     (externalSetHighlightedIndex ?? internalSetHighlightedIndex)(index2);
@@ -9408,7 +9439,7 @@ function CompositeRoot(componentProps) {
     props: [defaultProps, ...props, elementProps],
     stateAttributesMapping: stateAttributesMapping6
   });
-  const contextValue = React52.useMemo(() => ({
+  const contextValue = React53.useMemo(() => ({
     highlightedIndex,
     onHighlightedIndexChange,
     highlightItemOnHover,
@@ -9428,10 +9459,10 @@ function CompositeRoot(componentProps) {
 }
 
 // node_modules/@base-ui/react/utils/FloatingPortalLite.mjs
-var React53 = __toESM(require_react(), 1);
+var React54 = __toESM(require_react(), 1);
 var ReactDOM7 = __toESM(require_react_dom(), 1);
 var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
-var FloatingPortalLite = /* @__PURE__ */ React53.forwardRef(function FloatingPortalLite2(componentProps, forwardedRef) {
+var FloatingPortalLite = /* @__PURE__ */ React54.forwardRef(function FloatingPortalLite2(componentProps, forwardedRef) {
   const {
     children,
     container,
@@ -9452,7 +9483,7 @@ var FloatingPortalLite = /* @__PURE__ */ React53.forwardRef(function FloatingPor
   if (!portalSubtree && !portalNode) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(React53.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(React54.Fragment, {
     children: [portalSubtree, portalNode && /* @__PURE__ */ ReactDOM7.createPortal(children, portalNode)]
   });
 });
@@ -9484,14 +9515,14 @@ __export(index_parts_exports2, {
 });
 
 // node_modules/@base-ui/react/tabs/root/TabsRoot.mjs
-var React55 = __toESM(require_react(), 1);
+var React56 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/tabs/root/TabsRootContext.mjs
-var React54 = __toESM(require_react(), 1);
-var TabsRootContext = /* @__PURE__ */ React54.createContext(void 0);
+var React55 = __toESM(require_react(), 1);
+var TabsRootContext = /* @__PURE__ */ React55.createContext(void 0);
 if (true) TabsRootContext.displayName = "TabsRootContext";
 function useTabsRootContext() {
-  const context = React54.useContext(TabsRootContext);
+  const context = React55.useContext(TabsRootContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: TabsRootContext is missing. Tabs parts must be placed within <Tabs.Root>." : formatErrorMessage_default(64));
   }
@@ -9514,7 +9545,7 @@ var tabsStateAttributesMapping = {
 
 // node_modules/@base-ui/react/tabs/root/TabsRoot.mjs
 var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
-var TabsRoot = /* @__PURE__ */ React55.forwardRef(function TabsRoot2(componentProps, forwardedRef) {
+var TabsRoot = /* @__PURE__ */ React56.forwardRef(function TabsRoot2(componentProps, forwardedRef) {
   const {
     className: className2,
     defaultValue: defaultValueProp = 0,
@@ -9526,8 +9557,8 @@ var TabsRoot = /* @__PURE__ */ React55.forwardRef(function TabsRoot2(componentPr
     ...elementProps
   } = componentProps;
   const hasExplicitDefaultValueProp = componentProps.defaultValue !== void 0;
-  const tabPanelRefs = React55.useRef([]);
-  const [mountedTabPanels, setMountedTabPanels] = React55.useState(() => /* @__PURE__ */ new Map());
+  const tabPanelRefs = React56.useRef([]);
+  const [mountedTabPanels, setMountedTabPanels] = React56.useState(() => /* @__PURE__ */ new Map());
   const [value, setValue] = useControlled({
     controlled: valueProp,
     default: defaultValueProp,
@@ -9535,9 +9566,9 @@ var TabsRoot = /* @__PURE__ */ React55.forwardRef(function TabsRoot2(componentPr
     state: "value"
   });
   const isControlled = valueProp !== void 0;
-  const [tabMap, setTabMap] = React55.useState(() => /* @__PURE__ */ new Map());
-  const lastKnownTabElementRef = React55.useRef(void 0);
-  const getTabElementBySelectedValue = React55.useCallback((selectedValue) => {
+  const [tabMap, setTabMap] = React56.useState(() => /* @__PURE__ */ new Map());
+  const lastKnownTabElementRef = React56.useRef(void 0);
+  const getTabElementBySelectedValue = React56.useCallback((selectedValue) => {
     if (selectedValue === void 0) {
       return null;
     }
@@ -9548,7 +9579,7 @@ var TabsRoot = /* @__PURE__ */ React55.forwardRef(function TabsRoot2(componentPr
     }
     return null;
   }, [tabMap]);
-  const [activationDirectionState, setActivationDirectionState] = React55.useState(() => ({
+  const [activationDirectionState, setActivationDirectionState] = React56.useState(() => ({
     previousValue: value,
     tabActivationDirection: "none"
   }));
@@ -9607,10 +9638,10 @@ var TabsRoot = /* @__PURE__ */ React55.forwardRef(function TabsRoot2(componentPr
       return next;
     });
   });
-  const getTabPanelIdByValue = React55.useCallback((tabValue) => {
+  const getTabPanelIdByValue = React56.useCallback((tabValue) => {
     return mountedTabPanels.get(tabValue);
   }, [mountedTabPanels]);
-  const getTabIdByPanelValue = React55.useCallback((tabPanelValue) => {
+  const getTabIdByPanelValue = React56.useCallback((tabPanelValue) => {
     for (const tabMetadata of tabMap.values()) {
       if (tabPanelValue === tabMetadata?.value) {
         return tabMetadata?.id;
@@ -9618,7 +9649,7 @@ var TabsRoot = /* @__PURE__ */ React55.forwardRef(function TabsRoot2(componentPr
     }
     return void 0;
   }, [tabMap]);
-  const tabsContextValue = React55.useMemo(() => ({
+  const tabsContextValue = React56.useMemo(() => ({
     getTabElementBySelectedValue,
     getTabIdByPanelValue,
     getTabPanelIdByValue,
@@ -9630,7 +9661,7 @@ var TabsRoot = /* @__PURE__ */ React55.forwardRef(function TabsRoot2(componentPr
     tabActivationDirection,
     value
   }), [getTabElementBySelectedValue, getTabIdByPanelValue, getTabPanelIdByValue, onValueChange, orientation, registerMountedTabPanel, setTabMap, unregisterMountedTabPanel, tabActivationDirection, value]);
-  const selectedTabMetadata = React55.useMemo(() => {
+  const selectedTabMetadata = React56.useMemo(() => {
     for (const tabMetadata of tabMap.values()) {
       if (tabMetadata != null && tabMetadata.value === value) {
         return tabMetadata;
@@ -9638,7 +9669,7 @@ var TabsRoot = /* @__PURE__ */ React55.forwardRef(function TabsRoot2(componentPr
     }
     return void 0;
   }, [tabMap, value]);
-  const firstEnabledTabValue = React55.useMemo(() => {
+  const firstEnabledTabValue = React56.useMemo(() => {
     for (const tabMetadata of tabMap.values()) {
       if (tabMetadata != null && !tabMetadata.disabled) {
         return tabMetadata.value;
@@ -9646,10 +9677,10 @@ var TabsRoot = /* @__PURE__ */ React55.forwardRef(function TabsRoot2(componentPr
     }
     return void 0;
   }, [tabMap]);
-  const shouldNotifyInitialValueChangeRef = React55.useRef(!hasExplicitDefaultValueProp);
-  const initialDefaultValueRef = React55.useRef(defaultValueProp);
-  const shouldHonorDisabledDefaultValueRef = React55.useRef(hasExplicitDefaultValueProp);
-  const didRegisterTabsRef = React55.useRef(false);
+  const shouldNotifyInitialValueChangeRef = React56.useRef(!hasExplicitDefaultValueProp);
+  const initialDefaultValueRef = React56.useRef(defaultValueProp);
+  const shouldHonorDisabledDefaultValueRef = React56.useRef(hasExplicitDefaultValueProp);
+  const didRegisterTabsRef = React56.useRef(false);
   useIsoLayoutEffect(() => {
     if (isControlled) {
       return;
@@ -9775,14 +9806,14 @@ function computeActivationDirection(oldValue, newValue, orientation, tabMap) {
 }
 
 // node_modules/@base-ui/react/tabs/tab/TabsTab.mjs
-var React57 = __toESM(require_react(), 1);
+var React58 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/tabs/list/TabsListContext.mjs
-var React56 = __toESM(require_react(), 1);
-var TabsListContext = /* @__PURE__ */ React56.createContext(void 0);
+var React57 = __toESM(require_react(), 1);
+var TabsListContext = /* @__PURE__ */ React57.createContext(void 0);
 if (true) TabsListContext.displayName = "TabsListContext";
 function useTabsListContext() {
-  const context = React56.useContext(TabsListContext);
+  const context = React57.useContext(TabsListContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: TabsListContext is missing. TabsList parts must be placed within <Tabs.List>." : formatErrorMessage_default(65));
   }
@@ -9790,7 +9821,7 @@ function useTabsListContext() {
 }
 
 // node_modules/@base-ui/react/tabs/tab/TabsTab.mjs
-var TabsTab = /* @__PURE__ */ React57.forwardRef(function TabsTab2(componentProps, forwardedRef) {
+var TabsTab = /* @__PURE__ */ React58.forwardRef(function TabsTab2(componentProps, forwardedRef) {
   const {
     className: className2,
     disabled: disabled2 = false,
@@ -9816,7 +9847,7 @@ var TabsTab = /* @__PURE__ */ React57.forwardRef(function TabsTab2(componentProp
     tabsListElement
   } = useTabsListContext();
   const id = useBaseUiId(idProp);
-  const tabMetadata = React57.useMemo(() => ({
+  const tabMetadata = React58.useMemo(() => ({
     disabled: disabled2,
     id,
     value
@@ -9831,8 +9862,8 @@ var TabsTab = /* @__PURE__ */ React57.forwardRef(function TabsTab2(componentProp
     metadata: tabMetadata
   });
   const active = value === activeTabValue;
-  const isNavigatingRef = React57.useRef(false);
-  const tabElementRef = React57.useRef(null);
+  const isNavigatingRef = React58.useRef(false);
+  const tabElementRef = React58.useRef(null);
   useIsoLayoutEffect(() => {
     const tabElement = tabElementRef.current;
     if (!tabElement) {
@@ -9868,8 +9899,8 @@ var TabsTab = /* @__PURE__ */ React57.forwardRef(function TabsTab2(componentProp
     focusableWhenDisabled: true
   });
   const tabPanelId = getTabPanelIdByValue(value);
-  const isPressingRef = React57.useRef(false);
-  const isMainButtonRef = React57.useRef(false);
+  const isPressingRef = React58.useRef(false);
+  const isMainButtonRef = React58.useRef(false);
   function onClick(event) {
     if (active || disabled2) {
       return;
@@ -9941,7 +9972,7 @@ var TabsTab = /* @__PURE__ */ React57.forwardRef(function TabsTab2(componentProp
 if (true) TabsTab.displayName = "TabsTab";
 
 // node_modules/@base-ui/react/tabs/indicator/TabsIndicator.mjs
-var React58 = __toESM(require_react(), 1);
+var React59 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/tabs/indicator/prehydrationScript.min.mjs
 var script = '!function(){const t=document.currentScript.previousElementSibling;if(!t)return;const e=t.closest(\'[role="tablist"]\');if(!e)return;const i=e.querySelector("[data-active]");if(!i)return;if(0===i.offsetWidth||0===e.offsetWidth)return;let o=0,n=0,h=0,l=0,r=0,f=0;function s(t){const e=getComputedStyle(t);let i=parseFloat(e.width)||0,o=parseFloat(e.height)||0;return(Math.round(i)!==t.offsetWidth||Math.round(o)!==t.offsetHeight)&&(i=t.offsetWidth,o=t.offsetHeight),{width:i,height:o}}if(null!=i&&null!=e){const{width:t,height:c}=s(i),{width:u,height:d}=s(e),a=i.getBoundingClientRect(),g=e.getBoundingClientRect(),p=u>0?g.width/u:1,b=d>0?g.height/d:1;if(Math.abs(p)>Number.EPSILON&&Math.abs(b)>Number.EPSILON){const t=a.left-g.left,i=a.top-g.top;o=t/p+e.scrollLeft-e.clientLeft,h=i/b+e.scrollTop-e.clientTop}else o=i.offsetLeft,h=i.offsetTop;r=t,f=c,n=e.scrollWidth-o-r,l=e.scrollHeight-h-f}function c(e,i){t.style.setProperty(`--active-tab-${e}`,`${i}px`)}c("left",o),c("right",n),c("top",h),c("bottom",l),c("width",r),c("height",f),r>0&&f>0&&t.removeAttribute("hidden")}();';
@@ -9964,7 +9995,7 @@ var stateAttributesMapping2 = {
   activeTabPosition: () => null,
   activeTabSize: () => null
 };
-var TabsIndicator = /* @__PURE__ */ React58.forwardRef(function TabsIndicator2(componentProps, forwardedRef) {
+var TabsIndicator = /* @__PURE__ */ React59.forwardRef(function TabsIndicator2(componentProps, forwardedRef) {
   const {
     className: className2,
     render: render4,
@@ -9987,7 +10018,7 @@ var TabsIndicator = /* @__PURE__ */ React58.forwardRef(function TabsIndicator2(c
   } = useTabsListContext();
   const isHydrating = useIsHydrating();
   const rerender = useForcedRerendering();
-  React58.useEffect(() => {
+  React59.useEffect(() => {
     return registerIndicatorUpdateListener(rerender);
   }, [registerIndicatorUpdateListener, rerender]);
   let left = 0;
@@ -10070,7 +10101,7 @@ var TabsIndicator = /* @__PURE__ */ React58.forwardRef(function TabsIndicator2(c
   if (value == null) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(React58.Fragment, {
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(React59.Fragment, {
     children: [element, isHydrating && renderBeforeHydration && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("script", {
       nonce,
       dangerouslySetInnerHTML: {
@@ -10083,7 +10114,7 @@ var TabsIndicator = /* @__PURE__ */ React58.forwardRef(function TabsIndicator2(c
 if (true) TabsIndicator.displayName = "TabsIndicator";
 
 // node_modules/@base-ui/react/tabs/panel/TabsPanel.mjs
-var React59 = __toESM(require_react(), 1);
+var React60 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/tabs/panel/TabsPanelDataAttributes.mjs
 var TabsPanelDataAttributes = (function(TabsPanelDataAttributes2) {
@@ -10101,7 +10132,7 @@ var stateAttributesMapping3 = {
   ...tabsStateAttributesMapping,
   ...transitionStatusMapping
 };
-var TabsPanel = /* @__PURE__ */ React59.forwardRef(function TabsPanel2(componentProps, forwardedRef) {
+var TabsPanel = /* @__PURE__ */ React60.forwardRef(function TabsPanel2(componentProps, forwardedRef) {
   const {
     className: className2,
     value,
@@ -10119,7 +10150,7 @@ var TabsPanel = /* @__PURE__ */ React59.forwardRef(function TabsPanel2(component
     unregisterMountedTabPanel
   } = useTabsRootContext();
   const id = useBaseUiId();
-  const metadata = React59.useMemo(() => ({
+  const metadata = React60.useMemo(() => ({
     id,
     value
   }), [id, value]);
@@ -10143,7 +10174,7 @@ var TabsPanel = /* @__PURE__ */ React59.forwardRef(function TabsPanel2(component
     tabActivationDirection,
     transitionStatus
   };
-  const panelRef = React59.useRef(null);
+  const panelRef = React60.useRef(null);
   const element = useRenderElement("div", componentProps, {
     state,
     ref: [forwardedRef, listItemRef, panelRef],
@@ -10188,9 +10219,9 @@ var TabsPanel = /* @__PURE__ */ React59.forwardRef(function TabsPanel2(component
 if (true) TabsPanel.displayName = "TabsPanel";
 
 // node_modules/@base-ui/react/tabs/list/TabsList.mjs
-var React60 = __toESM(require_react(), 1);
+var React61 = __toESM(require_react(), 1);
 var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-var TabsList = /* @__PURE__ */ React60.forwardRef(function TabsList2(componentProps, forwardedRef) {
+var TabsList = /* @__PURE__ */ React61.forwardRef(function TabsList2(componentProps, forwardedRef) {
   const {
     activateOnFocus = false,
     className: className2,
@@ -10206,11 +10237,11 @@ var TabsList = /* @__PURE__ */ React60.forwardRef(function TabsList2(componentPr
     setTabMap,
     tabActivationDirection
   } = useTabsRootContext();
-  const [highlightedTabIndex, setHighlightedTabIndex] = React60.useState(0);
-  const [tabsListElement, setTabsListElement] = React60.useState(null);
-  const indicatorUpdateListenersRef = React60.useRef(/* @__PURE__ */ new Set());
-  const tabResizeObserverElementsRef = React60.useRef(/* @__PURE__ */ new Set());
-  const resizeObserverRef = React60.useRef(null);
+  const [highlightedTabIndex, setHighlightedTabIndex] = React61.useState(0);
+  const [tabsListElement, setTabsListElement] = React61.useState(null);
+  const indicatorUpdateListenersRef = React61.useRef(/* @__PURE__ */ new Set());
+  const tabResizeObserverElementsRef = React61.useRef(/* @__PURE__ */ new Set());
+  const resizeObserverRef = React61.useRef(null);
   useIsoLayoutEffect(() => {
     if (typeof ResizeObserver === "undefined") {
       return void 0;
@@ -10259,7 +10290,7 @@ var TabsList = /* @__PURE__ */ React60.forwardRef(function TabsList2(componentPr
     "aria-orientation": orientation === "vertical" ? "vertical" : void 0,
     role: "tablist"
   };
-  const tabsListContextValue = React60.useMemo(() => ({
+  const tabsListContextValue = React61.useMemo(() => ({
     activateOnFocus,
     highlightedTabIndex,
     registerIndicatorUpdateListener,
@@ -10306,14 +10337,14 @@ __export(index_parts_exports3, {
 });
 
 // node_modules/@base-ui/react/tooltip/root/TooltipRoot.mjs
-var React63 = __toESM(require_react(), 1);
+var React64 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/tooltip/root/TooltipRootContext.mjs
-var React61 = __toESM(require_react(), 1);
-var TooltipRootContext = /* @__PURE__ */ React61.createContext(void 0);
+var React62 = __toESM(require_react(), 1);
+var TooltipRootContext = /* @__PURE__ */ React62.createContext(void 0);
 if (true) TooltipRootContext.displayName = "TooltipRootContext";
 function useTooltipRootContext(optional) {
-  const context = React61.useContext(TooltipRootContext);
+  const context = React62.useContext(TooltipRootContext);
   if (context === void 0 && !optional) {
     throw new Error(true ? "Base UI: TooltipRootContext is missing. Tooltip parts must be placed within <Tooltip.Root>." : formatErrorMessage_default(72));
   }
@@ -10321,7 +10352,7 @@ function useTooltipRootContext(optional) {
 }
 
 // node_modules/@base-ui/react/tooltip/store/TooltipStore.mjs
-var React62 = __toESM(require_react(), 1);
+var React63 = __toESM(require_react(), 1);
 var selectors2 = {
   ...popupStoreSelectors,
   disabled: createSelector((state) => state.disabled),
@@ -10343,7 +10374,7 @@ var TooltipStore = class _TooltipStore extends ReactStore {
     };
     state.floatingRootContext = createPopupFloatingRootContext(triggerElements, floatingId, nested);
     super(state, {
-      popupRef: /* @__PURE__ */ React62.createRef(),
+      popupRef: /* @__PURE__ */ React63.createRef(),
       onOpenChange: void 0,
       onOpenChangeComplete: void 0,
       triggerElements
@@ -10428,7 +10459,7 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
   const isInstantPhase = store3.useState("isInstantPhase");
   const instantType = store3.useState("instantType");
   const lastOpenChangeReason = store3.useState("lastOpenChangeReason");
-  const previousInstantTypeRef = React63.useRef(null);
+  const previousInstantTypeRef = React64.useRef(null);
   useIsoLayoutEffect(() => {
     if (openState && disabled2) {
       store3.setOpen(false, createChangeEventDetails(reason_parts_exports.disabled));
@@ -10452,10 +10483,10 @@ var TooltipRoot = fastComponent(function TooltipRoot2(props) {
       }
     }
   }, [store3, activeTriggerId, open]);
-  const handleImperativeClose = React63.useCallback(() => {
+  const handleImperativeClose = React64.useCallback(() => {
     store3.setOpen(false, createChangeEventDetails(reason_parts_exports.imperativeAction));
   }, [store3]);
-  React63.useImperativeHandle(actionsRef, () => ({
+  React64.useImperativeHandle(actionsRef, () => ({
     unmount: forceUnmount,
     close: handleImperativeClose
   }), [forceUnmount, handleImperativeClose]);
@@ -10486,9 +10517,9 @@ function TooltipInteractions({
     enabled: !disabled2 && trackCursorAxis !== "none",
     axis: trackCursorAxis === "none" ? void 0 : trackCursorAxis
   });
-  const activeTriggerProps = React63.useMemo(() => mergeProps(clientPoint.reference, dismiss.reference), [clientPoint.reference, dismiss.reference]);
-  const inactiveTriggerProps = React63.useMemo(() => mergeProps(clientPoint.trigger, dismiss.trigger), [clientPoint.trigger, dismiss.trigger]);
-  const popupProps = React63.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, clientPoint.floating, dismiss.floating), [clientPoint.floating, dismiss.floating]);
+  const activeTriggerProps = React64.useMemo(() => mergeProps(clientPoint.reference, dismiss.reference), [clientPoint.reference, dismiss.reference]);
+  const inactiveTriggerProps = React64.useMemo(() => mergeProps(clientPoint.trigger, dismiss.trigger), [clientPoint.trigger, dismiss.trigger]);
+  const popupProps = React64.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, clientPoint.floating, dismiss.floating), [clientPoint.floating, dismiss.floating]);
   usePopupInteractionProps(store3, {
     activeTriggerProps,
     inactiveTriggerProps,
@@ -10498,14 +10529,14 @@ function TooltipInteractions({
 }
 
 // node_modules/@base-ui/react/tooltip/trigger/TooltipTrigger.mjs
-var React65 = __toESM(require_react(), 1);
+var React66 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/tooltip/provider/TooltipProviderContext.mjs
-var React64 = __toESM(require_react(), 1);
-var TooltipProviderContext = /* @__PURE__ */ React64.createContext(void 0);
+var React65 = __toESM(require_react(), 1);
+var TooltipProviderContext = /* @__PURE__ */ React65.createContext(void 0);
 if (true) TooltipProviderContext.displayName = "TooltipProviderContext";
 function useTooltipProviderContext() {
-  return React64.useContext(TooltipProviderContext);
+  return React65.useContext(TooltipProviderContext);
 }
 
 // node_modules/@base-ui/react/tooltip/trigger/TooltipTriggerDataAttributes.mjs
@@ -10575,7 +10606,7 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
   const isTriggerActive = store3.useState("isTriggerActive", thisTriggerId);
   const isOpenedByThisTrigger = store3.useState("isOpenedByTrigger", thisTriggerId);
   const floatingRootContext = store3.useState("floatingRootContext");
-  const triggerElementRef = React65.useRef(null);
+  const triggerElementRef = React66.useRef(null);
   const delayWithDefault = delay ?? OPEN_DELAY;
   const closeDelayWithDefault = closeDelay ?? 0;
   const {
@@ -10601,9 +10632,9 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
   const disabledRef = useValueAsRef(disabled2);
   const trackCursorAxis = store3.useState("trackCursorAxis");
   const disableHoverablePopup = store3.useState("disableHoverablePopup");
-  const isNestedTriggerHoveredRef = React65.useRef(false);
+  const isNestedTriggerHoveredRef = React66.useRef(false);
   const nestedTriggerOpenTimeout = useTimeout();
-  const pointerTypeRef = React65.useRef(void 0);
+  const pointerTypeRef = React66.useRef(void 0);
   function getOpenDelay() {
     const providerDelay = providerContext?.delay;
     const groupOpenValue = typeof delayRef.current === "object" ? delayRef.current.open : void 0;
@@ -10736,14 +10767,14 @@ var TooltipTrigger = fastComponentRef(function TooltipTrigger2(componentProps, f
 if (true) TooltipTrigger.displayName = "TooltipTrigger";
 
 // node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
-var React67 = __toESM(require_react(), 1);
+var React68 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/tooltip/portal/TooltipPortalContext.mjs
-var React66 = __toESM(require_react(), 1);
-var TooltipPortalContext = /* @__PURE__ */ React66.createContext(void 0);
+var React67 = __toESM(require_react(), 1);
+var TooltipPortalContext = /* @__PURE__ */ React67.createContext(void 0);
 if (true) TooltipPortalContext.displayName = "TooltipPortalContext";
 function useTooltipPortalContext() {
-  const value = React66.useContext(TooltipPortalContext);
+  const value = React67.useContext(TooltipPortalContext);
   if (value === void 0) {
     throw new Error(true ? "Base UI: <Tooltip.Portal> is missing." : formatErrorMessage_default(70));
   }
@@ -10752,7 +10783,7 @@ function useTooltipPortalContext() {
 
 // node_modules/@base-ui/react/tooltip/portal/TooltipPortal.mjs
 var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
-var TooltipPortal = /* @__PURE__ */ React67.forwardRef(function TooltipPortal2(props, forwardedRef) {
+var TooltipPortal = /* @__PURE__ */ React68.forwardRef(function TooltipPortal2(props, forwardedRef) {
   const {
     keepMounted = false,
     ...portalProps
@@ -10774,14 +10805,14 @@ var TooltipPortal = /* @__PURE__ */ React67.forwardRef(function TooltipPortal2(p
 if (true) TooltipPortal.displayName = "TooltipPortal";
 
 // node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
-var React69 = __toESM(require_react(), 1);
+var React70 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/tooltip/positioner/TooltipPositionerContext.mjs
-var React68 = __toESM(require_react(), 1);
-var TooltipPositionerContext = /* @__PURE__ */ React68.createContext(void 0);
+var React69 = __toESM(require_react(), 1);
+var TooltipPositionerContext = /* @__PURE__ */ React69.createContext(void 0);
 if (true) TooltipPositionerContext.displayName = "TooltipPositionerContext";
 function useTooltipPositionerContext() {
-  const context = React68.useContext(TooltipPositionerContext);
+  const context = React69.useContext(TooltipPositionerContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: TooltipPositionerContext is missing. TooltipPositioner parts must be placed within <Tooltip.Positioner>." : formatErrorMessage_default(71));
   }
@@ -10790,7 +10821,7 @@ function useTooltipPositionerContext() {
 
 // node_modules/@base-ui/react/tooltip/positioner/TooltipPositioner.mjs
 var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
-var TooltipPositioner = /* @__PURE__ */ React69.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
+var TooltipPositioner = /* @__PURE__ */ React70.forwardRef(function TooltipPositioner2(componentProps, forwardedRef) {
   const {
     render: render4,
     className: className2,
@@ -10837,7 +10868,7 @@ var TooltipPositioner = /* @__PURE__ */ React69.forwardRef(function TooltipPosit
     collisionAvoidance,
     adaptiveOrigin: hasViewport ? adaptiveOrigin : void 0
   });
-  const state = React69.useMemo(() => ({
+  const state = React70.useMemo(() => ({
     open,
     side: positioning.side,
     align: positioning.align,
@@ -10860,12 +10891,12 @@ var TooltipPositioner = /* @__PURE__ */ React69.forwardRef(function TooltipPosit
 if (true) TooltipPositioner.displayName = "TooltipPositioner";
 
 // node_modules/@base-ui/react/tooltip/popup/TooltipPopup.mjs
-var React70 = __toESM(require_react(), 1);
+var React71 = __toESM(require_react(), 1);
 var stateAttributesMapping4 = {
   ...popupStateMapping,
   ...transitionStatusMapping
 };
-var TooltipPopup = /* @__PURE__ */ React70.forwardRef(function TooltipPopup2(componentProps, forwardedRef) {
+var TooltipPopup = /* @__PURE__ */ React71.forwardRef(function TooltipPopup2(componentProps, forwardedRef) {
   const {
     render: render4,
     className: className2,
@@ -10916,8 +10947,8 @@ var TooltipPopup = /* @__PURE__ */ React70.forwardRef(function TooltipPopup2(com
 if (true) TooltipPopup.displayName = "TooltipPopup";
 
 // node_modules/@base-ui/react/tooltip/arrow/TooltipArrow.mjs
-var React71 = __toESM(require_react(), 1);
-var TooltipArrow = /* @__PURE__ */ React71.forwardRef(function TooltipArrow2(componentProps, forwardedRef) {
+var React72 = __toESM(require_react(), 1);
+var TooltipArrow = /* @__PURE__ */ React72.forwardRef(function TooltipArrow2(componentProps, forwardedRef) {
   const {
     render: render4,
     className: className2,
@@ -10955,7 +10986,7 @@ var TooltipArrow = /* @__PURE__ */ React71.forwardRef(function TooltipArrow2(com
 if (true) TooltipArrow.displayName = "TooltipArrow";
 
 // node_modules/@base-ui/react/tooltip/provider/TooltipProvider.mjs
-var React72 = __toESM(require_react(), 1);
+var React73 = __toESM(require_react(), 1);
 var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
 var TooltipProvider = function TooltipProvider2(props) {
   const {
@@ -10963,11 +10994,11 @@ var TooltipProvider = function TooltipProvider2(props) {
     closeDelay,
     timeout = 400
   } = props;
-  const contextValue = React72.useMemo(() => ({
+  const contextValue = React73.useMemo(() => ({
     delay,
     closeDelay
   }), [delay, closeDelay]);
-  const delayValue = React72.useMemo(() => ({
+  const delayValue = React73.useMemo(() => ({
     open: delay,
     close: closeDelay
   }), [delay, closeDelay]);
@@ -10983,7 +11014,7 @@ var TooltipProvider = function TooltipProvider2(props) {
 if (true) TooltipProvider.displayName = "TooltipProvider";
 
 // node_modules/@base-ui/react/tooltip/viewport/TooltipViewport.mjs
-var React73 = __toESM(require_react(), 1);
+var React74 = __toESM(require_react(), 1);
 
 // node_modules/@base-ui/react/tooltip/viewport/TooltipViewportCssVars.mjs
 var TooltipViewportCssVars = /* @__PURE__ */ (function(TooltipViewportCssVars2) {
@@ -10998,7 +11029,7 @@ var stateAttributesMapping5 = {
     "data-activation-direction": value
   } : null
 };
-var TooltipViewport = /* @__PURE__ */ React73.forwardRef(function TooltipViewport2(componentProps, forwardedRef) {
+var TooltipViewport = /* @__PURE__ */ React74.forwardRef(function TooltipViewport2(componentProps, forwardedRef) {
   const {
     render: render4,
     className: className2,
@@ -11290,35 +11321,11 @@ var Badge = (0, import_element11.forwardRef)(function Badge2({ intent = "none", 
   );
 });
 
-// packages/ui/build-module/icon/icon.mjs
+// packages/ui/build-module/button/button.mjs
 var import_element12 = __toESM(require_element(), 1);
-var import_primitives = __toESM(require_primitives(), 1);
+var import_i18n = __toESM(require_i18n(), 1);
 var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
-var Icon = (0, import_element12.forwardRef)(function Icon2({ icon, size: size4 = 24, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
-    import_primitives.SVG,
-    {
-      ref,
-      ...icon.props,
-      ...restProps,
-      width: size4,
-      height: size4
-    }
-  );
-});
-
-// packages/ui/build-module/card/index.mjs
-var card_exports = {};
-__export(card_exports, {
-  Content: () => Content,
-  FullBleed: () => FullBleed,
-  Header: () => Header,
-  Root: () => Root,
-  Title: () => Title
-});
-
-// packages/ui/build-module/card/root.mjs
-var import_element13 = __toESM(require_element(), 1);
+import { speak } from "@wordpress/a11y";
 var STYLE_HASH_ATTRIBUTE3 = "data-wp-hash";
 function getRuntime3() {
   const globalScope = globalThis;
@@ -11400,26 +11407,86 @@ function registerStyle3(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
+  registerStyle3("b74f1ac304", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:before{aspect-ratio:1;border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid;border-block-end-color:transparent;border-block-start-color:var(--wp-ui-button-foreground-color);border-inline-end-color:var(--wp-ui-button-foreground-color);border-inline-start-color:transparent;border-radius:50%;box-sizing:border-box;content:"";display:block;height:var(--wp-ui-button-font-size);inset-inline-start:50%;opacity:0;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%);@media not (prefers-reduced-motion){transition:opacity .1s ease-out}@media (forced-colors:active){border-block-end-style:none;border-bottom-color:ButtonText;border-inline-start-style:none;border-left-color:ButtonText;border-right-color:ButtonText;border-top-color:ButtonText}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._9f6fc6553aeb36fe__icon{margin:var(--wp-ui-button-icon-margin)}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.ad0619a3217c6a5b__is-minimal[aria-pressed=true],&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._914b42f315c0e580__is-loading:not(.abbb272e2ce49bd6__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}*{opacity:0}&:before{opacity:1;transition-delay:.05s;@media not (prefers-reduced-motion){animation:_5a1d53da6f830c8d__loading-animation 1s linear infinite}}}}@keyframes _5a1d53da6f830c8d__loading-animation{0%{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}}');
+}
+var style_default3 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "icon": "_9f6fc6553aeb36fe__icon", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "loading-animation": "_5a1d53da6f830c8d__loading-animation" };
+if (typeof process === "undefined" || true) {
   registerStyle3("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 }
 var resets_default = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 if (typeof process === "undefined" || true) {
-  registerStyle3("5d38cbdd27", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
+  registerStyle3("2ffedd8246", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
 }
-var style_default3 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
-var Root = (0, import_element13.forwardRef)(function Card({ render: render4, ...restProps }, ref) {
-  const mergedClassName = clsx_default(style_default3.root, resets_default["box-sizing"]);
-  const element = useRender({
-    defaultTagName: "div",
-    render: render4,
-    ref,
-    props: mergeProps({ className: mergedClassName }, restProps)
-  });
-  return element;
+var focus_module_default = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
+if (typeof process === "undefined" || true) {
+  registerStyle3("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+}
+var global_css_defense_default2 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+var Button3 = (0, import_element12.forwardRef)(
+  function Button22({
+    tone = "brand",
+    variant = "solid",
+    size: size4 = "default",
+    className: className2,
+    focusableWhenDisabled = true,
+    disabled: disabled2,
+    loading,
+    loadingAnnouncement = (0, import_i18n.__)("Loading"),
+    children,
+    ...props
+  }, ref) {
+    const mergedClassName = clsx_default(
+      global_css_defense_default2.button,
+      resets_default["box-sizing"],
+      focus_module_default["outset-ring--focus-except-active"],
+      variant !== "unstyled" && style_default3.button,
+      style_default3[`is-${tone}`],
+      style_default3[`is-${variant}`],
+      style_default3[`is-${size4}`],
+      loading && style_default3["is-loading"],
+      className2
+    );
+    (0, import_element12.useEffect)(() => {
+      if (loading && loadingAnnouncement) {
+        speak(loadingAnnouncement);
+      }
+    }, [loading, loadingAnnouncement]);
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+      Button,
+      {
+        ref,
+        className: mergedClassName,
+        focusableWhenDisabled,
+        disabled: disabled2 ?? loading,
+        ...props,
+        children
+      }
+    );
+  }
+);
+
+// packages/ui/build-module/button/icon.mjs
+var import_element14 = __toESM(require_element(), 1);
+
+// packages/ui/build-module/icon/icon.mjs
+var import_element13 = __toESM(require_element(), 1);
+var import_primitives = __toESM(require_primitives(), 1);
+var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+var Icon = (0, import_element13.forwardRef)(function Icon2({ icon, size: size4 = 24, ...restProps }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+    import_primitives.SVG,
+    {
+      ref,
+      ...icon.props,
+      ...restProps,
+      width: size4,
+      height: size4
+    }
+  );
 });
 
-// packages/ui/build-module/card/header.mjs
-var import_element14 = __toESM(require_element(), 1);
+// packages/ui/build-module/button/icon.mjs
+var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE4 = "data-wp-hash";
 function getRuntime4() {
   const globalScope = globalThis;
@@ -11501,2763 +11568,284 @@ function registerStyle4(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle4("5d38cbdd27", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
+  registerStyle4("b74f1ac304", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._97b0fc33c028be1a__button,.abbb272e2ce49bd6__is-unstyled{appearance:none;padding:0}._97b0fc33c028be1a__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._914b42f315c0e580__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:before{aspect-ratio:1;border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid;border-block-end-color:transparent;border-block-start-color:var(--wp-ui-button-foreground-color);border-inline-end-color:var(--wp-ui-button-foreground-color);border-inline-start-color:transparent;border-radius:50%;box-sizing:border-box;content:"";display:block;height:var(--wp-ui-button-font-size);inset-inline-start:50%;opacity:0;pointer-events:none;position:absolute;top:50%;transform:translate(-50%,-50%);@media not (prefers-reduced-motion){transition:opacity .1s ease-out}@media (forced-colors:active){border-block-end-style:none;border-bottom-color:ButtonText;border-inline-start-style:none;border-left-color:ButtonText;border-right-color:ButtonText;border-top-color:ButtonText}}}._908205475f9f2a92__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._9f6fc6553aeb36fe__icon{margin:var(--wp-ui-button-icon-margin)}.dd460c965226cc77__is-brand{&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}.e722a8f96726aa99__is-neutral{&.ad0619a3217c6a5b__is-minimal[aria-pressed=true],&.b50b3358c5fb4d0b__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline,&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._62d5a778b7b258ee__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&.ad0619a3217c6a5b__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.abbb272e2ce49bd6__is-unstyled{background:none;border:none;min-width:unset}.cf59cf1b69629838__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._914b42f315c0e580__is-loading:not(.abbb272e2ce49bd6__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}*{opacity:0}&:before{opacity:1;transition-delay:.05s;@media not (prefers-reduced-motion){animation:_5a1d53da6f830c8d__loading-animation 1s linear infinite}}}}@keyframes _5a1d53da6f830c8d__loading-animation{0%{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(1turn)}}}');
 }
-var style_default4 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
-var Header = (0, import_element14.forwardRef)(
-  function CardHeader({ render: render4, ...props }, ref) {
-    const element = useRender({
-      defaultTagName: "div",
-      render: render4,
-      ref,
-      props: mergeProps({ className: style_default4.header }, props)
-    });
-    return element;
-  }
-);
-
-// packages/ui/build-module/card/content.mjs
-var import_element15 = __toESM(require_element(), 1);
-var STYLE_HASH_ATTRIBUTE5 = "data-wp-hash";
-function getRuntime5() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument5(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash5(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE5}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE5) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle5(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime5();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash5(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE5, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument5(targetDocument) {
-  const runtime = getRuntime5();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle5(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle5(hash, css) {
-  const runtime = getRuntime5();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle5(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle5("5d38cbdd27", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
-}
-var style_default5 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
-var Content = (0, import_element15.forwardRef)(
-  function CardContent({ render: render4, ...props }, ref) {
-    const element = useRender({
-      defaultTagName: "div",
-      render: render4,
-      ref,
-      props: mergeProps({ className: style_default5.content }, props)
-    });
-    return element;
-  }
-);
-
-// packages/ui/build-module/card/full-bleed.mjs
-var import_element16 = __toESM(require_element(), 1);
-var STYLE_HASH_ATTRIBUTE6 = "data-wp-hash";
-function getRuntime6() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument6(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash6(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE6}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE6) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle6(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime6();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash6(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE6, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument6(targetDocument) {
-  const runtime = getRuntime6();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle6(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle6(hash, css) {
-  const runtime = getRuntime6();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle6(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle6("5d38cbdd27", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
-}
-var style_default6 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
-var FullBleed = (0, import_element16.forwardRef)(
-  function CardFullBleed({ render: render4, ...props }, ref) {
-    const element = useRender({
-      defaultTagName: "div",
-      render: render4,
-      ref,
-      props: mergeProps(
-        { className: style_default6.fullbleed },
-        props
-      )
-    });
-    return element;
-  }
-);
-
-// packages/ui/build-module/card/title.mjs
-var import_element17 = __toESM(require_element(), 1);
-var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
-var DEFAULT_TAG = /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", {});
-var Title = (0, import_element17.forwardRef)(
-  function CardTitle({ render: render4 = DEFAULT_TAG, children, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
-      Text,
+var style_default4 = { "button": "_97b0fc33c028be1a__button", "is-unstyled": "abbb272e2ce49bd6__is-unstyled", "is-loading": "_914b42f315c0e580__is-loading", "is-small": "_908205475f9f2a92__is-small", "icon": "_9f6fc6553aeb36fe__icon", "is-brand": "dd460c965226cc77__is-brand", "is-outline": "_62d5a778b7b258ee__is-outline", "is-minimal": "ad0619a3217c6a5b__is-minimal", "is-neutral": "e722a8f96726aa99__is-neutral", "is-solid": "b50b3358c5fb4d0b__is-solid", "is-compact": "cf59cf1b69629838__is-compact", "loading-animation": "_5a1d53da6f830c8d__loading-animation" };
+var ButtonIcon = (0, import_element14.forwardRef)(
+  function ButtonIcon2({ className: className2, icon, ...props }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+      Icon,
       {
         ref,
-        variant: "heading-lg",
-        render: render4,
-        ...props,
-        children
+        icon,
+        className: clsx_default(style_default4.icon, className2),
+        size: 24,
+        ...props
       }
     );
   }
 );
 
-// packages/ui/build-module/collapsible/panel.mjs
-var import_element18 = __toESM(require_element(), 1);
-var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
-var Panel = (0, import_element18.forwardRef)(
-  function CollapsiblePanel3(props, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(index_parts_exports.Panel, { ref: forwardedRef, ...props });
-  }
-);
-
-// packages/ui/build-module/collapsible/root.mjs
-var import_element19 = __toESM(require_element(), 1);
-var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
-var Root2 = (0, import_element19.forwardRef)(
-  function CollapsibleRoot3(props, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(index_parts_exports.Root, { ref: forwardedRef, ...props });
-  }
-);
-
-// packages/ui/build-module/collapsible/trigger.mjs
-var import_element20 = __toESM(require_element(), 1);
-var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
-var Trigger = (0, import_element20.forwardRef)(
-  function CollapsibleTrigger3(props, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(index_parts_exports.Trigger, { ref: forwardedRef, ...props });
-  }
-);
-
-// packages/ui/build-module/collapsible-card/index.mjs
-var collapsible_card_exports = {};
-__export(collapsible_card_exports, {
-  Content: () => Content2,
-  Header: () => Header2,
-  HeaderDescription: () => HeaderDescription,
-  Root: () => Root3
+// packages/ui/build-module/button/index.mjs
+ButtonIcon.displayName = "Button.Icon";
+var Button4 = Object.assign(Button3, {
+  /**
+   * An icon component specifically designed to work well when rendered inside
+   * a `Button` component.
+   */
+  Icon: ButtonIcon
 });
 
-// packages/ui/build-module/collapsible-card/root.mjs
-var import_element21 = __toESM(require_element(), 1);
-var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
-var Root3 = (0, import_element21.forwardRef)(
-  function CollapsibleCardRoot({ render: render4, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
-      Root2,
-      {
-        ref,
-        render: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Root, { render: render4 }),
-        ...restProps
-      }
-    );
-  }
-);
-
-// packages/ui/build-module/collapsible-card/header.mjs
-var import_element23 = __toESM(require_element(), 1);
-
-// packages/icons/build-module/library/aspect-ratio.mjs
-var import_primitives2 = __toESM(require_primitives(), 1);
-var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
-var aspect_ratio_default = /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives2.Path, { d: "M18.5 5.5h-13c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h13c1.1 0 2-.9 2-2v-9c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5h-13c-.3 0-.5-.2-.5-.5v-9c0-.3.2-.5.5-.5h13c.3 0 .5.2.5.5v9zM6.5 12H8v-2h2V8.5H6.5V12zm9.5 2h-2v1.5h3.5V12H16v2z" }) });
-
-// packages/icons/build-module/library/check.mjs
-var import_primitives3 = __toESM(require_primitives(), 1);
-var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
-var check_default = /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_primitives3.Path, { d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z" }) });
-
-// packages/icons/build-module/library/chevron-down.mjs
-var import_primitives4 = __toESM(require_primitives(), 1);
-var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
-var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_primitives4.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
-
-// packages/icons/build-module/library/chevron-right.mjs
-var import_primitives5 = __toESM(require_primitives(), 1);
-var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
-var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_primitives5.Path, { d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z" }) });
-
-// packages/icons/build-module/library/close-small.mjs
-var import_primitives6 = __toESM(require_primitives(), 1);
-var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
-var close_small_default = /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_primitives6.Path, { d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z" }) });
-
-// packages/icons/build-module/library/close.mjs
-var import_primitives7 = __toESM(require_primitives(), 1);
-var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
-var close_default = /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives7.Path, { d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z" }) });
-
-// packages/icons/build-module/library/drawer-right.mjs
-var import_primitives8 = __toESM(require_primitives(), 1);
-var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
-var drawer_right_default = /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives8.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-4 14.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h8v13zm4.5-.5c0 .3-.2.5-.5.5h-2.5v-13H18c.3 0 .5.2.5.5v12z" }) });
-
-// packages/icons/build-module/library/envelope.mjs
-var import_primitives9 = __toESM(require_primitives(), 1);
-var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
-var envelope_default = /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives9.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M3 7c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Zm2-.5h14c.3 0 .5.2.5.5v1L12 13.5 4.5 7.9V7c0-.3.2-.5.5-.5Zm-.5 3.3V17c0 .3.2.5.5.5h14c.3 0 .5-.2.5-.5V9.8L12 15.4 4.5 9.8Z" }) });
-
-// packages/icons/build-module/library/error.mjs
-var import_primitives10 = __toESM(require_primitives(), 1);
-var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
-var error_default = /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives10.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12.218 5.377a.25.25 0 0 0-.436 0l-7.29 12.96a.25.25 0 0 0 .218.373h14.58a.25.25 0 0 0 .218-.372l-7.29-12.96Zm-1.743-.735c.669-1.19 2.381-1.19 3.05 0l7.29 12.96a1.75 1.75 0 0 1-1.525 2.608H4.71a1.75 1.75 0 0 1-1.525-2.608l7.29-12.96ZM12.75 17.46h-1.5v-1.5h1.5v1.5Zm-1.5-3h1.5v-5h-1.5v5Z" }) });
-
-// packages/icons/build-module/library/flip-horizontal.mjs
-var import_primitives11 = __toESM(require_primitives(), 1);
-var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
-var flip_horizontal_default = /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives11.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives11.Path, { d: "M4 6v12c0 1.1.9 2 2 2h3v-1.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h3V4H6c-1.1 0-2 .9-2 2zm7.2 16h1.5V2h-1.5v20zM15 5.5h1.5V4H15v1.5zm3.5.5H20c0-1.1-.9-2-2-2v1.5c.3 0 .5.2.5.5zm0 10.5H20v-2h-1.5v2zm0-3.5H20v-2h-1.5v2zm-.5 5.5V20c1.1 0 2-.9 2-2h-1.5c0 .3-.2.5-.5.5zM15 20h1.5v-1.5H15V20zm3.5-10.5H20v-2h-1.5v2z" }) });
-
-// packages/icons/build-module/library/flip-vertical.mjs
-var import_primitives12 = __toESM(require_primitives(), 1);
-var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
-var flip_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives12.Path, { d: "M2 11.2v1.5h20v-1.5H2zM5.5 6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v3H20V6c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v3h1.5V6zm2 14h2v-1.5h-2V20zm3.5 0h2v-1.5h-2V20zm7-1.5V20c1.1 0 2-.9 2-2h-1.5c0 .3-.2.5-.5.5zm.5-2H20V15h-1.5v1.5zM5.5 18H4c0 1.1.9 2 2 2v-1.5c-.3 0-.5-.2-.5-.5zm0-3H4v1.5h1.5V15zm9 5h2v-1.5h-2V20z" }) });
-
-// packages/icons/build-module/library/keyboard.mjs
-var import_primitives13 = __toESM(require_primitives(), 1);
-var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
-var keyboard_default = /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: [
-  /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives13.Path, { d: "m16 15.5h-8v-1.5h8zm-7.5-2.5h-2v-2h2zm3 0h-2v-2h2zm3 0h-2v-2h2zm3 0h-2v-2h2zm-9-3h-2v-2h2zm3 0h-2v-2h2zm3 0h-2v-2h2zm3 0h-2v-2h2z" }),
-  /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives13.Path, { d: "m18.5 6.5h-13a.5.5 0 0 0 -.5.5v9.5a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9.5a.5.5 0 0 0 -.5-.5zm-13-1.5h13a2 2 0 0 1 2 2v9.5a2 2 0 0 1 -2 2h-13a2 2 0 0 1 -2-2v-9.5a2 2 0 0 1 2-2z" })
-] });
-
-// packages/icons/build-module/library/line-solid.mjs
-var import_primitives14 = __toESM(require_primitives(), 1);
-var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
-var line_solid_default = /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives14.Path, { d: "M5 11.25h14v1.5H5z" }) });
-
-// packages/icons/build-module/library/link.mjs
-var import_primitives15 = __toESM(require_primitives(), 1);
-var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
-var link_default = /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives15.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives15.Path, { d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z" }) });
-
-// packages/icons/build-module/library/mobile.mjs
-var import_primitives16 = __toESM(require_primitives(), 1);
-var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
-var mobile_default = /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives16.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives16.Path, { d: "M15 4H9c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h6c.3 0 .5.2.5.5v12zm-4.5-.5h2V16h-2v1.5z" }) });
-
-// packages/icons/build-module/library/pencil.mjs
-var import_primitives17 = __toESM(require_primitives(), 1);
-var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
-var pencil_default = /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives17.Path, { d: "m19 7-3-3-8.5 8.5-1 4 4-1L19 7Zm-7 11.5H5V20h7v-1.5Z" }) });
-
-// packages/icons/build-module/library/plus.mjs
-var import_primitives18 = __toESM(require_primitives(), 1);
-var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
-var plus_default = /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives18.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives18.Path, { d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z" }) });
-
-// packages/icons/build-module/library/published.mjs
-var import_primitives19 = __toESM(require_primitives(), 1);
-var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
-var published_default = /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives19.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives19.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm11.53-1.47-1.06-1.06L11 12.94l-1.47-1.47-1.06 1.06L11 15.06l4.53-4.53Z" }) });
-
-// packages/icons/build-module/library/redo.mjs
-var import_primitives20 = __toESM(require_primitives(), 1);
-var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
-var redo_default = /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives20.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives20.Path, { d: "M15.6 6.5l-1.1 1 2.9 3.3H8c-.9 0-1.7.3-2.3.9-1.4 1.5-1.4 4.2-1.4 5.6v.2h1.5v-.3c0-1.1 0-3.5 1-4.5.3-.3.7-.5 1.3-.5h9.2L14.5 15l1.1 1.1 4.6-4.6-4.6-5z" }) });
-
-// packages/icons/build-module/library/rotate-left.mjs
-var import_primitives21 = __toESM(require_primitives(), 1);
-var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
-var rotate_left_default = /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives21.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives21.Path, { d: "M12 4V2.2L9 4.8l3 2.5V5.5c3.6 0 6.5 2.9 6.5 6.5 0 2.9-1.9 5.3-4.5 6.2v.2l-.1-.2c-.4.1-.7.2-1.1.2l.2 1.5c.3 0 .6-.1 1-.2 3.5-.9 6-4 6-7.7 0-4.4-3.6-8-8-8zm-7.9 7l1.5.2c.1-1.2.5-2.3 1.2-3.2l-1.1-.9C4.8 8.2 4.3 9.6 4.1 11zm1.5 1.8l-1.5.2c.1.7.3 1.4.5 2 .3.7.6 1.3 1 1.8l1.2-.8c-.3-.5-.6-1-.8-1.5s-.4-1.1-.4-1.7zm1.5 5.5c1.1.9 2.4 1.4 3.8 1.6l.2-1.5c-1.1-.1-2.2-.5-3.1-1.2l-.9 1.1z" }) });
-
-// packages/icons/build-module/library/rotate-right.mjs
-var import_primitives22 = __toESM(require_primitives(), 1);
-var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
-var rotate_right_default = /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives22.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives22.Path, { d: "M15.1 4.8l-3-2.5V4c-4.4 0-8 3.6-8 8 0 3.7 2.5 6.9 6 7.7.3.1.6.1 1 .2l.2-1.5c-.4 0-.7-.1-1.1-.2l-.1.2v-.2c-2.6-.8-4.5-3.3-4.5-6.2 0-3.6 2.9-6.5 6.5-6.5v1.8l3-2.5zM20 11c-.2-1.4-.7-2.7-1.6-3.8l-1.2.8c.7.9 1.1 2 1.3 3.1L20 11zm-1.5 1.8c-.1.5-.2 1.1-.4 1.6s-.5 1-.8 1.5l1.2.9c.4-.5.8-1.1 1-1.8s.5-1.3.5-2l-1.5-.2zm-5.6 5.6l.2 1.5c1.4-.2 2.7-.7 3.8-1.6l-.9-1.1c-.9.7-2 1.1-3.1 1.2z" }) });
-
-// packages/icons/build-module/library/seen.mjs
-var import_primitives23 = __toESM(require_primitives(), 1);
-var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
-var seen_default = /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives23.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives23.Path, { d: "M3.99961 13C4.67043 13.3354 4.6703 13.3357 4.67017 13.3359L4.67298 13.3305C4.67621 13.3242 4.68184 13.3135 4.68988 13.2985C4.70595 13.2686 4.7316 13.2218 4.76695 13.1608C4.8377 13.0385 4.94692 12.8592 5.09541 12.6419C5.39312 12.2062 5.84436 11.624 6.45435 11.0431C7.67308 9.88241 9.49719 8.75 11.9996 8.75C14.502 8.75 16.3261 9.88241 17.5449 11.0431C18.1549 11.624 18.6061 12.2062 18.9038 12.6419C19.0523 12.8592 19.1615 13.0385 19.2323 13.1608C19.2676 13.2218 19.2933 13.2686 19.3093 13.2985C19.3174 13.3135 19.323 13.3242 19.3262 13.3305L19.3291 13.3359C19.3289 13.3357 19.3288 13.3354 19.9996 13C20.6704 12.6646 20.6703 12.6643 20.6701 12.664L20.6697 12.6632L20.6688 12.6614L20.6662 12.6563L20.6583 12.6408C20.6517 12.6282 20.6427 12.6108 20.631 12.5892C20.6078 12.5459 20.5744 12.4852 20.5306 12.4096C20.4432 12.2584 20.3141 12.0471 20.1423 11.7956C19.7994 11.2938 19.2819 10.626 18.5794 9.9569C17.1731 8.61759 14.9972 7.25 11.9996 7.25C9.00203 7.25 6.82614 8.61759 5.41987 9.9569C4.71736 10.626 4.19984 11.2938 3.85694 11.7956C3.68511 12.0471 3.55605 12.2584 3.4686 12.4096C3.42484 12.4852 3.39142 12.5459 3.36818 12.5892C3.35656 12.6108 3.34748 12.6282 3.34092 12.6408L3.33297 12.6563L3.33041 12.6614L3.32948 12.6632L3.32911 12.664C3.32894 12.6643 3.32879 12.6646 3.99961 13ZM11.9996 16C13.9326 16 15.4996 14.433 15.4996 12.5C15.4996 10.567 13.9326 9 11.9996 9C10.0666 9 8.49961 10.567 8.49961 12.5C8.49961 14.433 10.0666 16 11.9996 16Z" }) });
-
-// packages/icons/build-module/library/star-empty.mjs
-var import_primitives24 = __toESM(require_primitives(), 1);
-var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
-var star_empty_default = /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives24.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives24.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M9.706 8.646a.25.25 0 01-.188.137l-4.626.672a.25.25 0 00-.139.427l3.348 3.262a.25.25 0 01.072.222l-.79 4.607a.25.25 0 00.362.264l4.138-2.176a.25.25 0 01.233 0l4.137 2.175a.25.25 0 00.363-.263l-.79-4.607a.25.25 0 01.072-.222l3.347-3.262a.25.25 0 00-.139-.427l-4.626-.672a.25.25 0 01-.188-.137l-2.069-4.192a.25.25 0 00-.448 0L9.706 8.646zM12 7.39l-.948 1.921a1.75 1.75 0 01-1.317.957l-2.12.308 1.534 1.495c.412.402.6.982.503 1.55l-.362 2.11 1.896-.997a1.75 1.75 0 011.629 0l1.895.997-.362-2.11a1.75 1.75 0 01.504-1.55l1.533-1.495-2.12-.308a1.75 1.75 0 01-1.317-.957L12 7.39z" }) });
-
-// packages/icons/build-module/library/star-filled.mjs
-var import_primitives25 = __toESM(require_primitives(), 1);
-var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
-var star_filled_default = /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives25.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives25.Path, { d: "M11.776 4.454a.25.25 0 01.448 0l2.069 4.192a.25.25 0 00.188.137l4.626.672a.25.25 0 01.139.426l-3.348 3.263a.25.25 0 00-.072.222l.79 4.607a.25.25 0 01-.362.263l-4.138-2.175a.25.25 0 00-.232 0l-4.138 2.175a.25.25 0 01-.363-.263l.79-4.607a.25.25 0 00-.071-.222L4.754 9.881a.25.25 0 01.139-.426l4.626-.672a.25.25 0 00.188-.137l2.069-4.192z" }) });
-
-// packages/icons/build-module/library/undo.mjs
-var import_primitives26 = __toESM(require_primitives(), 1);
-var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
-var undo_default = /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives26.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_primitives26.Path, { d: "M18.3 11.7c-.6-.6-1.4-.9-2.3-.9H6.7l2.9-3.3-1.1-1-4.5 5L8.5 16l1-1-2.7-2.7H16c.5 0 .9.2 1.3.5 1 1 1 3.4 1 4.5v.3h1.5v-.2c0-1.5 0-4.3-1.5-5.7z" }) });
-
-// packages/icons/build-module/library/unseen.mjs
-var import_primitives27 = __toESM(require_primitives(), 1);
-var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
-var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_primitives27.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_primitives27.Path, { d: "M20.7 12.7s0-.1-.1-.2c0-.2-.2-.4-.4-.6-.3-.5-.9-1.2-1.6-1.8-.7-.6-1.5-1.3-2.6-1.8l-.6 1.4c.9.4 1.6 1 2.1 1.5.6.6 1.1 1.2 1.4 1.6.1.2.3.4.3.5v.1l.7-.3.7-.3Zm-5.2-9.3-1.8 4c-.5-.1-1.1-.2-1.7-.2-3 0-5.2 1.4-6.6 2.7-.7.7-1.2 1.3-1.6 1.8-.2.3-.3.5-.4.6 0 0 0 .1-.1.2s0 0 .7.3l.7.3V13c0-.1.2-.3.3-.5.3-.4.7-1 1.4-1.6 1.2-1.2 3-2.3 5.5-2.3H13v.3c-.4 0-.8-.1-1.1-.1-1.9 0-3.5 1.6-3.5 3.5s.6 2.3 1.6 2.9l-2 4.4.9.4 7.6-16.2-.9-.4Zm-3 12.6c1.7-.2 3-1.7 3-3.5s-.2-1.4-.6-1.9L12.4 16Z" }) });
-
-// packages/ui/build-module/collapsible-card/context.mjs
-var import_element22 = __toESM(require_element(), 1);
-var HeaderDescriptionIdContext = (0, import_element22.createContext)({
-  setDescriptionId: () => {
-  }
-});
-
-// packages/ui/build-module/collapsible-card/header.mjs
-var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE7 = "data-wp-hash";
-function getRuntime7() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument7(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash7(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE7}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE7) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle7(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime7();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash7(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE7, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument7(targetDocument) {
-  const runtime = getRuntime7();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle7(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle7(hash, css) {
-  const runtime = getRuntime7();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle7(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle7("78199613cf", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
-}
-var style_default7 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
-if (typeof process === "undefined" || true) {
-  registerStyle7("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
-}
-var global_css_defense_default2 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
-if (typeof process === "undefined" || true) {
-  registerStyle7("2ffedd8246", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-}
-var focus_module_default = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
-var Header2 = (0, import_element23.forwardRef)(
-  function CollapsibleCardHeader({ children, className: className2, render: render4, ...restProps }, ref) {
-    const [descriptionId, setDescriptionId] = (0, import_element23.useState)();
-    const contextValue = (0, import_element23.useMemo)(
-      () => ({ setDescriptionId }),
-      [setDescriptionId]
-    );
-    return useRender({
-      defaultTagName: "div",
-      render: render4,
-      ref,
-      props: mergeProps(restProps, {
-        className: clsx_default(
-          global_css_defense_default2.heading,
-          style_default7["heading-wrapper"],
-          className2
-        ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(HeaderDescriptionIdContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)(
-          Trigger,
-          {
-            className: style_default7.header,
-            render: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Header, {}),
-            nativeButton: false,
-            "aria-describedby": descriptionId,
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: style_default7["header-content"], children }),
-              /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
-                "div",
-                {
-                  className: clsx_default(
-                    style_default7["header-trigger-positioner"]
-                  ),
-                  children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
-                    "div",
-                    {
-                      className: clsx_default(
-                        style_default7["header-trigger-wrapper"],
-                        global_css_defense_default2.div,
-                        // While the interactive trigger element is the whole header,
-                        // the focus ring will be displayed only on the icon to visually
-                        // emulate it being the button.
-                        focus_module_default["outset-ring--focus-parent-visible"]
-                      ),
-                      children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
-                        Icon,
-                        {
-                          icon: chevron_down_default,
-                          className: style_default7["header-trigger"]
-                        }
-                      )
-                    }
-                  )
-                }
-              )
-            ]
-          }
-        ) })
-      })
-    });
-  }
-);
-
-// packages/ui/build-module/collapsible-card/header-description.mjs
-var import_element24 = __toESM(require_element(), 1);
-var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
-var HeaderDescription = (0, import_element24.forwardRef)(function CollapsibleCardHeaderDescription({ children, className: className2, ...restProps }, ref) {
-  const descriptionId = (0, import_element24.useId)();
-  const { setDescriptionId } = (0, import_element24.useContext)(HeaderDescriptionIdContext);
-  (0, import_element24.useEffect)(() => {
-    setDescriptionId(descriptionId);
-    return () => setDescriptionId(void 0);
-  }, [descriptionId, setDescriptionId]);
-  return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
-    "div",
-    {
-      ref,
-      id: descriptionId,
-      "aria-hidden": "true",
-      className: className2,
-      ...restProps,
-      children
-    }
-  );
-});
-
-// packages/ui/build-module/collapsible-card/content.mjs
-var import_element25 = __toESM(require_element(), 1);
-var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE8 = "data-wp-hash";
-function getRuntime8() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument8(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash8(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE8}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE8) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle8(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime8();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash8(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE8, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument8(targetDocument) {
-  const runtime = getRuntime8();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle8(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle8(hash, css) {
-  const runtime = getRuntime8();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle8(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle8("78199613cf", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
-}
-var style_default8 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
-var Content2 = (0, import_element25.forwardRef)(
-  function CollapsibleCardContent({ className: className2, render: render4, children, hiddenUntilFound = true, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
-      Panel,
-      {
-        ref,
-        className: (state) => clsx_default(
-          style_default8.content,
-          state.open && state.transitionStatus === "idle" && style_default8["overflow-visible"],
-          className2
-        ),
-        hiddenUntilFound,
-        ...restProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
-          Content,
-          {
-            className: style_default8["content-inner"],
-            render: render4,
-            children
-          }
-        )
-      }
-    );
-  }
-);
-
-// packages/ui/build-module/utils/render-slot-with-children.mjs
-var import_element26 = __toESM(require_element(), 1);
-function renderSlotWithChildren(slot, defaultSlot, children) {
-  return (0, import_element26.cloneElement)(slot ?? defaultSlot, { children });
+// node_modules/@date-fns/tz/tzName/index.js
+function tzName(timeZone, date, format7 = "long") {
+  return new Intl.DateTimeFormat("en-US", {
+    // Enforces engine to render the time. Without the option JavaScriptCore omits it.
+    hour: "numeric",
+    timeZone,
+    timeZoneName: format7
+  }).format(date).split(/\s/g).slice(2).join(" ");
 }
 
-// packages/ui/build-module/utils/theme-provider.mjs
-var theme = __toESM(require_theme(), 1);
-
-// packages/ui/build-module/lock-unlock.mjs
-var import_private_apis = __toESM(require_private_apis(), 1);
-var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-  "@wordpress/ui"
-);
-
-// packages/ui/build-module/utils/theme-provider.mjs
-function getThemeProvider() {
-  const themePackage = theme;
-  if (themePackage.ThemeProvider) {
-    return themePackage.ThemeProvider;
-  }
-  if (!themePackage.privateApis) {
-    throw new Error(
-      "@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`."
-    );
-  }
-  return unlock(
-    themePackage.privateApis
-  ).ThemeProvider;
-}
-var ThemeProvider = getThemeProvider();
-
-// packages/ui/build-module/stack/stack.mjs
-var import_element27 = __toESM(require_element(), 1);
-var STYLE_HASH_ATTRIBUTE9 = "data-wp-hash";
-function getRuntime9() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument9(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash9(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE9}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE9) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle9(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime9();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash9(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE9, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument9(targetDocument) {
-  const runtime = getRuntime9();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle9(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle9(hash, css) {
-  const runtime = getRuntime9();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle9(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle9("32aba35fe1", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._19ce0419607e1896__stack{display:flex}}}");
-}
-var style_default9 = { "stack": "_19ce0419607e1896__stack" };
-var gapTokens = {
-  xs: "var(--wpds-dimension-gap-xs, 4px)",
-  sm: "var(--wpds-dimension-gap-sm, 8px)",
-  md: "var(--wpds-dimension-gap-md, 12px)",
-  lg: "var(--wpds-dimension-gap-lg, 16px)",
-  xl: "var(--wpds-dimension-gap-xl, 24px)",
-  "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
-  "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
-};
-var Stack = (0, import_element27.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
-  const style = {
-    gap: gap && gapTokens[gap],
-    alignItems: align,
-    justifyContent: justify,
-    flexDirection: direction,
-    flexWrap: wrap
-  };
-  const element = useRender({
-    render: render4,
-    ref,
-    props: mergeProps(props, { style, className: style_default9.stack })
-  });
-  return element;
-});
-
-// packages/ui/build-module/tooltip/index.mjs
-var tooltip_exports = {};
-__export(tooltip_exports, {
-  Popup: () => Popup,
-  Portal: () => Portal,
-  Positioner: () => Positioner,
-  Provider: () => Provider,
-  Root: () => Root4,
-  Trigger: () => Trigger2
-});
-
-// packages/ui/build-module/tooltip/popup.mjs
-var import_element30 = __toESM(require_element(), 1);
-
-// packages/ui/build-module/tooltip/portal.mjs
-var import_element28 = __toESM(require_element(), 1);
-
-// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
-var STYLE_HASH_ATTRIBUTE10 = "data-wp-hash";
-function getRuntime10() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument10(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash10(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE10}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE10) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle10(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime10();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash10(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE10, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument10(targetDocument) {
-  const runtime = getRuntime10();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle10(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle10(hash, css) {
-  const runtime = getRuntime10();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle10(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle10("be37f31c1e", "._11fc52b637ff8a7e__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._11fc52b637ff8a7e__slot>*{pointer-events:auto}}}");
-}
-var wp_compat_overlay_slot_default = { "slot": "_11fc52b637ff8a7e__slot" };
-var WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
-function resolveOwnerDocument() {
-  return typeof document === "undefined" ? null : document;
-}
-function isInWordPressEnvironment() {
-  let topWp;
+// node_modules/@date-fns/tz/tzOffset/index.js
+var offsetFormatCache = {};
+var offsetCache = {};
+function tzOffset(timeZone, date) {
   try {
-    topWp = window.top?.wp;
+    const format7 = offsetFormatCache[timeZone] ||= new Intl.DateTimeFormat("en-US", {
+      timeZone,
+      timeZoneName: "longOffset"
+    }).format;
+    const offsetStr = format7(date).split("GMT")[1];
+    if (offsetStr in offsetCache) return offsetCache[offsetStr];
+    return calcOffset(offsetStr, offsetStr.split(":"));
   } catch {
+    if (timeZone in offsetCache) return offsetCache[timeZone];
+    const captures = timeZone?.match(offsetRe);
+    if (captures) return calcOffset(timeZone, captures.slice(1));
+    return NaN;
   }
-  const wp = topWp ?? window.wp;
-  return typeof wp?.components === "object" && wp.components !== null;
 }
-var cachedSlot = null;
-function ensureSlotIsAccessible(element) {
-  element.setAttribute("aria-hidden", "false");
-  return element;
-}
-function createSlot(ownerDocument2) {
-  const element = ownerDocument2.createElement("div");
-  element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
-  if (wp_compat_overlay_slot_default.slot) {
-    element.classList.add(wp_compat_overlay_slot_default.slot);
-  }
-  ownerDocument2.body.appendChild(element);
-  return element;
-}
-function getWpCompatOverlaySlot() {
-  if (typeof window === "undefined") {
-    return void 0;
-  }
-  if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) {
-    return void 0;
-  }
-  const ownerDocument2 = resolveOwnerDocument();
-  if (!ownerDocument2 || !ownerDocument2.body) {
-    return void 0;
-  }
-  if (cachedSlot && cachedSlot.ownerDocument === ownerDocument2 && cachedSlot.isConnected) {
-    return ensureSlotIsAccessible(cachedSlot);
-  }
-  const existing = ownerDocument2.querySelector(
-    `[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`
-  );
-  if (existing instanceof HTMLDivElement) {
-    cachedSlot = ensureSlotIsAccessible(existing);
-    return cachedSlot;
-  }
-  if (cachedSlot?.isConnected) {
-    cachedSlot.remove();
-  }
-  cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument2));
-  return cachedSlot;
+var offsetRe = /([+-]\d\d):?(\d\d)?/;
+function calcOffset(cacheStr, values) {
+  const hours = +(values[0] || 0);
+  const minutes = +(values[1] || 0);
+  const seconds = +(values[2] || 0) / 60;
+  return offsetCache[cacheStr] = hours * 60 + minutes > 0 ? hours * 60 + minutes + seconds : hours * 60 - minutes - seconds;
 }
 
-// packages/ui/build-module/tooltip/portal.mjs
-var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
-var Portal = (0, import_element28.forwardRef)(
-  function TooltipPortal3({ container, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
-      index_parts_exports3.Portal,
-      {
-        container: container ?? getWpCompatOverlaySlot(),
-        ...restProps,
-        ref
+// node_modules/@date-fns/tz/date/mini.js
+var TZDateMini = class _TZDateMini extends Date {
+  //#region static
+  constructor(...args) {
+    super();
+    if (args.length > 1 && typeof args[args.length - 1] === "string") {
+      this.timeZone = args.pop();
+    }
+    this.internal = /* @__PURE__ */ new Date();
+    if (isNaN(tzOffset(this.timeZone, this))) {
+      this.setTime(NaN);
+    } else {
+      if (!args.length) {
+        this.setTime(Date.now());
+      } else if (typeof args[0] === "number" && (args.length === 1 || args.length === 2 && typeof args[1] !== "number")) {
+        this.setTime(args[0]);
+      } else if (typeof args[0] === "string") {
+        this.setTime(+new Date(args[0]));
+      } else if (args[0] instanceof Date) {
+        this.setTime(+args[0]);
+      } else {
+        this.setTime(+new Date(...args));
+        adjustToSystemTZ(this, args);
       }
-    );
-  }
-);
-
-// packages/ui/build-module/tooltip/positioner.mjs
-var import_element29 = __toESM(require_element(), 1);
-var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
-function getRuntime11() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument11(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash11(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE11}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE11) === hash) {
-      return true;
     }
   }
-  return false;
-}
-function injectStyle11(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime11();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash11(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE11, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument11(targetDocument) {
-  const runtime = getRuntime11();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle11(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle11(hash, css) {
-  const runtime = getRuntime11();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle11(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle11("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-}
-var resets_default2 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-if (typeof process === "undefined" || true) {
-  registerStyle11("19fcc06039", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
-}
-var style_default10 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
-var Positioner = (0, import_element29.forwardRef)(
-  function TooltipPositioner3({ align = "center", className: className2, side = "top", sideOffset = 4, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
-      index_parts_exports3.Positioner,
-      {
-        ref,
-        align,
-        side,
-        sideOffset,
-        ...props,
-        className: clsx_default(
-          resets_default2["box-sizing"],
-          style_default10.positioner,
-          className2
-        )
-      }
-    );
-  }
-);
-
-// packages/ui/build-module/tooltip/popup.mjs
-var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
-function getRuntime12() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument12(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash12(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE12}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE12) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle12(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime12();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash12(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE12, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument12(targetDocument) {
-  const runtime = getRuntime12();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle12(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle12(hash, css) {
-  const runtime = getRuntime12();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle12(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle12("19fcc06039", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
-}
-var style_default11 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
-var POPUP_COLOR = { background: "#1e1e1e" };
-var Popup = (0, import_element30.forwardRef)(function TooltipPopup3({ portal, positioner, children, className: className2, ...props }, ref) {
-  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
-    index_parts_exports3.Popup,
-    {
-      ref,
-      className: clsx_default(style_default11.popup, className2),
-      ...props,
-      children
-    }
-  ) });
-  const positionedPopup = renderSlotWithChildren(
-    positioner,
-    /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(Positioner, {}),
-    popupContent
-  );
-  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(Portal, {}), positionedPopup);
-});
-
-// packages/ui/build-module/tooltip/trigger.mjs
-var import_element31 = __toESM(require_element(), 1);
-var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
-var Trigger2 = (0, import_element31.forwardRef)(
-  function TooltipTrigger3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(index_parts_exports3.Trigger, { ref, ...props });
-  }
-);
-
-// packages/ui/build-module/utils/direction-provider.mjs
-var import_i18n = __toESM(require_i18n(), 1);
-var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
-function DirectionProvider3({ children }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(DirectionProvider, { direction: (0, import_i18n.isRTL)() ? "rtl" : "ltr", children });
-}
-
-// packages/ui/build-module/tooltip/root.mjs
-var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
-function Root4(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(index_parts_exports3.Root, { ...props }) });
-}
-
-// packages/ui/build-module/tooltip/provider.mjs
-var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
-function Provider({ ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(index_parts_exports3.Provider, { ...props });
-}
-
-// packages/ui/build-module/visually-hidden/visually-hidden.mjs
-var import_element32 = __toESM(require_element(), 1);
-var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
-function getRuntime13() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument13(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash13(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE13}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE13) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle13(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime13();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash13(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE13, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument13(targetDocument) {
-  const runtime = getRuntime13();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle13(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle13(hash, css) {
-  const runtime = getRuntime13();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle13(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle13("fa606a57ae", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f37b9e2e191ebd66__visually-hidden{word-wrap:normal;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal}}}");
-}
-var style_default12 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
-var VisuallyHidden = (0, import_element32.forwardRef)(
-  function VisuallyHidden2({ render: render4, ...restProps }, ref) {
-    const element = useRender({
-      render: render4,
-      ref,
-      props: mergeProps(
-        { className: style_default12["visually-hidden"] },
-        restProps,
-        {
-          // @ts-expect-error Arbitrary data-* attributes aren't indexable on the typed div props. Kept hardcoded so consumers can't change or remove it.
-          "data-visually-hidden": ""
-        }
-      )
-    });
-    return element;
-  }
-);
-
-// packages/ui/build-module/utils/use-schedule-validation.mjs
-var import_element33 = __toESM(require_element(), 1);
-function useScheduleValidation(validate) {
-  const validateRef = (0, import_element33.useRef)(validate);
-  validateRef.current = validate;
-  const timerRef = (0, import_element33.useRef)(null);
-  const unmountedRef = (0, import_element33.useRef)(false);
-  const scheduleValidation = (0, import_element33.useCallback)(() => {
-    if (unmountedRef.current) {
-      return;
-    }
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-    timerRef.current = setTimeout(() => {
-      validateRef.current();
-      timerRef.current = null;
-    }, 0);
-  }, []);
-  (0, import_element33.useEffect)(() => {
-    unmountedRef.current = false;
-    return () => {
-      unmountedRef.current = true;
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-    };
-  }, []);
-  return scheduleValidation;
-}
-
-// packages/ui/build-module/link/link.mjs
-var import_element34 = __toESM(require_element(), 1);
-var import_i18n2 = __toESM(require_i18n(), 1);
-var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE14 = "data-wp-hash";
-function getRuntime14() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument14(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash14(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE14}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE14) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle14(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime14();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash14(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE14, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument14(targetDocument) {
-  const runtime = getRuntime14();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle14(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle14(hash, css) {
-  const runtime = getRuntime14();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle14(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle14("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-}
-var resets_default3 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
-if (typeof process === "undefined" || true) {
-  registerStyle14("2ffedd8246", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-}
-var focus_module_default2 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
-if (typeof process === "undefined" || true) {
-  registerStyle14("e8e6a9be37", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d4250949359b05ce__link{text-decoration-thickness:from-font;text-underline-offset:.2em}.c6055659b8e2cd2c__is-brand,.c6055659b8e2cd2c__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}.c6055659b8e2cd2c__is-brand:active,.c6055659b8e2cd2c__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._92e0dfcaeee15b88__is-neutral,._92e0dfcaeee15b88__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._92e0dfcaeee15b88__is-neutral:active,._92e0dfcaeee15b88__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}.cf122a9bf1035d42__is-unstyled{--_gcd-a-color:inherit;color:inherit;text-decoration:none}._0cb411afac4c86c7__link-icon{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._0cb411afac4c86c7__link-icon:after{content:"\\2197"}._0cb411afac4c86c7__link-icon:dir(rtl):after{content:"\\2196"}}}');
-}
-var style_default13 = { "link": "d4250949359b05ce__link", "is-brand": "c6055659b8e2cd2c__is-brand", "is-neutral": "_92e0dfcaeee15b88__is-neutral", "is-unstyled": "cf122a9bf1035d42__is-unstyled", "link-icon": "_0cb411afac4c86c7__link-icon" };
-if (typeof process === "undefined" || true) {
-  registerStyle14("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
-}
-var global_css_defense_default3 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
-var Link = (0, import_element34.forwardRef)(function Link2({
-  children,
-  variant = "default",
-  tone = "brand",
-  openInNewTab = false,
-  render: render4,
-  className: className2,
-  ...props
-}, ref) {
-  const element = useRender({
-    render: render4,
-    defaultTagName: "a",
-    ref,
-    props: mergeProps(props, {
-      className: clsx_default(
-        global_css_defense_default3.a,
-        resets_default3["box-sizing"],
-        focus_module_default2["outset-ring--focus-except-active"],
-        variant !== "unstyled" && style_default13.link,
-        variant !== "unstyled" && style_default13[`is-${tone}`],
-        variant === "unstyled" && style_default13["is-unstyled"],
-        className2
-      ),
-      target: openInNewTab ? "_blank" : void 0,
-      children: /* @__PURE__ */ (0, import_jsx_runtime61.jsxs)(import_jsx_runtime61.Fragment, { children: [
-        children,
-        openInNewTab && /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
-          "span",
-          {
-            className: style_default13["link-icon"],
-            role: "img",
-            "aria-label": (
-              /* translators: accessibility text appended to link text */
-              (0, import_i18n2.__)("(opens in a new tab)")
-            )
-          }
-        )
-      ] })
-    })
-  });
-  return element;
-});
-
-// packages/ui/build-module/tabs/index.mjs
-var tabs_exports = {};
-__export(tabs_exports, {
-  List: () => List,
-  Panel: () => Panel2,
-  Root: () => Root5,
-  Tab: () => Tab
-});
-
-// packages/ui/build-module/tabs/list.mjs
-var import_element35 = __toESM(require_element(), 1);
-var import_compose = __toESM(require_compose(), 1);
-var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
-function getRuntime15() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument15(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash15(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE15}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE15) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle15(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime15();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash15(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE15, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument15(targetDocument) {
-  const runtime = getRuntime15();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle15(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle15(hash, css) {
-  const runtime = getRuntime15();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle15(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle15("54ae3f4680", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7313adbc8a112e90__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&._9f2ac729c68a735a__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._9f2ac729c68a735a__is-overflowing-first._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._59228b5227f38a99__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._1c37dcfaa1ad8cda__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height,border-radius,border-block;transition-timing-function:ease-out}outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;&[data-orientation=horizontal]{background-color:var(--wpds-color-stroke-interactive-neutral-strong,#6e6e6e);bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width);z-index:1}&[data-orientation=vertical]{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-radius:var(--wpds-border-radius-sm,2px);height:var(--active-tab-height);left:50%;top:0;translate:-50% var(--active-tab-top);width:100%;z-index:0}._7313adbc8a112e90__tablist[data-select-on-move=true]:has(:focus-visible)\n			&[data-orientation=vertical]{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));box-sizing:border-box}}.a5fd8814f195aa5e__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);cursor:default;@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:hover,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&:after{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}}._59228b5227f38a99__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px)}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-sm,8px) var(--wpds-dimension-padding-md,12px)}[data-orientation=vertical][data-select-on-move=false] &:after{content:"";inset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}._5dfc77e6edd345d4__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}._4a20e969d15e5ac1__tab-chevron{flex-shrink:0;margin-inline-end:calc(var(--wpds-dimension-gap-xs, 4px)*-1);opacity:0;[data-orientation=horizontal] &{display:none}[role=tab]:is([aria-selected=true],:focus-visible,:hover) &{opacity:1}@media not (prefers-reduced-motion){[data-select-on-move=true]\n				[role=tab]:is([aria-selected=true])\n				&{transition:opacity .15s linear .15s}}&:dir(rtl){rotate:180deg}}}}');
-}
-var style_default14 = { "tablist": "_7313adbc8a112e90__tablist", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children", "tab-chevron": "_4a20e969d15e5ac1__tab-chevron" };
-var SCROLL_EPSILON = 1;
-var List = (0, import_element35.forwardRef)(
-  function TabList({
-    children,
-    variant = "default",
-    className: className2,
-    activateOnFocus,
-    ...otherProps
-  }, forwardedRef) {
-    const [listEl, setListEl] = (0, import_element35.useState)(null);
-    const [overflow, setOverflow] = (0, import_element35.useState)({
-      first: false,
-      last: false,
-      isScrolling: false
-    });
-    (0, import_element35.useEffect)(() => {
-      if (!listEl) {
-        return;
-      }
-      const measureOverflow = () => {
-        const { scrollWidth, clientWidth, scrollLeft } = listEl;
-        const maxScroll = Math.max(scrollWidth - clientWidth, 0);
-        const direction = listEl.dir || (typeof window !== "undefined" ? window.getComputedStyle(listEl).direction : "ltr");
-        const scrollFromStart = direction === "rtl" && scrollLeft < 0 ? (
-          // In RTL layouts, scrollLeft is typically 0 at the visual "start"
-          // (right edge) and becomes negative toward the "end" (left edge).
-          // Normalize value for correct first/last detection logic.
-          -scrollLeft
-        ) : scrollLeft;
-        const next = {
-          first: scrollFromStart > SCROLL_EPSILON,
-          last: scrollFromStart < maxScroll - SCROLL_EPSILON,
-          isScrolling: scrollWidth > clientWidth
-        };
-        setOverflow(
-          (prev) => prev.first === next.first && prev.last === next.last && prev.isScrolling === next.isScrolling ? prev : next
-        );
-      };
-      const resizeObserver = new ResizeObserver(measureOverflow);
-      const observeTabs = () => {
-        resizeObserver.disconnect();
-        resizeObserver.observe(listEl);
-        listEl.querySelectorAll('[role="tab"]').forEach((tab) => resizeObserver.observe(tab));
-      };
-      const mutationObserver = new MutationObserver(observeTabs);
-      mutationObserver.observe(listEl, {
-        childList: true,
-        subtree: true
-      });
-      let scrollTick = false;
-      const throttleMeasureOverflowOnScroll = () => {
-        if (!scrollTick) {
-          requestAnimationFrame(() => {
-            measureOverflow();
-            scrollTick = false;
-          });
-          scrollTick = true;
-        }
-      };
-      listEl.addEventListener(
-        "scroll",
-        throttleMeasureOverflowOnScroll,
-        { passive: true }
-      );
-      observeTabs();
-      measureOverflow();
-      return () => {
-        listEl.removeEventListener(
-          "scroll",
-          throttleMeasureOverflowOnScroll
-        );
-        resizeObserver.disconnect();
-        mutationObserver.disconnect();
-      };
-    }, [listEl]);
-    const mergedListRef = (0, import_compose.useMergeRefs)([
-      forwardedRef,
-      (el) => setListEl(el)
-    ]);
-    return /* @__PURE__ */ (0, import_jsx_runtime62.jsxs)(
-      index_parts_exports2.List,
-      {
-        ref: mergedListRef,
-        activateOnFocus,
-        "data-select-on-move": activateOnFocus ? "true" : "false",
-        className: clsx_default(
-          style_default14.tablist,
-          overflow.first && style_default14["is-overflowing-first"],
-          overflow.last && style_default14["is-overflowing-last"],
-          style_default14[`is-${variant}-variant`],
-          className2
-        ),
-        ...otherProps,
-        tabIndex: otherProps.tabIndex ?? (overflow.isScrolling ? -1 : void 0),
-        children: [
-          children,
-          /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(index_parts_exports2.Indicator, { className: style_default14.indicator })
-        ]
-      }
-    );
-  }
-);
-
-// packages/ui/build-module/tabs/panel.mjs
-var import_element37 = __toESM(require_element(), 1);
-
-// packages/ui/build-module/tabs/context.mjs
-var import_element36 = __toESM(require_element(), 1);
-var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
-var VALIDATION_ENABLED = true;
-var TabsValidationContext = VALIDATION_ENABLED ? (0, import_element36.createContext)(null) : null;
-function useRegisterTabDev() {
-  const context = (0, import_element36.useContext)(TabsValidationContext);
-  (0, import_element36.useEffect)(() => {
-    if (context) {
-      return context.registerTab();
-    }
-    return void 0;
-  }, [context]);
-}
-function useRegisterTabProd() {
-}
-var useRegisterTab = VALIDATION_ENABLED ? useRegisterTabDev : useRegisterTabProd;
-function useRegisterPanelDev() {
-  const context = (0, import_element36.useContext)(TabsValidationContext);
-  (0, import_element36.useEffect)(() => {
-    if (context) {
-      return context.registerPanel();
-    }
-    return void 0;
-  }, [context]);
-}
-function useRegisterPanelProd() {
-}
-var useRegisterPanel = VALIDATION_ENABLED ? useRegisterPanelDev : useRegisterPanelProd;
-function TabsValidationProviderDev({
-  children
-}) {
-  const tabCountRef = (0, import_element36.useRef)(0);
-  const panelCountRef = (0, import_element36.useRef)(0);
-  const scheduleValidation = useScheduleValidation(() => {
-    const tabCount = tabCountRef.current;
-    const panelCount = panelCountRef.current;
-    if (tabCount !== panelCount) {
-      throw new Error(
-        `Tabs: Tab/Panel count mismatch (${tabCount} Tabs, ${panelCount} Panels). Each Tab must be associated with exactly one Panel. Mismatched or missing associations can break screen reader navigation and violate WAI-ARIA Tabs pattern requirements.`
-      );
-    }
-  });
-  const registerTab = (0, import_element36.useCallback)(() => {
-    tabCountRef.current += 1;
-    scheduleValidation();
-    return () => {
-      tabCountRef.current -= 1;
-      scheduleValidation();
-    };
-  }, [scheduleValidation]);
-  const registerPanel = (0, import_element36.useCallback)(() => {
-    panelCountRef.current += 1;
-    scheduleValidation();
-    return () => {
-      panelCountRef.current -= 1;
-      scheduleValidation();
-    };
-  }, [scheduleValidation]);
-  const contextValue = (0, import_element36.useMemo)(
-    () => ({
-      registerTab,
-      registerPanel
-    }),
-    [registerTab, registerPanel]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(TabsValidationContext.Provider, { value: contextValue, children });
-}
-function TabsValidationProviderProd({
-  children
-}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(import_jsx_runtime63.Fragment, { children });
-}
-var TabsValidationProvider = VALIDATION_ENABLED ? TabsValidationProviderDev : TabsValidationProviderProd;
-
-// packages/ui/build-module/tabs/panel.mjs
-var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
-function getRuntime16() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument16(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash16(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE16}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE16) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle16(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime16();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash16(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE16, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument16(targetDocument) {
-  const runtime = getRuntime16();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle16(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle16(hash, css) {
-  const runtime = getRuntime16();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle16(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle16("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
-}
-var global_css_defense_default4 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
-if (typeof process === "undefined" || true) {
-  registerStyle16("2ffedd8246", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-}
-var focus_module_default3 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
-var Panel2 = (0, import_element37.forwardRef)(
-  function TabPanel({ className: className2, ...otherProps }, forwardedRef) {
-    useRegisterPanel();
-    return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
-      index_parts_exports2.Panel,
-      {
-        ref: forwardedRef,
-        className: clsx_default(
-          global_css_defense_default4.div,
-          focus_module_default3["outset-ring--focus-visible"],
-          className2
-        ),
-        ...otherProps
-      }
-    );
-  }
-);
-
-// packages/ui/build-module/tabs/root.mjs
-var import_element38 = __toESM(require_element(), 1);
-var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
-var Root5 = (0, import_element38.forwardRef)(
-  function TabsRoot3({ ...otherProps }, forwardedRef) {
-    return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(TabsValidationProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(index_parts_exports2.Root, { ref: forwardedRef, ...otherProps }) }) });
-  }
-);
-
-// packages/ui/build-module/tabs/tab.mjs
-var import_element39 = __toESM(require_element(), 1);
-var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
-function getRuntime17() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument17(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash17(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE17}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE17) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle17(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime17();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash17(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE17, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument17(targetDocument) {
-  const runtime = getRuntime17();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle17(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle17(hash, css) {
-  const runtime = getRuntime17();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle17(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle17("54ae3f4680", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7313adbc8a112e90__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&._9f2ac729c68a735a__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._9f2ac729c68a735a__is-overflowing-first._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._59228b5227f38a99__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._1c37dcfaa1ad8cda__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height,border-radius,border-block;transition-timing-function:ease-out}outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;&[data-orientation=horizontal]{background-color:var(--wpds-color-stroke-interactive-neutral-strong,#6e6e6e);bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width);z-index:1}&[data-orientation=vertical]{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-radius:var(--wpds-border-radius-sm,2px);height:var(--active-tab-height);left:50%;top:0;translate:-50% var(--active-tab-top);width:100%;z-index:0}._7313adbc8a112e90__tablist[data-select-on-move=true]:has(:focus-visible)\n			&[data-orientation=vertical]{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));box-sizing:border-box}}.a5fd8814f195aa5e__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);cursor:default;@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:hover,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&:after{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}}._59228b5227f38a99__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px)}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-sm,8px) var(--wpds-dimension-padding-md,12px)}[data-orientation=vertical][data-select-on-move=false] &:after{content:"";inset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}._5dfc77e6edd345d4__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}._4a20e969d15e5ac1__tab-chevron{flex-shrink:0;margin-inline-end:calc(var(--wpds-dimension-gap-xs, 4px)*-1);opacity:0;[data-orientation=horizontal] &{display:none}[role=tab]:is([aria-selected=true],:focus-visible,:hover) &{opacity:1}@media not (prefers-reduced-motion){[data-select-on-move=true]\n				[role=tab]:is([aria-selected=true])\n				&{transition:opacity .15s linear .15s}}&:dir(rtl){rotate:180deg}}}}');
-}
-var style_default15 = { "tablist": "_7313adbc8a112e90__tablist", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children", "tab-chevron": "_4a20e969d15e5ac1__tab-chevron" };
-var Tab = (0, import_element39.forwardRef)(function Tab2({ className: className2, children, ...otherProps }, forwardedRef) {
-  useRegisterTab();
-  return /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(
-    index_parts_exports2.Tab,
-    {
-      ref: forwardedRef,
-      className: clsx_default(style_default15.tab, className2),
-      ...otherProps,
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime66.jsx)("span", { className: style_default15["tab-children"], children }),
-        /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(Icon, { icon: chevron_right_default, className: style_default15["tab-chevron"] })
-      ]
-    }
-  );
-});
-
-// packages/admin-ui/build-module/breadcrumbs/index.mjs
-var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
-function getRuntime18() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument18(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash18(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE18}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE18) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle18(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime18();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash18(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE18, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument18(targetDocument) {
-  const runtime = getRuntime18();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle18(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle18(hash, css) {
-  const runtime = getRuntime18();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle18(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle18("a90be4572a", "._5f4053eba32ce092__list{list-style:none;margin:0;padding:0}._5f4053eba32ce092__list>li{flex-shrink:0;margin:0}._5f4053eba32ce092__list>li:last-child{flex-shrink:1;min-width:0}.d1978551971a3360__current{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._6d9152063d443376__separator{color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);margin:0 var(--wpds-dimension-gap-sm,8px);user-select:none}");
-}
-var style_default16 = { "list": "_5f4053eba32ce092__list", "current": "d1978551971a3360__current", "separator": "_6d9152063d443376__separator" };
-var Breadcrumbs = ({ items }) => {
-  if (!items.length) {
-    return null;
-  }
-  const precedingItems = items.slice(0, -1);
-  const lastItem = items[items.length - 1];
-  if (true) {
-    const invalidItem = precedingItems.find((item) => !item.to);
-    if (invalidItem) {
-      throw new Error(
-        `Breadcrumbs: item "${invalidItem.label}" is missing a \`to\` prop. All items except the last one must have a \`to\` prop.`
-      );
-    }
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("nav", { "aria-label": (0, import_i18n3.__)("Breadcrumbs"), children: /* @__PURE__ */ (0, import_jsx_runtime67.jsxs)(
-    Stack,
-    {
-      render: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("ul", {}),
-      direction: "row",
-      align: "center",
-      className: style_default16.list,
-      children: [
-        precedingItems.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime67.jsxs)("li", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
-            Text,
-            {
-              variant: "body-lg",
-              render: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
-                Link,
-                {
-                  tone: "neutral",
-                  render: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(RouterLink, { to: item.to })
-                }
-              ),
-              children: item.label
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
-            Text,
-            {
-              variant: "body-lg",
-              "aria-hidden": "true",
-              className: style_default16.separator,
-              children: "/"
-            }
-          )
-        ] }, index2)),
-        /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("li", { children: lastItem.to ? /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
-          Text,
-          {
-            variant: "body-lg",
-            render: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
-              Link,
-              {
-                tone: "neutral",
-                render: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(RouterLink, { to: lastItem.to })
-              }
-            ),
-            children: lastItem.label
-          }
-        ) : /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
-          Text,
-          {
-            variant: "heading-lg",
-            render: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("h1", {}),
-            className: style_default16.current,
-            children: lastItem.label
-          }
-        ) })
-      ]
-    }
-  ) });
+  static tz(tz, ...args) {
+    return args.length ? new _TZDateMini(...args, tz) : new _TZDateMini(Date.now(), tz);
+  }
+  //#endregion
+  //#region time zone
+  withTimeZone(timeZone) {
+    return new _TZDateMini(+this, timeZone);
+  }
+  getTimezoneOffset() {
+    const offset4 = -tzOffset(this.timeZone, this);
+    return offset4 > 0 ? Math.floor(offset4) : Math.ceil(offset4);
+  }
+  //#endregion
+  //#region time
+  setTime(_time) {
+    Date.prototype.setTime.apply(this, arguments);
+    syncToInternal(this);
+    return +this;
+  }
+  //#endregion
+  //#region date-fns integration
+  [/* @__PURE__ */ Symbol.for("constructDateFrom")](date) {
+    return new _TZDateMini(+new Date(date), this.timeZone);
+  }
+  //#endregion
 };
-var breadcrumbs_default = Breadcrumbs;
-
-// packages/admin-ui/build-module/navigable-region/index.mjs
-var import_element40 = __toESM(require_element(), 1);
-var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
-var NavigableRegion = (0, import_element40.forwardRef)(
-  ({ children, className: className2, ariaLabel, as: Tag = "div", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
-      Tag,
-      {
-        ref,
-        className: clsx_default("admin-ui-navigable-region", className2),
-        "aria-label": ariaLabel,
-        role: "region",
-        tabIndex: "-1",
-        ...props,
-        children
-      }
-    );
-  }
-);
-NavigableRegion.displayName = "NavigableRegion";
-var navigable_region_default = NavigableRegion;
-
-// packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
-var import_components = __toESM(require_components(), 1);
-var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components.createSlotFill)("SidebarToggle");
-
-// packages/admin-ui/build-module/page/header.mjs
-var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
-function getRuntime19() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument19(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash19(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE19}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE19) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle19(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime19();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash19(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE19, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument19(targetDocument) {
-  const runtime = getRuntime19();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle19(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle19(hash, css) {
-  const runtime = getRuntime19();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle19(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle19("ddd9aab364", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
-}
-var style_default17 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
-function Header3({
-  headingLevel = 1,
-  breadcrumbs,
-  badges,
-  visual,
-  title,
-  subTitle,
-  actions,
-  showSidebarToggle = true
-}) {
-  const HeadingTag = `h${headingLevel}`;
-  return /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)(Stack, { direction: "column", className: style_default17.header, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)(
-      Stack,
-      {
-        className: style_default17["header-content"],
-        direction: "row",
-        gap: "sm",
-        justify: "space-between",
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
-            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
-              SidebarToggleSlot,
-              {
-                bubblesVirtually: true,
-                className: style_default17["sidebar-toggle-slot"]
-              }
-            ),
-            visual && /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
-              "div",
-              {
-                className: style_default17["header-visual"],
-                "aria-hidden": "true",
-                children: visual
-              }
-            ),
-            title && /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
-              Text,
-              {
-                className: style_default17["header-title"],
-                render: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(HeadingTag, {}),
-                variant: "heading-lg",
-                children: title
-              }
-            ),
-            breadcrumbs,
-            badges
-          ] }),
-          actions && /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
-            Stack,
-            {
-              align: "center",
-              className: style_default17["header-actions"],
-              direction: "row",
-              gap: "sm",
-              children: actions
-            }
-          )
-        ]
-      }
-    ),
-    subTitle && /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
-      Text,
-      {
-        render: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)("p", {}),
-        variant: "body-md",
-        className: style_default17["header-subtitle"],
-        children: subTitle
-      }
-    )
-  ] });
-}
-
-// packages/admin-ui/build-module/page/index.mjs
-var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
-function getRuntime20() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument20(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash20(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE20}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE20) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle20(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime20();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash20(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE20, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument20(targetDocument) {
-  const runtime = getRuntime20();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle20(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle20(hash, css) {
-  const runtime = getRuntime20();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle20(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle20("ddd9aab364", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
-}
-var style_default18 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
-function Page({
-  headingLevel,
-  breadcrumbs,
-  badges,
-  visual,
-  title,
-  subTitle,
-  children,
-  className: className2,
-  actions,
-  ariaLabel,
-  hasPadding = false,
-  showSidebarToggle = true
-}) {
-  const classes = clsx_default(style_default18.page, className2);
-  const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
-  return /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
-    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
-      Header3,
-      {
-        headingLevel,
-        breadcrumbs,
-        badges,
-        visual,
-        title,
-        subTitle,
-        actions,
-        showSidebarToggle
-      }
-    ),
-    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
-      "div",
-      {
-        className: clsx_default(
-          style_default18.content,
-          style_default18["has-padding"]
-        ),
-        children
-      }
-    ) : children
-  ] });
-}
-Page.SidebarToggleFill = SidebarToggleFill;
-var page_default = Page;
-
-// routes/media-editor/stage.tsx
-var import_core_data3 = __toESM(require_core_data());
-var import_data10 = __toESM(require_data());
-var import_editor = __toESM(require_editor());
-var import_html_entities = __toESM(require_html_entities());
-var import_i18n42 = __toESM(require_i18n());
-
-// packages/media-editor/build-module/components/media-editor-provider/index.mjs
-var import_element41 = __toESM(require_element(), 1);
-var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
-var MediaEditorContext = (0, import_element41.createContext)(
-  void 0
-);
-function MediaEditorProvider({
-  value,
-  onChange,
-  settings = {},
-  children
-}) {
-  const contextValue = {
-    media: value,
-    onChange,
-    fields: settings.fields || []
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(MediaEditorContext.Provider, { value: contextValue, children });
-}
-function useMediaEditorContext() {
-  const context = (0, import_element41.useContext)(MediaEditorContext);
-  if (!context) {
-    throw new Error(
-      "useMediaEditorContext must be used within MediaEditorProvider"
-    );
-  }
-  return context;
-}
-
-// packages/media-editor/build-module/components/media-preview/index.mjs
-var import_components2 = __toESM(require_components(), 1);
-var import_element42 = __toESM(require_element(), 1);
-var import_i18n4 = __toESM(require_i18n(), 1);
-
-// packages/media-editor/build-module/utils/get-media-type.mjs
-function getMediaTypeFromMimeType(mimeType) {
-  if (!mimeType) {
-    return { type: "application" };
-  }
-  if (mimeType.startsWith("image/")) {
-    return { type: "image" };
-  }
-  if (mimeType.startsWith("video/")) {
-    return { type: "video" };
-  }
-  if (mimeType.startsWith("audio/")) {
-    return { type: "audio" };
-  }
-  return { type: "application" };
-}
-
-// packages/media-editor/build-module/components/media-preview/index.mjs
-var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
-function MediaPreviewContent({
-  mediaType,
-  mediaUrl,
-  altText,
-  displayTitle,
-  mimeType,
-  onLoad,
-  onError,
-  loadingState
-}) {
-  switch (mediaType.type) {
-    case "image":
-      return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-        "img",
-        {
-          className: loadingState === "loaded" ? "loaded" : "",
-          src: mediaUrl,
-          alt: altText || "",
-          onLoad,
-          onError
-        }
-      );
-    case "video":
-      return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("video", { src: mediaUrl, controls: true, onError, children: displayTitle });
-    case "audio":
-      return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("audio", { src: mediaUrl, controls: true, onError, children: displayTitle });
-    default:
-      return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)("div", { className: "media-editor-preview__file-info", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("p", { className: "media-editor-preview__file-name", children: displayTitle }),
-        /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("p", { className: "media-editor-preview__mime-type", children: mimeType }),
-        /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-          "a",
-          {
-            href: mediaUrl,
-            target: "_blank",
-            rel: "noopener",
-            className: "media-editor-preview__download-link",
-            children: (0, import_i18n4.__)("View file")
-          }
-        )
-      ] });
-  }
-}
-function MediaPreview(props) {
-  const [loadingState, setLoadingState] = (0, import_element42.useState)("loading");
-  const { media } = useMediaEditorContext();
-  const {
-    source_url: mediaUrl,
-    mime_type: mimeType,
-    alt_text: altText,
-    title
-  } = media || {};
-  const mediaType = getMediaTypeFromMimeType(mimeType);
-  if (!mediaUrl) {
-    return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("div", { className: "media-editor-preview media-editor-preview--empty", children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("p", { children: (0, import_i18n4.__)("No media file available.") }) });
-  }
-  if (loadingState === "error") {
-    return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)("div", { className: "media-editor-preview media-editor-preview--error", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("p", { children: (0, import_i18n4.__)("Failed to load media file.") }),
-      /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("p", { className: "media-editor-preview__url", children: mediaUrl })
-    ] });
-  }
-  const displayTitle = typeof title === "string" ? title : title?.rendered || title?.raw;
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(
-    "div",
-    {
-      ...props,
-      className: `media-editor-preview media-editor-preview--${mediaType.type}`,
-      children: [
-        mediaType.type === "image" && loadingState === "loading" && /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("div", { className: "media-editor-preview__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(import_components2.Spinner, {}) }),
-        /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-          MediaPreviewContent,
-          {
-            mediaType,
-            mediaUrl,
-            altText,
-            displayTitle,
-            mimeType,
-            onLoad: () => setLoadingState("loaded"),
-            onError: () => setLoadingState("error"),
-            loadingState
-          }
-        )
-      ]
-    }
-  );
-}
-
-// packages/dataviews/build-module/constants.mjs
-var import_i18n5 = __toESM(require_i18n(), 1);
-var OPERATOR_IS_ANY = "isAny";
-var OPERATOR_IS_NONE = "isNone";
-var OPERATOR_IS_ALL = "isAll";
-var OPERATOR_IS_NOT_ALL = "isNotAll";
-var OPERATOR_BETWEEN = "between";
-var OPERATOR_IN_THE_PAST = "inThePast";
-var OPERATOR_OVER = "over";
-var OPERATOR_IS = "is";
-var OPERATOR_IS_NOT = "isNot";
-var OPERATOR_LESS_THAN = "lessThan";
-var OPERATOR_GREATER_THAN = "greaterThan";
-var OPERATOR_LESS_THAN_OR_EQUAL = "lessThanOrEqual";
-var OPERATOR_GREATER_THAN_OR_EQUAL = "greaterThanOrEqual";
-var OPERATOR_BEFORE = "before";
-var OPERATOR_AFTER = "after";
-var OPERATOR_BEFORE_INC = "beforeInc";
-var OPERATOR_AFTER_INC = "afterInc";
-var OPERATOR_CONTAINS = "contains";
-var OPERATOR_NOT_CONTAINS = "notContains";
-var OPERATOR_STARTS_WITH = "startsWith";
-var OPERATOR_ON = "on";
-var OPERATOR_NOT_ON = "notOn";
-var sortLabels = {
-  asc: (0, import_i18n5.__)("Sort ascending"),
-  desc: (0, import_i18n5.__)("Sort descending")
-};
-
-// packages/dataviews/build-module/lock-unlock.mjs
-var import_private_apis2 = __toESM(require_private_apis(), 1);
-var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-  "@wordpress/dataviews"
-);
-
-// packages/dataviews/build-module/hooks/use-elements.mjs
-var import_element43 = __toESM(require_element(), 1);
-var EMPTY_ARRAY3 = [];
-function useElements({
-  elements,
-  getElements
-}) {
-  const staticElements = Array.isArray(elements) && elements.length > 0 ? elements : EMPTY_ARRAY3;
-  const [records, setRecords] = (0, import_element43.useState)(staticElements);
-  const [isLoading, setIsLoading] = (0, import_element43.useState)(false);
-  (0, import_element43.useEffect)(() => {
-    if (!getElements) {
-      setRecords(staticElements);
-      return;
-    }
-    let cancelled = false;
-    setIsLoading(true);
-    getElements().then((fetchedElements) => {
-      if (!cancelled) {
-        const dynamicElements = Array.isArray(fetchedElements) && fetchedElements.length > 0 ? fetchedElements : staticElements;
-        setRecords(dynamicElements);
-      }
-    }).catch(() => {
-      if (!cancelled) {
-        setRecords(staticElements);
-      }
-    }).finally(() => {
-      if (!cancelled) {
-        setIsLoading(false);
-      }
-    });
-    return () => {
-      cancelled = true;
+var re = /^(get|set)(?!UTC)/;
+Object.getOwnPropertyNames(Date.prototype).forEach((method) => {
+  if (!re.test(method)) return;
+  const utcMethod = method.replace(re, "$1UTC");
+  if (!TZDateMini.prototype[utcMethod]) return;
+  if (method.startsWith("get")) {
+    TZDateMini.prototype[method] = function() {
+      return this.internal[utcMethod]();
     };
-  }, [getElements, staticElements]);
-  return {
-    elements: records,
-    isLoading
-  };
+  } else {
+    TZDateMini.prototype[method] = function() {
+      Date.prototype[utcMethod].apply(this.internal, arguments);
+      syncFromInternal(this);
+      return +this;
+    };
+    TZDateMini.prototype[utcMethod] = function() {
+      Date.prototype[utcMethod].apply(this, arguments);
+      syncToInternal(this);
+      return +this;
+    };
+  }
+});
+function syncToInternal(date) {
+  date.internal.setTime(+date);
+  date.internal.setUTCSeconds(date.internal.getUTCSeconds() - // Round after converting minutes to seconds to avoid fractional offset
+  // precision errors from historical offsets.
+  Math.round(-tzOffset(date.timeZone, date) * 60));
 }
+function syncFromInternal(date) {
+  Date.prototype.setFullYear.call(date, date.internal.getUTCFullYear(), date.internal.getUTCMonth(), date.internal.getUTCDate());
+  Date.prototype.setHours.call(date, date.internal.getUTCHours(), date.internal.getUTCMinutes(), date.internal.getUTCSeconds(), date.internal.getUTCMilliseconds());
+  adjustToSystemTZ(date);
+}
+function adjustToSystemTZ(date, constructorArgs) {
+  const expectedInternalTime = Array.isArray(constructorArgs) ? constructorArgsToInternalTime(constructorArgs) : +date.internal;
+  const offsetWithSeconds = tzOffset(date.timeZone, date);
+  const offset4 = offsetWithSeconds > 0 ? Math.floor(offsetWithSeconds) : Math.ceil(offsetWithSeconds);
+  const prevHour = /* @__PURE__ */ new Date(+date);
+  prevHour.setUTCHours(prevHour.getUTCHours() - 1);
+  const systemOffset = -(/* @__PURE__ */ new Date(+date)).getTimezoneOffset();
+  const prevHourSystemOffset = -(/* @__PURE__ */ new Date(+prevHour)).getTimezoneOffset();
+  const systemDSTChange = systemOffset - prevHourSystemOffset;
+  let systemOffsetForDiff = systemOffset;
+  if (systemDSTChange && systemOffset !== offset4) {
+    const systemHour = Date.prototype.getHours.apply(date);
+    const expectedHour = Array.isArray(constructorArgs) ? constructorArgs[3] || 0 : date.internal.getUTCHours();
+    if (systemHour !== expectedHour) {
+      const testDate = /* @__PURE__ */ new Date(+date);
+      const testOffsetDiff = systemOffset - offset4;
+      if (testOffsetDiff) testDate.setUTCMinutes(testDate.getUTCMinutes() + testOffsetDiff);
+      const testOffsetWithSeconds = tzOffset(date.timeZone, testDate);
+      const testOffset = testOffsetWithSeconds > 0 ? Math.floor(testOffsetWithSeconds) : Math.ceil(testOffsetWithSeconds);
+      if (testOffset === offset4) systemOffsetForDiff = prevHourSystemOffset;
+    }
+  }
+  const offsetDiff = systemOffsetForDiff - offset4;
+  if (offsetDiff)
+    Date.prototype.setUTCMinutes.call(date, Date.prototype.getUTCMinutes.call(date) + offsetDiff);
+  const systemDate = /* @__PURE__ */ new Date(+date);
+  systemDate.setUTCSeconds(0);
+  const systemSecondsOffset = systemOffset > 0 ? systemDate.getSeconds() : (systemDate.getSeconds() - 60) % 60;
+  const secondsOffset = Math.round(-(tzOffset(date.timeZone, date) * 60)) % 60;
+  if (secondsOffset || systemSecondsOffset)
+    Date.prototype.setUTCSeconds.call(date, Date.prototype.getUTCSeconds.call(date) + secondsOffset + systemSecondsOffset);
+  const postOffsetWithSeconds = tzOffset(date.timeZone, date);
+  const postOffset = postOffsetWithSeconds > 0 ? Math.floor(postOffsetWithSeconds) : Math.ceil(postOffsetWithSeconds);
+  const postSystemOffset = -(/* @__PURE__ */ new Date(+date)).getTimezoneOffset();
+  const postOffsetDiff = postSystemOffset - postOffset;
+  const offsetChanged = postOffset !== offset4;
+  const postDiff = postOffsetDiff - offsetDiff;
+  const targetDSTShift = postOffset - offset4;
+  const postOffsetCandidate = expectedInternalTime - postOffset * 60 * 1e3;
+  const normalizedTargetDSTGap = targetDSTShift > 0 && targetInternalTime(date) - expectedInternalTime === targetDSTShift * 60 * 1e3 && targetInternalTime(date, postOffsetCandidate) !== expectedInternalTime;
+  if (offsetChanged && postDiff && !normalizedTargetDSTGap) {
+    Date.prototype.setUTCMinutes.call(date, Date.prototype.getUTCMinutes.call(date) + postDiff);
+    const newOffsetWithSeconds = tzOffset(date.timeZone, date);
+    const newOffset = newOffsetWithSeconds > 0 ? Math.floor(newOffsetWithSeconds) : Math.ceil(newOffsetWithSeconds);
+    const offsetChange = postOffset - newOffset;
+    if (offsetChange && postDiff < 0) {
+      Date.prototype.setUTCMinutes.call(date, Date.prototype.getUTCMinutes.call(date) + offsetChange);
+    }
+  }
+  syncToInternal(date);
+  const expectedTime = constructorArgs ? expectedInternalTime : expectedInternalTime + secondsOffset * 1e3;
+  const drift = expectedTime - +date.internal;
+  if (drift && Math.abs(drift) < 30 * 60 * 1e3) {
+    Date.prototype.setTime.call(date, +date + drift);
+    syncToInternal(date);
+  }
+}
+function constructorArgsToInternalTime(args) {
+  return Date.UTC(args[0], args.length > 1 ? args[1] : 0, args.length > 2 ? args[2] : 1, ...args.slice(3));
+}
+function targetInternalTime(date, time) {
+  const internal = new Date(time ?? +date);
+  internal.setUTCSeconds(internal.getUTCSeconds() - Math.round(-tzOffset(date.timeZone, internal) * 60));
+  return +internal;
+}
+
+// node_modules/@date-fns/tz/date/index.js
+var TZDate = class _TZDate extends TZDateMini {
+  //#region static
+  static tz(tz, ...args) {
+    return args.length ? new _TZDate(...args, tz) : new _TZDate(Date.now(), tz);
+  }
+  //#endregion
+  //#region representation
+  toISOString() {
+    const [sign, hours, minutes] = this.tzComponents();
+    const tz = `${sign}${hours}:${minutes}`;
+    return this.internal.toISOString().slice(0, -1) + tz;
+  }
+  toString() {
+    return `${this.toDateString()} ${this.toTimeString()}`;
+  }
+  toDateString() {
+    const [day, date, month, year] = this.internal.toUTCString().split(" ");
+    return `${day?.slice(0, -1)} ${month} ${date} ${year}`;
+  }
+  toTimeString() {
+    const time = this.internal.toUTCString().split(" ")[4];
+    const [sign, hours, minutes] = this.tzComponents();
+    return `${time} GMT${sign}${hours}${minutes} (${tzName(this.timeZone, this)})`;
+  }
+  toLocaleString(locales, options) {
+    return Date.prototype.toLocaleString.call(this, locales, {
+      ...options,
+      timeZone: options?.timeZone || this.timeZone
+    });
+  }
+  toLocaleDateString(locales, options) {
+    return Date.prototype.toLocaleDateString.call(this, locales, {
+      ...options,
+      timeZone: options?.timeZone || this.timeZone
+    });
+  }
+  toLocaleTimeString(locales, options) {
+    return Date.prototype.toLocaleTimeString.call(this, locales, {
+      ...options,
+      timeZone: options?.timeZone || this.timeZone
+    });
+  }
+  //#endregion
+  //#region private
+  tzComponents() {
+    const offset4 = this.getTimezoneOffset();
+    const sign = offset4 > 0 ? "-" : "+";
+    const hours = String(Math.floor(Math.abs(offset4) / 60)).padStart(2, "0");
+    const minutes = String(Math.abs(offset4) % 60).padStart(2, "0");
+    return [sign, hours, minutes];
+  }
+  //#endregion
+  withTimeZone(timeZone) {
+    return new _TZDate(+this, timeZone);
+  }
+  //#region date-fns integration
+  [/* @__PURE__ */ Symbol.for("constructDateFrom")](date) {
+    return new _TZDate(+new Date(date), this.timeZone);
+  }
+  //#endregion
+};
 
 // node_modules/date-fns/constants.js
 var daysInYear = 365.2425;
@@ -14433,6 +12021,42 @@ function addYears(date, amount, options) {
   return addMonths(date, amount * 12, options);
 }
 
+// node_modules/date-fns/max.js
+function max2(dates, options) {
+  let result;
+  let context = options?.in;
+  dates.forEach((date) => {
+    if (!context && typeof date === "object")
+      context = constructFrom.bind(null, date);
+    const date_ = toDate(date, context);
+    if (!result || result < date_ || isNaN(+date_)) result = date_;
+  });
+  return constructFrom(context, result || NaN);
+}
+
+// node_modules/date-fns/min.js
+function min2(dates, options) {
+  let result;
+  let context = options?.in;
+  dates.forEach((date) => {
+    if (!context && typeof date === "object")
+      context = constructFrom.bind(null, date);
+    const date_ = toDate(date, context);
+    if (!result || result > date_ || isNaN(+date_)) result = date_;
+  });
+  return constructFrom(context, result || NaN);
+}
+
+// node_modules/date-fns/isSameDay.js
+function isSameDay(laterDate, earlierDate, options) {
+  const [dateLeft_, dateRight_] = normalizeDates(
+    options?.in,
+    laterDate,
+    earlierDate
+  );
+  return +startOfDay(dateLeft_) === +startOfDay(dateRight_);
+}
+
 // node_modules/date-fns/isDate.js
 function isDate(value) {
   return value instanceof Date || typeof value === "object" && Object.prototype.toString.call(value) === "[object Date]";
@@ -14443,11 +12067,69 @@ function isValid(date) {
   return !(!isDate(date) && typeof date !== "number" || isNaN(+toDate(date)));
 }
 
+// node_modules/date-fns/differenceInCalendarMonths.js
+function differenceInCalendarMonths(laterDate, earlierDate, options) {
+  const [laterDate_, earlierDate_] = normalizeDates(
+    options?.in,
+    laterDate,
+    earlierDate
+  );
+  const yearsDiff = laterDate_.getFullYear() - earlierDate_.getFullYear();
+  const monthsDiff = laterDate_.getMonth() - earlierDate_.getMonth();
+  return yearsDiff * 12 + monthsDiff;
+}
+
+// node_modules/date-fns/endOfMonth.js
+function endOfMonth(date, options) {
+  const _date = toDate(date, options?.in);
+  const month = _date.getMonth();
+  _date.setFullYear(_date.getFullYear(), month + 1, 0);
+  _date.setHours(23, 59, 59, 999);
+  return _date;
+}
+
+// node_modules/date-fns/_lib/normalizeInterval.js
+function normalizeInterval(context, interval) {
+  const [start, end] = normalizeDates(context, interval.start, interval.end);
+  return { start, end };
+}
+
+// node_modules/date-fns/eachMonthOfInterval.js
+function eachMonthOfInterval(interval, options) {
+  const { start, end } = normalizeInterval(options?.in, interval);
+  let reversed = +start > +end;
+  const endTime = reversed ? +start : +end;
+  const date = reversed ? end : start;
+  date.setHours(0, 0, 0, 0);
+  date.setDate(1);
+  let step = options?.step ?? 1;
+  if (!step) return [];
+  if (step < 0) {
+    step = -step;
+    reversed = !reversed;
+  }
+  const dates = [];
+  while (+date <= endTime) {
+    dates.push(constructFrom(start, date));
+    date.setMonth(date.getMonth() + step);
+  }
+  return reversed ? dates.reverse() : dates;
+}
+
 // node_modules/date-fns/startOfMonth.js
 function startOfMonth(date, options) {
   const _date = toDate(date, options?.in);
   _date.setDate(1);
   _date.setHours(0, 0, 0, 0);
+  return _date;
+}
+
+// node_modules/date-fns/endOfYear.js
+function endOfYear(date, options) {
+  const _date = toDate(date, options?.in);
+  const year = _date.getFullYear();
+  _date.setFullYear(year + 1, 0, 0);
+  _date.setHours(23, 59, 59, 999);
   return _date;
 }
 
@@ -14457,6 +12139,45 @@ function startOfYear(date, options) {
   date_.setFullYear(date_.getFullYear(), 0, 1);
   date_.setHours(0, 0, 0, 0);
   return date_;
+}
+
+// node_modules/date-fns/eachYearOfInterval.js
+function eachYearOfInterval(interval, options) {
+  const { start, end } = normalizeInterval(options?.in, interval);
+  let reversed = +start > +end;
+  const endTime = reversed ? +start : +end;
+  const date = reversed ? end : start;
+  date.setHours(0, 0, 0, 0);
+  date.setMonth(0, 1);
+  let step = options?.step ?? 1;
+  if (!step) return [];
+  if (step < 0) {
+    step = -step;
+    reversed = !reversed;
+  }
+  const dates = [];
+  while (+date <= endTime) {
+    dates.push(constructFrom(start, date));
+    date.setFullYear(date.getFullYear() + step);
+  }
+  return reversed ? dates.reverse() : dates;
+}
+
+// node_modules/date-fns/endOfWeek.js
+function endOfWeek(date, options) {
+  const defaultOptions2 = getDefaultOptions();
+  const weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions2.weekStartsOn ?? defaultOptions2.locale?.options?.weekStartsOn ?? 0;
+  const _date = toDate(date, options?.in);
+  const day = _date.getDay();
+  const diff = (day < weekStartsOn ? -7 : 0) + 6 - (day - weekStartsOn);
+  _date.setDate(_date.getDate() + diff);
+  _date.setHours(23, 59, 59, 999);
+  return _date;
+}
+
+// node_modules/date-fns/endOfISOWeek.js
+function endOfISOWeek(date, options) {
+  return endOfWeek(date, { ...options, weekStartsOn: 1 });
 }
 
 // node_modules/date-fns/locale/en-US/_lib/formatDistance.js
@@ -15881,6 +13602,17 @@ function cleanEscapedString(input) {
   return matched[1].replace(doubleQuoteRegExp, "'");
 }
 
+// node_modules/date-fns/getDaysInMonth.js
+function getDaysInMonth(date, options) {
+  const _date = toDate(date, options?.in);
+  const year = _date.getFullYear();
+  const monthIndex = _date.getMonth();
+  const lastDayOfMonth = constructFrom(_date, 0);
+  lastDayOfMonth.setFullYear(year, monthIndex + 1, 0);
+  lastDayOfMonth.setHours(0, 0, 0, 0);
+  return lastDayOfMonth.getDate();
+}
+
 // node_modules/date-fns/getDefaultOptions.js
 function getDefaultOptions2() {
   return Object.assign({}, getDefaultOptions());
@@ -15890,6 +13622,26 @@ function getDefaultOptions2() {
 function getISODay(date, options) {
   const day = toDate(date, options?.in).getDay();
   return day === 0 ? 7 : day;
+}
+
+// node_modules/date-fns/getMonth.js
+function getMonth(date, options) {
+  return toDate(date, options?.in).getMonth();
+}
+
+// node_modules/date-fns/getYear.js
+function getYear(date, options) {
+  return toDate(date, options?.in).getFullYear();
+}
+
+// node_modules/date-fns/isAfter.js
+function isAfter(date, dateToCompare) {
+  return +toDate(date) > +toDate(dateToCompare);
+}
+
+// node_modules/date-fns/isBefore.js
+function isBefore(date, dateToCompare) {
+  return +toDate(date) < +toDate(dateToCompare);
 }
 
 // node_modules/date-fns/transpose.js
@@ -17622,9 +15374,50 @@ function cleanEscapedString2(input) {
   return input.match(escapedStringRegExp2)[1].replace(doubleQuoteRegExp2, "'");
 }
 
+// node_modules/date-fns/isSameMonth.js
+function isSameMonth(laterDate, earlierDate, options) {
+  const [laterDate_, earlierDate_] = normalizeDates(
+    options?.in,
+    laterDate,
+    earlierDate
+  );
+  return laterDate_.getFullYear() === earlierDate_.getFullYear() && laterDate_.getMonth() === earlierDate_.getMonth();
+}
+
+// node_modules/date-fns/isSameYear.js
+function isSameYear(laterDate, earlierDate, options) {
+  const [laterDate_, earlierDate_] = normalizeDates(
+    options?.in,
+    laterDate,
+    earlierDate
+  );
+  return laterDate_.getFullYear() === earlierDate_.getFullYear();
+}
+
 // node_modules/date-fns/subDays.js
 function subDays(date, amount, options) {
   return addDays(date, -amount, options);
+}
+
+// node_modules/date-fns/setMonth.js
+function setMonth(date, month, options) {
+  const _date = toDate(date, options?.in);
+  const year = _date.getFullYear();
+  const day = _date.getDate();
+  const midMonth = constructFrom(options?.in || date, 0);
+  midMonth.setFullYear(year, month, 15);
+  midMonth.setHours(0, 0, 0, 0);
+  const daysInMonth = getDaysInMonth(midMonth);
+  _date.setMonth(month, Math.min(day, daysInMonth));
+  return _date;
+}
+
+// node_modules/date-fns/setYear.js
+function setYear(date, year, options) {
+  const date_ = toDate(date, options?.in);
+  if (isNaN(+date_)) return constructFrom(options?.in || date, NaN);
+  date_.setFullYear(year);
+  return date_;
 }
 
 // node_modules/date-fns/subMonths.js
@@ -17642,10 +15435,6116 @@ function subYears(date, amount, options) {
   return addYears(date, -amount, options);
 }
 
-// packages/dataviews/build-module/utils/operators.mjs
-var import_i18n6 = __toESM(require_i18n(), 1);
+// node_modules/react-day-picker/dist/esm/helpers/getBroadcastWeeksInMonth.js
+var FIVE_WEEKS = 5;
+var FOUR_WEEKS = 4;
+function getBroadcastWeeksInMonth(month, dateLib) {
+  const firstDayOfMonth = dateLib.startOfMonth(month);
+  const firstDayOfWeek = firstDayOfMonth.getDay() > 0 ? firstDayOfMonth.getDay() : 7;
+  const broadcastStartDate = dateLib.addDays(month, -firstDayOfWeek + 1);
+  const lastDateOfLastWeek = dateLib.addDays(broadcastStartDate, FIVE_WEEKS * 7 - 1);
+  const numberOfWeeks = dateLib.getMonth(month) === dateLib.getMonth(lastDateOfLastWeek) ? FIVE_WEEKS : FOUR_WEEKS;
+  return numberOfWeeks;
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/startOfBroadcastWeek.js
+function startOfBroadcastWeek(date, dateLib) {
+  const firstOfMonth = dateLib.startOfMonth(date);
+  const dayOfWeek = firstOfMonth.getDay();
+  if (dayOfWeek === 1) {
+    return firstOfMonth;
+  } else if (dayOfWeek === 0) {
+    return dateLib.addDays(firstOfMonth, -1 * 6);
+  } else {
+    return dateLib.addDays(firstOfMonth, -1 * (dayOfWeek - 1));
+  }
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/endOfBroadcastWeek.js
+function endOfBroadcastWeek(date, dateLib) {
+  const startDate = startOfBroadcastWeek(date, dateLib);
+  const numberOfWeeks = getBroadcastWeeksInMonth(date, dateLib);
+  const endDate = dateLib.addDays(startDate, numberOfWeeks * 7 - 1);
+  return endDate;
+}
+
+// node_modules/react-day-picker/dist/esm/locale/en-US.js
+var enUS2 = {
+  ...enUS,
+  labels: {
+    labelDayButton: (date, modifiers, options, dateLib) => {
+      let formatDate2;
+      if (dateLib && typeof dateLib.format === "function") {
+        formatDate2 = dateLib.format.bind(dateLib);
+      } else {
+        formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
+      }
+      let label = formatDate2(date, "PPPP");
+      if (modifiers.today)
+        label = `Today, ${label}`;
+      if (modifiers.selected)
+        label = `${label}, selected`;
+      return label;
+    },
+    labelMonthDropdown: "Choose the Month",
+    labelNext: "Go to the Next Month",
+    labelPrevious: "Go to the Previous Month",
+    labelWeekNumber: (weekNumber) => `Week ${weekNumber}`,
+    labelYearDropdown: "Choose the Year",
+    labelGrid: (date, options, dateLib) => {
+      let formatDate2;
+      if (dateLib && typeof dateLib.format === "function") {
+        formatDate2 = dateLib.format.bind(dateLib);
+      } else {
+        formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
+      }
+      return formatDate2(date, "LLLL yyyy");
+    },
+    labelGridcell: (date, modifiers, options, dateLib) => {
+      let formatDate2;
+      if (dateLib && typeof dateLib.format === "function") {
+        formatDate2 = dateLib.format.bind(dateLib);
+      } else {
+        formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
+      }
+      let label = formatDate2(date, "PPPP");
+      if (modifiers?.today) {
+        label = `Today, ${label}`;
+      }
+      return label;
+    },
+    labelNav: "Navigation bar",
+    labelWeekNumberHeader: "Week Number",
+    labelWeekday: (date, options, dateLib) => {
+      let formatDate2;
+      if (dateLib && typeof dateLib.format === "function") {
+        formatDate2 = dateLib.format.bind(dateLib);
+      } else {
+        formatDate2 = (d2, pattern) => format(d2, pattern, { locale: enUS, ...options });
+      }
+      return formatDate2(date, "cccc");
+    }
+  }
+};
+
+// node_modules/react-day-picker/dist/esm/classes/DateLib.js
+var DateLib = class _DateLib {
+  /**
+   * Creates an instance of `DateLib`.
+   *
+   * @param options Configuration options for the date library.
+   * @param overrides Custom overrides for the date library functions.
+   */
+  constructor(options, overrides) {
+    this.Date = Date;
+    this.today = () => {
+      if (this.overrides?.today) {
+        return this.overrides.today();
+      }
+      if (this.options.timeZone) {
+        return TZDate.tz(this.options.timeZone);
+      }
+      return new this.Date();
+    };
+    this.newDate = (year, monthIndex, date) => {
+      if (this.overrides?.newDate) {
+        return this.overrides.newDate(year, monthIndex, date);
+      }
+      if (this.options.timeZone) {
+        return new TZDate(year, monthIndex, date, this.options.timeZone);
+      }
+      return new Date(year, monthIndex, date);
+    };
+    this.addDays = (date, amount) => {
+      return this.overrides?.addDays ? this.overrides.addDays(date, amount) : addDays(date, amount);
+    };
+    this.addMonths = (date, amount) => {
+      return this.overrides?.addMonths ? this.overrides.addMonths(date, amount) : addMonths(date, amount);
+    };
+    this.addWeeks = (date, amount) => {
+      return this.overrides?.addWeeks ? this.overrides.addWeeks(date, amount) : addWeeks(date, amount);
+    };
+    this.addYears = (date, amount) => {
+      return this.overrides?.addYears ? this.overrides.addYears(date, amount) : addYears(date, amount);
+    };
+    this.differenceInCalendarDays = (dateLeft, dateRight) => {
+      return this.overrides?.differenceInCalendarDays ? this.overrides.differenceInCalendarDays(dateLeft, dateRight) : differenceInCalendarDays(dateLeft, dateRight);
+    };
+    this.differenceInCalendarMonths = (dateLeft, dateRight) => {
+      return this.overrides?.differenceInCalendarMonths ? this.overrides.differenceInCalendarMonths(dateLeft, dateRight) : differenceInCalendarMonths(dateLeft, dateRight);
+    };
+    this.eachMonthOfInterval = (interval) => {
+      return this.overrides?.eachMonthOfInterval ? this.overrides.eachMonthOfInterval(interval) : eachMonthOfInterval(interval);
+    };
+    this.eachYearOfInterval = (interval) => {
+      const years = this.overrides?.eachYearOfInterval ? this.overrides.eachYearOfInterval(interval) : eachYearOfInterval(interval);
+      const uniqueYears = new Set(years.map((d2) => this.getYear(d2)));
+      if (uniqueYears.size === years.length) {
+        return years;
+      }
+      const yearsArray = [];
+      uniqueYears.forEach((y2) => {
+        yearsArray.push(new Date(y2, 0, 1));
+      });
+      return yearsArray;
+    };
+    this.endOfBroadcastWeek = (date) => {
+      return this.overrides?.endOfBroadcastWeek ? this.overrides.endOfBroadcastWeek(date) : endOfBroadcastWeek(date, this);
+    };
+    this.endOfISOWeek = (date) => {
+      return this.overrides?.endOfISOWeek ? this.overrides.endOfISOWeek(date) : endOfISOWeek(date);
+    };
+    this.endOfMonth = (date) => {
+      return this.overrides?.endOfMonth ? this.overrides.endOfMonth(date) : endOfMonth(date);
+    };
+    this.endOfWeek = (date, options2) => {
+      return this.overrides?.endOfWeek ? this.overrides.endOfWeek(date, options2) : endOfWeek(date, this.options);
+    };
+    this.endOfYear = (date) => {
+      return this.overrides?.endOfYear ? this.overrides.endOfYear(date) : endOfYear(date);
+    };
+    this.format = (date, formatStr, _options) => {
+      const formatted = this.overrides?.format ? this.overrides.format(date, formatStr, this.options) : format(date, formatStr, this.options);
+      if (this.options.numerals && this.options.numerals !== "latn") {
+        return this.replaceDigits(formatted);
+      }
+      return formatted;
+    };
+    this.getISOWeek = (date) => {
+      return this.overrides?.getISOWeek ? this.overrides.getISOWeek(date) : getISOWeek(date);
+    };
+    this.getMonth = (date, _options) => {
+      return this.overrides?.getMonth ? this.overrides.getMonth(date, this.options) : getMonth(date, this.options);
+    };
+    this.getYear = (date, _options) => {
+      return this.overrides?.getYear ? this.overrides.getYear(date, this.options) : getYear(date, this.options);
+    };
+    this.getWeek = (date, _options) => {
+      return this.overrides?.getWeek ? this.overrides.getWeek(date, this.options) : getWeek(date, this.options);
+    };
+    this.isAfter = (date, dateToCompare) => {
+      return this.overrides?.isAfter ? this.overrides.isAfter(date, dateToCompare) : isAfter(date, dateToCompare);
+    };
+    this.isBefore = (date, dateToCompare) => {
+      return this.overrides?.isBefore ? this.overrides.isBefore(date, dateToCompare) : isBefore(date, dateToCompare);
+    };
+    this.isDate = (value) => {
+      return this.overrides?.isDate ? this.overrides.isDate(value) : isDate(value);
+    };
+    this.isSameDay = (dateLeft, dateRight) => {
+      return this.overrides?.isSameDay ? this.overrides.isSameDay(dateLeft, dateRight) : isSameDay(dateLeft, dateRight);
+    };
+    this.isSameMonth = (dateLeft, dateRight) => {
+      return this.overrides?.isSameMonth ? this.overrides.isSameMonth(dateLeft, dateRight) : isSameMonth(dateLeft, dateRight);
+    };
+    this.isSameYear = (dateLeft, dateRight) => {
+      return this.overrides?.isSameYear ? this.overrides.isSameYear(dateLeft, dateRight) : isSameYear(dateLeft, dateRight);
+    };
+    this.max = (dates) => {
+      return this.overrides?.max ? this.overrides.max(dates) : max2(dates);
+    };
+    this.min = (dates) => {
+      return this.overrides?.min ? this.overrides.min(dates) : min2(dates);
+    };
+    this.setMonth = (date, month) => {
+      return this.overrides?.setMonth ? this.overrides.setMonth(date, month) : setMonth(date, month);
+    };
+    this.setYear = (date, year) => {
+      return this.overrides?.setYear ? this.overrides.setYear(date, year) : setYear(date, year);
+    };
+    this.startOfBroadcastWeek = (date, _dateLib) => {
+      return this.overrides?.startOfBroadcastWeek ? this.overrides.startOfBroadcastWeek(date, this) : startOfBroadcastWeek(date, this);
+    };
+    this.startOfDay = (date) => {
+      return this.overrides?.startOfDay ? this.overrides.startOfDay(date) : startOfDay(date);
+    };
+    this.startOfISOWeek = (date) => {
+      return this.overrides?.startOfISOWeek ? this.overrides.startOfISOWeek(date) : startOfISOWeek(date);
+    };
+    this.startOfMonth = (date) => {
+      return this.overrides?.startOfMonth ? this.overrides.startOfMonth(date) : startOfMonth(date);
+    };
+    this.startOfWeek = (date, _options) => {
+      return this.overrides?.startOfWeek ? this.overrides.startOfWeek(date, this.options) : startOfWeek(date, this.options);
+    };
+    this.startOfYear = (date) => {
+      return this.overrides?.startOfYear ? this.overrides.startOfYear(date) : startOfYear(date);
+    };
+    this.options = { locale: enUS2, ...options };
+    this.overrides = overrides;
+  }
+  /**
+   * Generates a mapping of Arabic digits (0-9) to the target numbering system
+   * digits.
+   *
+   * @since 9.5.0
+   * @returns A record mapping Arabic digits to the target numerals.
+   */
+  getDigitMap() {
+    const { numerals = "latn" } = this.options;
+    const formatter = new Intl.NumberFormat("en-US", {
+      numberingSystem: numerals
+    });
+    const digitMap = {};
+    for (let i2 = 0; i2 < 10; i2++) {
+      digitMap[i2.toString()] = formatter.format(i2);
+    }
+    return digitMap;
+  }
+  /**
+   * Replaces Arabic digits in a string with the target numbering system digits.
+   *
+   * @since 9.5.0
+   * @param input The string containing Arabic digits.
+   * @returns The string with digits replaced.
+   */
+  replaceDigits(input) {
+    const digitMap = this.getDigitMap();
+    return input.replace(/\d/g, (digit) => digitMap[digit] || digit);
+  }
+  /**
+   * Formats a number using the configured numbering system.
+   *
+   * @since 9.5.0
+   * @param value The number to format.
+   * @returns The formatted number as a string.
+   */
+  formatNumber(value) {
+    return this.replaceDigits(value.toString());
+  }
+  /**
+   * Returns the preferred ordering for month and year labels for the current
+   * locale.
+   */
+  getMonthYearOrder() {
+    const code = this.options.locale?.code;
+    if (!code) {
+      return "month-first";
+    }
+    return _DateLib.yearFirstLocales.has(code) ? "year-first" : "month-first";
+  }
+  /**
+   * Formats the month/year pair respecting locale conventions.
+   *
+   * @since 9.11.0
+   */
+  formatMonthYear(date) {
+    const { locale, timeZone, numerals } = this.options;
+    const localeCode = locale?.code;
+    if (localeCode && _DateLib.yearFirstLocales.has(localeCode)) {
+      try {
+        const intl = new Intl.DateTimeFormat(localeCode, {
+          month: "long",
+          year: "numeric",
+          timeZone,
+          numberingSystem: numerals
+        });
+        const formatted = intl.format(date);
+        return formatted;
+      } catch {
+      }
+    }
+    const pattern = this.getMonthYearOrder() === "year-first" ? "y LLLL" : "LLLL y";
+    return this.format(date, pattern);
+  }
+};
+DateLib.yearFirstLocales = /* @__PURE__ */ new Set([
+  "eu",
+  "hu",
+  "ja",
+  "ja-Hira",
+  "ja-JP",
+  "ko",
+  "ko-KR",
+  "lt",
+  "lt-LT",
+  "lv",
+  "lv-LV",
+  "mn",
+  "mn-MN",
+  "zh",
+  "zh-CN",
+  "zh-HK",
+  "zh-TW"
+]);
+var defaultDateLib = new DateLib();
+
+// node_modules/react-day-picker/dist/esm/classes/CalendarDay.js
+var CalendarDay = class {
+  constructor(date, displayMonth, dateLib = defaultDateLib) {
+    this.date = date;
+    this.displayMonth = displayMonth;
+    this.outside = Boolean(displayMonth && !dateLib.isSameMonth(date, displayMonth));
+    this.dateLib = dateLib;
+    this.isoDate = dateLib.format(date, "yyyy-MM-dd");
+    this.displayMonthId = dateLib.format(displayMonth, "yyyy-MM");
+    this.dateMonthId = dateLib.format(date, "yyyy-MM");
+  }
+  /**
+   * Checks if this day is equal to another `CalendarDay`, considering both the
+   * date and the displayed month.
+   *
+   * @param day The `CalendarDay` to compare with.
+   * @returns `true` if the days are equal, otherwise `false`.
+   */
+  isEqualTo(day) {
+    return this.dateLib.isSameDay(day.date, this.date) && this.dateLib.isSameMonth(day.displayMonth, this.displayMonth);
+  }
+};
+
+// node_modules/react-day-picker/dist/esm/classes/CalendarMonth.js
+var CalendarMonth = class {
+  constructor(month, weeks) {
+    this.date = month;
+    this.weeks = weeks;
+  }
+};
+
+// node_modules/react-day-picker/dist/esm/classes/CalendarWeek.js
+var CalendarWeek = class {
+  constructor(weekNumber, days) {
+    this.days = days;
+    this.weekNumber = weekNumber;
+  }
+};
+
+// node_modules/react-day-picker/dist/esm/components/custom-components.js
+var custom_components_exports = {};
+__export(custom_components_exports, {
+  Button: () => Button5,
+  CaptionLabel: () => CaptionLabel,
+  Chevron: () => Chevron,
+  Day: () => Day,
+  DayButton: () => DayButton,
+  Dropdown: () => Dropdown,
+  DropdownNav: () => DropdownNav,
+  Footer: () => Footer,
+  Month: () => Month,
+  MonthCaption: () => MonthCaption,
+  MonthGrid: () => MonthGrid,
+  Months: () => Months,
+  MonthsDropdown: () => MonthsDropdown,
+  Nav: () => Nav,
+  NextMonthButton: () => NextMonthButton,
+  Option: () => Option,
+  PreviousMonthButton: () => PreviousMonthButton,
+  Root: () => Root,
+  Select: () => Select,
+  Week: () => Week,
+  WeekNumber: () => WeekNumber,
+  WeekNumberHeader: () => WeekNumberHeader,
+  Weekday: () => Weekday,
+  Weekdays: () => Weekdays,
+  Weeks: () => Weeks,
+  YearsDropdown: () => YearsDropdown
+});
+
+// node_modules/react-day-picker/dist/esm/components/Button.js
+var import_react4 = __toESM(require_react(), 1);
+function Button5(props) {
+  return import_react4.default.createElement("button", { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/components/CaptionLabel.js
+var import_react5 = __toESM(require_react(), 1);
+function CaptionLabel(props) {
+  return import_react5.default.createElement("span", { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/components/Chevron.js
+var import_react6 = __toESM(require_react(), 1);
+function Chevron(props) {
+  const { size: size4 = 24, orientation = "left", className: className2 } = props;
+  return (
+    // biome-ignore lint/a11y/noSvgWithoutTitle: handled by the parent component
+    import_react6.default.createElement(
+      "svg",
+      { className: className2, width: size4, height: size4, viewBox: "0 0 24 24" },
+      orientation === "up" && import_react6.default.createElement("polygon", { points: "6.77 17 12.5 11.43 18.24 17 20 15.28 12.5 8 5 15.28" }),
+      orientation === "down" && import_react6.default.createElement("polygon", { points: "6.77 8 12.5 13.57 18.24 8 20 9.72 12.5 17 5 9.72" }),
+      orientation === "left" && import_react6.default.createElement("polygon", { points: "16 18.112 9.81111111 12 16 5.87733333 14.0888889 4 6 12 14.0888889 20" }),
+      orientation === "right" && import_react6.default.createElement("polygon", { points: "8 18.112 14.18888889 12 8 5.87733333 9.91111111 4 18 12 9.91111111 20" })
+    )
+  );
+}
+
+// node_modules/react-day-picker/dist/esm/components/Day.js
+var import_react7 = __toESM(require_react(), 1);
+function Day(props) {
+  const { day, modifiers, ...tdProps } = props;
+  return import_react7.default.createElement("td", { ...tdProps });
+}
+
+// node_modules/react-day-picker/dist/esm/components/DayButton.js
+var import_react8 = __toESM(require_react(), 1);
+function DayButton(props) {
+  const { day, modifiers, ...buttonProps } = props;
+  const ref = import_react8.default.useRef(null);
+  import_react8.default.useEffect(() => {
+    if (modifiers.focused)
+      ref.current?.focus();
+  }, [modifiers.focused]);
+  return import_react8.default.createElement("button", { ref, ...buttonProps });
+}
+
+// node_modules/react-day-picker/dist/esm/components/Dropdown.js
+var import_react9 = __toESM(require_react(), 1);
+
+// node_modules/react-day-picker/dist/esm/UI.js
+var UI;
+(function(UI2) {
+  UI2["Root"] = "root";
+  UI2["Chevron"] = "chevron";
+  UI2["Day"] = "day";
+  UI2["DayButton"] = "day_button";
+  UI2["CaptionLabel"] = "caption_label";
+  UI2["Dropdowns"] = "dropdowns";
+  UI2["Dropdown"] = "dropdown";
+  UI2["DropdownRoot"] = "dropdown_root";
+  UI2["Footer"] = "footer";
+  UI2["MonthGrid"] = "month_grid";
+  UI2["MonthCaption"] = "month_caption";
+  UI2["MonthsDropdown"] = "months_dropdown";
+  UI2["Month"] = "month";
+  UI2["Months"] = "months";
+  UI2["Nav"] = "nav";
+  UI2["NextMonthButton"] = "button_next";
+  UI2["PreviousMonthButton"] = "button_previous";
+  UI2["Week"] = "week";
+  UI2["Weeks"] = "weeks";
+  UI2["Weekday"] = "weekday";
+  UI2["Weekdays"] = "weekdays";
+  UI2["WeekNumber"] = "week_number";
+  UI2["WeekNumberHeader"] = "week_number_header";
+  UI2["YearsDropdown"] = "years_dropdown";
+})(UI || (UI = {}));
+var DayFlag;
+(function(DayFlag2) {
+  DayFlag2["disabled"] = "disabled";
+  DayFlag2["hidden"] = "hidden";
+  DayFlag2["outside"] = "outside";
+  DayFlag2["focused"] = "focused";
+  DayFlag2["today"] = "today";
+})(DayFlag || (DayFlag = {}));
+var SelectionState;
+(function(SelectionState2) {
+  SelectionState2["range_end"] = "range_end";
+  SelectionState2["range_middle"] = "range_middle";
+  SelectionState2["range_start"] = "range_start";
+  SelectionState2["selected"] = "selected";
+})(SelectionState || (SelectionState = {}));
+var Animation;
+(function(Animation2) {
+  Animation2["weeks_before_enter"] = "weeks_before_enter";
+  Animation2["weeks_before_exit"] = "weeks_before_exit";
+  Animation2["weeks_after_enter"] = "weeks_after_enter";
+  Animation2["weeks_after_exit"] = "weeks_after_exit";
+  Animation2["caption_after_enter"] = "caption_after_enter";
+  Animation2["caption_after_exit"] = "caption_after_exit";
+  Animation2["caption_before_enter"] = "caption_before_enter";
+  Animation2["caption_before_exit"] = "caption_before_exit";
+})(Animation || (Animation = {}));
+
+// node_modules/react-day-picker/dist/esm/components/Dropdown.js
+function Dropdown(props) {
+  const { options, className: className2, components, classNames, ...selectProps } = props;
+  const cssClassSelect = [classNames[UI.Dropdown], className2].join(" ");
+  const selectedOption = options?.find(({ value }) => value === selectProps.value);
+  return import_react9.default.createElement(
+    "span",
+    { "data-disabled": selectProps.disabled, className: classNames[UI.DropdownRoot] },
+    import_react9.default.createElement(components.Select, { className: cssClassSelect, ...selectProps }, options?.map(({ value, label, disabled: disabled2 }) => import_react9.default.createElement(components.Option, { key: value, value, disabled: disabled2 }, label))),
+    import_react9.default.createElement(
+      "span",
+      { className: classNames[UI.CaptionLabel], "aria-hidden": true },
+      selectedOption?.label,
+      import_react9.default.createElement(components.Chevron, { orientation: "down", size: 18, className: classNames[UI.Chevron] })
+    )
+  );
+}
+
+// node_modules/react-day-picker/dist/esm/components/DropdownNav.js
+var import_react10 = __toESM(require_react(), 1);
+function DropdownNav(props) {
+  return import_react10.default.createElement("div", { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/components/Footer.js
+var import_react11 = __toESM(require_react(), 1);
+function Footer(props) {
+  return import_react11.default.createElement("div", { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/components/Month.js
+var import_react12 = __toESM(require_react(), 1);
+function Month(props) {
+  const { calendarMonth, displayIndex, ...divProps } = props;
+  return import_react12.default.createElement("div", { ...divProps }, props.children);
+}
+
+// node_modules/react-day-picker/dist/esm/components/MonthCaption.js
+var import_react13 = __toESM(require_react(), 1);
+function MonthCaption(props) {
+  const { calendarMonth, displayIndex, ...divProps } = props;
+  return import_react13.default.createElement("div", { ...divProps });
+}
+
+// node_modules/react-day-picker/dist/esm/components/MonthGrid.js
+var import_react14 = __toESM(require_react(), 1);
+function MonthGrid(props) {
+  return import_react14.default.createElement("table", { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/components/Months.js
+var import_react15 = __toESM(require_react(), 1);
+function Months(props) {
+  return import_react15.default.createElement("div", { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/components/MonthsDropdown.js
+var import_react17 = __toESM(require_react(), 1);
+
+// node_modules/react-day-picker/dist/esm/useDayPicker.js
+var import_react16 = __toESM(require_react(), 1);
+var dayPickerContext = (0, import_react16.createContext)(void 0);
+function useDayPicker() {
+  const context = (0, import_react16.useContext)(dayPickerContext);
+  if (context === void 0) {
+    throw new Error("useDayPicker() must be used within a custom component.");
+  }
+  return context;
+}
+
+// node_modules/react-day-picker/dist/esm/components/MonthsDropdown.js
+function MonthsDropdown(props) {
+  const { components } = useDayPicker();
+  return import_react17.default.createElement(components.Dropdown, { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/components/Nav.js
+var import_react18 = __toESM(require_react(), 1);
+function Nav(props) {
+  const { onPreviousClick, onNextClick, previousMonth, nextMonth, ...navProps } = props;
+  const { components, classNames, labels: { labelPrevious: labelPrevious2, labelNext: labelNext2 } } = useDayPicker();
+  const handleNextClick = (0, import_react18.useCallback)((e2) => {
+    if (nextMonth) {
+      onNextClick?.(e2);
+    }
+  }, [nextMonth, onNextClick]);
+  const handlePreviousClick = (0, import_react18.useCallback)((e2) => {
+    if (previousMonth) {
+      onPreviousClick?.(e2);
+    }
+  }, [previousMonth, onPreviousClick]);
+  return import_react18.default.createElement(
+    "nav",
+    { ...navProps },
+    import_react18.default.createElement(
+      components.PreviousMonthButton,
+      { type: "button", className: classNames[UI.PreviousMonthButton], tabIndex: previousMonth ? void 0 : -1, "aria-disabled": previousMonth ? void 0 : true, "aria-label": labelPrevious2(previousMonth), onClick: handlePreviousClick },
+      import_react18.default.createElement(components.Chevron, { disabled: previousMonth ? void 0 : true, className: classNames[UI.Chevron], orientation: "left" })
+    ),
+    import_react18.default.createElement(
+      components.NextMonthButton,
+      { type: "button", className: classNames[UI.NextMonthButton], tabIndex: nextMonth ? void 0 : -1, "aria-disabled": nextMonth ? void 0 : true, "aria-label": labelNext2(nextMonth), onClick: handleNextClick },
+      import_react18.default.createElement(components.Chevron, { disabled: nextMonth ? void 0 : true, orientation: "right", className: classNames[UI.Chevron] })
+    )
+  );
+}
+
+// node_modules/react-day-picker/dist/esm/components/NextMonthButton.js
+var import_react19 = __toESM(require_react(), 1);
+function NextMonthButton(props) {
+  const { components } = useDayPicker();
+  return import_react19.default.createElement(components.Button, { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/components/Option.js
+var import_react20 = __toESM(require_react(), 1);
+function Option(props) {
+  return import_react20.default.createElement("option", { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/components/PreviousMonthButton.js
+var import_react21 = __toESM(require_react(), 1);
+function PreviousMonthButton(props) {
+  const { components } = useDayPicker();
+  return import_react21.default.createElement(components.Button, { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/components/Root.js
+var import_react22 = __toESM(require_react(), 1);
+function Root(props) {
+  const { rootRef, ...rest } = props;
+  return import_react22.default.createElement("div", { ...rest, ref: rootRef });
+}
+
+// node_modules/react-day-picker/dist/esm/components/Select.js
+var import_react23 = __toESM(require_react(), 1);
+function Select(props) {
+  return import_react23.default.createElement("select", { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/components/Week.js
+var import_react24 = __toESM(require_react(), 1);
+function Week(props) {
+  const { week, ...trProps } = props;
+  return import_react24.default.createElement("tr", { ...trProps });
+}
+
+// node_modules/react-day-picker/dist/esm/components/Weekday.js
+var import_react25 = __toESM(require_react(), 1);
+function Weekday(props) {
+  return import_react25.default.createElement("th", { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/components/Weekdays.js
+var import_react26 = __toESM(require_react(), 1);
+function Weekdays(props) {
+  return import_react26.default.createElement(
+    "thead",
+    { "aria-hidden": true },
+    import_react26.default.createElement("tr", { ...props })
+  );
+}
+
+// node_modules/react-day-picker/dist/esm/components/WeekNumber.js
+var import_react27 = __toESM(require_react(), 1);
+function WeekNumber(props) {
+  const { week, ...thProps } = props;
+  return import_react27.default.createElement("th", { ...thProps });
+}
+
+// node_modules/react-day-picker/dist/esm/components/WeekNumberHeader.js
+var import_react28 = __toESM(require_react(), 1);
+function WeekNumberHeader(props) {
+  return import_react28.default.createElement("th", { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/components/Weeks.js
+var import_react29 = __toESM(require_react(), 1);
+function Weeks(props) {
+  return import_react29.default.createElement("tbody", { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/components/YearsDropdown.js
+var import_react30 = __toESM(require_react(), 1);
+function YearsDropdown(props) {
+  const { components } = useDayPicker();
+  return import_react30.default.createElement(components.Dropdown, { ...props });
+}
+
+// node_modules/react-day-picker/dist/esm/DayPicker.js
+var import_react35 = __toESM(require_react(), 1);
+
+// node_modules/react-day-picker/dist/esm/utils/rangeIncludesDate.js
+function rangeIncludesDate(range, date, excludeEnds = false, dateLib = defaultDateLib) {
+  let { from, to } = range;
+  const { differenceInCalendarDays: differenceInCalendarDays2, isSameDay: isSameDay2 } = dateLib;
+  if (from && to) {
+    const isRangeInverted = differenceInCalendarDays2(to, from) < 0;
+    if (isRangeInverted) {
+      [from, to] = [to, from];
+    }
+    const isInRange = differenceInCalendarDays2(date, from) >= (excludeEnds ? 1 : 0) && differenceInCalendarDays2(to, date) >= (excludeEnds ? 1 : 0);
+    return isInRange;
+  }
+  if (!excludeEnds && to) {
+    return isSameDay2(to, date);
+  }
+  if (!excludeEnds && from) {
+    return isSameDay2(from, date);
+  }
+  return false;
+}
+
+// node_modules/react-day-picker/dist/esm/utils/typeguards.js
+function isDateInterval(matcher) {
+  return Boolean(matcher && typeof matcher === "object" && "before" in matcher && "after" in matcher);
+}
+function isDateRange(value) {
+  return Boolean(value && typeof value === "object" && "from" in value);
+}
+function isDateAfterType(value) {
+  return Boolean(value && typeof value === "object" && "after" in value);
+}
+function isDateBeforeType(value) {
+  return Boolean(value && typeof value === "object" && "before" in value);
+}
+function isDayOfWeekType(value) {
+  return Boolean(value && typeof value === "object" && "dayOfWeek" in value);
+}
+function isDatesArray(value, dateLib) {
+  return Array.isArray(value) && value.every(dateLib.isDate);
+}
+
+// node_modules/react-day-picker/dist/esm/utils/dateMatchModifiers.js
+function dateMatchModifiers(date, matchers, dateLib = defaultDateLib) {
+  const matchersArr = !Array.isArray(matchers) ? [matchers] : matchers;
+  const { isSameDay: isSameDay2, differenceInCalendarDays: differenceInCalendarDays2, isAfter: isAfter2 } = dateLib;
+  return matchersArr.some((matcher) => {
+    if (typeof matcher === "boolean") {
+      return matcher;
+    }
+    if (dateLib.isDate(matcher)) {
+      return isSameDay2(date, matcher);
+    }
+    if (isDatesArray(matcher, dateLib)) {
+      return matcher.some((matcherDate) => isSameDay2(date, matcherDate));
+    }
+    if (isDateRange(matcher)) {
+      return rangeIncludesDate(matcher, date, false, dateLib);
+    }
+    if (isDayOfWeekType(matcher)) {
+      if (!Array.isArray(matcher.dayOfWeek)) {
+        return matcher.dayOfWeek === date.getDay();
+      }
+      return matcher.dayOfWeek.includes(date.getDay());
+    }
+    if (isDateInterval(matcher)) {
+      const diffBefore = differenceInCalendarDays2(matcher.before, date);
+      const diffAfter = differenceInCalendarDays2(matcher.after, date);
+      const isDayBefore = diffBefore > 0;
+      const isDayAfter = diffAfter < 0;
+      const isClosedInterval = isAfter2(matcher.before, matcher.after);
+      if (isClosedInterval) {
+        return isDayAfter && isDayBefore;
+      } else {
+        return isDayBefore || isDayAfter;
+      }
+    }
+    if (isDateAfterType(matcher)) {
+      return differenceInCalendarDays2(date, matcher.after) > 0;
+    }
+    if (isDateBeforeType(matcher)) {
+      return differenceInCalendarDays2(matcher.before, date) > 0;
+    }
+    if (typeof matcher === "function") {
+      return matcher(date);
+    }
+    return false;
+  });
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/createGetModifiers.js
+function createGetModifiers(days, props, navStart, navEnd, dateLib) {
+  const { disabled: disabled2, hidden, modifiers, showOutsideDays, broadcastCalendar, today = dateLib.today() } = props;
+  const { isSameDay: isSameDay2, isSameMonth: isSameMonth2, startOfMonth: startOfMonth2, isBefore: isBefore2, endOfMonth: endOfMonth2, isAfter: isAfter2 } = dateLib;
+  const computedNavStart = navStart && startOfMonth2(navStart);
+  const computedNavEnd = navEnd && endOfMonth2(navEnd);
+  const internalModifiersMap = {
+    [DayFlag.focused]: [],
+    [DayFlag.outside]: [],
+    [DayFlag.disabled]: [],
+    [DayFlag.hidden]: [],
+    [DayFlag.today]: []
+  };
+  const customModifiersMap = {};
+  for (const day of days) {
+    const { date, displayMonth } = day;
+    const isOutside = Boolean(displayMonth && !isSameMonth2(date, displayMonth));
+    const isBeforeNavStart = Boolean(computedNavStart && isBefore2(date, computedNavStart));
+    const isAfterNavEnd = Boolean(computedNavEnd && isAfter2(date, computedNavEnd));
+    const isDisabled = Boolean(disabled2 && dateMatchModifiers(date, disabled2, dateLib));
+    const isHidden = Boolean(hidden && dateMatchModifiers(date, hidden, dateLib)) || isBeforeNavStart || isAfterNavEnd || // Broadcast calendar will show outside days as default
+    !broadcastCalendar && !showOutsideDays && isOutside || broadcastCalendar && showOutsideDays === false && isOutside;
+    const isToday = isSameDay2(date, today);
+    if (isOutside)
+      internalModifiersMap.outside.push(day);
+    if (isDisabled)
+      internalModifiersMap.disabled.push(day);
+    if (isHidden)
+      internalModifiersMap.hidden.push(day);
+    if (isToday)
+      internalModifiersMap.today.push(day);
+    if (modifiers) {
+      Object.keys(modifiers).forEach((name) => {
+        const modifierValue = modifiers?.[name];
+        const isMatch = modifierValue ? dateMatchModifiers(date, modifierValue, dateLib) : false;
+        if (!isMatch)
+          return;
+        if (customModifiersMap[name]) {
+          customModifiersMap[name].push(day);
+        } else {
+          customModifiersMap[name] = [day];
+        }
+      });
+    }
+  }
+  return (day) => {
+    const dayFlags = {
+      [DayFlag.focused]: false,
+      [DayFlag.disabled]: false,
+      [DayFlag.hidden]: false,
+      [DayFlag.outside]: false,
+      [DayFlag.today]: false
+    };
+    const customModifiers = {};
+    for (const name in internalModifiersMap) {
+      const days2 = internalModifiersMap[name];
+      dayFlags[name] = days2.some((d2) => d2 === day);
+    }
+    for (const name in customModifiersMap) {
+      customModifiers[name] = customModifiersMap[name].some((d2) => d2 === day);
+    }
+    return {
+      ...dayFlags,
+      // custom modifiers should override all the previous ones
+      ...customModifiers
+    };
+  };
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getClassNamesForModifiers.js
+function getClassNamesForModifiers(modifiers, classNames, modifiersClassNames = {}) {
+  const modifierClassNames = Object.entries(modifiers).filter(([, active]) => active === true).reduce((previousValue, [key]) => {
+    if (modifiersClassNames[key]) {
+      previousValue.push(modifiersClassNames[key]);
+    } else if (classNames[DayFlag[key]]) {
+      previousValue.push(classNames[DayFlag[key]]);
+    } else if (classNames[SelectionState[key]]) {
+      previousValue.push(classNames[SelectionState[key]]);
+    }
+    return previousValue;
+  }, [classNames[UI.Day]]);
+  return modifierClassNames;
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getComponents.js
+function getComponents(customComponents) {
+  return {
+    ...custom_components_exports,
+    ...customComponents
+  };
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getDataAttributes.js
+function getDataAttributes(props) {
+  const dataAttributes = {
+    "data-mode": props.mode ?? void 0,
+    "data-required": "required" in props ? props.required : void 0,
+    "data-multiple-months": props.numberOfMonths && props.numberOfMonths > 1 || void 0,
+    "data-week-numbers": props.showWeekNumber || void 0,
+    "data-broadcast-calendar": props.broadcastCalendar || void 0,
+    "data-nav-layout": props.navLayout || void 0
+  };
+  Object.entries(props).forEach(([key, val]) => {
+    if (key.startsWith("data-")) {
+      dataAttributes[key] = val;
+    }
+  });
+  return dataAttributes;
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getDefaultClassNames.js
+function getDefaultClassNames() {
+  const classNames = {};
+  for (const key in UI) {
+    classNames[UI[key]] = `rdp-${UI[key]}`;
+  }
+  for (const key in DayFlag) {
+    classNames[DayFlag[key]] = `rdp-${DayFlag[key]}`;
+  }
+  for (const key in SelectionState) {
+    classNames[SelectionState[key]] = `rdp-${SelectionState[key]}`;
+  }
+  for (const key in Animation) {
+    classNames[Animation[key]] = `rdp-${Animation[key]}`;
+  }
+  return classNames;
+}
+
+// node_modules/react-day-picker/dist/esm/formatters/index.js
+var formatters_exports = {};
+__export(formatters_exports, {
+  formatCaption: () => formatCaption,
+  formatDay: () => formatDay,
+  formatMonthCaption: () => formatMonthCaption,
+  formatMonthDropdown: () => formatMonthDropdown,
+  formatWeekNumber: () => formatWeekNumber,
+  formatWeekNumberHeader: () => formatWeekNumberHeader,
+  formatWeekdayName: () => formatWeekdayName,
+  formatYearCaption: () => formatYearCaption,
+  formatYearDropdown: () => formatYearDropdown
+});
+
+// node_modules/react-day-picker/dist/esm/formatters/formatCaption.js
+function formatCaption(month, options, dateLib) {
+  const lib = dateLib ?? new DateLib(options);
+  return lib.formatMonthYear(month);
+}
+var formatMonthCaption = formatCaption;
+
+// node_modules/react-day-picker/dist/esm/formatters/formatDay.js
+function formatDay(date, options, dateLib) {
+  return (dateLib ?? new DateLib(options)).format(date, "d");
+}
+
+// node_modules/react-day-picker/dist/esm/formatters/formatMonthDropdown.js
+function formatMonthDropdown(month, dateLib = defaultDateLib) {
+  return dateLib.format(month, "LLLL");
+}
+
+// node_modules/react-day-picker/dist/esm/formatters/formatWeekdayName.js
+function formatWeekdayName(weekday, options, dateLib) {
+  return (dateLib ?? new DateLib(options)).format(weekday, "cccccc");
+}
+
+// node_modules/react-day-picker/dist/esm/formatters/formatWeekNumber.js
+function formatWeekNumber(weekNumber, dateLib = defaultDateLib) {
+  if (weekNumber < 10) {
+    return dateLib.formatNumber(`0${weekNumber.toLocaleString()}`);
+  }
+  return dateLib.formatNumber(`${weekNumber.toLocaleString()}`);
+}
+
+// node_modules/react-day-picker/dist/esm/formatters/formatWeekNumberHeader.js
+function formatWeekNumberHeader() {
+  return ``;
+}
+
+// node_modules/react-day-picker/dist/esm/formatters/formatYearDropdown.js
+function formatYearDropdown(year, dateLib = defaultDateLib) {
+  return dateLib.format(year, "yyyy");
+}
+var formatYearCaption = formatYearDropdown;
+
+// node_modules/react-day-picker/dist/esm/helpers/getFormatters.js
+function getFormatters(customFormatters) {
+  if (customFormatters?.formatMonthCaption && !customFormatters.formatCaption) {
+    customFormatters.formatCaption = customFormatters.formatMonthCaption;
+  }
+  if (customFormatters?.formatYearCaption && !customFormatters.formatYearDropdown) {
+    customFormatters.formatYearDropdown = customFormatters.formatYearCaption;
+  }
+  return {
+    ...formatters_exports,
+    ...customFormatters
+  };
+}
+
+// node_modules/react-day-picker/dist/esm/labels/index.js
+var labels_exports = {};
+__export(labels_exports, {
+  labelCaption: () => labelCaption,
+  labelDay: () => labelDay,
+  labelDayButton: () => labelDayButton,
+  labelGrid: () => labelGrid,
+  labelGridcell: () => labelGridcell,
+  labelMonthDropdown: () => labelMonthDropdown,
+  labelNav: () => labelNav,
+  labelNext: () => labelNext,
+  labelPrevious: () => labelPrevious,
+  labelWeekNumber: () => labelWeekNumber,
+  labelWeekNumberHeader: () => labelWeekNumberHeader,
+  labelWeekday: () => labelWeekday,
+  labelYearDropdown: () => labelYearDropdown
+});
+
+// node_modules/react-day-picker/dist/esm/labels/labelDayButton.js
+function labelDayButton(date, modifiers, options, dateLib) {
+  let label = (dateLib ?? new DateLib(options)).format(date, "PPPP");
+  if (modifiers.today)
+    label = `Today, ${label}`;
+  if (modifiers.selected)
+    label = `${label}, selected`;
+  return label;
+}
+var labelDay = labelDayButton;
+
+// node_modules/react-day-picker/dist/esm/labels/labelGrid.js
+function labelGrid(date, options, dateLib) {
+  const lib = dateLib ?? new DateLib(options);
+  return lib.formatMonthYear(date);
+}
+var labelCaption = labelGrid;
+
+// node_modules/react-day-picker/dist/esm/labels/labelGridcell.js
+function labelGridcell(date, modifiers, options, dateLib) {
+  let label = (dateLib ?? new DateLib(options)).format(date, "PPPP");
+  if (modifiers?.today) {
+    label = `Today, ${label}`;
+  }
+  return label;
+}
+
+// node_modules/react-day-picker/dist/esm/labels/labelMonthDropdown.js
+function labelMonthDropdown(_options) {
+  return "Choose the Month";
+}
+
+// node_modules/react-day-picker/dist/esm/labels/labelNav.js
+function labelNav() {
+  return "";
+}
+
+// node_modules/react-day-picker/dist/esm/labels/labelNext.js
+var defaultLabel = "Go to the Next Month";
+function labelNext(_month, _options) {
+  return defaultLabel;
+}
+
+// node_modules/react-day-picker/dist/esm/labels/labelPrevious.js
+function labelPrevious(_month) {
+  return "Go to the Previous Month";
+}
+
+// node_modules/react-day-picker/dist/esm/labels/labelWeekday.js
+function labelWeekday(date, options, dateLib) {
+  return (dateLib ?? new DateLib(options)).format(date, "cccc");
+}
+
+// node_modules/react-day-picker/dist/esm/labels/labelWeekNumber.js
+function labelWeekNumber(weekNumber, _options) {
+  return `Week ${weekNumber}`;
+}
+
+// node_modules/react-day-picker/dist/esm/labels/labelWeekNumberHeader.js
+function labelWeekNumberHeader(_options) {
+  return "Week Number";
+}
+
+// node_modules/react-day-picker/dist/esm/labels/labelYearDropdown.js
+function labelYearDropdown(_options) {
+  return "Choose the Year";
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getLabels.js
+var resolveLabel = (defaultLabel2, customLabel, localeLabel) => {
+  if (customLabel)
+    return customLabel;
+  if (localeLabel) {
+    return typeof localeLabel === "function" ? localeLabel : (..._args) => localeLabel;
+  }
+  return defaultLabel2;
+};
+function getLabels(customLabels, options) {
+  const localeLabels = options.locale?.labels ?? {};
+  return {
+    ...labels_exports,
+    ...customLabels ?? {},
+    labelDayButton: resolveLabel(labelDayButton, customLabels?.labelDayButton, localeLabels.labelDayButton),
+    labelMonthDropdown: resolveLabel(labelMonthDropdown, customLabels?.labelMonthDropdown, localeLabels.labelMonthDropdown),
+    labelNext: resolveLabel(labelNext, customLabels?.labelNext, localeLabels.labelNext),
+    labelPrevious: resolveLabel(labelPrevious, customLabels?.labelPrevious, localeLabels.labelPrevious),
+    labelWeekNumber: resolveLabel(labelWeekNumber, customLabels?.labelWeekNumber, localeLabels.labelWeekNumber),
+    labelYearDropdown: resolveLabel(labelYearDropdown, customLabels?.labelYearDropdown, localeLabels.labelYearDropdown),
+    labelGrid: resolveLabel(labelGrid, customLabels?.labelGrid, localeLabels.labelGrid),
+    labelGridcell: resolveLabel(labelGridcell, customLabels?.labelGridcell, localeLabels.labelGridcell),
+    labelNav: resolveLabel(labelNav, customLabels?.labelNav, localeLabels.labelNav),
+    labelWeekNumberHeader: resolveLabel(labelWeekNumberHeader, customLabels?.labelWeekNumberHeader, localeLabels.labelWeekNumberHeader),
+    labelWeekday: resolveLabel(labelWeekday, customLabels?.labelWeekday, localeLabels.labelWeekday)
+  };
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getMonthOptions.js
+function getMonthOptions(displayMonth, navStart, navEnd, formatters2, dateLib) {
+  const { startOfMonth: startOfMonth2, startOfYear: startOfYear2, endOfYear: endOfYear2, eachMonthOfInterval: eachMonthOfInterval2, getMonth: getMonth2 } = dateLib;
+  const months = eachMonthOfInterval2({
+    start: startOfYear2(displayMonth),
+    end: endOfYear2(displayMonth)
+  });
+  const options = months.map((month) => {
+    const label = formatters2.formatMonthDropdown(month, dateLib);
+    const value = getMonth2(month);
+    const disabled2 = navStart && month < startOfMonth2(navStart) || navEnd && month > startOfMonth2(navEnd) || false;
+    return { value, label, disabled: disabled2 };
+  });
+  return options;
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getStyleForModifiers.js
+function getStyleForModifiers(dayModifiers, styles = {}, modifiersStyles = {}) {
+  let style = { ...styles?.[UI.Day] };
+  Object.entries(dayModifiers).filter(([, active]) => active === true).forEach(([modifier]) => {
+    style = {
+      ...style,
+      ...modifiersStyles?.[modifier]
+    };
+  });
+  return style;
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getWeekdays.js
+function getWeekdays(dateLib, ISOWeek, broadcastCalendar, today) {
+  const referenceToday = today ?? dateLib.today();
+  const start = broadcastCalendar ? dateLib.startOfBroadcastWeek(referenceToday, dateLib) : ISOWeek ? dateLib.startOfISOWeek(referenceToday) : dateLib.startOfWeek(referenceToday);
+  const days = [];
+  for (let i2 = 0; i2 < 7; i2++) {
+    const day = dateLib.addDays(start, i2);
+    days.push(day);
+  }
+  return days;
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getYearOptions.js
+function getYearOptions(navStart, navEnd, formatters2, dateLib, reverse = false) {
+  if (!navStart)
+    return void 0;
+  if (!navEnd)
+    return void 0;
+  const { startOfYear: startOfYear2, endOfYear: endOfYear2, eachYearOfInterval: eachYearOfInterval2, getYear: getYear2 } = dateLib;
+  const firstNavYear = startOfYear2(navStart);
+  const lastNavYear = endOfYear2(navEnd);
+  const years = eachYearOfInterval2({ start: firstNavYear, end: lastNavYear });
+  if (reverse)
+    years.reverse();
+  return years.map((year) => {
+    const label = formatters2.formatYearDropdown(year, dateLib);
+    return {
+      value: getYear2(year),
+      label,
+      disabled: false
+    };
+  });
+}
+
+// node_modules/react-day-picker/dist/esm/noonDateLib.js
+function createNoonOverrides(timeZone, options = {}) {
+  const { weekStartsOn, locale } = options;
+  const fallbackWeekStartsOn = weekStartsOn ?? locale?.options?.weekStartsOn ?? 0;
+  const toNoonTZDate = (date) => {
+    const normalizedDate = typeof date === "number" || typeof date === "string" ? new Date(date) : date;
+    return new TZDate(normalizedDate.getFullYear(), normalizedDate.getMonth(), normalizedDate.getDate(), 12, 0, 0, timeZone);
+  };
+  const toCalendarDate = (date) => {
+    const zoned = toNoonTZDate(date);
+    return new Date(zoned.getFullYear(), zoned.getMonth(), zoned.getDate(), 0, 0, 0, 0);
+  };
+  return {
+    today: () => {
+      return toNoonTZDate(TZDate.tz(timeZone));
+    },
+    newDate: (year, monthIndex, date) => {
+      return new TZDate(year, monthIndex, date, 12, 0, 0, timeZone);
+    },
+    startOfDay: (date) => {
+      return toNoonTZDate(date);
+    },
+    startOfWeek: (date, options2) => {
+      const base = toNoonTZDate(date);
+      const weekStartsOnValue = options2?.weekStartsOn ?? fallbackWeekStartsOn;
+      const diff = (base.getDay() - weekStartsOnValue + 7) % 7;
+      base.setDate(base.getDate() - diff);
+      return base;
+    },
+    startOfISOWeek: (date) => {
+      const base = toNoonTZDate(date);
+      const diff = (base.getDay() - 1 + 7) % 7;
+      base.setDate(base.getDate() - diff);
+      return base;
+    },
+    startOfMonth: (date) => {
+      const base = toNoonTZDate(date);
+      base.setDate(1);
+      return base;
+    },
+    startOfYear: (date) => {
+      const base = toNoonTZDate(date);
+      base.setMonth(0, 1);
+      return base;
+    },
+    endOfWeek: (date, options2) => {
+      const base = toNoonTZDate(date);
+      const weekStartsOnValue = options2?.weekStartsOn ?? fallbackWeekStartsOn;
+      const endDow = (weekStartsOnValue + 6) % 7;
+      const diff = (endDow - base.getDay() + 7) % 7;
+      base.setDate(base.getDate() + diff);
+      return base;
+    },
+    endOfISOWeek: (date) => {
+      const base = toNoonTZDate(date);
+      const diff = (7 - base.getDay()) % 7;
+      base.setDate(base.getDate() + diff);
+      return base;
+    },
+    endOfMonth: (date) => {
+      const base = toNoonTZDate(date);
+      base.setMonth(base.getMonth() + 1, 0);
+      return base;
+    },
+    endOfYear: (date) => {
+      const base = toNoonTZDate(date);
+      base.setMonth(11, 31);
+      return base;
+    },
+    eachMonthOfInterval: (interval) => {
+      const start = toNoonTZDate(interval.start);
+      const end = toNoonTZDate(interval.end);
+      const result = [];
+      const cursor = new TZDate(start.getFullYear(), start.getMonth(), 1, 12, 0, 0, timeZone);
+      const endKey = end.getFullYear() * 12 + end.getMonth();
+      while (cursor.getFullYear() * 12 + cursor.getMonth() <= endKey) {
+        result.push(new TZDate(cursor, timeZone));
+        cursor.setMonth(cursor.getMonth() + 1, 1);
+      }
+      return result;
+    },
+    // Normalize to noon once before arithmetic (avoid DST/midnight edge cases),
+    // mutate the same TZDate, and return it.
+    addDays: (date, amount) => {
+      const base = toNoonTZDate(date);
+      base.setDate(base.getDate() + amount);
+      return base;
+    },
+    addWeeks: (date, amount) => {
+      const base = toNoonTZDate(date);
+      base.setDate(base.getDate() + amount * 7);
+      return base;
+    },
+    addMonths: (date, amount) => {
+      const base = toNoonTZDate(date);
+      base.setMonth(base.getMonth() + amount);
+      return base;
+    },
+    addYears: (date, amount) => {
+      const base = toNoonTZDate(date);
+      base.setFullYear(base.getFullYear() + amount);
+      return base;
+    },
+    eachYearOfInterval: (interval) => {
+      const start = toNoonTZDate(interval.start);
+      const end = toNoonTZDate(interval.end);
+      const years = [];
+      const cursor = new TZDate(start.getFullYear(), 0, 1, 12, 0, 0, timeZone);
+      while (cursor.getFullYear() <= end.getFullYear()) {
+        years.push(new TZDate(cursor, timeZone));
+        cursor.setFullYear(cursor.getFullYear() + 1, 0, 1);
+      }
+      return years;
+    },
+    getWeek: (date, options2) => {
+      const base = toCalendarDate(date);
+      return getWeek(base, {
+        weekStartsOn: options2?.weekStartsOn ?? fallbackWeekStartsOn,
+        firstWeekContainsDate: options2?.firstWeekContainsDate ?? locale?.options?.firstWeekContainsDate ?? 1
+      });
+    },
+    getISOWeek: (date) => {
+      const base = toCalendarDate(date);
+      return getISOWeek(base);
+    },
+    differenceInCalendarDays: (dateLeft, dateRight) => {
+      const left = toCalendarDate(dateLeft);
+      const right = toCalendarDate(dateRight);
+      return differenceInCalendarDays(left, right);
+    },
+    differenceInCalendarMonths: (dateLeft, dateRight) => {
+      const left = toCalendarDate(dateLeft);
+      const right = toCalendarDate(dateRight);
+      return differenceInCalendarMonths(left, right);
+    }
+  };
+}
+
+// node_modules/react-day-picker/dist/esm/useAnimation.js
+var import_react31 = __toESM(require_react(), 1);
+var asHtmlElement = (element) => {
+  if (element instanceof HTMLElement)
+    return element;
+  return null;
+};
+var queryMonthEls = (element) => [
+  ...element.querySelectorAll("[data-animated-month]") ?? []
+];
+var queryMonthEl = (element) => asHtmlElement(element.querySelector("[data-animated-month]"));
+var queryCaptionEl = (element) => asHtmlElement(element.querySelector("[data-animated-caption]"));
+var queryWeeksEl = (element) => asHtmlElement(element.querySelector("[data-animated-weeks]"));
+var queryNavEl = (element) => asHtmlElement(element.querySelector("[data-animated-nav]"));
+var queryWeekdaysEl = (element) => asHtmlElement(element.querySelector("[data-animated-weekdays]"));
+function useAnimation(rootElRef, enabled, { classNames, months, focused, dateLib }) {
+  const previousRootElSnapshotRef = (0, import_react31.useRef)(null);
+  const previousMonthsRef = (0, import_react31.useRef)(months);
+  const animatingRef = (0, import_react31.useRef)(false);
+  (0, import_react31.useLayoutEffect)(() => {
+    const previousMonths = previousMonthsRef.current;
+    previousMonthsRef.current = months;
+    if (!enabled || !rootElRef.current || // safety check because the ref can be set to anything by consumers
+    !(rootElRef.current instanceof HTMLElement) || // validation required for the animation to work as expected
+    months.length === 0 || previousMonths.length === 0 || months.length !== previousMonths.length) {
+      return;
+    }
+    const isSameMonth2 = dateLib.isSameMonth(months[0].date, previousMonths[0].date);
+    const isAfterPreviousMonth = dateLib.isAfter(months[0].date, previousMonths[0].date);
+    const captionAnimationClass = isAfterPreviousMonth ? classNames[Animation.caption_after_enter] : classNames[Animation.caption_before_enter];
+    const weeksAnimationClass = isAfterPreviousMonth ? classNames[Animation.weeks_after_enter] : classNames[Animation.weeks_before_enter];
+    const previousRootElSnapshot = previousRootElSnapshotRef.current;
+    const rootElSnapshot = rootElRef.current.cloneNode(true);
+    if (rootElSnapshot instanceof HTMLElement) {
+      const currentMonthElsSnapshot = queryMonthEls(rootElSnapshot);
+      currentMonthElsSnapshot.forEach((currentMonthElSnapshot) => {
+        if (!(currentMonthElSnapshot instanceof HTMLElement))
+          return;
+        const previousMonthElSnapshot = queryMonthEl(currentMonthElSnapshot);
+        if (previousMonthElSnapshot && currentMonthElSnapshot.contains(previousMonthElSnapshot)) {
+          currentMonthElSnapshot.removeChild(previousMonthElSnapshot);
+        }
+        const captionEl = queryCaptionEl(currentMonthElSnapshot);
+        if (captionEl) {
+          captionEl.classList.remove(captionAnimationClass);
+        }
+        const weeksEl = queryWeeksEl(currentMonthElSnapshot);
+        if (weeksEl) {
+          weeksEl.classList.remove(weeksAnimationClass);
+        }
+      });
+      previousRootElSnapshotRef.current = rootElSnapshot;
+    } else {
+      previousRootElSnapshotRef.current = null;
+    }
+    if (animatingRef.current || isSameMonth2 || // skip animation if a day is focused because it can cause issues to the animation and is better for a11y
+    focused) {
+      return;
+    }
+    const previousMonthEls = previousRootElSnapshot instanceof HTMLElement ? queryMonthEls(previousRootElSnapshot) : [];
+    const currentMonthEls = queryMonthEls(rootElRef.current);
+    if (currentMonthEls?.every((el) => el instanceof HTMLElement) && previousMonthEls && previousMonthEls.every((el) => el instanceof HTMLElement)) {
+      animatingRef.current = true;
+      const cleanUpFunctions = [];
+      rootElRef.current.style.isolation = "isolate";
+      const navEl = queryNavEl(rootElRef.current);
+      if (navEl) {
+        navEl.style.zIndex = "1";
+      }
+      currentMonthEls.forEach((currentMonthEl, index2) => {
+        const previousMonthEl = previousMonthEls[index2];
+        if (!previousMonthEl) {
+          return;
+        }
+        currentMonthEl.style.position = "relative";
+        currentMonthEl.style.overflow = "hidden";
+        const captionEl = queryCaptionEl(currentMonthEl);
+        if (captionEl) {
+          captionEl.classList.add(captionAnimationClass);
+        }
+        const weeksEl = queryWeeksEl(currentMonthEl);
+        if (weeksEl) {
+          weeksEl.classList.add(weeksAnimationClass);
+        }
+        const cleanUp = () => {
+          animatingRef.current = false;
+          if (rootElRef.current) {
+            rootElRef.current.style.isolation = "";
+          }
+          if (navEl) {
+            navEl.style.zIndex = "";
+          }
+          if (captionEl) {
+            captionEl.classList.remove(captionAnimationClass);
+          }
+          if (weeksEl) {
+            weeksEl.classList.remove(weeksAnimationClass);
+          }
+          currentMonthEl.style.position = "";
+          currentMonthEl.style.overflow = "";
+          if (currentMonthEl.contains(previousMonthEl)) {
+            currentMonthEl.removeChild(previousMonthEl);
+          }
+        };
+        cleanUpFunctions.push(cleanUp);
+        previousMonthEl.style.pointerEvents = "none";
+        previousMonthEl.style.position = "absolute";
+        previousMonthEl.style.overflow = "hidden";
+        previousMonthEl.setAttribute("aria-hidden", "true");
+        const previousWeekdaysEl = queryWeekdaysEl(previousMonthEl);
+        if (previousWeekdaysEl) {
+          previousWeekdaysEl.style.opacity = "0";
+        }
+        const previousCaptionEl = queryCaptionEl(previousMonthEl);
+        if (previousCaptionEl) {
+          previousCaptionEl.classList.add(isAfterPreviousMonth ? classNames[Animation.caption_before_exit] : classNames[Animation.caption_after_exit]);
+          previousCaptionEl.addEventListener("animationend", cleanUp);
+        }
+        const previousWeeksEl = queryWeeksEl(previousMonthEl);
+        if (previousWeeksEl) {
+          previousWeeksEl.classList.add(isAfterPreviousMonth ? classNames[Animation.weeks_before_exit] : classNames[Animation.weeks_after_exit]);
+        }
+        currentMonthEl.insertBefore(previousMonthEl, currentMonthEl.firstChild);
+      });
+    }
+  });
+}
+
+// node_modules/react-day-picker/dist/esm/useCalendar.js
+var import_react33 = __toESM(require_react(), 1);
+
+// node_modules/react-day-picker/dist/esm/helpers/getDates.js
+function getDates(displayMonths, maxDate, props, dateLib) {
+  const firstMonth = displayMonths[0];
+  const lastMonth = displayMonths[displayMonths.length - 1];
+  const { ISOWeek, fixedWeeks, broadcastCalendar } = props ?? {};
+  const { addDays: addDays2, differenceInCalendarDays: differenceInCalendarDays2, differenceInCalendarMonths: differenceInCalendarMonths2, endOfBroadcastWeek: endOfBroadcastWeek2, endOfISOWeek: endOfISOWeek2, endOfMonth: endOfMonth2, endOfWeek: endOfWeek2, isAfter: isAfter2, startOfBroadcastWeek: startOfBroadcastWeek2, startOfISOWeek: startOfISOWeek2, startOfWeek: startOfWeek2 } = dateLib;
+  const startWeekFirstDate = broadcastCalendar ? startOfBroadcastWeek2(firstMonth, dateLib) : ISOWeek ? startOfISOWeek2(firstMonth) : startOfWeek2(firstMonth);
+  const displayMonthsWeekEnd = broadcastCalendar ? endOfBroadcastWeek2(lastMonth) : ISOWeek ? endOfISOWeek2(endOfMonth2(lastMonth)) : endOfWeek2(endOfMonth2(lastMonth));
+  const constraintWeekEnd = maxDate && (broadcastCalendar ? endOfBroadcastWeek2(maxDate) : ISOWeek ? endOfISOWeek2(maxDate) : endOfWeek2(maxDate));
+  const gridEndDate = constraintWeekEnd && isAfter2(displayMonthsWeekEnd, constraintWeekEnd) ? constraintWeekEnd : displayMonthsWeekEnd;
+  const nOfDays = differenceInCalendarDays2(gridEndDate, startWeekFirstDate);
+  const nOfMonths = differenceInCalendarMonths2(lastMonth, firstMonth) + 1;
+  const dates = [];
+  for (let i2 = 0; i2 <= nOfDays; i2++) {
+    const date = addDays2(startWeekFirstDate, i2);
+    dates.push(date);
+  }
+  const nrOfDaysWithFixedWeeks = broadcastCalendar ? 35 : 42;
+  const extraDates = nrOfDaysWithFixedWeeks * nOfMonths;
+  if (fixedWeeks && dates.length < extraDates) {
+    const daysToAdd = extraDates - dates.length;
+    for (let i2 = 0; i2 < daysToAdd; i2++) {
+      const date = addDays2(dates[dates.length - 1], 1);
+      dates.push(date);
+    }
+  }
+  return dates;
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getDays.js
+function getDays(calendarMonths) {
+  const initialDays = [];
+  return calendarMonths.reduce((days, month) => {
+    const weekDays = month.weeks.reduce((weekDays2, week) => {
+      return weekDays2.concat(week.days.slice());
+    }, initialDays.slice());
+    return days.concat(weekDays.slice());
+  }, initialDays.slice());
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getDisplayMonths.js
+function getDisplayMonths(firstDisplayedMonth, calendarEndMonth, props, dateLib) {
+  const { numberOfMonths = 1 } = props;
+  const months = [];
+  for (let i2 = 0; i2 < numberOfMonths; i2++) {
+    const month = dateLib.addMonths(firstDisplayedMonth, i2);
+    if (calendarEndMonth && month > calendarEndMonth) {
+      break;
+    }
+    months.push(month);
+  }
+  return months;
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getInitialMonth.js
+function getInitialMonth(props, navStart, navEnd, dateLib) {
+  const { month, defaultMonth, today = dateLib.today(), numberOfMonths = 1 } = props;
+  let initialMonth = month || defaultMonth || today;
+  const { differenceInCalendarMonths: differenceInCalendarMonths2, addMonths: addMonths2, startOfMonth: startOfMonth2 } = dateLib;
+  if (navEnd && differenceInCalendarMonths2(navEnd, initialMonth) < numberOfMonths - 1) {
+    const offset4 = -1 * (numberOfMonths - 1);
+    initialMonth = addMonths2(navEnd, offset4);
+  }
+  if (navStart && differenceInCalendarMonths2(initialMonth, navStart) < 0) {
+    initialMonth = navStart;
+  }
+  return startOfMonth2(initialMonth);
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getMonths.js
+function getMonths(displayMonths, dates, props, dateLib) {
+  const { addDays: addDays2, endOfBroadcastWeek: endOfBroadcastWeek2, endOfISOWeek: endOfISOWeek2, endOfMonth: endOfMonth2, endOfWeek: endOfWeek2, getISOWeek: getISOWeek2, getWeek: getWeek2, startOfBroadcastWeek: startOfBroadcastWeek2, startOfISOWeek: startOfISOWeek2, startOfWeek: startOfWeek2 } = dateLib;
+  const dayPickerMonths = displayMonths.reduce((months, month) => {
+    const firstDateOfFirstWeek = props.broadcastCalendar ? startOfBroadcastWeek2(month, dateLib) : props.ISOWeek ? startOfISOWeek2(month) : startOfWeek2(month);
+    const lastDateOfLastWeek = props.broadcastCalendar ? endOfBroadcastWeek2(month) : props.ISOWeek ? endOfISOWeek2(endOfMonth2(month)) : endOfWeek2(endOfMonth2(month));
+    const monthDates = dates.filter((date) => {
+      return date >= firstDateOfFirstWeek && date <= lastDateOfLastWeek;
+    });
+    const nrOfDaysWithFixedWeeks = props.broadcastCalendar ? 35 : 42;
+    if (props.fixedWeeks && monthDates.length < nrOfDaysWithFixedWeeks) {
+      const extraDates = dates.filter((date) => {
+        const daysToAdd = nrOfDaysWithFixedWeeks - monthDates.length;
+        return date > lastDateOfLastWeek && date <= addDays2(lastDateOfLastWeek, daysToAdd);
+      });
+      monthDates.push(...extraDates);
+    }
+    const weeks = monthDates.reduce((weeks2, date) => {
+      const weekNumber = props.ISOWeek ? getISOWeek2(date) : getWeek2(date);
+      const week = weeks2.find((week2) => week2.weekNumber === weekNumber);
+      const day = new CalendarDay(date, month, dateLib);
+      if (!week) {
+        weeks2.push(new CalendarWeek(weekNumber, [day]));
+      } else {
+        week.days.push(day);
+      }
+      return weeks2;
+    }, []);
+    const dayPickerMonth = new CalendarMonth(month, weeks);
+    months.push(dayPickerMonth);
+    return months;
+  }, []);
+  if (!props.reverseMonths) {
+    return dayPickerMonths;
+  } else {
+    return dayPickerMonths.reverse();
+  }
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getNavMonth.js
+function getNavMonths(props, dateLib) {
+  let { startMonth, endMonth } = props;
+  const { startOfYear: startOfYear2, startOfDay: startOfDay2, startOfMonth: startOfMonth2, endOfMonth: endOfMonth2, addYears: addYears2, endOfYear: endOfYear2, newDate, today } = dateLib;
+  const { fromYear, toYear, fromMonth, toMonth } = props;
+  if (!startMonth && fromMonth) {
+    startMonth = fromMonth;
+  }
+  if (!startMonth && fromYear) {
+    startMonth = dateLib.newDate(fromYear, 0, 1);
+  }
+  if (!endMonth && toMonth) {
+    endMonth = toMonth;
+  }
+  if (!endMonth && toYear) {
+    endMonth = newDate(toYear, 11, 31);
+  }
+  const hasYearDropdown = props.captionLayout === "dropdown" || props.captionLayout === "dropdown-years";
+  if (startMonth) {
+    startMonth = startOfMonth2(startMonth);
+  } else if (fromYear) {
+    startMonth = newDate(fromYear, 0, 1);
+  } else if (!startMonth && hasYearDropdown) {
+    startMonth = startOfYear2(addYears2(props.today ?? today(), -100));
+  }
+  if (endMonth) {
+    endMonth = endOfMonth2(endMonth);
+  } else if (toYear) {
+    endMonth = newDate(toYear, 11, 31);
+  } else if (!endMonth && hasYearDropdown) {
+    endMonth = endOfYear2(props.today ?? today());
+  }
+  return [
+    startMonth ? startOfDay2(startMonth) : startMonth,
+    endMonth ? startOfDay2(endMonth) : endMonth
+  ];
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getNextMonth.js
+function getNextMonth(firstDisplayedMonth, calendarEndMonth, options, dateLib) {
+  if (options.disableNavigation) {
+    return void 0;
+  }
+  const { pagedNavigation, numberOfMonths = 1 } = options;
+  const { startOfMonth: startOfMonth2, addMonths: addMonths2, differenceInCalendarMonths: differenceInCalendarMonths2 } = dateLib;
+  const offset4 = pagedNavigation ? numberOfMonths : 1;
+  const month = startOfMonth2(firstDisplayedMonth);
+  if (!calendarEndMonth) {
+    return addMonths2(month, offset4);
+  }
+  const monthsDiff = differenceInCalendarMonths2(calendarEndMonth, firstDisplayedMonth);
+  if (monthsDiff < numberOfMonths) {
+    return void 0;
+  }
+  return addMonths2(month, offset4);
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getPreviousMonth.js
+function getPreviousMonth(firstDisplayedMonth, calendarStartMonth, options, dateLib) {
+  if (options.disableNavigation) {
+    return void 0;
+  }
+  const { pagedNavigation, numberOfMonths } = options;
+  const { startOfMonth: startOfMonth2, addMonths: addMonths2, differenceInCalendarMonths: differenceInCalendarMonths2 } = dateLib;
+  const offset4 = pagedNavigation ? numberOfMonths ?? 1 : 1;
+  const month = startOfMonth2(firstDisplayedMonth);
+  if (!calendarStartMonth) {
+    return addMonths2(month, -offset4);
+  }
+  const monthsDiff = differenceInCalendarMonths2(month, calendarStartMonth);
+  if (monthsDiff <= 0) {
+    return void 0;
+  }
+  return addMonths2(month, -offset4);
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getWeeks.js
+function getWeeks(months) {
+  const initialWeeks = [];
+  return months.reduce((weeks, month) => {
+    return weeks.concat(month.weeks.slice());
+  }, initialWeeks.slice());
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/useControlledValue.js
+var import_react32 = __toESM(require_react(), 1);
+function useControlledValue(defaultValue, controlledValue) {
+  const [uncontrolledValue, setValue] = (0, import_react32.useState)(defaultValue);
+  const value = controlledValue === void 0 ? uncontrolledValue : controlledValue;
+  return [value, setValue];
+}
+
+// node_modules/react-day-picker/dist/esm/useCalendar.js
+function useCalendar(props, dateLib) {
+  const [navStart, navEnd] = getNavMonths(props, dateLib);
+  const { startOfMonth: startOfMonth2, endOfMonth: endOfMonth2 } = dateLib;
+  const initialMonth = getInitialMonth(props, navStart, navEnd, dateLib);
+  const [firstMonth, setFirstMonth] = useControlledValue(
+    initialMonth,
+    // initialMonth is always computed from props.month if provided
+    props.month ? initialMonth : void 0
+  );
+  (0, import_react33.useEffect)(() => {
+    const newInitialMonth = getInitialMonth(props, navStart, navEnd, dateLib);
+    setFirstMonth(newInitialMonth);
+  }, [props.timeZone]);
+  const { months, weeks, days, previousMonth, nextMonth } = (0, import_react33.useMemo)(() => {
+    const displayMonths = getDisplayMonths(firstMonth, navEnd, { numberOfMonths: props.numberOfMonths }, dateLib);
+    const dates = getDates(displayMonths, props.endMonth ? endOfMonth2(props.endMonth) : void 0, {
+      ISOWeek: props.ISOWeek,
+      fixedWeeks: props.fixedWeeks,
+      broadcastCalendar: props.broadcastCalendar
+    }, dateLib);
+    const months2 = getMonths(displayMonths, dates, {
+      broadcastCalendar: props.broadcastCalendar,
+      fixedWeeks: props.fixedWeeks,
+      ISOWeek: props.ISOWeek,
+      reverseMonths: props.reverseMonths
+    }, dateLib);
+    const weeks2 = getWeeks(months2);
+    const days2 = getDays(months2);
+    const previousMonth2 = getPreviousMonth(firstMonth, navStart, props, dateLib);
+    const nextMonth2 = getNextMonth(firstMonth, navEnd, props, dateLib);
+    return {
+      months: months2,
+      weeks: weeks2,
+      days: days2,
+      previousMonth: previousMonth2,
+      nextMonth: nextMonth2
+    };
+  }, [
+    dateLib,
+    firstMonth.getTime(),
+    navEnd?.getTime(),
+    navStart?.getTime(),
+    props.disableNavigation,
+    props.broadcastCalendar,
+    props.endMonth?.getTime(),
+    props.fixedWeeks,
+    props.ISOWeek,
+    props.numberOfMonths,
+    props.pagedNavigation,
+    props.reverseMonths
+  ]);
+  const { disableNavigation, onMonthChange } = props;
+  const isDayInCalendar = (day) => weeks.some((week) => week.days.some((d2) => d2.isEqualTo(day)));
+  const goToMonth = (date) => {
+    if (disableNavigation) {
+      return;
+    }
+    let newMonth = startOfMonth2(date);
+    if (navStart && newMonth < startOfMonth2(navStart)) {
+      newMonth = startOfMonth2(navStart);
+    }
+    if (navEnd && newMonth > startOfMonth2(navEnd)) {
+      newMonth = startOfMonth2(navEnd);
+    }
+    setFirstMonth(newMonth);
+    onMonthChange?.(newMonth);
+  };
+  const goToDay = (day) => {
+    if (isDayInCalendar(day)) {
+      return;
+    }
+    goToMonth(day.date);
+  };
+  const calendar = {
+    months,
+    weeks,
+    days,
+    navStart,
+    navEnd,
+    previousMonth,
+    nextMonth,
+    goToMonth,
+    goToDay
+  };
+  return calendar;
+}
+
+// node_modules/react-day-picker/dist/esm/useFocus.js
+var import_react34 = __toESM(require_react(), 1);
+
+// node_modules/react-day-picker/dist/esm/helpers/calculateFocusTarget.js
+var FocusTargetPriority;
+(function(FocusTargetPriority2) {
+  FocusTargetPriority2[FocusTargetPriority2["Today"] = 0] = "Today";
+  FocusTargetPriority2[FocusTargetPriority2["Selected"] = 1] = "Selected";
+  FocusTargetPriority2[FocusTargetPriority2["LastFocused"] = 2] = "LastFocused";
+  FocusTargetPriority2[FocusTargetPriority2["FocusedModifier"] = 3] = "FocusedModifier";
+})(FocusTargetPriority || (FocusTargetPriority = {}));
+function isFocusableDay(modifiers) {
+  return !modifiers[DayFlag.disabled] && !modifiers[DayFlag.hidden] && !modifiers[DayFlag.outside];
+}
+function calculateFocusTarget(days, getModifiers, isSelected, lastFocused) {
+  let focusTarget;
+  let foundFocusTargetPriority = -1;
+  for (const day of days) {
+    const modifiers = getModifiers(day);
+    if (isFocusableDay(modifiers)) {
+      if (modifiers[DayFlag.focused] && foundFocusTargetPriority < FocusTargetPriority.FocusedModifier) {
+        focusTarget = day;
+        foundFocusTargetPriority = FocusTargetPriority.FocusedModifier;
+      } else if (lastFocused?.isEqualTo(day) && foundFocusTargetPriority < FocusTargetPriority.LastFocused) {
+        focusTarget = day;
+        foundFocusTargetPriority = FocusTargetPriority.LastFocused;
+      } else if (isSelected(day.date) && foundFocusTargetPriority < FocusTargetPriority.Selected) {
+        focusTarget = day;
+        foundFocusTargetPriority = FocusTargetPriority.Selected;
+      } else if (modifiers[DayFlag.today] && foundFocusTargetPriority < FocusTargetPriority.Today) {
+        focusTarget = day;
+        foundFocusTargetPriority = FocusTargetPriority.Today;
+      }
+    }
+  }
+  if (!focusTarget) {
+    focusTarget = days.find((day) => isFocusableDay(getModifiers(day)));
+  }
+  return focusTarget;
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getFocusableDate.js
+function getFocusableDate(moveBy, moveDir, refDate, navStart, navEnd, props, dateLib) {
+  const { ISOWeek, broadcastCalendar } = props;
+  const { addDays: addDays2, addMonths: addMonths2, addWeeks: addWeeks2, addYears: addYears2, endOfBroadcastWeek: endOfBroadcastWeek2, endOfISOWeek: endOfISOWeek2, endOfWeek: endOfWeek2, max: max4, min: min4, startOfBroadcastWeek: startOfBroadcastWeek2, startOfISOWeek: startOfISOWeek2, startOfWeek: startOfWeek2 } = dateLib;
+  const moveFns = {
+    day: addDays2,
+    week: addWeeks2,
+    month: addMonths2,
+    year: addYears2,
+    startOfWeek: (date) => broadcastCalendar ? startOfBroadcastWeek2(date, dateLib) : ISOWeek ? startOfISOWeek2(date) : startOfWeek2(date),
+    endOfWeek: (date) => broadcastCalendar ? endOfBroadcastWeek2(date) : ISOWeek ? endOfISOWeek2(date) : endOfWeek2(date)
+  };
+  let focusableDate = moveFns[moveBy](refDate, moveDir === "after" ? 1 : -1);
+  if (moveDir === "before" && navStart) {
+    focusableDate = max4([navStart, focusableDate]);
+  } else if (moveDir === "after" && navEnd) {
+    focusableDate = min4([navEnd, focusableDate]);
+  }
+  return focusableDate;
+}
+
+// node_modules/react-day-picker/dist/esm/helpers/getNextFocus.js
+function getNextFocus(moveBy, moveDir, refDay, calendarStartMonth, calendarEndMonth, props, dateLib, attempt = 0) {
+  if (attempt > 365) {
+    return void 0;
+  }
+  const focusableDate = getFocusableDate(moveBy, moveDir, refDay.date, calendarStartMonth, calendarEndMonth, props, dateLib);
+  const isDisabled = Boolean(props.disabled && dateMatchModifiers(focusableDate, props.disabled, dateLib));
+  const isHidden = Boolean(props.hidden && dateMatchModifiers(focusableDate, props.hidden, dateLib));
+  const targetMonth = focusableDate;
+  const focusDay = new CalendarDay(focusableDate, targetMonth, dateLib);
+  if (!isDisabled && !isHidden) {
+    return focusDay;
+  }
+  return getNextFocus(moveBy, moveDir, focusDay, calendarStartMonth, calendarEndMonth, props, dateLib, attempt + 1);
+}
+
+// node_modules/react-day-picker/dist/esm/useFocus.js
+function useFocus2(props, calendar, getModifiers, isSelected, dateLib) {
+  const { autoFocus } = props;
+  const [lastFocused, setLastFocused] = (0, import_react34.useState)();
+  const focusTarget = calculateFocusTarget(calendar.days, getModifiers, isSelected || (() => false), lastFocused);
+  const [focusedDay, setFocused] = (0, import_react34.useState)(autoFocus ? focusTarget : void 0);
+  const blur = () => {
+    setLastFocused(focusedDay);
+    setFocused(void 0);
+  };
+  const moveFocus = (moveBy, moveDir) => {
+    if (!focusedDay)
+      return;
+    const nextFocus = getNextFocus(moveBy, moveDir, focusedDay, calendar.navStart, calendar.navEnd, props, dateLib);
+    if (!nextFocus)
+      return;
+    if (props.disableNavigation) {
+      const isNextInCalendar = calendar.days.some((day) => day.isEqualTo(nextFocus));
+      if (!isNextInCalendar) {
+        return;
+      }
+    }
+    calendar.goToDay(nextFocus);
+    setFocused(nextFocus);
+  };
+  const isFocusTarget = (day) => {
+    return Boolean(focusTarget?.isEqualTo(day));
+  };
+  const useFocus3 = {
+    isFocusTarget,
+    setFocused,
+    focused: focusedDay,
+    blur,
+    moveFocus
+  };
+  return useFocus3;
+}
+
+// node_modules/react-day-picker/dist/esm/selection/useMulti.js
+function useMulti(props, dateLib) {
+  const { selected: initiallySelected, required, onSelect } = props;
+  const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
+  const selected = !onSelect ? internallySelected : initiallySelected;
+  const { isSameDay: isSameDay2 } = dateLib;
+  const isSelected = (date) => {
+    return selected?.some((d2) => isSameDay2(d2, date)) ?? false;
+  };
+  const { min: min4, max: max4 } = props;
+  const select = (triggerDate, modifiers, e2) => {
+    let newDates = [...selected ?? []];
+    if (isSelected(triggerDate)) {
+      if (selected?.length === min4) {
+        return;
+      }
+      if (required && selected?.length === 1) {
+        return;
+      }
+      newDates = selected?.filter((d2) => !isSameDay2(d2, triggerDate));
+    } else {
+      if (selected?.length === max4) {
+        newDates = [triggerDate];
+      } else {
+        newDates = [...newDates, triggerDate];
+      }
+    }
+    if (!onSelect) {
+      setSelected(newDates);
+    }
+    onSelect?.(newDates, triggerDate, modifiers, e2);
+    return newDates;
+  };
+  return {
+    selected,
+    select,
+    isSelected
+  };
+}
+
+// node_modules/react-day-picker/dist/esm/utils/addToRange.js
+function addToRange(date, initialRange, min4 = 0, max4 = 0, required = false, dateLib = defaultDateLib) {
+  const { from, to } = initialRange || {};
+  const { isSameDay: isSameDay2, isAfter: isAfter2, isBefore: isBefore2 } = dateLib;
+  let range;
+  if (!from && !to) {
+    range = { from: date, to: min4 > 0 ? void 0 : date };
+  } else if (from && !to) {
+    if (isSameDay2(from, date)) {
+      if (min4 === 0) {
+        range = { from, to: date };
+      } else if (required) {
+        range = { from, to: void 0 };
+      } else {
+        range = void 0;
+      }
+    } else if (isBefore2(date, from)) {
+      range = { from: date, to: from };
+    } else {
+      range = { from, to: date };
+    }
+  } else if (from && to) {
+    if (isSameDay2(from, date) && isSameDay2(to, date)) {
+      if (required) {
+        range = { from, to };
+      } else {
+        range = void 0;
+      }
+    } else if (isSameDay2(from, date)) {
+      range = { from, to: min4 > 0 ? void 0 : date };
+    } else if (isSameDay2(to, date)) {
+      range = { from: date, to: min4 > 0 ? void 0 : date };
+    } else if (isBefore2(date, from)) {
+      range = { from: date, to };
+    } else if (isAfter2(date, from)) {
+      range = { from, to: date };
+    } else if (isAfter2(date, to)) {
+      range = { from, to: date };
+    } else {
+      throw new Error("Invalid range");
+    }
+  }
+  if (range?.from && range?.to) {
+    const diff = dateLib.differenceInCalendarDays(range.to, range.from);
+    if (max4 > 0 && diff > max4) {
+      range = { from: date, to: void 0 };
+    } else if (min4 > 1 && diff < min4) {
+      range = { from: date, to: void 0 };
+    }
+  }
+  return range;
+}
+
+// node_modules/react-day-picker/dist/esm/utils/rangeContainsDayOfWeek.js
+function rangeContainsDayOfWeek(range, dayOfWeek, dateLib = defaultDateLib) {
+  const dayOfWeekArr = !Array.isArray(dayOfWeek) ? [dayOfWeek] : dayOfWeek;
+  let date = range.from;
+  const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
+  const totalDaysLimit = Math.min(totalDays, 6);
+  for (let i2 = 0; i2 <= totalDaysLimit; i2++) {
+    if (dayOfWeekArr.includes(date.getDay())) {
+      return true;
+    }
+    date = dateLib.addDays(date, 1);
+  }
+  return false;
+}
+
+// node_modules/react-day-picker/dist/esm/utils/rangeOverlaps.js
+function rangeOverlaps(rangeLeft, rangeRight, dateLib = defaultDateLib) {
+  return rangeIncludesDate(rangeLeft, rangeRight.from, false, dateLib) || rangeIncludesDate(rangeLeft, rangeRight.to, false, dateLib) || rangeIncludesDate(rangeRight, rangeLeft.from, false, dateLib) || rangeIncludesDate(rangeRight, rangeLeft.to, false, dateLib);
+}
+
+// node_modules/react-day-picker/dist/esm/utils/rangeContainsModifiers.js
+function rangeContainsModifiers(range, modifiers, dateLib = defaultDateLib) {
+  const matchers = Array.isArray(modifiers) ? modifiers : [modifiers];
+  const nonFunctionMatchers = matchers.filter((matcher) => typeof matcher !== "function");
+  const nonFunctionMatchersResult = nonFunctionMatchers.some((matcher) => {
+    if (typeof matcher === "boolean")
+      return matcher;
+    if (dateLib.isDate(matcher)) {
+      return rangeIncludesDate(range, matcher, false, dateLib);
+    }
+    if (isDatesArray(matcher, dateLib)) {
+      return matcher.some((date) => rangeIncludesDate(range, date, false, dateLib));
+    }
+    if (isDateRange(matcher)) {
+      if (matcher.from && matcher.to) {
+        return rangeOverlaps(range, { from: matcher.from, to: matcher.to }, dateLib);
+      }
+      return false;
+    }
+    if (isDayOfWeekType(matcher)) {
+      return rangeContainsDayOfWeek(range, matcher.dayOfWeek, dateLib);
+    }
+    if (isDateInterval(matcher)) {
+      const isClosedInterval = dateLib.isAfter(matcher.before, matcher.after);
+      if (isClosedInterval) {
+        return rangeOverlaps(range, {
+          from: dateLib.addDays(matcher.after, 1),
+          to: dateLib.addDays(matcher.before, -1)
+        }, dateLib);
+      }
+      return dateMatchModifiers(range.from, matcher, dateLib) || dateMatchModifiers(range.to, matcher, dateLib);
+    }
+    if (isDateAfterType(matcher) || isDateBeforeType(matcher)) {
+      return dateMatchModifiers(range.from, matcher, dateLib) || dateMatchModifiers(range.to, matcher, dateLib);
+    }
+    return false;
+  });
+  if (nonFunctionMatchersResult) {
+    return true;
+  }
+  const functionMatchers = matchers.filter((matcher) => typeof matcher === "function");
+  if (functionMatchers.length) {
+    let date = range.from;
+    const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
+    for (let i2 = 0; i2 <= totalDays; i2++) {
+      if (functionMatchers.some((matcher) => matcher(date))) {
+        return true;
+      }
+      date = dateLib.addDays(date, 1);
+    }
+  }
+  return false;
+}
+
+// node_modules/react-day-picker/dist/esm/selection/useRange.js
+function useRange(props, dateLib) {
+  const { disabled: disabled2, excludeDisabled, resetOnSelect, selected: initiallySelected, required, onSelect } = props;
+  const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
+  const selected = !onSelect ? internallySelected : initiallySelected;
+  const isSelected = (date) => selected && rangeIncludesDate(selected, date, false, dateLib);
+  const select = (triggerDate, modifiers, e2) => {
+    const { min: min4, max: max4 } = props;
+    let newRange;
+    if (triggerDate) {
+      const selectedFrom = selected?.from;
+      const selectedTo = selected?.to;
+      const hasFullRange = !!selectedFrom && !!selectedTo;
+      const isClickingSingleDayRange = !!selectedFrom && !!selectedTo && dateLib.isSameDay(selectedFrom, selectedTo) && dateLib.isSameDay(triggerDate, selectedFrom);
+      if (resetOnSelect && (hasFullRange || !selected?.from)) {
+        if (!required && isClickingSingleDayRange) {
+          newRange = void 0;
+        } else {
+          newRange = { from: triggerDate, to: void 0 };
+        }
+      } else {
+        newRange = addToRange(triggerDate, selected, min4, max4, required, dateLib);
+      }
+    }
+    if (excludeDisabled && disabled2 && newRange?.from && newRange.to) {
+      if (rangeContainsModifiers({ from: newRange.from, to: newRange.to }, disabled2, dateLib)) {
+        newRange.from = triggerDate;
+        newRange.to = void 0;
+      }
+    }
+    if (!onSelect) {
+      setSelected(newRange);
+    }
+    onSelect?.(newRange, triggerDate, modifiers, e2);
+    return newRange;
+  };
+  return {
+    selected,
+    select,
+    isSelected
+  };
+}
+
+// node_modules/react-day-picker/dist/esm/selection/useSingle.js
+function useSingle(props, dateLib) {
+  const { selected: initiallySelected, required, onSelect } = props;
+  const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
+  const selected = !onSelect ? internallySelected : initiallySelected;
+  const { isSameDay: isSameDay2 } = dateLib;
+  const isSelected = (compareDate) => {
+    return selected ? isSameDay2(selected, compareDate) : false;
+  };
+  const select = (triggerDate, modifiers, e2) => {
+    let newDate = triggerDate;
+    if (!required && selected && selected && isSameDay2(triggerDate, selected)) {
+      newDate = void 0;
+    }
+    if (!onSelect) {
+      setSelected(newDate);
+    }
+    if (required) {
+      onSelect?.(newDate, triggerDate, modifiers, e2);
+    } else {
+      onSelect?.(newDate, triggerDate, modifiers, e2);
+    }
+    return newDate;
+  };
+  return {
+    selected,
+    select,
+    isSelected
+  };
+}
+
+// node_modules/react-day-picker/dist/esm/useSelection.js
+function useSelection(props, dateLib) {
+  const single = useSingle(props, dateLib);
+  const multi = useMulti(props, dateLib);
+  const range = useRange(props, dateLib);
+  switch (props.mode) {
+    case "single":
+      return single;
+    case "multiple":
+      return multi;
+    case "range":
+      return range;
+    default:
+      return void 0;
+  }
+}
+
+// node_modules/react-day-picker/dist/esm/utils/toTimeZone.js
+function toTimeZone(date, timeZone) {
+  if (date instanceof TZDate && date.timeZone === timeZone) {
+    return date;
+  }
+  return new TZDate(date, timeZone);
+}
+
+// node_modules/react-day-picker/dist/esm/utils/convertMatchersToTimeZone.js
+function toZoneNoon(date, timeZone, noonSafe) {
+  if (!noonSafe)
+    return toTimeZone(date, timeZone);
+  const zoned = toTimeZone(date, timeZone);
+  const noonZoned = new TZDate(zoned.getFullYear(), zoned.getMonth(), zoned.getDate(), 12, 0, 0, timeZone);
+  return new Date(noonZoned.getTime());
+}
+function convertMatcher(matcher, timeZone, noonSafe) {
+  if (typeof matcher === "boolean" || typeof matcher === "function") {
+    return matcher;
+  }
+  if (matcher instanceof Date) {
+    return toZoneNoon(matcher, timeZone, noonSafe);
+  }
+  if (Array.isArray(matcher)) {
+    return matcher.map((value) => value instanceof Date ? toZoneNoon(value, timeZone, noonSafe) : value);
+  }
+  if (isDateRange(matcher)) {
+    return {
+      ...matcher,
+      from: matcher.from ? toTimeZone(matcher.from, timeZone) : matcher.from,
+      to: matcher.to ? toTimeZone(matcher.to, timeZone) : matcher.to
+    };
+  }
+  if (isDateInterval(matcher)) {
+    return {
+      before: toZoneNoon(matcher.before, timeZone, noonSafe),
+      after: toZoneNoon(matcher.after, timeZone, noonSafe)
+    };
+  }
+  if (isDateAfterType(matcher)) {
+    return {
+      after: toZoneNoon(matcher.after, timeZone, noonSafe)
+    };
+  }
+  if (isDateBeforeType(matcher)) {
+    return {
+      before: toZoneNoon(matcher.before, timeZone, noonSafe)
+    };
+  }
+  return matcher;
+}
+function convertMatchersToTimeZone(matchers, timeZone, noonSafe) {
+  if (!matchers) {
+    return matchers;
+  }
+  if (Array.isArray(matchers)) {
+    return matchers.map((matcher) => convertMatcher(matcher, timeZone, noonSafe));
+  }
+  return convertMatcher(matchers, timeZone, noonSafe);
+}
+
+// node_modules/react-day-picker/dist/esm/DayPicker.js
+function DayPicker(initialProps) {
+  let props = initialProps;
+  const timeZone = props.timeZone;
+  if (timeZone) {
+    props = {
+      ...initialProps,
+      timeZone
+    };
+    if (props.today) {
+      props.today = toTimeZone(props.today, timeZone);
+    }
+    if (props.month) {
+      props.month = toTimeZone(props.month, timeZone);
+    }
+    if (props.defaultMonth) {
+      props.defaultMonth = toTimeZone(props.defaultMonth, timeZone);
+    }
+    if (props.startMonth) {
+      props.startMonth = toTimeZone(props.startMonth, timeZone);
+    }
+    if (props.endMonth) {
+      props.endMonth = toTimeZone(props.endMonth, timeZone);
+    }
+    if (props.mode === "single" && props.selected) {
+      props.selected = toTimeZone(props.selected, timeZone);
+    } else if (props.mode === "multiple" && props.selected) {
+      props.selected = props.selected?.map((date) => toTimeZone(date, timeZone));
+    } else if (props.mode === "range" && props.selected) {
+      props.selected = {
+        from: props.selected.from ? toTimeZone(props.selected.from, timeZone) : props.selected.from,
+        to: props.selected.to ? toTimeZone(props.selected.to, timeZone) : props.selected.to
+      };
+    }
+    if (props.disabled !== void 0) {
+      props.disabled = convertMatchersToTimeZone(props.disabled, timeZone);
+    }
+    if (props.hidden !== void 0) {
+      props.hidden = convertMatchersToTimeZone(props.hidden, timeZone);
+    }
+    if (props.modifiers) {
+      const nextModifiers = {};
+      Object.keys(props.modifiers).forEach((key) => {
+        nextModifiers[key] = convertMatchersToTimeZone(props.modifiers?.[key], timeZone);
+      });
+      props.modifiers = nextModifiers;
+    }
+  }
+  const { components, formatters: formatters2, labels, dateLib, locale, classNames } = (0, import_react35.useMemo)(() => {
+    const locale2 = { ...enUS2, ...props.locale };
+    const weekStartsOn = props.broadcastCalendar ? 1 : props.weekStartsOn;
+    const noonOverrides = props.noonSafe && props.timeZone ? createNoonOverrides(props.timeZone, {
+      weekStartsOn,
+      locale: locale2
+    }) : void 0;
+    const overrides = props.dateLib && noonOverrides ? { ...noonOverrides, ...props.dateLib } : props.dateLib ?? noonOverrides;
+    const dateLib2 = new DateLib({
+      locale: locale2,
+      weekStartsOn,
+      firstWeekContainsDate: props.firstWeekContainsDate,
+      useAdditionalWeekYearTokens: props.useAdditionalWeekYearTokens,
+      useAdditionalDayOfYearTokens: props.useAdditionalDayOfYearTokens,
+      timeZone: props.timeZone,
+      numerals: props.numerals
+    }, overrides);
+    return {
+      dateLib: dateLib2,
+      components: getComponents(props.components),
+      formatters: getFormatters(props.formatters),
+      labels: getLabels(props.labels, dateLib2.options),
+      locale: locale2,
+      classNames: { ...getDefaultClassNames(), ...props.classNames }
+    };
+  }, [
+    props.locale,
+    props.broadcastCalendar,
+    props.weekStartsOn,
+    props.firstWeekContainsDate,
+    props.useAdditionalWeekYearTokens,
+    props.useAdditionalDayOfYearTokens,
+    props.timeZone,
+    props.numerals,
+    props.dateLib,
+    props.noonSafe,
+    props.components,
+    props.formatters,
+    props.labels,
+    props.classNames
+  ]);
+  if (!props.today) {
+    props = { ...props, today: dateLib.today() };
+  }
+  const { captionLayout, mode, navLayout, numberOfMonths = 1, onDayBlur, onDayClick, onDayFocus, onDayKeyDown, onDayMouseEnter, onDayMouseLeave, onNextClick, onPrevClick, showWeekNumber, styles } = props;
+  const { formatCaption: formatCaption2, formatDay: formatDay2, formatMonthDropdown: formatMonthDropdown2, formatWeekNumber: formatWeekNumber2, formatWeekNumberHeader: formatWeekNumberHeader2, formatWeekdayName: formatWeekdayName2, formatYearDropdown: formatYearDropdown2 } = formatters2;
+  const calendar = useCalendar(props, dateLib);
+  const { days, months, navStart, navEnd, previousMonth, nextMonth, goToMonth } = calendar;
+  const getModifiers = createGetModifiers(days, props, navStart, navEnd, dateLib);
+  const { isSelected, select, selected: selectedValue } = useSelection(props, dateLib) ?? {};
+  const { blur, focused, isFocusTarget, moveFocus, setFocused } = useFocus2(props, calendar, getModifiers, isSelected ?? (() => false), dateLib);
+  const { labelDayButton: labelDayButton2, labelGridcell: labelGridcell2, labelGrid: labelGrid2, labelMonthDropdown: labelMonthDropdown2, labelNav: labelNav2, labelPrevious: labelPrevious2, labelNext: labelNext2, labelWeekday: labelWeekday2, labelWeekNumber: labelWeekNumber2, labelWeekNumberHeader: labelWeekNumberHeader2, labelYearDropdown: labelYearDropdown2 } = labels;
+  const weekdays = (0, import_react35.useMemo)(() => getWeekdays(dateLib, props.ISOWeek, props.broadcastCalendar, props.today), [dateLib, props.ISOWeek, props.broadcastCalendar, props.today]);
+  const isInteractive = mode !== void 0 || onDayClick !== void 0;
+  const handlePreviousClick = (0, import_react35.useCallback)(() => {
+    if (!previousMonth)
+      return;
+    goToMonth(previousMonth);
+    onPrevClick?.(previousMonth);
+  }, [previousMonth, goToMonth, onPrevClick]);
+  const handleNextClick = (0, import_react35.useCallback)(() => {
+    if (!nextMonth)
+      return;
+    goToMonth(nextMonth);
+    onNextClick?.(nextMonth);
+  }, [goToMonth, nextMonth, onNextClick]);
+  const handleDayClick = (0, import_react35.useCallback)((day, m2) => (e2) => {
+    e2.preventDefault();
+    e2.stopPropagation();
+    setFocused(day);
+    if (m2.disabled) {
+      return;
+    }
+    select?.(day.date, m2, e2);
+    onDayClick?.(day.date, m2, e2);
+  }, [select, onDayClick, setFocused]);
+  const handleDayFocus = (0, import_react35.useCallback)((day, m2) => (e2) => {
+    setFocused(day);
+    onDayFocus?.(day.date, m2, e2);
+  }, [onDayFocus, setFocused]);
+  const handleDayBlur = (0, import_react35.useCallback)((day, m2) => (e2) => {
+    blur();
+    onDayBlur?.(day.date, m2, e2);
+  }, [blur, onDayBlur]);
+  const handleDayKeyDown = (0, import_react35.useCallback)((day, modifiers) => (e2) => {
+    const keyMap = {
+      ArrowLeft: [
+        e2.shiftKey ? "month" : "day",
+        props.dir === "rtl" ? "after" : "before"
+      ],
+      ArrowRight: [
+        e2.shiftKey ? "month" : "day",
+        props.dir === "rtl" ? "before" : "after"
+      ],
+      ArrowDown: [e2.shiftKey ? "year" : "week", "after"],
+      ArrowUp: [e2.shiftKey ? "year" : "week", "before"],
+      PageUp: [e2.shiftKey ? "year" : "month", "before"],
+      PageDown: [e2.shiftKey ? "year" : "month", "after"],
+      Home: ["startOfWeek", "before"],
+      End: ["endOfWeek", "after"]
+    };
+    if (keyMap[e2.key]) {
+      e2.preventDefault();
+      e2.stopPropagation();
+      const [moveBy, moveDir] = keyMap[e2.key];
+      moveFocus(moveBy, moveDir);
+    }
+    onDayKeyDown?.(day.date, modifiers, e2);
+  }, [moveFocus, onDayKeyDown, props.dir]);
+  const handleDayMouseEnter = (0, import_react35.useCallback)((day, modifiers) => (e2) => {
+    onDayMouseEnter?.(day.date, modifiers, e2);
+  }, [onDayMouseEnter]);
+  const handleDayMouseLeave = (0, import_react35.useCallback)((day, modifiers) => (e2) => {
+    onDayMouseLeave?.(day.date, modifiers, e2);
+  }, [onDayMouseLeave]);
+  const handleMonthChange = (0, import_react35.useCallback)((date) => (e2) => {
+    const selectedMonth = Number(e2.target.value);
+    const month = dateLib.setMonth(dateLib.startOfMonth(date), selectedMonth);
+    goToMonth(month);
+  }, [dateLib, goToMonth]);
+  const handleYearChange = (0, import_react35.useCallback)((date) => (e2) => {
+    const selectedYear = Number(e2.target.value);
+    const month = dateLib.setYear(dateLib.startOfMonth(date), selectedYear);
+    goToMonth(month);
+  }, [dateLib, goToMonth]);
+  const { className: className2, style } = (0, import_react35.useMemo)(() => ({
+    className: [classNames[UI.Root], props.className].filter(Boolean).join(" "),
+    style: { ...styles?.[UI.Root], ...props.style }
+  }), [classNames, props.className, props.style, styles]);
+  const dataAttributes = getDataAttributes(props);
+  const rootElRef = (0, import_react35.useRef)(null);
+  useAnimation(rootElRef, Boolean(props.animate), {
+    classNames,
+    months,
+    focused,
+    dateLib
+  });
+  const contextValue = {
+    dayPickerProps: props,
+    selected: selectedValue,
+    select,
+    isSelected,
+    months,
+    nextMonth,
+    previousMonth,
+    goToMonth,
+    getModifiers,
+    components,
+    classNames,
+    styles,
+    labels,
+    formatters: formatters2
+  };
+  return import_react35.default.createElement(
+    dayPickerContext.Provider,
+    { value: contextValue },
+    import_react35.default.createElement(
+      components.Root,
+      { rootRef: props.animate ? rootElRef : void 0, className: className2, style, dir: props.dir, id: props.id, lang: props.lang ?? locale.code, nonce: props.nonce, title: props.title, role: props.role, "aria-label": props["aria-label"], "aria-labelledby": props["aria-labelledby"], ...dataAttributes },
+      import_react35.default.createElement(
+        components.Months,
+        { className: classNames[UI.Months], style: styles?.[UI.Months] },
+        !props.hideNavigation && !navLayout && import_react35.default.createElement(components.Nav, { "data-animated-nav": props.animate ? "true" : void 0, className: classNames[UI.Nav], style: styles?.[UI.Nav], "aria-label": labelNav2(), onPreviousClick: handlePreviousClick, onNextClick: handleNextClick, previousMonth, nextMonth }),
+        months.map((calendarMonth, displayIndex) => {
+          return import_react35.default.createElement(
+            components.Month,
+            {
+              "data-animated-month": props.animate ? "true" : void 0,
+              className: classNames[UI.Month],
+              style: styles?.[UI.Month],
+              // biome-ignore lint/suspicious/noArrayIndexKey: breaks animation
+              key: displayIndex,
+              displayIndex,
+              calendarMonth
+            },
+            navLayout === "around" && !props.hideNavigation && displayIndex === 0 && import_react35.default.createElement(
+              components.PreviousMonthButton,
+              { type: "button", className: classNames[UI.PreviousMonthButton], tabIndex: previousMonth ? void 0 : -1, "aria-disabled": previousMonth ? void 0 : true, "aria-label": labelPrevious2(previousMonth), onClick: handlePreviousClick, "data-animated-button": props.animate ? "true" : void 0 },
+              import_react35.default.createElement(components.Chevron, { disabled: previousMonth ? void 0 : true, className: classNames[UI.Chevron], orientation: props.dir === "rtl" ? "right" : "left" })
+            ),
+            import_react35.default.createElement(components.MonthCaption, { "data-animated-caption": props.animate ? "true" : void 0, className: classNames[UI.MonthCaption], style: styles?.[UI.MonthCaption], calendarMonth, displayIndex }, captionLayout?.startsWith("dropdown") ? import_react35.default.createElement(
+              components.DropdownNav,
+              { className: classNames[UI.Dropdowns], style: styles?.[UI.Dropdowns] },
+              (() => {
+                const monthControl = captionLayout === "dropdown" || captionLayout === "dropdown-months" ? import_react35.default.createElement(components.MonthsDropdown, { key: "month", className: classNames[UI.MonthsDropdown], "aria-label": labelMonthDropdown2(), classNames, components, disabled: Boolean(props.disableNavigation), onChange: handleMonthChange(calendarMonth.date), options: getMonthOptions(calendarMonth.date, navStart, navEnd, formatters2, dateLib), style: styles?.[UI.Dropdown], value: dateLib.getMonth(calendarMonth.date) }) : import_react35.default.createElement("span", { key: "month" }, formatMonthDropdown2(calendarMonth.date, dateLib));
+                const yearControl = captionLayout === "dropdown" || captionLayout === "dropdown-years" ? import_react35.default.createElement(components.YearsDropdown, { key: "year", className: classNames[UI.YearsDropdown], "aria-label": labelYearDropdown2(dateLib.options), classNames, components, disabled: Boolean(props.disableNavigation), onChange: handleYearChange(calendarMonth.date), options: getYearOptions(navStart, navEnd, formatters2, dateLib, Boolean(props.reverseYears)), style: styles?.[UI.Dropdown], value: dateLib.getYear(calendarMonth.date) }) : import_react35.default.createElement("span", { key: "year" }, formatYearDropdown2(calendarMonth.date, dateLib));
+                const controls = dateLib.getMonthYearOrder() === "year-first" ? [yearControl, monthControl] : [monthControl, yearControl];
+                return controls;
+              })(),
+              import_react35.default.createElement("span", { role: "status", "aria-live": "polite", style: {
+                border: 0,
+                clip: "rect(0 0 0 0)",
+                height: "1px",
+                margin: "-1px",
+                overflow: "hidden",
+                padding: 0,
+                position: "absolute",
+                width: "1px",
+                whiteSpace: "nowrap",
+                wordWrap: "normal"
+              } }, formatCaption2(calendarMonth.date, dateLib.options, dateLib))
+            ) : import_react35.default.createElement(components.CaptionLabel, { className: classNames[UI.CaptionLabel], role: "status", "aria-live": "polite" }, formatCaption2(calendarMonth.date, dateLib.options, dateLib))),
+            navLayout === "around" && !props.hideNavigation && displayIndex === numberOfMonths - 1 && import_react35.default.createElement(
+              components.NextMonthButton,
+              { type: "button", className: classNames[UI.NextMonthButton], tabIndex: nextMonth ? void 0 : -1, "aria-disabled": nextMonth ? void 0 : true, "aria-label": labelNext2(nextMonth), onClick: handleNextClick, "data-animated-button": props.animate ? "true" : void 0 },
+              import_react35.default.createElement(components.Chevron, { disabled: nextMonth ? void 0 : true, className: classNames[UI.Chevron], orientation: props.dir === "rtl" ? "left" : "right" })
+            ),
+            displayIndex === numberOfMonths - 1 && navLayout === "after" && !props.hideNavigation && import_react35.default.createElement(components.Nav, { "data-animated-nav": props.animate ? "true" : void 0, className: classNames[UI.Nav], style: styles?.[UI.Nav], "aria-label": labelNav2(), onPreviousClick: handlePreviousClick, onNextClick: handleNextClick, previousMonth, nextMonth }),
+            import_react35.default.createElement(
+              components.MonthGrid,
+              { role: "grid", "aria-multiselectable": mode === "multiple" || mode === "range", "aria-label": labelGrid2(calendarMonth.date, dateLib.options, dateLib) || void 0, className: classNames[UI.MonthGrid], style: styles?.[UI.MonthGrid] },
+              !props.hideWeekdays && import_react35.default.createElement(
+                components.Weekdays,
+                { "data-animated-weekdays": props.animate ? "true" : void 0, className: classNames[UI.Weekdays], style: styles?.[UI.Weekdays] },
+                showWeekNumber && import_react35.default.createElement(components.WeekNumberHeader, { "aria-label": labelWeekNumberHeader2(dateLib.options), className: classNames[UI.WeekNumberHeader], style: styles?.[UI.WeekNumberHeader], scope: "col" }, formatWeekNumberHeader2()),
+                weekdays.map((weekday) => import_react35.default.createElement(components.Weekday, { "aria-label": labelWeekday2(weekday, dateLib.options, dateLib), className: classNames[UI.Weekday], key: String(weekday), style: styles?.[UI.Weekday], scope: "col" }, formatWeekdayName2(weekday, dateLib.options, dateLib)))
+              ),
+              import_react35.default.createElement(components.Weeks, { "data-animated-weeks": props.animate ? "true" : void 0, className: classNames[UI.Weeks], style: styles?.[UI.Weeks] }, calendarMonth.weeks.map((week) => {
+                return import_react35.default.createElement(
+                  components.Week,
+                  { className: classNames[UI.Week], key: week.weekNumber, style: styles?.[UI.Week], week },
+                  showWeekNumber && import_react35.default.createElement(components.WeekNumber, { week, style: styles?.[UI.WeekNumber], "aria-label": labelWeekNumber2(week.weekNumber, {
+                    locale
+                  }), className: classNames[UI.WeekNumber], scope: "row", role: "rowheader" }, formatWeekNumber2(week.weekNumber, dateLib)),
+                  week.days.map((day) => {
+                    const { date } = day;
+                    const modifiers = getModifiers(day);
+                    modifiers[DayFlag.focused] = !modifiers.hidden && Boolean(focused?.isEqualTo(day));
+                    modifiers[SelectionState.selected] = isSelected?.(date) || modifiers.selected;
+                    if (isDateRange(selectedValue)) {
+                      const { from, to } = selectedValue;
+                      modifiers[SelectionState.range_start] = Boolean(from && to && dateLib.isSameDay(date, from));
+                      modifiers[SelectionState.range_end] = Boolean(from && to && dateLib.isSameDay(date, to));
+                      modifiers[SelectionState.range_middle] = rangeIncludesDate(selectedValue, date, true, dateLib);
+                    }
+                    const style2 = getStyleForModifiers(modifiers, styles, props.modifiersStyles);
+                    const className3 = getClassNamesForModifiers(modifiers, classNames, props.modifiersClassNames);
+                    const ariaLabel = !isInteractive && !modifiers.hidden ? labelGridcell2(date, modifiers, dateLib.options, dateLib) : void 0;
+                    return import_react35.default.createElement(components.Day, { key: `${day.isoDate}_${day.displayMonthId}`, day, modifiers, className: className3.join(" "), style: style2, role: "gridcell", "aria-selected": modifiers.selected || void 0, "aria-label": ariaLabel, "data-day": day.isoDate, "data-month": day.outside ? day.dateMonthId : void 0, "data-selected": modifiers.selected || void 0, "data-disabled": modifiers.disabled || void 0, "data-hidden": modifiers.hidden || void 0, "data-outside": day.outside || void 0, "data-focused": modifiers.focused || void 0, "data-today": modifiers.today || void 0 }, !modifiers.hidden && isInteractive ? import_react35.default.createElement(components.DayButton, { className: classNames[UI.DayButton], style: styles?.[UI.DayButton], type: "button", day, modifiers, disabled: !modifiers.focused && modifiers.disabled || void 0, "aria-disabled": modifiers.focused && modifiers.disabled || void 0, tabIndex: isFocusTarget(day) ? 0 : -1, "aria-label": labelDayButton2(date, modifiers, dateLib.options, dateLib), onClick: handleDayClick(day, modifiers), onBlur: handleDayBlur(day, modifiers), onFocus: handleDayFocus(day, modifiers), onKeyDown: handleDayKeyDown(day, modifiers), onMouseEnter: handleDayMouseEnter(day, modifiers), onMouseLeave: handleDayMouseLeave(day, modifiers) }, formatDay2(date, dateLib.options, dateLib)) : !modifiers.hidden && formatDay2(day.date, dateLib.options, dateLib));
+                  })
+                );
+              }))
+            )
+          );
+        })
+      ),
+      props.footer && import_react35.default.createElement(components.Footer, { className: classNames[UI.Footer], style: styles?.[UI.Footer], role: "status", "aria-live": "polite" }, props.footer)
+    )
+  );
+}
+
+// packages/ui/build-module/calendar/calendar.mjs
+var import_element19 = __toESM(require_element(), 1);
+
+// packages/ui/build-module/calendar/utils/components.mjs
+var import_element16 = __toESM(require_element(), 1);
+var import_compose = __toESM(require_compose(), 1);
+
+// packages/icons/build-module/library/aspect-ratio.mjs
+var import_primitives2 = __toESM(require_primitives(), 1);
+var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+var aspect_ratio_default = /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives2.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_primitives2.Path, { d: "M18.5 5.5h-13c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h13c1.1 0 2-.9 2-2v-9c0-1.1-.9-2-2-2zm.5 11c0 .3-.2.5-.5.5h-13c-.3 0-.5-.2-.5-.5v-9c0-.3.2-.5.5-.5h13c.3 0 .5.2.5.5v9zM6.5 12H8v-2h2V8.5H6.5V12zm9.5 2h-2v1.5h3.5V12H16v2z" }) });
+
+// packages/icons/build-module/library/check.mjs
+var import_primitives3 = __toESM(require_primitives(), 1);
+var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+var check_default = /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives3.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_primitives3.Path, { d: "M16.5 7.5 10 13.9l-2.5-2.4-1 1 3.5 3.6 7.5-7.6z" }) });
+
+// packages/icons/build-module/library/chevron-down.mjs
+var import_primitives4 = __toESM(require_primitives(), 1);
+var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_primitives4.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_primitives4.Path, { d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z" }) });
+
+// packages/icons/build-module/library/chevron-left.mjs
+var import_primitives5 = __toESM(require_primitives(), 1);
+var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives5.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_primitives5.Path, { d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z" }) });
+
+// packages/icons/build-module/library/chevron-right.mjs
+var import_primitives6 = __toESM(require_primitives(), 1);
+var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_primitives6.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_primitives6.Path, { d: "M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z" }) });
+
+// packages/icons/build-module/library/close-small.mjs
+var import_primitives7 = __toESM(require_primitives(), 1);
+var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
+var close_small_default = /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_primitives7.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_primitives7.Path, { d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z" }) });
+
+// packages/icons/build-module/library/close.mjs
+var import_primitives8 = __toESM(require_primitives(), 1);
+var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+var close_default = /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_primitives8.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(import_primitives8.Path, { d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z" }) });
+
+// packages/icons/build-module/library/drawer-right.mjs
+var import_primitives9 = __toESM(require_primitives(), 1);
+var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+var drawer_right_default = /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_primitives9.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_primitives9.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-4 14.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h8v13zm4.5-.5c0 .3-.2.5-.5.5h-2.5v-13H18c.3 0 .5.2.5.5v12z" }) });
+
+// packages/icons/build-module/library/envelope.mjs
+var import_primitives10 = __toESM(require_primitives(), 1);
+var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
+var envelope_default = /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives10.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_primitives10.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M3 7c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Zm2-.5h14c.3 0 .5.2.5.5v1L12 13.5 4.5 7.9V7c0-.3.2-.5.5-.5Zm-.5 3.3V17c0 .3.2.5.5.5h14c.3 0 .5-.2.5-.5V9.8L12 15.4 4.5 9.8Z" }) });
+
+// packages/icons/build-module/library/error.mjs
+var import_primitives11 = __toESM(require_primitives(), 1);
+var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+var error_default = /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives11.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(import_primitives11.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12.218 5.377a.25.25 0 0 0-.436 0l-7.29 12.96a.25.25 0 0 0 .218.373h14.58a.25.25 0 0 0 .218-.372l-7.29-12.96Zm-1.743-.735c.669-1.19 2.381-1.19 3.05 0l7.29 12.96a1.75 1.75 0 0 1-1.525 2.608H4.71a1.75 1.75 0 0 1-1.525-2.608l7.29-12.96ZM12.75 17.46h-1.5v-1.5h1.5v1.5Zm-1.5-3h1.5v-5h-1.5v5Z" }) });
+
+// packages/icons/build-module/library/flip-horizontal.mjs
+var import_primitives12 = __toESM(require_primitives(), 1);
+var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+var flip_horizontal_default = /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives12.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_primitives12.Path, { d: "M4 6v12c0 1.1.9 2 2 2h3v-1.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h3V4H6c-1.1 0-2 .9-2 2zm7.2 16h1.5V2h-1.5v20zM15 5.5h1.5V4H15v1.5zm3.5.5H20c0-1.1-.9-2-2-2v1.5c.3 0 .5.2.5.5zm0 10.5H20v-2h-1.5v2zm0-3.5H20v-2h-1.5v2zm-.5 5.5V20c1.1 0 2-.9 2-2h-1.5c0 .3-.2.5-.5.5zM15 20h1.5v-1.5H15V20zm3.5-10.5H20v-2h-1.5v2z" }) });
+
+// packages/icons/build-module/library/flip-vertical.mjs
+var import_primitives13 = __toESM(require_primitives(), 1);
+var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
+var flip_vertical_default = /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives13.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_primitives13.Path, { d: "M2 11.2v1.5h20v-1.5H2zM5.5 6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v3H20V6c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v3h1.5V6zm2 14h2v-1.5h-2V20zm3.5 0h2v-1.5h-2V20zm7-1.5V20c1.1 0 2-.9 2-2h-1.5c0 .3-.2.5-.5.5zm.5-2H20V15h-1.5v1.5zM5.5 18H4c0 1.1.9 2 2 2v-1.5c-.3 0-.5-.2-.5-.5zm0-3H4v1.5h1.5V15zm9 5h2v-1.5h-2V20z" }) });
+
+// packages/icons/build-module/library/keyboard.mjs
+var import_primitives14 = __toESM(require_primitives(), 1);
+var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+var keyboard_default = /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(import_primitives14.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: [
+  /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives14.Path, { d: "m16 15.5h-8v-1.5h8zm-7.5-2.5h-2v-2h2zm3 0h-2v-2h2zm3 0h-2v-2h2zm3 0h-2v-2h2zm-9-3h-2v-2h2zm3 0h-2v-2h2zm3 0h-2v-2h2zm3 0h-2v-2h2z" }),
+  /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_primitives14.Path, { d: "m18.5 6.5h-13a.5.5 0 0 0 -.5.5v9.5a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9.5a.5.5 0 0 0 -.5-.5zm-13-1.5h13a2 2 0 0 1 2 2v9.5a2 2 0 0 1 -2 2h-13a2 2 0 0 1 -2-2v-9.5a2 2 0 0 1 2-2z" })
+] });
+
+// packages/icons/build-module/library/line-solid.mjs
+var import_primitives15 = __toESM(require_primitives(), 1);
+var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+var line_solid_default = /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives15.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(import_primitives15.Path, { d: "M5 11.25h14v1.5H5z" }) });
+
+// packages/icons/build-module/library/link.mjs
+var import_primitives16 = __toESM(require_primitives(), 1);
+var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
+var link_default = /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives16.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_primitives16.Path, { d: "M10 17.389H8.444A5.194 5.194 0 1 1 8.444 7H10v1.5H8.444a3.694 3.694 0 0 0 0 7.389H10v1.5ZM14 7h1.556a5.194 5.194 0 0 1 0 10.39H14v-1.5h1.556a3.694 3.694 0 0 0 0-7.39H14V7Zm-4.5 6h5v-1.5h-5V13Z" }) });
+
+// packages/icons/build-module/library/mobile.mjs
+var import_primitives17 = __toESM(require_primitives(), 1);
+var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+var mobile_default = /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives17.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(import_primitives17.Path, { d: "M15 4H9c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h6c.3 0 .5.2.5.5v12zm-4.5-.5h2V16h-2v1.5z" }) });
+
+// packages/icons/build-module/library/pencil.mjs
+var import_primitives18 = __toESM(require_primitives(), 1);
+var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
+var pencil_default = /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives18.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(import_primitives18.Path, { d: "m19 7-3-3-8.5 8.5-1 4 4-1L19 7Zm-7 11.5H5V20h7v-1.5Z" }) });
+
+// packages/icons/build-module/library/plus.mjs
+var import_primitives19 = __toESM(require_primitives(), 1);
+var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
+var plus_default = /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives19.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(import_primitives19.Path, { d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z" }) });
+
+// packages/icons/build-module/library/published.mjs
+var import_primitives20 = __toESM(require_primitives(), 1);
+var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+var published_default = /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives20.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(import_primitives20.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm11.53-1.47-1.06-1.06L11 12.94l-1.47-1.47-1.06 1.06L11 15.06l4.53-4.53Z" }) });
+
+// packages/icons/build-module/library/redo.mjs
+var import_primitives21 = __toESM(require_primitives(), 1);
+var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+var redo_default = /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives21.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_primitives21.Path, { d: "M15.6 6.5l-1.1 1 2.9 3.3H8c-.9 0-1.7.3-2.3.9-1.4 1.5-1.4 4.2-1.4 5.6v.2h1.5v-.3c0-1.1 0-3.5 1-4.5.3-.3.7-.5 1.3-.5h9.2L14.5 15l1.1 1.1 4.6-4.6-4.6-5z" }) });
+
+// packages/icons/build-module/library/rotate-left.mjs
+var import_primitives22 = __toESM(require_primitives(), 1);
+var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
+var rotate_left_default = /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives22.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_primitives22.Path, { d: "M12 4V2.2L9 4.8l3 2.5V5.5c3.6 0 6.5 2.9 6.5 6.5 0 2.9-1.9 5.3-4.5 6.2v.2l-.1-.2c-.4.1-.7.2-1.1.2l.2 1.5c.3 0 .6-.1 1-.2 3.5-.9 6-4 6-7.7 0-4.4-3.6-8-8-8zm-7.9 7l1.5.2c.1-1.2.5-2.3 1.2-3.2l-1.1-.9C4.8 8.2 4.3 9.6 4.1 11zm1.5 1.8l-1.5.2c.1.7.3 1.4.5 2 .3.7.6 1.3 1 1.8l1.2-.8c-.3-.5-.6-1-.8-1.5s-.4-1.1-.4-1.7zm1.5 5.5c1.1.9 2.4 1.4 3.8 1.6l.2-1.5c-1.1-.1-2.2-.5-3.1-1.2l-.9 1.1z" }) });
+
+// packages/icons/build-module/library/rotate-right.mjs
+var import_primitives23 = __toESM(require_primitives(), 1);
+var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
+var rotate_right_default = /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives23.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(import_primitives23.Path, { d: "M15.1 4.8l-3-2.5V4c-4.4 0-8 3.6-8 8 0 3.7 2.5 6.9 6 7.7.3.1.6.1 1 .2l.2-1.5c-.4 0-.7-.1-1.1-.2l-.1.2v-.2c-2.6-.8-4.5-3.3-4.5-6.2 0-3.6 2.9-6.5 6.5-6.5v1.8l3-2.5zM20 11c-.2-1.4-.7-2.7-1.6-3.8l-1.2.8c.7.9 1.1 2 1.3 3.1L20 11zm-1.5 1.8c-.1.5-.2 1.1-.4 1.6s-.5 1-.8 1.5l1.2.9c.4-.5.8-1.1 1-1.8s.5-1.3.5-2l-1.5-.2zm-5.6 5.6l.2 1.5c1.4-.2 2.7-.7 3.8-1.6l-.9-1.1c-.9.7-2 1.1-3.1 1.2z" }) });
+
+// packages/icons/build-module/library/seen.mjs
+var import_primitives24 = __toESM(require_primitives(), 1);
+var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
+var seen_default = /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives24.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_primitives24.Path, { d: "M3.99961 13C4.67043 13.3354 4.6703 13.3357 4.67017 13.3359L4.67298 13.3305C4.67621 13.3242 4.68184 13.3135 4.68988 13.2985C4.70595 13.2686 4.7316 13.2218 4.76695 13.1608C4.8377 13.0385 4.94692 12.8592 5.09541 12.6419C5.39312 12.2062 5.84436 11.624 6.45435 11.0431C7.67308 9.88241 9.49719 8.75 11.9996 8.75C14.502 8.75 16.3261 9.88241 17.5449 11.0431C18.1549 11.624 18.6061 12.2062 18.9038 12.6419C19.0523 12.8592 19.1615 13.0385 19.2323 13.1608C19.2676 13.2218 19.2933 13.2686 19.3093 13.2985C19.3174 13.3135 19.323 13.3242 19.3262 13.3305L19.3291 13.3359C19.3289 13.3357 19.3288 13.3354 19.9996 13C20.6704 12.6646 20.6703 12.6643 20.6701 12.664L20.6697 12.6632L20.6688 12.6614L20.6662 12.6563L20.6583 12.6408C20.6517 12.6282 20.6427 12.6108 20.631 12.5892C20.6078 12.5459 20.5744 12.4852 20.5306 12.4096C20.4432 12.2584 20.3141 12.0471 20.1423 11.7956C19.7994 11.2938 19.2819 10.626 18.5794 9.9569C17.1731 8.61759 14.9972 7.25 11.9996 7.25C9.00203 7.25 6.82614 8.61759 5.41987 9.9569C4.71736 10.626 4.19984 11.2938 3.85694 11.7956C3.68511 12.0471 3.55605 12.2584 3.4686 12.4096C3.42484 12.4852 3.39142 12.5459 3.36818 12.5892C3.35656 12.6108 3.34748 12.6282 3.34092 12.6408L3.33297 12.6563L3.33041 12.6614L3.32948 12.6632L3.32911 12.664C3.32894 12.6643 3.32879 12.6646 3.99961 13ZM11.9996 16C13.9326 16 15.4996 14.433 15.4996 12.5C15.4996 10.567 13.9326 9 11.9996 9C10.0666 9 8.49961 10.567 8.49961 12.5C8.49961 14.433 10.0666 16 11.9996 16Z" }) });
+
+// packages/icons/build-module/library/star-empty.mjs
+var import_primitives25 = __toESM(require_primitives(), 1);
+var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
+var star_empty_default = /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives25.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(import_primitives25.Path, { fillRule: "evenodd", clipRule: "evenodd", d: "M9.706 8.646a.25.25 0 01-.188.137l-4.626.672a.25.25 0 00-.139.427l3.348 3.262a.25.25 0 01.072.222l-.79 4.607a.25.25 0 00.362.264l4.138-2.176a.25.25 0 01.233 0l4.137 2.175a.25.25 0 00.363-.263l-.79-4.607a.25.25 0 01.072-.222l3.347-3.262a.25.25 0 00-.139-.427l-4.626-.672a.25.25 0 01-.188-.137l-2.069-4.192a.25.25 0 00-.448 0L9.706 8.646zM12 7.39l-.948 1.921a1.75 1.75 0 01-1.317.957l-2.12.308 1.534 1.495c.412.402.6.982.503 1.55l-.362 2.11 1.896-.997a1.75 1.75 0 011.629 0l1.895.997-.362-2.11a1.75 1.75 0 01.504-1.55l1.533-1.495-2.12-.308a1.75 1.75 0 01-1.317-.957L12 7.39z" }) });
+
+// packages/icons/build-module/library/star-filled.mjs
+var import_primitives26 = __toESM(require_primitives(), 1);
+var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
+var star_filled_default = /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives26.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_primitives26.Path, { d: "M11.776 4.454a.25.25 0 01.448 0l2.069 4.192a.25.25 0 00.188.137l4.626.672a.25.25 0 01.139.426l-3.348 3.263a.25.25 0 00-.072.222l.79 4.607a.25.25 0 01-.362.263l-4.138-2.175a.25.25 0 00-.232 0l-4.138 2.175a.25.25 0 01-.363-.263l.79-4.607a.25.25 0 00-.071-.222L4.754 9.881a.25.25 0 01.139-.426l4.626-.672a.25.25 0 00.188-.137l2.069-4.192z" }) });
+
+// packages/icons/build-module/library/undo.mjs
+var import_primitives27 = __toESM(require_primitives(), 1);
+var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
+var undo_default = /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives27.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_primitives27.Path, { d: "M18.3 11.7c-.6-.6-1.4-.9-2.3-.9H6.7l2.9-3.3-1.1-1-4.5 5L8.5 16l1-1-2.7-2.7H16c.5 0 .9.2 1.3.5 1 1 1 3.4 1 4.5v.3h1.5v-.2c0-1.5 0-4.3-1.5-5.7z" }) });
+
+// packages/icons/build-module/library/unseen.mjs
+var import_primitives28 = __toESM(require_primitives(), 1);
+var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
+var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives28.SVG, { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_primitives28.Path, { d: "M20.7 12.7s0-.1-.1-.2c0-.2-.2-.4-.4-.6-.3-.5-.9-1.2-1.6-1.8-.7-.6-1.5-1.3-2.6-1.8l-.6 1.4c.9.4 1.6 1 2.1 1.5.6.6 1.1 1.2 1.4 1.6.1.2.3.4.3.5v.1l.7-.3.7-.3Zm-5.2-9.3-1.8 4c-.5-.1-1.1-.2-1.7-.2-3 0-5.2 1.4-6.6 2.7-.7.7-1.2 1.3-1.6 1.8-.2.3-.3.5-.4.6 0 0 0 .1-.1.2s0 0 .7.3l.7.3V13c0-.1.2-.3.3-.5.3-.4.7-1 1.4-1.6 1.2-1.2 3-2.3 5.5-2.3H13v.3c-.4 0-.8-.1-1.1-.1-1.9 0-3.5 1.6-3.5 3.5s.6 2.3 1.6 2.9l-2 4.4.9.4 7.6-16.2-.9-.4Zm-3 12.6c1.7-.2 3-1.7 3-3.5s-.2-1.4-.6-1.9L12.4 16Z" }) });
+
+// packages/ui/build-module/calendar/utils/root-context.mjs
+var import_element15 = __toESM(require_element(), 1);
+var RootContext = (0, import_element15.createContext)({});
+
+// packages/ui/build-module/calendar/utils/components.mjs
+var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
+var PreviewDashStartAndEnd = () => {
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
+    "svg",
+    {
+      viewBox: "0 0 32 32",
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      stroke: "currentColor",
+      strokeDasharray: "3.7677",
+      strokeDashoffset: "3.2",
+      strokeWidth: "1",
+      children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("path", { d: "M29.5,0.5 h-27 a2,2 0 0 0 -2,2 v27 a2,2 0 0 0 2,2 h27 a2,2 0 0 0 2,-2 v-27 a2,2 0 0 0 -2,-2" })
+    }
+  );
+};
+var PreviewDashStart = () => {
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
+    "svg",
+    {
+      viewBox: "0 0 32 32",
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      stroke: "currentColor",
+      strokeDasharray: "3.84516",
+      strokeDashoffset: "1.9226",
+      strokeWidth: "1",
+      children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("path", { d: "M32,0.5 h-29.5 a2,2 0 0 0 -2,2 v27 a2,2 0 0 0 2,2 h30" })
+    }
+  );
+};
+var PreviewDashMiddle = () => {
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
+    "svg",
+    {
+      viewBox: "0 0 32 32",
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      stroke: "currentColor",
+      strokeDasharray: "3.9 4",
+      strokeDashoffset: "2",
+      strokeWidth: "1",
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("line", { x1: "0", y1: "0.5", x2: "100", y2: "0.5" }),
+        /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("line", { x1: "0", y1: "31.5", x2: "100", y2: "31.5" })
+      ]
+    }
+  );
+};
+var PreviewDashEnd = () => {
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
+    "svg",
+    {
+      viewBox: "0 0 32 32",
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      stroke: "currentColor",
+      strokeDasharray: "3.84516",
+      strokeDashoffset: "1.9226",
+      strokeWidth: "1",
+      children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("path", { d: "M0,0.5 h29.5 a2,2 0 0 1 2,2 v27 a2,2 0 0 1 -2,2 h-29.5" })
+    }
+  );
+};
+function Day2(props) {
+  const { day, modifiers, children, ...tdProps } = props;
+  let PreviewDash;
+  if (modifiers.preview_start && modifiers.preview_end) {
+    PreviewDash = PreviewDashStartAndEnd;
+  } else if (modifiers.preview_start) {
+    PreviewDash = PreviewDashStart;
+  } else if (modifiers.preview_end) {
+    PreviewDash = PreviewDashEnd;
+  } else if (modifiers.preview) {
+    PreviewDash = PreviewDashMiddle;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)("td", { ...tdProps, children: [
+    PreviewDash && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(PreviewDash, {}),
+    children
+  ] });
+}
+function Root2({ rootRef, ...props }) {
+  const { render: render4, ref } = (0, import_element16.useContext)(RootContext);
+  const mergedRef = (0, import_compose.useMergeRefs)([rootRef ?? null, ref ?? null]);
+  return useRender({
+    render: render4,
+    defaultTagName: "div",
+    ref: mergedRef,
+    props
+  });
+}
+function Chevron2({ orientation, className: className2 }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
+    Icon,
+    {
+      className: className2,
+      icon: orientation === "right" ? chevron_right_default : chevron_left_default
+    }
+  );
+}
+function NavButton({
+  className: className2,
+  "aria-disabled": ariaDisabled,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
+    Button4,
+    {
+      ...props,
+      className: className2,
+      variant: "minimal",
+      tone: "neutral",
+      size: "compact",
+      disabled: ariaDisabled === true || ariaDisabled === "true",
+      focusableWhenDisabled: true
+    }
+  );
+}
+
+// packages/ui/build-module/calendar/utils/constants.mjs
+var STYLE_HASH_ATTRIBUTE5 = "data-wp-hash";
+function getRuntime5() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument5(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash5(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE5}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE5) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle5(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime5();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash5(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE5, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument5(targetDocument) {
+  const runtime = getRuntime5();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle5(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle5(hash, css) {
+  const runtime = getRuntime5();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle5(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle5("6a1312fdcf", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._2c7ac60ba97b3411__root{--wp-ui-calendar-cell-size:var(--wpds-dimension-size-md,32px);--wp-ui-calendar-range-middle-background-color:color-mix(in srgb,var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9)) 4%,transparent);--wp-ui-calendar-preview-border-color:color-mix(in srgb,var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9)) 16%,transparent);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-block;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);position:relative;z-index:0}._172c492625235710__day{padding:0;position:relative;&:has(._1b64226e315835f8__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&:has(._1b64226e315835f8__day-button:focus-visible),&:has(._1b64226e315835f8__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}}._1b64226e315835f8__day-button{align-items:center;background:none;border:none;border-radius:var(--wpds-border-radius-sm,2px);color:inherit;cursor:var(--wpds-cursor-control,pointer);display:flex;font:inherit;font-variant-numeric:tabular-nums;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin:0;padding:0;position:relative;width:var(--wp-ui-calendar-cell-size);&:before{border:none;border-radius:var(--wpds-border-radius-sm,2px);z-index:-1}&:after,&:before{content:"";inset:0;position:absolute}&:after{pointer-events:none;z-index:1}&:disabled{cursor:revert;@media (forced-colors:active){text-decoration:line-through}}}._66b9a8120581fd4b__caption-label{align-items:center;border:0;display:inline-flex;position:relative;text-transform:capitalize;white-space:nowrap;z-index:1}._228eede754134437__chevron{fill:currentColor;display:inline-block;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._2c7ac60ba97b3411__root[dir=rtl] ._66b1d4a7b488b496__nav ._228eede754134437__chevron{transform:rotate(180deg);transform-origin:50%}._337e5337d49b7f3d__month-caption{align-content:center;display:flex;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin-bottom:var(--wpds-dimension-gap-md,12px)}._110e46230c68e498__months{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-lg,16px);justify-content:center;max-width:fit-content;position:relative}._92915239fedb1fea__month-grid{border-collapse:separate;border-spacing:0 var(--wpds-dimension-gap-xs,4px)}._66b1d4a7b488b496__nav{align-items:center;display:flex;height:var(--wp-ui-calendar-cell-size);inset-block-start:0;inset-inline-end:0;inset-inline-start:0;justify-content:space-between;position:absolute}._7207199709ca5776__weekday{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-weight:var(--wpds-typography-font-weight-default,400);height:var(--wp-ui-calendar-cell-size);padding:0;text-align:center;text-transform:uppercase;width:var(--wp-ui-calendar-cell-size)}._058175f0f9c495e0__today:after{border:2px solid;border-radius:50%;content:"";height:0;inset-block-start:2px;inset-inline-end:2px;position:absolute;width:0;z-index:1}.acb642920fb0bef5__selected:not(._165d91a726feca9c__range-middle){&:has(._1b64226e315835f8__day-button,._1b64226e315835f8__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0)}&:has(._1b64226e315835f8__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}._1b64226e315835f8__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);border:1px solid transparent}&:disabled:before{background-color:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6)}&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e)}}}.c259c5c255fda10f__outside{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}._4d8957a0ca4ec8f0__hidden{visibility:hidden}.f2523033db055ffe__range-start:not(.c04a453de7b11520__range-end) ._1b64226e315835f8__day-button{&,&:before{border-end-end-radius:0;border-start-end-radius:0}}._165d91a726feca9c__range-middle ._1b64226e315835f8__day-button{&:before{background-color:var(--wp-ui-calendar-range-middle-background-color);border-color:transparent;border-radius:0;border-style:solid;border-width:1px 0}}.c04a453de7b11520__range-end:not(.f2523033db055ffe__range-start) ._1b64226e315835f8__day-button{&,&:before{border-end-start-radius:0;border-start-start-radius:0}}._81b244e7c541d95e__preview svg{color:var(--wp-ui-calendar-preview-border-color);inset:0;pointer-events:none;position:absolute;@media (forced-colors:active){color:inherit}}._2c7ac60ba97b3411__root[dir=rtl] ._81b244e7c541d95e__preview svg{transform:scaleX(-1)}._81b244e7c541d95e__preview._165d91a726feca9c__range-middle ._1b64226e315835f8__day-button:before{border:none}@keyframes _255a1a462a5377db__slide-in-left{0%{transform:translateX(-100%)}to{transform:translateX(0)}}@keyframes c21e45f616d6db39__slide-in-right{0%{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes aed80001de9ae226__slide-out-left{0%{transform:translateX(0)}to{transform:translateX(-100%)}}@keyframes _7d4779a7f29408f2__slide-out-right{0%{transform:translateX(0)}to{transform:translateX(100%)}}@keyframes _83ba6321b055d687__fade-in{0%{opacity:0}to{opacity:1}}@keyframes _96fbead71248d210__fade-out{0%{opacity:1}to{opacity:0}}._1563bccb09e39c30__caption-after-enter,._60ac2a7fc3208801__weeks-before-exit,._735dacf9052adecd__caption-before-exit,._7f73a6ab85101202__weeks-after-exit,._805d698b56ba4a29__weeks-after-enter,._9721326fbc23a5fb__weeks-before-enter,.c7a3082839155d29__caption-after-exit,.cb8a5ec82ad0885e__caption-before-enter{animation-duration:0s;animation-fill-mode:forwards;animation-timing-function:var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1));@media not (prefers-reduced-motion){animation-duration:var(--wpds-motion-duration-lg,.3s)}}._2c7ac60ba97b3411__root[dir=rtl] ._805d698b56ba4a29__weeks-after-enter,._9721326fbc23a5fb__weeks-before-enter{animation-name:_255a1a462a5377db__slide-in-left}._2c7ac60ba97b3411__root[dir=rtl] ._7f73a6ab85101202__weeks-after-exit,._60ac2a7fc3208801__weeks-before-exit{animation-name:aed80001de9ae226__slide-out-left}._2c7ac60ba97b3411__root[dir=rtl] ._9721326fbc23a5fb__weeks-before-enter,._805d698b56ba4a29__weeks-after-enter{animation-name:c21e45f616d6db39__slide-in-right}._2c7ac60ba97b3411__root[dir=rtl] ._60ac2a7fc3208801__weeks-before-exit,._7f73a6ab85101202__weeks-after-exit{animation-name:_7d4779a7f29408f2__slide-out-right}._1563bccb09e39c30__caption-after-enter,.cb8a5ec82ad0885e__caption-before-enter{animation-name:_83ba6321b055d687__fade-in}._735dacf9052adecd__caption-before-exit,.c7a3082839155d29__caption-after-exit{animation-name:_96fbead71248d210__fade-out}}@layer compositions{._395a75bb1930f57e__nav-button{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset;--wp-ui-button-height:var(--wp-ui-calendar-cell-size)}}}');
+}
+var style_default5 = { "root": "_2c7ac60ba97b3411__root", "day": "_172c492625235710__day", "day-button": "_1b64226e315835f8__day-button", "caption-label": "_66b9a8120581fd4b__caption-label", "chevron": "_228eede754134437__chevron", "nav": "_66b1d4a7b488b496__nav", "month-caption": "_337e5337d49b7f3d__month-caption", "months": "_110e46230c68e498__months", "month-grid": "_92915239fedb1fea__month-grid", "weekday": "_7207199709ca5776__weekday", "today": "_058175f0f9c495e0__today", "selected": "acb642920fb0bef5__selected", "range-middle": "_165d91a726feca9c__range-middle", "outside": "c259c5c255fda10f__outside", "hidden": "_4d8957a0ca4ec8f0__hidden", "range-start": "f2523033db055ffe__range-start", "range-end": "c04a453de7b11520__range-end", "preview": "_81b244e7c541d95e__preview", "weeks-before-enter": "_9721326fbc23a5fb__weeks-before-enter", "weeks-before-exit": "_60ac2a7fc3208801__weeks-before-exit", "weeks-after-enter": "_805d698b56ba4a29__weeks-after-enter", "weeks-after-exit": "_7f73a6ab85101202__weeks-after-exit", "caption-after-enter": "_1563bccb09e39c30__caption-after-enter", "caption-after-exit": "c7a3082839155d29__caption-after-exit", "caption-before-enter": "cb8a5ec82ad0885e__caption-before-enter", "caption-before-exit": "_735dacf9052adecd__caption-before-exit", "slide-in-left": "_255a1a462a5377db__slide-in-left", "slide-out-left": "aed80001de9ae226__slide-out-left", "slide-in-right": "c21e45f616d6db39__slide-in-right", "slide-out-right": "_7d4779a7f29408f2__slide-out-right", "fade-in": "_83ba6321b055d687__fade-in", "fade-out": "_96fbead71248d210__fade-out", "nav-button": "_395a75bb1930f57e__nav-button" };
+if (typeof process === "undefined" || true) {
+  registerStyle5("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+}
+var resets_default2 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+if (typeof process === "undefined" || true) {
+  registerStyle5("2ffedd8246", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+}
+var focus_module_default2 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
+if (typeof process === "undefined" || true) {
+  registerStyle5("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+}
+var global_css_defense_default3 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+var CLASSNAMES = {
+  root: clsx_default(style_default5.root, resets_default2["box-sizing"]),
+  day: style_default5.day,
+  day_button: clsx_default(
+    style_default5["day-button"],
+    global_css_defense_default3.button,
+    focus_module_default2["outset-ring--focus-visible"]
+  ),
+  outside: style_default5.outside,
+  caption_label: style_default5["caption-label"],
+  button_next: style_default5["nav-button"],
+  button_previous: style_default5["nav-button"],
+  chevron: style_default5.chevron,
+  nav: style_default5.nav,
+  month_caption: style_default5["month-caption"],
+  months: style_default5.months,
+  month_grid: style_default5["month-grid"],
+  weekday: style_default5.weekday,
+  today: style_default5.today,
+  selected: style_default5.selected,
+  /*
+   * Disabled days are styled through `:has(.day-button:disabled)` rather than
+   * a modifier class on the cell, because the two are not equivalent: the
+   * focused day keeps its button enabled so it stays reachable. Mapped to
+   * `undefined` on purpose, so `react-day-picker` doesn't fall back to its
+   * own `rdp-disabled` class for a modifier we don't style.
+   */
+  disabled: void 0,
+  hidden: style_default5.hidden,
+  range_start: style_default5["range-start"],
+  range_end: style_default5["range-end"],
+  range_middle: style_default5["range-middle"],
+  weeks_before_enter: style_default5["weeks-before-enter"],
+  weeks_before_exit: style_default5["weeks-before-exit"],
+  weeks_after_enter: style_default5["weeks-after-enter"],
+  weeks_after_exit: style_default5["weeks-after-exit"],
+  caption_after_enter: style_default5["caption-after-enter"],
+  caption_after_exit: style_default5["caption-after-exit"],
+  caption_before_enter: style_default5["caption-before-enter"],
+  caption_before_exit: style_default5["caption-before-exit"]
+};
+var MODIFIER_CLASSNAMES = {
+  preview: style_default5.preview
+};
+var COMMON_PROPS = {
+  animate: true,
+  // Only show days in the current month
+  showOutsideDays: false,
+  // Hide week number column
+  showWeekNumber: false,
+  // Show weekdays row
+  hideWeekdays: false,
+  // Month and year caption are not interactive
+  captionLayout: "label",
+  // Show a variable number of weeks depending on the month
+  fixedWeeks: false,
+  // Show navigation buttons
+  hideNavigation: false,
+  // Class names
+  classNames: CLASSNAMES,
+  // Default role
+  role: "application",
+  components: {
+    Day: Day2,
+    Root: Root2,
+    Chevron: Chevron2,
+    PreviousMonthButton: NavButton,
+    NextMonthButton: NavButton
+  }
+};
+
+// packages/ui/build-module/calendar/utils/misc.mjs
+function clampNumberOfMonths(numberOfMonths) {
+  return Math.min(3, Math.max(1, numberOfMonths));
+}
+
+// packages/ui/build-module/calendar/utils/use-controlled-value.mjs
+var import_element17 = __toESM(require_element(), 1);
+function useControlledValue2({
+  defaultValue,
+  onChange,
+  value: valueProp
+}) {
+  const hasValue = typeof valueProp !== "undefined";
+  const initialValue = hasValue ? valueProp : defaultValue;
+  const [state, setState] = (0, import_element17.useState)(initialValue);
+  const value = hasValue ? valueProp : state;
+  const uncontrolledSetValue = (0, import_element17.useCallback)(
+    (nextValue, ...args) => {
+      setState(nextValue);
+      onChange?.(nextValue, ...args);
+    },
+    [onChange]
+  );
+  let setValue;
+  if (hasValue && typeof onChange === "function") {
+    setValue = onChange;
+  } else if (!hasValue && typeof onChange === "function") {
+    setValue = uncontrolledSetValue;
+  } else {
+    setValue = setState;
+  }
+  return [value, setValue];
+}
+
+// packages/ui/build-module/calendar/utils/use-localization-props.mjs
+var import_i18n2 = __toESM(require_i18n(), 1);
+var import_element18 = __toESM(require_element(), 1);
+function isLocaleRTL(localeCode) {
+  const localeObj = new Intl.Locale(localeCode);
+  const direction = localeObj.getTextInfo?.().direction;
+  if (direction) {
+    return direction === "rtl";
+  }
+  return [
+    "ar",
+    // Arabic
+    "he",
+    // Hebrew
+    "fa",
+    // Persian (Farsi)
+    "ur",
+    // Urdu
+    "ps",
+    // Pashto
+    "syr",
+    // Syriac
+    "dv",
+    // Divehi
+    "ku",
+    // Kurdish (Sorani)
+    "ckb",
+    // Central Kurdish (Sorani)
+    "ug",
+    // Uyghur
+    "yi"
+    // Yiddish
+  ].includes(localeObj.language);
+}
+var useLocalizationProps = ({
+  locale,
+  timeZone,
+  mode
+}) => {
+  return (0, import_element18.useMemo)(() => {
+    const monthNameFormatter = new Intl.DateTimeFormat(locale.code, {
+      year: "numeric",
+      month: "long",
+      timeZone
+    });
+    const weekdayNarrowFormatter = new Intl.DateTimeFormat(locale.code, {
+      weekday: "narrow",
+      timeZone
+    });
+    const weekdayLongFormatter = new Intl.DateTimeFormat(locale.code, {
+      weekday: "long",
+      timeZone
+    });
+    const fullDateFormatter = new Intl.DateTimeFormat(locale.code, {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone
+    });
+    return {
+      "aria-label": mode === "single" ? (0, import_i18n2.__)("Date calendar") : (0, import_i18n2.__)("Date range calendar"),
+      labels: {
+        /**
+         * The label for the month grid.
+         * @param date
+         */
+        labelGrid: (date) => monthNameFormatter.format(date),
+        /**
+         * The label for the gridcell, when the calendar is not interactive.
+         * @param date
+         * @param modifiers
+         */
+        labelGridcell: (date, modifiers) => {
+          const formattedDate = fullDateFormatter.format(date);
+          let label = formattedDate;
+          if (modifiers?.today) {
+            label = (0, import_i18n2.sprintf)(
+              // translators: %s is the full date (e.g. "Monday, April 29, 2025")
+              (0, import_i18n2.__)("Today, %s"),
+              formattedDate
+            );
+          }
+          return label;
+        },
+        /** The label for the "next month" button. */
+        labelNext: () => (0, import_i18n2.__)("Go to the Next Month"),
+        /** The label for the "previous month" button. */
+        labelPrevious: () => (0, import_i18n2.__)("Go to the Previous Month"),
+        /**
+         * The label for the day button.
+         * @param date
+         * @param modifiers
+         */
+        labelDayButton: (date, modifiers) => {
+          const formattedDate = fullDateFormatter.format(date);
+          let label = formattedDate;
+          if (modifiers?.today && modifiers?.selected) {
+            return (0, import_i18n2.sprintf)(
+              // translators: %s is the full date (e.g. "Monday, April 29, 2025")
+              (0, import_i18n2.__)("Today, %s, selected"),
+              formattedDate
+            );
+          }
+          if (modifiers?.today) {
+            label = (0, import_i18n2.sprintf)(
+              // translators: %s is the full date (e.g. "Monday, April 29, 2025")
+              (0, import_i18n2.__)("Today, %s"),
+              formattedDate
+            );
+          }
+          if (modifiers?.selected) {
+            label = (0, import_i18n2.sprintf)(
+              // translators: %s is the full date (e.g. "Monday, April 29, 2025")
+              (0, import_i18n2.__)("%s, selected"),
+              formattedDate
+            );
+          }
+          return label;
+        },
+        /**
+         * The label for the weekday.
+         * @param date
+         */
+        labelWeekday: (date) => weekdayLongFormatter.format(date)
+      },
+      locale,
+      dir: isLocaleRTL(locale.code) ? "rtl" : "ltr",
+      formatters: {
+        formatWeekdayName: (date) => {
+          return weekdayNarrowFormatter.format(date);
+        },
+        formatCaption: (date) => {
+          return monthNameFormatter.format(date);
+        }
+      },
+      timeZone
+    };
+  }, [locale, timeZone, mode]);
+};
+
+// packages/ui/build-module/calendar/calendar.mjs
+var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
+var Calendar = (0, import_element19.forwardRef)(
+  function Calendar2({
+    defaultValue,
+    value: valueProp,
+    onValueChange,
+    numberOfMonths = 1,
+    locale = enUS2,
+    timeZone,
+    render: render4,
+    labels: customLabels,
+    ...props
+  }, ref) {
+    const localizationProps = useLocalizationProps({
+      locale,
+      timeZone,
+      mode: "single"
+    });
+    const labels = (0, import_element19.useMemo)(
+      () => customLabels ? { ...localizationProps.labels, ...customLabels } : localizationProps.labels,
+      [localizationProps.labels, customLabels]
+    );
+    const onChange = (0, import_element19.useCallback)(
+      (selected2, triggerDate, modifiers, e2) => {
+        onValueChange?.(
+          selected2 ?? null,
+          triggerDate,
+          modifiers,
+          e2
+        );
+      },
+      [onValueChange]
+    );
+    const [selected, setSelected] = useControlledValue2({
+      defaultValue,
+      value: valueProp,
+      onChange
+    });
+    const rootContextValue = (0, import_element19.useMemo)(
+      () => ({ render: render4, ref }),
+      [render4, ref]
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(RootContext.Provider, { value: rootContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+      DayPicker,
+      {
+        ...COMMON_PROPS,
+        ...localizationProps,
+        ...props,
+        role: "application",
+        mode: "single",
+        numberOfMonths: clampNumberOfMonths(numberOfMonths),
+        labels,
+        selected: selected ?? void 0,
+        onSelect: setSelected
+      }
+    ) });
+  }
+);
+
+// packages/ui/build-module/calendar/range-calendar.mjs
+var import_element20 = __toESM(require_element(), 1);
+var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
+function usePreviewRange({
+  value,
+  hoveredDate,
+  excludeDisabled,
+  min: min4,
+  max: max4,
+  disabled: disabled2
+}) {
+  return (0, import_element20.useMemo)(() => {
+    if (!hoveredDate || !value?.from) {
+      return;
+    }
+    let previewHighlight;
+    let potentialNewRange;
+    if (hoveredDate < value.from) {
+      previewHighlight = {
+        from: hoveredDate,
+        to: value.from
+      };
+      potentialNewRange = {
+        from: hoveredDate,
+        to: value.to ?? value.from
+      };
+    } else if (value.to && hoveredDate > value.from && hoveredDate < value.to) {
+      previewHighlight = {
+        from: value.from,
+        to: hoveredDate
+      };
+      potentialNewRange = {
+        from: value.from,
+        to: hoveredDate
+      };
+    } else if (hoveredDate > value.from) {
+      previewHighlight = {
+        from: value.to ?? value.from,
+        to: hoveredDate
+      };
+      potentialNewRange = {
+        from: value.from,
+        to: hoveredDate
+      };
+    }
+    if (min4 !== void 0 && min4 > 0 && potentialNewRange && differenceInCalendarDays(
+      potentialNewRange.to,
+      potentialNewRange.from
+    ) < min4) {
+      previewHighlight = {
+        from: hoveredDate,
+        to: hoveredDate
+      };
+    }
+    if (max4 !== void 0 && max4 > 0 && potentialNewRange && differenceInCalendarDays(
+      potentialNewRange.to,
+      potentialNewRange.from
+    ) > max4) {
+      previewHighlight = {
+        from: hoveredDate,
+        to: hoveredDate
+      };
+    }
+    if (excludeDisabled && disabled2 && potentialNewRange && rangeContainsModifiers(potentialNewRange, disabled2)) {
+      previewHighlight = {
+        from: hoveredDate,
+        to: hoveredDate
+      };
+    }
+    return previewHighlight;
+  }, [value, hoveredDate, excludeDisabled, min4, max4, disabled2]);
+}
+var RangeCalendar = (0, import_element20.forwardRef)(
+  function RangeCalendar2({
+    defaultValue,
+    value: valueProp,
+    onValueChange,
+    numberOfMonths = 1,
+    excludeDisabled,
+    min: min4,
+    max: max4,
+    disabled: disabled2,
+    locale = enUS2,
+    timeZone,
+    render: render4,
+    labels: customLabels,
+    ...props
+  }, ref) {
+    const localizationProps = useLocalizationProps({
+      locale,
+      timeZone,
+      mode: "range"
+    });
+    const labels = (0, import_element20.useMemo)(
+      () => customLabels ? { ...localizationProps.labels, ...customLabels } : localizationProps.labels,
+      [localizationProps.labels, customLabels]
+    );
+    const onChange = (0, import_element20.useCallback)(
+      (selected2, triggerDate, modifiers2, e2) => {
+        onValueChange?.(
+          selected2 ?? null,
+          triggerDate,
+          modifiers2,
+          e2
+        );
+      },
+      [onValueChange]
+    );
+    const [selected, setSelected] = useControlledValue2({
+      defaultValue,
+      value: valueProp,
+      onChange
+    });
+    const [hoveredDate, setHoveredDate] = (0, import_element20.useState)(
+      void 0
+    );
+    const previewRange = usePreviewRange({
+      value: selected,
+      hoveredDate,
+      excludeDisabled,
+      min: min4,
+      max: max4,
+      disabled: disabled2
+    });
+    const modifiers = (0, import_element20.useMemo)(() => {
+      return {
+        preview: previewRange,
+        preview_start: previewRange?.from,
+        preview_end: previewRange?.to
+      };
+    }, [previewRange]);
+    const rootContextValue = (0, import_element20.useMemo)(
+      () => ({ render: render4, ref }),
+      [render4, ref]
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(RootContext.Provider, { value: rootContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
+      DayPicker,
+      {
+        ...COMMON_PROPS,
+        ...localizationProps,
+        ...props,
+        role: "application",
+        mode: "range",
+        numberOfMonths: clampNumberOfMonths(numberOfMonths),
+        disabled: disabled2,
+        excludeDisabled,
+        min: min4,
+        max: max4,
+        labels,
+        selected: selected ?? void 0,
+        onSelect: setSelected,
+        onDayMouseEnter: (date) => setHoveredDate(date),
+        onDayMouseLeave: () => setHoveredDate(void 0),
+        modifiers,
+        modifiersClassNames: MODIFIER_CLASSNAMES
+      }
+    ) });
+  }
+);
+
+// packages/ui/build-module/card/index.mjs
+var card_exports = {};
+__export(card_exports, {
+  Content: () => Content,
+  FullBleed: () => FullBleed,
+  Header: () => Header,
+  Root: () => Root3,
+  Title: () => Title
+});
+
+// packages/ui/build-module/card/root.mjs
+var import_element21 = __toESM(require_element(), 1);
+var STYLE_HASH_ATTRIBUTE6 = "data-wp-hash";
+function getRuntime6() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument6(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash6(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE6}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE6) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle6(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime6();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash6(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE6, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument6(targetDocument) {
+  const runtime = getRuntime6();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle6(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle6(hash, css) {
+  const runtime = getRuntime6();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle6(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle6("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+}
+var resets_default3 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+if (typeof process === "undefined" || true) {
+  registerStyle6("5d38cbdd27", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
+}
+var style_default6 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
+var Root3 = (0, import_element21.forwardRef)(function Card({ render: render4, ...restProps }, ref) {
+  const mergedClassName = clsx_default(style_default6.root, resets_default3["box-sizing"]);
+  const element = useRender({
+    defaultTagName: "div",
+    render: render4,
+    ref,
+    props: mergeProps({ className: mergedClassName }, restProps)
+  });
+  return element;
+});
+
+// packages/ui/build-module/card/header.mjs
+var import_element22 = __toESM(require_element(), 1);
+var STYLE_HASH_ATTRIBUTE7 = "data-wp-hash";
+function getRuntime7() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument7(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash7(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE7}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE7) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle7(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime7();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash7(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE7, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument7(targetDocument) {
+  const runtime = getRuntime7();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle7(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle7(hash, css) {
+  const runtime = getRuntime7();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle7(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle7("5d38cbdd27", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
+}
+var style_default7 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
+var Header = (0, import_element22.forwardRef)(
+  function CardHeader({ render: render4, ...props }, ref) {
+    const element = useRender({
+      defaultTagName: "div",
+      render: render4,
+      ref,
+      props: mergeProps({ className: style_default7.header }, props)
+    });
+    return element;
+  }
+);
+
+// packages/ui/build-module/card/content.mjs
+var import_element23 = __toESM(require_element(), 1);
+var STYLE_HASH_ATTRIBUTE8 = "data-wp-hash";
+function getRuntime8() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument8(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash8(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE8}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE8) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle8(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime8();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash8(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE8, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument8(targetDocument) {
+  const runtime = getRuntime8();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle8(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle8(hash, css) {
+  const runtime = getRuntime8();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle8(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle8("5d38cbdd27", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
+}
+var style_default8 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
+var Content = (0, import_element23.forwardRef)(
+  function CardContent({ render: render4, ...props }, ref) {
+    const element = useRender({
+      defaultTagName: "div",
+      render: render4,
+      ref,
+      props: mergeProps({ className: style_default8.content }, props)
+    });
+    return element;
+  }
+);
+
+// packages/ui/build-module/card/full-bleed.mjs
+var import_element24 = __toESM(require_element(), 1);
+var STYLE_HASH_ATTRIBUTE9 = "data-wp-hash";
+function getRuntime9() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument9(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash9(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE9}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE9) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle9(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime9();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash9(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE9, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument9(targetDocument) {
+  const runtime = getRuntime9();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle9(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle9(hash, css) {
+  const runtime = getRuntime9();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle9(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle9("5d38cbdd27", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
+}
+var style_default9 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
+var FullBleed = (0, import_element24.forwardRef)(
+  function CardFullBleed({ render: render4, ...props }, ref) {
+    const element = useRender({
+      defaultTagName: "div",
+      render: render4,
+      ref,
+      props: mergeProps(
+        { className: style_default9.fullbleed },
+        props
+      )
+    });
+    return element;
+  }
+);
+
+// packages/ui/build-module/card/title.mjs
+var import_element25 = __toESM(require_element(), 1);
+var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
+var DEFAULT_TAG = /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", {});
+var Title = (0, import_element25.forwardRef)(
+  function CardTitle({ render: render4 = DEFAULT_TAG, children, ...props }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+      Text,
+      {
+        ref,
+        variant: "heading-lg",
+        render: render4,
+        ...props,
+        children
+      }
+    );
+  }
+);
+
+// packages/ui/build-module/collapsible/panel.mjs
+var import_element26 = __toESM(require_element(), 1);
+var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
+var Panel = (0, import_element26.forwardRef)(
+  function CollapsiblePanel3(props, forwardedRef) {
+    return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(index_parts_exports.Panel, { ref: forwardedRef, ...props });
+  }
+);
+
+// packages/ui/build-module/collapsible/root.mjs
+var import_element27 = __toESM(require_element(), 1);
+var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
+var Root4 = (0, import_element27.forwardRef)(
+  function CollapsibleRoot3(props, forwardedRef) {
+    return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(index_parts_exports.Root, { ref: forwardedRef, ...props });
+  }
+);
+
+// packages/ui/build-module/collapsible/trigger.mjs
+var import_element28 = __toESM(require_element(), 1);
+var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
+var Trigger = (0, import_element28.forwardRef)(
+  function CollapsibleTrigger3(props, forwardedRef) {
+    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(index_parts_exports.Trigger, { ref: forwardedRef, ...props });
+  }
+);
+
+// packages/ui/build-module/collapsible-card/index.mjs
+var collapsible_card_exports = {};
+__export(collapsible_card_exports, {
+  Content: () => Content2,
+  Header: () => Header2,
+  HeaderDescription: () => HeaderDescription,
+  Root: () => Root32
+});
+
+// packages/ui/build-module/collapsible-card/root.mjs
+var import_element29 = __toESM(require_element(), 1);
+var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
+var Root32 = (0, import_element29.forwardRef)(
+  function CollapsibleCardRoot({ render: render4, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+      Root4,
+      {
+        ref,
+        render: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(Root3, { render: render4 }),
+        ...restProps
+      }
+    );
+  }
+);
+
+// packages/ui/build-module/collapsible-card/header.mjs
+var import_element31 = __toESM(require_element(), 1);
+
+// packages/ui/build-module/collapsible-card/context.mjs
+var import_element30 = __toESM(require_element(), 1);
+var HeaderDescriptionIdContext = (0, import_element30.createContext)({
+  setDescriptionId: () => {
+  }
+});
+
+// packages/ui/build-module/collapsible-card/header.mjs
+var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE10 = "data-wp-hash";
+function getRuntime10() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument10(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash10(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE10}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE10) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle10(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime10();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash10(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE10, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument10(targetDocument) {
+  const runtime = getRuntime10();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle10(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle10(hash, css) {
+  const runtime = getRuntime10();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle10(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle10("78199613cf", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
+}
+var style_default10 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
+if (typeof process === "undefined" || true) {
+  registerStyle10("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+}
+var global_css_defense_default4 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+if (typeof process === "undefined" || true) {
+  registerStyle10("2ffedd8246", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+}
+var focus_module_default3 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
+var Header2 = (0, import_element31.forwardRef)(
+  function CollapsibleCardHeader({ children, className: className2, render: render4, ...restProps }, ref) {
+    const [descriptionId, setDescriptionId] = (0, import_element31.useState)();
+    const contextValue = (0, import_element31.useMemo)(
+      () => ({ setDescriptionId }),
+      [setDescriptionId]
+    );
+    return useRender({
+      defaultTagName: "div",
+      render: render4,
+      ref,
+      props: mergeProps(restProps, {
+        className: clsx_default(
+          global_css_defense_default4.heading,
+          style_default10["heading-wrapper"],
+          className2
+        ),
+        children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(HeaderDescriptionIdContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime57.jsxs)(
+          Trigger,
+          {
+            className: style_default10.header,
+            render: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(Header, {}),
+            nativeButton: false,
+            "aria-describedby": descriptionId,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime57.jsx)("div", { className: style_default10["header-content"], children }),
+              /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+                "div",
+                {
+                  className: clsx_default(
+                    style_default10["header-trigger-positioner"]
+                  ),
+                  children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+                    "div",
+                    {
+                      className: clsx_default(
+                        style_default10["header-trigger-wrapper"],
+                        global_css_defense_default4.div,
+                        // While the interactive trigger element is the whole header,
+                        // the focus ring will be displayed only on the icon to visually
+                        // emulate it being the button.
+                        focus_module_default3["outset-ring--focus-parent-visible"]
+                      ),
+                      children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+                        Icon,
+                        {
+                          icon: chevron_down_default,
+                          className: style_default10["header-trigger"]
+                        }
+                      )
+                    }
+                  )
+                }
+              )
+            ]
+          }
+        ) })
+      })
+    });
+  }
+);
+
+// packages/ui/build-module/collapsible-card/header-description.mjs
+var import_element32 = __toESM(require_element(), 1);
+var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
+var HeaderDescription = (0, import_element32.forwardRef)(function CollapsibleCardHeaderDescription({ children, className: className2, ...restProps }, ref) {
+  const descriptionId = (0, import_element32.useId)();
+  const { setDescriptionId } = (0, import_element32.useContext)(HeaderDescriptionIdContext);
+  (0, import_element32.useEffect)(() => {
+    setDescriptionId(descriptionId);
+    return () => setDescriptionId(void 0);
+  }, [descriptionId, setDescriptionId]);
+  return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
+    "div",
+    {
+      ref,
+      id: descriptionId,
+      "aria-hidden": "true",
+      className: className2,
+      ...restProps,
+      children
+    }
+  );
+});
+
+// packages/ui/build-module/collapsible-card/content.mjs
+var import_element33 = __toESM(require_element(), 1);
+var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
+function getRuntime11() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument11(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash11(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE11}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE11) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle11(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime11();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash11(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE11, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument11(targetDocument) {
+  const runtime = getRuntime11();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle11(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle11(hash, css) {
+  const runtime = getRuntime11();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle11(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle11("78199613cf", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._626190151275d6d3__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.cab17c7a373cb60d__header-content{flex:1;min-width:0}.dd89d27c4f15912d__header-trigger-positioner{align-self:center;flex-shrink:0;max-height:0;overflow:visible}.bcfab5f2448bafef__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._3106f8d2b0330faa__header-trigger{@media not (prefers-reduced-motion){transition:rotate .15s ease-out}}._5d2dfcb4085c6d0f__header[data-panel-open] ._3106f8d2b0330faa__header-trigger{rotate:180deg}._5d2dfcb4085c6d0f__header[data-disabled] ._3106f8d2b0330faa__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.e34cf37ccd0d81e0__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden;&._03cfdbcd710393c9__overflow-visible{overflow:visible}&[hidden]:not([hidden=until-found]){display:none}&[data-ending-style],&[data-starting-style]{height:0}@media not (prefers-reduced-motion){transition:all .15s ease-out}}}@layer compositions{._41bfdbf7b6c087c2__content-inner{padding-block-start:0}._5d2dfcb4085c6d0f__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}}");
+}
+var style_default11 = { "heading-wrapper": "_626190151275d6d3__heading-wrapper", "header-content": "cab17c7a373cb60d__header-content", "header-trigger-positioner": "dd89d27c4f15912d__header-trigger-positioner", "header-trigger-wrapper": "bcfab5f2448bafef__header-trigger-wrapper", "header-trigger": "_3106f8d2b0330faa__header-trigger", "header": "_5d2dfcb4085c6d0f__header", "content": "e34cf37ccd0d81e0__content", "overflow-visible": "_03cfdbcd710393c9__overflow-visible", "content-inner": "_41bfdbf7b6c087c2__content-inner" };
+var Content2 = (0, import_element33.forwardRef)(
+  function CollapsibleCardContent({ className: className2, render: render4, children, hiddenUntilFound = true, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+      Panel,
+      {
+        ref,
+        className: (state) => clsx_default(
+          style_default11.content,
+          state.open && state.transitionStatus === "idle" && style_default11["overflow-visible"],
+          className2
+        ),
+        hiddenUntilFound,
+        ...restProps,
+        children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+          Content,
+          {
+            className: style_default11["content-inner"],
+            render: render4,
+            children
+          }
+        )
+      }
+    );
+  }
+);
+
+// packages/ui/build-module/utils/render-slot-with-children.mjs
+var import_element34 = __toESM(require_element(), 1);
+function renderSlotWithChildren(slot, defaultSlot, children) {
+  return (0, import_element34.cloneElement)(slot ?? defaultSlot, { children });
+}
+
+// packages/ui/build-module/utils/theme-provider.mjs
+var theme = __toESM(require_theme(), 1);
+
+// packages/ui/build-module/lock-unlock.mjs
+var import_private_apis = __toESM(require_private_apis(), 1);
+var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/ui"
+);
+
+// packages/ui/build-module/utils/theme-provider.mjs
+function getThemeProvider() {
+  const themePackage = theme;
+  if (themePackage.ThemeProvider) {
+    return themePackage.ThemeProvider;
+  }
+  if (!themePackage.privateApis) {
+    throw new Error(
+      "@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`."
+    );
+  }
+  return unlock(
+    themePackage.privateApis
+  ).ThemeProvider;
+}
+var ThemeProvider = getThemeProvider();
+
+// packages/ui/build-module/stack/stack.mjs
+var import_element35 = __toESM(require_element(), 1);
+var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
+function getRuntime12() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument12(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash12(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE12}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE12) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle12(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime12();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash12(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE12, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument12(targetDocument) {
+  const runtime = getRuntime12();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle12(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle12(hash, css) {
+  const runtime = getRuntime12();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle12(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle12("32aba35fe1", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._19ce0419607e1896__stack{display:flex}}}");
+}
+var style_default12 = { "stack": "_19ce0419607e1896__stack" };
+var gapTokens = {
+  xs: "var(--wpds-dimension-gap-xs, 4px)",
+  sm: "var(--wpds-dimension-gap-sm, 8px)",
+  md: "var(--wpds-dimension-gap-md, 12px)",
+  lg: "var(--wpds-dimension-gap-lg, 16px)",
+  xl: "var(--wpds-dimension-gap-xl, 24px)",
+  "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
+  "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
+};
+var Stack = (0, import_element35.forwardRef)(function Stack2({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
+  const style = {
+    gap: gap && gapTokens[gap],
+    alignItems: align,
+    justifyContent: justify,
+    flexDirection: direction,
+    flexWrap: wrap
+  };
+  const element = useRender({
+    render: render4,
+    ref,
+    props: mergeProps(props, { style, className: style_default12.stack })
+  });
+  return element;
+});
+
+// packages/ui/build-module/tooltip/index.mjs
+var tooltip_exports = {};
+__export(tooltip_exports, {
+  Popup: () => Popup,
+  Portal: () => Portal,
+  Positioner: () => Positioner,
+  Provider: () => Provider,
+  Root: () => Root5,
+  Trigger: () => Trigger2
+});
+
+// packages/ui/build-module/tooltip/popup.mjs
+var import_element38 = __toESM(require_element(), 1);
+
+// packages/ui/build-module/tooltip/portal.mjs
+var import_element36 = __toESM(require_element(), 1);
+
+// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
+var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
+function getRuntime13() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument13(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash13(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE13}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE13) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle13(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime13();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash13(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE13, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument13(targetDocument) {
+  const runtime = getRuntime13();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle13(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle13(hash, css) {
+  const runtime = getRuntime13();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle13(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle13("be37f31c1e", "._11fc52b637ff8a7e__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._11fc52b637ff8a7e__slot>*{pointer-events:auto}}}");
+}
+var wp_compat_overlay_slot_default = { "slot": "_11fc52b637ff8a7e__slot" };
+var WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
+function resolveOwnerDocument() {
+  return typeof document === "undefined" ? null : document;
+}
+function isInWordPressEnvironment() {
+  let topWp;
+  try {
+    topWp = window.top?.wp;
+  } catch {
+  }
+  const wp = topWp ?? window.wp;
+  return typeof wp?.components === "object" && wp.components !== null;
+}
+var cachedSlot = null;
+function ensureSlotIsAccessible(element) {
+  element.setAttribute("aria-hidden", "false");
+  return element;
+}
+function createSlot(ownerDocument2) {
+  const element = ownerDocument2.createElement("div");
+  element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
+  if (wp_compat_overlay_slot_default.slot) {
+    element.classList.add(wp_compat_overlay_slot_default.slot);
+  }
+  ownerDocument2.body.appendChild(element);
+  return element;
+}
+function getWpCompatOverlaySlot() {
+  if (typeof window === "undefined") {
+    return void 0;
+  }
+  if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) {
+    return void 0;
+  }
+  const ownerDocument2 = resolveOwnerDocument();
+  if (!ownerDocument2 || !ownerDocument2.body) {
+    return void 0;
+  }
+  if (cachedSlot && cachedSlot.ownerDocument === ownerDocument2 && cachedSlot.isConnected) {
+    return ensureSlotIsAccessible(cachedSlot);
+  }
+  const existing = ownerDocument2.querySelector(
+    `[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`
+  );
+  if (existing instanceof HTMLDivElement) {
+    cachedSlot = ensureSlotIsAccessible(existing);
+    return cachedSlot;
+  }
+  if (cachedSlot?.isConnected) {
+    cachedSlot.remove();
+  }
+  cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument2));
+  return cachedSlot;
+}
+
+// packages/ui/build-module/tooltip/portal.mjs
+var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
+var Portal = (0, import_element36.forwardRef)(
+  function TooltipPortal3({ container, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
+      index_parts_exports3.Portal,
+      {
+        container: container ?? getWpCompatOverlaySlot(),
+        ...restProps,
+        ref
+      }
+    );
+  }
+);
+
+// packages/ui/build-module/tooltip/positioner.mjs
+var import_element37 = __toESM(require_element(), 1);
+var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE14 = "data-wp-hash";
+function getRuntime14() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument14(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash14(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE14}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE14) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle14(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime14();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash14(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE14, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument14(targetDocument) {
+  const runtime = getRuntime14();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle14(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle14(hash, css) {
+  const runtime = getRuntime14();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle14(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle14("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+}
+var resets_default4 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+if (typeof process === "undefined" || true) {
+  registerStyle14("19fcc06039", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
+}
+var style_default13 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
+var Positioner = (0, import_element37.forwardRef)(
+  function TooltipPositioner3({ align = "center", className: className2, side = "top", sideOffset = 4, ...props }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
+      index_parts_exports3.Positioner,
+      {
+        ref,
+        align,
+        side,
+        sideOffset,
+        ...props,
+        className: clsx_default(
+          resets_default4["box-sizing"],
+          style_default13.positioner,
+          className2
+        )
+      }
+    );
+  }
+);
+
+// packages/ui/build-module/tooltip/popup.mjs
+var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
+function getRuntime15() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument15(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash15(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE15}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE15) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle15(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime15();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash15(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE15, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument15(targetDocument) {
+  const runtime = getRuntime15();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle15(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle15(hash, css) {
+  const runtime = getRuntime15();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle15(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle15("19fcc06039", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._480b748dd3510e64__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._50096b232db7709d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
+}
+var style_default14 = { "positioner": "_480b748dd3510e64__positioner", "popup": "_50096b232db7709d__popup" };
+var POPUP_COLOR = { background: "#1e1e1e" };
+var Popup = (0, import_element38.forwardRef)(function TooltipPopup3({ portal, positioner, children, className: className2, ...props }, ref) {
+  const popupContent = /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(
+    index_parts_exports3.Popup,
+    {
+      ref,
+      className: clsx_default(style_default14.popup, className2),
+      ...props,
+      children
+    }
+  ) });
+  const positionedPopup = renderSlotWithChildren(
+    positioner,
+    /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(Positioner, {}),
+    popupContent
+  );
+  return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(Portal, {}), positionedPopup);
+});
+
+// packages/ui/build-module/tooltip/trigger.mjs
+var import_element39 = __toESM(require_element(), 1);
+var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
+var Trigger2 = (0, import_element39.forwardRef)(
+  function TooltipTrigger3(props, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(index_parts_exports3.Trigger, { ref, ...props });
+  }
+);
+
+// packages/ui/build-module/utils/direction-provider.mjs
+var import_i18n3 = __toESM(require_i18n(), 1);
+var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
+function DirectionProvider3({ children }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(DirectionProvider, { direction: (0, import_i18n3.isRTL)() ? "rtl" : "ltr", children });
+}
+
+// packages/ui/build-module/tooltip/root.mjs
+var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
+function Root5(props) {
+  return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(index_parts_exports3.Root, { ...props }) });
+}
+
+// packages/ui/build-module/tooltip/provider.mjs
+var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
+function Provider({ ...props }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(index_parts_exports3.Provider, { ...props });
+}
+
+// packages/ui/build-module/visually-hidden/visually-hidden.mjs
+var import_element40 = __toESM(require_element(), 1);
+var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
+function getRuntime16() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument16(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash16(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE16}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE16) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle16(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime16();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash16(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE16, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument16(targetDocument) {
+  const runtime = getRuntime16();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle16(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle16(hash, css) {
+  const runtime = getRuntime16();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle16(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle16("fa606a57ae", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.f37b9e2e191ebd66__visually-hidden{word-wrap:normal;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal}}}");
+}
+var style_default15 = { "visually-hidden": "f37b9e2e191ebd66__visually-hidden" };
+var VisuallyHidden = (0, import_element40.forwardRef)(
+  function VisuallyHidden2({ render: render4, ...restProps }, ref) {
+    const element = useRender({
+      render: render4,
+      ref,
+      props: mergeProps(
+        { className: style_default15["visually-hidden"] },
+        restProps,
+        {
+          // @ts-expect-error Arbitrary data-* attributes aren't indexable on the typed div props. Kept hardcoded so consumers can't change or remove it.
+          "data-visually-hidden": ""
+        }
+      )
+    });
+    return element;
+  }
+);
+
+// packages/ui/build-module/utils/use-schedule-validation.mjs
+var import_element41 = __toESM(require_element(), 1);
+function useScheduleValidation(validate) {
+  const validateRef = (0, import_element41.useRef)(validate);
+  validateRef.current = validate;
+  const timerRef = (0, import_element41.useRef)(null);
+  const unmountedRef = (0, import_element41.useRef)(false);
+  const scheduleValidation = (0, import_element41.useCallback)(() => {
+    if (unmountedRef.current) {
+      return;
+    }
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = setTimeout(() => {
+      validateRef.current();
+      timerRef.current = null;
+    }, 0);
+  }, []);
+  (0, import_element41.useEffect)(() => {
+    unmountedRef.current = false;
+    return () => {
+      unmountedRef.current = true;
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
+  return scheduleValidation;
+}
+
+// packages/ui/build-module/link/link.mjs
+var import_element42 = __toESM(require_element(), 1);
+var import_i18n4 = __toESM(require_i18n(), 1);
+var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
+function getRuntime17() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument17(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash17(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE17}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE17) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle17(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime17();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash17(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE17, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument17(targetDocument) {
+  const runtime = getRuntime17();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle17(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle17(hash, css) {
+  const runtime = getRuntime17();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle17(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle17("10f3806643", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._336cd3e4e743482f__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+}
+var resets_default5 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
+if (typeof process === "undefined" || true) {
+  registerStyle17("2ffedd8246", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+}
+var focus_module_default4 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
+if (typeof process === "undefined" || true) {
+  registerStyle17("e8e6a9be37", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d4250949359b05ce__link{text-decoration-thickness:from-font;text-underline-offset:.2em}.c6055659b8e2cd2c__is-brand,.c6055659b8e2cd2c__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}.c6055659b8e2cd2c__is-brand:active,.c6055659b8e2cd2c__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._92e0dfcaeee15b88__is-neutral,._92e0dfcaeee15b88__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._92e0dfcaeee15b88__is-neutral:active,._92e0dfcaeee15b88__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}.cf122a9bf1035d42__is-unstyled{--_gcd-a-color:inherit;color:inherit;text-decoration:none}._0cb411afac4c86c7__link-icon{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._0cb411afac4c86c7__link-icon:after{content:"\\2197"}._0cb411afac4c86c7__link-icon:dir(rtl):after{content:"\\2196"}}}');
+}
+var style_default16 = { "link": "d4250949359b05ce__link", "is-brand": "c6055659b8e2cd2c__is-brand", "is-neutral": "_92e0dfcaeee15b88__is-neutral", "is-unstyled": "cf122a9bf1035d42__is-unstyled", "link-icon": "_0cb411afac4c86c7__link-icon" };
+if (typeof process === "undefined" || true) {
+  registerStyle17("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+}
+var global_css_defense_default5 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+var Link = (0, import_element42.forwardRef)(function Link2({
+  children,
+  variant = "default",
+  tone = "brand",
+  openInNewTab = false,
+  render: render4,
+  className: className2,
+  ...props
+}, ref) {
+  const element = useRender({
+    render: render4,
+    defaultTagName: "a",
+    ref,
+    props: mergeProps(props, {
+      className: clsx_default(
+        global_css_defense_default5.a,
+        resets_default5["box-sizing"],
+        focus_module_default4["outset-ring--focus-except-active"],
+        variant !== "unstyled" && style_default16.link,
+        variant !== "unstyled" && style_default16[`is-${tone}`],
+        variant === "unstyled" && style_default16["is-unstyled"],
+        className2
+      ),
+      target: openInNewTab ? "_blank" : void 0,
+      children: /* @__PURE__ */ (0, import_jsx_runtime67.jsxs)(import_jsx_runtime67.Fragment, { children: [
+        children,
+        openInNewTab && /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(
+          "span",
+          {
+            className: style_default16["link-icon"],
+            role: "img",
+            "aria-label": (
+              /* translators: accessibility text appended to link text */
+              (0, import_i18n4.__)("(opens in a new tab)")
+            )
+          }
+        )
+      ] })
+    })
+  });
+  return element;
+});
+
+// packages/ui/build-module/tabs/index.mjs
+var tabs_exports = {};
+__export(tabs_exports, {
+  List: () => List,
+  Panel: () => Panel2,
+  Root: () => Root6,
+  Tab: () => Tab
+});
+
+// packages/ui/build-module/tabs/list.mjs
+var import_element43 = __toESM(require_element(), 1);
+var import_compose2 = __toESM(require_compose(), 1);
+var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
+function getRuntime18() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument18(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash18(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE18}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE18) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle18(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime18();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash18(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE18, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument18(targetDocument) {
+  const runtime = getRuntime18();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle18(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle18(hash, css) {
+  const runtime = getRuntime18();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle18(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle18("54ae3f4680", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7313adbc8a112e90__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&._9f2ac729c68a735a__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._9f2ac729c68a735a__is-overflowing-first._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._59228b5227f38a99__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._1c37dcfaa1ad8cda__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height,border-radius,border-block;transition-timing-function:ease-out}outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;&[data-orientation=horizontal]{background-color:var(--wpds-color-stroke-interactive-neutral-strong,#6e6e6e);bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width);z-index:1}&[data-orientation=vertical]{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-radius:var(--wpds-border-radius-sm,2px);height:var(--active-tab-height);left:50%;top:0;translate:-50% var(--active-tab-top);width:100%;z-index:0}._7313adbc8a112e90__tablist[data-select-on-move=true]:has(:focus-visible)\n			&[data-orientation=vertical]{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));box-sizing:border-box}}.a5fd8814f195aa5e__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);cursor:default;@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:hover,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&:after{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}}._59228b5227f38a99__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px)}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-sm,8px) var(--wpds-dimension-padding-md,12px)}[data-orientation=vertical][data-select-on-move=false] &:after{content:"";inset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}._5dfc77e6edd345d4__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}._4a20e969d15e5ac1__tab-chevron{flex-shrink:0;margin-inline-end:calc(var(--wpds-dimension-gap-xs, 4px)*-1);opacity:0;[data-orientation=horizontal] &{display:none}[role=tab]:is([aria-selected=true],:focus-visible,:hover) &{opacity:1}@media not (prefers-reduced-motion){[data-select-on-move=true]\n				[role=tab]:is([aria-selected=true])\n				&{transition:opacity .15s linear .15s}}&:dir(rtl){rotate:180deg}}}}');
+}
+var style_default17 = { "tablist": "_7313adbc8a112e90__tablist", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children", "tab-chevron": "_4a20e969d15e5ac1__tab-chevron" };
+var SCROLL_EPSILON = 1;
+var List = (0, import_element43.forwardRef)(
+  function TabList({
+    children,
+    variant = "default",
+    className: className2,
+    activateOnFocus,
+    ...otherProps
+  }, forwardedRef) {
+    const [listEl, setListEl] = (0, import_element43.useState)(null);
+    const [overflow, setOverflow] = (0, import_element43.useState)({
+      first: false,
+      last: false,
+      isScrolling: false
+    });
+    (0, import_element43.useEffect)(() => {
+      if (!listEl) {
+        return;
+      }
+      const measureOverflow = () => {
+        const { scrollWidth, clientWidth, scrollLeft } = listEl;
+        const maxScroll = Math.max(scrollWidth - clientWidth, 0);
+        const direction = listEl.dir || (typeof window !== "undefined" ? window.getComputedStyle(listEl).direction : "ltr");
+        const scrollFromStart = direction === "rtl" && scrollLeft < 0 ? (
+          // In RTL layouts, scrollLeft is typically 0 at the visual "start"
+          // (right edge) and becomes negative toward the "end" (left edge).
+          // Normalize value for correct first/last detection logic.
+          -scrollLeft
+        ) : scrollLeft;
+        const next = {
+          first: scrollFromStart > SCROLL_EPSILON,
+          last: scrollFromStart < maxScroll - SCROLL_EPSILON,
+          isScrolling: scrollWidth > clientWidth
+        };
+        setOverflow(
+          (prev) => prev.first === next.first && prev.last === next.last && prev.isScrolling === next.isScrolling ? prev : next
+        );
+      };
+      const resizeObserver = new ResizeObserver(measureOverflow);
+      const observeTabs = () => {
+        resizeObserver.disconnect();
+        resizeObserver.observe(listEl);
+        listEl.querySelectorAll('[role="tab"]').forEach((tab) => resizeObserver.observe(tab));
+      };
+      const mutationObserver = new MutationObserver(observeTabs);
+      mutationObserver.observe(listEl, {
+        childList: true,
+        subtree: true
+      });
+      let scrollTick = false;
+      const throttleMeasureOverflowOnScroll = () => {
+        if (!scrollTick) {
+          requestAnimationFrame(() => {
+            measureOverflow();
+            scrollTick = false;
+          });
+          scrollTick = true;
+        }
+      };
+      listEl.addEventListener(
+        "scroll",
+        throttleMeasureOverflowOnScroll,
+        { passive: true }
+      );
+      observeTabs();
+      measureOverflow();
+      return () => {
+        listEl.removeEventListener(
+          "scroll",
+          throttleMeasureOverflowOnScroll
+        );
+        resizeObserver.disconnect();
+        mutationObserver.disconnect();
+      };
+    }, [listEl]);
+    const mergedListRef = (0, import_compose2.useMergeRefs)([
+      forwardedRef,
+      (el) => setListEl(el)
+    ]);
+    return /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)(
+      index_parts_exports2.List,
+      {
+        ref: mergedListRef,
+        activateOnFocus,
+        "data-select-on-move": activateOnFocus ? "true" : "false",
+        className: clsx_default(
+          style_default17.tablist,
+          overflow.first && style_default17["is-overflowing-first"],
+          overflow.last && style_default17["is-overflowing-last"],
+          style_default17[`is-${variant}-variant`],
+          className2
+        ),
+        ...otherProps,
+        tabIndex: otherProps.tabIndex ?? (overflow.isScrolling ? -1 : void 0),
+        children: [
+          children,
+          /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(index_parts_exports2.Indicator, { className: style_default17.indicator })
+        ]
+      }
+    );
+  }
+);
+
+// packages/ui/build-module/tabs/panel.mjs
+var import_element45 = __toESM(require_element(), 1);
+
+// packages/ui/build-module/tabs/context.mjs
 var import_element44 = __toESM(require_element(), 1);
-var import_date = __toESM(require_date(), 1);
+var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
+var VALIDATION_ENABLED = true;
+var TabsValidationContext = VALIDATION_ENABLED ? (0, import_element44.createContext)(null) : null;
+function useRegisterTabDev() {
+  const context = (0, import_element44.useContext)(TabsValidationContext);
+  (0, import_element44.useEffect)(() => {
+    if (context) {
+      return context.registerTab();
+    }
+    return void 0;
+  }, [context]);
+}
+function useRegisterTabProd() {
+}
+var useRegisterTab = VALIDATION_ENABLED ? useRegisterTabDev : useRegisterTabProd;
+function useRegisterPanelDev() {
+  const context = (0, import_element44.useContext)(TabsValidationContext);
+  (0, import_element44.useEffect)(() => {
+    if (context) {
+      return context.registerPanel();
+    }
+    return void 0;
+  }, [context]);
+}
+function useRegisterPanelProd() {
+}
+var useRegisterPanel = VALIDATION_ENABLED ? useRegisterPanelDev : useRegisterPanelProd;
+function TabsValidationProviderDev({
+  children
+}) {
+  const tabCountRef = (0, import_element44.useRef)(0);
+  const panelCountRef = (0, import_element44.useRef)(0);
+  const scheduleValidation = useScheduleValidation(() => {
+    const tabCount = tabCountRef.current;
+    const panelCount = panelCountRef.current;
+    if (tabCount !== panelCount) {
+      throw new Error(
+        `Tabs: Tab/Panel count mismatch (${tabCount} Tabs, ${panelCount} Panels). Each Tab must be associated with exactly one Panel. Mismatched or missing associations can break screen reader navigation and violate WAI-ARIA Tabs pattern requirements.`
+      );
+    }
+  });
+  const registerTab = (0, import_element44.useCallback)(() => {
+    tabCountRef.current += 1;
+    scheduleValidation();
+    return () => {
+      tabCountRef.current -= 1;
+      scheduleValidation();
+    };
+  }, [scheduleValidation]);
+  const registerPanel = (0, import_element44.useCallback)(() => {
+    panelCountRef.current += 1;
+    scheduleValidation();
+    return () => {
+      panelCountRef.current -= 1;
+      scheduleValidation();
+    };
+  }, [scheduleValidation]);
+  const contextValue = (0, import_element44.useMemo)(
+    () => ({
+      registerTab,
+      registerPanel
+    }),
+    [registerTab, registerPanel]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(TabsValidationContext.Provider, { value: contextValue, children });
+}
+function TabsValidationProviderProd({
+  children
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(import_jsx_runtime69.Fragment, { children });
+}
+var TabsValidationProvider = VALIDATION_ENABLED ? TabsValidationProviderDev : TabsValidationProviderProd;
+
+// packages/ui/build-module/tabs/panel.mjs
+var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
+function getRuntime19() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument19(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash19(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE19}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE19) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle19(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime19();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash19(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE19, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument19(targetDocument) {
+  const runtime = getRuntime19();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle19(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle19(hash, css) {
+  const runtime = getRuntime19();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle19(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle19("af6d9984a6", "._6defc79820e382c6__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}.d2cff2e5dea83bd1__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._547d86373d02e108__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._8c15fd0ed9f28ba4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._43cec3e1eec1066d__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6).e97669c6d9a38497__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}._2c0831b0499dbd6e__a,._2c0831b0499dbd6e__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}");
+}
+var global_css_defense_default6 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
+if (typeof process === "undefined" || true) {
+  registerStyle19("2ffedd8246", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+}
+var focus_module_default5 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
+var Panel2 = (0, import_element45.forwardRef)(
+  function TabPanel({ className: className2, ...otherProps }, forwardedRef) {
+    useRegisterPanel();
+    return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+      index_parts_exports2.Panel,
+      {
+        ref: forwardedRef,
+        className: clsx_default(
+          global_css_defense_default6.div,
+          focus_module_default5["outset-ring--focus-visible"],
+          className2
+        ),
+        ...otherProps
+      }
+    );
+  }
+);
+
+// packages/ui/build-module/tabs/root.mjs
+var import_element46 = __toESM(require_element(), 1);
+var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
+var Root6 = (0, import_element46.forwardRef)(
+  function TabsRoot3({ ...otherProps }, forwardedRef) {
+    return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(TabsValidationProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(index_parts_exports2.Root, { ref: forwardedRef, ...otherProps }) }) });
+  }
+);
+
+// packages/ui/build-module/tabs/tab.mjs
+var import_element47 = __toESM(require_element(), 1);
+var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
+function getRuntime20() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument20(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash20(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE20}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE20) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle20(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime20();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash20(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE20, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument20(targetDocument) {
+  const runtime = getRuntime20();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle20(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle20(hash, css) {
+  const runtime = getRuntime20();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle20(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle20("54ae3f4680", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7313adbc8a112e90__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&._9f2ac729c68a735a__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._9f2ac729c68a735a__is-overflowing-first._81c799c1f3cdd261__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._59228b5227f38a99__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._1c37dcfaa1ad8cda__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height,border-radius,border-block;transition-timing-function:ease-out}outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;&[data-orientation=horizontal]{background-color:var(--wpds-color-stroke-interactive-neutral-strong,#6e6e6e);bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width);z-index:1}&[data-orientation=vertical]{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-radius:var(--wpds-border-radius-sm,2px);height:var(--active-tab-height);left:50%;top:0;translate:-50% var(--active-tab-top);width:100%;z-index:0}._7313adbc8a112e90__tablist[data-select-on-move=true]:has(:focus-visible)\n			&[data-orientation=vertical]{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));box-sizing:border-box}}.a5fd8814f195aa5e__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);cursor:default;@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:hover,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&:after{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset:var(--wpds-dimension-padding-md,12px)}}._59228b5227f38a99__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px)}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-sm,8px) var(--wpds-dimension-padding-md,12px)}[data-orientation=vertical][data-select-on-move=false] &:after{content:"";inset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}._5dfc77e6edd345d4__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}._4a20e969d15e5ac1__tab-chevron{flex-shrink:0;margin-inline-end:calc(var(--wpds-dimension-gap-xs, 4px)*-1);opacity:0;[data-orientation=horizontal] &{display:none}[role=tab]:is([aria-selected=true],:focus-visible,:hover) &{opacity:1}@media not (prefers-reduced-motion){[data-select-on-move=true]\n				[role=tab]:is([aria-selected=true])\n				&{transition:opacity .15s linear .15s}}&:dir(rtl){rotate:180deg}}}}');
+}
+var style_default18 = { "tablist": "_7313adbc8a112e90__tablist", "is-overflowing-first": "_9f2ac729c68a735a__is-overflowing-first", "is-overflowing-last": "_81c799c1f3cdd261__is-overflowing-last", "is-minimal-variant": "_59228b5227f38a99__is-minimal-variant", "indicator": "_1c37dcfaa1ad8cda__indicator", "tab": "a5fd8814f195aa5e__tab", "tab-children": "_5dfc77e6edd345d4__tab-children", "tab-chevron": "_4a20e969d15e5ac1__tab-chevron" };
+var Tab = (0, import_element47.forwardRef)(function Tab2({ className: className2, children, ...otherProps }, forwardedRef) {
+  useRegisterTab();
+  return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)(
+    index_parts_exports2.Tab,
+    {
+      ref: forwardedRef,
+      className: clsx_default(style_default18.tab, className2),
+      ...otherProps,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("span", { className: style_default18["tab-children"], children }),
+        /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(Icon, { icon: chevron_right_default, className: style_default18["tab-chevron"] })
+      ]
+    }
+  );
+});
+
+// packages/admin-ui/build-module/breadcrumbs/index.mjs
+var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE21 = "data-wp-hash";
+function getRuntime21() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument21(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash21(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE21}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE21) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle21(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime21();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash21(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE21, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument21(targetDocument) {
+  const runtime = getRuntime21();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle21(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle21(hash, css) {
+  const runtime = getRuntime21();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle21(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle21("a90be4572a", "._5f4053eba32ce092__list{list-style:none;margin:0;padding:0}._5f4053eba32ce092__list>li{flex-shrink:0;margin:0}._5f4053eba32ce092__list>li:last-child{flex-shrink:1;min-width:0}.d1978551971a3360__current{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._6d9152063d443376__separator{color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);margin:0 var(--wpds-dimension-gap-sm,8px);user-select:none}");
+}
+var style_default19 = { "list": "_5f4053eba32ce092__list", "current": "d1978551971a3360__current", "separator": "_6d9152063d443376__separator" };
+var Breadcrumbs = ({ items }) => {
+  if (!items.length) {
+    return null;
+  }
+  const precedingItems = items.slice(0, -1);
+  const lastItem = items[items.length - 1];
+  if (true) {
+    const invalidItem = precedingItems.find((item) => !item.to);
+    if (invalidItem) {
+      throw new Error(
+        `Breadcrumbs: item "${invalidItem.label}" is missing a \`to\` prop. All items except the last one must have a \`to\` prop.`
+      );
+    }
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("nav", { "aria-label": (0, import_i18n5.__)("Breadcrumbs"), children: /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)(
+    Stack,
+    {
+      render: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("ul", {}),
+      direction: "row",
+      align: "center",
+      className: style_default19.list,
+      children: [
+        precedingItems.map((item, index2) => /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("li", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+            Text,
+            {
+              variant: "body-lg",
+              render: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+                Link,
+                {
+                  tone: "neutral",
+                  render: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(RouterLink, { to: item.to })
+                }
+              ),
+              children: item.label
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+            Text,
+            {
+              variant: "body-lg",
+              "aria-hidden": "true",
+              className: style_default19.separator,
+              children: "/"
+            }
+          )
+        ] }, index2)),
+        /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("li", { children: lastItem.to ? /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+          Text,
+          {
+            variant: "body-lg",
+            render: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+              Link,
+              {
+                tone: "neutral",
+                render: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(RouterLink, { to: lastItem.to })
+              }
+            ),
+            children: lastItem.label
+          }
+        ) : /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+          Text,
+          {
+            variant: "heading-lg",
+            render: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("h1", {}),
+            className: style_default19.current,
+            children: lastItem.label
+          }
+        ) })
+      ]
+    }
+  ) });
+};
+var breadcrumbs_default = Breadcrumbs;
+
+// packages/admin-ui/build-module/navigable-region/index.mjs
+var import_element48 = __toESM(require_element(), 1);
+var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
+var NavigableRegion = (0, import_element48.forwardRef)(
+  ({ children, className: className2, ariaLabel, as: Tag = "div", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+      Tag,
+      {
+        ref,
+        className: clsx_default("admin-ui-navigable-region", className2),
+        "aria-label": ariaLabel,
+        role: "region",
+        tabIndex: "-1",
+        ...props,
+        children
+      }
+    );
+  }
+);
+NavigableRegion.displayName = "NavigableRegion";
+var navigable_region_default = NavigableRegion;
+
+// packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
+var import_components2 = __toESM(require_components(), 1);
+var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components2.createSlotFill)("SidebarToggle");
+
+// packages/admin-ui/build-module/page/header.mjs
+var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
+function getRuntime22() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument22(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash22(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE22}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE22) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle22(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime22();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash22(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE22, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument22(targetDocument) {
+  const runtime = getRuntime22();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle22(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle22(hash, css) {
+  const runtime = getRuntime22();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle22(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle22("ddd9aab364", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
+}
+var style_default20 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
+function Header3({
+  headingLevel = 1,
+  breadcrumbs,
+  badges,
+  visual,
+  title,
+  subTitle,
+  actions,
+  showSidebarToggle = true
+}) {
+  const HeadingTag = `h${headingLevel}`;
+  return /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(Stack, { direction: "column", className: style_default20.header, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(
+      Stack,
+      {
+        className: style_default20["header-content"],
+        direction: "row",
+        gap: "sm",
+        justify: "space-between",
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
+            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+              SidebarToggleSlot,
+              {
+                bubblesVirtually: true,
+                className: style_default20["sidebar-toggle-slot"]
+              }
+            ),
+            visual && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+              "div",
+              {
+                className: style_default20["header-visual"],
+                "aria-hidden": "true",
+                children: visual
+              }
+            ),
+            title && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+              Text,
+              {
+                className: style_default20["header-title"],
+                render: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(HeadingTag, {}),
+                variant: "heading-lg",
+                children: title
+              }
+            ),
+            breadcrumbs,
+            badges
+          ] }),
+          actions && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+            Stack,
+            {
+              align: "center",
+              className: style_default20["header-actions"],
+              direction: "row",
+              gap: "sm",
+              children: actions
+            }
+          )
+        ]
+      }
+    ),
+    subTitle && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+      Text,
+      {
+        render: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)("p", {}),
+        variant: "body-md",
+        className: style_default20["header-subtitle"],
+        children: subTitle
+      }
+    )
+  ] });
+}
+
+// packages/admin-ui/build-module/page/index.mjs
+var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
+function getRuntime23() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument23(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash23(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE23}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE23) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle23(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime23();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash23(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE23, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument23(targetDocument) {
+  const runtime = getRuntime23();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle23(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle23(hash, css) {
+  const runtime = getRuntime23();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle23(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle23("ddd9aab364", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
+}
+var style_default21 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
+function Page({
+  headingLevel,
+  breadcrumbs,
+  badges,
+  visual,
+  title,
+  subTitle,
+  children,
+  className: className2,
+  actions,
+  ariaLabel,
+  hasPadding = false,
+  showSidebarToggle = true
+}) {
+  const classes = clsx_default(style_default21.page, className2);
+  const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
+  return /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
+    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+      Header3,
+      {
+        headingLevel,
+        breadcrumbs,
+        badges,
+        visual,
+        title,
+        subTitle,
+        actions,
+        showSidebarToggle
+      }
+    ),
+    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
+      "div",
+      {
+        className: clsx_default(
+          style_default21.content,
+          style_default21["has-padding"]
+        ),
+        children
+      }
+    ) : children
+  ] });
+}
+Page.SidebarToggleFill = SidebarToggleFill;
+var page_default = Page;
+
+// routes/media-editor/stage.tsx
+var import_core_data3 = __toESM(require_core_data());
+var import_data10 = __toESM(require_data());
+var import_editor = __toESM(require_editor());
+var import_html_entities = __toESM(require_html_entities());
+var import_i18n44 = __toESM(require_i18n());
+
+// packages/media-editor/build-module/components/media-editor-provider/index.mjs
+var import_element49 = __toESM(require_element(), 1);
+var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
+var MediaEditorContext = (0, import_element49.createContext)(
+  void 0
+);
+function MediaEditorProvider({
+  value,
+  onChange,
+  settings = {},
+  children
+}) {
+  const contextValue = {
+    media: value,
+    onChange,
+    fields: settings.fields || []
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(MediaEditorContext.Provider, { value: contextValue, children });
+}
+function useMediaEditorContext() {
+  const context = (0, import_element49.useContext)(MediaEditorContext);
+  if (!context) {
+    throw new Error(
+      "useMediaEditorContext must be used within MediaEditorProvider"
+    );
+  }
+  return context;
+}
+
+// packages/media-editor/build-module/components/media-preview/index.mjs
+var import_components3 = __toESM(require_components(), 1);
+var import_element50 = __toESM(require_element(), 1);
+var import_i18n6 = __toESM(require_i18n(), 1);
+
+// packages/media-editor/build-module/utils/get-media-type.mjs
+function getMediaTypeFromMimeType(mimeType) {
+  if (!mimeType) {
+    return { type: "application" };
+  }
+  if (mimeType.startsWith("image/")) {
+    return { type: "image" };
+  }
+  if (mimeType.startsWith("video/")) {
+    return { type: "video" };
+  }
+  if (mimeType.startsWith("audio/")) {
+    return { type: "audio" };
+  }
+  return { type: "application" };
+}
+
+// packages/media-editor/build-module/components/media-preview/index.mjs
+var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
+function MediaPreviewContent({
+  mediaType,
+  mediaUrl,
+  altText,
+  displayTitle,
+  mimeType,
+  onLoad,
+  onError,
+  loadingState
+}) {
+  switch (mediaType.type) {
+    case "image":
+      return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
+        "img",
+        {
+          className: loadingState === "loaded" ? "loaded" : "",
+          src: mediaUrl,
+          alt: altText || "",
+          onLoad,
+          onError
+        }
+      );
+    case "video":
+      return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("video", { src: mediaUrl, controls: true, onError, children: displayTitle });
+    case "audio":
+      return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("audio", { src: mediaUrl, controls: true, onError, children: displayTitle });
+    default:
+      return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)("div", { className: "media-editor-preview__file-info", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("p", { className: "media-editor-preview__file-name", children: displayTitle }),
+        /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("p", { className: "media-editor-preview__mime-type", children: mimeType }),
+        /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
+          "a",
+          {
+            href: mediaUrl,
+            target: "_blank",
+            rel: "noopener",
+            className: "media-editor-preview__download-link",
+            children: (0, import_i18n6.__)("View file")
+          }
+        )
+      ] });
+  }
+}
+function MediaPreview(props) {
+  const [loadingState, setLoadingState] = (0, import_element50.useState)("loading");
+  const { media } = useMediaEditorContext();
+  const {
+    source_url: mediaUrl,
+    mime_type: mimeType,
+    alt_text: altText,
+    title
+  } = media || {};
+  const mediaType = getMediaTypeFromMimeType(mimeType);
+  if (!mediaUrl) {
+    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("div", { className: "media-editor-preview media-editor-preview--empty", children: /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("p", { children: (0, import_i18n6.__)("No media file available.") }) });
+  }
+  if (loadingState === "error") {
+    return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)("div", { className: "media-editor-preview media-editor-preview--error", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("p", { children: (0, import_i18n6.__)("Failed to load media file.") }),
+      /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("p", { className: "media-editor-preview__url", children: mediaUrl })
+    ] });
+  }
+  const displayTitle = typeof title === "string" ? title : title?.rendered || title?.raw;
+  return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(
+    "div",
+    {
+      ...props,
+      className: `media-editor-preview media-editor-preview--${mediaType.type}`,
+      children: [
+        mediaType.type === "image" && loadingState === "loading" && /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("div", { className: "media-editor-preview__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(import_components3.Spinner, {}) }),
+        /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
+          MediaPreviewContent,
+          {
+            mediaType,
+            mediaUrl,
+            altText,
+            displayTitle,
+            mimeType,
+            onLoad: () => setLoadingState("loaded"),
+            onError: () => setLoadingState("error"),
+            loadingState
+          }
+        )
+      ]
+    }
+  );
+}
+
+// packages/dataviews/build-module/constants.mjs
+var import_i18n7 = __toESM(require_i18n(), 1);
+var OPERATOR_IS_ANY = "isAny";
+var OPERATOR_IS_NONE = "isNone";
+var OPERATOR_IS_ALL = "isAll";
+var OPERATOR_IS_NOT_ALL = "isNotAll";
+var OPERATOR_BETWEEN = "between";
+var OPERATOR_IN_THE_PAST = "inThePast";
+var OPERATOR_OVER = "over";
+var OPERATOR_IS = "is";
+var OPERATOR_IS_NOT = "isNot";
+var OPERATOR_LESS_THAN = "lessThan";
+var OPERATOR_GREATER_THAN = "greaterThan";
+var OPERATOR_LESS_THAN_OR_EQUAL = "lessThanOrEqual";
+var OPERATOR_GREATER_THAN_OR_EQUAL = "greaterThanOrEqual";
+var OPERATOR_BEFORE = "before";
+var OPERATOR_AFTER = "after";
+var OPERATOR_BEFORE_INC = "beforeInc";
+var OPERATOR_AFTER_INC = "afterInc";
+var OPERATOR_CONTAINS = "contains";
+var OPERATOR_NOT_CONTAINS = "notContains";
+var OPERATOR_STARTS_WITH = "startsWith";
+var OPERATOR_ON = "on";
+var OPERATOR_NOT_ON = "notOn";
+var sortLabels = {
+  asc: (0, import_i18n7.__)("Sort ascending"),
+  desc: (0, import_i18n7.__)("Sort descending")
+};
+
+// packages/dataviews/build-module/lock-unlock.mjs
+var import_private_apis2 = __toESM(require_private_apis(), 1);
+var { lock: lock2, unlock: unlock2 } = (0, import_private_apis2.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/dataviews"
+);
+
+// packages/dataviews/build-module/hooks/use-elements.mjs
+var import_element51 = __toESM(require_element(), 1);
+var EMPTY_ARRAY3 = [];
+function useElements({
+  elements,
+  getElements
+}) {
+  const staticElements = Array.isArray(elements) && elements.length > 0 ? elements : EMPTY_ARRAY3;
+  const [records, setRecords] = (0, import_element51.useState)(staticElements);
+  const [isLoading, setIsLoading] = (0, import_element51.useState)(false);
+  (0, import_element51.useEffect)(() => {
+    if (!getElements) {
+      setRecords(staticElements);
+      return;
+    }
+    let cancelled = false;
+    setIsLoading(true);
+    getElements().then((fetchedElements) => {
+      if (!cancelled) {
+        const dynamicElements = Array.isArray(fetchedElements) && fetchedElements.length > 0 ? fetchedElements : staticElements;
+        setRecords(dynamicElements);
+      }
+    }).catch(() => {
+      if (!cancelled) {
+        setRecords(staticElements);
+      }
+    }).finally(() => {
+      if (!cancelled) {
+        setIsLoading(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [getElements, staticElements]);
+  return {
+    elements: records,
+    isLoading
+  };
+}
+
+// packages/dataviews/build-module/utils/operators.mjs
+var import_i18n8 = __toESM(require_i18n(), 1);
+var import_element52 = __toESM(require_element(), 1);
+var import_date2 = __toESM(require_date(), 1);
 
 // packages/dataviews/build-module/field-types/utils/parse-time.mjs
 var ZONE_DESIGNATOR = /(?:[Zz]|[+-](?:[01]\d|2[0-3]):?[0-5]\d)$/;
@@ -17666,10 +21565,10 @@ function parseTime(value) {
 }
 
 // packages/dataviews/build-module/utils/operators.mjs
-var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
 var filterTextWrappers = {
-  Name: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
-  Value: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
+  Name: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
+  Value: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
 };
 function toComparableTemporals(fieldValue, filterValue) {
   const filterTime = parseTime(filterValue);
@@ -17677,8 +21576,8 @@ function toComparableTemporals(fieldValue, filterValue) {
     return [parseTime(fieldValue) ?? NaN, filterTime];
   }
   return [
-    (0, import_date.getDate)(fieldValue).getTime(),
-    (0, import_date.getDate)(filterValue).getTime()
+    (0, import_date2.getDate)(fieldValue).getTime(),
+    (0, import_date2.getDate)(filterValue).getTime()
   ];
 }
 function getRelativeDate(value, unit) {
@@ -17697,11 +21596,11 @@ function getRelativeDate(value, unit) {
 }
 var isNoneOperatorDefinition = {
   /* translators: DataViews operator name */
-  label: (0, import_i18n6.__)("Is none of"),
-  filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-    (0, import_i18n6.sprintf)(
+  label: (0, import_i18n8.__)("Is none of"),
+  filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+    (0, import_i18n8.sprintf)(
       /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
-      (0, import_i18n6.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
+      (0, import_i18n8.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
       filter.name,
       activeElements.map((element) => element.label).join(", ")
     ),
@@ -17727,11 +21626,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS_ANY,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Includes"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Includes"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
-        (0, import_i18n6.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements.map((element) => element.label).join(", ")
       ),
@@ -17760,11 +21659,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS_ALL,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Includes all"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Includes all"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
-        (0, import_i18n6.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements.map((element) => element.label).join(", ")
       ),
@@ -17787,11 +21686,11 @@ var OPERATORS = [
   {
     name: OPERATOR_BETWEEN,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Between (inc)"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Between (inc)"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
-        (0, import_i18n6.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s between (inc): </Name><Value>%2$s and %3$s</Value>"
         ),
         filter.name,
@@ -17808,10 +21707,10 @@ var OPERATORS = [
         return true;
       }
       const fieldValue = field.getValue({ item });
-      const [min3, max3] = filterValue.map(parseTime);
-      if (min3 !== null && max3 !== null) {
+      const [min4, max4] = filterValue.map(parseTime);
+      if (min4 !== null && max4 !== null) {
         const value = parseTime(fieldValue);
-        return value !== null && value >= min3 && value <= max3;
+        return value !== null && value >= min4 && value <= max4;
       }
       if (typeof fieldValue === "number" || fieldValue instanceof Date || typeof fieldValue === "string") {
         return fieldValue >= filterValue[0] && fieldValue <= filterValue[1];
@@ -17823,11 +21722,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IN_THE_PAST,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("In the past"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("In the past"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
-        (0, import_i18n6.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s is in the past: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -17843,7 +21742,7 @@ var OPERATORS = [
         filterValue.value,
         filterValue.unit
       );
-      const fieldValue = (0, import_date.getDate)(field.getValue({ item }));
+      const fieldValue = (0, import_date2.getDate)(field.getValue({ item }));
       return fieldValue >= targetDate && fieldValue <= /* @__PURE__ */ new Date();
     },
     selection: "custom"
@@ -17851,11 +21750,11 @@ var OPERATORS = [
   {
     name: OPERATOR_OVER,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Over"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Over"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
-        (0, import_i18n6.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
         filter.name,
         `${activeElements[0].value.value} ${activeElements[0].value.unit}`
       ),
@@ -17869,7 +21768,7 @@ var OPERATORS = [
         filterValue.value,
         filterValue.unit
       );
-      const fieldValue = (0, import_date.getDate)(field.getValue({ item }));
+      const fieldValue = (0, import_date2.getDate)(field.getValue({ item }));
       return fieldValue < targetDate;
     },
     selection: "custom"
@@ -17877,11 +21776,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Is"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Is"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
-        (0, import_i18n6.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -17895,11 +21794,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS_NOT,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Is not"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Is not"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
-        (0, import_i18n6.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -17913,11 +21812,11 @@ var OPERATORS = [
   {
     name: OPERATOR_LESS_THAN,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Less than"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Less than"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
-        (0, import_i18n6.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -17935,11 +21834,11 @@ var OPERATORS = [
   {
     name: OPERATOR_GREATER_THAN,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Greater than"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Greater than"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
-        (0, import_i18n6.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s is greater than: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -17959,11 +21858,11 @@ var OPERATORS = [
   {
     name: OPERATOR_LESS_THAN_OR_EQUAL,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Less than or equal"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Less than or equal"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
-        (0, import_i18n6.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s is less than or equal to: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -17983,11 +21882,11 @@ var OPERATORS = [
   {
     name: OPERATOR_GREATER_THAN_OR_EQUAL,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Greater than or equal"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Greater than or equal"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
-        (0, import_i18n6.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s is greater than or equal to: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -18007,11 +21906,11 @@ var OPERATORS = [
   {
     name: OPERATOR_BEFORE,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Before"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Before"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
-        (0, import_i18n6.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -18032,11 +21931,11 @@ var OPERATORS = [
   {
     name: OPERATOR_AFTER,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("After"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("After"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
-        (0, import_i18n6.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -18057,11 +21956,11 @@ var OPERATORS = [
   {
     name: OPERATOR_BEFORE_INC,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Before (inc)"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Before (inc)"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
-        (0, import_i18n6.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s is on or before: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -18084,11 +21983,11 @@ var OPERATORS = [
   {
     name: OPERATOR_AFTER_INC,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("After (inc)"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("After (inc)"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
-        (0, import_i18n6.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s is on or after: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -18111,11 +22010,11 @@ var OPERATORS = [
   {
     name: OPERATOR_CONTAINS,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Contains"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Contains"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
-        (0, import_i18n6.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -18133,11 +22032,11 @@ var OPERATORS = [
   {
     name: OPERATOR_NOT_CONTAINS,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Doesn't contain"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Doesn't contain"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
-        (0, import_i18n6.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -18157,11 +22056,11 @@ var OPERATORS = [
   {
     name: OPERATOR_STARTS_WITH,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Starts with"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Starts with"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
-        (0, import_i18n6.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -18179,11 +22078,11 @@ var OPERATORS = [
   {
     name: OPERATOR_ON,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("On"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("On"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
-        (0, import_i18n6.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -18204,11 +22103,11 @@ var OPERATORS = [
   {
     name: OPERATOR_NOT_ON,
     /* translators: DataViews operator name */
-    label: (0, import_i18n6.__)("Not on"),
-    filterText: (filter, activeElements) => (0, import_element44.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
+    label: (0, import_i18n8.__)("Not on"),
+    filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
-        (0, import_i18n6.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -18231,8 +22130,8 @@ var getOperatorByName = (name) => OPERATORS.find((op) => op.name === name);
 var getAllOperatorNames = () => OPERATORS.map((op) => op.name);
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-var import_components3 = __toESM(require_components(), 1);
-var import_element45 = __toESM(require_element(), 1);
+var import_components4 = __toESM(require_components(), 1);
+var import_element53 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.mjs
 function getCustomValidity(isValid2, validity) {
@@ -18261,8 +22160,8 @@ function getCustomValidity(isValid2, validity) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedCheckboxControl } = unlock2(import_components3.privateApis);
+var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedCheckboxControl } = unlock2(import_components4.privateApis);
 function Checkbox({
   field,
   onChange,
@@ -18273,12 +22172,12 @@ function Checkbox({
 }) {
   const { getValue, setValue, label, description, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element45.useCallback)(() => {
+  const onChangeControl = (0, import_element53.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
     );
   }, [data, getValue, onChange, setValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
     ValidatedCheckboxControl,
     {
       required: !!field.isValid?.required,
@@ -18295,10 +22194,10 @@ function Checkbox({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/combobox.mjs
-var import_components4 = __toESM(require_components(), 1);
-var import_element46 = __toESM(require_element(), 1);
-var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedComboboxControl } = unlock2(import_components4.privateApis);
+var import_components5 = __toESM(require_components(), 1);
+var import_element54 = __toESM(require_element(), 1);
+var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedComboboxControl } = unlock2(import_components5.privateApis);
 function Combobox({
   data,
   field,
@@ -18308,7 +22207,7 @@ function Combobox({
 }) {
   const { label, description, placeholder, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data }) ?? "";
-  const onChangeControl = (0, import_element46.useCallback)(
+  const onChangeControl = (0, import_element54.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue ?? "" })),
     [data, onChange, setValue]
   );
@@ -18317,9 +22216,9 @@ function Combobox({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(import_components4.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components5.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
     ValidatedComboboxControl,
     {
       required: !!field.isValid?.required,
@@ -18338,28 +22237,28 @@ function Combobox({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
-var import_components6 = __toESM(require_components(), 1);
-var import_element49 = __toESM(require_element(), 1);
-var import_i18n8 = __toESM(require_i18n(), 1);
-var import_date3 = __toESM(require_date(), 1);
+var import_components7 = __toESM(require_components(), 1);
+var import_element57 = __toESM(require_element(), 1);
+var import_i18n10 = __toESM(require_i18n(), 1);
+var import_date4 = __toESM(require_date(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
-var import_components5 = __toESM(require_components(), 1);
-var import_element47 = __toESM(require_element(), 1);
-var import_i18n7 = __toESM(require_i18n(), 1);
-var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
+var import_components6 = __toESM(require_components(), 1);
+var import_element55 = __toESM(require_element(), 1);
+var import_i18n9 = __toESM(require_i18n(), 1);
+var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
 var TIME_UNITS_OPTIONS = {
   [OPERATOR_IN_THE_PAST]: [
-    { value: "days", label: (0, import_i18n7.__)("Days") },
-    { value: "weeks", label: (0, import_i18n7.__)("Weeks") },
-    { value: "months", label: (0, import_i18n7.__)("Months") },
-    { value: "years", label: (0, import_i18n7.__)("Years") }
+    { value: "days", label: (0, import_i18n9.__)("Days") },
+    { value: "weeks", label: (0, import_i18n9.__)("Weeks") },
+    { value: "months", label: (0, import_i18n9.__)("Months") },
+    { value: "years", label: (0, import_i18n9.__)("Years") }
   ],
   [OPERATOR_OVER]: [
-    { value: "days", label: (0, import_i18n7.__)("Days ago") },
-    { value: "weeks", label: (0, import_i18n7.__)("Weeks ago") },
-    { value: "months", label: (0, import_i18n7.__)("Months ago") },
-    { value: "years", label: (0, import_i18n7.__)("Years ago") }
+    { value: "days", label: (0, import_i18n9.__)("Days ago") },
+    { value: "weeks", label: (0, import_i18n9.__)("Weeks ago") },
+    { value: "months", label: (0, import_i18n9.__)("Months ago") },
+    { value: "years", label: (0, import_i18n9.__)("Years ago") }
   ]
 };
 function RelativeDateControl({
@@ -18375,7 +22274,7 @@ function RelativeDateControl({
   const disabled2 = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
-  const onChangeValue = (0, import_element47.useCallback)(
+  const onChangeValue = (0, import_element55.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -18384,7 +22283,7 @@ function RelativeDateControl({
     ),
     [onChange, setValue, data, unit]
   );
-  const onChangeUnit = (0, import_element47.useCallback)(
+  const onChangeUnit = (0, import_element55.useCallback)(
     (newUnit) => onChange(
       setValue({
         item: data,
@@ -18393,17 +22292,17 @@ function RelativeDateControl({
     ),
     [onChange, setValue, data, relValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-    import_components5.BaseControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+    import_components6.BaseControl,
     {
       id,
       className: clsx_default(className2, "dataviews-controls__relative-date"),
       label,
       hideLabelFromVision,
       help: description,
-      children: /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(Stack, { direction: "row", gap: "sm", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-          import_components5.__experimentalNumberControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(Stack, { direction: "row", gap: "sm", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+          import_components6.__experimentalNumberControl,
           {
             className: "dataviews-controls__relative-date-number",
             spinControls: "none",
@@ -18414,11 +22313,11 @@ function RelativeDateControl({
             disabled: disabled2
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-          import_components5.SelectControl,
+        /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+          import_components6.SelectControl,
           {
             className: "dataviews-controls__relative-date-unit",
-            label: (0, import_i18n7.__)("Unit"),
+            label: (0, import_i18n9.__)("Unit"),
             value: unit,
             options,
             onChange: onChangeUnit,
@@ -18432,11 +22331,11 @@ function RelativeDateControl({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/utils/use-disabled-date-matchers.mjs
-var import_element48 = __toESM(require_element(), 1);
+var import_element56 = __toESM(require_element(), 1);
 function useDisabledDateMatchers(isValid2, parseDateFn) {
   const minConstraint = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
   const maxConstraint = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
-  const disabledMatchers = (0, import_element48.useMemo)(() => {
+  const disabledMatchers = (0, import_element56.useMemo)(() => {
     const matchers = [];
     if (minConstraint) {
       const minDate = parseDateFn(minConstraint);
@@ -18456,23 +22355,23 @@ function useDisabledDateMatchers(isValid2, parseDateFn) {
 }
 
 // packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
-var import_date2 = __toESM(require_date(), 1);
+var import_date3 = __toESM(require_date(), 1);
 function parseDateTime(dateTimeString) {
   if (!dateTimeString) {
     return null;
   }
-  const parsed = (0, import_date2.getDate)(dateTimeString);
+  const parsed = (0, import_date3.getDate)(dateTimeString);
   return parsed && isValid(parsed) ? parsed : null;
 }
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
-var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
-var { DateCalendar, ValidatedInputControl } = unlock2(import_components6.privateApis);
+var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl } = unlock2(import_components7.privateApis);
 var formatDateTime = (value) => {
   if (!value) {
     return "";
   }
-  return (0, import_date3.dateI18n)("Y-m-d\\TH:i", (0, import_date3.getDate)(value));
+  return (0, import_date4.dateI18n)("Y-m-d\\TH:i", (0, import_date4.getDate)(value));
 };
 function CalendarDateTimeControl({
   data,
@@ -18488,37 +22387,37 @@ function CalendarDateTimeControl({
   const disabled2 = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
-  const [calendarMonth, setCalendarMonth] = (0, import_element49.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element57.useState)(() => {
     const parsedDate = parseDateTime(value);
     return parsedDate || /* @__PURE__ */ new Date();
   });
-  const inputControlRef = (0, import_element49.useRef)(null);
-  const validationTimeoutRef = (0, import_element49.useRef)(void 0);
-  const previousFocusRef = (0, import_element49.useRef)(null);
+  const inputControlRef = (0, import_element57.useRef)(null);
+  const validationTimeoutRef = (0, import_element57.useRef)(void 0);
+  const previousFocusRef = (0, import_element57.useRef)(null);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
-  const onChangeCallback = (0, import_element49.useCallback)(
+  const onChangeCallback = (0, import_element57.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  (0, import_element49.useEffect)(() => {
+  (0, import_element57.useEffect)(() => {
     return () => {
       if (validationTimeoutRef.current) {
         clearTimeout(validationTimeoutRef.current);
       }
     };
   }, []);
-  const onSelectDate = (0, import_element49.useCallback)(
+  const onSelectDate = (0, import_element57.useCallback)(
     (newDate) => {
       let dateTimeValue;
       if (newDate) {
-        const wpDate = (0, import_date3.dateI18n)("Y-m-d", newDate);
+        const wpDate = (0, import_date4.dateI18n)("Y-m-d", newDate);
         let wpTime;
         if (value) {
-          wpTime = (0, import_date3.dateI18n)("H:i", (0, import_date3.getDate)(value));
+          wpTime = (0, import_date4.dateI18n)("H:i", (0, import_date4.getDate)(value));
         } else {
-          wpTime = (0, import_date3.dateI18n)("H:i", newDate);
+          wpTime = (0, import_date4.dateI18n)("H:i", newDate);
         }
-        const finalDateTime = (0, import_date3.getDate)(`${wpDate}T${wpTime}`);
+        const finalDateTime = (0, import_date4.getDate)(`${wpDate}T${wpTime}`);
         dateTimeValue = finalDateTime.toISOString();
         onChangeCallback(dateTimeValue);
         if (validationTimeoutRef.current) {
@@ -18541,10 +22440,10 @@ function CalendarDateTimeControl({
     },
     [onChangeCallback, value]
   );
-  const handleManualDateTimeChange = (0, import_element49.useCallback)(
+  const handleManualDateTimeChange = (0, import_element57.useCallback)(
     (newValue) => {
       if (newValue) {
-        const dateTime = (0, import_date3.getDate)(newValue);
+        const dateTime = (0, import_date4.getDate)(newValue);
         onChangeCallback(dateTime.toISOString());
         const parsedDate = parseDateTime(dateTime.toISOString());
         if (parsedDate) {
@@ -18557,32 +22456,32 @@ function CalendarDateTimeControl({
     [onChangeCallback]
   );
   const { format: fieldFormat } = field;
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date3.getSettings)().l10n.startOfWeek;
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
   const {
     timezone: { string: timezoneString }
-  } = (0, import_date3.getSettings)();
+  } = (0, import_date4.getSettings)();
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n8.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n10.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n8.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n10.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-    import_components6.BaseControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+    import_components7.BaseControl,
     {
       id,
       label: displayLabel,
       help: description,
       hideLabelFromVision,
-      children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
           ValidatedInputControl,
           {
             ref: inputControlRef,
             required: !!isValid2?.required,
             customValidity: getCustomValidity(isValid2, validity),
             type: "datetime-local",
-            label: (0, import_i18n8.__)("Date time"),
+            label: (0, import_i18n10.__)("Date time"),
             hideLabelFromVision: true,
             value: formatDateTime(value),
             onChange: handleManualDateTimeChange,
@@ -18591,12 +22490,12 @@ function CalendarDateTimeControl({
             max: maxConstraint ? formatDateTime(maxConstraint) : void 0
           }
         ),
-        !compact && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-          DateCalendar,
+        !compact && /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+          Calendar,
           {
             style: { width: "100%" },
-            selected: value ? parseDateTime(value) || void 0 : void 0,
-            onSelect: onSelectDate,
+            value: value ? parseDateTime(value) : null,
+            onValueChange: onSelectDate,
             month: calendarMonth,
             onMonthChange: setCalendarMonth,
             timeZone: timezoneString || void 0,
@@ -18619,7 +22518,7 @@ function DateTime({
   config
 }) {
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
       RelativeDateControl,
       {
         className: "dataviews-controls__datetime",
@@ -18631,7 +22530,7 @@ function DateTime({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
     CalendarDateTimeControl,
     {
       data,
@@ -18646,40 +22545,39 @@ function DateTime({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/date.mjs
-var import_components7 = __toESM(require_components(), 1);
-var import_element50 = __toESM(require_element(), 1);
-var import_i18n9 = __toESM(require_i18n(), 1);
-var import_date4 = __toESM(require_date(), 1);
-import { speak } from "@wordpress/a11y";
-var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
-var { DateCalendar: DateCalendar2, DateRangeCalendar } = unlock2(import_components7.privateApis);
+var import_components8 = __toESM(require_components(), 1);
+var import_element58 = __toESM(require_element(), 1);
+var import_i18n11 = __toESM(require_i18n(), 1);
+var import_date5 = __toESM(require_date(), 1);
+import { speak as speak2 } from "@wordpress/a11y";
+var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
 var DATE_PRESETS = [
   {
     id: "today",
-    label: (0, import_i18n9.__)("Today"),
-    getValue: () => (0, import_date4.getDate)(null)
+    label: (0, import_i18n11.__)("Today"),
+    getValue: () => (0, import_date5.getDate)(null)
   },
   {
     id: "yesterday",
-    label: (0, import_i18n9.__)("Yesterday"),
+    label: (0, import_i18n11.__)("Yesterday"),
     getValue: () => {
-      const today = (0, import_date4.getDate)(null);
+      const today = (0, import_date5.getDate)(null);
       return subDays(today, 1);
     }
   },
   {
     id: "past-week",
-    label: (0, import_i18n9.__)("Past week"),
+    label: (0, import_i18n11.__)("Past week"),
     getValue: () => {
-      const today = (0, import_date4.getDate)(null);
+      const today = (0, import_date5.getDate)(null);
       return subDays(today, 7);
     }
   },
   {
     id: "past-month",
-    label: (0, import_i18n9.__)("Past month"),
+    label: (0, import_i18n11.__)("Past month"),
     getValue: () => {
-      const today = (0, import_date4.getDate)(null);
+      const today = (0, import_date5.getDate)(null);
       return subMonths(today, 1);
     }
   }
@@ -18687,41 +22585,41 @@ var DATE_PRESETS = [
 var DATE_RANGE_PRESETS = [
   {
     id: "last-7-days",
-    label: (0, import_i18n9.__)("Last 7 days"),
+    label: (0, import_i18n11.__)("Last 7 days"),
     getValue: () => {
-      const today = (0, import_date4.getDate)(null);
+      const today = (0, import_date5.getDate)(null);
       return [subDays(today, 7), today];
     }
   },
   {
     id: "last-30-days",
-    label: (0, import_i18n9.__)("Last 30 days"),
+    label: (0, import_i18n11.__)("Last 30 days"),
     getValue: () => {
-      const today = (0, import_date4.getDate)(null);
+      const today = (0, import_date5.getDate)(null);
       return [subDays(today, 30), today];
     }
   },
   {
     id: "month-to-date",
-    label: (0, import_i18n9.__)("Month to date"),
+    label: (0, import_i18n11.__)("Month to date"),
     getValue: () => {
-      const today = (0, import_date4.getDate)(null);
+      const today = (0, import_date5.getDate)(null);
       return [startOfMonth(today), today];
     }
   },
   {
     id: "last-year",
-    label: (0, import_i18n9.__)("Last year"),
+    label: (0, import_i18n11.__)("Last year"),
     getValue: () => {
-      const today = (0, import_date4.getDate)(null);
+      const today = (0, import_date5.getDate)(null);
       return [subYears(today, 1), today];
     }
   },
   {
     id: "year-to-date",
-    label: (0, import_i18n9.__)("Year to date"),
+    label: (0, import_i18n11.__)("Year to date"),
     getValue: () => {
-      const today = (0, import_date4.getDate)(null);
+      const today = (0, import_date5.getDate)(null);
       return [startOfYear(today), today];
     }
   }
@@ -18730,7 +22628,7 @@ var parseDate = (dateString) => {
   if (!dateString) {
     return null;
   }
-  const parsed = (0, import_date4.getDate)(dateString);
+  const parsed = (0, import_date5.getDate)(dateString);
   return parsed && isValid(parsed) ? parsed : null;
 };
 var formatDate = (date) => {
@@ -18748,8 +22646,8 @@ function ValidatedDateControl({
   children
 }) {
   const { isValid: isValid2 } = field;
-  const [customValidity, setCustomValidity] = (0, import_element50.useState)(void 0);
-  const validateRefs = (0, import_element50.useCallback)(() => {
+  const [customValidity, setCustomValidity] = (0, import_element58.useState)(void 0);
+  const validateRefs = (0, import_element58.useCallback)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     for (const ref of refs) {
       const input = ref.current;
@@ -18763,7 +22661,7 @@ function ValidatedDateControl({
     }
     setCustomValidity(void 0);
   }, [inputRefs]);
-  (0, import_element50.useEffect)(() => {
+  (0, import_element58.useEffect)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     const result = validity ? getCustomValidity(isValid2, validity) : void 0;
     for (const ref of refs) {
@@ -18775,7 +22673,7 @@ function ValidatedDateControl({
       }
     }
   }, [inputRefs, isValid2, validity]);
-  (0, import_element50.useEffect)(() => {
+  (0, import_element58.useEffect)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     const handleInvalid = (event) => {
       event.preventDefault();
@@ -18790,7 +22688,7 @@ function ValidatedDateControl({
       }
     };
   }, [inputRefs, setIsTouched]);
-  (0, import_element50.useEffect)(() => {
+  (0, import_element58.useEffect)(() => {
     if (!isTouched) {
       return;
     }
@@ -18801,9 +22699,9 @@ function ValidatedDateControl({
       validateRefs();
     }
   }, [isTouched, isValid2, validity, validateRefs]);
-  (0, import_element50.useEffect)(() => {
+  (0, import_element58.useEffect)(() => {
     if (isTouched && customValidity?.message) {
-      speak(customValidity.message);
+      speak2(customValidity.message);
     }
   }, [isTouched, customValidity?.message]);
   const onBlur = (event) => {
@@ -18814,9 +22712,9 @@ function ValidatedDateControl({
       setIsTouched(true);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)("div", { onBlur, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)("div", { onBlur, children: [
     children,
-    customValidity && /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(
+    customValidity && /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)(
       "p",
       {
         className: clsx_default(
@@ -18824,8 +22722,8 @@ function ValidatedDateControl({
           customValidity.type === "invalid" ? "is-invalid" : void 0
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
-            import_components7.Icon,
+          /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+            import_components8.Icon,
             {
               className: "components-validated-control__indicator-icon",
               icon: error_default,
@@ -18857,24 +22755,24 @@ function CalendarDateControl({
     format: fieldFormat
   } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const [selectedPresetId, setSelectedPresetId] = (0, import_element50.useState)(
+  const [selectedPresetId, setSelectedPresetId] = (0, import_element58.useState)(
     null
   );
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
-  const [calendarMonth, setCalendarMonth] = (0, import_element50.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element58.useState)(() => {
     const parsedDate = parseDate(value);
     return parsedDate || /* @__PURE__ */ new Date();
   });
-  const [isTouched, setIsTouched] = (0, import_element50.useState)(false);
-  const validityTargetRef = (0, import_element50.useRef)(null);
+  const [isTouched, setIsTouched] = (0, import_element58.useState)(false);
+  const validityTargetRef = (0, import_element58.useRef)(null);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
-  const onChangeCallback = (0, import_element50.useCallback)(
+  const onChangeCallback = (0, import_element58.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  const onSelectDate = (0, import_element50.useCallback)(
+  const onSelectDate = (0, import_element58.useCallback)(
     (newDate) => {
       const dateValue = newDate ? format(newDate, "yyyy-MM-dd") : void 0;
       onChangeCallback(dateValue);
@@ -18883,7 +22781,7 @@ function CalendarDateControl({
     },
     [onChangeCallback]
   );
-  const handlePresetClick = (0, import_element50.useCallback)(
+  const handlePresetClick = (0, import_element58.useCallback)(
     (preset) => {
       const presetDate = preset.getValue();
       const dateValue = formatDate(presetDate);
@@ -18894,7 +22792,7 @@ function CalendarDateControl({
     },
     [onChangeCallback]
   );
-  const handleManualDateChange = (0, import_element50.useCallback)(
+  const handleManualDateChange = (0, import_element58.useCallback)(
     (newValue) => {
       onChangeCallback(newValue);
       if (newValue) {
@@ -18910,14 +22808,14 @@ function CalendarDateControl({
   );
   const {
     timezone: { string: timezoneString }
-  } = (0, import_date4.getSettings)();
+  } = (0, import_date5.getSettings)();
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n9.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n11.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n9.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n11.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
     ValidatedDateControl,
     {
       field,
@@ -18925,16 +22823,16 @@ function CalendarDateControl({
       inputRefs: validityTargetRef,
       isTouched,
       setIsTouched,
-      children: /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
-        import_components7.BaseControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+        import_components8.BaseControl,
         {
           id,
           className: "dataviews-controls__date",
           label: displayLabel,
           help: description,
           hideLabelFromVision,
-          children: /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -18944,8 +22842,8 @@ function CalendarDateControl({
                 children: [
                   DATE_PRESETS.map((preset) => {
                     const isSelected = selectedPresetId === preset.id;
-                    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
-                      import_components7.Button,
+                    return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+                      import_components8.Button,
                       {
                         className: "dataviews-controls__date-preset",
                         variant: "tertiary",
@@ -18959,8 +22857,8 @@ function CalendarDateControl({
                       preset.id
                     );
                   }),
-                  /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
-                    import_components7.Button,
+                  /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+                    import_components8.Button,
                     {
                       className: "dataviews-controls__date-preset",
                       variant: "tertiary",
@@ -18968,18 +22866,18 @@ function CalendarDateControl({
                       size: "small",
                       disabled: !!selectedPresetId || disabled2,
                       accessibleWhenDisabled: true,
-                      children: (0, import_i18n9.__)("Custom")
+                      children: (0, import_i18n11.__)("Custom")
                     }
                   )
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
-              import_components7.__experimentalInputControl,
+            /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+              import_components8.__experimentalInputControl,
               {
                 ref: validityTargetRef,
                 type: "date",
-                label: (0, import_i18n9.__)("Date"),
+                label: (0, import_i18n11.__)("Date"),
                 hideLabelFromVision: true,
                 value,
                 onChange: handleManualDateChange,
@@ -18989,12 +22887,12 @@ function CalendarDateControl({
                 max: maxConstraint
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
-              DateCalendar2,
+            /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+              Calendar,
               {
                 style: { width: "100%" },
-                selected: value ? parseDate(value) || void 0 : void 0,
-                onSelect: onSelectDate,
+                value: value ? parseDate(value) : null,
+                onValueChange: onSelectDate,
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 timeZone: timezoneString || void 0,
@@ -19032,9 +22930,9 @@ function CalendarDateRangeControl({
   if (Array.isArray(fieldValue) && fieldValue.length === 2 && fieldValue.every((date) => typeof date === "string")) {
     value = fieldValue;
   }
-  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date4.getSettings)().l10n.startOfWeek;
+  const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
-  const onChangeCallback = (0, import_element50.useCallback)(
+  const onChangeCallback = (0, import_element58.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -19045,12 +22943,12 @@ function CalendarDateRangeControl({
     },
     [data, onChange, setValue]
   );
-  const [selectedPresetId, setSelectedPresetId] = (0, import_element50.useState)(
+  const [selectedPresetId, setSelectedPresetId] = (0, import_element58.useState)(
     null
   );
-  const selectedRange = (0, import_element50.useMemo)(() => {
+  const selectedRange = (0, import_element58.useMemo)(() => {
     if (!value) {
-      return { from: void 0, to: void 0 };
+      return null;
     }
     const [from, to] = value;
     return {
@@ -19058,13 +22956,13 @@ function CalendarDateRangeControl({
       to: parseDate(to) || void 0
     };
   }, [value]);
-  const [calendarMonth, setCalendarMonth] = (0, import_element50.useState)(() => {
-    return selectedRange.from || /* @__PURE__ */ new Date();
+  const [calendarMonth, setCalendarMonth] = (0, import_element58.useState)(() => {
+    return selectedRange?.from || /* @__PURE__ */ new Date();
   });
-  const [isTouched, setIsTouched] = (0, import_element50.useState)(false);
-  const fromInputRef = (0, import_element50.useRef)(null);
-  const toInputRef = (0, import_element50.useRef)(null);
-  const updateDateRange = (0, import_element50.useCallback)(
+  const [isTouched, setIsTouched] = (0, import_element58.useState)(false);
+  const fromInputRef = (0, import_element58.useRef)(null);
+  const toInputRef = (0, import_element58.useRef)(null);
+  const updateDateRange = (0, import_element58.useCallback)(
     (fromDate, toDate2) => {
       if (!fromDate && !toDate2) {
         onChangeCallback(void 0);
@@ -19077,7 +22975,7 @@ function CalendarDateRangeControl({
     },
     [onChangeCallback]
   );
-  const onSelectCalendarRange = (0, import_element50.useCallback)(
+  const onSelectCalendarRange = (0, import_element58.useCallback)(
     (newRange) => {
       updateDateRange(newRange?.from, newRange?.to);
       setSelectedPresetId(null);
@@ -19085,7 +22983,7 @@ function CalendarDateRangeControl({
     },
     [updateDateRange]
   );
-  const handlePresetClick = (0, import_element50.useCallback)(
+  const handlePresetClick = (0, import_element58.useCallback)(
     (preset) => {
       const [startDate, endDate] = preset.getValue();
       setCalendarMonth(startDate);
@@ -19095,7 +22993,7 @@ function CalendarDateRangeControl({
     },
     [updateDateRange]
   );
-  const handleManualDateChange = (0, import_element50.useCallback)(
+  const handleManualDateChange = (0, import_element58.useCallback)(
     (fromOrTo, newValue) => {
       const [currentFrom, currentTo] = value || [
         void 0,
@@ -19115,14 +23013,14 @@ function CalendarDateRangeControl({
     },
     [value, updateDateRange]
   );
-  const { timezone } = (0, import_date4.getSettings)();
+  const { timezone } = (0, import_date5.getSettings)();
   let displayLabel = label;
   if (field.isValid?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n9.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n11.__)("Required")})`;
   } else if (!field.isValid?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n9.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n11.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
     ValidatedDateControl,
     {
       field,
@@ -19130,16 +23028,16 @@ function CalendarDateRangeControl({
       inputRefs: [fromInputRef, toInputRef],
       isTouched,
       setIsTouched,
-      children: /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
-        import_components7.BaseControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+        import_components8.BaseControl,
         {
           id,
           className: "dataviews-controls__date",
           label: displayLabel,
           help: description,
           hideLabelFromVision,
-          children: /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -19149,8 +23047,8 @@ function CalendarDateRangeControl({
                 children: [
                   DATE_RANGE_PRESETS.map((preset) => {
                     const isSelected = selectedPresetId === preset.id;
-                    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
-                      import_components7.Button,
+                    return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+                      import_components8.Button,
                       {
                         className: "dataviews-controls__date-preset",
                         variant: "tertiary",
@@ -19164,8 +23062,8 @@ function CalendarDateRangeControl({
                       preset.id
                     );
                   }),
-                  /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
-                    import_components7.Button,
+                  /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+                    import_components8.Button,
                     {
                       className: "dataviews-controls__date-preset",
                       variant: "tertiary",
@@ -19173,13 +23071,13 @@ function CalendarDateRangeControl({
                       size: "small",
                       accessibleWhenDisabled: true,
                       disabled: !!selectedPresetId || disabled2,
-                      children: (0, import_i18n9.__)("Custom")
+                      children: (0, import_i18n11.__)("Custom")
                     }
                   )
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -19187,12 +23085,12 @@ function CalendarDateRangeControl({
                 justify: "space-between",
                 className: "dataviews-controls__date-range-inputs",
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
-                    import_components7.__experimentalInputControl,
+                  /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+                    import_components8.__experimentalInputControl,
                     {
                       ref: fromInputRef,
                       type: "date",
-                      label: (0, import_i18n9.__)("From"),
+                      label: (0, import_i18n11.__)("From"),
                       hideLabelFromVision: true,
                       value: value?.[0],
                       onChange: (newValue) => handleManualDateChange("from", newValue),
@@ -19202,12 +23100,12 @@ function CalendarDateRangeControl({
                       max: maxConstraint
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
-                    import_components7.__experimentalInputControl,
+                  /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+                    import_components8.__experimentalInputControl,
                     {
                       ref: toInputRef,
                       type: "date",
-                      label: (0, import_i18n9.__)("To"),
+                      label: (0, import_i18n11.__)("To"),
                       hideLabelFromVision: true,
                       value: value?.[1],
                       onChange: (newValue) => handleManualDateChange("to", newValue),
@@ -19220,12 +23118,12 @@ function CalendarDateRangeControl({
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
-              DateRangeCalendar,
+            /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+              RangeCalendar,
               {
                 style: { width: "100%" },
-                selected: selectedRange,
-                onSelect: onSelectCalendarRange,
+                value: selectedRange,
+                onValueChange: onSelectCalendarRange,
                 month: calendarMonth,
                 onMonthChange: setCalendarMonth,
                 timeZone: timezone.string || void 0,
@@ -19249,7 +23147,7 @@ function DateControl({
   validity
 }) {
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
       RelativeDateControl,
       {
         className: "dataviews-controls__date",
@@ -19262,7 +23160,7 @@ function DateControl({
     );
   }
   if (operator === OPERATOR_BETWEEN) {
-    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
       CalendarDateRangeControl,
       {
         data,
@@ -19274,7 +23172,7 @@ function DateControl({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
     CalendarDateControl,
     {
       data,
@@ -19288,16 +23186,16 @@ function DateControl({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/select.mjs
-var import_components10 = __toESM(require_components(), 1);
-var import_element53 = __toESM(require_element(), 1);
+var import_components11 = __toESM(require_components(), 1);
+var import_element61 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/validated-form-controls/control-with-error.mjs
-var import_i18n10 = __toESM(require_i18n(), 1);
-var import_element51 = __toESM(require_element(), 1);
+var import_i18n12 = __toESM(require_i18n(), 1);
+var import_element59 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/validated-form-controls/validity-indicator.mjs
-var import_components8 = __toESM(require_components(), 1);
-var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
+var import_components9 = __toESM(require_components(), 1);
+var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 function ValidityIndicator({
   id,
   type,
@@ -19307,7 +23205,7 @@ function ValidityIndicator({
     valid: published_default,
     invalid: error_default
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(
     "p",
     {
       id,
@@ -19316,8 +23214,8 @@ function ValidityIndicator({
         `is-${type}`
       ),
       children: [
-        type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(import_components8.Spinner, { className: "dataviews-validated-control__indicator-spinner" }) : /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
-          import_components8.Icon,
+        type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(import_components9.Spinner, { className: "dataviews-validated-control__indicator-spinner" }) : /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+          import_components9.Icon,
           {
             className: "dataviews-validated-control__indicator-icon",
             icon: ICON[type],
@@ -19332,13 +23230,13 @@ function ValidityIndicator({
 }
 
 // packages/dataviews/build-module/components/validated-form-controls/control-with-error.mjs
-var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
 function appendRequiredIndicator(label, required, markWhenOptional) {
   let suffix;
   if (required && !markWhenOptional) {
-    suffix = `(${(0, import_i18n10.__)("Required")})`;
+    suffix = `(${(0, import_i18n12.__)("Required")})`;
   } else if (!required && markWhenOptional) {
-    suffix = `(${(0, import_i18n10.__)("Optional")})`;
+    suffix = `(${(0, import_i18n12.__)("Optional")})`;
   }
   if (!suffix) {
     return label;
@@ -19346,7 +23244,7 @@ function appendRequiredIndicator(label, required, markWhenOptional) {
   if (typeof label === "string") {
     return `${label} ${suffix}`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(import_jsx_runtime80.Fragment, { children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)(import_jsx_runtime86.Fragment, { children: [
     label,
     " ",
     suffix
@@ -19361,11 +23259,11 @@ function UnforwardedControlWithError({
   getValidityTarget,
   children
 }, forwardedRef) {
-  const [errorMessage, setErrorMessage] = (0, import_element51.useState)();
-  const [statusMessage, setStatusMessage] = (0, import_element51.useState)();
-  const [showMessage, setShowMessage] = (0, import_element51.useState)(false);
-  const [isTouched, setIsTouched] = (0, import_element51.useState)(false);
-  (0, import_element51.useEffect)(() => {
+  const [errorMessage, setErrorMessage] = (0, import_element59.useState)();
+  const [statusMessage, setStatusMessage] = (0, import_element59.useState)();
+  const [showMessage, setShowMessage] = (0, import_element59.useState)(false);
+  const [isTouched, setIsTouched] = (0, import_element59.useState)(false);
+  (0, import_element59.useEffect)(() => {
     const validityTarget = getValidityTarget();
     const handler = () => {
       setShowMessage(true);
@@ -19374,7 +23272,7 @@ function UnforwardedControlWithError({
     validityTarget?.addEventListener("invalid", handler);
     return () => validityTarget?.removeEventListener("invalid", handler);
   }, [getValidityTarget]);
-  (0, import_element51.useEffect)(() => {
+  (0, import_element59.useEffect)(() => {
     const validityTarget = getValidityTarget();
     const suppressNativePopover = (event) => {
       event.preventDefault();
@@ -19408,7 +23306,7 @@ function UnforwardedControlWithError({
       );
     };
   }, [getValidityTarget]);
-  (0, import_element51.useEffect)(() => {
+  (0, import_element59.useEffect)(() => {
     const validityTarget = getValidityTarget();
     if (!customValidity?.type) {
       validityTarget?.setCustomValidity("");
@@ -19445,7 +23343,7 @@ function UnforwardedControlWithError({
       }
     }
   }, [customValidity, getValidityTarget]);
-  (0, import_element51.useEffect)(() => {
+  (0, import_element59.useEffect)(() => {
     if (!isTouched || showMessage) {
       return;
     }
@@ -19466,10 +23364,10 @@ function UnforwardedControlWithError({
       getValidityTarget()?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
     }
   };
-  const messageId = (0, import_element51.useId)();
+  const messageId = (0, import_element59.useId)();
   const message2 = (() => {
     if (errorMessage) {
-      return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
         ValidityIndicator,
         {
           id: messageId,
@@ -19479,7 +23377,7 @@ function UnforwardedControlWithError({
       );
     }
     if (statusMessage?.type) {
-      return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
         ValidityIndicator,
         {
           id: messageId,
@@ -19491,7 +23389,7 @@ function UnforwardedControlWithError({
     return null;
   })();
   const visibleMessage = showMessage ? message2 : null;
-  (0, import_element51.useEffect)(() => {
+  (0, import_element59.useEffect)(() => {
     const target = getValidityTarget();
     if (!target) {
       return;
@@ -19510,8 +23408,8 @@ function UnforwardedControlWithError({
     setDescribedBy(target, !!visibleMessage);
     return () => setDescribedBy(target, false);
   }, [visibleMessage, messageId, getValidityTarget]);
-  return /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)("div", { className, ref: forwardedRef, onBlur, children: [
-    (0, import_element51.cloneElement)(children, {
+  return /* @__PURE__ */ (0, import_jsx_runtime86.jsxs)("div", { className, ref: forwardedRef, onBlur, children: [
+    (0, import_element59.cloneElement)(children, {
       label: appendRequiredIndicator(
         children.props.label,
         required,
@@ -19522,31 +23420,31 @@ function UnforwardedControlWithError({
     visibleMessage
   ] });
 }
-var ControlWithError = (0, import_element51.forwardRef)(UnforwardedControlWithError);
+var ControlWithError = (0, import_element59.forwardRef)(UnforwardedControlWithError);
 ControlWithError.displayName = "ControlWithError";
 
 // packages/dataviews/build-module/components/validated-form-controls/select-control.mjs
-var import_element52 = __toESM(require_element(), 1);
-var import_compose2 = __toESM(require_compose(), 1);
-var import_components9 = __toESM(require_components(), 1);
-var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+var import_element60 = __toESM(require_element(), 1);
+var import_compose3 = __toESM(require_compose(), 1);
+var import_components10 = __toESM(require_components(), 1);
+var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedSelectControl = ({
   required,
   customValidity,
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element52.useRef)(null);
-  const mergedRefs = (0, import_compose2.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+  const validityTargetRef = (0, import_element60.useRef)(null);
+  const mergedRefs = (0, import_compose3.useMergeRefs)([forwardedRef, validityTargetRef]);
+  return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
     ControlWithError,
     {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
-        import_components9.SelectControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+        import_components10.SelectControl,
         {
           ref: mergedRefs,
           // A runtime boolean cannot statically discriminate
@@ -19557,12 +23455,12 @@ var UnforwardedValidatedSelectControl = ({
     }
   );
 };
-var ValidatedSelectControl = (0, import_element52.forwardRef)(UnforwardedValidatedSelectControl);
+var ValidatedSelectControl = (0, import_element60.forwardRef)(UnforwardedValidatedSelectControl);
 ValidatedSelectControl.displayName = "ValidatedSelectControl";
 
 // packages/dataviews/build-module/components/dataform-controls/select.mjs
-var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
-function Select({
+var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
+function Select2({
   data,
   field,
   onChange,
@@ -19574,7 +23472,7 @@ function Select({
   const disabled2 = field.isDisabled({ item: data, field });
   const isMultiple = type === "array";
   const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
-  const onChangeControl = (0, import_element53.useCallback)(
+  const onChangeControl = (0, import_element61.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -19583,9 +23481,9 @@ function Select({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(import_components10.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(import_components11.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
     ValidatedSelectControl,
     {
       required: !!field.isValid?.required,
@@ -19604,7 +23502,7 @@ function Select({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/adaptive-select.mjs
-var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
 var ELEMENTS_THRESHOLD = 10;
 function AdaptiveSelect(props) {
   const { field } = props;
@@ -19613,19 +23511,19 @@ function AdaptiveSelect(props) {
     getElements: field.getElements
   });
   if (elements.length >= ELEMENTS_THRESHOLD) {
-    return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(Combobox, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(Combobox, { ...props });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(Select, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(Select2, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/email.mjs
-var import_components12 = __toESM(require_components(), 1);
+var import_components13 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.mjs
-var import_components11 = __toESM(require_components(), 1);
-var import_element54 = __toESM(require_element(), 1);
-var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl2 } = unlock2(import_components11.privateApis);
+var import_components12 = __toESM(require_components(), 1);
+var import_element62 = __toESM(require_element(), 1);
+var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl: ValidatedInputControl2 } = unlock2(import_components12.privateApis);
 function ValidatedText({
   data,
   field,
@@ -19640,7 +23538,7 @@ function ValidatedText({
   const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data });
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element54.useCallback)(
+  const onChangeControl = (0, import_element62.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -19649,7 +23547,7 @@ function ValidatedText({
     ),
     [data, setValue, onChange]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
     ValidatedInputControl2,
     {
       required: !!isValid2.required,
@@ -19673,7 +23571,7 @@ function ValidatedText({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/email.mjs
-var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 function Email({
   data,
   field,
@@ -19682,7 +23580,7 @@ function Email({
   markWhenOptional,
   validity
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
     ValidatedText,
     {
       ...{
@@ -19693,15 +23591,15 @@ function Email({
         markWhenOptional,
         validity,
         type: "email",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(import_components12.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(import_components12.Icon, { icon: envelope_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components13.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components13.Icon, { icon: envelope_default }) })
       }
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-controls/telephone.mjs
-var import_components13 = __toESM(require_components(), 1);
-var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
+var import_components14 = __toESM(require_components(), 1);
+var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
 function Telephone({
   data,
   field,
@@ -19710,7 +23608,7 @@ function Telephone({
   markWhenOptional,
   validity
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
     ValidatedText,
     {
       ...{
@@ -19721,15 +23619,15 @@ function Telephone({
         markWhenOptional,
         validity,
         type: "tel",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components13.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components13.Icon, { icon: mobile_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components14.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components14.Icon, { icon: mobile_default }) })
       }
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-controls/url.mjs
-var import_components14 = __toESM(require_components(), 1);
-var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
+var import_components15 = __toESM(require_components(), 1);
+var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
 function Url({
   data,
   field,
@@ -19738,7 +23636,7 @@ function Url({
   markWhenOptional,
   validity
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
     ValidatedText,
     {
       ...{
@@ -19749,18 +23647,18 @@ function Url({
         markWhenOptional,
         validity,
         type: "url",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_components14.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_components14.Icon, { icon: link_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(import_components15.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(import_components15.Icon, { icon: link_default }) })
       }
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
-var import_components15 = __toESM(require_components(), 1);
-var import_element55 = __toESM(require_element(), 1);
-var import_i18n11 = __toESM(require_i18n(), 1);
-var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedNumberControl } = unlock2(import_components15.privateApis);
+var import_components16 = __toESM(require_components(), 1);
+var import_element63 = __toESM(require_element(), 1);
+var import_i18n13 = __toESM(require_i18n(), 1);
+var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedNumberControl } = unlock2(import_components16.privateApis);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
     return "";
@@ -19774,37 +23672,37 @@ function BetweenControls({
   hideLabelFromVision,
   step
 }) {
-  const [min3 = "", max3 = ""] = value;
-  const onChangeMin = (0, import_element55.useCallback)(
-    (newValue) => onChange([toNumberOrEmpty(newValue), max3]),
-    [onChange, max3]
+  const [min4 = "", max4 = ""] = value;
+  const onChangeMin = (0, import_element63.useCallback)(
+    (newValue) => onChange([toNumberOrEmpty(newValue), max4]),
+    [onChange, max4]
   );
-  const onChangeMax = (0, import_element55.useCallback)(
-    (newValue) => onChange([min3, toNumberOrEmpty(newValue)]),
-    [onChange, min3]
+  const onChangeMax = (0, import_element63.useCallback)(
+    (newValue) => onChange([min4, toNumberOrEmpty(newValue)]),
+    [onChange, min4]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
-    import_components15.BaseControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+    import_components16.BaseControl,
     {
-      help: (0, import_i18n11.__)("The max. value must be greater than the min. value."),
-      children: /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(import_components15.Flex, { direction: "row", gap: 4, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
-          import_components15.__experimentalNumberControl,
+      help: (0, import_i18n13.__)("The max. value must be greater than the min. value."),
+      children: /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(import_components16.Flex, { direction: "row", gap: 4, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+          import_components16.__experimentalNumberControl,
           {
-            label: (0, import_i18n11.__)("Min."),
-            value: min3,
-            max: max3 ? Number(max3) - step : void 0,
+            label: (0, import_i18n13.__)("Min."),
+            value: min4,
+            max: max4 ? Number(max4) - step : void 0,
             onChange: onChangeMin,
             hideLabelFromVision,
             step
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
-          import_components15.__experimentalNumberControl,
+        /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+          import_components16.__experimentalNumberControl,
           {
-            label: (0, import_i18n11.__)("Max."),
-            value: max3,
-            min: min3 ? Number(min3) + step : void 0,
+            label: (0, import_i18n13.__)("Max."),
+            value: max4,
+            min: min4 ? Number(min4) + step : void 0,
             onChange: onChangeMax,
             hideLabelFromVision,
             step
@@ -19828,7 +23726,7 @@ function ValidatedNumber({
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data }) ?? "";
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element55.useCallback)(
+  const onChangeControl = (0, import_element63.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -19842,7 +23740,7 @@ function ValidatedNumber({
     },
     [data, onChange, setValue]
   );
-  const onChangeBetweenControls = (0, import_element55.useCallback)(
+  const onChangeBetweenControls = (0, import_element63.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -19860,7 +23758,7 @@ function ValidatedNumber({
     )) {
       valueBetween = value;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
       BetweenControls,
       {
         value: valueBetween,
@@ -19870,7 +23768,7 @@ function ValidatedNumber({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
     ValidatedNumberControl,
     {
       required: !!isValid2.required,
@@ -19890,22 +23788,22 @@ function ValidatedNumber({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/integer.mjs
-var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
 function Integer(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(ValidatedNumber, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(ValidatedNumber, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/number.mjs
-var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 function Number2(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(ValidatedNumber, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(ValidatedNumber, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/radio.mjs
-var import_components16 = __toESM(require_components(), 1);
-var import_element56 = __toESM(require_element(), 1);
-var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedRadioControl } = unlock2(import_components16.privateApis);
+var import_components17 = __toESM(require_components(), 1);
+var import_element64 = __toESM(require_element(), 1);
+var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedRadioControl } = unlock2(import_components17.privateApis);
 function Radio({
   data,
   field,
@@ -19921,14 +23819,14 @@ function Radio({
     getElements: field.getElements
   });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element56.useCallback)(
+  const onChangeControl = (0, import_element64.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components16.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(import_components17.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
     ValidatedRadioControl,
     {
       required: !!field.isValid?.required,
@@ -19946,8 +23844,8 @@ function Radio({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/text.mjs
-var import_element57 = __toESM(require_element(), 1);
-var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
+var import_element65 = __toESM(require_element(), 1);
+var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
 function Text3({
   data,
   field,
@@ -19958,7 +23856,7 @@ function Text3({
   validity
 }) {
   const { prefix, suffix } = config || {};
-  return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
     ValidatedText,
     {
       ...{
@@ -19968,19 +23866,19 @@ function Text3({
         hideLabelFromVision,
         markWhenOptional,
         validity,
-        prefix: prefix ? (0, import_element57.createElement)(prefix) : void 0,
-        suffix: suffix ? (0, import_element57.createElement)(suffix) : void 0
+        prefix: prefix ? (0, import_element65.createElement)(prefix) : void 0,
+        suffix: suffix ? (0, import_element65.createElement)(suffix) : void 0
       }
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-controls/time.mjs
-var import_components17 = __toESM(require_components(), 1);
-var import_element58 = __toESM(require_element(), 1);
-var import_i18n12 = __toESM(require_i18n(), 1);
-var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components17.privateApis);
+var import_components18 = __toESM(require_components(), 1);
+var import_element66 = __toESM(require_element(), 1);
+var import_i18n14 = __toESM(require_i18n(), 1);
+var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components18.privateApis);
 function getStep(timeFormat, values) {
   const tokens = (timeFormat ?? "").replace(/\\./g, "");
   const hasSeconds = tokens.includes("s") || values.some((value) => (parseTime(value) ?? 0) % 60 !== 0);
@@ -20006,49 +23904,49 @@ function BetweenControls2({
   hideLabelFromVision,
   disabled: disabled2,
   step,
-  min: min3,
-  max: max3
+  min: min4,
+  max: max4
 }) {
   const [from = "", to = ""] = value;
-  const onChangeFrom = (0, import_element58.useCallback)(
+  const onChangeFrom = (0, import_element66.useCallback)(
     (newValue) => onChange([newValue ?? "", to]),
     [onChange, to]
   );
-  const onChangeTo = (0, import_element58.useCallback)(
+  const onChangeTo = (0, import_element66.useCallback)(
     (newValue) => onChange([from, newValue ?? ""]),
     [onChange, from]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
-    import_components17.BaseControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+    import_components18.BaseControl,
     {
-      help: (0, import_i18n12.__)("The end time must be later than the start time."),
-      children: /* @__PURE__ */ (0, import_jsx_runtime93.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+      help: (0, import_i18n14.__)("The end time must be later than the start time."),
+      children: /* @__PURE__ */ (0, import_jsx_runtime99.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
           ValidatedInputControl3,
           {
             type: "time",
-            label: (0, import_i18n12.__)("From"),
+            label: (0, import_i18n14.__)("From"),
             value: from,
             onChange: onChangeFrom,
             hideLabelFromVision,
             disabled: disabled2,
             step,
-            min: min3,
-            max: to || max3
+            min: min4,
+            max: to || max4
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
           ValidatedInputControl3,
           {
             type: "time",
-            label: (0, import_i18n12.__)("To"),
+            label: (0, import_i18n14.__)("To"),
             value: to,
             onChange: onChangeTo,
             hideLabelFromVision,
             disabled: disabled2,
             step,
-            min: from || min3,
-            max: max3
+            min: from || min4,
+            max: max4
           }
         )
       ] })
@@ -20068,9 +23966,9 @@ function Time({
   const value = getValue({ item: data });
   const disabled2 = field.isDisabled({ item: data, field });
   const timeFormat = field.format?.time;
-  const min3 = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
-  const max3 = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
-  const onChangeControl = (0, import_element58.useCallback)(
+  const min4 = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
+  const max4 = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
+  const onChangeControl = (0, import_element66.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -20079,7 +23977,7 @@ function Time({
     ),
     [data, onChange, setValue]
   );
-  const onChangeBetweenControls = (0, import_element58.useCallback)(
+  const onChangeBetweenControls = (0, import_element66.useCallback)(
     ([from, to]) => onChange(
       setValue({
         item: data,
@@ -20098,7 +23996,7 @@ function Time({
         toInputValue(value[1])
       ];
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
       BetweenControls2,
       {
         value: valueBetween,
@@ -20106,12 +24004,12 @@ function Time({
         hideLabelFromVision,
         disabled: disabled2,
         step: getStep(timeFormat, valueBetween),
-        min: min3,
-        max: max3
+        min: min4,
+        max: max4
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
     ValidatedInputControl3,
     {
       required: !!isValid2.required,
@@ -20126,17 +24024,17 @@ function Time({
       hideLabelFromVision,
       disabled: disabled2,
       step: getStep(timeFormat, [value]),
-      min: min3,
-      max: max3
+      min: min4,
+      max: max4
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
-var import_components18 = __toESM(require_components(), 1);
-var import_element59 = __toESM(require_element(), 1);
-var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedToggleControl } = unlock2(import_components18.privateApis);
+var import_components19 = __toESM(require_components(), 1);
+var import_element67 = __toESM(require_element(), 1);
+var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedToggleControl } = unlock2(import_components19.privateApis);
 function Toggle({
   field,
   onChange,
@@ -20147,12 +24045,12 @@ function Toggle({
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element59.useCallback)(() => {
+  const onChangeControl = (0, import_element67.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
     );
   }, [onChange, setValue, data, getValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
     ValidatedToggleControl,
     {
       required: !!isValid2.required,
@@ -20169,10 +24067,10 @@ function Toggle({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
-var import_components19 = __toESM(require_components(), 1);
-var import_element60 = __toESM(require_element(), 1);
-var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedTextareaControl } = unlock2(import_components19.privateApis);
+var import_components20 = __toESM(require_components(), 1);
+var import_element68 = __toESM(require_element(), 1);
+var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedTextareaControl } = unlock2(import_components20.privateApis);
 function Textarea({
   data,
   field,
@@ -20186,11 +24084,11 @@ function Textarea({
   const disabled2 = field.isDisabled({ item: data, field });
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const value = field.getValue({ item: data });
-  const onChangeControl = (0, import_element60.useCallback)(
+  const onChangeControl = (0, import_element68.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
     ValidatedTextareaControl,
     {
       required: !!isValid2.required,
@@ -20211,12 +24109,12 @@ function Textarea({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/index.mjs
-var import_element62 = __toESM(require_element(), 1);
+var import_element70 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
-var import_components20 = __toESM(require_components(), 1);
-var import_compose3 = __toESM(require_compose(), 1);
-var import_element61 = __toESM(require_element(), 1);
+var import_components21 = __toESM(require_components(), 1);
+var import_compose4 = __toESM(require_compose(), 1);
+var import_element69 = __toESM(require_element(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
 var import_rich_text2 = __toESM(require_rich_text(), 1);
 
@@ -20234,8 +24132,8 @@ function getAllowedFormats({
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/format-edit.mjs
 var import_rich_text = __toESM(require_rich_text(), 1);
-var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
-var import_react12 = __toESM(require_react(), 1);
+var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
+var import_react45 = __toESM(require_react(), 1);
 var EMPTY_CONTEXT = {};
 function Edit({
   onChange,
@@ -20253,7 +24151,7 @@ function Edit({
   const isActive = activeFormat !== void 0;
   const activeObject = (0, import_rich_text.getActiveObject)(value);
   const isObjectActive = activeObject !== void 0 && activeObject.type === name;
-  return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
     EditFunction,
     {
       isActive,
@@ -20274,13 +24172,13 @@ function FormatEdit({
   formatTypes,
   ...props
 }) {
-  return formatTypes.map((settings) => /* @__PURE__ */ (0, import_react12.createElement)(Edit, { settings, ...props, key: settings.name }));
+  return formatTypes.map((settings) => /* @__PURE__ */ (0, import_react45.createElement)(Edit, { settings, ...props, key: settings.name }));
 }
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
-var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
 var { ValidatedContentEditableControl: RichTextControlShell } = unlock2(
-  import_components20.privateApis
+  import_components21.privateApis
 );
 var {
   useRichText,
@@ -20312,17 +24210,17 @@ function RichTextControl({
   focusOnMount,
   completers = EMPTY_COMPLETERS
 }) {
-  const [selection, setSelection] = (0, import_element61.useState)({
+  const [selection, setSelection] = (0, import_element69.useState)({
     start: void 0,
     end: void 0
   });
-  const [isSelected, setIsSelected] = (0, import_element61.useState)(false);
-  const anchorRef = (0, import_element61.useRef)(void 0);
-  const inputEvents = (0, import_element61.useRef)(/* @__PURE__ */ new Set());
-  const keyboardShortcuts = (0, import_element61.useRef)(
+  const [isSelected, setIsSelected] = (0, import_element69.useState)(false);
+  const anchorRef = (0, import_element69.useRef)(void 0);
+  const inputEvents = (0, import_element69.useRef)(/* @__PURE__ */ new Set());
+  const keyboardShortcuts = (0, import_element69.useRef)(
     /* @__PURE__ */ new Set()
   );
-  const focusOutside = (0, import_compose3.__experimentalUseFocusOutside)(() => setIsSelected(false));
+  const focusOutside = (0, import_compose4.__experimentalUseFocusOutside)(() => setIsSelected(false));
   const adjustedAllowedFormats = getAllowedFormats({
     allowedFormats,
     disableFormats
@@ -20345,7 +24243,7 @@ function RichTextControl({
     __unstableDisableFormats: disableFormats,
     allowedFormats: adjustedAllowedFormats,
     withoutInteractiveFormatting,
-    __unstableFormatTypeHandlerContext: (0, import_element61.useMemo)(
+    __unstableFormatTypeHandlerContext: (0, import_element69.useMemo)(
       () => ({
         richTextIdentifier: id,
         blockClientId: clientId
@@ -20356,23 +24254,23 @@ function RichTextControl({
   function onFocus() {
     anchorRef.current?.focus();
   }
-  const eventListenersPropsRef = (0, import_element61.useRef)({
+  const eventListenersPropsRef = (0, import_element69.useRef)({
     keyboardShortcuts,
     inputEvents
   });
-  const inputRulePropsRef = (0, import_element61.useRef)({
+  const inputRulePropsRef = (0, import_element69.useRef)({
     formatTypes,
     getValue,
     onChange: onRichTextChange
   });
-  (0, import_element61.useInsertionEffect)(() => {
+  (0, import_element69.useInsertionEffect)(() => {
     inputRulePropsRef.current = {
       formatTypes,
       getValue,
       onChange: onRichTextChange
     };
   });
-  const enterRef = (0, import_compose3.useRefEffect)(
+  const enterRef = (0, import_compose4.useRefEffect)(
     (element) => {
       if (disabled2) {
         return;
@@ -20401,7 +24299,7 @@ function RichTextControl({
     },
     [disableLineBreaks, disabled2]
   );
-  const eventListenersRef = (0, import_compose3.useRefEffect)(
+  const eventListenersRef = (0, import_compose4.useRefEffect)(
     (element) => {
       if (!isSelected) {
         return;
@@ -20446,7 +24344,7 @@ function RichTextControl({
     },
     [isSelected]
   );
-  const { ref: autocompleteRef, ...autocompleteProps } = (0, import_components20.__unstableUseAutocompleteProps)(
+  const { ref: autocompleteRef, ...autocompleteProps } = (0, import_components21.__unstableUseAutocompleteProps)(
     {
       completers,
       record: value,
@@ -20458,7 +24356,7 @@ function RichTextControl({
       }
     }
   );
-  const focusOnMountRef = (0, import_compose3.useRefEffect)(
+  const focusOnMountRef = (0, import_compose4.useRefEffect)(
     (element) => {
       if (focusOnMount && !disabled2) {
         element.focus();
@@ -20466,7 +24364,7 @@ function RichTextControl({
     },
     [focusOnMount, disabled2]
   );
-  const editableRef = (0, import_compose3.useMergeRefs)([
+  const editableRef = (0, import_compose4.useMergeRefs)([
     richTextRef,
     anchorRef,
     eventListenersRef,
@@ -20477,7 +24375,7 @@ function RichTextControl({
   return (
     // Focus boundary for the field's selection: `onFocus` selects on entry;
     // the spread `useFocusOutside` handlers deselect once focus leaves.
-    /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
       "div",
       {
         ...focusOutside,
@@ -20485,8 +24383,8 @@ function RichTextControl({
           setIsSelected(true);
           focusOutside.onFocus(event);
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components20.SlotFillProvider, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime103.jsxs)(import_components21.SlotFillProvider, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
             RichTextControlShell,
             {
               label,
@@ -20508,11 +24406,11 @@ function RichTextControl({
               ref: editableRef
             }
           ),
-          isSelected && !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+          isSelected && !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
             KeyboardShortcutContext.Provider,
             {
               value: keyboardShortcuts,
-              children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(InputEventContext.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(InputEventContext.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
                 FormatEdit,
                 {
                   value,
@@ -20532,7 +24430,7 @@ function RichTextControl({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/richtext/index.mjs
-var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
 function RichText({
   data,
   field,
@@ -20554,11 +24452,11 @@ function RichText({
   const disabled2 = field.isDisabled({ item: data, field });
   const { label, placeholder, description, id, setValue, isValid: isValid2 } = field;
   const value = field.getValue({ item: data }) ?? "";
-  const onChangeControl = (0, import_element62.useCallback)(
+  const onChangeControl = (0, import_element70.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
     RichTextControl,
     {
       label,
@@ -20584,10 +24482,10 @@ function RichText({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
-var import_components21 = __toESM(require_components(), 1);
-var import_element63 = __toESM(require_element(), 1);
-var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedToggleGroupControl } = unlock2(import_components21.privateApis);
+var import_components22 = __toESM(require_components(), 1);
+var import_element71 = __toESM(require_element(), 1);
+var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedToggleGroupControl } = unlock2(import_components22.privateApis);
 function ToggleGroup({
   data,
   field,
@@ -20599,7 +24497,7 @@ function ToggleGroup({
   const { getValue, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element63.useCallback)(
+  const onChangeControl = (0, import_element71.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -20608,13 +24506,13 @@ function ToggleGroup({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_components21.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(import_components22.Spinner, {});
   }
   if (elements.length === 0) {
     return null;
   }
   const selectedOption = elements.find((el) => el.value === value);
-  return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
     ValidatedToggleGroupControl,
     {
       required: !!field.isValid?.required,
@@ -20626,8 +24524,8 @@ function ToggleGroup({
       onChange: onChangeControl,
       value,
       hideLabelFromVision,
-      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
-        import_components21.__experimentalToggleGroupControlOption,
+      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+        import_components22.__experimentalToggleGroupControlOption,
         {
           label: el.label,
           value: el.value,
@@ -20640,10 +24538,10 @@ function ToggleGroup({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/array.mjs
-var import_components22 = __toESM(require_components(), 1);
-var import_element64 = __toESM(require_element(), 1);
-var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedFormTokenField } = unlock2(import_components22.privateApis);
+var import_components23 = __toESM(require_components(), 1);
+var import_element72 = __toESM(require_element(), 1);
+var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedFormTokenField } = unlock2(import_components23.privateApis);
 function ArrayControl({
   data,
   field,
@@ -20659,7 +24557,7 @@ function ArrayControl({
     elements: field.elements,
     getElements: field.getElements
   });
-  const arrayValueAsElements = (0, import_element64.useMemo)(
+  const arrayValueAsElements = (0, import_element72.useMemo)(
     () => Array.isArray(value) ? value.map((token) => {
       const element = elements?.find(
         (suggestion) => suggestion.value === token
@@ -20668,7 +24566,7 @@ function ArrayControl({
     }) : [],
     [value, elements]
   );
-  const onChangeControl = (0, import_element64.useCallback)(
+  const onChangeControl = (0, import_element72.useCallback)(
     (tokens) => {
       const valueTokens = tokens.map((token) => {
         if (typeof token === "object" && "value" in token) {
@@ -20681,9 +24579,9 @@ function ArrayControl({
     [onChange, setValue, data]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components22.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(import_components23.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
     ValidatedFormTokenField,
     {
       required: !!isValid2?.required,
@@ -20722,9 +24620,9 @@ function ArrayControl({
           const element = elements.find(
             (el) => el.value === item
           );
-          return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("span", { children: element?.label || item });
+          return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("span", { children: element?.label || item });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("span", { children: item });
+        return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("span", { children: item });
       }
     }
   );
@@ -20889,35 +24787,35 @@ var w = function(r3) {
 };
 
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
-var import_components23 = __toESM(require_components(), 1);
-var import_element65 = __toESM(require_element(), 1);
-var import_i18n13 = __toESM(require_i18n(), 1);
-var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl4 } = unlock2(import_components23.privateApis);
+var import_components24 = __toESM(require_components(), 1);
+var import_element73 = __toESM(require_element(), 1);
+var import_i18n15 = __toESM(require_i18n(), 1);
+var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl: ValidatedInputControl4 } = unlock2(import_components24.privateApis);
 var ColorPickerDropdown = ({
   color,
   onColorChange,
   disabled: disabled2
 }) => {
   const validColor = color && w(color).isValid() ? color : "#ffffff";
-  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
-    import_components23.Dropdown,
+  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+    import_components24.Dropdown,
     {
       className: "dataviews-controls__color-picker-dropdown",
       popoverProps: { resize: false },
-      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
-        import_components23.Button,
+      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+        import_components24.Button,
         {
           onClick: onToggle,
-          "aria-label": (0, import_i18n13.__)("Open color picker"),
+          "aria-label": (0, import_i18n15.__)("Open color picker"),
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
-          icon: () => /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components23.ColorIndicator, { colorValue: validColor })
+          icon: () => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_components24.ColorIndicator, { colorValue: validColor })
         }
       ),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components23.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
-        import_components23.ColorPicker,
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_components24.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+        import_components24.ColorPicker,
         {
           color: validColor,
           onChange: onColorChange,
@@ -20938,19 +24836,19 @@ function Color({
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = field.getValue({ item: data }) || "";
-  const handleColorChange = (0, import_element65.useCallback)(
+  const handleColorChange = (0, import_element73.useCallback)(
     (newColor) => {
       onChange(setValue({ item: data, value: newColor }));
     },
     [data, onChange, setValue]
   );
-  const handleInputChange = (0, import_element65.useCallback)(
+  const handleInputChange = (0, import_element73.useCallback)(
     (newValue) => {
       onChange(setValue({ item: data, value: newValue || "" }));
     },
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
     ValidatedInputControl4,
     {
       required: !!field.isValid?.required,
@@ -20964,7 +24862,7 @@ function Color({
       hideLabelFromVision,
       type: "text",
       disabled: disabled2,
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components23.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_components24.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
         ColorPickerDropdown,
         {
           color: value,
@@ -20977,10 +24875,10 @@ function Color({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
-var import_components24 = __toESM(require_components(), 1);
-var import_element66 = __toESM(require_element(), 1);
-var import_i18n14 = __toESM(require_i18n(), 1);
-var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
+var import_components25 = __toESM(require_components(), 1);
+var import_element74 = __toESM(require_element(), 1);
+var import_i18n16 = __toESM(require_i18n(), 1);
+var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
   field,
@@ -20989,12 +24887,12 @@ function Password({
   markWhenOptional,
   validity
 }) {
-  const [isVisible, setIsVisible] = (0, import_element66.useState)(false);
+  const [isVisible, setIsVisible] = (0, import_element74.useState)(false);
   const disabled2 = field.isDisabled({ item: data, field });
-  const toggleVisibility = (0, import_element66.useCallback)(() => {
+  const toggleVisibility = (0, import_element74.useCallback)(() => {
     setIsVisible((prev) => !prev);
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
     ValidatedText,
     {
       ...{
@@ -21005,13 +24903,13 @@ function Password({
         markWhenOptional,
         validity,
         type: isVisible ? "text" : "password",
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(import_components24.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-          import_components24.Button,
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_components25.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
+          import_components25.Button,
           {
             icon: isVisible ? unseen_default : seen_default,
             onClick: toggleVisibility,
             size: "small",
-            label: isVisible ? (0, import_i18n14.__)("Hide password") : (0, import_i18n14.__)("Show password"),
+            label: isVisible ? (0, import_i18n16.__)("Hide password") : (0, import_i18n16.__)("Show password"),
             disabled: disabled2,
             accessibleWhenDisabled: true
           }
@@ -21027,7 +24925,7 @@ function hasElements(field) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/index.mjs
-var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
 var FORM_CONTROLS = {
   adaptiveSelect: AdaptiveSelect,
   array: ArrayControl,
@@ -21043,7 +24941,7 @@ var FORM_CONTROLS = {
   number: Number2,
   password: Password,
   radio: Radio,
-  select: Select,
+  select: Select2,
   text: Text3,
   time: Time,
   toggle: Toggle,
@@ -21061,7 +24959,7 @@ function createConfiguredControl(config) {
     return null;
   }
   return function ConfiguredControl(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(BaseControlType, { ...props, config: controlConfig });
+    return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(BaseControlType, { ...props, config: controlConfig });
   };
 }
 function getControl(field, fallback) {
@@ -21137,7 +25035,7 @@ var setValueFromId = (id) => ({ value }) => {
 var set_value_from_id_default = setValueFromId;
 
 // packages/dataviews/build-module/field-types/email.mjs
-var import_i18n15 = __toESM(require_i18n(), 1);
+var import_i18n17 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
 function RenderFromElements({
@@ -21159,13 +25057,13 @@ function RenderFromElements({
 }
 
 // packages/dataviews/build-module/field-types/utils/render-default.mjs
-var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
 function render({
   item,
   field
 }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(RenderFromElements, { item, field });
   }
   return field.getValueFormatted({ item, field });
 }
@@ -21247,7 +25145,7 @@ var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{
 function isValidCustom(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-    return (0, import_i18n15.__)("Value must be a valid email address.");
+    return (0, import_i18n17.__)("Value must be a valid email address.");
   }
   return null;
 }
@@ -21284,7 +25182,7 @@ var email_default = {
 };
 
 // packages/dataviews/build-module/field-types/integer.mjs
-var import_i18n16 = __toESM(require_i18n(), 1);
+var import_i18n18 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/sort-number.mjs
 var sort_number_default = (a2, b2, direction) => {
@@ -21350,7 +25248,7 @@ function getValueFormatted2({
 function isValidCustom2(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-    return (0, import_i18n16.__)("Value must be an integer.");
+    return (0, import_i18n18.__)("Value must be an integer.");
   }
   return null;
 }
@@ -21397,7 +25295,7 @@ var integer_default = {
 };
 
 // packages/dataviews/build-module/field-types/number.mjs
-var import_i18n17 = __toESM(require_i18n(), 1);
+var import_i18n19 = __toESM(require_i18n(), 1);
 var format3 = {
   separatorThousand: ",",
   separatorDecimal: ".",
@@ -21433,7 +25331,7 @@ function isEmpty(value) {
 function isValidCustom3(item, field) {
   const value = field.getValue({ item });
   if (!isEmpty(value) && !Number.isFinite(value)) {
-    return (0, import_i18n17.__)("Value must be a number.");
+    return (0, import_i18n19.__)("Value must be a number.");
   }
   return null;
 }
@@ -21513,15 +25411,15 @@ var text_default = {
 };
 
 // packages/dataviews/build-module/field-types/datetime.mjs
-var import_date7 = __toESM(require_date(), 1);
+var import_date8 = __toESM(require_date(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-boundary.mjs
-var import_date6 = __toESM(require_date(), 1);
+var import_date7 = __toESM(require_date(), 1);
 function parseDateLike(value) {
   if (!isValid(new Date(value))) {
     return null;
   }
-  const parsed = (0, import_date6.getDate)(value);
+  const parsed = (0, import_date7.getDate)(value);
   return parsed && isValid(parsed) ? parsed.getTime() : null;
 }
 function validateBoundary(item, field, boundary, parse2) {
@@ -21556,8 +25454,8 @@ function isValidMaxTime(item, field) {
 
 // packages/dataviews/build-module/field-types/datetime.mjs
 var format4 = {
-  datetime: (0, import_date7.getSettings)().formats.datetime,
-  weekStartsOn: (0, import_date7.getSettings)().l10n.startOfWeek
+  datetime: (0, import_date8.getSettings)().formats.datetime,
+  weekStartsOn: (0, import_date8.getSettings)().l10n.startOfWeek
 };
 function getValueFormatted4({
   item,
@@ -21573,7 +25471,7 @@ function getValueFormatted4({
   } else {
     formatDatetime = field.format;
   }
-  return (0, import_date7.dateI18n)(formatDatetime.datetime, (0, import_date7.getDate)(value));
+  return (0, import_date8.dateI18n)(formatDatetime.datetime, (0, import_date8.getDate)(value));
 }
 var sort = (a2, b2, direction) => {
   const timeA = new Date(a2).getTime();
@@ -21618,10 +25516,10 @@ var datetime_default = {
 };
 
 // packages/dataviews/build-module/field-types/date.mjs
-var import_date8 = __toESM(require_date(), 1);
+var import_date9 = __toESM(require_date(), 1);
 var format5 = {
-  date: (0, import_date8.getSettings)().formats.date,
-  weekStartsOn: (0, import_date8.getSettings)().l10n.startOfWeek
+  date: (0, import_date9.getSettings)().formats.date,
+  weekStartsOn: (0, import_date9.getSettings)().l10n.startOfWeek
 };
 function getValueFormatted5({
   item,
@@ -21637,7 +25535,7 @@ function getValueFormatted5({
   } else {
     formatDate2 = field.format;
   }
-  return (0, import_date8.dateI18n)(formatDate2.date, (0, import_date8.getDate)(value));
+  return (0, import_date9.dateI18n)(formatDate2.date, (0, import_date9.getDate)(value));
 }
 var sort2 = (a2, b2, direction) => {
   const timeA = new Date(a2).getTime();
@@ -21684,9 +25582,9 @@ var date_default = {
 };
 
 // packages/dataviews/build-module/field-types/time.mjs
-var import_date9 = __toESM(require_date(), 1);
+var import_date10 = __toESM(require_date(), 1);
 var format6 = {
-  time: (0, import_date9.getSettings)().formats.time
+  time: (0, import_date10.getSettings)().formats.time
 };
 var ANCHOR_DATE = "2000-01-01";
 function toAnchoredDate(secondsSinceMidnight) {
@@ -21694,7 +25592,7 @@ function toAnchoredDate(secondsSinceMidnight) {
   const minutes = Math.floor(secondsSinceMidnight % 3600 / 60);
   const seconds = secondsSinceMidnight % 60;
   const time = [hours, minutes, seconds].map((part) => String(part).padStart(2, "0")).join(":");
-  return (0, import_date9.getDate)(`${ANCHOR_DATE}T${time}`);
+  return (0, import_date10.getDate)(`${ANCHOR_DATE}T${time}`);
 }
 function getValueFormatted6({
   item,
@@ -21710,7 +25608,7 @@ function getValueFormatted6({
   } else {
     formatTime = field.format;
   }
-  return (0, import_date9.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
+  return (0, import_date10.dateI18n)(formatTime.time, toAnchoredDate(secondsSinceMidnight));
 }
 var sort3 = (a2, b2, direction) => {
   const timeA = parseTime(a2);
@@ -21759,7 +25657,7 @@ var time_default = {
 };
 
 // packages/dataviews/build-module/field-types/boolean.mjs
-var import_i18n18 = __toESM(require_i18n(), 1);
+var import_i18n20 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
 function isValidRequiredForBool(item, field) {
@@ -21774,17 +25672,17 @@ function getValueFormatted7({
 }) {
   const value = field.getValue({ item });
   if (value === true) {
-    return (0, import_i18n18.__)("True");
+    return (0, import_i18n20.__)("True");
   }
   if (value === false) {
-    return (0, import_i18n18.__)("False");
+    return (0, import_i18n20.__)("False");
   }
   return "";
 }
 function isValidCustom4(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-    return (0, import_i18n18.__)("Value must be true, false, or undefined");
+    return (0, import_i18n20.__)("Value must be true, false, or undefined");
   }
   return null;
 }
@@ -21836,7 +25734,7 @@ var media_default = {
 };
 
 // packages/dataviews/build-module/field-types/array.mjs
-var import_i18n19 = __toESM(require_i18n(), 1);
+var import_i18n21 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
 function isValidRequiredForArray(item, field) {
@@ -21864,10 +25762,10 @@ function isValidCustom5(item, field) {
     return null;
   }
   if (!Array.isArray(value)) {
-    return (0, import_i18n19.__)("Value must be an array.");
+    return (0, import_i18n21.__)("Value must be an array.");
   }
   if (!value.every((v2) => typeof v2 === "string")) {
-    return (0, import_i18n19.__)("Every value must be a string.");
+    return (0, import_i18n21.__)("Every value must be a string.");
   }
   return null;
 }
@@ -21965,18 +25863,18 @@ var telephone_default = {
 };
 
 // packages/dataviews/build-module/field-types/color.mjs
-var import_i18n20 = __toESM(require_i18n(), 1);
-var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
+var import_i18n22 = __toESM(require_i18n(), 1);
+var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(RenderFromElements, { item, field });
   }
   const value = get_value_formatted_default_default({ item, field });
   if (!value || !w(value).isValid()) {
     return value;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime105.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
       "div",
       {
         style: {
@@ -21989,13 +25887,13 @@ function render3({ item, field }) {
         }
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime105.jsx)("span", { children: value })
+    /* @__PURE__ */ (0, import_jsx_runtime111.jsx)("span", { children: value })
   ] });
 }
 function isValidCustom6(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-    return (0, import_i18n20.__)("Value must be a valid color.");
+    return (0, import_i18n22.__)("Value must be a valid color.");
   }
   return null;
 }
@@ -22131,8 +26029,8 @@ function getIsValid(field, fieldType) {
       validate: fieldType.validate.elements
     };
   }
-  const min3 = normalizeRangeRule(rules?.min, fieldType, "min");
-  const max3 = normalizeRangeRule(rules?.max, fieldType, "max");
+  const min4 = normalizeRangeRule(rules?.min, fieldType, "min");
+  const max4 = normalizeRangeRule(rules?.max, fieldType, "max");
   const minLengthValue = rules?.minLength;
   let minLength;
   if (typeof minLengthValue === "number" && fieldType.validate.minLength !== void 0) {
@@ -22161,8 +26059,8 @@ function getIsValid(field, fieldType) {
   return {
     required,
     elements,
-    min: min3,
-    max: max3,
+    min: min4,
+    max: max4,
     minLength,
     maxLength,
     pattern,
@@ -22258,12 +26156,12 @@ function normalizeFields(fields) {
 }
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_element78 = __toESM(require_element(), 1);
+var import_element86 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-context/index.mjs
-var import_element67 = __toESM(require_element(), 1);
-var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
-var DataFormContext = (0, import_element67.createContext)({
+var import_element75 = __toESM(require_element(), 1);
+var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
+var DataFormContext = (0, import_element75.createContext)({
   fields: []
 });
 DataFormContext.displayName = "DataFormContext";
@@ -22271,19 +26169,19 @@ function DataFormProvider({
   fields,
   children
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(DataFormContext.Provider, { value: { fields }, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(DataFormContext.Provider, { value: { fields }, children });
 }
 var dataform_context_default = DataFormContext;
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_element77 = __toESM(require_element(), 1);
+var import_element85 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-var import_element68 = __toESM(require_element(), 1);
-var import_components25 = __toESM(require_components(), 1);
+var import_element76 = __toESM(require_element(), 1);
+var import_components26 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
-var import_i18n21 = __toESM(require_i18n(), 1);
+var import_i18n23 = __toESM(require_i18n(), 1);
 var DEFAULT_LAYOUT = {
   type: "regular",
   labelPosition: "top"
@@ -22314,14 +26212,14 @@ function normalizeLayout(layout) {
     if (typeof openAs === "object" && openAs.type === "modal") {
       normalizedOpenAs = {
         type: "modal",
-        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n21.__)("Apply"),
-        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n21.__)("Cancel")
+        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n23.__)("Apply"),
+        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n23.__)("Cancel")
       };
     } else if (openAs === "modal") {
       normalizedOpenAs = {
         type: "modal",
-        applyLabel: (0, import_i18n21.__)("Apply"),
-        cancelLabel: (0, import_i18n21.__)("Cancel")
+        applyLabel: (0, import_i18n23.__)("Apply"),
+        cancelLabel: (0, import_i18n23.__)("Cancel")
       };
     } else {
       normalizedOpenAs = { type: "dropdown" };
@@ -22401,15 +26299,15 @@ function normalizeForm(form) {
 var normalize_form_default = normalizeForm;
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
 function Header4({ title }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-regular__header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_components25.__experimentalHeading, { level: 2, size: 13, children: title }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_components26.__experimentalHeading, { level: 2, size: 13, children: title }) })
     }
   );
 }
@@ -22421,9 +26319,9 @@ function FormRegularField({
   markWhenOptional,
   validity
 }) {
-  const { fields } = (0, import_element68.useContext)(dataform_context_default);
+  const { fields } = (0, import_element76.useContext)(dataform_context_default);
   const layout = field.layout;
-  const form = (0, import_element68.useMemo)(
+  const form = (0, import_element76.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : []
@@ -22431,9 +26329,9 @@ function FormRegularField({
     [field]
   );
   if (!!field.children) {
-    return /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(import_jsx_runtime107.Fragment, { children: [
-      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(Header4, { title: field.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(import_jsx_runtime113.Fragment, { children: [
+      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(Header4, { title: field.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
         DataFormLayout,
         {
           data,
@@ -22452,30 +26350,30 @@ function FormRegularField({
     return null;
   }
   if (labelPosition === "side") {
-    return /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(
       Stack,
       {
         direction: "row",
         className: "dataforms-layouts-regular__field",
         gap: "sm",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
             "div",
             {
               className: clsx_default(
                 "dataforms-layouts-regular__field-label",
                 `dataforms-layouts-regular__field-label--label-position-${labelPosition}`
               ),
-              children: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_components25.BaseControl.VisualLabel, { children: fieldDefinition.label })
+              children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_components26.BaseControl.VisualLabel, { children: fieldDefinition.label })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime107.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
             fieldDefinition.render,
             {
               item: data,
               field: fieldDefinition
             }
-          ) : /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+          ) : /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
             fieldDefinition.Edit,
             {
               data,
@@ -22491,16 +26389,16 @@ function FormRegularField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_jsx_runtime107.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(import_jsx_runtime107.Fragment, { children: [
-    !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_components25.BaseControl.VisualLabel, { children: fieldDefinition.label }),
-    /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_jsx_runtime113.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(import_jsx_runtime113.Fragment, { children: [
+    !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_components26.BaseControl.VisualLabel, { children: fieldDefinition.label }),
+    /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
       fieldDefinition.render,
       {
         item: data,
         field: fieldDefinition
       }
     )
-  ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+  ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
     fieldDefinition.Edit,
     {
       data,
@@ -22515,15 +26413,15 @@ function FormRegularField({
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
 var import_deepmerge2 = __toESM(require_cjs(), 1);
-var import_components28 = __toESM(require_components(), 1);
-var import_element73 = __toESM(require_element(), 1);
-var import_compose5 = __toESM(require_compose(), 1);
+var import_components29 = __toESM(require_components(), 1);
+var import_element81 = __toESM(require_element(), 1);
+var import_compose6 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
-var import_components27 = __toESM(require_components(), 1);
-var import_i18n22 = __toESM(require_i18n(), 1);
-var import_compose4 = __toESM(require_compose(), 1);
-var import_element69 = __toESM(require_element(), 1);
+var import_components28 = __toESM(require_components(), 1);
+var import_i18n24 = __toESM(require_i18n(), 1);
+var import_compose5 = __toESM(require_compose(), 1);
+var import_element77 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
 function getLabelClassName(labelPosition, showError) {
@@ -22536,16 +26434,16 @@ function getLabelClassName(labelPosition, showError) {
 var get_label_classname_default = getLabelClassName;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-content.mjs
-var import_components26 = __toESM(require_components(), 1);
-var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
+var import_components27 = __toESM(require_components(), 1);
+var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
 function getLabelContent(showError, errorMessage, fieldLabel) {
-  return showError ? /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)(tooltip_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
+  return showError ? /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(tooltip_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
       tooltip_exports.Trigger,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_components26.Icon, { icon: error_default, size: 16 }),
-          /* @__PURE__ */ (0, import_jsx_runtime108.jsxs)(VisuallyHidden, { children: [
+        render: /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components27.Icon, { icon: error_default, size: 16 }),
+          /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(VisuallyHidden, { children: [
             errorMessage,
             ": "
           ] }),
@@ -22553,7 +26451,7 @@ function getLabelContent(showError, errorMessage, fieldLabel) {
         ] })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(tooltip_exports.Popup, { children: errorMessage })
+    /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(tooltip_exports.Popup, { children: errorMessage })
   ] }) : fieldLabel;
 }
 var get_label_content_default = getLabelContent;
@@ -22594,7 +26492,7 @@ function getFirstValidationError(validity) {
 var get_first_validation_error_default = getFirstValidationError;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
-var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
 function SummaryButton({
   data,
   field,
@@ -22619,21 +26517,21 @@ function SummaryButton({
       "dataforms-layouts-panel__field-trigger--edit-always": editVisibility === "always"
     }
   );
-  const controlId = (0, import_compose4.useInstanceId)(
+  const controlId = (0, import_compose5.useInstanceId)(
     SummaryButton,
     "dataforms-layouts-panel__field-control"
   );
-  const ariaLabel = showError ? (0, import_i18n22.sprintf)(
+  const ariaLabel = showError ? (0, import_i18n24.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n22._x)("Edit %s (has errors)", "field"),
+    (0, import_i18n24._x)("Edit %s (has errors)", "field"),
     fieldLabel || ""
-  ) : (0, import_i18n22.sprintf)(
+  ) : (0, import_i18n24.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n22._x)("Edit %s", "field"),
+    (0, import_i18n24._x)("Edit %s", "field"),
     fieldLabel || ""
   );
-  const rowRef = (0, import_element69.useRef)(null);
-  const editButtonRef = (0, import_element69.useRef)(null);
+  const rowRef = (0, import_element77.useRef)(null);
+  const editButtonRef = (0, import_element77.useRef)(null);
   const handleRowClick = (event) => {
     if (!isOpen2 && event.detail < 2 && !editButtonRef.current?.contains(event.target) && rowRef.current?.ownerDocument.defaultView?.getSelection()?.toString()) {
       return;
@@ -22646,7 +26544,7 @@ function SummaryButton({
       onClick();
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)(
     "div",
     {
       ref: rowRef,
@@ -22654,30 +26552,30 @@ function SummaryButton({
       onClick: !disabled2 ? handleRowClick : void 0,
       onKeyDown: !disabled2 ? handleKeyDown : void 0,
       children: [
-        labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("span", { className: labelClassName, children: labelContent }),
-        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(tooltip_exports.Root, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+        labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("span", { className: labelClassName, children: labelContent }),
+        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)(tooltip_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
             tooltip_exports.Trigger,
             {
-              render: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+              render: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
                 "span",
                 {
                   className: "dataforms-layouts-panel__field-label-error-content",
                   role: "img",
                   "aria-label": errorMessage,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(import_components27.Icon, { icon: error_default, size: 16 })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_components28.Icon, { icon: error_default, size: 16 })
                 }
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(tooltip_exports.Popup, { children: errorMessage })
+          /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(tooltip_exports.Popup, { children: errorMessage })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
           "span",
           {
             id: `${controlId}`,
             className: "dataforms-layouts-panel__field-control",
-            children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+            children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
               "span",
               {
                 style: {
@@ -22687,11 +26585,11 @@ function SummaryButton({
                   width: "100%",
                   gap: "2px"
                 },
-                children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+                children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
                   "span",
                   {
                     style: { width: "100%" },
-                    children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+                    children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
                       summaryField.render,
                       {
                         item: data,
@@ -22702,7 +26600,7 @@ function SummaryButton({
                   summaryField.id
                 ))
               }
-            ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+            ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
               summaryField.render,
               {
                 item: data,
@@ -22712,8 +26610,8 @@ function SummaryButton({
             ))
           }
         ),
-        !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
-          import_components27.Button,
+        !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+          import_components28.Button,
           {
             ref: editButtonRef,
             className: "dataforms-layouts-panel__field-trigger-icon",
@@ -22733,8 +26631,8 @@ function SummaryButton({
 // packages/dataviews/build-module/hooks/use-form-validity.mjs
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es6 = __toESM(require_es6(), 1);
-var import_element70 = __toESM(require_element(), 1);
-var import_i18n23 = __toESM(require_i18n(), 1);
+var import_element78 = __toESM(require_element(), 1);
+var import_i18n25 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
     return true;
@@ -22864,7 +26762,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n23.__)("Could not validate elements.")
+              message: (0, import_i18n25.__)("Could not validate elements.")
             }
           },
           [...path, formField.id]
@@ -22883,7 +26781,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n23.__)(
+              message: (0, import_i18n25.__)(
                 "Value must be one of the elements."
               )
             }
@@ -22909,7 +26807,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n23.__)(
+      errorMessage = String(error2) || (0, import_i18n25.__)(
         "Unknown error when running elements validation asynchronously."
       );
     }
@@ -22968,7 +26866,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
         {
           custom: {
             type: "invalid",
-            message: (0, import_i18n23.__)("Validation could not be processed.")
+            message: (0, import_i18n25.__)("Validation could not be processed.")
           }
         },
         [...path, formField.id]
@@ -22983,7 +26881,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n23.__)(
+      errorMessage = String(error2) || (0, import_i18n25.__)(
         "Unknown error when running custom validation asynchronously."
       );
     }
@@ -23025,7 +26923,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       pattern: {
         type: "invalid",
-        message: (0, import_i18n23.__)("Value does not match the required pattern.")
+        message: (0, import_i18n25.__)("Value does not match the required pattern.")
       }
     };
   }
@@ -23033,7 +26931,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       min: {
         type: "invalid",
-        message: (0, import_i18n23.__)("Value is below the minimum.")
+        message: (0, import_i18n25.__)("Value is below the minimum.")
       }
     };
   }
@@ -23041,7 +26939,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       max: {
         type: "invalid",
-        message: (0, import_i18n23.__)("Value is above the maximum.")
+        message: (0, import_i18n25.__)("Value is above the maximum.")
       }
     };
   }
@@ -23049,7 +26947,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       minLength: {
         type: "invalid",
-        message: (0, import_i18n23.__)("Value is too short.")
+        message: (0, import_i18n25.__)("Value is too short.")
       }
     };
   }
@@ -23057,7 +26955,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       maxLength: {
         type: "invalid",
-        message: (0, import_i18n23.__)("Value is too long.")
+        message: (0, import_i18n25.__)("Value is too long.")
       }
     };
   }
@@ -23065,7 +26963,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       elements: {
         type: "invalid",
-        message: (0, import_i18n23.__)("Value must be one of the elements.")
+        message: (0, import_i18n25.__)("Value must be one of the elements.")
       }
     };
   }
@@ -23088,7 +26986,7 @@ function validateFormField(item, formField, promiseHandler) {
       if (error2 instanceof Error) {
         errorMessage = error2.message;
       } else {
-        errorMessage = String(error2) || (0, import_i18n23.__)("Unknown error when running custom validation.");
+        errorMessage = String(error2) || (0, import_i18n25.__)("Unknown error when running custom validation.");
       }
       return {
         custom: {
@@ -23115,14 +27013,14 @@ function validateFormField(item, formField, promiseHandler) {
     );
     fieldValidity.elements = {
       type: "validating",
-      message: (0, import_i18n23.__)("Validating\u2026")
+      message: (0, import_i18n25.__)("Validating\u2026")
     };
   }
   if (customError instanceof Promise) {
     handleCustomValidationAsync(customError, formField, promiseHandler);
     fieldValidity.custom = {
       type: "validating",
-      message: (0, import_i18n23.__)("Validating\u2026")
+      message: (0, import_i18n25.__)("Validating\u2026")
     };
   }
   if (Object.keys(fieldValidity).length > 0) {
@@ -23167,11 +27065,11 @@ function getFormFieldValue(formField, item) {
   };
 }
 function useFormValidity(item, fields, form) {
-  const [formValidity, setFormValidity] = (0, import_element70.useState)();
-  const customCounterRef = (0, import_element70.useRef)({});
-  const elementsCounterRef = (0, import_element70.useRef)({});
-  const previousValuesRef = (0, import_element70.useRef)({});
-  const validate = (0, import_element70.useCallback)(() => {
+  const [formValidity, setFormValidity] = (0, import_element78.useState)();
+  const customCounterRef = (0, import_element78.useRef)({});
+  const elementsCounterRef = (0, import_element78.useRef)({});
+  const previousValuesRef = (0, import_element78.useRef)({});
+  const validate = (0, import_element78.useCallback)(() => {
     const promiseHandler = {
       customCounterRef,
       elementsCounterRef,
@@ -23229,7 +27127,7 @@ function useFormValidity(item, fields, form) {
       return validity;
     });
   }, [item, fields, form]);
-  (0, import_element70.useEffect)(() => {
+  (0, import_element78.useEffect)(() => {
     validate();
   }, [validate]);
   return {
@@ -23240,9 +27138,9 @@ function useFormValidity(item, fields, form) {
 var use_form_validity_default = useFormValidity;
 
 // packages/dataviews/build-module/hooks/use-reveal-validity.mjs
-var import_element71 = __toESM(require_element(), 1);
+var import_element79 = __toESM(require_element(), 1);
 function useRevealValidity(ref, shouldReveal) {
-  const revealValidity = (0, import_element71.useCallback)(() => {
+  const revealValidity = (0, import_element79.useCallback)(() => {
     const inputs = ref.current?.querySelectorAll("input, textarea, select");
     let revealedCount = 0;
     inputs?.forEach((input) => {
@@ -23255,7 +27153,7 @@ function useRevealValidity(ref, shouldReveal) {
     });
     return revealedCount;
   }, [ref]);
-  (0, import_element71.useEffect)(() => {
+  (0, import_element79.useEffect)(() => {
     if (shouldReveal) {
       revealValidity();
     }
@@ -23264,7 +27162,7 @@ function useRevealValidity(ref, shouldReveal) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
-var import_element72 = __toESM(require_element(), 1);
+var import_element80 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
 function extractSummaryIds(summary) {
@@ -23305,7 +27203,7 @@ var getFieldDefinition = (field, fields) => {
   return fieldDefinition;
 };
 function useFieldFromFormField(field) {
-  const { fields } = (0, import_element72.useContext)(dataform_context_default);
+  const { fields } = (0, import_element80.useContext)(dataform_context_default);
   const layout = field.layout;
   const summaryFields = getSummaryFields(layout.summary, fields);
   const fieldDefinition = getFieldDefinition(field, fields);
@@ -23326,7 +27224,7 @@ function useFieldFromFormField(field) {
 var use_field_from_form_field_default = useFieldFromFormField;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
-var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
 function ModalContent({
   data,
   field,
@@ -23337,14 +27235,14 @@ function ModalContent({
 }) {
   const { openAs } = field.layout;
   const { applyLabel, cancelLabel } = openAs;
-  const { fields } = (0, import_element73.useContext)(dataform_context_default);
-  const [changes, setChanges] = (0, import_element73.useState)({});
-  const modalData = (0, import_element73.useMemo)(() => {
+  const { fields } = (0, import_element81.useContext)(dataform_context_default);
+  const [changes, setChanges] = (0, import_element81.useState)({});
+  const modalData = (0, import_element81.useMemo)(() => {
     return (0, import_deepmerge2.default)(data, changes, {
       arrayMerge: (target, source) => source
     });
   }, [data, changes]);
-  const form = (0, import_element73.useMemo)(
+  const form = (0, import_element81.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -23379,12 +27277,12 @@ function ModalContent({
       })
     );
   };
-  const focusOnMountRef = (0, import_compose5.useFocusOnMount)("firstInputElement");
-  const contentRef = (0, import_element73.useRef)(null);
-  const mergedRef = (0, import_compose5.useMergeRefs)([focusOnMountRef, contentRef]);
+  const focusOnMountRef = (0, import_compose6.useFocusOnMount)("firstInputElement");
+  const contentRef = (0, import_element81.useRef)(null);
+  const mergedRef = (0, import_compose6.useMergeRefs)([focusOnMountRef, contentRef]);
   useRevealValidity(contentRef, touched);
-  return /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)(
-    import_components28.Modal,
+  return /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(
+    import_components29.Modal,
     {
       className: "dataforms-layouts-panel__modal",
       onRequestClose: onClose,
@@ -23392,14 +27290,14 @@ function ModalContent({
       title: fieldLabel,
       size: "medium",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("div", { ref: mergedRef, children: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("div", { ref: mergedRef, children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
           DataFormLayout,
           {
             data: modalData,
             form,
             onChange: handleOnChange,
             validity,
-            children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+            children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
               FieldLayout,
               {
                 data: modalData,
@@ -23413,16 +27311,16 @@ function ModalContent({
             )
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(
           Stack,
           {
             direction: "row",
             className: "dataforms-layouts-panel__modal-footer",
             gap: "md",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(import_components28.__experimentalSpacer, { style: { flex: 1 } }),
-              /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
-                import_components28.Button,
+              /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_components29.__experimentalSpacer, { style: { flex: 1 } }),
+              /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+                import_components29.Button,
                 {
                   variant: "tertiary",
                   onClick: onClose,
@@ -23430,8 +27328,8 @@ function ModalContent({
                   children: cancelLabel
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
-                import_components28.Button,
+              /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+                import_components29.Button,
                 {
                   variant: "primary",
                   onClick: onApply,
@@ -23452,8 +27350,8 @@ function PanelModal({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element73.useState)(false);
-  const [isOpen2, setIsOpen] = (0, import_element73.useState)(false);
+  const [touched, setTouched] = (0, import_element81.useState)(false);
+  const [isOpen2, setIsOpen] = (0, import_element81.useState)(false);
   const { fieldDefinition, fieldLabel, summaryFields } = use_field_from_form_field_default(field);
   if (!fieldDefinition) {
     return null;
@@ -23462,8 +27360,8 @@ function PanelModal({
     setIsOpen(false);
     setTouched(true);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)(import_jsx_runtime110.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(import_jsx_runtime116.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
       SummaryButton,
       {
         data,
@@ -23477,7 +27375,7 @@ function PanelModal({
         isOpen: isOpen2
       }
     ),
-    isOpen2 && /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+    isOpen2 && /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
       ModalContent,
       {
         data,
@@ -23493,28 +27391,28 @@ function PanelModal({
 var modal_default = PanelModal;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
-var import_components29 = __toESM(require_components(), 1);
-var import_i18n24 = __toESM(require_i18n(), 1);
-var import_element74 = __toESM(require_element(), 1);
-var import_compose6 = __toESM(require_compose(), 1);
-var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
+var import_components30 = __toESM(require_components(), 1);
+var import_i18n26 = __toESM(require_i18n(), 1);
+var import_element82 = __toESM(require_element(), 1);
+var import_compose7 = __toESM(require_compose(), 1);
+var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
   title,
   onClose
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-panel__dropdown-header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
-        title && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components29.__experimentalHeading, { level: 2, size: 13, children: title }),
-        /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components29.__experimentalSpacer, { style: { flex: 1 } }),
-        onClose && /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
-          import_components29.Button,
+      children: /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
+        title && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components30.__experimentalHeading, { level: 2, size: 13, children: title }),
+        /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components30.__experimentalSpacer, { style: { flex: 1 } }),
+        onClose && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+          import_components30.Button,
           {
-            label: (0, import_i18n24.__)("Close"),
+            label: (0, import_i18n26.__)("Close"),
             icon: close_small_default,
             onClick: onClose,
             size: "small"
@@ -23528,9 +27426,9 @@ function DropdownContentWithValidation({
   touched,
   children
 }) {
-  const ref = (0, import_element74.useRef)(null);
+  const ref = (0, import_element82.useRef)(null);
   useRevealValidity(ref, touched);
-  return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)("div", { ref, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { ref, children });
 }
 function PanelDropdown({
   data,
@@ -23538,11 +27436,11 @@ function PanelDropdown({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element74.useState)(false);
-  const [popoverAnchor, setPopoverAnchor] = (0, import_element74.useState)(
+  const [touched, setTouched] = (0, import_element82.useState)(false);
+  const [popoverAnchor, setPopoverAnchor] = (0, import_element82.useState)(
     null
   );
-  const popoverProps = (0, import_element74.useMemo)(
+  const popoverProps = (0, import_element82.useMemo)(
     () => ({
       // Anchor the popover to the middle of the entire row so that it doesn't
       // move around when the label changes.
@@ -23553,10 +27451,10 @@ function PanelDropdown({
     }),
     [popoverAnchor]
   );
-  const [dialogRef, dialogProps] = (0, import_compose6.__experimentalUseDialog)({
+  const [dialogRef, dialogProps] = (0, import_compose7.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
-  const form = (0, import_element74.useMemo)(
+  const form = (0, import_element82.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -23566,7 +27464,7 @@ function PanelDropdown({
     }),
     [field]
   );
-  const formValidity = (0, import_element74.useMemo)(() => {
+  const formValidity = (0, import_element82.useMemo)(() => {
     if (validity === void 0) {
       return void 0;
     }
@@ -23579,13 +27477,13 @@ function PanelDropdown({
   if (!fieldDefinition) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
     "div",
     {
       ref: setPopoverAnchor,
       className: "dataforms-layouts-panel__field-dropdown-anchor",
-      children: /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
-        import_components29.Dropdown,
+      children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+        import_components30.Dropdown,
         {
           contentClassName: "dataforms-layouts-panel__field-dropdown",
           popoverProps,
@@ -23595,7 +27493,7 @@ function PanelDropdown({
               setTouched(true);
             }
           },
-          renderToggle: ({ isOpen: isOpen2, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
+          renderToggle: ({ isOpen: isOpen2, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
             SummaryButton,
             {
               data,
@@ -23609,22 +27507,22 @@ function PanelDropdown({
               onClick: onToggle
             }
           ),
-          renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
+          renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
               DropdownHeader,
               {
                 title: fieldLabel,
                 onClose
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
               DataFormLayout,
               {
                 data,
                 form,
                 onChange,
                 validity: formValidity,
-                children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
+                children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
                   FieldLayout,
                   {
                     data,
@@ -23647,7 +27545,7 @@ function PanelDropdown({
 var dropdown_default = PanelDropdown;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/index.mjs
-var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
 function FormPanelField({
   data,
   field,
@@ -23656,7 +27554,7 @@ function FormPanelField({
 }) {
   const layout = field.layout;
   if (layout.openAs.type === "modal") {
-    return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
       modal_default,
       {
         data,
@@ -23666,7 +27564,7 @@ function FormPanelField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
     dropdown_default,
     {
       data,
@@ -23678,12 +27576,12 @@ function FormPanelField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_element75 = __toESM(require_element(), 1);
-var import_compose7 = __toESM(require_compose(), 1);
-import { speak as speak2 } from "@wordpress/a11y";
+var import_element83 = __toESM(require_element(), 1);
+var import_compose8 = __toESM(require_compose(), 1);
+import { speak as speak3 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
-var import_i18n25 = __toESM(require_i18n(), 1);
+var import_i18n27 = __toESM(require_i18n(), 1);
 function countInvalidFields(validity) {
   if (!validity) {
     return 0;
@@ -23710,9 +27608,9 @@ function getValidationMessage(validity) {
   if (invalidCount === 0) {
     return void 0;
   }
-  return (0, import_i18n25.sprintf)(
+  return (0, import_i18n27.sprintf)(
     /* translators: %d: Number of fields that need attention */
-    (0, import_i18n25._n)(
+    (0, import_i18n27._n)(
       "%d field needs attention",
       "%d fields need attention",
       invalidCount
@@ -23722,7 +27620,7 @@ function getValidationMessage(validity) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
-var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
 function ValidationBadge({
   validity
 }) {
@@ -23730,11 +27628,11 @@ function ValidationBadge({
   if (!message2) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(Badge, { intent: "high", children: message2 });
+  return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(Badge, { intent: "high", children: message2 });
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
 function isSummaryFieldVisible(summaryField, summaryConfig, isOpen2) {
   if (!summaryConfig || Array.isArray(summaryConfig) && summaryConfig.length === 0) {
     return false;
@@ -23775,17 +27673,17 @@ function HeaderContent({
   );
   const hasBadge = touched && layout.isCollapsible;
   const hasSummary = visibleSummaryFields.length > 0 && layout.withHeader;
-  return /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
     Stack,
     {
       align: "center",
       justify: "space-between",
       className: "dataforms-layouts-card__field-header-content",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(card_exports.Title, { children: label }),
-        (hasBadge || hasSummary) && /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(collapsible_card_exports.HeaderDescription, { className: "dataforms-layouts-card__field-header-content-description", children: [
-          hasBadge && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(ValidationBadge, { validity }),
-          hasSummary && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(card_exports.Title, { children: label }),
+        (hasBadge || hasSummary) && /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(collapsible_card_exports.HeaderDescription, { className: "dataforms-layouts-card__field-header-content-description", children: [
+          hasBadge && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(ValidationBadge, { validity }),
+          hasSummary && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
             summaryField.render,
             {
               item: data,
@@ -23809,9 +27707,9 @@ function BodyContent({
   withHeader
 }) {
   if (field.children) {
-    return /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(import_jsx_runtime114.Fragment, { children: [
-      field.description && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
-      /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(import_jsx_runtime120.Fragment, { children: [
+      field.description && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
+      /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
         DataFormLayout,
         {
           data,
@@ -23826,7 +27724,7 @@ function BodyContent({
   if (!SingleFieldLayout) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
     SingleFieldLayout,
     {
       data,
@@ -23846,11 +27744,11 @@ function FormCardField({
   markWhenOptional,
   validity
 }) {
-  const { fields } = (0, import_element75.useContext)(dataform_context_default);
+  const { fields } = (0, import_element83.useContext)(dataform_context_default);
   const layout = field.layout;
-  const contentRef = (0, import_element75.useRef)(null);
-  const hasFocusedContentRef = (0, import_element75.useRef)(false);
-  const form = (0, import_element75.useMemo)(
+  const contentRef = (0, import_element83.useRef)(null);
+  const hasFocusedContentRef = (0, import_element83.useRef)(false);
+  const form = (0, import_element83.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
@@ -23858,12 +27756,12 @@ function FormCardField({
     [field]
   );
   const { isOpened, isCollapsible } = layout;
-  const [isOpen2, setIsOpen] = (0, import_element75.useState)(isOpened);
-  const [touched, setTouched] = (0, import_element75.useState)(false);
-  (0, import_element75.useEffect)(() => {
+  const [isOpen2, setIsOpen] = (0, import_element83.useState)(isOpened);
+  const [touched, setTouched] = (0, import_element83.useState)(false);
+  (0, import_element83.useEffect)(() => {
     setIsOpen(isOpened);
   }, [isOpened]);
-  const handleOpenChange = (0, import_element75.useCallback)((open) => {
+  const handleOpenChange = (0, import_element83.useCallback)((open) => {
     if (!open) {
       setTouched(true);
     }
@@ -23873,10 +27771,10 @@ function FormCardField({
     contentRef,
     (isCollapsible ? isOpen2 : true) && touched
   );
-  const handleContentFocus = (0, import_element75.useCallback)(() => {
+  const handleContentFocus = (0, import_element83.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element75.useCallback)(() => {
+  const handleFocusOutside = (0, import_element83.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -23887,10 +27785,10 @@ function FormCardField({
     const revealedCount = revealValidity();
     const message2 = getValidationMessage(validity);
     if (revealedCount > 0 && message2) {
-      speak2(message2, "polite");
+      speak3(message2, "polite");
     }
   }, [isCollapsible, isOpen2, revealValidity, validity]);
-  const focusOutsideProps = (0, import_compose7.__experimentalUseFocusOutside)(handleFocusOutside);
+  const focusOutsideProps = (0, import_compose8.__experimentalUseFocusOutside)(handleFocusOutside);
   let label = field.label;
   let withHeader;
   if (field.children) {
@@ -23905,7 +27803,7 @@ function FormCardField({
     label = fieldDefinition.label;
     withHeader = !!label && layout.withHeader;
   }
-  const bodyContent = /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+  const bodyContent = /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
     BodyContent,
     {
       data,
@@ -23918,7 +27816,7 @@ function FormCardField({
       withHeader
     }
   );
-  const headerContent = /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+  const headerContent = /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
     HeaderContent,
     {
       data,
@@ -23931,7 +27829,7 @@ function FormCardField({
     }
   );
   if (withHeader && isCollapsible) {
-    return /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
       collapsible_card_exports.Root,
       {
         className: "dataforms-layouts-card__field",
@@ -23939,8 +27837,8 @@ function FormCardField({
         onOpenChange: handleOpenChange,
         ...focusOutsideProps,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(collapsible_card_exports.Header, { children: headerContent }),
-          /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(collapsible_card_exports.Header, { children: headerContent }),
+          /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
             collapsible_card_exports.Content,
             {
               ref: contentRef,
@@ -23952,34 +27850,34 @@ function FormCardField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
     card_exports.Root,
     {
       className: "dataforms-layouts-card__field",
       ...focusOutsideProps,
       children: [
-        withHeader && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(card_exports.Header, { children: headerContent }),
-        /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(card_exports.Content, { ref: contentRef, onFocus: handleContentFocus, children: bodyContent })
+        withHeader && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(card_exports.Header, { children: headerContent }),
+        /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(card_exports.Content, { ref: contentRef, onFocus: handleContentFocus, children: bodyContent })
       ]
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/row/index.mjs
-var import_components30 = __toESM(require_components(), 1);
-var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
+var import_components31 = __toESM(require_components(), 1);
+var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
 function Header5({ title }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-row__header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_components30.__experimentalHeading, { level: 2, size: 13, children: title }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_components31.__experimentalHeading, { level: 2, size: 13, children: title }) })
     }
   );
 }
-var EMPTY_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_jsx_runtime115.Fragment, { children });
+var EMPTY_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_jsx_runtime121.Fragment, { children });
 function FormRowField({
   data,
   field,
@@ -23994,9 +27892,9 @@ function FormRowField({
       layout: DEFAULT_LAYOUT,
       fields: field.children
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
-      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(Header5, { title: field.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(Stack, { direction: "row", align: layout.alignment, gap: "lg", children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
+      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(Header5, { title: field.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(Stack, { direction: "row", align: layout.alignment, gap: "lg", children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
         DataFormLayout,
         {
           data,
@@ -24004,12 +27902,12 @@ function FormRowField({
           onChange,
           validity: validity?.children,
           as: EMPTY_WRAPPER,
-          children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+          children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
             "div",
             {
               className: "dataforms-layouts-row__field-control",
               style: layout.styles[childField.id],
-              children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
                 FieldLayout,
                 {
                   data,
@@ -24031,7 +27929,7 @@ function FormRowField({
   if (!RegularLayout) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_jsx_runtime115.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("div", { className: "dataforms-layouts-row__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_jsx_runtime121.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)("div", { className: "dataforms-layouts-row__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
     RegularLayout,
     {
       data,
@@ -24044,31 +27942,31 @@ function FormRowField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
-var import_element76 = __toESM(require_element(), 1);
-var import_i18n26 = __toESM(require_i18n(), 1);
-var import_compose8 = __toESM(require_compose(), 1);
-import { speak as speak3 } from "@wordpress/a11y";
-var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
+var import_element84 = __toESM(require_element(), 1);
+var import_i18n28 = __toESM(require_i18n(), 1);
+var import_compose9 = __toESM(require_compose(), 1);
+import { speak as speak4 } from "@wordpress/a11y";
+var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
 function FormDetailsField({
   data,
   field,
   onChange,
   validity
 }) {
-  const { fields } = (0, import_element76.useContext)(dataform_context_default);
-  const detailsRef = (0, import_element76.useRef)(null);
-  const contentRef = (0, import_element76.useRef)(null);
-  const hasFocusedContentRef = (0, import_element76.useRef)(false);
-  const [touched, setTouched] = (0, import_element76.useState)(false);
-  const [isOpen2, setIsOpen] = (0, import_element76.useState)(false);
-  const form = (0, import_element76.useMemo)(
+  const { fields } = (0, import_element84.useContext)(dataform_context_default);
+  const detailsRef = (0, import_element84.useRef)(null);
+  const contentRef = (0, import_element84.useRef)(null);
+  const hasFocusedContentRef = (0, import_element84.useRef)(false);
+  const [touched, setTouched] = (0, import_element84.useState)(false);
+  const [isOpen2, setIsOpen] = (0, import_element84.useState)(false);
+  const form = (0, import_element84.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
     }),
     [field]
   );
-  (0, import_element76.useEffect)(() => {
+  (0, import_element84.useEffect)(() => {
     const details = detailsRef.current;
     if (!details) {
       return;
@@ -24086,10 +27984,10 @@ function FormDetailsField({
     };
   }, []);
   const revealValidity = useRevealValidity(contentRef, isOpen2 && touched);
-  const handleContentFocus = (0, import_element76.useCallback)(() => {
+  const handleContentFocus = (0, import_element84.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element76.useCallback)(() => {
+  const handleFocusOutside = (0, import_element84.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -24100,10 +27998,10 @@ function FormDetailsField({
     const revealedCount = revealValidity();
     const message2 = getValidationMessage(validity);
     if (revealedCount > 0 && message2) {
-      speak3(message2, "polite");
+      speak4(message2, "polite");
     }
   }, [revealValidity, validity]);
-  const focusOutsideProps = (0, import_compose8.__experimentalUseFocusOutside)(handleFocusOutside);
+  const focusOutsideProps = (0, import_compose9.__experimentalUseFocusOutside)(handleFocusOutside);
   if (!field.children) {
     return null;
   }
@@ -24111,18 +28009,18 @@ function FormDetailsField({
   const summaryField = summaryFieldId ? fields.find((fieldDef) => fieldDef.id === summaryFieldId) : void 0;
   let summaryContent;
   if (summaryField && summaryField.render) {
-    summaryContent = /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(summaryField.render, { item: data, field: summaryField });
+    summaryContent = /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(summaryField.render, { item: data, field: summaryField });
   } else {
-    summaryContent = field.label || (0, import_i18n26.__)("More details");
+    summaryContent = field.label || (0, import_i18n28.__)("More details");
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(
     "details",
     {
       ref: detailsRef,
       className: "dataforms-layouts-details__details",
       ...focusOutsideProps,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(
           Stack,
           {
             direction: "row",
@@ -24131,17 +28029,17 @@ function FormDetailsField({
             className: "dataforms-layouts-details__summary-content",
             children: [
               summaryContent,
-              touched && /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(ValidationBadge, { validity })
+              touched && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(ValidationBadge, { validity })
             ]
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
           "div",
           {
             ref: contentRef,
             className: "dataforms-layouts-details__content",
             onFocus: handleContentFocus,
-            children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
               DataFormLayout,
               {
                 data,
@@ -24158,12 +28056,12 @@ function FormDetailsField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/index.mjs
-var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
 var FORM_FIELD_LAYOUTS = [
   {
     type: "regular",
     component: FormRegularField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
       Stack,
       {
         direction: "column",
@@ -24176,7 +28074,7 @@ var FORM_FIELD_LAYOUTS = [
   {
     type: "panel",
     component: FormPanelField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
       Stack,
       {
         direction: "column",
@@ -24189,7 +28087,7 @@ var FORM_FIELD_LAYOUTS = [
   {
     type: "card",
     component: FormCardField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
       Stack,
       {
         direction: "column",
@@ -24205,13 +28103,13 @@ var FORM_FIELD_LAYOUTS = [
     wrapper: ({
       children,
       layout
-    }) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+    }) => /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
       Stack,
       {
         direction: "column",
         className: "dataforms-layouts__wrapper",
         gap: "lg",
-        children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
           Stack,
           {
             direction: "row",
@@ -24233,8 +28131,8 @@ function getFormFieldLayout(type) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
-var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "lg", children });
+var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
+var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "lg", children });
 function DataFormLayout({
   data,
   form,
@@ -24243,8 +28141,8 @@ function DataFormLayout({
   children,
   as
 }) {
-  const { fields: fieldDefinitions } = (0, import_element77.useContext)(dataform_context_default);
-  const markWhenOptional = (0, import_element77.useMemo)(() => {
+  const { fields: fieldDefinitions } = (0, import_element85.useContext)(dataform_context_default);
+  const markWhenOptional = (0, import_element85.useMemo)(() => {
     const requiredCount = fieldDefinitions.filter(
       (f2) => !!f2.isValid?.required
     ).length;
@@ -24257,7 +28155,7 @@ function DataFormLayout({
     );
   }
   const Wrapper = as ?? getFormFieldLayout(form.layout.type)?.wrapper ?? DEFAULT_WRAPPER;
-  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
     const FieldLayout = getFormFieldLayout(formField.layout.type)?.component;
     if (!FieldLayout) {
       return null;
@@ -24274,7 +28172,7 @@ function DataFormLayout({
         markWhenOptional
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
       FieldLayout,
       {
         data,
@@ -24289,7 +28187,7 @@ function DataFormLayout({
 }
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
 function DataForm({
   data,
   form,
@@ -24297,15 +28195,15 @@ function DataForm({
   onChange,
   validity
 }) {
-  const normalizedForm = (0, import_element78.useMemo)(() => normalize_form_default(form), [form]);
-  const normalizedFields = (0, import_element78.useMemo)(
+  const normalizedForm = (0, import_element86.useMemo)(() => normalize_form_default(form), [form]);
+  const normalizedFields = (0, import_element86.useMemo)(
     () => normalizeFields(fields),
     [fields]
   );
   if (!form.fields) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
     DataFormLayout,
     {
       data,
@@ -24317,16 +28215,16 @@ function DataForm({
 }
 
 // packages/media-editor/build-module/components/media-form/index.mjs
-var import_components31 = __toESM(require_components(), 1);
-var import_i18n27 = __toESM(require_i18n(), 1);
-var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
+var import_components32 = __toESM(require_components(), 1);
+var import_i18n29 = __toESM(require_i18n(), 1);
+var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
 function MediaForm({
   form: formOverrides,
   header
 }) {
   const { media, fields, onChange } = useMediaEditorContext();
   if (!media || !onChange) {
-    return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { className: "media-editor-form media-editor-form--loading", children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(import_components31.Spinner, {}) });
+    return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { className: "media-editor-form media-editor-form--loading", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components32.Spinner, {}) });
   }
   const regularFieldIds = ["title", "alt_text", "caption", "description"];
   const sortedFields = [
@@ -24355,10 +28253,10 @@ function MediaForm({
     })
   };
   const form = formOverrides || defaultForm;
-  return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(import_components31.__experimentalVStack, { spacing: 4, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("h2", {}), children: (0, import_i18n27.__)("Media details") }),
+  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(import_components32.__experimentalVStack, { spacing: 4, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("h2", {}), children: (0, import_i18n29.__)("Media details") }),
     header,
-    /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
       DataForm,
       {
         data: media,
@@ -24459,34 +28357,34 @@ var store = (0, import_data.createReduxStore)(STORE_NAME, {
 (0, import_data.register)(store);
 
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
-var import_components44 = __toESM(require_components(), 1);
+var import_components45 = __toESM(require_components(), 1);
 var import_data9 = __toESM(require_data(), 1);
-var import_i18n41 = __toESM(require_i18n(), 1);
+var import_i18n43 = __toESM(require_i18n(), 1);
 var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
 var import_notices3 = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
-var import_components43 = __toESM(require_components(), 1);
-var import_compose11 = __toESM(require_compose(), 1);
+var import_components44 = __toESM(require_components(), 1);
+var import_compose12 = __toESM(require_compose(), 1);
 var import_data8 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
-var import_element99 = __toESM(require_element(), 1);
-var import_i18n40 = __toESM(require_i18n(), 1);
+var import_element107 = __toESM(require_element(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
 var import_keycodes3 = __toESM(require_keycodes(), 1);
 var import_notices2 = __toESM(require_notices(), 1);
 
 // packages/interface/build-module/components/complementary-area/index.mjs
-var import_components36 = __toESM(require_components(), 1);
+var import_components37 = __toESM(require_components(), 1);
 var import_data6 = __toESM(require_data(), 1);
-var import_i18n28 = __toESM(require_i18n(), 1);
-var import_element80 = __toESM(require_element(), 1);
+var import_i18n30 = __toESM(require_i18n(), 1);
+var import_element88 = __toESM(require_element(), 1);
 var import_viewport = __toESM(require_viewport(), 1);
 var import_preferences3 = __toESM(require_preferences(), 1);
-var import_compose9 = __toESM(require_compose(), 1);
+var import_compose10 = __toESM(require_compose(), 1);
 var import_plugins2 = __toESM(require_plugins(), 1);
 
 // packages/interface/build-module/components/complementary-area-toggle/index.mjs
-var import_components32 = __toESM(require_components(), 1);
+var import_components33 = __toESM(require_components(), 1);
 var import_data5 = __toESM(require_data(), 1);
 var import_plugins = __toESM(require_plugins(), 1);
 
@@ -24756,7 +28654,7 @@ var store2 = (0, import_data4.createReduxStore)(STORE_NAME2, {
 (0, import_data4.register)(store2);
 
 // packages/interface/build-module/components/complementary-area-toggle/index.mjs
-var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
 function roleSupportsCheckedState(role) {
   return [
     "checkbox",
@@ -24769,7 +28667,7 @@ function roleSupportsCheckedState(role) {
   ].includes(role);
 }
 function ComplementaryAreaToggle({
-  as = import_components32.Button,
+  as = import_components33.Button,
   scope,
   identifier: identifierProp,
   icon: iconProp,
@@ -24787,7 +28685,7 @@ function ComplementaryAreaToggle({
     [identifier, scope]
   );
   const { enableComplementaryArea: enableComplementaryArea2, disableComplementaryArea: disableComplementaryArea2 } = (0, import_data5.useDispatch)(store2);
-  return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
     ComponentToUse,
     {
       icon: selectedIcon && isSelected ? selectedIcon : icon,
@@ -24807,14 +28705,14 @@ function ComplementaryAreaToggle({
 }
 
 // packages/interface/build-module/components/complementary-area-header/index.mjs
-var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
 var ComplementaryAreaHeader = ({
   children,
   className: className2,
   toggleButtonProps
 }) => {
-  const toggleButton = /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(ComplementaryAreaToggle, { icon: close_small_default, ...toggleButtonProps });
-  return /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(
+  const toggleButton = /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(ComplementaryAreaToggle, { icon: close_small_default, ...toggleButtonProps });
+  return /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(
     "div",
     {
       className: clsx_default(
@@ -24833,33 +28731,33 @@ var ComplementaryAreaHeader = ({
 var complementary_area_header_default = ComplementaryAreaHeader;
 
 // packages/interface/build-module/components/complementary-area-more-menu-item/index.mjs
-var import_components34 = __toESM(require_components(), 1);
+var import_components35 = __toESM(require_components(), 1);
 
 // packages/interface/build-module/components/action-item/index.mjs
-var import_components33 = __toESM(require_components(), 1);
-var import_element79 = __toESM(require_element(), 1);
-var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
+var import_components34 = __toESM(require_components(), 1);
+var import_element87 = __toESM(require_element(), 1);
+var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
 var noop4 = () => {
 };
 function ActionItemSlot({
   name,
-  as: Component = import_components33.MenuGroup,
+  as: Component = import_components34.MenuGroup,
   fillProps = {},
   bubblesVirtually,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
-    import_components33.Slot,
+  return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+    import_components34.Slot,
     {
       name,
       bubblesVirtually,
       fillProps,
       children: (fills) => {
-        if (!import_element79.Children.toArray(fills).length) {
+        if (!import_element87.Children.toArray(fills).length) {
           return null;
         }
         const initializedByPlugins = [];
-        import_element79.Children.forEach(
+        import_element87.Children.forEach(
           fills,
           ({
             props: { __unstableExplicitMenuItem, __unstableTarget }
@@ -24869,7 +28767,7 @@ function ActionItemSlot({
             }
           }
         );
-        const children = import_element79.Children.map(fills, (child) => {
+        const children = import_element87.Children.map(fills, (child) => {
           if (!child.props.__unstableExplicitMenuItem && initializedByPlugins.includes(
             child.props.__unstableTarget
           )) {
@@ -24877,14 +28775,14 @@ function ActionItemSlot({
           }
           return child;
         });
-        return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(Component, { ...props, children });
+        return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(Component, { ...props, children });
       }
     }
   );
 }
-function ActionItem({ name, as: Component = import_components33.Button, onClick, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(import_components33.Fill, { name, children: ({ onClick: fpOnClick }) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+function ActionItem({ name, as: Component = import_components34.Button, onClick, ...props }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(import_components34.Fill, { name, children: ({ onClick: fpOnClick }) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
       Component,
       {
         onClick: onClick || fpOnClick ? (...args) => {
@@ -24900,7 +28798,7 @@ ActionItem.Slot = ActionItemSlot;
 var action_item_default = ActionItem;
 
 // packages/interface/build-module/components/complementary-area-more-menu-item/index.mjs
-var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
 var PluginsMenuItem = ({
   // Menu item is marked with unstable prop for backward compatibility.
   // They are removed so they don't leak to DOM elements.
@@ -24908,18 +28806,18 @@ var PluginsMenuItem = ({
   __unstableExplicitMenuItem,
   __unstableTarget,
   ...restProps
-}) => /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(import_components34.MenuItem, { ...restProps });
+}) => /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components35.MenuItem, { ...restProps });
 function ComplementaryAreaMoreMenuItem({
   scope,
   target,
   __unstableExplicitMenuItem,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
     ComplementaryAreaToggle,
     {
       as: (toggleProps) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
           action_item_default,
           {
             __unstableExplicitMenuItem,
@@ -24940,13 +28838,13 @@ function ComplementaryAreaMoreMenuItem({
 }
 
 // packages/interface/build-module/components/pinned-items/index.mjs
-var import_components35 = __toESM(require_components(), 1);
-var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
+var import_components36 = __toESM(require_components(), 1);
+var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
 function PinnedItems({ scope, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(import_components35.Fill, { name: `PinnedItems/${scope}`, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components36.Fill, { name: `PinnedItems/${scope}`, ...props });
 }
 function PinnedItemsSlot({ scope, className: className2, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(import_components35.Slot, { name: `PinnedItems/${scope}`, ...props, children: (fills) => fills?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components36.Slot, { name: `PinnedItems/${scope}`, ...props, children: (fills) => fills?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
     "div",
     {
       className: clsx_default(
@@ -24961,10 +28859,10 @@ PinnedItems.Slot = PinnedItemsSlot;
 var pinned_items_default = PinnedItems;
 
 // packages/interface/build-module/components/complementary-area/index.mjs
-var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
 var ANIMATION_DURATION = 0.3;
 function ComplementaryAreaSlot({ scope, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components36.Slot, { name: `ComplementaryArea/${scope}`, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components37.Slot, { name: `ComplementaryArea/${scope}`, ...props });
 }
 var variants = {
   // `auto` leaves the width to the area's own stylesheet, so it stays in one
@@ -24976,14 +28874,14 @@ var variants = {
   closed: (transition) => ({ width: 0, transition })
 };
 function renderContainer(render4, props) {
-  if ((0, import_element80.isValidElement)(render4)) {
-    return (0, import_element80.cloneElement)(render4, {
+  if ((0, import_element88.isValidElement)(render4)) {
+    return (0, import_element88.cloneElement)(render4, {
       ...props,
       className: clsx_default(render4.props.className, props.className),
       style: { ...render4.props.style, ...props.style }
     });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { ...props });
 }
 function ComplementaryAreaFill({
   activeArea,
@@ -24994,17 +28892,17 @@ function ComplementaryAreaFill({
   id,
   render: render4
 }) {
-  const disableMotion = (0, import_compose9.useReducedMotion)();
-  const isMobileViewport = (0, import_compose9.useViewportMatch)("medium", "<");
-  const previousActiveArea = (0, import_compose9.usePrevious)(activeArea);
+  const disableMotion = (0, import_compose10.useReducedMotion)();
+  const isMobileViewport = (0, import_compose10.useViewportMatch)("medium", "<");
+  const previousActiveArea = (0, import_compose10.usePrevious)(activeArea);
   const isSwitchingAreas = !!previousActiveArea && !!activeArea && activeArea !== previousActiveArea;
   const transition = {
     type: "tween",
     duration: disableMotion || isMobileViewport || isSwitchingAreas ? 0 : ANIMATION_DURATION,
     ease: [0.6, 0, 0.4, 1]
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components36.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components36.__unstableAnimatePresence, { initial: false, custom: transition, children: isActive && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
-    import_components36.__unstableMotion.div,
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components37.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components37.__unstableAnimatePresence, { initial: false, custom: transition, children: isActive && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+    import_components37.__unstableMotion.div,
     {
       variants,
       initial: "closed",
@@ -25021,10 +28919,10 @@ function ComplementaryAreaFill({
   ) }) });
 }
 function useAdjustComplementaryListener(scope, identifier, activeArea, isActive, isSmall) {
-  const previousIsSmallRef = (0, import_element80.useRef)(false);
-  const shouldOpenWhenNotSmallRef = (0, import_element80.useRef)(false);
+  const previousIsSmallRef = (0, import_element88.useRef)(false);
+  const shouldOpenWhenNotSmallRef = (0, import_element88.useRef)(false);
   const { enableComplementaryArea: enableComplementaryArea2, disableComplementaryArea: disableComplementaryArea2 } = (0, import_data6.useDispatch)(store2);
-  (0, import_element80.useEffect)(() => {
+  (0, import_element88.useEffect)(() => {
     if (isActive && isSmall && !previousIsSmallRef.current) {
       disableComplementaryArea2(scope);
       shouldOpenWhenNotSmallRef.current = true;
@@ -25060,7 +28958,7 @@ function useAdjustComplementaryListener(scope, identifier, activeArea, isActive,
 function ComplementaryArea({
   children,
   className: className2,
-  closeLabel = (0, import_i18n28.__)("Close plugin"),
+  closeLabel = (0, import_i18n30.__)("Close plugin"),
   identifier: identifierProp,
   header,
   headerClassName,
@@ -25077,7 +28975,7 @@ function ComplementaryArea({
   const context = (0, import_plugins2.usePluginContext)();
   const icon = iconProp || context.icon;
   const identifier = identifierProp || `${context.name}/${name}`;
-  const [isReady, setIsReady] = (0, import_element80.useState)(false);
+  const [isReady, setIsReady] = (0, import_element88.useState)(false);
   const {
     isLoading,
     isActive,
@@ -25107,7 +29005,7 @@ function ComplementaryArea({
     },
     [identifier, scope]
   );
-  const isMobileViewport = (0, import_compose9.useViewportMatch)("medium", "<");
+  const isMobileViewport = (0, import_compose10.useViewportMatch)("medium", "<");
   useAdjustComplementaryListener(
     scope,
     identifier,
@@ -25121,7 +29019,7 @@ function ComplementaryArea({
     pinItem: pinItem2,
     unpinItem: unpinItem2
   } = (0, import_data6.useDispatch)(store2);
-  (0, import_element80.useEffect)(() => {
+  (0, import_element88.useEffect)(() => {
     if (isActiveByDefault && activeArea === void 0 && !isSmall) {
       enableComplementaryArea2(scope, identifier);
     } else if (activeArea === void 0 && isSmall) {
@@ -25140,8 +29038,8 @@ function ComplementaryArea({
   if (!isReady) {
     return;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(import_jsx_runtime126.Fragment, { children: [
-    isPinnable && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(pinned_items_default, { scope, children: isPinned && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(import_jsx_runtime132.Fragment, { children: [
+    isPinnable && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(pinned_items_default, { scope, children: isPinned && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
       ComplementaryAreaToggle,
       {
         scope,
@@ -25157,7 +29055,7 @@ function ComplementaryArea({
         shortcut: toggleShortcut
       }
     ) }),
-    name && isPinnable && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+    name && isPinnable && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
       ComplementaryAreaMoreMenuItem,
       {
         target: name,
@@ -25167,7 +29065,7 @@ function ComplementaryArea({
         children: title
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
       ComplementaryAreaFill,
       {
         activeArea,
@@ -25177,7 +29075,7 @@ function ComplementaryArea({
         id: identifier.replace("/", ":"),
         render: render4,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
             complementary_area_header_default,
             {
               className: headerClassName,
@@ -25190,14 +29088,14 @@ function ComplementaryArea({
                 scope,
                 identifier
               },
-              children: header || /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(import_jsx_runtime126.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("h2", { className: "interface-complementary-area-header__title", children: title }),
-                isPinnable && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
-                  import_components36.Button,
+              children: header || /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(import_jsx_runtime132.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("h2", { className: "interface-complementary-area-header__title", children: title }),
+                isPinnable && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+                  import_components37.Button,
                   {
                     className: "interface-complementary-area__pin-unpin-item",
                     icon: isPinned ? star_filled_default : star_empty_default,
-                    label: isPinned ? (0, import_i18n28.__)("Unpin from toolbar") : (0, import_i18n28.__)("Pin to toolbar"),
+                    label: isPinned ? (0, import_i18n30.__)("Unpin from toolbar") : (0, import_i18n30.__)("Pin to toolbar"),
                     onClick: () => (isPinned ? unpinItem2 : pinItem2)(
                       scope,
                       identifier
@@ -25209,7 +29107,7 @@ function ComplementaryArea({
               ] })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components36.Panel, { className: panelClassName, children })
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components37.Panel, { className: panelClassName, children })
         ]
       }
     )
@@ -25219,11 +29117,11 @@ ComplementaryArea.Slot = ComplementaryAreaSlot;
 var complementary_area_default = ComplementaryArea;
 
 // packages/interface/build-module/components/interface-skeleton/index.mjs
-var import_element81 = __toESM(require_element(), 1);
-var import_components37 = __toESM(require_components(), 1);
-var import_i18n29 = __toESM(require_i18n(), 1);
-var import_compose10 = __toESM(require_compose(), 1);
-var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
+var import_element89 = __toESM(require_element(), 1);
+var import_components38 = __toESM(require_components(), 1);
+var import_i18n31 = __toESM(require_i18n(), 1);
+var import_compose11 = __toESM(require_compose(), 1);
+var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
 var ANIMATION_DURATION2 = 0.25;
 var commonTransition = {
   type: "tween",
@@ -25231,7 +29129,7 @@ var commonTransition = {
   ease: [0.6, 0, 0.4, 1]
 };
 function useHTMLClass(className2) {
-  (0, import_element81.useEffect)(() => {
+  (0, import_element89.useEffect)(() => {
     const element = document && document.querySelector(`html:not(.${className2})`);
     if (!element) {
       return;
@@ -25280,8 +29178,8 @@ function InterfaceSkeleton({
   labels,
   className: className2
 }, ref) {
-  const isMobileViewport = (0, import_compose10.useViewportMatch)("medium", "<");
-  const disableMotion = (0, import_compose10.useReducedMotion)();
+  const isMobileViewport = (0, import_compose11.useViewportMatch)("medium", "<");
+  const disableMotion = (0, import_compose11.useReducedMotion)();
   const defaultTransition = {
     type: "tween",
     duration: disableMotion ? 0 : ANIMATION_DURATION2,
@@ -25290,20 +29188,20 @@ function InterfaceSkeleton({
   useHTMLClass("interface-interface-skeleton__html-container");
   const defaultLabels = {
     /* translators: accessibility text for the top bar landmark region. */
-    header: (0, import_i18n29._x)("Header", "header landmark area"),
+    header: (0, import_i18n31._x)("Header", "header landmark area"),
     /* translators: accessibility text for the content landmark region. */
-    body: (0, import_i18n29.__)("Content"),
+    body: (0, import_i18n31.__)("Content"),
     /* translators: accessibility text for the secondary sidebar landmark region. */
-    secondarySidebar: (0, import_i18n29.__)("Block Library"),
+    secondarySidebar: (0, import_i18n31.__)("Block Library"),
     /* translators: accessibility text for the settings landmark region. */
-    sidebar: (0, import_i18n29._x)("Settings", "settings landmark area"),
+    sidebar: (0, import_i18n31._x)("Settings", "settings landmark area"),
     /* translators: accessibility text for the publish landmark region. */
-    actions: (0, import_i18n29.__)("Publish"),
+    actions: (0, import_i18n31.__)("Publish"),
     /* translators: accessibility text for the footer landmark region. */
-    footer: (0, import_i18n29.__)("Footer")
+    footer: (0, import_i18n31.__)("Footer")
   };
   const mergedLabels = { ...defaultLabels, ...labels };
-  return /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
     "div",
     {
       ref,
@@ -25313,11 +29211,11 @@ function InterfaceSkeleton({
         !!footer && "has-footer"
       ),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)("div", { className: "interface-interface-skeleton__editor", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(import_components37.__unstableAnimatePresence, { initial: false, children: !!header && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("div", { className: "interface-interface-skeleton__editor", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_components38.__unstableAnimatePresence, { initial: false, children: !!header && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
             navigable_region_default,
             {
-              as: import_components37.__unstableMotion.div,
+              as: import_components38.__unstableMotion.div,
               className: "interface-interface-skeleton__header",
               ariaLabel: mergedLabels.header,
               initial: isDistractionFree && !isMobileViewport ? "distractionFreeHidden" : "hidden",
@@ -25329,14 +29227,14 @@ function InterfaceSkeleton({
               children: header
             }
           ) }),
-          isDistractionFree && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("div", { className: "interface-interface-skeleton__header", children: editorNotices }),
-          /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)("div", { className: "interface-interface-skeleton__body", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(import_components37.__unstableAnimatePresence, { initial: false, children: !!secondarySidebar && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+          isDistractionFree && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", { className: "interface-interface-skeleton__header", children: editorNotices }),
+          /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("div", { className: "interface-interface-skeleton__body", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_components38.__unstableAnimatePresence, { initial: false, children: !!secondarySidebar && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__secondary-sidebar",
                 ariaLabel: mergedLabels.secondarySidebar,
-                as: import_components37.__unstableMotion.div,
+                as: import_components38.__unstableMotion.div,
                 initial: "closed",
                 animate: "open",
                 exit: "closed",
@@ -25345,8 +29243,8 @@ function InterfaceSkeleton({
                   closed: { width: 0 }
                 },
                 transition: defaultTransition,
-                children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
-                  import_components37.__unstableMotion.div,
+                children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                  import_components38.__unstableMotion.div,
                   {
                     style: {
                       width: isMobileViewport ? "100vw" : "max-content",
@@ -25362,7 +29260,7 @@ function InterfaceSkeleton({
                 )
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__content",
@@ -25370,7 +29268,7 @@ function InterfaceSkeleton({
                 children: content
               }
             ),
-            !!sidebar && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+            !!sidebar && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__sidebar",
@@ -25378,7 +29276,7 @@ function InterfaceSkeleton({
                 children: sidebar
               }
             ),
-            !!actions && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+            !!actions && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__actions",
@@ -25388,7 +29286,7 @@ function InterfaceSkeleton({
             )
           ] })
         ] }),
-        !!footer && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+        !!footer && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
           navigable_region_default,
           {
             className: "interface-interface-skeleton__footer",
@@ -25400,15 +29298,15 @@ function InterfaceSkeleton({
     }
   );
 }
-var interface_skeleton_default = (0, import_element81.forwardRef)(InterfaceSkeleton);
+var interface_skeleton_default = (0, import_element89.forwardRef)(InterfaceSkeleton);
 
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
-var import_element92 = __toESM(require_element(), 1);
-var import_components39 = __toESM(require_components(), 1);
-var import_i18n34 = __toESM(require_i18n(), 1);
+var import_element100 = __toESM(require_element(), 1);
+var import_components40 = __toESM(require_components(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/constants.mjs
-var import_i18n30 = __toESM(require_i18n(), 1);
+var import_i18n32 = __toESM(require_i18n(), 1);
 var MIN_ZOOM = 1;
 var ABSOLUTE_MIN_ZOOM = 0.1;
 var MAX_ZOOM = 10;
@@ -25448,15 +29346,15 @@ var DEFAULT_STATE2 = {
 };
 var ORIGINAL_ASPECT_RATIO = -1;
 var DEFAULT_ASPECT_RATIOS = [
-  { label: (0, import_i18n30.__)("Free"), value: 0 },
-  { label: (0, import_i18n30.__)("Original"), value: ORIGINAL_ASPECT_RATIO },
-  { label: (0, import_i18n30.__)("Square (1:1)"), value: 1 },
-  { label: (0, import_i18n30.__)("Landscape (16:9)"), value: 16 / 9 },
-  { label: (0, import_i18n30.__)("Portrait (9:16)"), value: 9 / 16 },
-  { label: (0, import_i18n30.__)("Classic (4:3)"), value: 4 / 3 },
-  { label: (0, import_i18n30.__)("Classic portrait (3:4)"), value: 3 / 4 },
-  { label: (0, import_i18n30.__)("Photo (3:2)"), value: 3 / 2 },
-  { label: (0, import_i18n30.__)("Photo portrait (2:3)"), value: 2 / 3 }
+  { label: (0, import_i18n32.__)("Free"), value: 0 },
+  { label: (0, import_i18n32.__)("Original"), value: ORIGINAL_ASPECT_RATIO },
+  { label: (0, import_i18n32.__)("Square (1:1)"), value: 1 },
+  { label: (0, import_i18n32.__)("Landscape (16:9)"), value: 16 / 9 },
+  { label: (0, import_i18n32.__)("Portrait (9:16)"), value: 9 / 16 },
+  { label: (0, import_i18n32.__)("Classic (4:3)"), value: 4 / 3 },
+  { label: (0, import_i18n32.__)("Classic portrait (3:4)"), value: 3 / 4 },
+  { label: (0, import_i18n32.__)("Photo (3:2)"), value: 3 / 2 },
+  { label: (0, import_i18n32.__)("Photo portrait (2:3)"), value: 2 / 3 }
 ];
 
 // node_modules/gl-matrix/esm/common.js
@@ -25727,8 +29625,8 @@ __export(vec2_exports, {
   len: () => len,
   length: () => length,
   lerp: () => lerp,
-  max: () => max2,
-  min: () => min2,
+  max: () => max3,
+  min: () => min3,
   mul: () => mul2,
   multiply: () => multiply2,
   negate: () => negate,
@@ -25813,12 +29711,12 @@ function floor2(out, a2) {
   out[1] = Math.floor(a2[1]);
   return out;
 }
-function min2(out, a2, b2) {
+function min3(out, a2, b2) {
   out[0] = Math.min(a2[0], b2[0]);
   out[1] = Math.min(a2[1], b2[1]);
   return out;
 }
-function max2(out, a2, b2) {
+function max3(out, a2, b2) {
   out[0] = Math.max(a2[0], b2[0]);
   out[1] = Math.max(a2[1], b2[1]);
   return out;
@@ -26841,8 +30739,8 @@ function buildCropperSetters(dispatchCropperAction, getCropperState) {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
-var import_element89 = __toESM(require_element(), 1);
-var import_i18n33 = __toESM(require_i18n(), 1);
+var import_element97 = __toESM(require_element(), 1);
+var import_i18n35 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/crop-rect.mjs
 function computeInscribedRect(aspectRatio, visualSize) {
@@ -27044,7 +30942,7 @@ function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-interaction.mjs
-var import_element82 = __toESM(require_element(), 1);
+var import_element90 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/interaction-controller.mjs
 var DOUBLE_TAP_TIME = 300;
@@ -27687,30 +31585,30 @@ function isHandledKeyboardZoom(event) {
   }
 }
 function useInteraction(state, actions, containerSize, imageSize, options) {
-  const [isDragging, setIsDragging] = (0, import_element82.useState)(false);
-  const [isZooming, setIsZooming] = (0, import_element82.useState)(false);
-  const [isGestureActive, setIsGestureActive] = (0, import_element82.useState)(false);
-  const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element82.useState)(false);
-  const keyboardInteractionTimerRef = (0, import_element82.useRef)();
-  const isKeyboardGestureActiveRef = (0, import_element82.useRef)(false);
-  const stateRef = (0, import_element82.useRef)(state);
+  const [isDragging, setIsDragging] = (0, import_element90.useState)(false);
+  const [isZooming, setIsZooming] = (0, import_element90.useState)(false);
+  const [isGestureActive, setIsGestureActive] = (0, import_element90.useState)(false);
+  const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element90.useState)(false);
+  const keyboardInteractionTimerRef = (0, import_element90.useRef)();
+  const isKeyboardGestureActiveRef = (0, import_element90.useRef)(false);
+  const stateRef = (0, import_element90.useRef)(state);
   stateRef.current = state;
-  const containerSizeRef = (0, import_element82.useRef)(containerSize);
+  const containerSizeRef = (0, import_element90.useRef)(containerSize);
   containerSizeRef.current = containerSize;
-  const imageSizeRef = (0, import_element82.useRef)(imageSize);
+  const imageSizeRef = (0, import_element90.useRef)(imageSize);
   imageSizeRef.current = imageSize;
-  const optionsRef = (0, import_element82.useRef)(options);
+  const optionsRef = (0, import_element90.useRef)(options);
   optionsRef.current = options;
-  const actionsRef = (0, import_element82.useRef)(actions);
+  const actionsRef = (0, import_element90.useRef)(actions);
   actionsRef.current = actions;
-  const controllerRef = (0, import_element82.useRef)(null);
-  const startPlacementGesture = (0, import_element82.useCallback)(() => {
+  const controllerRef = (0, import_element90.useRef)(null);
+  const startPlacementGesture = (0, import_element90.useCallback)(() => {
     setIsGestureActive(true);
   }, []);
-  const stopPlacementGesture = (0, import_element82.useCallback)(() => {
+  const stopPlacementGesture = (0, import_element90.useCallback)(() => {
     setIsGestureActive(false);
   }, []);
-  const signalKeyboardGesture = (0, import_element82.useCallback)(() => {
+  const signalKeyboardGesture = (0, import_element90.useCallback)(() => {
     if (!isKeyboardGestureActiveRef.current) {
       isKeyboardGestureActiveRef.current = true;
       optionsRef.current?.onGestureStart?.();
@@ -27722,12 +31620,12 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       optionsRef.current?.onGestureEnd?.();
     }, KEYBOARD_INTERACTION_IDLE_MS);
   }, []);
-  (0, import_element82.useEffect)(() => {
+  (0, import_element90.useEffect)(() => {
     return () => {
       clearTimeout(keyboardInteractionTimerRef.current);
     };
   }, []);
-  (0, import_element82.useEffect)(() => {
+  (0, import_element90.useEffect)(() => {
     const controller = new InteractionController({
       getState: () => stateRef.current,
       actions: {
@@ -27773,11 +31671,11 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       controllerRef.current = null;
     };
   }, [startPlacementGesture, stopPlacementGesture]);
-  const onPointerDown = (0, import_element82.useCallback)((e2) => {
+  const onPointerDown = (0, import_element90.useCallback)((e2) => {
     const el = e2.currentTarget;
     controllerRef.current?.handlePointerDown(e2.nativeEvent, el);
   }, []);
-  const onTouchStart = (0, import_element82.useCallback)((e2) => {
+  const onTouchStart = (0, import_element90.useCallback)((e2) => {
     const el = e2.currentTarget;
     const rect = el.getBoundingClientRect();
     controllerRef.current?.handleTouchStart(
@@ -27786,7 +31684,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       el.ownerDocument
     );
   }, []);
-  const onKeyDown = (0, import_element82.useCallback)(
+  const onKeyDown = (0, import_element90.useCallback)(
     (e2) => {
       if (isHandledKeyboardPan(e2.nativeEvent)) {
         setIsKeyboardPanning(true);
@@ -27798,7 +31696,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
     },
     [signalKeyboardGesture]
   );
-  const onWheelNative = (0, import_element82.useCallback)((e2) => {
+  const onWheelNative = (0, import_element90.useCallback)((e2) => {
     controllerRef.current?.handleWheel(e2);
   }, []);
   return {
@@ -27815,7 +31713,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-transform-style.mjs
-var import_element83 = __toESM(require_element(), 1);
+var import_element91 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/transform-style.mjs
 var IDENTITY_MATRIX_STYLE = "matrix(1, 0, 0, 1, 0, 0)";
@@ -27841,16 +31739,16 @@ function computeTransformStyle(state, imageSize) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-transform-style.mjs
 function useTransformStyle(state, imageSize) {
-  return (0, import_element83.useMemo)(
+  return (0, import_element91.useMemo)(
     () => computeTransformStyle(state, imageSize),
     [state, imageSize]
   );
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
-var import_element84 = __toESM(require_element(), 1);
-var import_i18n31 = __toESM(require_i18n(), 1);
-import { speak as speak4 } from "@wordpress/a11y";
+var import_element92 = __toESM(require_element(), 1);
+var import_i18n33 = __toESM(require_i18n(), 1);
+import { speak as speak5 } from "@wordpress/a11y";
 
 // packages/media-editor/build-module/image-editor/core/source-region.mjs
 function getSourceRegion(state, imageSize) {
@@ -28016,15 +31914,15 @@ function getFlipAnnouncement(state, previousState) {
   }
   const { horizontal, vertical } = state.flip;
   if (horizontal && vertical) {
-    return (0, import_i18n31.__)("Flipped horizontally and vertically");
+    return (0, import_i18n33.__)("Flipped horizontally and vertically");
   }
   if (horizontal) {
-    return (0, import_i18n31.__)("Flipped horizontally");
+    return (0, import_i18n33.__)("Flipped horizontally");
   }
   if (vertical) {
-    return (0, import_i18n31.__)("Flipped vertically");
+    return (0, import_i18n33.__)("Flipped vertically");
   }
-  return (0, import_i18n31.__)("Flip removed");
+  return (0, import_i18n33.__)("Flip removed");
 }
 function getRotationAnnouncement(state, previousState) {
   if (previousState && Math.round(previousState.rotation) === Math.round(state.rotation)) {
@@ -28040,18 +31938,18 @@ function getRotationAnnouncement(state, previousState) {
     visualRotation += 360;
   }
   if (visualRotation === 0) {
-    return previousState ? (0, import_i18n31.__)("Rotation 0 degrees") : void 0;
+    return previousState ? (0, import_i18n33.__)("Rotation 0 degrees") : void 0;
   }
   if (visualRotation > 0) {
-    return (0, import_i18n31.sprintf)(
+    return (0, import_i18n33.sprintf)(
       /* translators: %d: rotation angle in degrees. */
-      (0, import_i18n31.__)("Rotated %d degrees clockwise"),
+      (0, import_i18n33.__)("Rotated %d degrees clockwise"),
       visualRotation
     );
   }
-  return (0, import_i18n31.sprintf)(
+  return (0, import_i18n33.sprintf)(
     /* translators: %d: rotation angle in degrees. */
-    (0, import_i18n31.__)("Rotated %d degrees counterclockwise"),
+    (0, import_i18n33.__)("Rotated %d degrees counterclockwise"),
     Math.abs(visualRotation)
   );
 }
@@ -28073,9 +31971,9 @@ function getCropAnnouncement(state, previousState) {
       return void 0;
     }
   }
-  return (0, import_i18n31.sprintf)(
+  return (0, import_i18n33.sprintf)(
     /* translators: 1: crop width in pixels, 2: crop height in pixels. */
-    (0, import_i18n31.__)("Crop %1$d by %2$d pixels"),
+    (0, import_i18n33.__)("Crop %1$d by %2$d pixels"),
     Math.round(region.width),
     Math.round(region.height)
   );
@@ -28084,9 +31982,9 @@ function getZoomAnnouncement(state, previousState) {
   if (previousState && Math.round(previousState.zoom * 100) === Math.round(state.zoom * 100)) {
     return void 0;
   }
-  return (0, import_i18n31.sprintf)(
+  return (0, import_i18n33.sprintf)(
     /* translators: %d: zoom level as a percentage. */
-    (0, import_i18n31.__)("Zoom %d%%"),
+    (0, import_i18n33.__)("Zoom %d%%"),
     Math.round(state.zoom * 100)
   );
 }
@@ -28103,14 +32001,14 @@ function buildAnnouncement(state, previousState) {
   return parts.join(", ");
 }
 function useAriaAnnouncer(state) {
-  const timerRef = (0, import_element84.useRef)();
-  const prevMessageRef = (0, import_element84.useRef)("");
-  const prevStateRef = (0, import_element84.useRef)(null);
-  const latestStateRef = (0, import_element84.useRef)(state);
-  (0, import_element84.useLayoutEffect)(() => {
+  const timerRef = (0, import_element92.useRef)();
+  const prevMessageRef = (0, import_element92.useRef)("");
+  const prevStateRef = (0, import_element92.useRef)(null);
+  const latestStateRef = (0, import_element92.useRef)(state);
+  (0, import_element92.useLayoutEffect)(() => {
     latestStateRef.current = state;
   }, [state]);
-  (0, import_element84.useEffect)(() => {
+  (0, import_element92.useEffect)(() => {
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       const current = latestStateRef.current;
@@ -28118,7 +32016,7 @@ function useAriaAnnouncer(state) {
       prevStateRef.current = current;
       if (msg !== prevMessageRef.current) {
         prevMessageRef.current = msg;
-        speak4(msg);
+        speak5(msg);
       }
     }, ARIA_DEBOUNCE_MS);
     return () => {
@@ -28135,8 +32033,8 @@ function useAriaAnnouncer(state) {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
-var import_element85 = __toESM(require_element(), 1);
-var import_i18n32 = __toESM(require_i18n(), 1);
+var import_element93 = __toESM(require_element(), 1);
+var import_i18n34 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/react/visually-hidden-style.mjs
 var VISUALLY_HIDDEN_STYLE = {
@@ -28152,7 +32050,7 @@ var VISUALLY_HIDDEN_STYLE = {
 };
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
-var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
 var CORNER_POSITIONS = ["nw", "ne", "se", "sw"];
 var ALL_POSITIONS = [
   "nw",
@@ -28167,21 +32065,21 @@ var ALL_POSITIONS = [
 function getHandleLabel(pos) {
   switch (pos) {
     case "n":
-      return (0, import_i18n32.__)("Resize from top edge");
+      return (0, import_i18n34.__)("Resize from top edge");
     case "s":
-      return (0, import_i18n32.__)("Resize from bottom edge");
+      return (0, import_i18n34.__)("Resize from bottom edge");
     case "e":
-      return (0, import_i18n32.__)("Resize from right edge");
+      return (0, import_i18n34.__)("Resize from right edge");
     case "w":
-      return (0, import_i18n32.__)("Resize from left edge");
+      return (0, import_i18n34.__)("Resize from left edge");
     case "nw":
-      return (0, import_i18n32.__)("Resize from top-left corner");
+      return (0, import_i18n34.__)("Resize from top-left corner");
     case "ne":
-      return (0, import_i18n32.__)("Resize from top-right corner");
+      return (0, import_i18n34.__)("Resize from top-right corner");
     case "sw":
-      return (0, import_i18n32.__)("Resize from bottom-left corner");
+      return (0, import_i18n34.__)("Resize from bottom-left corner");
     case "se":
-      return (0, import_i18n32.__)("Resize from bottom-right corner");
+      return (0, import_i18n34.__)("Resize from bottom-right corner");
   }
 }
 var KEYBOARD_SETTLE_DELAY = 500;
@@ -28206,7 +32104,7 @@ function RectangleStencil({
   const boundsMinY = cropBounds?.minY ?? 0;
   const boundsMaxX = cropBounds?.maxX ?? 1;
   const boundsMaxY = cropBounds?.maxY ?? 1;
-  const bounds = (0, import_element85.useMemo)(
+  const bounds = (0, import_element93.useMemo)(
     () => ({
       minX: boundsMinX,
       minY: boundsMinY,
@@ -28215,25 +32113,25 @@ function RectangleStencil({
     }),
     [boundsMinX, boundsMinY, boundsMaxX, boundsMaxY]
   );
-  const keyboardSettleTimerRef = (0, import_element85.useRef)();
-  const keyboardResizeActiveRef = (0, import_element85.useRef)(false);
-  const resizeHandleDescriptionId = (0, import_element85.useId)();
+  const keyboardSettleTimerRef = (0, import_element93.useRef)();
+  const keyboardResizeActiveRef = (0, import_element93.useRef)(false);
+  const resizeHandleDescriptionId = (0, import_element93.useId)();
   const hasLockedRatio = !!(aspectRatio && aspectRatio > 0);
-  const activePointerResizeRef = (0, import_element85.useRef)(null);
-  (0, import_element85.useEffect)(() => {
+  const activePointerResizeRef = (0, import_element93.useRef)(null);
+  (0, import_element93.useEffect)(() => {
     return () => {
       clearTimeout(keyboardSettleTimerRef.current);
       keyboardResizeActiveRef.current = false;
       activePointerResizeRef.current?.cancel(false);
     };
   }, []);
-  (0, import_element85.useEffect)(() => {
+  (0, import_element93.useEffect)(() => {
     if (isResizeDisabled) {
       activePointerResizeRef.current?.cancel();
     }
   }, [isResizeDisabled]);
-  const latestHandlersRef = (0, import_element85.useRef)(null);
-  const normalizedRatio = (0, import_element85.useMemo)(() => {
+  const latestHandlersRef = (0, import_element93.useRef)(null);
+  const normalizedRatio = (0, import_element93.useMemo)(() => {
     if (!hasLockedRatio || imageSize.width === 0) {
       return 0;
     }
@@ -28245,7 +32143,7 @@ function RectangleStencil({
   const top = offsetY + cropRect.y * imageSize.height;
   const width = cropRect.width * imageSize.width;
   const height = cropRect.height * imageSize.height;
-  const handlePointerDown = (0, import_element85.useCallback)(
+  const handlePointerDown = (0, import_element93.useCallback)(
     (handle, event) => {
       if (isResizeDisabled || event.pointerType === "touch" && event.isPrimary === false) {
         event.preventDefault();
@@ -28336,7 +32234,7 @@ function RectangleStencil({
     },
     [cropRect, isResizeDisabled, onResizeStart]
   );
-  const computeFreeRect = (0, import_element85.useCallback)(
+  const computeFreeRect = (0, import_element93.useCallback)(
     (drag2, clientX, clientY) => computeFreeResizeRect(
       drag2,
       clientX,
@@ -28347,7 +32245,7 @@ function RectangleStencil({
     ),
     [imageSize, bounds, minCropSize]
   );
-  const computeLockedRect = (0, import_element85.useCallback)(
+  const computeLockedRect = (0, import_element93.useCallback)(
     (drag2, clientX, clientY, driverAxis) => computeLockedResizeRect(
       drag2,
       clientX,
@@ -28360,7 +32258,7 @@ function RectangleStencil({
     ),
     [imageSize, bounds, normalizedRatio, minCropSize]
   );
-  const computeShiftLockedRect = (0, import_element85.useCallback)(
+  const computeShiftLockedRect = (0, import_element93.useCallback)(
     (drag2, clientX, clientY) => computeShiftLockedResizeRect(
       drag2,
       clientX,
@@ -28380,7 +32278,7 @@ function RectangleStencil({
     onResizeEnd,
     snapCropRect
   };
-  const handleKeyDown = (0, import_element85.useCallback)(
+  const handleKeyDown = (0, import_element93.useCallback)(
     (handle, event) => {
       const key = event.key;
       if (isResizeDisabled) {
@@ -28480,7 +32378,7 @@ function RectangleStencil({
     return null;
   }
   const handles = hasLockedRatio ? CORNER_POSITIONS : ALL_POSITIONS;
-  return /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(
     "div",
     {
       className: "wp-media-editor-image-editor__stencil",
@@ -28493,17 +32391,17 @@ function RectangleStencil({
         transition: stencilTransition
       },
       children: [
-        freeformCrop && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+        freeformCrop && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
           "div",
           {
             id: resizeHandleDescriptionId,
             style: VISUALLY_HIDDEN_STYLE,
-            children: (0, import_i18n32.__)(
+            children: (0, import_i18n34.__)(
               "Use arrow keys to resize the crop area. Hold Shift for larger steps."
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__stencil-rect",
@@ -28515,7 +32413,7 @@ function RectangleStencil({
             }
           }
         ),
-        freeformCrop && handles.map((pos) => /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+        freeformCrop && handles.map((pos) => /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
           "button",
           {
             type: "button",
@@ -28538,7 +32436,7 @@ function RectangleStencil({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/dimming-overlay.mjs
-var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
 function DimmingOverlay({
   cropRect,
   containerSize,
@@ -28555,7 +32453,7 @@ function DimmingOverlay({
   const width = cropRect.width * imageSize.width;
   const height = cropRect.height * imageSize.height;
   const composedTransition = transition ? `${transition}, box-shadow 0.15s ease` : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
     "div",
     {
       className: "wp-media-editor-image-editor__dimming",
@@ -28572,7 +32470,7 @@ function DimmingOverlay({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/grid-overlay.mjs
-var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
 function GridOverlay({
   cropRect,
   containerSize,
@@ -28589,7 +32487,7 @@ function GridOverlay({
   const height = cropRect.height * imageSize.height;
   const thirdW = width / 3;
   const thirdH = height / 3;
-  return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)(
     "div",
     {
       className: "wp-media-editor-image-editor__grid",
@@ -28601,28 +32499,28 @@ function GridOverlay({
         height
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--horizontal",
             style: { top: thirdH }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--horizontal",
             style: { top: thirdH * 2 }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--vertical",
             style: { left: thirdW }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--vertical",
@@ -28635,8 +32533,8 @@ function GridOverlay({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/dimensions-overlay.mjs
-var import_element86 = __toESM(require_element(), 1);
-var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
+var import_element94 = __toESM(require_element(), 1);
+var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
 var HANDLE_GAP_PX = 12;
 var TRANSLATE_PERCENT = {
   before: "-100%",
@@ -28709,9 +32607,9 @@ function DimensionsOverlay({
   outputWidth,
   outputHeight
 }) {
-  const tooltipRef = (0, import_element86.useRef)(null);
-  const [tooltipSize, setTooltipSize] = (0, import_element86.useState)(null);
-  (0, import_element86.useLayoutEffect)(() => {
+  const tooltipRef = (0, import_element94.useRef)(null);
+  const [tooltipSize, setTooltipSize] = (0, import_element94.useState)(null);
+  (0, import_element94.useLayoutEffect)(() => {
     if (!tooltipRef.current) {
       return;
     }
@@ -28759,7 +32657,7 @@ function DimensionsOverlay({
       containerSize.height
     )
   } : preferred;
-  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
     "div",
     {
       ref: tooltipRef,
@@ -28779,10 +32677,10 @@ function DimensionsOverlay({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
-var import_element88 = __toESM(require_element(), 1);
+var import_element96 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-viewport-state.mjs
-var import_element87 = __toESM(require_element(), 1);
+var import_element95 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/viewport-state.mjs
 var DEFAULT_VIEWPORT_STATE = {
@@ -28806,36 +32704,36 @@ function viewportReducer(state, action) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-viewport-state.mjs
 function useViewportState() {
-  const [viewport, dispatch] = (0, import_element87.useReducer)(
+  const [viewport, dispatch] = (0, import_element95.useReducer)(
     viewportReducer,
     DEFAULT_VIEWPORT_STATE
   );
-  const setViewportZoom = (0, import_element87.useCallback)((zoom) => {
+  const setViewportZoom = (0, import_element95.useCallback)((zoom) => {
     dispatch({ type: "SET_VIEWPORT_ZOOM", payload: zoom });
   }, []);
-  const setViewportPan = (0, import_element87.useCallback)((pan) => {
+  const setViewportPan = (0, import_element95.useCallback)((pan) => {
     dispatch({ type: "SET_VIEWPORT_PAN", payload: pan });
   }, []);
-  const resetViewport = (0, import_element87.useCallback)(() => {
+  const resetViewport = (0, import_element95.useCallback)(() => {
     dispatch({ type: "RESET_VIEWPORT" });
   }, []);
-  return (0, import_element87.useMemo)(
+  return (0, import_element95.useMemo)(
     () => ({ viewport, setViewportZoom, setViewportPan, resetViewport }),
     [viewport, setViewportZoom, setViewportPan, resetViewport]
   );
 }
 
 // packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
-var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
-var ViewportContext = (0, import_element88.createContext)(null);
+var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
+var ViewportContext = (0, import_element96.createContext)(null);
 function ViewportProvider({
   children
 }) {
   const viewportState = useViewportState();
-  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(ViewportContext.Provider, { value: viewportState, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(ViewportContext.Provider, { value: viewportState, children });
 }
 function useViewport() {
-  const context = (0, import_element88.useContext)(ViewportContext);
+  const context = (0, import_element96.useContext)(ViewportContext);
   if (!context) {
     throw new Error(
       "useViewport must be used within a ViewportProvider."
@@ -28845,7 +32743,7 @@ function useViewport() {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
-var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
 var CROP_RECT_EPSILON = 1e-6;
 var CARDINAL_ROTATION_EPSILON2 = 1e-6;
 var SETTLE_TRANSITION_DURATION_MS = 200;
@@ -28889,20 +32787,20 @@ function CropperInner({
     setViewportPan,
     resetViewport
   } = useViewport();
-  const canvasRef = (0, import_element89.useRef)(null);
-  const cropAreaDescriptionId = (0, import_element89.useId)();
-  const [isCropAreaFocused, setIsCropAreaFocused] = (0, import_element89.useState)(focusOnMount);
-  const [isFocusVisible, setIsFocusVisible] = (0, import_element89.useState)(false);
-  const [canvasSize, setCanvasSize] = (0, import_element89.useState)({
+  const canvasRef = (0, import_element97.useRef)(null);
+  const cropAreaDescriptionId = (0, import_element97.useId)();
+  const [isCropAreaFocused, setIsCropAreaFocused] = (0, import_element97.useState)(focusOnMount);
+  const [isFocusVisible, setIsFocusVisible] = (0, import_element97.useState)(false);
+  const [canvasSize, setCanvasSize] = (0, import_element97.useState)({
     width: 0,
     height: 0
   });
-  (0, import_element89.useLayoutEffect)(() => {
+  (0, import_element97.useLayoutEffect)(() => {
     if (focusOnMount) {
       canvasRef.current?.focus({ preventScroll: true });
     }
   }, [focusOnMount]);
-  const handleCropAreaFocus = (0, import_element89.useCallback)(
+  const handleCropAreaFocus = (0, import_element97.useCallback)(
     (event) => {
       const target = event.target;
       if (target === event.currentTarget) {
@@ -28914,7 +32812,7 @@ function CropperInner({
     },
     []
   );
-  const handleCropAreaBlur = (0, import_element89.useCallback)(
+  const handleCropAreaBlur = (0, import_element97.useCallback)(
     (event) => {
       if (event.target === event.currentTarget) {
         setIsCropAreaFocused(false);
@@ -28927,7 +32825,7 @@ function CropperInner({
     },
     []
   );
-  (0, import_element89.useEffect)(() => {
+  (0, import_element97.useEffect)(() => {
     const element = canvasRef.current;
     if (!element) {
       return;
@@ -28948,13 +32846,13 @@ function CropperInner({
       observer.disconnect();
     };
   }, []);
-  (0, import_element89.useEffect)(() => {
+  (0, import_element97.useEffect)(() => {
     onStateChange?.(state);
   }, [state, onStateChange]);
   useAriaAnnouncer(state);
   const naturalWidth = state.image?.naturalWidth ?? 0;
   const naturalHeight = state.image?.naturalHeight ?? 0;
-  const { elementSize, visualSize } = (0, import_element89.useMemo)(
+  const { elementSize, visualSize } = (0, import_element97.useMemo)(
     () => getImageFit(
       canvasSize,
       { width: naturalWidth, height: naturalHeight },
@@ -28962,10 +32860,10 @@ function CropperInner({
     ),
     [canvasSize, naturalWidth, naturalHeight, state.rotation]
   );
-  (0, import_element89.useEffect)(() => {
+  (0, import_element97.useEffect)(() => {
     setVisualSize(visualSize);
   }, [visualSize, setVisualSize]);
-  (0, import_element89.useEffect)(() => {
+  (0, import_element97.useEffect)(() => {
     if (freeformCrop || visualSize.width === 0 || visualSize.height === 0 || !aspectRatio || aspectRatio <= 0) {
       return;
     }
@@ -28982,8 +32880,8 @@ function CropperInner({
     adjustCropRectForViewport,
     state.cropRect
   ]);
-  const prevAspectRatioRef = (0, import_element89.useRef)(aspectRatio);
-  (0, import_element89.useEffect)(() => {
+  const prevAspectRatioRef = (0, import_element97.useRef)(aspectRatio);
+  (0, import_element97.useEffect)(() => {
     if (prevAspectRatioRef.current === aspectRatio) {
       return;
     }
@@ -29004,26 +32902,26 @@ function CropperInner({
     adjustCropRectForViewport,
     state.cropRect
   ]);
-  const cropBounds = (0, import_element89.useMemo)(() => {
+  const cropBounds = (0, import_element97.useMemo)(() => {
     if (!state.image || elementSize.width === 0) {
       return void 0;
     }
     return getImageCropBounds(state, elementSize, visualSize);
   }, [state, elementSize, visualSize]);
   const effectiveMinZoom = minZoom !== void 0 ? minZoom : getMinZoom(state);
-  const [isResizing, setIsResizing] = (0, import_element89.useState)(false);
-  const isResizingRef = (0, import_element89.useRef)(false);
-  const isSettlingRef = (0, import_element89.useRef)(false);
-  const [isTouchPinching, setIsTouchPinchingState] = (0, import_element89.useState)(false);
-  const isTouchPinchingRef = (0, import_element89.useRef)(false);
-  const setTouchPinching = (0, import_element89.useCallback)((isPinching) => {
+  const [isResizing, setIsResizing] = (0, import_element97.useState)(false);
+  const isResizingRef = (0, import_element97.useRef)(false);
+  const isSettlingRef = (0, import_element97.useRef)(false);
+  const [isTouchPinching, setIsTouchPinchingState] = (0, import_element97.useState)(false);
+  const isTouchPinchingRef = (0, import_element97.useRef)(false);
+  const setTouchPinching = (0, import_element97.useCallback)((isPinching) => {
     isTouchPinchingRef.current = isPinching;
     setIsTouchPinchingState(isPinching);
   }, []);
-  const [activeHandle, setActiveHandle] = (0, import_element89.useState)(
+  const [activeHandle, setActiveHandle] = (0, import_element97.useState)(
     null
   );
-  const viewScaleRest = (0, import_element89.useMemo)(
+  const viewScaleRest = (0, import_element97.useMemo)(
     () => getViewScale(
       state.cropRect,
       canvasSize,
@@ -29033,9 +32931,9 @@ function CropperInner({
     ),
     [state.cropRect, canvasSize, visualSize]
   );
-  const [frozenViewScale, setFrozenViewScale] = (0, import_element89.useState)(1);
+  const [frozenViewScale, setFrozenViewScale] = (0, import_element97.useState)(1);
   const viewScale = isResizing ? frozenViewScale : viewScaleRest;
-  const scaledVisualSize = (0, import_element89.useMemo)(
+  const scaledVisualSize = (0, import_element97.useMemo)(
     () => ({
       width: visualSize.width * viewScale,
       height: visualSize.height * viewScale
@@ -29043,7 +32941,7 @@ function CropperInner({
     [visualSize.width, visualSize.height, viewScale]
   );
   const displayScale = naturalWidth > 0 ? elementSize.width / naturalWidth * state.zoom * viewScale : 0;
-  const keyboardResizeStep = (0, import_element89.useMemo)(() => {
+  const keyboardResizeStep = (0, import_element97.useMemo)(() => {
     if (displayScale < PIXEL_SNAP_DISPLAY_SCALE || aspectRatio && aspectRatio > 0 || naturalWidth <= 0 || naturalHeight <= 0) {
       return void 0;
     }
@@ -29071,7 +32969,7 @@ function CropperInner({
     state.rotation,
     state.zoom
   ]);
-  const minCropSize = (0, import_element89.useMemo)(() => {
+  const minCropSize = (0, import_element97.useMemo)(() => {
     if (naturalWidth <= 0 || naturalHeight <= 0) {
       return void 0;
     }
@@ -29093,7 +32991,7 @@ function CropperInner({
     state.zoom,
     displayScale
   ]);
-  const snapCropRect = (0, import_element89.useCallback)(
+  const snapCropRect = (0, import_element97.useCallback)(
     (rect, handle) => {
       if (displayScale < PIXEL_SNAP_DISPLAY_SCALE || naturalWidth <= 0 || naturalHeight <= 0) {
         return rect;
@@ -29107,8 +33005,8 @@ function CropperInner({
     },
     [displayScale, naturalWidth, naturalHeight, state]
   );
-  const wasPixelSnapEnabledRef = (0, import_element89.useRef)(false);
-  (0, import_element89.useEffect)(() => {
+  const wasPixelSnapEnabledRef = (0, import_element97.useRef)(false);
+  (0, import_element97.useEffect)(() => {
     const isPixelSnapEnabled = freeformCrop && (!aspectRatio || aspectRatio <= 0) && displayScale >= PIXEL_SNAP_DISPLAY_SCALE && naturalWidth > 0 && naturalHeight > 0;
     const wasPixelSnapEnabled = wasPixelSnapEnabledRef.current;
     wasPixelSnapEnabledRef.current = isPixelSnapEnabled;
@@ -29185,7 +33083,7 @@ function CropperInner({
       setIsFocusVisible(false);
     }
   };
-  (0, import_element89.useEffect)(() => {
+  (0, import_element97.useEffect)(() => {
     const el = canvasRef.current;
     if (!el) {
       return;
@@ -29205,7 +33103,7 @@ function CropperInner({
     };
   }, [onWheelNative]);
   const transformString = useTransformStyle(state, visualSize);
-  const handleImageLoad = (0, import_element89.useCallback)(
+  const handleImageLoad = (0, import_element97.useCallback)(
     (event) => {
       const img = event.currentTarget;
       const size4 = {
@@ -29221,7 +33119,7 @@ function CropperInner({
     },
     [src, setImage, onImageLoaded]
   );
-  const handleCropChange = (0, import_element89.useCallback)(
+  const handleCropChange = (0, import_element97.useCallback)(
     (rect) => {
       if (isTouchPinchingRef.current) {
         return;
@@ -29254,21 +33152,21 @@ function CropperInner({
     },
     [setCropRect, setViewportPan, canvasSize, scaledVisualSize]
   );
-  const [settling, setSettling] = (0, import_element89.useState)(false);
-  const settleTimerRef = (0, import_element89.useRef)();
-  const finishSettling = (0, import_element89.useCallback)(() => {
+  const [settling, setSettling] = (0, import_element97.useState)(false);
+  const settleTimerRef = (0, import_element97.useRef)();
+  const finishSettling = (0, import_element97.useCallback)(() => {
     clearTimeout(settleTimerRef.current);
     isSettlingRef.current = false;
     setSettling(false);
   }, []);
-  (0, import_element89.useEffect)(() => {
+  (0, import_element97.useEffect)(() => {
     return () => {
       clearTimeout(settleTimerRef.current);
     };
   }, []);
   const isInteractiveGrid = showGrid === "interactive";
   const showInteractiveGrid = isInteractiveGrid && (isInteractionPlacementActive || isResizing || isPlacementActive);
-  const outputSize = (0, import_element89.useMemo)(() => {
+  const outputSize = (0, import_element97.useMemo)(() => {
     if (!showDimensions || !activeHandle || !state.image) {
       return null;
     }
@@ -29278,11 +33176,11 @@ function CropperInner({
     });
     return { width: region.width, height: region.height };
   }, [showDimensions, activeHandle, state]);
-  const handleEscape = (0, import_element89.useCallback)(() => {
+  const handleEscape = (0, import_element97.useCallback)(() => {
     setIsFocusVisible(true);
     canvasRef.current?.focus({ preventScroll: true });
   }, []);
-  const handleResizeStart = (0, import_element89.useCallback)(
+  const handleResizeStart = (0, import_element97.useCallback)(
     (handle) => {
       if (isTouchPinchingRef.current) {
         return;
@@ -29297,7 +33195,7 @@ function CropperInner({
     },
     [finishSettling, onGestureStart, resetViewport, viewScaleRest]
   );
-  const handleResizeEnd = (0, import_element89.useCallback)(() => {
+  const handleResizeEnd = (0, import_element97.useCallback)(() => {
     const isCancellingForPinch = isTouchPinchingRef.current;
     isResizingRef.current = false;
     setIsResizing(false);
@@ -29318,7 +33216,7 @@ function CropperInner({
       SETTLE_TRANSITION_FALLBACK_MS
     );
   }, [finishSettling, settleCrop, onGestureEnd, resetViewport]);
-  const handleSettleTransitionEnd = (0, import_element89.useCallback)(
+  const handleSettleTransitionEnd = (0, import_element97.useCallback)(
     (event) => {
       if (!isSettlingRef.current || event.propertyName !== "transform") {
         return;
@@ -29334,7 +33232,7 @@ function CropperInner({
     imageTransition = "transform 150ms linear";
   }
   const settleStencilTransition = settling ? SETTLE_STENCIL_TRANSITION : void 0;
-  const imageStyle = (0, import_element89.useMemo)(() => {
+  const imageStyle = (0, import_element97.useMemo)(() => {
     if (elementSize.width === 0 || elementSize.height === 0) {
       return {};
     }
@@ -29381,7 +33279,7 @@ function CropperInner({
       willChange
     };
   }
-  const setContainerRef = (0, import_element89.useCallback)(
+  const setContainerRef = (0, import_element97.useCallback)(
     (element) => {
       if (typeof ref === "function") {
         ref(element);
@@ -29391,7 +33289,7 @@ function CropperInner({
     },
     [ref]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
     "div",
     {
       ref: setContainerRef,
@@ -29400,7 +33298,7 @@ function CropperInner({
         isDragging && "wp-media-editor-image-editor--dragging",
         className2
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
         "div",
         {
           ref: canvasRef,
@@ -29418,23 +33316,23 @@ function CropperInner({
           ),
           tabIndex: 0,
           role: "group",
-          "aria-label": (0, import_i18n33.__)("Crop area"),
+          "aria-label": (0, import_i18n35.__)("Crop area"),
           "aria-describedby": isCropAreaFocused ? cropAreaDescriptionId : void 0,
           onFocus: handleCropAreaFocus,
           onBlur: handleCropAreaBlur,
           ...canvasHandlers,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
               "div",
               {
                 id: cropAreaDescriptionId,
                 style: VISUALLY_HIDDEN_STYLE,
-                children: (0, import_i18n33.__)(
+                children: (0, import_i18n35.__)(
                   "When this area is focused, use arrow keys to move the image and plus or minus to zoom. Tab to resize handles and controls."
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
               "div",
               {
                 className: "wp-media-editor-image-editor__stage",
@@ -29442,7 +33340,7 @@ function CropperInner({
                 style: stageStyle,
                 onTransitionEnd: handleSettleTransitionEnd,
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                     "img",
                     {
                       className: "wp-media-editor-image-editor__image",
@@ -29454,7 +33352,7 @@ function CropperInner({
                       draggable: false
                     }
                   ),
-                  showDimming && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                  showDimming && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                     DimmingOverlay,
                     {
                       cropRect: state.cropRect,
@@ -29463,7 +33361,7 @@ function CropperInner({
                       transition: settleStencilTransition
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                     StencilComponent,
                     {
                       cropRect: state.cropRect,
@@ -29483,7 +33381,7 @@ function CropperInner({
                       keyboardResizeStep
                     }
                   ),
-                  (showGrid === true || isInteractiveGrid) && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                  (showGrid === true || isInteractiveGrid) && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                     GridOverlay,
                     {
                       cropRect: state.cropRect,
@@ -29491,7 +33389,7 @@ function CropperInner({
                       imageSize: scaledVisualSize
                     }
                   ),
-                  activeHandle && outputSize && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                  activeHandle && outputSize && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                     DimensionsOverlay,
                     {
                       cropRect: state.cropRect,
@@ -29511,15 +33409,15 @@ function CropperInner({
     }
   );
 }
-var CropperInnerWithRef = (0, import_element89.forwardRef)(
+var CropperInnerWithRef = (0, import_element97.forwardRef)(
   CropperInner
 );
-var Cropper = (0, import_element89.forwardRef)(
-  (props, ref) => /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(ViewportProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(CropperInnerWithRef, { ...props, ref }) })
+var Cropper = (0, import_element97.forwardRef)(
+  (props, ref) => /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(ViewportProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(CropperInnerWithRef, { ...props, ref }) })
 );
 
 // packages/media-editor/build-module/state/use-media-editor-state.mjs
-var import_element90 = __toESM(require_element(), 1);
+var import_element98 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/state/types.mjs
 var DEFAULT_CROP_OPTIONS = {
@@ -29616,7 +33514,7 @@ function areCropperImagesEqual(a2, b2) {
   return a2?.src === b2?.src && a2?.naturalWidth === b2?.naturalWidth && a2?.naturalHeight === b2?.naturalHeight;
 }
 function useMediaEditorState(initialState) {
-  const [state, dispatch] = (0, import_element90.useReducer)(
+  const [state, dispatch] = (0, import_element98.useReducer)(
     mediaEditorReducer,
     null,
     () => buildInitialMediaEditorState(
@@ -29627,16 +33525,16 @@ function useMediaEditorState(initialState) {
       initialState?.cropOptions
     )
   );
-  const [initialBaseline, setInitialBaseline] = (0, import_element90.useState)(() => state);
-  const stateRef = (0, import_element90.useRef)(state);
-  const visualSizeRef = (0, import_element90.useRef)({ width: 0, height: 0 });
-  const historyRef = (0, import_element90.useRef)([]);
-  const redoStackRef = (0, import_element90.useRef)([]);
-  const [hasUndo, setHasUndo] = (0, import_element90.useState)(false);
-  const [hasRedo, setHasRedo] = (0, import_element90.useState)(false);
-  const isGestureOpenRef = (0, import_element90.useRef)(false);
-  const gestureSnapshotRef = (0, import_element90.useRef)(null);
-  const pushSnapshot = (0, import_element90.useCallback)((snapshot) => {
+  const [initialBaseline, setInitialBaseline] = (0, import_element98.useState)(() => state);
+  const stateRef = (0, import_element98.useRef)(state);
+  const visualSizeRef = (0, import_element98.useRef)({ width: 0, height: 0 });
+  const historyRef = (0, import_element98.useRef)([]);
+  const redoStackRef = (0, import_element98.useRef)([]);
+  const [hasUndo, setHasUndo] = (0, import_element98.useState)(false);
+  const [hasRedo, setHasRedo] = (0, import_element98.useState)(false);
+  const isGestureOpenRef = (0, import_element98.useRef)(false);
+  const gestureSnapshotRef = (0, import_element98.useRef)(null);
+  const pushSnapshot = (0, import_element98.useCallback)((snapshot) => {
     const last = historyRef.current[historyRef.current.length - 1];
     if (last && areMediaEditorStatesEqual(last, snapshot)) {
       return;
@@ -29646,7 +33544,7 @@ function useMediaEditorState(initialState) {
     setHasUndo(true);
     setHasRedo(false);
   }, []);
-  const dispatchWithHistory = (0, import_element90.useCallback)(
+  const dispatchWithHistory = (0, import_element98.useCallback)(
     (action, recordHistory = true) => {
       const preState = stateRef.current;
       const postState = mediaEditorReducer(preState, action);
@@ -29666,14 +33564,14 @@ function useMediaEditorState(initialState) {
     },
     [pushSnapshot]
   );
-  const beginGesture = (0, import_element90.useCallback)(() => {
+  const beginGesture = (0, import_element98.useCallback)(() => {
     if (isGestureOpenRef.current) {
       return;
     }
     isGestureOpenRef.current = true;
     gestureSnapshotRef.current = null;
   }, []);
-  const endGesture = (0, import_element90.useCallback)(() => {
+  const endGesture = (0, import_element98.useCallback)(() => {
     const snapshot = gestureSnapshotRef.current;
     if (snapshot && !areMediaEditorStatesEqual(snapshot, stateRef.current)) {
       pushSnapshot(snapshot);
@@ -29681,20 +33579,20 @@ function useMediaEditorState(initialState) {
     gestureSnapshotRef.current = null;
     isGestureOpenRef.current = false;
   }, [pushSnapshot]);
-  const dispatchCropperAction = (0, import_element90.useCallback)(
+  const dispatchCropperAction = (0, import_element98.useCallback)(
     (action) => {
       dispatchWithHistory({ type: "CROPPER", action });
     },
     [dispatchWithHistory]
   );
-  const cropperSetters = (0, import_element90.useMemo)(
+  const cropperSetters = (0, import_element98.useMemo)(
     () => buildCropperSetters(
       dispatchCropperAction,
       () => stateRef.current.cropper
     ),
     [dispatchCropperAction]
   );
-  const setImage = (0, import_element90.useCallback)((image) => {
+  const setImage = (0, import_element98.useCallback)((image) => {
     if (areCropperImagesEqual(stateRef.current.cropper.image, image)) {
       return;
     }
@@ -29713,7 +33611,7 @@ function useMediaEditorState(initialState) {
     setHasUndo(false);
     setHasRedo(false);
   }, []);
-  const reset = (0, import_element90.useCallback)(
+  const reset = (0, import_element98.useCallback)(
     (resetState) => {
       dispatchWithHistory({
         type: "CROPPER",
@@ -29722,7 +33620,7 @@ function useMediaEditorState(initialState) {
     },
     [dispatchWithHistory]
   );
-  const setAspectRatioValue = (0, import_element90.useCallback)(
+  const setAspectRatioValue = (0, import_element98.useCallback)(
     (presetKey) => {
       const resolved = resolveAspectRatio(
         presetKey,
@@ -29739,10 +33637,10 @@ function useMediaEditorState(initialState) {
     },
     [dispatchWithHistory]
   );
-  const resetCropOptions = (0, import_element90.useCallback)(() => {
+  const resetCropOptions = (0, import_element98.useCallback)(() => {
     dispatchWithHistory({ type: "RESET_CROP_OPTIONS" });
   }, [dispatchWithHistory]);
-  const undo = (0, import_element90.useCallback)(() => {
+  const undo = (0, import_element98.useCallback)(() => {
     endGesture();
     const prev = historyRef.current[historyRef.current.length - 1];
     if (!prev) {
@@ -29755,7 +33653,7 @@ function useMediaEditorState(initialState) {
     stateRef.current = prev;
     dispatch({ type: "RESTORE_SNAPSHOT", payload: prev });
   }, [endGesture]);
-  const redo = (0, import_element90.useCallback)(() => {
+  const redo = (0, import_element98.useCallback)(() => {
     endGesture();
     const next = redoStackRef.current[0];
     if (!next) {
@@ -29768,10 +33666,10 @@ function useMediaEditorState(initialState) {
     stateRef.current = next;
     dispatch({ type: "RESTORE_SNAPSHOT", payload: next });
   }, [endGesture]);
-  const setVisualSize = (0, import_element90.useCallback)((size4) => {
+  const setVisualSize = (0, import_element98.useCallback)((size4) => {
     visualSizeRef.current = size4;
   }, []);
-  const adjustCropRectForViewport = (0, import_element90.useCallback)(
+  const adjustCropRectForViewport = (0, import_element98.useCallback)(
     (rect) => {
       dispatchWithHistory(
         { type: "VIEWPORT_ADJUST_CROP_RECT", payload: rect },
@@ -29785,7 +33683,7 @@ function useMediaEditorState(initialState) {
     state.cropper,
     initialBaseline.cropper
   );
-  const getCroppedImage = (0, import_element90.useCallback)(
+  const getCroppedImage = (0, import_element98.useCallback)(
     (mimeType, quality) => {
       if (!state.cropper.image) {
         return Promise.reject(
@@ -29801,7 +33699,7 @@ function useMediaEditorState(initialState) {
     },
     [state.cropper]
   );
-  const controller = (0, import_element90.useMemo)(
+  const controller = (0, import_element98.useMemo)(
     () => ({
       // CropperController surface (state is the cropper slice so a
       // <Cropper> takes this controller as-is).
@@ -29850,9 +33748,9 @@ function useMediaEditorState(initialState) {
 }
 
 // packages/media-editor/build-module/state/media-editor-state-provider.mjs
-var import_element91 = __toESM(require_element(), 1);
-var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
-var MediaEditorStateContext = (0, import_element91.createContext)(
+var import_element99 = __toESM(require_element(), 1);
+var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
+var MediaEditorStateContext = (0, import_element99.createContext)(
   null
 );
 function MediaEditorStateProvider({
@@ -29864,10 +33762,10 @@ function MediaEditorStateProvider({
     cropper: initialCropperState,
     cropOptions: initialCropOptions
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(MediaEditorStateContext.Provider, { value: controller, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(MediaEditorStateContext.Provider, { value: controller, children });
 }
 function useMediaEditor() {
-  const context = (0, import_element91.useContext)(MediaEditorStateContext);
+  const context = (0, import_element99.useContext)(MediaEditorStateContext);
   if (!context) {
     throw new Error(
       "useMediaEditor must be used within a MediaEditorStateProvider."
@@ -29877,7 +33775,7 @@ function useMediaEditor() {
 }
 
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
-var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCanvas({
   focusOnMount,
   isPlacementActive = false,
@@ -29889,18 +33787,18 @@ function MediaEditorCanvas({
   const { aspectRatioValue } = controller.cropOptions;
   const cropperImage = controller.state.image;
   const { beginGesture, endGesture, setImage } = controller;
-  const [status, setStatus] = (0, import_element92.useState)(
+  const [status, setStatus] = (0, import_element100.useState)(
     "loading"
   );
-  const aspectRatio = (0, import_element92.useMemo)(
+  const aspectRatio = (0, import_element100.useMemo)(
     () => resolveAspectRatio(aspectRatioValue, cropperImage),
     [aspectRatioValue, cropperImage]
   );
-  const handleGestureStart = (0, import_element92.useCallback)(() => {
+  const handleGestureStart = (0, import_element100.useCallback)(() => {
     beginGesture();
     onGestureStart?.();
   }, [beginGesture, onGestureStart]);
-  const handleGestureEnd = (0, import_element92.useCallback)(() => {
+  const handleGestureEnd = (0, import_element100.useCallback)(() => {
     endGesture();
     onGestureEnd?.();
   }, [endGesture, onGestureEnd]);
@@ -29908,7 +33806,7 @@ function MediaEditorCanvas({
   const mediaType = getMediaTypeFromMimeType(media?.mime_type);
   const mediaWidth = Number(media?.media_details?.width);
   const mediaHeight = Number(media?.media_details?.height);
-  (0, import_element92.useEffect)(() => {
+  (0, import_element100.useEffect)(() => {
     if (cropperImage || !mediaUrl || !Number.isFinite(mediaWidth) || !Number.isFinite(mediaHeight) || mediaWidth <= 0 || mediaHeight <= 0) {
       return;
     }
@@ -29919,7 +33817,7 @@ function MediaEditorCanvas({
     });
   }, [cropperImage, mediaUrl, mediaWidth, mediaHeight, setImage]);
   const isImage = mediaType.type === "image";
-  (0, import_element92.useEffect)(() => {
+  (0, import_element100.useEffect)(() => {
     if (!mediaUrl || !isImage) {
       return;
     }
@@ -29940,17 +33838,17 @@ function MediaEditorCanvas({
     return null;
   }
   if (status === "error") {
-    return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("div", { className: "media-editor-canvas__error", role: "alert", children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("p", { children: (0, import_i18n34.__)("Failed to load image.") }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "media-editor-canvas__error", role: "alert", children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("p", { children: (0, import_i18n36.__)("Failed to load image.") }) }) });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)("div", { className: "media-editor-canvas", children: [
-    status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("div", { className: "media-editor-canvas__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_components39.Spinner, {}) }),
-    /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)("div", { className: "media-editor-canvas", children: [
+    status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "media-editor-canvas__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_components40.Spinner, {}) }),
+    /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
       "div",
       {
         className: clsx_default("media-editor-canvas__cropper", {
           "is-loaded": status === "loaded"
         }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
           Cropper,
           {
             src: mediaUrl,
@@ -29970,41 +33868,41 @@ function MediaEditorCanvas({
 }
 
 // packages/media-editor/build-module/components/media-editor-fine-rotation/index.mjs
-var import_i18n35 = __toESM(require_i18n(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/hooks/use-crop-gesture-handlers.mjs
-var import_element93 = __toESM(require_element(), 1);
+var import_element101 = __toESM(require_element(), 1);
 var CROP_CONTROL_ATTR = "data-crop-control";
 var KEYBOARD_GESTURE_IDLE_MS = 300;
 function useCropGestureHandlers(options = {}) {
   const { commitOnKeyUp = true } = options;
   const { beginGesture, endGesture } = useMediaEditor();
-  const keyboardTimerRef = (0, import_element93.useRef)();
-  const clearKeyboardTimer = (0, import_element93.useCallback)(() => {
+  const keyboardTimerRef = (0, import_element101.useRef)();
+  const clearKeyboardTimer = (0, import_element101.useCallback)(() => {
     clearTimeout(keyboardTimerRef.current);
   }, []);
-  const scheduleKeyboardEnd = (0, import_element93.useCallback)(() => {
+  const scheduleKeyboardEnd = (0, import_element101.useCallback)(() => {
     clearKeyboardTimer();
     keyboardTimerRef.current = setTimeout(() => {
       endGesture();
     }, KEYBOARD_GESTURE_IDLE_MS);
   }, [clearKeyboardTimer, endGesture]);
-  (0, import_element93.useEffect)(() => clearKeyboardTimer, [clearKeyboardTimer]);
-  const handlePointerDownCapture = (0, import_element93.useCallback)(() => {
+  (0, import_element101.useEffect)(() => clearKeyboardTimer, [clearKeyboardTimer]);
+  const handlePointerDownCapture = (0, import_element101.useCallback)(() => {
     clearKeyboardTimer();
     beginGesture();
   }, [beginGesture, clearKeyboardTimer]);
-  const handlePointerEnd = (0, import_element93.useCallback)(() => {
+  const handlePointerEnd = (0, import_element101.useCallback)(() => {
     clearKeyboardTimer();
     endGesture();
   }, [clearKeyboardTimer, endGesture]);
-  const handleKeyDownCapture = (0, import_element93.useCallback)(() => {
+  const handleKeyDownCapture = (0, import_element101.useCallback)(() => {
     beginGesture();
     if (!commitOnKeyUp) {
       scheduleKeyboardEnd();
     }
   }, [beginGesture, commitOnKeyUp, scheduleKeyboardEnd]);
-  const handleKeyUp = (0, import_element93.useCallback)(() => {
+  const handleKeyUp = (0, import_element101.useCallback)(() => {
     if (commitOnKeyUp) {
       endGesture();
       return;
@@ -30022,19 +33920,19 @@ function useCropGestureHandlers(options = {}) {
 }
 
 // packages/media-editor/build-module/components/rotation-ruler/index.mjs
-var import_element95 = __toESM(require_element(), 1);
+var import_element103 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/components/rotation-ruler/use-ruler-drag.mjs
-var import_element94 = __toESM(require_element(), 1);
+var import_element102 = __toESM(require_element(), 1);
 function pxToValueDelta(deltaPx, pixelsPerStep, step) {
   return -deltaPx / pixelsPerStep * step;
 }
-function clampValue(value, min3, max3) {
-  if (value < min3) {
-    return min3;
+function clampValue(value, min4, max4) {
+  if (value < min4) {
+    return min4;
   }
-  if (value > max3) {
-    return max3;
+  if (value > max4) {
+    return max4;
   }
   return value;
 }
@@ -30045,14 +33943,14 @@ function useRulerDrag(options) {
   const {
     value,
     onChange,
-    min: min3,
-    max: max3,
+    min: min4,
+    max: max4,
     step,
     pixelsPerStep,
     disabled: disabled2,
     onPointerDownStart
   } = options;
-  const latestRef = (0, import_element94.useRef)({
+  const latestRef = (0, import_element102.useRef)({
     value,
     startX: 0,
     startValue: 0,
@@ -30062,10 +33960,10 @@ function useRulerDrag(options) {
     capturePointerId: 0,
     windowPointerUp: null
   });
-  (0, import_element94.useEffect)(() => {
+  (0, import_element102.useEffect)(() => {
     latestRef.current.value = value;
   }, [value]);
-  const endDrag = (0, import_element94.useCallback)(() => {
+  const endDrag = (0, import_element102.useCallback)(() => {
     const state = latestRef.current;
     if (!state.dragging) {
       return;
@@ -30086,8 +33984,8 @@ function useRulerDrag(options) {
       state.windowPointerUp = null;
     }
   }, []);
-  (0, import_element94.useEffect)(() => endDrag, [endDrag]);
-  const onPointerDown = (0, import_element94.useCallback)(
+  (0, import_element102.useEffect)(() => endDrag, [endDrag]);
+  const onPointerDown = (0, import_element102.useCallback)(
     (event) => {
       if (disabled2 || event.button !== 0) {
         return;
@@ -30108,7 +34006,7 @@ function useRulerDrag(options) {
     },
     [disabled2, onPointerDownStart, endDrag, step]
   );
-  const onPointerMove = (0, import_element94.useCallback)(
+  const onPointerMove = (0, import_element102.useCallback)(
     (event) => {
       const state = latestRef.current;
       if (!state.dragging) {
@@ -30128,13 +34026,13 @@ function useRulerDrag(options) {
       );
       const raw = state.startValue + deltaValue;
       const stepped = quantize(raw, state.activeStep);
-      const next = clampValue(stepped, min3, max3);
+      const next = clampValue(stepped, min4, max4);
       if (next !== state.value) {
         state.value = next;
         onChange(next);
       }
     },
-    [onChange, min3, max3, step, pixelsPerStep]
+    [onChange, min4, max4, step, pixelsPerStep]
   );
   return {
     onPointerDown,
@@ -30145,17 +34043,17 @@ function useRulerDrag(options) {
 }
 
 // packages/media-editor/build-module/components/rotation-ruler/index.mjs
-var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
 var STRIP_HEIGHT = 32;
 var LABEL_BASELINE_Y = 11;
 var MAJOR_INTERVAL = 15;
 var TICK_HEIGHT_MINOR = 4;
 var TICK_HEIGHT_MID = 8;
 var TICK_HEIGHT_MAJOR = 14;
-function useTicks(min3, max3) {
-  return (0, import_element95.useMemo)(() => {
+function useTicks(min4, max4) {
+  return (0, import_element103.useMemo)(() => {
     const out = [];
-    for (let v2 = Math.ceil(min3); v2 <= Math.floor(max3); v2 += 1) {
+    for (let v2 = Math.ceil(min4); v2 <= Math.floor(max4); v2 += 1) {
       let kind = "minor";
       let height = TICK_HEIGHT_MINOR;
       if (v2 % 15 === 0) {
@@ -30168,7 +34066,7 @@ function useTicks(min3, max3) {
       out.push({ value: v2, kind, height });
     }
     return out;
-  }, [min3, max3]);
+  }, [min4, max4]);
 }
 function formatValue(value) {
   const rounded = Math.round(value * 10) / 10;
@@ -30178,8 +34076,8 @@ function RotationRuler(props) {
   const {
     value,
     onChange,
-    min: min3 = -45,
-    max: max3 = 45,
+    min: min4 = -45,
+    max: max4 = 45,
     step = 1,
     label,
     unit = "\xB0",
@@ -30188,14 +34086,14 @@ function RotationRuler(props) {
     id,
     disabled: disabled2 = false
   } = props;
-  const inputRef = (0, import_element95.useRef)(null);
-  const generatedId = (0, import_element95.useId)();
+  const inputRef = (0, import_element103.useRef)(null);
+  const generatedId = (0, import_element103.useId)();
   const inputId = id ?? generatedId;
   const dragHandlers = useRulerDrag({
     value,
     onChange,
-    min: min3,
-    max: max3,
+    min: min4,
+    max: max4,
     step,
     pixelsPerStep,
     disabled: disabled2,
@@ -30213,15 +34111,15 @@ function RotationRuler(props) {
     }
     const direction = isIncrement ? 1 : -1;
     const magnitude = event.shiftKey ? step / 2 : step;
-    const next = clampValue(value + direction * magnitude, min3, max3);
+    const next = clampValue(value + direction * magnitude, min4, max4);
     if (next !== value) {
       onChange(next);
     }
   };
   const display = `${formatValue(value)}${unit}`;
-  const ticks = useTicks(min3, max3);
+  const ticks = useTicks(min4, max4);
   const pxPerUnit = pixelsPerStep / step;
-  const stripStyle = (0, import_element95.useMemo)(() => {
+  const stripStyle = (0, import_element103.useMemo)(() => {
     const offset4 = -value * pxPerUnit;
     return {
       transform: `translateX(calc(-50% + ${offset4}px))`
@@ -30233,7 +34131,7 @@ function RotationRuler(props) {
   const isNegative = numberText.startsWith("-");
   const digits = isNegative ? numberText.slice(1) : numberText;
   const majorTicks = ticks.filter((tick) => tick.kind === "major");
-  return /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(
     "div",
     {
       className: clsx_default("rotation-ruler", className2),
@@ -30241,37 +34139,37 @@ function RotationRuler(props) {
       "data-disabled": disabled2 || void 0,
       ...dragHandlers,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
           "input",
           {
             ref: inputRef,
             id: inputId,
             type: "range",
             className: "rotation-ruler__input",
-            min: min3,
-            max: max3,
+            min: min4,
+            max: max4,
             step: "any",
             value,
             disabled: disabled2,
             "aria-label": label,
             "aria-valuetext": display,
             onChange: (event) => onChange(
-              clampValue(event.target.valueAsNumber, min3, max3)
+              clampValue(event.target.valueAsNumber, min4, max4)
             ),
             onKeyDown: handleKeyDown
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("div", { className: "rotation-ruler__strip", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("div", { className: "rotation-ruler__strip", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(
           "svg",
           {
             className: "rotation-ruler__ticks",
             style: stripStyle,
-            width: (max3 - min3) * pxPerUnit,
+            width: (max4 - min4) * pxPerUnit,
             height: STRIP_HEIGHT,
-            viewBox: `${min3 * pxPerUnit} 0 ${(max3 - min3) * pxPerUnit} ${STRIP_HEIGHT}`,
+            viewBox: `${min4 * pxPerUnit} 0 ${(max4 - min4) * pxPerUnit} ${STRIP_HEIGHT}`,
             preserveAspectRatio: "xMidYMid meet",
             children: [
-              ticks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+              ticks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
                 "line",
                 {
                   x1: tick.value * pxPerUnit,
@@ -30282,7 +34180,7 @@ function RotationRuler(props) {
                 },
                 tick.value
               )),
-              majorTicks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)(
+              majorTicks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(
                 "text",
                 {
                   x: tick.value * pxPerUnit,
@@ -30299,19 +34197,19 @@ function RotationRuler(props) {
             ]
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("div", { className: "rotation-ruler__active-label", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)("span", { className: "rotation-ruler__active-label-number", children: [
-          isNegative && /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("span", { className: "rotation-ruler__active-label-sign", children: "-" }),
+        /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("div", { className: "rotation-ruler__active-label", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)("span", { className: "rotation-ruler__active-label-number", children: [
+          isNegative && /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("span", { className: "rotation-ruler__active-label-sign", children: "-" }),
           digits,
-          /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("span", { className: "rotation-ruler__active-label-unit", children: unit })
+          /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("span", { className: "rotation-ruler__active-label-unit", children: unit })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("div", { className: "rotation-ruler__pointer", "aria-hidden": "true" })
+        /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("div", { className: "rotation-ruler__pointer", "aria-hidden": "true" })
       ]
     }
   );
 }
 
 // packages/media-editor/build-module/components/media-editor-fine-rotation/index.mjs
-var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorFineRotation({
   onPlacementControlInteraction
 }) {
@@ -30332,16 +34230,16 @@ function MediaEditorFineRotation({
     onPlacementControlInteraction?.();
     setRotation(baseAngle + clamped * visualDir);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
     "div",
     {
       role: "presentation",
       className: "media-editor-fine-rotation",
       ...rotationGestureHandlers,
-      children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
         RotationRuler,
         {
-          label: (0, import_i18n35.__)("Fine rotation"),
+          label: (0, import_i18n37.__)("Fine rotation"),
           min: -MAX_ROTATION_OFFSET,
           max: MAX_ROTATION_OFFSET,
           value: fineOffset,
@@ -30353,11 +34251,11 @@ function MediaEditorFineRotation({
 }
 
 // packages/media-editor/build-module/components/media-editor-image-controls/index.mjs
-var import_components40 = __toESM(require_components(), 1);
-var import_i18n36 = __toESM(require_i18n(), 1);
+var import_components41 = __toESM(require_components(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/components/media-editor/use-crop-options.mjs
-var import_element96 = __toESM(require_element(), 1);
+var import_element104 = __toESM(require_element(), 1);
 function getAspectRatioOptions(aspectRatioPresets) {
   return [
     ...DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value <= 0),
@@ -30370,11 +34268,11 @@ function useCropOptions({
   const controller = useMediaEditor();
   const { aspectRatioValue } = controller.cropOptions;
   const cropperImage = controller.state.image;
-  const aspectRatioOptions = (0, import_element96.useMemo)(
+  const aspectRatioOptions = (0, import_element104.useMemo)(
     () => getAspectRatioOptions(aspectRatioPresets),
     [aspectRatioPresets]
   );
-  const resolvedAspectRatio = (0, import_element96.useMemo)(
+  const resolvedAspectRatio = (0, import_element104.useMemo)(
     () => resolveAspectRatio(aspectRatioValue, cropperImage),
     [aspectRatioValue, cropperImage]
   );
@@ -30388,7 +34286,7 @@ function useCropOptions({
 }
 
 // packages/media-editor/build-module/components/media-editor-image-controls/index.mjs
-var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
 var DEFAULT_ZOOM_FACTOR = 1.2;
 function MediaEditorImageControls({
   withLabels = false,
@@ -30405,35 +34303,35 @@ function MediaEditorImageControls({
       Math.min(MAX_ZOOM, Math.max(minZoom, state.zoom * factor))
     );
   };
-  const rotateButtons = /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(import_jsx_runtime138.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
-      import_components40.Button,
+  const rotateButtons = /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(import_jsx_runtime144.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      import_components41.Button,
       {
         size: "compact",
         icon: rotate_left_default,
-        label: (0, import_i18n36.__)("Rotate 90\xB0 counter-clockwise"),
+        label: (0, import_i18n38.__)("Rotate 90\xB0 counter-clockwise"),
         showTooltip: true,
         onClick: () => snapRotate90(-1)
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
-      import_components40.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      import_components41.Button,
       {
         size: "compact",
         icon: rotate_right_default,
-        label: (0, import_i18n36.__)("Rotate 90\xB0 clockwise"),
+        label: (0, import_i18n38.__)("Rotate 90\xB0 clockwise"),
         showTooltip: true,
         onClick: () => snapRotate90(1)
       }
     )
   ] });
-  const flipButtons = /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(import_jsx_runtime138.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
-      import_components40.Button,
+  const flipButtons = /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(import_jsx_runtime144.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      import_components41.Button,
       {
         size: "compact",
         icon: flip_horizontal_default,
-        label: (0, import_i18n36.__)("Flip horizontal"),
+        label: (0, import_i18n38.__)("Flip horizontal"),
         showTooltip: true,
         isPressed: state.flip.horizontal,
         onClick: () => setFlip({
@@ -30442,12 +34340,12 @@ function MediaEditorImageControls({
         })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
-      import_components40.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      import_components41.Button,
       {
         size: "compact",
         icon: flip_vertical_default,
-        label: (0, import_i18n36.__)("Flip vertical"),
+        label: (0, import_i18n38.__)("Flip vertical"),
         showTooltip: true,
         isPressed: state.flip.vertical,
         onClick: () => setFlip({
@@ -30457,25 +34355,25 @@ function MediaEditorImageControls({
       }
     )
   ] });
-  const zoomButtons = /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(import_jsx_runtime138.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
-      import_components40.Button,
+  const zoomButtons = /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(import_jsx_runtime144.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      import_components41.Button,
       {
         size: "compact",
         icon: plus_default,
-        label: (0, import_i18n36.__)("Zoom in"),
+        label: (0, import_i18n38.__)("Zoom in"),
         showTooltip: true,
         disabled: state.zoom >= MAX_ZOOM,
         accessibleWhenDisabled: true,
         onClick: () => zoomByFactor(zoomFactor)
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
-      import_components40.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      import_components41.Button,
       {
         size: "compact",
         icon: line_solid_default,
-        label: (0, import_i18n36.__)("Zoom out"),
+        label: (0, import_i18n38.__)("Zoom out"),
         showTooltip: true,
         disabled: state.zoom <= minZoom,
         accessibleWhenDisabled: true,
@@ -30483,18 +34381,18 @@ function MediaEditorImageControls({
       }
     )
   ] });
-  const aspectRatioDropdown = hasAspectRatioControl ? /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
-    import_components40.DropdownMenu,
+  const aspectRatioDropdown = hasAspectRatioControl ? /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+    import_components41.DropdownMenu,
     {
       icon: aspect_ratio_default,
-      label: (0, import_i18n36.__)("Aspect ratio"),
+      label: (0, import_i18n38.__)("Aspect ratio"),
       popoverProps: { placement: "top" },
       toggleProps: { size: "compact" },
-      children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_components40.MenuGroup, { label: (0, import_i18n36.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
+      children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(import_components41.MenuGroup, { label: (0, import_i18n38.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
         const value = preset.value.toString();
         const isSelected = value === aspectRatioValue;
-        return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
-          import_components40.MenuItem,
+        return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+          import_components41.MenuItem,
           {
             role: "menuitemradio",
             isSelected,
@@ -30511,69 +34409,69 @@ function MediaEditorImageControls({
     }
   ) : null;
   if (withLabels) {
-    return /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)("div", { className: "media-editor-image-controls is-stacked", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)("div", { className: "media-editor-image-controls__transforms", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)("div", { className: "media-editor-image-controls is-stacked", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)("div", { className: "media-editor-image-controls__transforms", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
           "div",
           {
             className: "media-editor-image-controls__group",
             role: "group",
-            "aria-label": (0, import_i18n36.__)("Rotate"),
+            "aria-label": (0, import_i18n38.__)("Rotate"),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
                 "span",
                 {
                   className: "media-editor-image-controls__label",
                   "aria-hidden": "true",
-                  children: (0, import_i18n36.__)("Rotate")
+                  children: (0, import_i18n38.__)("Rotate")
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("div", { className: "media-editor-image-controls__buttons", children: rotateButtons })
+              /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { className: "media-editor-image-controls__buttons", children: rotateButtons })
             ]
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
           "div",
           {
             className: "media-editor-image-controls__group",
             role: "group",
-            "aria-label": (0, import_i18n36.__)("Flip"),
+            "aria-label": (0, import_i18n38.__)("Flip"),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
                 "span",
                 {
                   className: "media-editor-image-controls__label",
                   "aria-hidden": "true",
-                  children: (0, import_i18n36.__)("Flip")
+                  children: (0, import_i18n38.__)("Flip")
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("div", { className: "media-editor-image-controls__buttons", children: flipButtons })
+              /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { className: "media-editor-image-controls__buttons", children: flipButtons })
             ]
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
         "div",
         {
           className: "media-editor-image-controls__group",
           role: "group",
-          "aria-label": (0, import_i18n36.__)("Zoom"),
+          "aria-label": (0, import_i18n38.__)("Zoom"),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
               "span",
               {
                 className: "media-editor-image-controls__label",
                 "aria-hidden": "true",
-                children: (0, import_i18n36.__)("Zoom")
+                children: (0, import_i18n38.__)("Zoom")
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("div", { className: "media-editor-image-controls__buttons", children: zoomButtons })
+            /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { className: "media-editor-image-controls__buttons", children: zoomButtons })
           ]
         }
       )
     ] });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)("div", { className: "media-editor-image-controls", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)("div", { className: "media-editor-image-controls", children: [
     rotateButtons,
     flipButtons,
     zoomButtons,
@@ -30582,9 +34480,9 @@ function MediaEditorImageControls({
 }
 
 // packages/media-editor/build-module/components/media-editor-crop-panel/index.mjs
-var import_components41 = __toESM(require_components(), 1);
-var import_i18n37 = __toESM(require_i18n(), 1);
-var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
+var import_components42 = __toESM(require_components(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
+var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCropPanel({
   aspectRatioValue,
   onAspectRatioChange,
@@ -30595,19 +34493,19 @@ function MediaEditorCropPanel({
     // Tag the whole panel as a crop-control region so the modal's
     // Cmd+Z handler doesn't mistake the SelectControl input for a
     // metadata field (which would suppress undo).
-    /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(
       Stack,
       {
         direction: "column",
         gap: "xl",
         ...{ [CROP_CONTROL_ATTR]: true },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("h2", {}), children: (0, import_i18n37.__)("Crop options") }),
-          showTransformControls && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(MediaEditorImageControls, { withLabels: true }),
-          /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
-            import_components41.SelectControl,
+          /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("h2", {}), children: (0, import_i18n39.__)("Crop options") }),
+          showTransformControls && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(MediaEditorImageControls, { withLabels: true }),
+          /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
+            import_components42.SelectControl,
             {
-              label: (0, import_i18n37.__)("Aspect ratio"),
+              label: (0, import_i18n39.__)("Aspect ratio"),
               value: aspectRatioValue,
               onChange: onAspectRatioChange,
               options: aspectRatioOptions.map((preset) => ({
@@ -30623,57 +34521,57 @@ function MediaEditorCropPanel({
 }
 
 // packages/media-editor/build-module/components/media-editor-keyboard-shortcuts-modal/index.mjs
-var import_components42 = __toESM(require_components(), 1);
-var import_element97 = __toESM(require_element(), 1);
-var import_i18n38 = __toESM(require_i18n(), 1);
+var import_components43 = __toESM(require_components(), 1);
+var import_element105 = __toESM(require_element(), 1);
+var import_i18n40 = __toESM(require_i18n(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
-var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
 var SHORTCUTS = [
   {
-    description: (0, import_i18n38.__)("Undo"),
+    description: (0, import_i18n40.__)("Undo"),
     keyCombination: { modifier: "primary", character: "z" }
   },
   {
-    description: (0, import_i18n38.__)("Redo"),
+    description: (0, import_i18n40.__)("Redo"),
     keyCombination: { modifier: "primaryShift", character: "z" }
   },
   {
-    description: (0, import_i18n38.__)("Pan"),
+    description: (0, import_i18n40.__)("Pan"),
     keyCombination: {
       character: ["\u2191", "\u2193", "\u2190", "\u2192"],
-      ariaLabel: (0, import_i18n38.__)("Arrow keys")
+      ariaLabel: (0, import_i18n40.__)("Arrow keys")
     }
   },
   {
-    description: (0, import_i18n38.__)("Zoom in"),
+    description: (0, import_i18n40.__)("Zoom in"),
     keyCombination: { character: "+" }
   },
   {
-    description: (0, import_i18n38.__)("Zoom out"),
+    description: (0, import_i18n40.__)("Zoom out"),
     keyCombination: { character: "-" }
   },
   {
-    description: (0, import_i18n38.__)("Rotate 90\xB0 clockwise"),
+    description: (0, import_i18n40.__)("Rotate 90\xB0 clockwise"),
     keyCombination: { character: "R" }
   },
   {
-    description: (0, import_i18n38.__)("Rotate 90\xB0 counter-clockwise"),
+    description: (0, import_i18n40.__)("Rotate 90\xB0 counter-clockwise"),
     keyCombination: { modifier: "shift", character: "R" }
   },
   {
-    description: (0, import_i18n38.__)("Flip horizontal"),
+    description: (0, import_i18n40.__)("Flip horizontal"),
     keyCombination: { character: "H" }
   },
   {
-    description: (0, import_i18n38.__)("Flip vertical"),
+    description: (0, import_i18n40.__)("Flip vertical"),
     keyCombination: { character: "V" }
   },
   {
-    description: (0, import_i18n38.__)("Pan or resize crop (large step)"),
+    description: (0, import_i18n40.__)("Pan or resize crop (large step)"),
     keyCombination: {
       modifier: "shift",
       character: ["\u2191", "\u2193", "\u2190", "\u2192"],
-      ariaLabel: (0, import_i18n38.__)("Shift + Arrow keys")
+      ariaLabel: (0, import_i18n40.__)("Shift + Arrow keys")
     }
   }
 ];
@@ -30701,13 +34599,13 @@ function KeyCombinationDisplay({
   } else {
     label = charString;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
     "kbd",
     {
       className: "media-editor-keyboard-shortcuts-modal__shortcut-term",
       "aria-label": label,
       children: keys.map(
-        (key, index2) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_element97.Fragment, { children: key }, index2) : /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+        (key, index2) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(import_element105.Fragment, { children: key }, index2) : /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
           "kbd",
           {
             className: "media-editor-keyboard-shortcuts-modal__shortcut-key",
@@ -30722,28 +34620,28 @@ function KeyCombinationDisplay({
 function MediaEditorKeyboardShortcutsModal({
   onClose
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
-    import_components42.Modal,
+  return /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(
+    import_components43.Modal,
     {
       className: "media-editor-keyboard-shortcuts-modal",
-      title: (0, import_i18n38.__)("Keyboard shortcuts"),
+      title: (0, import_i18n40.__)("Keyboard shortcuts"),
       onRequestClose: onClose,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n38.__)(
+        /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n40.__)(
           "These shortcuts work when the image editor has focus."
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
           "ul",
           {
             className: "media-editor-keyboard-shortcuts-modal__shortcut-list",
             role: "list",
-            children: SHORTCUTS.map(({ description, keyCombination }, index2) => /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
+            children: SHORTCUTS.map(({ description, keyCombination }, index2) => /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(
               "li",
               {
                 className: "media-editor-keyboard-shortcuts-modal__shortcut",
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("span", { className: "media-editor-keyboard-shortcuts-modal__shortcut-description", children: description }),
-                  /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("span", { className: "media-editor-keyboard-shortcuts-modal__shortcut-description", children: description }),
+                  /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
                     KeyCombinationDisplay,
                     {
                       keyCombination
@@ -30764,8 +34662,8 @@ function MediaEditorKeyboardShortcutsModal({
 var import_api_fetch = __toESM(require_api_fetch(), 1);
 var import_data7 = __toESM(require_data(), 1);
 var import_core_data = __toESM(require_core_data(), 1);
-var import_element98 = __toESM(require_element(), 1);
-var import_i18n39 = __toESM(require_i18n(), 1);
+var import_element106 = __toESM(require_element(), 1);
+var import_i18n41 = __toESM(require_i18n(), 1);
 var import_notices = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor-modal/build-modifiers.mjs
@@ -30874,8 +34772,8 @@ function useSaveMediaEditor({
     saveEditedEntityRecord
   } = (0, import_data7.useDispatch)(import_core_data.store);
   const { createErrorNotice, removeAllNotices } = (0, import_data7.useDispatch)(import_notices.store);
-  const [isSaving, setIsSaving] = (0, import_element98.useState)(false);
-  const save = (0, import_element98.useCallback)(async () => {
+  const [isSaving, setIsSaving] = (0, import_element106.useState)(false);
+  const save = (0, import_element106.useCallback)(async () => {
     removeAllNotices("snackbar", MEDIA_EDITOR_NOTICES_CONTEXT);
     setIsSaving(true);
     try {
@@ -30933,15 +34831,15 @@ function useSaveMediaEditor({
         });
       }
     } catch (error2) {
-      const message2 = error2 instanceof Error ? error2.message : error2?.message ?? (0, import_i18n39.__)("An unknown error occurred.");
+      const message2 = error2 instanceof Error ? error2.message : error2?.message ?? (0, import_i18n41.__)("An unknown error occurred.");
       createErrorNotice(
-        isImage ? (0, import_i18n39.sprintf)(
+        isImage ? (0, import_i18n41.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n39.__)("Could not save image. %s"),
+          (0, import_i18n41.__)("Could not save image. %s"),
           message2
-        ) : (0, import_i18n39.sprintf)(
+        ) : (0, import_i18n41.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n39.__)("Could not save media. %s"),
+          (0, import_i18n41.__)("Could not save media. %s"),
           message2
         ),
         {
@@ -30969,7 +34867,7 @@ function useSaveMediaEditor({
 }
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
-var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
 var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
 var PLACEMENT_CONTROL_IDLE_MS = 300;
 function MediaEditorSidebar({
@@ -30977,27 +34875,27 @@ function MediaEditorSidebar({
   activeTabId,
   onTabChange
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
     complementary_area_default,
     {
       scope: "media-editor",
       identifier: "media-editor/details",
-      title: (0, import_i18n40.__)("Details"),
+      title: (0, import_i18n42.__)("Details"),
       icon: drawer_right_default,
       isActiveByDefault: true,
       className: "media-editor__sidebar",
       panelClassName: "media-editor__sidebar-panel",
       headerClassName: "media-editor__sidebar-header",
-      closeLabel: (0, import_i18n40.__)("Close media panel"),
-      render: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+      closeLabel: (0, import_i18n42.__)("Close media panel"),
+      render: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
         tabs_exports.Root,
         {
           value: activeTabId,
           onValueChange: (value) => onTabChange(value)
         }
       ),
-      header: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(tabs_exports.List, { variant: "minimal", children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(tabs_exports.Tab, { value: tab.id, children: tab.title }, tab.id)) }),
-      children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(tabs_exports.Panel, { value: tab.id, tabIndex: -1, children: tab.panel }, tab.id))
+      header: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(tabs_exports.List, { variant: "minimal", children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(tabs_exports.Tab, { value: tab.id, children: tab.title }, tab.id)) }),
+      children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(tabs_exports.Panel, { value: tab.id, tabIndex: -1, children: tab.panel }, tab.id))
     }
   );
 }
@@ -31007,8 +34905,8 @@ function HeaderActions({
   showCloseButton = false,
   onCancel
 }) {
-  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element99.useState)(false);
-  return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(
+  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element107.useState)(false);
+  return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
     Stack,
     {
       className: "media-editor__header-actions",
@@ -31016,28 +34914,28 @@ function HeaderActions({
       align: "center",
       gap: "sm",
       children: [
-        isImage && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
-          import_components43.Button,
+        isImage && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components44.Button,
           {
             size: "compact",
             icon: keyboard_default,
-            label: (0, import_i18n40.__)("Keyboard shortcuts"),
+            label: (0, import_i18n42.__)("Keyboard shortcuts"),
             onClick: () => setIsShortcutsModalOpen(true)
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
-        showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
-          import_components43.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
+        showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components44.Button,
           {
             size: "compact",
             icon: close_default,
-            label: (0, import_i18n40.__)("Close"),
+            label: (0, import_i18n42.__)("Close"),
             onClick: onCancel,
             disabled: isSaving,
             accessibleWhenDisabled: true
           }
         ),
-        isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+        isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
           MediaEditorKeyboardShortcutsModal,
           {
             onClose: () => setIsShortcutsModalOpen(false)
@@ -31079,30 +34977,30 @@ function HistoryActions({
     onReset();
     endGesture();
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
     Stack,
     {
       className: "media-editor__history-actions",
       align: "center",
       gap: "sm",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
-          import_components43.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components44.Button,
           {
             size: "compact",
             variant: "tertiary",
             disabled: !isDirty,
             accessibleWhenDisabled: true,
             onClick: handleReset,
-            children: (0, import_i18n40.__)("Reset")
+            children: (0, import_i18n42.__)("Reset")
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
-          import_components43.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components44.Button,
           {
             size: "compact",
             icon: undo_default,
-            label: (0, import_i18n40.__)("Undo"),
+            label: (0, import_i18n42.__)("Undo"),
             showTooltip: true,
             shortcut: import_keycodes3.displayShortcut.primary("z"),
             disabled: isUndoRedoDisabled || !hasUndo,
@@ -31110,12 +35008,12 @@ function HistoryActions({
             onClick: handleUndo
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
-          import_components43.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components44.Button,
           {
             size: "compact",
             icon: redo_default,
-            label: (0, import_i18n40.__)("Redo"),
+            label: (0, import_i18n42.__)("Redo"),
             showTooltip: true,
             shortcut: (0, import_keycodes3.isAppleOS)() ? import_keycodes3.displayShortcut.primaryShift("z") : import_keycodes3.displayShortcut.primary("y"),
             disabled: isUndoRedoDisabled || !hasRedo,
@@ -31135,7 +35033,7 @@ function FooterActions({
   onSave
 }) {
   const saveDisabled = isSaving || !hasMedia || !hasChanges;
-  return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
     Stack,
     {
       className: "media-editor__footer-actions",
@@ -31143,19 +35041,19 @@ function FooterActions({
       align: "center",
       gap: "sm",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
-          import_components43.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components44.Button,
           {
             __next40pxDefaultSize: true,
             variant: "tertiary",
             onClick: onCancel,
             disabled: isSaving,
             accessibleWhenDisabled: true,
-            children: (0, import_i18n40.__)("Cancel")
+            children: (0, import_i18n42.__)("Cancel")
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
-          import_components43.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components44.Button,
           {
             __next40pxDefaultSize: true,
             variant: "primary",
@@ -31163,7 +35061,7 @@ function FooterActions({
             isBusy: isSaving,
             disabled: saveDisabled,
             accessibleWhenDisabled: true,
-            children: (0, import_i18n40.__)("Save")
+            children: (0, import_i18n42.__)("Save")
           }
         )
       ]
@@ -31183,7 +35081,7 @@ function MediaEditorContent({
   shouldCloseOnEsc = false
 }) {
   const cropper = useMediaEditor();
-  const isPanelLayout = (0, import_compose11.useViewportMatch)("small");
+  const isPanelLayout = (0, import_compose12.useViewportMatch)("small");
   const footerLayout = isPanelLayout ? "wide" : "narrow";
   const { media, hasEdits } = (0, import_data8.useSelect)(
     (select) => {
@@ -31216,34 +35114,34 @@ function MediaEditorContent({
   const hasChanges = cropper.isCropperDirty || hasEdits;
   const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, import_data8.useDispatch)(import_core_data2.store);
   const { removeAllNotices } = (0, import_data8.useDispatch)(import_notices2.store);
-  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element99.useState)(false);
-  const [isPlacementActive, setIsPlacementActive] = (0, import_element99.useState)(false);
-  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element99.useState)(false);
-  const placementControlTimerRef = (0, import_element99.useRef)();
-  const signalPlacementControlInteraction = (0, import_element99.useCallback)(() => {
+  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element107.useState)(false);
+  const [isPlacementActive, setIsPlacementActive] = (0, import_element107.useState)(false);
+  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element107.useState)(false);
+  const placementControlTimerRef = (0, import_element107.useRef)();
+  const signalPlacementControlInteraction = (0, import_element107.useCallback)(() => {
     setIsPlacementActive(true);
     clearTimeout(placementControlTimerRef.current);
     placementControlTimerRef.current = setTimeout(() => {
       setIsPlacementActive(false);
     }, PLACEMENT_CONTROL_IDLE_MS);
   }, []);
-  const handleCanvasGestureStart = (0, import_element99.useCallback)(() => {
+  const handleCanvasGestureStart = (0, import_element107.useCallback)(() => {
     setIsCanvasGestureActive(true);
   }, []);
-  const handleCanvasGestureEnd = (0, import_element99.useCallback)(() => {
+  const handleCanvasGestureEnd = (0, import_element107.useCallback)(() => {
     setIsCanvasGestureActive(false);
   }, []);
   const isCropInteractionActive = isPlacementActive || isCanvasGestureActive;
-  (0, import_element99.useEffect)(() => {
+  (0, import_element107.useEffect)(() => {
     return () => {
       clearTimeout(placementControlTimerRef.current);
     };
   }, []);
-  (0, import_element99.useEffect)(() => {
+  (0, import_element107.useEffect)(() => {
     setIsPlacementActive(false);
     setIsCanvasGestureActive(false);
   }, [id]);
-  (0, import_element99.useEffect)(() => {
+  (0, import_element107.useEffect)(() => {
     invalidateResolution("getEntityRecord", [
       "postType",
       "attachment",
@@ -31268,17 +35166,17 @@ function MediaEditorContent({
     media,
     onSaved
   });
-  const tabs = (0, import_element99.useMemo)(() => {
+  const tabs = (0, import_element107.useMemo)(() => {
     const detailsTab = {
       id: "details",
-      title: (0, import_i18n40.__)("Details"),
-      panel: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+      title: (0, import_i18n42.__)("Details"),
+      panel: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
         Stack,
         {
           className: "media-editor__panel",
           direction: "column",
           gap: "lg",
-          children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(MediaForm, {})
+          children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(MediaForm, {})
         }
       )
     };
@@ -31288,14 +35186,14 @@ function MediaEditorContent({
     return [
       {
         id: "crop",
-        title: (0, import_i18n40.__)("Crop"),
-        panel: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+        title: (0, import_i18n42.__)("Crop"),
+        panel: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
           Stack,
           {
             className: "media-editor__panel",
             direction: "column",
             gap: "lg",
-            children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
               MediaEditorCropPanel,
               {
                 aspectRatioValue,
@@ -31316,7 +35214,7 @@ function MediaEditorContent({
     aspectRatioOptions,
     isPanelLayout
   ]);
-  const [selectedTabId, setSelectedTabId] = (0, import_element99.useState)();
+  const [selectedTabId, setSelectedTabId] = (0, import_element107.useState)();
   const activeTabId = selectedTabId ?? tabs[0]?.id;
   const handleChange = (updates) => {
     editEntityRecord("postType", "attachment", id, updates);
@@ -31368,28 +35266,28 @@ function MediaEditorContent({
       }
     }
   };
-  const snackbar = /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+  const snackbar = /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
     import_notices2.SnackbarNotices,
     {
       className: noticesClassName,
       context: MEDIA_EDITOR_NOTICES_CONTEXT
     }
   );
-  const ruler = isImage ? /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+  const ruler = isImage ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
     MediaEditorFineRotation,
     {
       onPlacementControlInteraction: signalPlacementControlInteraction
     }
   ) : null;
-  const children = /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(
+  const children = /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
     MediaEditorProvider,
     {
       value: media ?? void 0,
       onChange: handleChange,
       settings: { fields },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_components43.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(import_jsx_runtime141.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(import_components44.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(import_jsx_runtime147.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
             MediaEditorSidebar,
             {
               tabs,
@@ -31397,16 +35295,16 @@ function MediaEditorContent({
               onTabChange: setSelectedTabId
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
             interface_skeleton_default,
             {
               className: "media-editor__skeleton",
               labels: {
-                body: isImage ? (0, import_i18n40.__)("Image editor") : (0, import_i18n40.__)("Media preview"),
-                sidebar: (0, import_i18n40.__)("Media details")
+                body: isImage ? (0, import_i18n42.__)("Image editor") : (0, import_i18n42.__)("Media preview"),
+                sidebar: (0, import_i18n42.__)("Media details")
               },
-              content: /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)("div", { className: "media-editor__content", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+              content: /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)("div", { className: "media-editor__content", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
                   MediaEditorCanvas,
                   {
                     focusOnMount: true,
@@ -31414,48 +35312,48 @@ function MediaEditorContent({
                     onGestureStart: handleCanvasGestureStart,
                     onGestureEnd: handleCanvasGestureEnd
                   }
-                ) : /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(MediaPreview, {}) }),
-                isImage && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "media-editor__canvas-toolbar", children: ruler })
+                ) : /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(MediaPreview, {}) }),
+                isImage && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { className: "media-editor__canvas-toolbar", children: ruler })
               ] }),
-              sidebar: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
+              sidebar: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
             }
           )
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
-          import_components43.__experimentalConfirmDialog,
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components44.__experimentalConfirmDialog,
           {
             isOpen: isDiscardDialogOpen,
-            confirmButtonText: (0, import_i18n40.__)("Discard"),
-            cancelButtonText: (0, import_i18n40.__)("Keep editing"),
+            confirmButtonText: (0, import_i18n42.__)("Discard"),
+            cancelButtonText: (0, import_i18n42.__)("Keep editing"),
             onCancel: () => setIsDiscardDialogOpen(false),
             onConfirm: () => {
               setIsDiscardDialogOpen(false);
               discardAndClose();
             },
-            children: (0, import_i18n40.__)(
+            children: (0, import_i18n42.__)(
               "Are you sure you want to discard your unsaved changes?"
             )
           }
         ),
-        noticesPortalElement ? (0, import_element99.createPortal)(snackbar, noticesPortalElement) : snackbar
+        noticesPortalElement ? (0, import_element107.createPortal)(snackbar, noticesPortalElement) : snackbar
       ]
     }
   );
-  const history = isImage ? /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+  const history = isImage ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
     HistoryActions,
     {
       isUndoRedoDisabled: isCropInteractionActive,
       onReset: resetCropOptions
     }
   ) : null;
-  const imageControls = isImage ? /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+  const imageControls = isImage ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
     MediaEditorImageControls,
     {
       showAspectRatioControl: true,
       aspectRatioPresets
     }
   ) : null;
-  const actions = /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+  const actions = /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
     FooterActions,
     {
       isSaving,
@@ -31467,14 +35365,14 @@ function MediaEditorContent({
   );
   let footerActions;
   if (footerLayout === "wide") {
-    footerActions = /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(import_jsx_runtime141.Fragment, { children: [
+    footerActions = /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(import_jsx_runtime147.Fragment, { children: [
       history,
       actions
     ] });
   } else {
-    footerActions = /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(import_jsx_runtime141.Fragment, { children: [
+    footerActions = /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(import_jsx_runtime147.Fragment, { children: [
       imageControls,
-      /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)("div", { className: "media-editor-modal__footer-row", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)("div", { className: "media-editor-modal__footer-row", children: [
         history,
         actions
       ] })
@@ -31482,7 +35380,7 @@ function MediaEditorContent({
   }
   return renderFrame({
     children,
-    headerActions: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+    headerActions: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
       HeaderActions,
       {
         isSaving,
@@ -31502,12 +35400,12 @@ function MediaEditorContent({
   });
 }
 function MediaEditor(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(MediaEditorStateProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(MediaEditorContent, { ...props }) }, props.id);
+  return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(MediaEditorStateProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(MediaEditorContent, { ...props }) }, props.id);
 }
 var media_editor_default = MediaEditor;
 
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
-var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorModal({
   fields = [],
   aspectRatioPresets
@@ -31534,7 +35432,7 @@ function MediaEditorModal({
     closeMediaEditorModal2();
     onClose?.();
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
     media_editor_default,
     {
       id,
@@ -31555,11 +35453,11 @@ function MediaEditorModal({
         }
         handleClose();
         if (previous && savedId !== previous.id && onUpdate) {
-          createSuccessNotice((0, import_i18n41.__)("Image edited."), {
+          createSuccessNotice((0, import_i18n43.__)("Image edited."), {
             type: "snackbar",
             actions: [
               {
-                label: (0, import_i18n41.__)("Undo"),
+                label: (0, import_i18n43.__)("Undo"),
                 onClick: () => {
                   onUpdate({
                     id: previous.id,
@@ -31579,16 +35477,16 @@ function MediaEditorModal({
         onRequestClose,
         onKeyDown,
         shouldCloseOnClickOutside
-      }) => /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
+      }) => /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
         import_keyboard_shortcuts.ShortcutProvider,
         {
           className: "media-editor-modal__shortcut-scope",
           onKeyDown: stopKeyDownPropagation,
-          children: /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(
-            import_components44.Modal,
+          children: /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)(
+            import_components45.Modal,
             {
               className: "media-editor-modal",
-              title: (0, import_i18n41.__)("Edit media"),
+              title: (0, import_i18n43.__)("Edit media"),
               size: "fill",
               isDismissible: false,
               shouldCloseOnClickOutside,
@@ -31597,12 +35495,12 @@ function MediaEditorModal({
               headerActions,
               children: [
                 children,
-                /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
                   "div",
                   {
                     className: `media-editor-modal__footer is-${footerLayout}`,
                     role: "region",
-                    "aria-label": (0, import_i18n41.__)("Editor actions"),
+                    "aria-label": (0, import_i18n43.__)("Editor actions"),
                     children: footerActions
                   }
                 )
@@ -31652,7 +35550,7 @@ function isMediaEditorAdminPage() {
 }
 function getMediaTitle(media) {
   const title = typeof media?.title === "string" ? media.title : media?.title?.rendered || media?.title?.raw;
-  return title ? (0, import_html_entities.decodeEntities)(title) : (0, import_i18n42.__)("Edit media");
+  return title ? (0, import_html_entities.decodeEntities)(title) : (0, import_i18n44.__)("Edit media");
 }
 function MediaEditorRoute() {
   const { id } = useParams({ from: "/media-editor/$id" });
@@ -31701,7 +35599,7 @@ function MediaEditorRoute() {
             {
               items: isStandaloneAdminPage ? [{ label: title }] : [
                 {
-                  label: (0, import_i18n42.__)("Media"),
+                  label: (0, import_i18n44.__)("Media"),
                   to: MEDIA_LIST_PATH
                 },
                 { label: title }
