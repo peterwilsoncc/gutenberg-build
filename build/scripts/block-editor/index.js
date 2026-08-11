@@ -57237,6 +57237,7 @@ var wp;
         }
       };
       const descriptionId = `block-editor-block-mover-button__description-${instanceId}`;
+      const keyCharacter = direction === "up" ? "t" : "y";
       return /* @__PURE__ */ (0, import_jsx_runtime283.jsxs)(import_jsx_runtime283.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
           import_components72.Button,
@@ -57258,17 +57259,22 @@ var wp;
             onClick: isDisabled ? null : onClick,
             disabled: isDisabled,
             accessibleWhenDisabled: true,
-            shortcut: direction === "up" ? import_keycodes10.displayShortcut.secondary("t") : import_keycodes10.displayShortcut.secondary("y")
+            shortcut: import_keycodes10.displayShortcut.secondary(keyCharacter)
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(VisuallyHidden, { id: descriptionId, children: getBlockMoverDescription(
-          blocksCount,
-          blockType && blockType.title,
-          firstIndex,
-          isFirst,
-          isLast,
-          direction === "up" ? -1 : 1,
-          orientation
+        /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(VisuallyHidden, { id: descriptionId, children: (0, import_i18n75.sprintf)(
+          // translators: 1: Description of the block movement. 2: Keyboard shortcut.
+          (0, import_i18n75.__)("%1$s (%2$s)"),
+          getBlockMoverDescription(
+            blocksCount,
+            blockType && blockType.title,
+            firstIndex,
+            isFirst,
+            isLast,
+            direction === "up" ? -1 : 1,
+            orientation
+          ),
+          import_keycodes10.shortcutAriaLabel.secondary(keyCharacter)
         ) })
       ] });
     }
