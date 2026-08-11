@@ -3921,7 +3921,12 @@ var wp;
     "styles.color": (0, import_i18n.__)("Colors"),
     "styles.spacing": (0, import_i18n.__)("Spacing"),
     "styles.background": (0, import_i18n.__)("Background"),
-    "styles.typography": (0, import_i18n.__)("Typography")
+    "styles.typography": (0, import_i18n.__)("Typography"),
+    "styles.border": (0, import_i18n.__)("Border"),
+    "styles.shadow": (0, import_i18n.__)("Shadow"),
+    "styles.outline": (0, import_i18n.__)("Outline"),
+    "styles.filter": (0, import_i18n.__)("Filter"),
+    "styles.dimensions": (0, import_i18n.__)("Dimensions")
   };
   var getBlockNames = memize(
     () => (0, import_blocks.getBlockTypes)().reduce(
@@ -3974,6 +3979,22 @@ var wp;
     }
     return diffs;
   }
+  var COMPARED_STYLE_KEYS = [
+    "background",
+    "color",
+    "typography",
+    "spacing",
+    "border",
+    "shadow",
+    "outline",
+    "filter",
+    "dimensions"
+  ];
+  function pickComparedStyles(config2) {
+    return Object.fromEntries(
+      COMPARED_STYLE_KEYS.map((key) => [key, config2?.styles?.[key]])
+    );
+  }
   function getGlobalStylesChangelist(next, previous) {
     const cacheKey2 = JSON.stringify({ next, previous });
     if (globalStylesChangesCache.has(cacheKey2)) {
@@ -3981,23 +4002,13 @@ var wp;
     }
     const changedValueTree = deepCompare(
       {
-        styles: {
-          background: next?.styles?.background,
-          color: next?.styles?.color,
-          typography: next?.styles?.typography,
-          spacing: next?.styles?.spacing
-        },
+        styles: pickComparedStyles(next),
         blocks: next?.styles?.blocks,
         elements: next?.styles?.elements,
         settings: next?.settings
       },
       {
-        styles: {
-          background: previous?.styles?.background,
-          color: previous?.styles?.color,
-          typography: previous?.styles?.typography,
-          spacing: previous?.styles?.spacing
-        },
+        styles: pickComparedStyles(previous),
         blocks: previous?.styles?.blocks,
         elements: previous?.styles?.elements,
         settings: previous?.settings
