@@ -382,7 +382,7 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         function useSyncExternalStore$2(subscribe5, getSnapshot2) {
-          didWarnOld18Alpha || void 0 === React105.startTransition || (didWarnOld18Alpha = true, console.error(
+          didWarnOld18Alpha || void 0 === React104.startTransition || (didWarnOld18Alpha = true, console.error(
             "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
           ));
           var value = getSnapshot2();
@@ -430,8 +430,8 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React105 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState165 = React105.useState, useEffect121 = React105.useEffect, useLayoutEffect18 = React105.useLayoutEffect, useDebugValue2 = React105.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-        exports.useSyncExternalStore = void 0 !== React105.useSyncExternalStore ? React105.useSyncExternalStore : shim;
+        var React104 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState165 = React104.useState, useEffect121 = React104.useEffect, useLayoutEffect18 = React104.useLayoutEffect, useDebugValue2 = React104.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        exports.useSyncExternalStore = void 0 !== React104.useSyncExternalStore ? React104.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
     }
@@ -458,7 +458,7 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React105 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore6 = shim.useSyncExternalStore, useRef124 = React105.useRef, useEffect121 = React105.useEffect, useMemo160 = React105.useMemo, useDebugValue2 = React105.useDebugValue;
+        var React104 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore6 = shim.useSyncExternalStore, useRef124 = React104.useRef, useEffect121 = React104.useEffect, useMemo160 = React104.useMemo, useDebugValue2 = React104.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe5, getSnapshot2, getServerSnapshot2, selector2, isEqual2) {
           var instRef = useRef124(null);
           if (null === instRef.current) {
@@ -2236,7 +2236,7 @@ var wp;
         return t4;
       };
       exports.__esModule = true;
-      var React105 = require_react();
+      var React104 = require_react();
       var PropTypes = require_prop_types();
       var autosize = require_autosize();
       var _getLineHeight = require_line_height();
@@ -2298,7 +2298,7 @@ var wp;
             var _this = this;
             var _a = this, _b = _a.props, onResize = _b.onResize, maxRows = _b.maxRows, onChange = _b.onChange, style = _b.style, innerRef = _b.innerRef, children = _b.children, props = __rest(_b, ["onResize", "maxRows", "onChange", "style", "innerRef", "children"]), lineHeight = _a.state.lineHeight;
             var maxHeight = maxRows && lineHeight ? lineHeight * maxRows : null;
-            return React105.createElement("textarea", __assign2({}, props, { onChange: this.onChange, style: maxHeight ? __assign2({}, style, { maxHeight }) : style, ref: function(element) {
+            return React104.createElement("textarea", __assign2({}, props, { onChange: this.onChange, style: maxHeight ? __assign2({}, style, { maxHeight }) : style, ref: function(element) {
               _this.textarea = element;
               if (typeof _this.props.innerRef === "function") {
                 _this.props.innerRef(element);
@@ -2322,10 +2322,10 @@ var wp;
             async: PropTypes.bool
           };
           return TextareaAutosizeClass2;
-        })(React105.Component)
+        })(React104.Component)
       );
-      exports.TextareaAutosize = React105.forwardRef(function(props, ref) {
-        return React105.createElement(TextareaAutosizeClass, __assign2({}, props, { innerRef: ref }));
+      exports.TextareaAutosize = React104.forwardRef(function(props, ref) {
+        return React104.createElement(TextareaAutosizeClass, __assign2({}, props, { innerRef: ref }));
       });
     }
   });
@@ -23644,7 +23644,7 @@ var wp;
     return addYears(date, -amount, options);
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getBroadcastWeeksInMonth.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getBroadcastWeeksInMonth.js
   var FIVE_WEEKS = 5;
   var FOUR_WEEKS = 4;
   function getBroadcastWeeksInMonth(month, dateLib) {
@@ -23656,7 +23656,7 @@ var wp;
     return numberOfWeeks;
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/startOfBroadcastWeek.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/startOfBroadcastWeek.js
   function startOfBroadcastWeek(date, dateLib) {
     const firstOfMonth = dateLib.startOfMonth(date);
     const dayOfWeek = firstOfMonth.getDay();
@@ -23669,7 +23669,7 @@ var wp;
     }
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/endOfBroadcastWeek.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/endOfBroadcastWeek.js
   function endOfBroadcastWeek(date, dateLib) {
     const startDate2 = startOfBroadcastWeek(date, dateLib);
     const numberOfWeeks = getBroadcastWeeksInMonth(date, dateLib);
@@ -23677,7 +23677,7 @@ var wp;
     return endDate;
   }
 
-  // node_modules/react-day-picker/dist/esm/locale/en-US.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/locale/en-US.js
   var enUS2 = {
     ...enUS,
     labels: {
@@ -23736,7 +23736,7 @@ var wp;
     }
   };
 
-  // node_modules/react-day-picker/dist/esm/classes/DateLib.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/classes/DateLib.js
   var DateLib = class _DateLib {
     /**
      * Creates an instance of `DateLib`.
@@ -23745,7 +23745,6 @@ var wp;
      * @param overrides Custom overrides for the date library functions.
      */
     constructor(options, overrides) {
-      this.Date = Date;
       this.today = () => {
         if (this.overrides?.today) {
           return this.overrides.today();
@@ -23753,7 +23752,8 @@ var wp;
         if (this.options.timeZone) {
           return TZDate.tz(this.options.timeZone);
         }
-        return new this.Date();
+        const DateCtor = this.options.Date ?? Date;
+        return new DateCtor();
       };
       this.newDate = (year, monthIndex, date) => {
         if (this.overrides?.newDate) {
@@ -23978,7 +23978,7 @@ var wp;
   ]);
   var defaultDateLib = new DateLib();
 
-  // node_modules/react-day-picker/dist/esm/classes/CalendarDay.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/classes/CalendarDay.js
   var CalendarDay = class {
     constructor(date, displayMonth, dateLib = defaultDateLib) {
       this.date = date;
@@ -24001,7 +24001,7 @@ var wp;
     }
   };
 
-  // node_modules/react-day-picker/dist/esm/classes/CalendarMonth.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/classes/CalendarMonth.js
   var CalendarMonth = class {
     constructor(month, weeks) {
       this.date = month;
@@ -24009,7 +24009,7 @@ var wp;
     }
   };
 
-  // node_modules/react-day-picker/dist/esm/classes/CalendarWeek.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/classes/CalendarWeek.js
   var CalendarWeek = class {
     constructor(weekNumber, days) {
       this.days = days;
@@ -24017,10 +24017,9 @@ var wp;
     }
   };
 
-  // node_modules/react-day-picker/dist/esm/components/custom-components.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/custom-components.js
   var custom_components_exports = {};
   __export(custom_components_exports, {
-    Button: () => Button6,
     CaptionLabel: () => CaptionLabel,
     Chevron: () => Chevron,
     Day: () => Day,
@@ -24048,58 +24047,49 @@ var wp;
     YearsDropdown: () => YearsDropdown
   });
 
-  // node_modules/react-day-picker/dist/esm/components/Button.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/CaptionLabel.js
   var import_react4 = __toESM(require_react(), 1);
-  function Button6(props) {
-    return import_react4.default.createElement("button", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/CaptionLabel.js
-  var import_react5 = __toESM(require_react(), 1);
   function CaptionLabel(props) {
-    return import_react5.default.createElement("span", { ...props });
+    return import_react4.default.createElement("span", { ...props });
   }
 
-  // node_modules/react-day-picker/dist/esm/components/Chevron.js
-  var import_react6 = __toESM(require_react(), 1);
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Chevron.js
+  var import_react5 = __toESM(require_react(), 1);
   function Chevron(props) {
-    const { size: size4 = 24, orientation = "left", className: className2 } = props;
-    return (
-      // biome-ignore lint/a11y/noSvgWithoutTitle: handled by the parent component
-      import_react6.default.createElement(
-        "svg",
-        { className: className2, width: size4, height: size4, viewBox: "0 0 24 24" },
-        orientation === "up" && import_react6.default.createElement("polygon", { points: "6.77 17 12.5 11.43 18.24 17 20 15.28 12.5 8 5 15.28" }),
-        orientation === "down" && import_react6.default.createElement("polygon", { points: "6.77 8 12.5 13.57 18.24 8 20 9.72 12.5 17 5 9.72" }),
-        orientation === "left" && import_react6.default.createElement("polygon", { points: "16 18.112 9.81111111 12 16 5.87733333 14.0888889 4 6 12 14.0888889 20" }),
-        orientation === "right" && import_react6.default.createElement("polygon", { points: "8 18.112 14.18888889 12 8 5.87733333 9.91111111 4 18 12 9.91111111 20" })
-      )
+    const { size: size4 = 24, orientation = "left", className: className2, style } = props;
+    return import_react5.default.createElement(
+      "svg",
+      { className: className2, style, width: size4, height: size4, viewBox: "0 0 24 24" },
+      orientation === "up" && import_react5.default.createElement("polygon", { points: "6.77 17 12.5 11.43 18.24 17 20 15.28 12.5 8 5 15.28" }),
+      orientation === "down" && import_react5.default.createElement("polygon", { points: "6.77 8 12.5 13.57 18.24 8 20 9.72 12.5 17 5 9.72" }),
+      orientation === "left" && import_react5.default.createElement("polygon", { points: "16 18.112 9.81111111 12 16 5.87733333 14.0888889 4 6 12 14.0888889 20" }),
+      orientation === "right" && import_react5.default.createElement("polygon", { points: "8 18.112 14.18888889 12 8 5.87733333 9.91111111 4 18 12 9.91111111 20" })
     );
   }
 
-  // node_modules/react-day-picker/dist/esm/components/Day.js
-  var import_react7 = __toESM(require_react(), 1);
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Day.js
+  var import_react6 = __toESM(require_react(), 1);
   function Day(props) {
     const { day, modifiers, ...tdProps } = props;
-    return import_react7.default.createElement("td", { ...tdProps });
+    return import_react6.default.createElement("td", { ...tdProps });
   }
 
-  // node_modules/react-day-picker/dist/esm/components/DayButton.js
-  var import_react8 = __toESM(require_react(), 1);
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/DayButton.js
+  var import_react7 = __toESM(require_react(), 1);
   function DayButton(props) {
     const { day, modifiers, ...buttonProps } = props;
-    const ref = import_react8.default.useRef(null);
-    import_react8.default.useEffect(() => {
+    const ref = import_react7.default.useRef(null);
+    import_react7.default.useEffect(() => {
       if (modifiers.focused)
         ref.current?.focus();
     }, [modifiers.focused]);
-    return import_react8.default.createElement("button", { ref, ...buttonProps });
+    return import_react7.default.createElement("button", { ref, ...buttonProps });
   }
 
-  // node_modules/react-day-picker/dist/esm/components/Dropdown.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Dropdown.js
   var import_react9 = __toESM(require_react(), 1);
 
-  // node_modules/react-day-picker/dist/esm/UI.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/UI.js
   var UI;
   (function(UI2) {
     UI2["Root"] = "root";
@@ -24154,199 +24144,196 @@ var wp;
     Animation3["caption_before_exit"] = "caption_before_exit";
   })(Animation || (Animation = {}));
 
-  // node_modules/react-day-picker/dist/esm/components/Dropdown.js
-  function Dropdown(props) {
-    const { options, className: className2, components, classNames, ...selectProps } = props;
-    const cssClassSelect = [classNames[UI.Dropdown], className2].join(" ");
-    const selectedOption = options?.find(({ value }) => value === selectProps.value);
-    return import_react9.default.createElement(
-      "span",
-      { "data-disabled": selectProps.disabled, className: classNames[UI.DropdownRoot] },
-      import_react9.default.createElement(components.Select, { className: cssClassSelect, ...selectProps }, options?.map(({ value, label, disabled: disabled2 }) => import_react9.default.createElement(components.Option, { key: value, value, disabled: disabled2 }, label))),
-      import_react9.default.createElement(
-        "span",
-        { className: classNames[UI.CaptionLabel], "aria-hidden": true },
-        selectedOption?.label,
-        import_react9.default.createElement(components.Chevron, { orientation: "down", size: 18, className: classNames[UI.Chevron] })
-      )
-    );
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/DropdownNav.js
-  var import_react10 = __toESM(require_react(), 1);
-  function DropdownNav(props) {
-    return import_react10.default.createElement("div", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Footer.js
-  var import_react11 = __toESM(require_react(), 1);
-  function Footer(props) {
-    return import_react11.default.createElement("div", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Month.js
-  var import_react12 = __toESM(require_react(), 1);
-  function Month(props) {
-    const { calendarMonth, displayIndex, ...divProps } = props;
-    return import_react12.default.createElement("div", { ...divProps }, props.children);
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/MonthCaption.js
-  var import_react13 = __toESM(require_react(), 1);
-  function MonthCaption(props) {
-    const { calendarMonth, displayIndex, ...divProps } = props;
-    return import_react13.default.createElement("div", { ...divProps });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/MonthGrid.js
-  var import_react14 = __toESM(require_react(), 1);
-  function MonthGrid(props) {
-    return import_react14.default.createElement("table", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Months.js
-  var import_react15 = __toESM(require_react(), 1);
-  function Months(props) {
-    return import_react15.default.createElement("div", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/MonthsDropdown.js
-  var import_react17 = __toESM(require_react(), 1);
-
-  // node_modules/react-day-picker/dist/esm/useDayPicker.js
-  var import_react16 = __toESM(require_react(), 1);
-  var dayPickerContext = (0, import_react16.createContext)(void 0);
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/useDayPicker.js
+  var import_react8 = __toESM(require_react(), 1);
+  var dayPickerContext = (0, import_react8.createContext)(void 0);
   function useDayPicker() {
-    const context = (0, import_react16.useContext)(dayPickerContext);
+    const context = (0, import_react8.useContext)(dayPickerContext);
     if (context === void 0) {
       throw new Error("useDayPicker() must be used within a custom component.");
     }
     return context;
   }
 
-  // node_modules/react-day-picker/dist/esm/components/MonthsDropdown.js
-  function MonthsDropdown(props) {
-    const { components } = useDayPicker();
-    return import_react17.default.createElement(components.Dropdown, { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Nav.js
-  var import_react18 = __toESM(require_react(), 1);
-  function Nav(props) {
-    const { onPreviousClick, onNextClick, previousMonth, nextMonth, ...navProps } = props;
-    const { components, classNames, labels: { labelPrevious: labelPrevious2, labelNext: labelNext2 } } = useDayPicker();
-    const handleNextClick = (0, import_react18.useCallback)((e3) => {
-      if (nextMonth) {
-        onNextClick?.(e3);
-      }
-    }, [nextMonth, onNextClick]);
-    const handlePreviousClick = (0, import_react18.useCallback)((e3) => {
-      if (previousMonth) {
-        onPreviousClick?.(e3);
-      }
-    }, [previousMonth, onPreviousClick]);
-    return import_react18.default.createElement(
-      "nav",
-      { ...navProps },
-      import_react18.default.createElement(
-        components.PreviousMonthButton,
-        { type: "button", className: classNames[UI.PreviousMonthButton], tabIndex: previousMonth ? void 0 : -1, "aria-disabled": previousMonth ? void 0 : true, "aria-label": labelPrevious2(previousMonth), onClick: handlePreviousClick },
-        import_react18.default.createElement(components.Chevron, { disabled: previousMonth ? void 0 : true, className: classNames[UI.Chevron], orientation: "left" })
-      ),
-      import_react18.default.createElement(
-        components.NextMonthButton,
-        { type: "button", className: classNames[UI.NextMonthButton], tabIndex: nextMonth ? void 0 : -1, "aria-disabled": nextMonth ? void 0 : true, "aria-label": labelNext2(nextMonth), onClick: handleNextClick },
-        import_react18.default.createElement(components.Chevron, { disabled: nextMonth ? void 0 : true, orientation: "right", className: classNames[UI.Chevron] })
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Dropdown.js
+  function Dropdown(props) {
+    const { options, className: className2, ...selectProps } = props;
+    const { classNames, components, styles } = useDayPicker();
+    const cssClassSelect = [classNames[UI.Dropdown], className2].join(" ");
+    const selectedOption = options?.find(({ value }) => value === selectProps.value);
+    return import_react9.default.createElement(
+      "span",
+      { "data-disabled": selectProps.disabled, className: classNames[UI.DropdownRoot], style: styles?.[UI.DropdownRoot] },
+      import_react9.default.createElement(components.Select, { className: cssClassSelect, ...selectProps }, options?.map(({ value, label, disabled: disabled2 }) => import_react9.default.createElement(components.Option, { key: value, value, disabled: disabled2 }, label))),
+      import_react9.default.createElement(
+        "span",
+        { className: classNames[UI.CaptionLabel], style: styles?.[UI.CaptionLabel], "aria-hidden": true },
+        selectedOption?.label,
+        import_react9.default.createElement(components.Chevron, { orientation: "down", size: 18, className: classNames[UI.Chevron], style: styles?.[UI.Chevron] })
       )
     );
   }
 
-  // node_modules/react-day-picker/dist/esm/components/NextMonthButton.js
-  var import_react19 = __toESM(require_react(), 1);
-  function NextMonthButton(props) {
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/DropdownNav.js
+  var import_react10 = __toESM(require_react(), 1);
+  function DropdownNav(props) {
+    return import_react10.default.createElement("div", { ...props });
+  }
+
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Footer.js
+  var import_react11 = __toESM(require_react(), 1);
+  function Footer(props) {
+    return import_react11.default.createElement("div", { ...props });
+  }
+
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Month.js
+  var import_react12 = __toESM(require_react(), 1);
+  function Month(props) {
+    const { calendarMonth, displayIndex, ...divProps } = props;
+    return import_react12.default.createElement("div", { ...divProps }, props.children);
+  }
+
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/MonthCaption.js
+  var import_react13 = __toESM(require_react(), 1);
+  function MonthCaption(props) {
+    const { calendarMonth, displayIndex, ...divProps } = props;
+    return import_react13.default.createElement("div", { ...divProps });
+  }
+
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/MonthGrid.js
+  var import_react14 = __toESM(require_react(), 1);
+  function MonthGrid(props) {
+    return import_react14.default.createElement("table", { ...props });
+  }
+
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Months.js
+  var import_react15 = __toESM(require_react(), 1);
+  function Months(props) {
+    return import_react15.default.createElement("div", { ...props });
+  }
+
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/MonthsDropdown.js
+  var import_react16 = __toESM(require_react(), 1);
+  function MonthsDropdown(props) {
     const { components } = useDayPicker();
-    return import_react19.default.createElement(components.Button, { ...props });
+    return import_react16.default.createElement(components.Dropdown, { ...props });
   }
 
-  // node_modules/react-day-picker/dist/esm/components/Option.js
-  var import_react20 = __toESM(require_react(), 1);
-  function Option(props) {
-    return import_react20.default.createElement("option", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/PreviousMonthButton.js
-  var import_react21 = __toESM(require_react(), 1);
-  function PreviousMonthButton(props) {
-    const { components } = useDayPicker();
-    return import_react21.default.createElement(components.Button, { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Root.js
-  var import_react22 = __toESM(require_react(), 1);
-  function Root(props) {
-    const { rootRef, ...rest } = props;
-    return import_react22.default.createElement("div", { ...rest, ref: rootRef });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Select.js
-  var import_react23 = __toESM(require_react(), 1);
-  function Select(props) {
-    return import_react23.default.createElement("select", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Week.js
-  var import_react24 = __toESM(require_react(), 1);
-  function Week(props) {
-    const { week, ...trProps } = props;
-    return import_react24.default.createElement("tr", { ...trProps });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Weekday.js
-  var import_react25 = __toESM(require_react(), 1);
-  function Weekday(props) {
-    return import_react25.default.createElement("th", { ...props });
-  }
-
-  // node_modules/react-day-picker/dist/esm/components/Weekdays.js
-  var import_react26 = __toESM(require_react(), 1);
-  function Weekdays(props) {
-    return import_react26.default.createElement(
-      "thead",
-      { "aria-hidden": true },
-      import_react26.default.createElement("tr", { ...props })
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Nav.js
+  var import_react17 = __toESM(require_react(), 1);
+  function Nav(props) {
+    const { onPreviousClick, onNextClick, previousMonth, nextMonth, ...navProps } = props;
+    const { components, classNames, styles, labels: { labelPrevious: labelPrevious2, labelNext: labelNext2 } } = useDayPicker();
+    const handleNextClick = (0, import_react17.useCallback)((e3) => {
+      if (nextMonth) {
+        onNextClick?.(e3);
+      }
+    }, [nextMonth, onNextClick]);
+    const handlePreviousClick = (0, import_react17.useCallback)((e3) => {
+      if (previousMonth) {
+        onPreviousClick?.(e3);
+      }
+    }, [previousMonth, onPreviousClick]);
+    return import_react17.default.createElement(
+      "nav",
+      { ...navProps },
+      import_react17.default.createElement(
+        components.PreviousMonthButton,
+        { type: "button", className: classNames[UI.PreviousMonthButton], style: styles?.[UI.PreviousMonthButton], tabIndex: previousMonth ? void 0 : -1, "aria-disabled": previousMonth ? void 0 : true, "aria-label": labelPrevious2(previousMonth), onClick: handlePreviousClick },
+        import_react17.default.createElement(components.Chevron, { disabled: previousMonth ? void 0 : true, className: classNames[UI.Chevron], style: styles?.[UI.Chevron], orientation: "left" })
+      ),
+      import_react17.default.createElement(
+        components.NextMonthButton,
+        { type: "button", className: classNames[UI.NextMonthButton], style: styles?.[UI.NextMonthButton], tabIndex: nextMonth ? void 0 : -1, "aria-disabled": nextMonth ? void 0 : true, "aria-label": labelNext2(nextMonth), onClick: handleNextClick },
+        import_react17.default.createElement(components.Chevron, { disabled: nextMonth ? void 0 : true, orientation: "right", className: classNames[UI.Chevron], style: styles?.[UI.Chevron] })
+      )
     );
   }
 
-  // node_modules/react-day-picker/dist/esm/components/WeekNumber.js
-  var import_react27 = __toESM(require_react(), 1);
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/NextMonthButton.js
+  var import_react18 = __toESM(require_react(), 1);
+  function NextMonthButton(props) {
+    return import_react18.default.createElement("button", { ...props });
+  }
+
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Option.js
+  var import_react19 = __toESM(require_react(), 1);
+  function Option(props) {
+    return import_react19.default.createElement("option", { ...props });
+  }
+
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/PreviousMonthButton.js
+  var import_react20 = __toESM(require_react(), 1);
+  function PreviousMonthButton(props) {
+    return import_react20.default.createElement("button", { ...props });
+  }
+
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Root.js
+  var import_react21 = __toESM(require_react(), 1);
+  function Root(props) {
+    const { rootRef, ...rest } = props;
+    return import_react21.default.createElement("div", { ...rest, ref: rootRef });
+  }
+
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Select.js
+  var import_react22 = __toESM(require_react(), 1);
+  function Select(props) {
+    return import_react22.default.createElement("select", { ...props });
+  }
+
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Week.js
+  var import_react23 = __toESM(require_react(), 1);
+  function Week(props) {
+    const { week, ...trProps } = props;
+    return import_react23.default.createElement("tr", { ...trProps });
+  }
+
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Weekday.js
+  var import_react24 = __toESM(require_react(), 1);
+  function Weekday(props) {
+    return import_react24.default.createElement("th", { ...props });
+  }
+
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Weekdays.js
+  var import_react25 = __toESM(require_react(), 1);
+  function Weekdays(props) {
+    return import_react25.default.createElement(
+      "thead",
+      { "aria-hidden": true },
+      import_react25.default.createElement("tr", { ...props })
+    );
+  }
+
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/WeekNumber.js
+  var import_react26 = __toESM(require_react(), 1);
   function WeekNumber(props) {
     const { week, ...thProps } = props;
-    return import_react27.default.createElement("th", { ...thProps });
+    return import_react26.default.createElement("th", { ...thProps });
   }
 
-  // node_modules/react-day-picker/dist/esm/components/WeekNumberHeader.js
-  var import_react28 = __toESM(require_react(), 1);
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/WeekNumberHeader.js
+  var import_react27 = __toESM(require_react(), 1);
   function WeekNumberHeader(props) {
-    return import_react28.default.createElement("th", { ...props });
+    return import_react27.default.createElement("th", { ...props });
   }
 
-  // node_modules/react-day-picker/dist/esm/components/Weeks.js
-  var import_react29 = __toESM(require_react(), 1);
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/Weeks.js
+  var import_react28 = __toESM(require_react(), 1);
   function Weeks(props) {
-    return import_react29.default.createElement("tbody", { ...props });
+    return import_react28.default.createElement("tbody", { ...props });
   }
 
-  // node_modules/react-day-picker/dist/esm/components/YearsDropdown.js
-  var import_react30 = __toESM(require_react(), 1);
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/components/YearsDropdown.js
+  var import_react29 = __toESM(require_react(), 1);
   function YearsDropdown(props) {
     const { components } = useDayPicker();
-    return import_react30.default.createElement(components.Dropdown, { ...props });
+    return import_react29.default.createElement(components.Dropdown, { ...props });
   }
 
-  // node_modules/react-day-picker/dist/esm/DayPicker.js
-  var import_react35 = __toESM(require_react(), 1);
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/DayPicker.js
+  var import_react34 = __toESM(require_react(), 1);
 
-  // node_modules/react-day-picker/dist/esm/utils/rangeIncludesDate.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/utils/rangeIncludesDate.js
   function rangeIncludesDate(range, date, excludeEnds = false, dateLib = defaultDateLib) {
     let { from, to: to2 } = range;
     const { differenceInCalendarDays: differenceInCalendarDays2, isSameDay: isSameDay3 } = dateLib;
@@ -24367,7 +24354,7 @@ var wp;
     return false;
   }
 
-  // node_modules/react-day-picker/dist/esm/utils/typeguards.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/utils/typeguards.js
   function isDateInterval(matcher) {
     return Boolean(matcher && typeof matcher === "object" && "before" in matcher && "after" in matcher);
   }
@@ -24387,7 +24374,7 @@ var wp;
     return Array.isArray(value) && value.every(dateLib.isDate);
   }
 
-  // node_modules/react-day-picker/dist/esm/utils/dateMatchModifiers.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/utils/dateMatchModifiers.js
   function dateMatchModifiers(date, matchers, dateLib = defaultDateLib) {
     const matchersArr = !Array.isArray(matchers) ? [matchers] : matchers;
     const { isSameDay: isSameDay3, differenceInCalendarDays: differenceInCalendarDays2, isAfter: isAfter2 } = dateLib;
@@ -24435,7 +24422,7 @@ var wp;
     });
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/createGetModifiers.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/createGetModifiers.js
   function createGetModifiers(days, props, navStart, navEnd, dateLib) {
     const { disabled: disabled2, hidden, modifiers, showOutsideDays, broadcastCalendar, today = dateLib.today() } = props;
     const { isSameDay: isSameDay3, isSameMonth: isSameMonth2, startOfMonth: startOfMonth2, isBefore: isBefore2, endOfMonth: endOfMonth2, isAfter: isAfter2 } = dateLib;
@@ -24504,7 +24491,7 @@ var wp;
     };
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getClassNamesForModifiers.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getClassNamesForModifiers.js
   function getClassNamesForModifiers(modifiers, classNames, modifiersClassNames = {}) {
     const modifierClassNames = Object.entries(modifiers).filter(([, active]) => active === true).reduce((previousValue, [key]) => {
       if (modifiersClassNames[key]) {
@@ -24519,7 +24506,7 @@ var wp;
     return modifierClassNames;
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getComponents.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getComponents.js
   function getComponents(customComponents) {
     return {
       ...custom_components_exports,
@@ -24527,7 +24514,7 @@ var wp;
     };
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getDataAttributes.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getDataAttributes.js
   function getDataAttributes(props) {
     const dataAttributes = {
       "data-mode": props.mode ?? void 0,
@@ -24545,7 +24532,7 @@ var wp;
     return dataAttributes;
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getDefaultClassNames.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getDefaultClassNames.js
   function getDefaultClassNames() {
     const classNames = {};
     for (const key in UI) {
@@ -24563,43 +24550,40 @@ var wp;
     return classNames;
   }
 
-  // node_modules/react-day-picker/dist/esm/formatters/index.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/formatters/index.js
   var formatters_exports = {};
   __export(formatters_exports, {
     formatCaption: () => formatCaption,
     formatDay: () => formatDay,
-    formatMonthCaption: () => formatMonthCaption,
     formatMonthDropdown: () => formatMonthDropdown,
     formatWeekNumber: () => formatWeekNumber,
     formatWeekNumberHeader: () => formatWeekNumberHeader,
     formatWeekdayName: () => formatWeekdayName,
-    formatYearCaption: () => formatYearCaption,
     formatYearDropdown: () => formatYearDropdown
   });
 
-  // node_modules/react-day-picker/dist/esm/formatters/formatCaption.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/formatters/formatCaption.js
   function formatCaption(month, options, dateLib) {
     const lib = dateLib ?? new DateLib(options);
     return lib.formatMonthYear(month);
   }
-  var formatMonthCaption = formatCaption;
 
-  // node_modules/react-day-picker/dist/esm/formatters/formatDay.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/formatters/formatDay.js
   function formatDay(date, options, dateLib) {
     return (dateLib ?? new DateLib(options)).format(date, "d");
   }
 
-  // node_modules/react-day-picker/dist/esm/formatters/formatMonthDropdown.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/formatters/formatMonthDropdown.js
   function formatMonthDropdown(month, dateLib = defaultDateLib) {
     return dateLib.format(month, "LLLL");
   }
 
-  // node_modules/react-day-picker/dist/esm/formatters/formatWeekdayName.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/formatters/formatWeekdayName.js
   function formatWeekdayName(weekday, options, dateLib) {
     return (dateLib ?? new DateLib(options)).format(weekday, "cccccc");
   }
 
-  // node_modules/react-day-picker/dist/esm/formatters/formatWeekNumber.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/formatters/formatWeekNumber.js
   function formatWeekNumber(weekNumber, dateLib = defaultDateLib) {
     if (weekNumber < 10) {
       return dateLib.formatNumber(`0${weekNumber.toLocaleString()}`);
@@ -24607,36 +24591,27 @@ var wp;
     return dateLib.formatNumber(`${weekNumber.toLocaleString()}`);
   }
 
-  // node_modules/react-day-picker/dist/esm/formatters/formatWeekNumberHeader.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/formatters/formatWeekNumberHeader.js
   function formatWeekNumberHeader() {
     return ``;
   }
 
-  // node_modules/react-day-picker/dist/esm/formatters/formatYearDropdown.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/formatters/formatYearDropdown.js
   function formatYearDropdown(year, dateLib = defaultDateLib) {
     return dateLib.format(year, "yyyy");
   }
-  var formatYearCaption = formatYearDropdown;
 
-  // node_modules/react-day-picker/dist/esm/helpers/getFormatters.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getFormatters.js
   function getFormatters(customFormatters) {
-    if (customFormatters?.formatMonthCaption && !customFormatters.formatCaption) {
-      customFormatters.formatCaption = customFormatters.formatMonthCaption;
-    }
-    if (customFormatters?.formatYearCaption && !customFormatters.formatYearDropdown) {
-      customFormatters.formatYearDropdown = customFormatters.formatYearCaption;
-    }
     return {
       ...formatters_exports,
       ...customFormatters
     };
   }
 
-  // node_modules/react-day-picker/dist/esm/labels/index.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/labels/index.js
   var labels_exports = {};
   __export(labels_exports, {
-    labelCaption: () => labelCaption,
-    labelDay: () => labelDay,
     labelDayButton: () => labelDayButton,
     labelGrid: () => labelGrid,
     labelGridcell: () => labelGridcell,
@@ -24650,7 +24625,7 @@ var wp;
     labelYearDropdown: () => labelYearDropdown
   });
 
-  // node_modules/react-day-picker/dist/esm/labels/labelDayButton.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/labels/labelDayButton.js
   function labelDayButton(date, modifiers, options, dateLib) {
     let label = (dateLib ?? new DateLib(options)).format(date, "PPPP");
     if (modifiers.today)
@@ -24659,16 +24634,14 @@ var wp;
       label = `${label}, selected`;
     return label;
   }
-  var labelDay = labelDayButton;
 
-  // node_modules/react-day-picker/dist/esm/labels/labelGrid.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/labels/labelGrid.js
   function labelGrid(date, options, dateLib) {
     const lib = dateLib ?? new DateLib(options);
     return lib.formatMonthYear(date);
   }
-  var labelCaption = labelGrid;
 
-  // node_modules/react-day-picker/dist/esm/labels/labelGridcell.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/labels/labelGridcell.js
   function labelGridcell(date, modifiers, options, dateLib) {
     let label = (dateLib ?? new DateLib(options)).format(date, "PPPP");
     if (modifiers?.today) {
@@ -24677,48 +24650,48 @@ var wp;
     return label;
   }
 
-  // node_modules/react-day-picker/dist/esm/labels/labelMonthDropdown.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/labels/labelMonthDropdown.js
   function labelMonthDropdown(_options) {
     return "Choose the Month";
   }
 
-  // node_modules/react-day-picker/dist/esm/labels/labelNav.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/labels/labelNav.js
   function labelNav() {
     return "";
   }
 
-  // node_modules/react-day-picker/dist/esm/labels/labelNext.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/labels/labelNext.js
   var defaultLabel = "Go to the Next Month";
   function labelNext(_month, _options) {
     return defaultLabel;
   }
 
-  // node_modules/react-day-picker/dist/esm/labels/labelPrevious.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/labels/labelPrevious.js
   function labelPrevious(_month) {
     return "Go to the Previous Month";
   }
 
-  // node_modules/react-day-picker/dist/esm/labels/labelWeekday.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/labels/labelWeekday.js
   function labelWeekday(date, options, dateLib) {
     return (dateLib ?? new DateLib(options)).format(date, "cccc");
   }
 
-  // node_modules/react-day-picker/dist/esm/labels/labelWeekNumber.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/labels/labelWeekNumber.js
   function labelWeekNumber(weekNumber, _options) {
     return `Week ${weekNumber}`;
   }
 
-  // node_modules/react-day-picker/dist/esm/labels/labelWeekNumberHeader.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/labels/labelWeekNumberHeader.js
   function labelWeekNumberHeader(_options) {
     return "Week Number";
   }
 
-  // node_modules/react-day-picker/dist/esm/labels/labelYearDropdown.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/labels/labelYearDropdown.js
   function labelYearDropdown(_options) {
     return "Choose the Year";
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getLabels.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getLabels.js
   var resolveLabel = (defaultLabel2, customLabel, localeLabel) => {
     if (customLabel)
       return customLabel;
@@ -24746,7 +24719,7 @@ var wp;
     };
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getMonthOptions.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getMonthOptions.js
   function getMonthOptions(displayMonth, navStart, navEnd, formatters2, dateLib) {
     const { startOfMonth: startOfMonth2, startOfYear: startOfYear2, endOfYear: endOfYear2, eachMonthOfInterval: eachMonthOfInterval2, getMonth: getMonth2 } = dateLib;
     const months = eachMonthOfInterval2({
@@ -24762,7 +24735,7 @@ var wp;
     return options;
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getStyleForModifiers.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getStyleForModifiers.js
   function getStyleForModifiers(dayModifiers, styles = {}, modifiersStyles = {}) {
     let style = { ...styles?.[UI.Day] };
     Object.entries(dayModifiers).filter(([, active]) => active === true).forEach(([modifier]) => {
@@ -24774,7 +24747,7 @@ var wp;
     return style;
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getWeekdays.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getWeekdays.js
   function getWeekdays(dateLib, ISOWeek, broadcastCalendar, today) {
     const referenceToday = today ?? dateLib.today();
     const start2 = broadcastCalendar ? dateLib.startOfBroadcastWeek(referenceToday, dateLib) : ISOWeek ? dateLib.startOfISOWeek(referenceToday) : dateLib.startOfWeek(referenceToday);
@@ -24786,7 +24759,7 @@ var wp;
     return days;
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getYearOptions.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getYearOptions.js
   function getYearOptions(navStart, navEnd, formatters2, dateLib, reverse = false) {
     if (!navStart)
       return void 0;
@@ -24808,7 +24781,7 @@ var wp;
     });
   }
 
-  // node_modules/react-day-picker/dist/esm/noonDateLib.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/noonDateLib.js
   function createNoonOverrides(timeZone, options = {}) {
     const { weekStartsOn, locale } = options;
     const fallbackWeekStartsOn = weekStartsOn ?? locale?.options?.weekStartsOn ?? 0;
@@ -24946,8 +24919,8 @@ var wp;
     };
   }
 
-  // node_modules/react-day-picker/dist/esm/useAnimation.js
-  var import_react31 = __toESM(require_react(), 1);
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/useAnimation.js
+  var import_react30 = __toESM(require_react(), 1);
   var asHtmlElement = (element) => {
     if (element instanceof HTMLElement)
       return element;
@@ -24962,10 +24935,10 @@ var wp;
   var queryNavEl = (element) => asHtmlElement(element.querySelector("[data-animated-nav]"));
   var queryWeekdaysEl = (element) => asHtmlElement(element.querySelector("[data-animated-weekdays]"));
   function useAnimation(rootElRef, enabled, { classNames, months, focused, dateLib }) {
-    const previousRootElSnapshotRef = (0, import_react31.useRef)(null);
-    const previousMonthsRef = (0, import_react31.useRef)(months);
-    const animatingRef = (0, import_react31.useRef)(false);
-    (0, import_react31.useLayoutEffect)(() => {
+    const previousRootElSnapshotRef = (0, import_react30.useRef)(null);
+    const previousMonthsRef = (0, import_react30.useRef)(months);
+    const animatingRef = (0, import_react30.useRef)(false);
+    (0, import_react30.useLayoutEffect)(() => {
       const previousMonths = previousMonthsRef.current;
       previousMonthsRef.current = months;
       if (!enabled || !rootElRef.current || // safety check because the ref can be set to anything by consumers
@@ -25007,7 +24980,7 @@ var wp;
       }
       const previousMonthEls = previousRootElSnapshot instanceof HTMLElement ? queryMonthEls(previousRootElSnapshot) : [];
       const currentMonthEls = queryMonthEls(rootElRef.current);
-      if (currentMonthEls?.every((el) => el instanceof HTMLElement) && previousMonthEls && previousMonthEls.every((el) => el instanceof HTMLElement)) {
+      if (currentMonthEls?.every((el) => el instanceof HTMLElement) && previousMonthEls?.every((el) => el instanceof HTMLElement)) {
         animatingRef.current = true;
         const cleanUpFunctions = [];
         rootElRef.current.style.isolation = "isolate";
@@ -25074,10 +25047,10 @@ var wp;
     });
   }
 
-  // node_modules/react-day-picker/dist/esm/useCalendar.js
-  var import_react33 = __toESM(require_react(), 1);
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/useCalendar.js
+  var import_react32 = __toESM(require_react(), 1);
 
-  // node_modules/react-day-picker/dist/esm/helpers/getDates.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getDates.js
   function getDates(displayMonths, maxDate, props, dateLib) {
     const firstMonth = displayMonths[0];
     const lastMonth = displayMonths[displayMonths.length - 1];
@@ -25106,7 +25079,7 @@ var wp;
     return dates;
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getDays.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getDays.js
   function getDays(calendarMonths) {
     const initialDays = [];
     return calendarMonths.reduce((days, month) => {
@@ -25117,7 +25090,7 @@ var wp;
     }, initialDays.slice());
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getDisplayMonths.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getDisplayMonths.js
   function getDisplayMonths(firstDisplayedMonth, calendarEndMonth, props, dateLib) {
     const { numberOfMonths = 1 } = props;
     const months = [];
@@ -25131,7 +25104,7 @@ var wp;
     return months;
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getInitialMonth.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getInitialMonth.js
   function getInitialMonth(props, navStart, navEnd, dateLib) {
     const { month, defaultMonth, today = dateLib.today(), numberOfMonths = 1 } = props;
     let initialMonth = month || defaultMonth || today;
@@ -25146,7 +25119,7 @@ var wp;
     return startOfMonth2(initialMonth);
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getMonths.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getMonths.js
   function getMonths(displayMonths, dates, props, dateLib) {
     const { addDays: addDays2, endOfBroadcastWeek: endOfBroadcastWeek2, endOfISOWeek: endOfISOWeek2, endOfMonth: endOfMonth2, endOfWeek: endOfWeek2, getISOWeek: getISOWeek2, getWeek: getWeek2, startOfBroadcastWeek: startOfBroadcastWeek2, startOfISOWeek: startOfISOWeek2, startOfWeek: startOfWeek2 } = dateLib;
     const dayPickerMonths = displayMonths.reduce((months, month) => {
@@ -25185,35 +25158,18 @@ var wp;
     }
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getNavMonth.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getNavMonth.js
   function getNavMonths(props, dateLib) {
     let { startMonth, endMonth } = props;
-    const { startOfYear: startOfYear2, startOfDay: startOfDay2, startOfMonth: startOfMonth2, endOfMonth: endOfMonth2, addYears: addYears2, endOfYear: endOfYear2, newDate, today } = dateLib;
-    const { fromYear, toYear, fromMonth, toMonth } = props;
-    if (!startMonth && fromMonth) {
-      startMonth = fromMonth;
-    }
-    if (!startMonth && fromYear) {
-      startMonth = dateLib.newDate(fromYear, 0, 1);
-    }
-    if (!endMonth && toMonth) {
-      endMonth = toMonth;
-    }
-    if (!endMonth && toYear) {
-      endMonth = newDate(toYear, 11, 31);
-    }
+    const { startOfYear: startOfYear2, startOfDay: startOfDay2, startOfMonth: startOfMonth2, endOfMonth: endOfMonth2, addYears: addYears2, endOfYear: endOfYear2, today } = dateLib;
     const hasYearDropdown = props.captionLayout === "dropdown" || props.captionLayout === "dropdown-years";
     if (startMonth) {
       startMonth = startOfMonth2(startMonth);
-    } else if (fromYear) {
-      startMonth = newDate(fromYear, 0, 1);
     } else if (!startMonth && hasYearDropdown) {
       startMonth = startOfYear2(addYears2(props.today ?? today(), -100));
     }
     if (endMonth) {
       endMonth = endOfMonth2(endMonth);
-    } else if (toYear) {
-      endMonth = newDate(toYear, 11, 31);
     } else if (!endMonth && hasYearDropdown) {
       endMonth = endOfYear2(props.today ?? today());
     }
@@ -25223,7 +25179,7 @@ var wp;
     ];
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getNextMonth.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getNextMonth.js
   function getNextMonth(firstDisplayedMonth, calendarEndMonth, options, dateLib) {
     if (options.disableNavigation) {
       return void 0;
@@ -25242,7 +25198,7 @@ var wp;
     return addMonths2(month, offset4);
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getPreviousMonth.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getPreviousMonth.js
   function getPreviousMonth(firstDisplayedMonth, calendarStartMonth, options, dateLib) {
     if (options.disableNavigation) {
       return void 0;
@@ -25261,7 +25217,7 @@ var wp;
     return addMonths2(month, -offset4);
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getWeeks.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getWeeks.js
   function getWeeks(months) {
     const initialWeeks = [];
     return months.reduce((weeks, month) => {
@@ -25269,15 +25225,15 @@ var wp;
     }, initialWeeks.slice());
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/useControlledValue.js
-  var import_react32 = __toESM(require_react(), 1);
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/useControlledValue.js
+  var import_react31 = __toESM(require_react(), 1);
   function useControlledValue(defaultValue2, controlledValue) {
-    const [uncontrolledValue, setValue] = (0, import_react32.useState)(defaultValue2);
+    const [uncontrolledValue, setValue] = (0, import_react31.useState)(defaultValue2);
     const value = controlledValue === void 0 ? uncontrolledValue : controlledValue;
     return [value, setValue];
   }
 
-  // node_modules/react-day-picker/dist/esm/useCalendar.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/useCalendar.js
   function useCalendar(props, dateLib) {
     const [navStart, navEnd] = getNavMonths(props, dateLib);
     const { startOfMonth: startOfMonth2, endOfMonth: endOfMonth2 } = dateLib;
@@ -25287,11 +25243,11 @@ var wp;
       // initialMonth is always computed from props.month if provided
       props.month ? initialMonth : void 0
     );
-    (0, import_react33.useEffect)(() => {
+    (0, import_react32.useEffect)(() => {
       const newInitialMonth = getInitialMonth(props, navStart, navEnd, dateLib);
       setFirstMonth(newInitialMonth);
     }, [props.timeZone]);
-    const { months, weeks, days, previousMonth, nextMonth } = (0, import_react33.useMemo)(() => {
+    const { months, weeks, days, previousMonth, nextMonth } = (0, import_react32.useMemo)(() => {
       const displayMonths = getDisplayMonths(firstMonth, navEnd, { numberOfMonths: props.numberOfMonths }, dateLib);
       const dates = getDates(displayMonths, props.endMonth ? endOfMonth2(props.endMonth) : void 0, {
         ISOWeek: props.ISOWeek,
@@ -25365,10 +25321,10 @@ var wp;
     return calendar;
   }
 
-  // node_modules/react-day-picker/dist/esm/useFocus.js
-  var import_react34 = __toESM(require_react(), 1);
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/useFocus.js
+  var import_react33 = __toESM(require_react(), 1);
 
-  // node_modules/react-day-picker/dist/esm/helpers/calculateFocusTarget.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/calculateFocusTarget.js
   var FocusTargetPriority;
   (function(FocusTargetPriority2) {
     FocusTargetPriority2[FocusTargetPriority2["Today"] = 0] = "Today";
@@ -25406,7 +25362,7 @@ var wp;
     return focusTarget;
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getFocusableDate.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getFocusableDate.js
   function getFocusableDate(moveBy, moveDir, refDate, navStart, navEnd, props, dateLib) {
     const { ISOWeek, broadcastCalendar } = props;
     const { addDays: addDays2, addMonths: addMonths2, addWeeks: addWeeks2, addYears: addYears2, endOfBroadcastWeek: endOfBroadcastWeek2, endOfISOWeek: endOfISOWeek2, endOfWeek: endOfWeek2, max: max4, min: min4, startOfBroadcastWeek: startOfBroadcastWeek2, startOfISOWeek: startOfISOWeek2, startOfWeek: startOfWeek2 } = dateLib;
@@ -25427,7 +25383,7 @@ var wp;
     return focusableDate;
   }
 
-  // node_modules/react-day-picker/dist/esm/helpers/getNextFocus.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/helpers/getNextFocus.js
   function getNextFocus(moveBy, moveDir, refDay, calendarStartMonth, calendarEndMonth, props, dateLib, attempt = 0) {
     if (attempt > 365) {
       return void 0;
@@ -25443,12 +25399,12 @@ var wp;
     return getNextFocus(moveBy, moveDir, focusDay, calendarStartMonth, calendarEndMonth, props, dateLib, attempt + 1);
   }
 
-  // node_modules/react-day-picker/dist/esm/useFocus.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/useFocus.js
   function useFocus2(props, calendar, getModifiers, isSelected2, dateLib) {
     const { autoFocus } = props;
-    const [lastFocused, setLastFocused] = (0, import_react34.useState)();
+    const [lastFocused, setLastFocused] = (0, import_react33.useState)();
     const focusTarget = calculateFocusTarget(calendar.days, getModifiers, isSelected2 || (() => false), lastFocused);
-    const [focusedDay, setFocused] = (0, import_react34.useState)(autoFocus ? focusTarget : void 0);
+    const [focusedDay, setFocused] = (0, import_react33.useState)(autoFocus ? focusTarget : void 0);
     const blur = () => {
       setLastFocused(focusedDay);
       setFocused(void 0);
@@ -25481,7 +25437,7 @@ var wp;
     return useFocus3;
   }
 
-  // node_modules/react-day-picker/dist/esm/selection/useMulti.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/selection/useMulti.js
   function useMulti(props, dateLib) {
     const { selected: initiallySelected, required, onSelect } = props;
     const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
@@ -25521,7 +25477,7 @@ var wp;
     };
   }
 
-  // node_modules/react-day-picker/dist/esm/utils/addToRange.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/utils/addToRange.js
   function addToRange(date, initialRange, min4 = 0, max4 = 0, required = false, dateLib = defaultDateLib) {
     const { from, to: to2 } = initialRange || {};
     const { isSameDay: isSameDay3, isAfter: isAfter2, isBefore: isBefore2 } = dateLib;
@@ -25574,7 +25530,7 @@ var wp;
     return range;
   }
 
-  // node_modules/react-day-picker/dist/esm/utils/rangeContainsDayOfWeek.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/utils/rangeContainsDayOfWeek.js
   function rangeContainsDayOfWeek(range, dayOfWeek, dateLib = defaultDateLib) {
     const dayOfWeekArr = !Array.isArray(dayOfWeek) ? [dayOfWeek] : dayOfWeek;
     let date = range.from;
@@ -25589,12 +25545,12 @@ var wp;
     return false;
   }
 
-  // node_modules/react-day-picker/dist/esm/utils/rangeOverlaps.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/utils/rangeOverlaps.js
   function rangeOverlaps(rangeLeft, rangeRight, dateLib = defaultDateLib) {
     return rangeIncludesDate(rangeLeft, rangeRight.from, false, dateLib) || rangeIncludesDate(rangeLeft, rangeRight.to, false, dateLib) || rangeIncludesDate(rangeRight, rangeLeft.from, false, dateLib) || rangeIncludesDate(rangeRight, rangeLeft.to, false, dateLib);
   }
 
-  // node_modules/react-day-picker/dist/esm/utils/rangeContainsModifiers.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/utils/rangeContainsModifiers.js
   function rangeContainsModifiers(range, modifiers, dateLib = defaultDateLib) {
     const matchers = Array.isArray(modifiers) ? modifiers : [modifiers];
     const nonFunctionMatchers = matchers.filter((matcher) => typeof matcher !== "function");
@@ -25648,7 +25604,7 @@ var wp;
     return false;
   }
 
-  // node_modules/react-day-picker/dist/esm/selection/useRange.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/selection/useRange.js
   function useRange(props, dateLib) {
     const { disabled: disabled2, excludeDisabled, resetOnSelect, selected: initiallySelected, required, onSelect } = props;
     const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
@@ -25691,7 +25647,7 @@ var wp;
     };
   }
 
-  // node_modules/react-day-picker/dist/esm/selection/useSingle.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/selection/useSingle.js
   function useSingle(props, dateLib) {
     const { selected: initiallySelected, required, onSelect } = props;
     const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
@@ -25722,7 +25678,7 @@ var wp;
     };
   }
 
-  // node_modules/react-day-picker/dist/esm/useSelection.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/useSelection.js
   function useSelection(props, dateLib) {
     const single = useSingle(props, dateLib);
     const multi = useMulti(props, dateLib);
@@ -25739,7 +25695,7 @@ var wp;
     }
   }
 
-  // node_modules/react-day-picker/dist/esm/utils/toTimeZone.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/utils/toTimeZone.js
   function toTimeZone(date, timeZone) {
     if (date instanceof TZDate && date.timeZone === timeZone) {
       return date;
@@ -25747,7 +25703,7 @@ var wp;
     return new TZDate(date, timeZone);
   }
 
-  // node_modules/react-day-picker/dist/esm/utils/convertMatchersToTimeZone.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/utils/convertMatchersToTimeZone.js
   function toZoneNoon(date, timeZone, noonSafe) {
     if (!noonSafe)
       return toTimeZone(date, timeZone);
@@ -25800,7 +25756,7 @@ var wp;
     return convertMatcher(matchers, timeZone, noonSafe);
   }
 
-  // node_modules/react-day-picker/dist/esm/DayPicker.js
+  // node_modules/@daypicker/react/node_modules/react-day-picker/dist/esm/DayPicker.js
   function DayPicker(initialProps) {
     let props = initialProps;
     const timeZone = props.timeZone;
@@ -25848,7 +25804,7 @@ var wp;
         props.modifiers = nextModifiers;
       }
     }
-    const { components, formatters: formatters2, labels, dateLib, locale, classNames } = (0, import_react35.useMemo)(() => {
+    const { components, formatters: formatters2, labels, dateLib, locale, classNames } = (0, import_react34.useMemo)(() => {
       const locale2 = { ...enUS2, ...props.locale };
       const weekStartsOn = props.broadcastCalendar ? 1 : props.weekStartsOn;
       const noonOverrides = props.noonSafe && props.timeZone ? createNoonOverrides(props.timeZone, {
@@ -25900,21 +25856,21 @@ var wp;
     const { isSelected: isSelected2, select: select9, selected: selectedValue } = useSelection(props, dateLib) ?? {};
     const { blur, focused, isFocusTarget, moveFocus, setFocused } = useFocus2(props, calendar, getModifiers, isSelected2 ?? (() => false), dateLib);
     const { labelDayButton: labelDayButton2, labelGridcell: labelGridcell2, labelGrid: labelGrid2, labelMonthDropdown: labelMonthDropdown2, labelNav: labelNav2, labelPrevious: labelPrevious2, labelNext: labelNext2, labelWeekday: labelWeekday2, labelWeekNumber: labelWeekNumber2, labelWeekNumberHeader: labelWeekNumberHeader2, labelYearDropdown: labelYearDropdown2 } = labels;
-    const weekdays = (0, import_react35.useMemo)(() => getWeekdays(dateLib, props.ISOWeek, props.broadcastCalendar, props.today), [dateLib, props.ISOWeek, props.broadcastCalendar, props.today]);
+    const weekdays = (0, import_react34.useMemo)(() => getWeekdays(dateLib, props.ISOWeek, props.broadcastCalendar, props.today), [dateLib, props.ISOWeek, props.broadcastCalendar, props.today]);
     const isInteractive = mode !== void 0 || onDayClick !== void 0;
-    const handlePreviousClick = (0, import_react35.useCallback)(() => {
+    const handlePreviousClick = (0, import_react34.useCallback)(() => {
       if (!previousMonth)
         return;
       goToMonth(previousMonth);
       onPrevClick?.(previousMonth);
     }, [previousMonth, goToMonth, onPrevClick]);
-    const handleNextClick = (0, import_react35.useCallback)(() => {
+    const handleNextClick = (0, import_react34.useCallback)(() => {
       if (!nextMonth)
         return;
       goToMonth(nextMonth);
       onNextClick?.(nextMonth);
     }, [goToMonth, nextMonth, onNextClick]);
-    const handleDayClick = (0, import_react35.useCallback)((day, m2) => (e3) => {
+    const handleDayClick = (0, import_react34.useCallback)((day, m2) => (e3) => {
       e3.preventDefault();
       e3.stopPropagation();
       setFocused(day);
@@ -25924,15 +25880,15 @@ var wp;
       select9?.(day.date, m2, e3);
       onDayClick?.(day.date, m2, e3);
     }, [select9, onDayClick, setFocused]);
-    const handleDayFocus = (0, import_react35.useCallback)((day, m2) => (e3) => {
+    const handleDayFocus = (0, import_react34.useCallback)((day, m2) => (e3) => {
       setFocused(day);
       onDayFocus?.(day.date, m2, e3);
     }, [onDayFocus, setFocused]);
-    const handleDayBlur = (0, import_react35.useCallback)((day, m2) => (e3) => {
+    const handleDayBlur = (0, import_react34.useCallback)((day, m2) => (e3) => {
       blur();
       onDayBlur?.(day.date, m2, e3);
     }, [blur, onDayBlur]);
-    const handleDayKeyDown = (0, import_react35.useCallback)((day, modifiers) => (e3) => {
+    const handleDayKeyDown = (0, import_react34.useCallback)((day, modifiers) => (e3) => {
       const keyMap = {
         ArrowLeft: [
           e3.shiftKey ? "month" : "day",
@@ -25957,28 +25913,39 @@ var wp;
       }
       onDayKeyDown?.(day.date, modifiers, e3);
     }, [moveFocus, onDayKeyDown, props.dir]);
-    const handleDayMouseEnter = (0, import_react35.useCallback)((day, modifiers) => (e3) => {
+    const handleDayMouseEnter = (0, import_react34.useCallback)((day, modifiers) => (e3) => {
       onDayMouseEnter?.(day.date, modifiers, e3);
     }, [onDayMouseEnter]);
-    const handleDayMouseLeave = (0, import_react35.useCallback)((day, modifiers) => (e3) => {
+    const handleDayMouseLeave = (0, import_react34.useCallback)((day, modifiers) => (e3) => {
       onDayMouseLeave?.(day.date, modifiers, e3);
     }, [onDayMouseLeave]);
-    const handleMonthChange = (0, import_react35.useCallback)((date) => (e3) => {
+    const handleMonthChange = (0, import_react34.useCallback)((date, monthOffset) => (e3) => {
       const selectedMonth = Number(e3.target.value);
       const month = dateLib.setMonth(dateLib.startOfMonth(date), selectedMonth);
-      goToMonth(month);
+      goToMonth(dateLib.addMonths(month, -monthOffset));
     }, [dateLib, goToMonth]);
-    const handleYearChange = (0, import_react35.useCallback)((date) => (e3) => {
+    const handleYearChange = (0, import_react34.useCallback)((date, monthOffset) => (e3) => {
       const selectedYear = Number(e3.target.value);
       const month = dateLib.setYear(dateLib.startOfMonth(date), selectedYear);
-      goToMonth(month);
+      goToMonth(dateLib.addMonths(month, -monthOffset));
     }, [dateLib, goToMonth]);
-    const { className: className2, style } = (0, import_react35.useMemo)(() => ({
+    const { className: className2, style } = (0, import_react34.useMemo)(() => ({
       className: [classNames[UI.Root], props.className].filter(Boolean).join(" "),
       style: { ...styles?.[UI.Root], ...props.style }
     }), [classNames, props.className, props.style, styles]);
     const dataAttributes = getDataAttributes(props);
-    const rootElRef = (0, import_react35.useRef)(null);
+    const getDropdownStyle = (dropdown) => {
+      const dropdownStyle = styles?.[UI.Dropdown];
+      const specificDropdownStyle = styles?.[dropdown];
+      if (!dropdownStyle && !specificDropdownStyle) {
+        return void 0;
+      }
+      return {
+        ...dropdownStyle,
+        ...specificDropdownStyle
+      };
+    };
+    const rootElRef = (0, import_react34.useRef)(null);
     useAnimation(rootElRef, Boolean(props.animate), {
       classNames,
       months,
@@ -26001,18 +25968,19 @@ var wp;
       labels,
       formatters: formatters2
     };
-    return import_react35.default.createElement(
+    return import_react34.default.createElement(
       dayPickerContext.Provider,
       { value: contextValue },
-      import_react35.default.createElement(
+      import_react34.default.createElement(
         components.Root,
         { rootRef: props.animate ? rootElRef : void 0, className: className2, style, dir: props.dir, id: props.id, lang: props.lang ?? locale.code, nonce: props.nonce, title: props.title, role: props.role, "aria-label": props["aria-label"], "aria-labelledby": props["aria-labelledby"], ...dataAttributes },
-        import_react35.default.createElement(
+        import_react34.default.createElement(
           components.Months,
           { className: classNames[UI.Months], style: styles?.[UI.Months] },
-          !props.hideNavigation && !navLayout && import_react35.default.createElement(components.Nav, { "data-animated-nav": props.animate ? "true" : void 0, className: classNames[UI.Nav], style: styles?.[UI.Nav], "aria-label": labelNav2(), onPreviousClick: handlePreviousClick, onNextClick: handleNextClick, previousMonth, nextMonth }),
+          !props.hideNavigation && !navLayout && import_react34.default.createElement(components.Nav, { "data-animated-nav": props.animate ? "true" : void 0, className: classNames[UI.Nav], style: styles?.[UI.Nav], "aria-label": labelNav2(), onPreviousClick: handlePreviousClick, onNextClick: handleNextClick, previousMonth, nextMonth }),
           months.map((calendarMonth, displayIndex) => {
-            return import_react35.default.createElement(
+            const monthOffset = props.reverseMonths ? months.length - 1 - displayIndex : displayIndex;
+            return import_react34.default.createElement(
               components.Month,
               {
                 "data-animated-month": props.animate ? "true" : void 0,
@@ -26023,21 +25991,21 @@ var wp;
                 displayIndex,
                 calendarMonth
               },
-              navLayout === "around" && !props.hideNavigation && displayIndex === 0 && import_react35.default.createElement(
+              navLayout === "around" && !props.hideNavigation && displayIndex === 0 && import_react34.default.createElement(
                 components.PreviousMonthButton,
-                { type: "button", className: classNames[UI.PreviousMonthButton], tabIndex: previousMonth ? void 0 : -1, "aria-disabled": previousMonth ? void 0 : true, "aria-label": labelPrevious2(previousMonth), onClick: handlePreviousClick, "data-animated-button": props.animate ? "true" : void 0 },
-                import_react35.default.createElement(components.Chevron, { disabled: previousMonth ? void 0 : true, className: classNames[UI.Chevron], orientation: props.dir === "rtl" ? "right" : "left" })
+                { type: "button", className: classNames[UI.PreviousMonthButton], style: styles?.[UI.PreviousMonthButton], tabIndex: previousMonth ? void 0 : -1, "aria-disabled": previousMonth ? void 0 : true, "aria-label": labelPrevious2(previousMonth), onClick: handlePreviousClick, "data-animated-button": props.animate ? "true" : void 0 },
+                import_react34.default.createElement(components.Chevron, { disabled: previousMonth ? void 0 : true, className: classNames[UI.Chevron], style: styles?.[UI.Chevron], orientation: props.dir === "rtl" ? "right" : "left" })
               ),
-              import_react35.default.createElement(components.MonthCaption, { "data-animated-caption": props.animate ? "true" : void 0, className: classNames[UI.MonthCaption], style: styles?.[UI.MonthCaption], calendarMonth, displayIndex }, captionLayout?.startsWith("dropdown") ? import_react35.default.createElement(
+              import_react34.default.createElement(components.MonthCaption, { "data-animated-caption": props.animate ? "true" : void 0, className: classNames[UI.MonthCaption], style: styles?.[UI.MonthCaption], calendarMonth, displayIndex }, captionLayout?.startsWith("dropdown") ? import_react34.default.createElement(
                 components.DropdownNav,
                 { className: classNames[UI.Dropdowns], style: styles?.[UI.Dropdowns] },
                 (() => {
-                  const monthControl = captionLayout === "dropdown" || captionLayout === "dropdown-months" ? import_react35.default.createElement(components.MonthsDropdown, { key: "month", className: classNames[UI.MonthsDropdown], "aria-label": labelMonthDropdown2(), classNames, components, disabled: Boolean(props.disableNavigation), onChange: handleMonthChange(calendarMonth.date), options: getMonthOptions(calendarMonth.date, navStart, navEnd, formatters2, dateLib), style: styles?.[UI.Dropdown], value: dateLib.getMonth(calendarMonth.date) }) : import_react35.default.createElement("span", { key: "month" }, formatMonthDropdown2(calendarMonth.date, dateLib));
-                  const yearControl = captionLayout === "dropdown" || captionLayout === "dropdown-years" ? import_react35.default.createElement(components.YearsDropdown, { key: "year", className: classNames[UI.YearsDropdown], "aria-label": labelYearDropdown2(dateLib.options), classNames, components, disabled: Boolean(props.disableNavigation), onChange: handleYearChange(calendarMonth.date), options: getYearOptions(navStart, navEnd, formatters2, dateLib, Boolean(props.reverseYears)), style: styles?.[UI.Dropdown], value: dateLib.getYear(calendarMonth.date) }) : import_react35.default.createElement("span", { key: "year" }, formatYearDropdown2(calendarMonth.date, dateLib));
+                  const monthControl = captionLayout === "dropdown" || captionLayout === "dropdown-months" ? import_react34.default.createElement(components.MonthsDropdown, { key: "month", className: classNames[UI.MonthsDropdown], "aria-label": labelMonthDropdown2(), disabled: Boolean(props.disableNavigation), onChange: handleMonthChange(calendarMonth.date, monthOffset), options: getMonthOptions(calendarMonth.date, navStart, navEnd, formatters2, dateLib), style: getDropdownStyle(UI.MonthsDropdown), value: dateLib.getMonth(calendarMonth.date) }) : import_react34.default.createElement("span", { key: "month" }, formatMonthDropdown2(calendarMonth.date, dateLib));
+                  const yearControl = captionLayout === "dropdown" || captionLayout === "dropdown-years" ? import_react34.default.createElement(components.YearsDropdown, { key: "year", className: classNames[UI.YearsDropdown], "aria-label": labelYearDropdown2(dateLib.options), disabled: Boolean(props.disableNavigation), onChange: handleYearChange(calendarMonth.date, monthOffset), options: getYearOptions(navStart, navEnd, formatters2, dateLib, Boolean(props.reverseYears)), style: getDropdownStyle(UI.YearsDropdown), value: dateLib.getYear(calendarMonth.date) }) : import_react34.default.createElement("span", { key: "year" }, formatYearDropdown2(calendarMonth.date, dateLib));
                   const controls = dateLib.getMonthYearOrder() === "year-first" ? [yearControl, monthControl] : [monthControl, yearControl];
                   return controls;
                 })(),
-                import_react35.default.createElement("span", { role: "status", "aria-live": "polite", style: {
+                import_react34.default.createElement("span", { role: "status", "aria-live": "polite", style: {
                   border: 0,
                   clip: "rect(0 0 0 0)",
                   height: "1px",
@@ -26049,27 +26017,27 @@ var wp;
                   whiteSpace: "nowrap",
                   wordWrap: "normal"
                 } }, formatCaption2(calendarMonth.date, dateLib.options, dateLib))
-              ) : import_react35.default.createElement(components.CaptionLabel, { className: classNames[UI.CaptionLabel], role: "status", "aria-live": "polite" }, formatCaption2(calendarMonth.date, dateLib.options, dateLib))),
-              navLayout === "around" && !props.hideNavigation && displayIndex === numberOfMonths - 1 && import_react35.default.createElement(
+              ) : import_react34.default.createElement(components.CaptionLabel, { className: classNames[UI.CaptionLabel], style: styles?.[UI.CaptionLabel], role: "status", "aria-live": "polite" }, formatCaption2(calendarMonth.date, dateLib.options, dateLib))),
+              navLayout === "around" && !props.hideNavigation && displayIndex === numberOfMonths - 1 && import_react34.default.createElement(
                 components.NextMonthButton,
-                { type: "button", className: classNames[UI.NextMonthButton], tabIndex: nextMonth ? void 0 : -1, "aria-disabled": nextMonth ? void 0 : true, "aria-label": labelNext2(nextMonth), onClick: handleNextClick, "data-animated-button": props.animate ? "true" : void 0 },
-                import_react35.default.createElement(components.Chevron, { disabled: nextMonth ? void 0 : true, className: classNames[UI.Chevron], orientation: props.dir === "rtl" ? "left" : "right" })
+                { type: "button", className: classNames[UI.NextMonthButton], style: styles?.[UI.NextMonthButton], tabIndex: nextMonth ? void 0 : -1, "aria-disabled": nextMonth ? void 0 : true, "aria-label": labelNext2(nextMonth), onClick: handleNextClick, "data-animated-button": props.animate ? "true" : void 0 },
+                import_react34.default.createElement(components.Chevron, { disabled: nextMonth ? void 0 : true, className: classNames[UI.Chevron], style: styles?.[UI.Chevron], orientation: props.dir === "rtl" ? "left" : "right" })
               ),
-              displayIndex === numberOfMonths - 1 && navLayout === "after" && !props.hideNavigation && import_react35.default.createElement(components.Nav, { "data-animated-nav": props.animate ? "true" : void 0, className: classNames[UI.Nav], style: styles?.[UI.Nav], "aria-label": labelNav2(), onPreviousClick: handlePreviousClick, onNextClick: handleNextClick, previousMonth, nextMonth }),
-              import_react35.default.createElement(
+              displayIndex === numberOfMonths - 1 && navLayout === "after" && !props.hideNavigation && import_react34.default.createElement(components.Nav, { "data-animated-nav": props.animate ? "true" : void 0, className: classNames[UI.Nav], style: styles?.[UI.Nav], "aria-label": labelNav2(), onPreviousClick: handlePreviousClick, onNextClick: handleNextClick, previousMonth, nextMonth }),
+              import_react34.default.createElement(
                 components.MonthGrid,
                 { role: "grid", "aria-multiselectable": mode === "multiple" || mode === "range", "aria-label": labelGrid2(calendarMonth.date, dateLib.options, dateLib) || void 0, className: classNames[UI.MonthGrid], style: styles?.[UI.MonthGrid] },
-                !props.hideWeekdays && import_react35.default.createElement(
+                !props.hideWeekdays && import_react34.default.createElement(
                   components.Weekdays,
                   { "data-animated-weekdays": props.animate ? "true" : void 0, className: classNames[UI.Weekdays], style: styles?.[UI.Weekdays] },
-                  showWeekNumber && import_react35.default.createElement(components.WeekNumberHeader, { "aria-label": labelWeekNumberHeader2(dateLib.options), className: classNames[UI.WeekNumberHeader], style: styles?.[UI.WeekNumberHeader], scope: "col" }, formatWeekNumberHeader2()),
-                  weekdays.map((weekday) => import_react35.default.createElement(components.Weekday, { "aria-label": labelWeekday2(weekday, dateLib.options, dateLib), className: classNames[UI.Weekday], key: String(weekday), style: styles?.[UI.Weekday], scope: "col" }, formatWeekdayName2(weekday, dateLib.options, dateLib)))
+                  showWeekNumber && import_react34.default.createElement(components.WeekNumberHeader, { "aria-label": labelWeekNumberHeader2(dateLib.options), className: classNames[UI.WeekNumberHeader], style: styles?.[UI.WeekNumberHeader], scope: "col" }, formatWeekNumberHeader2()),
+                  weekdays.map((weekday) => import_react34.default.createElement(components.Weekday, { "aria-label": labelWeekday2(weekday, dateLib.options, dateLib), className: classNames[UI.Weekday], key: String(weekday), style: styles?.[UI.Weekday], scope: "col" }, formatWeekdayName2(weekday, dateLib.options, dateLib)))
                 ),
-                import_react35.default.createElement(components.Weeks, { "data-animated-weeks": props.animate ? "true" : void 0, className: classNames[UI.Weeks], style: styles?.[UI.Weeks] }, calendarMonth.weeks.map((week) => {
-                  return import_react35.default.createElement(
+                import_react34.default.createElement(components.Weeks, { "data-animated-weeks": props.animate ? "true" : void 0, className: classNames[UI.Weeks], style: styles?.[UI.Weeks] }, calendarMonth.weeks.map((week) => {
+                  return import_react34.default.createElement(
                     components.Week,
                     { className: classNames[UI.Week], key: week.weekNumber, style: styles?.[UI.Week], week },
-                    showWeekNumber && import_react35.default.createElement(components.WeekNumber, { week, style: styles?.[UI.WeekNumber], "aria-label": labelWeekNumber2(week.weekNumber, {
+                    showWeekNumber && import_react34.default.createElement(components.WeekNumber, { week, style: styles?.[UI.WeekNumber], "aria-label": labelWeekNumber2(week.weekNumber, {
                       locale
                     }), className: classNames[UI.WeekNumber], scope: "row", role: "rowheader" }, formatWeekNumber2(week.weekNumber, dateLib)),
                     week.days.map((day) => {
@@ -26086,7 +26054,7 @@ var wp;
                       const style2 = getStyleForModifiers(modifiers, styles, props.modifiersStyles);
                       const className3 = getClassNamesForModifiers(modifiers, classNames, props.modifiersClassNames);
                       const ariaLabel = !isInteractive && !modifiers.hidden ? labelGridcell2(date, modifiers, dateLib.options, dateLib) : void 0;
-                      return import_react35.default.createElement(components.Day, { key: `${day.isoDate}_${day.displayMonthId}`, day, modifiers, className: className3.join(" "), style: style2, role: "gridcell", "aria-selected": modifiers.selected || void 0, "aria-label": ariaLabel, "data-day": day.isoDate, "data-month": day.outside ? day.dateMonthId : void 0, "data-selected": modifiers.selected || void 0, "data-disabled": modifiers.disabled || void 0, "data-hidden": modifiers.hidden || void 0, "data-outside": day.outside || void 0, "data-focused": modifiers.focused || void 0, "data-today": modifiers.today || void 0 }, !modifiers.hidden && isInteractive ? import_react35.default.createElement(components.DayButton, { className: classNames[UI.DayButton], style: styles?.[UI.DayButton], type: "button", day, modifiers, disabled: !modifiers.focused && modifiers.disabled || void 0, "aria-disabled": modifiers.focused && modifiers.disabled || void 0, tabIndex: isFocusTarget(day) ? 0 : -1, "aria-label": labelDayButton2(date, modifiers, dateLib.options, dateLib), onClick: handleDayClick(day, modifiers), onBlur: handleDayBlur(day, modifiers), onFocus: handleDayFocus(day, modifiers), onKeyDown: handleDayKeyDown(day, modifiers), onMouseEnter: handleDayMouseEnter(day, modifiers), onMouseLeave: handleDayMouseLeave(day, modifiers) }, formatDay2(date, dateLib.options, dateLib)) : !modifiers.hidden && formatDay2(day.date, dateLib.options, dateLib));
+                      return import_react34.default.createElement(components.Day, { key: `${day.isoDate}_${day.displayMonthId}`, day, modifiers, className: className3.join(" "), style: style2, role: "gridcell", "aria-selected": modifiers.selected || void 0, "aria-label": ariaLabel, "data-day": day.isoDate, "data-month": day.outside ? day.dateMonthId : void 0, "data-selected": modifiers.selected || void 0, "data-disabled": modifiers.disabled || void 0, "data-hidden": modifiers.hidden || void 0, "data-outside": day.outside || void 0, "data-focused": modifiers.focused || void 0, "data-today": modifiers.today || void 0 }, !modifiers.hidden && isInteractive ? import_react34.default.createElement(components.DayButton, { className: classNames[UI.DayButton], style: styles?.[UI.DayButton], type: "button", day, modifiers, disabled: !modifiers.focused && modifiers.disabled || void 0, "aria-disabled": modifiers.focused && modifiers.disabled || void 0, tabIndex: isFocusTarget(day) ? 0 : -1, "aria-label": labelDayButton2(date, modifiers, dateLib.options, dateLib), onClick: handleDayClick(day, modifiers), onBlur: handleDayBlur(day, modifiers), onFocus: handleDayFocus(day, modifiers), onKeyDown: handleDayKeyDown(day, modifiers), onMouseEnter: handleDayMouseEnter(day, modifiers), onMouseLeave: handleDayMouseLeave(day, modifiers) }, formatDay2(date, dateLib.options, dateLib)) : !modifiers.hidden && formatDay2(day.date, dateLib.options, dateLib));
                     })
                   );
                 }))
@@ -26094,7 +26062,7 @@ var wp;
             );
           })
         ),
-        props.footer && import_react35.default.createElement(components.Footer, { className: classNames[UI.Footer], style: styles?.[UI.Footer], role: "status", "aria-live": "polite" }, props.footer)
+        props.footer && import_react34.default.createElement(components.Footer, { className: classNames[UI.Footer], style: styles?.[UI.Footer], role: "status", "aria-live": "polite" }, props.footer)
       )
     );
   }
@@ -26351,7 +26319,7 @@ var wp;
      * Disabled days are styled through `:has(.day-button:disabled)` rather than
      * a modifier class on the cell, because the two are not equivalent: the
      * focused day keeps its button enabled so it stays reachable. Mapped to
-     * `undefined` on purpose, so `react-day-picker` doesn't fall back to its
+     * `undefined` on purpose, so `@daypicker/react` doesn't fall back to its
      * own `rdp-disabled` class for a modifier we don't style.
      */
     disabled: void 0,
@@ -29313,7 +29281,7 @@ var wp;
   }
 
   // node_modules/@react-spring/shared/dist/react-spring-shared.esm.js
-  var import_react46 = __toESM(require_react());
+  var import_react47 = __toESM(require_react());
   function noop4() {
   }
   var defineHidden = (obj, key, value) => Object.defineProperty(obj, key, {
@@ -29917,9 +29885,9 @@ var wp;
   function isAnimatedString(value) {
     return is.str(value) && (value[0] == "#" || /\d/.test(value) || !isSSR() && cssVariableRegex.test(value) || value in (colors$1 || {}));
   }
-  var useIsomorphicLayoutEffect = isSSR() ? import_react46.useEffect : import_react46.useLayoutEffect;
+  var useIsomorphicLayoutEffect = isSSR() ? import_react47.useEffect : import_react47.useLayoutEffect;
   var useIsMounted = () => {
-    const isMounted = (0, import_react46.useRef)(false);
+    const isMounted = (0, import_react47.useRef)(false);
     useIsomorphicLayoutEffect(() => {
       isMounted.current = true;
       return () => {
@@ -29929,7 +29897,7 @@ var wp;
     return isMounted;
   };
   function useForceUpdate() {
-    const update4 = (0, import_react46.useState)()[1];
+    const update4 = (0, import_react47.useState)()[1];
     const isMounted = useIsMounted();
     return () => {
       if (isMounted.current) {
@@ -29938,11 +29906,11 @@ var wp;
     };
   }
   function useMemoOne(getResult, inputs) {
-    const [initial2] = (0, import_react46.useState)(() => ({
+    const [initial2] = (0, import_react47.useState)(() => ({
       inputs,
       result: getResult()
     }));
-    const committed = (0, import_react46.useRef)();
+    const committed = (0, import_react47.useRef)();
     const prevCache = committed.current;
     let cache = prevCache;
     if (cache) {
@@ -29956,7 +29924,7 @@ var wp;
     } else {
       cache = initial2;
     }
-    (0, import_react46.useEffect)(() => {
+    (0, import_react47.useEffect)(() => {
       committed.current = cache;
       if (prevCache == initial2) {
         initial2.inputs = initial2.result = void 0;
@@ -29975,16 +29943,16 @@ var wp;
     }
     return true;
   }
-  var useOnce = (effect) => (0, import_react46.useEffect)(effect, emptyDeps);
+  var useOnce = (effect) => (0, import_react47.useEffect)(effect, emptyDeps);
   var emptyDeps = [];
 
   // node_modules/@react-spring/core/dist/react-spring-core.esm.js
-  var React102 = __toESM(require_react());
-  var import_react48 = __toESM(require_react());
+  var React101 = __toESM(require_react());
+  var import_react49 = __toESM(require_react());
 
   // node_modules/@react-spring/animated/dist/react-spring-animated.esm.js
-  var React101 = __toESM(require_react());
-  var import_react47 = __toESM(require_react());
+  var React100 = __toESM(require_react());
+  var import_react48 = __toESM(require_react());
   var $node = /* @__PURE__ */ Symbol.for("Animated:node");
   var isAnimated = (value) => !!value && value[$node] === value;
   var getAnimated = (owner) => owner && owner[$node];
@@ -30183,9 +30151,9 @@ var wp;
   }
   var withAnimated = (Component3, host2) => {
     const hasInstance = !is.fun(Component3) || Component3.prototype && Component3.prototype.isReactComponent;
-    return (0, import_react47.forwardRef)((givenProps, givenRef) => {
-      const instanceRef = (0, import_react47.useRef)(null);
-      const ref = hasInstance && (0, import_react47.useCallback)((value) => {
+    return (0, import_react48.forwardRef)((givenProps, givenRef) => {
+      const instanceRef = (0, import_react48.useRef)(null);
+      const ref = hasInstance && (0, import_react48.useCallback)((value) => {
         instanceRef.current = updateRef(givenRef, value);
       }, [givenRef]);
       const [props, deps] = getAnimatedState(givenProps, host2);
@@ -30201,7 +30169,7 @@ var wp;
         }
       };
       const observer = new PropsObserver(callback, deps);
-      const observerRef = (0, import_react47.useRef)();
+      const observerRef = (0, import_react48.useRef)();
       useIsomorphicLayoutEffect(() => {
         observerRef.current = observer;
         each(deps, (dep) => addFluidObserver(dep, observer));
@@ -30212,13 +30180,13 @@ var wp;
           }
         };
       });
-      (0, import_react47.useEffect)(callback, []);
+      (0, import_react48.useEffect)(callback, []);
       useOnce(() => () => {
         const observer2 = observerRef.current;
         each(observer2.deps, (dep) => removeFluidObserver(dep, observer2));
       });
       const usedProps = host2.getComponentProps(props.getValue());
-      return React101.createElement(Component3, _extends2({}, usedProps, {
+      return React100.createElement(Component3, _extends2({}, usedProps, {
         ref
       }));
     });
@@ -31726,7 +31694,7 @@ var wp;
     let {
       children
     } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$3);
-    const inherited = (0, import_react48.useContext)(ctx);
+    const inherited = (0, import_react49.useContext)(ctx);
     const pause = props.pause || !!inherited.pause, immediate = props.immediate || !!inherited.immediate;
     props = useMemoOne(() => ({
       pause,
@@ -31735,7 +31703,7 @@ var wp;
     const {
       Provider: Provider2
     } = ctx;
-    return React102.createElement(Provider2, {
+    return React101.createElement(Provider2, {
       value: props
     }, children);
   };
@@ -31743,7 +31711,7 @@ var wp;
   SpringContext.Provider = ctx.Provider;
   SpringContext.Consumer = ctx.Consumer;
   function makeContext(target, init2) {
-    Object.assign(target, React102.createContext(init2));
+    Object.assign(target, React101.createContext(init2));
     target.Provider._context = target;
     target.Consumer._context = target;
     return target;
@@ -40407,7 +40375,7 @@ var wp;
   var activity_item_default = ActivityItem;
 
   // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-items.mjs
-  var import_react49 = __toESM(require_react(), 1);
+  var import_react50 = __toESM(require_react(), 1);
   function isDefined3(item) {
     return !!item;
   }
@@ -40420,7 +40388,7 @@ var wp;
     );
     const otherFields = (view?.fields ?? []).map((fieldId) => fields2.find((f3) => fieldId === f3.id)).filter(isDefined3);
     return data.map((item, index2) => {
-      return /* @__PURE__ */ (0, import_react49.createElement)(
+      return /* @__PURE__ */ (0, import_react50.createElement)(
         activity_item_default,
         {
           ...props,
@@ -42145,8 +42113,8 @@ var wp;
   }
 
   // node_modules/@ariakit/react-components/dist/focusable/focusable-context.js
-  var import_react50 = __toESM(require_react(), 1);
-  var FocusableContext = (0, import_react50.createContext)(true);
+  var import_react51 = __toESM(require_react(), 1);
+  var FocusableContext = (0, import_react51.createContext)(true);
 
   // node_modules/@ariakit/utils/dist/index.js
   function toArray2(arg) {
@@ -42601,8 +42569,8 @@ var wp;
   }
 
   // node_modules/@ariakit/react-utils/dist/index.js
-  var React103 = __toESM(require_react(), 1);
-  var import_react51 = __toESM(require_react(), 1);
+  var React102 = __toESM(require_react(), 1);
+  var import_react52 = __toESM(require_react(), 1);
   var import_jsx_runtime206 = __toESM(require_jsx_runtime(), 1);
   function setRef(ref, value) {
     if (typeof ref === "function") {
@@ -42612,7 +42580,7 @@ var wp;
   }
   function isValidElementWithRef(element) {
     if (!element) return false;
-    if (!(0, import_react51.isValidElement)(element)) return false;
+    if (!(0, import_react52.isValidElement)(element)) return false;
     if ("ref" in element.props) return true;
     if ("ref" in element) return true;
     return false;
@@ -42657,34 +42625,34 @@ var wp;
     }
     return props;
   }
-  var _React = { ...React103 };
+  var _React = { ...React102 };
   var useReactId = _React.useId;
   var useReactDeferredValue = _React.useDeferredValue;
   var useReactInsertionEffect = _React.useInsertionEffect;
-  var useSafeLayoutEffect = canUseDOM ? import_react51.useLayoutEffect : import_react51.useEffect;
+  var useSafeLayoutEffect = canUseDOM ? import_react52.useLayoutEffect : import_react52.useEffect;
   function useInitialValue(value) {
-    const [initialValue] = (0, import_react51.useState)(value);
+    const [initialValue] = (0, import_react52.useState)(value);
     return initialValue;
   }
   function useLiveRef(value) {
-    const ref = (0, import_react51.useRef)(value);
+    const ref = (0, import_react52.useRef)(value);
     useSafeLayoutEffect(() => {
       ref.current = value;
     });
     return ref;
   }
   function useEvent2(callback) {
-    const ref = (0, import_react51.useRef)(() => {
+    const ref = (0, import_react52.useRef)(() => {
       throw new Error("Cannot call an event handler while rendering.");
     });
     if (useReactInsertionEffect) useReactInsertionEffect(() => {
       ref.current = callback;
     });
     else ref.current = callback;
-    return (0, import_react51.useCallback)((...args) => ref.current?.(...args), []);
+    return (0, import_react52.useCallback)((...args) => ref.current?.(...args), []);
   }
   function useTransactionState(callback) {
-    const [state2, setState] = (0, import_react51.useState)(null);
+    const [state2, setState] = (0, import_react52.useState)(null);
     useSafeLayoutEffect(() => {
       if (state2 == null) return;
       if (!callback) return;
@@ -42700,7 +42668,7 @@ var wp;
     return [state2, setState];
   }
   function useMergeRefs3(...refs) {
-    return (0, import_react51.useMemo)(() => {
+    return (0, import_react52.useMemo)(() => {
       if (!refs.some(Boolean)) return;
       return (value) => {
         const refEffects = [];
@@ -42726,7 +42694,7 @@ var wp;
       if (defaultId) return defaultId;
       return reactId;
     }
-    const [id, setId] = (0, import_react51.useState)(defaultId);
+    const [id, setId] = (0, import_react52.useState)(defaultId);
     useSafeLayoutEffect(() => {
       if (defaultId || id) return;
       const random2 = Math.random().toString(36).slice(2, 8);
@@ -42736,8 +42704,8 @@ var wp;
   }
   function useAttribute(refOrElement, attributeName, defaultValue2) {
     const initialValue = useInitialValue(defaultValue2);
-    const [attribute, setAttribute] = (0, import_react51.useState)(initialValue);
-    (0, import_react51.useEffect)(() => {
+    const [attribute, setAttribute] = (0, import_react52.useState)(initialValue);
+    (0, import_react52.useEffect)(() => {
       const element = refOrElement && "current" in refOrElement ? refOrElement.current : refOrElement;
       if (!element) return;
       const callback = () => {
@@ -42756,17 +42724,17 @@ var wp;
     return attribute;
   }
   function useUpdateEffect(effect, deps) {
-    const mounted = (0, import_react51.useRef)(false);
-    (0, import_react51.useEffect)(() => {
+    const mounted = (0, import_react52.useRef)(false);
+    (0, import_react52.useEffect)(() => {
       if (mounted.current) return effect();
       mounted.current = true;
     }, deps);
-    (0, import_react51.useEffect)(() => () => {
+    (0, import_react52.useEffect)(() => () => {
       mounted.current = false;
     }, []);
   }
   function useUpdateLayoutEffect(effect, deps) {
-    const mounted = (0, import_react51.useRef)(false);
+    const mounted = (0, import_react52.useRef)(false);
     useSafeLayoutEffect(() => {
       if (mounted.current) return effect();
       mounted.current = true;
@@ -42776,13 +42744,13 @@ var wp;
     }, []);
   }
   function useForceUpdate2() {
-    return (0, import_react51.useReducer)(() => [], []);
+    return (0, import_react52.useReducer)(() => [], []);
   }
   function useBooleanEvent(booleanOrCallback) {
     return useEvent2(typeof booleanOrCallback === "function" ? booleanOrCallback : () => booleanOrCallback);
   }
   function useWrapElement(props, callback, deps = []) {
-    const wrapElement = (0, import_react51.useCallback)((element) => {
+    const wrapElement = (0, import_react52.useCallback)((element) => {
       if (props.wrapElement) element = props.wrapElement(element);
       return callback(element);
     }, [...deps, props.wrapElement]);
@@ -42793,7 +42761,7 @@ var wp;
   }
   function useMetadataProps(props, key, value) {
     const parent = props.onLoadedMetadataCapture;
-    const onLoadedMetadataCapture = (0, import_react51.useMemo)(() => {
+    const onLoadedMetadataCapture = (0, import_react52.useMemo)(() => {
       return Object.assign(() => {
       }, parent, ...value !== void 0 ? [{ [key]: value }] : []);
     }, [
@@ -42805,7 +42773,7 @@ var wp;
   }
   var hasInstalledGlobalEventListeners = false;
   function useIsMouseMoving() {
-    (0, import_react51.useEffect)(() => {
+    (0, import_react52.useEffect)(() => {
       if (hasInstalledGlobalEventListeners) return;
       addGlobalEventListener("mousemove", setMouseMoving, true);
       addGlobalEventListener("mousedown", resetMouseMoving, true);
@@ -42834,7 +42802,7 @@ var wp;
     mouseMoving = false;
   }
   function forwardRef56(render5) {
-    const Role = React103.forwardRef((props, ref) => render5({
+    const Role = React102.forwardRef((props, ref) => render5({
       ...props,
       ref
     }));
@@ -42842,18 +42810,18 @@ var wp;
     return Role;
   }
   function memo4(Component3, propsAreEqual) {
-    return React103.memo(Component3, propsAreEqual);
+    return React102.memo(Component3, propsAreEqual);
   }
   function createElement5(Type, props) {
     const { wrapElement, render: render5, ...rest } = props;
     const mergedRef = useMergeRefs3(props.ref, getRefProperty(render5));
     let element;
-    if (React103.isValidElement(render5)) {
+    if (React102.isValidElement(render5)) {
       const renderProps = {
         ...render5.props,
         ref: mergedRef
       };
-      element = React103.cloneElement(render5, mergeProps2(rest, renderProps));
+      element = React102.cloneElement(render5, mergeProps2(rest, renderProps));
     } else if (render5) element = render5(rest);
     else element = /* @__PURE__ */ (0, import_jsx_runtime206.jsx)(Type, { ...rest });
     if (wrapElement) return wrapElement(element);
@@ -42867,17 +42835,17 @@ var wp;
     return useRole;
   }
   function createStoreContext(providers = [], scopedProviders = []) {
-    const context = React103.createContext(void 0);
-    const scopedContext = React103.createContext(void 0);
-    const useContext73 = () => React103.useContext(context);
+    const context = React102.createContext(void 0);
+    const scopedContext = React102.createContext(void 0);
+    const useContext73 = () => React102.useContext(context);
     const useScopedContext = (onlyScoped = false) => {
-      const scoped = React103.useContext(scopedContext);
+      const scoped = React102.useContext(scopedContext);
       const store4 = useContext73();
       if (onlyScoped) return scoped;
       return scoped || store4;
     };
     const useProviderContext = () => {
-      const scoped = React103.useContext(scopedContext);
+      const scoped = React102.useContext(scopedContext);
       const store4 = useContext73();
       if (scoped && scoped === store4) return;
       return store4;
@@ -42909,7 +42877,7 @@ var wp;
   }
 
   // node_modules/@ariakit/react-components/dist/focusable/focusable.js
-  var import_react52 = __toESM(require_react(), 1);
+  var import_react53 = __toESM(require_react(), 1);
   var TagName = "div";
   var accessibleWhenDisabledSymbol = /* @__PURE__ */ Symbol("accessibleWhenDisabled");
   var isSafariBrowser = isSafari();
@@ -43000,10 +42968,10 @@ var wp;
     isKeyboardModality = true;
   }
   var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = true, accessibleWhenDisabled, autoFocus, onFocusVisible, ...props }) {
-    const ref = (0, import_react52.useRef)(null);
+    const ref = (0, import_react53.useRef)(null);
     const [parentAccessibleWhenDisabled, metadataProps] = useMetadataProps(props, accessibleWhenDisabledSymbol, accessibleWhenDisabled);
     accessibleWhenDisabled ??= parentAccessibleWhenDisabled;
-    (0, import_react52.useEffect)(() => {
+    (0, import_react53.useEffect)(() => {
       if (!focusable2) return;
       if (hasInstalledGlobalEventListeners2) return;
       addGlobalEventListener("mousedown", onGlobalMouseDown, true);
@@ -43012,16 +42980,16 @@ var wp;
     }, [focusable2]);
     const disabled2 = focusable2 && disabledFromProps(props);
     const trulyDisabled = disabled2 && !accessibleWhenDisabled;
-    const [focusVisible, setFocusVisible] = (0, import_react52.useState)(false);
-    const focusVisibleRef = (0, import_react52.useRef)(false);
-    const nativeSubmitObserverCleanupRef = (0, import_react52.useRef)(null);
+    const [focusVisible, setFocusVisible] = (0, import_react53.useState)(false);
+    const focusVisibleRef = (0, import_react53.useRef)(false);
+    const nativeSubmitObserverCleanupRef = (0, import_react53.useRef)(null);
     const cleanupFocusVisible = useEvent2((element) => {
       nativeSubmitObserverCleanupRef.current?.();
       nativeSubmitObserverCleanupRef.current = null;
       focusVisibleRef.current = false;
       element?.removeAttribute("data-focus-visible");
     });
-    (0, import_react52.useEffect)(() => {
+    (0, import_react53.useEffect)(() => {
       if (focusable2 && !trulyDisabled) return;
       cleanupFocusVisible(ref.current);
       if (focusVisible) setFocusVisible(false);
@@ -43031,7 +42999,7 @@ var wp;
       focusVisible,
       cleanupFocusVisible
     ]);
-    (0, import_react52.useEffect)(() => {
+    (0, import_react53.useEffect)(() => {
       if (!focusable2) return;
       if (!focusVisible) return;
       const element = ref.current;
@@ -43046,7 +43014,7 @@ var wp;
       observer.observe(element);
       return () => observer.disconnect();
     }, [focusable2, focusVisible]);
-    (0, import_react52.useEffect)(() => {
+    (0, import_react53.useEffect)(() => {
       return () => nativeSubmitObserverCleanupRef.current?.();
     }, []);
     const onKeyPressCapture = useDisableEvent(props.onKeyPressCapture, disabled2);
@@ -43114,7 +43082,7 @@ var wp;
       cleanupFocusVisible(event.currentTarget);
       setFocusVisible(false);
     });
-    const autoFocusOnShow = (0, import_react52.useContext)(FocusableContext);
+    const autoFocusOnShow = (0, import_react53.useContext)(FocusableContext);
     const autoFocusRef = useEvent2((element) => {
       if (!focusable2) return;
       if (!autoFocus) return;
@@ -43126,7 +43094,7 @@ var wp;
         element.focus();
       });
     });
-    const [elementCapabilities, setElementCapabilities] = (0, import_react52.useState)(defaultElementCapabilities);
+    const [elementCapabilities, setElementCapabilities] = (0, import_react53.useState)(defaultElementCapabilities);
     useSafeLayoutEffect(() => {
       const element = ref.current;
       if (!element) return;
@@ -43136,8 +43104,8 @@ var wp;
     }, []);
     const nativeTabbable = focusable2 && !!(elementCapabilities & nativeTabbableMask);
     const supportsDisabled = focusable2 && !!(elementCapabilities & supportsDisabledMask);
-    const [safariTabIndex, setSafariTabIndex] = (0, import_react52.useState)(false);
-    if (isSafariBrowser) (0, import_react52.useEffect)(() => {
+    const [safariTabIndex, setSafariTabIndex] = (0, import_react53.useState)(false);
+    if (isSafariBrowser) (0, import_react53.useEffect)(() => {
       if (!focusable2) return;
       const element = ref.current;
       if (!element) return;
@@ -43146,7 +43114,7 @@ var wp;
       setSafariTabIndex(isButton(element) || isNativeCheckboxOrRadio);
     }, [focusable2]);
     const styleProp = props.style;
-    const style = (0, import_react52.useMemo)(() => {
+    const style = (0, import_react53.useMemo)(() => {
       if (trulyDisabled) return {
         pointerEvents: "none",
         ...styleProp
@@ -43186,7 +43154,7 @@ var wp;
   });
 
   // node_modules/@ariakit/react-components/dist/command/command.js
-  var import_react53 = __toESM(require_react(), 1);
+  var import_react54 = __toESM(require_react(), 1);
   var TagName2 = "button";
   function isNativeClick(event) {
     if (!event.isTrusted) return false;
@@ -43197,18 +43165,18 @@ var wp;
   }
   var symbol = /* @__PURE__ */ Symbol("command");
   var useCommand = createHook(function useCommand2({ clickOnEnter = true, clickOnSpace = true, ...props }) {
-    const ref = (0, import_react53.useRef)(null);
-    const [isNativeButton, setIsNativeButton] = (0, import_react53.useState)(false);
+    const ref = (0, import_react54.useRef)(null);
+    const [isNativeButton, setIsNativeButton] = (0, import_react54.useState)(false);
     const type = props.type;
-    (0, import_react53.useEffect)(() => {
+    (0, import_react54.useEffect)(() => {
       const element = ref.current;
       if (!element) return;
       const nativeButton = isButton(element);
       if (type !== void 0 && nativeButton && element.type === "button") return;
       setIsNativeButton(nativeButton);
     }, [type]);
-    const [active, setActive] = (0, import_react53.useState)(false);
-    const activeRef = (0, import_react53.useRef)(false);
+    const [active, setActive] = (0, import_react54.useState)(false);
+    const activeRef = (0, import_react54.useRef)(false);
     const disabled2 = disabledFromProps(props);
     const [isDuplicate, metadataProps] = useMetadataProps(props, symbol, true);
     useSafeLayoutEffect(() => {
@@ -43306,14 +43274,14 @@ var wp;
   var CollectionScopedContextProvider = ctx2.ScopedContextProvider;
 
   // node_modules/@ariakit/react-components/dist/collection/collection-item.js
-  var import_react54 = __toESM(require_react(), 1);
+  var import_react55 = __toESM(require_react(), 1);
   var TagName3 = "div";
   var useCollectionItem = createHook(function useCollectionItem2({ store: store4, shouldRegisterItem = true, getItem = identity, element, ...props }) {
     const context = useCollectionContext();
     store4 = store4 || context;
     const id = useId5(props.id);
-    const ref = (0, import_react54.useRef)(element);
-    (0, import_react54.useEffect)(() => {
+    const ref = (0, import_react55.useRef)(element);
+    (0, import_react55.useEffect)(() => {
       const element2 = ref.current;
       if (!id) return;
       if (!element2) return;
@@ -43341,15 +43309,15 @@ var wp;
   });
 
   // node_modules/@ariakit/react-components/dist/composite/composite-context.js
-  var import_react55 = __toESM(require_react(), 1);
+  var import_react56 = __toESM(require_react(), 1);
   var ctx3 = createStoreContext([CollectionContextProvider], [CollectionScopedContextProvider]);
   var useCompositeContext = ctx3.useContext;
   var useCompositeScopedContext = ctx3.useScopedContext;
   var useCompositeProviderContext = ctx3.useProviderContext;
   var CompositeContextProvider = ctx3.ContextProvider;
   var CompositeScopedContextProvider = ctx3.ScopedContextProvider;
-  var CompositeItemContext = (0, import_react55.createContext)(void 0);
-  var CompositeRowContext = (0, import_react55.createContext)(void 0);
+  var CompositeItemContext = (0, import_react56.createContext)(void 0);
+  var CompositeRowContext = (0, import_react56.createContext)(void 0);
 
   // node_modules/@ariakit/store/dist/index.js
   function getInternal(store4, key) {
@@ -44342,11 +44310,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // node_modules/@ariakit/react-components/dist/composite/composite-item.js
-  var import_react56 = __toESM(require_react(), 1);
+  var import_react57 = __toESM(require_react(), 1);
   var import_jsx_runtime207 = __toESM(require_jsx_runtime(), 1);
 
   // node_modules/@ariakit/react-store/dist/index.js
-  var React104 = __toESM(require_react(), 1);
+  var React103 = __toESM(require_react(), 1);
   var import_shim3 = __toESM(require_shim(), 1);
   var noopSubscribe = () => () => {
   };
@@ -44367,7 +44335,7 @@ If there's a particular need for this, please submit a feature request at https:
     return true;
   }
   function useStableStoreKeys(keys) {
-    const keysRef = React104.useRef(null);
+    const keysRef = React103.useRef(null);
     const currentKeys = keysRef.current;
     if (keys === null) {
       keysRef.current = null;
@@ -44380,7 +44348,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useStoreState(store4, keyOrKeysOrSelector = identity, selector2) {
     const subscriptionKeys = useStableStoreKeys(isStoreKeyArray(keyOrKeysOrSelector) ? keyOrKeysOrSelector : typeof keyOrKeysOrSelector === "function" ? null : [keyOrKeysOrSelector]);
-    const storeSubscribe = React104.useCallback((callback) => {
+    const storeSubscribe = React103.useCallback((callback) => {
       if (!store4) return noopSubscribe();
       if (subscriptionKeys?.length === 0) return noopSubscribe();
       return subscribe2(store4, subscriptionKeys, callback);
@@ -44419,9 +44387,9 @@ If there's a particular need for this, please submit a feature request at https:
   function useStoreStateObject(store4, objectOrKeys, object) {
     const stateObject = isStoreKeyArray(objectOrKeys) ? object ?? {} : objectOrKeys;
     const selectorKeys = isStoreKeyArray(objectOrKeys) ? objectOrKeys : void 0;
-    const objRef = React104.useRef({});
+    const objRef = React103.useRef({});
     const subscriptionKeys = useStableStoreKeys(getStoreStateObjectKeys(stateObject, selectorKeys));
-    const storeSubscribe = React104.useCallback((callback) => {
+    const storeSubscribe = React103.useCallback((callback) => {
       if (!store4) return noopSubscribe();
       if (subscriptionKeys?.length === 0) return noopSubscribe();
       return subscribe2(store4, subscriptionKeys, callback);
@@ -44484,10 +44452,10 @@ If there's a particular need for this, please submit a feature request at https:
     });
   }
   function useStore2(createStore2, props) {
-    const [store4, setStore] = React104.useState(() => createStore2(props));
+    const [store4, setStore] = React103.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store4), [store4]);
-    const useState165 = React104.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
-    return [React104.useMemo(() => ({
+    const useState165 = React103.useCallback((keyOrSelector) => useStoreState(store4, keyOrSelector), [store4]);
+    return [React103.useMemo(() => ({
       ...store4,
       useState: useState165
     }), [store4, useState165]), useEvent2(() => {
@@ -44551,8 +44519,8 @@ If there's a particular need for this, please submit a feature request at https:
     const context = useCompositeScopedContext();
     store4 = store4 || context;
     const id = useId5(props.id);
-    const ref = (0, import_react56.useRef)(null);
-    const row = (0, import_react56.useContext)(CompositeRowContext);
+    const ref = (0, import_react57.useRef)(null);
+    const row = (0, import_react57.useContext)(CompositeRowContext);
     const trulyDisabled = disabledFromProps(props) && !props.accessibleWhenDisabled;
     const shouldRegisterItem = props.shouldRegisterItem;
     const getRowId = (state2) => {
@@ -44604,7 +44572,7 @@ If there's a particular need for this, please submit a feature request at https:
         return state2.activeId === id;
       }
     });
-    const getItem = (0, import_react56.useCallback)((item) => {
+    const getItem = (0, import_react57.useCallback)((item) => {
       const nextItem = {
         ...item,
         id: id || item.id,
@@ -44623,8 +44591,8 @@ If there's a particular need for this, please submit a feature request at https:
       getItemProp
     ]);
     const onFocusProp = props.onFocus;
-    const hasFocusedComposite = (0, import_react56.useRef)(false);
-    const cancelScheduledFocusRedirectRef = (0, import_react56.useRef)(null);
+    const hasFocusedComposite = (0, import_react57.useRef)(false);
+    const cancelScheduledFocusRedirectRef = (0, import_react57.useRef)(null);
     const onFocus = useEvent2((event) => {
       onFocusProp?.(event);
       if (event.defaultPrevented) return;
@@ -44747,7 +44715,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     });
-    const providerValue = (0, import_react56.useMemo)(() => ({
+    const providerValue = (0, import_react57.useMemo)(() => ({
       id,
       baseElement
     }), [id, baseElement]);
@@ -44784,7 +44752,7 @@ If there's a particular need for this, please submit a feature request at https:
   }));
 
   // node_modules/@ariakit/react-components/dist/composite/composite.js
-  var import_react57 = __toESM(require_react(), 1);
+  var import_react58 = __toESM(require_react(), 1);
   var import_jsx_runtime208 = __toESM(require_jsx_runtime(), 1);
   var TagName5 = "div";
   function isGrid(items) {
@@ -44830,10 +44798,10 @@ If there's a particular need for this, please submit a feature request at https:
     baseElement.scrollTop = savedScrollTop;
   }
   function useScheduleFocus(store4) {
-    const [scheduled, setScheduled] = (0, import_react57.useState)(false);
-    const schedule2 = (0, import_react57.useCallback)(() => setScheduled(true), []);
+    const [scheduled, setScheduled] = (0, import_react58.useState)(false);
+    const schedule2 = (0, import_react58.useCallback)(() => setScheduled(true), []);
     const activeItem = useStoreState(store4, scheduled ? ["activeId", "items"] : [], (state2) => scheduled ? getEnabledItem(store4, state2.activeId) : null);
-    (0, import_react57.useEffect)(() => {
+    (0, import_react58.useEffect)(() => {
       const activeElement2 = activeItem?.element;
       if (!scheduled) return;
       if (!activeElement2) return;
@@ -44851,7 +44819,7 @@ If there's a particular need for this, please submit a feature request at https:
   var CompositeFocusOnMove = memo4(function CompositeFocusOnMove2({ store: store4, focusOnMove, previousElementRef }) {
     const moves = useStoreState(store4, "moves");
     const baseElement = useStoreState(store4, "baseElement");
-    (0, import_react57.useEffect)(() => {
+    (0, import_react58.useEffect)(() => {
       if (!moves) return;
       if (!focusOnMove) return;
       const { activeId } = store4.getState();
@@ -44883,8 +44851,8 @@ If there's a particular need for this, please submit a feature request at https:
     const context = useCompositeProviderContext();
     store4 = store4 || context;
     invariant(store4, "Composite must receive a `store` prop or be wrapped in a CompositeProvider component.");
-    const ref = (0, import_react57.useRef)(null);
-    const previousElementRef = (0, import_react57.useRef)(null);
+    const ref = (0, import_react58.useRef)(null);
+    const previousElementRef = (0, import_react58.useRef)(null);
     const scheduleFocus = useScheduleFocus(store4);
     const [, setBaseElement] = useTransactionState(composite ? store4.setBaseElement : null);
     const virtualFocus = useStoreState(store4, "virtualFocus");
@@ -45038,18 +45006,18 @@ If there's a particular need for this, please submit a feature request at https:
   var DisclosureScopedContextProvider = ctx4.ScopedContextProvider;
 
   // node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
-  var import_react58 = __toESM(require_react(), 1);
+  var import_react59 = __toESM(require_react(), 1);
   var ctx5 = createStoreContext([DisclosureContextProvider], [DisclosureScopedContextProvider]);
   var useDialogContext = ctx5.useContext;
   var useDialogScopedContext = ctx5.useScopedContext;
   var useDialogProviderContext = ctx5.useProviderContext;
   var DialogContextProvider = ctx5.ContextProvider;
   var DialogScopedContextProvider = ctx5.ScopedContextProvider;
-  var DialogHeadingContext = (0, import_react58.createContext)(void 0);
-  var DialogDescriptionContext = (0, import_react58.createContext)(void 0);
+  var DialogHeadingContext = (0, import_react59.createContext)(void 0);
+  var DialogDescriptionContext = (0, import_react59.createContext)(void 0);
 
   // node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
-  var import_react59 = __toESM(require_react(), 1);
+  var import_react60 = __toESM(require_react(), 1);
   var import_jsx_runtime209 = __toESM(require_jsx_runtime(), 1);
   var import_react_dom5 = __toESM(require_react_dom(), 1);
   var TagName6 = "div";
@@ -45087,9 +45055,9 @@ If there's a particular need for this, please submit a feature request at https:
     const context = useDisclosureProviderContext();
     store4 = store4 || context;
     invariant(store4, "DisclosureContent must receive a `store` prop or be wrapped in a DisclosureProvider component.");
-    const ref = (0, import_react59.useRef)(null);
+    const ref = (0, import_react60.useRef)(null);
     const id = useId5(props.id);
-    const [transition, setTransition] = (0, import_react59.useState)(null);
+    const [transition, setTransition] = (0, import_react60.useState)(null);
     const { open, mounted, animated: animated2, contentElement } = useStoreStateObject(store4, {
       open: "open",
       mounted: "mounted",
@@ -45097,7 +45065,7 @@ If there's a particular need for this, please submit a feature request at https:
       contentElement: "contentElement"
     });
     const otherElement = useStoreState(store4.disclosure, "contentElement");
-    const hasClosedRef = (0, import_react59.useRef)(false);
+    const hasClosedRef = (0, import_react60.useRef)(false);
     useSafeLayoutEffect(() => {
       if (!ref.current) return;
       store4?.setContentElement(ref.current);
@@ -45173,7 +45141,7 @@ If there's a particular need for this, please submit a feature request at https:
     }), [store4]);
     const hidden = isHidden(mounted, props.hidden, alwaysVisible);
     const styleProp = props.style;
-    const style = (0, import_react59.useMemo)(() => {
+    const style = (0, import_react60.useMemo)(() => {
       if (hidden) return {
         ...styleProp,
         display: "none"
@@ -45260,16 +45228,16 @@ If there's a particular need for this, please submit a feature request at https:
   var PopoverScopedContextProvider = ctx6.ScopedContextProvider;
 
   // node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
-  var import_react60 = __toESM(require_react(), 1);
-  var ComboboxListRoleContext = (0, import_react60.createContext)(void 0);
+  var import_react61 = __toESM(require_react(), 1);
+  var ComboboxListRoleContext = (0, import_react61.createContext)(void 0);
   var ctx7 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
   var useComboboxContext = ctx7.useContext;
   var useComboboxScopedContext = ctx7.useScopedContext;
   var useComboboxProviderContext = ctx7.useProviderContext;
   var ComboboxContextProvider = ctx7.ContextProvider;
   var ComboboxScopedContextProvider = ctx7.ScopedContextProvider;
-  var ComboboxItemValueContext = (0, import_react60.createContext)(void 0);
-  var ComboboxItemCheckedContext = (0, import_react60.createContext)(false);
+  var ComboboxItemValueContext = (0, import_react61.createContext)(void 0);
+  var ComboboxItemCheckedContext = (0, import_react61.createContext)(false);
 
   // node_modules/@ariakit/react-components/dist/collection/collection-store.js
   function useCollectionStoreProps(store4, update4, props) {
@@ -45367,7 +45335,7 @@ If there's a particular need for this, please submit a feature request at https:
   });
 
   // node_modules/@ariakit/react-components/dist/composite/composite-hover.js
-  var import_react61 = __toESM(require_react(), 1);
+  var import_react62 = __toESM(require_react(), 1);
   var TagName8 = "div";
   function hoveringInside(event) {
     const nextElement = event.relatedTarget;
@@ -45416,7 +45384,7 @@ If there's a particular need for this, please submit a feature request at https:
       store4?.setActiveId(null);
       store4?.getState().baseElement?.focus();
     });
-    const ref = (0, import_react61.useCallback)((element) => {
+    const ref = (0, import_react62.useCallback)((element) => {
       if (!element) return;
       element[symbol2] = true;
     }, []);
@@ -45434,7 +45402,7 @@ If there's a particular need for this, please submit a feature request at https:
   }));
 
   // node_modules/@ariakit/react-components/dist/combobox/combobox.js
-  var import_react62 = __toESM(require_react(), 1);
+  var import_react63 = __toESM(require_react(), 1);
   var import_jsx_runtime210 = __toESM(require_jsx_runtime(), 1);
   var TagName9 = "input";
   function isFirstItemAutoSelected(items, activeValue, autoSelect) {
@@ -45463,11 +45431,11 @@ If there's a particular need for this, please submit a feature request at https:
     const context = useComboboxProviderContext();
     store4 = store4 || context;
     invariant(store4, "Combobox must receive a `store` prop or be wrapped in a ComboboxProvider component.");
-    const ref = (0, import_react62.useRef)(null);
+    const ref = (0, import_react63.useRef)(null);
     const [valueUpdated, forceValueUpdate] = useForceUpdate2();
-    const canAutoSelectRef = (0, import_react62.useRef)(false);
-    const composingRef = (0, import_react62.useRef)(false);
-    const compositionEndFrameRef = (0, import_react62.useRef)(null);
+    const canAutoSelectRef = (0, import_react63.useRef)(false);
+    const composingRef = (0, import_react63.useRef)(false);
+    const compositionEndFrameRef = (0, import_react63.useRef)(null);
     const cancelCompositionEndFrame = () => {
       const frame = compositionEndFrameRef.current;
       if (frame == null) return;
@@ -45476,7 +45444,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const autoSelect = useStoreState(store4, ["virtualFocus"], (state2) => state2.virtualFocus && autoSelectProp);
     const inline4 = autoComplete === "inline" || autoComplete === "both";
-    const [canInline, setCanInline] = (0, import_react62.useState)(inline4);
+    const [canInline, setCanInline] = (0, import_react63.useState)(inline4);
     useUpdateLayoutEffect(() => {
       if (!inline4) return;
       setCanInline(true);
@@ -45488,8 +45456,8 @@ If there's a particular need for this, please submit a feature request at https:
       return state2.selectedValue;
     });
     const multiSelectable = Array.isArray(selectedValue);
-    const prevSelectedValueRef = (0, import_react62.useRef)(void 0);
-    (0, import_react62.useEffect)(() => {
+    const prevSelectedValueRef = (0, import_react63.useRef)(void 0);
+    (0, import_react63.useEffect)(() => {
       return sync2(store4, ["selectedValue", "activeId"], (_, prev) => {
         prevSelectedValueRef.current = prev.selectedValue;
       });
@@ -45510,7 +45478,7 @@ If there's a particular need for this, please submit a feature request at https:
     const items = useStoreState(store4, "renderedItems");
     const open = useStoreState(store4, "open");
     const contentElement = useStoreState(store4, "contentElement");
-    const value = (0, import_react62.useMemo)(() => {
+    const value = (0, import_react63.useMemo)(() => {
       if (!inline4) return storeValue;
       if (!canInline) return storeValue;
       if (isFirstItemAutoSelected(items, inlineActiveValue, autoSelect)) {
@@ -45529,7 +45497,7 @@ If there's a particular need for this, please submit a feature request at https:
       autoSelect,
       storeValue
     ]);
-    (0, import_react62.useEffect)(() => {
+    (0, import_react63.useEffect)(() => {
       const element = ref.current;
       if (!element) return;
       const onCompositeItemMove = () => setCanInline(true);
@@ -45538,7 +45506,7 @@ If there's a particular need for this, please submit a feature request at https:
         element.removeEventListener("combobox-item-move", onCompositeItemMove);
       };
     }, []);
-    (0, import_react62.useEffect)(() => {
+    (0, import_react63.useEffect)(() => {
       if (!inline4) return;
       if (!canInline) return;
       if (!inlineActiveValue) return;
@@ -45571,11 +45539,11 @@ If there's a particular need for this, please submit a feature request at https:
       storeValue
     ]);
     const getAutoSelectIdProp = useEvent2(getAutoSelectId);
-    const autoSelectIdRef = (0, import_react62.useRef)(null);
-    const autoSelectMovedRef = (0, import_react62.useRef)(void 0);
-    const userScrolledRef = (0, import_react62.useRef)(false);
-    const isAutoScrollingRef = (0, import_react62.useRef)(false);
-    (0, import_react62.useEffect)(() => {
+    const autoSelectIdRef = (0, import_react63.useRef)(null);
+    const autoSelectMovedRef = (0, import_react63.useRef)(void 0);
+    const userScrolledRef = (0, import_react63.useRef)(false);
+    const isAutoScrollingRef = (0, import_react63.useRef)(false);
+    (0, import_react63.useEffect)(() => {
       if (!open) return;
       if (!contentElement) return;
       const scrollingElement = getScrollingElement(contentElement);
@@ -45675,7 +45643,7 @@ If there's a particular need for this, please submit a feature request at https:
       getAutoSelectIdProp,
       items
     ]);
-    (0, import_react62.useEffect)(() => {
+    (0, import_react63.useEffect)(() => {
       if (!inline4) return;
       const combobox = ref.current;
       if (!combobox) return;
@@ -45729,7 +45697,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (showOnChangeProp(event)) store4.show();
       if (!autoSelect || !canAutoSelectRef.current) store4.setActiveId(null);
     });
-    (0, import_react62.useEffect)(() => cancelCompositionEndFrame, []);
+    (0, import_react63.useEffect)(() => cancelCompositionEndFrame, []);
     const onCompositionStartProp = props.onCompositionStart;
     const onCompositionStart = useEvent2((event) => {
       cancelCompositionEndFrame();
@@ -45868,7 +45836,7 @@ If there's a particular need for this, please submit a feature request at https:
   });
 
   // node_modules/@ariakit/react-components/dist/combobox/combobox-item.js
-  var import_react63 = __toESM(require_react(), 1);
+  var import_react64 = __toESM(require_react(), 1);
   var import_jsx_runtime211 = __toESM(require_jsx_runtime(), 1);
   var TagName10 = "div";
   function isSelected(storeValue, itemValue) {
@@ -45893,7 +45861,7 @@ If there's a particular need for this, please submit a feature request at https:
         return isSelected(state2.selectedValue, value);
       }
     });
-    const getItem = (0, import_react63.useCallback)((item) => {
+    const getItem = (0, import_react64.useCallback)((item) => {
       const nextItem = {
         ...item,
         value
@@ -45953,7 +45921,7 @@ If there's a particular need for this, please submit a feature request at https:
       })
     }), [value, selected]);
     props = {
-      role: getItemRole((0, import_react63.useContext)(ComboboxListRoleContext)),
+      role: getItemRole((0, import_react64.useContext)(ComboboxListRoleContext)),
       children: value,
       ...props,
       onClick,
@@ -45984,7 +45952,7 @@ If there's a particular need for this, please submit a feature request at https:
   }));
 
   // node_modules/@ariakit/react-components/dist/combobox/combobox-item-value.js
-  var import_react64 = __toESM(require_react(), 1);
+  var import_react65 = __toESM(require_react(), 1);
   var import_jsx_runtime212 = __toESM(require_jsx_runtime(), 1);
   var TagName11 = "span";
   function normalizeValue2(value) {
@@ -46084,11 +46052,11 @@ If there's a particular need for this, please submit a feature request at https:
   var useComboboxItemValue = createHook(function useComboboxItemValue2({ store: store4, value, userValue, ...props }) {
     const context = useComboboxScopedContext();
     store4 = store4 || context;
-    const itemContext = (0, import_react64.useContext)(ComboboxItemValueContext);
+    const itemContext = (0, import_react65.useContext)(ComboboxItemValueContext);
     const itemValue = value ?? itemContext;
     const inputValue = useStoreState(store4, ["value"], (state2) => userValue ?? state2?.value);
     props = {
-      children: (0, import_react64.useMemo)(() => {
+      children: (0, import_react65.useMemo)(() => {
         if (!itemValue) return;
         if (!inputValue) return itemValue;
         return splitValue(itemValue, inputValue);
@@ -46122,7 +46090,7 @@ If there's a particular need for this, please submit a feature request at https:
   }));
 
   // node_modules/@ariakit/react-components/dist/combobox/combobox-list.js
-  var import_react65 = __toESM(require_react(), 1);
+  var import_react66 = __toESM(require_react(), 1);
   var import_jsx_runtime213 = __toESM(require_jsx_runtime(), 1);
   var TagName13 = "div";
   var useComboboxList = createHook(function useComboboxList2({ store: store4, alwaysVisible, ...props }) {
@@ -46131,7 +46099,7 @@ If there's a particular need for this, please submit a feature request at https:
     store4 = store4 || context;
     const scopedContextSameStore = !!store4 && store4 === scopedContext;
     invariant(store4, "ComboboxList must receive a `store` prop or be wrapped in a ComboboxProvider component.");
-    const ref = (0, import_react65.useRef)(null);
+    const ref = (0, import_react66.useRef)(null);
     const id = useId5(props.id);
     const mounted = useStoreState(store4, "mounted");
     const hidden = isHidden(mounted, props.hidden, alwaysVisible);
@@ -46142,7 +46110,7 @@ If there's a particular need for this, please submit a feature request at https:
     const multiSelectable = useStoreState(store4, ["selectedValue"], (state2) => Array.isArray(state2.selectedValue));
     const role = useAttribute(ref, "role", props.role);
     const ariaMultiSelectable = role === "listbox" || role === "tree" || role === "grid" ? multiSelectable || void 0 : void 0;
-    const [hasListboxInside, setHasListboxInside] = (0, import_react65.useState)(false);
+    const [hasListboxInside, setHasListboxInside] = (0, import_react66.useState)(false);
     const contentElement = useStoreState(store4, "contentElement");
     useSafeLayoutEffect(() => {
       if (!mounted) return;
@@ -46189,9 +46157,9 @@ If there's a particular need for this, please submit a feature request at https:
   });
 
   // node_modules/@ariakit/react-components/dist/tag/tag-context.js
-  var import_react66 = __toESM(require_react(), 1);
-  var TagValueContext = (0, import_react66.createContext)(null);
-  var TagRemoveIdContext = (0, import_react66.createContext)(null);
+  var import_react67 = __toESM(require_react(), 1);
+  var TagValueContext = (0, import_react67.createContext)(null);
+  var TagRemoveIdContext = (0, import_react67.createContext)(null);
   var ctx8 = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
   var useTagContext = ctx8.useContext;
   var useTagScopedContext = ctx8.useScopedContext;
@@ -104692,7 +104660,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/rich-text-control/format-edit.mjs
   var import_rich_text7 = __toESM(require_rich_text(), 1);
   var import_jsx_runtime557 = __toESM(require_jsx_runtime(), 1);
-  var import_react67 = __toESM(require_react(), 1);
+  var import_react68 = __toESM(require_react(), 1);
   var EMPTY_CONTEXT = {};
   function Edit({
     onChange,
@@ -104731,7 +104699,7 @@ If there's a particular need for this, please submit a feature request at https:
     formatTypes,
     ...props
   }) {
-    return formatTypes.map((settings) => /* @__PURE__ */ (0, import_react67.createElement)(Edit, { settings, ...props, key: settings.name }));
+    return formatTypes.map((settings) => /* @__PURE__ */ (0, import_react68.createElement)(Edit, { settings, ...props, key: settings.name }));
   }
 
   // packages/editor/build-module/components/collab-sidebar/rich-text-control/index.mjs
