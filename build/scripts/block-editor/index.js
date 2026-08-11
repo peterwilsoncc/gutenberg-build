@@ -46565,7 +46565,9 @@ var wp;
         next.current.focus({ preventScroll: true });
       }
       function onFocusOut(event) {
-        setLastFocus2({ ...getLastFocus2(), current: event.target });
+        if (!node.contains(event.relatedTarget)) {
+          setLastFocus2({ current: event.target });
+        }
         const { ownerDocument: ownerDocument22 } = node;
         if (!event.relatedTarget && event.target.hasAttribute("data-block") && ownerDocument22.activeElement === ownerDocument22.body && getBlockCount2() === 0) {
           node.focus();
@@ -59349,6 +59351,10 @@ var wp;
   }) {
     const [initialFocusOnMount] = (0, import_element168.useState)(focusOnMount);
     const [initialIndex] = (0, import_element168.useState)(defaultIndex);
+    const { getLastFocus: getLastFocus2, getSelectedBlockClientId: getSelectedBlockClientId2 } = unlock(
+      (0, import_data108.useSelect)(store)
+    );
+    const { refsMap } = (0, import_element168.useContext)(BlockRefs);
     const focusToolbar = (0, import_element168.useCallback)(() => {
       focusFirstTabbableIn(toolbarRef.current);
     }, [toolbarRef]);
@@ -59390,26 +59396,32 @@ var wp;
         onIndexChange(index2);
       };
     }, [initialIndex, initialFocusOnMount, onIndexChange, toolbarRef]);
-    const { getLastFocus: getLastFocus2 } = unlock((0, import_data108.useSelect)(store));
     (0, import_element168.useEffect)(() => {
-      const navigableToolbarRef = toolbarRef.current;
-      if (focusEditorOnEscape) {
-        const handleKeyDown = (event) => {
-          const lastFocus2 = getLastFocus2();
-          if (event.keyCode === import_keycodes12.ESCAPE && lastFocus2?.current) {
-            event.preventDefault();
-            lastFocus2.current.focus();
-          }
-        };
-        navigableToolbarRef.addEventListener("keydown", handleKeyDown);
-        return () => {
-          navigableToolbarRef.removeEventListener(
-            "keydown",
-            handleKeyDown
-          );
-        };
+      if (!focusEditorOnEscape) {
+        return;
       }
-    }, [focusEditorOnEscape, getLastFocus2, toolbarRef]);
+      const navigableToolbar = toolbarRef.current;
+      const handleKeyDown = (event) => {
+        if (event.keyCode !== import_keycodes12.ESCAPE) {
+          return;
+        }
+        const target = getLastFocus2()?.current ?? refsMap.get(getSelectedBlockClientId2());
+        if (target) {
+          event.preventDefault();
+          target.focus();
+        }
+      };
+      navigableToolbar.addEventListener("keydown", handleKeyDown);
+      return () => {
+        navigableToolbar.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [
+      focusEditorOnEscape,
+      getLastFocus2,
+      getSelectedBlockClientId2,
+      refsMap,
+      toolbarRef
+    ]);
   }
   function NavigableToolbar({
     children,
