@@ -3283,6 +3283,10 @@ iframe[name=editor-canvas] {
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
 }
 
+.block-editor-multi-selection-inspector__card-description {
+  color: #757575;
+}
+
 .block-editor-multi-selection-inspector__card .block-editor-block-icon {
   margin-left: -2px;
   padding: 0 3px;
