@@ -73499,6 +73499,17 @@ ${text}
   var settings104 = {
     icon: tab_panel_default,
     template: TEMPLATE19,
+    __experimentalLabel(attributes, { context }) {
+      const { label } = attributes;
+      const customName = attributes?.metadata?.name;
+      const hasLabel = label?.trim().length > 0;
+      if (context === "list-view" && (customName || hasLabel)) {
+        return customName || label;
+      }
+      if (context === "breadcrumb" && customName) {
+        return customName;
+      }
+    },
     edit: Edit19,
     save: save48
   };
