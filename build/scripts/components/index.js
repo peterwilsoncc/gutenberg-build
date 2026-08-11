@@ -21786,10 +21786,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return React7.createElement.apply(null, createElementArgArray);
   };
-  (function(_jsx261) {
+  (function(_jsx260) {
     var JSX;
     /* @__PURE__ */ (function(_JSX) {
-    })(JSX || (JSX = _jsx261.JSX || (_jsx261.JSX = {})));
+    })(JSX || (JSX = _jsx260.JSX || (_jsx260.JSX = {})));
   })(jsx36 || (jsx36 = {}));
   function css() {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -57179,11 +57179,11 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var ValidatedContentEditableControl = (0, import_element235.forwardRef)(UnforwardedValidatedContentEditableControl);
   ValidatedContentEditableControl.displayName = "ValidatedContentEditableControl";
 
-  // packages/components/build-module/validated-form-controls/components/select-control.mjs
-  var import_element236 = __toESM(require_element(), 1);
+  // packages/components/build-module/validated-form-controls/components/text-control.mjs
   var import_compose92 = __toESM(require_compose(), 1);
+  var import_element236 = __toESM(require_element(), 1);
   var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
-  var UnforwardedValidatedSelectControl = ({
+  var UnforwardedValidatedTextControl = ({
     required,
     customValidity,
     markWhenOptional,
@@ -57196,20 +57196,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(select_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime320.jsx)(text_control_default, {
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedSelectControl = (0, import_element236.forwardRef)(UnforwardedValidatedSelectControl);
-  ValidatedSelectControl.displayName = "ValidatedSelectControl";
+  var ValidatedTextControl = (0, import_element236.forwardRef)(UnforwardedValidatedTextControl);
+  ValidatedTextControl.displayName = "ValidatedTextControl";
 
-  // packages/components/build-module/validated-form-controls/components/text-control.mjs
-  var import_compose93 = __toESM(require_compose(), 1);
+  // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
   var import_element237 = __toESM(require_element(), 1);
+  var import_compose93 = __toESM(require_compose(), 1);
   var import_jsx_runtime321 = __toESM(require_jsx_runtime(), 1);
-  var UnforwardedValidatedTextControl = ({
+  var UnforwardedValidatedTextareaControl = ({
     required,
     customValidity,
     markWhenOptional,
@@ -57222,20 +57222,20 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(text_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(textarea_control_default, {
         ref: mergedRefs,
         ...restProps
       })
     });
   };
-  var ValidatedTextControl = (0, import_element237.forwardRef)(UnforwardedValidatedTextControl);
-  ValidatedTextControl.displayName = "ValidatedTextControl";
+  var ValidatedTextareaControl = (0, import_element237.forwardRef)(UnforwardedValidatedTextareaControl);
+  ValidatedTextareaControl.displayName = "ValidatedTextareaControl";
 
-  // packages/components/build-module/validated-form-controls/components/textarea-control.mjs
+  // packages/components/build-module/validated-form-controls/components/toggle-control.mjs
   var import_element238 = __toESM(require_element(), 1);
   var import_compose94 = __toESM(require_compose(), 1);
   var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
-  var UnforwardedValidatedTextareaControl = ({
+  var UnforwardedValidatedToggleControl = ({
     required,
     customValidity,
     markWhenOptional,
@@ -57248,65 +57248,39 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(textarea_control_default, {
-        ref: mergedRefs,
-        ...restProps
-      })
-    });
-  };
-  var ValidatedTextareaControl = (0, import_element238.forwardRef)(UnforwardedValidatedTextareaControl);
-  ValidatedTextareaControl.displayName = "ValidatedTextareaControl";
-
-  // packages/components/build-module/validated-form-controls/components/toggle-control.mjs
-  var import_element239 = __toESM(require_element(), 1);
-  var import_compose95 = __toESM(require_compose(), 1);
-  var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
-  var UnforwardedValidatedToggleControl = ({
-    required,
-    customValidity,
-    markWhenOptional,
-    ...restProps
-  }, forwardedRef) => {
-    const validityTargetRef = (0, import_element239.useRef)(null);
-    const mergedRefs = (0, import_compose95.useMergeRefs)([forwardedRef, validityTargetRef]);
-    return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(ControlWithError, {
-      required,
-      markWhenOptional,
-      customValidity,
-      getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(toggle_control_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(toggle_control_default, {
         ref: mergedRefs,
         required,
         ...restProps
       })
     });
   };
-  var ValidatedToggleControl = (0, import_element239.forwardRef)(UnforwardedValidatedToggleControl);
+  var ValidatedToggleControl = (0, import_element238.forwardRef)(UnforwardedValidatedToggleControl);
   ValidatedToggleControl.displayName = "ValidatedToggleControl";
 
   // packages/components/build-module/validated-form-controls/components/toggle-group-control.mjs
-  var import_element240 = __toESM(require_element(), 1);
-  var import_jsx_runtime324 = __toESM(require_jsx_runtime(), 1);
+  var import_element239 = __toESM(require_element(), 1);
+  var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedToggleGroupControl = ({
     required,
     customValidity,
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element240.useRef)(null);
-    const nameAttr = (0, import_element240.useId)();
-    return /* @__PURE__ */ (0, import_jsx_runtime324.jsxs)("div", {
+    const validityTargetRef = (0, import_element239.useRef)(null);
+    const nameAttr = (0, import_element239.useId)();
+    return /* @__PURE__ */ (0, import_jsx_runtime323.jsxs)("div", {
       className: "components-validated-control__wrapper-with-error-delegate",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime324.jsx)(ControlWithError, {
+      children: [/* @__PURE__ */ (0, import_jsx_runtime323.jsx)(ControlWithError, {
         required,
         markWhenOptional,
         customValidity,
         getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime324.jsx)(component_default12, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(component_default12, {
           ref: forwardedRef,
           ...restProps
         })
-      }), /* @__PURE__ */ (0, import_jsx_runtime324.jsx)("input", {
+      }), /* @__PURE__ */ (0, import_jsx_runtime323.jsx)("input", {
         className: "components-validated-control__error-delegate",
         type: "radio",
         ref: validityTargetRef,
@@ -57322,7 +57296,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       })]
     });
   };
-  var ValidatedToggleGroupControl = (0, import_element240.forwardRef)(UnforwardedValidatedToggleGroupControl);
+  var ValidatedToggleGroupControl = (0, import_element239.forwardRef)(UnforwardedValidatedToggleGroupControl);
   ValidatedToggleGroupControl.displayName = "ValidatedToggleGroupControl";
 
   // packages/components/build-module/private-apis.mjs
@@ -57342,7 +57316,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ValidatedCheckboxControl,
     ValidatedComboboxControl,
     ValidatedNumberControl,
-    ValidatedSelectControl,
     ValidatedRadioControl,
     ValidatedContentEditableControl,
     ValidatedTextControl,
