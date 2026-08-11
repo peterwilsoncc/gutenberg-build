@@ -82279,11 +82279,15 @@ If there's a particular need for this, please submit a feature request at https:
       );
       const siteEntityLabels = siteEntityConfig?.meta?.labels ?? {};
       const {
+        title: siteTitleEdit,
+        description: siteDescriptionEdit,
         site_logo: siteLogoEdit,
         site_icon: siteIconEdit,
         ...otherSiteEdits
       } = siteEdits ?? {};
       const orderedSiteProperties = [
+        siteTitleEdit !== void 0 && "title",
+        siteDescriptionEdit !== void 0 && "description",
         siteLogoEdit !== void 0 && "site_logo",
         siteIconEdit !== void 0 && "site_icon",
         ...Object.keys(otherSiteEdits)
