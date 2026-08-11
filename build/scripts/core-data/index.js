@@ -5768,7 +5768,7 @@ var wp;
             updatedRecord,
             void 0,
             true,
-            edits
+            record
           );
           if (entityConfig.syncConfig) {
             let syncChanges;
