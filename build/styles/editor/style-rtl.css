@@ -3885,11 +3885,6 @@ div.dataviews-view-list {
   align-self: flex-end;
 }
 
-.dataviews-controls__richtext [data-rich-text-placeholder]::after {
-  content: attr(data-rich-text-placeholder);
-  color: color-mix(in srgb, currentColor, transparent 38%);
-}
-
 .dataviews-controls__datetime {
   border: none;
   padding: 0;
@@ -6024,6 +6019,11 @@ mark.wp-note {
 
 .editor-collab-sidebar-panel__mention-suggestion .editor-autocompleters__user-avatar {
   border-radius: 50%;
+}
+
+.editor-rich-text-control [data-rich-text-placeholder]::after {
+  content: attr(data-rich-text-placeholder);
+  color: color-mix(in srgb, currentColor, transparent 38%);
 }
 
 .editor-avatar {

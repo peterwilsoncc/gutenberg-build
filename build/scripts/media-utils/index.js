@@ -136,7 +136,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState48({
+          cachedValue = useState47({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -174,7 +174,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React81 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState48 = React81.useState, useEffect40 = React81.useEffect, useLayoutEffect7 = React81.useLayoutEffect, useDebugValue2 = React81.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React81 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState47 = React81.useState, useEffect40 = React81.useEffect, useLayoutEffect7 = React81.useLayoutEffect, useDebugValue2 = React81.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React81.useSyncExternalStore ? React81.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -202,14 +202,14 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React81 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef55 = React81.useRef, useEffect40 = React81.useEffect, useMemo50 = React81.useMemo, useDebugValue2 = React81.useDebugValue;
+        var React81 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef54 = React81.useRef, useEffect40 = React81.useEffect, useMemo49 = React81.useMemo, useDebugValue2 = React81.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
-          var instRef = useRef55(null);
+          var instRef = useRef54(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo50(
+          instRef = useMemo49(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -849,13 +849,6 @@ var wp;
   var require_warning = __commonJS({
     "package-external:@wordpress/warning"(exports, module) {
       module.exports = window.wp.warning;
-    }
-  });
-
-  // package-external:@wordpress/rich-text
-  var require_rich_text = __commonJS({
-    "package-external:@wordpress/rich-text"(exports, module) {
-      module.exports = window.wp.richText;
     }
   });
 
@@ -1659,11 +1652,11 @@ var wp;
   var clsx_default = clsx;
 
   // packages/media-utils/build-module/components/media-upload-modal/index.mjs
-  var import_element101 = __toESM(require_element(), 1);
+  var import_element99 = __toESM(require_element(), 1);
   var import_i18n73 = __toESM(require_i18n(), 1);
   var import_core_data6 = __toESM(require_core_data(), 1);
   var import_data14 = __toESM(require_data(), 1);
-  var import_components58 = __toESM(require_components(), 1);
+  var import_components57 = __toESM(require_components(), 1);
 
   // packages/icons/build-module/library/arrow-down.mjs
   var import_primitives = __toESM(require_primitives(), 1);
@@ -25802,11 +25795,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore2(createStore2, props) {
     const [store, setStore] = React80.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store), [store]);
-    const useState48 = React80.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+    const useState47 = React80.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
     return [React80.useMemo(() => ({
       ...store,
-      useState: useState48
-    }), [store, useState48]), useEvent(() => {
+      useState: useState47
+    }), [store, useState47]), useEvent(() => {
       setStore((store2) => createStore2({
         ...props,
         ...store2.getState()
@@ -31691,384 +31684,11 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/dataviews/build-module/components/dataform-controls/richtext/index.mjs
-  var import_element84 = __toESM(require_element(), 1);
-
-  // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
-  var import_components46 = __toESM(require_components(), 1);
-  var import_compose14 = __toESM(require_compose(), 1);
-  var import_element83 = __toESM(require_element(), 1);
-  var import_keycodes3 = __toESM(require_keycodes(), 1);
-  var import_rich_text2 = __toESM(require_rich_text(), 1);
-
-  // packages/dataviews/build-module/components/dataform-controls/richtext/utils.mjs
-  var EMPTY_ARRAY5 = [];
-  function getAllowedFormats({
-    allowedFormats,
-    disableFormats
-  }) {
-    if (disableFormats) {
-      return EMPTY_ARRAY5;
-    }
-    return allowedFormats;
-  }
-
-  // packages/dataviews/build-module/components/dataform-controls/richtext/format-edit.mjs
-  var import_rich_text = __toESM(require_rich_text(), 1);
-  var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
-  var import_react58 = __toESM(require_react(), 1);
-  var EMPTY_CONTEXT = {};
-  function Edit({
-    onChange,
-    onFocus,
-    value,
-    forwardedRef,
-    settings,
-    isVisible: isVisible2
-  }) {
-    const { name, edit: EditFunction } = settings;
-    if (!EditFunction) {
-      return null;
-    }
-    const activeFormat = (0, import_rich_text.getActiveFormat)(value, name);
-    const isActive = activeFormat !== void 0;
-    const activeObject = (0, import_rich_text.getActiveObject)(value);
-    const isObjectActive = activeObject !== void 0 && activeObject.type === name;
-    return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
-      EditFunction,
-      {
-        isActive,
-        isVisible: isVisible2,
-        activeAttributes: isActive ? activeFormat.attributes || {} : {},
-        isObjectActive,
-        activeObjectAttributes: isObjectActive ? activeObject.attributes || {} : {},
-        value,
-        onChange,
-        onFocus,
-        contentRef: forwardedRef,
-        context: EMPTY_CONTEXT
-      },
-      name
-    );
-  }
-  function FormatEdit({
-    formatTypes,
-    ...props
-  }) {
-    return formatTypes.map((settings) => /* @__PURE__ */ (0, import_react58.createElement)(Edit, { settings, ...props, key: settings.name }));
-  }
-
-  // packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
-  var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedContentEditableControl: RichTextControlShell } = unlock2(
-    import_components46.privateApis
-  );
-  var {
-    useRichText,
-    KeyboardShortcutContext,
-    InputEventContext,
-    shortcutsListener,
-    inputEventsListener
-  } = unlock2(import_rich_text2.privateApis);
-  var EMPTY_COMPLETERS = [];
-  function RichTextControl({
-    label,
-    value: attrValue,
-    onChange,
-    placeholder,
-    id,
-    clientId,
-    className: className2,
-    hideLabelFromVision,
-    help,
-    disabled: disabled2,
-    required,
-    markWhenOptional,
-    customValidity,
-    allowedFormats,
-    disableFormats,
-    withoutInteractiveFormatting,
-    preserveWhiteSpace,
-    disableLineBreaks,
-    focusOnMount,
-    completers = EMPTY_COMPLETERS
-  }) {
-    const [selection, setSelection] = (0, import_element83.useState)({
-      start: void 0,
-      end: void 0
-    });
-    const [isSelected2, setIsSelected] = (0, import_element83.useState)(false);
-    const anchorRef = (0, import_element83.useRef)(void 0);
-    const inputEvents = (0, import_element83.useRef)(/* @__PURE__ */ new Set());
-    const keyboardShortcuts = (0, import_element83.useRef)(
-      /* @__PURE__ */ new Set()
-    );
-    const focusOutside = (0, import_compose14.__experimentalUseFocusOutside)(() => setIsSelected(false));
-    const adjustedAllowedFormats = getAllowedFormats({
-      allowedFormats,
-      disableFormats
-    });
-    const {
-      value,
-      onChange: onRichTextChange,
-      ref: richTextRef,
-      formatTypes,
-      getValue
-    } = useRichText({
-      value: attrValue,
-      onChange,
-      selectionStart: selection.start,
-      selectionEnd: selection.end,
-      onSelectionChange: (start, end) => setSelection({ start, end }),
-      __unstableIsSelected: isSelected2,
-      preserveWhiteSpace: !!preserveWhiteSpace,
-      placeholder,
-      __unstableDisableFormats: disableFormats,
-      allowedFormats: adjustedAllowedFormats,
-      withoutInteractiveFormatting,
-      __unstableFormatTypeHandlerContext: (0, import_element83.useMemo)(
-        () => ({
-          richTextIdentifier: id,
-          blockClientId: clientId
-        }),
-        [id, clientId]
-      )
-    });
-    function onFocus() {
-      anchorRef.current?.focus();
-    }
-    const eventListenersPropsRef = (0, import_element83.useRef)({
-      keyboardShortcuts,
-      inputEvents
-    });
-    const inputRulePropsRef = (0, import_element83.useRef)({
-      formatTypes,
-      getValue,
-      onChange: onRichTextChange
-    });
-    (0, import_element83.useInsertionEffect)(() => {
-      inputRulePropsRef.current = {
-        formatTypes,
-        getValue,
-        onChange: onRichTextChange
-      };
-    });
-    const enterRef = (0, import_compose14.useRefEffect)(
-      (element) => {
-        if (disabled2) {
-          return;
-        }
-        const onKeyDown = (0, import_keycodes3.withIgnoreIMEEvents)((event) => {
-          if (event.key !== "Enter" || event.defaultPrevented || event.metaKey || event.ctrlKey) {
-            return;
-          }
-          event.preventDefault();
-          if (disableLineBreaks) {
-            return;
-          }
-          const { getValue: getCurrentValue2, onChange: handleChange } = inputRulePropsRef.current;
-          const current = getCurrentValue2();
-          handleChange(
-            (0, import_rich_text2.insert)(
-              current,
-              "\n",
-              current.start ?? current.text.length,
-              current.end ?? current.text.length
-            )
-          );
-        });
-        element.addEventListener("keydown", onKeyDown);
-        return () => element.removeEventListener("keydown", onKeyDown);
-      },
-      [disableLineBreaks, disabled2]
-    );
-    const eventListenersRef = (0, import_compose14.useRefEffect)(
-      (element) => {
-        if (!isSelected2) {
-          return;
-        }
-        const cleanupShortcuts = shortcutsListener(
-          eventListenersPropsRef
-        )(element);
-        const cleanupInputEvents = inputEventsListener(
-          eventListenersPropsRef
-        )(element);
-        function onFormatInput(event) {
-          if (event.inputType !== "insertText" && event.type !== "compositionend") {
-            return;
-          }
-          const {
-            formatTypes: types,
-            getValue: getCurrentValue2,
-            onChange: handleChange
-          } = inputRulePropsRef.current;
-          const current = getCurrentValue2();
-          const transformed = types.reduce(
-            (accumulator, {
-              __unstableInputRule
-            }) => __unstableInputRule ? __unstableInputRule(accumulator) : accumulator,
-            current
-          );
-          if (transformed !== current) {
-            handleChange({
-              ...transformed,
-              activeFormats: current.activeFormats
-            });
-          }
-        }
-        element.addEventListener("input", onFormatInput);
-        element.addEventListener("compositionend", onFormatInput);
-        return () => {
-          cleanupShortcuts();
-          cleanupInputEvents();
-          element.removeEventListener("input", onFormatInput);
-          element.removeEventListener("compositionend", onFormatInput);
-        };
-      },
-      [isSelected2]
-    );
-    const { ref: autocompleteRef, ...autocompleteProps } = (0, import_components46.__unstableUseAutocompleteProps)(
-      {
-        completers,
-        record: value,
-        onChange: onRichTextChange,
-        // This control's completers insert their completion into the value;
-        // none replace the whole value, so the required `onReplace` is a
-        // no-op here.
-        onReplace: () => {
-        }
-      }
-    );
-    const focusOnMountRef = (0, import_compose14.useRefEffect)(
-      (element) => {
-        if (focusOnMount && !disabled2) {
-          element.focus();
-        }
-      },
-      [focusOnMount, disabled2]
-    );
-    const editableRef = (0, import_compose14.useMergeRefs)([
-      richTextRef,
-      anchorRef,
-      eventListenersRef,
-      enterRef,
-      focusOnMountRef,
-      autocompleteRef
-    ]);
-    return (
-      // Focus boundary for the field's selection: `onFocus` selects on entry;
-      // the spread `useFocusOutside` handlers deselect once focus leaves.
-      /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
-        "div",
-        {
-          ...focusOutside,
-          onFocus: (event) => {
-            setIsSelected(true);
-            focusOutside.onFocus(event);
-          },
-          children: /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(import_components46.SlotFillProvider, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
-              RichTextControlShell,
-              {
-                label,
-                id,
-                className: clsx_default(
-                  "dataviews-controls__richtext",
-                  className2
-                ),
-                placeholder,
-                hideLabelFromVision,
-                help,
-                disabled: disabled2,
-                required,
-                markWhenOptional,
-                customValidity,
-                value: value.text,
-                "aria-multiline": !disableLineBreaks,
-                ...autocompleteProps,
-                ref: editableRef
-              }
-            ),
-            isSelected2 && !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
-              KeyboardShortcutContext.Provider,
-              {
-                value: keyboardShortcuts,
-                children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(InputEventContext.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
-                  FormatEdit,
-                  {
-                    value,
-                    onChange: onRichTextChange,
-                    onFocus,
-                    formatTypes,
-                    forwardedRef: anchorRef,
-                    isVisible: true
-                  }
-                ) })
-              }
-            )
-          ] })
-        }
-      )
-    );
-  }
-
-  // packages/dataviews/build-module/components/dataform-controls/richtext/index.mjs
-  var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
-  function RichText({
-    data,
-    field,
-    onChange,
-    hideLabelFromVision,
-    markWhenOptional,
-    config,
-    validity
-  }) {
-    const {
-      className: className2,
-      clientId,
-      allowedFormats,
-      disableFormats,
-      withoutInteractiveFormatting,
-      preserveWhiteSpace,
-      disableLineBreaks
-    } = config || {};
-    const disabled2 = field.isDisabled({ item: data, field });
-    const { label, placeholder, description, id, setValue, isValid: isValid2 } = field;
-    const value = field.getValue({ item: data }) ?? "";
-    const onChangeControl = (0, import_element84.useCallback)(
-      (newValue) => onChange(setValue({ item: data, value: newValue })),
-      [data, onChange, setValue]
-    );
-    return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
-      RichTextControl,
-      {
-        label,
-        value,
-        onChange: onChangeControl,
-        placeholder,
-        id,
-        hideLabelFromVision,
-        help: description,
-        disabled: disabled2,
-        required: !!isValid2.required,
-        markWhenOptional,
-        customValidity: getCustomValidity(isValid2, validity),
-        className: className2,
-        clientId,
-        allowedFormats,
-        disableFormats,
-        withoutInteractiveFormatting,
-        preserveWhiteSpace,
-        disableLineBreaks
-      }
-    );
-  }
-
   // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
-  var import_components47 = __toESM(require_components(), 1);
-  var import_element85 = __toESM(require_element(), 1);
-  var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedToggleGroupControl } = unlock2(import_components47.privateApis);
+  var import_components46 = __toESM(require_components(), 1);
+  var import_element83 = __toESM(require_element(), 1);
+  var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
+  var { ValidatedToggleGroupControl } = unlock2(import_components46.privateApis);
   function ToggleGroup({
     data,
     field,
@@ -32080,7 +31700,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { getValue, setValue, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
     const value = getValue({ item: data });
-    const onChangeControl = (0, import_element85.useCallback)(
+    const onChangeControl = (0, import_element83.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -32089,13 +31709,13 @@ If there's a particular need for this, please submit a feature request at https:
       getElements: field.getElements
     });
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components47.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(import_components46.Spinner, {});
     }
     if (elements.length === 0) {
       return null;
     }
     const selectedOption = elements.find((el) => el.value === value);
-    return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
       ValidatedToggleGroupControl,
       {
         required: !!field.isValid?.required,
@@ -32107,8 +31727,8 @@ If there's a particular need for this, please submit a feature request at https:
         onChange: onChangeControl,
         value,
         hideLabelFromVision,
-        children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
-          import_components47.__experimentalToggleGroupControlOption,
+        children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+          import_components46.__experimentalToggleGroupControlOption,
           {
             label: el.label,
             value: el.value,
@@ -32121,10 +31741,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/array.mjs
-  var import_components48 = __toESM(require_components(), 1);
-  var import_element86 = __toESM(require_element(), 1);
-  var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedFormTokenField } = unlock2(import_components48.privateApis);
+  var import_components47 = __toESM(require_components(), 1);
+  var import_element84 = __toESM(require_element(), 1);
+  var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
+  var { ValidatedFormTokenField } = unlock2(import_components47.privateApis);
   function ArrayControl({
     data,
     field,
@@ -32140,7 +31760,7 @@ If there's a particular need for this, please submit a feature request at https:
       elements: field.elements,
       getElements: field.getElements
     });
-    const arrayValueAsElements = (0, import_element86.useMemo)(
+    const arrayValueAsElements = (0, import_element84.useMemo)(
       () => Array.isArray(value) ? value.map((token) => {
         const element = elements?.find(
           (suggestion) => suggestion.value === token
@@ -32149,7 +31769,7 @@ If there's a particular need for this, please submit a feature request at https:
       }) : [],
       [value, elements]
     );
-    const onChangeControl = (0, import_element86.useCallback)(
+    const onChangeControl = (0, import_element84.useCallback)(
       (tokens) => {
         const valueTokens = tokens.map((token) => {
           if (typeof token === "object" && "value" in token) {
@@ -32162,9 +31782,9 @@ If there's a particular need for this, please submit a feature request at https:
       [onChange, setValue, data]
     );
     if (isLoading) {
-      return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components48.Spinner, {});
+      return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(import_components47.Spinner, {});
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
       ValidatedFormTokenField,
       {
         required: !!isValid2?.required,
@@ -32203,9 +31823,9 @@ If there's a particular need for this, please submit a feature request at https:
             const element = elements.find(
               (el) => el.value === item
             );
-            return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("span", { children: element?.label || item });
+            return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("span", { children: element?.label || item });
           }
-          return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("span", { children: item });
+          return /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("span", { children: item });
         }
       }
     );
@@ -32370,35 +31990,35 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/components/dataform-controls/color.mjs
-  var import_components49 = __toESM(require_components(), 1);
-  var import_element87 = __toESM(require_element(), 1);
+  var import_components48 = __toESM(require_components(), 1);
+  var import_element85 = __toESM(require_element(), 1);
   var import_i18n48 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedInputControl: ValidatedInputControl4 } = unlock2(import_components49.privateApis);
+  var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
+  var { ValidatedInputControl: ValidatedInputControl4 } = unlock2(import_components48.privateApis);
   var ColorPickerDropdown = ({
     color,
     onColorChange,
     disabled: disabled2
   }) => {
     const validColor = color && w(color).isValid() ? color : "#ffffff";
-    return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
-      import_components49.Dropdown,
+    return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+      import_components48.Dropdown,
       {
         className: "dataviews-controls__color-picker-dropdown",
         popoverProps: { resize: false },
-        renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
-          import_components49.Button,
+        renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+          import_components48.Button,
           {
             onClick: onToggle,
             "aria-label": (0, import_i18n48.__)("Open color picker"),
             size: "small",
             disabled: disabled2,
             accessibleWhenDisabled: true,
-            icon: () => /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components49.ColorIndicator, { colorValue: validColor })
+            icon: () => /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(import_components48.ColorIndicator, { colorValue: validColor })
           }
         ),
-        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components49.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
-          import_components49.ColorPicker,
+        renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(import_components48.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+          import_components48.ColorPicker,
           {
             color: validColor,
             onChange: onColorChange,
@@ -32419,19 +32039,19 @@ If there's a particular need for this, please submit a feature request at https:
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
     const value = field.getValue({ item: data }) || "";
-    const handleColorChange = (0, import_element87.useCallback)(
+    const handleColorChange = (0, import_element85.useCallback)(
       (newColor) => {
         onChange(setValue({ item: data, value: newColor }));
       },
       [data, onChange, setValue]
     );
-    const handleInputChange = (0, import_element87.useCallback)(
+    const handleInputChange = (0, import_element85.useCallback)(
       (newValue) => {
         onChange(setValue({ item: data, value: newValue || "" }));
       },
       [data, onChange, setValue]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
       ValidatedInputControl4,
       {
         required: !!field.isValid?.required,
@@ -32445,7 +32065,7 @@ If there's a particular need for this, please submit a feature request at https:
         hideLabelFromVision,
         type: "text",
         disabled: disabled2,
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components49.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(import_components48.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
           ColorPickerDropdown,
           {
             color: value,
@@ -32458,10 +32078,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/password.mjs
-  var import_components50 = __toESM(require_components(), 1);
-  var import_element88 = __toESM(require_element(), 1);
+  var import_components49 = __toESM(require_components(), 1);
+  var import_element86 = __toESM(require_element(), 1);
   var import_i18n49 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
   function Password({
     data,
     field,
@@ -32470,12 +32090,12 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     validity
   }) {
-    const [isVisible2, setIsVisible] = (0, import_element88.useState)(false);
+    const [isVisible2, setIsVisible] = (0, import_element86.useState)(false);
     const disabled2 = field.isDisabled({ item: data, field });
-    const toggleVisibility = (0, import_element88.useCallback)(() => {
+    const toggleVisibility = (0, import_element86.useCallback)(() => {
       setIsVisible((prev) => !prev);
     }, []);
-    return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
       ValidatedText,
       {
         ...{
@@ -32486,8 +32106,8 @@ If there's a particular need for this, please submit a feature request at https:
           markWhenOptional,
           validity,
           type: isVisible2 ? "text" : "password",
-          suffix: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_components50.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
-            import_components50.Button,
+          suffix: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components49.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+            import_components49.Button,
             {
               icon: isVisible2 ? unseen_default : seen_default,
               onClick: toggleVisibility,
@@ -32508,7 +32128,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/index.mjs
-  var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
   var FORM_CONTROLS = {
     adaptiveSelect: AdaptiveSelect,
     array: ArrayControl,
@@ -32529,7 +32149,6 @@ If there's a particular need for this, please submit a feature request at https:
     time: Time,
     toggle: Toggle,
     textarea: Textarea,
-    richtext: RichText,
     toggleGroup: ToggleGroup
   };
   function isEditConfig(value) {
@@ -32542,7 +32161,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return function ConfiguredControl(props) {
-      return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(BaseControlType, { ...props, config: controlConfig });
+      return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(BaseControlType, { ...props, config: controlConfig });
     };
   }
   function getControl(field, fallback) {
@@ -32640,13 +32259,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/field-types/utils/render-default.mjs
-  var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
   function render({
     item,
     field
   }) {
     if (field.hasElements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(RenderFromElements, { item, field });
+      return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(RenderFromElements, { item, field });
     }
     return field.getValueFormatted({ item, field });
   }
@@ -33447,17 +33066,17 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/field-types/color.mjs
   var import_i18n55 = __toESM(require_i18n(), 1);
-  var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
   function render3({ item, field }) {
     if (field.hasElements) {
-      return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(RenderFromElements, { item, field });
+      return /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(RenderFromElements, { item, field });
     }
     const value = get_value_formatted_default_default({ item, field });
     if (!value || !w(value).isValid()) {
       return value;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
         "div",
         {
           style: {
@@ -33470,7 +33089,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("span", { children: value })
+      /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { children: value })
     ] });
   }
   function isValidCustom6(item, field) {
@@ -33739,7 +33358,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/hooks/use-data.mjs
-  var import_element89 = __toESM(require_element(), 1);
+  var import_element87 = __toESM(require_element(), 1);
   function useData({
     view,
     data: shownData,
@@ -33749,34 +33368,34 @@ If there's a particular need for this, please submit a feature request at https:
     selection
   }) {
     const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-    const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element89.useState)(
+    const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element87.useState)(
       !isLoading
     );
-    (0, import_element89.useEffect)(() => {
+    (0, import_element87.useEffect)(() => {
       if (!isLoading) {
         setHasInitiallyLoaded(true);
       }
     }, [isLoading]);
-    const previousDataRef = (0, import_element89.useRef)(shownData);
-    const previousPaginationInfoRef = (0, import_element89.useRef)(paginationInfo);
-    (0, import_element89.useEffect)(() => {
+    const previousDataRef = (0, import_element87.useRef)(shownData);
+    const previousPaginationInfoRef = (0, import_element87.useRef)(paginationInfo);
+    (0, import_element87.useEffect)(() => {
       if (!isLoading) {
         previousDataRef.current = shownData;
         previousPaginationInfoRef.current = paginationInfo;
       }
     }, [shownData, isLoading, paginationInfo]);
-    const [visibleEntries, setVisibleEntries] = (0, import_element89.useState)([]);
-    const positionMapRef = (0, import_element89.useRef)(/* @__PURE__ */ new Map());
-    const allLoadedRecordsRef = (0, import_element89.useRef)([]);
-    const prevViewParamsRef = (0, import_element89.useRef)({
+    const [visibleEntries, setVisibleEntries] = (0, import_element87.useState)([]);
+    const positionMapRef = (0, import_element87.useRef)(/* @__PURE__ */ new Map());
+    const allLoadedRecordsRef = (0, import_element87.useRef)([]);
+    const prevViewParamsRef = (0, import_element87.useRef)({
       search: void 0,
       filters: void 0,
       perPage: void 0
     });
-    const scrollDirectionRef = (0, import_element89.useRef)(void 0);
-    const prevStartPositionRef = (0, import_element89.useRef)(void 0);
-    const hasInitializedRef = (0, import_element89.useRef)(false);
-    const allLoadedRecords = (0, import_element89.useMemo)(() => {
+    const scrollDirectionRef = (0, import_element87.useRef)(void 0);
+    const prevStartPositionRef = (0, import_element87.useRef)(void 0);
+    const hasInitializedRef = (0, import_element87.useRef)(false);
+    const allLoadedRecords = (0, import_element87.useMemo)(() => {
       if (view.startPosition !== void 0 && prevStartPositionRef.current !== void 0) {
         if (view.startPosition < prevStartPositionRef.current) {
           scrollDirectionRef.current = "up";
@@ -33898,8 +33517,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
-  var import_element90 = __toESM(require_element(), 1);
-  var import_compose15 = __toESM(require_compose(), 1);
+  var import_element88 = __toESM(require_element(), 1);
+  var import_compose14 = __toESM(require_compose(), 1);
   function captureAnchorElement(container, anchorElementRef, direction) {
     const containerRect = container.getBoundingClientRect();
     const centerY = containerRect.top + containerRect.height / 2;
@@ -33934,18 +33553,18 @@ If there's a particular need for this, please submit a feature request at https:
     containerRef,
     setVisibleEntries
   }) {
-    const anchorElementRef = (0, import_element90.useRef)(null);
-    const viewRef = (0, import_element90.useRef)(view);
-    const isLoadingRef = (0, import_element90.useRef)(isLoading);
-    const onChangeViewRef = (0, import_element90.useRef)(onChangeView);
-    const totalItemsRef = (0, import_element90.useRef)(paginationInfo.totalItems);
-    (0, import_element90.useLayoutEffect)(() => {
+    const anchorElementRef = (0, import_element88.useRef)(null);
+    const viewRef = (0, import_element88.useRef)(view);
+    const isLoadingRef = (0, import_element88.useRef)(isLoading);
+    const onChangeViewRef = (0, import_element88.useRef)(onChangeView);
+    const totalItemsRef = (0, import_element88.useRef)(paginationInfo.totalItems);
+    (0, import_element88.useLayoutEffect)(() => {
       viewRef.current = view;
       isLoadingRef.current = isLoading;
       onChangeViewRef.current = onChangeView;
       totalItemsRef.current = paginationInfo.totalItems;
     }, [view, isLoading, onChangeView, paginationInfo.totalItems]);
-    const intersectionObserverCallback = (0, import_element90.useCallback)(
+    const intersectionObserverCallback = (0, import_element88.useCallback)(
       (entries) => {
         if (!setVisibleEntries) {
           return;
@@ -33977,7 +33596,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [setVisibleEntries]
     );
-    (0, import_element90.useLayoutEffect)(() => {
+    (0, import_element88.useLayoutEffect)(() => {
       const container = containerRef.current;
       const anchor = anchorElementRef.current;
       if (!container || !view.infiniteScrollEnabled || !anchor || isLoading) {
@@ -33997,10 +33616,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
       anchorElementRef.current = null;
     }, [containerRef, isLoading, view.infiniteScrollEnabled]);
-    const intersectionObserverRef = (0, import_element90.useRef)(
+    const intersectionObserverRef = (0, import_element88.useRef)(
       null
     );
-    (0, import_element90.useEffect)(() => {
+    (0, import_element88.useEffect)(() => {
       if (!view.infiniteScrollEnabled || !intersectionObserverCallback) {
         if (intersectionObserverRef.current) {
           intersectionObserverRef.current.disconnect();
@@ -34019,14 +33638,14 @@ If there's a particular need for this, please submit a feature request at https:
         }
       };
     }, [view.infiniteScrollEnabled, intersectionObserverCallback]);
-    (0, import_element90.useEffect)(() => {
+    (0, import_element88.useEffect)(() => {
       if (!view.infiniteScrollEnabled || !containerRef.current) {
         return;
       }
       let lastScrollTop = 0;
       const BOTTOM_THRESHOLD = 600;
       const TOP_THRESHOLD = 800;
-      const handleScroll = (0, import_compose15.throttle)((event) => {
+      const handleScroll = (0, import_compose14.throttle)((event) => {
         const currentView = viewRef.current;
         const totalItems = totalItemsRef.current;
         const target = event.target;
@@ -34079,15 +33698,15 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/dataviews-picker/index.mjs
-  var import_element91 = __toESM(require_element(), 1);
-  var import_compose16 = __toESM(require_compose(), 1);
-  var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
+  var import_element89 = __toESM(require_element(), 1);
+  var import_compose15 = __toESM(require_compose(), 1);
+  var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
   var isItemClickable = () => false;
   var dataViewsPickerLayouts = VIEW_LAYOUTS.filter(
     (viewLayout) => viewLayout.isPicker
   );
   var defaultGetItemId = (item) => item.id;
-  var EMPTY_ARRAY6 = [];
+  var EMPTY_ARRAY5 = [];
   var DEFAULT_PICKER_LAYOUTS = {
     pickerGrid: true,
     pickerTable: true
@@ -34096,10 +33715,10 @@ If there's a particular need for this, please submit a feature request at https:
     search = true,
     searchLabel = void 0
   }) {
-    const { view } = (0, import_element91.useContext)(dataviews_context_default);
+    const { view } = (0, import_element89.useContext)(dataviews_context_default);
     const isInfiniteScroll = view.infiniteScrollEnabled;
-    return /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(import_jsx_runtime137.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(import_jsx_runtime134.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(
         Stack,
         {
           direction: "row",
@@ -34110,7 +33729,7 @@ If there's a particular need for this, please submit a feature request at https:
           }),
           gap: "xs",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -34118,18 +33737,18 @@ If there's a particular need for this, please submit a feature request at https:
                 justify: "start",
                 className: "dataviews__search",
                 children: [
-                  search && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(dataviews_search_default, { label: searchLabel }),
-                  /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(toggle_default, {})
+                  search && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(dataviews_search_default, { label: searchLabel }),
+                  /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(toggle_default, {})
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(dataviews_view_config_default, {}) })
+            /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(dataviews_view_config_default, {}) })
           ]
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
-      /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(DataViewsLayout, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(DataViewsPickerFooter, {})
+      /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
+      /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(DataViewsLayout, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(DataViewsPickerFooter, {})
     ] });
   }
   function DataViewsPicker({
@@ -34138,7 +33757,7 @@ If there's a particular need for this, please submit a feature request at https:
     fields,
     search = true,
     searchLabel = void 0,
-    actions = EMPTY_ARRAY6,
+    actions = EMPTY_ARRAY5,
     data,
     getItemId = defaultGetItemId,
     isLoading = false,
@@ -34159,9 +33778,9 @@ If there's a particular need for this, please submit a feature request at https:
       selection,
       paginationInfo
     });
-    const containerRef = (0, import_element91.useRef)(null);
-    const [containerWidth, setContainerWidth] = (0, import_element91.useState)(0);
-    const resizeObserverRef = (0, import_compose16.useResizeObserver)(
+    const containerRef = (0, import_element89.useRef)(null);
+    const [containerWidth, setContainerWidth] = (0, import_element89.useState)(0);
+    const resizeObserverRef = (0, import_compose15.useResizeObserver)(
       (resizeObserverEntries) => {
         setContainerWidth(
           resizeObserverEntries[0].borderBoxSize[0].inlineSize
@@ -34169,22 +33788,22 @@ If there's a particular need for this, please submit a feature request at https:
       },
       { box: "border-box" }
     );
-    const [openedFilter, setOpenedFilter] = (0, import_element91.useState)(null);
+    const [openedFilter, setOpenedFilter] = (0, import_element89.useState)(null);
     function setSelectionWithChange(value) {
       const newValue = typeof value === "function" ? value(selection) : value;
       if (onChangeSelection) {
         onChangeSelection(newValue);
       }
     }
-    const _fields = (0, import_element91.useMemo)(() => normalizeFields(fields), [fields]);
+    const _fields = (0, import_element89.useMemo)(() => normalizeFields(fields), [fields]);
     const filters = use_filters_default(_fields, view);
-    const hasPrimaryOrLockedFilters = (0, import_element91.useMemo)(
+    const hasPrimaryOrLockedFilters = (0, import_element89.useMemo)(
       () => (filters || []).some(
         (filter) => filter.isPrimary || filter.isLocked
       ),
       [filters]
     );
-    const [isShowingFilter, setIsShowingFilter] = (0, import_element91.useState)(
+    const [isShowingFilter, setIsShowingFilter] = (0, import_element89.useState)(
       hasPrimaryOrLockedFilters
     );
     const { intersectionObserver } = useInfiniteScroll({
@@ -34195,12 +33814,12 @@ If there's a particular need for this, please submit a feature request at https:
       containerRef,
       setVisibleEntries
     });
-    (0, import_element91.useEffect)(() => {
+    (0, import_element89.useEffect)(() => {
       if (hasPrimaryOrLockedFilters && !isShowingFilter) {
         setIsShowingFilter(true);
       }
     }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-    const defaultLayouts2 = (0, import_element91.useMemo)(
+    const defaultLayouts2 = (0, import_element89.useMemo)(
       () => Object.fromEntries(
         Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
           return dataViewsPickerLayouts.some(
@@ -34216,7 +33835,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!defaultLayouts2[view.type]) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
       dataviews_context_default.Provider,
       {
         value: {
@@ -34247,7 +33866,7 @@ If there's a particular need for this, please submit a feature request at https:
           hasInitiallyLoaded: true,
           intersectionObserver
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("div", { className: "dataviews-picker-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(DefaultUI, { search, searchLabel }) })
+        children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { className: "dataviews-picker-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(DefaultUI, { search, searchLabel }) })
       }
     );
   }
@@ -34341,7 +33960,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/views/build-module/use-view.mjs
-  var import_element92 = __toESM(require_element(), 1);
+  var import_element90 = __toESM(require_element(), 1);
   var import_data7 = __toESM(require_data(), 1);
   var import_preferences = __toESM(require_preferences(), 1);
 
@@ -34477,7 +34096,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { set: set3 } = (0, import_data7.useDispatch)(import_preferences.store);
     const page = Number(queryParams?.page ?? 1);
     const search = queryParams?.search ?? "";
-    const view = (0, import_element92.useMemo)(
+    const view = (0, import_element90.useMemo)(
       () => resolveView({
         defaultView: defaultView2,
         defaultLayouts: defaultLayouts2,
@@ -34496,7 +34115,7 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     );
     const isModified = !!persistedView && Object.keys(persistedView).length > 0;
-    const updateView = (0, import_element92.useCallback)(
+    const updateView = (0, import_element90.useCallback)(
       (newView) => {
         const newQueryParams = {
           page: Number(newView?.page ?? 1),
@@ -34527,7 +34146,7 @@ If there's a particular need for this, please submit a feature request at https:
         preferenceKey
       ]
     );
-    const resetToDefault = (0, import_element92.useCallback)(() => {
+    const resetToDefault = (0, import_element90.useCallback)(() => {
       set3("core/views", preferenceKey, void 0);
     }, [preferenceKey, set3]);
     return {
@@ -34555,8 +34174,8 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/alt_text/index.mjs
   var import_i18n56 = __toESM(require_i18n(), 1);
-  var import_components51 = __toESM(require_components(), 1);
-  var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
+  var import_components50 = __toESM(require_components(), 1);
+  var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
   var altTextField = {
     id: "alt_text",
     type: "text",
@@ -34564,14 +34183,14 @@ If there's a particular need for this, please submit a feature request at https:
     isVisible: (item) => item?.media_type === "image",
     render: ({ item }) => item?.alt_text || "-",
     Edit: ({ field, onChange, data }) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
-        import_components51.TextareaControl,
+      return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+        import_components50.TextareaControl,
         {
           label: field.label,
           value: data.alt_text || "",
           onChange: (value) => onChange({ alt_text: value }),
-          help: /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(import_jsx_runtime138.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+          help: /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)(import_jsx_runtime135.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
               Link,
               {
                 href: (
@@ -34584,7 +34203,7 @@ If there's a particular need for this, please submit a feature request at https:
                 children: (0, import_i18n56.__)("Describe the purpose of the image.")
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("br", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("br", {}),
             (0, import_i18n56.__)("Leave empty if decorative.")
           ] }),
           rows: 2
@@ -34600,7 +34219,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n59 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/attached_to/view.mjs
-  var import_element93 = __toESM(require_element(), 1);
+  var import_element91 = __toESM(require_element(), 1);
   var import_i18n57 = __toESM(require_i18n(), 1);
 
   // packages/media-fields/build-module/utils/get-rendered-content.mjs
@@ -34618,15 +34237,15 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-fields/build-module/attached_to/view.mjs
-  var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
   function MediaAttachedToView({
     item
   }) {
-    const [attachedPostTitle, setAttachedPostTitle] = (0, import_element93.useState)(null);
+    const [attachedPostTitle, setAttachedPostTitle] = (0, import_element91.useState)(null);
     const parentId = item.post;
     const embeddedPostId = item._embedded?.["wp:attached-to"]?.[0]?.id;
     const embeddedPostTitle = item._embedded?.["wp:attached-to"]?.[0]?.title;
-    (0, import_element93.useEffect)(() => {
+    (0, import_element91.useEffect)(() => {
       if (!!parentId && parentId === embeddedPostId) {
         setAttachedPostTitle(
           getRenderedContent(embeddedPostTitle) || (0, import_i18n57.__)("(no title)")
@@ -34636,17 +34255,17 @@ If there's a particular need for this, please submit a feature request at https:
         setAttachedPostTitle((0, import_i18n57.__)("(Unattached)"));
       }
     }, [parentId, embeddedPostId, embeddedPostTitle]);
-    return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_jsx_runtime139.Fragment, { children: attachedPostTitle });
+    return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(import_jsx_runtime136.Fragment, { children: attachedPostTitle });
   }
 
   // packages/media-fields/build-module/attached_to/edit.mjs
   var import_core_data3 = __toESM(require_core_data(), 1);
-  var import_components52 = __toESM(require_components(), 1);
+  var import_components51 = __toESM(require_components(), 1);
   var import_i18n58 = __toESM(require_i18n(), 1);
-  var import_element94 = __toESM(require_element(), 1);
-  var import_compose17 = __toESM(require_compose(), 1);
+  var import_element92 = __toESM(require_element(), 1);
+  var import_compose16 = __toESM(require_compose(), 1);
   var import_data10 = __toESM(require_data(), 1);
-  var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
   function MediaAttachedToEdit({
     data,
     onChange
@@ -34659,12 +34278,12 @@ If there's a particular need for this, please submit a feature request at https:
         value: data.post.toString()
       }
     ] : [];
-    const [options, setOptions] = (0, import_element94.useState)(defaultPost);
-    const [searchResults, setSearchResults] = (0, import_element94.useState)(
+    const [options, setOptions] = (0, import_element92.useState)(defaultPost);
+    const [searchResults, setSearchResults] = (0, import_element92.useState)(
       []
     );
-    const [isLoading, setIsLoading] = (0, import_element94.useState)(false);
-    const [value, setValue] = (0, import_element94.useState)(
+    const [isLoading, setIsLoading] = (0, import_element92.useState)(false);
+    const [value, setValue] = (0, import_element92.useState)(
       data?.post?.toString() ?? null
     );
     const postTypes = (0, import_data10.useSelect)(
@@ -34700,7 +34319,7 @@ If there's a particular need for this, please submit a feature request at https:
       setOptions(suggestions.concat(includeCurrent ? defaultPost : []));
       setIsLoading(false);
     };
-    const debouncedValueChange = (0, import_compose17.useDebounce)((0, import_compose17.useEvent)(onValueChange), 300);
+    const debouncedValueChange = (0, import_compose16.useDebounce)((0, import_compose16.useEvent)(onValueChange), 300);
     const handleSelectOption = (selectedPostId) => {
       if (!selectedPostId) {
         handleDetach();
@@ -34733,8 +34352,8 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
-      import_components52.ComboboxControl,
+    return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+      import_components51.ComboboxControl,
       {
         className: "dataviews-media-field__attached-to",
         isLoading,
@@ -34769,20 +34388,20 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/author/view.mjs
   var import_i18n60 = __toESM(require_i18n(), 1);
-  var import_element95 = __toESM(require_element(), 1);
-  var import_components53 = __toESM(require_components(), 1);
-  var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
+  var import_element93 = __toESM(require_element(), 1);
+  var import_components52 = __toESM(require_components(), 1);
+  var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
   function AuthorView({
     item
   }) {
     const author = item?._embedded?.author?.[0];
     const text = author?.name;
     const imageUrl = author?.avatar_urls?.[48];
-    const [loadingState, setLoadingState] = (0, import_element95.useState)("loading");
-    (0, import_element95.useEffect)(() => {
+    const [loadingState, setLoadingState] = (0, import_element93.useState)("loading");
+    (0, import_element93.useEffect)(() => {
       setLoadingState("loading");
     }, [imageUrl]);
-    const imgRef = (0, import_element95.useCallback)((img) => {
+    const imgRef = (0, import_element93.useCallback)((img) => {
       if (img?.complete) {
         setLoadingState("instant");
       }
@@ -34792,15 +34411,15 @@ If there's a particular need for this, please submit a feature request at https:
         setLoadingState("loaded");
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(import_components53.__experimentalHStack, { alignment: "left", spacing: 0, children: [
-      !!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(import_components52.__experimentalHStack, { alignment: "left", spacing: 0, children: [
+      !!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
         "div",
         {
           className: clsx_default("media-author-field__avatar", {
             "is-loading": loadingState === "loading",
             "is-loaded": loadingState === "loaded"
           }),
-          children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
             "img",
             {
               ref: imgRef,
@@ -34811,8 +34430,8 @@ If there's a particular need for this, please submit a feature request at https:
           )
         }
       ),
-      !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "media-author-field__icon", children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_components53.Icon, { icon: comment_author_avatar_default }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("span", { className: "media-author-field__name", children: text })
+      !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("div", { className: "media-author-field__icon", children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_components52.Icon, { icon: comment_author_avatar_default }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("span", { className: "media-author-field__name", children: text })
     ] });
   }
 
@@ -34852,7 +34471,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/caption/index.mjs
   var import_i18n62 = __toESM(require_i18n(), 1);
-  var import_components54 = __toESM(require_components(), 1);
+  var import_components53 = __toESM(require_components(), 1);
 
   // packages/media-fields/build-module/utils/get-raw-content.mjs
   function getRawContent(content) {
@@ -34869,7 +34488,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-fields/build-module/caption/index.mjs
-  var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
   var captionField = {
     id: "caption",
     type: "text",
@@ -34877,8 +34496,8 @@ If there's a particular need for this, please submit a feature request at https:
     getValue: ({ item }) => getRawContent(item?.caption),
     render: ({ item }) => getRawContent(item?.caption) || "-",
     Edit: ({ field, onChange, data }) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
-        import_components54.TextareaControl,
+      return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+        import_components53.TextareaControl,
         {
           label: field.label,
           value: getRawContent(data.caption) || "",
@@ -34920,17 +34539,17 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/media-fields/build-module/description/index.mjs
   var import_i18n65 = __toESM(require_i18n(), 1);
-  var import_components55 = __toESM(require_components(), 1);
-  var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
+  var import_components54 = __toESM(require_components(), 1);
+  var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
   var descriptionField = {
     id: "description",
     type: "text",
     label: (0, import_i18n65.__)("Description"),
     getValue: ({ item }) => getRawContent(item?.description),
-    render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", { children: getRawContent(item?.description) || "-" }),
+    render: ({ item }) => /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("div", { children: getRawContent(item?.description) || "-" }),
     Edit: ({ field, onChange, data }) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
-        import_components55.TextareaControl,
+      return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+        import_components54.TextareaControl,
         {
           label: field.label,
           value: getRawContent(data.description) || "",
@@ -34949,14 +34568,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url4 = __toESM(require_url(), 1);
 
   // packages/media-fields/build-module/filename/view.mjs
-  var import_element96 = __toESM(require_element(), 1);
+  var import_element94 = __toESM(require_element(), 1);
   var import_url3 = __toESM(require_url(), 1);
-  var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
   var TRUNCATE_LENGTH = 15;
   function FileNameView({
     item
   }) {
-    const fileName = (0, import_element96.useMemo)(
+    const fileName = (0, import_element94.useMemo)(
       () => item?.source_url ? (0, import_url3.getFilename)(item.source_url) : null,
       [item?.source_url]
     );
@@ -34964,16 +34583,16 @@ If there's a particular need for this, please submit a feature request at https:
       return "";
     }
     if (fileName.length <= TRUNCATE_LENGTH) {
-      return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("span", { className: "dataviews-media-field__filename", children: fileName });
+      return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("span", { className: "dataviews-media-field__filename", children: fileName });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(tooltip_exports.Root, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(tooltip_exports.Root, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
         tooltip_exports.Trigger,
         {
-          render: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("span", { className: "dataviews-media-field__filename", children: fileName })
+          render: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("span", { className: "dataviews-media-field__filename", children: fileName })
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(tooltip_exports.Popup, { children: fileName })
+      /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(tooltip_exports.Popup, { children: fileName })
     ] });
   }
 
@@ -35083,8 +34702,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-fields/build-module/media_thumbnail/view.mjs
   var import_data12 = __toESM(require_data(), 1);
   var import_core_data5 = __toESM(require_core_data(), 1);
-  var import_components56 = __toESM(require_components(), 1);
-  var import_element97 = __toESM(require_element(), 1);
+  var import_components55 = __toESM(require_components(), 1);
+  var import_element95 = __toESM(require_element(), 1);
   var import_url5 = __toESM(require_url(), 1);
 
   // packages/media-fields/build-module/utils/get-media-type-from-mime-type.mjs
@@ -35119,7 +34738,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-fields/build-module/media_thumbnail/view.mjs
-  var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
   function getBestImageUrl(featuredMedia, configSizes) {
     const sizes = featuredMedia?.media_details?.sizes;
     if (!sizes) {
@@ -35152,23 +34771,23 @@ If there's a particular need for this, please submit a feature request at https:
     item,
     filename
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(
-      import_components56.__experimentalVStack,
+    return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("div", { className: "dataviews-media-field__media-thumbnail", children: /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(
+      import_components55.__experimentalVStack,
       {
         justify: "center",
         alignment: "center",
         className: "dataviews-media-field__media-thumbnail__stack",
         spacing: 0,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
-            import_components56.Icon,
+          /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
+            import_components55.Icon,
             {
               className: "dataviews-media-field__media-thumbnail--icon",
               icon: getMediaTypeFromMimeType(item.mime_type).icon,
               size: 24
             }
           ),
-          !!filename && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("div", { className: "dataviews-media-field__media-thumbnail__filename", children: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(import_components56.__experimentalTruncate, { className: "dataviews-media-field__media-thumbnail__filename__truncate", children: filename }) })
+          !!filename && /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("div", { className: "dataviews-media-field__media-thumbnail__filename", children: /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(import_components55.__experimentalTruncate, { className: "dataviews-media-field__media-thumbnail__filename__truncate", children: filename }) })
         ]
       }
     ) });
@@ -35179,9 +34798,9 @@ If there's a particular need for this, please submit a feature request at https:
     onError
   }) {
     const imageUrl = getBestImageUrl(item, configSizes);
-    const imgRef = (0, import_element97.useRef)(null);
-    const [loadingState, setLoadingState] = (0, import_element97.useState)("loading");
-    (0, import_element97.useLayoutEffect)(() => {
+    const imgRef = (0, import_element95.useRef)(null);
+    const [loadingState, setLoadingState] = (0, import_element95.useState)("loading");
+    (0, import_element95.useLayoutEffect)(() => {
       if (imgRef.current?.complete) {
         setLoadingState("instant");
       } else {
@@ -35193,14 +34812,14 @@ If there's a particular need for this, please submit a feature request at https:
         setLoadingState("loaded");
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
       "div",
       {
         className: clsx_default("dataviews-media-field__media-thumbnail", {
           "is-loading": loadingState === "loading",
           "is-loaded": loadingState === "loaded"
         }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
           "img",
           {
             ref: imgRef,
@@ -35219,7 +34838,7 @@ If there's a particular need for this, please submit a feature request at https:
     item,
     config
   }) {
-    const [imageError, setImageError] = (0, import_element97.useState)(false);
+    const [imageError, setImageError] = (0, import_element95.useState)(false);
     const _featuredMedia = (0, import_data12.useSelect)(
       (select3) => {
         if (!item.featured_media) {
@@ -35239,9 +34858,9 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const filename = (0, import_url5.getFilename)(featuredMedia.source_url || "");
     if (imageError || getMediaTypeFromMimeType(featuredMedia.mime_type).type !== "image") {
-      return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(FallbackView, { item: featuredMedia, filename: filename || "" });
+      return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(FallbackView, { item: featuredMedia, filename: filename || "" });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
       ImageView,
       {
         item: featuredMedia,
@@ -35289,19 +34908,19 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/media-utils/build-module/components/media-upload-modal/upload-status-popover.mjs
-  var import_element98 = __toESM(require_element(), 1);
+  var import_element96 = __toESM(require_element(), 1);
   var import_i18n72 = __toESM(require_i18n(), 1);
-  var import_components57 = __toESM(require_components(), 1);
-  var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
+  var import_components56 = __toESM(require_components(), 1);
+  var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
   function UploadStatusPopover({
     uploadingFiles,
     onDismissError,
     onOpenChange
   }) {
-    const [isOpen, setIsOpen] = (0, import_element98.useState)(false);
-    const [prevHadErrors, setPrevHadErrors] = (0, import_element98.useState)(false);
-    const triggerRef = (0, import_element98.useRef)(null);
-    const updateIsOpen = (0, import_element98.useCallback)(
+    const [isOpen, setIsOpen] = (0, import_element96.useState)(false);
+    const [prevHadErrors, setPrevHadErrors] = (0, import_element96.useState)(false);
+    const triggerRef = (0, import_element96.useRef)(null);
+    const updateIsOpen = (0, import_element96.useCallback)(
       (open) => {
         setIsOpen(open);
         onOpenChange?.(open);
@@ -35316,7 +34935,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const hasErrors = errorFiles.length > 0;
     const isUploading = activeFiles.length > 0;
-    (0, import_element98.useEffect)(() => {
+    (0, import_element96.useEffect)(() => {
       if (hasErrors && !prevHadErrors) {
         updateIsOpen(true);
       }
@@ -35344,10 +34963,10 @@ If there's a particular need for this, please submit a feature request at https:
       buttonLabel = (0, import_i18n72.__)("Upload complete");
       popoverHeading = (0, import_i18n72.__)("Upload complete");
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)("div", { className: "media-upload-modal__upload-status", children: [
-      isUploading && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(import_components57.Spinner, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
-        import_components57.Button,
+    return /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)("div", { className: "media-upload-modal__upload-status", children: [
+      isUploading && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(import_components56.Spinner, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
+        import_components56.Button,
         {
           className: "media-upload-modal__upload-status__trigger",
           size: "compact",
@@ -35359,8 +34978,8 @@ If there's a particular need for this, please submit a feature request at https:
           children: buttonLabel
         }
       ),
-      isOpen && /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(
-        import_components57.Popover,
+      isOpen && /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)(
+        import_components56.Popover,
         {
           className: "media-upload-modal__upload-status__popover",
           placement: "top-start",
@@ -35376,15 +34995,15 @@ If there's a particular need for this, please submit a feature request at https:
             updateIsOpen(false);
           },
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", { className: "media-upload-modal__upload-status__header", children: /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("h3", { children: popoverHeading }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("ul", { className: "media-upload-modal__upload-status__list", children: uploadingFiles.map((file) => /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", { className: "media-upload-modal__upload-status__header", children: /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("h3", { children: popoverHeading }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("ul", { className: "media-upload-modal__upload-status__list", children: uploadingFiles.map((file) => /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)(
               "li",
               {
                 className: "media-upload-modal__upload-status__item",
                 children: [
-                  file.status === "uploading" && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(import_components57.Spinner, {}),
-                  file.status === "uploaded" && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(import_components57.Icon, { icon: check_default, size: 16 }),
-                  (file.status === "uploading" || file.status === "uploaded") && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
+                  file.status === "uploading" && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(import_components56.Spinner, {}),
+                  file.status === "uploaded" && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(import_components56.Icon, { icon: check_default, size: 16 }),
+                  (file.status === "uploading" || file.status === "uploaded") && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
                     "span",
                     {
                       className: "media-upload-modal__upload-status__filename",
@@ -35392,8 +35011,8 @@ If there's a particular need for this, please submit a feature request at https:
                       children: file.name
                     }
                   ),
-                  file.status === "error" && /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(
-                    import_components57.Notice,
+                  file.status === "error" && /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)(
+                    import_components56.Notice,
                     {
                       status: "error",
                       isDismissible: !!onDismissError,
@@ -35416,38 +35035,38 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/use-invalidate-attachment-resolutions.mjs
-  var import_element99 = __toESM(require_element(), 1);
+  var import_element97 = __toESM(require_element(), 1);
   var import_data13 = __toESM(require_data(), 1);
   function useInvalidateAttachmentResolutions() {
     const registry = (0, import_data13.useRegistry)();
-    return (0, import_element99.useCallback)(
+    return (0, import_element97.useCallback)(
       () => invalidateAttachmentResolutions(registry),
       [registry]
     );
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/use-upload-status.mjs
-  var import_element100 = __toESM(require_element(), 1);
+  var import_element98 = __toESM(require_element(), 1);
   var import_blob2 = __toESM(require_blob(), 1);
   var idCounter = 0;
   var batchIdCounter = 0;
   function useUploadStatus({
     onBatchComplete
   } = {}) {
-    const [uploadingFiles, setUploadingFiles] = (0, import_element100.useState)(
+    const [uploadingFiles, setUploadingFiles] = (0, import_element98.useState)(
       []
     );
-    const clearCompleted = (0, import_element100.useCallback)(() => {
+    const clearCompleted = (0, import_element98.useCallback)(() => {
       setUploadingFiles(
         (prev) => prev.filter((item) => item.status !== "uploaded")
       );
     }, []);
-    const dismissError = (0, import_element100.useCallback)((fileId) => {
+    const dismissError = (0, import_element98.useCallback)((fileId) => {
       setUploadingFiles(
         (prev) => prev.filter((item) => item.id !== fileId)
       );
     }, []);
-    const registerBatch = (0, import_element100.useCallback)(
+    const registerBatch = (0, import_element98.useCallback)(
       (files) => {
         const batchId = String(++batchIdCounter);
         const batchSize = files.length;
@@ -35525,7 +35144,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-utils/build-module/components/media-upload-modal/index.mjs
-  var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
   var { useEntityRecordsWithPermissions } = unlock4(import_core_data6.privateApis);
   var LAYOUT_PICKER_GRID2 = "pickerGrid";
   var LAYOUT_PICKER_TABLE2 = "pickerTable";
@@ -35588,12 +35207,12 @@ If there's a particular need for this, please submit a feature request at https:
     search = true,
     searchLabel = (0, import_i18n73.__)("Search media")
   }) {
-    const [selection, setSelection] = (0, import_element101.useState)(
+    const [selection, setSelection] = (0, import_element99.useState)(
       () => getSelectionFromValue(value)
     );
     const { createSuccessNotice, removeAllNotices } = (0, import_data14.useDispatch)(import_notices.store);
     const invalidateAttachmentResolutions2 = useInvalidateAttachmentResolutions();
-    const [queryParams, setQueryParams] = (0, import_element101.useState)(
+    const [queryParams, setQueryParams] = (0, import_element99.useState)(
       () => defaultQueryParams
     );
     const { view, updateView, isModified, resetToDefault } = useView({
@@ -35604,7 +35223,7 @@ If there's a particular need for this, please submit a feature request at https:
       queryParams,
       onChangeQueryParams: setQueryParams
     });
-    const handleChangeView = (0, import_element101.useCallback)(
+    const handleChangeView = (0, import_element99.useCallback)(
       (nextView) => {
         const normalizedView = { ...nextView };
         if (normalizedView.startPosition === void 0) {
@@ -35614,7 +35233,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [updateView]
     );
-    const queryArgs = (0, import_element101.useMemo)(() => {
+    const queryArgs = (0, import_element99.useMemo)(() => {
       const filters = {};
       view.filters?.forEach((filter) => {
         if (filter.field === "media_type") {
@@ -35670,7 +35289,7 @@ If there's a particular need for this, please submit a feature request at https:
         ...filters
       };
     }, [view, allowedTypes]);
-    const handleBatchComplete = (0, import_element101.useCallback)(
+    const handleBatchComplete = (0, import_element99.useCallback)(
       (attachments) => {
         const uploadedIds = attachments.map((attachment) => String(attachment.id)).filter(Boolean);
         if (multiple) {
@@ -35695,8 +35314,8 @@ If there's a particular need for this, please submit a feature request at https:
       clearCompleted,
       allComplete
     } = useUploadStatus({ onBatchComplete: handleBatchComplete });
-    const isPopoverOpenRef = (0, import_element101.useRef)(false);
-    const handlePopoverOpenChange = (0, import_element101.useCallback)(
+    const isPopoverOpenRef = (0, import_element99.useRef)(false);
+    const handlePopoverOpenChange = (0, import_element99.useCallback)(
       (open) => {
         isPopoverOpenRef.current = open;
         if (!open) {
@@ -35711,7 +35330,7 @@ If there's a particular need for this, please submit a feature request at https:
       totalItems,
       totalPages
     } = useEntityRecordsWithPermissions("postType", "attachment", queryArgs);
-    const fields = (0, import_element101.useMemo)(
+    const fields = (0, import_element99.useMemo)(
       () => [
         // Media field definitions from @wordpress/media-fields
         // Cast is safe because RestAttachment has the same properties as Attachment
@@ -35743,7 +35362,7 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       []
     );
-    const actions = (0, import_element101.useMemo)(
+    const actions = (0, import_element99.useMemo)(
       () => [
         {
           id: "select",
@@ -35774,15 +35393,15 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       [multiple, onSelect, selection, removeAllNotices]
     );
-    const handleModalClose = (0, import_element101.useCallback)(() => {
+    const handleModalClose = (0, import_element99.useCallback)(() => {
       removeAllNotices("snackbar", NOTICES_CONTEXT);
       onClose?.();
     }, [removeAllNotices, onClose]);
-    const valueRef = (0, import_element101.useRef)(value);
-    (0, import_element101.useEffect)(() => {
+    const valueRef = (0, import_element99.useRef)(value);
+    (0, import_element99.useEffect)(() => {
       valueRef.current = value;
     }, [value]);
-    (0, import_element101.useEffect)(() => {
+    (0, import_element99.useEffect)(() => {
       if (isOpen) {
         setSelection(getSelectionFromValue(valueRef.current));
       } else {
@@ -35790,8 +35409,8 @@ If there's a particular need for this, please submit a feature request at https:
       }
     }, [isOpen]);
     const handleUpload = onUpload || uploadMedia;
-    const prevAllCompleteRef = (0, import_element101.useRef)(false);
-    (0, import_element101.useEffect)(() => {
+    const prevAllCompleteRef = (0, import_element99.useRef)(false);
+    (0, import_element99.useEffect)(() => {
       if (allComplete && !prevAllCompleteRef.current) {
         const completeCount = uploadingFiles.filter(
           (file) => file.status === "uploaded"
@@ -35820,7 +35439,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       prevAllCompleteRef.current = allComplete;
     }, [allComplete, uploadingFiles, createSuccessNotice, clearCompleted]);
-    const handleFileSelect = (0, import_element101.useCallback)(
+    const handleFileSelect = (0, import_element99.useCallback)(
       (event) => {
         const files = event.target.files;
         if (files && files.length > 0) {
@@ -35836,14 +35455,14 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [allowedTypes, handleUpload, registerBatch]
     );
-    const paginationInfo = (0, import_element101.useMemo)(
+    const paginationInfo = (0, import_element99.useMemo)(
       () => ({
         totalItems,
         totalPages
       }),
       [totalItems, totalPages]
     );
-    const acceptTypes = (0, import_element101.useMemo)(() => {
+    const acceptTypes = (0, import_element99.useMemo)(() => {
       if (allowedTypes?.includes("*")) {
         return void 0;
       }
@@ -35852,8 +35471,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isOpen) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
-      import_components58.Modal,
+    return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
+      import_components57.Modal,
       {
         title,
         onRequestClose: handleModalClose,
@@ -35861,14 +35480,14 @@ If there's a particular need for this, please submit a feature request at https:
         className: modalClass,
         overlayClassName: "media-upload-modal",
         size: "fill",
-        headerActions: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
-          import_components58.FormFileUpload,
+        headerActions: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+          import_components57.FormFileUpload,
           {
             accept: acceptTypes,
             multiple: true,
             onChange: handleFileSelect,
-            render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
-              import_components58.Button,
+            render: ({ openFileDialog }) => /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+              import_components57.Button,
               {
                 onClick: openFileDialog,
                 icon: upload_default,
@@ -35879,8 +35498,8 @@ If there's a particular need for this, please submit a feature request at https:
           }
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
-            import_components58.DropZone,
+          /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+            import_components57.DropZone,
             {
               onFilesDrop: (files) => {
                 let filteredFiles = files;
@@ -35906,7 +35525,7 @@ If there's a particular need for this, please submit a feature request at https:
               label: (0, import_i18n73.__)("Drop files to upload")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
             dataviews_picker_default,
             {
               data: mediaRecords || [],
@@ -35923,7 +35542,7 @@ If there's a particular need for this, please submit a feature request at https:
               itemListLabel: (0, import_i18n73.__)("Media items"),
               onReset: isModified ? resetToDefault : false,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
+                /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
                   Stack,
                   {
                     direction: "row",
@@ -35932,7 +35551,7 @@ If there's a particular need for this, please submit a feature request at https:
                     className: "dataviews__view-actions",
                     gap: "xs",
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
+                      /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
                         Stack,
                         {
                           direction: "row",
@@ -35940,28 +35559,28 @@ If there's a particular need for this, please submit a feature request at https:
                           justify: "start",
                           className: "dataviews__search",
                           children: [
-                            search && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(dataviews_picker_default.Search, { label: searchLabel }),
-                            /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(dataviews_picker_default.FiltersToggle, {})
+                            search && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(dataviews_picker_default.Search, { label: searchLabel }),
+                            /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(dataviews_picker_default.FiltersToggle, {})
                           ]
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(dataviews_picker_default.LayoutSwitcher, {}),
-                        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(dataviews_picker_default.ViewConfig, {})
+                      /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(dataviews_picker_default.LayoutSwitcher, {}),
+                        /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(dataviews_picker_default.ViewConfig, {})
                       ] })
                     ]
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(dataviews_picker_default.FiltersToggled, { className: "dataviews-filters__container" }),
-                /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(dataviews_picker_default.Layout, {}),
-                /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
+                /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(dataviews_picker_default.FiltersToggled, { className: "dataviews-filters__container" }),
+                /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(dataviews_picker_default.Layout, {}),
+                /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
                   "div",
                   {
                     className: clsx_default("media-upload-modal__footer", {
                       "is-uploading": uploadingFiles.length > 0
                     }),
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+                      /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
                         UploadStatusPopover,
                         {
                           uploadingFiles,
@@ -35969,15 +35588,15 @@ If there's a particular need for this, please submit a feature request at https:
                           onOpenChange: handlePopoverOpenChange
                         }
                       ),
-                      /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(dataviews_picker_default.Footer, {})
+                      /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(dataviews_picker_default.Footer, {})
                     ]
                   }
                 )
               ]
             }
           ),
-          (0, import_element101.createPortal)(
-            /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          (0, import_element99.createPortal)(
+            /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
               import_notices.SnackbarNotices,
               {
                 className: "media-upload-modal__snackbar",

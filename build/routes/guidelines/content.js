@@ -82,7 +82,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState55({
+        cachedValue = useState54({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React89 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState55 = React89.useState, useEffect46 = React89.useEffect, useLayoutEffect6 = React89.useLayoutEffect, useDebugValue2 = React89.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React89 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState54 = React89.useState, useEffect46 = React89.useEffect, useLayoutEffect6 = React89.useLayoutEffect, useDebugValue2 = React89.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React89.useSyncExternalStore ? React89.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -148,14 +148,14 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React89 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef61 = React89.useRef, useEffect46 = React89.useEffect, useMemo61 = React89.useMemo, useDebugValue2 = React89.useDebugValue;
+      var React89 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef60 = React89.useRef, useEffect46 = React89.useEffect, useMemo60 = React89.useMemo, useDebugValue2 = React89.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector2, isEqual) {
-        var instRef = useRef61(null);
+        var instRef = useRef60(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo61(
+        instRef = useMemo60(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -816,13 +816,6 @@ var require_date = __commonJS({
 var require_warning = __commonJS({
   "package-external:@wordpress/warning"(exports, module) {
     module.exports = window.wp.warning;
-  }
-});
-
-// package-external:@wordpress/rich-text
-var require_rich_text = __commonJS({
-  "package-external:@wordpress/rich-text"(exports, module) {
-    module.exports = window.wp.richText;
   }
 });
 
@@ -19378,8 +19371,8 @@ var page_default = Page;
 
 // routes/guidelines/stage.tsx
 var import_i18n60 = __toESM(require_i18n());
-var import_element122 = __toESM(require_element());
-var import_components64 = __toESM(require_components());
+var import_element120 = __toESM(require_element());
+var import_components63 = __toESM(require_components());
 
 // routes/guidelines/style.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='67839b70f7']")) {
@@ -19400,11 +19393,11 @@ function GuidelineAccordion({
 }
 
 // routes/guidelines/components/guideline-accordion-form.tsx
-var import_components59 = __toESM(require_components());
+var import_components58 = __toESM(require_components());
 
 // packages/dataviews/build-module/dataviews/index.mjs
-var import_element104 = __toESM(require_element(), 1);
-var import_compose16 = __toESM(require_compose(), 1);
+var import_element102 = __toESM(require_element(), 1);
+var import_compose15 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataviews-context/index.mjs
 var import_element42 = __toESM(require_element(), 1);
@@ -26831,11 +26824,11 @@ function useStoreProps(store, props, key, setKey) {
 function useStore2(createStore2, props) {
   const [store, setStore] = React88.useState(() => createStore2(props));
   useSafeLayoutEffect(() => init(store), [store]);
-  const useState55 = React88.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
+  const useState54 = React88.useCallback((keyOrSelector) => useStoreState(store, keyOrSelector), [store]);
   return [React88.useMemo(() => ({
     ...store,
-    useState: useState55
-  }), [store, useState55]), useEvent(() => {
+    useState: useState54
+  }), [store, useState54]), useEvent(() => {
     setStore((store2) => createStore2({
       ...props,
       ...store2.getState()
@@ -32768,384 +32761,11 @@ function Textarea({
   );
 }
 
-// packages/dataviews/build-module/components/dataform-controls/richtext/index.mjs
-var import_element97 = __toESM(require_element(), 1);
-
-// packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
-var import_components48 = __toESM(require_components(), 1);
-var import_compose14 = __toESM(require_compose(), 1);
-var import_element96 = __toESM(require_element(), 1);
-var import_keycodes3 = __toESM(require_keycodes(), 1);
-var import_rich_text2 = __toESM(require_rich_text(), 1);
-
-// packages/dataviews/build-module/components/dataform-controls/richtext/utils.mjs
-var EMPTY_ARRAY6 = [];
-function getAllowedFormats({
-  allowedFormats,
-  disableFormats
-}) {
-  if (disableFormats) {
-    return EMPTY_ARRAY6;
-  }
-  return allowedFormats;
-}
-
-// packages/dataviews/build-module/components/dataform-controls/richtext/format-edit.mjs
-var import_rich_text = __toESM(require_rich_text(), 1);
-var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
-var import_react62 = __toESM(require_react(), 1);
-var EMPTY_CONTEXT = {};
-function Edit({
-  onChange,
-  onFocus,
-  value,
-  forwardedRef,
-  settings,
-  isVisible: isVisible2
-}) {
-  const { name, edit: EditFunction } = settings;
-  if (!EditFunction) {
-    return null;
-  }
-  const activeFormat = (0, import_rich_text.getActiveFormat)(value, name);
-  const isActive = activeFormat !== void 0;
-  const activeObject = (0, import_rich_text.getActiveObject)(value);
-  const isObjectActive = activeObject !== void 0 && activeObject.type === name;
-  return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
-    EditFunction,
-    {
-      isActive,
-      isVisible: isVisible2,
-      activeAttributes: isActive ? activeFormat.attributes || {} : {},
-      isObjectActive,
-      activeObjectAttributes: isObjectActive ? activeObject.attributes || {} : {},
-      value,
-      onChange,
-      onFocus,
-      contentRef: forwardedRef,
-      context: EMPTY_CONTEXT
-    },
-    name
-  );
-}
-function FormatEdit({
-  formatTypes,
-  ...props
-}) {
-  return formatTypes.map((settings) => /* @__PURE__ */ (0, import_react62.createElement)(Edit, { settings, ...props, key: settings.name }));
-}
-
-// packages/dataviews/build-module/components/dataform-controls/richtext/control.mjs
-var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedContentEditableControl: RichTextControlShell } = unlock2(
-  import_components48.privateApis
-);
-var {
-  useRichText,
-  KeyboardShortcutContext,
-  InputEventContext,
-  shortcutsListener,
-  inputEventsListener
-} = unlock2(import_rich_text2.privateApis);
-var EMPTY_COMPLETERS = [];
-function RichTextControl({
-  label,
-  value: attrValue,
-  onChange,
-  placeholder,
-  id,
-  clientId,
-  className: className2,
-  hideLabelFromVision,
-  help,
-  disabled: disabled2,
-  required,
-  markWhenOptional,
-  customValidity,
-  allowedFormats,
-  disableFormats,
-  withoutInteractiveFormatting,
-  preserveWhiteSpace,
-  disableLineBreaks,
-  focusOnMount,
-  completers = EMPTY_COMPLETERS
-}) {
-  const [selection, setSelection] = (0, import_element96.useState)({
-    start: void 0,
-    end: void 0
-  });
-  const [isSelected2, setIsSelected] = (0, import_element96.useState)(false);
-  const anchorRef = (0, import_element96.useRef)(void 0);
-  const inputEvents = (0, import_element96.useRef)(/* @__PURE__ */ new Set());
-  const keyboardShortcuts = (0, import_element96.useRef)(
-    /* @__PURE__ */ new Set()
-  );
-  const focusOutside = (0, import_compose14.__experimentalUseFocusOutside)(() => setIsSelected(false));
-  const adjustedAllowedFormats = getAllowedFormats({
-    allowedFormats,
-    disableFormats
-  });
-  const {
-    value,
-    onChange: onRichTextChange,
-    ref: richTextRef,
-    formatTypes,
-    getValue
-  } = useRichText({
-    value: attrValue,
-    onChange,
-    selectionStart: selection.start,
-    selectionEnd: selection.end,
-    onSelectionChange: (start, end) => setSelection({ start, end }),
-    __unstableIsSelected: isSelected2,
-    preserveWhiteSpace: !!preserveWhiteSpace,
-    placeholder,
-    __unstableDisableFormats: disableFormats,
-    allowedFormats: adjustedAllowedFormats,
-    withoutInteractiveFormatting,
-    __unstableFormatTypeHandlerContext: (0, import_element96.useMemo)(
-      () => ({
-        richTextIdentifier: id,
-        blockClientId: clientId
-      }),
-      [id, clientId]
-    )
-  });
-  function onFocus() {
-    anchorRef.current?.focus();
-  }
-  const eventListenersPropsRef = (0, import_element96.useRef)({
-    keyboardShortcuts,
-    inputEvents
-  });
-  const inputRulePropsRef = (0, import_element96.useRef)({
-    formatTypes,
-    getValue,
-    onChange: onRichTextChange
-  });
-  (0, import_element96.useInsertionEffect)(() => {
-    inputRulePropsRef.current = {
-      formatTypes,
-      getValue,
-      onChange: onRichTextChange
-    };
-  });
-  const enterRef = (0, import_compose14.useRefEffect)(
-    (element) => {
-      if (disabled2) {
-        return;
-      }
-      const onKeyDown = (0, import_keycodes3.withIgnoreIMEEvents)((event) => {
-        if (event.key !== "Enter" || event.defaultPrevented || event.metaKey || event.ctrlKey) {
-          return;
-        }
-        event.preventDefault();
-        if (disableLineBreaks) {
-          return;
-        }
-        const { getValue: getCurrentValue2, onChange: handleChange } = inputRulePropsRef.current;
-        const current = getCurrentValue2();
-        handleChange(
-          (0, import_rich_text2.insert)(
-            current,
-            "\n",
-            current.start ?? current.text.length,
-            current.end ?? current.text.length
-          )
-        );
-      });
-      element.addEventListener("keydown", onKeyDown);
-      return () => element.removeEventListener("keydown", onKeyDown);
-    },
-    [disableLineBreaks, disabled2]
-  );
-  const eventListenersRef = (0, import_compose14.useRefEffect)(
-    (element) => {
-      if (!isSelected2) {
-        return;
-      }
-      const cleanupShortcuts = shortcutsListener(
-        eventListenersPropsRef
-      )(element);
-      const cleanupInputEvents = inputEventsListener(
-        eventListenersPropsRef
-      )(element);
-      function onFormatInput(event) {
-        if (event.inputType !== "insertText" && event.type !== "compositionend") {
-          return;
-        }
-        const {
-          formatTypes: types,
-          getValue: getCurrentValue2,
-          onChange: handleChange
-        } = inputRulePropsRef.current;
-        const current = getCurrentValue2();
-        const transformed = types.reduce(
-          (accumulator, {
-            __unstableInputRule
-          }) => __unstableInputRule ? __unstableInputRule(accumulator) : accumulator,
-          current
-        );
-        if (transformed !== current) {
-          handleChange({
-            ...transformed,
-            activeFormats: current.activeFormats
-          });
-        }
-      }
-      element.addEventListener("input", onFormatInput);
-      element.addEventListener("compositionend", onFormatInput);
-      return () => {
-        cleanupShortcuts();
-        cleanupInputEvents();
-        element.removeEventListener("input", onFormatInput);
-        element.removeEventListener("compositionend", onFormatInput);
-      };
-    },
-    [isSelected2]
-  );
-  const { ref: autocompleteRef, ...autocompleteProps } = (0, import_components48.__unstableUseAutocompleteProps)(
-    {
-      completers,
-      record: value,
-      onChange: onRichTextChange,
-      // This control's completers insert their completion into the value;
-      // none replace the whole value, so the required `onReplace` is a
-      // no-op here.
-      onReplace: () => {
-      }
-    }
-  );
-  const focusOnMountRef = (0, import_compose14.useRefEffect)(
-    (element) => {
-      if (focusOnMount && !disabled2) {
-        element.focus();
-      }
-    },
-    [focusOnMount, disabled2]
-  );
-  const editableRef = (0, import_compose14.useMergeRefs)([
-    richTextRef,
-    anchorRef,
-    eventListenersRef,
-    enterRef,
-    focusOnMountRef,
-    autocompleteRef
-  ]);
-  return (
-    // Focus boundary for the field's selection: `onFocus` selects on entry;
-    // the spread `useFocusOutside` handlers deselect once focus leaves.
-    /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
-      "div",
-      {
-        ...focusOutside,
-        onFocus: (event) => {
-          setIsSelected(true);
-          focusOutside.onFocus(event);
-        },
-        children: /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)(import_components48.SlotFillProvider, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
-            RichTextControlShell,
-            {
-              label,
-              id,
-              className: clsx_default(
-                "dataviews-controls__richtext",
-                className2
-              ),
-              placeholder,
-              hideLabelFromVision,
-              help,
-              disabled: disabled2,
-              required,
-              markWhenOptional,
-              customValidity,
-              value: value.text,
-              "aria-multiline": !disableLineBreaks,
-              ...autocompleteProps,
-              ref: editableRef
-            }
-          ),
-          isSelected2 && !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
-            KeyboardShortcutContext.Provider,
-            {
-              value: keyboardShortcuts,
-              children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(InputEventContext.Provider, { value: inputEvents, children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
-                FormatEdit,
-                {
-                  value,
-                  onChange: onRichTextChange,
-                  onFocus,
-                  formatTypes,
-                  forwardedRef: anchorRef,
-                  isVisible: true
-                }
-              ) })
-            }
-          )
-        ] })
-      }
-    )
-  );
-}
-
-// packages/dataviews/build-module/components/dataform-controls/richtext/index.mjs
-var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
-function RichText({
-  data,
-  field,
-  onChange,
-  hideLabelFromVision,
-  markWhenOptional,
-  config,
-  validity
-}) {
-  const {
-    className: className2,
-    clientId,
-    allowedFormats,
-    disableFormats,
-    withoutInteractiveFormatting,
-    preserveWhiteSpace,
-    disableLineBreaks
-  } = config || {};
-  const disabled2 = field.isDisabled({ item: data, field });
-  const { label, placeholder, description, id, setValue, isValid: isValid2 } = field;
-  const value = field.getValue({ item: data }) ?? "";
-  const onChangeControl = (0, import_element97.useCallback)(
-    (newValue) => onChange(setValue({ item: data, value: newValue })),
-    [data, onChange, setValue]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
-    RichTextControl,
-    {
-      label,
-      value,
-      onChange: onChangeControl,
-      placeholder,
-      id,
-      hideLabelFromVision,
-      help: description,
-      disabled: disabled2,
-      required: !!isValid2.required,
-      markWhenOptional,
-      customValidity: getCustomValidity(isValid2, validity),
-      className: className2,
-      clientId,
-      allowedFormats,
-      disableFormats,
-      withoutInteractiveFormatting,
-      preserveWhiteSpace,
-      disableLineBreaks
-    }
-  );
-}
-
 // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
-var import_components49 = __toESM(require_components(), 1);
-var import_element98 = __toESM(require_element(), 1);
-var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedToggleGroupControl } = unlock2(import_components49.privateApis);
+var import_components48 = __toESM(require_components(), 1);
+var import_element96 = __toESM(require_element(), 1);
+var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedToggleGroupControl } = unlock2(import_components48.privateApis);
 function ToggleGroup({
   data,
   field,
@@ -33157,7 +32777,7 @@ function ToggleGroup({
   const { getValue, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element98.useCallback)(
+  const onChangeControl = (0, import_element96.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -33166,13 +32786,13 @@ function ToggleGroup({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_components49.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_components48.Spinner, {});
   }
   if (elements.length === 0) {
     return null;
   }
   const selectedOption = elements.find((el) => el.value === value);
-  return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
     ValidatedToggleGroupControl,
     {
       required: !!field.isValid?.required,
@@ -33184,8 +32804,8 @@ function ToggleGroup({
       onChange: onChangeControl,
       value,
       hideLabelFromVision,
-      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
-        import_components49.__experimentalToggleGroupControlOption,
+      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+        import_components48.__experimentalToggleGroupControlOption,
         {
           label: el.label,
           value: el.value,
@@ -33198,10 +32818,10 @@ function ToggleGroup({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/array.mjs
-var import_components50 = __toESM(require_components(), 1);
-var import_element99 = __toESM(require_element(), 1);
-var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedFormTokenField } = unlock2(import_components50.privateApis);
+var import_components49 = __toESM(require_components(), 1);
+var import_element97 = __toESM(require_element(), 1);
+var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedFormTokenField } = unlock2(import_components49.privateApis);
 function ArrayControl({
   data,
   field,
@@ -33217,7 +32837,7 @@ function ArrayControl({
     elements: field.elements,
     getElements: field.getElements
   });
-  const arrayValueAsElements = (0, import_element99.useMemo)(
+  const arrayValueAsElements = (0, import_element97.useMemo)(
     () => Array.isArray(value) ? value.map((token) => {
       const element = elements?.find(
         (suggestion) => suggestion.value === token
@@ -33226,7 +32846,7 @@ function ArrayControl({
     }) : [],
     [value, elements]
   );
-  const onChangeControl = (0, import_element99.useCallback)(
+  const onChangeControl = (0, import_element97.useCallback)(
     (tokens) => {
       const valueTokens = tokens.map((token) => {
         if (typeof token === "object" && "value" in token) {
@@ -33239,9 +32859,9 @@ function ArrayControl({
     [onChange, setValue, data]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(import_components50.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(import_components49.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
     ValidatedFormTokenField,
     {
       required: !!isValid2?.required,
@@ -33280,9 +32900,9 @@ function ArrayControl({
           const element = elements.find(
             (el) => el.value === item
           );
-          return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("span", { children: element?.label || item });
+          return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("span", { children: element?.label || item });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("span", { children: item });
+        return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("span", { children: item });
       }
     }
   );
@@ -33447,35 +33067,35 @@ var w = function(r3) {
 };
 
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
-var import_components51 = __toESM(require_components(), 1);
-var import_element100 = __toESM(require_element(), 1);
+var import_components50 = __toESM(require_components(), 1);
+var import_element98 = __toESM(require_element(), 1);
 var import_i18n41 = __toESM(require_i18n(), 1);
-var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl4 } = unlock2(import_components51.privateApis);
+var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl: ValidatedInputControl4 } = unlock2(import_components50.privateApis);
 var ColorPickerDropdown = ({
   color,
   onColorChange,
   disabled: disabled2
 }) => {
   const validColor = color && w(color).isValid() ? color : "#ffffff";
-  return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
-    import_components51.Dropdown,
+  return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+    import_components50.Dropdown,
     {
       className: "dataviews-controls__color-picker-dropdown",
       popoverProps: { resize: false },
-      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
-        import_components51.Button,
+      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+        import_components50.Button,
         {
           onClick: onToggle,
           "aria-label": (0, import_i18n41.__)("Open color picker"),
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
-          icon: () => /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_components51.ColorIndicator, { colorValue: validColor })
+          icon: () => /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_components50.ColorIndicator, { colorValue: validColor })
         }
       ),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_components51.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
-        import_components51.ColorPicker,
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_components50.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+        import_components50.ColorPicker,
         {
           color: validColor,
           onChange: onColorChange,
@@ -33496,19 +33116,19 @@ function Color({
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = field.getValue({ item: data }) || "";
-  const handleColorChange = (0, import_element100.useCallback)(
+  const handleColorChange = (0, import_element98.useCallback)(
     (newColor) => {
       onChange(setValue({ item: data, value: newColor }));
     },
     [data, onChange, setValue]
   );
-  const handleInputChange = (0, import_element100.useCallback)(
+  const handleInputChange = (0, import_element98.useCallback)(
     (newValue) => {
       onChange(setValue({ item: data, value: newValue || "" }));
     },
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
     ValidatedInputControl4,
     {
       required: !!field.isValid?.required,
@@ -33522,7 +33142,7 @@ function Color({
       hideLabelFromVision,
       type: "text",
       disabled: disabled2,
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(import_components51.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_components50.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
         ColorPickerDropdown,
         {
           color: value,
@@ -33535,10 +33155,10 @@ function Color({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
-var import_components52 = __toESM(require_components(), 1);
-var import_element101 = __toESM(require_element(), 1);
+var import_components51 = __toESM(require_components(), 1);
+var import_element99 = __toESM(require_element(), 1);
 var import_i18n42 = __toESM(require_i18n(), 1);
-var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
   field,
@@ -33547,12 +33167,12 @@ function Password({
   markWhenOptional,
   validity
 }) {
-  const [isVisible2, setIsVisible] = (0, import_element101.useState)(false);
+  const [isVisible2, setIsVisible] = (0, import_element99.useState)(false);
   const disabled2 = field.isDisabled({ item: data, field });
-  const toggleVisibility = (0, import_element101.useCallback)(() => {
+  const toggleVisibility = (0, import_element99.useCallback)(() => {
     setIsVisible((prev) => !prev);
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
     ValidatedText,
     {
       ...{
@@ -33563,8 +33183,8 @@ function Password({
         markWhenOptional,
         validity,
         type: isVisible2 ? "text" : "password",
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_components52.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
-          import_components52.Button,
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_components51.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+          import_components51.Button,
           {
             icon: isVisible2 ? unseen_default : seen_default,
             onClick: toggleVisibility,
@@ -33585,7 +33205,7 @@ function hasElements(field) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/index.mjs
-var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
 var FORM_CONTROLS = {
   adaptiveSelect: AdaptiveSelect,
   array: ArrayControl,
@@ -33606,7 +33226,6 @@ var FORM_CONTROLS = {
   time: Time,
   toggle: Toggle,
   textarea: Textarea,
-  richtext: RichText,
   toggleGroup: ToggleGroup
 };
 function isEditConfig(value) {
@@ -33619,7 +33238,7 @@ function createConfiguredControl(config) {
     return null;
   }
   return function ConfiguredControl(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(BaseControlType, { ...props, config: controlConfig });
+    return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(BaseControlType, { ...props, config: controlConfig });
   };
 }
 function getControl(field, fallback) {
@@ -33717,13 +33336,13 @@ function RenderFromElements({
 }
 
 // packages/dataviews/build-module/field-types/utils/render-default.mjs
-var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
 function render({
   item,
   field
 }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(RenderFromElements, { item, field });
   }
   return field.getValueFormatted({ item, field });
 }
@@ -34524,17 +34143,17 @@ var telephone_default = {
 
 // packages/dataviews/build-module/field-types/color.mjs
 var import_i18n48 = __toESM(require_i18n(), 1);
-var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(RenderFromElements, { item, field });
   }
   const value = get_value_formatted_default_default({ item, field });
   if (!value || !w(value).isValid()) {
     return value;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
       "div",
       {
         style: {
@@ -34547,7 +34166,7 @@ function render3({ item, field }) {
         }
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("span", { children: value })
+    /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("span", { children: value })
   ] });
 }
 function isValidCustom6(item, field) {
@@ -34816,7 +34435,7 @@ function normalizeFields(fields2) {
 }
 
 // packages/dataviews/build-module/hooks/use-data.mjs
-var import_element102 = __toESM(require_element(), 1);
+var import_element100 = __toESM(require_element(), 1);
 function useData({
   view,
   data: shownData,
@@ -34826,34 +34445,34 @@ function useData({
   selection
 }) {
   const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element102.useState)(
+  const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element100.useState)(
     !isLoading
   );
-  (0, import_element102.useEffect)(() => {
+  (0, import_element100.useEffect)(() => {
     if (!isLoading) {
       setHasInitiallyLoaded(true);
     }
   }, [isLoading]);
-  const previousDataRef = (0, import_element102.useRef)(shownData);
-  const previousPaginationInfoRef = (0, import_element102.useRef)(paginationInfo);
-  (0, import_element102.useEffect)(() => {
+  const previousDataRef = (0, import_element100.useRef)(shownData);
+  const previousPaginationInfoRef = (0, import_element100.useRef)(paginationInfo);
+  (0, import_element100.useEffect)(() => {
     if (!isLoading) {
       previousDataRef.current = shownData;
       previousPaginationInfoRef.current = paginationInfo;
     }
   }, [shownData, isLoading, paginationInfo]);
-  const [visibleEntries, setVisibleEntries] = (0, import_element102.useState)([]);
-  const positionMapRef = (0, import_element102.useRef)(/* @__PURE__ */ new Map());
-  const allLoadedRecordsRef = (0, import_element102.useRef)([]);
-  const prevViewParamsRef = (0, import_element102.useRef)({
+  const [visibleEntries, setVisibleEntries] = (0, import_element100.useState)([]);
+  const positionMapRef = (0, import_element100.useRef)(/* @__PURE__ */ new Map());
+  const allLoadedRecordsRef = (0, import_element100.useRef)([]);
+  const prevViewParamsRef = (0, import_element100.useRef)({
     search: void 0,
     filters: void 0,
     perPage: void 0
   });
-  const scrollDirectionRef = (0, import_element102.useRef)(void 0);
-  const prevStartPositionRef = (0, import_element102.useRef)(void 0);
-  const hasInitializedRef = (0, import_element102.useRef)(false);
-  const allLoadedRecords = (0, import_element102.useMemo)(() => {
+  const scrollDirectionRef = (0, import_element100.useRef)(void 0);
+  const prevStartPositionRef = (0, import_element100.useRef)(void 0);
+  const hasInitializedRef = (0, import_element100.useRef)(false);
+  const allLoadedRecords = (0, import_element100.useMemo)(() => {
     if (view.startPosition !== void 0 && prevStartPositionRef.current !== void 0) {
       if (view.startPosition < prevStartPositionRef.current) {
         scrollDirectionRef.current = "up";
@@ -34975,8 +34594,8 @@ function useData({
 }
 
 // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
-var import_element103 = __toESM(require_element(), 1);
-var import_compose15 = __toESM(require_compose(), 1);
+var import_element101 = __toESM(require_element(), 1);
+var import_compose14 = __toESM(require_compose(), 1);
 function captureAnchorElement(container, anchorElementRef, direction) {
   const containerRect = container.getBoundingClientRect();
   const centerY = containerRect.top + containerRect.height / 2;
@@ -35011,18 +34630,18 @@ function useInfiniteScroll({
   containerRef,
   setVisibleEntries
 }) {
-  const anchorElementRef = (0, import_element103.useRef)(null);
-  const viewRef = (0, import_element103.useRef)(view);
-  const isLoadingRef = (0, import_element103.useRef)(isLoading);
-  const onChangeViewRef = (0, import_element103.useRef)(onChangeView);
-  const totalItemsRef = (0, import_element103.useRef)(paginationInfo.totalItems);
-  (0, import_element103.useLayoutEffect)(() => {
+  const anchorElementRef = (0, import_element101.useRef)(null);
+  const viewRef = (0, import_element101.useRef)(view);
+  const isLoadingRef = (0, import_element101.useRef)(isLoading);
+  const onChangeViewRef = (0, import_element101.useRef)(onChangeView);
+  const totalItemsRef = (0, import_element101.useRef)(paginationInfo.totalItems);
+  (0, import_element101.useLayoutEffect)(() => {
     viewRef.current = view;
     isLoadingRef.current = isLoading;
     onChangeViewRef.current = onChangeView;
     totalItemsRef.current = paginationInfo.totalItems;
   }, [view, isLoading, onChangeView, paginationInfo.totalItems]);
-  const intersectionObserverCallback = (0, import_element103.useCallback)(
+  const intersectionObserverCallback = (0, import_element101.useCallback)(
     (entries) => {
       if (!setVisibleEntries) {
         return;
@@ -35054,7 +34673,7 @@ function useInfiniteScroll({
     },
     [setVisibleEntries]
   );
-  (0, import_element103.useLayoutEffect)(() => {
+  (0, import_element101.useLayoutEffect)(() => {
     const container = containerRef.current;
     const anchor = anchorElementRef.current;
     if (!container || !view.infiniteScrollEnabled || !anchor || isLoading) {
@@ -35074,10 +34693,10 @@ function useInfiniteScroll({
     }
     anchorElementRef.current = null;
   }, [containerRef, isLoading, view.infiniteScrollEnabled]);
-  const intersectionObserverRef = (0, import_element103.useRef)(
+  const intersectionObserverRef = (0, import_element101.useRef)(
     null
   );
-  (0, import_element103.useEffect)(() => {
+  (0, import_element101.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !intersectionObserverCallback) {
       if (intersectionObserverRef.current) {
         intersectionObserverRef.current.disconnect();
@@ -35096,14 +34715,14 @@ function useInfiniteScroll({
       }
     };
   }, [view.infiniteScrollEnabled, intersectionObserverCallback]);
-  (0, import_element103.useEffect)(() => {
+  (0, import_element101.useEffect)(() => {
     if (!view.infiniteScrollEnabled || !containerRef.current) {
       return;
     }
     let lastScrollTop = 0;
     const BOTTOM_THRESHOLD = 600;
     const TOP_THRESHOLD = 800;
-    const handleScroll = (0, import_compose15.throttle)((event) => {
+    const handleScroll = (0, import_compose14.throttle)((event) => {
       const currentView = viewRef.current;
       const totalItems = totalItemsRef.current;
       const target = event.target;
@@ -35156,10 +34775,10 @@ function useInfiniteScroll({
 }
 
 // packages/dataviews/build-module/dataviews/index.mjs
-var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
 var defaultGetItemId = (item) => item.id;
 var defaultIsItemClickable = () => true;
-var EMPTY_ARRAY7 = [];
+var EMPTY_ARRAY6 = [];
 var DEFAULT_LAYOUTS = { table: {}, grid: {}, list: {} };
 var dataViewsLayouts = VIEW_LAYOUTS.filter(
   (viewLayout) => !viewLayout.isPicker
@@ -35169,10 +34788,10 @@ function DefaultUI({
   search = true,
   searchLabel = void 0
 }) {
-  const { view } = (0, import_element104.useContext)(dataviews_context_default);
+  const { view } = (0, import_element102.useContext)(dataviews_context_default);
   const isInfiniteScroll = view.infiniteScrollEnabled;
-  return /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(import_jsx_runtime145.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(import_jsx_runtime142.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(
       Stack,
       {
         direction: "row",
@@ -35183,7 +34802,7 @@ function DefaultUI({
         }),
         gap: "xs",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(
             Stack,
             {
               direction: "row",
@@ -35191,21 +34810,21 @@ function DefaultUI({
               gap: "sm",
               className: "dataviews__search",
               children: [
-                search && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(dataviews_search_default, { label: searchLabel }),
-                /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(toggle_default, {})
+                search && /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(dataviews_search_default, { label: searchLabel }),
+                /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(toggle_default, {})
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(dataviews_view_config_default, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(Stack, { direction: "row", gap: "xs", style: { flexShrink: 0 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(dataviews_view_config_default, {}),
             header
           ] })
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
-    /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(DataViewsLayout, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(DataViewsFooter, {})
+    /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(filters_toggled_default, { className: "dataviews-filters__container" }),
+    /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(DataViewsLayout, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(DataViewsFooter, {})
   ] });
 }
 function DataViews({
@@ -35214,7 +34833,7 @@ function DataViews({
   fields: fields2,
   search = true,
   searchLabel = void 0,
-  actions = EMPTY_ARRAY7,
+  actions = EMPTY_ARRAY6,
   data,
   getItemId = defaultGetItemId,
   getItemLevel,
@@ -35232,7 +34851,7 @@ function DataViews({
   empty,
   onReset
 }) {
-  const [selectionState, setSelectionState] = (0, import_element104.useState)([]);
+  const [selectionState, setSelectionState] = (0, import_element102.useState)([]);
   const isUncontrolled = selectionProperty === void 0 || onChangeSelection === void 0;
   const selection = isUncontrolled ? selectionState : selectionProperty;
   const {
@@ -35248,9 +34867,9 @@ function DataViews({
     selection,
     paginationInfo
   });
-  const containerRef = (0, import_element104.useRef)(null);
-  const [containerWidth, setContainerWidth] = (0, import_element104.useState)(0);
-  const resizeObserverRef = (0, import_compose16.useResizeObserver)(
+  const containerRef = (0, import_element102.useRef)(null);
+  const [containerWidth, setContainerWidth] = (0, import_element102.useState)(0);
+  const resizeObserverRef = (0, import_compose15.useResizeObserver)(
     (resizeObserverEntries) => {
       setContainerWidth(
         resizeObserverEntries[0].borderBoxSize[0].inlineSize
@@ -35258,7 +34877,7 @@ function DataViews({
     },
     { box: "border-box" }
   );
-  const [openedFilter, setOpenedFilter] = (0, import_element104.useState)(null);
+  const [openedFilter, setOpenedFilter] = (0, import_element102.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === "function" ? value(selection) : value;
     if (isUncontrolled) {
@@ -35268,8 +34887,8 @@ function DataViews({
       onChangeSelection(newValue);
     }
   }
-  const _fields = (0, import_element104.useMemo)(() => normalizeFields(fields2), [fields2]);
-  const _selection = (0, import_element104.useMemo)(() => {
+  const _fields = (0, import_element102.useMemo)(() => normalizeFields(fields2), [fields2]);
+  const _selection = (0, import_element102.useMemo)(() => {
     if (view.infiniteScrollEnabled) {
       return selection;
     }
@@ -35278,13 +34897,13 @@ function DataViews({
     );
   }, [selection, data, getItemId, view.infiniteScrollEnabled]);
   const filters = use_filters_default(_fields, view);
-  const hasPrimaryOrLockedFilters = (0, import_element104.useMemo)(
+  const hasPrimaryOrLockedFilters = (0, import_element102.useMemo)(
     () => (filters || []).some(
       (filter) => filter.isPrimary || filter.isLocked
     ),
     [filters]
   );
-  const [isShowingFilter, setIsShowingFilter] = (0, import_element104.useState)(
+  const [isShowingFilter, setIsShowingFilter] = (0, import_element102.useState)(
     hasPrimaryOrLockedFilters
   );
   const { intersectionObserver } = useInfiniteScroll({
@@ -35295,12 +34914,12 @@ function DataViews({
     containerRef,
     setVisibleEntries
   });
-  (0, import_element104.useEffect)(() => {
+  (0, import_element102.useEffect)(() => {
     if (hasPrimaryOrLockedFilters && !isShowingFilter) {
       setIsShowingFilter(true);
     }
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-  const defaultLayouts = (0, import_element104.useMemo)(
+  const defaultLayouts = (0, import_element102.useMemo)(
     () => Object.fromEntries(
       Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
         return dataViewsLayouts.some(
@@ -35316,7 +34935,7 @@ function DataViews({
   if (!defaultLayouts[view.type]) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
     dataviews_context_default.Provider,
     {
       value: {
@@ -35349,7 +34968,7 @@ function DataViews({
         onReset,
         intersectionObserver
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("div", { className: "dataviews-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("div", { className: "dataviews-wrapper", children: children ?? /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
         DefaultUI,
         {
           header,
@@ -35374,12 +34993,12 @@ DataViewsSubComponents.Footer = DataViewsFooter;
 var dataviews_default = DataViewsSubComponents;
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_element116 = __toESM(require_element(), 1);
+var import_element114 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-context/index.mjs
-var import_element105 = __toESM(require_element(), 1);
-var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
-var DataFormContext = (0, import_element105.createContext)({
+var import_element103 = __toESM(require_element(), 1);
+var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
+var DataFormContext = (0, import_element103.createContext)({
   fields: []
 });
 DataFormContext.displayName = "DataFormContext";
@@ -35387,16 +35006,16 @@ function DataFormProvider({
   fields: fields2,
   children
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(DataFormContext.Provider, { value: { fields: fields2 }, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(DataFormContext.Provider, { value: { fields: fields2 }, children });
 }
 var dataform_context_default = DataFormContext;
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_element115 = __toESM(require_element(), 1);
+var import_element113 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-var import_element106 = __toESM(require_element(), 1);
-var import_components53 = __toESM(require_components(), 1);
+var import_element104 = __toESM(require_element(), 1);
+var import_components52 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
 var import_i18n49 = __toESM(require_i18n(), 1);
@@ -35517,15 +35136,15 @@ function normalizeForm(form) {
 var normalize_form_default = normalizeForm;
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
 function Header4({ title }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-regular__header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(import_components53.__experimentalHeading, { level: 2, size: 13, children: title }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(import_components52.__experimentalHeading, { level: 2, size: 13, children: title }) })
     }
   );
 }
@@ -35537,9 +35156,9 @@ function FormRegularField({
   markWhenOptional,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element106.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element104.useContext)(dataform_context_default);
   const layout = field.layout;
-  const form = (0, import_element106.useMemo)(
+  const form = (0, import_element104.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : []
@@ -35547,9 +35166,9 @@ function FormRegularField({
     [field]
   );
   if (!!field.children) {
-    return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(import_jsx_runtime147.Fragment, { children: [
-      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(Header4, { title: field.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(import_jsx_runtime144.Fragment, { children: [
+      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(Header4, { title: field.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
         DataFormLayout,
         {
           data,
@@ -35568,30 +35187,30 @@ function FormRegularField({
     return null;
   }
   if (labelPosition === "side") {
-    return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
       Stack,
       {
         direction: "row",
         className: "dataforms-layouts-regular__field",
         gap: "sm",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
             "div",
             {
               className: clsx_default(
                 "dataforms-layouts-regular__field-label",
                 `dataforms-layouts-regular__field-label--label-position-${labelPosition}`
               ),
-              children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(import_components53.BaseControl.VisualLabel, { children: fieldDefinition.label })
+              children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(import_components52.BaseControl.VisualLabel, { children: fieldDefinition.label })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
             fieldDefinition.render,
             {
               item: data,
               field: fieldDefinition
             }
-          ) : /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          ) : /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
             fieldDefinition.Edit,
             {
               data,
@@ -35607,16 +35226,16 @@ function FormRegularField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(import_jsx_runtime147.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(import_jsx_runtime147.Fragment, { children: [
-    !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(import_components53.BaseControl.VisualLabel, { children: fieldDefinition.label }),
-    /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(import_jsx_runtime144.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(import_jsx_runtime144.Fragment, { children: [
+    !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(import_components52.BaseControl.VisualLabel, { children: fieldDefinition.label }),
+    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
       fieldDefinition.render,
       {
         item: data,
         field: fieldDefinition
       }
     )
-  ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+  ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
     fieldDefinition.Edit,
     {
       data,
@@ -35631,15 +35250,15 @@ function FormRegularField({
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
 var import_deepmerge2 = __toESM(require_cjs(), 1);
-var import_components56 = __toESM(require_components(), 1);
-var import_element111 = __toESM(require_element(), 1);
-var import_compose18 = __toESM(require_compose(), 1);
+var import_components55 = __toESM(require_components(), 1);
+var import_element109 = __toESM(require_element(), 1);
+var import_compose17 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
-var import_components55 = __toESM(require_components(), 1);
+var import_components54 = __toESM(require_components(), 1);
 var import_i18n50 = __toESM(require_i18n(), 1);
-var import_compose17 = __toESM(require_compose(), 1);
-var import_element107 = __toESM(require_element(), 1);
+var import_compose16 = __toESM(require_compose(), 1);
+var import_element105 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
 function getLabelClassName(labelPosition, showError) {
@@ -35652,16 +35271,16 @@ function getLabelClassName(labelPosition, showError) {
 var get_label_classname_default = getLabelClassName;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-content.mjs
-var import_components54 = __toESM(require_components(), 1);
-var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
+var import_components53 = __toESM(require_components(), 1);
+var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
 function getLabelContent(showError, errorMessage, fieldLabel) {
-  return showError ? /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)(tooltip_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
+  return showError ? /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(tooltip_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
       tooltip_exports.Trigger,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(import_components54.Icon, { icon: error_default, size: 16 }),
-          /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)(VisuallyHidden, { children: [
+        render: /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(import_components53.Icon, { icon: error_default, size: 16 }),
+          /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(VisuallyHidden, { children: [
             errorMessage,
             ": "
           ] }),
@@ -35669,7 +35288,7 @@ function getLabelContent(showError, errorMessage, fieldLabel) {
         ] })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(tooltip_exports.Popup, { children: errorMessage })
+    /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(tooltip_exports.Popup, { children: errorMessage })
   ] }) : fieldLabel;
 }
 var get_label_content_default = getLabelContent;
@@ -35710,7 +35329,7 @@ function getFirstValidationError(validity) {
 var get_first_validation_error_default = getFirstValidationError;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
-var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
 function SummaryButton({
   data,
   field,
@@ -35735,7 +35354,7 @@ function SummaryButton({
       "dataforms-layouts-panel__field-trigger--edit-always": editVisibility === "always"
     }
   );
-  const controlId = (0, import_compose17.useInstanceId)(
+  const controlId = (0, import_compose16.useInstanceId)(
     SummaryButton,
     "dataforms-layouts-panel__field-control"
   );
@@ -35748,8 +35367,8 @@ function SummaryButton({
     (0, import_i18n50._x)("Edit %s", "field"),
     fieldLabel || ""
   );
-  const rowRef = (0, import_element107.useRef)(null);
-  const editButtonRef = (0, import_element107.useRef)(null);
+  const rowRef = (0, import_element105.useRef)(null);
+  const editButtonRef = (0, import_element105.useRef)(null);
   const handleRowClick = (event) => {
     if (!isOpen && event.detail < 2 && !editButtonRef.current?.contains(event.target) && rowRef.current?.ownerDocument.defaultView?.getSelection()?.toString()) {
       return;
@@ -35762,7 +35381,7 @@ function SummaryButton({
       onClick();
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(
     "div",
     {
       ref: rowRef,
@@ -35770,30 +35389,30 @@ function SummaryButton({
       onClick: !disabled2 ? handleRowClick : void 0,
       onKeyDown: !disabled2 ? handleKeyDown : void 0,
       children: [
-        labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime149.jsx)("span", { className: labelClassName, children: labelContent }),
-        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)(tooltip_exports.Root, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
+        labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("span", { className: labelClassName, children: labelContent }),
+        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(tooltip_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
             tooltip_exports.Trigger,
             {
-              render: /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
+              render: /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
                 "span",
                 {
                   className: "dataforms-layouts-panel__field-label-error-content",
                   role: "img",
                   "aria-label": errorMessage,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(import_components55.Icon, { icon: error_default, size: 16 })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(import_components54.Icon, { icon: error_default, size: 16 })
                 }
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(tooltip_exports.Popup, { children: errorMessage })
+          /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(tooltip_exports.Popup, { children: errorMessage })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
           "span",
           {
             id: `${controlId}`,
             className: "dataforms-layouts-panel__field-control",
-            children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
+            children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
               "span",
               {
                 style: {
@@ -35803,11 +35422,11 @@ function SummaryButton({
                   width: "100%",
                   gap: "2px"
                 },
-                children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
+                children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
                   "span",
                   {
                     style: { width: "100%" },
-                    children: /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
+                    children: /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
                       summaryField.render,
                       {
                         item: data,
@@ -35818,7 +35437,7 @@ function SummaryButton({
                   summaryField.id
                 ))
               }
-            ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
+            ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
               summaryField.render,
               {
                 item: data,
@@ -35828,8 +35447,8 @@ function SummaryButton({
             ))
           }
         ),
-        !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
-          import_components55.Button,
+        !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
+          import_components54.Button,
           {
             ref: editButtonRef,
             className: "dataforms-layouts-panel__field-trigger-icon",
@@ -35849,7 +35468,7 @@ function SummaryButton({
 // packages/dataviews/build-module/hooks/use-form-validity.mjs
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es62 = __toESM(require_es6(), 1);
-var import_element108 = __toESM(require_element(), 1);
+var import_element106 = __toESM(require_element(), 1);
 var import_i18n51 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
@@ -36283,11 +35902,11 @@ function getFormFieldValue(formField, item) {
   };
 }
 function useFormValidity(item, fields2, form) {
-  const [formValidity, setFormValidity] = (0, import_element108.useState)();
-  const customCounterRef = (0, import_element108.useRef)({});
-  const elementsCounterRef = (0, import_element108.useRef)({});
-  const previousValuesRef = (0, import_element108.useRef)({});
-  const validate = (0, import_element108.useCallback)(() => {
+  const [formValidity, setFormValidity] = (0, import_element106.useState)();
+  const customCounterRef = (0, import_element106.useRef)({});
+  const elementsCounterRef = (0, import_element106.useRef)({});
+  const previousValuesRef = (0, import_element106.useRef)({});
+  const validate = (0, import_element106.useCallback)(() => {
     const promiseHandler = {
       customCounterRef,
       elementsCounterRef,
@@ -36345,7 +35964,7 @@ function useFormValidity(item, fields2, form) {
       return validity;
     });
   }, [item, fields2, form]);
-  (0, import_element108.useEffect)(() => {
+  (0, import_element106.useEffect)(() => {
     validate();
   }, [validate]);
   return {
@@ -36356,9 +35975,9 @@ function useFormValidity(item, fields2, form) {
 var use_form_validity_default = useFormValidity;
 
 // packages/dataviews/build-module/hooks/use-reveal-validity.mjs
-var import_element109 = __toESM(require_element(), 1);
+var import_element107 = __toESM(require_element(), 1);
 function useRevealValidity(ref, shouldReveal) {
-  const revealValidity = (0, import_element109.useCallback)(() => {
+  const revealValidity = (0, import_element107.useCallback)(() => {
     const inputs = ref.current?.querySelectorAll("input, textarea, select");
     let revealedCount = 0;
     inputs?.forEach((input) => {
@@ -36371,7 +35990,7 @@ function useRevealValidity(ref, shouldReveal) {
     });
     return revealedCount;
   }, [ref]);
-  (0, import_element109.useEffect)(() => {
+  (0, import_element107.useEffect)(() => {
     if (shouldReveal) {
       revealValidity();
     }
@@ -36380,7 +35999,7 @@ function useRevealValidity(ref, shouldReveal) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
-var import_element110 = __toESM(require_element(), 1);
+var import_element108 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
 function extractSummaryIds(summary) {
@@ -36421,7 +36040,7 @@ var getFieldDefinition = (field, fields2) => {
   return fieldDefinition;
 };
 function useFieldFromFormField(field) {
-  const { fields: fields2 } = (0, import_element110.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element108.useContext)(dataform_context_default);
   const layout = field.layout;
   const summaryFields = getSummaryFields(layout.summary, fields2);
   const fieldDefinition = getFieldDefinition(field, fields2);
@@ -36442,7 +36061,7 @@ function useFieldFromFormField(field) {
 var use_field_from_form_field_default = useFieldFromFormField;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
-var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
 function ModalContent({
   data,
   field,
@@ -36453,14 +36072,14 @@ function ModalContent({
 }) {
   const { openAs } = field.layout;
   const { applyLabel, cancelLabel } = openAs;
-  const { fields: fields2 } = (0, import_element111.useContext)(dataform_context_default);
-  const [changes, setChanges] = (0, import_element111.useState)({});
-  const modalData = (0, import_element111.useMemo)(() => {
+  const { fields: fields2 } = (0, import_element109.useContext)(dataform_context_default);
+  const [changes, setChanges] = (0, import_element109.useState)({});
+  const modalData = (0, import_element109.useMemo)(() => {
     return (0, import_deepmerge2.default)(data, changes, {
       arrayMerge: (target, source) => source
     });
   }, [data, changes]);
-  const form = (0, import_element111.useMemo)(
+  const form = (0, import_element109.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -36495,12 +36114,12 @@ function ModalContent({
       })
     );
   };
-  const focusOnMountRef = (0, import_compose18.useFocusOnMount)("firstInputElement");
-  const contentRef = (0, import_element111.useRef)(null);
-  const mergedRef = (0, import_compose18.useMergeRefs)([focusOnMountRef, contentRef]);
+  const focusOnMountRef = (0, import_compose17.useFocusOnMount)("firstInputElement");
+  const contentRef = (0, import_element109.useRef)(null);
+  const mergedRef = (0, import_compose17.useMergeRefs)([focusOnMountRef, contentRef]);
   useRevealValidity(contentRef, touched);
-  return /* @__PURE__ */ (0, import_jsx_runtime150.jsxs)(
-    import_components56.Modal,
+  return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
+    import_components55.Modal,
     {
       className: "dataforms-layouts-panel__modal",
       onRequestClose: onClose,
@@ -36508,14 +36127,14 @@ function ModalContent({
       title: fieldLabel,
       size: "medium",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime150.jsx)("div", { ref: mergedRef, children: /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { ref: mergedRef, children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
           DataFormLayout,
           {
             data: modalData,
             form,
             onChange: handleOnChange,
             validity,
-            children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(
+            children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
               FieldLayout,
               {
                 data: modalData,
@@ -36529,16 +36148,16 @@ function ModalContent({
             )
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime150.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
           Stack,
           {
             direction: "row",
             className: "dataforms-layouts-panel__modal-footer",
             gap: "md",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(import_components56.__experimentalSpacer, { style: { flex: 1 } }),
-              /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(
-                import_components56.Button,
+              /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(import_components55.__experimentalSpacer, { style: { flex: 1 } }),
+              /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+                import_components55.Button,
                 {
                   variant: "tertiary",
                   onClick: onClose,
@@ -36546,8 +36165,8 @@ function ModalContent({
                   children: cancelLabel
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(
-                import_components56.Button,
+              /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+                import_components55.Button,
                 {
                   variant: "primary",
                   onClick: onApply,
@@ -36568,8 +36187,8 @@ function PanelModal({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element111.useState)(false);
-  const [isOpen, setIsOpen] = (0, import_element111.useState)(false);
+  const [touched, setTouched] = (0, import_element109.useState)(false);
+  const [isOpen, setIsOpen] = (0, import_element109.useState)(false);
   const { fieldDefinition, fieldLabel, summaryFields } = use_field_from_form_field_default(field);
   if (!fieldDefinition) {
     return null;
@@ -36578,8 +36197,8 @@ function PanelModal({
     setIsOpen(false);
     setTouched(true);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime150.jsxs)(import_jsx_runtime150.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(import_jsx_runtime147.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
       SummaryButton,
       {
         data,
@@ -36593,7 +36212,7 @@ function PanelModal({
         isOpen
       }
     ),
-    isOpen && /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(
+    isOpen && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
       ModalContent,
       {
         data,
@@ -36609,26 +36228,26 @@ function PanelModal({
 var modal_default = PanelModal;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
-var import_components57 = __toESM(require_components(), 1);
+var import_components56 = __toESM(require_components(), 1);
 var import_i18n52 = __toESM(require_i18n(), 1);
-var import_element112 = __toESM(require_element(), 1);
-var import_compose19 = __toESM(require_compose(), 1);
-var import_jsx_runtime151 = __toESM(require_jsx_runtime(), 1);
+var import_element110 = __toESM(require_element(), 1);
+var import_compose18 = __toESM(require_compose(), 1);
+var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
   title,
   onClose
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-panel__dropdown-header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
-        title && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(import_components57.__experimentalHeading, { level: 2, size: 13, children: title }),
-        /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(import_components57.__experimentalSpacer, { style: { flex: 1 } }),
-        onClose && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
-          import_components57.Button,
+      children: /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
+        title && /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(import_components56.__experimentalHeading, { level: 2, size: 13, children: title }),
+        /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(import_components56.__experimentalSpacer, { style: { flex: 1 } }),
+        onClose && /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
+          import_components56.Button,
           {
             label: (0, import_i18n52.__)("Close"),
             icon: close_small_default,
@@ -36644,9 +36263,9 @@ function DropdownContentWithValidation({
   touched,
   children
 }) {
-  const ref = (0, import_element112.useRef)(null);
+  const ref = (0, import_element110.useRef)(null);
   useRevealValidity(ref, touched);
-  return /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("div", { ref, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)("div", { ref, children });
 }
 function PanelDropdown({
   data,
@@ -36654,11 +36273,11 @@ function PanelDropdown({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element112.useState)(false);
-  const [popoverAnchor, setPopoverAnchor] = (0, import_element112.useState)(
+  const [touched, setTouched] = (0, import_element110.useState)(false);
+  const [popoverAnchor, setPopoverAnchor] = (0, import_element110.useState)(
     null
   );
-  const popoverProps = (0, import_element112.useMemo)(
+  const popoverProps = (0, import_element110.useMemo)(
     () => ({
       // Anchor the popover to the middle of the entire row so that it doesn't
       // move around when the label changes.
@@ -36669,10 +36288,10 @@ function PanelDropdown({
     }),
     [popoverAnchor]
   );
-  const [dialogRef, dialogProps] = (0, import_compose19.__experimentalUseDialog)({
+  const [dialogRef, dialogProps] = (0, import_compose18.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
-  const form = (0, import_element112.useMemo)(
+  const form = (0, import_element110.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -36682,7 +36301,7 @@ function PanelDropdown({
     }),
     [field]
   );
-  const formValidity = (0, import_element112.useMemo)(() => {
+  const formValidity = (0, import_element110.useMemo)(() => {
     if (validity === void 0) {
       return void 0;
     }
@@ -36695,13 +36314,13 @@ function PanelDropdown({
   if (!fieldDefinition) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
     "div",
     {
       ref: setPopoverAnchor,
       className: "dataforms-layouts-panel__field-dropdown-anchor",
-      children: /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
-        import_components57.Dropdown,
+      children: /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
+        import_components56.Dropdown,
         {
           contentClassName: "dataforms-layouts-panel__field-dropdown",
           popoverProps,
@@ -36711,7 +36330,7 @@ function PanelDropdown({
               setTouched(true);
             }
           },
-          renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
+          renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
             SummaryButton,
             {
               data,
@@ -36725,22 +36344,22 @@ function PanelDropdown({
               onClick: onToggle
             }
           ),
-          renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
+          renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
               DropdownHeader,
               {
                 title: fieldLabel,
                 onClose
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
               DataFormLayout,
               {
                 data,
                 form,
                 onChange,
                 validity: formValidity,
-                children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
+                children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
                   FieldLayout,
                   {
                     data,
@@ -36763,7 +36382,7 @@ function PanelDropdown({
 var dropdown_default = PanelDropdown;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/index.mjs
-var import_jsx_runtime152 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
 function FormPanelField({
   data,
   field,
@@ -36772,7 +36391,7 @@ function FormPanelField({
 }) {
   const layout = field.layout;
   if (layout.openAs.type === "modal") {
-    return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
       modal_default,
       {
         data,
@@ -36782,7 +36401,7 @@ function FormPanelField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
     dropdown_default,
     {
       data,
@@ -36794,8 +36413,8 @@ function FormPanelField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_element113 = __toESM(require_element(), 1);
-var import_compose20 = __toESM(require_compose(), 1);
+var import_element111 = __toESM(require_element(), 1);
+var import_compose19 = __toESM(require_compose(), 1);
 import { speak as speak3 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
@@ -36838,7 +36457,7 @@ function getValidationMessage(validity) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
-var import_jsx_runtime153 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
 function ValidationBadge({
   validity
 }) {
@@ -36846,11 +36465,11 @@ function ValidationBadge({
   if (!message2) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(Badge, { intent: "high", children: message2 });
+  return /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(Badge, { intent: "high", children: message2 });
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime151 = __toESM(require_jsx_runtime(), 1);
 function isSummaryFieldVisible(summaryField, summaryConfig, isOpen) {
   if (!summaryConfig || Array.isArray(summaryConfig) && summaryConfig.length === 0) {
     return false;
@@ -36891,17 +36510,17 @@ function HeaderContent({
   );
   const hasBadge = touched && layout.isCollapsible;
   const hasSummary = visibleSummaryFields.length > 0 && layout.withHeader;
-  return /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(
     Stack,
     {
       align: "center",
       justify: "space-between",
       className: "dataforms-layouts-card__field-header-content",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(card_exports.Title, { children: label }),
-        (hasBadge || hasSummary) && /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(collapsible_card_exports.HeaderDescription, { className: "dataforms-layouts-card__field-header-content-description", children: [
-          hasBadge && /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(ValidationBadge, { validity }),
-          hasSummary && /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(card_exports.Title, { children: label }),
+        (hasBadge || hasSummary) && /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(collapsible_card_exports.HeaderDescription, { className: "dataforms-layouts-card__field-header-content-description", children: [
+          hasBadge && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(ValidationBadge, { validity }),
+          hasSummary && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
             summaryField.render,
             {
               item: data,
@@ -36925,9 +36544,9 @@ function BodyContent({
   withHeader
 }) {
   if (field.children) {
-    return /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(import_jsx_runtime154.Fragment, { children: [
-      field.description && /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
-      /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(import_jsx_runtime151.Fragment, { children: [
+      field.description && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
+      /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
         DataFormLayout,
         {
           data,
@@ -36942,7 +36561,7 @@ function BodyContent({
   if (!SingleFieldLayout) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
     SingleFieldLayout,
     {
       data,
@@ -36962,11 +36581,11 @@ function FormCardField({
   markWhenOptional,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element113.useContext)(dataform_context_default);
+  const { fields: fields2 } = (0, import_element111.useContext)(dataform_context_default);
   const layout = field.layout;
-  const contentRef = (0, import_element113.useRef)(null);
-  const hasFocusedContentRef = (0, import_element113.useRef)(false);
-  const form = (0, import_element113.useMemo)(
+  const contentRef = (0, import_element111.useRef)(null);
+  const hasFocusedContentRef = (0, import_element111.useRef)(false);
+  const form = (0, import_element111.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
@@ -36974,12 +36593,12 @@ function FormCardField({
     [field]
   );
   const { isOpened, isCollapsible } = layout;
-  const [isOpen, setIsOpen] = (0, import_element113.useState)(isOpened);
-  const [touched, setTouched] = (0, import_element113.useState)(false);
-  (0, import_element113.useEffect)(() => {
+  const [isOpen, setIsOpen] = (0, import_element111.useState)(isOpened);
+  const [touched, setTouched] = (0, import_element111.useState)(false);
+  (0, import_element111.useEffect)(() => {
     setIsOpen(isOpened);
   }, [isOpened]);
-  const handleOpenChange = (0, import_element113.useCallback)((open) => {
+  const handleOpenChange = (0, import_element111.useCallback)((open) => {
     if (!open) {
       setTouched(true);
     }
@@ -36989,10 +36608,10 @@ function FormCardField({
     contentRef,
     (isCollapsible ? isOpen : true) && touched
   );
-  const handleContentFocus = (0, import_element113.useCallback)(() => {
+  const handleContentFocus = (0, import_element111.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element113.useCallback)(() => {
+  const handleFocusOutside = (0, import_element111.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -37006,7 +36625,7 @@ function FormCardField({
       speak3(message2, "polite");
     }
   }, [isCollapsible, isOpen, revealValidity, validity]);
-  const focusOutsideProps = (0, import_compose20.__experimentalUseFocusOutside)(handleFocusOutside);
+  const focusOutsideProps = (0, import_compose19.__experimentalUseFocusOutside)(handleFocusOutside);
   let label = field.label;
   let withHeader;
   if (field.children) {
@@ -37021,7 +36640,7 @@ function FormCardField({
     label = fieldDefinition.label;
     withHeader = !!label && layout.withHeader;
   }
-  const bodyContent = /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
+  const bodyContent = /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
     BodyContent,
     {
       data,
@@ -37034,7 +36653,7 @@ function FormCardField({
       withHeader
     }
   );
-  const headerContent = /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
+  const headerContent = /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
     HeaderContent,
     {
       data,
@@ -37047,7 +36666,7 @@ function FormCardField({
     }
   );
   if (withHeader && isCollapsible) {
-    return /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(
       collapsible_card_exports.Root,
       {
         className: "dataforms-layouts-card__field",
@@ -37055,8 +36674,8 @@ function FormCardField({
         onOpenChange: handleOpenChange,
         ...focusOutsideProps,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(collapsible_card_exports.Header, { children: headerContent }),
-          /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(collapsible_card_exports.Header, { children: headerContent }),
+          /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
             collapsible_card_exports.Content,
             {
               ref: contentRef,
@@ -37068,34 +36687,34 @@ function FormCardField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(
     card_exports.Root,
     {
       className: "dataforms-layouts-card__field",
       ...focusOutsideProps,
       children: [
-        withHeader && /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(card_exports.Header, { children: headerContent }),
-        /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(card_exports.Content, { ref: contentRef, onFocus: handleContentFocus, children: bodyContent })
+        withHeader && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(card_exports.Header, { children: headerContent }),
+        /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(card_exports.Content, { ref: contentRef, onFocus: handleContentFocus, children: bodyContent })
       ]
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/row/index.mjs
-var import_components58 = __toESM(require_components(), 1);
-var import_jsx_runtime155 = __toESM(require_jsx_runtime(), 1);
+var import_components57 = __toESM(require_components(), 1);
+var import_jsx_runtime152 = __toESM(require_jsx_runtime(), 1);
 function Header5({ title }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-row__header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(import_components58.__experimentalHeading, { level: 2, size: 13, children: title }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(import_components57.__experimentalHeading, { level: 2, size: 13, children: title }) })
     }
   );
 }
-var EMPTY_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(import_jsx_runtime155.Fragment, { children });
+var EMPTY_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(import_jsx_runtime152.Fragment, { children });
 function FormRowField({
   data,
   field,
@@ -37110,9 +36729,9 @@ function FormRowField({
       layout: DEFAULT_LAYOUT,
       fields: field.children
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
-      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(Header5, { title: field.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(Stack, { direction: "row", align: layout.alignment, gap: "lg", children: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
+      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(Header5, { title: field.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(Stack, { direction: "row", align: layout.alignment, gap: "lg", children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
         DataFormLayout,
         {
           data,
@@ -37120,12 +36739,12 @@ function FormRowField({
           onChange,
           validity: validity?.children,
           as: EMPTY_WRAPPER,
-          children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
+          children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
             "div",
             {
               className: "dataforms-layouts-row__field-control",
               style: layout.styles[childField.id],
-              children: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
                 FieldLayout,
                 {
                   data,
@@ -37147,7 +36766,7 @@ function FormRowField({
   if (!RegularLayout) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(import_jsx_runtime155.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("div", { className: "dataforms-layouts-row__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(import_jsx_runtime152.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("div", { className: "dataforms-layouts-row__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
     RegularLayout,
     {
       data,
@@ -37160,31 +36779,31 @@ function FormRowField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
-var import_element114 = __toESM(require_element(), 1);
+var import_element112 = __toESM(require_element(), 1);
 var import_i18n54 = __toESM(require_i18n(), 1);
-var import_compose21 = __toESM(require_compose(), 1);
+var import_compose20 = __toESM(require_compose(), 1);
 import { speak as speak4 } from "@wordpress/a11y";
-var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime153 = __toESM(require_jsx_runtime(), 1);
 function FormDetailsField({
   data,
   field,
   onChange,
   validity
 }) {
-  const { fields: fields2 } = (0, import_element114.useContext)(dataform_context_default);
-  const detailsRef = (0, import_element114.useRef)(null);
-  const contentRef = (0, import_element114.useRef)(null);
-  const hasFocusedContentRef = (0, import_element114.useRef)(false);
-  const [touched, setTouched] = (0, import_element114.useState)(false);
-  const [isOpen, setIsOpen] = (0, import_element114.useState)(false);
-  const form = (0, import_element114.useMemo)(
+  const { fields: fields2 } = (0, import_element112.useContext)(dataform_context_default);
+  const detailsRef = (0, import_element112.useRef)(null);
+  const contentRef = (0, import_element112.useRef)(null);
+  const hasFocusedContentRef = (0, import_element112.useRef)(false);
+  const [touched, setTouched] = (0, import_element112.useState)(false);
+  const [isOpen, setIsOpen] = (0, import_element112.useState)(false);
+  const form = (0, import_element112.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
     }),
     [field]
   );
-  (0, import_element114.useEffect)(() => {
+  (0, import_element112.useEffect)(() => {
     const details = detailsRef.current;
     if (!details) {
       return;
@@ -37202,10 +36821,10 @@ function FormDetailsField({
     };
   }, []);
   const revealValidity = useRevealValidity(contentRef, isOpen && touched);
-  const handleContentFocus = (0, import_element114.useCallback)(() => {
+  const handleContentFocus = (0, import_element112.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element114.useCallback)(() => {
+  const handleFocusOutside = (0, import_element112.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -37219,7 +36838,7 @@ function FormDetailsField({
       speak4(message2, "polite");
     }
   }, [revealValidity, validity]);
-  const focusOutsideProps = (0, import_compose21.__experimentalUseFocusOutside)(handleFocusOutside);
+  const focusOutsideProps = (0, import_compose20.__experimentalUseFocusOutside)(handleFocusOutside);
   if (!field.children) {
     return null;
   }
@@ -37227,18 +36846,18 @@ function FormDetailsField({
   const summaryField = summaryFieldId ? fields2.find((fieldDef) => fieldDef.id === summaryFieldId) : void 0;
   let summaryContent;
   if (summaryField && summaryField.render) {
-    summaryContent = /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(summaryField.render, { item: data, field: summaryField });
+    summaryContent = /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(summaryField.render, { item: data, field: summaryField });
   } else {
     summaryContent = field.label || (0, import_i18n54.__)("More details");
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime156.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(
     "details",
     {
       ref: detailsRef,
       className: "dataforms-layouts-details__details",
       ...focusOutsideProps,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime156.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime156.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(
           Stack,
           {
             direction: "row",
@@ -37247,17 +36866,17 @@ function FormDetailsField({
             className: "dataforms-layouts-details__summary-content",
             children: [
               summaryContent,
-              touched && /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(ValidationBadge, { validity })
+              touched && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(ValidationBadge, { validity })
             ]
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
           "div",
           {
             ref: contentRef,
             className: "dataforms-layouts-details__content",
             onFocus: handleContentFocus,
-            children: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
               DataFormLayout,
               {
                 data,
@@ -37274,12 +36893,12 @@ function FormDetailsField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/index.mjs
-var import_jsx_runtime157 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime154 = __toESM(require_jsx_runtime(), 1);
 var FORM_FIELD_LAYOUTS = [
   {
     type: "regular",
     component: FormRegularField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
       Stack,
       {
         direction: "column",
@@ -37292,7 +36911,7 @@ var FORM_FIELD_LAYOUTS = [
   {
     type: "panel",
     component: FormPanelField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
       Stack,
       {
         direction: "column",
@@ -37305,7 +36924,7 @@ var FORM_FIELD_LAYOUTS = [
   {
     type: "card",
     component: FormCardField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
       Stack,
       {
         direction: "column",
@@ -37321,13 +36940,13 @@ var FORM_FIELD_LAYOUTS = [
     wrapper: ({
       children,
       layout
-    }) => /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
+    }) => /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
       Stack,
       {
         direction: "column",
         className: "dataforms-layouts__wrapper",
         gap: "lg",
-        children: /* @__PURE__ */ (0, import_jsx_runtime157.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime157.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime154.jsx)(
           Stack,
           {
             direction: "row",
@@ -37349,8 +36968,8 @@ function getFormFieldLayout(type) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_jsx_runtime158 = __toESM(require_jsx_runtime(), 1);
-var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "lg", children });
+var import_jsx_runtime155 = __toESM(require_jsx_runtime(), 1);
+var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "lg", children });
 function DataFormLayout({
   data,
   form,
@@ -37359,8 +36978,8 @@ function DataFormLayout({
   children,
   as
 }) {
-  const { fields: fieldDefinitions } = (0, import_element115.useContext)(dataform_context_default);
-  const markWhenOptional = (0, import_element115.useMemo)(() => {
+  const { fields: fieldDefinitions } = (0, import_element113.useContext)(dataform_context_default);
+  const markWhenOptional = (0, import_element113.useMemo)(() => {
     const requiredCount = fieldDefinitions.filter(
       (f2) => !!f2.isValid?.required
     ).length;
@@ -37373,7 +36992,7 @@ function DataFormLayout({
     );
   }
   const Wrapper = as ?? getFormFieldLayout(form.layout.type)?.wrapper ?? DEFAULT_WRAPPER;
-  return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
     const FieldLayout = getFormFieldLayout(formField.layout.type)?.component;
     if (!FieldLayout) {
       return null;
@@ -37390,7 +37009,7 @@ function DataFormLayout({
         markWhenOptional
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime155.jsx)(
       FieldLayout,
       {
         data,
@@ -37405,7 +37024,7 @@ function DataFormLayout({
 }
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_jsx_runtime159 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime156 = __toESM(require_jsx_runtime(), 1);
 function DataForm({
   data,
   form,
@@ -37413,15 +37032,15 @@ function DataForm({
   onChange,
   validity
 }) {
-  const normalizedForm = (0, import_element116.useMemo)(() => normalize_form_default(form), [form]);
-  const normalizedFields = (0, import_element116.useMemo)(
+  const normalizedForm = (0, import_element114.useMemo)(() => normalize_form_default(form), [form]);
+  const normalizedFields = (0, import_element114.useMemo)(
     () => normalizeFields(fields2),
     [fields2]
   );
   if (!form.fields) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime159.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime156.jsx)(
     DataFormLayout,
     {
       data,
@@ -37438,11 +37057,11 @@ var import_deprecated = __toESM(require_deprecated(), 1);
 function normalizeSearchInput2(input = "") {
   return (0, import_remove_accents2.default)(input.trim().toLowerCase());
 }
-var EMPTY_ARRAY8 = [];
+var EMPTY_ARRAY7 = [];
 function filterSortAndPaginate(data, view, fields2) {
   if (!data) {
     return {
-      data: EMPTY_ARRAY8,
+      data: EMPTY_ARRAY7,
       paginationInfo: { totalItems: 0, totalPages: 0 }
     };
   }
@@ -37530,12 +37149,12 @@ function filterSortAndPaginate(data, view, fields2) {
 
 // routes/guidelines/components/guideline-accordion-form.tsx
 var import_i18n55 = __toESM(require_i18n());
-var import_element118 = __toESM(require_element());
+var import_element116 = __toESM(require_element());
 var import_data7 = __toESM(require_data());
 var import_notices = __toESM(require_notices());
 
 // routes/guidelines/data.ts
-var import_element117 = __toESM(require_element());
+var import_element115 = __toESM(require_element());
 var import_data6 = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
 var import_blocks = __toESM(require_blocks());
@@ -37572,7 +37191,7 @@ function useContentBlocks() {
 function useGuidelineData() {
   const { records: scopeRecords, hasResolved: scopesResolved } = (0, import_core_data.useEntityRecords)("root", "guidelineScope");
   const contentBlocks = useContentBlocks();
-  const scopes = (0, import_element117.useMemo)(
+  const scopes = (0, import_element115.useMemo)(
     () => (scopeRecords ?? []).map((s2) => ({
       slug: s2.slug,
       title: s2.title,
@@ -37581,7 +37200,7 @@ function useGuidelineData() {
     })).sort((a2, b2) => a2.order - b2.order),
     [scopeRecords]
   );
-  const slugs = (0, import_element117.useMemo)(() => {
+  const slugs = (0, import_element115.useMemo)(() => {
     const hasBlocksScope = scopes.some((s2) => s2.slug === BLOCKS_SCOPE);
     const list = [
       // The Blocks scope has no single row; its per-block rows are added below.
@@ -37590,7 +37209,7 @@ function useGuidelineData() {
     ];
     return list.length > 0 ? list : [NO_MATCH_SLUG];
   }, [scopes, contentBlocks]);
-  const query = (0, import_element117.useMemo)(
+  const query = (0, import_element115.useMemo)(
     () => ({
       slug: slugs,
       // The published row is the canonical one. Private/draft/suffixed
@@ -37606,7 +37225,7 @@ function useGuidelineData() {
     KNOWLEDGE_NAME,
     query
   );
-  const bySlug = (0, import_element117.useMemo)(() => {
+  const bySlug = (0, import_element115.useMemo)(() => {
     const map = {};
     for (const row of rowRecords ?? []) {
       map[row.slug] = {
@@ -37713,13 +37332,13 @@ function GuidelineAccordionForm({
   query
 }) {
   const { createSuccessNotice } = (0, import_data7.useDispatch)(import_notices.store);
-  const [loading, setLoading] = (0, import_element118.useState)(false);
-  const [error2, setError] = (0, import_element118.useState)(null);
-  const [showClearConfirmation, setShowClearConfirmation] = (0, import_element118.useState)(false);
-  const [draft, setDraft] = (0, import_element118.useState)(content);
-  (0, import_element118.useEffect)(() => setDraft(content), [content]);
-  const data = (0, import_element118.useMemo)(() => ({ guidelines: draft }), [draft]);
-  const fields2 = (0, import_element118.useMemo)(
+  const [loading, setLoading] = (0, import_element116.useState)(false);
+  const [error2, setError] = (0, import_element116.useState)(null);
+  const [showClearConfirmation, setShowClearConfirmation] = (0, import_element116.useState)(false);
+  const [draft, setDraft] = (0, import_element116.useState)(content);
+  (0, import_element116.useEffect)(() => setDraft(content), [content]);
+  const data = (0, import_element116.useMemo)(() => ({ guidelines: draft }), [draft]);
+  const fields2 = (0, import_element116.useMemo)(
     () => [
       {
         id: "guidelines",
@@ -37734,7 +37353,7 @@ function GuidelineAccordionForm({
     ],
     [scope.title]
   );
-  const form = (0, import_element118.useMemo)(
+  const form = (0, import_element116.useMemo)(
     () => ({
       layout: { type: "regular", labelPosition: "none" },
       fields: ["guidelines"]
@@ -37790,7 +37409,7 @@ function GuidelineAccordionForm({
       setShowClearConfirmation(false);
     });
   };
-  return /* @__PURE__ */ React.createElement("form", { onSubmit: handleSave }, /* @__PURE__ */ React.createElement(import_components59.__experimentalVStack, { spacing: 4 }, /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ React.createElement("form", { onSubmit: handleSave }, /* @__PURE__ */ React.createElement(import_components58.__experimentalVStack, { spacing: 4 }, /* @__PURE__ */ React.createElement(
     DataForm,
     {
       data,
@@ -37798,8 +37417,8 @@ function GuidelineAccordionForm({
       form,
       onChange: (edits) => setDraft(edits.guidelines ?? draft)
     }
-  ), error2 && /* @__PURE__ */ React.createElement(import_components59.Notice, { status: "error", onRemove: () => setError(null) }, error2), /* @__PURE__ */ React.createElement(import_components59.__experimentalHStack, { spacing: 4, alignment: "left" }, /* @__PURE__ */ React.createElement(
-    import_components59.Button,
+  ), error2 && /* @__PURE__ */ React.createElement(import_components58.Notice, { status: "error", onRemove: () => setError(null) }, error2), /* @__PURE__ */ React.createElement(import_components58.__experimentalHStack, { spacing: 4, alignment: "left" }, /* @__PURE__ */ React.createElement(
+    import_components58.Button,
     {
       variant: "primary",
       type: "submit",
@@ -37810,7 +37429,7 @@ function GuidelineAccordionForm({
     },
     (0, import_i18n55.__)("Save guidelines")
   ), /* @__PURE__ */ React.createElement(
-    import_components59.Button,
+    import_components58.Button,
     {
       variant: "tertiary",
       type: "button",
@@ -37822,7 +37441,7 @@ function GuidelineAccordionForm({
     },
     (0, import_i18n55.__)("Clear guidelines")
   ))), /* @__PURE__ */ React.createElement(
-    import_components59.__experimentalConfirmDialog,
+    import_components58.__experimentalConfirmDialog,
     {
       isOpen: showClearConfirmation,
       title: (0, import_i18n55.sprintf)(
@@ -37846,16 +37465,16 @@ function GuidelineAccordionForm({
 }
 
 // routes/guidelines/components/block-guidelines.tsx
-var import_components61 = __toESM(require_components());
+var import_components60 = __toESM(require_components());
 var import_i18n57 = __toESM(require_i18n());
-var import_element120 = __toESM(require_element());
+var import_element118 = __toESM(require_element());
 var import_data11 = __toESM(require_data());
 var import_notices3 = __toESM(require_notices());
 
 // routes/guidelines/components/block-guideline-modal.tsx
-var import_components60 = __toESM(require_components());
+var import_components59 = __toESM(require_components());
 var import_i18n56 = __toESM(require_i18n());
-var import_element119 = __toESM(require_element());
+var import_element117 = __toESM(require_element());
 var import_data9 = __toESM(require_data());
 var import_notices2 = __toESM(require_notices());
 
@@ -37875,16 +37494,16 @@ function BlockGuidelineModal({
   bySlug,
   query
 }) {
-  const [selectedBlock, setSelectedBlock] = (0, import_element119.useState)(
+  const [selectedBlock, setSelectedBlock] = (0, import_element117.useState)(
     initialBlock
   );
-  const [isSaving, setIsSaving] = (0, import_element119.useState)(false);
-  const [error2, setError] = (0, import_element119.useState)(null);
-  const [showRemoveConfirmation, setShowRemoveConfirmation] = (0, import_element119.useState)(false);
+  const [isSaving, setIsSaving] = (0, import_element117.useState)(false);
+  const [error2, setError] = (0, import_element117.useState)(null);
+  const [showRemoveConfirmation, setShowRemoveConfirmation] = (0, import_element117.useState)(false);
   const isEditing = !!initialBlock;
   const currentGuideline = selectedBlock ? bySlug[blockSlug(selectedBlock)]?.content ?? "" : "";
-  const [guidelineText, setGuidelineText] = (0, import_element119.useState)(currentGuideline);
-  const availableBlockOptions = (0, import_element119.useMemo)(() => {
+  const [guidelineText, setGuidelineText] = (0, import_element117.useState)(currentGuideline);
+  const availableBlockOptions = (0, import_element117.useMemo)(() => {
     return contentBlocks.filter(
       (block) => !bySlug[blockSlug(block.name)] || block.name === selectedBlock
     ).filter((block) => block.name !== initialBlock).map((block) => ({
@@ -37892,7 +37511,7 @@ function BlockGuidelineModal({
       label: block.title
     }));
   }, [contentBlocks, bySlug, initialBlock, selectedBlock]);
-  const selectedBlockLabel = (0, import_element119.useMemo)(
+  const selectedBlockLabel = (0, import_element117.useMemo)(
     () => contentBlocks.find((block) => block.name === selectedBlock)?.title || "",
     [contentBlocks, selectedBlock]
   );
@@ -37934,14 +37553,14 @@ function BlockGuidelineModal({
     submitButtonLabel = (0, import_i18n56.__)("Saving\u2026");
   }
   return /* @__PURE__ */ React.createElement(
-    import_components60.Modal,
+    import_components59.Modal,
     {
       className: "block-guideline-modal",
       title: isEditing ? (0, import_i18n56.__)("Edit guidelines") : (0, import_i18n56.__)("Add guidelines"),
       onRequestClose: closeModal
     },
-    /* @__PURE__ */ React.createElement(import_components60.__experimentalVStack, { spacing: 4 }, isEditing ? /* @__PURE__ */ React.createElement(
-      import_components60.TextControl,
+    /* @__PURE__ */ React.createElement(import_components59.__experimentalVStack, { spacing: 4 }, isEditing ? /* @__PURE__ */ React.createElement(
+      import_components59.TextControl,
       {
         label: (0, import_i18n56.__)("Block"),
         value: selectedBlockLabel,
@@ -37950,7 +37569,7 @@ function BlockGuidelineModal({
         disabled: true
       }
     ) : /* @__PURE__ */ React.createElement(
-      import_components60.ComboboxControl,
+      import_components59.ComboboxControl,
       {
         label: (0, import_i18n56.__)("Block"),
         options: availableBlockOptions,
@@ -37959,7 +37578,7 @@ function BlockGuidelineModal({
         placeholder: (0, import_i18n56.__)("Search for a block\u2026")
       }
     ), /* @__PURE__ */ React.createElement(
-      import_components60.TextareaControl,
+      import_components59.TextareaControl,
       {
         label: (0, import_i18n56.__)("Guideline text"),
         value: guidelineText,
@@ -37969,19 +37588,19 @@ function BlockGuidelineModal({
         ),
         rows: 6
       }
-    ), error2 && /* @__PURE__ */ React.createElement(import_components60.Notice, { status: "error", onRemove: () => setError(null) }, (0, import_i18n56.sprintf)(
+    ), error2 && /* @__PURE__ */ React.createElement(import_components59.Notice, { status: "error", onRemove: () => setError(null) }, (0, import_i18n56.sprintf)(
       /* translators: %s: Error message. */
       (0, import_i18n56.__)("Error: %s"),
       error2
     )), /* @__PURE__ */ React.createElement(
-      import_components60.__experimentalHStack,
+      import_components59.__experimentalHStack,
       {
         justify: "flex-end",
         spacing: 2,
         className: "block-guideline-modal__actions"
       },
       isEditing && /* @__PURE__ */ React.createElement(
-        import_components60.Button,
+        import_components59.Button,
         {
           variant: "tertiary",
           isDestructive: true,
@@ -37994,7 +37613,7 @@ function BlockGuidelineModal({
         (0, import_i18n56.__)("Remove")
       ),
       /* @__PURE__ */ React.createElement(
-        import_components60.Button,
+        import_components59.Button,
         {
           variant: "primary",
           onClick: () => handleSave(guidelineText),
@@ -38007,7 +37626,7 @@ function BlockGuidelineModal({
       )
     )),
     /* @__PURE__ */ React.createElement(
-      import_components60.__experimentalConfirmDialog,
+      import_components59.__experimentalConfirmDialog,
       {
         isOpen: showRemoveConfirmation,
         title: (0, import_i18n56.__)("Remove block guidelines"),
@@ -38064,7 +37683,7 @@ var fields = [
     // editor's `.block-editor-block-icon`. That keeps viewBox-less icons
     // (e.g. core/icon) centered and uncropped. Painted and clamped in
     // block-guidelines.scss.
-    render: ({ item }) => /* @__PURE__ */ React.createElement("div", { className: "block-guidelines__icon" }, /* @__PURE__ */ React.createElement(import_components61.Icon, { icon: item.icon ?? block_default_default }))
+    render: ({ item }) => /* @__PURE__ */ React.createElement("div", { className: "block-guidelines__icon" }, /* @__PURE__ */ React.createElement(import_components60.Icon, { icon: item.icon ?? block_default_default }))
   },
   {
     id: "label",
@@ -38080,16 +37699,16 @@ function BlockGuidelines({
   bySlug,
   query
 }) {
-  const [isOpen, setIsOpen] = (0, import_element120.useState)(false);
-  const [view, setView] = (0, import_element120.useState)(initialView);
-  const [selectedItem, setSelectedItem] = (0, import_element120.useState)();
-  const [error2, setError] = (0, import_element120.useState)(null);
-  const [busy, setBusy] = (0, import_element120.useState)(false);
-  const [itemToDelete, setItemToDelete] = (0, import_element120.useState)(
+  const [isOpen, setIsOpen] = (0, import_element118.useState)(false);
+  const [view, setView] = (0, import_element118.useState)(initialView);
+  const [selectedItem, setSelectedItem] = (0, import_element118.useState)();
+  const [error2, setError] = (0, import_element118.useState)(null);
+  const [busy, setBusy] = (0, import_element118.useState)(false);
+  const [itemToDelete, setItemToDelete] = (0, import_element118.useState)(
     null
   );
   const { createSuccessNotice } = (0, import_data11.useDispatch)(import_notices3.store);
-  const rows = (0, import_element120.useMemo)(
+  const rows = (0, import_element118.useMemo)(
     () => contentBlocks.filter((block) => bySlug[blockSlug(block.name)]).map((block) => ({
       id: block.name,
       label: block.title,
@@ -38102,7 +37721,7 @@ function BlockGuidelines({
     setSelectedItem(id);
     setIsOpen(true);
   };
-  const actions = (0, import_element120.useMemo)(
+  const actions = (0, import_element118.useMemo)(
     () => [
       {
         id: "edit",
@@ -38141,11 +37760,11 @@ function BlockGuidelines({
       setItemToDelete(null);
     });
   };
-  const { data: processedData, paginationInfo } = (0, import_element120.useMemo)(
+  const { data: processedData, paginationInfo } = (0, import_element118.useMemo)(
     () => filterSortAndPaginate(rows, view, fields),
     [rows, view]
   );
-  (0, import_element120.useEffect)(() => {
+  (0, import_element118.useEffect)(() => {
     const lastPage = Math.max(paginationInfo.totalPages, 1);
     if (view.page && view.page > lastPage) {
       setView(
@@ -38165,7 +37784,7 @@ function BlockGuidelines({
     setIsOpen(true);
   };
   const shouldShowDataViewControls = rows.length > PER_PAGE;
-  return /* @__PURE__ */ React.createElement(import_components61.__experimentalVStack, { spacing: 4, className: "block-guidelines" }, error2 && /* @__PURE__ */ React.createElement(import_components61.Notice, { status: "error", onRemove: () => setError(null) }, (0, import_i18n57.sprintf)(
+  return /* @__PURE__ */ React.createElement(import_components60.__experimentalVStack, { spacing: 4, className: "block-guidelines" }, error2 && /* @__PURE__ */ React.createElement(import_components60.Notice, { status: "error", onRemove: () => setError(null) }, (0, import_i18n57.sprintf)(
     /* translators: %s: Error message. */
     (0, import_i18n57.__)("Error: %s"),
     error2
@@ -38186,9 +37805,9 @@ function BlockGuidelines({
         list: true
       }
     },
-    /* @__PURE__ */ React.createElement(import_components61.__experimentalVStack, { spacing: 4 }, shouldShowDataViewControls && /* @__PURE__ */ React.createElement(dataviews_default.Search, { label: (0, import_i18n57.__)("Search blocks") }), /* @__PURE__ */ React.createElement(dataviews_default.Layout, null), shouldShowDataViewControls && /* @__PURE__ */ React.createElement(dataviews_default.Footer, null))
-  ), /* @__PURE__ */ React.createElement(import_components61.__experimentalHStack, null, /* @__PURE__ */ React.createElement(
-    import_components61.Button,
+    /* @__PURE__ */ React.createElement(import_components60.__experimentalVStack, { spacing: 4 }, shouldShowDataViewControls && /* @__PURE__ */ React.createElement(dataviews_default.Search, { label: (0, import_i18n57.__)("Search blocks") }), /* @__PURE__ */ React.createElement(dataviews_default.Layout, null), shouldShowDataViewControls && /* @__PURE__ */ React.createElement(dataviews_default.Footer, null))
+  ), /* @__PURE__ */ React.createElement(import_components60.__experimentalHStack, null, /* @__PURE__ */ React.createElement(
+    import_components60.Button,
     {
       variant: "primary",
       onClick: openModal,
@@ -38205,7 +37824,7 @@ function BlockGuidelines({
       query
     }
   ), /* @__PURE__ */ React.createElement(
-    import_components61.__experimentalConfirmDialog,
+    import_components60.__experimentalConfirmDialog,
     {
       isOpen: !!itemToDelete,
       title: (0, import_i18n57.__)("Remove block guidelines"),
@@ -38227,9 +37846,9 @@ function BlockGuidelines({
 }
 
 // routes/guidelines/components/guideline-actions-section.tsx
-var import_components63 = __toESM(require_components());
+var import_components62 = __toESM(require_components());
 var import_i18n59 = __toESM(require_i18n());
-var import_element121 = __toESM(require_element());
+var import_element119 = __toESM(require_element());
 
 // routes/guidelines/components/guideline-actions-section.scss
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='6d10be742e']")) {
@@ -38349,7 +37968,7 @@ async function importGuidelines(file, scopes, bySlug, contentBlocks, query) {
 }
 
 // routes/guidelines/components/action-item.tsx
-var import_components62 = __toESM(require_components());
+var import_components61 = __toESM(require_components());
 function ActionItem({
   slug,
   title,
@@ -38361,8 +37980,8 @@ function ActionItem({
   isBusy
 }) {
   const descriptionId = `guidelines-action-${slug}-description`;
-  return /* @__PURE__ */ React.createElement(import_components62.__experimentalHStack, { justify: "space-between", className: "guidelines__action-row" }, /* @__PURE__ */ React.createElement(import_components62.__experimentalVStack, { spacing: 1 }, /* @__PURE__ */ React.createElement(
-    import_components62.__experimentalHeading,
+  return /* @__PURE__ */ React.createElement(import_components61.__experimentalHStack, { justify: "space-between", className: "guidelines__action-row" }, /* @__PURE__ */ React.createElement(import_components61.__experimentalVStack, { spacing: 1 }, /* @__PURE__ */ React.createElement(
+    import_components61.__experimentalHeading,
     {
       level: 3,
       size: 13,
@@ -38371,7 +37990,7 @@ function ActionItem({
     },
     title
   ), /* @__PURE__ */ React.createElement(
-    import_components62.__experimentalText,
+    import_components61.__experimentalText,
     {
       id: descriptionId,
       size: 13,
@@ -38381,7 +38000,7 @@ function ActionItem({
     },
     description
   )), /* @__PURE__ */ React.createElement(
-    import_components62.Button,
+    import_components61.Button,
     {
       size: "compact",
       variant: "secondary",
@@ -38407,10 +38026,10 @@ function GuidelineActionsSection({
   bySlug,
   query
 }) {
-  const fileInputRef = (0, import_element121.useRef)(null);
-  const [isImporting, setIsImporting] = (0, import_element121.useState)(false);
-  const [error2, setError] = (0, import_element121.useState)(null);
-  const [pendingImport, setPendingImport] = (0, import_element121.useState)(null);
+  const fileInputRef = (0, import_element119.useRef)(null);
+  const [isImporting, setIsImporting] = (0, import_element119.useState)(false);
+  const [error2, setError] = (0, import_element119.useState)(null);
+  const [pendingImport, setPendingImport] = (0, import_element119.useState)(null);
   function handleImportClick() {
     fileInputRef.current?.click();
   }
@@ -38484,7 +38103,7 @@ function GuidelineActionsSection({
       onClick: handleExportClick
     }
   ];
-  return /* @__PURE__ */ React.createElement(import_components63.__experimentalVStack, { spacing: 4, className: "guidelines__actions" }, /* @__PURE__ */ React.createElement(import_components63.__experimentalHeading, { level: 3, size: 15 }, (0, import_i18n59.__)("Actions")), /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ React.createElement(import_components62.__experimentalVStack, { spacing: 4, className: "guidelines__actions" }, /* @__PURE__ */ React.createElement(import_components62.__experimentalHeading, { level: 3, size: 15 }, (0, import_i18n59.__)("Actions")), /* @__PURE__ */ React.createElement(
     "input",
     {
       type: "file",
@@ -38494,14 +38113,14 @@ function GuidelineActionsSection({
       style: { display: "none" }
     }
   ), error2 && /* @__PURE__ */ React.createElement(
-    import_components63.Notice,
+    import_components62.Notice,
     {
       status: "error",
       onRemove: () => setError(null),
       isDismissible: true
     },
     error2
-  ), /* @__PURE__ */ React.createElement(import_components63.Card, { className: "guidelines__actions-card" }, /* @__PURE__ */ React.createElement("ul", { role: "list", className: "guidelines__actions-list" }, ACTIONS.map((action) => /* @__PURE__ */ React.createElement(
+  ), /* @__PURE__ */ React.createElement(import_components62.Card, { className: "guidelines__actions-card" }, /* @__PURE__ */ React.createElement("ul", { role: "list", className: "guidelines__actions-list" }, ACTIONS.map((action) => /* @__PURE__ */ React.createElement(
     "li",
     {
       key: action.slug,
@@ -38509,7 +38128,7 @@ function GuidelineActionsSection({
     },
     /* @__PURE__ */ React.createElement(ActionItem, { ...action })
   )))), /* @__PURE__ */ React.createElement(
-    import_components63.__experimentalConfirmDialog,
+    import_components62.__experimentalConfirmDialog,
     {
       isOpen: !!pendingImport,
       __experimentalHideHeader: false,
@@ -38528,8 +38147,8 @@ function GuidelineActionsSection({
 // routes/guidelines/stage.tsx
 function GuidelinesPage() {
   const { scopes, contentBlocks, bySlug, query, isLoading } = useGuidelineData();
-  const [hasLoaded, setHasLoaded] = (0, import_element122.useState)(false);
-  (0, import_element122.useEffect)(() => {
+  const [hasLoaded, setHasLoaded] = (0, import_element120.useState)(false);
+  (0, import_element120.useEffect)(() => {
     if (!isLoading) {
       setHasLoaded(true);
     }
@@ -38542,7 +38161,7 @@ function GuidelinesPage() {
         "Set content standards that guide your team, inform plugins, and help AI tools generate content that matches your site's voice and requirements."
       )
     },
-    !hasLoaded ? /* @__PURE__ */ React.createElement("div", { className: "guidelines__loading" }, /* @__PURE__ */ React.createElement(import_components64.Spinner, null)) : /* @__PURE__ */ React.createElement(import_components64.__experimentalVStack, { className: "guidelines__content" }, /* @__PURE__ */ React.createElement("ul", { role: "list", className: "guidelines__list" }, scopes.map((scope) => /* @__PURE__ */ React.createElement(
+    !hasLoaded ? /* @__PURE__ */ React.createElement("div", { className: "guidelines__loading" }, /* @__PURE__ */ React.createElement(import_components63.Spinner, null)) : /* @__PURE__ */ React.createElement(import_components63.__experimentalVStack, { className: "guidelines__content" }, /* @__PURE__ */ React.createElement("ul", { role: "list", className: "guidelines__list" }, scopes.map((scope) => /* @__PURE__ */ React.createElement(
       "li",
       {
         key: scope.slug,
