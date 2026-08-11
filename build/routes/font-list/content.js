@@ -88,7 +88,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState29({
+        cachedValue = useState28({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -126,7 +126,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React49 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState29 = React49.useState, useEffect20 = React49.useEffect, useLayoutEffect4 = React49.useLayoutEffect, useDebugValue2 = React49.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React49 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState28 = React49.useState, useEffect20 = React49.useEffect, useLayoutEffect4 = React49.useLayoutEffect, useDebugValue2 = React49.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React49.useSyncExternalStore ? React49.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -3010,8 +3010,8 @@ function useDismiss(context, props = {}) {
         const isScrollableY = lastTraversableNode || scrollRe.test(style.overflowY);
         const canScrollX = isScrollableX && target.clientWidth > 0 && target.scrollWidth > target.clientWidth;
         const canScrollY = isScrollableY && target.clientHeight > 0 && target.scrollHeight > target.clientHeight;
-        const isRTL13 = style.direction === "rtl";
-        const pressedVerticalScrollbar = canScrollY && (isRTL13 ? event.offsetX <= target.offsetWidth - target.clientWidth : event.offsetX > target.clientWidth);
+        const isRTL12 = style.direction === "rtl";
+        const pressedVerticalScrollbar = canScrollY && (isRTL12 ? event.offsetX <= target.offsetWidth - target.clientWidth : event.offsetX > target.clientWidth);
         const pressedHorizontalScrollbar = canScrollX && event.offsetY > target.clientHeight;
         if (pressedVerticalScrollbar || pressedHorizontalScrollbar) {
           return;
@@ -9705,19 +9705,19 @@ Page.SidebarToggleFill = SidebarToggleFill;
 var page_default = Page;
 
 // routes/font-list/stage.tsx
-var import_i18n49 = __toESM(require_i18n());
-var import_components60 = __toESM(require_components());
+var import_i18n48 = __toESM(require_i18n());
+var import_components58 = __toESM(require_components());
 var import_editor = __toESM(require_editor());
 var import_core_data12 = __toESM(require_core_data());
 var import_data13 = __toESM(require_data());
-var import_element52 = __toESM(require_element());
+var import_element51 = __toESM(require_element());
 
 // packages/global-styles-ui/build-module/global-styles-ui.mjs
-var import_components59 = __toESM(require_components(), 1);
+var import_components57 = __toESM(require_components(), 1);
 var import_blocks5 = __toESM(require_blocks(), 1);
 var import_data12 = __toESM(require_data(), 1);
 var import_block_editor14 = __toESM(require_block_editor(), 1);
-var import_element51 = __toESM(require_element(), 1);
+var import_element50 = __toESM(require_element(), 1);
 var import_compose6 = __toESM(require_compose(), 1);
 
 // packages/global-styles-engine/build-module/utils/object.mjs
@@ -18149,12 +18149,12 @@ var inflate_default = (function() {
           var STR_APPLY_UIA_OK = true;
           try {
             String.fromCharCode.apply(null, [0]);
-          } catch (__43) {
+          } catch (__42) {
             STR_APPLY_OK = false;
           }
           try {
             String.fromCharCode.apply(null, new Uint8Array(1));
-          } catch (__43) {
+          } catch (__42) {
             STR_APPLY_UIA_OK = false;
           }
           var _utf8len = new utils.Buf8(256);
@@ -24779,80 +24779,87 @@ var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
 var { useHasBackgroundPanel: useHasBackgroundPanel4 } = unlock3(import_block_editor9.privateApis);
 
 // packages/global-styles-ui/build-module/shadows-panel.mjs
+var import_i18n33 = __toESM(require_i18n(), 1);
+
+// packages/global-styles-ui/build-module/presets/preset-group.mjs
 var import_components42 = __toESM(require_components(), 1);
 var import_i18n32 = __toESM(require_i18n(), 1);
 var import_element42 = __toESM(require_element(), 1);
 
-// packages/global-styles-ui/build-module/confirm-reset-shadow-dialog.mjs
+// packages/global-styles-ui/build-module/presets/dialogs/confirm-reset-dialog.mjs
 var import_components41 = __toESM(require_components(), 1);
 var import_i18n31 = __toESM(require_i18n(), 1);
 var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/shadows-panel.mjs
+// packages/global-styles-ui/build-module/presets/preset-group.mjs
 var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
 var { Menu } = unlock3(import_components42.privateApis);
 
-// packages/global-styles-ui/build-module/shadows-edit-panel.mjs
-var import_components43 = __toESM(require_components(), 1);
-var import_i18n33 = __toESM(require_i18n(), 1);
-var import_element43 = __toESM(require_element(), 1);
+// packages/global-styles-ui/build-module/shadows-panel.mjs
 var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
+
+// packages/global-styles-ui/build-module/shadows-edit-panel.mjs
+var import_components46 = __toESM(require_components(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
+var import_element44 = __toESM(require_element(), 1);
+
+// packages/global-styles-ui/build-module/presets/preset-edit-header.mjs
+var import_components43 = __toESM(require_components(), 1);
+var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
 var { Menu: Menu2 } = unlock3(import_components43.privateApis);
-var customShadowMenuItems = [
-  {
-    label: (0, import_i18n33.__)("Rename"),
-    action: "rename"
-  },
-  {
-    label: (0, import_i18n33.__)("Delete"),
-    action: "delete"
-  }
-];
-var presetShadowMenuItems = [
-  {
-    label: (0, import_i18n33.__)("Reset"),
-    action: "reset"
-  }
-];
+
+// packages/global-styles-ui/build-module/presets/dialogs/confirm-delete-dialog.mjs
+var import_components44 = __toESM(require_components(), 1);
+var import_i18n34 = __toESM(require_i18n(), 1);
+var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
+
+// packages/global-styles-ui/build-module/presets/dialogs/rename-dialog.mjs
+var import_components45 = __toESM(require_components(), 1);
+var import_i18n35 = __toESM(require_i18n(), 1);
+var import_element43 = __toESM(require_element(), 1);
+var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+
+// packages/global-styles-ui/build-module/shadows-edit-panel.mjs
+var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-shadows.mjs
-var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-layout.mjs
-var import_i18n34 = __toESM(require_i18n(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 var import_block_editor11 = __toESM(require_block_editor(), 1);
 
 // packages/global-styles-ui/build-module/dimensions-panel.mjs
 var import_block_editor10 = __toESM(require_block_editor(), 1);
-var import_element44 = __toESM(require_element(), 1);
-var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
+var import_element45 = __toESM(require_element(), 1);
+var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
 var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock3(import_block_editor10.privateApis);
 
 // packages/global-styles-ui/build-module/screen-layout.mjs
-var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
 var { useHasDimensionsPanel: useHasDimensionsPanel4, useSettingsForBlockElement: useSettingsForBlockElement7 } = unlock3(
   import_block_editor11.privateApis
 );
 
 // packages/global-styles-ui/build-module/screen-style-variations.mjs
-var import_components46 = __toESM(require_components(), 1);
-var import_i18n37 = __toESM(require_i18n(), 1);
+var import_components49 = __toESM(require_components(), 1);
+var import_i18n40 = __toESM(require_i18n(), 1);
 
 // packages/global-styles-ui/build-module/style-variations-content.mjs
-var import_i18n36 = __toESM(require_i18n(), 1);
-var import_components45 = __toESM(require_components(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
+var import_components48 = __toESM(require_components(), 1);
 
 // packages/global-styles-ui/build-module/style-variations-container.mjs
 var import_core_data9 = __toESM(require_core_data(), 1);
 var import_data9 = __toESM(require_data(), 1);
-var import_element45 = __toESM(require_element(), 1);
-var import_components44 = __toESM(require_components(), 1);
-var import_i18n35 = __toESM(require_i18n(), 1);
-var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+var import_element46 = __toESM(require_element(), 1);
+var import_components47 = __toESM(require_components(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
+var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 function StyleVariationsContainer({
   gap = 2
 }) {
-  const { user } = (0, import_element45.useContext)(GlobalStylesContext);
+  const { user } = (0, import_element46.useContext)(GlobalStylesContext);
   const userStyles = user?.styles;
   const variations = (0, import_data9.useSelect)((select) => {
     const result = select(
@@ -24868,10 +24875,10 @@ function StyleVariationsContainer({
       ]);
     }
   );
-  const themeVariations = (0, import_element45.useMemo)(() => {
+  const themeVariations = (0, import_element46.useMemo)(() => {
     const withEmptyVariation = [
       {
-        title: (0, import_i18n35.__)("Default"),
+        title: (0, import_i18n38.__)("Default"),
         settings: {},
         styles: {}
       },
@@ -24914,14 +24921,14 @@ function StyleVariationsContainer({
   if (!fullStyleVariations || fullStyleVariations.length < 1) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
-    import_components44.__experimentalGrid,
+  return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+    import_components47.__experimentalGrid,
     {
       columns: 2,
       className: "global-styles-ui-style-variations-container",
       gap,
       children: themeVariations.map(
-        (variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(Variation, { variation, children: (isFocused) => /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+        (variation, index2) => /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(Variation, { variation, children: (isFocused) => /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
           preview_styles_default,
           {
             label: variation?.title,
@@ -24937,106 +24944,74 @@ function StyleVariationsContainer({
 var style_variations_container_default = StyleVariationsContainer;
 
 // packages/global-styles-ui/build-module/style-variations-content.mjs
-var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-style-variations.mjs
-var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
 
 // packages/global-styles-ui/build-module/screen-css.mjs
-var import_i18n38 = __toESM(require_i18n(), 1);
-var import_components47 = __toESM(require_components(), 1);
+var import_i18n41 = __toESM(require_i18n(), 1);
+var import_components50 = __toESM(require_components(), 1);
 var import_block_editor12 = __toESM(require_block_editor(), 1);
-var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
 var { AdvancedPanel: StylesAdvancedPanel2 } = unlock3(import_block_editor12.privateApis);
 
 // packages/global-styles-ui/build-module/screen-revisions/index.mjs
-var import_i18n41 = __toESM(require_i18n(), 1);
-var import_components50 = __toESM(require_components(), 1);
-var import_element47 = __toESM(require_element(), 1);
+var import_i18n44 = __toESM(require_i18n(), 1);
+var import_components53 = __toESM(require_components(), 1);
+var import_element48 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-revisions/use-global-styles-revisions.mjs
 var import_data10 = __toESM(require_data(), 1);
 var import_core_data10 = __toESM(require_core_data(), 1);
-var import_element46 = __toESM(require_element(), 1);
+var import_element47 = __toESM(require_element(), 1);
 
 // packages/global-styles-ui/build-module/screen-revisions/revisions-buttons.mjs
-var import_i18n39 = __toESM(require_i18n(), 1);
-var import_components48 = __toESM(require_components(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
+var import_components51 = __toESM(require_components(), 1);
 var import_date = __toESM(require_date(), 1);
 var import_core_data11 = __toESM(require_core_data(), 1);
 var import_data11 = __toESM(require_data(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
-var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
-var { Badge: WCBadge } = unlock3(import_components48.privateApis);
+var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
+var { Badge: WCBadge } = unlock3(import_components51.privateApis);
 var DAY_IN_MILLISECONDS = 60 * 60 * 1e3 * 24;
 
 // packages/global-styles-ui/build-module/pagination/index.mjs
-var import_components49 = __toESM(require_components(), 1);
-var import_i18n40 = __toESM(require_i18n(), 1);
-var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
-
-// packages/global-styles-ui/build-module/screen-revisions/index.mjs
-var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
-
-// packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
-var import_i18n44 = __toESM(require_i18n(), 1);
-var import_components53 = __toESM(require_components(), 1);
-
-// packages/global-styles-ui/build-module/presets/preset-group.mjs
 var import_components52 = __toESM(require_components(), 1);
 var import_i18n43 = __toESM(require_i18n(), 1);
-var import_element48 = __toESM(require_element(), 1);
-
-// packages/global-styles-ui/build-module/presets/dialogs/confirm-reset-dialog.mjs
-var import_components51 = __toESM(require_components(), 1);
-var import_i18n42 = __toESM(require_i18n(), 1);
-var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
-
-// packages/global-styles-ui/build-module/presets/preset-group.mjs
-var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu3 } = unlock3(import_components52.privateApis);
-
-// packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
 var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-sizes/font-size.mjs
-var import_i18n48 = __toESM(require_i18n(), 1);
-var import_components58 = __toESM(require_components(), 1);
-var import_element50 = __toESM(require_element(), 1);
-
-// packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
-var import_block_editor13 = __toESM(require_block_editor(), 1);
-var import_i18n45 = __toESM(require_i18n(), 1);
+// packages/global-styles-ui/build-module/screen-revisions/index.mjs
 var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/size-control/index.mjs
+// packages/global-styles-ui/build-module/font-sizes/font-sizes.mjs
+var import_i18n45 = __toESM(require_i18n(), 1);
 var import_components54 = __toESM(require_components(), 1);
 var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/presets/preset-edit-header.mjs
-var import_components55 = __toESM(require_components(), 1);
-var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
-var { Menu: Menu4 } = unlock3(import_components55.privateApis);
-
-// packages/global-styles-ui/build-module/presets/dialogs/confirm-delete-dialog.mjs
+// packages/global-styles-ui/build-module/font-sizes/font-size.mjs
+var import_i18n47 = __toESM(require_i18n(), 1);
 var import_components56 = __toESM(require_components(), 1);
+var import_element49 = __toESM(require_element(), 1);
+
+// packages/global-styles-ui/build-module/font-sizes/font-size-preview.mjs
+var import_block_editor13 = __toESM(require_block_editor(), 1);
 var import_i18n46 = __toESM(require_i18n(), 1);
+var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
+
+// packages/global-styles-ui/build-module/size-control/index.mjs
+var import_components55 = __toESM(require_components(), 1);
 var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/presets/dialogs/rename-dialog.mjs
-var import_components57 = __toESM(require_components(), 1);
-var import_i18n47 = __toESM(require_i18n(), 1);
-var import_element49 = __toESM(require_element(), 1);
+// packages/global-styles-ui/build-module/font-sizes/font-size.mjs
 var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/font-sizes/font-size.mjs
+// packages/global-styles-ui/build-module/global-styles-ui.mjs
 var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 
-// packages/global-styles-ui/build-module/global-styles-ui.mjs
-var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
-
 // packages/global-styles-ui/build-module/with-global-styles-provider.mjs
-var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 function withGlobalStylesProvider(Component) {
   return function WrappedComponent({
     value,
@@ -25044,13 +25019,13 @@ function withGlobalStylesProvider(Component) {
     onChange,
     ...props
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
       GlobalStylesProvider,
       {
         value,
         baseValue,
         onChange,
-        children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(Component, { ...props })
+        children: /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Component, { ...props })
       }
     );
   };
@@ -25066,7 +25041,7 @@ var ColorVariations2 = withGlobalStylesProvider(ColorVariations);
 var TypographyVariations2 = withGlobalStylesProvider(TypographyVariations);
 
 // packages/global-styles-ui/build-module/font-library/font-library.mjs
-var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
 function FontLibrary({
   value,
   baseValue,
@@ -25076,21 +25051,21 @@ function FontLibrary({
   let content;
   switch (activeTab) {
     case "upload-fonts":
-      content = /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(upload_fonts_default, {});
+      content = /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(upload_fonts_default, {});
       break;
     case "installed-fonts":
-      content = /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(installed_fonts_default, {});
+      content = /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(installed_fonts_default, {});
       break;
     default:
-      content = /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(font_collection_default, { slug: activeTab });
+      content = /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(font_collection_default, { slug: activeTab });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
     GlobalStylesProvider,
     {
       value,
       baseValue,
       onChange,
-      children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(context_default, { children: content })
+      children: /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(context_default, { children: content })
     }
   );
 }
@@ -25111,13 +25086,13 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 }
 
 // routes/font-list/stage.tsx
-var { Tabs: Tabs2 } = unlock4(import_components60.privateApis);
+var { Tabs: Tabs2 } = unlock4(import_components58.privateApis);
 var { useGlobalStyles } = unlock4(import_editor.privateApis);
 function FontLibraryPage() {
   const { records: collections = [] } = (0, import_core_data12.useEntityRecords)("root", "fontCollection", {
     _fields: "slug,name,description"
   });
-  const [activeTab, setActiveTab] = (0, import_element52.useState)("installed-fonts");
+  const [activeTab, setActiveTab] = (0, import_element51.useState)("installed-fonts");
   const { base, user, setUser, isReady } = useGlobalStyles();
   const canUserCreate = (0, import_data13.useSelect)((select) => {
     return select(import_core_data12.store).canUser("create", {
@@ -25131,22 +25106,22 @@ function FontLibraryPage() {
   const tabs = [
     {
       id: "installed-fonts",
-      title: (0, import_i18n49._x)("Library", "Font library")
+      title: (0, import_i18n48._x)("Library", "Font library")
     }
   ];
   if (canUserCreate) {
     tabs.push({
       id: "upload-fonts",
-      title: (0, import_i18n49._x)("Upload", "noun")
+      title: (0, import_i18n48._x)("Upload", "noun")
     });
     tabs.push(
       ...(collections || []).map(({ slug, name: name2 }) => ({
         id: slug,
-        title: collections && collections.length === 1 && slug === "google-fonts" ? (0, import_i18n49.__)("Install Fonts") : name2
+        title: collections && collections.length === 1 && slug === "google-fonts" ? (0, import_i18n48.__)("Install Fonts") : name2
       }))
     );
   }
-  return /* @__PURE__ */ React.createElement(page_default, { title: (0, import_i18n49.__)("Fonts"), className: "font-library-page" }, /* @__PURE__ */ React.createElement(
+  return /* @__PURE__ */ React.createElement(page_default, { title: (0, import_i18n48.__)("Fonts"), className: "font-library-page" }, /* @__PURE__ */ React.createElement(
     Tabs2,
     {
       selectedTabId: activeTab,
