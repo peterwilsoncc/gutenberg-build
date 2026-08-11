@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).dom = (() => {
@@ -1089,7 +1088,5 @@ var wp;
   // packages/dom/build-module/index.mjs
   var focus = { focusable: focusable_exports, tabbable: tabbable_exports };
   return __toCommonJS(index_exports);
-})();
-(window.wp ||= {}).dom = wp.dom;
 })();
 //# sourceMappingURL=index.js.map

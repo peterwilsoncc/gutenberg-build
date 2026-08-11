@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).blocks = (() => {
@@ -5057,27 +5056,21 @@ var wp;
       doc.body.innerHTML = source;
       source = doc.body;
     }
-    if (typeof matchers === "function") {
+    if ("function" === typeof matchers) {
       return matchers(source);
     }
     if (Object !== matchers.constructor) {
       return;
     }
     return Object.keys(matchers).reduce(function(memo, key) {
-      var inner = matchers[key];
-      memo[key] = parse(source, inner);
+      memo[key] = parse(source, matchers[key]);
       return memo;
     }, {});
   }
-  function prop(arg1, arg2) {
-    var name;
-    var selector;
+  function prop(selector, name) {
     if (1 === arguments.length) {
-      name = arg1;
+      name = selector;
       selector = void 0;
-    } else {
-      name = arg2;
-      selector = arg1;
     }
     return function(node) {
       var match = node;
@@ -5089,19 +5082,14 @@ var wp;
       }
     };
   }
-  function attr(arg1, arg2) {
-    var name;
-    var selector;
+  function attr(selector, name) {
     if (1 === arguments.length) {
-      name = arg1;
+      name = selector;
       selector = void 0;
-    } else {
-      name = arg2;
-      selector = arg1;
     }
     return function(node) {
       var attributes = prop(selector, "attributes")(node);
-      if (attributes && Object.prototype.hasOwnProperty.call(attributes, name)) {
+      if (attributes && attributes.hasOwnProperty(name)) {
         return attributes[name].value;
       }
     };
@@ -5392,7 +5380,7 @@ var wp;
   };
 
   // packages/blocks/build-module/api/parser/get-block-attributes.mjs
-  var toBooleanAttributeMatcher = (matcher3) => (domNode) => matcher3(domNode) !== void 0;
+  var toBooleanAttributeMatcher = (matcher3) => (value) => matcher3(value) !== void 0;
   function isOfType(value, type) {
     switch (type) {
       case "rich-text":
@@ -5458,12 +5446,12 @@ var wp;
     (sourceConfig) => {
       switch (sourceConfig.source) {
         case "attribute": {
-          const matcher3 = attr(
+          let matcher3 = attr(
             sourceConfig.selector,
             sourceConfig.attribute
           );
           if (sourceConfig.type === "boolean") {
-            return toBooleanAttributeMatcher(matcher3);
+            matcher3 = toBooleanAttributeMatcher(matcher3);
           }
           return matcher3;
         }
@@ -8320,6 +8308,4 @@ is-plain-object/dist/is-plain-object.mjs:
    * Released under the MIT License.
    *)
 */
-(window.wp ||= {}).blocks = wp.blocks;
-})();
 //# sourceMappingURL=index.js.map

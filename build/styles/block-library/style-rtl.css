@@ -3849,7 +3849,6 @@ p.has-text-align-left[style*="writing-mode:vertical-lr"] {
 .wp-block-post-author-biography {
   box-sizing: border-box;
   white-space: pre-wrap;
-  overflow-wrap: break-word;
 }
 
 :where(.wp-block-post-comments-form textarea),

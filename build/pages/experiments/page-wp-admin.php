@@ -270,23 +270,23 @@ function gutenberg_experiments_wp_admin_render_page() {
 		#wpwrap {
 			overflow-y: auto;
 		}
-		body.js {
+		body {
 			background: #fff;
 		}
 
 		/* Reset wp-admin padding */
-		body.js #wpcontent {
+		#wpcontent {
 			padding-inline-start: 0;
 		}
-		body.js #wpbody-content {
+		#wpbody-content {
 			padding-bottom: 0;
 		}
 
 		/* Hide legacy admin elements */
-		body.js #wpbody-content > div:not(.boot-layout-container):not(#screen-meta) {
+		#wpbody-content > div:not(.boot-layout-container):not(#screen-meta) {
 			display: none;
 		}
-		body.js #wpfooter {
+		#wpfooter {
 			display: none;
 		}
 
@@ -315,15 +315,6 @@ function gutenberg_experiments_wp_admin_render_page() {
 			}
 		}
 	</style>
-	<div class="wrap hide-if-js">
-		<h1 class="wp-heading-inline"><?php echo esc_html( get_admin_page_title() ); ?></h1>
-		<?php
-		wp_admin_notice(
-			__( 'This screen requires JavaScript. Enable JavaScript in your browser settings and reload the page.' ),
-			array( 'type' => 'error' )
-		);
-		?>
-	</div>
 	<div id="experiments-wp-admin-app" class="boot-layout-container"></div>
 	<?php
 }

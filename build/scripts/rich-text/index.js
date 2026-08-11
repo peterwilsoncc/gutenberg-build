@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).richText = (() => {
@@ -1987,12 +1986,7 @@ var wp;
     function onCopy(event) {
       const { record, handleChange } = props.current;
       const { ownerDocument } = element;
-      if (
-        // Another handler may have already claimed the clipboard, e.g.
-        // the block editor copying the whole block when its entire
-        // text is selected.
-        event.defaultPrevented || isCollapsed(record.current) || !element.contains(ownerDocument.activeElement) && !ownsSelection(element)
-      ) {
+      if (isCollapsed(record.current) || !element.contains(ownerDocument.activeElement) && !ownsSelection(element)) {
         return;
       }
       const selectedRecord = slice(record.current);
@@ -3134,7 +3128,5 @@ var wp;
   function __experimentalRichText() {
   }
   return __toCommonJS(index_exports);
-})();
-(window.wp ||= {}).richText = wp.richText;
 })();
 //# sourceMappingURL=index.js.map

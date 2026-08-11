@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).element = (() => {
@@ -77,23 +76,23 @@ var wp;
     createContext: () => import_react.createContext,
     createElement: () => import_react.createElement,
     createInterpolateElement: () => create_interpolate_element_default,
-    createPortal: () => createPortal,
+    createPortal: () => import_react_dom.createPortal,
     createRef: () => import_react.createRef,
     createRoot: () => import_client.createRoot,
-    findDOMNode: () => findDOMNode,
-    flushSync: () => flushSync,
+    findDOMNode: () => import_react_dom.findDOMNode,
+    flushSync: () => import_react_dom.flushSync,
     forwardRef: () => import_react.forwardRef,
-    hydrate: () => hydrate,
+    hydrate: () => import_react_dom.hydrate,
     hydrateRoot: () => import_client.hydrateRoot,
     isEmptyElement: () => isEmptyElement,
     isValidElement: () => import_react.isValidElement,
     lazy: () => import_react.lazy,
     memo: () => import_react.memo,
-    render: () => render,
+    render: () => import_react_dom.render,
     renderToString: () => serialize_default,
     startTransition: () => import_react.startTransition,
     switchChildrenNodeName: () => switchChildrenNodeName,
-    unmountComponentAtNode: () => unmountComponentAtNode,
+    unmountComponentAtNode: () => import_react_dom.unmountComponentAtNode,
     useCallback: () => import_react.useCallback,
     useContext: () => import_react.useContext,
     useDebugValue: () => import_react.useDebugValue,
@@ -319,18 +318,8 @@ var wp;
   var create_interpolate_element_default = createInterpolateElement;
 
   // packages/element/build-module/react-platform.mjs
-  var ReactDOM = __toESM(require_react_dom(), 1);
+  var import_react_dom = __toESM(require_react_dom(), 1);
   var import_client = __toESM(require_client(), 1);
-  var {
-    createPortal,
-    flushSync,
-    /* eslint-disable react/no-deprecated */
-    findDOMNode,
-    render,
-    hydrate,
-    unmountComponentAtNode
-    /* eslint-enable react/no-deprecated */
-  } = ReactDOM;
 
   // packages/element/build-module/utils.mjs
   var isEmptyElement = (element) => {
@@ -960,6 +949,4 @@ is-plain-object/dist/is-plain-object.mjs:
    * Released under the MIT License.
    *)
 */
-(window.wp ||= {}).element = wp.element;
-})();
 //# sourceMappingURL=index.js.map

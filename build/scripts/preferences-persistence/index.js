@@ -1,4 +1,3 @@
-(function() {
 var wp;
 (wp ||= {}).preferencesPersistence = (() => {
   var __create = Object.create;
@@ -508,7 +507,5 @@ var wp;
     });
   }
   return __toCommonJS(index_exports);
-})();
-(window.wp ||= {}).preferencesPersistence = wp.preferencesPersistence;
 })();
 //# sourceMappingURL=index.js.map

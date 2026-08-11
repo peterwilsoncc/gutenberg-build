@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).primitives = (() => {
@@ -124,7 +123,5 @@ var wp;
   // packages/primitives/build-module/view/index.mjs
   var View = "div";
   return __toCommonJS(index_exports);
-})();
-(window.wp ||= {}).primitives = wp.primitives;
 })();
 //# sourceMappingURL=index.js.map

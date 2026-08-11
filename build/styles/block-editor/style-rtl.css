@@ -1507,6 +1507,10 @@ iframe[name=editor-canvas] {
   min-width: 0;
 }
 
+.block-editor-panel-color-gradient-settings.block-editor-panel-color-gradient-settings, .block-editor-panel-color-gradient-settings.block-editor-panel-color-gradient-settings > div:not(:first-of-type) {
+  display: block;
+}
+
 @media screen and (min-width: 782px) {
   .block-editor-panel-color-gradient-settings .components-circular-option-picker__swatches {
     display: grid;
@@ -1515,16 +1519,6 @@ iframe[name=editor-canvas] {
 }
 .block-editor-block-inspector .block-editor-panel-color-gradient-settings .components-base-control {
   margin-bottom: inherit;
-}
-.block-editor-panel-color-gradient-settings {
-  /* Increased specificity required to remove the slot wrapper's row gap */
-}
-.block-editor-panel-color-gradient-settings.block-editor-panel-color-gradient-settings .block-editor-panel-color-gradient-settings__inner-wrapper {
-  grid-column: 1/-1;
-  row-gap: 0;
-}
-.block-editor-panel-color-gradient-settings.block-editor-panel-color-gradient-settings .block-editor-panel-color-gradient-settings__inner-wrapper > * {
-  grid-column: 1/-1;
 }
 
 .block-editor-panel-color-gradient-settings__dropdown-content {
@@ -2474,7 +2468,7 @@ iframe[name=editor-canvas] {
   max-height: 32px;
 }
 .block-editor-link-control__preview .block-editor-link-control__preview-title {
-  line-height: var(--wpds-typography-line-height-sm, 20px);
+  line-height: 1.1;
 }
 .block-editor-link-control__preview .block-editor-link-control__preview-title:focus {
   box-shadow: none;
@@ -2996,12 +2990,6 @@ iframe[name=editor-canvas] {
 .block-editor-list-view-leaf .block-editor-inserter__toggle:active {
   color: #fff;
 }
-.block-editor-list-view-leaf .block-editor-list-view-block-select-button__label-wrapper {
-  width: 100%;
-}
-.block-editor-list-view-leaf .block-editor-list-view-block-select-button__label-wrapper > * {
-  min-width: 0;
-}
 .block-editor-list-view-leaf .block-editor-list-view-block-select-button__label-wrapper svg {
   right: 2px;
   position: relative;
@@ -3024,17 +3012,6 @@ iframe[name=editor-canvas] {
   position: absolute;
   left: 0;
   transform: translateY(-50%);
-  box-sizing: border-box;
-  max-width: 100%;
-  padding: 2px 8px;
-  border-radius: 2px;
-  background: #f0f0f0;
-  color: #2f2f2f;
-  font-size: 12px;
-  line-height: 20px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .block-editor-list-view-leaf.is-selected .block-editor-list-view-block-select-button__anchor {
   background: rgba(0, 0, 0, 0.3);
@@ -3580,11 +3557,6 @@ iframe[name=editor-canvas] {
   display: block;
   padding: 16px;
   border-top: 1px solid #1e1e1e;
-}
-
-.block-editor-url-popover__link-container-content {
-  display: flex;
-  align-items: center;
 }
 
 .block-editor-url-popover__link-editor,

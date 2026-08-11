@@ -11,6 +11,8 @@ foreach ( [
 	__DIR__ . '/pages/font-library/page-wp-admin.php',
 	__DIR__ . '/pages/options-connectors/page.php',
 	__DIR__ . '/pages/options-connectors/page-wp-admin.php',
+	__DIR__ . '/pages/content-types/page.php',
+	__DIR__ . '/pages/content-types/page-wp-admin.php',
 	__DIR__ . '/pages/dashboard/page.php',
 	__DIR__ . '/pages/dashboard/page-wp-admin.php',
 	__DIR__ . '/pages/experiments/page.php',

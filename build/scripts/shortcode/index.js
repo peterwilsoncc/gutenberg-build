@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).shortcode = (() => {
@@ -294,6 +293,4 @@ var wp;
   return __toCommonJS(index_exports);
 })();
 if (typeof wp.shortcode === 'object' && wp.shortcode.default) { wp.shortcode = wp.shortcode.default; }
-(window.wp ||= {}).shortcode = wp.shortcode;
-})();
 //# sourceMappingURL=index.js.map

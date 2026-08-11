@@ -1,4 +1,3 @@
-(function() {
 "use strict";
 var wp;
 (wp ||= {}).viewport = (() => {
@@ -130,7 +129,7 @@ var wp;
         return operatorEntries.map(
           ([operator, condition]) => {
             const list = window.matchMedia(
-              `screen and (${condition}: ${width}px)`
+              `(${condition}: ${width}px)`
             );
             list.addEventListener("change", setIsMatching2);
             return [`${operator} ${name}`, list];
@@ -216,7 +215,5 @@ var wp;
   };
   listener_default(BREAKPOINTS, OPERATORS);
   return __toCommonJS(index_exports);
-})();
-(window.wp ||= {}).viewport = wp.viewport;
 })();
 //# sourceMappingURL=index.js.map
