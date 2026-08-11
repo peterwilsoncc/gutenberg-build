@@ -3582,6 +3582,11 @@ iframe[name=editor-canvas] {
   border-top: 1px solid #1e1e1e;
 }
 
+.block-editor-url-popover__link-container-content {
+  display: flex;
+  align-items: center;
+}
+
 .block-editor-url-popover__link-editor,
 .block-editor-url-popover__link-viewer {
   display: flex;

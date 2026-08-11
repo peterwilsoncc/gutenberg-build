@@ -74722,7 +74722,7 @@ var wp;
         return /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
           url_popover_default.LinkEditor,
           {
-            className: "block-editor-format-toolbar__link-container-content",
+            className: "block-editor-url-popover__link-container-content",
             value: linkEditorValue,
             onChangeInputValue: setUrlInput,
             onSubmit: onSubmitLinkChange(),
@@ -74734,7 +74734,7 @@ var wp;
           /* @__PURE__ */ (0, import_jsx_runtime408.jsx)(
             url_popover_default.LinkViewer,
             {
-              className: "block-editor-format-toolbar__link-container-content",
+              className: "block-editor-url-popover__link-container-content",
               url,
               onEditLinkClick: startEditLink,
               urlLabel
