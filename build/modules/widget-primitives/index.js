@@ -135,6 +135,12 @@ async function resolveIcon(reference) {
 var pendingIcon = (0, import_element2.createElement)("svg", {
   viewBox: "0 0 24 24"
 });
+function withRenderableIcons(actions) {
+  return actions.map(({ icon, ...action }) => ({
+    ...action,
+    ...(0, import_element2.isValidElement)(icon) ? { icon } : {}
+  }));
+}
 function useWidgetTypes(records) {
   const [widgetTypes, setWidgetTypes] = (0, import_element2.useState)([]);
   const [isResolvingWidgetTypes, setIsResolvingWidgetTypes] = (0, import_element2.useState)(true);
@@ -166,6 +172,7 @@ function useWidgetTypes(records) {
           const metadata = module.default;
           const moduleIcon = (0, import_element2.isValidElement)(metadata.icon) ? metadata.icon : void 0;
           const icon = moduleIcon ?? (record.icon ? pendingIcon : void 0);
+          const actions = record.actions ?? metadata.actions;
           return {
             ...metadata,
             ...metadata.attributes ? {
@@ -188,7 +195,7 @@ function useWidgetTypes(records) {
             ...record.description ? { description: record.description } : {},
             ...record.help ? { help: record.help } : {},
             ...record.keywords ? { keywords: record.keywords } : {},
-            ...record.actions ? { actions: record.actions } : {}
+            ...actions ? { actions: withRenderableIcons(actions) } : {}
           };
         } catch {
           return null;
@@ -223,28 +230,24 @@ function useWidgetTypes(records) {
           );
         });
       }
-      for (const widgetType of results) {
-        for (const action of widgetType?.actions ?? []) {
+      for (const record of records) {
+        for (const action of record.actions ?? []) {
           if (typeof action.icon !== "string") {
             continue;
           }
-          const reference = action.icon;
-          void resolveIcon(reference).then((resolved) => {
-            if (cancelled) {
+          void resolveIcon(action.icon).then((resolved) => {
+            if (cancelled || !resolved) {
               return;
             }
             setWidgetTypes(
               (prev) => prev.map((type) => {
-                if (type.name !== widgetType?.name) {
+                if (type.name !== record.name) {
                   return type;
                 }
                 return {
                   ...type,
                   actions: type.actions?.map(
-                    (entry) => entry.id === action.id && entry.icon === reference ? {
-                      ...entry,
-                      icon: resolved ?? void 0
-                    } : entry
+                    (entry) => entry.id === action.id ? { ...entry, icon: resolved } : entry
                   )
                 };
               })

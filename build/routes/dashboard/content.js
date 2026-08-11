@@ -31549,7 +31549,7 @@ var page_default = Page;
 // routes/dashboard/stage.tsx
 var import_core_data = __toESM(require_core_data());
 var import_data9 = __toESM(require_data());
-var import_element226 = __toESM(require_element());
+var import_element225 = __toESM(require_element());
 var import_i18n78 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 var import_viewport2 = __toESM(require_viewport());
@@ -54731,7 +54731,7 @@ function WidgetSettingsTrigger({
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widgets.mjs
-var import_element223 = __toESM(require_element(), 1);
+var import_element222 = __toESM(require_element(), 1);
 
 // node_modules/@dnd-kit/core/dist/core.esm.js
 var import_react45 = __toESM(require_react());
@@ -61735,7 +61735,6 @@ function useDashboardContainerColumnCount(forwardedRef) {
 
 // packages/widget-dashboard/build-module/components/widget-actions/widget-actions.mjs
 var import_components57 = __toESM(require_components(), 1);
-var import_element218 = __toESM(require_element(), 1);
 var import_i18n74 = __toESM(require_i18n(), 1);
 var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE79 = "data-wp-hash";
@@ -61850,7 +61849,7 @@ function WidgetActions({
     /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(Menu7.Popover, { children: /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(Menu7.Group, { className: widget_actions_default["widget-action-items"], children: actions.map((action) => /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
       Menu7.Item,
       {
-        prefix: (0, import_element218.isValidElement)(action.icon) ? /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(Icon, { icon: action.icon }) : void 0,
+        prefix: action.icon ? /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(Icon, { icon: action.icon }) : void 0,
         render: /* @__PURE__ */ (0, import_jsx_runtime292.jsx)(
           Link,
           {
@@ -61868,10 +61867,10 @@ function WidgetActions({
 }
 
 // packages/widget-dashboard/build-module/components/widget-attributes/widget-attributes.mjs
-var import_element221 = __toESM(require_element(), 1);
+var import_element220 = __toESM(require_element(), 1);
 
 // packages/widget-dashboard/build-module/components/widget-attributes/attributes-dropdown.mjs
-var import_element219 = __toESM(require_element(), 1);
+var import_element218 = __toESM(require_element(), 1);
 var import_i18n75 = __toESM(require_i18n(), 1);
 var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE80 = "data-wp-hash";
@@ -61964,7 +61963,7 @@ function AttributesDropdown({
   onChange,
   onOpenChange
 }) {
-  const form = (0, import_element219.useMemo)(
+  const form = (0, import_element218.useMemo)(
     () => ({
       layout: { type: "regular", labelPosition: "top" },
       fields: fields2.map((field) => field.id)
@@ -62012,16 +62011,16 @@ function AttributesDropdown({
 
 // packages/widget-dashboard/build-module/components/widget-attributes/use-inline-fit.mjs
 var import_compose39 = __toESM(require_compose(), 1);
-var import_element220 = __toESM(require_element(), 1);
+var import_element219 = __toESM(require_element(), 1);
 function useInlineFit(options = {}) {
   const { locked = false } = options;
   const availableSize = useWidgetHeaderAvailableSize();
-  const [naturalSize, setNaturalSize] = (0, import_element220.useState)(0);
+  const [naturalSize, setNaturalSize] = (0, import_element219.useState)(0);
   const measureRef = (0, import_compose39.useResizeObserver)(
     ([entry]) => setNaturalSize(entry.contentRect.width)
   );
   const computed = availableSize !== null && naturalSize > 0 && naturalSize > availableSize;
-  const [held, setHeld] = (0, import_element220.useState)(computed);
+  const [held, setHeld] = (0, import_element219.useState)(computed);
   if (!locked && held !== computed) {
     setHeld(computed);
   }
@@ -62123,26 +62122,26 @@ function WidgetAttributes({
     (attribute) => attribute.relevance !== "high"
   );
   const settingsReserveRef = useReserveHeaderSpace("settings");
-  const [dropdownOpen, setDropdownOpen] = (0, import_element221.useState)(false);
-  const [inlineHasFocus, setInlineHasFocus] = (0, import_element221.useState)(false);
-  const [dropdownTriggerHasFocus, setDropdownTriggerHasFocus] = (0, import_element221.useState)(false);
+  const [dropdownOpen, setDropdownOpen] = (0, import_element220.useState)(false);
+  const [inlineHasFocus, setInlineHasFocus] = (0, import_element220.useState)(false);
+  const [dropdownTriggerHasFocus, setDropdownTriggerHasFocus] = (0, import_element220.useState)(false);
   const { measureRef, collapsed } = useInlineFit({
     locked: dropdownOpen || inlineHasFocus || dropdownTriggerHasFocus
   });
-  (0, import_element221.useEffect)(() => {
+  (0, import_element220.useEffect)(() => {
     if (collapsed) {
       setInlineHasFocus(false);
     } else {
       setDropdownTriggerHasFocus(false);
     }
   }, [collapsed]);
-  const fields2 = (0, import_element221.useMemo)(
+  const fields2 = (0, import_element220.useMemo)(
     () => (widgetType.attributes ?? []).filter(
       (attribute) => attribute.relevance === "high"
     ),
     [widgetType.attributes]
   );
-  const form = (0, import_element221.useMemo)(
+  const form = (0, import_element220.useMemo)(
     () => ({
       layout: { type: "row", alignment: "center" },
       fields: fields2.map((field) => ({
@@ -62152,7 +62151,7 @@ function WidgetAttributes({
     }),
     [fields2]
   );
-  const handleChange = (0, import_element221.useCallback)(
+  const handleChange = (0, import_element220.useCallback)(
     (edits) => {
       onLayoutChange(
         layout.map(
@@ -62428,7 +62427,7 @@ function WidgetToolbar({
 }
 
 // packages/widget-dashboard/build-module/components/widgets/widget-resize-handle.mjs
-var import_element222 = __toESM(require_element(), 1);
+var import_element221 = __toESM(require_element(), 1);
 var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE83 = "data-wp-hash";
 function getRuntime83() {
@@ -62514,7 +62513,7 @@ if (typeof process === "undefined" || true) {
   registerStyle83("415a4244a3", '.a70c7d5347a2f54b__handle{--widget-resize-handle-visual-inset:var(--wpds-dimension-padding-xs,4px);--widget-resize-handle-hover-scale:1.18;background:transparent;bottom:0;box-sizing:border-box;inset-inline-end:0;padding:0;position:absolute;z-index:1}.a70c7d5347a2f54b__handle:focus-visible{border-radius:var(--wpds-border-radius-sm,2px);outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa1d4aafe4d24e03__resizing{opacity:.72}._000e7ddc64fb1ac6__handle-corner{cursor:nwse-resize;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px)}._000e7ddc64fb1ac6__handle-corner:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-block-start:none;border-end-end-radius:var(--wpds-border-radius-md,4px);border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));border-inline-start:none;bottom:var(--widget-resize-handle-visual-inset);box-sizing:border-box;content:"";height:var(--wpds-dimension-size-4xs,8px);inset-inline-end:var(--widget-resize-handle-visual-inset);position:absolute;transform:scale(1);transform-origin:100% 100%;width:var(--wpds-dimension-size-4xs,8px)}[dir=rtl] ._000e7ddc64fb1ac6__handle-corner:after{transform-origin:0 100%}._000e7ddc64fb1ac6__handle-corner.aa1d4aafe4d24e03__resizing:after,._000e7ddc64fb1ac6__handle-corner:focus-visible:after,._000e7ddc64fb1ac6__handle-corner:hover:after{border-block-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));border-inline-end:var(--wpds-border-width-sm,2px) solid var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}.f227b7c826e4b495__handle-horizontal{align-items:center;border:none;cursor:ew-resize;display:flex;height:var(--wpds-dimension-size-lg,40px);justify-content:center;padding-inline-end:var(--widget-resize-handle-visual-inset);width:var(--wpds-dimension-size-sm,24px)}@media not (prefers-reduced-motion){._000e7ddc64fb1ac6__handle-corner:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-block-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),border-inline-end-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}.f227b7c826e4b495__handle-horizontal:after{transition:transform var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1)),background-color var(--wpds-motion-duration-xs,50ms) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}}.f227b7c826e4b495__handle-horizontal:after{background-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));content:"";height:var(--wpds-dimension-size-3xs,12px);transform:scale(1);transform-origin:50% 100%;width:var(--wpds-border-width-sm,2px)}.f227b7c826e4b495__handle-horizontal.aa1d4aafe4d24e03__resizing:after,.f227b7c826e4b495__handle-horizontal:focus-visible:after,.f227b7c826e4b495__handle-horizontal:hover:after{background-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));transform:scale(var(--widget-resize-handle-hover-scale))}@media (forced-colors:active){._000e7ddc64fb1ac6__handle-corner.aa1d4aafe4d24e03__resizing:after,._000e7ddc64fb1ac6__handle-corner:after,._000e7ddc64fb1ac6__handle-corner:focus-visible:after,._000e7ddc64fb1ac6__handle-corner:hover:after{border-block-end-color:Highlight;border-inline-end-color:Highlight}.f227b7c826e4b495__handle-horizontal.aa1d4aafe4d24e03__resizing:after,.f227b7c826e4b495__handle-horizontal:after,.f227b7c826e4b495__handle-horizontal:focus-visible:after,.f227b7c826e4b495__handle-horizontal:hover:after{background-color:Highlight}}');
 }
 var widget_resize_handle_default = { "handle": "a70c7d5347a2f54b__handle", "resizing": "aa1d4aafe4d24e03__resizing", "handle-corner": "_000e7ddc64fb1ac6__handle-corner", "handle-horizontal": "f227b7c826e4b495__handle-horizontal" };
-var WidgetResizeHandle = (0, import_element222.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
+var WidgetResizeHandle = (0, import_element221.forwardRef)(function WidgetResizeHandle2({ listeners, attributes, verticalResizable, isResizing }, ref) {
   if (!verticalResizable) {
     return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(
       "div",
@@ -62675,22 +62674,22 @@ function applyMasonryChange(widgets, masonryLayout) {
     };
   });
 }
-var Widgets = (0, import_element223.forwardRef)(
+var Widgets = (0, import_element222.forwardRef)(
   function Widgets2({ className }, ref) {
     const { layout, onLayoutChange, editMode, gridSettings, widgetTypes } = useDashboardInternalContext();
     const { containerRef, columnCount } = useDashboardContainerColumnCount(ref);
     const isMasonry = gridSettings.model === "masonry";
-    const gridLayout = (0, import_element223.useMemo)(
+    const gridLayout = (0, import_element222.useMemo)(
       () => isMasonry ? toMasonryLayout(layout) : toGridLayout(layout),
       [layout, isMasonry]
     );
-    const handleGridChange = (0, import_element223.useCallback)(
+    const handleGridChange = (0, import_element222.useCallback)(
       (newGridLayout) => {
         onLayoutChange(applyGridChange(layout, newGridLayout));
       },
       [layout, onLayoutChange]
     );
-    const handleMasonryChange = (0, import_element223.useCallback)(
+    const handleMasonryChange = (0, import_element222.useCallback)(
       (newMasonryLayout) => {
         onLayoutChange(
           applyMasonryChange(layout, newMasonryLayout)
@@ -62737,7 +62736,7 @@ var Widgets = (0, import_element223.forwardRef)(
         widget.uuid
       );
     });
-    const renderDragPreview = (0, import_element223.useCallback)(
+    const renderDragPreview = (0, import_element222.useCallback)(
       ({ children: clone }) => /* @__PURE__ */ (0, import_jsx_runtime298.jsx)("div", { className: widgets_default["drag-preview"], children: clone }),
       []
     );
@@ -62831,10 +62830,10 @@ import {
 import { registerFieldType } from "@wordpress/widget-primitives";
 
 // routes/dashboard/field-types/location-control/location-control.tsx
-var import_element225 = __toESM(require_element());
+var import_element224 = __toESM(require_element());
 
 // routes/dashboard/field-types/location-picker/location-picker.tsx
-var import_element224 = __toESM(require_element());
+var import_element223 = __toESM(require_element());
 var import_i18n77 = __toESM(require_i18n());
 
 // packages/style-runtime/src/index.ts
@@ -62937,11 +62936,11 @@ function LocationPicker({
   selectButton = true,
   onChange
 }) {
-  const locationInputId = (0, import_element224.useId)();
-  const [locationInput, setLocationInput] = (0, import_element224.useState)(seedInput);
-  const [locationOptions, setLocationOptions] = (0, import_element224.useState)([]);
-  const [isLocatingCity, setIsLocatingCity] = (0, import_element224.useState)(false);
-  (0, import_element224.useEffect)(() => {
+  const locationInputId = (0, import_element223.useId)();
+  const [locationInput, setLocationInput] = (0, import_element223.useState)(seedInput);
+  const [locationOptions, setLocationOptions] = (0, import_element223.useState)([]);
+  const [isLocatingCity, setIsLocatingCity] = (0, import_element223.useState)(false);
+  (0, import_element223.useEffect)(() => {
     if (!selectButton || seedInput) {
       setLocationInput(seedInput);
     }
@@ -62977,7 +62976,7 @@ function LocationPicker({
       setIsLocatingCity(false);
     }
   };
-  (0, import_element224.useEffect)(() => {
+  (0, import_element223.useEffect)(() => {
     const query = locationInput.trim();
     if (query.length < 2) {
       setLocationOptions([]);
@@ -63124,7 +63123,7 @@ function LocationControl({
   hideLabelFromVision
 }) {
   const value = field.getValue({ item: data });
-  const onLocationChange = (0, import_element225.useCallback)(
+  const onLocationChange = (0, import_element224.useCallback)(
     (location) => {
       onChange(
         field.setValue({
@@ -63211,7 +63210,7 @@ function Dashboard() {
     []
   );
   const [widgetTypes, isResolving] = useWidgetTypes(widgetsModules);
-  const [editMode, setEditMode] = (0, import_element226.useState)(false);
+  const [editMode, setEditMode] = (0, import_element225.useState)(false);
   const isMobileViewport = (0, import_data9.useSelect)(
     (select) => select(import_viewport2.store).isViewportMatch("< small"),
     []
