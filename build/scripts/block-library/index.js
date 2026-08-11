@@ -32580,7 +32580,6 @@ ${url}
     },
     supports: {
       __experimentalOnEnter: true,
-      __experimentalOnMerge: true,
       __experimentalSettings: true,
       align: ["wide", "full"],
       anchor: true,

@@ -3140,7 +3140,6 @@ return array(
 		),
 		'supports' => array(
 			'__experimentalOnEnter' => true,
-			'__experimentalOnMerge' => true,
 			'__experimentalSettings' => true,
 			'align' => array(
 				'wide',
