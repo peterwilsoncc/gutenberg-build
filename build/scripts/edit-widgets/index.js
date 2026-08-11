@@ -916,11 +916,14 @@ var wp;
   function ComplementaryAreaSlot({ scope, ...props }) {
     return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_components5.Slot, { name: `ComplementaryArea/${scope}`, ...props });
   }
-  var SIDEBAR_WIDTH = 280;
   var variants = {
-    open: { width: SIDEBAR_WIDTH },
-    closed: { width: 0 },
-    mobileOpen: { width: "100vw" }
+    // `auto` leaves the width to the area's own stylesheet, so it stays in one
+    // place. framer-motion measures the element to animate, then restores
+    // `auto`.
+    open: { width: "auto" },
+    // Resolved with the `custom` value passed to `AnimatePresence`, which is
+    // the only way an already removed element can be given a fresh transition.
+    closed: (transition) => ({ width: 0, transition })
   };
   function renderContainer(render, props) {
     if ((0, import_element2.isValidElement)(render)) {
@@ -944,31 +947,24 @@ var wp;
     const disableMotion = (0, import_compose.useReducedMotion)();
     const isMobileViewport = (0, import_compose.useViewportMatch)("medium", "<");
     const previousActiveArea = (0, import_compose.usePrevious)(activeArea);
-    const previousIsActive = (0, import_compose.usePrevious)(isActive);
-    const [, setState] = (0, import_element2.useState)({});
-    (0, import_element2.useEffect)(() => {
-      setState({});
-    }, [isActive]);
+    const isSwitchingAreas = !!previousActiveArea && !!activeArea && activeArea !== previousActiveArea;
     const transition = {
       type: "tween",
-      duration: disableMotion || isMobileViewport || !!previousActiveArea && !!activeArea && activeArea !== previousActiveArea ? 0 : ANIMATION_DURATION,
+      duration: disableMotion || isMobileViewport || isSwitchingAreas ? 0 : ANIMATION_DURATION,
       ease: [0.6, 0, 0.4, 1]
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_components5.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_components5.__unstableAnimatePresence, { initial: false, children: (previousIsActive || isActive) && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_components5.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_components5.__unstableAnimatePresence, { initial: false, custom: transition, children: isActive && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
       import_components5.__unstableMotion.div,
       {
         variants,
         initial: "closed",
-        animate: isMobileViewport ? "mobileOpen" : "open",
+        animate: "open",
         exit: "closed",
         transition,
         className: "interface-complementary-area__fill",
         children: renderContainer(render, {
           id,
           className,
-          style: {
-            width: isMobileViewport ? "100vw" : SIDEBAR_WIDTH
-          },
           children
         })
       }

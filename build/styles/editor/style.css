@@ -223,6 +223,7 @@
   color: #1e1e1e;
   height: 100%;
   overflow: auto;
+  width: 100vw;
 }
 
 @media (min-width: 782px) {
