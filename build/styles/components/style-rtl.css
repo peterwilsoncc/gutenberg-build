@@ -3593,10 +3593,6 @@ div.components-toolbar > div + div.has-left-divider::before {
 .components-validated-control__wrapper-with-error-delegate:has(input[type=radio]:invalid[data-validity-visible]) {
   --wp-components-color-accent: #cc1818;
 }
-.components-validated-control__wrapper-with-error-delegate:has(input:invalid[data-validity-visible]) .components-form-token-field__input-container:not(:has([aria-expanded=true])) {
-  --wp-admin-theme-color: #cc1818;
-  border-color: #cc1818;
-}
 .components-validated-control__wrapper-with-error-delegate:has(input:invalid[data-validity-visible]) .components-validated-control__content-editable [role=textbox] {
   --wp-admin-theme-color: #cc1818;
   border-color: #cc1818;

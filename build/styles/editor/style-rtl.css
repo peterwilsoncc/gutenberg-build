@@ -3926,6 +3926,24 @@ div.dataviews-view-list {
   --wp-admin-theme-color: #cc1818;
 }
 
+.dataviews-validated-control__wrapper-with-error-delegate {
+  position: relative;
+}
+
+.dataviews-validated-control__wrapper-with-error-delegate:has(input:invalid[data-validity-visible]) .components-form-token-field__input-container:not(:has([aria-expanded=true])) {
+  --wp-admin-theme-color: #cc1818;
+  border-color: #cc1818;
+}
+
+.dataviews-validated-control__error-delegate {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .dataviews-validated-control__indicator {
   display: flex;
   align-items: flex-start;
