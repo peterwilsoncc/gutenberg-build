@@ -2705,6 +2705,10 @@ div.dataviews-view-list {
   border-color: #cc1818;
 }
 
+.dataviews-validated-control .components-combobox-control__suggestions-container:has(input:invalid[data-validity-visible]):not(:has([aria-expanded=true])) {
+  --wp-admin-theme-color: #cc1818;
+}
+
 .dataviews-validated-control__indicator {
   display: flex;
   align-items: flex-start;

@@ -3595,9 +3595,6 @@ div.components-toolbar > div + div.has-left-divider::before {
   --wp-components-color-accent: #cc1818;
   border-color: #cc1818;
 }
-.components-validated-control .components-combobox-control__suggestions-container:has(input:invalid[data-validity-visible]):not(:has([aria-expanded=true])) {
-  --wp-admin-theme-color: #cc1818;
-}
 
 .components-validated-control__wrapper-with-error-delegate {
   position: relative;
