@@ -730,8 +730,15 @@ var wp;
   }
   function getQueryArgs(url) {
     return (getQueryString(url) || "").replace(/\+/g, "%20").split("&").reduce((accumulator, keyValue) => {
-      const [key, value = ""] = keyValue.split("=").filter(Boolean).map(safeDecodeURIComponent);
+      const separatorIndex = keyValue.indexOf("=");
+      const hasValue = separatorIndex !== -1;
+      const key = safeDecodeURIComponent(
+        hasValue ? keyValue.slice(0, separatorIndex) : keyValue
+      );
       if (key) {
+        const value = hasValue ? safeDecodeURIComponent(
+          keyValue.slice(separatorIndex + 1)
+        ) : "";
         const segments = key.replace(/\]/g, "").split("[");
         setPath(accumulator, segments, value);
       }
