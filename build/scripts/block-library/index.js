@@ -34667,7 +34667,13 @@ ${text}
     const [isInserterOpen, setInserterOpen] = (0, import_element54.useState)(false);
     const isContentOnlyMode = (0, import_block_editor112.useBlockEditingMode)() === "contentOnly";
     const colorProps = (0, import_block_editor112.__experimentalUseColorProps)(attributes);
-    const spacingProps = (0, import_block_editor112.__experimentalGetSpacingClassesAndStyles)(attributes);
+    const spacingProps = (0, import_block_editor112.__experimentalGetSpacingClassesAndStyles)({
+      style: {
+        spacing: {
+          padding: attributes.style?.spacing?.padding
+        }
+      }
+    });
     const borderProps = (0, import_block_editor112.__experimentalUseBorderProps)(attributes);
     const dimensionsProps = (0, import_block_editor112.getDimensionsClassesAndStyles)(attributes);
     const selectedIcon = (0, import_data48.useSelect)(
