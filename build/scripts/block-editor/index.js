@@ -82508,8 +82508,8 @@ var wp;
     };
     const sideLabel = ALL_SIDES.includes(view) && showSideInLabel ? LABELS[view] : "";
     const label = (0, import_i18n180.sprintf)(
-      // translators: 1: The side of the block being modified (top, bottom, left etc.). 2. Type of spacing being modified (padding, margin, etc).
-      (0, import_i18n180._x)("%1$s %2$s", "spacing"),
+      // translators: 1: Type of spacing being modified (Padding, Margin, etc.). 2: The side of the block being modified (Top, Bottom, Left, etc.).
+      (0, import_i18n180._x)("%1$s %2$s", "spacing control label"),
       labelProp,
       sideLabel
     ).trim();
