@@ -2099,7 +2099,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState128({
+          cachedValue = useState127({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -2111,7 +2111,7 @@ var wp;
             },
             [subscribe, value, getSnapshot]
           );
-          useEffect98(
+          useEffect99(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe(function() {
@@ -2137,7 +2137,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React146 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState128 = React146.useState, useEffect98 = React146.useEffect, useLayoutEffect19 = React146.useLayoutEffect, useDebugValue2 = React146.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React146 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState127 = React146.useState, useEffect99 = React146.useEffect, useLayoutEffect19 = React146.useLayoutEffect, useDebugValue2 = React146.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React146.useSyncExternalStore ? React146.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -2165,9 +2165,9 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React146 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef114 = React146.useRef, useEffect98 = React146.useEffect, useMemo160 = React146.useMemo, useDebugValue2 = React146.useDebugValue;
+        var React146 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef115 = React146.useRef, useEffect99 = React146.useEffect, useMemo160 = React146.useMemo, useDebugValue2 = React146.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector3, isEqual2) {
-          var instRef = useRef114(null);
+          var instRef = useRef115(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -2208,7 +2208,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector3, isEqual2]
           );
           var value = useSyncExternalStore2(subscribe, instRef[0], instRef[1]);
-          useEffect98(
+          useEffect99(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -85576,6 +85576,39 @@ var wp;
   // packages/block-editor/build-module/components/dimensions-tool/aspect-ratio-tool.mjs
   var import_components199 = __toESM(require_components(), 1);
   var import_i18n195 = __toESM(require_i18n(), 1);
+
+  // packages/block-editor/build-module/components/dimensions-tool/utils.mjs
+  function parseAspectRatio(value) {
+    if (typeof value !== "string") {
+      return null;
+    }
+    const parts = value.split("/");
+    if (parts.length > 2) {
+      return null;
+    }
+    const [width, height = "1"] = parts;
+    const numericWidth = Number(width.trim());
+    const numericHeight = Number(height.trim());
+    if (!Number.isFinite(numericWidth) || !Number.isFinite(numericHeight) || numericWidth <= 0 || numericHeight <= 0) {
+      return null;
+    }
+    return numericWidth / numericHeight;
+  }
+  function findAspectRatioOption(value, options) {
+    const exactMatch = options.find((option) => option.value === value);
+    if (exactMatch) {
+      return exactMatch;
+    }
+    const ratio = parseAspectRatio(value);
+    if (ratio === null) {
+      return null;
+    }
+    return options.find(
+      (option) => parseAspectRatio(option.value) === ratio
+    ) ?? null;
+  }
+
+  // packages/block-editor/build-module/components/dimensions-tool/aspect-ratio-tool.mjs
   var import_jsx_runtime434 = __toESM(require_jsx_runtime(), 1);
   function AspectRatioTool({
     panelId,
@@ -85590,7 +85623,6 @@ var wp;
     isInherited,
     hasLocalOverride
   }) {
-    const displayValue = value ?? "auto";
     const [defaultRatios, themeRatios, showDefaultRatios] = useSettings(
       "dimensions.aspectRatios.default",
       "dimensions.aspectRatios.theme",
@@ -85621,6 +85653,8 @@ var wp;
         hidden: true
       }
     ];
+    const resolvedOptions = options ?? aspectRatioOptions;
+    const displayValue = value === void 0 || value === null || value === "auto" ? "auto" : findAspectRatioOption(value, resolvedOptions)?.value ?? "custom";
     return /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
       InheritanceToolsPanelItem,
       {
@@ -85637,7 +85671,7 @@ var wp;
           {
             label: (0, import_i18n195.__)("Aspect ratio"),
             value: displayValue,
-            options: options ?? aspectRatioOptions,
+            options: resolvedOptions,
             onChange
           }
         )
@@ -105309,9 +105343,19 @@ var wp;
     const height = value.height === void 0 || value.height === "auto" ? null : value.height;
     const aspectRatio = value.aspectRatio === void 0 || value.aspectRatio === "auto" ? null : value.aspectRatio;
     const scale = value.scale === void 0 ? null : value.scale;
-    const [lastScale, setLastScale] = (0, import_element351.useState)(scale);
-    const [lastAspectRatio, setLastAspectRatio] = (0, import_element351.useState)(aspectRatio);
     const hasCustomAspectRatio = !!(width && height);
+    const lastScaleRef = (0, import_element351.useRef)(scale);
+    const lastAspectRatioRef = (0, import_element351.useRef)(aspectRatio);
+    (0, import_element351.useEffect)(() => {
+      if (scale) {
+        lastScaleRef.current = scale;
+      }
+    }, [scale]);
+    (0, import_element351.useEffect)(() => {
+      if (!hasCustomAspectRatio) {
+        lastAspectRatioRef.current = aspectRatio;
+      }
+    }, [aspectRatio, hasCustomAspectRatio]);
     const aspectRatioValue = hasCustomAspectRatio ? "custom" : aspectRatio;
     const showScaleControl = aspectRatio || width && height;
     return /* @__PURE__ */ (0, import_jsx_runtime551.jsxs)(import_jsx_runtime551.Fragment, { children: [
@@ -105325,7 +105369,6 @@ var wp;
           onChange: (nextAspectRatio) => {
             const nextValue = { ...value };
             nextAspectRatio = nextAspectRatio === "auto" ? null : nextAspectRatio;
-            setLastAspectRatio(nextAspectRatio);
             if (!nextAspectRatio) {
               delete nextValue.aspectRatio;
             } else {
@@ -105333,11 +105376,8 @@ var wp;
             }
             if (!nextAspectRatio) {
               delete nextValue.scale;
-            } else if (lastScale) {
-              nextValue.scale = lastScale;
             } else {
-              nextValue.scale = defaultScale;
-              setLastScale(defaultScale);
+              nextValue.scale = lastScaleRef.current ?? defaultScale;
             }
             if ("custom" !== nextAspectRatio && width && height) {
               delete nextValue.height;
@@ -105368,17 +105408,14 @@ var wp;
             }
             if (nextWidth && nextHeight) {
               delete nextValue.aspectRatio;
-            } else if (lastAspectRatio) {
-              nextValue.aspectRatio = lastAspectRatio;
+            } else if (lastAspectRatioRef.current) {
+              nextValue.aspectRatio = lastAspectRatioRef.current;
             } else {
             }
-            if (!lastAspectRatio && !!nextWidth !== !!nextHeight) {
+            if (!lastAspectRatioRef.current && !!nextWidth !== !!nextHeight) {
               delete nextValue.scale;
-            } else if (lastScale) {
-              nextValue.scale = lastScale;
             } else {
-              nextValue.scale = defaultScale;
-              setLastScale(defaultScale);
+              nextValue.scale = lastScaleRef.current ?? defaultScale;
             }
             onChange(nextValue);
           }
@@ -105390,10 +105427,9 @@ var wp;
           panelId,
           options: scaleOptions,
           defaultValue: defaultScale,
-          value: lastScale,
+          value: scale,
           onChange: (nextScale) => {
             const nextValue = { ...value };
-            setLastScale(nextScale);
             if (!nextScale) {
               delete nextValue.scale;
             } else {
