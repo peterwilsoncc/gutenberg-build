@@ -17291,7 +17291,17 @@ var wp;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_components6.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(tooltip_exports.Provider, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_plugins2.PluginArea, { onError: onPluginAreaError }),
-      /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_theme.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(Layout, { ...props }) })
+      /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
+        import_theme.ThemeProvider,
+        {
+          isRoot: true,
+          color: {
+            primary: themeColors.primary,
+            ...CONTENT_COLOR
+          },
+          children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(import_theme.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(Layout, { ...props }) })
+        }
+      )
     ] }) });
   }
 
