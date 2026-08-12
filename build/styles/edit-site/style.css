@@ -5623,9 +5623,10 @@ body.js.site-editor-php {
 @media (min-width: 782px) {
   body.js.site-editor-php:has(.editor-editor-interface.is-distraction-free) {
     --wp-admin--admin-bar--height: 0px;
+    --wp-editor-admin-bar-display: none;
   }
-  body.js.site-editor-php:has(.editor-editor-interface.is-distraction-free) #wpadminbar {
-    display: none;
+  body.js.site-editor-php #wpadminbar {
+    display: var(--wp-editor-admin-bar-display, block);
   }
 }
 

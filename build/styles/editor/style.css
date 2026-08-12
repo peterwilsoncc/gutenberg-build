@@ -5820,7 +5820,8 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 .interface-interface-skeleton__sidebar:has(.editor-collab-sidebar) {
   box-shadow: none;
 }
-.interface-interface-skeleton__sidebar:has(.editor-collab-sidebar) .interface-complementary-area-header {
+
+.editor-collab-sidebar__header {
   display: none;
 }
 
@@ -7960,7 +7961,8 @@ mark.wp-note {
   flex-direction: column;
   overflow: hidden;
 }
-.interface-complementary-area:has(.editor-post-revisions-timeline) .editor-sidebar__panel-tabs {
+
+.interface-complementary-area > .editor-sidebar__panel-tabs {
   flex-shrink: 0;
 }
 
@@ -7970,17 +7972,20 @@ mark.wp-note {
   flex: 1;
   min-height: 0;
 }
-.editor-sidebar__panel:has(.editor-post-revisions-timeline) [role=tabpanel]:has(.editor-post-revisions-timeline) {
+
+.editor-sidebar__panel [role=tabpanel]:has(.editor-post-revisions-timeline) {
   display: flex;
   flex-direction: column;
   flex: 1;
   min-height: 0;
 }
-.editor-sidebar__panel:has(.editor-post-revisions-timeline) .editor-revision-meta-diff__content {
+
+.editor-sidebar__panel .editor-revision-meta-diff__content {
   max-height: 80px;
   overflow-y: auto;
 }
-.editor-sidebar__panel:has(.editor-post-revisions-timeline) .editor-post-revisions-timeline {
+
+.editor-sidebar__panel .editor-post-revisions-timeline {
   flex: 1;
   min-height: 0;
 }
