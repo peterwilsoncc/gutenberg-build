@@ -29753,12 +29753,15 @@ If there's a particular need for this, please submit a feature request at https:
     (0, import_element67.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const handler = () => {
+        if (customValidity?.type !== "validating") {
+          setErrorMessage(validityTarget?.validationMessage);
+        }
         setShowMessage(true);
         validityTarget?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       };
       validityTarget?.addEventListener("invalid", handler);
       return () => validityTarget?.removeEventListener("invalid", handler);
-    }, [getValidityTarget]);
+    }, [customValidity?.type, getValidityTarget]);
     (0, import_element67.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {
@@ -30282,6 +30285,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components39 = __toESM(require_components(), 1);
   var import_element79 = __toESM(require_element(), 1);
   var import_i18n44 = __toESM(require_i18n(), 1);
+  var import_a11y2 = __toESM(require_a11y(), 1);
   var import_date4 = __toESM(require_date(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
@@ -30435,22 +30439,16 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const inputControlRef = (0, import_element79.useRef)(null);
     const validationTimeoutRef = (0, import_element79.useRef)(void 0);
-    const previousFocusRef = (0, import_element79.useRef)(null);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
     const onChangeCallback = (0, import_element79.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
     (0, import_element79.useEffect)(() => {
-      return () => {
-        if (validationTimeoutRef.current) {
-          clearTimeout(validationTimeoutRef.current);
-        }
-      };
+      return () => clearTimeout(validationTimeoutRef.current);
     }, []);
     const onSelectDate = (0, import_element79.useCallback)(
       (newDate) => {
-        let dateTimeValue;
         if (newDate) {
           const wpDate = (0, import_date4.dateI18n)("Y-m-d", newDate);
           let wpTime;
@@ -30460,23 +30458,21 @@ If there's a particular need for this, please submit a feature request at https:
             wpTime = (0, import_date4.dateI18n)("H:i", newDate);
           }
           const finalDateTime = (0, import_date4.getDate)(`${wpDate}T${wpTime}`);
-          dateTimeValue = finalDateTime.toISOString();
-          onChangeCallback(dateTimeValue);
-          if (validationTimeoutRef.current) {
-            clearTimeout(validationTimeoutRef.current);
-          }
+          onChangeCallback(finalDateTime.toISOString());
         } else {
           onChangeCallback(void 0);
         }
-        previousFocusRef.current = inputControlRef.current && inputControlRef.current.ownerDocument.activeElement;
+        clearTimeout(validationTimeoutRef.current);
         validationTimeoutRef.current = setTimeout(() => {
-          if (inputControlRef.current) {
-            inputControlRef.current.focus();
-            inputControlRef.current.blur();
-            onChangeCallback(dateTimeValue);
-            if (previousFocusRef.current && previousFocusRef.current instanceof HTMLElement) {
-              previousFocusRef.current.focus();
-            }
+          const input = inputControlRef.current;
+          if (!input) {
+            return;
+          }
+          input.dispatchEvent(
+            new Event("invalid", { cancelable: true })
+          );
+          if (input.validationMessage) {
+            (0, import_a11y2.speak)(input.validationMessage);
           }
         }, 0);
       },
@@ -30588,7 +30584,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/date.mjs
   var import_components40 = __toESM(require_components(), 1);
-  var import_a11y2 = __toESM(require_a11y(), 1);
+  var import_a11y3 = __toESM(require_a11y(), 1);
   var import_element80 = __toESM(require_element(), 1);
   var import_i18n45 = __toESM(require_i18n(), 1);
   var import_date5 = __toESM(require_date(), 1);
@@ -30743,7 +30739,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [isTouched, isValid2, validity, validateRefs]);
     (0, import_element80.useEffect)(() => {
       if (isTouched && customValidity?.message) {
-        (0, import_a11y2.speak)(customValidity.message);
+        (0, import_a11y3.speak)(customValidity.message);
       }
     }, [isTouched, customValidity?.message]);
     const onBlur = (event) => {

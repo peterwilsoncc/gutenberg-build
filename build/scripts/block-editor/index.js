@@ -94589,12 +94589,15 @@ var wp;
     (0, import_element292.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const handler = () => {
+        if (customValidity?.type !== "validating") {
+          setErrorMessage(validityTarget?.validationMessage);
+        }
         setShowMessage(true);
         validityTarget?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       };
       validityTarget?.addEventListener("invalid", handler);
       return () => validityTarget?.removeEventListener("invalid", handler);
-    }, [getValidityTarget]);
+    }, [customValidity?.type, getValidityTarget]);
     (0, import_element292.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {
@@ -95118,6 +95121,7 @@ var wp;
   var import_components241 = __toESM(require_components(), 1);
   var import_element304 = __toESM(require_element(), 1);
   var import_i18n227 = __toESM(require_i18n(), 1);
+  var import_a11y24 = __toESM(require_a11y(), 1);
   var import_date6 = __toESM(require_date(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
@@ -95271,22 +95275,16 @@ var wp;
     });
     const inputControlRef = (0, import_element304.useRef)(null);
     const validationTimeoutRef = (0, import_element304.useRef)(void 0);
-    const previousFocusRef = (0, import_element304.useRef)(null);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
     const onChangeCallback = (0, import_element304.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
     (0, import_element304.useEffect)(() => {
-      return () => {
-        if (validationTimeoutRef.current) {
-          clearTimeout(validationTimeoutRef.current);
-        }
-      };
+      return () => clearTimeout(validationTimeoutRef.current);
     }, []);
     const onSelectDate = (0, import_element304.useCallback)(
       (newDate) => {
-        let dateTimeValue;
         if (newDate) {
           const wpDate = (0, import_date6.dateI18n)("Y-m-d", newDate);
           let wpTime;
@@ -95296,23 +95294,21 @@ var wp;
             wpTime = (0, import_date6.dateI18n)("H:i", newDate);
           }
           const finalDateTime = (0, import_date6.getDate)(`${wpDate}T${wpTime}`);
-          dateTimeValue = finalDateTime.toISOString();
-          onChangeCallback(dateTimeValue);
-          if (validationTimeoutRef.current) {
-            clearTimeout(validationTimeoutRef.current);
-          }
+          onChangeCallback(finalDateTime.toISOString());
         } else {
           onChangeCallback(void 0);
         }
-        previousFocusRef.current = inputControlRef.current && inputControlRef.current.ownerDocument.activeElement;
+        clearTimeout(validationTimeoutRef.current);
         validationTimeoutRef.current = setTimeout(() => {
-          if (inputControlRef.current) {
-            inputControlRef.current.focus();
-            inputControlRef.current.blur();
-            onChangeCallback(dateTimeValue);
-            if (previousFocusRef.current && previousFocusRef.current instanceof HTMLElement) {
-              previousFocusRef.current.focus();
-            }
+          const input = inputControlRef.current;
+          if (!input) {
+            return;
+          }
+          input.dispatchEvent(
+            new Event("invalid", { cancelable: true })
+          );
+          if (input.validationMessage) {
+            (0, import_a11y24.speak)(input.validationMessage);
           }
         }, 0);
       },
@@ -95424,7 +95420,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-controls/date.mjs
   var import_components242 = __toESM(require_components(), 1);
-  var import_a11y24 = __toESM(require_a11y(), 1);
+  var import_a11y25 = __toESM(require_a11y(), 1);
   var import_element305 = __toESM(require_element(), 1);
   var import_i18n228 = __toESM(require_i18n(), 1);
   var import_date7 = __toESM(require_date(), 1);
@@ -95579,7 +95575,7 @@ var wp;
     }, [isTouched, isValid2, validity, validateRefs]);
     (0, import_element305.useEffect)(() => {
       if (isTouched && customValidity?.message) {
-        (0, import_a11y24.speak)(customValidity.message);
+        (0, import_a11y25.speak)(customValidity.message);
       }
     }, [isTouched, customValidity?.message]);
     const onBlur = (event) => {
@@ -99648,7 +99644,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
   var import_element326 = __toESM(require_element(), 1);
-  var import_a11y25 = __toESM(require_a11y(), 1);
+  var import_a11y26 = __toESM(require_a11y(), 1);
   var import_compose110 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
@@ -99856,7 +99852,7 @@ var wp;
       const revealedCount = revealValidity();
       const message2 = getValidationMessage(validity);
       if (revealedCount > 0 && message2) {
-        (0, import_a11y25.speak)(message2, "polite");
+        (0, import_a11y26.speak)(message2, "polite");
       }
     }, [isCollapsible, isOpen, revealValidity, validity]);
     const focusOutsideProps = (0, import_compose110.__experimentalUseFocusOutside)(handleFocusOutside);
@@ -100015,7 +100011,7 @@ var wp;
   // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
   var import_element327 = __toESM(require_element(), 1);
   var import_i18n244 = __toESM(require_i18n(), 1);
-  var import_a11y26 = __toESM(require_a11y(), 1);
+  var import_a11y27 = __toESM(require_a11y(), 1);
   var import_compose111 = __toESM(require_compose(), 1);
   var import_jsx_runtime523 = __toESM(require_jsx_runtime(), 1);
   function FormDetailsField({
@@ -100069,7 +100065,7 @@ var wp;
       const revealedCount = revealValidity();
       const message2 = getValidationMessage(validity);
       if (revealedCount > 0 && message2) {
-        (0, import_a11y26.speak)(message2, "polite");
+        (0, import_a11y27.speak)(message2, "polite");
       }
     }, [revealValidity, validity]);
     const focusOutsideProps = (0, import_compose111.__experimentalUseFocusOutside)(handleFocusOutside);

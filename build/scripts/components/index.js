@@ -51970,12 +51970,15 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     (0, import_element225.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const handler = () => {
+        if (customValidity?.type !== "validating") {
+          setErrorMessage(validityTarget?.validationMessage);
+        }
         setShowMessage(true);
         validityTarget?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       };
       validityTarget?.addEventListener("invalid", handler);
       return () => validityTarget?.removeEventListener("invalid", handler);
-    }, [getValidityTarget]);
+    }, [customValidity?.type, getValidityTarget]);
     (0, import_element225.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {

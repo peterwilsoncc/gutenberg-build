@@ -7148,7 +7148,7 @@ var wp;
     updatePost: () => updatePost,
     updatePostLock: () => updatePostLock
   });
-  var import_a11y9 = __toESM(require_a11y(), 1);
+  var import_a11y10 = __toESM(require_a11y(), 1);
   var import_api_fetch8 = __toESM(require_api_fetch(), 1);
   var import_escape_html = __toESM(require_escape_html(), 1);
   var import_deprecated9 = __toESM(require_deprecated(), 1);
@@ -48444,12 +48444,15 @@ If there's a particular need for this, please submit a feature request at https:
     (0, import_element116.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const handler = () => {
+        if (customValidity?.type !== "validating") {
+          setErrorMessage(validityTarget?.validationMessage);
+        }
         setShowMessage(true);
         validityTarget?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
       };
       validityTarget?.addEventListener("invalid", handler);
       return () => validityTarget?.removeEventListener("invalid", handler);
-    }, [getValidityTarget]);
+    }, [customValidity?.type, getValidityTarget]);
     (0, import_element116.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {
@@ -48973,6 +48976,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components65 = __toESM(require_components(), 1);
   var import_element128 = __toESM(require_element(), 1);
   var import_i18n115 = __toESM(require_i18n(), 1);
+  var import_a11y3 = __toESM(require_a11y(), 1);
   var import_date9 = __toESM(require_date(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
@@ -49126,22 +49130,16 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const inputControlRef = (0, import_element128.useRef)(null);
     const validationTimeoutRef = (0, import_element128.useRef)(void 0);
-    const previousFocusRef = (0, import_element128.useRef)(null);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
     const onChangeCallback = (0, import_element128.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
     (0, import_element128.useEffect)(() => {
-      return () => {
-        if (validationTimeoutRef.current) {
-          clearTimeout(validationTimeoutRef.current);
-        }
-      };
+      return () => clearTimeout(validationTimeoutRef.current);
     }, []);
     const onSelectDate = (0, import_element128.useCallback)(
       (newDate) => {
-        let dateTimeValue;
         if (newDate) {
           const wpDate = (0, import_date9.dateI18n)("Y-m-d", newDate);
           let wpTime;
@@ -49151,23 +49149,21 @@ If there's a particular need for this, please submit a feature request at https:
             wpTime = (0, import_date9.dateI18n)("H:i", newDate);
           }
           const finalDateTime = (0, import_date9.getDate)(`${wpDate}T${wpTime}`);
-          dateTimeValue = finalDateTime.toISOString();
-          onChangeCallback(dateTimeValue);
-          if (validationTimeoutRef.current) {
-            clearTimeout(validationTimeoutRef.current);
-          }
+          onChangeCallback(finalDateTime.toISOString());
         } else {
           onChangeCallback(void 0);
         }
-        previousFocusRef.current = inputControlRef.current && inputControlRef.current.ownerDocument.activeElement;
+        clearTimeout(validationTimeoutRef.current);
         validationTimeoutRef.current = setTimeout(() => {
-          if (inputControlRef.current) {
-            inputControlRef.current.focus();
-            inputControlRef.current.blur();
-            onChangeCallback(dateTimeValue);
-            if (previousFocusRef.current && previousFocusRef.current instanceof HTMLElement) {
-              previousFocusRef.current.focus();
-            }
+          const input = inputControlRef.current;
+          if (!input) {
+            return;
+          }
+          input.dispatchEvent(
+            new Event("invalid", { cancelable: true })
+          );
+          if (input.validationMessage) {
+            (0, import_a11y3.speak)(input.validationMessage);
           }
         }, 0);
       },
@@ -49279,7 +49275,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/date.mjs
   var import_components66 = __toESM(require_components(), 1);
-  var import_a11y3 = __toESM(require_a11y(), 1);
+  var import_a11y4 = __toESM(require_a11y(), 1);
   var import_element129 = __toESM(require_element(), 1);
   var import_i18n116 = __toESM(require_i18n(), 1);
   var import_date10 = __toESM(require_date(), 1);
@@ -49434,7 +49430,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [isTouched, isValid2, validity, validateRefs]);
     (0, import_element129.useEffect)(() => {
       if (isTouched && customValidity?.message) {
-        (0, import_a11y3.speak)(customValidity.message);
+        (0, import_a11y4.speak)(customValidity.message);
       }
     }, [isTouched, customValidity?.message]);
     const onBlur = (event) => {
@@ -54029,7 +54025,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
   var import_element153 = __toESM(require_element(), 1);
-  var import_a11y4 = __toESM(require_a11y(), 1);
+  var import_a11y5 = __toESM(require_a11y(), 1);
   var import_compose29 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
@@ -54237,7 +54233,7 @@ If there's a particular need for this, please submit a feature request at https:
       const revealedCount = revealValidity();
       const message2 = getValidationMessage(validity);
       if (revealedCount > 0 && message2) {
-        (0, import_a11y4.speak)(message2, "polite");
+        (0, import_a11y5.speak)(message2, "polite");
       }
     }, [isCollapsible, isOpen2, revealValidity, validity]);
     const focusOutsideProps = (0, import_compose29.__experimentalUseFocusOutside)(handleFocusOutside);
@@ -54396,7 +54392,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
   var import_element154 = __toESM(require_element(), 1);
   var import_i18n132 = __toESM(require_i18n(), 1);
-  var import_a11y5 = __toESM(require_a11y(), 1);
+  var import_a11y6 = __toESM(require_a11y(), 1);
   var import_compose30 = __toESM(require_compose(), 1);
   var import_jsx_runtime273 = __toESM(require_jsx_runtime(), 1);
   function FormDetailsField({
@@ -54450,7 +54446,7 @@ If there's a particular need for this, please submit a feature request at https:
       const revealedCount = revealValidity();
       const message2 = getValidationMessage(validity);
       if (revealedCount > 0 && message2) {
-        (0, import_a11y5.speak)(message2, "polite");
+        (0, import_a11y6.speak)(message2, "polite");
       }
     }, [revealValidity, validity]);
     const focusOutsideProps = (0, import_compose30.__experimentalUseFocusOutside)(handleFocusOutside);
@@ -58359,7 +58355,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
-  var import_a11y6 = __toESM(require_a11y(), 1);
+  var import_a11y7 = __toESM(require_a11y(), 1);
   var import_element164 = __toESM(require_element(), 1);
   var import_i18n137 = __toESM(require_i18n(), 1);
 
@@ -58629,7 +58625,7 @@ If there's a particular need for this, please submit a feature request at https:
         prevStateRef.current = current;
         if (msg !== prevMessageRef.current) {
           prevMessageRef.current = msg;
-          (0, import_a11y6.speak)(msg);
+          (0, import_a11y7.speak)(msg);
         }
       }, ARIA_DEBOUNCE_MS);
       return () => {
@@ -63738,7 +63734,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element186 = __toESM(require_element(), 1);
   var import_block_editor7 = __toESM(require_block_editor(), 1);
   var import_compose35 = __toESM(require_compose(), 1);
-  var import_a11y8 = __toESM(require_a11y(), 1);
+  var import_a11y9 = __toESM(require_a11y(), 1);
 
   // packages/global-styles-ui/build-module/variations/variations-panel.mjs
   var import_blocks7 = __toESM(require_blocks(), 1);
@@ -63904,7 +63900,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function BlockList({ filterValue }) {
     const sortedBlockTypes = useSortedBlockTypes();
-    const debouncedSpeak = (0, import_compose35.useDebounce)(import_a11y8.speak, 500);
+    const debouncedSpeak = (0, import_compose35.useDebounce)(import_a11y9.speak, 500);
     const { isMatchingSearchTerm } = (0, import_data55.useSelect)(import_blocks8.store);
     const filteredBlockTypes = !filterValue ? sortedBlockTypes : sortedBlockTypes.filter(
       (blockType) => isMatchingSearchTerm(blockType, filterValue)
@@ -84915,7 +84911,7 @@ If there's a particular need for this, please submit a feature request at https:
             __unstableHTML: true,
             speak: false
           };
-          (0, import_a11y9.speak)(noticeMessage, "assertive");
+          (0, import_a11y10.speak)(noticeMessage, "assertive");
         }
         registry.dispatch(import_notices21.store).createErrorNotice(...args);
       }
@@ -85293,13 +85289,13 @@ If there's a particular need for this, please submit a feature request at https:
       unlock(registry.dispatch(import_block_editor36.store)).resetZoomLevel();
     }
     if (mode === "visual") {
-      (0, import_a11y9.speak)((0, import_i18n209.__)("Visual editor selected"), "assertive");
+      (0, import_a11y10.speak)((0, import_i18n209.__)("Visual editor selected"), "assertive");
     } else if (mode === "text") {
       const isDistractionFree = registry.select(import_preferences10.store).get("core", "distractionFree");
       if (isDistractionFree) {
         dispatch8.toggleDistractionFree();
       }
-      (0, import_a11y9.speak)((0, import_i18n209.__)("Code editor selected"), "assertive");
+      (0, import_a11y10.speak)((0, import_i18n209.__)("Code editor selected"), "assertive");
     }
   };
   function openPublishSidebar() {
@@ -92123,7 +92119,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data154 = __toESM(require_data(), 1);
   var import_core_data91 = __toESM(require_core_data(), 1);
   var import_compose56 = __toESM(require_compose(), 1);
-  var import_a11y10 = __toESM(require_a11y(), 1);
+  var import_a11y11 = __toESM(require_a11y(), 1);
   var import_notices27 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/most-used-terms.mjs
@@ -92343,7 +92339,7 @@ If there's a particular need for this, please submit a feature request at https:
         (0, import_i18n255._x)("%s added", "term"),
         taxonomy?.labels?.singular_name ?? defaultName
       );
-      (0, import_a11y10.speak)(termAddedMessage, "assertive");
+      (0, import_a11y11.speak)(termAddedMessage, "assertive");
       onUpdateTerms(newTermIds);
     }
     const newTermLabel = taxonomy?.labels?.add_new_item ?? (slug === "post_tag" ? (0, import_i18n255.__)("Add Tag") : (0, import_i18n255.__)("Add Term"));
@@ -92527,7 +92523,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data157 = __toESM(require_data(), 1);
   var import_compose57 = __toESM(require_compose(), 1);
   var import_core_data94 = __toESM(require_core_data(), 1);
-  var import_a11y11 = __toESM(require_a11y(), 1);
+  var import_a11y12 = __toESM(require_a11y(), 1);
   var import_html_entities25 = __toESM(require_html_entities(), 1);
 
   // packages/editor/build-module/utils/normalize-text-string.mjs
@@ -92610,7 +92606,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [showForm, setShowForm] = (0, import_element271.useState)(false);
     const [filterValue, setFilterValue] = (0, import_element271.useState)("");
     const [filteredTermsTree, setFilteredTermsTree] = (0, import_element271.useState)([]);
-    const debouncedSpeak = (0, import_compose57.useDebounce)(import_a11y11.speak, 500);
+    const debouncedSpeak = (0, import_compose57.useDebounce)(import_a11y12.speak, 500);
     const {
       hasCreateAction,
       hasAssignAction,
@@ -92706,7 +92702,7 @@ If there's a particular need for this, please submit a feature request at https:
         (0, import_i18n258._x)("%s added", "term"),
         taxonomy?.labels?.singular_name ?? defaultName
       );
-      (0, import_a11y11.speak)(termAddedMessage, "assertive");
+      (0, import_a11y12.speak)(termAddedMessage, "assertive");
       setAdding(false);
       setFormName("");
       setFormParent("");
@@ -97645,7 +97641,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collaborators-presence/list.mjs
   var import_i18n297 = __toESM(require_i18n(), 1);
   var import_components250 = __toESM(require_components(), 1);
-  var import_a11y13 = __toESM(require_a11y(), 1);
+  var import_a11y14 = __toESM(require_a11y(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/get-avatar-url.mjs
   function getAvatarUrl(avatarUrls) {
@@ -98008,7 +98004,7 @@ If there's a particular need for this, please submit a feature request at https:
         highlightDuration: 2e3
       });
       if (success) {
-        (0, import_a11y13.speak)((0, import_i18n297.__)("Scrolled to cursor"), "polite");
+        (0, import_a11y14.speak)((0, import_i18n297.__)("Scrolled to cursor"), "polite");
         setIsPopoverVisible(false);
       }
     };
@@ -105783,7 +105779,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collab-sidebar/hooks.mjs
-  var import_a11y14 = __toESM(require_a11y(), 1);
+  var import_a11y15 = __toESM(require_a11y(), 1);
   var import_i18n342 = __toESM(require_i18n(), 1);
   var import_element350 = __toESM(require_element(), 1);
   var import_core_data141 = __toESM(require_core_data(), 1);
@@ -106138,7 +106134,7 @@ If there's a particular need for this, please submit a feature request at https:
               updateBlockAttributes2
             );
           }
-          (0, import_a11y14.speak)(
+          (0, import_a11y15.speak)(
             status === "approved" ? (0, import_i18n342.__)("Note marked as resolved.") : (0, import_i18n342.__)("Note reopened.")
           );
           return savedRecord2;
@@ -108322,7 +108318,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data273 = __toESM(require_data(), 1);
   var import_element358 = __toESM(require_element(), 1);
   var import_i18n355 = __toESM(require_i18n(), 1);
-  var import_a11y15 = __toESM(require_a11y(), 1);
+  var import_a11y16 = __toESM(require_a11y(), 1);
   var import_upload_media3 = __toESM(require_upload_media(), 1);
   var import_notices39 = __toESM(require_notices(), 1);
   var import_components292 = __toESM(require_components(), 1);
@@ -108379,14 +108375,14 @@ If there's a particular need for this, please submit a feature request at https:
       const isUploading = remaining > 0;
       if (isUploading && !wasUploadingRef.current) {
         dismissedRef.current = false;
-        (0, import_a11y15.speak)((0, import_i18n355.__)("Media upload started"), "polite");
+        (0, import_a11y16.speak)((0, import_i18n355.__)("Media upload started"), "polite");
         if (completionTimeoutRef.current) {
           clearTimeout(completionTimeoutRef.current);
           completionTimeoutRef.current = null;
           peakRef.current = 0;
         }
       } else if (!isUploading && wasUploadingRef.current) {
-        (0, import_a11y15.speak)((0, import_i18n355.__)("Media upload complete"), "polite");
+        (0, import_a11y16.speak)((0, import_i18n355.__)("Media upload complete"), "polite");
         if (!dismissedRef.current) {
           createNotice("info", (0, import_i18n355.__)("Upload complete"), {
             id: NOTICE_ID,
