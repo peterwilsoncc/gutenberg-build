@@ -96931,7 +96931,9 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/more-menu/tools-more-menu-group.mjs
   var import_components243 = __toESM(require_components(), 1);
   var import_jsx_runtime500 = __toESM(require_jsx_runtime(), 1);
-  var { Fill: ToolsMoreMenuGroup, Slot: Slot11 } = (0, import_components243.createSlotFill)("ToolsMoreMenuGroup");
+  var { Fill: ToolsMoreMenuGroup, Slot: Slot11 } = (0, import_components243.createSlotFill)(
+    /* @__PURE__ */ Symbol("ToolsMoreMenuGroup")
+  );
   ToolsMoreMenuGroup.Slot = ({ fillProps }) => /* @__PURE__ */ (0, import_jsx_runtime500.jsx)(Slot11, { fillProps });
   var tools_more_menu_group_default = ToolsMoreMenuGroup;
 
