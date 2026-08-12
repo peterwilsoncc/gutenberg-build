@@ -10944,11 +10944,8 @@ var NavigableRegion = (0, import_element32.forwardRef)(
 NavigableRegion.displayName = "NavigableRegion";
 var navigable_region_default = NavigableRegion;
 
-// packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
-var import_components = __toESM(require_components(), 1);
-var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components.createSlotFill)("SidebarToggle");
-
-// packages/admin-ui/build-module/page/header.mjs
+// packages/admin-ui/build-module/navigation/index.mjs
+var import_i18n6 = __toESM(require_i18n(), 1);
 var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
 function getRuntime19() {
@@ -11031,83 +11028,72 @@ function registerStyle19(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle19("ddd9aab364", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
+  registerStyle19("72ef022400", ".bfb5a2dd8cceebd3__list{--focus-ring-size:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*2);list-style:none;margin:calc(var(--focus-ring-size)*-1);overflow-x:auto;padding:var(--focus-ring-size);scroll-padding:var(--focus-ring-size)}.a4759b4cb2c8bd92__li{flex-shrink:0}._07da506d3f2d9afe__item{align-items:center;color:var(--wpds-color-foreground-interactive-neutral-weak,#707070);display:flex;font-weight:var(--wpds-typography-font-weight-default,400);min-block-size:44px;min-inline-size:44px;text-decoration:none}._07da506d3f2d9afe__item:hover,._07da506d3f2d9afe__item[aria-current=page]{color:var(--wpds-color-foreground-interactive-neutral-weak-active,#1e1e1e)}._07da506d3f2d9afe__item[aria-current=page]{font-weight:var(--wpds-typography-font-weight-emphasis,600)}");
 }
-var style_default18 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
-function Header({
-  headingLevel = 1,
-  breadcrumbs,
-  badges,
-  visual,
-  title,
-  subTitle,
-  actions,
-  showSidebarToggle = true
-}) {
-  const HeadingTag = `h${headingLevel}`;
-  return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(Stack, { direction: "column", className: style_default18.header, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
-      Stack,
-      {
-        className: style_default18["header-content"],
-        direction: "row",
-        gap: "sm",
-        justify: "space-between",
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
-            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-              SidebarToggleSlot,
-              {
-                bubblesVirtually: true,
-                className: style_default18["sidebar-toggle-slot"]
-              }
-            ),
-            visual && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-              "div",
-              {
-                className: style_default18["header-visual"],
-                "aria-hidden": "true",
-                children: visual
-              }
-            ),
-            title && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-              Text,
-              {
-                className: style_default18["header-title"],
-                render: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(HeadingTag, {}),
-                variant: "heading-lg",
-                children: title
-              }
-            ),
-            breadcrumbs,
-            badges
-          ] }),
-          actions && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-            Stack,
+var style_default18 = { "list": "bfb5a2dd8cceebd3__list", "li": "a4759b4cb2c8bd92__li", "item": "_07da506d3f2d9afe__item" };
+var Navigation = ({
+  items,
+  currentHref,
+  ariaLabel = (0, import_i18n6.__)("Sections"),
+  linkComponent,
+  className
+}) => {
+  if (!items.length) {
+    return null;
+  }
+  const LinkComponent = linkComponent ?? "a";
+  if (true) {
+    const invalidItem = items.find(
+      (item) => typeof item.href !== "string"
+    );
+    if (invalidItem) {
+      throw new Error(
+        `Navigation: item "${invalidItem.label}" is missing an \`href\` prop.`
+      );
+    }
+    const duplicate = items.find(
+      (item, index2) => items.findIndex((other) => other.href === item.href) !== index2
+    );
+    if (duplicate) {
+      throw new Error(
+        `Navigation: duplicate \`href\` "${duplicate.href}". Each item must have a unique \`href\` so a single item receives \`aria-current="page"\`.`
+      );
+    }
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("nav", { "aria-label": ariaLabel, className, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+    Stack,
+    {
+      render: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("ul", { role: "list" }),
+      direction: "row",
+      align: "center",
+      gap: "md",
+      className: style_default18.list,
+      children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("li", { className: style_default18.li, children: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+        Text,
+        {
+          variant: "body-md",
+          className: style_default18.item,
+          render: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+            Link,
             {
-              align: "center",
-              className: style_default18["header-actions"],
-              direction: "row",
-              gap: "sm",
-              children: actions
+              variant: "unstyled",
+              "aria-current": item.href === currentHref ? "page" : void 0,
+              render: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(LinkComponent, { href: item.href })
             }
-          )
-        ]
-      }
-    ),
-    subTitle && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-      Text,
-      {
-        render: /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("p", {}),
-        variant: "body-md",
-        className: style_default18["header-subtitle"],
-        children: subTitle
-      }
-    )
-  ] });
-}
+          ),
+          children: item.label
+        }
+      ) }, item.href))
+    }
+  ) });
+};
+var navigation_default = Navigation;
 
-// packages/admin-ui/build-module/page/index.mjs
+// packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
+var import_components = __toESM(require_components(), 1);
+var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components.createSlotFill)("SidebarToggle");
+
+// packages/admin-ui/build-module/page/header.mjs
 var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
 function getRuntime20() {
@@ -11190,9 +11176,189 @@ function registerStyle20(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle20("ddd9aab364", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
+  registerStyle20("89e4060c20", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
 }
-var style_default19 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
+var style_default19 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "has-navigation": "_4b0f17e503d11619__has-navigation", "header-navigation": "_673c99dcbfb58211__header-navigation", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
+function Header({
+  headingLevel = 1,
+  breadcrumbs,
+  badges,
+  visual,
+  title,
+  subTitle,
+  actions,
+  navigation,
+  components,
+  showSidebarToggle = true
+}) {
+  const HeadingTag = `h${headingLevel}`;
+  const hasNavigation = !!navigation?.items?.length;
+  return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
+    Stack,
+    {
+      direction: "column",
+      className: clsx_default(
+        style_default19.header,
+        hasNavigation && style_default19["has-navigation"]
+      ),
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
+          Stack,
+          {
+            className: style_default19["header-content"],
+            direction: "row",
+            gap: "sm",
+            justify: "space-between",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
+                showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                  SidebarToggleSlot,
+                  {
+                    bubblesVirtually: true,
+                    className: style_default19["sidebar-toggle-slot"]
+                  }
+                ),
+                visual && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                  "div",
+                  {
+                    className: style_default19["header-visual"],
+                    "aria-hidden": "true",
+                    children: visual
+                  }
+                ),
+                title && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                  Text,
+                  {
+                    className: style_default19["header-title"],
+                    render: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(HeadingTag, {}),
+                    variant: "heading-lg",
+                    children: title
+                  }
+                ),
+                breadcrumbs,
+                badges
+              ] }),
+              actions && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+                Stack,
+                {
+                  align: "center",
+                  className: style_default19["header-actions"],
+                  direction: "row",
+                  gap: "sm",
+                  children: actions
+                }
+              )
+            ]
+          }
+        ),
+        subTitle && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+          Text,
+          {
+            render: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("p", {}),
+            variant: "body-md",
+            className: style_default19["header-subtitle"],
+            children: subTitle
+          }
+        ),
+        hasNavigation && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+          navigation_default,
+          {
+            ...navigation,
+            linkComponent: components?.link,
+            className: style_default19["header-navigation"]
+          }
+        )
+      ]
+    }
+  );
+}
+
+// packages/admin-ui/build-module/page/index.mjs
+var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE21 = "data-wp-hash";
+function getRuntime21() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument21(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash21(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE21}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE21) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle21(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime21();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash21(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE21, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument21(targetDocument) {
+  const runtime = getRuntime21();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle21(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle21(hash, css) {
+  const runtime = getRuntime21();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle21(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle21("89e4060c20", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
+}
+var style_default20 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "has-navigation": "_4b0f17e503d11619__has-navigation", "header-navigation": "_673c99dcbfb58211__header-navigation", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
 function Page({
   headingLevel,
   breadcrumbs,
@@ -11203,14 +11369,16 @@ function Page({
   children,
   className,
   actions,
+  navigation,
+  components,
   ariaLabel,
   hasPadding = false,
   showSidebarToggle = true
 }) {
-  const classes = clsx_default(style_default19.page, className);
+  const classes = clsx_default(style_default20.page, className);
   const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
-  return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
-    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
+    (title || breadcrumbs || badges || actions || visual || !!navigation?.items?.length) && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
       Header,
       {
         headingLevel,
@@ -11220,15 +11388,17 @@ function Page({
         title,
         subTitle,
         actions,
+        navigation,
+        components,
         showSidebarToggle
       }
     ),
-    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
       "div",
       {
         className: clsx_default(
-          style_default19.content,
-          style_default19["has-padding"]
+          style_default20.content,
+          style_default20["has-padding"]
         ),
         children
       }
@@ -11242,7 +11412,7 @@ var page_default = Page;
 var import_components4 = __toESM(require_components());
 var import_data4 = __toESM(require_data());
 var import_element36 = __toESM(require_element());
-var import_i18n9 = __toESM(require_i18n());
+var import_i18n10 = __toESM(require_i18n());
 var import_core_data3 = __toESM(require_core_data());
 import {
   privateApis as connectorsPrivateApis2
@@ -11268,7 +11438,7 @@ var import_components3 = __toESM(require_components());
 var import_core_data2 = __toESM(require_core_data());
 var import_data3 = __toESM(require_data());
 var import_element35 = __toESM(require_element());
-var import_i18n8 = __toESM(require_i18n());
+var import_i18n9 = __toESM(require_i18n());
 var import_notices2 = __toESM(require_notices());
 var import_url = __toESM(require_url());
 
@@ -11276,7 +11446,7 @@ var import_url = __toESM(require_url());
 var import_components2 = __toESM(require_components());
 var import_element34 = __toESM(require_element());
 var import_data2 = __toESM(require_data());
-var import_i18n7 = __toESM(require_i18n());
+var import_i18n8 = __toESM(require_i18n());
 import {
   __experimentalRegisterConnector as registerConnector,
   __experimentalConnectorItem as ConnectorItem,
@@ -11289,7 +11459,7 @@ import {
 var import_core_data = __toESM(require_core_data());
 var import_data = __toESM(require_data());
 var import_element33 = __toESM(require_element());
-var import_i18n6 = __toESM(require_i18n());
+var import_i18n7 = __toESM(require_i18n());
 var import_notices = __toESM(require_notices());
 function useConnectorPlugin({
   file: pluginFileFromServer,
@@ -11403,9 +11573,9 @@ function useConnectorPlugin({
   );
   const createConnectedNotice = () => {
     createSuccessNotice(
-      (0, import_i18n6.sprintf)(
+      (0, import_i18n7.sprintf)(
         /* translators: %s: Name of the connector (e.g. "OpenAI"). */
-        (0, import_i18n6.__)("%s connected successfully."),
+        (0, import_i18n7.__)("%s connected successfully."),
         connectorName
       ),
       {
@@ -11416,9 +11586,9 @@ function useConnectorPlugin({
   };
   const createDisconnectedNotice = () => {
     createSuccessNotice(
-      (0, import_i18n6.sprintf)(
+      (0, import_i18n7.sprintf)(
         /* translators: %s: Name of the connector (e.g. "OpenAI"). */
-        (0, import_i18n6.__)("%s disconnected."),
+        (0, import_i18n7.__)("%s disconnected."),
         connectorName
       ),
       {
@@ -11429,9 +11599,9 @@ function useConnectorPlugin({
   };
   const createDisconnectErrorNotice = () => {
     createErrorNotice(
-      (0, import_i18n6.sprintf)(
+      (0, import_i18n7.sprintf)(
         /* translators: %s: Name of the connector (e.g. "OpenAI"). */
-        (0, import_i18n6.__)("Failed to disconnect %s."),
+        (0, import_i18n7.__)("Failed to disconnect %s."),
         connectorName
       ),
       {
@@ -11456,9 +11626,9 @@ function useConnectorPlugin({
       invalidateResolution("getEntityRecord", ["root", "site"]);
       setIsExpanded(true);
       createSuccessNotice(
-        (0, import_i18n6.sprintf)(
+        (0, import_i18n7.sprintf)(
           /* translators: %s: Name of the connector (e.g. "OpenAI"). */
-          (0, import_i18n6.__)("Plugin for %s installed and activated successfully."),
+          (0, import_i18n7.__)("Plugin for %s installed and activated successfully."),
           connectorName
         ),
         {
@@ -11468,9 +11638,9 @@ function useConnectorPlugin({
       );
     } catch {
       createErrorNotice(
-        (0, import_i18n6.sprintf)(
+        (0, import_i18n7.sprintf)(
           /* translators: %s: Name of the connector (e.g. "OpenAI"). */
-          (0, import_i18n6.__)("Failed to install plugin for %s."),
+          (0, import_i18n7.__)("Failed to install plugin for %s."),
           connectorName
         ),
         {
@@ -11501,9 +11671,9 @@ function useConnectorPlugin({
       invalidateResolution("getEntityRecord", ["root", "site"]);
       setIsExpanded(true);
       createSuccessNotice(
-        (0, import_i18n6.sprintf)(
+        (0, import_i18n7.sprintf)(
           /* translators: %s: Name of the connector (e.g. "OpenAI"). */
-          (0, import_i18n6.__)("Plugin for %s activated successfully."),
+          (0, import_i18n7.__)("Plugin for %s activated successfully."),
           connectorName
         ),
         {
@@ -11513,9 +11683,9 @@ function useConnectorPlugin({
       );
     } catch {
       createErrorNotice(
-        (0, import_i18n6.sprintf)(
+        (0, import_i18n7.sprintf)(
           /* translators: %s: Name of the connector (e.g. "OpenAI"). */
-          (0, import_i18n6.__)("Failed to activate plugin for %s."),
+          (0, import_i18n7.__)("Failed to activate plugin for %s."),
           connectorName
         ),
         {
@@ -11544,23 +11714,23 @@ function useConnectorPlugin({
   };
   const getButtonLabel = () => {
     if (isBusy) {
-      return pluginStatus === "not-installed" ? (0, import_i18n6.__)("Installing\u2026") : (0, import_i18n6.__)("Activating\u2026");
+      return pluginStatus === "not-installed" ? (0, import_i18n7.__)("Installing\u2026") : (0, import_i18n7.__)("Activating\u2026");
     }
     if (isExpanded) {
-      return (0, import_i18n6.__)("Cancel");
+      return (0, import_i18n7.__)("Cancel");
     }
     if (isConnected) {
-      return (0, import_i18n6.__)("Edit");
+      return (0, import_i18n7.__)("Edit");
     }
     switch (pluginStatus) {
       case "checking":
-        return (0, import_i18n6.__)("Checking\u2026");
+        return (0, import_i18n7.__)("Checking\u2026");
       case "not-installed":
-        return (0, import_i18n6.__)("Install");
+        return (0, import_i18n7.__)("Install");
       case "inactive":
-        return (0, import_i18n6.__)("Activate");
+        return (0, import_i18n7.__)("Activate");
       case "active":
-        return (0, import_i18n6.__)("Set up");
+        return (0, import_i18n7.__)("Set up");
     }
   };
   const saveApiKey = async (apiKey) => {
@@ -11594,7 +11764,7 @@ function useConnectorPlugin({
       const credentials = record?.[settingName];
       if (!credentials?.username || !credentials?.password) {
         throw new Error(
-          (0, import_i18n6.__)("It was not possible to save these credentials.")
+          (0, import_i18n7.__)("It was not possible to save these credentials.")
         );
       }
       setConnectedState(true);
@@ -11856,21 +12026,21 @@ var ConnectedBadge = () => /* @__PURE__ */ React.createElement(
       whiteSpace: "nowrap"
     }
   },
-  (0, import_i18n7.__)("Connected")
+  (0, import_i18n8.__)("Connected")
 );
 var PluginDirectoryLink = ({ slug }) => /* @__PURE__ */ React.createElement(
   Link,
   {
-    href: (0, import_i18n7.sprintf)(
+    href: (0, import_i18n8.sprintf)(
       /* translators: %s: plugin slug. */
-      (0, import_i18n7.__)("https://wordpress.org/plugins/%s/"),
+      (0, import_i18n8.__)("https://wordpress.org/plugins/%s/"),
       slug
     ),
     openInNewTab: true
   },
-  (0, import_i18n7.__)("Learn more")
+  (0, import_i18n8.__)("Learn more")
 );
-var UnavailableActionBadge = () => /* @__PURE__ */ React.createElement(Badge, null, (0, import_i18n7.__)("Not available"));
+var UnavailableActionBadge = () => /* @__PURE__ */ React.createElement(Badge, null, (0, import_i18n8.__)("Not available"));
 function ConnectorActionArea({
   isConnected,
   showUnavailableBadge,
@@ -12204,14 +12374,14 @@ function AiPluginCallout() {
       );
       setJustActivated(true);
       createSuccessNotice(
-        (0, import_i18n8.__)("AI plugin installed and activated successfully."),
+        (0, import_i18n9.__)("AI plugin installed and activated successfully."),
         {
           id: "ai-plugin-install-success",
           type: "snackbar"
         }
       );
     } catch {
-      createErrorNotice((0, import_i18n8.__)("Failed to install the AI plugin."), {
+      createErrorNotice((0, import_i18n9.__)("Failed to install the AI plugin."), {
         id: "ai-plugin-install-error",
         type: "snackbar"
       });
@@ -12229,12 +12399,12 @@ function AiPluginCallout() {
         { throwOnError: true }
       );
       setJustActivated(true);
-      createSuccessNotice((0, import_i18n8.__)("AI plugin activated successfully."), {
+      createSuccessNotice((0, import_i18n9.__)("AI plugin activated successfully."), {
         id: "ai-plugin-activate-success",
         type: "snackbar"
       });
     } catch {
-      createErrorNotice((0, import_i18n8.__)("Failed to activate the AI plugin."), {
+      createErrorNotice((0, import_i18n9.__)("Failed to activate the AI plugin."), {
         id: "ai-plugin-activate-error",
         type: "snackbar"
       });
@@ -12260,29 +12430,29 @@ function AiPluginCallout() {
   const hideButtons = pluginStatus === "not-installed" && canInstallPlugins === false;
   const getMessage = () => {
     if (isJustConnected) {
-      return (0, import_i18n8.__)(
+      return (0, import_i18n9.__)(
         "The <strong>AI plugin</strong> is ready to use. You can use it to generate featured images, alt text, titles, excerpts and more. <a>Learn more</a>"
       );
     }
     if (isActiveNoProvider) {
-      return (0, import_i18n8.__)(
+      return (0, import_i18n9.__)(
         "The <strong>AI plugin</strong> is installed. Connect an AI provider below to generate featured images, alt text, titles, excerpts, and more. <a>Learn more</a>"
       );
     }
-    return (0, import_i18n8.__)(
+    return (0, import_i18n9.__)(
       "The <strong>AI plugin</strong> can use your AI connectors to generate featured images, alt text, titles, excerpts and more. <a>Learn more</a>"
     );
   };
   const getPrimaryButtonProps = () => {
     if (pluginStatus === "not-installed") {
       return {
-        label: isBusy ? (0, import_i18n8.__)("Installing\u2026") : (0, import_i18n8.__)("Install the AI plugin"),
+        label: isBusy ? (0, import_i18n9.__)("Installing\u2026") : (0, import_i18n9.__)("Install the AI plugin"),
         disabled: isBusy,
         onClick: isBusy ? void 0 : installPlugin
       };
     }
     return {
-      label: isBusy ? (0, import_i18n8.__)("Activating\u2026") : (0, import_i18n8.__)("Activate the AI plugin"),
+      label: isBusy ? (0, import_i18n9.__)("Activating\u2026") : (0, import_i18n9.__)("Activate the AI plugin"),
       disabled: isBusy,
       onClick: isBusy ? void 0 : activatePlugin
     };
@@ -12312,7 +12482,7 @@ function AiPluginCallout() {
         page: AI_PLUGIN_PAGE_SLUG
       })
     },
-    (0, import_i18n8.__)("Control features in the AI plugin")
+    (0, import_i18n9.__)("Control features in the AI plugin")
   ))), /* @__PURE__ */ React.createElement(WpLogoDecoration, null));
 }
 
@@ -12369,8 +12539,8 @@ function ConnectorsPage() {
   return /* @__PURE__ */ React.createElement(
     page_default,
     {
-      title: (0, import_i18n9.__)("Connectors"),
-      subTitle: (0, import_i18n9.__)(
+      title: (0, import_i18n10.__)("Connectors"),
+      subTitle: (0, import_i18n10.__)(
         "All of your API keys and credentials are stored here and shared across plugins. Configure once and use everywhere."
       )
     },
@@ -12385,9 +12555,9 @@ function ConnectorsPage() {
           intent: "info",
           className: "connectors-page__file-mods-notice"
         },
-        /* @__PURE__ */ React.createElement(notice_exports.Description, null, isFileModDisabled ? (0, import_i18n9.__)(
+        /* @__PURE__ */ React.createElement(notice_exports.Description, null, isFileModDisabled ? (0, import_i18n10.__)(
           "Plugins cannot be installed here due to your site configuration. Install them manually using your normal deployment workflow."
-        ) : (0, import_i18n9.__)(
+        ) : (0, import_i18n10.__)(
           "You do not have permission to install plugins. Please ask a site administrator to install them for you."
         ))
       ),
@@ -12398,7 +12568,7 @@ function ConnectorsPage() {
           spacing: 3,
           style: { maxWidth: 480 }
         },
-        /* @__PURE__ */ React.createElement(import_components4.__experimentalVStack, { alignment: "center", spacing: 2 }, /* @__PURE__ */ React.createElement(import_components4.__experimentalHeading, { level: 2, size: 15 }, (0, import_i18n9.__)("No connectors yet")), /* @__PURE__ */ React.createElement(import_components4.__experimentalText, { size: 12 }, (0, import_i18n9.__)(
+        /* @__PURE__ */ React.createElement(import_components4.__experimentalVStack, { alignment: "center", spacing: 2 }, /* @__PURE__ */ React.createElement(import_components4.__experimentalHeading, { level: 2, size: 15 }, (0, import_i18n10.__)("No connectors yet")), /* @__PURE__ */ React.createElement(import_components4.__experimentalText, { size: 12 }, (0, import_i18n10.__)(
           "Connectors appear here when you install plugins that use external services. Each plugin registers the API keys it needs, and you manage them all in one place."
         ))),
         /* @__PURE__ */ React.createElement(
@@ -12408,7 +12578,7 @@ function ConnectorsPage() {
             href: "plugin-install.php",
             __next40pxDefaultSize: true
           },
-          (0, import_i18n9.__)("Learn more")
+          (0, import_i18n10.__)("Learn more")
         )
       ) : /* @__PURE__ */ React.createElement(import_components4.__experimentalVStack, { spacing: 3 }, /* @__PURE__ */ React.createElement(AiPluginCallout, null), /* @__PURE__ */ React.createElement(import_components4.__experimentalVStack, { spacing: 3, role: "list" }, connectors.map(
         (connector) => {
@@ -12431,7 +12601,7 @@ function ConnectorsPage() {
         }
       ))),
       canInstallPlugins && !isFileModDisabled && /* @__PURE__ */ React.createElement("p", null, (0, import_element36.createInterpolateElement)(
-        (0, import_i18n9.__)(
+        (0, import_i18n10.__)(
           "If the connector you need is not listed, <a>search the plugin directory</a> to see if a connector is available."
         ),
         {
