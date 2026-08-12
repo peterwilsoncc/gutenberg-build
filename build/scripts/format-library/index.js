@@ -5745,7 +5745,7 @@ var wp;
 
   // packages/format-library/build-module/math/index.mjs
   var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
-  var { ValidatedTextControl } = unlock(import_components6.privateApis);
+  var { ValidatedInputControl } = unlock(import_components6.privateApis);
   var name14 = "core/math";
   var title14 = (0, import_i18n19.__)("Math");
   function InlineUI2({
@@ -5806,7 +5806,7 @@ var wp;
             style: { minWidth: "300px", padding: "4px" },
             onSubmit: (event) => event.preventDefault(),
             children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
-              ValidatedTextControl,
+              ValidatedInputControl,
               {
                 hideLabelFromVision: true,
                 label: (0, import_i18n19.__)("LaTeX math syntax"),
