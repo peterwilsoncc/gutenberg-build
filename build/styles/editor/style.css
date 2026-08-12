@@ -3937,6 +3937,10 @@ div.dataviews-view-list {
   border-color: #cc1818;
 }
 
+.dataviews-validated-control__wrapper-with-error-delegate:has(input[type=radio]:invalid[data-validity-visible]) {
+  --wp-components-color-accent: #cc1818;
+}
+
 .dataviews-validated-control__error-delegate {
   position: absolute;
   top: 0;

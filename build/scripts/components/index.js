@@ -21786,10 +21786,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return React7.createElement.apply(null, createElementArgArray);
   };
-  (function(_jsx251) {
+  (function(_jsx250) {
     var JSX;
     /* @__PURE__ */ (function(_JSX) {
-    })(JSX || (JSX = _jsx251.JSX || (_jsx251.JSX = {})));
+    })(JSX || (JSX = _jsx250.JSX || (_jsx250.JSX = {})));
   })(jsx36 || (jsx36 = {}));
   function css() {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -52361,47 +52361,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var ValidatedToggleControl = (0, import_element230.forwardRef)(UnforwardedValidatedToggleControl);
   ValidatedToggleControl.displayName = "ValidatedToggleControl";
 
-  // packages/components/build-module/validated-form-controls/components/toggle-group-control.mjs
-  var import_element231 = __toESM(require_element(), 1);
-  var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
-  var UnforwardedValidatedToggleGroupControl = ({
-    required,
-    customValidity,
-    markWhenOptional,
-    ...restProps
-  }, forwardedRef) => {
-    const validityTargetRef = (0, import_element231.useRef)(null);
-    const nameAttr = (0, import_element231.useId)();
-    return /* @__PURE__ */ (0, import_jsx_runtime314.jsxs)("div", {
-      className: "components-validated-control__wrapper-with-error-delegate",
-      children: [/* @__PURE__ */ (0, import_jsx_runtime314.jsx)(ControlWithError, {
-        required,
-        markWhenOptional,
-        customValidity,
-        getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime314.jsx)(component_default12, {
-          ref: forwardedRef,
-          ...restProps
-        })
-      }), /* @__PURE__ */ (0, import_jsx_runtime314.jsx)("input", {
-        className: "components-validated-control__error-delegate",
-        type: "radio",
-        ref: validityTargetRef,
-        required,
-        checked: restProps.value !== void 0,
-        tabIndex: -1,
-        name: nameAttr,
-        onChange: () => {
-        },
-        onFocus: (e3) => {
-          e3.target.previousElementSibling?.querySelector('[data-active-item="true"]')?.focus();
-        }
-      })]
-    });
-  };
-  var ValidatedToggleGroupControl = (0, import_element231.forwardRef)(UnforwardedValidatedToggleGroupControl);
-  ValidatedToggleGroupControl.displayName = "ValidatedToggleGroupControl";
-
   // packages/components/build-module/private-apis.mjs
   var privateApis = {};
   lock(privateApis, {
@@ -52415,8 +52374,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     ValidatedInputControl,
     ValidatedContentEditableControl,
     ValidatedTextareaControl,
-    ValidatedToggleControl,
-    ValidatedToggleGroupControl
+    ValidatedToggleControl
   });
   return __toCommonJS(index_exports);
 })();
