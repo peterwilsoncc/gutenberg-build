@@ -54,7 +54,7 @@ return array(
 		'path'        => '/',
 		'page'        => 'site-editor-v2',
 		'has_route'   => true,
-		'has_content' => false,
+		'has_content' => true,
 	),
 	array(
 		'name'        => 'media-editor',

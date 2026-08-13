@@ -24,6 +24,13 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
+// package-external:@wordpress/i18n
+var require_i18n = __commonJS({
+  "package-external:@wordpress/i18n"(exports, module) {
+    module.exports = window.wp.i18n;
+  }
+});
+
 // package-external:@wordpress/data
 var require_data = __commonJS({
   "package-external:@wordpress/data"(exports, module) {
@@ -38,29 +45,66 @@ var require_core_data = __commonJS({
   }
 });
 
-// package-external:@wordpress/i18n
-var require_i18n = __commonJS({
-  "package-external:@wordpress/i18n"(exports, module) {
-    module.exports = window.wp.i18n;
+// package-external:@wordpress/dom
+var require_dom = __commonJS({
+  "package-external:@wordpress/dom"(exports, module) {
+    module.exports = window.wp.dom;
   }
 });
 
-// routes/home/route.ts
+// package-external:@wordpress/url
+var require_url = __commonJS({
+  "package-external:@wordpress/url"(exports, module) {
+    module.exports = window.wp.url;
+  }
+});
+
+// routes/home/canvas.tsx
+var import_i18n = __toESM(require_i18n());
 var import_data = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
-var import_i18n = __toESM(require_i18n());
-var route = {
-  title: () => (0, import_i18n.__)("Home"),
-  async canvas() {
-    const currentTheme = await (0, import_data.resolveSelect)(import_core_data.store).getCurrentTheme();
-    if (!currentTheme?.is_block_theme) {
-      return null;
-    }
-    return {
-      isPreview: true
-    };
+var import_dom = __toESM(require_dom());
+var import_url = __toESM(require_url());
+function SitePreview() {
+  const siteUrl = (0, import_data.useSelect)((select) => {
+    const siteData = select(import_core_data.store).getEntityRecord(
+      "root",
+      "__unstableBase"
+    );
+    return siteData?.home;
+  }, []);
+  if (typeof siteUrl !== "string" || !siteUrl) {
+    return null;
   }
-};
+  return /* @__PURE__ */ React.createElement(
+    "iframe",
+    {
+      src: (0, import_url.addQueryArgs)(siteUrl, {
+        // Parameter for hiding the admin bar.
+        wp_site_preview: 1
+      }),
+      title: (0, import_i18n.__)("Site Preview"),
+      style: {
+        display: "block",
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#fff"
+      },
+      onLoad: (event) => {
+        const iframeDocument = event.target.contentDocument;
+        if (!iframeDocument) {
+          return;
+        }
+        import_dom.focus.focusable.find(iframeDocument.documentElement).forEach((element) => {
+          element.style.pointerEvents = "none";
+          element.tabIndex = -1;
+          element.setAttribute("aria-hidden", "true");
+        });
+      }
+    }
+  );
+}
+var canvas = SitePreview;
 export {
-  route
+  canvas
 };
