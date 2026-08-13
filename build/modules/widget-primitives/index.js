@@ -135,11 +135,16 @@ async function resolveIcon(reference) {
 var pendingIcon = (0, import_element2.createElement)("svg", {
   viewBox: "0 0 24 24"
 });
-function withRenderableIcons(actions) {
-  return actions.map(({ icon, ...action }) => ({
-    ...action,
-    ...(0, import_element2.isValidElement)(icon) ? { icon } : {}
-  }));
+function withRenderableIcons(actions, holdPending) {
+  return actions.map(({ icon, ...action }) => {
+    if ((0, import_element2.isValidElement)(icon)) {
+      return { ...action, icon };
+    }
+    if (holdPending && typeof icon === "string") {
+      return { ...action, icon: pendingIcon };
+    }
+    return action;
+  });
 }
 function useWidgetTypes(records) {
   const [widgetTypes, setWidgetTypes] = (0, import_element2.useState)([]);
@@ -195,7 +200,12 @@ function useWidgetTypes(records) {
             ...record.description ? { description: record.description } : {},
             ...record.help ? { help: record.help } : {},
             ...record.keywords ? { keywords: record.keywords } : {},
-            ...actions ? { actions: withRenderableIcons(actions) } : {}
+            ...actions ? {
+              actions: withRenderableIcons(
+                actions,
+                actions === record.actions
+              )
+            } : {}
           };
         } catch {
           return null;
@@ -236,7 +246,7 @@ function useWidgetTypes(records) {
             continue;
           }
           void resolveIcon(action.icon).then((resolved) => {
-            if (cancelled || !resolved) {
+            if (cancelled) {
               return;
             }
             setWidgetTypes(
@@ -246,9 +256,18 @@ function useWidgetTypes(records) {
                 }
                 return {
                   ...type,
-                  actions: type.actions?.map(
-                    (entry) => entry.id === action.id ? { ...entry, icon: resolved } : entry
-                  )
+                  actions: type.actions?.map((entry) => {
+                    if (entry.id !== action.id) {
+                      return entry;
+                    }
+                    if (resolved) {
+                      return {
+                        ...entry,
+                        icon: resolved
+                      };
+                    }
+                    return entry.icon === pendingIcon ? { ...entry, icon: void 0 } : entry;
+                  })
                 };
               })
             );

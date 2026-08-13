@@ -34373,9 +34373,9 @@ function EventsList({
 
 // widgets/events/style.module.css
 if (typeof process === "undefined" || true) {
-  registerStyle18("10b6071c70", "._8eae235c5e84e11a__container{block-size:100%;min-height:200px}.a8467f8a7e71416b__locationPickerInWidget{flex-grow:1;padding:var(--wpds-dimension-padding-2xl,24px)}.dc172eb76cf854ff__footer{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);padding-block:var(--wpds-dimension-padding-lg,16px);padding-inline:var(--wpds-dimension-padding-2xl,24px)}._8035a0c4b6216adf__statusText{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0;padding-inline:var(--wpds-dimension-padding-2xl,24px)}.a55a5460581ee126__noLocationSelected{flex-grow:1}");
+  registerStyle18("2222ab87ae", "._8eae235c5e84e11a__container{block-size:100%;min-height:200px}.a8467f8a7e71416b__locationPickerInWidget{flex-grow:1;padding:var(--wpds-dimension-padding-2xl,24px)}._8035a0c4b6216adf__statusText{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin:0;padding-inline:var(--wpds-dimension-padding-2xl,24px)}.a55a5460581ee126__noLocationSelected{flex-grow:1}");
 }
-var style_default17 = { "container": "_8eae235c5e84e11a__container", "locationPickerInWidget": "a8467f8a7e71416b__locationPickerInWidget", "footer": "dc172eb76cf854ff__footer", "statusText": "_8035a0c4b6216adf__statusText", "noLocationSelected": "a55a5460581ee126__noLocationSelected" };
+var style_default17 = { "container": "_8eae235c5e84e11a__container", "locationPickerInWidget": "a8467f8a7e71416b__locationPickerInWidget", "statusText": "_8035a0c4b6216adf__statusText", "noLocationSelected": "a55a5460581ee126__noLocationSelected" };
 
 // widgets/events/render.tsx
 var import_jsx_runtime144 = __toESM(require_jsx_runtime());
@@ -34445,67 +34445,41 @@ function WordPressEvents({
     });
     return () => controller.abort();
   }, [activeLocation, hasSelectedLocation, userLocale]);
-  return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
-    Stack,
-    {
-      direction: "column",
-      justify: "space-between",
-      className: style_default17.container,
-      children: [
-        !hasSelectedLocation && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
-          Stack,
-          {
-            align: "center",
-            justify: "center",
-            className: style_default17.noLocationSelected,
-            children: /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(empty_state_exports.Root, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(empty_state_exports.Visual, { children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(Icon, { icon: map_marker_default }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(empty_state_exports.Title, { children: (0, import_i18n51.__)("Attend an upcoming event near you.") }),
-              /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(empty_state_exports.Description, { children: (0, import_i18n51.__)("Select a city to view events.") })
-            ] })
-          }
-        ),
-        hasSelectedLocation && eventsLoading && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
-          Stack,
-          {
-            className: style_default17.locationPickerInWidget,
-            direction: "column",
-            align: "center",
-            justify: "center",
-            children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(import_components55.Spinner, {})
-          }
-        ),
-        hasSelectedLocation && !eventsLoading && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
-          EventsListSection,
-          {
-            events,
-            loading: eventsLoading,
-            error: eventsError,
-            showEmptyState: true,
-            location: locationLabel || activeLocation
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { className: style_default17.footer, children: /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(Stack, { direction: "row", align: "center", gap: "sm", wrap: "wrap", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
-            Link,
-            {
-              href: "https://make.wordpress.org/community/meetups-landing-page",
-              openInNewTab: true,
-              children: (0, import_i18n51.__)("Meetups")
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
-            Link,
-            {
-              href: "https://central.wordcamp.org/schedule/",
-              openInNewTab: true,
-              children: (0, import_i18n51.__)("WordCamps")
-            }
-          )
-        ] }) })
-      ]
-    }
-  );
+  return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(Stack, { direction: "column", className: style_default17.container, children: [
+    !hasSelectedLocation && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      Stack,
+      {
+        align: "center",
+        justify: "center",
+        className: style_default17.noLocationSelected,
+        children: /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(empty_state_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(empty_state_exports.Visual, { children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(Icon, { icon: map_marker_default }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(empty_state_exports.Title, { children: (0, import_i18n51.__)("Attend an upcoming event near you.") }),
+          /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(empty_state_exports.Description, { children: (0, import_i18n51.__)("Select a city to view events.") })
+        ] })
+      }
+    ),
+    hasSelectedLocation && eventsLoading && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      Stack,
+      {
+        className: style_default17.locationPickerInWidget,
+        direction: "column",
+        align: "center",
+        justify: "center",
+        children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(import_components55.Spinner, {})
+      }
+    ),
+    hasSelectedLocation && !eventsLoading && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      EventsListSection,
+      {
+        events,
+        loading: eventsLoading,
+        error: eventsError,
+        showEmptyState: true,
+        location: locationLabel || activeLocation
+      }
+    )
+  ] });
 }
 export {
   WordPressEvents as default
