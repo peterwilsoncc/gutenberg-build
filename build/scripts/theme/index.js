@@ -1,4 +1,5 @@
 (function() {
+"use strict";
 var wp;
 (wp ||= {}).theme = (() => {
   var __create = Object.create;
@@ -4056,7 +4057,7 @@ var wp;
     const calculatedColors = /* @__PURE__ */ new Map();
     calculatedColors.set("seed", seed);
     for (const stepName of sortedSteps) {
-      let computeDirection = function(color, followDirection) {
+      let computeDirection2 = function(color, followDirection) {
         if (followDirection === "main") {
           return mainDir;
         }
@@ -4071,6 +4072,7 @@ var wp;
         }
         return followDirection;
       };
+      var computeDirection = computeDirection2;
       const {
         contrast,
         lightness: stepLightnessConstraint,
@@ -4101,7 +4103,7 @@ var wp;
           continue;
         }
       }
-      const computedDir = computeDirection(
+      const computedDir = computeDirection2(
         referenceColor,
         contrast.followDirection
       );
@@ -4189,9 +4191,9 @@ var wp;
     });
     let bestRamp = rampResults;
     if (maxDeficit > CONTRAST_EPSILON && rescaleToFitContrastTargets) {
-      let getSeedForL = function(l) {
+      let getSeedForL2 = function(l) {
         return clampToGamut(set(clone(seed), [oklch_default, "l"], l));
-      }, getDeficitForSeed = function(s) {
+      }, getDeficitForSeed2 = function(s) {
         const iterationResults = calculateRamp({
           seed: s,
           sortedSteps: iterSteps,
@@ -4202,14 +4204,15 @@ var wp;
         });
         return iterationResults.maxDeficitDirection === maxDeficitDirection ? iterationResults.maxDeficit : -maxDeficit;
       };
+      var getSeedForL = getSeedForL2, getDeficitForSeed = getDeficitForSeed2;
       const iterSteps = stepsForStep(maxDeficitStep, config);
       const lowerSeedL = maxDeficitDirection === "lighter" ? 0 : 1;
       const lowerDeficit = -maxDeficit;
       const upperSeedL = get(seed, [oklch_default, "l"]);
       const upperDeficit = maxDeficit;
       const bestSeed = solveWithBisect(
-        getSeedForL,
-        getDeficitForSeed,
+        getSeedForL2,
+        getDeficitForSeed2,
         lowerSeedL,
         lowerDeficit,
         upperSeedL,
