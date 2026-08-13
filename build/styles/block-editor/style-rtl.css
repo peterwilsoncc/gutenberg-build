@@ -3734,14 +3734,8 @@ iframe[name=editor-canvas] {
   font-size: 16px;
   /* Override core line-height. To be reviewed. */
   line-height: normal;
-  box-shadow: 0 0 0 transparent;
-  border-radius: 2px;
-  border: 1px solid #949494;
-}
-@media not (prefers-reduced-motion) {
-  .block-editor-content-only-controls__rich-text {
-    transition: box-shadow 0.1s linear;
-  }
+  border: var(--wpds-border-width-xs, 1px) solid var(--wpds-color-stroke-interactive-neutral, #8d8d8d);
+  border-radius: var(--wpds-border-radius-sm, 2px);
 }
 @media (min-width: 600px) {
   .block-editor-content-only-controls__rich-text {
@@ -3750,10 +3744,14 @@ iframe[name=editor-canvas] {
     line-height: normal;
   }
 }
+.block-editor-content-only-controls__rich-text:hover:not(:disabled, [aria-disabled=true], [type=checkbox]) {
+  border-color: var(--wpds-color-stroke-interactive-neutral-active, #6e6e6e);
+}
 .block-editor-content-only-controls__rich-text:focus {
-  border-color: var(--wp-admin-theme-color);
-  box-shadow: 0 0 0 0.5px var(--wp-admin-theme-color);
-  outline: 2px solid transparent;
+  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--focus-color, var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9)));
+  outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
+  border-color: var(--wpds-color-stroke-interactive-neutral, #8d8d8d);
+  box-shadow: none;
 }
 .block-editor-content-only-controls__rich-text::-moz-placeholder {
   color: rgba(30, 30, 30, 0.62);
