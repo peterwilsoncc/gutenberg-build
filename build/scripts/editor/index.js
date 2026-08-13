@@ -1177,7 +1177,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment122 = REACT_FRAGMENT_TYPE;
+          var Fragment121 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE2;
           var Memo = REACT_MEMO_TYPE;
           var Portal2 = REACT_PORTAL_TYPE;
@@ -1236,7 +1236,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment122;
+          exports.Fragment = Fragment121;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal2;
@@ -106962,49 +106962,6 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
 
-  // packages/editor/build-module/components/global-styles-sidebar/default-sidebar.mjs
-  var import_jsx_runtime573 = __toESM(require_jsx_runtime(), 1);
-  function DefaultSidebar({
-    className: className2,
-    identifier,
-    title,
-    icon,
-    children,
-    closeLabel,
-    header,
-    headerClassName,
-    panelClassName,
-    isActiveByDefault
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime573.jsxs)(import_jsx_runtime573.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(
-        complementary_area_default,
-        {
-          className: className2,
-          scope: "core",
-          identifier,
-          title,
-          icon,
-          closeLabel,
-          header,
-          headerClassName,
-          panelClassName,
-          isActiveByDefault,
-          children
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(
-        ComplementaryAreaMoreMenuItem,
-        {
-          scope: "core",
-          identifier,
-          icon,
-          children: title
-        }
-      )
-    ] });
-  }
-
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
   var import_data267 = __toESM(require_data(), 1);
   var import_components288 = __toESM(require_components(), 1);
@@ -107012,22 +106969,22 @@ If there's a particular need for this, please submit a feature request at https:
   var import_preferences32 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide-image.mjs
-  var import_jsx_runtime574 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime573 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideImage({ nonAnimatedSrc, animatedSrc }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime574.jsxs)("picture", { className: "editor-welcome-guide__image", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime574.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime573.jsxs)("picture", { className: "editor-welcome-guide__image", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime573.jsx)(
         "source",
         {
           srcSet: nonAnimatedSrc,
           media: "(prefers-reduced-motion: reduce)"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime574.jsx)("img", { src: animatedSrc, width: "312", height: "240", alt: "" })
+      /* @__PURE__ */ (0, import_jsx_runtime573.jsx)("img", { src: animatedSrc, width: "312", height: "240", alt: "" })
     ] });
   }
 
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
-  var import_jsx_runtime575 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime574 = __toESM(require_jsx_runtime(), 1);
   function WelcomeGuideStyles() {
     const { toggle } = (0, import_data267.useDispatch)(import_preferences32.store);
     const { isActive, isStylesOpen } = (0, import_data267.useSelect)((select9) => {
@@ -107044,7 +107001,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     const welcomeLabel = (0, import_i18n348.__)("Welcome to Styles");
-    return /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime574.jsx)(
       import_components288.Guide,
       {
         className: "editor-welcome-guide guide-styles",
@@ -107053,66 +107010,66 @@ If there's a particular need for this, please submit a feature request at https:
         onFinish: () => toggle("core/edit-site", "welcomeGuideStyles"),
         pages: [
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime574.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/welcome-to-styles.svg?1",
                 animatedSrc: "https://s.w.org/images/block-editor/welcome-to-styles.gif?1"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime575.jsxs)(import_jsx_runtime575.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime575.jsx)("h1", { className: "editor-welcome-guide__heading", children: welcomeLabel }),
-              /* @__PURE__ */ (0, import_jsx_runtime575.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n348.__)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime574.jsxs)(import_jsx_runtime574.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime574.jsx)("h1", { className: "editor-welcome-guide__heading", children: welcomeLabel }),
+              /* @__PURE__ */ (0, import_jsx_runtime574.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n348.__)(
                 "Tweak your site, or give it a whole new look! Get creative \u2014 how about a new color palette for your buttons, or choosing a new font? Take a look at what you can do here."
               ) })
             ] })
           },
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime574.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/set-the-design.svg?1",
                 animatedSrc: "https://s.w.org/images/block-editor/set-the-design.gif?1"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime575.jsxs)(import_jsx_runtime575.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime575.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n348.__)("Set the design") }),
-              /* @__PURE__ */ (0, import_jsx_runtime575.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n348.__)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime574.jsxs)(import_jsx_runtime574.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime574.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n348.__)("Set the design") }),
+              /* @__PURE__ */ (0, import_jsx_runtime574.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n348.__)(
                 "You can customize your site as much as you like with different colors, typography, and layouts. Or if you prefer, just leave it up to your theme to handle!"
               ) })
             ] })
           },
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime574.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/personalize-blocks.svg?1",
                 animatedSrc: "https://s.w.org/images/block-editor/personalize-blocks.gif?1"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime575.jsxs)(import_jsx_runtime575.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime575.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n348.__)("Personalize blocks") }),
-              /* @__PURE__ */ (0, import_jsx_runtime575.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n348.__)(
+            content: /* @__PURE__ */ (0, import_jsx_runtime574.jsxs)(import_jsx_runtime574.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime574.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n348.__)("Personalize blocks") }),
+              /* @__PURE__ */ (0, import_jsx_runtime574.jsx)("p", { className: "editor-welcome-guide__text", children: (0, import_i18n348.__)(
                 "You can adjust your blocks to ensure a cohesive experience across your site \u2014 add your unique colors to a branded Button block, or adjust the Heading block to your preferred size."
               ) })
             ] })
           },
           {
-            image: /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
+            image: /* @__PURE__ */ (0, import_jsx_runtime574.jsx)(
               WelcomeGuideImage,
               {
                 nonAnimatedSrc: "https://s.w.org/images/block-editor/welcome-documentation.svg",
                 animatedSrc: "https://s.w.org/images/block-editor/welcome-documentation.gif"
               }
             ),
-            content: /* @__PURE__ */ (0, import_jsx_runtime575.jsxs)(import_jsx_runtime575.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime575.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n348.__)("Learn more") }),
-              /* @__PURE__ */ (0, import_jsx_runtime575.jsxs)("p", { className: "editor-welcome-guide__text", children: [
+            content: /* @__PURE__ */ (0, import_jsx_runtime574.jsxs)(import_jsx_runtime574.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime574.jsx)("h1", { className: "editor-welcome-guide__heading", children: (0, import_i18n348.__)("Learn more") }),
+              /* @__PURE__ */ (0, import_jsx_runtime574.jsxs)("p", { className: "editor-welcome-guide__text", children: [
                 (0, import_i18n348.__)(
                   "New to block themes and styling your site?"
                 ),
                 " ",
-                /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime574.jsx)(
                   import_components288.ExternalLink,
                   {
                     href: (0, import_i18n348.__)(
@@ -107132,7 +107089,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/global-styles-sidebar/index.mjs
-  var import_jsx_runtime576 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime575 = __toESM(require_jsx_runtime(), 1);
   function GlobalStylesSidebar() {
     const {
       shouldResetNavigation,
@@ -107142,17 +107099,20 @@ If there's a particular need for this, please submit a feature request at https:
       hasRevisions,
       activeComplementaryArea,
       editorSettings: editorSettings2,
-      styleStateViewport
+      styleStateViewport,
+      isDistractionFree
     } = (0, import_data268.useSelect)((select9) => {
+      const { get } = select9(import_preferences33.store);
       const { getActiveComplementaryArea: getActiveComplementaryArea2 } = select9(store3);
-      const { getStylesPath: getStylesPath2, getShowStylebook: getShowStylebook2 } = unlock(
-        select9(store)
-      );
-      const _isVisualEditorMode = "visual" === select9(store).getEditorMode();
-      const _showListViewByDefault = select9(import_preferences33.store).get(
-        "core",
-        "showListViewByDefault"
-      );
+      const {
+        getStylesPath: getStylesPath2,
+        getShowStylebook: getShowStylebook2,
+        getEditorMode: getEditorMode2,
+        getEditorSettings: getEditorSettings2
+      } = unlock(select9(store));
+      const _isVisualEditorMode = "visual" === getEditorMode2();
+      const _showListViewByDefault = get("core", "showListViewByDefault");
+      const _isDistractionFree = get("core", "distractionFree");
       const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data143.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
       const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
@@ -107162,11 +107122,12 @@ If there's a particular need for this, please submit a feature request at https:
         shouldResetNavigation: "edit-site/global-styles" !== getActiveComplementaryArea2("core") || !_isVisualEditorMode,
         showListViewByDefault: _showListViewByDefault,
         hasRevisions: !!globalStyles?._links?.["version-history"]?.[0]?.count,
-        activeComplementaryArea: select9(store3).getActiveComplementaryArea("core"),
-        editorSettings: select9(store).getEditorSettings(),
+        activeComplementaryArea: getActiveComplementaryArea2("core"),
+        editorSettings: getEditorSettings2(),
         styleStateViewport: unlock(
           select9(import_block_editor107.store)
-        ).getStyleStateViewport()
+        ).getStyleStateViewport(),
+        isDistractionFree: _isDistractionFree
       };
     }, []);
     const { setStylesPath: setStylesPath2, setShowStylebook: setShowStylebook2, resetStylesNavigation: resetStylesNavigation2 } = unlock(
@@ -107199,31 +107160,37 @@ If there's a particular need for this, please submit a feature request at https:
       setIsListViewOpened2(showStylebook2 && showListViewByDefault);
       setShowStylebook2(!showStylebook2);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime576.jsxs)(import_jsx_runtime576.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(
-        DefaultSidebar,
+    return /* @__PURE__ */ (0, import_jsx_runtime575.jsxs)(import_jsx_runtime575.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
+        PluginSidebar,
         {
-          className: "editor-global-styles-sidebar",
+          name: "global-styles",
           identifier: "edit-site/global-styles",
           title: (0, import_i18n349.__)("Styles"),
           icon: styles_default,
+          isPinnable: !isDistractionFree,
           closeLabel: (0, import_i18n349.__)("Close Styles"),
-          panelClassName: "editor-global-styles-sidebar__panel",
-          header: /* @__PURE__ */ (0, import_jsx_runtime576.jsxs)(
-            import_components289.Flex,
+          className: "editor-global-styles-sidebar__panel",
+          render: /* @__PURE__ */ (0, import_jsx_runtime575.jsx)("div", { className: "editor-global-styles-sidebar" }),
+          header: /* @__PURE__ */ (0, import_jsx_runtime575.jsxs)(
+            Stack,
             {
               className: "editor-global-styles-sidebar__header",
-              gap: 1,
+              direction: "row",
+              align: "center",
+              gap: "xs",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(import_components289.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime576.jsx)("h2", { className: "editor-global-styles-sidebar__header-title", children: (0, import_i18n349.__)("Styles") }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime576.jsxs)(
-                  import_components289.Flex,
+                /* @__PURE__ */ (0, import_jsx_runtime575.jsx)("h2", { className: "editor-global-styles-sidebar__header-title", children: (0, import_i18n349.__)("Styles") }),
+                /* @__PURE__ */ (0, import_jsx_runtime575.jsxs)(
+                  Stack,
                   {
-                    justify: "flex-end",
-                    gap: 1,
                     className: "editor-global-styles-sidebar__header-actions",
+                    direction: "row",
+                    align: "center",
+                    justify: "flex-end",
+                    gap: "xs",
                     children: [
-                      !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(import_components289.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(
+                      !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
                         import_components289.Button,
                         {
                           icon: seen_default,
@@ -107234,8 +107201,8 @@ If there's a particular need for this, please submit a feature request at https:
                           onClick: toggleStyleBook,
                           size: "compact"
                         }
-                      ) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(import_components289.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
                         import_components289.Button,
                         {
                           label: (0, import_i18n349.__)("Revisions"),
@@ -107246,8 +107213,8 @@ If there's a particular need for this, please submit a feature request at https:
                           isPressed: isRevisionsOpened || isRevisionsStyleBookOpened,
                           size: "compact"
                         }
-                      ) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
                         GlobalStylesActionMenu,
                         {
                           onChangePath: setStylesPath2
@@ -107259,7 +107226,7 @@ If there's a particular need for this, please submit a feature request at https:
               ]
             }
           ),
-          children: /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
             GlobalStylesUIWrapper,
             {
               path: stylesPath2,
@@ -107271,12 +107238,12 @@ If there's a particular need for this, please submit a feature request at https:
           )
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(WelcomeGuideStyles, {})
+      /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(WelcomeGuideStyles, {})
     ] });
   }
 
   // packages/editor/build-module/components/editor/index.mjs
-  var import_jsx_runtime577 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime576 = __toESM(require_jsx_runtime(), 1);
   function Editor({
     postType: postType2,
     postId: postId2,
@@ -107338,8 +107305,8 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [postType2, postId2, templateId2]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime577.jsxs)(import_jsx_runtime577.Fragment, { children: [
-      hasLoadedPost && !post2 && /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime576.jsxs)(import_jsx_runtime576.Fragment, { children: [
+      hasLoadedPost && !post2 && /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(
         import_components290.Notice,
         {
           status: !!error2 ? "error" : "warning",
@@ -107349,7 +107316,7 @@ If there's a particular need for this, please submit a feature request at https:
           ) : error2
         }
       ),
-      !!post2 && /* @__PURE__ */ (0, import_jsx_runtime577.jsxs)(
+      !!post2 && /* @__PURE__ */ (0, import_jsx_runtime576.jsxs)(
         ExperimentalEditorProvider,
         {
           post: post2,
@@ -107358,18 +107325,18 @@ If there's a particular need for this, please submit a feature request at https:
           initialEdits,
           useSubRegistry: false,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(EditorInterface, { ...props, children: extraContent }),
+            /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(EditorInterface, { ...props, children: extraContent }),
             children,
-            /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(
               sidebar_default2,
               {
                 onActionPerformed,
                 extraPanels: extraSidebarPanels
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(NotesSidebarContainer, {}),
-            isBlockTheme && /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(GlobalStylesRenderer, {}),
-            showGlobalStyles && /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(GlobalStylesSidebar, {})
+            /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(NotesSidebarContainer, {}),
+            isBlockTheme && /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(GlobalStylesRenderer, {}),
+            showGlobalStyles && /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(GlobalStylesSidebar, {})
           ]
         }
       )
@@ -107387,14 +107354,14 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/preferences-modal/enable-publish-sidebar.mjs
   var import_data270 = __toESM(require_data(), 1);
   var import_preferences34 = __toESM(require_preferences(), 1);
-  var import_jsx_runtime578 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime577 = __toESM(require_jsx_runtime(), 1);
   var { PreferenceBaseOption: PreferenceBaseOption2 } = unlock(import_preferences34.privateApis);
   function EnablePublishSidebarOption(props) {
     const isChecked = (0, import_data270.useSelect)((select9) => {
       return select9(store).isPublishSidebarEnabled();
     }, []);
     const { enablePublishSidebar: enablePublishSidebar2, disablePublishSidebar: disablePublishSidebar2 } = (0, import_data270.useDispatch)(store);
-    return /* @__PURE__ */ (0, import_jsx_runtime578.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime577.jsx)(
       PreferenceBaseOption2,
       {
         isChecked,
@@ -107412,7 +107379,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components291 = __toESM(require_components(), 1);
   var import_i18n351 = __toESM(require_i18n(), 1);
   var import_block_editor108 = __toESM(require_block_editor(), 1);
-  var import_jsx_runtime579 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime578 = __toESM(require_jsx_runtime(), 1);
   var { BlockManager } = unlock(import_block_editor108.privateApis);
   var EMPTY_ARRAY18 = [];
   function BlockVisibility() {
@@ -107470,8 +107437,8 @@ If there's a particular need for this, please submit a feature request at https:
         showBlockTypes2(blockTypesToShow.map(({ name: name2 }) => name2));
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime579.jsxs)("div", { className: "editor-block-visibility", children: [
-      !!numberOfHiddenBlocks && /* @__PURE__ */ (0, import_jsx_runtime579.jsxs)("div", { className: "editor-block-visibility__disabled-blocks-count", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime578.jsxs)("div", { className: "editor-block-visibility", children: [
+      !!numberOfHiddenBlocks && /* @__PURE__ */ (0, import_jsx_runtime578.jsxs)("div", { className: "editor-block-visibility__disabled-blocks-count", children: [
         (0, import_i18n351.sprintf)(
           /* translators: %d: number of blocks. */
           (0, import_i18n351._n)(
@@ -107481,7 +107448,7 @@ If there's a particular need for this, please submit a feature request at https:
           ),
           numberOfHiddenBlocks
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime578.jsx)(
           import_components291.Button,
           {
             __next40pxDefaultSize: true,
@@ -107491,7 +107458,7 @@ If there's a particular need for this, please submit a feature request at https:
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime578.jsx)(
         BlockManager,
         {
           blockTypes: filteredBlockTypes,
@@ -107504,7 +107471,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/preferences-modal/index.mjs
-  var import_jsx_runtime580 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime579 = __toESM(require_jsx_runtime(), 1);
   var {
     PreferencesModal,
     PreferencesModalTabs,
@@ -107519,7 +107486,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (!isActive) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(PreferencesModal, { closeModal: closeModal2, children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(PreferencesModalContents, { extraSections }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(PreferencesModal, { closeModal: closeModal2, children: /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(PreferencesModalContents, { extraSections }) });
   }
   function PreferencesModalContents({ extraSections = {} }) {
     const isLargeViewport = (0, import_compose94.useViewportMatch)("medium");
@@ -107543,13 +107510,13 @@ If there's a particular need for this, please submit a feature request at https:
         {
           name: "general",
           tabLabel: (0, import_i18n352.__)("General"),
-          content: /* @__PURE__ */ (0, import_jsx_runtime580.jsxs)(import_jsx_runtime580.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime580.jsxs)(
+          content: /* @__PURE__ */ (0, import_jsx_runtime579.jsxs)(import_jsx_runtime579.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime579.jsxs)(
               PreferencesModalSection,
               {
                 title: (0, import_i18n352.__)("Interface"),
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                     PreferenceToggleControl,
                     {
                       scope: "core",
@@ -107560,7 +107527,7 @@ If there's a particular need for this, please submit a feature request at https:
                       label: (0, import_i18n352.__)("Always open List View")
                     }
                   ),
-                  showBlockBreadcrumbsOption && /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                  showBlockBreadcrumbsOption && /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                     PreferenceToggleControl,
                     {
                       scope: "core",
@@ -107571,7 +107538,7 @@ If there's a particular need for this, please submit a feature request at https:
                       label: (0, import_i18n352.__)("Show block breadcrumbs")
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                     PreferenceToggleControl,
                     {
                       scope: "core",
@@ -107584,7 +107551,7 @@ If there's a particular need for this, please submit a feature request at https:
                       )
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                     PreferenceToggleControl,
                     {
                       scope: "core",
@@ -107595,7 +107562,7 @@ If there's a particular need for this, please submit a feature request at https:
                       label: (0, import_i18n352.__)("Show starter patterns")
                     }
                   ),
-                  showCollaborationOptions && /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                  showCollaborationOptions && /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                     PreferenceToggleControl,
                     {
                       scope: "core",
@@ -107609,14 +107576,14 @@ If there's a particular need for this, please submit a feature request at https:
                 ]
               }
             ),
-            showCollaborationOptions && /* @__PURE__ */ (0, import_jsx_runtime580.jsxs)(
+            showCollaborationOptions && /* @__PURE__ */ (0, import_jsx_runtime579.jsxs)(
               PreferencesModalSection,
               {
                 title: (0, import_i18n352.__)(
                   "Collaboration notifications"
                 ),
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                     PreferenceToggleControl,
                     {
                       scope: "core",
@@ -107627,7 +107594,7 @@ If there's a particular need for this, please submit a feature request at https:
                       label: (0, import_i18n352.__)("Collaborator joined")
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                     PreferenceToggleControl,
                     {
                       scope: "core",
@@ -107638,7 +107605,7 @@ If there's a particular need for this, please submit a feature request at https:
                       label: (0, import_i18n352.__)("Collaborator left")
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                     PreferenceToggleControl,
                     {
                       scope: "core",
@@ -107652,7 +107619,7 @@ If there's a particular need for this, please submit a feature request at https:
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime580.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime579.jsxs)(
               PreferencesModalSection,
               {
                 title: (0, import_i18n352.__)("Document settings"),
@@ -107660,11 +107627,11 @@ If there's a particular need for this, please submit a feature request at https:
                   "Select what settings are shown in the document panel."
                 ),
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(enable_plugin_document_setting_panel_default.Slot, {}),
-                  /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(enable_plugin_document_setting_panel_default.Slot, {}),
+                  /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                     post_taxonomies_default,
                     {
-                      taxonomyWrapper: (content, taxonomy) => /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                      taxonomyWrapper: (content, taxonomy) => /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                         EnablePanelOption,
                         {
                           label: taxonomy.labels.menu_name,
@@ -107673,25 +107640,25 @@ If there's a particular need for this, please submit a feature request at https:
                       )
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(check_default4, { children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(check_default4, { children: /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                     EnablePanelOption,
                     {
                       label: (0, import_i18n352.__)("Featured image"),
                       panelName: "featured-image"
                     }
                   ) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(check_default3, { children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(check_default3, { children: /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                     EnablePanelOption,
                     {
                       label: (0, import_i18n352.__)("Excerpt"),
                       panelName: "post-excerpt"
                     }
                   ) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                     post_type_support_check_default,
                     {
                       supportKeys: ["comments", "trackbacks"],
-                      children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                      children: /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                         EnablePanelOption,
                         {
                           label: (0, import_i18n352.__)("Discussion"),
@@ -107700,7 +107667,7 @@ If there's a particular need for this, please submit a feature request at https:
                       )
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(check_default2, { children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(check_default2, { children: /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                     EnablePanelOption,
                     {
                       label: (0, import_i18n352.__)("Page attributes"),
@@ -107710,11 +107677,11 @@ If there's a particular need for this, please submit a feature request at https:
                 ]
               }
             ),
-            isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+            isLargeViewport && /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
               PreferencesModalSection,
               {
                 title: (0, import_i18n352.__)("Publishing"),
-                children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                   EnablePublishSidebarOption,
                   {
                     help: (0, import_i18n352.__)(
@@ -107733,7 +107700,7 @@ If there's a particular need for this, please submit a feature request at https:
         {
           name: "appearance",
           tabLabel: (0, import_i18n352.__)("Appearance"),
-          content: /* @__PURE__ */ (0, import_jsx_runtime580.jsxs)(
+          content: /* @__PURE__ */ (0, import_jsx_runtime579.jsxs)(
             PreferencesModalSection,
             {
               title: (0, import_i18n352.__)("Appearance"),
@@ -107741,7 +107708,7 @@ If there's a particular need for this, please submit a feature request at https:
                 "Customize the editor interface to suit your needs."
               ),
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core",
@@ -107757,7 +107724,7 @@ If there's a particular need for this, please submit a feature request at https:
                     label: (0, import_i18n352.__)("Top toolbar")
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core",
@@ -107777,7 +107744,7 @@ If there's a particular need for this, please submit a feature request at https:
                     label: (0, import_i18n352.__)("Distraction free")
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core",
@@ -107796,15 +107763,15 @@ If there's a particular need for this, please submit a feature request at https:
         {
           name: "accessibility",
           tabLabel: (0, import_i18n352.__)("Accessibility"),
-          content: /* @__PURE__ */ (0, import_jsx_runtime580.jsxs)(import_jsx_runtime580.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+          content: /* @__PURE__ */ (0, import_jsx_runtime579.jsxs)(import_jsx_runtime579.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
               PreferencesModalSection,
               {
                 title: (0, import_i18n352.__)("Navigation"),
                 description: (0, import_i18n352.__)(
                   "Optimize the editing experience for enhanced control."
                 ),
-                children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core",
@@ -107819,11 +107786,11 @@ If there's a particular need for this, please submit a feature request at https:
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
               PreferencesModalSection,
               {
                 title: (0, import_i18n352.__)("Interface"),
-                children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core",
@@ -107841,8 +107808,8 @@ If there's a particular need for this, please submit a feature request at https:
         {
           name: "blocks",
           tabLabel: (0, import_i18n352.__)("Blocks"),
-          content: /* @__PURE__ */ (0, import_jsx_runtime580.jsxs)(import_jsx_runtime580.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(PreferencesModalSection, { title: (0, import_i18n352.__)("Inserter"), children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+          content: /* @__PURE__ */ (0, import_jsx_runtime579.jsxs)(import_jsx_runtime579.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(PreferencesModalSection, { title: (0, import_i18n352.__)("Inserter"), children: /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
               PreferenceToggleControl,
               {
                 scope: "core",
@@ -107853,14 +107820,14 @@ If there's a particular need for this, please submit a feature request at https:
                 label: (0, import_i18n352.__)("Show most used blocks")
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
               PreferencesModalSection,
               {
                 title: (0, import_i18n352.__)("Manage block visibility"),
                 description: (0, import_i18n352.__)(
                   "Disable blocks that you don't want to appear in the inserter. They can always be toggled back on later."
                 ),
-                children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(BlockVisibility, {})
+                children: /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(BlockVisibility, {})
               }
             )
           ] })
@@ -107868,7 +107835,7 @@ If there's a particular need for this, please submit a feature request at https:
         window.__clientSideMediaProcessing && {
           name: "media",
           tabLabel: (0, import_i18n352.__)("Media"),
-          content: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_jsx_runtime580.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime580.jsxs)(
+          content: /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(import_jsx_runtime579.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime579.jsxs)(
             PreferencesModalSection,
             {
               title: (0, import_i18n352.__)("General"),
@@ -107876,7 +107843,7 @@ If there's a particular need for this, please submit a feature request at https:
                 "Customize options related to the media upload flow."
               ),
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core/media",
@@ -107887,7 +107854,7 @@ If there's a particular need for this, please submit a feature request at https:
                     label: (0, import_i18n352.__)("Pre-upload compression")
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(
                   PreferenceToggleControl,
                   {
                     scope: "core/media",
@@ -107913,7 +107880,7 @@ If there's a particular need for this, please submit a feature request at https:
         isLargeViewport
       ]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(PreferencesModalTabs, { sections });
+    return /* @__PURE__ */ (0, import_jsx_runtime579.jsx)(PreferencesModalTabs, { sections });
   }
 
   // packages/editor/build-module/bindings/api.mjs
@@ -108356,7 +108323,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_upload_media3 = __toESM(require_upload_media(), 1);
   var import_notices39 = __toESM(require_notices(), 1);
   var import_components292 = __toESM(require_components(), 1);
-  var import_jsx_runtime581 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime580 = __toESM(require_jsx_runtime(), 1);
   var NOTICE_ID = "upload-progress";
   var COMPLETION_DISPLAY_MS = 3e3;
   var MAX_FILENAME_LENGTH = 40;
@@ -108370,15 +108337,15 @@ If there's a particular need for this, please submit a feature request at https:
     const back = Math.floor(visible / 2);
     return filename.slice(0, front) + ellipsis + filename.slice(filename.length - back);
   }
-  var UPLOAD_SPINNER = /* @__PURE__ */ (0, import_jsx_runtime581.jsx)(
+  var UPLOAD_SPINNER = /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(
     "span",
     {
       className: "editor-upload-progress-snackbar__spinner",
       "aria-hidden": "true",
-      children: /* @__PURE__ */ (0, import_jsx_runtime581.jsx)(import_components292.Spinner, {})
+      children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_components292.Spinner, {})
     }
   );
-  var UPLOAD_DONE = /* @__PURE__ */ (0, import_jsx_runtime581.jsx)("span", { className: "editor-upload-progress-snackbar__check", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime581.jsx)(import_components292.Icon, { icon: check_default }) });
+  var UPLOAD_DONE = /* @__PURE__ */ (0, import_jsx_runtime580.jsx)("span", { className: "editor-upload-progress-snackbar__check", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_components292.Icon, { icon: check_default }) });
   function UploadProgressSnackbar() {
     const items = (0, import_data273.useSelect)(
       (select9) => select9(import_upload_media3.store).getItems(),
