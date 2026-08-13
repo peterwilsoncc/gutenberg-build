@@ -2165,9 +2165,9 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React146 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef119 = React146.useRef, useEffect99 = React146.useEffect, useMemo160 = React146.useMemo, useDebugValue2 = React146.useDebugValue;
+        var React146 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore2 = shim.useSyncExternalStore, useRef120 = React146.useRef, useEffect99 = React146.useEffect, useMemo160 = React146.useMemo, useDebugValue2 = React146.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector3, isEqual2) {
-          var instRef = useRef119(null);
+          var instRef = useRef120(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -7777,8 +7777,8 @@ var wp;
     if (!blockType) {
       return null;
     }
-    const Component5 = blockType.edit || blockType.save;
-    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Component5, { ...props });
+    const Component4 = blockType.edit || blockType.save;
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Component4, { ...props });
   };
   var EditWithFilters = (0, import_components.withFilters)("editor.BlockEdit")(Edit);
   var EditWithGeneratedProps = (props) => {
@@ -18119,87 +18119,71 @@ var wp;
     return (0, import_compose2.compose)([
       withColorPalette,
       (WrappedComponent) => {
-        return class WithColors extends import_element7.Component {
-          constructor(props) {
-            super(props);
-            this.setters = this.createSetters();
-            this.colorUtils = {
-              getMostReadableColor: this.getMostReadableColor.bind(this)
-            };
-            this.state = {};
-          }
-          getMostReadableColor(colorValue) {
-            const { colors: colors2 } = this.props;
-            return getMostReadableColor(colors2, colorValue);
-          }
-          createSetters() {
-            return Object.keys(colorMap).reduce(
-              (settersAccumulator, colorAttributeName) => {
-                const upperFirstColorAttributeName = upperFirst(colorAttributeName);
-                const customColorAttributeName = `custom${upperFirstColorAttributeName}`;
-                settersAccumulator[`set${upperFirstColorAttributeName}`] = this.createSetColor(
-                  colorAttributeName,
-                  customColorAttributeName
-                );
-                return settersAccumulator;
-              },
-              {}
-            );
-          }
-          createSetColor(colorAttributeName, customColorAttributeName) {
-            return (colorValue) => {
-              const colorObject = getColorObjectByColorValue(
-                this.props.colors,
-                colorValue
-              );
-              this.props.setAttributes({
-                [colorAttributeName]: colorObject && colorObject.slug ? colorObject.slug : void 0,
-                [customColorAttributeName]: colorObject && colorObject.slug ? void 0 : colorValue
-              });
-            };
-          }
-          static getDerivedStateFromProps({ attributes, colors: colors2 }, previousState) {
-            return Object.entries(colorMap).reduce(
-              (newState, [colorAttributeName, colorContext]) => {
-                const colorObject = getColorObjectByAttributeValues(
-                  colors2,
-                  attributes[colorAttributeName],
-                  attributes[`custom${upperFirst(
+        return function WithColors(props) {
+          const { colors: _colors, ...passedProps } = props;
+          const { attributes, setAttributes } = passedProps;
+          const prevColorPropsRef = (0, import_element7.useRef)(null);
+          const colorProps = (0, import_element7.useMemo)(() => {
+            const prevColorProps = prevColorPropsRef.current;
+            const result = Object.fromEntries(
+              Object.entries(colorMap).flatMap(
+                ([colorAttributeName, colorContext]) => {
+                  const customAttr = `custom${upperFirst(
                     colorAttributeName
-                  )}`]
-                );
-                const previousColorObject = previousState[colorAttributeName];
-                const previousColor = previousColorObject?.color;
-                if (previousColor === colorObject.color && previousColorObject) {
-                  newState[colorAttributeName] = previousColorObject;
-                } else {
-                  newState[colorAttributeName] = {
+                  )}`;
+                  const upperFirstColorAttributeName = upperFirst(colorAttributeName);
+                  const colorObject = getColorObjectByAttributeValues(
+                    _colors,
+                    attributes[colorAttributeName],
+                    attributes[customAttr]
+                  );
+                  const prevColorValue = prevColorProps?.[colorAttributeName];
+                  const colorValue = prevColorValue?.color === colorObject.color && prevColorValue ? prevColorValue : {
                     ...colorObject,
                     class: getColorClassName(
                       colorContext,
                       colorObject.slug
                     )
                   };
+                  const setter = (newColorValue) => {
+                    const resolvedColorObject = getColorObjectByColorValue(
+                      _colors,
+                      newColorValue
+                    );
+                    setAttributes({
+                      [colorAttributeName]: resolvedColorObject?.slug || void 0,
+                      [customAttr]: resolvedColorObject?.slug ? void 0 : newColorValue
+                    });
+                  };
+                  return [
+                    [colorAttributeName, colorValue],
+                    [
+                      `set${upperFirstColorAttributeName}`,
+                      setter
+                    ]
+                  ];
                 }
-                return newState;
-              },
-              {}
+              )
             );
-          }
-          render() {
-            return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
-              WrappedComponent,
-              {
-                ...{
-                  ...this.props,
-                  colors: void 0,
-                  ...this.state,
-                  ...this.setters,
-                  colorUtils: this.colorUtils
-                }
+            prevColorPropsRef.current = result;
+            return result;
+          }, [attributes, _colors, setAttributes]);
+          const colorUtils = (0, import_element7.useMemo)(
+            () => ({
+              getMostReadableColor: (colorValue) => getMostReadableColor(_colors, colorValue)
+            }),
+            [_colors]
+          );
+          return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+            WrappedComponent,
+            {
+              ...{
+                ...passedProps,
+                ...colorProps,
+                colorUtils
               }
-            );
-          }
+            }
+          );
         };
       }
     ]);
@@ -23322,8 +23306,8 @@ var wp;
     };
     return _extends2.apply(this, arguments);
   }
-  var withAnimated = (Component5, host2) => {
-    const hasInstance = !is.fun(Component5) || Component5.prototype && Component5.prototype.isReactComponent;
+  var withAnimated = (Component4, host2) => {
+    const hasInstance = !is.fun(Component4) || Component4.prototype && Component4.prototype.isReactComponent;
     return (0, import_react2.forwardRef)((givenProps, givenRef) => {
       const instanceRef = (0, import_react2.useRef)(null);
       const ref = hasInstance && (0, import_react2.useCallback)((value) => {
@@ -23359,7 +23343,7 @@ var wp;
         each(observer2.deps, (dep) => removeFluidObserver(dep, observer2));
       });
       const usedProps = host2.getComponentProps(props.getValue());
-      return React.createElement(Component5, _extends2({}, usedProps, {
+      return React.createElement(Component4, _extends2({}, usedProps, {
         ref
       }));
     });
@@ -23403,21 +23387,21 @@ var wp;
       createAnimatedStyle: _createAnimatedStyle,
       getComponentProps: _getComponentProps
     };
-    const animated2 = (Component5) => {
-      const displayName = getDisplayName(Component5) || "Anonymous";
-      if (is.str(Component5)) {
-        Component5 = animated2[Component5] || (animated2[Component5] = withAnimated(Component5, hostConfig));
+    const animated2 = (Component4) => {
+      const displayName = getDisplayName(Component4) || "Anonymous";
+      if (is.str(Component4)) {
+        Component4 = animated2[Component4] || (animated2[Component4] = withAnimated(Component4, hostConfig));
       } else {
-        Component5 = Component5[cacheKey] || (Component5[cacheKey] = withAnimated(Component5, hostConfig));
+        Component4 = Component4[cacheKey] || (Component4[cacheKey] = withAnimated(Component4, hostConfig));
       }
-      Component5.displayName = `Animated(${displayName})`;
-      return Component5;
+      Component4.displayName = `Animated(${displayName})`;
+      return Component4;
     };
-    eachProp(components, (Component5, key) => {
+    eachProp(components, (Component4, key) => {
       if (is.arr(components)) {
-        key = getDisplayName(Component5);
+        key = getDisplayName(Component4);
       }
-      animated2[key] = animated2(Component5);
+      animated2[key] = animated2(Component4);
     });
     return {
       animated: animated2
@@ -56887,7 +56871,7 @@ var wp;
   var import_components34 = __toESM(require_components(), 1);
   var import_element115 = __toESM(require_element(), 1);
   var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
-  function InserterListboxItem({ isFirst, as: Component5, children, ...props }, ref) {
+  function InserterListboxItem({ isFirst, as: Component4, children, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
       import_components34.Composite.Item,
       {
@@ -56900,8 +56884,8 @@ var wp;
             ...htmlProps,
             tabIndex: isFirst ? 0 : htmlProps.tabIndex
           };
-          if (Component5) {
-            return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(Component5, { ...propsWithTabIndex, children });
+          if (Component4) {
+            return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(Component4, { ...propsWithTabIndex, children });
           }
           if (typeof children === "function") {
             return children(propsWithTabIndex);
@@ -73035,9 +73019,9 @@ var wp;
     const baseClass = "block-editor-block-variation-transforms";
     const showButtons = variations.length > 6;
     const ButtonComponent = showButtons ? VariationsButtons : VariationsToggleGroupControl;
-    const Component5 = hasUniqueIcons ? ButtonComponent : VariationsDropdown;
+    const Component4 = hasUniqueIcons ? ButtonComponent : VariationsDropdown;
     return /* @__PURE__ */ (0, import_jsx_runtime347.jsx)(
-      Component5,
+      Component4,
       {
         className: baseClass,
         onSelectVariation,
@@ -81426,7 +81410,7 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/with-deprecations.mjs
   var import_jsx_runtime405 = __toESM(require_jsx_runtime(), 1);
-  function withDeprecations(Component5) {
+  function withDeprecations(Component4) {
     return (0, import_element243.forwardRef)((props, ref) => {
       let value = props.value;
       let onChange = props.onChange;
@@ -81444,7 +81428,7 @@ var wp;
           )
         );
       }
-      const NewComponent = props.multiline ? multiline_default : Component5;
+      const NewComponent = props.multiline ? multiline_default : Component4;
       return /* @__PURE__ */ (0, import_jsx_runtime405.jsx)(
         NewComponent,
         {
