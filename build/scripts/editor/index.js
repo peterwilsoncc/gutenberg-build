@@ -60386,7 +60386,6 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
   var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
   function MediaEditorCanvas({
-    focusOnMount,
     isPlacementActive = false,
     onGestureStart,
     onGestureEnd
@@ -60464,7 +60463,6 @@ If there's a particular need for this, please submit a feature request at https:
               controller,
               aspectRatio,
               freeformCrop: true,
-              focusOnMount: focusOnMount && status === "loaded",
               showGrid: "interactive",
               isPlacementActive,
               onGestureStart: handleGestureStart,
@@ -61916,7 +61914,6 @@ If there's a particular need for this, please submit a feature request at https:
                   /* @__PURE__ */ (0, import_jsx_runtime299.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
                     MediaEditorCanvas,
                     {
-                      focusOnMount: true,
                       isPlacementActive,
                       onGestureStart: handleCanvasGestureStart,
                       onGestureEnd: handleCanvasGestureEnd
