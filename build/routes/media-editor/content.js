@@ -34847,12 +34847,13 @@ var PLACEMENT_CONTROL_IDLE_MS = 300;
 function MediaEditorSidebar({
   tabs,
   activeTabId,
-  onTabChange
+  onTabChange,
+  scope
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
     complementary_area_default,
     {
-      scope: "media-editor",
+      scope,
       identifier: "media-editor/details",
       title: (0, import_i18n43.__)("Details"),
       icon: drawer_right_default,
@@ -34877,7 +34878,8 @@ function HeaderActions({
   isSaving,
   isImage,
   showCloseButton = false,
-  onCancel
+  onCancel,
+  scope
 }) {
   const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element111.useState)(false);
   return /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(
@@ -34897,7 +34899,7 @@ function HeaderActions({
             onClick: () => setIsShortcutsModalOpen(true)
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
+        /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(pinned_items_default.Slot, { scope }),
         showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
           import_components48.Button,
           {
@@ -35052,7 +35054,8 @@ function MediaEditorContent({
   noticesClassName = "media-editor__snackbar",
   noticesPortalElement,
   showCloseButton = false,
-  shouldCloseOnEsc = false
+  shouldCloseOnEsc = false,
+  scope = "media-editor"
 }) {
   const cropper = useMediaEditor();
   const isPanelLayout = (0, import_compose15.useViewportMatch)("small");
@@ -35266,7 +35269,8 @@ function MediaEditorContent({
             {
               tabs,
               activeTabId,
-              onTabChange: setSelectedTabId
+              onTabChange: setSelectedTabId,
+              scope
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
@@ -35288,7 +35292,7 @@ function MediaEditorContent({
                 ) : /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(MediaPreview, {}) }),
                 isImage && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("div", { className: "media-editor__canvas-toolbar", children: ruler })
               ] }),
-              sidebar: /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
+              sidebar: /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(complementary_area_default.Slot, { scope })
             }
           )
         ] }) }),
@@ -35359,7 +35363,8 @@ function MediaEditorContent({
         isSaving,
         isImage,
         showCloseButton,
-        onCancel: handleRequestClose
+        onCancel: handleRequestClose,
+        scope
       }
     ),
     footerActions,
@@ -35518,6 +35523,7 @@ var { MediaEditor: MediaEditor2 } = unlock4(privateApis5);
 var MEDIA_LIST_PATH = "/types/attachment/list/all";
 var MEDIA_LIBRARY_ADMIN_PATH = "upload.php";
 var MEDIA_EDITOR_ADMIN_PAGE = "media-editor-wp-admin";
+var MEDIA_EDITOR_SCOPE = "media-editor-route";
 function isMediaEditorAdminPage() {
   return typeof window !== "undefined" && new URLSearchParams(window.location.search).get("page") === MEDIA_EDITOR_ADMIN_PAGE;
 }
@@ -35556,6 +35562,7 @@ function MediaEditorRoute() {
     {
       id: attachmentId,
       fields,
+      scope: MEDIA_EDITOR_SCOPE,
       onClose: navigateBack,
       onSaved: ({ id: savedId }) => {
         if (savedId !== attachmentId) {

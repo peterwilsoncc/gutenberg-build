@@ -61480,12 +61480,13 @@ If there's a particular need for this, please submit a feature request at https:
   function MediaEditorSidebar({
     tabs,
     activeTabId,
-    onTabChange
+    onTabChange,
+    scope
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
       complementary_area_default,
       {
-        scope: "media-editor",
+        scope,
         identifier: "media-editor/details",
         title: (0, import_i18n146.__)("Details"),
         icon: drawer_right_default,
@@ -61510,7 +61511,8 @@ If there's a particular need for this, please submit a feature request at https:
     isSaving,
     isImage,
     showCloseButton = false,
-    onCancel
+    onCancel,
+    scope
   }) {
     const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element179.useState)(false);
     return /* @__PURE__ */ (0, import_jsx_runtime299.jsxs)(
@@ -61530,7 +61532,7 @@ If there's a particular need for this, please submit a feature request at https:
               onClick: () => setIsShortcutsModalOpen(true)
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
+          /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(pinned_items_default.Slot, { scope }),
           showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
             import_components99.Button,
             {
@@ -61685,7 +61687,8 @@ If there's a particular need for this, please submit a feature request at https:
     noticesClassName = "media-editor__snackbar",
     noticesPortalElement,
     showCloseButton = false,
-    shouldCloseOnEsc = false
+    shouldCloseOnEsc = false,
+    scope = "media-editor"
   }) {
     const cropper = useMediaEditor();
     const isPanelLayout = (0, import_compose33.useViewportMatch)("small");
@@ -61899,7 +61902,8 @@ If there's a particular need for this, please submit a feature request at https:
               {
                 tabs,
                 activeTabId,
-                onTabChange: setSelectedTabId
+                onTabChange: setSelectedTabId,
+                scope
               }
             ),
             /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(
@@ -61921,7 +61925,7 @@ If there's a particular need for this, please submit a feature request at https:
                   ) : /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(MediaPreview2, {}) }),
                   isImage && /* @__PURE__ */ (0, import_jsx_runtime299.jsx)("div", { className: "media-editor__canvas-toolbar", children: ruler })
                 ] }),
-                sidebar: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
+                sidebar: /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(complementary_area_default.Slot, { scope })
               }
             )
           ] }) }),
@@ -61992,7 +61996,8 @@ If there's a particular need for this, please submit a feature request at https:
           isSaving,
           isImage,
           showCloseButton,
-          onCancel: handleRequestClose
+          onCancel: handleRequestClose,
+          scope
         }
       ),
       footerActions,
