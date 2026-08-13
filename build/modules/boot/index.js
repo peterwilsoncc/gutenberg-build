@@ -9797,6 +9797,9 @@ function reducer(state = initialState, action) {
         }
       };
     case "UPDATE_MENU_ITEM":
+      if (!state.menuItems[action.id]) {
+        return state;
+      }
       return {
         ...state,
         menuItems: {
