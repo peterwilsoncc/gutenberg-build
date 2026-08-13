@@ -88512,27 +88512,21 @@ If there's a particular need for this, please submit a feature request at https:
     )) {
       return flatTermsWithParentAndChildren;
     }
-    const termsByParent = flatTermsWithParentAndChildren.reduce(
-      (acc, term) => {
-        const { parent } = term;
-        if (!acc[parent]) {
-          acc[parent] = [];
-        }
-        acc[parent].push(term);
-        return acc;
-      },
-      {}
-    );
-    const fillWithChildren = (terms) => {
-      return terms.map((term) => {
-        const children = termsByParent[term.id];
-        return {
-          ...term,
-          children: children && children.length ? fillWithChildren(children) : []
-        };
-      });
-    };
-    return fillWithChildren(termsByParent["0"] || []);
+    const termsById = /* @__PURE__ */ Object.create(null);
+    for (const term of flatTermsWithParentAndChildren) {
+      term.children = [];
+      termsById[term.id] = term;
+    }
+    const tree = [];
+    for (const term of flatTermsWithParentAndChildren) {
+      const parent = termsById[term.parent];
+      if (parent) {
+        parent.children.push(term);
+      } else if (`${term.parent}` === "0") {
+        tree.push(term);
+      }
+    }
+    return tree;
   }
   var unescapeString = (arg) => {
     return (0, import_html_entities17.decodeEntities)(arg);
@@ -92582,33 +92576,61 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var MIN_TERMS_COUNT_FOR_FILTER = 8;
   var EMPTY_ARRAY15 = [];
+  var TermCheckbox = (0, import_element272.memo)(function Checkbox2({
+    id,
+    name: name2,
+    checked,
+    onToggle
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
+      import_components215.CheckboxControl,
+      {
+        checked,
+        onChange: () => onToggle(id),
+        label: (0, import_html_entities25.decodeEntities)(name2)
+      }
+    );
+  });
+  function TermRow({ term, selectedTerms, onToggle }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime464.jsxs)("div", { className: "editor-post-taxonomies__hierarchical-terms-choice", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
+        TermCheckbox,
+        {
+          id: term.id,
+          name: term.name,
+          checked: selectedTerms.has(term.id),
+          onToggle
+        }
+      ),
+      !!term.children.length && /* @__PURE__ */ (0, import_jsx_runtime464.jsx)("div", { className: "editor-post-taxonomies__hierarchical-terms-subchoices", children: term.children.map((child) => /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
+        TermRow,
+        {
+          term: child,
+          selectedTerms,
+          onToggle
+        },
+        child.id
+      )) })
+    ] });
+  }
   function sortBySelected(termsTree, terms) {
+    const selectedTerms = new Set(terms);
     const treeHasSelection = (termTree) => {
-      if (terms.indexOf(termTree.id) !== -1) {
+      if (selectedTerms.has(termTree.id)) {
         return true;
       }
-      if (void 0 === termTree.children) {
-        return false;
-      }
-      return termTree.children.map(treeHasSelection).filter((child) => child).length > 0;
+      return !!termTree.children?.some(treeHasSelection);
     };
-    const termOrChildIsSelected = (termA, termB) => {
-      const termASelected = treeHasSelection(termA);
-      const termBSelected = treeHasSelection(termB);
-      if (termASelected === termBSelected) {
-        return 0;
+    const selected = [];
+    const unselected = [];
+    for (const termTree of termsTree) {
+      if (treeHasSelection(termTree)) {
+        selected.push(termTree);
+      } else {
+        unselected.push(termTree);
       }
-      if (termASelected && !termBSelected) {
-        return -1;
-      }
-      if (!termASelected && termBSelected) {
-        return 1;
-      }
-      return 0;
-    };
-    const newTermTree = [...termsTree];
-    newTermTree.sort(termOrChildIsSelected);
-    return newTermTree;
+    }
+    return [...selected, ...unselected];
   }
   function findTerm(terms, parent, name2) {
     return terms.find((term) => {
@@ -92616,6 +92638,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
   }
   function getFilterMatcher(filterValue) {
+    const normalizedFilterValue = normalizeTextString(filterValue);
     const matchTermsForFilter = (originalTerm) => {
       if ("" === filterValue) {
         return originalTerm;
@@ -92625,7 +92648,7 @@ If there's a particular need for this, please submit a feature request at https:
         term.children = term.children.map(matchTermsForFilter).filter((child) => child);
       }
       if (-1 !== normalizeTextString(term.name).indexOf(
-        normalizeTextString(filterValue)
+        normalizedFilterValue
       ) || term.children.length > 0) {
         return term;
       }
@@ -92671,12 +92694,23 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { editPost: editPost2 } = (0, import_data157.useDispatch)(store);
     const { saveEntityRecord } = (0, import_data157.useDispatch)(import_core_data94.store);
+    const selectedTerms = (0, import_element272.useMemo)(() => new Set(terms), [terms]);
     const availableTermsTree = (0, import_element272.useMemo)(
       () => sortBySelected(buildTermsTree2(availableTerms), terms),
       // Remove `terms` from the dependency list to avoid reordering every time
       // checking or unchecking a term.
       [availableTerms]
     );
+    const onUpdateTerms = (termIds) => {
+      editPost2({ [taxonomy.rest_base]: termIds });
+    };
+    const onToggleTerm = (0, import_compose58.useEvent)((termId) => {
+      const id = parseInt(termId, 10);
+      onUpdateTerms(
+        selectedTerms.has(id) ? terms.filter((term) => term !== id) : [...terms, id]
+      );
+    });
+    const shownTerms = "" !== filterValue ? filteredTermsTree : availableTermsTree;
     const { createErrorNotice } = (0, import_data157.useDispatch)(import_notices28.store);
     if (!hasAssignAction) {
       return null;
@@ -92685,14 +92719,6 @@ If there's a particular need for this, please submit a feature request at https:
       return saveEntityRecord("taxonomy", slug, term, {
         throwOnError: true
       });
-    };
-    const onUpdateTerms = (termIds) => {
-      editPost2({ [taxonomy.rest_base]: termIds });
-    };
-    const onChange = (termId) => {
-      const hasTerm = terms.includes(termId);
-      const newTerms = hasTerm ? terms.filter((id) => id !== termId) : [...terms, termId];
-      onUpdateTerms(newTerms);
     };
     const onChangeFormName = (value) => {
       setFormName(value);
@@ -92764,31 +92790,6 @@ If there's a particular need for this, please submit a feature request at https:
       );
       debouncedSpeak(resultsFoundMessage, "assertive");
     };
-    const renderTerms = (renderedTerms) => {
-      return renderedTerms.map((term) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime464.jsxs)(
-          "div",
-          {
-            className: "editor-post-taxonomies__hierarchical-terms-choice",
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
-                import_components215.CheckboxControl,
-                {
-                  checked: terms.indexOf(term.id) !== -1,
-                  onChange: () => {
-                    const termId = parseInt(term.id, 10);
-                    onChange(termId);
-                  },
-                  label: (0, import_html_entities25.decodeEntities)(term.name)
-                }
-              ),
-              !!term.children.length && /* @__PURE__ */ (0, import_jsx_runtime464.jsx)("div", { className: "editor-post-taxonomies__hierarchical-terms-subchoices", children: renderTerms(term.children) })
-            ]
-          },
-          term.id
-        );
-      });
-    };
     const labelWithFallback = (labelProperty, fallbackIsCategory, fallbackIsNotCategory) => taxonomy?.labels?.[labelProperty] ?? (slug === "category" ? fallbackIsCategory : fallbackIsNotCategory);
     const newTermButtonLabel = labelWithFallback(
       "add_new_item",
@@ -92838,9 +92839,15 @@ If there's a particular need for this, please submit a feature request at https:
           tabIndex: "0",
           role: "group",
           "aria-label": groupLabel,
-          children: renderTerms(
-            "" !== filterValue ? filteredTermsTree : availableTermsTree
-          )
+          children: shownTerms.map((term) => /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
+            TermRow,
+            {
+              term,
+              selectedTerms,
+              onToggle: onToggleTerm
+            },
+            term.id
+          ))
         }
       ),
       !loading && hasCreateAction && /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(import_components215.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
