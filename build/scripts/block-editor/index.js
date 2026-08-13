@@ -17433,7 +17433,7 @@ var wp;
       });
       return;
     }
-    if ((0, import_blocks10.isUnmodifiedDefaultBlock)(blockA)) {
+    if ((0, import_blocks10.isUnmodifiedDefaultBlock)(blockA) || !!blockAType.merge && blockA.name !== blockB.name && (0, import_blocks10.isUnmodifiedBlock)(blockA, "content")) {
       const isASelected = select3.isBlockSelected(clientIdA);
       if (isASelected) {
         registry.batch(() => {
