@@ -105,8 +105,7 @@ var route = {
     return {
       postType: NAVIGATION_POST_TYPE,
       postId,
-      isPreview: true,
-      editLink: `/types/wp_navigation/edit/${postId}`
+      isPreview: true
     };
   },
   loader: async ({

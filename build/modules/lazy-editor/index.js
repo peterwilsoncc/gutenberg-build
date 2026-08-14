@@ -2861,7 +2861,8 @@ function Editor({
   postType,
   postId,
   settings,
-  backButton
+  backButton,
+  onActionPerformed
 }) {
   const homePage = (0, import_data6.useSelect)(
     (select2) => {
@@ -2924,6 +2925,7 @@ function Editor({
       templateId,
       settings: finalSettings,
       styles: finalSettings.styles,
+      onActionPerformed,
       children: backButton && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BackButton, { children: backButton })
     }
   );

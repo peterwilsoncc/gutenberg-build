@@ -155,14 +155,14 @@ var require_with_selector_development = __commonJS({
         return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React48 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef22 = React48.useRef, useEffect18 = React48.useEffect, useMemo20 = React48.useMemo, useDebugValue2 = React48.useDebugValue;
+      var React48 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef22 = React48.useRef, useEffect18 = React48.useEffect, useMemo22 = React48.useMemo, useDebugValue2 = React48.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef22(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo20(
+        instRef = useMemo22(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -303,12 +303,12 @@ var require_html_entities = __commonJS({
 });
 
 // packages/boot/build-module/components/app/index.mjs
-var import_element33 = __toESM(require_element(), 1);
-var import_data10 = __toESM(require_data(), 1);
+var import_element34 = __toESM(require_element(), 1);
+var import_data12 = __toESM(require_data(), 1);
 
 // packages/boot/build-module/components/app/router.mjs
-var import_i18n13 = __toESM(require_i18n(), 1);
-var import_element31 = __toESM(require_element(), 1);
+var import_i18n14 = __toESM(require_i18n(), 1);
+var import_element32 = __toESM(require_element(), 1);
 
 // node_modules/clsx/dist/clsx.mjs
 function r(e) {
@@ -9753,19 +9753,19 @@ function getAdminThemeColors() {
 }
 
 // packages/boot/build-module/components/app/router.mjs
-var import_data9 = __toESM(require_data(), 1);
-var import_core_data4 = __toESM(require_core_data(), 1);
+var import_data11 = __toESM(require_data(), 1);
+var import_core_data5 = __toESM(require_core_data(), 1);
 import {
-  privateApis as routePrivateApis5
+  privateApis as routePrivateApis6
 } from "@wordpress/route";
 
 // packages/boot/build-module/components/root/index.mjs
-var import_notices = __toESM(require_notices(), 1);
+var import_notices2 = __toESM(require_notices(), 1);
 var import_compose4 = __toESM(require_compose(), 1);
 var import_components13 = __toESM(require_components(), 1);
-import { privateApis as routePrivateApis4 } from "@wordpress/route";
-var import_element30 = __toESM(require_element(), 1);
-var import_i18n12 = __toESM(require_i18n(), 1);
+import { privateApis as routePrivateApis5 } from "@wordpress/route";
+var import_element31 = __toESM(require_element(), 1);
+var import_i18n13 = __toESM(require_i18n(), 1);
 var import_theme = __toESM(require_theme(), 1);
 
 // packages/boot/build-module/components/sidebar/index.mjs
@@ -9784,7 +9784,8 @@ var import_data = __toESM(require_data(), 1);
 var initialState = {
   menuItems: {},
   routes: [],
-  dashboardLink: void 0
+  dashboardLink: void 0,
+  entityLinks: {}
 };
 function reducer(state = initialState, action) {
   switch (action.type) {
@@ -9815,6 +9816,17 @@ function reducer(state = initialState, action) {
         ...state,
         routes: [...state.routes, action.route]
       };
+    case "REGISTER_ENTITY_LINKS":
+      return {
+        ...state,
+        entityLinks: {
+          ...state.entityLinks,
+          [action.postType]: {
+            ...state.entityLinks[action.postType],
+            ...action.links
+          }
+        }
+      };
     case "SET_DASHBOARD_LINK":
       return {
         ...state,
@@ -9827,6 +9839,7 @@ function reducer(state = initialState, action) {
 // packages/boot/build-module/store/actions.mjs
 var actions_exports = {};
 __export(actions_exports, {
+  registerEntityLinks: () => registerEntityLinks,
   registerMenuItem: () => registerMenuItem,
   registerRoute: () => registerRoute,
   setDashboardLink: () => setDashboardLink,
@@ -9852,6 +9865,13 @@ function registerRoute(route) {
     route
   };
 }
+function registerEntityLinks(postType, links) {
+  return {
+    type: "REGISTER_ENTITY_LINKS",
+    postType,
+    links
+  };
+}
 function setDashboardLink(dashboardLink) {
   return {
     type: "SET_DASHBOARD_LINK",
@@ -9863,6 +9883,7 @@ function setDashboardLink(dashboardLink) {
 var selectors_exports = {};
 __export(selectors_exports, {
   getDashboardLink: () => getDashboardLink,
+  getEntityLink: () => getEntityLink,
   getMenuItems: () => getMenuItems,
   getRoutes: () => getRoutes
 });
@@ -9874,6 +9895,14 @@ function getRoutes(state) {
 }
 function getDashboardLink(state) {
   return state.dashboardLink;
+}
+function getEntityLink(state, postType, postId) {
+  const links = state.entityLinks[postType] ?? state.entityLinks.default;
+  const path = postId === void 0 ? links?.list : links?.edit;
+  if (!path) {
+    return void 0;
+  }
+  return path.replace("{type}", encodeURIComponent(postType)).replace("{id}", encodeURIComponent(postId ?? ""));
 }
 
 // packages/boot/build-module/store/index.mjs
@@ -10694,12 +10723,13 @@ function SavePanel() {
 }
 
 // packages/boot/build-module/components/canvas-renderer/index.mjs
-var import_element27 = __toESM(require_element(), 1);
+var import_element28 = __toESM(require_element(), 1);
 
 // packages/boot/build-module/components/canvas/index.mjs
-var import_element26 = __toESM(require_element(), 1);
+var import_element27 = __toESM(require_element(), 1);
 var import_components12 = __toESM(require_components(), 1);
-import { useNavigate } from "@wordpress/route";
+var import_data9 = __toESM(require_data(), 1);
+import { useNavigate as useNavigate2 } from "@wordpress/route";
 
 // packages/boot/build-module/components/canvas/back-button.mjs
 var import_components11 = __toESM(require_components(), 1);
@@ -10723,12 +10753,141 @@ function BootBackButton({ length }) {
   );
 }
 
+// packages/boot/build-module/components/canvas/use-navigate-to-entity-record.mjs
+var import_element26 = __toESM(require_element(), 1);
+var import_data8 = __toESM(require_data(), 1);
+var import_core_data3 = __toESM(require_core_data(), 1);
+var import_editor4 = __toESM(require_editor(), 1);
+var import_notices = __toESM(require_notices(), 1);
+var import_html_entities = __toESM(require_html_entities(), 1);
+var import_i18n11 = __toESM(require_i18n(), 1);
+import {
+  useNavigate,
+  useSearch,
+  privateApis as routePrivateApis3
+} from "@wordpress/route";
+var { useCanGoBack, useRouter: useRouter2 } = unlock2(routePrivateApis3);
+function useNavigateToEntityRecord() {
+  const navigate = useNavigate();
+  const search = useSearch({ strict: false });
+  const registry = (0, import_data8.useRegistry)();
+  const getEntityLink2 = (0, import_data8.useSelect)(
+    (select) => select(store).getEntityLink,
+    []
+  );
+  const router = useRouter2();
+  const canGoBack = useCanGoBack();
+  const onNavigateToEntityRecord = (0, import_element26.useCallback)(
+    (params) => {
+      const currentPostType = registry.select(import_editor4.store).getCurrentPostType();
+      const currentPostId = registry.select(import_editor4.store).getCurrentPostId();
+      const edits = registry.select(import_core_data3.store).getEntityRecordEdits(
+        "postType",
+        currentPostType,
+        currentPostId
+      );
+      const selectedBlock = edits?.selection?.selectionStart?.clientId;
+      if (selectedBlock) {
+        navigate({
+          search: (previous) => ({
+            ...previous,
+            selectedBlock
+          }),
+          replace: true
+        });
+      }
+      const to = getEntityLink2(params.postType, params.postId);
+      if (to) {
+        navigate({ to, search: () => ({ focusMode: true }) });
+      }
+    },
+    [navigate, registry, getEntityLink2]
+  );
+  const isFocusMode = !!search.focusMode;
+  const onNavigateToPreviousEntityRecord = (0, import_element26.useMemo)(
+    () => isFocusMode && canGoBack ? () => router.history.back() : void 0,
+    [isFocusMode, canGoBack, router]
+  );
+  return { onNavigateToEntityRecord, onNavigateToPreviousEntityRecord };
+}
+function useActionPerformed(postType) {
+  const navigate = useNavigate();
+  const { createSuccessNotice } = (0, import_data8.useDispatch)(import_notices.store);
+  const getEntityLink2 = (0, import_data8.useSelect)(
+    (select) => select(store).getEntityLink,
+    []
+  );
+  return (0, import_element26.useCallback)(
+    (actionId, items) => {
+      switch (actionId) {
+        case "move-to-trash":
+        case "delete-post": {
+          const to = postType && getEntityLink2(postType);
+          if (to) {
+            navigate({ to, search: () => ({}) });
+          }
+          break;
+        }
+        case "duplicate-post": {
+          const newItem = items[0];
+          const to = getEntityLink2(newItem.type, newItem.id);
+          if (!to) {
+            break;
+          }
+          const title = typeof newItem.title === "string" ? newItem.title : newItem.title?.rendered;
+          createSuccessNotice(
+            (0, import_i18n11.sprintf)(
+              // translators: %s: Title of the created post, e.g: "Hello world".
+              (0, import_i18n11.__)('"%s" successfully created.'),
+              (0, import_html_entities.decodeEntities)(title ?? "") || (0, import_i18n11.__)("(no title)")
+            ),
+            {
+              type: "snackbar",
+              id: "duplicate-post-action",
+              actions: [
+                {
+                  label: (0, import_i18n11.__)("Edit"),
+                  onClick: () => navigate({ to })
+                }
+              ]
+            }
+          );
+          break;
+        }
+      }
+    },
+    [navigate, createSuccessNotice, getEntityLink2, postType]
+  );
+}
+
 // packages/boot/build-module/components/canvas/index.mjs
 var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
 function Canvas({ canvas }) {
-  const [Editor, setEditor] = (0, import_element26.useState)(null);
-  const navigate = useNavigate();
-  (0, import_element26.useEffect)(() => {
+  const [Editor, setEditor] = (0, import_element27.useState)(null);
+  const navigate = useNavigate2();
+  const { onNavigateToEntityRecord, onNavigateToPreviousEntityRecord } = useNavigateToEntityRecord();
+  const onActionPerformed = useActionPerformed(canvas.postType);
+  const editLink = (0, import_data9.useSelect)(
+    (select) => canvas.postType && canvas.postId ? select(store).getEntityLink(
+      canvas.postType,
+      canvas.postId
+    ) : void 0,
+    [canvas.postType, canvas.postId]
+  );
+  const settings = (0, import_element27.useMemo)(
+    () => ({
+      isPreviewMode: canvas.isPreview,
+      styles: canvas.isPreview ? [{ css: "body{min-height:100vh;}" }] : [],
+      onNavigateToEntityRecord,
+      onNavigateToPreviousEntityRecord
+    }),
+    [
+      canvas.isPreview,
+      onNavigateToEntityRecord,
+      onNavigateToPreviousEntityRecord
+    ]
+  );
+  (0, import_element27.useEffect)(() => {
     import("@wordpress/lazy-editor").then((module) => {
       setEditor(() => module.Editor);
     }).catch((error) => {
@@ -10762,23 +10921,21 @@ function Canvas({ canvas }) {
           {
             postType: canvas.postType,
             postId: canvas.postId,
-            settings: {
-              isPreviewMode: canvas.isPreview,
-              styles: canvas.isPreview ? [{ css: "body{min-height:100vh;}" }] : []
-            },
-            backButton
+            settings,
+            backButton,
+            onActionPerformed
           }
         )
       }
     ),
-    canvas.isPreview && canvas.editLink && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+    canvas.isPreview && editLink && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
       "div",
       {
-        onClick: () => navigate({ to: canvas.editLink }),
+        onClick: () => navigate({ to: editLink }),
         onKeyDown: (e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
-            navigate({ to: canvas.editLink });
+            navigate({ to: editLink });
           }
         },
         style: {
@@ -10801,8 +10958,8 @@ function CanvasRenderer({
   canvas,
   routeContentModule
 }) {
-  const [CustomCanvas, setCustomCanvas] = (0, import_element27.useState)(null);
-  (0, import_element27.useEffect)(() => {
+  const [CustomCanvas, setCustomCanvas] = (0, import_element28.useState)(null);
+  (0, import_element28.useEffect)(() => {
     if (canvas === null && routeContentModule) {
       import(routeContentModule).then((module) => {
         setCustomCanvas(() => module.canvas);
@@ -10826,40 +10983,40 @@ function CanvasRenderer({
 }
 
 // packages/boot/build-module/components/app/use-route-title.mjs
-var import_element28 = __toESM(require_element(), 1);
-var import_data8 = __toESM(require_data(), 1);
-var import_core_data3 = __toESM(require_core_data(), 1);
-var import_i18n11 = __toESM(require_i18n(), 1);
-var import_html_entities = __toESM(require_html_entities(), 1);
+var import_element29 = __toESM(require_element(), 1);
+var import_data10 = __toESM(require_data(), 1);
+var import_core_data4 = __toESM(require_core_data(), 1);
+var import_i18n12 = __toESM(require_i18n(), 1);
+var import_html_entities2 = __toESM(require_html_entities(), 1);
 import { speak } from "@wordpress/a11y";
-import { privateApis as routePrivateApis3 } from "@wordpress/route";
-var { useLocation, useMatches: useMatches2 } = unlock2(routePrivateApis3);
+import { privateApis as routePrivateApis4 } from "@wordpress/route";
+var { useLocation, useMatches: useMatches2 } = unlock2(routePrivateApis4);
 function useRouteTitle() {
   const location = useLocation();
   const matches = useMatches2();
   const currentMatch = matches[matches.length - 1];
   const routeTitle = currentMatch?.loaderData?.title;
-  const siteTitle = (0, import_data8.useSelect)(
-    (select) => select(import_core_data3.store).getEntityRecord(
+  const siteTitle = (0, import_data10.useSelect)(
+    (select) => select(import_core_data4.store).getEntityRecord(
       "root",
       "__unstableBase"
     )?.name,
     []
   );
-  const isInitialLocationRef = (0, import_element28.useRef)(true);
-  (0, import_element28.useEffect)(() => {
+  const isInitialLocationRef = (0, import_element29.useRef)(true);
+  (0, import_element29.useEffect)(() => {
     isInitialLocationRef.current = false;
   }, [location]);
-  (0, import_element28.useEffect)(() => {
+  (0, import_element29.useEffect)(() => {
     if (isInitialLocationRef.current) {
       return;
     }
     if (routeTitle && typeof routeTitle === "string" && siteTitle && typeof siteTitle === "string") {
-      const decodedRouteTitle = (0, import_html_entities.decodeEntities)(routeTitle);
-      const decodedSiteTitle = (0, import_html_entities.decodeEntities)(siteTitle);
-      const formattedTitle = (0, import_i18n11.sprintf)(
+      const decodedRouteTitle = (0, import_html_entities2.decodeEntities)(routeTitle);
+      const decodedSiteTitle = (0, import_html_entities2.decodeEntities)(siteTitle);
+      const formattedTitle = (0, import_i18n12.sprintf)(
         /* translators: Admin document title. 1: Admin screen name, 2: Site name. */
-        (0, import_i18n11.__)("%1$s ‹ %2$s — WordPress"),
+        (0, import_i18n12.__)("%1$s ‹ %2$s — WordPress"),
         decodedRouteTitle,
         decodedSiteTitle
       );
@@ -10872,10 +11029,10 @@ function useRouteTitle() {
 }
 
 // packages/boot/build-module/components/root/use-sync-body-background.mjs
-var import_element29 = __toESM(require_element(), 1);
+var import_element30 = __toESM(require_element(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
 function useSyncBodyBackground() {
-  const layoutRef = (0, import_element29.useRef)(null);
+  const layoutRef = (0, import_element30.useRef)(null);
   (0, import_compose3.useIsomorphicLayoutEffect)(() => {
     if (!layoutRef.current) {
       return;
@@ -10902,7 +11059,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   style.appendChild(document.createTextNode(".boot-layout{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:row;height:100%;isolation:isolate;width:100%}.boot-layout__sidebar-backdrop{background-color:rgba(0,0,0,.5);bottom:0;cursor:var(--wpds-cursor-control,pointer);left:0;position:fixed;right:0;top:0;z-index:100002}.boot-layout__sidebar{flex-shrink:0;height:100%;overflow:hidden;position:relative;width:240px}.boot-layout__sidebar.is-mobile{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);bottom:0;box-shadow:2px 0 8px rgba(0,0,0,.2);inset-inline-start:0;max-width:85vw;position:fixed;top:0;width:300px;z-index:100003}.boot-layout__mobile-sidebar-drawer{left:0;position:fixed;right:0;top:0}.boot-layout--single-page .boot-layout__mobile-sidebar-drawer{top:46px}.boot-layout__mobile-sidebar-drawer{align-items:center;background:var(--wpds-color-background-surface-neutral,#fcfcfc);border-bottom:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);display:flex;justify-content:flex-start;padding:16px;z-index:3}.boot-layout__canvas.has-mobile-drawer{padding-top:65px;position:relative}.boot-layout__surfaces{display:flex;flex-grow:1;gap:8px;margin:0}@media (min-width:782px){.boot-layout__surfaces{margin:8px}.boot-layout--single-page .boot-layout__surfaces{margin-top:0;margin-inline-start:0}}.boot-layout__inspector,.boot-layout__stage{background:var(--wpds-color-background-surface-neutral,#fcfcfc);border-radius:0;bottom:0;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);flex:1;height:100vh;left:0;margin:0;overflow-y:auto;position:relative;position:fixed;right:0;top:0;width:100vw}.boot-layout--single-page .boot-layout__inspector,.boot-layout--single-page .boot-layout__stage{height:calc(100vh - 46px);top:46px}@media (min-width:782px){.boot-layout__inspector,.boot-layout__stage{border-radius:var(--wpds-border-radius-xl,12px);height:auto;margin:0;position:static;width:auto}.boot-layout--single-page .boot-layout__inspector,.boot-layout--single-page .boot-layout__stage{height:auto}}.boot-layout__stage{z-index:2}@media (min-width:782px){.boot-layout__stage{z-index:auto}}.boot-layout__inspector{z-index:3}@media (min-width:782px){.boot-layout__inspector{z-index:auto}}.boot-layout__canvas{background:var(--wpds-color-background-surface-neutral,#fcfcfc);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:0;bottom:0;box-shadow:0 1px 3px rgba(0,0,0,.1);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);flex:1;height:100vh;left:0;margin:0;overflow-y:auto;position:relative;position:fixed;right:0;top:0;width:100vw;z-index:1}.boot-layout--single-page .boot-layout__canvas{height:calc(100vh - 46px);top:46px}@media (min-width:782px){.boot-layout__canvas{border-radius:var(--wpds-border-radius-xl,12px);height:auto;position:static;width:auto;z-index:auto}.boot-layout--single-page .boot-layout__canvas{height:auto}.boot-layout.has-canvas .boot-layout__stage,.boot-layout__inspector{max-width:400px}}.boot-layout__canvas .interface-interface-skeleton{height:100%;left:0!important;position:relative;top:0!important}.boot-layout.has-full-canvas .boot-layout__surfaces{gap:0;margin:0}.boot-layout.has-full-canvas .boot-layout__inspector,.boot-layout.has-full-canvas .boot-layout__stage{display:none}.boot-layout.has-full-canvas .boot-layout__canvas{border:none;border-radius:0;bottom:0;box-shadow:none;left:0;margin:0;max-width:none;overflow:hidden;position:fixed;right:0;top:var(--wp-admin--admin-bar--height,0)}.boot-layout--single-page .boot-layout.has-full-canvas .boot-layout__canvas{top:46px}@media (min-width:782px){.boot-layout--single-page .boot-layout.has-full-canvas .boot-layout__canvas{top:32px}}@media (max-width:782px){.boot-layout__canvas:not(.has-mobile-drawer),.boot-layout__inspector,.boot-layout__stage{height:calc(100vh - var(--wp-admin--admin-bar--height, 0px));top:var(--wp-admin--admin-bar--height,0)}.boot-layout__mobile-sidebar-drawer{top:var(--wp-admin--admin-bar--height,0)}}"));
   document.head.appendChild(style);
 }
-var { useLocation: useLocation2, useMatches: useMatches3, Outlet } = unlock2(routePrivateApis4);
+var { useLocation: useLocation2, useMatches: useMatches3, Outlet } = unlock2(routePrivateApis5);
 function Root2() {
   const matches = useMatches3();
   const location = useLocation2();
@@ -10912,12 +11069,12 @@ function Root2() {
   const isFullScreen = canvas && !canvas.isPreview;
   useRouteTitle();
   const isMobileViewport = (0, import_compose4.useViewportMatch)("medium", "<");
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = (0, import_element30.useState)(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = (0, import_element31.useState)(false);
   const disableMotion = (0, import_compose4.useReducedMotion)();
-  (0, import_element30.useEffect)(() => {
+  (0, import_element31.useEffect)(() => {
     setIsMobileSidebarOpen(false);
   }, [location.pathname, isMobileViewport]);
-  const themeColors = (0, import_element30.useMemo)(getAdminThemeColors, []);
+  const themeColors = (0, import_element31.useMemo)(getAdminThemeColors, []);
   const layoutRef = useSyncBodyBackground();
   return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_components13.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(tooltip_exports.Provider, { children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
     import_theme.ThemeProvider,
@@ -10934,13 +11091,13 @@ function Root2() {
           }),
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(SavePanel, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_notices.SnackbarNotices, { className: "boot-notices__snackbar" }),
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(import_notices2.SnackbarNotices, { className: "boot-notices__snackbar" }),
             isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(page_default.SidebarToggleFill, { children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
               import_components13.Button,
               {
                 icon: menu_default,
                 onClick: () => setIsMobileSidebarOpen(true),
-                label: (0, import_i18n12.__)("Open navigation panel"),
+                label: (0, import_i18n13.__)("Open navigation panel"),
                 size: "compact"
               }
             ) }),
@@ -10966,7 +11123,7 @@ function Root2() {
                 },
                 role: "button",
                 tabIndex: -1,
-                "aria-label": (0, import_i18n12.__)(
+                "aria-label": (0, import_i18n13.__)(
                   "Close navigation panel"
                 )
               }
@@ -11013,7 +11170,7 @@ function Root2() {
                             onClick: () => setIsMobileSidebarOpen(
                               true
                             ),
-                            label: (0, import_i18n12.__)(
+                            label: (0, import_i18n13.__)(
                               "Open navigation panel"
                             ),
                             size: "compact"
@@ -11050,9 +11207,9 @@ var {
   createBrowserHistory,
   parseHref,
   useLoaderData
-} = unlock2(routePrivateApis5);
+} = unlock2(routePrivateApis6);
 function NotFoundComponent() {
-  return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(page_default, { title: (0, import_i18n13.__)("Route not found"), hasPadding: true, children: (0, import_i18n13.__)("The page you're looking for does not exist") }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(page_default, { title: (0, import_i18n14.__)("Route not found"), hasPadding: true, children: (0, import_i18n14.__)("The page you're looking for does not exist") }) });
 }
 function createRouteFromDefinition(route, parentRoute) {
   let tanstackRoute = createRoute({
@@ -11081,7 +11238,7 @@ function createRouteFromDefinition(route, parentRoute) {
         search: opts.deps || {}
       };
       const [, loaderData, canvasData, titleData] = await Promise.all([
-        (0, import_data9.resolveSelect)(import_core_data4.store).getEntityRecord(
+        (0, import_data11.resolveSelect)(import_core_data5.store).getEntityRecord(
           "root",
           "__unstableBase"
         ),
@@ -11153,7 +11310,7 @@ function Router({
   routes,
   rootComponent = Root2
 }) {
-  const router = (0, import_element31.useMemo)(() => {
+  const router = (0, import_element32.useMemo)(() => {
     const history = createPathHistory();
     const routeTree = createRouteTree(routes, rootComponent);
     return createRouter({
@@ -11177,10 +11334,10 @@ function Router({
 }
 
 // packages/boot/build-module/components/root/single-page.mjs
-var import_notices2 = __toESM(require_notices(), 1);
+var import_notices3 = __toESM(require_notices(), 1);
 var import_components14 = __toESM(require_components(), 1);
-var import_element32 = __toESM(require_element(), 1);
-import { privateApis as routePrivateApis6 } from "@wordpress/route";
+var import_element33 = __toESM(require_element(), 1);
+import { privateApis as routePrivateApis7 } from "@wordpress/route";
 var import_theme2 = __toESM(require_theme(), 1);
 var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d38c56df8c']")) {
@@ -11189,7 +11346,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
   style.appendChild(document.createTextNode(".boot-layout{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:row;height:100%;isolation:isolate;width:100%}.boot-layout__sidebar-backdrop{background-color:rgba(0,0,0,.5);bottom:0;cursor:var(--wpds-cursor-control,pointer);left:0;position:fixed;right:0;top:0;z-index:100002}.boot-layout__sidebar{flex-shrink:0;height:100%;overflow:hidden;position:relative;width:240px}.boot-layout__sidebar.is-mobile{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);bottom:0;box-shadow:2px 0 8px rgba(0,0,0,.2);inset-inline-start:0;max-width:85vw;position:fixed;top:0;width:300px;z-index:100003}.boot-layout__mobile-sidebar-drawer{left:0;position:fixed;right:0;top:0}.boot-layout--single-page .boot-layout__mobile-sidebar-drawer{top:46px}.boot-layout__mobile-sidebar-drawer{align-items:center;background:var(--wpds-color-background-surface-neutral,#fcfcfc);border-bottom:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);display:flex;justify-content:flex-start;padding:16px;z-index:3}.boot-layout__canvas.has-mobile-drawer{padding-top:65px;position:relative}.boot-layout__surfaces{display:flex;flex-grow:1;gap:8px;margin:0}@media (min-width:782px){.boot-layout__surfaces{margin:8px}.boot-layout--single-page .boot-layout__surfaces{margin-top:0;margin-inline-start:0}}.boot-layout__inspector,.boot-layout__stage{background:var(--wpds-color-background-surface-neutral,#fcfcfc);border-radius:0;bottom:0;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);flex:1;height:100vh;left:0;margin:0;overflow-y:auto;position:relative;position:fixed;right:0;top:0;width:100vw}.boot-layout--single-page .boot-layout__inspector,.boot-layout--single-page .boot-layout__stage{height:calc(100vh - 46px);top:46px}@media (min-width:782px){.boot-layout__inspector,.boot-layout__stage{border-radius:var(--wpds-border-radius-xl,12px);height:auto;margin:0;position:static;width:auto}.boot-layout--single-page .boot-layout__inspector,.boot-layout--single-page .boot-layout__stage{height:auto}}.boot-layout__stage{z-index:2}@media (min-width:782px){.boot-layout__stage{z-index:auto}}.boot-layout__inspector{z-index:3}@media (min-width:782px){.boot-layout__inspector{z-index:auto}}.boot-layout__canvas{background:var(--wpds-color-background-surface-neutral,#fcfcfc);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:0;bottom:0;box-shadow:0 1px 3px rgba(0,0,0,.1);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);flex:1;height:100vh;left:0;margin:0;overflow-y:auto;position:relative;position:fixed;right:0;top:0;width:100vw;z-index:1}.boot-layout--single-page .boot-layout__canvas{height:calc(100vh - 46px);top:46px}@media (min-width:782px){.boot-layout__canvas{border-radius:var(--wpds-border-radius-xl,12px);height:auto;position:static;width:auto;z-index:auto}.boot-layout--single-page .boot-layout__canvas{height:auto}.boot-layout.has-canvas .boot-layout__stage,.boot-layout__inspector{max-width:400px}}.boot-layout__canvas .interface-interface-skeleton{height:100%;left:0!important;position:relative;top:0!important}.boot-layout.has-full-canvas .boot-layout__surfaces{gap:0;margin:0}.boot-layout.has-full-canvas .boot-layout__inspector,.boot-layout.has-full-canvas .boot-layout__stage{display:none}.boot-layout.has-full-canvas .boot-layout__canvas{border:none;border-radius:0;bottom:0;box-shadow:none;left:0;margin:0;max-width:none;overflow:hidden;position:fixed;right:0;top:var(--wp-admin--admin-bar--height,0)}.boot-layout--single-page .boot-layout.has-full-canvas .boot-layout__canvas{top:46px}@media (min-width:782px){.boot-layout--single-page .boot-layout.has-full-canvas .boot-layout__canvas{top:32px}}@media (max-width:782px){.boot-layout__canvas:not(.has-mobile-drawer),.boot-layout__inspector,.boot-layout__stage{height:calc(100vh - var(--wp-admin--admin-bar--height, 0px));top:var(--wp-admin--admin-bar--height,0)}.boot-layout__mobile-sidebar-drawer{top:var(--wp-admin--admin-bar--height,0)}}"));
   document.head.appendChild(style);
 }
-var { useMatches: useMatches4, Outlet: Outlet2 } = unlock2(routePrivateApis6);
+var { useMatches: useMatches4, Outlet: Outlet2 } = unlock2(routePrivateApis7);
 function RootSinglePage() {
   const matches = useMatches4();
   const currentMatch = matches[matches.length - 1];
@@ -11197,7 +11354,7 @@ function RootSinglePage() {
   const routeContentModule = currentMatch?.loaderData?.routeContentModule;
   const isFullScreen = canvas && !canvas.isPreview;
   useRouteTitle();
-  const themeColors = (0, import_element32.useMemo)(getAdminThemeColors, []);
+  const themeColors = (0, import_element33.useMemo)(getAdminThemeColors, []);
   const layoutRef = useSyncBodyBackground();
   return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_components14.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
     import_theme2.ThemeProvider,
@@ -11217,7 +11374,7 @@ function RootSinglePage() {
           ),
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(SavePanel, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_notices2.SnackbarNotices, { className: "boot-notices__snackbar" }),
+            /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(import_notices3.SnackbarNotices, { className: "boot-notices__snackbar" }),
             /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(
               import_theme2.ThemeProvider,
               {
@@ -11247,7 +11404,7 @@ function RootSinglePage() {
 // packages/boot/build-module/components/app/index.mjs
 var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
 function App({ rootComponent }) {
-  const routes = (0, import_data10.useSelect)((select) => select(store).getRoutes(), []);
+  const routes = (0, import_data12.useSelect)((select) => select(store).getRoutes(), []);
   return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Router, { routes, rootComponent });
 }
 async function runInitModules(initModules) {
@@ -11264,20 +11421,20 @@ async function init({
   dashboardLink
 }) {
   (menuItems ?? []).forEach((menuItem) => {
-    (0, import_data10.dispatch)(store).registerMenuItem(menuItem.id, menuItem);
+    (0, import_data12.dispatch)(store).registerMenuItem(menuItem.id, menuItem);
   });
   (routes ?? []).forEach((route) => {
-    (0, import_data10.dispatch)(store).registerRoute(route);
+    (0, import_data12.dispatch)(store).registerRoute(route);
   });
   if (dashboardLink) {
-    (0, import_data10.dispatch)(store).setDashboardLink(dashboardLink);
+    (0, import_data12.dispatch)(store).setDashboardLink(dashboardLink);
   }
   await runInitModules(initModules);
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
-    const root = (0, import_element33.createRoot)(rootElement);
+    const root = (0, import_element34.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_element33.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_element34.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(App, {}) })
     );
   }
 }
@@ -11287,14 +11444,14 @@ async function initSinglePage({
   initModules
 }) {
   (routes ?? []).forEach((route) => {
-    (0, import_data10.dispatch)(store).registerRoute(route);
+    (0, import_data12.dispatch)(store).registerRoute(route);
   });
   await runInitModules(initModules);
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
-    const root = (0, import_element33.createRoot)(rootElement);
+    const root = (0, import_element34.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_element33.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(App, { rootComponent: RootSinglePage }) })
+      /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_element34.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(App, { rootComponent: RootSinglePage }) })
     );
   }
 }

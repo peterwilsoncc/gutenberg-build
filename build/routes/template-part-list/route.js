@@ -265,10 +265,7 @@ var route = {
       return {
         postType: "wp_template_part",
         postId,
-        isPreview: true,
-        editLink: `/types/wp_template_part/edit/${encodeURIComponent(
-          postId
-        )}`
+        isPreview: true
       };
     }
     const query = viewToQuery(view);
@@ -282,10 +279,7 @@ var route = {
       return {
         postType: "wp_template_part",
         postId,
-        isPreview: true,
-        editLink: `/types/wp_template_part/edit/${encodeURIComponent(
-          postId
-        )}`
+        isPreview: true
       };
     }
     return void 0;

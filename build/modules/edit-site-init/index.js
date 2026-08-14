@@ -105,6 +105,19 @@ async function init() {
   Object.entries(menuIcons).forEach(([id, { icon }]) => {
     (0, import_data.dispatch)(bootStore).updateMenuItem(id, { icon });
   });
+  const entityLinks = {
+    default: { list: "/types/{type}", edit: "/types/{type}/edit/{id}" },
+    wp_template: { list: "/templates" },
+    wp_template_part: { list: "/template-parts" },
+    wp_block: { list: "/patterns" },
+    wp_navigation: { list: "/navigation" }
+  };
+  Object.entries(entityLinks).forEach(([postType, links]) => {
+    (0, import_data.dispatch)(bootStore).registerEntityLinks(postType, {
+      ...entityLinks.default,
+      ...links
+    });
+  });
 }
 export {
   init
