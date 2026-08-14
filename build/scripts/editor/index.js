@@ -88257,17 +88257,16 @@ If there's a particular need for this, please submit a feature request at https:
         return this.props.children;
       }
       return /* @__PURE__ */ (0, import_jsx_runtime410.jsxs)(
-        import_components174.__experimentalHStack,
+        Stack,
         {
           className: "editor-error-boundary",
-          alignment: "baseline",
-          spacing: 4,
+          align: "baseline",
+          gap: "lg",
           justify: "space-between",
-          expanded: false,
-          wrap: true,
+          wrap: "wrap",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(import_components174.__experimentalText, { as: "p", children: (0, import_i18n222.__)("The editor has encountered an unexpected error.") }),
-            /* @__PURE__ */ (0, import_jsx_runtime410.jsxs)(import_components174.__experimentalHStack, { expanded: false, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(Text, { render: /* @__PURE__ */ (0, import_jsx_runtime410.jsx)("p", {}), children: (0, import_i18n222.__)("The editor has encountered an unexpected error.") }),
+            /* @__PURE__ */ (0, import_jsx_runtime410.jsxs)(Stack, { align: "center", gap: "sm", children: [
               canCopyContent && /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(CopyButton, { text: getContent, children: (0, import_i18n222.__)("Copy contents") }),
               /* @__PURE__ */ (0, import_jsx_runtime410.jsx)(CopyButton, { variant: "primary", text: error2?.stack, children: (0, import_i18n222.__)("Copy error") })
             ] })
