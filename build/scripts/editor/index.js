@@ -80643,7 +80643,6 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return settings.allowedBlockTypes;
     }, [settings.allowedBlockTypes, hiddenBlockTypes, blockTypes]);
-    const forceDisableFocusMode = settings.focusMode === false;
     const inserterMediaCategories2 = (0, import_element216.useMemo)(
       () => getInserterMediaCategories(currentPostId, viewablePostTypeLabel),
       [currentPostId, viewablePostTypeLabel]
@@ -80663,7 +80662,7 @@ If there's a particular need for this, please submit a feature request at https:
         imageMaxBitDepth,
         allowedBlockTypes,
         allowRightClickOverrides,
-        focusMode: focusMode && !forceDisableFocusMode,
+        focusMode,
         hasFixedToolbar,
         isDistractionFree,
         keepCaretInsideBlock,
@@ -80736,7 +80735,6 @@ If there's a particular need for this, please submit a feature request at https:
       allowedBlockTypes,
       allowRightClickOverrides,
       focusMode,
-      forceDisableFocusMode,
       hasFixedToolbar,
       isDistractionFree,
       keepCaretInsideBlock,
@@ -87079,8 +87077,6 @@ If there's a particular need for this, please submit a feature request at https:
     const settings = (0, import_element239.useMemo)(
       () => ({
         ...originalSettings,
-        focusMode: false,
-        // Disable "Spotlight mode".
         isPreviewMode: true
       }),
       [originalSettings]

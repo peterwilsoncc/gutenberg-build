@@ -56665,8 +56665,6 @@ var wp;
     const settings2 = (0, import_element111.useMemo)(
       () => ({
         ...originalSettings,
-        focusMode: false,
-        // Disable "Spotlight mode".
         isPreviewMode: true
       }),
       [originalSettings]
@@ -56707,8 +56705,6 @@ var wp;
         ...originalSettings,
         styles: void 0,
         // Clear styles included by the parent settings, as they are already output by the parent's EditorStyles.
-        focusMode: false,
-        // Disable "Spotlight mode".
         isPreviewMode: true
       }),
       [originalSettings]
@@ -63036,7 +63032,12 @@ var wp;
       } = getSettings8();
       return {
         isOutlineMode: outlineMode && !isTyping3(),
-        isFocusMode: focusMode || hasBlockSpotlight3(),
+        /*
+         * Spotlight fades everything but the block being worked on, which
+         * has nothing to offer a canvas that cannot be edited — a preview
+         * would just render most of its content faded out.
+         */
+        isFocusMode: !_isPreviewMode && (focusMode || hasBlockSpotlight3()),
         isPreviewMode: _isPreviewMode,
         editedContentOnlySection: getEditedContentOnlySection2()
       };

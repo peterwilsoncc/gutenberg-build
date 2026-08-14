@@ -28730,7 +28730,6 @@ var wp;
         __experimentalFeatures: globalSettings,
         richEditingEnabled: true,
         supportsTemplateMode: true,
-        focusMode: canvas !== "view",
         onNavigateToEntityRecord,
         onNavigateToPreviousEntityRecord,
         isPreviewMode: canvas === "view"
