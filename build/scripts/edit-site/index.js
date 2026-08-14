@@ -1099,7 +1099,7 @@ var wp;
     store: () => store
   });
   var import_blocks15 = __toESM(require_blocks(), 1);
-  var import_block_library4 = __toESM(require_block_library(), 1);
+  var import_block_library3 = __toESM(require_block_library(), 1);
   var import_data90 = __toESM(require_data(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
   var import_element217 = __toESM(require_element(), 1);
@@ -25336,7 +25336,6 @@ var wp;
   var import_editor17 = __toESM(require_editor(), 1);
   var import_i18n27 = __toESM(require_i18n(), 1);
   var import_core_data22 = __toESM(require_core_data(), 1);
-  var import_block_library = __toESM(require_block_library(), 1);
   var import_element66 = __toESM(require_element(), 1);
   var import_notices3 = __toESM(require_notices(), 1);
   var import_router18 = __toESM(require_router(), 1);
@@ -29319,7 +29318,6 @@ var wp;
   var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
   var { Editor, BackButton } = unlock(import_editor17.privateApis);
   var { useHistory: useHistory11, useLocation: useLocation18 } = unlock(import_router18.privateApis);
-  var { BlockKeyboardShortcuts } = unlock(import_block_library.privateApis);
   function getListPathForPostType(postType2) {
     switch (postType2) {
       case "navigation":
@@ -29432,7 +29430,6 @@ var wp;
     );
     const isReady = !isLoading;
     return !isBlockBasedTheme && isHomeRoute ? /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(SitePreview, {}) : /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(import_jsx_runtime130.Fragment, { children: [
-      isEditMode && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(BlockKeyboardShortcuts, {}),
       !isReady ? /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(CanvasLoader, { id: loadingProgressId }) : null,
       isEditMode && isReady && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
         WelcomeGuide,
@@ -60781,7 +60778,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks9 = __toESM(require_blocks(), 1);
   var import_element185 = __toESM(require_element(), 1);
   var import_core_data36 = __toESM(require_core_data(), 1);
-  var import_block_library2 = __toESM(require_block_library(), 1);
+  var import_block_library = __toESM(require_block_library(), 1);
 
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/leaf-more-menu.mjs
   var import_components142 = __toESM(require_components(), 1);
@@ -60899,7 +60896,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/navigation-menu-content.mjs
   var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
   var { PrivateListView } = unlock(import_block_editor21.privateApis);
-  var { NavigationLinkUI } = unlock(import_block_library2.privateApis);
+  var { NavigationLinkUI } = unlock(import_block_library.privateApis);
   var MAX_PAGE_COUNT = 100;
   var PAGES_QUERY = [
     "postType",
@@ -62304,9 +62301,9 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-template-part-areas.mjs
   var import_core_data45 = __toESM(require_core_data(), 1);
   var import_data69 = __toESM(require_data(), 1);
-  var import_block_library3 = __toESM(require_block_library(), 1);
+  var import_block_library2 = __toESM(require_block_library(), 1);
   var { NAVIGATION_OVERLAY_TEMPLATE_PART_AREA } = unlock(
-    import_block_library3.privateApis
+    import_block_library2.privateApis
   );
   var useTemplatePartsGroupedByArea = (items) => {
     const allItems = items || [];
@@ -67649,16 +67646,16 @@ If there's a particular need for this, please submit a feature request at https:
     const target = document.getElementById(id);
     const root = (0, import_element217.createRoot)(target);
     (0, import_data90.dispatch)(import_blocks15.store).reapplyBlockTypeFilters();
-    const coreBlocks = (0, import_block_library4.__experimentalGetCoreBlocks)().filter(
+    const coreBlocks = (0, import_block_library3.__experimentalGetCoreBlocks)().filter(
       ({ name: name2 }) => name2 !== "core/freeform"
     );
-    (0, import_block_library4.registerCoreBlocks)(coreBlocks);
+    (0, import_block_library3.registerCoreBlocks)(coreBlocks);
     registerCoreBlockBindingsSources();
     (0, import_data90.dispatch)(import_blocks15.store).setFreeformFallbackBlockName("core/html");
     (0, import_widgets.registerLegacyWidgetBlock)({ inserter: false });
     (0, import_widgets.registerWidgetGroupBlock)({ inserter: false });
     if (true) {
-      (0, import_block_library4.__experimentalRegisterExperimentalCoreBlocks)({
+      (0, import_block_library3.__experimentalRegisterExperimentalCoreBlocks)({
         enableFSEBlocks: true
       });
     }

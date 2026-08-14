@@ -2472,6 +2472,7 @@ var wp;
     getAllBlockBindingsSources: () => getAllBlockBindingsSources,
     getBlockBindingsSource: () => getBlockBindingsSource2,
     getBlockBindingsSourceFieldsList: () => getBlockBindingsSourceFieldsList,
+    getBlockKeyboardShortcuts: () => getBlockKeyboardShortcuts,
     getBootstrappedBlockType: () => getBootstrappedBlockType,
     getSupportedStyles: () => getSupportedStyles,
     getUnprocessedBlockTypes: () => getUnprocessedBlockTypes,
@@ -2606,6 +2607,49 @@ var wp;
       },
       (state, source, blockContext) => [source.getFieldsList, source.usesContext, blockContext]
     )
+  );
+  var getBlockKeyboardShortcuts = (0, import_data3.createSelector)(
+    (state) => {
+      const shortcuts = [];
+      for (const blockName of Object.keys(state.blockTypes)) {
+        for (const variation of state.blockVariations[blockName] ?? []) {
+          if (!variation.shortcut) {
+            continue;
+          }
+          shortcuts.push({
+            shortcut: variation.shortcut,
+            targetBlockName: blockName,
+            variationName: variation.name
+          });
+        }
+        const transforms = state.blockTypes[blockName]?.transforms;
+        for (const transform of transforms?.to ?? []) {
+          const targetBlockName = transform.blocks?.[0];
+          if (!transform.shortcut || transform.type !== "block" || !targetBlockName) {
+            continue;
+          }
+          shortcuts.push({
+            shortcut: transform.shortcut,
+            targetBlockName,
+            blockNames: [blockName],
+            variationName: transform.variationName
+          });
+        }
+        for (const transform of transforms?.from ?? []) {
+          if (!transform.shortcut || transform.type !== "block" || !transform.blocks?.length) {
+            continue;
+          }
+          shortcuts.push({
+            shortcut: transform.shortcut,
+            targetBlockName: blockName,
+            blockNames: transform.blocks,
+            variationName: transform.variationName
+          });
+        }
+      }
+      return shortcuts;
+    },
+    (state) => [state.blockTypes, state.blockVariations]
   );
   var hasContentRoleAttribute = (state, blockTypeName) => {
     const blockType = getBlockType2(state, blockTypeName);

@@ -240,7 +240,7 @@ var wp;
   var import_data32 = __toESM(require_data(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
   var import_element27 = __toESM(require_element(), 1);
-  var import_block_library2 = __toESM(require_block_library(), 1);
+  var import_block_library = __toESM(require_block_library(), 1);
   var import_core_data12 = __toESM(require_core_data(), 1);
   var import_widgets5 = __toESM(require_widgets(), 1);
   var import_preferences10 = __toESM(require_preferences(), 1);
@@ -2941,7 +2941,6 @@ var wp;
   var import_block_editor9 = __toESM(require_block_editor(), 1);
   var import_patterns = __toESM(require_patterns(), 1);
   var import_preferences4 = __toESM(require_preferences(), 1);
-  var import_block_library = __toESM(require_block_library(), 1);
 
   // packages/edit-widgets/build-module/components/keyboard-shortcuts/index.mjs
   var import_element10 = __toESM(require_element(), 1);
@@ -3098,7 +3097,6 @@ var wp;
   var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
   var { ExperimentalBlockEditorProvider } = unlock(import_block_editor9.privateApis);
   var { PatternsMenuItems } = unlock(import_patterns.privateApis);
-  var { BlockKeyboardShortcuts } = unlock(import_block_library.privateApis);
   var EMPTY_ARRAY2 = [];
   function WidgetAreasBlockEditorProvider({
     blockEditorSettings,
@@ -3180,7 +3178,6 @@ var wp;
     );
     return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(import_components9.SlotFillProvider, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(keyboard_shortcuts_default.Register, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(BlockKeyboardShortcuts, {}),
       /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(
         ExperimentalBlockEditorProvider,
         {
@@ -4659,7 +4656,7 @@ var wp;
   function initializeEditor(id, settings2) {
     const target = document.getElementById(id);
     const root = (0, import_element27.createRoot)(target);
-    const coreBlocks = (0, import_block_library2.__experimentalGetCoreBlocks)().filter((block) => {
+    const coreBlocks = (0, import_block_library.__experimentalGetCoreBlocks)().filter((block) => {
       return !(disabledBlocks.includes(block.name) || block.name.startsWith("core/post") || block.name.startsWith("core/query") || block.name.startsWith("core/site") || block.name.startsWith("core/navigation") || block.name.startsWith("core/term"));
     });
     (0, import_data32.dispatch)(import_preferences10.store).setDefaults("core/edit-widgets", {
@@ -4669,10 +4666,10 @@ var wp;
       themeStyles: true
     });
     (0, import_data32.dispatch)(import_blocks3.store).reapplyBlockTypeFilters();
-    (0, import_block_library2.registerCoreBlocks)(coreBlocks);
+    (0, import_block_library.registerCoreBlocks)(coreBlocks);
     (0, import_widgets5.registerLegacyWidgetBlock)();
     if (true) {
-      (0, import_block_library2.__experimentalRegisterExperimentalCoreBlocks)({
+      (0, import_block_library.__experimentalRegisterExperimentalCoreBlocks)({
         enableFSEBlocks: ENABLE_EXPERIMENTAL_FSE_BLOCKS
       });
     }

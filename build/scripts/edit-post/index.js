@@ -409,7 +409,7 @@ var wp;
     store: () => store
   });
   var import_blocks2 = __toESM(require_blocks(), 1);
-  var import_block_library2 = __toESM(require_block_library(), 1);
+  var import_block_library = __toESM(require_block_library(), 1);
   var import_deprecated4 = __toESM(require_deprecated(), 1);
   var import_element30 = __toESM(require_element(), 1);
   var import_data26 = __toESM(require_data(), 1);
@@ -9556,7 +9556,6 @@ var wp;
   var import_notices3 = __toESM(require_notices(), 1);
   var import_preferences10 = __toESM(require_preferences(), 1);
   var import_commands2 = __toESM(require_commands(), 1);
-  var import_block_library = __toESM(require_block_library(), 1);
   var import_url6 = __toESM(require_url(), 1);
   var import_html_entities = __toESM(require_html_entities(), 1);
   var import_core_data9 = __toESM(require_core_data(), 1);
@@ -11293,7 +11292,6 @@ var wp;
   var { useCommandContext } = unlock2(import_commands2.privateApis);
   var { useDrag } = unlock2(import_components9.privateApis);
   var { Editor, FullscreenMode, UploadProgressSnackbar } = unlock2(import_editor18.privateApis);
-  var { BlockKeyboardShortcuts } = unlock2(import_block_library.privateApis);
   var DESIGN_POST_TYPES = [
     "wp_template",
     "wp_template_part",
@@ -11714,7 +11712,6 @@ var wp;
             /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_editor18.AutosaveMonitor, {}),
             /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_editor18.LocalAutosaveMonitor, {}),
             /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(keyboard_shortcuts_default, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(BlockKeyboardShortcuts, {}),
             currentPostType === "wp_block" && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(InitPatternModal, {}),
             /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(import_plugins.PluginArea, { onError: onPluginAreaError }),
             /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(more_menu_default, {}),
@@ -11858,12 +11855,12 @@ var wp;
     if (isMediumOrBigger && (0, import_data26.select)(import_preferences11.store).get("core", "showListViewByDefault") && !(0, import_data26.select)(import_preferences11.store).get("core", "distractionFree")) {
       (0, import_data26.dispatch)(import_editor20.store).setIsListViewOpened(true);
     }
-    (0, import_block_library2.registerCoreBlocks)();
+    (0, import_block_library.registerCoreBlocks)();
     registerCoreBlockBindingsSources();
     (0, import_widgets.registerLegacyWidgetBlock)({ inserter: false });
     (0, import_widgets.registerWidgetGroupBlock)({ inserter: false });
     if (true) {
-      (0, import_block_library2.__experimentalRegisterExperimentalCoreBlocks)({
+      (0, import_block_library.__experimentalRegisterExperimentalCoreBlocks)({
         enableFSEBlocks: settings.__unstableEnableFullSiteEditingBlocks
       });
     }
