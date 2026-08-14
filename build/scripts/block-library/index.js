@@ -15439,7 +15439,7 @@ var wp;
       {
         templateLock,
         allowedBlocks,
-        renderAppender: hasChildBlocks ? void 0 : import_block_editor34.InnerBlocks.ButtonBlockAppender
+        renderAppender: hasChildBlocks ? false : import_block_editor34.InnerBlocks.ButtonBlockAppender
       }
     );
     return /* @__PURE__ */ (0, import_jsx_runtime209.jsxs)(import_jsx_runtime209.Fragment, { children: [
