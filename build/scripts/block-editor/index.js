@@ -104282,6 +104282,29 @@ var wp;
       return css ? `${mediaQuery}{${css}}` : "";
     }).filter(Boolean).join("");
   }
+  function getUpdatedChildLayoutStyle(style, layout, selectedState) {
+    if (!hasViewportBlockStyleState(selectedState)) {
+      return {
+        ...style,
+        layout: {
+          ...style?.layout,
+          ...layout
+        }
+      };
+    }
+    const layoutState = {
+      viewport: selectedState.viewport,
+      pseudo: DEFAULT_BLOCK_STYLE_STATE2.pseudo
+    };
+    const stateStyle = getStyleForState2(style, layoutState);
+    return setStyleForState(style, layoutState, {
+      ...stateStyle,
+      layout: {
+        ...stateStyle?.layout,
+        ...layout
+      }
+    });
+  }
   function useBlockPropsChildLayoutStyles({ style }) {
     const { shouldRenderChildLayoutStyles, viewportSettings } = (0, import_data198.useSelect)(
       (select3) => {
@@ -104370,7 +104393,8 @@ var wp;
       blockBlockVisibility,
       deviceType,
       viewportSettings,
-      isChildBlockAGrid
+      isChildBlockAGrid,
+      selectedState
     } = (0, import_data198.useSelect)(
       (select3) => {
         const {
@@ -104378,8 +104402,9 @@ var wp;
           getBlockEditingMode: getBlockEditingMode2,
           getTemplateLock: getTemplateLock2,
           getBlockAttributes: getBlockAttributes3,
-          getSettings: getSettings8
-        } = select3(store);
+          getSettings: getSettings8,
+          getSelectedBlockStyleState: getSelectedBlockStyleState2
+        } = unlock(select3(store));
         const _rootClientId = getBlockRootClientId2(clientId);
         if (getTemplateLock2(_rootClientId) || getBlockEditingMode2(_rootClientId) !== "default") {
           return {
@@ -104399,7 +104424,8 @@ var wp;
           deviceType: currentDeviceType,
           viewportSettings: settings2?.__experimentalFeatures?.viewport,
           // Check if the selected child block is itself a grid.
-          isChildBlockAGrid: blockAttributes?.layout?.type === "grid"
+          isChildBlockAGrid: blockAttributes?.layout?.type === "grid",
+          selectedState: getSelectedBlockStyleState2(clientId)
         };
       },
       [clientId]
@@ -104445,13 +104471,7 @@ var wp;
     const showResizer = allowSizingOnChildren && !isBlockItselfCurrentlyHidden;
     function updateLayout(layout) {
       setAttributes({
-        style: {
-          ...style,
-          layout: {
-            ...style?.layout,
-            ...layout
-          }
-        }
+        style: getUpdatedChildLayoutStyle(style, layout, selectedState)
       });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime543.jsxs)(import_jsx_runtime543.Fragment, { children: [
