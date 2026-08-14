@@ -11093,10 +11093,15 @@ function createRouteFromDefinition(route, parentRoute) {
       if (routeConfig.inspector) {
         inspector = await routeConfig.inspector(context);
       }
+      let stage = true;
+      if (routeConfig.stage) {
+        stage = await routeConfig.stage(context);
+      }
       return {
         ...loaderData,
         canvas: canvasData,
         inspector,
+        stage,
         title: titleData,
         routeContentModule: route.content_module
       };
@@ -11109,9 +11114,9 @@ function createRouteFromDefinition(route, parentRoute) {
     const Inspector = module.inspector;
     return createLazyRoute(route.path)({
       component: function RouteComponent() {
-        const { inspector: showInspector } = useLoaderData({ from: route.path }) ?? {};
+        const { inspector: showInspector, stage: showStage } = useLoaderData({ from: route.path }) ?? {};
         return /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(import_jsx_runtime45.Fragment, { children: [
-          Stage && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Stage, {}) }),
+          Stage && showStage && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Stage, {}) }),
           Inspector && showInspector && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "boot-layout__inspector", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Inspector, {}) })
         ] });
       }

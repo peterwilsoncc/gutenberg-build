@@ -1541,13 +1541,25 @@ var stage = Stage;
 // routes/styles/canvas.tsx
 var import_editor2 = __toESM(require_editor());
 var import_components3 = __toESM(require_components());
+var import_data2 = __toESM(require_data());
+var import_core_data2 = __toESM(require_core_data());
 import { useNavigate as useNavigate2, useSearch as useSearch2 } from "@wordpress/route";
-import { useEditorAssets } from "@wordpress/lazy-editor";
+import { useEditorAssets, useEditorSettings as useEditorSettings2 } from "@wordpress/lazy-editor";
 var { StyleBookPreview } = unlock(import_editor2.privateApis);
 function Canvas() {
   const { isReady: assetsReady } = useEditorAssets();
   const navigate = useNavigate2();
   const search = useSearch2({ strict: false });
+  const { globalStylesId, isBlockTheme } = (0, import_data2.useSelect)((select) => {
+    const { getCurrentTheme, __experimentalGetCurrentGlobalStylesId } = select(import_core_data2.store);
+    return {
+      globalStylesId: __experimentalGetCurrentGlobalStylesId(),
+      isBlockTheme: !!getCurrentTheme()?.is_block_theme
+    };
+  }, []);
+  const { isReady: settingsReady, editorSettings } = useEditorSettings2({
+    stylesId: globalStylesId
+  });
   const section = search.section ?? "/";
   const onChangeSection = (updatedSection) => {
     navigate({
@@ -1557,7 +1569,7 @@ function Canvas() {
       }
     });
   };
-  if (!assetsReady) {
+  if (!assetsReady || !settingsReady) {
     return /* @__PURE__ */ React.createElement(
       "div",
       {
@@ -1571,7 +1583,17 @@ function Canvas() {
       /* @__PURE__ */ React.createElement(import_components3.Spinner, null)
     );
   }
-  return /* @__PURE__ */ React.createElement(StyleBookPreview, { path: section, onPathChange: onChangeSection });
+  if (!isBlockTheme) {
+    return /* @__PURE__ */ React.createElement(StyleBookPreview, { isStatic: true, settings: editorSettings });
+  }
+  return /* @__PURE__ */ React.createElement(
+    StyleBookPreview,
+    {
+      path: section,
+      onPathChange: onChangeSection,
+      settings: editorSettings
+    }
+  );
 }
 var canvas = Canvas;
 export {
