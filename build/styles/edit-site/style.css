@@ -2719,7 +2719,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-validated-control__wrapper-with-error-delegate:has(input[type=radio]:invalid[data-validity-visible]) {
-  --wp-components-color-accent: #cc1818;
+  --focus-color: #cc1818;
 }
 
 .dataviews-validated-control__error-delegate {
