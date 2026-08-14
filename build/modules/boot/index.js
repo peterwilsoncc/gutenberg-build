@@ -274,17 +274,17 @@ var require_notices = __commonJS({
   }
 });
 
-// package-external:@wordpress/keycodes
-var require_keycodes = __commonJS({
-  "package-external:@wordpress/keycodes"(exports, module) {
-    module.exports = window.wp.keycodes;
-  }
-});
-
 // package-external:@wordpress/editor
 var require_editor = __commonJS({
   "package-external:@wordpress/editor"(exports, module) {
     module.exports = window.wp.editor;
+  }
+});
+
+// package-external:@wordpress/keycodes
+var require_keycodes = __commonJS({
+  "package-external:@wordpress/keycodes"(exports, module) {
+    module.exports = window.wp.keycodes;
   }
 });
 
@@ -10403,6 +10403,7 @@ var import_components14 = __toESM(require_components(), 1);
 import { privateApis as routePrivateApis5 } from "@wordpress/route";
 var import_element39 = __toESM(require_element(), 1);
 var import_i18n15 = __toESM(require_i18n(), 1);
+var import_editor5 = __toESM(require_editor(), 1);
 var import_theme = __toESM(require_theme(), 1);
 
 // packages/boot/build-module/components/sidebar/index.mjs
@@ -11768,6 +11769,7 @@ function Root3() {
             "has-full-canvas": isFullScreen
           }),
           children: [
+            /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_editor5.UnsavedChangesWarning, {}),
             /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(SavePanel, {}),
             /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_notices2.SnackbarNotices, { className: "boot-notices__snackbar" }),
             isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(page_default.SidebarToggleFill, { children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
@@ -12017,6 +12019,7 @@ var import_components15 = __toESM(require_components(), 1);
 var import_element41 = __toESM(require_element(), 1);
 import { privateApis as routePrivateApis7 } from "@wordpress/route";
 var import_theme2 = __toESM(require_theme(), 1);
+var import_editor6 = __toESM(require_editor(), 1);
 var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d38c56df8c']")) {
   const style = document.createElement("style");
@@ -12051,6 +12054,7 @@ function RootSinglePage() {
             }
           ),
           children: [
+            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_editor6.UnsavedChangesWarning, {}),
             /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(SavePanel, {}),
             /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_notices3.SnackbarNotices, { className: "boot-notices__snackbar" }),
             /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(
