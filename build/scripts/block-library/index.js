@@ -56348,62 +56348,60 @@ ${text}
           }
         )
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)("li", { ...blockProps, children: [
-        !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(import_components103.Spinner, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)(
-          "button",
-          {
-            className: "wp-block-playlist-track__button",
-            onClick: () => setCurrentTrackClientId(clientId),
-            "aria-current": currentTrackClientId === clientId ? "true" : "false",
-            children: [
-              showImages && !!image && /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
-                "img",
+      /* @__PURE__ */ (0, import_jsx_runtime376.jsx)("li", { ...blockProps, children: /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)(
+        "button",
+        {
+          className: "wp-block-playlist-track__button",
+          onClick: () => setCurrentTrackClientId(clientId),
+          "aria-current": currentTrackClientId === clientId ? "true" : "false",
+          children: [
+            showImages && !!image && /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
+              "img",
+              {
+                className: "wp-block-playlist-track__image",
+                src: image,
+                alt: imageAlt || ""
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)("span", { className: "wp-block-playlist-track__content", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
+                import_block_editor185.PlainText,
                 {
-                  className: "wp-block-playlist-track__image",
-                  src: image,
-                  alt: imageAlt || ""
+                  tagName: "span",
+                  className: "wp-block-playlist-track__title",
+                  value: title,
+                  placeholder: (0, import_i18n169.__)("Add title"),
+                  onChange: (value) => {
+                    setAttributes({ title: value });
+                  },
+                  __experimentalVersion: 2
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)("span", { className: "wp-block-playlist-track__content", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
-                  import_block_editor185.PlainText,
-                  {
-                    tagName: "span",
-                    className: "wp-block-playlist-track__title",
-                    value: title,
-                    placeholder: (0, import_i18n169.__)("Add title"),
-                    onChange: (value) => {
-                      setAttributes({ title: value });
-                    },
-                    __experimentalVersion: 2
-                  }
-                ),
-                showArtists && /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
-                  import_block_editor185.PlainText,
-                  {
-                    tagName: "span",
-                    className: "wp-block-playlist-track__artist",
-                    value: artist,
-                    placeholder: (0, import_i18n169.__)("Add artist"),
-                    onChange: (value) => setAttributes({ artist: value }),
-                    __experimentalVersion: 2
-                  }
-                )
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)("span", { className: "wp-block-playlist-track__length", children: [
-                length && /* @__PURE__ */ (0, import_jsx_runtime376.jsx)("span", {
-                  className: "screen-reader-text",
-                  /* translators: Visually hidden label for the track duration (screen reader text). */
-                  children: (0, import_i18n169.__)("Duration:")
-                }),
-                length
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime376.jsx)("span", { className: "screen-reader-text", children: (0, import_i18n169.__)("Play") })
-            ]
-          }
-        )
-      ] })
+              showArtists && /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(
+                import_block_editor185.PlainText,
+                {
+                  tagName: "span",
+                  className: "wp-block-playlist-track__artist",
+                  value: artist,
+                  placeholder: (0, import_i18n169.__)("Add artist"),
+                  onChange: (value) => setAttributes({ artist: value }),
+                  __experimentalVersion: 2
+                }
+              )
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime376.jsxs)("span", { className: "wp-block-playlist-track__length", children: [
+              length && /* @__PURE__ */ (0, import_jsx_runtime376.jsx)("span", {
+                className: "screen-reader-text",
+                /* translators: Visually hidden label for the track duration (screen reader text). */
+                children: (0, import_i18n169.__)("Duration:")
+              }),
+              length,
+              !!temporaryURL && /* @__PURE__ */ (0, import_jsx_runtime376.jsx)(import_components103.Spinner, { className: "wp-block-playlist-track__spinner" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime376.jsx)("span", { className: "screen-reader-text", children: (0, import_i18n169.__)("Play") })
+          ]
+        }
+      ) })
     ] });
   };
   var edit_default24 = PlaylistTrackEdit;
