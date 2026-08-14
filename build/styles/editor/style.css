@@ -1657,8 +1657,8 @@ button.font-library__upload-area {
 
 .dataviews-filters__summary-operators-container .dataviews-filters__summary-operators-filter-select {
   width: 100%;
+  min-width: 0;
   white-space: nowrap;
-  overflow: hidden;
 }
 
 .dataviews-filters__summary-chip-container {
@@ -3920,7 +3920,10 @@ div.dataviews-view-list {
 }
 
 .dataviews-validated-control:has(:is(input, select):invalid[data-validity-visible]) .components-input-control__backdrop {
-  --wp-components-color-accent: #cc1818;
+  --focus-color: #cc1818;
+}
+
+.dataviews-validated-control:has(:is(input, select):invalid[data-validity-visible]) .components-input-control__backdrop {
   border-color: #cc1818;
 }
 
