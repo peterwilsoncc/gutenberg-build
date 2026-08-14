@@ -57,6 +57,13 @@ return array(
 		'has_content' => true,
 	),
 	array(
+		'name'        => 'identity',
+		'path'        => '/identity',
+		'page'        => 'site-editor-v2',
+		'has_route'   => true,
+		'has_content' => true,
+	),
+	array(
 		'name'        => 'media-editor',
 		'path'        => '/media-editor/$id',
 		'page'        => 'site-editor-v2',
