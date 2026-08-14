@@ -84217,6 +84217,7 @@ var wp;
     label,
     children,
     contrastWarning,
+    additionalElements,
     showInheritanceLabelIndicators = isGlobalStylesInheritanceEnabled()
   }) {
     const {
@@ -84323,9 +84324,20 @@ var wp;
           name: "h6",
           label: (0, import_i18n192.__)("H6"),
           showPanel: showHeadingPanel
-        }
+        },
+        ...additionalElements?.map((element) => ({
+          ...element,
+          showPanel: hasSolidColors || hasGradientColors
+        })) ?? []
       ],
-      [showCaptionPanel, showButtonPanel, showHeadingPanel]
+      [
+        additionalElements,
+        hasGradientColors,
+        hasSolidColors,
+        showCaptionPanel,
+        showButtonPanel,
+        showHeadingPanel
+      ]
     );
     const resetAllFilter = (0, import_element257.useCallback)(
       (previousValue) => {

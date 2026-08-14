@@ -64588,8 +64588,32 @@ If there's a particular need for this, please submit a feature request at https:
           ElementItem,
           {
             parentMenu,
+            element: "cite",
+            label: (0, import_i18n157.__)("Citations")
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
+          ElementItem,
+          {
+            parentMenu,
             element: "button",
             label: (0, import_i18n157.__)("Buttons")
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
+          ElementItem,
+          {
+            parentMenu,
+            element: "textInput",
+            label: (0, import_i18n157.__)("Inputs")
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(
+          ElementItem,
+          {
+            parentMenu,
+            element: "select",
+            label: (0, import_i18n157.__)("Selects")
           }
         )
       ] })
@@ -77220,9 +77244,21 @@ If there's a particular need for this, please submit a feature request at https:
       description: (0, import_i18n171.__)("Manage the fonts and typography used on captions."),
       title: (0, import_i18n171.__)("Captions")
     },
+    cite: {
+      description: (0, import_i18n171.__)("Manage the fonts and typography used on citations."),
+      title: (0, import_i18n171.__)("Citations")
+    },
     button: {
       description: (0, import_i18n171.__)("Manage the fonts and typography used on buttons."),
       title: (0, import_i18n171.__)("Buttons")
+    },
+    textInput: {
+      description: (0, import_i18n171.__)("Manage the fonts and typography used on inputs."),
+      title: (0, import_i18n171.__)("Inputs")
+    },
+    select: {
+      description: (0, import_i18n171.__)("Manage the fonts and typography used on selects."),
+      title: (0, import_i18n171.__)("Selects")
     }
   };
   function ScreenTypographyElement({ element }) {
@@ -77418,6 +77454,20 @@ If there's a particular need for this, please submit a feature request at https:
   var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock7(
     import_block_editor11.privateApis
   );
+  var ADDITIONAL_ELEMENTS = [
+    { name: "cite", label: (0, import_i18n173.__)("Citations") },
+    { name: "textInput", label: (0, import_i18n173.__)("Inputs") },
+    { name: "select", label: (0, import_i18n173.__)("Selects") }
+  ];
+  var DEFAULT_CONTROLS = {
+    link: true,
+    heading: true,
+    button: true,
+    caption: true,
+    cite: true,
+    textInput: true,
+    select: true
+  };
   function ScreenColors() {
     const [style, setStyle2] = useStyle(
       "",
@@ -77451,6 +77501,8 @@ If there's a particular need for this, please submit a feature request at https:
           value: style,
           onChange: setStyle2,
           settings,
+          additionalElements: ADDITIONAL_ELEMENTS,
+          defaultControls: DEFAULT_CONTROLS,
           showInheritanceLabelIndicators: false
         }
       )
@@ -78643,7 +78695,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element207 = __toESM(require_element(), 1);
   var import_jsx_runtime358 = __toESM(require_jsx_runtime(), 1);
   var { useSettingsForBlockElement: useSettingsForBlockElement6, DimensionsPanel: StylesDimensionsPanel2 } = unlock7(import_block_editor14.privateApis);
-  var DEFAULT_CONTROLS = {
+  var DEFAULT_CONTROLS2 = {
     contentSize: true,
     wideSize: true,
     padding: true,
@@ -78701,7 +78753,7 @@ If there's a particular need for this, please submit a feature request at https:
         onChange,
         settings,
         includeLayoutControls: true,
-        defaultControls: DEFAULT_CONTROLS,
+        defaultControls: DEFAULT_CONTROLS2,
         showInheritanceLabelIndicators: false
       }
     );
@@ -79928,7 +79980,10 @@ If there's a particular need for this, please submit a feature request at https:
               /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(GlobalStylesNavigationScreen, { path: "/typography/link", children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(screen_typography_element_default, { element: "link" }) }),
               /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(GlobalStylesNavigationScreen, { path: "/typography/heading", children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(screen_typography_element_default, { element: "heading" }) }),
               /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(GlobalStylesNavigationScreen, { path: "/typography/caption", children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(screen_typography_element_default, { element: "caption" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(GlobalStylesNavigationScreen, { path: "/typography/cite", children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(screen_typography_element_default, { element: "cite" }) }),
               /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(GlobalStylesNavigationScreen, { path: "/typography/button", children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(screen_typography_element_default, { element: "button" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(GlobalStylesNavigationScreen, { path: "/typography/textInput", children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(screen_typography_element_default, { element: "textInput" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(GlobalStylesNavigationScreen, { path: "/typography/select", children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(screen_typography_element_default, { element: "select" }) }),
               /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(GlobalStylesNavigationScreen, { path: "/blocks", children: /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(screen_block_list_default, {}) }),
               blocks.map((block) => /* @__PURE__ */ (0, import_jsx_runtime371.jsxs)(import_element212.Fragment, { children: [
                 /* @__PURE__ */ (0, import_jsx_runtime371.jsx)(

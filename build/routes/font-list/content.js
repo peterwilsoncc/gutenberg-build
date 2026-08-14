@@ -24925,9 +24925,21 @@ var elements = {
     description: (0, import_i18n26.__)("Manage the fonts and typography used on captions."),
     title: (0, import_i18n26.__)("Captions")
   },
+  cite: {
+    description: (0, import_i18n26.__)("Manage the fonts and typography used on citations."),
+    title: (0, import_i18n26.__)("Citations")
+  },
   button: {
     description: (0, import_i18n26.__)("Manage the fonts and typography used on buttons."),
     title: (0, import_i18n26.__)("Buttons")
+  },
+  textInput: {
+    description: (0, import_i18n26.__)("Manage the fonts and typography used on inputs."),
+    title: (0, import_i18n26.__)("Inputs")
+  },
+  select: {
+    description: (0, import_i18n26.__)("Manage the fonts and typography used on selects."),
+    title: (0, import_i18n26.__)("Selects")
   }
 };
 
@@ -24953,6 +24965,11 @@ var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
 var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock3(
   import_block_editor7.privateApis
 );
+var ADDITIONAL_ELEMENTS = [
+  { name: "cite", label: (0, import_i18n28.__)("Citations") },
+  { name: "textInput", label: (0, import_i18n28.__)("Inputs") },
+  { name: "select", label: (0, import_i18n28.__)("Selects") }
+];
 
 // packages/global-styles-ui/build-module/screen-color-palette.mjs
 var import_i18n31 = __toESM(require_i18n(), 1);

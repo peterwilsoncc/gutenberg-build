@@ -59756,9 +59756,21 @@ If there's a particular need for this, please submit a feature request at https:
       description: (0, import_i18n104.__)("Manage the fonts and typography used on captions."),
       title: (0, import_i18n104.__)("Captions")
     },
+    cite: {
+      description: (0, import_i18n104.__)("Manage the fonts and typography used on citations."),
+      title: (0, import_i18n104.__)("Citations")
+    },
     button: {
       description: (0, import_i18n104.__)("Manage the fonts and typography used on buttons."),
       title: (0, import_i18n104.__)("Buttons")
+    },
+    textInput: {
+      description: (0, import_i18n104.__)("Manage the fonts and typography used on inputs."),
+      title: (0, import_i18n104.__)("Inputs")
+    },
+    select: {
+      description: (0, import_i18n104.__)("Manage the fonts and typography used on selects."),
+      title: (0, import_i18n104.__)("Selects")
     }
   };
 
@@ -59784,6 +59796,11 @@ If there's a particular need for this, please submit a feature request at https:
   var { useSettingsForBlockElement: useSettingsForBlockElement5, ColorPanel: StylesColorPanel2 } = unlock6(
     import_block_editor12.privateApis
   );
+  var ADDITIONAL_ELEMENTS = [
+    { name: "cite", label: (0, import_i18n106.__)("Citations") },
+    { name: "textInput", label: (0, import_i18n106.__)("Inputs") },
+    { name: "select", label: (0, import_i18n106.__)("Selects") }
+  ];
 
   // packages/global-styles-ui/build-module/screen-color-palette.mjs
   var import_i18n109 = __toESM(require_i18n(), 1);
