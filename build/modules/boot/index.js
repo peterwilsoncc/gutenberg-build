@@ -307,7 +307,7 @@ var import_element34 = __toESM(require_element(), 1);
 var import_data12 = __toESM(require_data(), 1);
 
 // packages/boot/build-module/components/app/router.mjs
-var import_i18n14 = __toESM(require_i18n(), 1);
+var import_i18n15 = __toESM(require_i18n(), 1);
 var import_element32 = __toESM(require_element(), 1);
 
 // node_modules/clsx/dist/clsx.mjs
@@ -9765,7 +9765,7 @@ var import_compose4 = __toESM(require_compose(), 1);
 var import_components13 = __toESM(require_components(), 1);
 import { privateApis as routePrivateApis5 } from "@wordpress/route";
 var import_element31 = __toESM(require_element(), 1);
-var import_i18n13 = __toESM(require_i18n(), 1);
+var import_i18n14 = __toESM(require_i18n(), 1);
 var import_theme = __toESM(require_theme(), 1);
 
 // packages/boot/build-module/components/sidebar/index.mjs
@@ -10728,6 +10728,7 @@ var import_element28 = __toESM(require_element(), 1);
 // packages/boot/build-module/components/canvas/index.mjs
 var import_element27 = __toESM(require_element(), 1);
 var import_components12 = __toESM(require_components(), 1);
+var import_i18n12 = __toESM(require_i18n(), 1);
 var import_data9 = __toESM(require_data(), 1);
 import { useNavigate as useNavigate2 } from "@wordpress/route";
 
@@ -10946,7 +10947,7 @@ function Canvas({ canvas }) {
         },
         role: "button",
         tabIndex: 0,
-        "aria-label": "Click to edit"
+        "aria-label": (0, import_i18n12.__)("Edit")
       }
     )
   ] });
@@ -10986,7 +10987,7 @@ function CanvasRenderer({
 var import_element29 = __toESM(require_element(), 1);
 var import_data10 = __toESM(require_data(), 1);
 var import_core_data4 = __toESM(require_core_data(), 1);
-var import_i18n12 = __toESM(require_i18n(), 1);
+var import_i18n13 = __toESM(require_i18n(), 1);
 var import_html_entities2 = __toESM(require_html_entities(), 1);
 import { speak } from "@wordpress/a11y";
 import { privateApis as routePrivateApis4 } from "@wordpress/route";
@@ -11014,9 +11015,9 @@ function useRouteTitle() {
     if (routeTitle && typeof routeTitle === "string" && siteTitle && typeof siteTitle === "string") {
       const decodedRouteTitle = (0, import_html_entities2.decodeEntities)(routeTitle);
       const decodedSiteTitle = (0, import_html_entities2.decodeEntities)(siteTitle);
-      const formattedTitle = (0, import_i18n12.sprintf)(
+      const formattedTitle = (0, import_i18n13.sprintf)(
         /* translators: Admin document title. 1: Admin screen name, 2: Site name. */
-        (0, import_i18n12.__)("%1$s ‹ %2$s — WordPress"),
+        (0, import_i18n13.__)("%1$s ‹ %2$s — WordPress"),
         decodedRouteTitle,
         decodedSiteTitle
       );
@@ -11097,7 +11098,7 @@ function Root2() {
               {
                 icon: menu_default,
                 onClick: () => setIsMobileSidebarOpen(true),
-                label: (0, import_i18n13.__)("Open navigation panel"),
+                label: (0, import_i18n14.__)("Open navigation panel"),
                 size: "compact"
               }
             ) }),
@@ -11123,7 +11124,7 @@ function Root2() {
                 },
                 role: "button",
                 tabIndex: -1,
-                "aria-label": (0, import_i18n13.__)(
+                "aria-label": (0, import_i18n14.__)(
                   "Close navigation panel"
                 )
               }
@@ -11170,7 +11171,7 @@ function Root2() {
                             onClick: () => setIsMobileSidebarOpen(
                               true
                             ),
-                            label: (0, import_i18n13.__)(
+                            label: (0, import_i18n14.__)(
                               "Open navigation panel"
                             ),
                             size: "compact"
@@ -11209,7 +11210,7 @@ var {
   useLoaderData
 } = unlock2(routePrivateApis6);
 function NotFoundComponent() {
-  return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(page_default, { title: (0, import_i18n14.__)("Route not found"), hasPadding: true, children: (0, import_i18n14.__)("The page you're looking for does not exist") }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(page_default, { title: (0, import_i18n15.__)("Route not found"), hasPadding: true, children: (0, import_i18n15.__)("The page you're looking for does not exist") }) });
 }
 function createRouteFromDefinition(route, parentRoute) {
   let tanstackRoute = createRoute({
