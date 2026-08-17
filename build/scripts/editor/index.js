@@ -99859,30 +99859,15 @@ If there's a particular need for this, please submit a feature request at https:
       listViewRef,
       setDropZoneElement
     ]);
-    function handleSidebarFocus(currentTab) {
-      const tabPanelFocus = import_dom26.focus.tabbable.find(tabsRef.current)[0];
-      if (currentTab === "list-view") {
-        const listViewApplicationFocus = import_dom26.focus.tabbable.find(
-          listViewRef.current
-        )[0];
-        const listViewFocusArea = sidebarRef.current.contains(
-          listViewApplicationFocus
-        ) ? listViewApplicationFocus : tabPanelFocus;
-        listViewFocusArea.focus();
-      } else {
-        tabPanelFocus.focus();
-      }
-    }
-    const handleToggleListViewShortcut = (0, import_element313.useCallback)(() => {
-      if (sidebarRef.current.contains(
-        sidebarRef.current.ownerDocument.activeElement
-      )) {
+    (0, import_keyboard_shortcuts9.useShortcut)("core/editor/toggle-list-view", () => {
+      const sidebar = sidebarRef.current;
+      if (sidebar.contains(sidebar.ownerDocument.activeElement)) {
         closeListView();
-      } else {
-        handleSidebarFocus(tab);
+        return;
       }
-    }, [closeListView, tab]);
-    (0, import_keyboard_shortcuts9.useShortcut)("core/editor/toggle-list-view", handleToggleListViewShortcut);
+      const target = tab === "list-view" && import_dom26.focus.tabbable.find(listViewRef.current)[0] || import_dom26.focus.tabbable.find(tabsRef.current)[0];
+      target?.focus();
+    });
     return (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       /* @__PURE__ */ (0, import_jsx_runtime517.jsx)(
