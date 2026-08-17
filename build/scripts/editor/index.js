@@ -99837,7 +99837,6 @@ If there's a particular need for this, please submit a feature request at https:
   function ListViewSidebar() {
     const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data209.useDispatch)(store);
     const { getListViewToggleRef: getListViewToggleRef2 } = unlock((0, import_data209.useSelect)(store));
-    const focusOnMountRef = (0, import_compose77.useFocusOnMount)("firstElement");
     const closeListView = (0, import_element313.useCallback)(() => {
       setIsListViewOpened2(false);
       getListViewToggleRef2().current?.focus();
@@ -99857,7 +99856,6 @@ If there's a particular need for this, please submit a feature request at https:
     const tabsRef = (0, import_element313.useRef)();
     const listViewRef = (0, import_element313.useRef)();
     const listViewContainerRef = (0, import_compose77.useMergeRefs)([
-      focusOnMountRef,
       listViewRef,
       setDropZoneElement
     ]);
@@ -99903,7 +99901,8 @@ If there's a particular need for this, please submit a feature request at https:
                   panel: /* @__PURE__ */ (0, import_jsx_runtime517.jsx)("div", { className: "editor-list-view-sidebar__list-view-container", children: /* @__PURE__ */ (0, import_jsx_runtime517.jsx)("div", { className: "editor-list-view-sidebar__list-view-panel-content", children: /* @__PURE__ */ (0, import_jsx_runtime517.jsx)(
                     import_block_editor76.__experimentalListView,
                     {
-                      dropZoneElement
+                      dropZoneElement,
+                      focusOnMount: true
                     }
                   ) }) }),
                   panelRef: listViewContainerRef

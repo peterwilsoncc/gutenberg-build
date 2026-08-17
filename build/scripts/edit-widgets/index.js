@@ -3418,7 +3418,7 @@ var wp;
   }
 
   // packages/edit-widgets/build-module/components/layout/interface.mjs
-  var import_compose12 = __toESM(require_compose(), 1);
+  var import_compose11 = __toESM(require_compose(), 1);
   var import_block_editor18 = __toESM(require_block_editor(), 1);
   var import_element23 = __toESM(require_element(), 1);
   var import_data28 = __toESM(require_data(), 1);
@@ -4266,7 +4266,6 @@ var wp;
   // packages/edit-widgets/build-module/components/secondary-sidebar/list-view-sidebar.mjs
   var import_block_editor17 = __toESM(require_block_editor(), 1);
   var import_components20 = __toESM(require_components(), 1);
-  var import_compose11 = __toESM(require_compose(), 1);
   var import_data26 = __toESM(require_data(), 1);
   var import_element22 = __toESM(require_element(), 1);
   var import_i18n17 = __toESM(require_i18n(), 1);
@@ -4276,7 +4275,6 @@ var wp;
     const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data26.useDispatch)(store2);
     const { getListViewToggleRef: getListViewToggleRef2 } = unlock((0, import_data26.useSelect)(store2));
     const [dropZoneElement, setDropZoneElement] = (0, import_element22.useState)(null);
-    const focusOnMountRef = (0, import_compose11.useFocusOnMount)("firstElement");
     const closeListView = (0, import_element22.useCallback)(() => {
       setIsListViewOpened2(false);
       getListViewToggleRef2().current?.focus();
@@ -4314,8 +4312,8 @@ var wp;
               "div",
               {
                 className: "edit-widgets-editor__list-view-panel-content",
-                ref: (0, import_compose11.useMergeRefs)([focusOnMountRef, setDropZoneElement]),
-                children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_block_editor17.__experimentalListView, { dropZoneElement })
+                ref: setDropZoneElement,
+                children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_block_editor17.__experimentalListView, { dropZoneElement, focusOnMount: true })
               }
             )
           ]
@@ -4356,8 +4354,8 @@ var wp;
     footer: (0, import_i18n18.__)("Widgets footer")
   };
   function Interface({ blockEditorSettings }) {
-    const isMobileViewport = (0, import_compose12.useViewportMatch)("medium", "<");
-    const isHugeViewport = (0, import_compose12.useViewportMatch)("huge", ">=");
+    const isMobileViewport = (0, import_compose11.useViewportMatch)("medium", "<");
+    const isHugeViewport = (0, import_compose11.useViewportMatch)("huge", ">=");
     const { setIsInserterOpened: setIsInserterOpened2, setIsListViewOpened: setIsListViewOpened2, closeGeneralSidebar: closeGeneralSidebar2 } = (0, import_data28.useDispatch)(store2);
     const {
       hasBlockBreadCrumbsEnabled,

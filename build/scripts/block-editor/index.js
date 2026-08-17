@@ -70523,7 +70523,7 @@ var wp;
       end
     };
   }
-  function focusListItem(focusClientId, treeGridElement) {
+  function focusListItem(focusClientId, treeGridElement, signal) {
     if (!treeGridElement) {
       return;
     }
@@ -70544,11 +70544,23 @@ var wp;
         childList: true,
         subtree: true
       });
+      signal?.addEventListener(
+        "abort",
+        () => {
+          clearTimeout(timer);
+          observer.disconnect();
+          resolve(null);
+        },
+        { once: true }
+      );
       timer = setTimeout(() => {
         observer.disconnect();
         resolve(null);
       }, 3e3);
     }).then((element) => {
+      if (signal?.aborted) {
+        return;
+      }
       if (element && element.isConnected) {
         import_dom64.focus.focusable.find(element)?.[0]?.focus();
       }
@@ -72219,6 +72231,7 @@ var wp;
     showBlockMovers = false,
     isExpanded = false,
     showAppender = false,
+    focusOnMount = false,
     blockSettingsMenu: BlockSettingsMenu2 = BlockSettingsDropdown,
     rootClientId,
     description,
@@ -72278,18 +72291,43 @@ var wp;
     const clipBoardRef = useClipboardHandler2({
       selectBlock: selectEditorBlock
     });
-    const focusSelectedBlock = (0, import_element206.useCallback)(
+    const focusOnMountRef = (0, import_compose78.useRefEffect)(
       (node) => {
-        const [firstSelectedClientId] = getSelectedBlockClientIds2();
-        if (firstSelectedClientId && node) {
-          focusListItem(firstSelectedClientId, node);
+        if (!focusOnMount) {
+          return;
         }
+        const controller = new window.AbortController();
+        const focusRow2 = (clientId) => focusListItem(clientId, node, controller.signal).then(
+          () => controller.abort()
+        );
+        node.ownerDocument.addEventListener(
+          "focusin",
+          () => controller.abort(),
+          { once: true, signal: controller.signal }
+        );
+        const [firstSelectedClientId] = getSelectedBlockClientIds2();
+        if (firstSelectedClientId) {
+          focusRow2(firstSelectedClientId);
+          return () => controller.abort();
+        }
+        const timerId = setTimeout(() => {
+          const firstClientId = node.querySelector(
+            "[role=row][data-block]"
+          )?.dataset.block;
+          if (firstClientId) {
+            focusRow2(firstClientId);
+          }
+        }, 0);
+        return () => {
+          clearTimeout(timerId);
+          controller.abort();
+        };
       },
-      [getSelectedBlockClientIds2]
+      [focusOnMount, getSelectedBlockClientIds2]
     );
     const treeGridRef = (0, import_compose78.useMergeRefs)([
       clipBoardRef,
-      focusSelectedBlock,
+      focusOnMountRef,
       elementRef,
       dropZoneRef,
       ref
