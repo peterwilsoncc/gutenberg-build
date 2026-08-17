@@ -10391,7 +10391,7 @@ function getAdminThemeColors() {
 
 // packages/boot/build-module/components/app/router.mjs
 var import_data11 = __toESM(require_data(), 1);
-var import_core_data5 = __toESM(require_core_data(), 1);
+var import_core_data6 = __toESM(require_core_data(), 1);
 import {
   privateApis as routePrivateApis6
 } from "@wordpress/route";
@@ -11368,6 +11368,7 @@ var import_element34 = __toESM(require_element(), 1);
 var import_components12 = __toESM(require_components(), 1);
 var import_i18n12 = __toESM(require_i18n(), 1);
 var import_data9 = __toESM(require_data(), 1);
+var import_core_data4 = __toESM(require_core_data(), 1);
 import { useNavigate as useNavigate2 } from "@wordpress/route";
 
 // packages/boot/build-module/components/canvas/back-button.mjs
@@ -11506,11 +11507,24 @@ function Canvas({ canvas }) {
   const navigate = useNavigate2();
   const { onNavigateToEntityRecord, onNavigateToPreviousEntityRecord } = useNavigateToEntityRecord();
   const onActionPerformed = useActionPerformed(canvas.postType);
-  const editLink = (0, import_data9.useSelect)(
-    (select) => canvas.postType && canvas.postId ? select(store).getEntityLink(
-      canvas.postType,
-      canvas.postId
-    ) : void 0,
+  const { editLink, isTrashed } = (0, import_data9.useSelect)(
+    (select) => {
+      if (!canvas.postType || !canvas.postId) {
+        return { editLink: void 0, isTrashed: false };
+      }
+      const record = select(import_core_data4.store).getEntityRecord(
+        "postType",
+        canvas.postType,
+        canvas.postId
+      );
+      return {
+        editLink: select(store).getEntityLink(
+          canvas.postType,
+          canvas.postId
+        ),
+        isTrashed: record?.status === "trash"
+      };
+    },
     [canvas.postType, canvas.postId]
   );
   const settings = (0, import_element34.useMemo)(
@@ -11570,8 +11584,11 @@ function Canvas({ canvas }) {
     canvas.isPreview && editLink && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
       "div",
       {
-        onClick: () => navigate({ to: editLink }),
+        onClick: isTrashed ? void 0 : () => navigate({ to: editLink }),
         onKeyDown: (e) => {
+          if (isTrashed) {
+            return;
+          }
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             navigate({ to: editLink });
@@ -11580,11 +11597,12 @@ function Canvas({ canvas }) {
         style: {
           position: "absolute",
           inset: 0,
-          cursor: "pointer",
+          cursor: isTrashed ? "default" : "pointer",
           zIndex: 1
         },
         role: "button",
         tabIndex: 0,
+        "aria-disabled": isTrashed,
         "aria-label": (0, import_i18n12.__)("Edit")
       }
     )
@@ -11664,7 +11682,7 @@ var ErrorBoundary = class extends import_element36.Component {
 // packages/boot/build-module/components/app/use-route-title.mjs
 var import_element37 = __toESM(require_element(), 1);
 var import_data10 = __toESM(require_data(), 1);
-var import_core_data4 = __toESM(require_core_data(), 1);
+var import_core_data5 = __toESM(require_core_data(), 1);
 var import_i18n14 = __toESM(require_i18n(), 1);
 var import_html_entities2 = __toESM(require_html_entities(), 1);
 import { speak } from "@wordpress/a11y";
@@ -11676,7 +11694,7 @@ function useRouteTitle() {
   const currentMatch = matches[matches.length - 1];
   const routeTitle = currentMatch?.loaderData?.title;
   const siteTitle = (0, import_data10.useSelect)(
-    (select) => select(import_core_data4.store).getEntityRecord(
+    (select) => select(import_core_data5.store).getEntityRecord(
       "root",
       "__unstableBase"
     )?.name,
@@ -11918,7 +11936,7 @@ function createRouteFromDefinition(route, parentRoute) {
         search: opts.deps || {}
       };
       const [, loaderData, canvasData, titleData] = await Promise.all([
-        (0, import_data11.resolveSelect)(import_core_data5.store).getEntityRecord(
+        (0, import_data11.resolveSelect)(import_core_data6.store).getEntityRecord(
           "root",
           "__unstableBase"
         ),
