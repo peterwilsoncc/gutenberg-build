@@ -101,7 +101,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe, value, getSnapshot]
         );
-        useEffect18(
+        useEffect19(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe(function() {
@@ -127,7 +127,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React48 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState19 = React48.useState, useEffect18 = React48.useEffect, useLayoutEffect3 = React48.useLayoutEffect, useDebugValue2 = React48.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React48 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState19 = React48.useState, useEffect19 = React48.useEffect, useLayoutEffect3 = React48.useLayoutEffect, useDebugValue2 = React48.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React48.useSyncExternalStore ? React48.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -155,7 +155,7 @@ var require_with_selector_development = __commonJS({
         return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React48 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef22 = React48.useRef, useEffect18 = React48.useEffect, useMemo22 = React48.useMemo, useDebugValue2 = React48.useDebugValue;
+      var React48 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef22 = React48.useRef, useEffect19 = React48.useEffect, useMemo22 = React48.useMemo, useDebugValue2 = React48.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef22(null);
         if (null === instRef.current) {
@@ -198,7 +198,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector, isEqual]
         );
         var value = useSyncExternalStore2(subscribe, instRef[0], instRef[1]);
-        useEffect18(
+        useEffect19(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -303,12 +303,12 @@ var require_html_entities = __commonJS({
 });
 
 // packages/boot/build-module/components/app/index.mjs
-var import_element42 = __toESM(require_element(), 1);
-var import_data12 = __toESM(require_data(), 1);
+var import_element43 = __toESM(require_element(), 1);
+var import_data13 = __toESM(require_data(), 1);
 
 // packages/boot/build-module/components/app/router.mjs
 var import_i18n16 = __toESM(require_i18n(), 1);
-var import_element40 = __toESM(require_element(), 1);
+var import_element41 = __toESM(require_element(), 1);
 
 // node_modules/clsx/dist/clsx.mjs
 function r(e) {
@@ -10390,7 +10390,7 @@ function getAdminThemeColors() {
 }
 
 // packages/boot/build-module/components/app/router.mjs
-var import_data11 = __toESM(require_data(), 1);
+var import_data12 = __toESM(require_data(), 1);
 var import_core_data6 = __toESM(require_core_data(), 1);
 import {
   privateApis as routePrivateApis6
@@ -10401,9 +10401,9 @@ var import_notices2 = __toESM(require_notices(), 1);
 var import_compose5 = __toESM(require_compose(), 1);
 var import_components14 = __toESM(require_components(), 1);
 import { privateApis as routePrivateApis5 } from "@wordpress/route";
-var import_element39 = __toESM(require_element(), 1);
+var import_element40 = __toESM(require_element(), 1);
 var import_i18n15 = __toESM(require_i18n(), 1);
-var import_editor5 = __toESM(require_editor(), 1);
+var import_editor6 = __toESM(require_editor(), 1);
 var import_theme = __toESM(require_theme(), 1);
 
 // packages/boot/build-module/components/sidebar/index.mjs
@@ -11361,13 +11361,13 @@ function SavePanel() {
 }
 
 // packages/boot/build-module/components/canvas-renderer/index.mjs
-var import_element35 = __toESM(require_element(), 1);
+var import_element36 = __toESM(require_element(), 1);
 
 // packages/boot/build-module/components/canvas/index.mjs
-var import_element34 = __toESM(require_element(), 1);
+var import_element35 = __toESM(require_element(), 1);
 var import_components12 = __toESM(require_components(), 1);
 var import_i18n12 = __toESM(require_i18n(), 1);
-var import_data9 = __toESM(require_data(), 1);
+var import_data10 = __toESM(require_data(), 1);
 var import_core_data4 = __toESM(require_core_data(), 1);
 import { useNavigate as useNavigate2 } from "@wordpress/route";
 
@@ -11394,57 +11394,90 @@ function BootBackButton({ length }) {
 }
 
 // packages/boot/build-module/components/canvas/use-navigate-to-entity-record.mjs
-var import_element33 = __toESM(require_element(), 1);
-var import_data8 = __toESM(require_data(), 1);
+var import_element34 = __toESM(require_element(), 1);
+var import_data9 = __toESM(require_data(), 1);
 var import_core_data3 = __toESM(require_core_data(), 1);
-var import_editor4 = __toESM(require_editor(), 1);
+var import_editor5 = __toESM(require_editor(), 1);
 var import_notices = __toESM(require_notices(), 1);
 var import_html_entities = __toESM(require_html_entities(), 1);
 var import_i18n11 = __toESM(require_i18n(), 1);
 import {
   useNavigate,
-  useSearch,
+  useSearch as useSearch2,
   privateApis as routePrivateApis3
 } from "@wordpress/route";
+
+// packages/boot/build-module/components/canvas/use-viewport-sync.mjs
+var import_element33 = __toESM(require_element(), 1);
+var import_data8 = __toESM(require_data(), 1);
+var import_editor4 = __toESM(require_editor(), 1);
+import { useSearch } from "@wordpress/route";
+var DEFAULT_DEVICE_TYPE = "Desktop";
+var VALID_VIEWPORTS = ["desktop", "tablet", "mobile"];
+var capitalize = (value) => value.charAt(0).toUpperCase() + value.slice(1);
+function useViewportSync() {
+  const { viewport } = useSearch({ strict: false });
+  const { setDeviceType } = (0, import_data8.useDispatch)(import_editor4.store);
+  (0, import_element33.useEffect)(() => {
+    const requested = viewport?.toLowerCase();
+    setDeviceType(
+      requested && VALID_VIEWPORTS.includes(requested) ? capitalize(requested) : DEFAULT_DEVICE_TYPE
+    );
+  }, [viewport, setDeviceType]);
+}
+
+// packages/boot/build-module/components/canvas/use-navigate-to-entity-record.mjs
 var { useCanGoBack, useRouter: useRouter2 } = unlock2(routePrivateApis3);
+var VALID_VIEWPORTS2 = ["desktop", "tablet", "mobile"];
 function useNavigateToEntityRecord() {
   const navigate = useNavigate();
-  const search = useSearch({ strict: false });
-  const registry = (0, import_data8.useRegistry)();
-  const getEntityLink2 = (0, import_data8.useSelect)(
+  const search = useSearch2({ strict: false });
+  const registry = (0, import_data9.useRegistry)();
+  const getEntityLink2 = (0, import_data9.useSelect)(
     (select) => select(store).getEntityLink,
     []
   );
   const router = useRouter2();
   const canGoBack = useCanGoBack();
-  const onNavigateToEntityRecord = (0, import_element33.useCallback)(
+  const onNavigateToEntityRecord = (0, import_element34.useCallback)(
     (params) => {
-      const currentPostType = registry.select(import_editor4.store).getCurrentPostType();
-      const currentPostId = registry.select(import_editor4.store).getCurrentPostId();
+      const currentPostType = registry.select(import_editor5.store).getCurrentPostType();
+      const currentPostId = registry.select(import_editor5.store).getCurrentPostId();
       const edits = registry.select(import_core_data3.store).getEntityRecordEdits(
         "postType",
         currentPostType,
         currentPostId
       );
       const selectedBlock = edits?.selection?.selectionStart?.clientId;
-      if (selectedBlock) {
+      const requestedViewport = params.viewport?.toLowerCase();
+      const hasRequestedViewport = !!requestedViewport && VALID_VIEWPORTS2.includes(requestedViewport);
+      const currentViewport = hasRequestedViewport ? (registry.select(import_editor5.store).getDeviceType() ?? DEFAULT_DEVICE_TYPE).toLowerCase() : void 0;
+      if (selectedBlock || currentViewport) {
         navigate({
           search: (previous) => ({
             ...previous,
-            selectedBlock
+            ...selectedBlock ? { selectedBlock } : {},
+            // The default needs no entry; its absence means it.
+            ...currentViewport && currentViewport !== DEFAULT_DEVICE_TYPE.toLowerCase() ? { viewport: currentViewport } : {}
           }),
           replace: true
         });
       }
       const to = getEntityLink2(params.postType, params.postId);
       if (to) {
-        navigate({ to, search: () => ({ focusMode: true }) });
+        navigate({
+          to,
+          search: () => ({
+            focusMode: true,
+            ...hasRequestedViewport ? { viewport: requestedViewport } : {}
+          })
+        });
       }
     },
     [navigate, registry, getEntityLink2]
   );
   const isFocusMode = !!search.focusMode;
-  const onNavigateToPreviousEntityRecord = (0, import_element33.useMemo)(
+  const onNavigateToPreviousEntityRecord = (0, import_element34.useMemo)(
     () => isFocusMode && canGoBack ? () => router.history.back() : void 0,
     [isFocusMode, canGoBack, router]
   );
@@ -11452,12 +11485,12 @@ function useNavigateToEntityRecord() {
 }
 function useActionPerformed(postType) {
   const navigate = useNavigate();
-  const { createSuccessNotice } = (0, import_data8.useDispatch)(import_notices.store);
-  const getEntityLink2 = (0, import_data8.useSelect)(
+  const { createSuccessNotice } = (0, import_data9.useDispatch)(import_notices.store);
+  const getEntityLink2 = (0, import_data9.useSelect)(
     (select) => select(store).getEntityLink,
     []
   );
-  return (0, import_element33.useCallback)(
+  return (0, import_element34.useCallback)(
     (actionId, items) => {
       switch (actionId) {
         case "move-to-trash":
@@ -11503,11 +11536,12 @@ function useActionPerformed(postType) {
 // packages/boot/build-module/components/canvas/index.mjs
 var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
 function Canvas({ canvas }) {
-  const [Editor, setEditor] = (0, import_element34.useState)(null);
+  const [Editor, setEditor] = (0, import_element35.useState)(null);
   const navigate = useNavigate2();
   const { onNavigateToEntityRecord, onNavigateToPreviousEntityRecord } = useNavigateToEntityRecord();
   const onActionPerformed = useActionPerformed(canvas.postType);
-  const { editLink, isTrashed } = (0, import_data9.useSelect)(
+  useViewportSync();
+  const { editLink, isTrashed } = (0, import_data10.useSelect)(
     (select) => {
       if (!canvas.postType || !canvas.postId) {
         return { editLink: void 0, isTrashed: false };
@@ -11527,7 +11561,7 @@ function Canvas({ canvas }) {
     },
     [canvas.postType, canvas.postId]
   );
-  const settings = (0, import_element34.useMemo)(
+  const settings = (0, import_element35.useMemo)(
     () => ({
       isPreviewMode: canvas.isPreview,
       styles: canvas.isPreview ? [{ css: "body{min-height:100vh;}" }] : [],
@@ -11540,7 +11574,7 @@ function Canvas({ canvas }) {
       onNavigateToPreviousEntityRecord
     ]
   );
-  (0, import_element34.useEffect)(() => {
+  (0, import_element35.useEffect)(() => {
     import("@wordpress/lazy-editor").then((module) => {
       setEditor(() => module.Editor);
     }).catch((error) => {
@@ -11615,8 +11649,8 @@ function CanvasRenderer({
   canvas,
   routeContentModule
 }) {
-  const [CustomCanvas, setCustomCanvas] = (0, import_element35.useState)(null);
-  (0, import_element35.useEffect)(() => {
+  const [CustomCanvas, setCustomCanvas] = (0, import_element36.useState)(null);
+  (0, import_element36.useEffect)(() => {
     if (canvas === null && routeContentModule) {
       import(routeContentModule).then((module) => {
         setCustomCanvas(() => module.canvas);
@@ -11640,7 +11674,7 @@ function CanvasRenderer({
 }
 
 // packages/boot/build-module/components/error-boundary/index.mjs
-var import_element36 = __toESM(require_element(), 1);
+var import_element37 = __toESM(require_element(), 1);
 var import_i18n13 = __toESM(require_i18n(), 1);
 var import_components13 = __toESM(require_components(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
@@ -11655,7 +11689,7 @@ function CopyErrorButton({ error }) {
   const ref = (0, import_compose3.useCopyToClipboard)(() => error.stack ?? String(error));
   return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_components13.Button, { __next40pxDefaultSize: true, variant: "secondary", ref, children: (0, import_i18n13.__)("Copy error") });
 }
-var ErrorBoundary = class extends import_element36.Component {
+var ErrorBoundary = class extends import_element37.Component {
   constructor(props) {
     super(props);
     this.state = { error: null };
@@ -11680,8 +11714,8 @@ var ErrorBoundary = class extends import_element36.Component {
 };
 
 // packages/boot/build-module/components/app/use-route-title.mjs
-var import_element37 = __toESM(require_element(), 1);
-var import_data10 = __toESM(require_data(), 1);
+var import_element38 = __toESM(require_element(), 1);
+var import_data11 = __toESM(require_data(), 1);
 var import_core_data5 = __toESM(require_core_data(), 1);
 var import_i18n14 = __toESM(require_i18n(), 1);
 var import_html_entities2 = __toESM(require_html_entities(), 1);
@@ -11693,18 +11727,18 @@ function useRouteTitle() {
   const matches = useMatches2();
   const currentMatch = matches[matches.length - 1];
   const routeTitle = currentMatch?.loaderData?.title;
-  const siteTitle = (0, import_data10.useSelect)(
+  const siteTitle = (0, import_data11.useSelect)(
     (select) => select(import_core_data5.store).getEntityRecord(
       "root",
       "__unstableBase"
     )?.name,
     []
   );
-  const isInitialLocationRef = (0, import_element37.useRef)(true);
-  (0, import_element37.useEffect)(() => {
+  const isInitialLocationRef = (0, import_element38.useRef)(true);
+  (0, import_element38.useEffect)(() => {
     isInitialLocationRef.current = false;
   }, [location]);
-  (0, import_element37.useEffect)(() => {
+  (0, import_element38.useEffect)(() => {
     if (isInitialLocationRef.current) {
       return;
     }
@@ -11726,10 +11760,10 @@ function useRouteTitle() {
 }
 
 // packages/boot/build-module/components/root/use-sync-body-background.mjs
-var import_element38 = __toESM(require_element(), 1);
+var import_element39 = __toESM(require_element(), 1);
 var import_compose4 = __toESM(require_compose(), 1);
 function useSyncBodyBackground() {
-  const layoutRef = (0, import_element38.useRef)(null);
+  const layoutRef = (0, import_element39.useRef)(null);
   (0, import_compose4.useIsomorphicLayoutEffect)(() => {
     if (!layoutRef.current) {
       return;
@@ -11766,12 +11800,12 @@ function Root3() {
   const isFullScreen = canvas && !canvas.isPreview;
   useRouteTitle();
   const isMobileViewport = (0, import_compose5.useViewportMatch)("medium", "<");
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = (0, import_element39.useState)(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = (0, import_element40.useState)(false);
   const disableMotion = (0, import_compose5.useReducedMotion)();
-  (0, import_element39.useEffect)(() => {
+  (0, import_element40.useEffect)(() => {
     setIsMobileSidebarOpen(false);
   }, [location.pathname, isMobileViewport]);
-  const themeColors = (0, import_element39.useMemo)(getAdminThemeColors, []);
+  const themeColors = (0, import_element40.useMemo)(getAdminThemeColors, []);
   const layoutRef = useSyncBodyBackground();
   return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_components14.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(tooltip_exports.Provider, { children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
     import_theme.ThemeProvider,
@@ -11787,7 +11821,7 @@ function Root3() {
             "has-full-canvas": isFullScreen
           }),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_editor5.UnsavedChangesWarning, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_editor6.UnsavedChangesWarning, {}),
             /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(SavePanel, {}),
             /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_notices2.SnackbarNotices, { className: "boot-notices__snackbar" }),
             isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(page_default.SidebarToggleFill, { children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
@@ -11936,7 +11970,7 @@ function createRouteFromDefinition(route, parentRoute) {
         search: opts.deps || {}
       };
       const [, loaderData, canvasData, titleData] = await Promise.all([
-        (0, import_data11.resolveSelect)(import_core_data6.store).getEntityRecord(
+        (0, import_data12.resolveSelect)(import_core_data6.store).getEntityRecord(
           "root",
           "__unstableBase"
         ),
@@ -12008,7 +12042,7 @@ function Router({
   routes,
   rootComponent = Root3
 }) {
-  const router = (0, import_element40.useMemo)(() => {
+  const router = (0, import_element41.useMemo)(() => {
     const history = createPathHistory();
     const routeTree = createRouteTree(routes, rootComponent);
     return createRouter({
@@ -12034,10 +12068,10 @@ function Router({
 // packages/boot/build-module/components/root/single-page.mjs
 var import_notices3 = __toESM(require_notices(), 1);
 var import_components15 = __toESM(require_components(), 1);
-var import_element41 = __toESM(require_element(), 1);
+var import_element42 = __toESM(require_element(), 1);
 import { privateApis as routePrivateApis7 } from "@wordpress/route";
 var import_theme2 = __toESM(require_theme(), 1);
-var import_editor6 = __toESM(require_editor(), 1);
+var import_editor7 = __toESM(require_editor(), 1);
 var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d38c56df8c']")) {
   const style = document.createElement("style");
@@ -12053,7 +12087,7 @@ function RootSinglePage() {
   const routeContentModule = currentMatch?.loaderData?.routeContentModule;
   const isFullScreen = canvas && !canvas.isPreview;
   useRouteTitle();
-  const themeColors = (0, import_element41.useMemo)(getAdminThemeColors, []);
+  const themeColors = (0, import_element42.useMemo)(getAdminThemeColors, []);
   const layoutRef = useSyncBodyBackground();
   return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_components15.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
     import_theme2.ThemeProvider,
@@ -12072,7 +12106,7 @@ function RootSinglePage() {
             }
           ),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_editor6.UnsavedChangesWarning, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_editor7.UnsavedChangesWarning, {}),
             /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(SavePanel, {}),
             /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_notices3.SnackbarNotices, { className: "boot-notices__snackbar" }),
             /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(
@@ -12104,7 +12138,7 @@ function RootSinglePage() {
 // packages/boot/build-module/components/app/index.mjs
 var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
 function App({ rootComponent }) {
-  const routes = (0, import_data12.useSelect)((select) => select(store).getRoutes(), []);
+  const routes = (0, import_data13.useSelect)((select) => select(store).getRoutes(), []);
   return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Router, { routes, rootComponent });
 }
 async function runInitModules(initModules) {
@@ -12121,20 +12155,20 @@ async function init({
   dashboardLink
 }) {
   (menuItems ?? []).forEach((menuItem) => {
-    (0, import_data12.dispatch)(store).registerMenuItem(menuItem.id, menuItem);
+    (0, import_data13.dispatch)(store).registerMenuItem(menuItem.id, menuItem);
   });
   (routes ?? []).forEach((route) => {
-    (0, import_data12.dispatch)(store).registerRoute(route);
+    (0, import_data13.dispatch)(store).registerRoute(route);
   });
   if (dashboardLink) {
-    (0, import_data12.dispatch)(store).setDashboardLink(dashboardLink);
+    (0, import_data13.dispatch)(store).setDashboardLink(dashboardLink);
   }
   await runInitModules(initModules);
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
-    const root = (0, import_element42.createRoot)(rootElement);
+    const root = (0, import_element43.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_element42.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_element43.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(App, {}) })
     );
   }
 }
@@ -12144,14 +12178,14 @@ async function initSinglePage({
   initModules
 }) {
   (routes ?? []).forEach((route) => {
-    (0, import_data12.dispatch)(store).registerRoute(route);
+    (0, import_data13.dispatch)(store).registerRoute(route);
   });
   await runInitModules(initModules);
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
-    const root = (0, import_element42.createRoot)(rootElement);
+    const root = (0, import_element43.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_element42.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(App, { rootComponent: RootSinglePage }) })
+      /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_element43.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(App, { rootComponent: RootSinglePage }) })
     );
   }
 }
