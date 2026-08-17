@@ -27491,7 +27491,6 @@ function useMediaEditor() {
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
 var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCanvas({
-  focusOnMount,
   isPlacementActive = false,
   onGestureStart,
   onGestureEnd
@@ -27569,7 +27568,6 @@ function MediaEditorCanvas({
             controller,
             aspectRatio,
             freeformCrop: true,
-            focusOnMount: focusOnMount && status === "loaded",
             showGrid: "interactive",
             isPlacementActive,
             onGestureStart: handleGestureStart,
@@ -29009,7 +29007,6 @@ function MediaEditorContent({
                     /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
                       MediaEditorCanvas,
                       {
-                        focusOnMount: true,
                         isPlacementActive,
                         onGestureStart: handleCanvasGestureStart,
                         onGestureEnd: handleCanvasGestureEnd
