@@ -45,6 +45,13 @@ var require_data = __commonJS({
   }
 });
 
+// package-external:@wordpress/preferences
+var require_preferences = __commonJS({
+  "package-external:@wordpress/preferences"(exports, module) {
+    module.exports = window.wp.preferences;
+  }
+});
+
 // packages/icons/build-module/library/home.mjs
 var import_primitives = __toESM(require_primitives(), 1);
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
@@ -90,6 +97,7 @@ var symbol_default = /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_primiti
 
 // packages/edit-site-init/build-module/index.mjs
 var import_data = __toESM(require_data(), 1);
+var import_preferences = __toESM(require_preferences(), 1);
 import { store as bootStore } from "@wordpress/boot";
 async function init() {
   const menuIcons = {
@@ -117,6 +125,11 @@ async function init() {
       ...entityLinks.default,
       ...links
     });
+  });
+  (0, import_data.dispatch)(import_preferences.store).setDefaults("core", {
+    allowRightClickOverrides: true,
+    enableChoosePatternModal: true,
+    showBlockBreadcrumbs: true
   });
 }
 export {
