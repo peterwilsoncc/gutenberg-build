@@ -295,6 +295,20 @@ var require_keyboard_shortcuts = __commonJS({
   }
 });
 
+// package-external:@wordpress/dom
+var require_dom = __commonJS({
+  "package-external:@wordpress/dom"(exports, module) {
+    module.exports = window.wp.dom;
+  }
+});
+
+// package-external:@wordpress/url
+var require_url = __commonJS({
+  "package-external:@wordpress/url"(exports, module) {
+    module.exports = window.wp.url;
+  }
+});
+
 // package-external:@wordpress/html-entities
 var require_html_entities = __commonJS({
   "package-external:@wordpress/html-entities"(exports, module) {
@@ -304,10 +318,10 @@ var require_html_entities = __commonJS({
 
 // packages/boot/build-module/components/app/index.mjs
 var import_element43 = __toESM(require_element(), 1);
-var import_data13 = __toESM(require_data(), 1);
+var import_data14 = __toESM(require_data(), 1);
 
 // packages/boot/build-module/components/app/router.mjs
-var import_i18n16 = __toESM(require_i18n(), 1);
+var import_i18n17 = __toESM(require_i18n(), 1);
 var import_element41 = __toESM(require_element(), 1);
 
 // node_modules/clsx/dist/clsx.mjs
@@ -10390,8 +10404,8 @@ function getAdminThemeColors() {
 }
 
 // packages/boot/build-module/components/app/router.mjs
-var import_data12 = __toESM(require_data(), 1);
-var import_core_data6 = __toESM(require_core_data(), 1);
+var import_data13 = __toESM(require_data(), 1);
+var import_core_data7 = __toESM(require_core_data(), 1);
 import {
   privateApis as routePrivateApis6
 } from "@wordpress/route";
@@ -10402,7 +10416,7 @@ var import_compose5 = __toESM(require_compose(), 1);
 var import_components14 = __toESM(require_components(), 1);
 import { privateApis as routePrivateApis5 } from "@wordpress/route";
 var import_element40 = __toESM(require_element(), 1);
-var import_i18n15 = __toESM(require_i18n(), 1);
+var import_i18n16 = __toESM(require_i18n(), 1);
 var import_editor6 = __toESM(require_editor(), 1);
 var import_theme = __toESM(require_theme(), 1);
 
@@ -11366,9 +11380,9 @@ var import_element36 = __toESM(require_element(), 1);
 // packages/boot/build-module/components/canvas/index.mjs
 var import_element35 = __toESM(require_element(), 1);
 var import_components12 = __toESM(require_components(), 1);
-var import_i18n12 = __toESM(require_i18n(), 1);
-var import_data10 = __toESM(require_data(), 1);
-var import_core_data4 = __toESM(require_core_data(), 1);
+var import_i18n13 = __toESM(require_i18n(), 1);
+var import_data11 = __toESM(require_data(), 1);
+var import_core_data5 = __toESM(require_core_data(), 1);
 import { useNavigate as useNavigate2 } from "@wordpress/route";
 
 // packages/boot/build-module/components/canvas/back-button.mjs
@@ -11393,14 +11407,61 @@ function BootBackButton({ length }) {
   );
 }
 
+// packages/boot/build-module/components/canvas/site-preview.mjs
+var import_i18n11 = __toESM(require_i18n(), 1);
+var import_data8 = __toESM(require_data(), 1);
+var import_core_data3 = __toESM(require_core_data(), 1);
+var import_dom21 = __toESM(require_dom(), 1);
+var import_url = __toESM(require_url(), 1);
+var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
+function SitePreview() {
+  const siteUrl = (0, import_data8.useSelect)((select) => {
+    const siteData = select(import_core_data3.store).getEntityRecord(
+      "root",
+      "__unstableBase"
+    );
+    return siteData?.home;
+  }, []);
+  if (typeof siteUrl !== "string" || !siteUrl) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+    "iframe",
+    {
+      src: (0, import_url.addQueryArgs)(siteUrl, {
+        // Parameter for hiding the admin bar.
+        wp_site_preview: 1
+      }),
+      title: (0, import_i18n11.__)("Site Preview"),
+      style: {
+        display: "block",
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#fff"
+      },
+      onLoad: (event) => {
+        const iframeDocument = event.target.contentDocument;
+        if (!iframeDocument) {
+          return;
+        }
+        import_dom21.focus.focusable.find(iframeDocument.documentElement).forEach((element) => {
+          element.style.pointerEvents = "none";
+          element.tabIndex = -1;
+          element.setAttribute("aria-hidden", "true");
+        });
+      }
+    }
+  );
+}
+
 // packages/boot/build-module/components/canvas/use-navigate-to-entity-record.mjs
 var import_element34 = __toESM(require_element(), 1);
-var import_data9 = __toESM(require_data(), 1);
-var import_core_data3 = __toESM(require_core_data(), 1);
+var import_data10 = __toESM(require_data(), 1);
+var import_core_data4 = __toESM(require_core_data(), 1);
 var import_editor5 = __toESM(require_editor(), 1);
 var import_notices = __toESM(require_notices(), 1);
 var import_html_entities = __toESM(require_html_entities(), 1);
-var import_i18n11 = __toESM(require_i18n(), 1);
+var import_i18n12 = __toESM(require_i18n(), 1);
 import {
   useNavigate,
   useSearch as useSearch2,
@@ -11409,7 +11470,7 @@ import {
 
 // packages/boot/build-module/components/canvas/use-viewport-sync.mjs
 var import_element33 = __toESM(require_element(), 1);
-var import_data8 = __toESM(require_data(), 1);
+var import_data9 = __toESM(require_data(), 1);
 var import_editor4 = __toESM(require_editor(), 1);
 import { useSearch } from "@wordpress/route";
 var DEFAULT_DEVICE_TYPE = "Desktop";
@@ -11417,7 +11478,7 @@ var VALID_VIEWPORTS = ["desktop", "tablet", "mobile"];
 var capitalize = (value) => value.charAt(0).toUpperCase() + value.slice(1);
 function useViewportSync() {
   const { viewport } = useSearch({ strict: false });
-  const { setDeviceType } = (0, import_data8.useDispatch)(import_editor4.store);
+  const { setDeviceType } = (0, import_data9.useDispatch)(import_editor4.store);
   (0, import_element33.useEffect)(() => {
     const requested = viewport?.toLowerCase();
     setDeviceType(
@@ -11432,8 +11493,8 @@ var VALID_VIEWPORTS2 = ["desktop", "tablet", "mobile"];
 function useNavigateToEntityRecord() {
   const navigate = useNavigate();
   const search = useSearch2({ strict: false });
-  const registry = (0, import_data9.useRegistry)();
-  const getEntityLink2 = (0, import_data9.useSelect)(
+  const registry = (0, import_data10.useRegistry)();
+  const getEntityLink2 = (0, import_data10.useSelect)(
     (select) => select(store).getEntityLink,
     []
   );
@@ -11443,7 +11504,7 @@ function useNavigateToEntityRecord() {
     (params) => {
       const currentPostType = registry.select(import_editor5.store).getCurrentPostType();
       const currentPostId = registry.select(import_editor5.store).getCurrentPostId();
-      const edits = registry.select(import_core_data3.store).getEntityRecordEdits(
+      const edits = registry.select(import_core_data4.store).getEntityRecordEdits(
         "postType",
         currentPostType,
         currentPostId
@@ -11485,8 +11546,8 @@ function useNavigateToEntityRecord() {
 }
 function useActionPerformed(postType) {
   const navigate = useNavigate();
-  const { createSuccessNotice } = (0, import_data9.useDispatch)(import_notices.store);
-  const getEntityLink2 = (0, import_data9.useSelect)(
+  const { createSuccessNotice } = (0, import_data10.useDispatch)(import_notices.store);
+  const getEntityLink2 = (0, import_data10.useSelect)(
     (select) => select(store).getEntityLink,
     []
   );
@@ -11509,17 +11570,17 @@ function useActionPerformed(postType) {
           }
           const title = typeof newItem.title === "string" ? newItem.title : newItem.title?.rendered;
           createSuccessNotice(
-            (0, import_i18n11.sprintf)(
+            (0, import_i18n12.sprintf)(
               // translators: %s: Title of the created post, e.g: "Hello world".
-              (0, import_i18n11.__)('"%s" successfully created.'),
-              (0, import_html_entities.decodeEntities)(title ?? "") || (0, import_i18n11.__)("(no title)")
+              (0, import_i18n12.__)('"%s" successfully created.'),
+              (0, import_html_entities.decodeEntities)(title ?? "") || (0, import_i18n12.__)("(no title)")
             ),
             {
               type: "snackbar",
               id: "duplicate-post-action",
               actions: [
                 {
-                  label: (0, import_i18n11.__)("Edit"),
+                  label: (0, import_i18n12.__)("Edit"),
                   onClick: () => navigate({ to })
                 }
               ]
@@ -11534,19 +11595,24 @@ function useActionPerformed(postType) {
 }
 
 // packages/boot/build-module/components/canvas/index.mjs
-var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
 function Canvas({ canvas }) {
   const [Editor, setEditor] = (0, import_element35.useState)(null);
   const navigate = useNavigate2();
   const { onNavigateToEntityRecord, onNavigateToPreviousEntityRecord } = useNavigateToEntityRecord();
   const onActionPerformed = useActionPerformed(canvas.postType);
   useViewportSync();
-  const { editLink, isTrashed } = (0, import_data10.useSelect)(
+  const hasEntity = !!(canvas.postType && canvas.postId);
+  const isBlockTheme = (0, import_data11.useSelect)(
+    (select) => select(import_core_data5.store).getCurrentTheme()?.is_block_theme,
+    []
+  );
+  const { editLink, isTrashed } = (0, import_data11.useSelect)(
     (select) => {
       if (!canvas.postType || !canvas.postId) {
         return { editLink: void 0, isTrashed: false };
       }
-      const record = select(import_core_data4.store).getEntityRecord(
+      const record = select(import_core_data5.store).getEntityRecord(
         "postType",
         canvas.postType,
         canvas.postId
@@ -11581,8 +11647,11 @@ function Canvas({ canvas }) {
       console.error("Failed to load lazy editor:", error);
     });
   }, []);
-  if (!Editor) {
-    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+  if (!hasEntity && isBlockTheme === false) {
+    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(SitePreview, {});
+  }
+  if (!Editor || !hasEntity && isBlockTheme === void 0) {
+    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
       "div",
       {
         style: {
@@ -11592,18 +11661,18 @@ function Canvas({ canvas }) {
           height: "100%",
           padding: "2rem"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(import_components12.Spinner, {})
+        children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(import_components12.Spinner, {})
       }
     );
   }
-  const backButton = !canvas.isPreview ? ({ length }) => /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(BootBackButton, { length }) : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)("div", { style: { height: "100%", position: "relative" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+  const backButton = !canvas.isPreview ? ({ length }) => /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(BootBackButton, { length }) : void 0;
+  return /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)("div", { style: { height: "100%", position: "relative" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
       "div",
       {
         style: { height: "100%" },
         inert: canvas.isPreview ? "true" : void 0,
-        children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
           Editor,
           {
             postType: canvas.postType,
@@ -11615,7 +11684,7 @@ function Canvas({ canvas }) {
         )
       }
     ),
-    canvas.isPreview && editLink && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+    canvas.isPreview && editLink && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
       "div",
       {
         onClick: isTrashed ? void 0 : () => navigate({ to: editLink }),
@@ -11637,14 +11706,14 @@ function Canvas({ canvas }) {
         role: "button",
         tabIndex: 0,
         "aria-disabled": isTrashed,
-        "aria-label": (0, import_i18n12.__)("Edit")
+        "aria-label": (0, import_i18n13.__)("Edit")
       }
     )
   ] });
 }
 
 // packages/boot/build-module/components/canvas-renderer/index.mjs
-var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
 function CanvasRenderer({
   canvas,
   routeContentModule
@@ -11668,17 +11737,17 @@ function CanvasRenderer({
     if (!CustomCanvas) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(CustomCanvas, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(CustomCanvas, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(Canvas, { canvas });
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(Canvas, { canvas });
 }
 
 // packages/boot/build-module/components/error-boundary/index.mjs
 var import_element37 = __toESM(require_element(), 1);
-var import_i18n13 = __toESM(require_i18n(), 1);
+var import_i18n14 = __toESM(require_i18n(), 1);
 var import_components13 = __toESM(require_components(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
-var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='2273583628']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "2273583628");
@@ -11687,7 +11756,7 @@ if (typeof document !== "undefined" && true && !document.head.querySelector("sty
 }
 function CopyErrorButton({ error }) {
   const ref = (0, import_compose3.useCopyToClipboard)(() => error.stack ?? String(error));
-  return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(import_components13.Button, { __next40pxDefaultSize: true, variant: "secondary", ref, children: (0, import_i18n13.__)("Copy error") });
+  return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_components13.Button, { __next40pxDefaultSize: true, variant: "secondary", ref, children: (0, import_i18n14.__)("Copy error") });
 }
 var ErrorBoundary = class extends import_element37.Component {
   constructor(props) {
@@ -11702,22 +11771,22 @@ var ErrorBoundary = class extends import_element37.Component {
     if (!error) {
       return this.props.children;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "boot-error-boundary", children: /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(empty_state_exports.Root, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(empty_state_exports.Icon, { icon: caution_default }),
-      /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(empty_state_exports.Title, { children: (0, import_i18n13.__)("Something went wrong") }),
-      /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(empty_state_exports.Description, { children: (0, import_i18n13.__)(
+    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", { className: "boot-error-boundary", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(empty_state_exports.Root, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(empty_state_exports.Icon, { icon: caution_default }),
+      /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(empty_state_exports.Title, { children: (0, import_i18n14.__)("Something went wrong") }),
+      /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(empty_state_exports.Description, { children: (0, import_i18n14.__)(
         "This part of the screen could not be displayed. Reloading the page may help."
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(empty_state_exports.Actions, { children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(CopyErrorButton, { error }) })
+      /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(empty_state_exports.Actions, { children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(CopyErrorButton, { error }) })
     ] }) });
   }
 };
 
 // packages/boot/build-module/components/app/use-route-title.mjs
 var import_element38 = __toESM(require_element(), 1);
-var import_data11 = __toESM(require_data(), 1);
-var import_core_data5 = __toESM(require_core_data(), 1);
-var import_i18n14 = __toESM(require_i18n(), 1);
+var import_data12 = __toESM(require_data(), 1);
+var import_core_data6 = __toESM(require_core_data(), 1);
+var import_i18n15 = __toESM(require_i18n(), 1);
 var import_html_entities2 = __toESM(require_html_entities(), 1);
 import { speak } from "@wordpress/a11y";
 import { privateApis as routePrivateApis4 } from "@wordpress/route";
@@ -11727,8 +11796,8 @@ function useRouteTitle() {
   const matches = useMatches2();
   const currentMatch = matches[matches.length - 1];
   const routeTitle = currentMatch?.loaderData?.title;
-  const siteTitle = (0, import_data11.useSelect)(
-    (select) => select(import_core_data5.store).getEntityRecord(
+  const siteTitle = (0, import_data12.useSelect)(
+    (select) => select(import_core_data6.store).getEntityRecord(
       "root",
       "__unstableBase"
     )?.name,
@@ -11745,9 +11814,9 @@ function useRouteTitle() {
     if (routeTitle && typeof routeTitle === "string" && siteTitle && typeof siteTitle === "string") {
       const decodedRouteTitle = (0, import_html_entities2.decodeEntities)(routeTitle);
       const decodedSiteTitle = (0, import_html_entities2.decodeEntities)(siteTitle);
-      const formattedTitle = (0, import_i18n14.sprintf)(
+      const formattedTitle = (0, import_i18n15.sprintf)(
         /* translators: Admin document title. 1: Admin screen name, 2: Site name. */
-        (0, import_i18n14.__)("%1$s ‹ %2$s — WordPress"),
+        (0, import_i18n15.__)("%1$s ‹ %2$s — WordPress"),
         decodedRouteTitle,
         decodedSiteTitle
       );
@@ -11783,7 +11852,7 @@ function useSyncBodyBackground() {
 }
 
 // packages/boot/build-module/components/root/index.mjs
-var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d38c56df8c']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "d38c56df8c");
@@ -11807,12 +11876,12 @@ function Root3() {
   }, [location.pathname, isMobileViewport]);
   const themeColors = (0, import_element40.useMemo)(getAdminThemeColors, []);
   const layoutRef = useSyncBodyBackground();
-  return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_components14.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(tooltip_exports.Provider, { children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_components14.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(tooltip_exports.Provider, { children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
     import_theme.ThemeProvider,
     {
       isRoot: true,
       color: { ...themeColors, background: "#f8f8f8" },
-      children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_theme.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_theme.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)(
         "div",
         {
           ref: layoutRef,
@@ -11821,19 +11890,19 @@ function Root3() {
             "has-full-canvas": isFullScreen
           }),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_editor6.UnsavedChangesWarning, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(SavePanel, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_notices2.SnackbarNotices, { className: "boot-notices__snackbar" }),
-            isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(page_default.SidebarToggleFill, { children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_editor6.UnsavedChangesWarning, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(SavePanel, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_notices2.SnackbarNotices, { className: "boot-notices__snackbar" }),
+            isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(page_default.SidebarToggleFill, { children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
               import_components14.Button,
               {
                 icon: menu_default,
                 onClick: () => setIsMobileSidebarOpen(true),
-                label: (0, import_i18n15.__)("Open navigation panel"),
+                label: (0, import_i18n16.__)("Open navigation panel"),
                 size: "compact"
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_components14.__unstableAnimatePresence, { children: isMobileViewport && isMobileSidebarOpen && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_components14.__unstableAnimatePresence, { children: isMobileViewport && isMobileSidebarOpen && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
               import_components14.__unstableMotion.div,
               {
                 initial: { opacity: 0 },
@@ -11855,12 +11924,12 @@ function Root3() {
                 },
                 role: "button",
                 tabIndex: -1,
-                "aria-label": (0, import_i18n15.__)(
+                "aria-label": (0, import_i18n16.__)(
                   "Close navigation panel"
                 )
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_components14.__unstableAnimatePresence, { children: isMobileViewport && isMobileSidebarOpen && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(import_components14.__unstableAnimatePresence, { children: isMobileViewport && isMobileSidebarOpen && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
               import_components14.__unstableMotion.div,
               {
                 initial: { x: "-100%" },
@@ -11872,11 +11941,11 @@ function Root3() {
                   ease: "easeOut"
                 },
                 className: "boot-layout__sidebar is-mobile",
-                children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Sidebar, {})
+                children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Sidebar, {})
               }
             ) }),
-            !isMobileViewport && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", { className: "boot-layout__sidebar", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Sidebar, {}) }),
-            /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(
+            !isMobileViewport && !isFullScreen && /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "boot-layout__sidebar", children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Sidebar, {}) }),
+            /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)(
               import_theme.ThemeProvider,
               {
                 color: {
@@ -11884,8 +11953,8 @@ function Root3() {
                   background: "#ffffff"
                 },
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Outlet, {}),
-                  (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(
+                  /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Outlet, {}),
+                  (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)(
                     "div",
                     {
                       className: clsx_default(
@@ -11895,20 +11964,20 @@ function Root3() {
                         }
                       ),
                       children: [
-                        canvas?.isPreview && isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", { className: "boot-layout__mobile-sidebar-drawer", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+                        canvas?.isPreview && isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "boot-layout__mobile-sidebar-drawer", children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
                           import_components14.Button,
                           {
                             icon: menu_default,
                             onClick: () => setIsMobileSidebarOpen(
                               true
                             ),
-                            label: (0, import_i18n15.__)(
+                            label: (0, import_i18n16.__)(
                               "Open navigation panel"
                             ),
                             size: "compact"
                           }
                         ) }),
-                        /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+                        /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
                           CanvasRenderer,
                           {
                             canvas,
@@ -11929,7 +11998,7 @@ function Root3() {
 }
 
 // packages/boot/build-module/components/app/router.mjs
-var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
 var {
   createLazyRoute,
   createRouter,
@@ -11941,7 +12010,7 @@ var {
   useLoaderData
 } = unlock2(routePrivateApis6);
 function NotFoundComponent() {
-  return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(page_default, { title: (0, import_i18n16.__)("Route not found"), hasPadding: true, children: (0, import_i18n16.__)("The page you're looking for does not exist") }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(page_default, { title: (0, import_i18n17.__)("Route not found"), hasPadding: true, children: (0, import_i18n17.__)("The page you're looking for does not exist") }) });
 }
 function createRouteFromDefinition(route, parentRoute) {
   let tanstackRoute = createRoute({
@@ -11970,7 +12039,7 @@ function createRouteFromDefinition(route, parentRoute) {
         search: opts.deps || {}
       };
       const [, loaderData, canvasData, titleData] = await Promise.all([
-        (0, import_data12.resolveSelect)(import_core_data6.store).getEntityRecord(
+        (0, import_data13.resolveSelect)(import_core_data7.store).getEntityRecord(
           "root",
           "__unstableBase"
         ),
@@ -12004,9 +12073,9 @@ function createRouteFromDefinition(route, parentRoute) {
     return createLazyRoute(route.path)({
       component: function RouteComponent() {
         const { inspector: showInspector, stage: showStage } = useLoaderData({ from: route.path }) ?? {};
-        return /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)(import_jsx_runtime51.Fragment, { children: [
-          Stage && showStage && /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Stage, {}) }) }),
-          Inspector && showInspector && /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "boot-layout__inspector", children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Inspector, {}) }) })
+        return /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(import_jsx_runtime52.Fragment, { children: [
+          Stage && showStage && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { className: "boot-layout__stage", children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Stage, {}) }) }),
+          Inspector && showInspector && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { className: "boot-layout__inspector", children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Inspector, {}) }) })
         ] });
       }
     });
@@ -12062,7 +12131,7 @@ function Router({
       }
     });
   }, [routes, rootComponent]);
-  return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(RouterProvider, { router });
+  return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(RouterProvider, { router });
 }
 
 // packages/boot/build-module/components/root/single-page.mjs
@@ -12072,7 +12141,7 @@ var import_element42 = __toESM(require_element(), 1);
 import { privateApis as routePrivateApis7 } from "@wordpress/route";
 var import_theme2 = __toESM(require_theme(), 1);
 var import_editor7 = __toESM(require_editor(), 1);
-var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='d38c56df8c']")) {
   const style = document.createElement("style");
   style.setAttribute("data-wp-hash", "d38c56df8c");
@@ -12089,12 +12158,12 @@ function RootSinglePage() {
   useRouteTitle();
   const themeColors = (0, import_element42.useMemo)(getAdminThemeColors, []);
   const layoutRef = useSyncBodyBackground();
-  return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_components15.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_components15.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
     import_theme2.ThemeProvider,
     {
       isRoot: true,
       color: { ...themeColors, background: "#f8f8f8" },
-      children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_theme2.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_theme2.ThemeProvider, { color: themeColors, children: /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(
         "div",
         {
           ref: layoutRef,
@@ -12106,10 +12175,10 @@ function RootSinglePage() {
             }
           ),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_editor7.UnsavedChangesWarning, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(SavePanel, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(import_notices3.SnackbarNotices, { className: "boot-notices__snackbar" }),
-            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_editor7.UnsavedChangesWarning, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(SavePanel, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_notices3.SnackbarNotices, { className: "boot-notices__snackbar" }),
+            /* @__PURE__ */ (0, import_jsx_runtime53.jsx)("div", { className: "boot-layout__surfaces", children: /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(
               import_theme2.ThemeProvider,
               {
                 color: {
@@ -12117,8 +12186,8 @@ function RootSinglePage() {
                   background: "#ffffff"
                 },
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Outlet2, {}),
-                  (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { className: "boot-layout__canvas", children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Outlet2, {}),
+                  (canvas || canvas === null) && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)("div", { className: "boot-layout__canvas", children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
                     CanvasRenderer,
                     {
                       canvas,
@@ -12136,10 +12205,10 @@ function RootSinglePage() {
 }
 
 // packages/boot/build-module/components/app/index.mjs
-var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
 function App({ rootComponent }) {
-  const routes = (0, import_data13.useSelect)((select) => select(store).getRoutes(), []);
-  return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Router, { routes, rootComponent });
+  const routes = (0, import_data14.useSelect)((select) => select(store).getRoutes(), []);
+  return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(Router, { routes, rootComponent });
 }
 async function runInitModules(initModules) {
   for (const moduleId of initModules ?? []) {
@@ -12155,20 +12224,20 @@ async function init({
   dashboardLink
 }) {
   (menuItems ?? []).forEach((menuItem) => {
-    (0, import_data13.dispatch)(store).registerMenuItem(menuItem.id, menuItem);
+    (0, import_data14.dispatch)(store).registerMenuItem(menuItem.id, menuItem);
   });
   (routes ?? []).forEach((route) => {
-    (0, import_data13.dispatch)(store).registerRoute(route);
+    (0, import_data14.dispatch)(store).registerRoute(route);
   });
   if (dashboardLink) {
-    (0, import_data13.dispatch)(store).setDashboardLink(dashboardLink);
+    (0, import_data14.dispatch)(store).setDashboardLink(dashboardLink);
   }
   await runInitModules(initModules);
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
     const root = (0, import_element43.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_element43.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(App, {}) })
+      /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_element43.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(App, {}) })
     );
   }
 }
@@ -12178,14 +12247,14 @@ async function initSinglePage({
   initModules
 }) {
   (routes ?? []).forEach((route) => {
-    (0, import_data13.dispatch)(store).registerRoute(route);
+    (0, import_data14.dispatch)(store).registerRoute(route);
   });
   await runInitModules(initModules);
   const rootElement = document.getElementById(mountId);
   if (rootElement) {
     const root = (0, import_element43.createRoot)(rootElement);
     root.render(
-      /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(import_element43.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(App, { rootComponent: RootSinglePage }) })
+      /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(import_element43.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(App, { rootComponent: RootSinglePage }) })
     );
   }
 }
