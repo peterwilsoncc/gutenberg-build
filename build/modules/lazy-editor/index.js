@@ -2856,7 +2856,11 @@ function useEditorAssets() {
 
 // packages/lazy-editor/build-module/components/editor/index.mjs
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-var { Editor: PrivateEditor, BackButton } = unlock(import_editor.privateApis);
+var {
+  Editor: PrivateEditor,
+  BackButton,
+  PreferencesModal
+} = unlock(import_editor.privateApis);
 function Editor({
   postType,
   postId,
@@ -2917,7 +2921,7 @@ function Editor({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
     PrivateEditor,
     {
       postType: resolvedPostType,
@@ -2926,7 +2930,10 @@ function Editor({
       settings: finalSettings,
       styles: finalSettings.styles,
       onActionPerformed,
-      children: backButton && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BackButton, { children: backButton })
+      children: [
+        backButton && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BackButton, { children: backButton }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PreferencesModal, {})
+      ]
     }
   );
 }
