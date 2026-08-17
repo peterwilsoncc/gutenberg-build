@@ -56389,6 +56389,7 @@ ${text}
                   tagName: "span",
                   className: "wp-block-playlist-track__title",
                   value: title,
+                  "aria-label": (0, import_i18n169.__)("Track title"),
                   placeholder: (0, import_i18n169.__)("Add title"),
                   onChange: (value) => {
                     setAttributes({ title: value });
@@ -56402,6 +56403,7 @@ ${text}
                   tagName: "span",
                   className: "wp-block-playlist-track__artist",
                   value: artist,
+                  "aria-label": (0, import_i18n169.__)("Track artist"),
                   placeholder: (0, import_i18n169.__)("Add artist"),
                   onChange: (value) => setAttributes({ artist: value }),
                   __experimentalVersion: 2
