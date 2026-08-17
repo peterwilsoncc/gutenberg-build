@@ -7731,21 +7731,21 @@ If there's a particular need for this, please submit a feature request at https:
     const side = getSide(placement);
     return oppositeSideMap[side] + placement.slice(side.length);
   }
-  function expandPaddingObject(padding2) {
+  function expandPaddingObject(padding) {
     var _padding$top, _padding$right, _padding$bottom, _padding$left;
     return {
-      top: (_padding$top = padding2.top) != null ? _padding$top : 0,
-      right: (_padding$right = padding2.right) != null ? _padding$right : 0,
-      bottom: (_padding$bottom = padding2.bottom) != null ? _padding$bottom : 0,
-      left: (_padding$left = padding2.left) != null ? _padding$left : 0
+      top: (_padding$top = padding.top) != null ? _padding$top : 0,
+      right: (_padding$right = padding.right) != null ? _padding$right : 0,
+      bottom: (_padding$bottom = padding.bottom) != null ? _padding$bottom : 0,
+      left: (_padding$left = padding.left) != null ? _padding$left : 0
     };
   }
-  function getPaddingObject(padding2) {
-    return typeof padding2 !== "number" ? expandPaddingObject(padding2) : {
-      top: padding2,
-      right: padding2,
-      bottom: padding2,
-      left: padding2
+  function getPaddingObject(padding) {
+    return typeof padding !== "number" ? expandPaddingObject(padding) : {
+      top: padding,
+      right: padding,
+      bottom: padding,
+      left: padding
     };
   }
   function rectToClientRect(rect) {
@@ -7837,9 +7837,9 @@ If there's a particular need for this, please submit a feature request at https:
       rootBoundary = "viewport",
       elementContext = "floating",
       altBoundary = false,
-      padding: padding2 = 0
+      padding = 0
     } = evaluate(options2, state);
-    const paddingObject = getPaddingObject(padding2);
+    const paddingObject = getPaddingObject(padding);
     const altContext = elementContext === "floating" ? "reference" : "floating";
     const element = elements2[altBoundary ? altContext : elementContext];
     const clippingClientRect = rectToClientRect(await platform2.getClippingRect({
@@ -7975,12 +7975,12 @@ If there's a particular need for this, please submit a feature request at https:
       } = state;
       const {
         element,
-        padding: padding2 = 0
+        padding = 0
       } = evaluate(options2, state) || {};
       if (element == null) {
         return {};
       }
-      const paddingObject = getPaddingObject(padding2);
+      const paddingObject = getPaddingObject(padding);
       const coords = {
         x: x2,
         y: y3
@@ -9210,9 +9210,9 @@ If there's a particular need for this, please submit a feature request at https:
     const dpr = window.devicePixelRatio || 1;
     return Math.round(value * dpr) / dpr;
   }
-  function getOverflowPaddingValue(padding2) {
-    if (typeof padding2 === "number") return padding2;
-    return Math.max(padding2.left ?? 0, padding2.right ?? 0);
+  function getOverflowPaddingValue(padding) {
+    if (typeof padding === "number") return padding;
+    return Math.max(padding.left ?? 0, padding.right ?? 0);
   }
   function getOffsetMiddleware(arrowElement, props) {
     return offset2(({ placement }) => {
@@ -24009,7 +24009,7 @@ If there's a particular need for this, please submit a feature request at https:
       marginTop,
       marginX,
       marginY,
-      padding: padding2,
+      padding,
       paddingBottom,
       paddingLeft,
       paddingRight,
@@ -24043,8 +24043,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (isDefined(marginRight)) {
       spacingStyle["--wp-components-spacer-margin-inline-end"] = space(marginRight);
     }
-    if (isDefined(padding2)) {
-      spacingStyle["--wp-components-spacer-padding"] = space(padding2);
+    if (isDefined(padding)) {
+      spacingStyle["--wp-components-spacer-padding"] = space(padding);
     }
     if (isDefined(paddingY)) {
       spacingStyle["--wp-components-spacer-padding-block-start"] = space(paddingY);
@@ -25104,19 +25104,19 @@ If there's a particular need for this, please submit a feature request at https:
     isPrefix
   }) => {
     const {
-      paddingLeft: padding2
+      paddingLeft: padding
     } = getSizeConfig({
       inputSize: size4
     });
     const paddingProperty = isPrefix ? "paddingInlineStart" : "paddingInlineEnd";
     if (variant === "default") {
       return /* @__PURE__ */ css({
-        [paddingProperty]: padding2
+        [paddingProperty]: padding
       }, false ? "" : ";label:prefixSuffixWrapperStyles;", false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImlucHV0LWNvbnRyb2wtc3R5bGVzLnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFtVVMiLCJmaWxlIjoiaW5wdXQtY29udHJvbC1zdHlsZXMudHN4Iiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHR5cGUgeyBTZXJpYWxpemVkU3R5bGVzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuaW1wb3J0IHR5cGUgeyBDU1NQcm9wZXJ0aWVzLCBSZWFjdE5vZGUgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgdHlwZSB7IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzIH0gZnJvbSAnLi4vLi4vY29udGV4dCc7XG5pbXBvcnQgeyBGbGV4LCBGbGV4SXRlbSB9IGZyb20gJy4uLy4uL2ZsZXgnO1xuaW1wb3J0IHsgVGV4dCB9IGZyb20gJy4uLy4uL3RleHQnO1xuaW1wb3J0IHsgYmFzZUxhYmVsVHlwb2dyYXBoeSwgQ09MT1JTLCBDT05GSUcsIHJ0bCB9IGZyb20gJy4uLy4uL3V0aWxzJztcbmltcG9ydCB0eXBlIHsgTGFiZWxQb3NpdGlvbiwgU2l6ZSwgUHJlZml4U3VmZml4V3JhcHBlclByb3BzIH0gZnJvbSAnLi4vdHlwZXMnO1xuXG50eXBlIENvbnRhaW5lclByb3BzID0ge1xuXHRkaXNhYmxlZD86IGJvb2xlYW47XG5cdGhpZGVMYWJlbD86IGJvb2xlYW47XG5cdF9fdW5zdGFibGVJbnB1dFdpZHRoPzogQ1NTUHJvcGVydGllc1sgJ3dpZHRoJyBdO1xuXHRsYWJlbFBvc2l0aW9uPzogTGFiZWxQb3NpdGlvbjtcbn07XG5cbmV4cG9ydCBjb25zdCBQcmVmaXggPSBzdHlsZWQuc3BhbmBcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0ZGlzcGxheTogYmxvY2s7XG5gO1xuXG5leHBvcnQgY29uc3QgU3VmZml4ID0gc3R5bGVkLnNwYW5gXG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGFsaWduLXNlbGY6IHN0cmV0Y2g7XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdGRpc3BsYXk6IGZsZXg7XG5gO1xuXG50eXBlIEJhY2tkcm9wUHJvcHMgPSB7XG5cdGRpc2FibGVkPzogYm9vbGVhbjtcblx0aXNCb3JkZXJsZXNzPzogYm9vbGVhbjtcbn07XG5cbmNvbnN0IGJhY2tkcm9wQm9yZGVyQ29sb3IgPSAoIHtcblx0ZGlzYWJsZWQsXG5cdGlzQm9yZGVybGVzcyxcbn06IEJhY2tkcm9wUHJvcHMgKTogQ1NTUHJvcGVydGllc1sgJ2JvcmRlckNvbG9yJyBdID0+IHtcblx0aWYgKCBpc0JvcmRlcmxlc3MgKSB7XG5cdFx0cmV0dXJuICd0cmFuc3BhcmVudCc7XG5cdH1cblxuXHRpZiAoIGRpc2FibGVkICkge1xuXHRcdHJldHVybiBDT0xPUlMudWkuYm9yZGVyRGlzYWJsZWQ7XG5cdH1cblxuXHRyZXR1cm4gQ09MT1JTLnVpLmJvcmRlcjtcbn07XG5cbmV4cG9ydCBjb25zdCBCYWNrZHJvcFVJID0gc3R5bGVkLmRpdjwgQmFja2Ryb3BQcm9wcyA+YFxuXHQmJiYge1xuXHRcdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdFx0Ym9yZGVyLWNvbG9yOiAkeyBiYWNrZHJvcEJvcmRlckNvbG9yIH07XG5cdFx0Ym9yZGVyLXJhZGl1czogaW5oZXJpdDtcblx0XHRib3JkZXItc3R5bGU6IHNvbGlkO1xuXHRcdGJvcmRlci13aWR0aDogMXB4O1xuXHRcdGJvdHRvbTogMDtcblx0XHRsZWZ0OiAwO1xuXHRcdG1hcmdpbjogMDtcblx0XHRwYWRkaW5nOiAwO1xuXHRcdHBvaW50ZXItZXZlbnRzOiBub25lO1xuXHRcdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0XHRyaWdodDogMDtcblx0XHR0b3A6IDA7XG5cblx0XHQkeyBydGwoIHsgcGFkZGluZ0xlZnQ6IDIgfSApIH1cblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFJvb3QgPSBzdHlsZWQoIEZsZXggKWBcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblx0cGFkZGluZy10b3A6IDA7XG5gO1xuXG5jb25zdCBjb250YWluZXJEaXNhYmxlZFN0eWxlcyA9ICggeyBkaXNhYmxlZCB9OiBDb250YWluZXJQcm9wcyApID0+IHtcblx0Y29uc3QgYmFja2dyb3VuZENvbG9yID0gZGlzYWJsZWRcblx0XHQ/IENPTE9SUy51aS5iYWNrZ3JvdW5kRGlzYWJsZWRcblx0XHQ6IENPTE9SUy51aS5iYWNrZ3JvdW5kO1xuXG5cdHJldHVybiBjc3MoIHsgYmFja2dyb3VuZENvbG9yIH0gKTtcbn07XG5cbmNvbnN0IGNvbnRhaW5lcldpZHRoU3R5bGVzID0gKCB7XG5cdF9fdW5zdGFibGVJbnB1dFdpZHRoLFxuXHRsYWJlbFBvc2l0aW9uLFxufTogQ29udGFpbmVyUHJvcHMgKSA9PiB7XG5cdGlmICggISBfX3Vuc3RhYmxlSW5wdXRXaWR0aCApIHtcblx0XHRyZXR1cm4gY3NzKCB7IHdpZHRoOiAnMTAwJScgfSApO1xuXHR9XG5cblx0aWYgKCBsYWJlbFBvc2l0aW9uID09PSAnc2lkZScgKSB7XG5cdFx0cmV0dXJuICcnO1xuXHR9XG5cblx0aWYgKCBsYWJlbFBvc2l0aW9uID09PSAnZWRnZScgKSB7XG5cdFx0cmV0dXJuIGNzcygge1xuXHRcdFx0ZmxleDogYDAgMCAkeyBfX3Vuc3RhYmxlSW5wdXRXaWR0aCB9YCxcblx0XHR9ICk7XG5cdH1cblxuXHRyZXR1cm4gY3NzKCB7IHdpZHRoOiBfX3Vuc3RhYmxlSW5wdXRXaWR0aCB9ICk7XG59O1xuXG5leHBvcnQgY29uc3QgQ29udGFpbmVyID0gc3R5bGVkLmRpdjwgQ29udGFpbmVyUHJvcHMgPmBcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0Ym9yZGVyLXJhZGl1czogaW5oZXJpdDtcblx0ZGlzcGxheTogZmxleDtcblx0ZmxleDogMTtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXG5cdCR7IGNvbnRhaW5lckRpc2FibGVkU3R5bGVzIH1cblx0JHsgY29udGFpbmVyV2lkdGhTdHlsZXMgfVxuYDtcblxudHlwZSBJbnB1dFByb3BzID0ge1xuXHRkaXNhYmxlZD86IGJvb2xlYW47XG5cdGlucHV0U2l6ZT86IFNpemU7XG5cdGlzRHJhZ2dpbmc/OiBib29sZWFuO1xuXHRkcmFnQ3Vyc29yPzogQ1NTUHJvcGVydGllc1sgJ2N1cnNvcicgXTtcblx0cGFkZGluZ0lubGluZVN0YXJ0PzogQ1NTUHJvcGVydGllc1sgJ3BhZGRpbmdJbmxpbmVTdGFydCcgXTtcblx0cGFkZGluZ0lubGluZUVuZD86IENTU1Byb3BlcnRpZXNbICdwYWRkaW5nSW5saW5lRW5kJyBdO1xufTtcblxuY29uc3QgZGlzYWJsZWRTdHlsZXMgPSAoIHsgZGlzYWJsZWQgfTogSW5wdXRQcm9wcyApID0+IHtcblx0aWYgKCAhIGRpc2FibGVkICkge1xuXHRcdHJldHVybiAnJztcblx0fVxuXG5cdHJldHVybiBjc3MoIHtcblx0XHRjb2xvcjogQ09MT1JTLnVpLnRleHREaXNhYmxlZCxcblx0fSApO1xufTtcblxuZXhwb3J0IGNvbnN0IGZvbnRTaXplU3R5bGVzID0gKCB7IGlucHV0U2l6ZTogc2l6ZSB9OiBJbnB1dFByb3BzICkgPT4ge1xuXHRjb25zdCBzaXplcyA9IHtcblx0XHRkZWZhdWx0OiAnMTNweCcsXG5cdFx0c21hbGw6ICcxMXB4Jyxcblx0XHRjb21wYWN0OiAnMTNweCcsXG5cdH07XG5cblx0Y29uc3QgZm9udFNpemUgPSBzaXplc1sgc2l6ZSBhcyBTaXplIF0gfHwgc2l6ZXMuZGVmYXVsdDtcblx0Y29uc3QgZm9udFNpemVNb2JpbGUgPSAnMTZweCc7XG5cblx0aWYgKCAhIGZvbnRTaXplICkge1xuXHRcdHJldHVybiAnJztcblx0fVxuXG5cdHJldHVybiBjc3NgXG5cdFx0Zm9udC1zaXplOiAkeyBmb250U2l6ZU1vYmlsZSB9O1xuXG5cdFx0QG1lZGlhICggbWluLXdpZHRoOiA2MDBweCApIHtcblx0XHRcdGZvbnQtc2l6ZTogJHsgZm9udFNpemUgfTtcblx0XHR9XG5cdGA7XG59O1xuXG5leHBvcnQgY29uc3QgZ2V0U2l6ZUNvbmZpZyA9ICggeyBpbnB1dFNpemU6IHNpemUgfTogSW5wdXRQcm9wcyApID0+IHtcblx0Ly8gUGFkZGluZ3MgbWF5IGJlIG92ZXJyaWRkZW4gYnkgdGhlIGN1c3RvbSBwYWRkaW5ncyBwcm9wcy5cblx0Y29uc3Qgc2l6ZXMgPSB7XG5cdFx0ZGVmYXVsdDoge1xuXHRcdFx0aGVpZ2h0OiA0MCxcblx0XHRcdGxpbmVIZWlnaHQ6IDEsXG5cdFx0XHRtaW5IZWlnaHQ6IDQwLFxuXHRcdFx0cGFkZGluZ0xlZnQ6IENPTkZJRy5jb250cm9sUGFkZGluZ1gsXG5cdFx0XHRwYWRkaW5nUmlnaHQ6IENPTkZJRy5jb250cm9sUGFkZGluZ1gsXG5cdFx0fSxcblx0XHRzbWFsbDoge1xuXHRcdFx0aGVpZ2h0OiAyNCxcblx0XHRcdGxpbmVIZWlnaHQ6IDEsXG5cdFx0XHRtaW5IZWlnaHQ6IDI0LFxuXHRcdFx0cGFkZGluZ0xlZnQ6IENPTkZJRy5jb250cm9sUGFkZGluZ1hTbWFsbCxcblx0XHRcdHBhZGRpbmdSaWdodDogQ09ORklHLmNvbnRyb2xQYWRkaW5nWFNtYWxsLFxuXHRcdH0sXG5cdFx0Y29tcGFjdDoge1xuXHRcdFx0aGVpZ2h0OiAzMixcblx0XHRcdGxpbmVIZWlnaHQ6IDEsXG5cdFx0XHRtaW5IZWlnaHQ6IDMyLFxuXHRcdFx0cGFkZGluZ0xlZnQ6IENPTkZJRy5jb250cm9sUGFkZGluZ1hTbWFsbCxcblx0XHRcdHBhZGRpbmdSaWdodDogQ09ORklHLmNvbnRyb2xQYWRkaW5nWFNtYWxsLFxuXHRcdH0sXG5cdH07XG5cblx0cmV0dXJuIHNpemVzWyBzaXplIGFzIFNpemUgXSB8fCBzaXplcy5kZWZhdWx0O1xufTtcblxuY29uc3Qgc2l6ZVN0eWxlcyA9ICggcHJvcHM6IElucHV0UHJvcHMgKSA9PiB7XG5cdHJldHVybiBjc3MoIGdldFNpemVDb25maWcoIHByb3BzICkgKTtcbn07XG5cbmNvbnN0IGN1c3RvbVBhZGRpbmdzID0gKCB7XG5cdHBhZGRpbmdJbmxpbmVTdGFydCxcblx0cGFkZGluZ0lubGluZUVuZCxcbn06IElucHV0UHJvcHMgKSA9PiB7XG5cdHJldHVybiBjc3MoIHsgcGFkZGluZ0lubGluZVN0YXJ0LCBwYWRkaW5nSW5saW5lRW5kIH0gKTtcbn07XG5cbmNvbnN0IGRyYWdTdHlsZXMgPSAoIHsgaXNEcmFnZ2luZywgZHJhZ0N1cnNvciB9OiBJbnB1dFByb3BzICkgPT4ge1xuXHRsZXQgZGVmYXVsdEFycm93U3R5bGVzOiBTZXJpYWxpemVkU3R5bGVzIHwgdW5kZWZpbmVkO1xuXHRsZXQgYWN0aXZlRHJhZ0N1cnNvclN0eWxlczogU2VyaWFsaXplZFN0eWxlcyB8IHVuZGVmaW5lZDtcblxuXHRpZiAoIGlzRHJhZ2dpbmcgKSB7XG5cdFx0ZGVmYXVsdEFycm93U3R5bGVzID0gY3NzYFxuXHRcdFx0Y3Vyc29yOiAkeyBkcmFnQ3Vyc29yIH07XG5cdFx0XHR1c2VyLXNlbGVjdDogbm9uZTtcblxuXHRcdFx0Jjo6LXdlYmtpdC1vdXRlci1zcGluLWJ1dHRvbixcblx0XHRcdCY6Oi13ZWJraXQtaW5uZXItc3Bpbi1idXR0b24ge1xuXHRcdFx0XHQtd2Via2l0LWFwcGVhcmFuY2U6IG5vbmUgIWltcG9ydGFudDtcblx0XHRcdFx0bWFyZ2luOiAwICFpbXBvcnRhbnQ7XG5cdFx0XHR9XG5cdFx0YDtcblx0fVxuXG5cdGlmICggaXNEcmFnZ2luZyAmJiBkcmFnQ3Vyc29yICkge1xuXHRcdGFjdGl2ZURyYWdDdXJzb3JTdHlsZXMgPSBjc3NgXG5cdFx0XHQmOmFjdGl2ZSB7XG5cdFx0XHRcdGN1cnNvcjogJHsgZHJhZ0N1cnNvciB9O1xuXHRcdFx0fVxuXHRcdGA7XG5cdH1cblxuXHRyZXR1cm4gY3NzYFxuXHRcdCR7IGRlZmF1bHRBcnJvd1N0eWxlcyB9XG5cdFx0JHsgYWN0aXZlRHJhZ0N1cnNvclN0eWxlcyB9XG5cdGA7XG59O1xuXG4vLyBUT0RPOiBSZXNvbHZlIG5lZWQgdG8gdXNlICYmJiB0byBpbmNyZWFzZSBzcGVjaWZpY2l0eVxuLy8gaHR0cHM6Ly9naXRodWIuY29tL1dvcmRQcmVzcy9ndXRlbmJlcmcvaXNzdWVzLzE4NDgzXG5cbmV4cG9ydCBjb25zdCBJbnB1dCA9IHN0eWxlZC5pbnB1dDwgSW5wdXRQcm9wcyA+YFxuXHQmJiYge1xuXHRcdGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50O1xuXHRcdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdFx0Ym9yZGVyOiBub25lO1xuXHRcdGJveC1zaGFkb3c6IG5vbmUgIWltcG9ydGFudDtcblx0XHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfTtcblx0XHRkaXNwbGF5OiBibG9jaztcblx0XHRmb250LWZhbWlseTogaW5oZXJpdDtcblx0XHRtYXJnaW46IDA7XG5cdFx0b3V0bGluZTogbm9uZTtcblx0XHR3aWR0aDogMTAwJTtcblxuXHRcdCR7IGRyYWdTdHlsZXMgfVxuXHRcdCR7IGRpc2FibGVkU3R5bGVzIH1cblx0XHQkeyBmb250U2l6ZVN0eWxlcyB9XG5cdFx0JHsgc2l6ZVN0eWxlcyB9XG5cdFx0JHsgY3VzdG9tUGFkZGluZ3MgfVxuXG5cdFx0Jjo6LXdlYmtpdC1pbnB1dC1wbGFjZWhvbGRlciB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmRhcmtHcmF5UGxhY2Vob2xkZXIgfTtcblx0XHR9XG5cblx0XHQmOjotbW96LXBsYWNlaG9sZGVyIHtcblx0XHRcdGNvbG9yOiAkeyBDT0xPUlMudWkuZGFya0dyYXlQbGFjZWhvbGRlciB9O1xuXHRcdH1cblxuXHRcdCY6LW1zLWlucHV0LXBsYWNlaG9sZGVyIHtcblx0XHRcdGNvbG9yOiAkeyBDT0xPUlMudWkuZGFya0dyYXlQbGFjZWhvbGRlciB9O1xuXHRcdH1cblxuXHRcdCZbdHlwZT0nZGF0ZSddLFxuXHRcdCZbdHlwZT0nZGF0ZXRpbWUtbG9jYWwnXSxcblx0XHQmW3R5cGU9J21vbnRoJ10sXG5cdFx0Jlt0eXBlPSd0aW1lJ10sXG5cdFx0Jlt0eXBlPSd3ZWVrJ10ge1xuXHRcdFx0Jjo6LXdlYmtpdC1kYXRldGltZS1lZGl0IHtcblx0XHRcdFx0ZGlzcGxheTogZmxleDtcblx0XHRcdFx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0XHRcdFx0aGVpZ2h0OiAxMDAlO1xuXHRcdFx0fVxuXHRcdH1cblxuXHRcdCZbdHlwZT0nZW1haWwnXSxcblx0XHQmW3R5cGU9J3VybCddIHtcblx0XHRcdC8qIHJ0bDppZ25vcmUgKi9cblx0XHRcdGRpcmVjdGlvbjogbHRyO1xuXHRcdH1cblx0fVxuYDtcblxuY29uc3QgQmFzZUxhYmVsID0gc3R5bGVkKCBUZXh0ICk8IHsgbGFiZWxQb3NpdGlvbj86IExhYmVsUG9zaXRpb24gfSA+YFxuXHQmJiYge1xuXHRcdCR7IGJhc2VMYWJlbFR5cG9ncmFwaHkgfTtcblxuXHRcdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdFx0ZGlzcGxheTogYmxvY2s7XG5cdFx0cGFkZGluZy10b3A6IDA7XG5cdFx0cGFkZGluZy1ib3R0b206IDA7XG5cdFx0bWF4LXdpZHRoOiAxMDAlO1xuXHRcdHotaW5kZXg6IDE7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBMYWJlbCA9IChcblx0cHJvcHM6IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzPFxuXHRcdHsgbGFiZWxQb3NpdGlvbj86IExhYmVsUG9zaXRpb247IGNoaWxkcmVuOiBSZWFjdE5vZGUgfSxcblx0XHQnbGFiZWwnLFxuXHRcdGZhbHNlXG5cdD5cbikgPT4gPEJhc2VMYWJlbCB7IC4uLnByb3BzIH0gYXM9XCJsYWJlbFwiIC8+O1xuXG5leHBvcnQgY29uc3QgTGFiZWxXcmFwcGVyID0gc3R5bGVkKCBGbGV4SXRlbSApYFxuXHRtYXgtd2lkdGg6IGNhbGMoIDEwMCUgLSAxMHB4ICk7XG5gO1xuXG5jb25zdCBwcmVmaXhTdWZmaXhXcmFwcGVyU3R5bGVzID0gKCB7XG5cdHZhcmlhbnQgPSAnZGVmYXVsdCcsXG5cdHNpemUsXG5cdGlzUHJlZml4LFxufTogUHJlZml4U3VmZml4V3JhcHBlclByb3BzICYgeyBpc1ByZWZpeD86IGJvb2xlYW4gfSApID0+IHtcblx0Y29uc3QgeyBwYWRkaW5nTGVmdDogcGFkZGluZyB9ID0gZ2V0U2l6ZUNvbmZpZygge1xuXHRcdGlucHV0U2l6ZTogc2l6ZSxcblx0fSApO1xuXG5cdGNvbnN0IHBhZGRpbmdQcm9wZXJ0eSA9IGlzUHJlZml4XG5cdFx0PyAncGFkZGluZ0lubGluZVN0YXJ0J1xuXHRcdDogJ3BhZGRpbmdJbmxpbmVFbmQnO1xuXG5cdGlmICggdmFyaWFudCA9PT0gJ2RlZmF1bHQnICkge1xuXHRcdHJldHVybiBjc3MoIHtcblx0XHRcdFsgcGFkZGluZ1Byb3BlcnR5IF06IHBhZGRpbmcsXG5cdFx0fSApO1xuXHR9XG5cblx0Ly8gSWYgdmFyaWFudCBpcyAnaWNvbicgb3IgJ2NvbnRyb2wnXG5cdHJldHVybiBjc3MoIHtcblx0XHRkaXNwbGF5OiAnZmxleCcsXG5cdFx0WyBwYWRkaW5nUHJvcGVydHkgXTogcGFkZGluZyAtIDQsXG5cdH0gKTtcbn07XG5cbmV4cG9ydCBjb25zdCBQcmVmaXhTdWZmaXhXcmFwcGVyID0gc3R5bGVkLmRpdmBcblx0JHsgcHJlZml4U3VmZml4V3JhcHBlclN0eWxlcyB9XG5gO1xuIl19 */");
     }
     return /* @__PURE__ */ css({
       display: "flex",
-      [paddingProperty]: padding2 - 4
+      [paddingProperty]: padding - 4
     }, false ? "" : ";label:prefixSuffixWrapperStyles;", false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImlucHV0LWNvbnRyb2wtc3R5bGVzLnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUF5VVEiLCJmaWxlIjoiaW5wdXQtY29udHJvbC1zdHlsZXMudHN4Iiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHR5cGUgeyBTZXJpYWxpemVkU3R5bGVzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHsgY3NzIH0gZnJvbSAnQGVtb3Rpb24vcmVhY3QnO1xuaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuaW1wb3J0IHR5cGUgeyBDU1NQcm9wZXJ0aWVzLCBSZWFjdE5vZGUgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgdHlwZSB7IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzIH0gZnJvbSAnLi4vLi4vY29udGV4dCc7XG5pbXBvcnQgeyBGbGV4LCBGbGV4SXRlbSB9IGZyb20gJy4uLy4uL2ZsZXgnO1xuaW1wb3J0IHsgVGV4dCB9IGZyb20gJy4uLy4uL3RleHQnO1xuaW1wb3J0IHsgYmFzZUxhYmVsVHlwb2dyYXBoeSwgQ09MT1JTLCBDT05GSUcsIHJ0bCB9IGZyb20gJy4uLy4uL3V0aWxzJztcbmltcG9ydCB0eXBlIHsgTGFiZWxQb3NpdGlvbiwgU2l6ZSwgUHJlZml4U3VmZml4V3JhcHBlclByb3BzIH0gZnJvbSAnLi4vdHlwZXMnO1xuXG50eXBlIENvbnRhaW5lclByb3BzID0ge1xuXHRkaXNhYmxlZD86IGJvb2xlYW47XG5cdGhpZGVMYWJlbD86IGJvb2xlYW47XG5cdF9fdW5zdGFibGVJbnB1dFdpZHRoPzogQ1NTUHJvcGVydGllc1sgJ3dpZHRoJyBdO1xuXHRsYWJlbFBvc2l0aW9uPzogTGFiZWxQb3NpdGlvbjtcbn07XG5cbmV4cG9ydCBjb25zdCBQcmVmaXggPSBzdHlsZWQuc3BhbmBcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0ZGlzcGxheTogYmxvY2s7XG5gO1xuXG5leHBvcnQgY29uc3QgU3VmZml4ID0gc3R5bGVkLnNwYW5gXG5cdGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cdGFsaWduLXNlbGY6IHN0cmV0Y2g7XG5cdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdGRpc3BsYXk6IGZsZXg7XG5gO1xuXG50eXBlIEJhY2tkcm9wUHJvcHMgPSB7XG5cdGRpc2FibGVkPzogYm9vbGVhbjtcblx0aXNCb3JkZXJsZXNzPzogYm9vbGVhbjtcbn07XG5cbmNvbnN0IGJhY2tkcm9wQm9yZGVyQ29sb3IgPSAoIHtcblx0ZGlzYWJsZWQsXG5cdGlzQm9yZGVybGVzcyxcbn06IEJhY2tkcm9wUHJvcHMgKTogQ1NTUHJvcGVydGllc1sgJ2JvcmRlckNvbG9yJyBdID0+IHtcblx0aWYgKCBpc0JvcmRlcmxlc3MgKSB7XG5cdFx0cmV0dXJuICd0cmFuc3BhcmVudCc7XG5cdH1cblxuXHRpZiAoIGRpc2FibGVkICkge1xuXHRcdHJldHVybiBDT0xPUlMudWkuYm9yZGVyRGlzYWJsZWQ7XG5cdH1cblxuXHRyZXR1cm4gQ09MT1JTLnVpLmJvcmRlcjtcbn07XG5cbmV4cG9ydCBjb25zdCBCYWNrZHJvcFVJID0gc3R5bGVkLmRpdjwgQmFja2Ryb3BQcm9wcyA+YFxuXHQmJiYge1xuXHRcdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdFx0Ym9yZGVyLWNvbG9yOiAkeyBiYWNrZHJvcEJvcmRlckNvbG9yIH07XG5cdFx0Ym9yZGVyLXJhZGl1czogaW5oZXJpdDtcblx0XHRib3JkZXItc3R5bGU6IHNvbGlkO1xuXHRcdGJvcmRlci13aWR0aDogMXB4O1xuXHRcdGJvdHRvbTogMDtcblx0XHRsZWZ0OiAwO1xuXHRcdG1hcmdpbjogMDtcblx0XHRwYWRkaW5nOiAwO1xuXHRcdHBvaW50ZXItZXZlbnRzOiBub25lO1xuXHRcdHBvc2l0aW9uOiBhYnNvbHV0ZTtcblx0XHRyaWdodDogMDtcblx0XHR0b3A6IDA7XG5cblx0XHQkeyBydGwoIHsgcGFkZGluZ0xlZnQ6IDIgfSApIH1cblx0fVxuYDtcblxuZXhwb3J0IGNvbnN0IFJvb3QgPSBzdHlsZWQoIEZsZXggKWBcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXHRib3JkZXItcmFkaXVzOiAkeyBDT05GSUcucmFkaXVzU21hbGwgfTtcblx0cGFkZGluZy10b3A6IDA7XG5gO1xuXG5jb25zdCBjb250YWluZXJEaXNhYmxlZFN0eWxlcyA9ICggeyBkaXNhYmxlZCB9OiBDb250YWluZXJQcm9wcyApID0+IHtcblx0Y29uc3QgYmFja2dyb3VuZENvbG9yID0gZGlzYWJsZWRcblx0XHQ/IENPTE9SUy51aS5iYWNrZ3JvdW5kRGlzYWJsZWRcblx0XHQ6IENPTE9SUy51aS5iYWNrZ3JvdW5kO1xuXG5cdHJldHVybiBjc3MoIHsgYmFja2dyb3VuZENvbG9yIH0gKTtcbn07XG5cbmNvbnN0IGNvbnRhaW5lcldpZHRoU3R5bGVzID0gKCB7XG5cdF9fdW5zdGFibGVJbnB1dFdpZHRoLFxuXHRsYWJlbFBvc2l0aW9uLFxufTogQ29udGFpbmVyUHJvcHMgKSA9PiB7XG5cdGlmICggISBfX3Vuc3RhYmxlSW5wdXRXaWR0aCApIHtcblx0XHRyZXR1cm4gY3NzKCB7IHdpZHRoOiAnMTAwJScgfSApO1xuXHR9XG5cblx0aWYgKCBsYWJlbFBvc2l0aW9uID09PSAnc2lkZScgKSB7XG5cdFx0cmV0dXJuICcnO1xuXHR9XG5cblx0aWYgKCBsYWJlbFBvc2l0aW9uID09PSAnZWRnZScgKSB7XG5cdFx0cmV0dXJuIGNzcygge1xuXHRcdFx0ZmxleDogYDAgMCAkeyBfX3Vuc3RhYmxlSW5wdXRXaWR0aCB9YCxcblx0XHR9ICk7XG5cdH1cblxuXHRyZXR1cm4gY3NzKCB7IHdpZHRoOiBfX3Vuc3RhYmxlSW5wdXRXaWR0aCB9ICk7XG59O1xuXG5leHBvcnQgY29uc3QgQ29udGFpbmVyID0gc3R5bGVkLmRpdjwgQ29udGFpbmVyUHJvcHMgPmBcblx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0Ym94LXNpemluZzogYm9yZGVyLWJveDtcblx0Ym9yZGVyLXJhZGl1czogaW5oZXJpdDtcblx0ZGlzcGxheTogZmxleDtcblx0ZmxleDogMTtcblx0cG9zaXRpb246IHJlbGF0aXZlO1xuXG5cdCR7IGNvbnRhaW5lckRpc2FibGVkU3R5bGVzIH1cblx0JHsgY29udGFpbmVyV2lkdGhTdHlsZXMgfVxuYDtcblxudHlwZSBJbnB1dFByb3BzID0ge1xuXHRkaXNhYmxlZD86IGJvb2xlYW47XG5cdGlucHV0U2l6ZT86IFNpemU7XG5cdGlzRHJhZ2dpbmc/OiBib29sZWFuO1xuXHRkcmFnQ3Vyc29yPzogQ1NTUHJvcGVydGllc1sgJ2N1cnNvcicgXTtcblx0cGFkZGluZ0lubGluZVN0YXJ0PzogQ1NTUHJvcGVydGllc1sgJ3BhZGRpbmdJbmxpbmVTdGFydCcgXTtcblx0cGFkZGluZ0lubGluZUVuZD86IENTU1Byb3BlcnRpZXNbICdwYWRkaW5nSW5saW5lRW5kJyBdO1xufTtcblxuY29uc3QgZGlzYWJsZWRTdHlsZXMgPSAoIHsgZGlzYWJsZWQgfTogSW5wdXRQcm9wcyApID0+IHtcblx0aWYgKCAhIGRpc2FibGVkICkge1xuXHRcdHJldHVybiAnJztcblx0fVxuXG5cdHJldHVybiBjc3MoIHtcblx0XHRjb2xvcjogQ09MT1JTLnVpLnRleHREaXNhYmxlZCxcblx0fSApO1xufTtcblxuZXhwb3J0IGNvbnN0IGZvbnRTaXplU3R5bGVzID0gKCB7IGlucHV0U2l6ZTogc2l6ZSB9OiBJbnB1dFByb3BzICkgPT4ge1xuXHRjb25zdCBzaXplcyA9IHtcblx0XHRkZWZhdWx0OiAnMTNweCcsXG5cdFx0c21hbGw6ICcxMXB4Jyxcblx0XHRjb21wYWN0OiAnMTNweCcsXG5cdH07XG5cblx0Y29uc3QgZm9udFNpemUgPSBzaXplc1sgc2l6ZSBhcyBTaXplIF0gfHwgc2l6ZXMuZGVmYXVsdDtcblx0Y29uc3QgZm9udFNpemVNb2JpbGUgPSAnMTZweCc7XG5cblx0aWYgKCAhIGZvbnRTaXplICkge1xuXHRcdHJldHVybiAnJztcblx0fVxuXG5cdHJldHVybiBjc3NgXG5cdFx0Zm9udC1zaXplOiAkeyBmb250U2l6ZU1vYmlsZSB9O1xuXG5cdFx0QG1lZGlhICggbWluLXdpZHRoOiA2MDBweCApIHtcblx0XHRcdGZvbnQtc2l6ZTogJHsgZm9udFNpemUgfTtcblx0XHR9XG5cdGA7XG59O1xuXG5leHBvcnQgY29uc3QgZ2V0U2l6ZUNvbmZpZyA9ICggeyBpbnB1dFNpemU6IHNpemUgfTogSW5wdXRQcm9wcyApID0+IHtcblx0Ly8gUGFkZGluZ3MgbWF5IGJlIG92ZXJyaWRkZW4gYnkgdGhlIGN1c3RvbSBwYWRkaW5ncyBwcm9wcy5cblx0Y29uc3Qgc2l6ZXMgPSB7XG5cdFx0ZGVmYXVsdDoge1xuXHRcdFx0aGVpZ2h0OiA0MCxcblx0XHRcdGxpbmVIZWlnaHQ6IDEsXG5cdFx0XHRtaW5IZWlnaHQ6IDQwLFxuXHRcdFx0cGFkZGluZ0xlZnQ6IENPTkZJRy5jb250cm9sUGFkZGluZ1gsXG5cdFx0XHRwYWRkaW5nUmlnaHQ6IENPTkZJRy5jb250cm9sUGFkZGluZ1gsXG5cdFx0fSxcblx0XHRzbWFsbDoge1xuXHRcdFx0aGVpZ2h0OiAyNCxcblx0XHRcdGxpbmVIZWlnaHQ6IDEsXG5cdFx0XHRtaW5IZWlnaHQ6IDI0LFxuXHRcdFx0cGFkZGluZ0xlZnQ6IENPTkZJRy5jb250cm9sUGFkZGluZ1hTbWFsbCxcblx0XHRcdHBhZGRpbmdSaWdodDogQ09ORklHLmNvbnRyb2xQYWRkaW5nWFNtYWxsLFxuXHRcdH0sXG5cdFx0Y29tcGFjdDoge1xuXHRcdFx0aGVpZ2h0OiAzMixcblx0XHRcdGxpbmVIZWlnaHQ6IDEsXG5cdFx0XHRtaW5IZWlnaHQ6IDMyLFxuXHRcdFx0cGFkZGluZ0xlZnQ6IENPTkZJRy5jb250cm9sUGFkZGluZ1hTbWFsbCxcblx0XHRcdHBhZGRpbmdSaWdodDogQ09ORklHLmNvbnRyb2xQYWRkaW5nWFNtYWxsLFxuXHRcdH0sXG5cdH07XG5cblx0cmV0dXJuIHNpemVzWyBzaXplIGFzIFNpemUgXSB8fCBzaXplcy5kZWZhdWx0O1xufTtcblxuY29uc3Qgc2l6ZVN0eWxlcyA9ICggcHJvcHM6IElucHV0UHJvcHMgKSA9PiB7XG5cdHJldHVybiBjc3MoIGdldFNpemVDb25maWcoIHByb3BzICkgKTtcbn07XG5cbmNvbnN0IGN1c3RvbVBhZGRpbmdzID0gKCB7XG5cdHBhZGRpbmdJbmxpbmVTdGFydCxcblx0cGFkZGluZ0lubGluZUVuZCxcbn06IElucHV0UHJvcHMgKSA9PiB7XG5cdHJldHVybiBjc3MoIHsgcGFkZGluZ0lubGluZVN0YXJ0LCBwYWRkaW5nSW5saW5lRW5kIH0gKTtcbn07XG5cbmNvbnN0IGRyYWdTdHlsZXMgPSAoIHsgaXNEcmFnZ2luZywgZHJhZ0N1cnNvciB9OiBJbnB1dFByb3BzICkgPT4ge1xuXHRsZXQgZGVmYXVsdEFycm93U3R5bGVzOiBTZXJpYWxpemVkU3R5bGVzIHwgdW5kZWZpbmVkO1xuXHRsZXQgYWN0aXZlRHJhZ0N1cnNvclN0eWxlczogU2VyaWFsaXplZFN0eWxlcyB8IHVuZGVmaW5lZDtcblxuXHRpZiAoIGlzRHJhZ2dpbmcgKSB7XG5cdFx0ZGVmYXVsdEFycm93U3R5bGVzID0gY3NzYFxuXHRcdFx0Y3Vyc29yOiAkeyBkcmFnQ3Vyc29yIH07XG5cdFx0XHR1c2VyLXNlbGVjdDogbm9uZTtcblxuXHRcdFx0Jjo6LXdlYmtpdC1vdXRlci1zcGluLWJ1dHRvbixcblx0XHRcdCY6Oi13ZWJraXQtaW5uZXItc3Bpbi1idXR0b24ge1xuXHRcdFx0XHQtd2Via2l0LWFwcGVhcmFuY2U6IG5vbmUgIWltcG9ydGFudDtcblx0XHRcdFx0bWFyZ2luOiAwICFpbXBvcnRhbnQ7XG5cdFx0XHR9XG5cdFx0YDtcblx0fVxuXG5cdGlmICggaXNEcmFnZ2luZyAmJiBkcmFnQ3Vyc29yICkge1xuXHRcdGFjdGl2ZURyYWdDdXJzb3JTdHlsZXMgPSBjc3NgXG5cdFx0XHQmOmFjdGl2ZSB7XG5cdFx0XHRcdGN1cnNvcjogJHsgZHJhZ0N1cnNvciB9O1xuXHRcdFx0fVxuXHRcdGA7XG5cdH1cblxuXHRyZXR1cm4gY3NzYFxuXHRcdCR7IGRlZmF1bHRBcnJvd1N0eWxlcyB9XG5cdFx0JHsgYWN0aXZlRHJhZ0N1cnNvclN0eWxlcyB9XG5cdGA7XG59O1xuXG4vLyBUT0RPOiBSZXNvbHZlIG5lZWQgdG8gdXNlICYmJiB0byBpbmNyZWFzZSBzcGVjaWZpY2l0eVxuLy8gaHR0cHM6Ly9naXRodWIuY29tL1dvcmRQcmVzcy9ndXRlbmJlcmcvaXNzdWVzLzE4NDgzXG5cbmV4cG9ydCBjb25zdCBJbnB1dCA9IHN0eWxlZC5pbnB1dDwgSW5wdXRQcm9wcyA+YFxuXHQmJiYge1xuXHRcdGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50O1xuXHRcdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdFx0Ym9yZGVyOiBub25lO1xuXHRcdGJveC1zaGFkb3c6IG5vbmUgIWltcG9ydGFudDtcblx0XHRjb2xvcjogJHsgQ09MT1JTLnRoZW1lLmZvcmVncm91bmQgfTtcblx0XHRkaXNwbGF5OiBibG9jaztcblx0XHRmb250LWZhbWlseTogaW5oZXJpdDtcblx0XHRtYXJnaW46IDA7XG5cdFx0b3V0bGluZTogbm9uZTtcblx0XHR3aWR0aDogMTAwJTtcblxuXHRcdCR7IGRyYWdTdHlsZXMgfVxuXHRcdCR7IGRpc2FibGVkU3R5bGVzIH1cblx0XHQkeyBmb250U2l6ZVN0eWxlcyB9XG5cdFx0JHsgc2l6ZVN0eWxlcyB9XG5cdFx0JHsgY3VzdG9tUGFkZGluZ3MgfVxuXG5cdFx0Jjo6LXdlYmtpdC1pbnB1dC1wbGFjZWhvbGRlciB7XG5cdFx0XHRjb2xvcjogJHsgQ09MT1JTLnVpLmRhcmtHcmF5UGxhY2Vob2xkZXIgfTtcblx0XHR9XG5cblx0XHQmOjotbW96LXBsYWNlaG9sZGVyIHtcblx0XHRcdGNvbG9yOiAkeyBDT0xPUlMudWkuZGFya0dyYXlQbGFjZWhvbGRlciB9O1xuXHRcdH1cblxuXHRcdCY6LW1zLWlucHV0LXBsYWNlaG9sZGVyIHtcblx0XHRcdGNvbG9yOiAkeyBDT0xPUlMudWkuZGFya0dyYXlQbGFjZWhvbGRlciB9O1xuXHRcdH1cblxuXHRcdCZbdHlwZT0nZGF0ZSddLFxuXHRcdCZbdHlwZT0nZGF0ZXRpbWUtbG9jYWwnXSxcblx0XHQmW3R5cGU9J21vbnRoJ10sXG5cdFx0Jlt0eXBlPSd0aW1lJ10sXG5cdFx0Jlt0eXBlPSd3ZWVrJ10ge1xuXHRcdFx0Jjo6LXdlYmtpdC1kYXRldGltZS1lZGl0IHtcblx0XHRcdFx0ZGlzcGxheTogZmxleDtcblx0XHRcdFx0YWxpZ24taXRlbXM6IGNlbnRlcjtcblx0XHRcdFx0aGVpZ2h0OiAxMDAlO1xuXHRcdFx0fVxuXHRcdH1cblxuXHRcdCZbdHlwZT0nZW1haWwnXSxcblx0XHQmW3R5cGU9J3VybCddIHtcblx0XHRcdC8qIHJ0bDppZ25vcmUgKi9cblx0XHRcdGRpcmVjdGlvbjogbHRyO1xuXHRcdH1cblx0fVxuYDtcblxuY29uc3QgQmFzZUxhYmVsID0gc3R5bGVkKCBUZXh0ICk8IHsgbGFiZWxQb3NpdGlvbj86IExhYmVsUG9zaXRpb24gfSA+YFxuXHQmJiYge1xuXHRcdCR7IGJhc2VMYWJlbFR5cG9ncmFwaHkgfTtcblxuXHRcdGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG5cdFx0ZGlzcGxheTogYmxvY2s7XG5cdFx0cGFkZGluZy10b3A6IDA7XG5cdFx0cGFkZGluZy1ib3R0b206IDA7XG5cdFx0bWF4LXdpZHRoOiAxMDAlO1xuXHRcdHotaW5kZXg6IDE7XG5cdH1cbmA7XG5cbmV4cG9ydCBjb25zdCBMYWJlbCA9IChcblx0cHJvcHM6IFdvcmRQcmVzc0NvbXBvbmVudFByb3BzPFxuXHRcdHsgbGFiZWxQb3NpdGlvbj86IExhYmVsUG9zaXRpb247IGNoaWxkcmVuOiBSZWFjdE5vZGUgfSxcblx0XHQnbGFiZWwnLFxuXHRcdGZhbHNlXG5cdD5cbikgPT4gPEJhc2VMYWJlbCB7IC4uLnByb3BzIH0gYXM9XCJsYWJlbFwiIC8+O1xuXG5leHBvcnQgY29uc3QgTGFiZWxXcmFwcGVyID0gc3R5bGVkKCBGbGV4SXRlbSApYFxuXHRtYXgtd2lkdGg6IGNhbGMoIDEwMCUgLSAxMHB4ICk7XG5gO1xuXG5jb25zdCBwcmVmaXhTdWZmaXhXcmFwcGVyU3R5bGVzID0gKCB7XG5cdHZhcmlhbnQgPSAnZGVmYXVsdCcsXG5cdHNpemUsXG5cdGlzUHJlZml4LFxufTogUHJlZml4U3VmZml4V3JhcHBlclByb3BzICYgeyBpc1ByZWZpeD86IGJvb2xlYW4gfSApID0+IHtcblx0Y29uc3QgeyBwYWRkaW5nTGVmdDogcGFkZGluZyB9ID0gZ2V0U2l6ZUNvbmZpZygge1xuXHRcdGlucHV0U2l6ZTogc2l6ZSxcblx0fSApO1xuXG5cdGNvbnN0IHBhZGRpbmdQcm9wZXJ0eSA9IGlzUHJlZml4XG5cdFx0PyAncGFkZGluZ0lubGluZVN0YXJ0J1xuXHRcdDogJ3BhZGRpbmdJbmxpbmVFbmQnO1xuXG5cdGlmICggdmFyaWFudCA9PT0gJ2RlZmF1bHQnICkge1xuXHRcdHJldHVybiBjc3MoIHtcblx0XHRcdFsgcGFkZGluZ1Byb3BlcnR5IF06IHBhZGRpbmcsXG5cdFx0fSApO1xuXHR9XG5cblx0Ly8gSWYgdmFyaWFudCBpcyAnaWNvbicgb3IgJ2NvbnRyb2wnXG5cdHJldHVybiBjc3MoIHtcblx0XHRkaXNwbGF5OiAnZmxleCcsXG5cdFx0WyBwYWRkaW5nUHJvcGVydHkgXTogcGFkZGluZyAtIDQsXG5cdH0gKTtcbn07XG5cbmV4cG9ydCBjb25zdCBQcmVmaXhTdWZmaXhXcmFwcGVyID0gc3R5bGVkLmRpdmBcblx0JHsgcHJlZml4U3VmZml4V3JhcHBlclN0eWxlcyB9XG5gO1xuIl19 */");
   };
   var PrefixSuffixWrapper = /* @__PURE__ */ createStyled("div", false ? {
@@ -28508,13 +28508,13 @@ This message will only show in development mode. It won't appear in production. 
       fn(state) {
         const {
           element,
-          padding: padding2
+          padding
         } = typeof options2 === "function" ? options2(state) : options2;
         if (element && isRef2(element)) {
           if (element.current != null) {
             return arrow2({
               element: element.current,
-              padding: padding2
+              padding
             }).fn(state);
           }
           return {};
@@ -28522,7 +28522,7 @@ This message will only show in development mode. It won't appear in production. 
         if (element) {
           return arrow2({
             element,
-            padding: padding2
+            padding
           }).fn(state);
         }
         return {};
@@ -31084,12 +31084,12 @@ This message will only show in development mode. It won't appear in production. 
     multiple,
     selectSize = "default"
   }) => {
-    const padding2 = {
+    const padding = {
       default: config_values_default.controlPaddingX,
       small: config_values_default.controlPaddingXSmall,
       compact: config_values_default.controlPaddingXSmall
     };
-    const selectedPadding = padding2[selectSize] || padding2.default;
+    const selectedPadding = padding[selectSize] || padding.default;
     return rtl({
       paddingLeft: selectedPadding,
       paddingRight: selectedPadding + chevronIconSize,
@@ -33170,36 +33170,99 @@ This message will only show in development mode. It won't appear in production. 
     label: "ColorHeading"
   })("text-transform:uppercase;line-height:24px;font-weight:", config_values_default.fontWeightEmphasis, ";&&&{font-size:11px;margin-bottom:0;}" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFJNkMiLCJmaWxlIjoic3R5bGVzLnRzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHN0eWxlZCBmcm9tICdAZW1vdGlvbi9zdHlsZWQnO1xuaW1wb3J0IHsgSGVhZGluZyB9IGZyb20gJy4uL2hlYWRpbmcnO1xuaW1wb3J0IHsgQ09ORklHIH0gZnJvbSAnLi4vdXRpbHMnO1xuXG5leHBvcnQgY29uc3QgQ29sb3JIZWFkaW5nID0gc3R5bGVkKCBIZWFkaW5nIClgXG5cdHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG5cdGxpbmUtaGVpZ2h0OiAyNHB4O1xuXHRmb250LXdlaWdodDogJHsgQ09ORklHLmZvbnRXZWlnaHRFbXBoYXNpcyB9O1xuXHQmJiYge1xuXHRcdGZvbnQtc2l6ZTogMTFweDtcblx0XHRtYXJnaW4tYm90dG9tOiAwO1xuXHR9XG5gO1xuIl19 */"));
 
-  // packages/components/build-module/dropdown/styles.mjs
-  var padding = ({
-    paddingSize = "small"
-  }) => {
-    if (paddingSize === "none") {
-      return;
-    }
-    const paddingValues = {
-      small: space(2),
-      medium: space(4)
-    };
-    return /* @__PURE__ */ css("padding:", paddingValues[paddingSize] || paddingValues.small, ";" + (false ? "" : ";label:padding;"), false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFlVyIsImZpbGUiOiJzdHlsZXMudHMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBjc3MgfSBmcm9tICdAZW1vdGlvbi9yZWFjdCc7XG5pbXBvcnQgc3R5bGVkIGZyb20gJ0BlbW90aW9uL3N0eWxlZCc7XG5pbXBvcnQgeyBzcGFjZSB9IGZyb20gJy4uL3V0aWxzL3NwYWNlJztcbmltcG9ydCB0eXBlIHsgRHJvcGRvd25Db250ZW50V3JhcHBlclByb3BzIH0gZnJvbSAnLi90eXBlcyc7XG5cbmNvbnN0IHBhZGRpbmcgPSAoIHsgcGFkZGluZ1NpemUgPSAnc21hbGwnIH06IERyb3Bkb3duQ29udGVudFdyYXBwZXJQcm9wcyApID0+IHtcblx0aWYgKCBwYWRkaW5nU2l6ZSA9PT0gJ25vbmUnICkge1xuXHRcdHJldHVybjtcblx0fVxuXG5cdGNvbnN0IHBhZGRpbmdWYWx1ZXMgPSB7XG5cdFx0c21hbGw6IHNwYWNlKCAyICksXG5cdFx0bWVkaXVtOiBzcGFjZSggNCApLFxuXHR9O1xuXG5cdHJldHVybiBjc3NgXG5cdFx0cGFkZGluZzogJHsgcGFkZGluZ1ZhbHVlc1sgcGFkZGluZ1NpemUgXSB8fCBwYWRkaW5nVmFsdWVzLnNtYWxsIH07XG5cdGA7XG59O1xuXG5leHBvcnQgY29uc3QgRHJvcGRvd25Db250ZW50V3JhcHBlckRpdiA9IHN0eWxlZC5kaXY8IERyb3Bkb3duQ29udGVudFdyYXBwZXJQcm9wcyA+YFxuXHQvLyBOZWdhdGl2ZSBtYXJnaW4gdG8gcmVzZXQgKG9mZnNldCkgdGhlIGRlZmF1bHQgcGFkZGluZyBvbiAuY29tcG9uZW50cy1wb3BvdmVyX19jb250ZW50XG5cdG1hcmdpbi1sZWZ0OiAkeyBzcGFjZSggLTIgKSB9O1xuXHRtYXJnaW4tcmlnaHQ6ICR7IHNwYWNlKCAtMiApIH07XG5cdCY6Zmlyc3Qtb2YtdHlwZSB7XG5cdFx0bWFyZ2luLXRvcDogJHsgc3BhY2UoIC0yICkgfTtcblx0fVxuXHQmOmxhc3Qtb2YtdHlwZSB7XG5cdFx0bWFyZ2luLWJvdHRvbTogJHsgc3BhY2UoIC0yICkgfTtcblx0fVxuXG5cdCR7IHBhZGRpbmcgfTtcbmA7XG4iXX0= */");
-  };
-  var DropdownContentWrapperDiv = /* @__PURE__ */ createStyled("div", false ? {
-    target: "eovvns30"
-  } : {
-    target: "eovvns30",
-    label: "DropdownContentWrapperDiv"
-  })("margin-left:", space(-2), ";margin-right:", space(-2), ";&:first-of-type{margin-top:", space(-2), ";}&:last-of-type{margin-bottom:", space(-2), ";}", padding, ";" + (false ? "" : "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFvQmtGIiwiZmlsZSI6InN0eWxlcy50cyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IGNzcyB9IGZyb20gJ0BlbW90aW9uL3JlYWN0JztcbmltcG9ydCBzdHlsZWQgZnJvbSAnQGVtb3Rpb24vc3R5bGVkJztcbmltcG9ydCB7IHNwYWNlIH0gZnJvbSAnLi4vdXRpbHMvc3BhY2UnO1xuaW1wb3J0IHR5cGUgeyBEcm9wZG93bkNvbnRlbnRXcmFwcGVyUHJvcHMgfSBmcm9tICcuL3R5cGVzJztcblxuY29uc3QgcGFkZGluZyA9ICggeyBwYWRkaW5nU2l6ZSA9ICdzbWFsbCcgfTogRHJvcGRvd25Db250ZW50V3JhcHBlclByb3BzICkgPT4ge1xuXHRpZiAoIHBhZGRpbmdTaXplID09PSAnbm9uZScgKSB7XG5cdFx0cmV0dXJuO1xuXHR9XG5cblx0Y29uc3QgcGFkZGluZ1ZhbHVlcyA9IHtcblx0XHRzbWFsbDogc3BhY2UoIDIgKSxcblx0XHRtZWRpdW06IHNwYWNlKCA0ICksXG5cdH07XG5cblx0cmV0dXJuIGNzc2Bcblx0XHRwYWRkaW5nOiAkeyBwYWRkaW5nVmFsdWVzWyBwYWRkaW5nU2l6ZSBdIHx8IHBhZGRpbmdWYWx1ZXMuc21hbGwgfTtcblx0YDtcbn07XG5cbmV4cG9ydCBjb25zdCBEcm9wZG93bkNvbnRlbnRXcmFwcGVyRGl2ID0gc3R5bGVkLmRpdjwgRHJvcGRvd25Db250ZW50V3JhcHBlclByb3BzID5gXG5cdC8vIE5lZ2F0aXZlIG1hcmdpbiB0byByZXNldCAob2Zmc2V0KSB0aGUgZGVmYXVsdCBwYWRkaW5nIG9uIC5jb21wb25lbnRzLXBvcG92ZXJfX2NvbnRlbnRcblx0bWFyZ2luLWxlZnQ6ICR7IHNwYWNlKCAtMiApIH07XG5cdG1hcmdpbi1yaWdodDogJHsgc3BhY2UoIC0yICkgfTtcblx0JjpmaXJzdC1vZi10eXBlIHtcblx0XHRtYXJnaW4tdG9wOiAkeyBzcGFjZSggLTIgKSB9O1xuXHR9XG5cdCY6bGFzdC1vZi10eXBlIHtcblx0XHRtYXJnaW4tYm90dG9tOiAkeyBzcGFjZSggLTIgKSB9O1xuXHR9XG5cblx0JHsgcGFkZGluZyB9O1xuYDtcbiJdfQ== */"));
-
   // packages/components/build-module/dropdown/dropdown-content-wrapper.mjs
   var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
+  function getRuntime11() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument11(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash11(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE11}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE11) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle11(targetDocument, hash2, css3) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime11();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash11(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE11, hash2);
+    style2.appendChild(targetDocument.createTextNode(css3));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument11(targetDocument) {
+    const runtime = getRuntime11();
+    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+    for (const [hash2, css3] of runtime.styles) {
+      injectStyle11(targetDocument, hash2, css3);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle10(hash2, css3) {
+    const runtime = getRuntime11();
+    runtime.styles.set(hash2, css3);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle11(targetDocument, hash2, css3);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle10("7f9bfd3385", ".ab61d20c737fa550__content-wrapper{margin-left:-8px;margin-right:-8px}.ab61d20c737fa550__content-wrapper:first-of-type{margin-top:-8px}.ab61d20c737fa550__content-wrapper:last-of-type{margin-bottom:-8px}.f0a033fae417d720__padding-small{padding:8px}.d83816967399484e__padding-medium{padding:16px}");
+  }
+  var style_module_default10 = { "content-wrapper": "ab61d20c737fa550__content-wrapper", "padding-small": "f0a033fae417d720__padding-small", "padding-medium": "d83816967399484e__padding-medium" };
   function UnconnectedDropdownContentWrapper(props, forwardedRef) {
     const {
       paddingSize = "small",
+      className: className2,
       ...derivedProps
     } = useContextSystem(props, "DropdownContentWrapper");
-    return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(DropdownContentWrapperDiv, {
+    return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("div", {
       ...derivedProps,
-      paddingSize,
+      className: clsx_default(style_module_default10["content-wrapper"], {
+        [style_module_default10["padding-small"]]: paddingSize !== "none" && paddingSize !== "medium",
+        [style_module_default10["padding-medium"]]: paddingSize === "medium"
+      }, className2),
       ref: forwardedRef
     });
   }
@@ -36088,8 +36151,8 @@ This message will only show in development mode. It won't appear in production. 
   var import_deprecated10 = __toESM(require_deprecated(), 1);
 
   // packages/components/build-module/surface/hook.mjs
-  var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
-  function getRuntime11() {
+  var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
+  function getRuntime12() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -36100,26 +36163,26 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument11(document);
+      registerDocument12(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash11(targetDocument, hash2) {
+  function documentContainsStyleHash12(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE11}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE11) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE12}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE12) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle11(targetDocument, hash2, css3) {
+  function injectStyle12(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime11();
+    const runtime = getRuntime12();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -36128,21 +36191,21 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash11(targetDocument, hash2)) {
+    if (documentContainsStyleHash12(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE11, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE12, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument11(targetDocument) {
-    const runtime = getRuntime11();
+  function registerDocument12(targetDocument) {
+    const runtime = getRuntime12();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle11(targetDocument, hash2, css3);
+      injectStyle12(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -36156,17 +36219,17 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle10(hash2, css3) {
-    const runtime = getRuntime11();
+  function registerStyle11(hash2, css3) {
+    const runtime = getRuntime12();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle11(targetDocument, hash2, css3);
+      injectStyle12(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle10("afa72ffb80", "._074d7c69bf27b61f__surface{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);position:relative}.c8e7f206d344f0be__border-bottom{border-bottom:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}._64aa30939d5e500b__border-left{border-left:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}._543f465ff38d9d77__border-right{border-right:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}._8aca9849530b97b1__border-top{border-top:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}._67628eb2296cfec7__secondary{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4)}._0efc0a4250262223__dotted{background:linear-gradient(90deg,var(--wpds-color-background-surface-neutral-strong,#fff) var(--wp-components-surface-background-size-dotted),transparent 1%) 50%,linear-gradient(var(--wpds-color-background-surface-neutral-strong,#fff) var(--wp-components-surface-background-size-dotted),transparent 1%) 50%,var(--wpds-color-stroke-surface-neutral,#dbdbdb);background-size:var(--wp-components-surface-background-size) var(--wp-components-surface-background-size)}._5e99093161bb409c__grid{background:var(--wpds-color-background-surface-neutral-strong,#fff);background-image:linear-gradient(var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0) var(--wpds-border-width-xs,1px),transparent var(--wpds-border-width-xs,1px)),linear-gradient(90deg,var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0) var(--wpds-border-width-xs,1px),transparent var(--wpds-border-width-xs,1px));background-size:var(--wp-components-surface-background-size) var(--wp-components-surface-background-size)}");
+    registerStyle11("afa72ffb80", "._074d7c69bf27b61f__surface{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);position:relative}.c8e7f206d344f0be__border-bottom{border-bottom:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}._64aa30939d5e500b__border-left{border-left:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}._543f465ff38d9d77__border-right{border-right:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}._8aca9849530b97b1__border-top{border-top:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}._67628eb2296cfec7__secondary{background:var(--wpds-color-background-surface-neutral-weak,#f4f4f4)}._0efc0a4250262223__dotted{background:linear-gradient(90deg,var(--wpds-color-background-surface-neutral-strong,#fff) var(--wp-components-surface-background-size-dotted),transparent 1%) 50%,linear-gradient(var(--wpds-color-background-surface-neutral-strong,#fff) var(--wp-components-surface-background-size-dotted),transparent 1%) 50%,var(--wpds-color-stroke-surface-neutral,#dbdbdb);background-size:var(--wp-components-surface-background-size) var(--wp-components-surface-background-size)}._5e99093161bb409c__grid{background:var(--wpds-color-background-surface-neutral-strong,#fff);background-image:linear-gradient(var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0) var(--wpds-border-width-xs,1px),transparent var(--wpds-border-width-xs,1px)),linear-gradient(90deg,var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0) var(--wpds-border-width-xs,1px),transparent var(--wpds-border-width-xs,1px));background-size:var(--wp-components-surface-background-size) var(--wp-components-surface-background-size)}");
   }
-  var style_module_default10 = { "surface": "_074d7c69bf27b61f__surface", "border-bottom": "c8e7f206d344f0be__border-bottom", "border-left": "_64aa30939d5e500b__border-left", "border-right": "_543f465ff38d9d77__border-right", "border-top": "_8aca9849530b97b1__border-top", "secondary": "_67628eb2296cfec7__secondary", "dotted": "_0efc0a4250262223__dotted", "grid": "_5e99093161bb409c__grid" };
+  var style_module_default11 = { "surface": "_074d7c69bf27b61f__surface", "border-bottom": "c8e7f206d344f0be__border-bottom", "border-left": "_64aa30939d5e500b__border-left", "border-right": "_543f465ff38d9d77__border-right", "border-top": "_8aca9849530b97b1__border-top", "secondary": "_67628eb2296cfec7__secondary", "dotted": "_0efc0a4250262223__dotted", "grid": "_5e99093161bb409c__grid" };
   function useSurface(props) {
     const {
       backgroundSize = 12,
@@ -36187,14 +36250,14 @@ This message will only show in development mode. It won't appear in production. 
     } : style2;
     return {
       ...otherProps,
-      className: clsx_default(style_module_default10.surface, {
-        [style_module_default10["border-bottom"]]: borderBottom,
-        [style_module_default10["border-left"]]: borderLeft,
-        [style_module_default10["border-right"]]: borderRight,
-        [style_module_default10["border-top"]]: borderTop,
-        [style_module_default10.secondary]: variant === "secondary",
-        [style_module_default10.dotted]: variant === "dotted",
-        [style_module_default10.grid]: variant === "grid"
+      className: clsx_default(style_module_default11.surface, {
+        [style_module_default11["border-bottom"]]: borderBottom,
+        [style_module_default11["border-left"]]: borderLeft,
+        [style_module_default11["border-right"]]: borderRight,
+        [style_module_default11["border-top"]]: borderTop,
+        [style_module_default11.secondary]: variant === "secondary",
+        [style_module_default11.dotted]: variant === "dotted",
+        [style_module_default11.grid]: variant === "grid"
       }, className2),
       style: surfaceStyle
     };
@@ -36444,8 +36507,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/divider/component.mjs
   var import_jsx_runtime164 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
-  function getRuntime12() {
+  var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
+  function getRuntime13() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -36456,26 +36519,26 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument12(document);
+      registerDocument13(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash12(targetDocument, hash2) {
+  function documentContainsStyleHash13(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE12}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE12) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE13}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE13) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle12(targetDocument, hash2, css3) {
+  function injectStyle13(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime12();
+    const runtime = getRuntime13();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -36484,21 +36547,21 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash12(targetDocument, hash2)) {
+    if (documentContainsStyleHash13(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE12, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE13, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument12(targetDocument) {
-    const runtime = getRuntime12();
+  function registerDocument13(targetDocument) {
+    const runtime = getRuntime13();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle12(targetDocument, hash2, css3);
+      injectStyle13(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -36512,17 +36575,17 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle11(hash2, css3) {
-    const runtime = getRuntime12();
+  function registerStyle12(hash2, css3) {
+    const runtime = getRuntime13();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle12(targetDocument, hash2, css3);
+      injectStyle13(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle11("b6ebee9322", ".e10c29fc10c181dc__divider{border:0;margin:0}.e10c29fc10c181dc__divider:where([aria-orientation=horizontal]){block-size:0;border-block-end:1px solid currentColor;inline-size:auto;margin-block-end:var(--wp-components-divider-margin-end,0);margin-block-start:var(--wp-components-divider-margin-start,0)}.e10c29fc10c181dc__divider:where([aria-orientation=vertical]){block-size:auto;border-inline-end:1px solid currentColor;display:inline;inline-size:0;margin-inline-end:var(--wp-components-divider-margin-end,0);margin-inline-start:var(--wp-components-divider-margin-start,0)}");
+    registerStyle12("b6ebee9322", ".e10c29fc10c181dc__divider{border:0;margin:0}.e10c29fc10c181dc__divider:where([aria-orientation=horizontal]){block-size:0;border-block-end:1px solid currentColor;inline-size:auto;margin-block-end:var(--wp-components-divider-margin-end,0);margin-block-start:var(--wp-components-divider-margin-start,0)}.e10c29fc10c181dc__divider:where([aria-orientation=vertical]){block-size:auto;border-inline-end:1px solid currentColor;display:inline;inline-size:0;margin-inline-end:var(--wp-components-divider-margin-end,0);margin-inline-start:var(--wp-components-divider-margin-start,0)}");
   }
-  var style_module_default11 = { "divider": "e10c29fc10c181dc__divider" };
+  var style_module_default12 = { "divider": "e10c29fc10c181dc__divider" };
   function UnconnectedDivider(props, forwardedRef) {
     const {
       className: className2,
@@ -36544,7 +36607,7 @@ This message will only show in development mode. It won't appear in production. 
       dividerStyle["--wp-components-divider-margin-end"] = resolvedMarginEnd;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime164.jsx)(Separator, {
-      className: clsx_default(style_module_default11.divider, className2),
+      className: clsx_default(style_module_default12.divider, className2),
       style: dividerStyle,
       ...contextProps,
       ref: forwardedRef
@@ -36872,138 +36935,6 @@ This message will only show in development mode. It won't appear in production. 
   var useItemGroupContext = () => (0, import_element104.useContext)(ItemGroupContext);
 
   // packages/components/build-module/item-group/item/hook.mjs
-  var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
-  function getRuntime13() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument13(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash13(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE13}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE13) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle13(targetDocument, hash2, css3) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime13();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash13(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE13, hash2);
-    style2.appendChild(targetDocument.createTextNode(css3));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument13(targetDocument) {
-    const runtime = getRuntime13();
-    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-    for (const [hash2, css3] of runtime.styles) {
-      injectStyle13(targetDocument, hash2, css3);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle12(hash2, css3) {
-    const runtime = getRuntime13();
-    runtime.styles.set(hash2, css3);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle13(targetDocument, hash2, css3);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle12("5c81a85f17", "._68553e70f1f1cb4e__item-group._55756ee749a180e1__is-bordered{border:1px solid rgba(0,0,0,.1)}._68553e70f1f1cb4e__item-group._4e8285db01e0c630__is-separated>:not(marquee)>*{border-block-end:1px solid rgba(0,0,0,.1)}._68553e70f1f1cb4e__item-group._4e8285db01e0c630__is-separated>:last-of-type>*{border-block-end-color:transparent}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded{border-radius:var(--wpds-border-radius-sm,2px)}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded>:first-of-type>*{border-start-end-radius:var(--wpds-border-radius-sm,2px);border-start-start-radius:var(--wpds-border-radius-sm,2px)}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded>:last-of-type>*{border-end-end-radius:var(--wpds-border-radius-sm,2px);border-end-start-radius:var(--wpds-border-radius-sm,2px)}._4f562a88cd53281b__item-wrapper,.fc4c000709063bb0__item{display:block;width:100%}.fc4c000709063bb0__item{box-sizing:border-box;color:inherit;margin:0}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button{appearance:none;background:none;border:1px solid transparent;cursor:var(--wpds-cursor-control,pointer);font-family:inherit;font-size:13px;text-align:start}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link path,.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link svg,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button path,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button svg{fill:currentColor}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:hover,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:hover{color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:focus,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:focus{box-shadow:none;outline:none}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:focus-visible,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:focus-visible{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link{text-decoration:none}.fc4c000709063bb0__item._62800b4fe741b26a__is-spaced-around{border-radius:var(--wpds-border-radius-sm,2px)}.fc4c000709063bb0__item.ff341e6676e9138f__is-size-small{padding:4.3px 8px}.fc4c000709063bb0__item._715af0bb13514a58__is-size-medium{padding:7.9px 12px}.fc4c000709063bb0__item.b141618c0c420070__is-size-large{padding:11.5px 16.0008px}");
-  }
-  var style_module_default12 = { "item-group": "_68553e70f1f1cb4e__item-group", "is-bordered": "_55756ee749a180e1__is-bordered", "is-separated": "_4e8285db01e0c630__is-separated", "is-rounded": "_58738db58e87759e__is-rounded", "item-wrapper": "_4f562a88cd53281b__item-wrapper", "item": "fc4c000709063bb0__item", "is-unstyled-button": "d204dc5a680d24cf__is-unstyled-button", "is-unstyled-link": "a5802f3508d737a0__is-unstyled-link", "is-spaced-around": "_62800b4fe741b26a__is-spaced-around", "is-size-small": "ff341e6676e9138f__is-size-small", "is-size-medium": "_715af0bb13514a58__is-size-medium", "is-size-large": "b141618c0c420070__is-size-large" };
-  var sizeClassName = {
-    small: style_module_default12["is-size-small"],
-    medium: style_module_default12["is-size-medium"],
-    large: style_module_default12["is-size-large"]
-  };
-  function useItem(props) {
-    const {
-      as: asProp,
-      className: className2,
-      onClick,
-      role = "listitem",
-      size: sizeProp,
-      ...otherProps
-    } = useContextSystem(props, "Item");
-    const {
-      spacedAround,
-      size: contextSize
-    } = useItemGroupContext();
-    const size4 = sizeProp || contextSize;
-    const as = asProp || (typeof onClick !== "undefined" ? "button" : "div");
-    const classes = clsx_default(style_module_default12.item, as === "button" && style_module_default12["is-unstyled-button"], as === "a" && style_module_default12["is-unstyled-link"], sizeClassName[size4] || sizeClassName.medium, spacedAround && style_module_default12["is-spaced-around"], className2);
-    const wrapperClassName = style_module_default12["item-wrapper"];
-    return {
-      as,
-      className: classes,
-      onClick,
-      wrapperClassName,
-      role,
-      ...otherProps
-    };
-  }
-
-  // packages/components/build-module/item-group/item/component.mjs
-  var import_jsx_runtime171 = __toESM(require_jsx_runtime(), 1);
-  function UnconnectedItem(props, forwardedRef) {
-    const {
-      role,
-      wrapperClassName,
-      ...otherProps
-    } = useItem(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime171.jsx)("div", {
-      role,
-      className: wrapperClassName,
-      children: /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(component_default, {
-        ...otherProps,
-        ref: forwardedRef
-      })
-    });
-  }
-  var Item = contextConnect(UnconnectedItem, "Item");
-  var component_default35 = Item;
-
-  // packages/components/build-module/item-group/item-group/hook.mjs
   var STYLE_HASH_ATTRIBUTE14 = "data-wp-hash";
   function getRuntime14() {
     const globalScope = globalThis;
@@ -37083,6 +37014,138 @@ This message will only show in development mode. It won't appear in production. 
     registerStyle13("5c81a85f17", "._68553e70f1f1cb4e__item-group._55756ee749a180e1__is-bordered{border:1px solid rgba(0,0,0,.1)}._68553e70f1f1cb4e__item-group._4e8285db01e0c630__is-separated>:not(marquee)>*{border-block-end:1px solid rgba(0,0,0,.1)}._68553e70f1f1cb4e__item-group._4e8285db01e0c630__is-separated>:last-of-type>*{border-block-end-color:transparent}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded{border-radius:var(--wpds-border-radius-sm,2px)}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded>:first-of-type>*{border-start-end-radius:var(--wpds-border-radius-sm,2px);border-start-start-radius:var(--wpds-border-radius-sm,2px)}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded>:last-of-type>*{border-end-end-radius:var(--wpds-border-radius-sm,2px);border-end-start-radius:var(--wpds-border-radius-sm,2px)}._4f562a88cd53281b__item-wrapper,.fc4c000709063bb0__item{display:block;width:100%}.fc4c000709063bb0__item{box-sizing:border-box;color:inherit;margin:0}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button{appearance:none;background:none;border:1px solid transparent;cursor:var(--wpds-cursor-control,pointer);font-family:inherit;font-size:13px;text-align:start}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link path,.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link svg,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button path,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button svg{fill:currentColor}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:hover,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:hover{color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:focus,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:focus{box-shadow:none;outline:none}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:focus-visible,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:focus-visible{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link{text-decoration:none}.fc4c000709063bb0__item._62800b4fe741b26a__is-spaced-around{border-radius:var(--wpds-border-radius-sm,2px)}.fc4c000709063bb0__item.ff341e6676e9138f__is-size-small{padding:4.3px 8px}.fc4c000709063bb0__item._715af0bb13514a58__is-size-medium{padding:7.9px 12px}.fc4c000709063bb0__item.b141618c0c420070__is-size-large{padding:11.5px 16.0008px}");
   }
   var style_module_default13 = { "item-group": "_68553e70f1f1cb4e__item-group", "is-bordered": "_55756ee749a180e1__is-bordered", "is-separated": "_4e8285db01e0c630__is-separated", "is-rounded": "_58738db58e87759e__is-rounded", "item-wrapper": "_4f562a88cd53281b__item-wrapper", "item": "fc4c000709063bb0__item", "is-unstyled-button": "d204dc5a680d24cf__is-unstyled-button", "is-unstyled-link": "a5802f3508d737a0__is-unstyled-link", "is-spaced-around": "_62800b4fe741b26a__is-spaced-around", "is-size-small": "ff341e6676e9138f__is-size-small", "is-size-medium": "_715af0bb13514a58__is-size-medium", "is-size-large": "b141618c0c420070__is-size-large" };
+  var sizeClassName = {
+    small: style_module_default13["is-size-small"],
+    medium: style_module_default13["is-size-medium"],
+    large: style_module_default13["is-size-large"]
+  };
+  function useItem(props) {
+    const {
+      as: asProp,
+      className: className2,
+      onClick,
+      role = "listitem",
+      size: sizeProp,
+      ...otherProps
+    } = useContextSystem(props, "Item");
+    const {
+      spacedAround,
+      size: contextSize
+    } = useItemGroupContext();
+    const size4 = sizeProp || contextSize;
+    const as = asProp || (typeof onClick !== "undefined" ? "button" : "div");
+    const classes = clsx_default(style_module_default13.item, as === "button" && style_module_default13["is-unstyled-button"], as === "a" && style_module_default13["is-unstyled-link"], sizeClassName[size4] || sizeClassName.medium, spacedAround && style_module_default13["is-spaced-around"], className2);
+    const wrapperClassName = style_module_default13["item-wrapper"];
+    return {
+      as,
+      className: classes,
+      onClick,
+      wrapperClassName,
+      role,
+      ...otherProps
+    };
+  }
+
+  // packages/components/build-module/item-group/item/component.mjs
+  var import_jsx_runtime171 = __toESM(require_jsx_runtime(), 1);
+  function UnconnectedItem(props, forwardedRef) {
+    const {
+      role,
+      wrapperClassName,
+      ...otherProps
+    } = useItem(props);
+    return /* @__PURE__ */ (0, import_jsx_runtime171.jsx)("div", {
+      role,
+      className: wrapperClassName,
+      children: /* @__PURE__ */ (0, import_jsx_runtime171.jsx)(component_default, {
+        ...otherProps,
+        ref: forwardedRef
+      })
+    });
+  }
+  var Item = contextConnect(UnconnectedItem, "Item");
+  var component_default35 = Item;
+
+  // packages/components/build-module/item-group/item-group/hook.mjs
+  var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
+  function getRuntime15() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument15(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash15(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE15}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE15) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle15(targetDocument, hash2, css3) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime15();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash15(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE15, hash2);
+    style2.appendChild(targetDocument.createTextNode(css3));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument15(targetDocument) {
+    const runtime = getRuntime15();
+    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+    for (const [hash2, css3] of runtime.styles) {
+      injectStyle15(targetDocument, hash2, css3);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle14(hash2, css3) {
+    const runtime = getRuntime15();
+    runtime.styles.set(hash2, css3);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle15(targetDocument, hash2, css3);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle14("5c81a85f17", "._68553e70f1f1cb4e__item-group._55756ee749a180e1__is-bordered{border:1px solid rgba(0,0,0,.1)}._68553e70f1f1cb4e__item-group._4e8285db01e0c630__is-separated>:not(marquee)>*{border-block-end:1px solid rgba(0,0,0,.1)}._68553e70f1f1cb4e__item-group._4e8285db01e0c630__is-separated>:last-of-type>*{border-block-end-color:transparent}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded{border-radius:var(--wpds-border-radius-sm,2px)}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded>:first-of-type>*{border-start-end-radius:var(--wpds-border-radius-sm,2px);border-start-start-radius:var(--wpds-border-radius-sm,2px)}._68553e70f1f1cb4e__item-group._58738db58e87759e__is-rounded>:last-of-type>*{border-end-end-radius:var(--wpds-border-radius-sm,2px);border-end-start-radius:var(--wpds-border-radius-sm,2px)}._4f562a88cd53281b__item-wrapper,.fc4c000709063bb0__item{display:block;width:100%}.fc4c000709063bb0__item{box-sizing:border-box;color:inherit;margin:0}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button{appearance:none;background:none;border:1px solid transparent;cursor:var(--wpds-cursor-control,pointer);font-family:inherit;font-size:13px;text-align:start}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link path,.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link svg,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button path,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button svg{fill:currentColor}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:hover,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:hover{color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9))}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:focus,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:focus{box-shadow:none;outline:none}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link:focus-visible,.fc4c000709063bb0__item.d204dc5a680d24cf__is-unstyled-button:focus-visible{box-shadow:0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));outline:2px solid transparent;outline-offset:0}.fc4c000709063bb0__item.a5802f3508d737a0__is-unstyled-link{text-decoration:none}.fc4c000709063bb0__item._62800b4fe741b26a__is-spaced-around{border-radius:var(--wpds-border-radius-sm,2px)}.fc4c000709063bb0__item.ff341e6676e9138f__is-size-small{padding:4.3px 8px}.fc4c000709063bb0__item._715af0bb13514a58__is-size-medium{padding:7.9px 12px}.fc4c000709063bb0__item.b141618c0c420070__is-size-large{padding:11.5px 16.0008px}");
+  }
+  var style_module_default14 = { "item-group": "_68553e70f1f1cb4e__item-group", "is-bordered": "_55756ee749a180e1__is-bordered", "is-separated": "_4e8285db01e0c630__is-separated", "is-rounded": "_58738db58e87759e__is-rounded", "item-wrapper": "_4f562a88cd53281b__item-wrapper", "item": "fc4c000709063bb0__item", "is-unstyled-button": "d204dc5a680d24cf__is-unstyled-button", "is-unstyled-link": "a5802f3508d737a0__is-unstyled-link", "is-spaced-around": "_62800b4fe741b26a__is-spaced-around", "is-size-small": "ff341e6676e9138f__is-size-small", "is-size-medium": "_715af0bb13514a58__is-size-medium", "is-size-large": "b141618c0c420070__is-size-large" };
   function useItemGroup(props) {
     const {
       className: className2,
@@ -37092,10 +37155,10 @@ This message will only show in development mode. It won't appear in production. 
       role = "list",
       ...otherProps
     } = useContextSystem(props, "ItemGroup");
-    const classes = clsx_default(style_module_default13["item-group"], {
-      [style_module_default13["is-bordered"]]: isBordered,
-      [style_module_default13["is-separated"]]: isSeparated,
-      [style_module_default13["is-rounded"]]: isRounded
+    const classes = clsx_default(style_module_default14["item-group"], {
+      [style_module_default14["is-bordered"]]: isBordered,
+      [style_module_default14["is-separated"]]: isSeparated,
+      [style_module_default14["is-rounded"]]: isRounded
     }, className2);
     return {
       isBordered,
@@ -39069,8 +39132,8 @@ This message will only show in development mode. It won't appear in production. 
   // packages/components/build-module/spinner/index.mjs
   var import_element115 = __toESM(require_element(), 1);
   var import_jsx_runtime185 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE15 = "data-wp-hash";
-  function getRuntime15() {
+  var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
+  function getRuntime16() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -39081,26 +39144,26 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument15(document);
+      registerDocument16(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash15(targetDocument, hash2) {
+  function documentContainsStyleHash16(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE15}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE15) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE16}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE16) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle15(targetDocument, hash2, css3) {
+  function injectStyle16(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime15();
+    const runtime = getRuntime16();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -39109,21 +39172,21 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash15(targetDocument, hash2)) {
+    if (documentContainsStyleHash16(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE15, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE16, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument15(targetDocument) {
-    const runtime = getRuntime15();
+  function registerDocument16(targetDocument) {
+    const runtime = getRuntime16();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle15(targetDocument, hash2, css3);
+      injectStyle16(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -39137,23 +39200,23 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle14(hash2, css3) {
-    const runtime = getRuntime15();
+  function registerStyle15(hash2, css3) {
+    const runtime = getRuntime16();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle15(targetDocument, hash2, css3);
+      injectStyle16(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle14("a4ac9b380a", "._5223dcef142ddf2a__spinner{background-color:transparent;color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));display:inline-block;height:16px;margin:5px 11px 0;opacity:1;overflow:visible;position:relative;width:16px}._00e30fe487ccb5cc__track,.b33a3d348ed141fd__indicator{fill:transparent;stroke-width:1.5px}._00e30fe487ccb5cc__track{stroke:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb))}.b33a3d348ed141fd__indicator{stroke:currentColor;stroke-linecap:round;animation:e5c099d0667bd442__spin 1.4s linear infinite both;transform-origin:50% 50%}@keyframes e5c099d0667bd442__spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}");
+    registerStyle15("a4ac9b380a", "._5223dcef142ddf2a__spinner{background-color:transparent;color:var(--wp-components-color-accent,var(--wp-admin-theme-color,#3858e9));display:inline-block;height:16px;margin:5px 11px 0;opacity:1;overflow:visible;position:relative;width:16px}._00e30fe487ccb5cc__track,.b33a3d348ed141fd__indicator{fill:transparent;stroke-width:1.5px}._00e30fe487ccb5cc__track{stroke:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb))}.b33a3d348ed141fd__indicator{stroke:currentColor;stroke-linecap:round;animation:e5c099d0667bd442__spin 1.4s linear infinite both;transform-origin:50% 50%}@keyframes e5c099d0667bd442__spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}");
   }
-  var style_module_default14 = { "spinner": "_5223dcef142ddf2a__spinner", "track": "_00e30fe487ccb5cc__track", "indicator": "b33a3d348ed141fd__indicator", "spin": "e5c099d0667bd442__spin" };
+  var style_module_default15 = { "spinner": "_5223dcef142ddf2a__spinner", "track": "_00e30fe487ccb5cc__track", "indicator": "b33a3d348ed141fd__indicator", "spin": "e5c099d0667bd442__spin" };
   function UnforwardedSpinner({
     className: className2,
     ...props
   }, forwardedRef) {
     return /* @__PURE__ */ (0, import_jsx_runtime185.jsxs)("svg", {
-      className: clsx_default("components-spinner", style_module_default14.spinner, className2),
+      className: clsx_default("components-spinner", style_module_default15.spinner, className2),
       viewBox: "0 0 100 100",
       width: "16",
       height: "16",
@@ -39163,13 +39226,13 @@ This message will only show in development mode. It won't appear in production. 
       ...props,
       ref: forwardedRef,
       children: [/* @__PURE__ */ (0, import_jsx_runtime185.jsx)("circle", {
-        className: style_module_default14.track,
+        className: style_module_default15.track,
         cx: "50",
         cy: "50",
         r: "50",
         vectorEffect: "non-scaling-stroke"
       }), /* @__PURE__ */ (0, import_jsx_runtime185.jsx)("path", {
-        className: style_module_default14.indicator,
+        className: style_module_default15.indicator,
         d: "m 50 0 a 50 50 0 0 1 50 50",
         vectorEffect: "non-scaling-stroke"
       })]
@@ -39842,8 +39905,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/confirm-dialog/component.mjs
   var import_jsx_runtime189 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
-  function getRuntime16() {
+  var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
+  function getRuntime17() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -39854,26 +39917,26 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument16(document);
+      registerDocument17(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash16(targetDocument, hash2) {
+  function documentContainsStyleHash17(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE16}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE16) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE17}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE17) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle16(targetDocument, hash2, css3) {
+  function injectStyle17(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime16();
+    const runtime = getRuntime17();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -39882,21 +39945,21 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash16(targetDocument, hash2)) {
+    if (documentContainsStyleHash17(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE16, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE17, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument16(targetDocument) {
-    const runtime = getRuntime16();
+  function registerDocument17(targetDocument) {
+    const runtime = getRuntime17();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle16(targetDocument, hash2, css3);
+      injectStyle17(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -39910,17 +39973,17 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle15(hash2, css3) {
-    const runtime = getRuntime16();
+  function registerStyle16(hash2, css3) {
+    const runtime = getRuntime17();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle16(targetDocument, hash2, css3);
+      injectStyle17(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle15("af7a0f28df", ".f8c6ba0dd016e6c1__wrapper.f8c6ba0dd016e6c1__wrapper{z-index:1000001}");
+    registerStyle16("af7a0f28df", ".f8c6ba0dd016e6c1__wrapper.f8c6ba0dd016e6c1__wrapper{z-index:1000001}");
   }
-  var style_module_default15 = { "wrapper": "f8c6ba0dd016e6c1__wrapper" };
+  var style_module_default16 = { "wrapper": "f8c6ba0dd016e6c1__wrapper" };
   var UnconnectedConfirmDialog = (props, forwardedRef) => {
     const {
       isOpen: isOpenProp,
@@ -39932,7 +39995,7 @@ This message will only show in development mode. It won't appear in production. 
       isBusy,
       ...otherProps
     } = useContextSystem(props, "ConfirmDialog");
-    const wrapperClassName = style_module_default15.wrapper;
+    const wrapperClassName = style_module_default16.wrapper;
     const cancelButtonRef = (0, import_element121.useRef)(null);
     const confirmButtonRef = (0, import_element121.useRef)(null);
     const [isOpen, setIsOpen] = (0, import_element121.useState)();
@@ -41751,8 +41814,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/disabled/index.mjs
   var import_jsx_runtime198 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
-  function getRuntime17() {
+  var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
+  function getRuntime18() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -41763,26 +41826,26 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument17(document);
+      registerDocument18(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash17(targetDocument, hash2) {
+  function documentContainsStyleHash18(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE17}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE17) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE18}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE18) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle17(targetDocument, hash2, css3) {
+  function injectStyle18(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime17();
+    const runtime = getRuntime18();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -41791,21 +41854,21 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash17(targetDocument, hash2)) {
+    if (documentContainsStyleHash18(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE17, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE18, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument17(targetDocument) {
-    const runtime = getRuntime17();
+  function registerDocument18(targetDocument) {
+    const runtime = getRuntime18();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle17(targetDocument, hash2, css3);
+      injectStyle18(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -41819,17 +41882,17 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle16(hash2, css3) {
-    const runtime = getRuntime17();
+  function registerStyle17(hash2, css3) {
+    const runtime = getRuntime18();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle17(targetDocument, hash2, css3);
+      injectStyle18(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle16("bacc423d2b", '._556ae8be2a7ddc8e__disabled{pointer-events:none;position:relative}._556ae8be2a7ddc8e__disabled:after{content:"";inset:0;position:absolute}._556ae8be2a7ddc8e__disabled *{pointer-events:none}');
+    registerStyle17("bacc423d2b", '._556ae8be2a7ddc8e__disabled{pointer-events:none;position:relative}._556ae8be2a7ddc8e__disabled:after{content:"";inset:0;position:absolute}._556ae8be2a7ddc8e__disabled *{pointer-events:none}');
   }
-  var style_module_default16 = { "disabled": "_556ae8be2a7ddc8e__disabled" };
+  var style_module_default17 = { "disabled": "_556ae8be2a7ddc8e__disabled" };
   var {
     Consumer,
     Provider: Provider2
@@ -41845,7 +41908,7 @@ This message will only show in development mode. It won't appear in production. 
       children: /* @__PURE__ */ (0, import_jsx_runtime198.jsx)("div", {
         // @ts-expect-error `inert` is not declared in React 18's HTML attribute types.
         inert: isDisabled ? "true" : void 0,
-        className: isDisabled ? clsx_default(style_module_default16.disabled, className2, "components-disabled") : void 0,
+        className: isDisabled ? clsx_default(style_module_default17.disabled, className2, "components-disabled") : void 0,
         ...props,
         children
       })
@@ -41881,8 +41944,8 @@ This message will only show in development mode. It won't appear in production. 
   var import_element131 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
-  var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
-  function getRuntime18() {
+  var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
+  function getRuntime19() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -41893,28 +41956,28 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument18(document);
+      registerDocument19(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash18(targetDocument, hash2) {
+  function documentContainsStyleHash19(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
     for (const style2 of targetDocument.head.querySelectorAll(
-      `style[${STYLE_HASH_ATTRIBUTE18}]`
+      `style[${STYLE_HASH_ATTRIBUTE19}]`
     )) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE18) === hash2) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE19) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle18(targetDocument, hash2, css3) {
+  function injectStyle19(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime18();
+    const runtime = getRuntime19();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -41923,24 +41986,24 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash18(targetDocument, hash2)) {
+    if (documentContainsStyleHash19(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE18, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE19, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument18(targetDocument) {
-    const runtime = getRuntime18();
+  function registerDocument19(targetDocument) {
+    const runtime = getRuntime19();
     runtime.documents.set(
       targetDocument,
       (runtime.documents.get(targetDocument) ?? 0) + 1
     );
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle18(targetDocument, hash2, css3);
+      injectStyle19(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -41954,15 +42017,15 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle17(hash2, css3) {
-    const runtime = getRuntime18();
+  function registerStyle18(hash2, css3) {
+    const runtime = getRuntime19();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle18(targetDocument, hash2, css3);
+      injectStyle19(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle17("be37f31c1e", "._11fc52b637ff8a7e__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._11fc52b637ff8a7e__slot>*{pointer-events:auto}}}");
+    registerStyle18("be37f31c1e", "._11fc52b637ff8a7e__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._11fc52b637ff8a7e__slot>*{pointer-events:auto}}}");
   }
   var wp_compat_overlay_slot_default = { "slot": "_11fc52b637ff8a7e__slot" };
   var WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
@@ -42022,8 +42085,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/draggable/index.mjs
   var import_jsx_runtime200 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
-  function getRuntime19() {
+  var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
+  function getRuntime20() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -42034,26 +42097,26 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument19(document);
+      registerDocument20(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash19(targetDocument, hash2) {
+  function documentContainsStyleHash20(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE19}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE19) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE20}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE20) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle19(targetDocument, hash2, css3) {
+  function injectStyle20(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime19();
+    const runtime = getRuntime20();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -42062,21 +42125,21 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash19(targetDocument, hash2)) {
+    if (documentContainsStyleHash20(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE19, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE20, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument19(targetDocument) {
-    const runtime = getRuntime19();
+  function registerDocument20(targetDocument) {
+    const runtime = getRuntime20();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle19(targetDocument, hash2, css3);
+      injectStyle20(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -42090,19 +42153,19 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle18(hash2, css3) {
-    const runtime = getRuntime19();
+  function registerStyle19(hash2, css3) {
+    const runtime = getRuntime20();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle19(targetDocument, hash2, css3);
+      injectStyle20(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle18("e7e88c1781", "._3476c2e530687f96__invisible-drag-image{height:50px;left:-1000px;position:fixed;width:50px}._6f00e51ab7574306__clone{background:transparent;padding:0;pointer-events:none;position:fixed}._6f00e51ab7574306__clone:not(._664ecd37377558df__is-in-compat-slot){z-index:1000000000}body.is-dragging-components-draggable{cursor:move;cursor:grabbing!important}");
+    registerStyle19("e7e88c1781", "._3476c2e530687f96__invisible-drag-image{height:50px;left:-1000px;position:fixed;width:50px}._6f00e51ab7574306__clone{background:transparent;padding:0;pointer-events:none;position:fixed}._6f00e51ab7574306__clone:not(._664ecd37377558df__is-in-compat-slot){z-index:1000000000}body.is-dragging-components-draggable{cursor:move;cursor:grabbing!important}");
   }
-  var style_module_default17 = { "invisible-drag-image": "_3476c2e530687f96__invisible-drag-image", "clone": "_6f00e51ab7574306__clone", "is-in-compat-slot": "_664ecd37377558df__is-in-compat-slot" };
-  var dragImageClasses = [style_module_default17["invisible-drag-image"], "components-draggable__invisible-drag-image"].filter(Boolean);
-  var cloneWrapperClasses = [style_module_default17.clone, "components-draggable__clone"].filter(Boolean);
+  var style_module_default18 = { "invisible-drag-image": "_3476c2e530687f96__invisible-drag-image", "clone": "_6f00e51ab7574306__clone", "is-in-compat-slot": "_664ecd37377558df__is-in-compat-slot" };
+  var dragImageClasses = [style_module_default18["invisible-drag-image"], "components-draggable__invisible-drag-image"].filter(Boolean);
+  var cloneWrapperClasses = [style_module_default18.clone, "components-draggable__clone"].filter(Boolean);
   var bodyClass = "is-dragging-components-draggable";
   var clonePadding = 0;
   function Draggable({
@@ -42144,7 +42207,7 @@ This message will only show in development mode. It won't appear in production. 
         event.dataTransfer.setDragImage(dragImage, 0, 0);
       }
       cloneWrapper.classList.add(...cloneWrapperClasses);
-      const inSlotClass = style_module_default17["is-in-compat-slot"];
+      const inSlotClass = style_module_default18["is-in-compat-slot"];
       if (compatSlot && inSlotClass) {
         cloneWrapper.classList.add(inSlotClass);
       }
@@ -43702,8 +43765,8 @@ This message will only show in development mode. It won't appear in production. 
 
   // packages/components/build-module/form-token-field/index.mjs
   var import_jsx_runtime219 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
-  function getRuntime20() {
+  var STYLE_HASH_ATTRIBUTE21 = "data-wp-hash";
+  function getRuntime21() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -43714,26 +43777,26 @@ This message will only show in development mode. It won't appear in production. 
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument20(document);
+      registerDocument21(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash20(targetDocument, hash2) {
+  function documentContainsStyleHash21(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE20}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE20) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE21}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE21) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle20(targetDocument, hash2, css3) {
+  function injectStyle21(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime20();
+    const runtime = getRuntime21();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -43742,21 +43805,21 @@ This message will only show in development mode. It won't appear in production. 
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash20(targetDocument, hash2)) {
+    if (documentContainsStyleHash21(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE20, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE21, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument20(targetDocument) {
-    const runtime = getRuntime20();
+  function registerDocument21(targetDocument) {
+    const runtime = getRuntime21();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle20(targetDocument, hash2, css3);
+      injectStyle21(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -43770,17 +43833,17 @@ This message will only show in development mode. It won't appear in production. 
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle19(hash2, css3) {
-    const runtime = getRuntime20();
+  function registerStyle20(hash2, css3) {
+    const runtime = getRuntime21();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle20(targetDocument, hash2, css3);
+      injectStyle21(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle19("f9ae5dc19e", ".df878b202c3b3cb7__tokens-and-input{box-sizing:border-box;padding:7px}.df878b202c3b3cb7__tokens-and-input *,.df878b202c3b3cb7__tokens-and-input :after,.df878b202c3b3cb7__tokens-and-input :before{box-sizing:inherit}");
+    registerStyle20("f9ae5dc19e", ".df878b202c3b3cb7__tokens-and-input{box-sizing:border-box;padding:7px}.df878b202c3b3cb7__tokens-and-input *,.df878b202c3b3cb7__tokens-and-input :after,.df878b202c3b3cb7__tokens-and-input :before{box-sizing:inherit}");
   }
-  var style_module_default18 = { "tokens-and-input": "df878b202c3b3cb7__tokens-and-input" };
+  var style_module_default19 = { "tokens-and-input": "df878b202c3b3cb7__tokens-and-input" };
   var identity3 = (value) => value;
   function FormTokenField(props) {
     const {
@@ -44303,7 +44366,7 @@ This message will only show in development mode. It won't appear in production. 
         onMouseDown: onContainerTouched,
         onTouchStart: onContainerTouched,
         children: [/* @__PURE__ */ (0, import_jsx_runtime219.jsx)(component_default3, {
-          className: style_module_default18["tokens-and-input"],
+          className: style_module_default19["tokens-and-input"],
           justify: "flex-start",
           align: "center",
           gap: 1,
@@ -45887,7 +45950,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var notice_default = Notice;
 
   // packages/components/build-module/notice/list.mjs
-  var import_react112 = __toESM(require_react(), 1);
+  var import_react111 = __toESM(require_react(), 1);
   var import_jsx_runtime235 = __toESM(require_jsx_runtime(), 1);
   var noop20 = () => {
   };
@@ -45906,7 +45969,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
           content,
           ...restNotice
         } = notice;
-        return /* @__PURE__ */ (0, import_react112.createElement)(notice_default, {
+        return /* @__PURE__ */ (0, import_react111.createElement)(notice_default, {
           ...restNotice,
           key: notice.id,
           onRemove: removeNotice(notice.id)
@@ -48163,8 +48226,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_element172 = __toESM(require_element(), 1);
   var import_deprecated24 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime254 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE21 = "data-wp-hash";
-  function getRuntime21() {
+  var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
+  function getRuntime22() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -48175,26 +48238,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument21(document);
+      registerDocument22(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash21(targetDocument, hash2) {
+  function documentContainsStyleHash22(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE21}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE21) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE22}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE22) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle21(targetDocument, hash2, css3) {
+  function injectStyle22(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime21();
+    const runtime = getRuntime22();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -48203,21 +48266,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash21(targetDocument, hash2)) {
+    if (documentContainsStyleHash22(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE21, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE22, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument21(targetDocument) {
-    const runtime = getRuntime21();
+  function registerDocument22(targetDocument) {
+    const runtime = getRuntime22();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle21(targetDocument, hash2, css3);
+      injectStyle22(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -48231,17 +48294,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle20(hash2, css3) {
-    const runtime = getRuntime21();
+  function registerStyle21(hash2, css3) {
+    const runtime = getRuntime22();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle21(targetDocument, hash2, css3);
+      injectStyle22(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle20("77f847972d", "._5e6152f7430df331__input input[type=search]::-webkit-search-cancel-button,._5e6152f7430df331__input input[type=search]::-webkit-search-decoration,._5e6152f7430df331__input input[type=search]::-webkit-search-results-button,._5e6152f7430df331__input input[type=search]::-webkit-search-results-decoration{-webkit-appearance:none}._9a856163f1b1aaae__icon:dir(ltr){transform:scaleX(-1)}");
+    registerStyle21("77f847972d", "._5e6152f7430df331__input input[type=search]::-webkit-search-cancel-button,._5e6152f7430df331__input input[type=search]::-webkit-search-decoration,._5e6152f7430df331__input input[type=search]::-webkit-search-results-button,._5e6152f7430df331__input input[type=search]::-webkit-search-results-decoration{-webkit-appearance:none}._9a856163f1b1aaae__icon:dir(ltr){transform:scaleX(-1)}");
   }
-  var style_module_default19 = { "input": "_5e6152f7430df331__input", "icon": "_9a856163f1b1aaae__icon" };
+  var style_module_default20 = { "input": "_5e6152f7430df331__input", "icon": "_9a856163f1b1aaae__icon" };
   function SuffixItem({
     searchRef,
     onChange,
@@ -48294,7 +48357,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       ref: (0, import_compose69.useMergeRefs)([searchRef, forwardedRef]),
       type: "search",
       size: size4,
-      className: clsx_default(style_module_default19.input, "components-search-control", className2),
+      className: clsx_default(style_module_default20.input, "components-search-control", className2),
       onChange: (nextValue) => onChange(nextValue ?? ""),
       autoComplete: "off",
       placeholder,
@@ -48302,7 +48365,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       prefix: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(InputControlPrefixWrapper, {
         variant: "icon",
         children: /* @__PURE__ */ (0, import_jsx_runtime254.jsx)(icon_default3, {
-          className: style_module_default19.icon,
+          className: style_module_default20.icon,
           icon: search_default,
           fill: "currentColor"
         })
@@ -48702,8 +48765,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/textarea-control/index.mjs
   var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
-  function getRuntime22() {
+  var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
+  function getRuntime23() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -48714,26 +48777,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument22(document);
+      registerDocument23(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash22(targetDocument, hash2) {
+  function documentContainsStyleHash23(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE22}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE22) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE23}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE23) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle22(targetDocument, hash2, css3) {
+  function injectStyle23(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime22();
+    const runtime = getRuntime23();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -48742,21 +48805,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash22(targetDocument, hash2)) {
+    if (documentContainsStyleHash23(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE22, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE23, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument22(targetDocument) {
-    const runtime = getRuntime22();
+  function registerDocument23(targetDocument) {
+    const runtime = getRuntime23();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle22(targetDocument, hash2, css3);
+      injectStyle23(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -48770,17 +48833,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle21(hash2, css3) {
-    const runtime = getRuntime22();
+  function registerStyle22(hash2, css3) {
+    const runtime = getRuntime23();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle22(targetDocument, hash2, css3);
+      injectStyle23(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle21("c666f77d8c", ".aa08a6e706634925__textarea{border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px}@media (min-width:600px){.aa08a6e706634925__textarea{font-size:13px;line-height:normal}}.aa08a6e706634925__textarea:hover:not(:disabled,[aria-disabled=true],[type=checkbox]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}.aa08a6e706634925__textarea:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa08a6e706634925__textarea::placeholder{color:rgba(30,30,30,.62)}");
+    registerStyle22("c666f77d8c", ".aa08a6e706634925__textarea{border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px}@media (min-width:600px){.aa08a6e706634925__textarea{font-size:13px;line-height:normal}}.aa08a6e706634925__textarea:hover:not(:disabled,[aria-disabled=true],[type=checkbox]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}.aa08a6e706634925__textarea:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}.aa08a6e706634925__textarea::placeholder{color:rgba(30,30,30,.62)}");
   }
-  var style_module_default20 = { "textarea": "aa08a6e706634925__textarea" };
+  var style_module_default21 = { "textarea": "aa08a6e706634925__textarea" };
   function UnforwardedTextareaControl(props, ref) {
     const {
       // Prevent passing this to `textarea`.
@@ -48805,7 +48868,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       help,
       className: classes,
       children: /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(StyledTextarea, {
-        className: clsx_default("components-textarea-control__input", style_module_default20.textarea),
+        className: clsx_default("components-textarea-control__input", style_module_default21.textarea),
         id: id3,
         rows,
         onChange: onChangeValue,
@@ -49292,111 +49355,6 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var useToolsPanelContext = () => (0, import_element188.useContext)(ToolsPanelContext);
 
   // packages/components/build-module/tools-panel/tools-panel-header/hook.mjs
-  var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
-  function getRuntime23() {
-    const globalScope = globalThis;
-    if (globalScope.__wpStyleRuntime) {
-      return globalScope.__wpStyleRuntime;
-    }
-    globalScope.__wpStyleRuntime = {
-      documents: /* @__PURE__ */ new Map(),
-      styles: /* @__PURE__ */ new Map(),
-      injectedStyles: /* @__PURE__ */ new WeakMap()
-    };
-    if (typeof document !== "undefined") {
-      registerDocument23(document);
-    }
-    return globalScope.__wpStyleRuntime;
-  }
-  function documentContainsStyleHash23(targetDocument, hash2) {
-    if (!targetDocument.head) {
-      return false;
-    }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE23}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE23) === hash2) {
-        return true;
-      }
-    }
-    return false;
-  }
-  function injectStyle23(targetDocument, hash2, css3) {
-    if (!targetDocument.head) {
-      return;
-    }
-    const runtime = getRuntime23();
-    let injectedStyles = runtime.injectedStyles.get(targetDocument);
-    if (!injectedStyles) {
-      injectedStyles = /* @__PURE__ */ new Set();
-      runtime.injectedStyles.set(targetDocument, injectedStyles);
-    }
-    if (injectedStyles.has(hash2)) {
-      return;
-    }
-    if (documentContainsStyleHash23(targetDocument, hash2)) {
-      injectedStyles.add(hash2);
-      return;
-    }
-    const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE23, hash2);
-    style2.appendChild(targetDocument.createTextNode(css3));
-    targetDocument.head.appendChild(style2);
-    injectedStyles.add(hash2);
-  }
-  function registerDocument23(targetDocument) {
-    const runtime = getRuntime23();
-    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-    for (const [hash2, css3] of runtime.styles) {
-      injectStyle23(targetDocument, hash2, css3);
-    }
-    return () => {
-      const count = runtime.documents.get(targetDocument);
-      if (count === void 0) {
-        return;
-      }
-      if (count <= 1) {
-        runtime.documents.delete(targetDocument);
-        return;
-      }
-      runtime.documents.set(targetDocument, count - 1);
-    };
-  }
-  function registerStyle22(hash2, css3) {
-    const runtime = getRuntime23();
-    runtime.styles.set(hash2, css3);
-    for (const targetDocument of runtime.documents.keys()) {
-      injectStyle23(targetDocument, hash2, css3);
-    }
-  }
-  if (typeof process === "undefined" || true) {
-    registerStyle22("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
-  }
-  var style_module_default21 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
-  function useToolsPanelHeader(props) {
-    const {
-      className: className2,
-      headingLevel = 2,
-      ...otherProps
-    } = useContextSystem(props, "ToolsPanelHeader");
-    const {
-      menuItems,
-      hasMenuItems,
-      areAllOptionalControlsHidden
-    } = useToolsPanelContext();
-    return {
-      ...otherProps,
-      areAllOptionalControlsHidden,
-      defaultControlsItemClassName: style_module_default21["default-controls-item"],
-      dropdownMenuClassName: style_module_default21["dropdown-menu"],
-      hasMenuItems,
-      headingClassName: style_module_default21["tools-panel-heading"],
-      headingLevel,
-      menuItems,
-      className: clsx_default(style_module_default21["tools-panel-header"], className2)
-    };
-  }
-
-  // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
-  var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE24 = "data-wp-hash";
   function getRuntime24() {
     const globalScope = globalThis;
@@ -49476,6 +49434,111 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     registerStyle23("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
   var style_module_default22 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
+  function useToolsPanelHeader(props) {
+    const {
+      className: className2,
+      headingLevel = 2,
+      ...otherProps
+    } = useContextSystem(props, "ToolsPanelHeader");
+    const {
+      menuItems,
+      hasMenuItems,
+      areAllOptionalControlsHidden
+    } = useToolsPanelContext();
+    return {
+      ...otherProps,
+      areAllOptionalControlsHidden,
+      defaultControlsItemClassName: style_module_default22["default-controls-item"],
+      dropdownMenuClassName: style_module_default22["dropdown-menu"],
+      hasMenuItems,
+      headingClassName: style_module_default22["tools-panel-heading"],
+      headingLevel,
+      menuItems,
+      className: clsx_default(style_module_default22["tools-panel-header"], className2)
+    };
+  }
+
+  // packages/components/build-module/tools-panel/tools-panel-header/component.mjs
+  var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
+  var STYLE_HASH_ATTRIBUTE25 = "data-wp-hash";
+  function getRuntime25() {
+    const globalScope = globalThis;
+    if (globalScope.__wpStyleRuntime) {
+      return globalScope.__wpStyleRuntime;
+    }
+    globalScope.__wpStyleRuntime = {
+      documents: /* @__PURE__ */ new Map(),
+      styles: /* @__PURE__ */ new Map(),
+      injectedStyles: /* @__PURE__ */ new WeakMap()
+    };
+    if (typeof document !== "undefined") {
+      registerDocument25(document);
+    }
+    return globalScope.__wpStyleRuntime;
+  }
+  function documentContainsStyleHash25(targetDocument, hash2) {
+    if (!targetDocument.head) {
+      return false;
+    }
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE25}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE25) === hash2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function injectStyle25(targetDocument, hash2, css3) {
+    if (!targetDocument.head) {
+      return;
+    }
+    const runtime = getRuntime25();
+    let injectedStyles = runtime.injectedStyles.get(targetDocument);
+    if (!injectedStyles) {
+      injectedStyles = /* @__PURE__ */ new Set();
+      runtime.injectedStyles.set(targetDocument, injectedStyles);
+    }
+    if (injectedStyles.has(hash2)) {
+      return;
+    }
+    if (documentContainsStyleHash25(targetDocument, hash2)) {
+      injectedStyles.add(hash2);
+      return;
+    }
+    const style2 = targetDocument.createElement("style");
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE25, hash2);
+    style2.appendChild(targetDocument.createTextNode(css3));
+    targetDocument.head.appendChild(style2);
+    injectedStyles.add(hash2);
+  }
+  function registerDocument25(targetDocument) {
+    const runtime = getRuntime25();
+    runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+    for (const [hash2, css3] of runtime.styles) {
+      injectStyle25(targetDocument, hash2, css3);
+    }
+    return () => {
+      const count = runtime.documents.get(targetDocument);
+      if (count === void 0) {
+        return;
+      }
+      if (count <= 1) {
+        runtime.documents.delete(targetDocument);
+        return;
+      }
+      runtime.documents.set(targetDocument, count - 1);
+    };
+  }
+  function registerStyle24(hash2, css3) {
+    const runtime = getRuntime25();
+    runtime.styles.set(hash2, css3);
+    for (const targetDocument of runtime.documents.keys()) {
+      injectStyle25(targetDocument, hash2, css3);
+    }
+  }
+  if (typeof process === "undefined" || true) {
+    registerStyle24("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+  }
+  var style_module_default23 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   var DefaultControlsGroup = ({
     itemClassName,
     items,
@@ -49486,7 +49549,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }
     const resetSuffix = /* @__PURE__ */ (0, import_jsx_runtime272.jsx)("span", {
       "aria-hidden": true,
-      className: style_module_default22["reset-label"],
+      className: style_module_default23["reset-label"],
       children: (0, import_i18n71.__)("Reset")
     });
     return /* @__PURE__ */ (0, import_jsx_runtime272.jsx)(import_jsx_runtime272.Fragment, {
@@ -49646,8 +49709,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
 
   // packages/components/build-module/tools-panel/tools-panel/hook.mjs
   var import_element189 = __toESM(require_element(), 1);
-  var STYLE_HASH_ATTRIBUTE25 = "data-wp-hash";
-  function getRuntime25() {
+  var STYLE_HASH_ATTRIBUTE26 = "data-wp-hash";
+  function getRuntime26() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -49658,26 +49721,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument25(document);
+      registerDocument26(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash25(targetDocument, hash2) {
+  function documentContainsStyleHash26(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE25}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE25) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE26}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE26) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle25(targetDocument, hash2, css3) {
+  function injectStyle26(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime25();
+    const runtime = getRuntime26();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -49686,21 +49749,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash25(targetDocument, hash2)) {
+    if (documentContainsStyleHash26(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE25, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE26, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument25(targetDocument) {
-    const runtime = getRuntime25();
+  function registerDocument26(targetDocument) {
+    const runtime = getRuntime26();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle25(targetDocument, hash2, css3);
+      injectStyle26(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -49714,17 +49777,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle24(hash2, css3) {
-    const runtime = getRuntime25();
+  function registerStyle25(hash2, css3) {
+    const runtime = getRuntime26();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle25(targetDocument, hash2, css3);
+      injectStyle26(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle24("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+    registerStyle25("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
-  var style_module_default23 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
+  var style_module_default24 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   function emptyMenuItems() {
     return {
       default: {},
@@ -49944,7 +50007,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     const areAllOptionalControlsHidden = (0, import_element189.useMemo)(() => {
       return isMenuItemTypeEmpty(menuItems.default) && !isMenuItemTypeEmpty(menuItems.optional) && Object.values(menuItems.optional).every((isSelected2) => !isSelected2);
     }, [menuItems]);
-    const classes = clsx_default(style_module_default23["tools-panel"], hasInnerWrapper && style_module_default23["tools-panel-with-inner-wrapper"], areAllOptionalControlsHidden && style_module_default23["tools-panel-hidden-inner-wrapper"], className2);
+    const classes = clsx_default(style_module_default24["tools-panel"], hasInnerWrapper && style_module_default24["tools-panel-with-inner-wrapper"], areAllOptionalControlsHidden && style_module_default24["tools-panel-hidden-inner-wrapper"], className2);
     const toggleItem = (0, import_element189.useCallback)((label) => {
       panelDispatch({
         type: "TOGGLE_VALUE",
@@ -50035,8 +50098,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   // packages/components/build-module/tools-panel/tools-panel-item/hook.mjs
   var import_compose75 = __toESM(require_compose(), 1);
   var import_element190 = __toESM(require_element(), 1);
-  var STYLE_HASH_ATTRIBUTE26 = "data-wp-hash";
-  function getRuntime26() {
+  var STYLE_HASH_ATTRIBUTE27 = "data-wp-hash";
+  function getRuntime27() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -50047,26 +50110,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument26(document);
+      registerDocument27(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash26(targetDocument, hash2) {
+  function documentContainsStyleHash27(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE26}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE26) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE27}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE27) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle26(targetDocument, hash2, css3) {
+  function injectStyle27(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime26();
+    const runtime = getRuntime27();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -50075,21 +50138,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash26(targetDocument, hash2)) {
+    if (documentContainsStyleHash27(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE26, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE27, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument26(targetDocument) {
-    const runtime = getRuntime26();
+  function registerDocument27(targetDocument) {
+    const runtime = getRuntime27();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle26(targetDocument, hash2, css3);
+      injectStyle27(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -50103,17 +50166,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle25(hash2, css3) {
-    const runtime = getRuntime26();
+  function registerStyle26(hash2, css3) {
+    const runtime = getRuntime27();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle26(targetDocument, hash2, css3);
+      injectStyle27(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle25("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
+    registerStyle26("29b739f451", "._62d714739f4dc308__tools-panel{border-top:1px solid #ddd;margin-top:-1px;padding:16px}._40db7f4f897b683d__tools-panel-with-inner-wrapper>div:not(:first-of-type){column-gap:16px;display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}._95a15674966f30a3__tools-panel-hidden-inner-wrapper>div:not(:first-of-type){display:none}._322a049b9b7d8674__tools-panel-header{gap:8px;grid-column:1/-1}._322a049b9b7d8674__tools-panel-header .components-dropdown-menu{line-height:0;margin:-4px 0}._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header._322a049b9b7d8674__tools-panel-header .components-dropdown-menu__toggle{min-width:24px;padding:0}.b92a382d3b30104d__tools-panel-heading.b92a382d3b30104d__tools-panel-heading{font-size:inherit;line-height:normal;margin:0}._8005d68fffa9db91__tools-panel-item{grid-column:1/-1}._8005d68fffa9db91__tools-panel-item>div,._8005d68fffa9db91__tools-panel-item>fieldset{margin-bottom:0;max-width:100%;padding-bottom:0}._8005d68fffa9db91__tools-panel-item .components-base-control__help,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control,._8005d68fffa9db91__tools-panel-item._8005d68fffa9db91__tools-panel-item .components-base-control .components-base-control__field:last-child{margin-bottom:0}._4f55e1a6e373746e__tools-panel-item-placeholder{display:none}.d40032517bff9e12__dropdown-menu{min-width:200px}.f135b96aa96ca6bb__reset-label{color:var(--wp-components-color-accent-darker-10,var(--wp-admin-theme-color-darker-10,#2145e6));font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;margin-inline-start:12px;text-transform:uppercase}._69b138dfa5570d9c__default-controls-item{color:#1e1e1e}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]{color:#757575;opacity:1}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true]:hover{color:#757575}._69b138dfa5570d9c__default-controls-item._69b138dfa5570d9c__default-controls-item[aria-disabled=true] .f135b96aa96ca6bb__reset-label{opacity:.3}");
   }
-  var style_module_default24 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
+  var style_module_default25 = { "tools-panel": "_62d714739f4dc308__tools-panel", "tools-panel-with-inner-wrapper": "_40db7f4f897b683d__tools-panel-with-inner-wrapper", "tools-panel-hidden-inner-wrapper": "_95a15674966f30a3__tools-panel-hidden-inner-wrapper", "tools-panel-header": "_322a049b9b7d8674__tools-panel-header", "tools-panel-heading": "b92a382d3b30104d__tools-panel-heading", "tools-panel-item": "_8005d68fffa9db91__tools-panel-item", "tools-panel-item-placeholder": "_4f55e1a6e373746e__tools-panel-item-placeholder", "dropdown-menu": "d40032517bff9e12__dropdown-menu", "reset-label": "f135b96aa96ca6bb__reset-label", "default-controls-item": "_69b138dfa5570d9c__default-controls-item" };
   var noop25 = () => {
   };
   function useToolsPanelItem(props) {
@@ -50196,7 +50259,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     }, [hasMatchingPanel, isMenuItemChecked, isRegistered, isResetting, isValueSet, wasMenuItemChecked, onSelect, onDeselect]);
     const isShown = isShownByDefault ? menuItems?.[menuGroup]?.[label] !== void 0 : isMenuItemChecked;
     const shouldApplyPlaceholderStyles = shouldRenderPlaceholder && !isShown;
-    const classes = clsx_default(style_module_default24["tools-panel-item"], shouldApplyPlaceholderStyles && style_module_default24["tools-panel-item-placeholder"], !shouldApplyPlaceholderStyles && className2, firstDisplayedItem === label && __experimentalFirstVisibleItemClass, lastDisplayedItem === label && __experimentalLastVisibleItemClass);
+    const classes = clsx_default(style_module_default25["tools-panel-item"], shouldApplyPlaceholderStyles && style_module_default25["tools-panel-item-placeholder"], !shouldApplyPlaceholderStyles && className2, firstDisplayedItem === label && __experimentalFirstVisibleItemClass, lastDisplayedItem === label && __experimentalLastVisibleItemClass);
     return {
       ...otherProps,
       isShown,
@@ -52200,8 +52263,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_compose87 = __toESM(require_compose(), 1);
   var import_element227 = __toESM(require_element(), 1);
   var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
-  var STYLE_HASH_ATTRIBUTE27 = "data-wp-hash";
-  function getRuntime27() {
+  var STYLE_HASH_ATTRIBUTE28 = "data-wp-hash";
+  function getRuntime28() {
     const globalScope = globalThis;
     if (globalScope.__wpStyleRuntime) {
       return globalScope.__wpStyleRuntime;
@@ -52212,26 +52275,26 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       injectedStyles: /* @__PURE__ */ new WeakMap()
     };
     if (typeof document !== "undefined") {
-      registerDocument27(document);
+      registerDocument28(document);
     }
     return globalScope.__wpStyleRuntime;
   }
-  function documentContainsStyleHash27(targetDocument, hash2) {
+  function documentContainsStyleHash28(targetDocument, hash2) {
     if (!targetDocument.head) {
       return false;
     }
-    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE27}]`)) {
-      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE27) === hash2) {
+    for (const style2 of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE28}]`)) {
+      if (style2.getAttribute(STYLE_HASH_ATTRIBUTE28) === hash2) {
         return true;
       }
     }
     return false;
   }
-  function injectStyle27(targetDocument, hash2, css3) {
+  function injectStyle28(targetDocument, hash2, css3) {
     if (!targetDocument.head) {
       return;
     }
-    const runtime = getRuntime27();
+    const runtime = getRuntime28();
     let injectedStyles = runtime.injectedStyles.get(targetDocument);
     if (!injectedStyles) {
       injectedStyles = /* @__PURE__ */ new Set();
@@ -52240,21 +52303,21 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     if (injectedStyles.has(hash2)) {
       return;
     }
-    if (documentContainsStyleHash27(targetDocument, hash2)) {
+    if (documentContainsStyleHash28(targetDocument, hash2)) {
       injectedStyles.add(hash2);
       return;
     }
     const style2 = targetDocument.createElement("style");
-    style2.setAttribute(STYLE_HASH_ATTRIBUTE27, hash2);
+    style2.setAttribute(STYLE_HASH_ATTRIBUTE28, hash2);
     style2.appendChild(targetDocument.createTextNode(css3));
     targetDocument.head.appendChild(style2);
     injectedStyles.add(hash2);
   }
-  function registerDocument27(targetDocument) {
-    const runtime = getRuntime27();
+  function registerDocument28(targetDocument) {
+    const runtime = getRuntime28();
     runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
     for (const [hash2, css3] of runtime.styles) {
-      injectStyle27(targetDocument, hash2, css3);
+      injectStyle28(targetDocument, hash2, css3);
     }
     return () => {
       const count = runtime.documents.get(targetDocument);
@@ -52268,17 +52331,17 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       runtime.documents.set(targetDocument, count - 1);
     };
   }
-  function registerStyle26(hash2, css3) {
-    const runtime = getRuntime27();
+  function registerStyle27(hash2, css3) {
+    const runtime = getRuntime28();
     runtime.styles.set(hash2, css3);
     for (const targetDocument of runtime.documents.keys()) {
-      injectStyle27(targetDocument, hash2, css3);
+      injectStyle28(targetDocument, hash2, css3);
     }
   }
   if (typeof process === "undefined" || true) {
-    registerStyle26("3558237a49", "._0f130cee1a924516__editable{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;width:100%}@media (min-width:600px){._0f130cee1a924516__editable{font-size:13px;line-height:normal}}._0f130cee1a924516__editable:hover:not(:disabled,[aria-disabled=true],[type=checkbox]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}._0f130cee1a924516__editable:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._0f130cee1a924516__editable::placeholder{color:rgba(30,30,30,.62)}._0f130cee1a924516__editable[aria-placeholder]:empty:before{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%);content:attr(aria-placeholder)}._0f130cee1a924516__editable{min-height:40px;padding:12px}._0f130cee1a924516__editable[aria-disabled=true]{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb));color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));cursor:default}");
+    registerStyle27("3558237a49", "._0f130cee1a924516__editable{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;width:100%}@media (min-width:600px){._0f130cee1a924516__editable{font-size:13px;line-height:normal}}._0f130cee1a924516__editable:hover:not(:disabled,[aria-disabled=true],[type=checkbox]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}._0f130cee1a924516__editable:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._0f130cee1a924516__editable::placeholder{color:rgba(30,30,30,.62)}._0f130cee1a924516__editable[aria-placeholder]:empty:before{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%);content:attr(aria-placeholder)}._0f130cee1a924516__editable{min-height:40px;padding:12px}._0f130cee1a924516__editable[aria-disabled=true]{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb));color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#707070));cursor:default}");
   }
-  var style_module_default25 = { "editable": "_0f130cee1a924516__editable" };
+  var style_module_default26 = { "editable": "_0f130cee1a924516__editable" };
   function UnforwardedContentEditableControl({
     label,
     id: id3,
@@ -52311,7 +52374,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         onClick: () => editableRef.current?.focus(),
         children: label
       }), /* @__PURE__ */ (0, import_jsx_runtime310.jsx)("div", {
-        className: style_module_default25.editable,
+        className: style_module_default26.editable,
         role: "textbox",
         "aria-multiline": true,
         "aria-labelledby": labelId,
