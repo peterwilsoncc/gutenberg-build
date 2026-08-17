@@ -62921,7 +62921,7 @@ var wp;
     );
     const defaultLayoutBlockSupport = (0, import_blocks49.getBlockSupport)(name, "layout") || (0, import_blocks49.getBlockSupport)(name, "__experimentalLayout") || EMPTY_OBJECT2;
     const { allowSizingOnChildren = false } = defaultLayoutBlockSupport;
-    const usedLayout = layout || defaultLayoutBlockSupport;
+    const usedLayout = layout || defaultLayoutBlockSupport.default || EMPTY_OBJECT2;
     const memoedLayout = (0, import_element152.useMemo)(
       () => ({
         // Default layout will know about any content/wide size defined by the theme.
