@@ -53458,7 +53458,7 @@ var wp;
           return false;
         }
         const blockName = getBlockName2(clientId);
-        if (blockNames && !blockNames.includes(blockName)) {
+        if (!blockNames.includes(blockName)) {
           return false;
         }
         const variation = variationName ? getBlockVariations2(targetBlockName)?.find(
@@ -53516,7 +53516,7 @@ var wp;
     );
   }
   function BlockShortcut({ entry, apply }) {
-    (0, import_keyboard_shortcuts4.useShortcut)(entry.shortcut.name, (event) => {
+    (0, import_keyboard_shortcuts4.useShortcut)(entry.name, (event) => {
       if (event.defaultPrevented) {
         return;
       }
@@ -53530,12 +53530,26 @@ var wp;
     const { registerShortcut, unregisterShortcut } = (0, import_data37.useDispatch)(
       import_keyboard_shortcuts4.store
     );
-    const registeredRef = (0, import_element101.useRef)(/* @__PURE__ */ new Set());
+    const registeredRef = (0, import_element101.useRef)(/* @__PURE__ */ new Map());
     (0, import_element101.useEffect)(() => {
-      const registered = /* @__PURE__ */ new Set();
+      const registered = /* @__PURE__ */ new Map();
       const combinations = /* @__PURE__ */ new Map();
-      for (const { shortcut } of shortcuts) {
-        if (registered.has(shortcut.name)) {
+      for (const shortcut of shortcuts) {
+        const config2 = {
+          name: shortcut.name,
+          category: "block",
+          description: shortcut.description,
+          keyCombination: shortcut.keyCombination,
+          aliases: shortcut.aliases
+        };
+        const serialized = JSON.stringify(config2);
+        const previous = registered.get(shortcut.name);
+        if (previous !== void 0) {
+          if (previous !== serialized) {
+            (0, import_warning5.default)(
+              `Block keyboard shortcut "${shortcut.name}" is declared more than once with different settings.`
+            );
+          }
           continue;
         }
         const { modifier, character } = shortcut.keyCombination;
@@ -53548,16 +53562,10 @@ var wp;
           );
         }
         combinations.set(combination, shortcut.name);
-        registerShortcut({
-          name: shortcut.name,
-          category: "block",
-          description: shortcut.description,
-          keyCombination: shortcut.keyCombination,
-          aliases: shortcut.aliases
-        });
-        registered.add(shortcut.name);
+        registerShortcut(config2);
+        registered.set(shortcut.name, serialized);
       }
-      for (const name of registeredRef.current) {
+      for (const name of registeredRef.current.keys()) {
         if (!registered.has(name)) {
           unregisterShortcut(name);
         }
@@ -53577,7 +53585,7 @@ var wp;
           entry,
           apply
         },
-        `${entry.shortcut.name}-${index2}`
+        `${entry.name}-${index2}`
       ))
     ] });
   }

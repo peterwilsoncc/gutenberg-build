@@ -2617,34 +2617,39 @@ var wp;
             continue;
           }
           shortcuts.push({
-            shortcut: variation.shortcut,
+            ...variation.shortcut,
             targetBlockName: blockName,
+            blockNames: [blockName],
             variationName: variation.name
           });
         }
         const transforms = state.blockTypes[blockName]?.transforms;
         for (const transform of transforms?.to ?? []) {
           const targetBlockName = transform.blocks?.[0];
-          if (!transform.shortcut || transform.type !== "block" || !targetBlockName) {
+          if (transform.type !== "block" || !targetBlockName) {
             continue;
           }
-          shortcuts.push({
-            shortcut: transform.shortcut,
-            targetBlockName,
-            blockNames: [blockName],
-            variationName: transform.variationName
-          });
+          for (const shortcut of transform.shortcuts ?? []) {
+            shortcuts.push({
+              ...shortcut,
+              targetBlockName,
+              blockNames: [blockName],
+              variationName: shortcut.variationName ?? transform.variationName
+            });
+          }
         }
         for (const transform of transforms?.from ?? []) {
-          if (!transform.shortcut || transform.type !== "block" || !transform.blocks?.length) {
+          if (transform.type !== "block" || !transform.blocks?.length) {
             continue;
           }
-          shortcuts.push({
-            shortcut: transform.shortcut,
-            targetBlockName: blockName,
-            blockNames: transform.blocks,
-            variationName: transform.variationName
-          });
+          for (const shortcut of transform.shortcuts ?? []) {
+            shortcuts.push({
+              ...shortcut,
+              targetBlockName: blockName,
+              blockNames: transform.blocks,
+              variationName: shortcut.variationName ?? transform.variationName
+            });
+          }
         }
       }
       return shortcuts;
