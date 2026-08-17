@@ -81310,11 +81310,12 @@ var wp;
         supportsSplitting,
         disableLineBreaks,
         onChange,
-        value,
+        getValue,
         onSplitAtDoubleLineEnd,
         registry,
         onSplitAtEnd
       } = props.current;
+      const value = getValue();
       const { text, start: start2, end } = value;
       if (event.shiftKey) {
         if (!disableLineBreaks) {
