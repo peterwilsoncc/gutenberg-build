@@ -8567,7 +8567,8 @@ return array(
 				),
 				'default' => array(
 					
-				)
+				),
+				'role' => 'local'
 			),
 			'onlyIncludeCurrentPage' => array(
 				'type' => 'boolean',
