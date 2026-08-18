@@ -39794,6 +39794,7 @@ This message will only show in development mode. It won't appear in production. 
     function handleEscapeKeyDown(event) {
       if (shouldCloseOnEsc && (event.code === "Escape" || event.key === "Escape") && !event.defaultPrevented) {
         event.preventDefault();
+        event.stopPropagation();
         closeModal().then(() => onRequestClose(event));
       }
     }
