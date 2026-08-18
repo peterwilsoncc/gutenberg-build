@@ -1108,6 +1108,17 @@ var wp;
       this.onSelect = this.onSelect.bind(this);
       this.onUpdate = this.onUpdate.bind(this);
       this.onClose = this.onClose.bind(this);
+      this.stopUndoRedoPropagation = this.stopUndoRedoPropagation.bind(this);
+    }
+    stopUndoRedoPropagation(event) {
+      if (!event.metaKey && !event.ctrlKey) {
+        return;
+      }
+      const character = event.key?.toLowerCase();
+      if (character !== "z" && character !== "y") {
+        return;
+      }
+      event.stopPropagation();
     }
     initializeListeners() {
       this.frame.on("select", this.onSelect);
@@ -1222,7 +1233,19 @@ var wp;
       wp.media.frame = this.frame;
     }
     componentWillUnmount() {
+      this.detachUndoRedoGuard();
+      this.frame?.close();
+      this.frame?.modal?.remove();
       this.frame?.remove();
+    }
+    detachUndoRedoGuard() {
+      if (this.frame?.modal?.el) {
+        this.frame.modal.el.removeEventListener(
+          "keydown",
+          this.stopUndoRedoPropagation,
+          true
+        );
+      }
     }
     onUpdate(selections) {
       const { onSelect, multiple = false } = this.props;
@@ -1250,6 +1273,13 @@ var wp;
       const { wp } = window;
       const { value } = this.props;
       this.updateCollection();
+      if (this.frame?.modal?.el) {
+        this.frame.modal.el.addEventListener(
+          "keydown",
+          this.stopUndoRedoPropagation,
+          true
+        );
+      }
       if (this.props.mode) {
         this.frame.content.mode(this.props.mode);
       }
@@ -1274,6 +1304,7 @@ var wp;
     }
     onClose() {
       const { onClose } = this.props;
+      this.detachUndoRedoGuard();
       if (onClose) {
         onClose();
       }
