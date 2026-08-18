@@ -243,14 +243,14 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React89 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore3 = shim.useSyncExternalStore, useRef87 = React89.useRef, useEffect75 = React89.useEffect, useMemo100 = React89.useMemo, useDebugValue2 = React89.useDebugValue;
+        var React89 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore3 = shim.useSyncExternalStore, useRef87 = React89.useRef, useEffect75 = React89.useEffect, useMemo101 = React89.useMemo, useDebugValue2 = React89.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe3, getSnapshot, getServerSnapshot, selector2, isEqual2) {
           var instRef = useRef87(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
           } else inst = instRef.current;
-          instRef = useMemo100(
+          instRef = useMemo101(
             function() {
               function memoizedSelector(nextSnapshot) {
                 if (!hasMemo) {
@@ -35372,16 +35372,16 @@ var wp;
   function createStoreContext(providers = [], scopedProviders = []) {
     const context = React87.createContext(void 0);
     const scopedContext = React87.createContext(void 0);
-    const useContext69 = () => React87.useContext(context);
+    const useContext70 = () => React87.useContext(context);
     const useScopedContext = (onlyScoped = false) => {
       const scoped = React87.useContext(scopedContext);
-      const store2 = useContext69();
+      const store2 = useContext70();
       if (onlyScoped) return scoped;
       return scoped || store2;
     };
     const useProviderContext = () => {
       const scoped = React87.useContext(scopedContext);
-      const store2 = useContext69();
+      const store2 = useContext70();
       if (scoped && scoped === store2) return;
       return store2;
     };
@@ -35403,7 +35403,7 @@ var wp;
     return {
       context,
       scopedContext,
-      useContext: useContext69,
+      useContext: useContext70,
       useScopedContext,
       useProviderContext,
       ContextProvider,
@@ -49259,6 +49259,22 @@ If there's a particular need for this, please submit a feature request at https:
     useHasColorPanel: useHasColorPanel2,
     useHasBackgroundPanel: useHasBackgroundPanel2
   } = unlock6(import_block_editor8.privateApis);
+  var { Menu: Menu6 } = unlock6(import_components90.privateApis);
+  function hasAnyValue(value) {
+    if (value === void 0 || value === null) {
+      return false;
+    }
+    if (Array.isArray(value)) {
+      return value.length > 0;
+    }
+    if (typeof value === "object") {
+      return Object.values(value).some(hasAnyValue);
+    }
+    return true;
+  }
+  function hasUserStylesForBlock(user, blockName) {
+    return hasAnyValue(user?.styles?.blocks?.[blockName]) || hasAnyValue(user?.settings?.blocks?.[blockName]);
+  }
   function useSortedBlockTypes() {
     const blockItems = (0, import_data46.useSelect)(
       (select4) => select4(import_blocks5.store).getBlockTypes(),
@@ -49289,7 +49305,7 @@ If there's a particular need for this, please submit a feature request at https:
     const hasGlobalStyles = hasTypographyPanel || hasColorPanel || hasBackgroundPanel || hasLayoutPanel || hasVariationsPanel;
     return hasGlobalStyles;
   }
-  function BlockMenuItem({ block }) {
+  function BlockMenuItem({ block, isCustomized }) {
     const hasBlockMenuItem = useBlockHasGlobalStyles(block.name);
     if (!hasBlockMenuItem) {
       return null;
@@ -49298,43 +49314,99 @@ If there's a particular need for this, please submit a feature request at https:
       NavigationButtonAsItem,
       {
         path: "/blocks/" + encodeURIComponent(block.name),
-        children: /* @__PURE__ */ (0, import_jsx_runtime244.jsxs)(import_components90.__experimentalHStack, { justify: "flex-start", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(import_block_editor8.BlockIcon, { icon: block.icon }),
-          /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(import_components90.FlexItem, { children: block.title })
+        children: /* @__PURE__ */ (0, import_jsx_runtime244.jsxs)(import_components90.__experimentalHStack, { justify: "flex-start", spacing: 2, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
+            import_block_editor8.BlockIcon,
+            {
+              className: "global-styles-ui-block-types-item__icon",
+              icon: block.icon
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(import_components90.FlexItem, { children: block.title }),
+          isCustomized && /* @__PURE__ */ (0, import_jsx_runtime244.jsxs)(import_jsx_runtime244.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(VisuallyHidden, { children: (0, import_i18n88.__)("Has custom styles") }),
+            /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
+              "span",
+              {
+                "aria-hidden": "true",
+                className: "global-styles-ui-block-types-item__indicator"
+              }
+            )
+          ] })
         ] })
       }
     );
   }
-  function BlockList({ filterValue }) {
+  function EmptyBlockList({
+    filterValue,
+    styleFilter
+  }) {
+    const label = "customized" === styleFilter && !filterValue ? (0, import_i18n88.__)("You haven't customized any blocks yet.") : (0, import_i18n88.__)("No blocks found.");
+    return /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
+      import_components90.__experimentalText,
+      {
+        align: "center",
+        as: "p",
+        className: "global-styles-ui-block-types-item-list__no-results",
+        children: label
+      }
+    );
+  }
+  function BlockList({ filterValue, styleFilter }) {
     const sortedBlockTypes = useSortedBlockTypes();
     const debouncedSpeak = (0, import_compose31.useDebounce)(import_a11y9.speak, 500);
     const { isMatchingSearchTerm } = (0, import_data46.useSelect)(import_blocks5.store);
-    const filteredBlockTypes = !filterValue ? sortedBlockTypes : sortedBlockTypes.filter(
+    const { user } = (0, import_element154.useContext)(GlobalStylesContext);
+    const customizedBlockNames = (0, import_element154.useMemo)(() => {
+      const names = /* @__PURE__ */ new Set();
+      const blockNames = [
+        ...Object.keys(user?.styles?.blocks ?? {}),
+        ...Object.keys(user?.settings?.blocks ?? {})
+      ];
+      blockNames.forEach((blockName) => {
+        if (hasUserStylesForBlock(user, blockName)) {
+          names.add(blockName);
+        }
+      });
+      return names;
+    }, [user]);
+    const searchedBlockTypes = !filterValue ? sortedBlockTypes : sortedBlockTypes.filter(
       (blockType) => isMatchingSearchTerm(blockType, filterValue)
     );
+    const filteredBlockTypes = styleFilter === "customized" ? searchedBlockTypes.filter(
+      (blockType) => customizedBlockNames.has(blockType.name)
+    ) : searchedBlockTypes;
     const blockTypesListRef = (0, import_element154.useRef)(null);
+    const hasResults = filteredBlockTypes.length > 0;
     (0, import_element154.useEffect)(() => {
-      if (!filterValue) {
+      if (!filterValue && styleFilter === "all") {
         return;
       }
-      const count = blockTypesListRef.current?.childElementCount || 0;
+      const count = hasResults ? blockTypesListRef.current?.childElementCount || 0 : 0;
       const resultsFoundMessage = (0, import_i18n88.sprintf)(
         /* translators: %d: number of results. */
         (0, import_i18n88._n)("%d result found.", "%d results found.", count),
         count
       );
       debouncedSpeak(resultsFoundMessage, "polite");
-    }, [filterValue, debouncedSpeak]);
+    }, [filterValue, styleFilter, hasResults, debouncedSpeak]);
     return /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
       "div",
       {
         ref: blockTypesListRef,
         className: "global-styles-ui-block-types-item-list",
         role: "list",
-        children: filteredBlockTypes.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(import_components90.__experimentalText, { align: "center", as: "p", children: (0, import_i18n88.__)("No blocks found.") }) : filteredBlockTypes.map((block) => /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
+        children: filteredBlockTypes.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
+          EmptyBlockList,
+          {
+            filterValue,
+            styleFilter
+          }
+        ) : filteredBlockTypes.map((block) => /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(
           BlockMenuItem,
           {
-            block
+            block,
+            isCustomized: customizedBlockNames.has(block.name)
           },
           "menu-itemblock-" + block.name
         ))
@@ -59970,7 +60042,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/global-styles-ui/build-module/presets/preset-group.mjs
   var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu6 } = unlock6(import_components121.privateApis);
+  var { Menu: Menu7 } = unlock6(import_components121.privateApis);
 
   // packages/global-styles-ui/build-module/shadows-panel.mjs
   var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
@@ -59983,7 +60055,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/global-styles-ui/build-module/presets/preset-edit-header.mjs
   var import_components122 = __toESM(require_components(), 1);
   var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu7 } = unlock6(import_components122.privateApis);
+  var { Menu: Menu8 } = unlock6(import_components122.privateApis);
 
   // packages/global-styles-ui/build-module/presets/dialogs/confirm-delete-dialog.mjs
   var import_components123 = __toESM(require_components(), 1);
