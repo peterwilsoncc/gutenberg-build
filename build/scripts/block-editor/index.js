@@ -12490,7 +12490,8 @@ var wp;
     fallbackGapValue
   }) {
     let ruleset = "";
-    let gapValue = hasBlockGapSupport ? getGapCSSValue(style?.spacing?.blockGap) : "";
+    const blockGapValue = style?.spacing?.blockGap;
+    let gapValue = hasBlockGapSupport ? getGapCSSValue(blockGapValue) : "";
     if (hasFallbackGapSupport) {
       if (selector3 === ROOT_BLOCK_SELECTOR) {
         gapValue = !gapValue ? "0.5em" : gapValue;
@@ -12498,12 +12499,16 @@ var wp;
         gapValue = fallbackGapValue;
       }
     }
+    const rowGapValue = hasBlockGapSupport && blockGapValue && typeof blockGapValue !== "string" ? getGapCSSValue(blockGapValue.top) : gapValue;
     if (gapValue && layoutDefinitions) {
       Object.values(layoutDefinitions).forEach(
         ({ className: className2, name, spacingStyles }) => {
           if (!hasBlockGapSupport && "flex" !== name && "grid" !== name) {
             return;
           }
+          const layoutGapValue = ["default", "constrained"].includes(
+            name
+          ) ? rowGapValue : gapValue;
           if (spacingStyles?.length) {
             spacingStyles.forEach((spacingStyle) => {
               const declarations = [];
@@ -12511,7 +12516,7 @@ var wp;
                 Object.entries(spacingStyle.rules).forEach(
                   ([cssProperty, cssValue]) => {
                     declarations.push(
-                      `${cssProperty}: ${cssValue ? cssValue : gapValue}`
+                      `${cssProperty}: ${cssValue ? cssValue : layoutGapValue}`
                     );
                   }
                 );
@@ -19501,6 +19506,10 @@ var wp;
   }
 
   // packages/block-editor/build-module/hooks/gap.mjs
+  function isAxialBlockGapAllowed(layout, defaultLayout2) {
+    const usedLayout = layout?.inherit || layout?.contentSize || layout?.wideSize ? { ...layout, type: "constrained" } : layout || defaultLayout2 || {};
+    return ["flex", "grid"].includes(usedLayout?.type);
+  }
   function getGapBoxControlValueFromStyle2(blockGapValue) {
     if (!blockGapValue) {
       return null;
@@ -20052,7 +20061,7 @@ var wp;
       hasBlockGapSupport,
       layoutDefinitions = LAYOUT_DEFINITIONS2
     }) {
-      const blockGapStyleValue = getGapCSSValue2(style?.spacing?.blockGap);
+      const blockGapStyleValue = style?.spacing?.blockGap;
       let blockGapValue = "";
       if (!shouldSkipSerialization(blockName, "spacing", "blockGap")) {
         if (blockGapStyleValue?.top) {
@@ -20309,7 +20318,7 @@ var wp;
       const effectiveLayout = hasViewportOverrides ? { ...layout, ...viewportOverrides } : layout;
       const hasViewportOverride = (key) => Object.hasOwn(viewportOverrides || {}, key);
       const { contentSize, wideSize, justifyContent } = effectiveLayout;
-      const blockGapStyleValue = getGapCSSValue2(style?.spacing?.blockGap);
+      const blockGapStyleValue = style?.spacing?.blockGap;
       const hasBlockGapOverride = !hasViewportOverrides || Object.hasOwn(style?.spacing || {}, "blockGap");
       const hasBlockSpacingOverride = !hasViewportOverrides || Object.hasOwn(style?.spacing || {}, "padding");
       let blockGapValue = "";
@@ -20663,7 +20672,8 @@ var wp;
       const shouldOutputGridColumns = !hasViewportOverrides || hasViewportOverride("minimumColumnWidth") || hasViewportOverride("columnCount") || hasViewportOverride("autoFit") || hasBlockGapOverride && minimumColumnWidth && columnCount > 0;
       const shouldOutputGridRows = (!hasViewportOverrides || hasViewportOverride("rowCount")) && columnCount && rowCount;
       if (shouldOutputGridColumns && minimumColumnWidth && columnCount > 0) {
-        let blockGapToUse = blockGapValue || fallbackGapValue;
+        const blockGapBoxControlValue = blockGapValue ? getGapBoxControlValueFromStyle2(style.spacing.blockGap) : void 0;
+        let blockGapToUse = getSpacingPresetCssVar2(blockGapBoxControlValue?.left) || fallbackGapValue;
         if (blockGapToUse === "0" || blockGapToUse === 0) {
           blockGapToUse = "0px";
         }
@@ -86438,6 +86448,7 @@ var wp;
     // Special case because the layout controls are not part of the dimensions panel
     // in global styles but not in block inspector.
     includeLayoutControls = false,
+    allowAxialBlockGap = true,
     styleState = DEFAULT_BLOCK_STYLE_STATE2,
     showInheritanceLabelIndicators = isGlobalStylesInheritanceEnabled()
   }) {
@@ -86588,12 +86599,14 @@ var wp;
     const onMouseOverMargin = () => onVisualize("margin");
     const showGapControl = hasGap(settings2);
     const gapSides = Array.isArray(settings2?.spacing?.blockGap) ? settings2?.spacing?.blockGap : settings2?.spacing?.blockGap?.sides;
-    const isAxialGap = gapSides && gapSides.some((side) => AXIAL_SIDES.includes(side));
+    const isAxialGap = allowAxialBlockGap && gapSides && gapSides.some((side) => AXIAL_SIDES.includes(side));
     const localGapRaw = decodeValue(value?.spacing?.blockGap);
     const inheritedGapRaw = decodeValue(inheritedValue?.spacing?.blockGap);
+    const localGapForSingleInput = !isAxialGap && typeof localGapRaw === "object" ? localGapRaw?.top : localGapRaw;
+    const inheritedGapForSingleInput = !isAxialGap && typeof inheritedGapRaw === "object" ? inheritedGapRaw?.top : inheritedGapRaw;
     const gapRawForDisplay = hasValue2(value?.spacing?.blockGap) ? localGapRaw : inheritedGapRaw;
     const gapValues = splitGapValue(gapRawForDisplay, isAxialGap);
-    const isGapPlaceholder = !hasValue2(value?.spacing?.blockGap) && typeof inheritedGapRaw === "string" && inheritedGapRaw !== "";
+    const isGapPlaceholder = !hasValue2(value?.spacing?.blockGap) && typeof inheritedGapForSingleInput === "string" && inheritedGapForSingleInput !== "";
     const setGapValue = (newGapValue) => {
       onChange(
         setImmutably2(value, ["spacing", "blockGap"], newGapValue)
@@ -86943,8 +86956,8 @@ var wp;
                     min: 0,
                     onChange: setGapValue,
                     units: units2,
-                    value: localGapRaw ?? void 0,
-                    placeholder: isGapPlaceholder ? inheritedGapRaw : void 0
+                    value: localGapForSingleInput ?? void 0,
+                    placeholder: isGapPlaceholder ? inheritedGapForSingleInput : void 0
                   }
                 )),
                 showSpacingPresetsControl && /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(
@@ -86957,7 +86970,8 @@ var wp;
                     sides: isAxialGap ? gapSides : ["top"],
                     values: gapValues,
                     allowReset: false
-                  }
+                  },
+                  isAxialGap ? "axial-gap" : "single-gap"
                 )
               ]
             }
@@ -101650,7 +101664,7 @@ var wp;
     const selectedState = useBlockStyleState();
     const isStateSelected = !isDefaultBlockStyleState2(selectedState);
     const isEnabled = useHasDimensionsPanel(settings2, selectedState);
-    const { style, className: className2 } = (0, import_data191.useSelect)(
+    const { style, className: className2, layout } = (0, import_data191.useSelect)(
       (select3) => {
         if (!isEnabled) {
           return {};
@@ -101658,7 +101672,8 @@ var wp;
         const attributes = select3(store).getBlockAttributes(clientId) || {};
         return {
           style: attributes.style,
-          className: attributes.className
+          className: attributes.className,
+          layout: attributes.layout
         };
       },
       [clientId, isEnabled]
@@ -101690,6 +101705,7 @@ var wp;
       SPACING_SUPPORT_KEY2,
       "__experimentalDefaultControls"
     ]);
+    const { default: defaultLayout2 } = (0, import_blocks121.getBlockSupport)(name, "layout") || {};
     const defaultControls = {
       // In the block inspector, minHeight and minWidth should not
       // be shown by default unless the block explicitly opts in.
@@ -101705,6 +101721,10 @@ var wp;
           as: DimensionsInspectorControl,
           panelId: clientId,
           settings: settings2,
+          allowAxialBlockGap: isAxialBlockGapAllowed(
+            layout,
+            defaultLayout2
+          ),
           value,
           onChange,
           defaultControls,

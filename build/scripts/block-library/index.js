@@ -32601,7 +32601,7 @@ ${url}
       spacing: {
         margin: ["top", "bottom"],
         padding: true,
-        blockGap: true,
+        blockGap: ["horizontal", "vertical"],
         __experimentalDefaultControls: {
           padding: true,
           blockGap: true

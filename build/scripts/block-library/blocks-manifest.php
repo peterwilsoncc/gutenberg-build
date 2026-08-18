@@ -3174,7 +3174,10 @@ return array(
 					'bottom'
 				),
 				'padding' => true,
-				'blockGap' => true,
+				'blockGap' => array(
+					'horizontal',
+					'vertical'
+				),
 				'__experimentalDefaultControls' => array(
 					'padding' => true,
 					'blockGap' => true

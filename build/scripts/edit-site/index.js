@@ -27318,7 +27318,8 @@ var wp;
     fallbackGapValue
   }) {
     let ruleset = "";
-    let gapValue = hasBlockGapSupport ? getGapCSSValue(style?.spacing?.blockGap) : "";
+    const blockGapValue = style?.spacing?.blockGap;
+    let gapValue = hasBlockGapSupport ? getGapCSSValue(blockGapValue) : "";
     if (hasFallbackGapSupport) {
       if (selector2 === ROOT_BLOCK_SELECTOR) {
         gapValue = !gapValue ? "0.5em" : gapValue;
@@ -27326,12 +27327,16 @@ var wp;
         gapValue = fallbackGapValue;
       }
     }
+    const rowGapValue = hasBlockGapSupport && blockGapValue && typeof blockGapValue !== "string" ? getGapCSSValue(blockGapValue.top) : gapValue;
     if (gapValue && layoutDefinitions) {
       Object.values(layoutDefinitions).forEach(
         ({ className: className2, name: name2, spacingStyles }) => {
           if (!hasBlockGapSupport && "flex" !== name2 && "grid" !== name2) {
             return;
           }
+          const layoutGapValue = ["default", "constrained"].includes(
+            name2
+          ) ? rowGapValue : gapValue;
           if (spacingStyles?.length) {
             spacingStyles.forEach((spacingStyle) => {
               const declarations = [];
@@ -27339,7 +27344,7 @@ var wp;
                 Object.entries(spacingStyle.rules).forEach(
                   ([cssProperty, cssValue]) => {
                     declarations.push(
-                      `${cssProperty}: ${cssValue ? cssValue : gapValue}`
+                      `${cssProperty}: ${cssValue ? cssValue : layoutGapValue}`
                     );
                   }
                 );
