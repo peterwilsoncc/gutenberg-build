@@ -35581,10 +35581,10 @@ This message will only show in development mode. It won't appear in production. 
           modifiedSides.push("top");
           break;
         case "left":
-          modifiedSides.push("left");
+          modifiedSides.push("right");
           break;
         case "right":
-          modifiedSides.push("right");
+          modifiedSides.push("left");
           break;
       }
     }
