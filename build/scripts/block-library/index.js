@@ -63341,6 +63341,9 @@ ${text}
       align: ["wide", "full"],
       html: false,
       layout: true,
+      spacing: {
+        blockGap: true
+      },
       interactivity: true
     },
     editorStyle: "wp-block-query-editor"

@@ -6746,6 +6746,9 @@ return array(
 			),
 			'html' => false,
 			'layout' => true,
+			'spacing' => array(
+				'blockGap' => true
+			),
 			'interactivity' => true
 		),
 		'editorStyle' => 'wp-block-query-editor'
