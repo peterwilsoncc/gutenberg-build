@@ -61487,7 +61487,9 @@ If there's a particular need for this, please submit a feature request at https:
       {
         title: title || (0, import_i18n139.__)("Navigation"),
         actions,
-        description: description || (0, import_i18n139.__)("Manage your Navigation Menus."),
+        description: description || (0, import_i18n139.__)(
+          "Manage the menus that help visitors find their way around your site."
+        ),
         backPath,
         content: children
       }
@@ -62520,7 +62522,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         title: (0, import_i18n141.__)("Patterns"),
         description: (0, import_i18n141.__)(
-          "Manage what patterns are available when editing the site."
+          "Manage what patterns are available when editing your site."
         ),
         isRoot: !backPath,
         backPath,
@@ -63577,7 +63579,7 @@ If there's a particular need for this, please submit a feature request at https:
       {
         title: (0, import_i18n150.__)("Templates"),
         description: (0, import_i18n150.__)(
-          "Create new templates, or reset any customizations made to the templates supplied by your theme."
+          "Manage the templates that define the structure of your pages, or reset any customizations made to those supplied by your theme."
         ),
         backPath,
         content: window?.__experimentalTemplateActivate ? /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(DataviewsTemplatesSidebarContent, {}) : /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(DataviewsTemplatesSidebarContent2, {})
@@ -67485,6 +67487,9 @@ If there's a particular need for this, please submit a feature request at https:
           SidebarNavigationScreen,
           {
             title: (0, import_i18n164.__)("Pages"),
+            description: (0, import_i18n164.__)(
+              "Manage or edit the pages that make up your site, and their appearance."
+            ),
             backPath: "/",
             content: /* @__PURE__ */ (0, import_jsx_runtime349.jsx)(DataViewsSidebarContent, { postType: "page" })
           }
