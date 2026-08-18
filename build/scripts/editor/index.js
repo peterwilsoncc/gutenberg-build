@@ -8242,7 +8242,7 @@ var wp;
       );
       const syncConfig = entityConfig?.syncConfig;
       return Boolean(
-        syncConfig && syncConfig.supportsPersistence && window._wpCollaborationEnabled && false !== syncConfig.shouldSync?.(
+        syncConfig && syncConfig.supportsPersistence && window.__experimentalEnableRealTimeCollaboration && false !== syncConfig.shouldSync?.(
           `postType/${currentPostType}`,
           currentPostId
         )

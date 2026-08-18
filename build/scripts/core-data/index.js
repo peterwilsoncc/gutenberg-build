@@ -667,6 +667,9 @@ var wp;
     if (syncManager) {
       return syncManager;
     }
+    if (!globalThis.window?.__experimentalEnableRealTimeCollaboration) {
+      return void 0;
+    }
     syncManager = createSyncManager();
     return syncManager;
   }
@@ -3256,7 +3259,7 @@ var wp;
       plural: "comments",
       label: (0, import_i18n.__)("Comment"),
       supportsPagination: true,
-      syncConfig: defaultCollectionSyncConfig
+      ...globalThis.window?.__experimentalEnableRealTimeCollaboration ? { syncConfig: defaultCollectionSyncConfig } : {}
     },
     {
       name: "menu",
@@ -3399,7 +3402,7 @@ var wp;
         newEdits.title = "";
       }
     }
-    if (persistedRecord) {
+    if (window.__experimentalEnableRealTimeCollaboration && persistedRecord) {
       const objectType = `postType/${name}`;
       const objectId = persistedRecord.id;
       const serializedDoc = await getSyncManager()?.createPersistedCRDTDoc(
@@ -3417,7 +3420,7 @@ var wp;
   };
   async function loadPostTypeEntities() {
     const postTypesPromise = (0, import_api_fetch2.default)({ path: "/wp/v2/types?context=view" });
-    const taxonomiesPromise = window._wpCollaborationEnabled ? (0, import_api_fetch2.default)({ path: "/wp/v2/taxonomies?context=view" }) : Promise.resolve({});
+    const taxonomiesPromise = window.__experimentalEnableRealTimeCollaboration ? (0, import_api_fetch2.default)({ path: "/wp/v2/taxonomies?context=view" }) : Promise.resolve({});
     const [postTypes, taxonomies] = await Promise.all([
       postTypesPromise,
       taxonomiesPromise
@@ -3464,6 +3467,9 @@ var wp;
         getRevisionsUrl: (parentId, revisionId) => `/${namespace}/${postType.rest_base}/${parentId}/revisions${revisionId ? "/" + revisionId : ""}`,
         revisionKey: isTemplate && !window?.__experimentalTemplateActivate ? "wp_id" : DEFAULT_ENTITY_KEY
       };
+      if (!window.__experimentalEnableRealTimeCollaboration) {
+        return entity2;
+      }
       entity2.syncConfig = {
         // Save a CRDT document with this entity
         supportsPersistence: true,
@@ -3531,7 +3537,9 @@ var wp;
         getTitle: (record) => record?.name,
         supportsPagination: true
       };
-      entity2.syncConfig = defaultSyncConfig;
+      if (window.__experimentalEnableRealTimeCollaboration) {
+        entity2.syncConfig = defaultSyncConfig;
+      }
       return entity2;
     });
   }
