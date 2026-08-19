@@ -82465,7 +82465,6 @@ If there's a particular need for this, please submit a feature request at https:
     commands.push({
       name: "core/open-shortcut-help",
       label: (0, import_i18n198.__)("Keyboard shortcuts"),
-      icon: keyboard_default,
       category: "view",
       callback: ({ close }) => {
         close();
@@ -82773,7 +82772,6 @@ If there's a particular need for this, please submit a feature request at https:
       commands.push({
         name: "core/switch-to-previous-entity",
         label: (0, import_i18n198.__)("Go back"),
-        icon: page_default,
         category: "view",
         callback: ({ close }) => {
           goBack();
