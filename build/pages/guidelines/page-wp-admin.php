@@ -146,8 +146,12 @@ function gutenberg_guidelines_wp_admin_enqueue_scripts( $hook_suffix ) {
 	// Get all registered routes
 	$routes = gutenberg_get_guidelines_wp_admin_routes();
 
-	// Get boot module asset file for dependencies
+	// Get boot module asset file for dependencies. Plugins that build their own
+	// boot module use it; everyone else falls back to the copy bundled with Core.
 	$asset_file = __DIR__ . '/../../modules/boot/index.min.asset.php';
+	if ( ! file_exists( $asset_file ) ) {
+		$asset_file = ABSPATH . WPINC . '/js/dist/script-modules/boot/index.min.asset.php';
+	}
 	if ( file_exists( $asset_file ) ) {
 		$asset = require $asset_file;
 
