@@ -22335,7 +22335,7 @@ var wp;
           {
             ref: editMediaButtonRef,
             icon: crop_default,
-            label: (0, import_i18n52.__)("Crop background image"),
+            label: (0, import_i18n52.__)("Edit image"),
             onClick: onEditMedia,
             "aria-haspopup": "dialog",
             disabled: isEditMediaDisabled
@@ -37258,7 +37258,7 @@ ${text}
             onClick: openImageMediaEditorModal,
             "aria-haspopup": "dialog",
             icon: crop_default,
-            label: (0, import_i18n103.__)("Crop"),
+            label: (0, import_i18n103.__)("Edit image"),
             disabled: isSwappingMedia
           }
         ),
@@ -70391,7 +70391,7 @@ ${text}
           }),
           "aria-haspopup": "dialog",
           icon: crop_default,
-          label: (0, import_i18n236.__)("Crop")
+          label: (0, import_i18n236.__)("Edit image")
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime448.jsx)(
