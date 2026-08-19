@@ -49,6 +49,7 @@ var require_i18n = __commonJS({
 var import_data = __toESM(require_data());
 var import_core_data = __toESM(require_core_data());
 var import_i18n = __toESM(require_i18n());
+import { notFound } from "@wordpress/route";
 var NAVIGATION_POST_TYPE = "wp_navigation";
 var PRELOADED_NAVIGATION_MENUS_QUERY = {
   per_page: -1,
@@ -57,6 +58,12 @@ var PRELOADED_NAVIGATION_MENUS_QUERY = {
   orderby: "date"
 };
 var route = {
+  async beforeLoad() {
+    const theme = await (0, import_data.resolveSelect)(import_core_data.store).getCurrentTheme();
+    if (!theme?.is_block_theme) {
+      throw notFound();
+    }
+  },
   title: () => (0, import_i18n.__)("Navigation"),
   canvas: async ({
     search
@@ -75,8 +82,7 @@ var route = {
     return {
       postType: NAVIGATION_POST_TYPE,
       postId,
-      isPreview: true,
-      editLink: `/types/wp_navigation/edit/${postId}`
+      isPreview: true
     };
   },
   loader: async () => {

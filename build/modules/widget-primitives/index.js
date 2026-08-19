@@ -135,11 +135,28 @@ async function resolveIcon(reference) {
 var pendingIcon = (0, import_element2.createElement)("svg", {
   viewBox: "0 0 24 24"
 });
-function withRenderableIcons(actions) {
-  return actions.map(({ icon, ...action }) => ({
-    ...action,
-    ...(0, import_element2.isValidElement)(icon) ? { icon } : {}
-  }));
+function withRenderableIcons(actions, holdPending) {
+  return actions.map(({ icon, ...action }) => {
+    if ((0, import_element2.isValidElement)(icon)) {
+      return { ...action, icon };
+    }
+    if (holdPending && typeof icon === "string") {
+      return { ...action, icon: pendingIcon };
+    }
+    return action;
+  });
+}
+var DEFAULT_API_VERSION = 1;
+function recordOverlay(record) {
+  return {
+    name: record.name,
+    renderModule: record.render_module ?? "",
+    ...record.presentation ? { presentation: record.presentation } : {},
+    ...record.category ? { category: record.category } : {},
+    ...record.description ? { description: record.description } : {},
+    ...record.help ? { help: record.help } : {},
+    ...record.keywords ? { keywords: record.keywords } : {}
+  };
 }
 function useWidgetTypes(records) {
   const [widgetTypes, setWidgetTypes] = (0, import_element2.useState)([]);
@@ -159,7 +176,21 @@ function useWidgetTypes(records) {
     Promise.all(
       records.map(async (record) => {
         if (!record.widget_module) {
-          return null;
+          if (!record.render_module) {
+            return null;
+          }
+          return {
+            apiVersion: DEFAULT_API_VERSION,
+            title: record.title ?? record.name,
+            ...record.icon ? { icon: pendingIcon } : {},
+            ...record.actions ? {
+              actions: withRenderableIcons(
+                record.actions,
+                true
+              )
+            } : {},
+            ...recordOverlay(record)
+          };
         }
         try {
           const module = await import(
@@ -174,14 +205,13 @@ function useWidgetTypes(records) {
           const icon = moduleIcon ?? (record.icon ? pendingIcon : void 0);
           const actions = record.actions ?? metadata.actions;
           return {
+            apiVersion: DEFAULT_API_VERSION,
             ...metadata,
             ...metadata.attributes ? {
               attributes: resolveFields(
                 metadata.attributes
               )
             } : {},
-            name: record.name,
-            renderModule: record.render_module ?? "",
             icon,
             /*
              * `title` is required:
@@ -190,12 +220,13 @@ function useWidgetTypes(records) {
              * - Then the record's name as fallback
              */
             title: record.title ?? metadata.title ?? record.name,
-            ...record.presentation ? { presentation: record.presentation } : {},
-            ...record.category ? { category: record.category } : {},
-            ...record.description ? { description: record.description } : {},
-            ...record.help ? { help: record.help } : {},
-            ...record.keywords ? { keywords: record.keywords } : {},
-            ...actions ? { actions: withRenderableIcons(actions) } : {}
+            ...actions ? {
+              actions: withRenderableIcons(
+                actions,
+                actions === record.actions
+              )
+            } : {},
+            ...recordOverlay(record)
           };
         } catch {
           return null;
@@ -236,7 +267,7 @@ function useWidgetTypes(records) {
             continue;
           }
           void resolveIcon(action.icon).then((resolved) => {
-            if (cancelled || !resolved) {
+            if (cancelled) {
               return;
             }
             setWidgetTypes(
@@ -246,9 +277,18 @@ function useWidgetTypes(records) {
                 }
                 return {
                   ...type,
-                  actions: type.actions?.map(
-                    (entry) => entry.id === action.id ? { ...entry, icon: resolved } : entry
-                  )
+                  actions: type.actions?.map((entry) => {
+                    if (entry.id !== action.id) {
+                      return entry;
+                    }
+                    if (resolved) {
+                      return {
+                        ...entry,
+                        icon: resolved
+                      };
+                    }
+                    return entry.icon === pendingIcon ? { ...entry, icon: void 0 } : entry;
+                  })
                 };
               })
             );
