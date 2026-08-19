@@ -104888,25 +104888,32 @@ If there's a particular need for this, please submit a feature request at https:
           }
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime558.jsxs)(Stack, { direction: "column", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime558.jsx)("span", { className: "editor-collab-sidebar-panel__user-name", children: name2 ?? currentUserName }),
-        date && /* @__PURE__ */ (0, import_jsx_runtime558.jsxs)(tooltip_exports.Root, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-            tooltip_exports.Trigger,
-            {
-              render: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-                "time",
+      /* @__PURE__ */ (0, import_jsx_runtime558.jsxs)(
+        Stack,
+        {
+          direction: "column",
+          className: "editor-collab-sidebar-panel__user-info",
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime558.jsx)("span", { className: "editor-collab-sidebar-panel__user-name", children: name2 ?? currentUserName }),
+            date && /* @__PURE__ */ (0, import_jsx_runtime558.jsxs)(tooltip_exports.Root, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
+                tooltip_exports.Trigger,
                 {
-                  dateTime: commentDateTime,
-                  className: "editor-collab-sidebar-panel__user-time",
-                  children: commentDateText
+                  render: /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
+                    "time",
+                    {
+                      dateTime: commentDateTime,
+                      className: "editor-collab-sidebar-panel__user-time",
+                      children: commentDateText
+                    }
+                  )
                 }
-              )
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(tooltip_exports.Popup, { children: tooltipText })
-        ] })
-      ] })
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(tooltip_exports.Popup, { children: tooltipText })
+            ] })
+          ]
+        }
+      )
     ] });
   }
 
