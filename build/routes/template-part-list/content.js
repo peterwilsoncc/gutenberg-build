@@ -34261,19 +34261,18 @@ var import_blocks = __toESM(require_blocks(), 1);
 // packages/fields/build-module/components/create-template-part-modal/utils.mjs
 var import_data9 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
-var useExistingTemplateParts = () => {
+var EMPTY_ARRAY7 = [];
+function useExistingTemplateParts() {
   return (0, import_data9.useSelect)(
     (select2) => select2(import_core_data2.store).getEntityRecords(
       "postType",
       "wp_template_part",
-      {
-        per_page: -1
-      }
-    ),
+      { per_page: -1 }
+    ) ?? EMPTY_ARRAY7,
     []
-  ) ?? [];
-};
-var getUniqueTemplatePartTitle = (title, templateParts) => {
+  );
+}
+function getUniqueTemplatePartTitle(title, templateParts) {
   const lowercaseTitle = title.toLowerCase();
   const existingTitles = templateParts.map(
     (templatePart) => templatePart.title.rendered.toLowerCase()
@@ -34286,10 +34285,10 @@ var getUniqueTemplatePartTitle = (title, templateParts) => {
     suffix++;
   }
   return `${title} ${suffix}`;
-};
-var getCleanTemplatePartSlug = (title) => {
+}
+function getCleanTemplatePartSlug(title) {
   return paramCase(title).replace(/[^\w-]+/g, "") || "wp-custom-part";
-};
+}
 
 // packages/fields/build-module/components/create-template-part-modal/index.mjs
 var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);

@@ -35975,19 +35975,18 @@ var wp;
   // packages/fields/build-module/components/create-template-part-modal/utils.mjs
   var import_data26 = __toESM(require_data(), 1);
   var import_core_data24 = __toESM(require_core_data(), 1);
-  var useExistingTemplateParts = () => {
+  var EMPTY_ARRAY6 = [];
+  function useExistingTemplateParts() {
     return (0, import_data26.useSelect)(
       (select9) => select9(import_core_data24.store).getEntityRecords(
         "postType",
         "wp_template_part",
-        {
-          per_page: -1
-        }
-      ),
+        { per_page: -1 }
+      ) ?? EMPTY_ARRAY6,
       []
-    ) ?? [];
-  };
-  var getUniqueTemplatePartTitle = (title, templateParts) => {
+    );
+  }
+  function getUniqueTemplatePartTitle(title, templateParts) {
     const lowercaseTitle = title.toLowerCase();
     const existingTitles = templateParts.map(
       (templatePart) => templatePart.title.rendered.toLowerCase()
@@ -36000,10 +35999,10 @@ var wp;
       suffix++;
     }
     return `${title} ${suffix}`;
-  };
-  var getCleanTemplatePartSlug = (title) => {
+  }
+  function getCleanTemplatePartSlug(title) {
     return paramCase(title).replace(/[^\w-]+/g, "") || "wp-custom-part";
-  };
+  }
 
   // packages/fields/build-module/components/create-template-part-modal/index.mjs
   var import_jsx_runtime170 = __toESM(require_jsx_runtime(), 1);
@@ -40606,7 +40605,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
   var import_jsx_runtime199 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY6 = [];
+  var EMPTY_ARRAY7 = [];
   function useIsMultiselectPicker(actions2) {
     return (0, import_element97.useMemo)(() => {
       return !!actions2?.length && actions2?.every((action) => action.supportsBulk);
@@ -40708,7 +40707,7 @@ var wp;
       selection,
       onChangeSelection,
       getItemId: getItemId2,
-      actions: actions2 = EMPTY_ARRAY6,
+      actions: actions2 = EMPTY_ARRAY7,
       paginationInfo,
       view
     } = (0, import_element97.useContext)(dataviews_context_default);
@@ -40755,7 +40754,7 @@ var wp;
       data,
       selection,
       getItemId: getItemId2,
-      actions: actions2 = EMPTY_ARRAY6
+      actions: actions2 = EMPTY_ARRAY7
     } = (0, import_element97.useContext)(dataviews_context_default);
     const selectedItems = (0, import_element97.useMemo)(
       () => data.filter((item) => selection.includes(getItemId2(item))),
@@ -40781,7 +40780,7 @@ var wp;
   }
   function DataViewsPickerFooter() {
     const {
-      actions: actions2 = EMPTY_ARRAY6,
+      actions: actions2 = EMPTY_ARRAY7,
       paginationInfo,
       view
     } = (0, import_element97.useContext)(dataviews_context_default);
@@ -46288,7 +46287,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components46 = __toESM(require_components(), 1);
 
   // packages/dataviews/build-module/components/dataviews-filters/utils.mjs
-  var EMPTY_ARRAY7 = [];
+  var EMPTY_ARRAY8 = [];
   var getCurrentValue = (filterDefinition, currentFilter) => {
     if (filterDefinition.singleSelection) {
       return currentFilter?.value;
@@ -46299,17 +46298,17 @@ If there's a particular need for this, please submit a feature request at https:
     if (!Array.isArray(currentFilter?.value) && !!currentFilter?.value) {
       return [currentFilter.value];
     }
-    return EMPTY_ARRAY7;
+    return EMPTY_ARRAY8;
   };
 
   // packages/dataviews/build-module/hooks/use-elements.mjs
   var import_element103 = __toESM(require_element(), 1);
-  var EMPTY_ARRAY8 = [];
+  var EMPTY_ARRAY9 = [];
   function useElements({
     elements: elements2,
     getElements
   }) {
-    const staticElements = Array.isArray(elements2) && elements2.length > 0 ? elements2 : EMPTY_ARRAY8;
+    const staticElements = Array.isArray(elements2) && elements2.length > 0 ? elements2 : EMPTY_ARRAY9;
     const [records, setRecords] = (0, import_element103.useState)(staticElements);
     const [isLoading, setIsLoading] = (0, import_element103.useState)(false);
     (0, import_element103.useEffect)(() => {
@@ -52463,7 +52462,7 @@ If there's a particular need for this, please submit a feature request at https:
     (viewLayout) => viewLayout.isPicker
   );
   var defaultGetItemId = (item) => item.id;
-  var EMPTY_ARRAY9 = [];
+  var EMPTY_ARRAY10 = [];
   var DEFAULT_PICKER_LAYOUTS = {
     pickerGrid: true,
     pickerTable: true
@@ -52514,7 +52513,7 @@ If there's a particular need for this, please submit a feature request at https:
     fields: fields2,
     search = true,
     searchLabel = void 0,
-    actions: actions2 = EMPTY_ARRAY9,
+    actions: actions2 = EMPTY_ARRAY10,
     data,
     getItemId: getItemId2 = defaultGetItemId,
     isLoading = false,
@@ -54705,11 +54704,11 @@ If there's a particular need for this, please submit a feature request at https:
   function normalizeSearchInput2(input = "") {
     return (0, import_remove_accents3.default)(input.trim().toLowerCase());
   }
-  var EMPTY_ARRAY10 = [];
+  var EMPTY_ARRAY11 = [];
   function filterSortAndPaginate(data, view, fields2) {
     if (!data) {
       return {
-        data: EMPTY_ARRAY10,
+        data: EMPTY_ARRAY11,
         paginationInfo: { totalItems: 0, totalPages: 0 }
       };
     }
@@ -63116,7 +63115,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     return [settingValue, setSettingValue];
   }
-  var EMPTY_ARRAY11 = [];
+  var EMPTY_ARRAY12 = [];
   function hasThemeVariation({
     title,
     settings,
@@ -63130,7 +63129,7 @@ If there's a particular need for this, please submit a feature request at https:
         import_core_data34.store
       ).__experimentalGetCurrentThemeGlobalStylesVariations?.();
       return {
-        variationsFromTheme: _variationsFromTheme || EMPTY_ARRAY11
+        variationsFromTheme: _variationsFromTheme || EMPTY_ARRAY12
       };
     }, []);
     const { user: userVariation } = (0, import_element184.useContext)(GlobalStylesContext);
@@ -78150,11 +78149,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/global-styles-ui/build-module/presets/use-presets.mjs
-  var EMPTY_ARRAY12 = [];
+  var EMPTY_ARRAY13 = [];
   function usePresets(settingsPath, origin) {
     const path = `${settingsPath}.${origin}`;
-    const [presets = EMPTY_ARRAY12, setPresets] = useSetting(path);
-    const [basePresets = EMPTY_ARRAY12] = useSetting(
+    const [presets = EMPTY_ARRAY13, setPresets] = useSetting(path);
+    const [basePresets = EMPTY_ARRAY13] = useSetting(
       path,
       void 0,
       "base"
@@ -79112,7 +79111,7 @@ If there's a particular need for this, please submit a feature request at https:
     capabilities: ["edit_theme_options"]
   };
   var DEFAULT_QUERY = { per_page: 100, page: 1 };
-  var EMPTY_ARRAY13 = [];
+  var EMPTY_ARRAY14 = [];
   function useGlobalStylesRevisions({
     query
   } = {}) {
@@ -79157,8 +79156,8 @@ If there's a particular need for this, please submit a feature request at https:
           "globalStyles",
           globalStylesId,
           _query
-        ) || EMPTY_ARRAY13 : EMPTY_ARRAY13;
-        const _authors = getUsers(SITE_EDITOR_AUTHORS_QUERY) || EMPTY_ARRAY13;
+        ) || EMPTY_ARRAY14 : EMPTY_ARRAY14;
+        const _authors = getUsers(SITE_EDITOR_AUTHORS_QUERY) || EMPTY_ARRAY14;
         const _isResolving = globalStylesId ? isResolving("getRevisions", [
           "root",
           "globalStyles",
@@ -79179,7 +79178,7 @@ If there's a particular need for this, please submit a feature request at https:
     return (0, import_element209.useMemo)(() => {
       if (!authors.length || isLoadingGlobalStylesRevisions) {
         return {
-          revisions: EMPTY_ARRAY13,
+          revisions: EMPTY_ARRAY14,
           hasUnsavedChanges: isDirty,
           isLoading: true,
           revisionsCount
@@ -92395,7 +92394,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/post-taxonomies/flat-term-selector.mjs
   var import_jsx_runtime461 = __toESM(require_jsx_runtime(), 1);
-  var EMPTY_ARRAY14 = [];
+  var EMPTY_ARRAY15 = [];
   var MAX_TERMS_SUGGESTIONS = 100;
   var DEFAULT_QUERY3 = {
     per_page: MAX_TERMS_SUGGESTIONS,
@@ -92425,7 +92424,7 @@ If there's a particular need for this, please submit a feature request at https:
         const { getEntityRecords, getEntityRecord, hasFinishedResolution } = select9(import_core_data91.store);
         const post2 = getCurrentPost2();
         const _taxonomy = getEntityRecord("root", "taxonomy", slug);
-        const _termIds = _taxonomy ? getEditedPostAttribute2(_taxonomy.rest_base) : EMPTY_ARRAY14;
+        const _termIds = _taxonomy ? getEditedPostAttribute2(_taxonomy.rest_base) : EMPTY_ARRAY15;
         const query = {
           ...DEFAULT_QUERY3,
           // Sort ids so reordering alone doesn't produce a new query key and re-fetch.
@@ -92437,7 +92436,7 @@ If there's a particular need for this, please submit a feature request at https:
           hasAssignAction: _taxonomy ? post2._links?.["wp:action-assign-" + _taxonomy.rest_base] ?? false : false,
           taxonomy: _taxonomy,
           termIds: _termIds,
-          terms: _termIds?.length ? getEntityRecords("taxonomy", slug, query) : EMPTY_ARRAY14,
+          terms: _termIds?.length ? getEntityRecords("taxonomy", slug, query) : EMPTY_ARRAY15,
           hasResolvedTerms: hasFinishedResolution("getEntityRecords", [
             "taxonomy",
             slug,
@@ -92454,7 +92453,7 @@ If there's a particular need for this, please submit a feature request at https:
           searchResults: !!search ? getEntityRecords("taxonomy", slug, {
             ...DEFAULT_QUERY3,
             search
-          }) : EMPTY_ARRAY14
+          }) : EMPTY_ARRAY15
         };
       },
       [search, slug]
@@ -92757,7 +92756,7 @@ If there's a particular need for this, please submit a feature request at https:
     [RECEIVE_INTERMEDIATE_RESULTS]: true
   };
   var MIN_TERMS_COUNT_FOR_FILTER = 8;
-  var EMPTY_ARRAY15 = [];
+  var EMPTY_ARRAY16 = [];
   var SPEAK_DEBOUNCE_MS = 500;
   function getResultCount(termsTree) {
     let count = 0;
@@ -92873,13 +92872,13 @@ If there's a particular need for this, please submit a feature request at https:
         return {
           hasCreateAction: _taxonomy ? !!post2._links?.["wp:action-create-" + _taxonomy.rest_base] : false,
           hasAssignAction: _taxonomy ? !!post2._links?.["wp:action-assign-" + _taxonomy.rest_base] : false,
-          terms: _taxonomy ? getEditedPostAttribute2(_taxonomy.rest_base) : EMPTY_ARRAY15,
+          terms: _taxonomy ? getEditedPostAttribute2(_taxonomy.rest_base) : EMPTY_ARRAY16,
           loading: isResolving("getEntityRecords", [
             "taxonomy",
             slug,
             DEFAULT_QUERY4
           ]),
-          availableTerms: getEntityRecords("taxonomy", slug, DEFAULT_QUERY4) || EMPTY_ARRAY15,
+          availableTerms: getEntityRecords("taxonomy", slug, DEFAULT_QUERY4) || EMPTY_ARRAY16,
           taxonomy: _taxonomy
         };
       },
@@ -103795,7 +103794,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n327 = __toESM(require_i18n(), 1);
   var import_jsx_runtime545 = __toESM(require_jsx_runtime(), 1);
   var PAGE_SIZE2 = 10;
-  var EMPTY_ARRAY16 = [];
+  var EMPTY_ARRAY17 = [];
   var defaultLayouts = { pickerActivity: true };
   var baseView = {
     type: "pickerActivity",
@@ -103903,7 +103902,7 @@ If there's a particular need for this, please submit a feature request at https:
       [revisionKey, currentRevisionId]
     );
     const { data: shownRevisions, paginationInfo } = (0, import_element338.useMemo)(
-      () => filterSortAndPaginate(revisions || EMPTY_ARRAY16, view, fields2),
+      () => filterSortAndPaginate(revisions || EMPTY_ARRAY17, view, fields2),
       [revisions, view, fields2]
     );
     (0, import_element338.useEffect)(() => {
@@ -103920,7 +103919,7 @@ If there's a particular need for this, please submit a feature request at https:
       setView((v3) => v3.page === page ? v3 : { ...v3, page });
     }, [currentRevisionId, revisions, revisionKey, view.perPage]);
     const selection = (0, import_element338.useMemo)(
-      () => currentRevisionId ? [String(currentRevisionId)] : EMPTY_ARRAY16,
+      () => currentRevisionId ? [String(currentRevisionId)] : EMPTY_ARRAY17,
       [currentRevisionId]
     );
     const onChangeSelection = (0, import_element338.useCallback)(
@@ -105029,13 +105028,13 @@ If there's a particular need for this, please submit a feature request at https:
   var import_rich_text8 = __toESM(require_rich_text(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/rich-text-control/utils.mjs
-  var EMPTY_ARRAY17 = [];
+  var EMPTY_ARRAY18 = [];
   function getAllowedFormats({
     allowedFormats,
     disableFormats
   }) {
     if (disableFormats) {
-      return EMPTY_ARRAY17;
+      return EMPTY_ARRAY18;
     }
     return allowedFormats;
   }
@@ -107595,7 +107594,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor108 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime578 = __toESM(require_jsx_runtime(), 1);
   var { BlockManager } = unlock(import_block_editor108.privateApis);
-  var EMPTY_ARRAY18 = [];
+  var EMPTY_ARRAY19 = [];
   function BlockVisibility() {
     const { showBlockTypes: showBlockTypes2, hideBlockTypes: hideBlockTypes2 } = unlock(
       (0, import_data271.useDispatch)(store)
@@ -107608,7 +107607,7 @@ If there's a particular need for this, please submit a feature request at https:
       return {
         blockTypes: select9(import_blocks39.store).getBlockTypes(),
         allowedBlockTypes: select9(store).getEditorSettings().allowedBlockTypes,
-        hiddenBlockTypes: select9(import_preferences35.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY18
+        hiddenBlockTypes: select9(import_preferences35.store).get("core", "hiddenBlockTypes") ?? EMPTY_ARRAY19
       };
     }, []);
     const allowedBlockTypes = (0, import_element357.useMemo)(() => {
