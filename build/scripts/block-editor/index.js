@@ -64720,13 +64720,15 @@ var wp;
     const {
       __unstableDisableLayoutClassNames,
       __unstableDisableDropZone,
-      dropZoneElement
+      dropZoneElement,
+      layout: layoutOverride
     } = options;
     const {
       clientId,
-      layout = null,
+      layout: contextLayout = null,
       __unstableLayoutClassNames: layoutClassNames = ""
     } = useBlockEditContext();
+    const layout = layoutOverride ?? contextLayout;
     const selected = (0, import_data81.useSelect)(
       (select3) => {
         const {

@@ -60717,10 +60717,14 @@ ${text}
   var import_components113 = __toESM(require_components(), 1);
   var import_core_data67 = __toESM(require_core_data(), 1);
   var import_jsx_runtime393 = __toESM(require_jsx_runtime(), 1);
+  var INNER_BLOCKS_LAYOUT = { type: "default" };
   function PostTemplateInnerBlocks({ classList }) {
     const innerBlocksProps = (0, import_block_editor203.useInnerBlocksProps)(
       { className: clsx_default("wp-block-post", classList) },
-      { __unstableDisableLayoutClassNames: true }
+      {
+        __unstableDisableLayoutClassNames: true,
+        layout: INNER_BLOCKS_LAYOUT
+      }
     );
     return /* @__PURE__ */ (0, import_jsx_runtime393.jsx)("li", { ...innerBlocksProps });
   }
@@ -79872,10 +79876,14 @@ ${text}
   var import_block_editor289 = __toESM(require_block_editor(), 1);
   var import_core_data100 = __toESM(require_core_data(), 1);
   var import_jsx_runtime551 = __toESM(require_jsx_runtime(), 1);
+  var INNER_BLOCKS_LAYOUT2 = { type: "default" };
   function TermTemplateInnerBlocks({ classList }) {
     const innerBlocksProps = (0, import_block_editor289.useInnerBlocksProps)(
       { className: clsx_default("wp-block-term", classList) },
-      { __unstableDisableLayoutClassNames: true }
+      {
+        __unstableDisableLayoutClassNames: true,
+        layout: INNER_BLOCKS_LAYOUT2
+      }
     );
     return /* @__PURE__ */ (0, import_jsx_runtime551.jsx)("li", { ...innerBlocksProps });
   }
