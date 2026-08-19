@@ -5457,7 +5457,7 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   align-items: center;
 }
 
-.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor__footer-actions {
+.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor__save-actions {
   margin-left: auto;
 }
 
@@ -5477,11 +5477,11 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
 }
 
 .media-editor-modal__footer-row .media-editor-image-controls,
-.media-editor-modal__footer-row .media-editor__footer-actions {
+.media-editor-modal__footer-row .media-editor__save-actions {
   margin-left: auto;
 }
 
-.media-editor__history-actions .components-button.has-icon:not([aria-disabled=true]) {
+.media-editor-modal .media-editor__history-actions .components-button.has-icon:not([aria-disabled=true]) {
   color: var(--wp-admin-theme-color);
 }
 

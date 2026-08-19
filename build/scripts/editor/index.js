@@ -1177,7 +1177,7 @@ var wp;
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment121 = REACT_FRAGMENT_TYPE;
+          var Fragment122 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE2;
           var Memo = REACT_MEMO_TYPE;
           var Portal2 = REACT_PORTAL_TYPE;
@@ -1236,7 +1236,7 @@ var wp;
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment121;
+          exports.Fragment = Fragment122;
           exports.Lazy = Lazy;
           exports.Memo = Memo;
           exports.Portal = Portal2;
@@ -42842,16 +42842,16 @@ var wp;
   function createStoreContext(providers = [], scopedProviders = []) {
     const context = React102.createContext(void 0);
     const scopedContext = React102.createContext(void 0);
-    const useContext74 = () => React102.useContext(context);
+    const useContext75 = () => React102.useContext(context);
     const useScopedContext = (onlyScoped = false) => {
       const scoped = React102.useContext(scopedContext);
-      const store4 = useContext74();
+      const store4 = useContext75();
       if (onlyScoped) return scoped;
       return scoped || store4;
     };
     const useProviderContext = () => {
       const scoped = React102.useContext(scopedContext);
-      const store4 = useContext74();
+      const store4 = useContext75();
       if (scoped && scoped === store4) return;
       return store4;
     };
@@ -42873,7 +42873,7 @@ var wp;
     return {
       context,
       scopedContext,
-      useContext: useContext74,
+      useContext: useContext75,
       useScopedContext,
       useProviderContext,
       ContextProvider,
@@ -61544,13 +61544,18 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  function HeaderActions({
-    isSaving,
-    isImage,
-    showCloseButton = false,
-    onCancel,
-    scope
-  }) {
+  var MediaEditorFrameContext = (0, import_element180.createContext)(null);
+  function useMediaEditorFrameContext() {
+    const context = (0, import_element180.useContext)(MediaEditorFrameContext);
+    if (!context) {
+      throw new Error(
+        "useMediaEditorFrameContext must be used within MediaEditor"
+      );
+    }
+    return context;
+  }
+  function HeaderActions({ showCloseButton = false }) {
+    const { isImage, isSaving, onCancel, scope } = useMediaEditorFrameContext();
     const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element180.useState)(false);
     return /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(
       Stack,
@@ -61591,10 +61596,8 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  function HistoryActions({
-    isUndoRedoDisabled = false,
-    onReset
-  }) {
+  function HistoryActions() {
+    const { isImage, isUndoRedoDisabled, onReset } = useMediaEditorFrameContext();
     const {
       reset,
       isDirty,
@@ -61605,6 +61608,9 @@ If there's a particular need for this, please submit a feature request at https:
       beginGesture,
       endGesture
     } = useMediaEditor();
+    if (!isImage) {
+      return null;
+    }
     const handleUndo = () => {
       if (isUndoRedoDisabled) {
         return;
@@ -61671,18 +61677,13 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  function FooterActions({
-    isSaving,
-    hasMedia,
-    hasChanges,
-    onCancel,
-    onSave
-  }) {
+  function SaveActions({ size: size4 = "default" }) {
+    const { isSaving, hasMedia, hasChanges, onCancel, onSave } = useMediaEditorFrameContext();
     const saveDisabled = isSaving || !hasMedia || !hasChanges;
     return /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(
       Stack,
       {
-        className: "media-editor__footer-actions",
+        className: "media-editor__save-actions",
         justify: "flex-end",
         align: "center",
         gap: "sm",
@@ -61691,6 +61692,7 @@ If there's a particular need for this, please submit a feature request at https:
             import_components99.Button,
             {
               __next40pxDefaultSize: true,
+              size: size4,
               variant: "tertiary",
               onClick: onCancel,
               disabled: isSaving,
@@ -61702,6 +61704,7 @@ If there's a particular need for this, please submit a feature request at https:
             import_components99.Button,
             {
               __next40pxDefaultSize: true,
+              size: size4,
               variant: "primary",
               onClick: onSave,
               isBusy: isSaving,
@@ -61714,6 +61717,19 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
+  function ImageControls() {
+    const { isImage, aspectRatioPresets } = useMediaEditorFrameContext();
+    if (!isImage) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
+      MediaEditorImageControls,
+      {
+        showAspectRatioControl: true,
+        aspectRatioPresets
+      }
+    );
+  }
   function MediaEditorContent({
     fields: fields2 = [],
     id,
@@ -61723,13 +61739,12 @@ If there's a particular need for this, please submit a feature request at https:
     renderFrame,
     noticesClassName = "media-editor__snackbar",
     noticesPortalElement,
-    showCloseButton = false,
     shouldCloseOnEsc = false,
     scope = "media-editor"
   }) {
     const cropper = useMediaEditor();
     const isPanelLayout = (0, import_compose34.useViewportMatch)("small");
-    const footerLayout = isPanelLayout ? "wide" : "narrow";
+    const layout = isPanelLayout ? "wide" : "narrow";
     const { media, hasEdits } = (0, import_data46.useSelect)(
       (select9) => {
         const {
@@ -61986,74 +62001,68 @@ If there's a particular need for this, please submit a feature request at https:
         ]
       }
     );
-    const history = isImage ? /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-      HistoryActions,
-      {
-        isUndoRedoDisabled: isCropInteractionActive,
-        onReset: resetCropOptions
-      }
-    ) : null;
-    const imageControls = isImage ? /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-      MediaEditorImageControls,
-      {
-        showAspectRatioControl: true,
-        aspectRatioPresets
-      }
-    ) : null;
-    const actions2 = /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-      FooterActions,
-      {
-        isSaving,
-        hasMedia: !!media,
-        hasChanges,
-        onCancel: handleRequestClose,
-        onSave: saveMediaEditor
-      }
-    );
-    let footerActions;
-    if (footerLayout === "wide") {
-      footerActions = /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(import_jsx_runtime300.Fragment, { children: [
-        history,
-        actions2
-      ] });
-    } else {
-      footerActions = /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)(import_jsx_runtime300.Fragment, { children: [
-        imageControls,
-        /* @__PURE__ */ (0, import_jsx_runtime300.jsxs)("div", { className: "media-editor-modal__footer-row", children: [
-          history,
-          actions2
-        ] })
-      ] });
-    }
-    return renderFrame({
+    const contextValue = {
+      isImage,
+      isSaving,
+      hasMedia: !!media,
+      hasChanges,
+      isUndoRedoDisabled: isCropInteractionActive,
+      scope,
+      aspectRatioPresets,
+      onCancel: handleRequestClose,
+      onSave: saveMediaEditor,
+      onReset: resetCropOptions
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(MediaEditorFrameContext.Provider, { value: contextValue, children: renderFrame({
       children,
-      headerActions: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(
-        HeaderActions,
-        {
-          isSaving,
-          isImage,
-          showCloseButton,
-          onCancel: handleRequestClose,
-          scope
-        }
-      ),
-      footerActions,
-      footerLayout,
+      isImage,
+      layout,
       onRequestClose: handleRequestClose,
       onKeyDown: handleKeyDown,
       shouldCloseOnClickOutside: !hasChanges && !isSaving,
       isSaving,
       hasChanges,
       hasMedia: !!media
-    });
+    }) });
   }
   function MediaEditor(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(MediaEditorStateProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(MediaEditorContent, { ...props }) }, props.id);
   }
+  MediaEditor.HeaderActions = HeaderActions;
+  MediaEditor.HistoryActions = HistoryActions;
+  MediaEditor.SaveActions = SaveActions;
+  MediaEditor.ImageControls = ImageControls;
   var media_editor_default = MediaEditor;
 
   // packages/media-editor/build-module/components/media-editor-modal/index.mjs
   var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
+  function ModalFooter({ layout }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
+      "div",
+      {
+        className: `media-editor-modal__footer is-${layout}`,
+        role: "region",
+        "aria-label": (0, import_i18n147.__)("Editor actions"),
+        children: layout === "wide" ? (
+          // Sidebar is a column: the image controls live in the Crop
+          // panel, so the footer is just History + Cancel/Save.
+          /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)(import_jsx_runtime301.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(media_editor_default.HistoryActions, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(media_editor_default.SaveActions, {})
+          ] })
+        ) : (
+          // Sidebar collapsed: the image controls drop into the footer.
+          /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)(import_jsx_runtime301.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(media_editor_default.ImageControls, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime301.jsxs)("div", { className: "media-editor-modal__footer-row", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(media_editor_default.HistoryActions, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(media_editor_default.SaveActions, {})
+            ] })
+          ] })
+        )
+      }
+    );
+  }
   function MediaEditorModal({
     fields: fields2 = [],
     aspectRatioPresets
@@ -62086,7 +62095,6 @@ If there's a particular need for this, please submit a feature request at https:
         id,
         fields: fields2,
         aspectRatioPresets,
-        showCloseButton: true,
         shouldCloseOnEsc: true,
         noticesClassName: "media-editor-modal__snackbar",
         noticesPortalElement: portalElement,
@@ -62119,9 +62127,7 @@ If there's a particular need for this, please submit a feature request at https:
         },
         renderFrame: ({
           children,
-          headerActions,
-          footerActions,
-          footerLayout,
+          layout,
           onRequestClose,
           onKeyDown,
           shouldCloseOnClickOutside
@@ -62140,18 +62146,10 @@ If there's a particular need for this, please submit a feature request at https:
                 shouldCloseOnClickOutside,
                 onKeyDown,
                 onRequestClose,
-                headerActions,
+                headerActions: /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(media_editor_default.HeaderActions, { showCloseButton: true }),
                 children: [
                   children,
-                  /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(
-                    "div",
-                    {
-                      className: `media-editor-modal__footer is-${footerLayout}`,
-                      role: "region",
-                      "aria-label": (0, import_i18n147.__)("Editor actions"),
-                      children: footerActions
-                    }
-                  )
+                  /* @__PURE__ */ (0, import_jsx_runtime301.jsx)(ModalFooter, { layout })
                 ]
               }
             )
