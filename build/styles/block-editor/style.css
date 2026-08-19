@@ -4586,34 +4586,39 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
 }
 
 .block-editor-block-patterns-explorer__sidebar {
-  position: absolute;
-  top: 72px;
-  left: 0;
-  bottom: 0;
-  width: 280px;
-  padding: 24px 24px 24px;
-  overflow-x: visible;
-  overflow-y: auto;
+  padding-bottom: 24px;
 }
-.block-editor-block-patterns-explorer__sidebar__categories-list__item {
-  display: block;
-  width: 100%;
-  height: 48px;
-  text-align: left;
+@media (min-width: 782px) {
+  .block-editor-block-patterns-explorer__sidebar {
+    position: absolute;
+    top: 72px;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    padding: 24px;
+    overflow-x: visible;
+    overflow-y: auto;
+  }
 }
-.block-editor-block-patterns-explorer__search {
-  margin-bottom: 32px;
+
+@media (min-width: 782px) {
+  .block-editor-block-patterns-explorer__panel {
+    margin-inline-start: 280px;
+  }
 }
-.block-editor-block-patterns-explorer__search-results-count {
-  padding-bottom: 32px;
+
+.block-editor-block-patterns-explorer__no-results {
+  padding: 32px;
+  text-align: center;
 }
+
 .block-editor-block-patterns-explorer__list {
-  margin-left: 280px;
   padding: 24px 0 32px;
 }
 .block-editor-block-patterns-explorer__list .block-editor-patterns__sync-status-filter .components-input-control__container {
   width: 380px;
 }
+
 .block-editor-block-patterns-explorer .block-editor-block-patterns-list {
   display: grid;
   grid-gap: 32px;
