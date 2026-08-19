@@ -88874,12 +88874,21 @@ var wp;
   var EMPTY_ARRAY14 = [];
   function ShadowPopoverContainer({ shadow, onShadowChange, settings: settings2 }) {
     const shadows = useShadowPresets(settings2);
+    const presets = (0, import_element267.useMemo)(() => {
+      if (!shadows.length) {
+        return shadows;
+      }
+      return [
+        { name: (0, import_i18n197.__)("Unset"), slug: "unset", shadow: "none" },
+        ...shadows
+      ];
+    }, [shadows]);
     return /* @__PURE__ */ (0, import_jsx_runtime446.jsx)("div", { className: "block-editor-global-styles__shadow-popover-container", children: /* @__PURE__ */ (0, import_jsx_runtime446.jsxs)(import_components200.__experimentalVStack, { spacing: 4, children: [
       /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(import_components200.__experimentalHeading, { level: 5, children: (0, import_i18n197.__)("Drop shadow") }),
       /* @__PURE__ */ (0, import_jsx_runtime446.jsx)(
         ShadowPresets,
         {
-          presets: shadows,
+          presets,
           activeShadow: shadow,
           onSelect: onShadowChange
         }
@@ -89058,20 +89067,16 @@ var wp;
         theme: themeShadows,
         custom: customShadows
       } = settings2?.shadow?.presets ?? {};
-      const unsetShadow = {
-        name: (0, import_i18n197.__)("Unset"),
-        slug: "unset",
-        shadow: "none"
-      };
-      const shadowPresets = [
+      const allPresets = [
         ...defaultPresetsEnabled && defaultShadows || EMPTY_ARRAY14,
         ...themeShadows || EMPTY_ARRAY14,
         ...customShadows || EMPTY_ARRAY14
       ];
-      if (shadowPresets.length) {
-        shadowPresets.unshift(unsetShadow);
-      }
-      return shadowPresets;
+      return allPresets.filter(
+        (preset, index2) => allPresets.findLastIndex(
+          ({ slug }) => slug === preset.slug
+        ) === index2
+      );
     }, [settings2]);
   }
 
@@ -89260,10 +89265,9 @@ var wp;
     const inheritedShadow = decodeValue(inheritedValue?.shadow);
     const isShadowPlaceholder = localShadow === void 0 && inheritedShadow !== void 0 && inheritedShadow !== "";
     const shadow = isShadowPlaceholder ? inheritedShadow : localShadow;
-    const shadowPresets = settings2?.shadow?.presets ?? {};
-    const mergedShadowPresets = shadowPresets.custom ?? shadowPresets.theme ?? shadowPresets.default ?? [];
+    const shadowPresets = useShadowPresets(settings2);
     const setShadow = (newValue) => {
-      const slug = mergedShadowPresets?.find(
+      const slug = shadowPresets.findLast(
         ({ shadow: shadowName }) => shadowName === newValue
       )?.slug;
       onChange(
