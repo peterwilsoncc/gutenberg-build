@@ -53509,7 +53509,6 @@ ${text}
     supports: {
       anchor: true,
       align: true,
-      __experimentalExposeControlsToChildren: true,
       color: {
         gradients: true,
         link: true,
@@ -55714,7 +55713,7 @@ ${text}
       );
     }
     return /* @__PURE__ */ (0, import_jsx_runtime374.jsxs)(import_jsx_runtime374.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_block_editor183.BlockControls, { group: "other", __experimentalShareWithChildBlocks: true, children: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(import_block_editor183.BlockControls, { group: "other", children: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
         import_block_editor183.MediaReplaceFlow,
         {
           name: (0, import_i18n168.__)("Add track"),
