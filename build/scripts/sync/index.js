@@ -10936,7 +10936,7 @@ ${err.toString()}`);
   // packages/sync/build-module/providers/index.mjs
   var providerCreators = null;
   function getDefaultProviderCreators() {
-    return [createHttpPollingProvider()];
+    return window.__experimentalEnableRealTimeCollaboration ? [createHttpPollingProvider()] : [];
   }
   function isProviderCreator(creator) {
     return "function" === typeof creator;
@@ -10945,7 +10945,7 @@ ${err.toString()}`);
     if (providerCreators) {
       return providerCreators;
     }
-    if (!window._wpCollaborationEnabled) {
+    if (!window.__experimentalEnableRealTimeCollaboration) {
       return [];
     }
     const filteredProviderCreators = (0, import_hooks3.applyFilters)(
