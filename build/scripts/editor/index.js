@@ -69776,8 +69776,8 @@ If there's a particular need for this, please submit a feature request at https:
                             ringbuffer,
                             ringbuffer_size
                           );
-                          for (var _x50 = 0; _x50 < copy_dst - ringbuffer_end; _x50++)
-                            ringbuffer[_x50] = ringbuffer[ringbuffer_end + _x50];
+                          for (var _x51 = 0; _x51 < copy_dst - ringbuffer_end; _x51++)
+                            ringbuffer[_x51] = ringbuffer[ringbuffer_end + _x51];
                         }
                       } else {
                         throw new Error(
@@ -101693,7 +101693,7 @@ If there's a particular need for this, please submit a feature request at https:
           /* @__PURE__ */ (0, import_jsx_runtime525.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime525.jsx)("thead", {}), children: /* @__PURE__ */ (0, import_jsx_runtime525.jsxs)("tr", { children: [
             showDiff && /* @__PURE__ */ (0, import_jsx_runtime525.jsx)("th", { children: (0, import_i18n309.__)("Previous line") }),
             /* @__PURE__ */ (0, import_jsx_runtime525.jsx)("th", { children: (0, import_i18n309.__)("Current line") }),
-            showDiff && /* @__PURE__ */ (0, import_jsx_runtime525.jsx)("th", { children: (0, import_i18n309.__)("Change") }),
+            showDiff && /* @__PURE__ */ (0, import_jsx_runtime525.jsx)("th", { children: (0, import_i18n309._x)("Change", "noun") }),
             /* @__PURE__ */ (0, import_jsx_runtime525.jsx)("th", { children: (0, import_i18n309.__)("Code") })
           ] }) }),
           /* @__PURE__ */ (0, import_jsx_runtime525.jsx)("tbody", { children: rows.map((row, index2) => {
