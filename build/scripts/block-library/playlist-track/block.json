@@ -15,40 +15,32 @@
 			"role": "local"
 		},
 		"id": {
-			"type": "number",
-			"role": "content"
+			"type": "number"
 		},
 		"src": {
-			"type": "string",
-			"role": "content"
+			"type": "string"
 		},
 		"type": {
 			"type": "string",
 			"default": "audio"
 		},
 		"album": {
-			"type": "string",
-			"role": "content"
+			"type": "string"
 		},
 		"artist": {
-			"type": "string",
-			"role": "content"
+			"type": "string"
 		},
 		"image": {
-			"type": "string",
-			"role": "content"
+			"type": "string"
 		},
 		"imageAlt": {
-			"type": "string",
-			"role": "content"
+			"type": "string"
 		},
 		"length": {
-			"type": "string",
-			"role": "content"
+			"type": "string"
 		},
 		"title": {
-			"type": "string",
-			"role": "content"
+			"type": "string"
 		}
 	},
 	"supports": {

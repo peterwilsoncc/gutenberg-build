@@ -334,7 +334,8 @@ var route = {
       return {
         postType: params.type,
         postId,
-        isPreview: true
+        isPreview: true,
+        editLink: `/types/${params.type}/edit/${postId}`
       };
     }
     const query = viewToQuery(view, params.type);
@@ -348,7 +349,8 @@ var route = {
       return {
         postType: params.type,
         postId,
-        isPreview: true
+        isPreview: true,
+        editLink: `/types/${params.type}/edit/${postId}`
       };
     }
     return void 0;

@@ -1051,47 +1051,16 @@ var wp;
       return value === collaboratorInfo2[key];
     });
   }
-  function hasValidAvatarUrls(value) {
-    if ("object" !== typeof value || null === value || Array.isArray(value)) {
-      return false;
-    }
-    return ["24", "48", "96"].every(
-      (size) => !(size in value) || "string" === typeof value[size]
-    );
-  }
-  function isCollaboratorInfo(value) {
-    if ("object" !== typeof value || null === value) {
-      return false;
-    }
-    return "id" in value && "name" in value && "slug" in value && "browserType" in value && "enteredAt" in value && (null === value.id || "number" === typeof value.id && Number.isInteger(value.id) && value.id > 0) && "string" === typeof value.name && "" !== value.name.trim() && "string" === typeof value.slug && (!("avatar_urls" in value) || hasValidAvatarUrls(value.avatar_urls)) && "string" === typeof value.browserType && "number" === typeof value.enteredAt && Number.isFinite(value.enteredAt);
-  }
-  function generateCollaboratorInfo(currentCollaborator, clientId) {
-    const presentationInfo = {
-      browserType: getBrowserName(),
-      enteredAt: Date.now()
-    };
-    if ("object" === typeof currentCollaborator && currentCollaborator) {
-      const user = currentCollaborator;
-      if ("id" in user && "name" in user) {
-        const collaboratorInfo = {
-          ...presentationInfo,
-          ..."avatar_urls" in user && hasValidAvatarUrls(user.avatar_urls) ? { avatar_urls: user.avatar_urls } : {},
-          id: user.id,
-          name: user.name,
-          slug: "slug" in user && "string" === typeof user.slug ? user.slug : ""
-        };
-        if (isCollaboratorInfo(collaboratorInfo) && null !== collaboratorInfo.id) {
-          return collaboratorInfo;
-        }
-      }
-    }
+  function generateCollaboratorInfo(currentCollaborator) {
+    const { avatar_urls, id, name, slug } = currentCollaborator;
     return {
-      ...presentationInfo,
-      id: null,
-      // Keep shared awareness data language-neutral. The editor localizes this
-      // fallback name for the viewer when it is displayed.
-      name: "Anonymous User",
-      slug: `anonymous-${clientId}`
+      avatar_urls,
+      // eslint-disable-line camelcase
+      browserType: getBrowserName(),
+      enteredAt: Date.now(),
+      id,
+      name,
+      slug
     };
   }
   function getRecordValue(obj, key) {
@@ -1378,15 +1347,9 @@ var wp;
      * Set the current collaborator info in the local state.
      */
     async setCurrentCollaboratorInfo() {
-      let currentUser2;
-      try {
-        currentUser2 = await (0, import_data.resolveSelect)(STORE_NAME).getCurrentUser();
-      } catch {
-      }
-      this.setLocalStateField(
-        "collaboratorInfo",
-        generateCollaboratorInfo(currentUser2, this.clientID)
-      );
+      const currentUser2 = await (0, import_data.resolveSelect)(STORE_NAME).getCurrentUser();
+      const collaboratorInfo = generateCollaboratorInfo(currentUser2);
+      this.setLocalStateField("collaboratorInfo", collaboratorInfo);
     }
   };
   var baseEqualityFieldChecks = {
@@ -2025,15 +1988,15 @@ var wp;
         ])
       );
       const collaboratorMapData = new Map(
-        Array.from(this.getSeenStates().entries()).filter(
-          ([, collaboratorState]) => isCollaboratorInfo(collaboratorState.collaboratorInfo)
-        ).map(([clientId, collaboratorState]) => [
-          String(clientId),
-          {
-            name: collaboratorState.collaboratorInfo.name,
-            wpUserId: collaboratorState.collaboratorInfo.id
-          }
-        ])
+        Array.from(this.getSeenStates().entries()).map(
+          ([clientId, collaboratorState]) => [
+            String(clientId),
+            {
+              name: collaboratorState.collaboratorInfo.name,
+              wpUserId: collaboratorState.collaboratorInfo.id
+            }
+          ]
+        )
       );
       const serializableClientItems = {};
       ydoc.store.clients.forEach((structs, clientId) => {
@@ -8313,9 +8276,7 @@ var wp;
     isCurrentCollaboratorDisconnected: false
   };
   function getAwarenessState(awareness, newState) {
-    const activeCollaborators = (newState ?? awareness.getCurrentState()).filter(
-      (collaborator) => isCollaboratorInfo(collaborator.collaboratorInfo)
-    );
+    const activeCollaborators = newState ?? awareness.getCurrentState();
     return {
       activeCollaborators,
       resolveSelection: (selection, blocks) => awareness.convertSelectionStateToAbsolute(selection, blocks),

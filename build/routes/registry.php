@@ -57,13 +57,6 @@ return array(
 		'has_content' => false,
 	),
 	array(
-		'name'        => 'identity',
-		'path'        => '/identity',
-		'page'        => 'site-editor-v2',
-		'has_route'   => true,
-		'has_content' => true,
-	),
-	array(
 		'name'        => 'media-editor',
 		'path'        => '/media-editor/$id',
 		'page'        => 'site-editor-v2',
@@ -139,13 +132,6 @@ return array(
 		'page'        => 'site-editor-v2',
 		'has_route'   => true,
 		'has_content' => false,
-	),
-	array(
-		'name'        => 'site-health',
-		'path'        => '/site-health',
-		'page'        => 'dashboard',
-		'has_route'   => true,
-		'has_content' => true,
 	),
 	array(
 		'name'        => 'styles',

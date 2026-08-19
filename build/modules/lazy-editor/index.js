@@ -1594,8 +1594,7 @@ function getLayoutStyles({
   fallbackGapValue
 }) {
   let ruleset = "";
-  const blockGapValue = style?.spacing?.blockGap;
-  let gapValue = hasBlockGapSupport ? getGapCSSValue(blockGapValue) : "";
+  let gapValue = hasBlockGapSupport ? getGapCSSValue(style?.spacing?.blockGap) : "";
   if (hasFallbackGapSupport) {
     if (selector === ROOT_BLOCK_SELECTOR) {
       gapValue = !gapValue ? "0.5em" : gapValue;
@@ -1603,16 +1602,12 @@ function getLayoutStyles({
       gapValue = fallbackGapValue;
     }
   }
-  const rowGapValue = hasBlockGapSupport && blockGapValue && typeof blockGapValue !== "string" ? getGapCSSValue(blockGapValue.top) : gapValue;
   if (gapValue && layoutDefinitions) {
     Object.values(layoutDefinitions).forEach(
       ({ className, name, spacingStyles }) => {
         if (!hasBlockGapSupport && "flex" !== name && "grid" !== name) {
           return;
         }
-        const layoutGapValue = ["default", "constrained"].includes(
-          name
-        ) ? rowGapValue : gapValue;
         if (spacingStyles?.length) {
           spacingStyles.forEach((spacingStyle) => {
             const declarations = [];
@@ -1620,7 +1615,7 @@ function getLayoutStyles({
               Object.entries(spacingStyle.rules).forEach(
                 ([cssProperty, cssValue]) => {
                   declarations.push(
-                    `${cssProperty}: ${cssValue ? cssValue : layoutGapValue}`
+                    `${cssProperty}: ${cssValue ? cssValue : gapValue}`
                   );
                 }
               );
@@ -2503,7 +2498,6 @@ function generateGlobalStyles(config = {}, blockTypes = [], options = {}) {
 
 // packages/lazy-editor/build-module/hooks/use-editor-settings.mjs
 var import_core_data3 = __toESM(require_core_data(), 1);
-var import_blocks2 = __toESM(require_blocks(), 1);
 var import_element2 = __toESM(require_element(), 1);
 var import_data4 = __toESM(require_data(), 1);
 
@@ -2569,20 +2563,16 @@ var { unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCo
 
 // packages/lazy-editor/build-module/hooks/use-editor-settings.mjs
 function useEditorSettings({ stylesId }) {
-  const { editorSettings, blockTypes } = (0, import_data4.useSelect)(
+  const { editorSettings } = (0, import_data4.useSelect)(
     (select2) => ({
       editorSettings: unlock(
         select2(import_core_data3.store)
-      ).getEditorSettings(),
-      blockTypes: select2(import_blocks2.store).getBlockTypes()
+      ).getEditorSettings()
     }),
     []
   );
   const { user: globalStyles } = useUserGlobalStyles(stylesId);
-  const [globalStylesCSS] = (0, import_element2.useMemo)(
-    () => generateGlobalStyles(globalStyles, blockTypes),
-    [globalStyles, blockTypes]
-  );
+  const [globalStylesCSS] = generateGlobalStyles(globalStyles);
   const hasEditorSettings = !!editorSettings;
   const styles = (0, import_element2.useMemo)(() => {
     if (!hasEditorSettings) {
@@ -2866,17 +2856,12 @@ function useEditorAssets() {
 
 // packages/lazy-editor/build-module/components/editor/index.mjs
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-var {
-  Editor: PrivateEditor,
-  BackButton,
-  PreferencesModal
-} = unlock(import_editor.privateApis);
+var { Editor: PrivateEditor, BackButton } = unlock(import_editor.privateApis);
 function Editor({
   postType,
   postId,
   settings,
-  backButton,
-  onActionPerformed
+  backButton
 }) {
   const homePage = (0, import_data6.useSelect)(
     (select2) => {
@@ -2913,17 +2898,7 @@ function Editor({
   const finalSettings = (0, import_element4.useMemo)(
     () => ({
       ...editorSettings,
-      ...settings,
-      /*
-       * The theme's styles and the user's global styles, then whatever the
-       * host adds for the surface it is rendering into. Spelled out after
-       * the spread because `styles` is a list each source adds to: a host
-       * contributing its own must not drop everyone else's.
-       */
-      styles: [
-        ...editorSettings.styles ?? [],
-        ...settings?.styles ?? []
-      ]
+      ...settings
     }),
     [editorSettings, settings]
   );
@@ -2941,7 +2916,7 @@ function Editor({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
     PrivateEditor,
     {
       postType: resolvedPostType,
@@ -2949,11 +2924,7 @@ function Editor({
       templateId,
       settings: finalSettings,
       styles: finalSettings.styles,
-      onActionPerformed,
-      children: [
-        backButton && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BackButton, { children: backButton }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PreferencesModal, {})
-      ]
+      children: backButton && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BackButton, { children: backButton })
     }
   );
 }
@@ -2963,7 +2934,7 @@ var import_i18n = __toESM(require_i18n(), 1);
 var import_element5 = __toESM(require_element(), 1);
 var import_block_editor = __toESM(require_block_editor(), 1);
 var import_editor2 = __toESM(require_editor(), 1);
-var import_blocks3 = __toESM(require_blocks(), 1);
+var import_blocks2 = __toESM(require_blocks(), 1);
 var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
 if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='95327475c1']")) {
   const style = document.createElement("style");
@@ -2980,7 +2951,7 @@ function PreviewContent({
   const descriptionId = (0, import_element5.useId)();
   const backgroundColor = useStyle("color.background");
   const actualBlocks = (0, import_element5.useMemo)(() => {
-    return blocks ?? (0, import_blocks3.parse)(content, {
+    return blocks ?? (0, import_blocks2.parse)(content, {
       __unstableSkipMigrationLogs: true
     });
   }, [content, blocks]);

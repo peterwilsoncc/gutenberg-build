@@ -1,4 +1,4 @@
-:where(.wp-block-search .wp-block-search__label) {
+.wp-block-search .wp-block-search__label {
   font-weight: bold;
 }
 

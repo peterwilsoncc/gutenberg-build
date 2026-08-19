@@ -94,7 +94,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe2, value, getSnapshot2]
         );
-        useEffect40(
+        useEffect39(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe2(function() {
@@ -120,7 +120,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot2();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React101 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState46 = React101.useState, useEffect40 = React101.useEffect, useLayoutEffect7 = React101.useLayoutEffect, useDebugValue2 = React101.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React101 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState46 = React101.useState, useEffect39 = React101.useEffect, useLayoutEffect7 = React101.useLayoutEffect, useDebugValue2 = React101.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React101.useSyncExternalStore ? React101.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -148,9 +148,9 @@ var require_with_selector_development = __commonJS({
         return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React101 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef61 = React101.useRef, useEffect40 = React101.useEffect, useMemo51 = React101.useMemo, useDebugValue2 = React101.useDebugValue;
+      var React101 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore3 = shim.useSyncExternalStore, useRef57 = React101.useRef, useEffect39 = React101.useEffect, useMemo51 = React101.useMemo, useDebugValue2 = React101.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot2, getServerSnapshot2, selector, isEqual) {
-        var instRef = useRef61(null);
+        var instRef = useRef57(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -191,7 +191,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot2, getServerSnapshot2, selector, isEqual]
         );
         var value = useSyncExternalStore3(subscribe2, instRef[0], instRef[1]);
-        useEffect40(
+        useEffect39(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -11408,7 +11408,7 @@ if (typeof process === "undefined" || true) {
 }
 var resets_default = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 if (typeof process === "undefined" || true) {
-  registerStyle3("2911fe3ed7", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+  registerStyle3("2ffedd8246", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
 }
 var focus_module_default = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
 if (typeof process === "undefined" || true) {
@@ -18210,7 +18210,7 @@ if (typeof process === "undefined" || true) {
 }
 var resets_default2 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 if (typeof process === "undefined" || true) {
-  registerStyle5("2911fe3ed7", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+  registerStyle5("2ffedd8246", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
 }
 var focus_module_default2 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
 if (typeof process === "undefined" || true) {
@@ -18780,7 +18780,7 @@ if (typeof process === "undefined" || true) {
 }
 var resets_default3 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 if (typeof process === "undefined" || true) {
-  registerStyle6("cb866dcef6", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
+  registerStyle6("5d38cbdd27", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
 }
 var style_default6 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
 var Root3 = (0, import_element21.forwardRef)(function Card({ render: render4, ...restProps }, ref) {
@@ -18877,7 +18877,7 @@ function registerStyle7(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle7("cb866dcef6", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
+  registerStyle7("5d38cbdd27", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
 }
 var style_default7 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
 var Header = (0, import_element22.forwardRef)(
@@ -18975,7 +18975,7 @@ function registerStyle8(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle8("cb866dcef6", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
+  registerStyle8("5d38cbdd27", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
 }
 var style_default8 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
 var Content = (0, import_element23.forwardRef)(
@@ -19073,7 +19073,7 @@ function registerStyle9(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle9("cb866dcef6", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
+  registerStyle9("5d38cbdd27", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._02872bf298eadc43__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}._5dffdaf2a6e669ac__content,.bbccc92e6ba5662d__header{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.bbccc92e6ba5662d__header+._5dffdaf2a6e669ac__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c1fa192587e1b4a6__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}._02872bf298eadc43__root>:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):first-child>.c1fa192587e1b4a6__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.bbccc92e6ba5662d__header,._5dffdaf2a6e669ac__content):last-child>.c1fa192587e1b4a6__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
 }
 var style_default9 = { "root": "_02872bf298eadc43__root", "header": "bbccc92e6ba5662d__header", "content": "_5dffdaf2a6e669ac__content", "fullbleed": "c1fa192587e1b4a6__fullbleed" };
 var FullBleed = (0, import_element24.forwardRef)(
@@ -19263,7 +19263,7 @@ if (typeof process === "undefined" || true) {
 }
 var global_css_defense_default4 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
 if (typeof process === "undefined" || true) {
-  registerStyle10("2911fe3ed7", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+  registerStyle10("2ffedd8246", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
 }
 var focus_module_default3 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
 var Header2 = (0, import_element31.forwardRef)(
@@ -20248,7 +20248,7 @@ if (typeof process === "undefined" || true) {
 }
 var resets_default5 = { "box-sizing": "_336cd3e4e743482f__box-sizing" };
 if (typeof process === "undefined" || true) {
-  registerStyle17("2911fe3ed7", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+  registerStyle17("2ffedd8246", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
 }
 var focus_module_default4 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
 if (typeof process === "undefined" || true) {
@@ -20667,7 +20667,7 @@ if (typeof process === "undefined" || true) {
 }
 var global_css_defense_default6 = { "button": "_6defc79820e382c6__button", "input": "d2cff2e5dea83bd1__input", "textarea": "_547d86373d02e108__textarea", "div": "_8c15fd0ed9f28ba4__div", "p": "_43cec3e1eec1066d__p", "heading": "e97669c6d9a38497__heading", "a": "_2c0831b0499dbd6e__a" };
 if (typeof process === "undefined" || true) {
-  registerStyle19("2911fe3ed7", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+  registerStyle19("2ffedd8246", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._64de9947bf305b7a__outset-ring--focus-within-visible:focus-within:has(:focus-visible),.af79fb116edb0dd7__outset-ring--focus:focus,.dfcfdc28396e5d98__outset-ring--focus-visible:focus-visible,.e5cd9ee879f6403a__outset-ring--focus-within:focus-within,:focus-visible ._81935a08e952f267__outset-ring--focus-parent-visible{--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within,.abc777e9713fa711__outset-ring--focus-except-active:focus{outline:none}._3c9f5ee9fc9c136d__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.abc777e9713fa711__outset-ring--focus-except-active:focus:not(:active){--focus-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color);outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
 }
 var focus_module_default5 = { "outset-ring--focus": "af79fb116edb0dd7__outset-ring--focus", "outset-ring--focus-visible": "dfcfdc28396e5d98__outset-ring--focus-visible", "outset-ring--focus-within": "e5cd9ee879f6403a__outset-ring--focus-within", "outset-ring--focus-within-visible": "_64de9947bf305b7a__outset-ring--focus-within-visible", "outset-ring--focus-parent-visible": "_81935a08e952f267__outset-ring--focus-parent-visible", "outset-ring--focus-except-active": "abc777e9713fa711__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3c9f5ee9fc9c136d__outset-ring--focus-within-except-active" };
 var Panel2 = (0, import_element45.forwardRef)(
@@ -20983,8 +20983,11 @@ var NavigableRegion = (0, import_element48.forwardRef)(
 NavigableRegion.displayName = "NavigableRegion";
 var navigable_region_default = NavigableRegion;
 
-// packages/admin-ui/build-module/navigation/index.mjs
-var import_i18n6 = __toESM(require_i18n(), 1);
+// packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
+var import_components2 = __toESM(require_components(), 1);
+var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components2.createSlotFill)("SidebarToggle");
+
+// packages/admin-ui/build-module/page/header.mjs
 var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
 function getRuntime22() {
@@ -21067,72 +21070,83 @@ function registerStyle22(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle22("72ef022400", ".bfb5a2dd8cceebd3__list{--focus-ring-size:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*2);list-style:none;margin:calc(var(--focus-ring-size)*-1);overflow-x:auto;padding:var(--focus-ring-size);scroll-padding:var(--focus-ring-size)}.a4759b4cb2c8bd92__li{flex-shrink:0}._07da506d3f2d9afe__item{align-items:center;color:var(--wpds-color-foreground-interactive-neutral-weak,#707070);display:flex;font-weight:var(--wpds-typography-font-weight-default,400);min-block-size:44px;min-inline-size:44px;text-decoration:none}._07da506d3f2d9afe__item:hover,._07da506d3f2d9afe__item[aria-current=page]{color:var(--wpds-color-foreground-interactive-neutral-weak-active,#1e1e1e)}._07da506d3f2d9afe__item[aria-current=page]{font-weight:var(--wpds-typography-font-weight-emphasis,600)}");
+  registerStyle22("ddd9aab364", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
 }
-var style_default20 = { "list": "bfb5a2dd8cceebd3__list", "li": "a4759b4cb2c8bd92__li", "item": "_07da506d3f2d9afe__item" };
-var Navigation = ({
-  items,
-  currentHref,
-  ariaLabel = (0, import_i18n6.__)("Sections"),
-  linkComponent,
-  className: className2
-}) => {
-  if (!items.length) {
-    return null;
-  }
-  const LinkComponent = linkComponent ?? "a";
-  if (true) {
-    const invalidItem = items.find(
-      (item) => typeof item.href !== "string"
-    );
-    if (invalidItem) {
-      throw new Error(
-        `Navigation: item "${invalidItem.label}" is missing an \`href\` prop.`
-      );
-    }
-    const duplicate = items.find(
-      (item, index2) => items.findIndex((other) => other.href === item.href) !== index2
-    );
-    if (duplicate) {
-      throw new Error(
-        `Navigation: duplicate \`href\` "${duplicate.href}". Each item must have a unique \`href\` so a single item receives \`aria-current="page"\`.`
-      );
-    }
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)("nav", { "aria-label": ariaLabel, className: className2, children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
-    Stack,
-    {
-      render: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)("ul", { role: "list" }),
-      direction: "row",
-      align: "center",
-      gap: "md",
-      className: style_default20.list,
-      children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime75.jsx)("li", { className: style_default20.li, children: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
-        Text,
-        {
-          variant: "body-md",
-          className: style_default20.item,
-          render: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
-            Link,
+var style_default20 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
+function Header3({
+  headingLevel = 1,
+  breadcrumbs,
+  badges,
+  visual,
+  title,
+  subTitle,
+  actions,
+  showSidebarToggle = true
+}) {
+  const HeadingTag = `h${headingLevel}`;
+  return /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(Stack, { direction: "column", className: style_default20.header, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(
+      Stack,
+      {
+        className: style_default20["header-content"],
+        direction: "row",
+        gap: "sm",
+        justify: "space-between",
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime75.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
+            showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+              SidebarToggleSlot,
+              {
+                bubblesVirtually: true,
+                className: style_default20["sidebar-toggle-slot"]
+              }
+            ),
+            visual && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+              "div",
+              {
+                className: style_default20["header-visual"],
+                "aria-hidden": "true",
+                children: visual
+              }
+            ),
+            title && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+              Text,
+              {
+                className: style_default20["header-title"],
+                render: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(HeadingTag, {}),
+                variant: "heading-lg",
+                children: title
+              }
+            ),
+            breadcrumbs,
+            badges
+          ] }),
+          actions && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+            Stack,
             {
-              variant: "unstyled",
-              "aria-current": item.href === currentHref ? "page" : void 0,
-              render: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(LinkComponent, { href: item.href })
+              align: "center",
+              className: style_default20["header-actions"],
+              direction: "row",
+              gap: "sm",
+              children: actions
             }
-          ),
-          children: item.label
-        }
-      ) }, item.href))
-    }
-  ) });
-};
-var navigation_default = Navigation;
+          )
+        ]
+      }
+    ),
+    subTitle && /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+      Text,
+      {
+        render: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)("p", {}),
+        variant: "body-md",
+        className: style_default20["header-subtitle"],
+        children: subTitle
+      }
+    )
+  ] });
+}
 
-// packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
-var import_components2 = __toESM(require_components(), 1);
-var { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components2.createSlotFill)("SidebarToggle");
-
-// packages/admin-ui/build-module/page/header.mjs
+// packages/admin-ui/build-module/page/index.mjs
 var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
 function getRuntime23() {
@@ -21215,189 +21229,9 @@ function registerStyle23(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle23("89e4060c20", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
+  registerStyle23("ddd9aab364", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
 }
-var style_default21 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "has-navigation": "_4b0f17e503d11619__has-navigation", "header-navigation": "_673c99dcbfb58211__header-navigation", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
-function Header3({
-  headingLevel = 1,
-  breadcrumbs,
-  badges,
-  visual,
-  title,
-  subTitle,
-  actions,
-  navigation,
-  components,
-  showSidebarToggle = true
-}) {
-  const HeadingTag = `h${headingLevel}`;
-  const hasNavigation = !!navigation?.items?.length;
-  return /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(
-    Stack,
-    {
-      direction: "column",
-      className: clsx_default(
-        style_default21.header,
-        hasNavigation && style_default21["has-navigation"]
-      ),
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(
-          Stack,
-          {
-            className: style_default21["header-content"],
-            direction: "row",
-            gap: "sm",
-            justify: "space-between",
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", justify: "start", children: [
-                showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-                  SidebarToggleSlot,
-                  {
-                    bubblesVirtually: true,
-                    className: style_default21["sidebar-toggle-slot"]
-                  }
-                ),
-                visual && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-                  "div",
-                  {
-                    className: style_default21["header-visual"],
-                    "aria-hidden": "true",
-                    children: visual
-                  }
-                ),
-                title && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-                  Text,
-                  {
-                    className: style_default21["header-title"],
-                    render: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(HeadingTag, {}),
-                    variant: "heading-lg",
-                    children: title
-                  }
-                ),
-                breadcrumbs,
-                badges
-              ] }),
-              actions && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-                Stack,
-                {
-                  align: "center",
-                  className: style_default21["header-actions"],
-                  direction: "row",
-                  gap: "sm",
-                  children: actions
-                }
-              )
-            ]
-          }
-        ),
-        subTitle && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-          Text,
-          {
-            render: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)("p", {}),
-            variant: "body-md",
-            className: style_default21["header-subtitle"],
-            children: subTitle
-          }
-        ),
-        hasNavigation && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
-          navigation_default,
-          {
-            ...navigation,
-            linkComponent: components?.link,
-            className: style_default21["header-navigation"]
-          }
-        )
-      ]
-    }
-  );
-}
-
-// packages/admin-ui/build-module/page/index.mjs
-var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
-var STYLE_HASH_ATTRIBUTE24 = "data-wp-hash";
-function getRuntime24() {
-  const globalScope = globalThis;
-  if (globalScope.__wpStyleRuntime) {
-    return globalScope.__wpStyleRuntime;
-  }
-  globalScope.__wpStyleRuntime = {
-    documents: /* @__PURE__ */ new Map(),
-    styles: /* @__PURE__ */ new Map(),
-    injectedStyles: /* @__PURE__ */ new WeakMap()
-  };
-  if (typeof document !== "undefined") {
-    registerDocument24(document);
-  }
-  return globalScope.__wpStyleRuntime;
-}
-function documentContainsStyleHash24(targetDocument, hash) {
-  if (!targetDocument.head) {
-    return false;
-  }
-  for (const style of targetDocument.head.querySelectorAll(
-    `style[${STYLE_HASH_ATTRIBUTE24}]`
-  )) {
-    if (style.getAttribute(STYLE_HASH_ATTRIBUTE24) === hash) {
-      return true;
-    }
-  }
-  return false;
-}
-function injectStyle24(targetDocument, hash, css) {
-  if (!targetDocument.head) {
-    return;
-  }
-  const runtime = getRuntime24();
-  let injectedStyles = runtime.injectedStyles.get(targetDocument);
-  if (!injectedStyles) {
-    injectedStyles = /* @__PURE__ */ new Set();
-    runtime.injectedStyles.set(targetDocument, injectedStyles);
-  }
-  if (injectedStyles.has(hash)) {
-    return;
-  }
-  if (documentContainsStyleHash24(targetDocument, hash)) {
-    injectedStyles.add(hash);
-    return;
-  }
-  const style = targetDocument.createElement("style");
-  style.setAttribute(STYLE_HASH_ATTRIBUTE24, hash);
-  style.appendChild(targetDocument.createTextNode(css));
-  targetDocument.head.appendChild(style);
-  injectedStyles.add(hash);
-}
-function registerDocument24(targetDocument) {
-  const runtime = getRuntime24();
-  runtime.documents.set(
-    targetDocument,
-    (runtime.documents.get(targetDocument) ?? 0) + 1
-  );
-  for (const [hash, css] of runtime.styles) {
-    injectStyle24(targetDocument, hash, css);
-  }
-  return () => {
-    const count = runtime.documents.get(targetDocument);
-    if (count === void 0) {
-      return;
-    }
-    if (count <= 1) {
-      runtime.documents.delete(targetDocument);
-      return;
-    }
-    runtime.documents.set(targetDocument, count - 1);
-  };
-}
-function registerStyle24(hash, css) {
-  const runtime = getRuntime24();
-  runtime.styles.set(hash, css);
-  for (const targetDocument of runtime.documents.keys()) {
-    injectStyle24(targetDocument, hash, css);
-  }
-}
-if (typeof process === "undefined" || true) {
-  registerStyle24("89e4060c20", "._956b6df0898efed0__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._0625b55e82a0d93d__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.a43c44d5ae28b2e8__header-content{min-height:var(--wpds-dimension-size-md,32px)}.b7cb5b9daf3a3b25__header-actions{flex-shrink:0}._8113be94e7caf73c__header-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._9a776c7f70996f61__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}.d5e0920cd15d35bc__sidebar-toggle-slot:empty{display:none}._60fea2f6bf5319cd__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#707070);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation,._0625b55e82a0d93d__header._4b0f17e503d11619__has-navigation ._60fea2f6bf5319cd__header-subtitle{padding-block-end:0}._673c99dcbfb58211__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}.be5e57d029ec4036__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._128806d0b26e3a50__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
-}
-var style_default22 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "has-navigation": "_4b0f17e503d11619__has-navigation", "header-navigation": "_673c99dcbfb58211__header-navigation", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
+var style_default21 = { "page": "_956b6df0898efed0__page", "header": "_0625b55e82a0d93d__header", "header-content": "a43c44d5ae28b2e8__header-content", "header-actions": "b7cb5b9daf3a3b25__header-actions", "header-title": "_8113be94e7caf73c__header-title", "header-visual": "_9a776c7f70996f61__header-visual", "sidebar-toggle-slot": "d5e0920cd15d35bc__sidebar-toggle-slot", "header-subtitle": "_60fea2f6bf5319cd__header-subtitle", "content": "be5e57d029ec4036__content", "has-padding": "_128806d0b26e3a50__has-padding" };
 function Page({
   headingLevel,
   breadcrumbs,
@@ -21408,16 +21242,14 @@ function Page({
   children,
   className: className2,
   actions,
-  navigation,
-  components,
   ariaLabel,
   hasPadding = false,
   showSidebarToggle = true
 }) {
-  const classes = clsx_default(style_default22.page, className2);
+  const classes = clsx_default(style_default21.page, className2);
   const effectiveAriaLabel = ariaLabel ?? (typeof title === "string" ? title : "");
-  return /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
-    (title || breadcrumbs || badges || actions || visual || !!navigation?.items?.length) && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(navigable_region_default, { className: classes, ariaLabel: effectiveAriaLabel, children: [
+    (title || breadcrumbs || badges || actions || visual) && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
       Header3,
       {
         headingLevel,
@@ -21427,17 +21259,15 @@ function Page({
         title,
         subTitle,
         actions,
-        navigation,
-        components,
         showSidebarToggle
       }
     ),
-    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+    hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(
       "div",
       {
         className: clsx_default(
-          style_default22.content,
-          style_default22["has-padding"]
+          style_default21.content,
+          style_default21["has-padding"]
         ),
         children
       }
@@ -21452,11 +21282,11 @@ var import_core_data3 = __toESM(require_core_data());
 var import_data10 = __toESM(require_data());
 var import_editor = __toESM(require_editor());
 var import_html_entities = __toESM(require_html_entities());
-var import_i18n45 = __toESM(require_i18n());
+var import_i18n44 = __toESM(require_i18n());
 
 // packages/media-editor/build-module/components/media-editor-provider/index.mjs
 var import_element49 = __toESM(require_element(), 1);
-var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
 var MediaEditorContext = (0, import_element49.createContext)(
   void 0
 );
@@ -21471,7 +21301,7 @@ function MediaEditorProvider({
     onChange,
     fields: settings.fields || []
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(MediaEditorContext.Provider, { value: contextValue, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(MediaEditorContext.Provider, { value: contextValue, children });
 }
 function useMediaEditorContext() {
   const context = (0, import_element49.useContext)(MediaEditorContext);
@@ -21486,7 +21316,7 @@ function useMediaEditorContext() {
 // packages/media-editor/build-module/components/media-preview/index.mjs
 var import_components3 = __toESM(require_components(), 1);
 var import_element50 = __toESM(require_element(), 1);
-var import_i18n7 = __toESM(require_i18n(), 1);
+var import_i18n6 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/utils/get-media-type.mjs
 function getMediaTypeFromMimeType(mimeType) {
@@ -21506,7 +21336,7 @@ function getMediaTypeFromMimeType(mimeType) {
 }
 
 // packages/media-editor/build-module/components/media-preview/index.mjs
-var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
 function MediaPreviewContent({
   mediaType,
   mediaUrl,
@@ -21519,7 +21349,7 @@ function MediaPreviewContent({
 }) {
   switch (mediaType.type) {
     case "image":
-      return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
         "img",
         {
           className: loadingState === "loaded" ? "loaded" : "",
@@ -21530,21 +21360,21 @@ function MediaPreviewContent({
         }
       );
     case "video":
-      return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("video", { src: mediaUrl, controls: true, onError, children: displayTitle });
+      return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("video", { src: mediaUrl, controls: true, onError, children: displayTitle });
     case "audio":
-      return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("audio", { src: mediaUrl, controls: true, onError, children: displayTitle });
+      return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("audio", { src: mediaUrl, controls: true, onError, children: displayTitle });
     default:
-      return /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)("div", { className: "media-editor-preview__file-info", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("p", { className: "media-editor-preview__file-name", children: displayTitle }),
-        /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("p", { className: "media-editor-preview__mime-type", children: mimeType }),
-        /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)("div", { className: "media-editor-preview__file-info", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("p", { className: "media-editor-preview__file-name", children: displayTitle }),
+        /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("p", { className: "media-editor-preview__mime-type", children: mimeType }),
+        /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
           "a",
           {
             href: mediaUrl,
             target: "_blank",
             rel: "noopener",
             className: "media-editor-preview__download-link",
-            children: (0, import_i18n7.__)("View file")
+            children: (0, import_i18n6.__)("View file")
           }
         )
       ] });
@@ -21561,23 +21391,23 @@ function MediaPreview(props) {
   } = media || {};
   const mediaType = getMediaTypeFromMimeType(mimeType);
   if (!mediaUrl) {
-    return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("div", { className: "media-editor-preview media-editor-preview--empty", children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("p", { children: (0, import_i18n7.__)("No media file available.") }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("div", { className: "media-editor-preview media-editor-preview--empty", children: /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("p", { children: (0, import_i18n6.__)("No media file available.") }) });
   }
   if (loadingState === "error") {
-    return /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)("div", { className: "media-editor-preview media-editor-preview--error", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("p", { children: (0, import_i18n7.__)("Failed to load media file.") }),
-      /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("p", { className: "media-editor-preview__url", children: mediaUrl })
+    return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)("div", { className: "media-editor-preview media-editor-preview--error", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("p", { children: (0, import_i18n6.__)("Failed to load media file.") }),
+      /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("p", { className: "media-editor-preview__url", children: mediaUrl })
     ] });
   }
   const displayTitle = typeof title === "string" ? title : title?.rendered || title?.raw;
-  return /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(
     "div",
     {
       ...props,
       className: `media-editor-preview media-editor-preview--${mediaType.type}`,
       children: [
-        mediaType.type === "image" && loadingState === "loading" && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("div", { className: "media-editor-preview__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(import_components3.Spinner, {}) }),
-        /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
+        mediaType.type === "image" && loadingState === "loading" && /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("div", { className: "media-editor-preview__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(import_components3.Spinner, {}) }),
+        /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(
           MediaPreviewContent,
           {
             mediaType,
@@ -21596,7 +21426,7 @@ function MediaPreview(props) {
 }
 
 // packages/dataviews/build-module/constants.mjs
-var import_i18n8 = __toESM(require_i18n(), 1);
+var import_i18n7 = __toESM(require_i18n(), 1);
 var OPERATOR_IS_ANY = "isAny";
 var OPERATOR_IS_NONE = "isNone";
 var OPERATOR_IS_ALL = "isAll";
@@ -21620,8 +21450,8 @@ var OPERATOR_STARTS_WITH = "startsWith";
 var OPERATOR_ON = "on";
 var OPERATOR_NOT_ON = "notOn";
 var sortLabels = {
-  asc: (0, import_i18n8.__)("Sort ascending"),
-  desc: (0, import_i18n8.__)("Sort descending")
+  asc: (0, import_i18n7.__)("Sort ascending"),
+  desc: (0, import_i18n7.__)("Sort descending")
 };
 
 // packages/dataviews/build-module/lock-unlock.mjs
@@ -21673,7 +21503,7 @@ function useElements({
 }
 
 // packages/dataviews/build-module/utils/operators.mjs
-var import_i18n9 = __toESM(require_i18n(), 1);
+var import_i18n8 = __toESM(require_i18n(), 1);
 var import_element52 = __toESM(require_element(), 1);
 var import_date2 = __toESM(require_date(), 1);
 
@@ -21696,10 +21526,10 @@ function parseTime(value) {
 }
 
 // packages/dataviews/build-module/utils/operators.mjs
-var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
 var filterTextWrappers = {
-  Name: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
-  Value: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
+  Name: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", { className: "dataviews-filters__summary-filter-text-name" }),
+  Value: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", { className: "dataviews-filters__summary-filter-text-value" })
 };
 function toComparableTemporals(fieldValue, filterValue) {
   const filterTime = parseTime(filterValue);
@@ -21727,11 +21557,11 @@ function getRelativeDate(value, unit) {
 }
 var isNoneOperatorDefinition = {
   /* translators: DataViews operator name */
-  label: (0, import_i18n9.__)("Is none of"),
+  label: (0, import_i18n8.__)("Is none of"),
   filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-    (0, import_i18n9.sprintf)(
+    (0, import_i18n8.sprintf)(
       /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
-      (0, import_i18n9.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
+      (0, import_i18n8.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
       filter.name,
       activeElements.map((element) => element.label).join(", ")
     ),
@@ -21757,11 +21587,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS_ANY,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Includes"),
+    label: (0, import_i18n8.__)("Includes"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
-        (0, import_i18n9.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements.map((element) => element.label).join(", ")
       ),
@@ -21790,11 +21620,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS_ALL,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Includes all"),
+    label: (0, import_i18n8.__)("Includes all"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
-        (0, import_i18n9.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements.map((element) => element.label).join(", ")
       ),
@@ -21817,11 +21647,11 @@ var OPERATORS = [
   {
     name: OPERATOR_BETWEEN,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Between (inc)"),
+    label: (0, import_i18n8.__)("Between (inc)"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
-        (0, import_i18n9.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s between (inc): </Name><Value>%2$s and %3$s</Value>"
         ),
         filter.name,
@@ -21853,11 +21683,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IN_THE_PAST,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("In the past"),
+    label: (0, import_i18n8.__)("In the past"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
-        (0, import_i18n9.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s is in the past: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -21881,11 +21711,11 @@ var OPERATORS = [
   {
     name: OPERATOR_OVER,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Over"),
+    label: (0, import_i18n8.__)("Over"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
-        (0, import_i18n9.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
         filter.name,
         `${activeElements[0].value.value} ${activeElements[0].value.unit}`
       ),
@@ -21907,11 +21737,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Is"),
+    label: (0, import_i18n8.__)("Is"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
-        (0, import_i18n9.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -21925,11 +21755,11 @@ var OPERATORS = [
   {
     name: OPERATOR_IS_NOT,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Is not"),
+    label: (0, import_i18n8.__)("Is not"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
-        (0, import_i18n9.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -21943,11 +21773,11 @@ var OPERATORS = [
   {
     name: OPERATOR_LESS_THAN,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Less than"),
+    label: (0, import_i18n8.__)("Less than"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
-        (0, import_i18n9.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -21965,11 +21795,11 @@ var OPERATORS = [
   {
     name: OPERATOR_GREATER_THAN,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Greater than"),
+    label: (0, import_i18n8.__)("Greater than"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
-        (0, import_i18n9.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s is greater than: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -21989,11 +21819,11 @@ var OPERATORS = [
   {
     name: OPERATOR_LESS_THAN_OR_EQUAL,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Less than or equal"),
+    label: (0, import_i18n8.__)("Less than or equal"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
-        (0, import_i18n9.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s is less than or equal to: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -22013,11 +21843,11 @@ var OPERATORS = [
   {
     name: OPERATOR_GREATER_THAN_OR_EQUAL,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Greater than or equal"),
+    label: (0, import_i18n8.__)("Greater than or equal"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
-        (0, import_i18n9.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s is greater than or equal to: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -22037,11 +21867,11 @@ var OPERATORS = [
   {
     name: OPERATOR_BEFORE,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Before"),
+    label: (0, import_i18n8.__)("Before"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
-        (0, import_i18n9.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -22062,11 +21892,11 @@ var OPERATORS = [
   {
     name: OPERATOR_AFTER,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("After"),
+    label: (0, import_i18n8.__)("After"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
-        (0, import_i18n9.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -22087,11 +21917,11 @@ var OPERATORS = [
   {
     name: OPERATOR_BEFORE_INC,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Before (inc)"),
+    label: (0, import_i18n8.__)("Before (inc)"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
-        (0, import_i18n9.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s is on or before: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -22114,11 +21944,11 @@ var OPERATORS = [
   {
     name: OPERATOR_AFTER_INC,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("After (inc)"),
+    label: (0, import_i18n8.__)("After (inc)"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
-        (0, import_i18n9.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s is on or after: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -22141,11 +21971,11 @@ var OPERATORS = [
   {
     name: OPERATOR_CONTAINS,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Contains"),
+    label: (0, import_i18n8.__)("Contains"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
-        (0, import_i18n9.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -22163,11 +21993,11 @@ var OPERATORS = [
   {
     name: OPERATOR_NOT_CONTAINS,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Doesn't contain"),
+    label: (0, import_i18n8.__)("Doesn't contain"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
-        (0, import_i18n9.__)(
+        (0, import_i18n8.__)(
           "<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"
         ),
         filter.name,
@@ -22187,11 +22017,11 @@ var OPERATORS = [
   {
     name: OPERATOR_STARTS_WITH,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Starts with"),
+    label: (0, import_i18n8.__)("Starts with"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
-        (0, import_i18n9.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -22209,11 +22039,11 @@ var OPERATORS = [
   {
     name: OPERATOR_ON,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("On"),
+    label: (0, import_i18n8.__)("On"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
-        (0, import_i18n9.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -22234,11 +22064,11 @@ var OPERATORS = [
   {
     name: OPERATOR_NOT_ON,
     /* translators: DataViews operator name */
-    label: (0, import_i18n9.__)("Not on"),
+    label: (0, import_i18n8.__)("Not on"),
     filterText: (filter, activeElements) => (0, import_element52.createInterpolateElement)(
-      (0, import_i18n9.sprintf)(
+      (0, import_i18n8.sprintf)(
         /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
-        (0, import_i18n9.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+        (0, import_i18n8.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
         filter.name,
         activeElements[0].label
       ),
@@ -22261,15 +22091,15 @@ var getOperatorByName = (name) => OPERATORS.find((op) => op.name === name);
 var getAllOperatorNames = () => OPERATORS.map((op) => op.name);
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-var import_element62 = __toESM(require_element(), 1);
+var import_element58 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/validated-form-controls/control-with-error.mjs
-var import_i18n10 = __toESM(require_i18n(), 1);
+var import_i18n9 = __toESM(require_i18n(), 1);
 var import_element53 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/validated-form-controls/validity-indicator.mjs
 var import_components4 = __toESM(require_components(), 1);
-var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
 function ValidityIndicator({
   id,
   type,
@@ -22279,7 +22109,7 @@ function ValidityIndicator({
     valid: published_default,
     invalid: error_default
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime80.jsxs)(
     "p",
     {
       id,
@@ -22288,7 +22118,7 @@ function ValidityIndicator({
         `is-${type}`
       ),
       children: [
-        type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(import_components4.Spinner, { className: "dataviews-validated-control__indicator-spinner" }) : /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
+        type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_components4.Spinner, { className: "dataviews-validated-control__indicator-spinner" }) : /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
           import_components4.Icon,
           {
             className: "dataviews-validated-control__indicator-icon",
@@ -22304,13 +22134,13 @@ function ValidityIndicator({
 }
 
 // packages/dataviews/build-module/components/validated-form-controls/control-with-error.mjs
-var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
 function appendRequiredIndicator(label, required, markWhenOptional) {
   let suffix;
   if (required && !markWhenOptional) {
-    suffix = `(${(0, import_i18n10.__)("Required")})`;
+    suffix = `(${(0, import_i18n9.__)("Required")})`;
   } else if (!required && markWhenOptional) {
-    suffix = `(${(0, import_i18n10.__)("Optional")})`;
+    suffix = `(${(0, import_i18n9.__)("Optional")})`;
   }
   if (!suffix) {
     return label;
@@ -22318,7 +22148,7 @@ function appendRequiredIndicator(label, required, markWhenOptional) {
   if (typeof label === "string") {
     return `${label} ${suffix}`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(import_jsx_runtime82.Fragment, { children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(import_jsx_runtime81.Fragment, { children: [
     label,
     " ",
     suffix
@@ -22340,15 +22170,12 @@ function UnforwardedControlWithError({
   (0, import_element53.useEffect)(() => {
     const validityTarget = getValidityTarget();
     const handler = () => {
-      if (customValidity?.type !== "validating") {
-        setErrorMessage(validityTarget?.validationMessage);
-      }
       setShowMessage(true);
       validityTarget?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
     };
     validityTarget?.addEventListener("invalid", handler);
     return () => validityTarget?.removeEventListener("invalid", handler);
-  }, [customValidity?.type, getValidityTarget]);
+  }, [getValidityTarget]);
   (0, import_element53.useEffect)(() => {
     const validityTarget = getValidityTarget();
     const suppressNativePopover = (event) => {
@@ -22444,7 +22271,7 @@ function UnforwardedControlWithError({
   const messageId = (0, import_element53.useId)();
   const message2 = (() => {
     if (errorMessage) {
-      return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
         ValidityIndicator,
         {
           id: messageId,
@@ -22454,7 +22281,7 @@ function UnforwardedControlWithError({
       );
     }
     if (statusMessage?.type) {
-      return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
         ValidityIndicator,
         {
           id: messageId,
@@ -22485,7 +22312,7 @@ function UnforwardedControlWithError({
     setDescribedBy(target, !!visibleMessage);
     return () => setDescribedBy(target, false);
   }, [visibleMessage, messageId, getValidityTarget]);
-  return /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)("div", { className, ref: forwardedRef, onBlur, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)("div", { className, ref: forwardedRef, onBlur, children: [
     (0, import_element53.cloneElement)(children, {
       label: appendRequiredIndicator(
         children.props.label,
@@ -22504,7 +22331,7 @@ ControlWithError.displayName = "ControlWithError";
 var import_element54 = __toESM(require_element(), 1);
 var import_compose3 = __toESM(require_compose(), 1);
 var import_components5 = __toESM(require_components(), 1);
-var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedCheckboxControl = ({
   required,
   customValidity,
@@ -22513,7 +22340,7 @@ var UnforwardedValidatedCheckboxControl = ({
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element54.useRef)(null);
   const mergedRefs = (0, import_compose3.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
     ControlWithError,
     {
       required,
@@ -22523,7 +22350,7 @@ var UnforwardedValidatedCheckboxControl = ({
       getValidityTarget: () => validityTargetRef.current?.querySelector(
         'input[type="checkbox"]'
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
         import_components5.CheckboxControl,
         {
           ...restProps
@@ -22535,12 +22362,12 @@ var UnforwardedValidatedCheckboxControl = ({
 var ValidatedCheckboxControl = (0, import_element54.forwardRef)(UnforwardedValidatedCheckboxControl);
 ValidatedCheckboxControl.displayName = "ValidatedCheckboxControl";
 
-// packages/dataviews/build-module/components/validated-form-controls/combobox-control.mjs
+// packages/dataviews/build-module/components/validated-form-controls/number-control.mjs
 var import_element55 = __toESM(require_element(), 1);
 var import_compose4 = __toESM(require_compose(), 1);
 var import_components6 = __toESM(require_components(), 1);
-var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
-var UnforwardedValidatedComboboxControl = ({
+var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
+var UnforwardedValidatedNumberControl = ({
   required,
   customValidity,
   markWhenOptional,
@@ -22548,127 +22375,34 @@ var UnforwardedValidatedComboboxControl = ({
 }, forwardedRef) => {
   const validityTargetRef = (0, import_element55.useRef)(null);
   const mergedRefs = (0, import_compose4.useMergeRefs)([forwardedRef, validityTargetRef]);
-  (0, import_element55.useEffect)(() => {
-    const input = validityTargetRef.current?.querySelector(
-      'input[role="combobox"]'
-    );
-    if (input) {
-      input.required = required ?? false;
-    }
-  }, [required]);
-  return (
-    // TODO: Bug - Missing value error is not cleared immediately on change, waits for blur.
-    /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
-      ControlWithError,
-      {
-        required,
-        markWhenOptional,
-        ref: mergedRefs,
-        customValidity,
-        getValidityTarget: () => validityTargetRef.current?.querySelector(
-          'input[role="combobox"]'
-        ),
-        children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_components6.ComboboxControl, { ...restProps })
-      }
-    )
-  );
-};
-var ValidatedComboboxControl = (0, import_element55.forwardRef)(UnforwardedValidatedComboboxControl);
-ValidatedComboboxControl.displayName = "ValidatedComboboxControl";
-
-// packages/dataviews/build-module/components/validated-form-controls/form-token-field.mjs
-var import_element56 = __toESM(require_element(), 1);
-var import_components7 = __toESM(require_components(), 1);
-var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
-var UnforwardedValidatedFormTokenField = ({
-  required,
-  customValidity,
-  markWhenOptional,
-  ...restProps
-}, forwardedRef) => {
-  const validityTargetRef = (0, import_element56.useRef)(null);
-  return /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(
-    "div",
-    {
-      className: "dataviews-validated-control__wrapper-with-error-delegate",
-      ref: forwardedRef,
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
-          ControlWithError,
-          {
-            required,
-            markWhenOptional,
-            customValidity,
-            getValidityTarget: () => validityTargetRef.current,
-            children: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(import_components7.FormTokenField, { ...restProps })
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
-          "input",
-          {
-            className: "dataviews-validated-control__error-delegate",
-            type: "text",
-            ref: validityTargetRef,
-            required,
-            value: restProps.value && restProps.value.length > 0 ? "hasvalue" : "",
-            tabIndex: -1,
-            onChange: () => {
-            },
-            onFocus: (e2) => {
-              e2.target.previousElementSibling?.querySelector(
-                'input[type="text"]'
-              )?.focus();
-            }
-          }
-        )
-      ]
-    }
-  );
-};
-var ValidatedFormTokenField = (0, import_element56.forwardRef)(UnforwardedValidatedFormTokenField);
-ValidatedFormTokenField.displayName = "ValidatedFormTokenField";
-
-// packages/dataviews/build-module/components/validated-form-controls/number-control.mjs
-var import_element57 = __toESM(require_element(), 1);
-var import_compose5 = __toESM(require_compose(), 1);
-var import_components8 = __toESM(require_components(), 1);
-var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
-var UnforwardedValidatedNumberControl = ({
-  required,
-  customValidity,
-  markWhenOptional,
-  ...restProps
-}, forwardedRef) => {
-  const validityTargetRef = (0, import_element57.useRef)(null);
-  const mergedRefs = (0, import_compose5.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
     ControlWithError,
     {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_components8.__experimentalNumberControl, { ref: mergedRefs, ...restProps })
+      children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(import_components6.__experimentalNumberControl, { ref: mergedRefs, ...restProps })
     }
   );
 };
-var ValidatedNumberControl = (0, import_element57.forwardRef)(UnforwardedValidatedNumberControl);
+var ValidatedNumberControl = (0, import_element55.forwardRef)(UnforwardedValidatedNumberControl);
 ValidatedNumberControl.displayName = "ValidatedNumberControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/radio-control.mjs
-var import_element58 = __toESM(require_element(), 1);
-var import_compose6 = __toESM(require_compose(), 1);
-var import_components9 = __toESM(require_components(), 1);
-var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
+var import_element56 = __toESM(require_element(), 1);
+var import_compose5 = __toESM(require_compose(), 1);
+var import_components7 = __toESM(require_components(), 1);
+var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedRadioControl = ({
   required,
   customValidity,
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element58.useRef)(null);
-  const mergedRefs = (0, import_compose6.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
+  const validityTargetRef = (0, import_element56.useRef)(null);
+  const mergedRefs = (0, import_compose5.useMergeRefs)([forwardedRef, validityTargetRef]);
+  return /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(
     ControlWithError,
     {
       required,
@@ -22678,35 +22412,35 @@ var UnforwardedValidatedRadioControl = ({
       getValidityTarget: () => validityTargetRef.current?.querySelector(
         'input[type="radio"]'
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_components9.RadioControl, { ...restProps })
+      children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(import_components7.RadioControl, { ...restProps })
     }
   );
 };
-var ValidatedRadioControl = (0, import_element58.forwardRef)(UnforwardedValidatedRadioControl);
+var ValidatedRadioControl = (0, import_element56.forwardRef)(UnforwardedValidatedRadioControl);
 ValidatedRadioControl.displayName = "ValidatedRadioControl";
 
 // packages/dataviews/build-module/components/validated-form-controls/select-control.mjs
-var import_element59 = __toESM(require_element(), 1);
-var import_compose7 = __toESM(require_compose(), 1);
-var import_components10 = __toESM(require_components(), 1);
-var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
+var import_element57 = __toESM(require_element(), 1);
+var import_compose6 = __toESM(require_compose(), 1);
+var import_components8 = __toESM(require_components(), 1);
+var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
 var UnforwardedValidatedSelectControl = ({
   required,
   customValidity,
   markWhenOptional,
   ...restProps
 }, forwardedRef) => {
-  const validityTargetRef = (0, import_element59.useRef)(null);
-  const mergedRefs = (0, import_compose7.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+  const validityTargetRef = (0, import_element57.useRef)(null);
+  const mergedRefs = (0, import_compose6.useMergeRefs)([forwardedRef, validityTargetRef]);
+  return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
     ControlWithError,
     {
       required,
       markWhenOptional,
       customValidity,
       getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
-        import_components10.SelectControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+        import_components8.SelectControl,
         {
           ref: mergedRefs,
           // A runtime boolean cannot statically discriminate
@@ -22717,89 +22451,8 @@ var UnforwardedValidatedSelectControl = ({
     }
   );
 };
-var ValidatedSelectControl = (0, import_element59.forwardRef)(UnforwardedValidatedSelectControl);
+var ValidatedSelectControl = (0, import_element57.forwardRef)(UnforwardedValidatedSelectControl);
 ValidatedSelectControl.displayName = "ValidatedSelectControl";
-
-// packages/dataviews/build-module/components/validated-form-controls/toggle-control.mjs
-var import_element60 = __toESM(require_element(), 1);
-var import_compose8 = __toESM(require_compose(), 1);
-var import_components11 = __toESM(require_components(), 1);
-var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
-var UnforwardedValidatedToggleControl = ({
-  required,
-  customValidity,
-  markWhenOptional,
-  ...restProps
-}, forwardedRef) => {
-  const validityTargetRef = (0, import_element60.useRef)(null);
-  const mergedRefs = (0, import_compose8.useMergeRefs)([forwardedRef, validityTargetRef]);
-  return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
-    ControlWithError,
-    {
-      required,
-      markWhenOptional,
-      customValidity,
-      getValidityTarget: () => validityTargetRef.current,
-      children: /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
-        import_components11.ToggleControl,
-        {
-          ref: mergedRefs,
-          required,
-          ...restProps
-        }
-      )
-    }
-  );
-};
-var ValidatedToggleControl = (0, import_element60.forwardRef)(UnforwardedValidatedToggleControl);
-ValidatedToggleControl.displayName = "ValidatedToggleControl";
-
-// packages/dataviews/build-module/components/validated-form-controls/toggle-group-control.mjs
-var import_element61 = __toESM(require_element(), 1);
-var import_components12 = __toESM(require_components(), 1);
-var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
-var UnforwardedValidatedToggleGroupControl = ({
-  required,
-  customValidity,
-  markWhenOptional,
-  ...restProps
-}, forwardedRef) => {
-  const validityTargetRef = (0, import_element61.useRef)(null);
-  const nameAttr = (0, import_element61.useId)();
-  return /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)("div", { className: "dataviews-validated-control__wrapper-with-error-delegate", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
-      ControlWithError,
-      {
-        required,
-        markWhenOptional,
-        customValidity,
-        getValidityTarget: () => validityTargetRef.current,
-        children: /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(import_components12.__experimentalToggleGroupControl, { ref: forwardedRef, ...restProps })
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
-      "input",
-      {
-        className: "dataviews-validated-control__error-delegate",
-        type: "radio",
-        ref: validityTargetRef,
-        required,
-        checked: restProps.value !== void 0,
-        tabIndex: -1,
-        name: nameAttr,
-        onChange: () => {
-        },
-        onFocus: (e2) => {
-          e2.target.previousElementSibling?.querySelector(
-            '[data-active-item="true"]'
-          )?.focus();
-        }
-      }
-    )
-  ] });
-};
-var ValidatedToggleGroupControl = (0, import_element61.forwardRef)(UnforwardedValidatedToggleGroupControl);
-ValidatedToggleGroupControl.displayName = "ValidatedToggleGroupControl";
 
 // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.mjs
 function getCustomValidity(isValid2, validity) {
@@ -22828,7 +22481,7 @@ function getCustomValidity(isValid2, validity) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
 function Checkbox({
   field,
   onChange,
@@ -22839,12 +22492,12 @@ function Checkbox({
 }) {
   const { getValue, setValue, label, description, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element62.useCallback)(() => {
+  const onChangeControl = (0, import_element58.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
     );
   }, [data, getValue, onChange, setValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(
     ValidatedCheckboxControl,
     {
       required: !!field.isValid?.required,
@@ -22861,9 +22514,10 @@ function Checkbox({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/combobox.mjs
-var import_components13 = __toESM(require_components(), 1);
-var import_element63 = __toESM(require_element(), 1);
-var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
+var import_components9 = __toESM(require_components(), 1);
+var import_element59 = __toESM(require_element(), 1);
+var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedComboboxControl } = unlock2(import_components9.privateApis);
 function Combobox({
   data,
   field,
@@ -22873,7 +22527,7 @@ function Combobox({
 }) {
   const { label, description, placeholder, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data }) ?? "";
-  const onChangeControl = (0, import_element63.useCallback)(
+  const onChangeControl = (0, import_element59.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue ?? "" })),
     [data, onChange, setValue]
   );
@@ -22882,9 +22536,9 @@ function Combobox({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(import_components13.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(import_components9.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(
     ValidatedComboboxControl,
     {
       required: !!field.isValid?.required,
@@ -22903,29 +22557,28 @@ function Combobox({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
-var import_components15 = __toESM(require_components(), 1);
-var import_element66 = __toESM(require_element(), 1);
-var import_i18n12 = __toESM(require_i18n(), 1);
+var import_components11 = __toESM(require_components(), 1);
+var import_element62 = __toESM(require_element(), 1);
+var import_i18n11 = __toESM(require_i18n(), 1);
 var import_date4 = __toESM(require_date(), 1);
-import { speak as speak2 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
-var import_components14 = __toESM(require_components(), 1);
-var import_element64 = __toESM(require_element(), 1);
-var import_i18n11 = __toESM(require_i18n(), 1);
-var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
+var import_components10 = __toESM(require_components(), 1);
+var import_element60 = __toESM(require_element(), 1);
+var import_i18n10 = __toESM(require_i18n(), 1);
+var import_jsx_runtime88 = __toESM(require_jsx_runtime(), 1);
 var TIME_UNITS_OPTIONS = {
   [OPERATOR_IN_THE_PAST]: [
-    { value: "days", label: (0, import_i18n11.__)("Days") },
-    { value: "weeks", label: (0, import_i18n11.__)("Weeks") },
-    { value: "months", label: (0, import_i18n11.__)("Months") },
-    { value: "years", label: (0, import_i18n11.__)("Years") }
+    { value: "days", label: (0, import_i18n10.__)("Days") },
+    { value: "weeks", label: (0, import_i18n10.__)("Weeks") },
+    { value: "months", label: (0, import_i18n10.__)("Months") },
+    { value: "years", label: (0, import_i18n10.__)("Years") }
   ],
   [OPERATOR_OVER]: [
-    { value: "days", label: (0, import_i18n11.__)("Days ago") },
-    { value: "weeks", label: (0, import_i18n11.__)("Weeks ago") },
-    { value: "months", label: (0, import_i18n11.__)("Months ago") },
-    { value: "years", label: (0, import_i18n11.__)("Years ago") }
+    { value: "days", label: (0, import_i18n10.__)("Days ago") },
+    { value: "weeks", label: (0, import_i18n10.__)("Weeks ago") },
+    { value: "months", label: (0, import_i18n10.__)("Months ago") },
+    { value: "years", label: (0, import_i18n10.__)("Years ago") }
   ]
 };
 function RelativeDateControl({
@@ -22941,7 +22594,7 @@ function RelativeDateControl({
   const disabled2 = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
-  const onChangeValue = (0, import_element64.useCallback)(
+  const onChangeValue = (0, import_element60.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -22950,7 +22603,7 @@ function RelativeDateControl({
     ),
     [onChange, setValue, data, unit]
   );
-  const onChangeUnit = (0, import_element64.useCallback)(
+  const onChangeUnit = (0, import_element60.useCallback)(
     (newUnit) => onChange(
       setValue({
         item: data,
@@ -22959,17 +22612,17 @@ function RelativeDateControl({
     ),
     [onChange, setValue, data, relValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
-    import_components14.BaseControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+    import_components10.BaseControl,
     {
       id,
       className: clsx_default(className2, "dataviews-controls__relative-date"),
       label,
       hideLabelFromVision,
       help: description,
-      children: /* @__PURE__ */ (0, import_jsx_runtime93.jsxs)(Stack, { direction: "row", gap: "sm", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
-          import_components14.__experimentalNumberControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime88.jsxs)(Stack, { direction: "row", gap: "sm", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+          import_components10.__experimentalNumberControl,
           {
             className: "dataviews-controls__relative-date-number",
             spinControls: "none",
@@ -22980,11 +22633,11 @@ function RelativeDateControl({
             disabled: disabled2
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
-          import_components14.SelectControl,
+        /* @__PURE__ */ (0, import_jsx_runtime88.jsx)(
+          import_components10.SelectControl,
           {
             className: "dataviews-controls__relative-date-unit",
-            label: (0, import_i18n11.__)("Unit"),
+            label: (0, import_i18n10.__)("Unit"),
             value: unit,
             options,
             onChange: onChangeUnit,
@@ -22998,11 +22651,11 @@ function RelativeDateControl({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/utils/use-disabled-date-matchers.mjs
-var import_element65 = __toESM(require_element(), 1);
+var import_element61 = __toESM(require_element(), 1);
 function useDisabledDateMatchers(isValid2, parseDateFn) {
   const minConstraint = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
   const maxConstraint = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
-  const disabledMatchers = (0, import_element65.useMemo)(() => {
+  const disabledMatchers = (0, import_element61.useMemo)(() => {
     const matchers = [];
     if (minConstraint) {
       const minDate = parseDateFn(minConstraint);
@@ -23032,8 +22685,8 @@ function parseDateTime(dateTimeString) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
-var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl } = unlock2(import_components15.privateApis);
+var import_jsx_runtime89 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl } = unlock2(import_components11.privateApis);
 var formatDateTime = (value) => {
   if (!value) {
     return "";
@@ -23054,22 +22707,28 @@ function CalendarDateTimeControl({
   const disabled2 = field.isDisabled({ item: data, field });
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
-  const [calendarMonth, setCalendarMonth] = (0, import_element66.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element62.useState)(() => {
     const parsedDate = parseDateTime(value);
     return parsedDate || /* @__PURE__ */ new Date();
   });
-  const inputControlRef = (0, import_element66.useRef)(null);
-  const validationTimeoutRef = (0, import_element66.useRef)(void 0);
+  const inputControlRef = (0, import_element62.useRef)(null);
+  const validationTimeoutRef = (0, import_element62.useRef)(void 0);
+  const previousFocusRef = (0, import_element62.useRef)(null);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
-  const onChangeCallback = (0, import_element66.useCallback)(
+  const onChangeCallback = (0, import_element62.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  (0, import_element66.useEffect)(() => {
-    return () => clearTimeout(validationTimeoutRef.current);
+  (0, import_element62.useEffect)(() => {
+    return () => {
+      if (validationTimeoutRef.current) {
+        clearTimeout(validationTimeoutRef.current);
+      }
+    };
   }, []);
-  const onSelectDate = (0, import_element66.useCallback)(
+  const onSelectDate = (0, import_element62.useCallback)(
     (newDate) => {
+      let dateTimeValue;
       if (newDate) {
         const wpDate = (0, import_date4.dateI18n)("Y-m-d", newDate);
         let wpTime;
@@ -23079,27 +22738,29 @@ function CalendarDateTimeControl({
           wpTime = (0, import_date4.dateI18n)("H:i", newDate);
         }
         const finalDateTime = (0, import_date4.getDate)(`${wpDate}T${wpTime}`);
-        onChangeCallback(finalDateTime.toISOString());
+        dateTimeValue = finalDateTime.toISOString();
+        onChangeCallback(dateTimeValue);
+        if (validationTimeoutRef.current) {
+          clearTimeout(validationTimeoutRef.current);
+        }
       } else {
         onChangeCallback(void 0);
       }
-      clearTimeout(validationTimeoutRef.current);
+      previousFocusRef.current = inputControlRef.current && inputControlRef.current.ownerDocument.activeElement;
       validationTimeoutRef.current = setTimeout(() => {
-        const input = inputControlRef.current;
-        if (!input) {
-          return;
-        }
-        input.dispatchEvent(
-          new Event("invalid", { cancelable: true })
-        );
-        if (input.validationMessage) {
-          speak2(input.validationMessage);
+        if (inputControlRef.current) {
+          inputControlRef.current.focus();
+          inputControlRef.current.blur();
+          onChangeCallback(dateTimeValue);
+          if (previousFocusRef.current && previousFocusRef.current instanceof HTMLElement) {
+            previousFocusRef.current.focus();
+          }
         }
       }, 0);
     },
     [onChangeCallback, value]
   );
-  const handleManualDateTimeChange = (0, import_element66.useCallback)(
+  const handleManualDateTimeChange = (0, import_element62.useCallback)(
     (newValue) => {
       if (newValue) {
         const dateTime = (0, import_date4.getDate)(newValue);
@@ -23121,26 +22782,26 @@ function CalendarDateTimeControl({
   } = (0, import_date4.getSettings)();
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n12.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n11.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional && !hideLabelFromVision) {
-    displayLabel = `${label} (${(0, import_i18n12.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n11.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
-    import_components15.BaseControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
+    import_components11.BaseControl,
     {
       id,
       label: displayLabel,
       help: description,
       hideLabelFromVision,
-      children: /* @__PURE__ */ (0, import_jsx_runtime94.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime89.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
           ValidatedInputControl,
           {
             ref: inputControlRef,
             required: !!isValid2?.required,
             customValidity: getCustomValidity(isValid2, validity),
             type: "datetime-local",
-            label: (0, import_i18n12.__)("Date time"),
+            label: (0, import_i18n11.__)("Date time"),
             hideLabelFromVision: true,
             value: formatDateTime(value),
             onChange: handleManualDateTimeChange,
@@ -23149,7 +22810,7 @@ function CalendarDateTimeControl({
             max: maxConstraint ? formatDateTime(maxConstraint) : void 0
           }
         ),
-        !compact && /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+        !compact && /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
           Calendar,
           {
             style: { width: "100%" },
@@ -23177,7 +22838,7 @@ function DateTime({
   config
 }) {
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
       RelativeDateControl,
       {
         className: "dataviews-controls__datetime",
@@ -23189,7 +22850,7 @@ function DateTime({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime89.jsx)(
     CalendarDateTimeControl,
     {
       data,
@@ -23204,21 +22865,21 @@ function DateTime({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/date.mjs
-var import_components16 = __toESM(require_components(), 1);
-var import_element67 = __toESM(require_element(), 1);
-var import_i18n13 = __toESM(require_i18n(), 1);
+var import_components12 = __toESM(require_components(), 1);
+var import_element63 = __toESM(require_element(), 1);
+var import_i18n12 = __toESM(require_i18n(), 1);
 var import_date5 = __toESM(require_date(), 1);
-import { speak as speak3 } from "@wordpress/a11y";
-var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
+import { speak as speak2 } from "@wordpress/a11y";
+var import_jsx_runtime90 = __toESM(require_jsx_runtime(), 1);
 var DATE_PRESETS = [
   {
     id: "today",
-    label: (0, import_i18n13.__)("Today"),
+    label: (0, import_i18n12.__)("Today"),
     getValue: () => (0, import_date5.getDate)(null)
   },
   {
     id: "yesterday",
-    label: (0, import_i18n13.__)("Yesterday"),
+    label: (0, import_i18n12.__)("Yesterday"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return subDays(today, 1);
@@ -23226,7 +22887,7 @@ var DATE_PRESETS = [
   },
   {
     id: "past-week",
-    label: (0, import_i18n13.__)("Past week"),
+    label: (0, import_i18n12.__)("Past week"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return subDays(today, 7);
@@ -23234,7 +22895,7 @@ var DATE_PRESETS = [
   },
   {
     id: "past-month",
-    label: (0, import_i18n13.__)("Past month"),
+    label: (0, import_i18n12.__)("Past month"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return subMonths(today, 1);
@@ -23244,7 +22905,7 @@ var DATE_PRESETS = [
 var DATE_RANGE_PRESETS = [
   {
     id: "last-7-days",
-    label: (0, import_i18n13.__)("Last 7 days"),
+    label: (0, import_i18n12.__)("Last 7 days"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [subDays(today, 7), today];
@@ -23252,7 +22913,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "last-30-days",
-    label: (0, import_i18n13.__)("Last 30 days"),
+    label: (0, import_i18n12.__)("Last 30 days"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [subDays(today, 30), today];
@@ -23260,7 +22921,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "month-to-date",
-    label: (0, import_i18n13.__)("Month to date"),
+    label: (0, import_i18n12.__)("Month to date"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [startOfMonth(today), today];
@@ -23268,7 +22929,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "last-year",
-    label: (0, import_i18n13.__)("Last year"),
+    label: (0, import_i18n12.__)("Last year"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [subYears(today, 1), today];
@@ -23276,7 +22937,7 @@ var DATE_RANGE_PRESETS = [
   },
   {
     id: "year-to-date",
-    label: (0, import_i18n13.__)("Year to date"),
+    label: (0, import_i18n12.__)("Year to date"),
     getValue: () => {
       const today = (0, import_date5.getDate)(null);
       return [startOfYear(today), today];
@@ -23305,8 +22966,8 @@ function ValidatedDateControl({
   children
 }) {
   const { isValid: isValid2 } = field;
-  const [customValidity, setCustomValidity] = (0, import_element67.useState)(void 0);
-  const validateRefs = (0, import_element67.useCallback)(() => {
+  const [customValidity, setCustomValidity] = (0, import_element63.useState)(void 0);
+  const validateRefs = (0, import_element63.useCallback)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     for (const ref of refs) {
       const input = ref.current;
@@ -23320,7 +22981,7 @@ function ValidatedDateControl({
     }
     setCustomValidity(void 0);
   }, [inputRefs]);
-  (0, import_element67.useEffect)(() => {
+  (0, import_element63.useEffect)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     const result = validity ? getCustomValidity(isValid2, validity) : void 0;
     for (const ref of refs) {
@@ -23332,7 +22993,7 @@ function ValidatedDateControl({
       }
     }
   }, [inputRefs, isValid2, validity]);
-  (0, import_element67.useEffect)(() => {
+  (0, import_element63.useEffect)(() => {
     const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
     const handleInvalid = (event) => {
       event.preventDefault();
@@ -23347,7 +23008,7 @@ function ValidatedDateControl({
       }
     };
   }, [inputRefs, setIsTouched]);
-  (0, import_element67.useEffect)(() => {
+  (0, import_element63.useEffect)(() => {
     if (!isTouched) {
       return;
     }
@@ -23358,9 +23019,9 @@ function ValidatedDateControl({
       validateRefs();
     }
   }, [isTouched, isValid2, validity, validateRefs]);
-  (0, import_element67.useEffect)(() => {
+  (0, import_element63.useEffect)(() => {
     if (isTouched && customValidity?.message) {
-      speak3(customValidity.message);
+      speak2(customValidity.message);
     }
   }, [isTouched, customValidity?.message]);
   const onBlur = (event) => {
@@ -23371,9 +23032,9 @@ function ValidatedDateControl({
       setIsTouched(true);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)("div", { onBlur, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)("div", { onBlur, children: [
     children,
-    customValidity && /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(
+    customValidity && /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)(
       "p",
       {
         className: clsx_default(
@@ -23381,8 +23042,8 @@ function ValidatedDateControl({
           customValidity.type === "invalid" ? "is-invalid" : void 0
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
-            import_components16.Icon,
+          /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+            import_components12.Icon,
             {
               className: "components-validated-control__indicator-icon",
               icon: error_default,
@@ -23414,24 +23075,24 @@ function CalendarDateControl({
     format: fieldFormat
   } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const [selectedPresetId, setSelectedPresetId] = (0, import_element67.useState)(
+  const [selectedPresetId, setSelectedPresetId] = (0, import_element63.useState)(
     null
   );
   const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
   const fieldValue = getValue({ item: data });
   const value = typeof fieldValue === "string" ? fieldValue : void 0;
-  const [calendarMonth, setCalendarMonth] = (0, import_element67.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element63.useState)(() => {
     const parsedDate = parseDate(value);
     return parsedDate || /* @__PURE__ */ new Date();
   });
-  const [isTouched, setIsTouched] = (0, import_element67.useState)(false);
-  const validityTargetRef = (0, import_element67.useRef)(null);
+  const [isTouched, setIsTouched] = (0, import_element63.useState)(false);
+  const validityTargetRef = (0, import_element63.useRef)(null);
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
-  const onChangeCallback = (0, import_element67.useCallback)(
+  const onChangeCallback = (0, import_element63.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  const onSelectDate = (0, import_element67.useCallback)(
+  const onSelectDate = (0, import_element63.useCallback)(
     (newDate) => {
       const dateValue = newDate ? format(newDate, "yyyy-MM-dd") : void 0;
       onChangeCallback(dateValue);
@@ -23440,7 +23101,7 @@ function CalendarDateControl({
     },
     [onChangeCallback]
   );
-  const handlePresetClick = (0, import_element67.useCallback)(
+  const handlePresetClick = (0, import_element63.useCallback)(
     (preset) => {
       const presetDate = preset.getValue();
       const dateValue = formatDate(presetDate);
@@ -23451,7 +23112,7 @@ function CalendarDateControl({
     },
     [onChangeCallback]
   );
-  const handleManualDateChange = (0, import_element67.useCallback)(
+  const handleManualDateChange = (0, import_element63.useCallback)(
     (newValue) => {
       onChangeCallback(newValue);
       if (newValue) {
@@ -23470,11 +23131,11 @@ function CalendarDateControl({
   } = (0, import_date5.getSettings)();
   let displayLabel = label;
   if (isValid2?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n13.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n12.__)("Required")})`;
   } else if (!isValid2?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n13.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n12.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
     ValidatedDateControl,
     {
       field,
@@ -23482,16 +23143,16 @@ function CalendarDateControl({
       inputRefs: validityTargetRef,
       isTouched,
       setIsTouched,
-      children: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
-        import_components16.BaseControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+        import_components12.BaseControl,
         {
           id,
           className: "dataviews-controls__date",
           label: displayLabel,
           help: description,
           hideLabelFromVision,
-          children: /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -23501,8 +23162,8 @@ function CalendarDateControl({
                 children: [
                   DATE_PRESETS.map((preset) => {
                     const isSelected = selectedPresetId === preset.id;
-                    return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
-                      import_components16.Button,
+                    return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+                      import_components12.Button,
                       {
                         className: "dataviews-controls__date-preset",
                         variant: "tertiary",
@@ -23516,8 +23177,8 @@ function CalendarDateControl({
                       preset.id
                     );
                   }),
-                  /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
-                    import_components16.Button,
+                  /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+                    import_components12.Button,
                     {
                       className: "dataviews-controls__date-preset",
                       variant: "tertiary",
@@ -23525,18 +23186,18 @@ function CalendarDateControl({
                       size: "small",
                       disabled: !!selectedPresetId || disabled2,
                       accessibleWhenDisabled: true,
-                      children: (0, import_i18n13.__)("Custom")
+                      children: (0, import_i18n12.__)("Custom")
                     }
                   )
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
-              import_components16.__experimentalInputControl,
+            /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+              import_components12.__experimentalInputControl,
               {
                 ref: validityTargetRef,
                 type: "date",
-                label: (0, import_i18n13.__)("Date"),
+                label: (0, import_i18n12.__)("Date"),
                 hideLabelFromVision: true,
                 value,
                 onChange: handleManualDateChange,
@@ -23546,7 +23207,7 @@ function CalendarDateControl({
                 max: maxConstraint
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
               Calendar,
               {
                 style: { width: "100%" },
@@ -23591,7 +23252,7 @@ function CalendarDateRangeControl({
   }
   const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date5.getSettings)().l10n.startOfWeek;
   const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate);
-  const onChangeCallback = (0, import_element67.useCallback)(
+  const onChangeCallback = (0, import_element63.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -23602,10 +23263,10 @@ function CalendarDateRangeControl({
     },
     [data, onChange, setValue]
   );
-  const [selectedPresetId, setSelectedPresetId] = (0, import_element67.useState)(
+  const [selectedPresetId, setSelectedPresetId] = (0, import_element63.useState)(
     null
   );
-  const selectedRange = (0, import_element67.useMemo)(() => {
+  const selectedRange = (0, import_element63.useMemo)(() => {
     if (!value) {
       return null;
     }
@@ -23615,13 +23276,13 @@ function CalendarDateRangeControl({
       to: parseDate(to) || void 0
     };
   }, [value]);
-  const [calendarMonth, setCalendarMonth] = (0, import_element67.useState)(() => {
+  const [calendarMonth, setCalendarMonth] = (0, import_element63.useState)(() => {
     return selectedRange?.from || /* @__PURE__ */ new Date();
   });
-  const [isTouched, setIsTouched] = (0, import_element67.useState)(false);
-  const fromInputRef = (0, import_element67.useRef)(null);
-  const toInputRef = (0, import_element67.useRef)(null);
-  const updateDateRange = (0, import_element67.useCallback)(
+  const [isTouched, setIsTouched] = (0, import_element63.useState)(false);
+  const fromInputRef = (0, import_element63.useRef)(null);
+  const toInputRef = (0, import_element63.useRef)(null);
+  const updateDateRange = (0, import_element63.useCallback)(
     (fromDate, toDate2) => {
       if (!fromDate && !toDate2) {
         onChangeCallback(void 0);
@@ -23634,7 +23295,7 @@ function CalendarDateRangeControl({
     },
     [onChangeCallback]
   );
-  const onSelectCalendarRange = (0, import_element67.useCallback)(
+  const onSelectCalendarRange = (0, import_element63.useCallback)(
     (newRange) => {
       updateDateRange(newRange?.from, newRange?.to);
       setSelectedPresetId(null);
@@ -23642,7 +23303,7 @@ function CalendarDateRangeControl({
     },
     [updateDateRange]
   );
-  const handlePresetClick = (0, import_element67.useCallback)(
+  const handlePresetClick = (0, import_element63.useCallback)(
     (preset) => {
       const [startDate, endDate] = preset.getValue();
       setCalendarMonth(startDate);
@@ -23652,7 +23313,7 @@ function CalendarDateRangeControl({
     },
     [updateDateRange]
   );
-  const handleManualDateChange = (0, import_element67.useCallback)(
+  const handleManualDateChange = (0, import_element63.useCallback)(
     (fromOrTo, newValue) => {
       const [currentFrom, currentTo] = value || [
         void 0,
@@ -23675,11 +23336,11 @@ function CalendarDateRangeControl({
   const { timezone } = (0, import_date5.getSettings)();
   let displayLabel = label;
   if (field.isValid?.required && !markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n13.__)("Required")})`;
+    displayLabel = `${label} (${(0, import_i18n12.__)("Required")})`;
   } else if (!field.isValid?.required && markWhenOptional) {
-    displayLabel = `${label} (${(0, import_i18n13.__)("Optional")})`;
+    displayLabel = `${label} (${(0, import_i18n12.__)("Optional")})`;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
     ValidatedDateControl,
     {
       field,
@@ -23687,16 +23348,16 @@ function CalendarDateRangeControl({
       inputRefs: [fromInputRef, toInputRef],
       isTouched,
       setIsTouched,
-      children: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
-        import_components16.BaseControl,
+      children: /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+        import_components12.BaseControl,
         {
           id,
           className: "dataviews-controls__date",
           label: displayLabel,
           help: description,
           hideLabelFromVision,
-          children: /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(Stack, { direction: "column", gap: "lg", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)(Stack, { direction: "column", gap: "lg", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -23706,8 +23367,8 @@ function CalendarDateRangeControl({
                 children: [
                   DATE_RANGE_PRESETS.map((preset) => {
                     const isSelected = selectedPresetId === preset.id;
-                    return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
-                      import_components16.Button,
+                    return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+                      import_components12.Button,
                       {
                         className: "dataviews-controls__date-preset",
                         variant: "tertiary",
@@ -23721,8 +23382,8 @@ function CalendarDateRangeControl({
                       preset.id
                     );
                   }),
-                  /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
-                    import_components16.Button,
+                  /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+                    import_components12.Button,
                     {
                       className: "dataviews-controls__date-preset",
                       variant: "tertiary",
@@ -23730,13 +23391,13 @@ function CalendarDateRangeControl({
                       size: "small",
                       accessibleWhenDisabled: true,
                       disabled: !!selectedPresetId || disabled2,
-                      children: (0, import_i18n13.__)("Custom")
+                      children: (0, import_i18n12.__)("Custom")
                     }
                   )
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime90.jsxs)(
               Stack,
               {
                 direction: "row",
@@ -23744,12 +23405,12 @@ function CalendarDateRangeControl({
                 justify: "space-between",
                 className: "dataviews-controls__date-range-inputs",
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
-                    import_components16.__experimentalInputControl,
+                  /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+                    import_components12.__experimentalInputControl,
                     {
                       ref: fromInputRef,
                       type: "date",
-                      label: (0, import_i18n13.__)("From"),
+                      label: (0, import_i18n12.__)("From"),
                       hideLabelFromVision: true,
                       value: value?.[0],
                       onChange: (newValue) => handleManualDateChange("from", newValue),
@@ -23759,12 +23420,12 @@ function CalendarDateRangeControl({
                       max: maxConstraint
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
-                    import_components16.__experimentalInputControl,
+                  /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
+                    import_components12.__experimentalInputControl,
                     {
                       ref: toInputRef,
                       type: "date",
-                      label: (0, import_i18n13.__)("To"),
+                      label: (0, import_i18n12.__)("To"),
                       hideLabelFromVision: true,
                       value: value?.[1],
                       onChange: (newValue) => handleManualDateChange("to", newValue),
@@ -23777,7 +23438,7 @@ function CalendarDateRangeControl({
                 ]
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
               RangeCalendar,
               {
                 style: { width: "100%" },
@@ -23806,7 +23467,7 @@ function DateControl({
   validity
 }) {
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
       RelativeDateControl,
       {
         className: "dataviews-controls__date",
@@ -23819,7 +23480,7 @@ function DateControl({
     );
   }
   if (operator === OPERATOR_BETWEEN) {
-    return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
       CalendarDateRangeControl,
       {
         data,
@@ -23831,7 +23492,7 @@ function DateControl({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime90.jsx)(
     CalendarDateControl,
     {
       data,
@@ -23845,9 +23506,9 @@ function DateControl({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/select.mjs
-var import_components17 = __toESM(require_components(), 1);
-var import_element68 = __toESM(require_element(), 1);
-var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
+var import_components13 = __toESM(require_components(), 1);
+var import_element64 = __toESM(require_element(), 1);
+var import_jsx_runtime91 = __toESM(require_jsx_runtime(), 1);
 function Select2({
   data,
   field,
@@ -23860,7 +23521,7 @@ function Select2({
   const disabled2 = field.isDisabled({ item: data, field });
   const isMultiple = type === "array";
   const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
-  const onChangeControl = (0, import_element68.useCallback)(
+  const onChangeControl = (0, import_element64.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -23869,9 +23530,9 @@ function Select2({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(import_components17.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_components13.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(
     ValidatedSelectControl,
     {
       required: !!field.isValid?.required,
@@ -23890,7 +23551,7 @@ function Select2({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/adaptive-select.mjs
-var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime92 = __toESM(require_jsx_runtime(), 1);
 var ELEMENTS_THRESHOLD = 10;
 function AdaptiveSelect(props) {
   const { field } = props;
@@ -23899,19 +23560,19 @@ function AdaptiveSelect(props) {
     getElements: field.getElements
   });
   if (elements.length >= ELEMENTS_THRESHOLD) {
-    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Combobox, { ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(Combobox, { ...props });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Select2, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime92.jsx)(Select2, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/email.mjs
-var import_components19 = __toESM(require_components(), 1);
+var import_components15 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.mjs
-var import_components18 = __toESM(require_components(), 1);
-var import_element69 = __toESM(require_element(), 1);
-var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl2 } = unlock2(import_components18.privateApis);
+var import_components14 = __toESM(require_components(), 1);
+var import_element65 = __toESM(require_element(), 1);
+var import_jsx_runtime93 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl: ValidatedInputControl2 } = unlock2(import_components14.privateApis);
 function ValidatedText({
   data,
   field,
@@ -23926,7 +23587,7 @@ function ValidatedText({
   const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data });
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element69.useCallback)(
+  const onChangeControl = (0, import_element65.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -23935,7 +23596,7 @@ function ValidatedText({
     ),
     [data, setValue, onChange]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
     ValidatedInputControl2,
     {
       required: !!isValid2.required,
@@ -23959,7 +23620,7 @@ function ValidatedText({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/email.mjs
-var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime94 = __toESM(require_jsx_runtime(), 1);
 function Email({
   data,
   field,
@@ -23968,7 +23629,7 @@ function Email({
   markWhenOptional,
   validity
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(
     ValidatedText,
     {
       ...{
@@ -23979,15 +23640,15 @@ function Email({
         markWhenOptional,
         validity,
         type: "email",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_components19.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(import_components19.Icon, { icon: envelope_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components15.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(import_components15.Icon, { icon: envelope_default }) })
       }
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-controls/telephone.mjs
-var import_components20 = __toESM(require_components(), 1);
-var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
+var import_components16 = __toESM(require_components(), 1);
+var import_jsx_runtime95 = __toESM(require_jsx_runtime(), 1);
 function Telephone({
   data,
   field,
@@ -23996,7 +23657,7 @@ function Telephone({
   markWhenOptional,
   validity
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(
     ValidatedText,
     {
       ...{
@@ -24007,15 +23668,15 @@ function Telephone({
         markWhenOptional,
         validity,
         type: "tel",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components20.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components20.Icon, { icon: mobile_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components16.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)(import_components16.Icon, { icon: mobile_default }) })
       }
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-controls/url.mjs
-var import_components21 = __toESM(require_components(), 1);
-var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
+var import_components17 = __toESM(require_components(), 1);
+var import_jsx_runtime96 = __toESM(require_jsx_runtime(), 1);
 function Url({
   data,
   field,
@@ -24024,7 +23685,7 @@ function Url({
   markWhenOptional,
   validity
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(
     ValidatedText,
     {
       ...{
@@ -24035,17 +23696,17 @@ function Url({
         markWhenOptional,
         validity,
         type: "url",
-        prefix: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components21.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(import_components21.Icon, { icon: link_default }) })
+        prefix: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(import_components17.__experimentalInputControlPrefixWrapper, { variant: "icon", children: /* @__PURE__ */ (0, import_jsx_runtime96.jsx)(import_components17.Icon, { icon: link_default }) })
       }
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
-var import_components22 = __toESM(require_components(), 1);
-var import_element70 = __toESM(require_element(), 1);
-var import_i18n14 = __toESM(require_i18n(), 1);
-var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
+var import_components18 = __toESM(require_components(), 1);
+var import_element66 = __toESM(require_element(), 1);
+var import_i18n13 = __toESM(require_i18n(), 1);
+var import_jsx_runtime97 = __toESM(require_jsx_runtime(), 1);
 function toNumberOrEmpty(value) {
   if (value === "" || value === void 0) {
     return "";
@@ -24060,23 +23721,23 @@ function BetweenControls({
   step
 }) {
   const [min4 = "", max4 = ""] = value;
-  const onChangeMin = (0, import_element70.useCallback)(
+  const onChangeMin = (0, import_element66.useCallback)(
     (newValue) => onChange([toNumberOrEmpty(newValue), max4]),
     [onChange, max4]
   );
-  const onChangeMax = (0, import_element70.useCallback)(
+  const onChangeMax = (0, import_element66.useCallback)(
     (newValue) => onChange([min4, toNumberOrEmpty(newValue)]),
     [onChange, min4]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-    import_components22.BaseControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+    import_components18.BaseControl,
     {
-      help: (0, import_i18n14.__)("The max. value must be greater than the min. value."),
-      children: /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(import_components22.Flex, { direction: "row", gap: 4, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-          import_components22.__experimentalNumberControl,
+      help: (0, import_i18n13.__)("The max. value must be greater than the min. value."),
+      children: /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(import_components18.Flex, { direction: "row", gap: 4, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+          import_components18.__experimentalNumberControl,
           {
-            label: (0, import_i18n14.__)("Min."),
+            label: (0, import_i18n13.__)("Min."),
             value: min4,
             max: max4 ? Number(max4) - step : void 0,
             onChange: onChangeMin,
@@ -24084,10 +23745,10 @@ function BetweenControls({
             step
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
-          import_components22.__experimentalNumberControl,
+        /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
+          import_components18.__experimentalNumberControl,
           {
-            label: (0, import_i18n14.__)("Max."),
+            label: (0, import_i18n13.__)("Max."),
             value: max4,
             min: min4 ? Number(min4) + step : void 0,
             onChange: onChangeMax,
@@ -24113,7 +23774,7 @@ function ValidatedNumber({
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const value = getValue({ item: data }) ?? "";
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element70.useCallback)(
+  const onChangeControl = (0, import_element66.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -24127,7 +23788,7 @@ function ValidatedNumber({
     },
     [data, onChange, setValue]
   );
-  const onChangeBetweenControls = (0, import_element70.useCallback)(
+  const onChangeBetweenControls = (0, import_element66.useCallback)(
     (newValue) => {
       onChange(
         setValue({
@@ -24145,7 +23806,7 @@ function ValidatedNumber({
     )) {
       valueBetween = value;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
       BetweenControls,
       {
         value: valueBetween,
@@ -24155,7 +23816,7 @@ function ValidatedNumber({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(
     ValidatedNumberControl,
     {
       required: !!isValid2.required,
@@ -24175,21 +23836,21 @@ function ValidatedNumber({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/integer.mjs
-var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime98 = __toESM(require_jsx_runtime(), 1);
 function Integer(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(ValidatedNumber, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime98.jsx)(ValidatedNumber, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/number.mjs
-var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime99 = __toESM(require_jsx_runtime(), 1);
 function Number2(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(ValidatedNumber, { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime99.jsx)(ValidatedNumber, { ...props });
 }
 
 // packages/dataviews/build-module/components/dataform-controls/radio.mjs
-var import_components23 = __toESM(require_components(), 1);
-var import_element71 = __toESM(require_element(), 1);
-var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
+var import_components19 = __toESM(require_components(), 1);
+var import_element67 = __toESM(require_element(), 1);
+var import_jsx_runtime100 = __toESM(require_jsx_runtime(), 1);
 function Radio({
   data,
   field,
@@ -24205,14 +23866,14 @@ function Radio({
     getElements: field.getElements
   });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element71.useCallback)(
+  const onChangeControl = (0, import_element67.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(import_components23.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(import_components19.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime100.jsx)(
     ValidatedRadioControl,
     {
       required: !!field.isValid?.required,
@@ -24230,8 +23891,8 @@ function Radio({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/text.mjs
-var import_element72 = __toESM(require_element(), 1);
-var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
+var import_element68 = __toESM(require_element(), 1);
+var import_jsx_runtime101 = __toESM(require_jsx_runtime(), 1);
 function Text3({
   data,
   field,
@@ -24242,7 +23903,7 @@ function Text3({
   validity
 }) {
   const { prefix, suffix } = config || {};
-  return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)(
     ValidatedText,
     {
       ...{
@@ -24252,19 +23913,19 @@ function Text3({
         hideLabelFromVision,
         markWhenOptional,
         validity,
-        prefix: prefix ? (0, import_element72.createElement)(prefix) : void 0,
-        suffix: suffix ? (0, import_element72.createElement)(suffix) : void 0
+        prefix: prefix ? (0, import_element68.createElement)(prefix) : void 0,
+        suffix: suffix ? (0, import_element68.createElement)(suffix) : void 0
       }
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-controls/time.mjs
-var import_components24 = __toESM(require_components(), 1);
-var import_element73 = __toESM(require_element(), 1);
-var import_i18n15 = __toESM(require_i18n(), 1);
-var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components24.privateApis);
+var import_components20 = __toESM(require_components(), 1);
+var import_element69 = __toESM(require_element(), 1);
+var import_i18n14 = __toESM(require_i18n(), 1);
+var import_jsx_runtime102 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl: ValidatedInputControl3 } = unlock2(import_components20.privateApis);
 function getStep(timeFormat, values) {
   const tokens = (timeFormat ?? "").replace(/\\./g, "");
   const hasSeconds = tokens.includes("s") || values.some((value) => (parseTime(value) ?? 0) % 60 !== 0);
@@ -24294,24 +23955,24 @@ function BetweenControls2({
   max: max4
 }) {
   const [from = "", to = ""] = value;
-  const onChangeFrom = (0, import_element73.useCallback)(
+  const onChangeFrom = (0, import_element69.useCallback)(
     (newValue) => onChange([newValue ?? "", to]),
     [onChange, to]
   );
-  const onChangeTo = (0, import_element73.useCallback)(
+  const onChangeTo = (0, import_element69.useCallback)(
     (newValue) => onChange([from, newValue ?? ""]),
     [onChange, from]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
-    import_components24.BaseControl,
+  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
+    import_components20.BaseControl,
     {
-      help: (0, import_i18n15.__)("The end time must be later than the start time."),
-      children: /* @__PURE__ */ (0, import_jsx_runtime107.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+      help: (0, import_i18n14.__)("The end time must be later than the start time."),
+      children: /* @__PURE__ */ (0, import_jsx_runtime102.jsxs)(Stack, { direction: "row", gap: "sm", justify: "space-between", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
           ValidatedInputControl3,
           {
             type: "time",
-            label: (0, import_i18n15.__)("From"),
+            label: (0, import_i18n14.__)("From"),
             value: from,
             onChange: onChangeFrom,
             hideLabelFromVision,
@@ -24321,11 +23982,11 @@ function BetweenControls2({
             max: to || max4
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
           ValidatedInputControl3,
           {
             type: "time",
-            label: (0, import_i18n15.__)("To"),
+            label: (0, import_i18n14.__)("To"),
             value: to,
             onChange: onChangeTo,
             hideLabelFromVision,
@@ -24354,7 +24015,7 @@ function Time({
   const timeFormat = field.format?.time;
   const min4 = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
   const max4 = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
-  const onChangeControl = (0, import_element73.useCallback)(
+  const onChangeControl = (0, import_element69.useCallback)(
     (newValue) => onChange(
       setValue({
         item: data,
@@ -24363,7 +24024,7 @@ function Time({
     ),
     [data, onChange, setValue]
   );
-  const onChangeBetweenControls = (0, import_element73.useCallback)(
+  const onChangeBetweenControls = (0, import_element69.useCallback)(
     ([from, to]) => onChange(
       setValue({
         item: data,
@@ -24382,7 +24043,7 @@ function Time({
         toInputValue(value[1])
       ];
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
       BetweenControls2,
       {
         value: valueBetween,
@@ -24395,7 +24056,7 @@ function Time({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
     ValidatedInputControl3,
     {
       required: !!isValid2.required,
@@ -24417,8 +24078,10 @@ function Time({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
-var import_element74 = __toESM(require_element(), 1);
-var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
+var import_components21 = __toESM(require_components(), 1);
+var import_element70 = __toESM(require_element(), 1);
+var import_jsx_runtime103 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedToggleControl } = unlock2(import_components21.privateApis);
 function Toggle({
   field,
   onChange,
@@ -24429,12 +24092,12 @@ function Toggle({
 }) {
   const { label, description, getValue, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
-  const onChangeControl = (0, import_element74.useCallback)(() => {
+  const onChangeControl = (0, import_element70.useCallback)(() => {
     onChange(
       setValue({ item: data, value: !getValue({ item: data }) })
     );
   }, [onChange, setValue, data, getValue]);
-  return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime103.jsx)(
     ValidatedToggleControl,
     {
       required: !!isValid2.required,
@@ -24451,10 +24114,10 @@ function Toggle({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
-var import_components25 = __toESM(require_components(), 1);
-var import_element75 = __toESM(require_element(), 1);
-var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedTextareaControl } = unlock2(import_components25.privateApis);
+var import_components22 = __toESM(require_components(), 1);
+var import_element71 = __toESM(require_element(), 1);
+var import_jsx_runtime104 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedTextareaControl } = unlock2(import_components22.privateApis);
 function Textarea({
   data,
   field,
@@ -24468,11 +24131,11 @@ function Textarea({
   const disabled2 = field.isDisabled({ item: data, field });
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const value = field.getValue({ item: data });
-  const onChangeControl = (0, import_element75.useCallback)(
+  const onChangeControl = (0, import_element71.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(
     ValidatedTextareaControl,
     {
       required: !!isValid2.required,
@@ -24493,9 +24156,10 @@ function Textarea({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
-var import_components26 = __toESM(require_components(), 1);
-var import_element76 = __toESM(require_element(), 1);
-var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
+var import_components23 = __toESM(require_components(), 1);
+var import_element72 = __toESM(require_element(), 1);
+var import_jsx_runtime105 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedToggleGroupControl } = unlock2(import_components23.privateApis);
 function ToggleGroup({
   data,
   field,
@@ -24507,7 +24171,7 @@ function ToggleGroup({
   const { getValue, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = getValue({ item: data });
-  const onChangeControl = (0, import_element76.useCallback)(
+  const onChangeControl = (0, import_element72.useCallback)(
     (newValue) => onChange(setValue({ item: data, value: newValue })),
     [data, onChange, setValue]
   );
@@ -24516,13 +24180,13 @@ function ToggleGroup({
     getElements: field.getElements
   });
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(import_components26.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(import_components23.Spinner, {});
   }
   if (elements.length === 0) {
     return null;
   }
   const selectedOption = elements.find((el) => el.value === value);
-  return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
     ValidatedToggleGroupControl,
     {
       required: !!field.isValid?.required,
@@ -24534,8 +24198,8 @@ function ToggleGroup({
       onChange: onChangeControl,
       value,
       hideLabelFromVision,
-      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(
-        import_components26.__experimentalToggleGroupControlOption,
+      children: elements.map((el) => /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(
+        import_components23.__experimentalToggleGroupControlOption,
         {
           label: el.label,
           value: el.value,
@@ -24548,9 +24212,10 @@ function ToggleGroup({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/array.mjs
-var import_components27 = __toESM(require_components(), 1);
-var import_element77 = __toESM(require_element(), 1);
-var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
+var import_components24 = __toESM(require_components(), 1);
+var import_element73 = __toESM(require_element(), 1);
+var import_jsx_runtime106 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedFormTokenField } = unlock2(import_components24.privateApis);
 function ArrayControl({
   data,
   field,
@@ -24566,7 +24231,7 @@ function ArrayControl({
     elements: field.elements,
     getElements: field.getElements
   });
-  const arrayValueAsElements = (0, import_element77.useMemo)(
+  const arrayValueAsElements = (0, import_element73.useMemo)(
     () => Array.isArray(value) ? value.map((token) => {
       const element = elements?.find(
         (suggestion) => suggestion.value === token
@@ -24575,7 +24240,7 @@ function ArrayControl({
     }) : [],
     [value, elements]
   );
-  const onChangeControl = (0, import_element77.useCallback)(
+  const onChangeControl = (0, import_element73.useCallback)(
     (tokens) => {
       const valueTokens = tokens.map((token) => {
         if (typeof token === "object" && "value" in token) {
@@ -24588,9 +24253,9 @@ function ArrayControl({
     [onChange, setValue, data]
   );
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(import_components27.Spinner, {});
+    return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(import_components24.Spinner, {});
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
     ValidatedFormTokenField,
     {
       required: !!isValid2?.required,
@@ -24629,9 +24294,9 @@ function ArrayControl({
           const element = elements.find(
             (el) => el.value === item
           );
-          return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)("span", { children: element?.label || item });
+          return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("span", { children: element?.label || item });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)("span", { children: item });
+        return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("span", { children: item });
       }
     }
   );
@@ -24796,35 +24461,35 @@ var w = function(r3) {
 };
 
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
-var import_components28 = __toESM(require_components(), 1);
-var import_element78 = __toESM(require_element(), 1);
-var import_i18n16 = __toESM(require_i18n(), 1);
-var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
-var { ValidatedInputControl: ValidatedInputControl4 } = unlock2(import_components28.privateApis);
+var import_components25 = __toESM(require_components(), 1);
+var import_element74 = __toESM(require_element(), 1);
+var import_i18n15 = __toESM(require_i18n(), 1);
+var import_jsx_runtime107 = __toESM(require_jsx_runtime(), 1);
+var { ValidatedInputControl: ValidatedInputControl4 } = unlock2(import_components25.privateApis);
 var ColorPickerDropdown = ({
   color,
   onColorChange,
   disabled: disabled2
 }) => {
   const validColor = color && w(color).isValid() ? color : "#ffffff";
-  return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
-    import_components28.Dropdown,
+  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+    import_components25.Dropdown,
     {
       className: "dataviews-controls__color-picker-dropdown",
       popoverProps: { resize: false },
-      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
-        import_components28.Button,
+      renderToggle: ({ onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+        import_components25.Button,
         {
           onClick: onToggle,
-          "aria-label": (0, import_i18n16.__)("Open color picker"),
+          "aria-label": (0, import_i18n15.__)("Open color picker"),
           size: "small",
           disabled: disabled2,
           accessibleWhenDisabled: true,
-          icon: () => /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_components28.ColorIndicator, { colorValue: validColor })
+          icon: () => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_components25.ColorIndicator, { colorValue: validColor })
         }
       ),
-      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_components28.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
-        import_components28.ColorPicker,
+      renderContent: () => /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_components25.__experimentalDropdownContentWrapper, { paddingSize: "none", children: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
+        import_components25.ColorPicker,
         {
           color: validColor,
           onChange: onColorChange,
@@ -24845,19 +24510,19 @@ function Color({
   const { label, placeholder, description, setValue, isValid: isValid2 } = field;
   const disabled2 = field.isDisabled({ item: data, field });
   const value = field.getValue({ item: data }) || "";
-  const handleColorChange = (0, import_element78.useCallback)(
+  const handleColorChange = (0, import_element74.useCallback)(
     (newColor) => {
       onChange(setValue({ item: data, value: newColor }));
     },
     [data, onChange, setValue]
   );
-  const handleInputChange = (0, import_element78.useCallback)(
+  const handleInputChange = (0, import_element74.useCallback)(
     (newValue) => {
       onChange(setValue({ item: data, value: newValue || "" }));
     },
     [data, onChange, setValue]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
     ValidatedInputControl4,
     {
       required: !!field.isValid?.required,
@@ -24871,7 +24536,7 @@ function Color({
       hideLabelFromVision,
       type: "text",
       disabled: disabled2,
-      prefix: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(import_components28.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(
+      prefix: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(import_components25.__experimentalInputControlPrefixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime107.jsx)(
         ColorPickerDropdown,
         {
           color: value,
@@ -24884,10 +24549,10 @@ function Color({
 }
 
 // packages/dataviews/build-module/components/dataform-controls/password.mjs
-var import_components29 = __toESM(require_components(), 1);
-var import_element79 = __toESM(require_element(), 1);
-var import_i18n17 = __toESM(require_i18n(), 1);
-var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
+var import_components26 = __toESM(require_components(), 1);
+var import_element75 = __toESM(require_element(), 1);
+var import_i18n16 = __toESM(require_i18n(), 1);
+var import_jsx_runtime108 = __toESM(require_jsx_runtime(), 1);
 function Password({
   data,
   field,
@@ -24896,12 +24561,12 @@ function Password({
   markWhenOptional,
   validity
 }) {
-  const [isVisible, setIsVisible] = (0, import_element79.useState)(false);
+  const [isVisible, setIsVisible] = (0, import_element75.useState)(false);
   const disabled2 = field.isDisabled({ item: data, field });
-  const toggleVisibility = (0, import_element79.useCallback)(() => {
+  const toggleVisibility = (0, import_element75.useCallback)(() => {
     setIsVisible((prev) => !prev);
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
     ValidatedText,
     {
       ...{
@@ -24912,13 +24577,13 @@ function Password({
         markWhenOptional,
         validity,
         type: isVisible ? "text" : "password",
-        suffix: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_components29.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
-          import_components29.Button,
+        suffix: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(import_components26.__experimentalInputControlSuffixWrapper, { variant: "control", children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
+          import_components26.Button,
           {
             icon: isVisible ? unseen_default : seen_default,
             onClick: toggleVisibility,
             size: "small",
-            label: isVisible ? (0, import_i18n17.__)("Hide password") : (0, import_i18n17.__)("Show password"),
+            label: isVisible ? (0, import_i18n16.__)("Hide password") : (0, import_i18n16.__)("Show password"),
             disabled: disabled2,
             accessibleWhenDisabled: true
           }
@@ -24934,7 +24599,7 @@ function hasElements(field) {
 }
 
 // packages/dataviews/build-module/components/dataform-controls/index.mjs
-var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime109 = __toESM(require_jsx_runtime(), 1);
 var FORM_CONTROLS = {
   adaptiveSelect: AdaptiveSelect,
   array: ArrayControl,
@@ -24967,7 +24632,7 @@ function createConfiguredControl(config) {
     return null;
   }
   return function ConfiguredControl(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(BaseControlType, { ...props, config: controlConfig });
+    return /* @__PURE__ */ (0, import_jsx_runtime109.jsx)(BaseControlType, { ...props, config: controlConfig });
   };
 }
 function getControl(field, fallback) {
@@ -25043,7 +24708,7 @@ var setValueFromId = (id) => ({ value }) => {
 var set_value_from_id_default = setValueFromId;
 
 // packages/dataviews/build-module/field-types/email.mjs
-var import_i18n18 = __toESM(require_i18n(), 1);
+var import_i18n17 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/render-from-elements.mjs
 function RenderFromElements({
@@ -25065,13 +24730,13 @@ function RenderFromElements({
 }
 
 // packages/dataviews/build-module/field-types/utils/render-default.mjs
-var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime110 = __toESM(require_jsx_runtime(), 1);
 function render({
   item,
   field
 }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime110.jsx)(RenderFromElements, { item, field });
   }
   return field.getValueFormatted({ item, field });
 }
@@ -25153,7 +24818,7 @@ var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{
 function isValidCustom(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !emailRegex.test(value)) {
-    return (0, import_i18n18.__)("Value must be a valid email address.");
+    return (0, import_i18n17.__)("Value must be a valid email address.");
   }
   return null;
 }
@@ -25190,7 +24855,7 @@ var email_default = {
 };
 
 // packages/dataviews/build-module/field-types/integer.mjs
-var import_i18n19 = __toESM(require_i18n(), 1);
+var import_i18n18 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/sort-number.mjs
 var sort_number_default = (a2, b2, direction) => {
@@ -25256,7 +24921,7 @@ function getValueFormatted2({
 function isValidCustom2(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !Number.isInteger(value)) {
-    return (0, import_i18n19.__)("Value must be an integer.");
+    return (0, import_i18n18.__)("Value must be an integer.");
   }
   return null;
 }
@@ -25303,7 +24968,7 @@ var integer_default = {
 };
 
 // packages/dataviews/build-module/field-types/number.mjs
-var import_i18n20 = __toESM(require_i18n(), 1);
+var import_i18n19 = __toESM(require_i18n(), 1);
 var format3 = {
   separatorThousand: ",",
   separatorDecimal: ".",
@@ -25339,7 +25004,7 @@ function isEmpty(value) {
 function isValidCustom3(item, field) {
   const value = field.getValue({ item });
   if (!isEmpty(value) && !Number.isFinite(value)) {
-    return (0, import_i18n20.__)("Value must be a number.");
+    return (0, import_i18n19.__)("Value must be a number.");
   }
   return null;
 }
@@ -25665,7 +25330,7 @@ var time_default = {
 };
 
 // packages/dataviews/build-module/field-types/boolean.mjs
-var import_i18n21 = __toESM(require_i18n(), 1);
+var import_i18n20 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-bool.mjs
 function isValidRequiredForBool(item, field) {
@@ -25680,17 +25345,17 @@ function getValueFormatted7({
 }) {
   const value = field.getValue({ item });
   if (value === true) {
-    return (0, import_i18n21.__)("True");
+    return (0, import_i18n20.__)("True");
   }
   if (value === false) {
-    return (0, import_i18n21.__)("False");
+    return (0, import_i18n20.__)("False");
   }
   return "";
 }
 function isValidCustom4(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && ![true, false].includes(value)) {
-    return (0, import_i18n21.__)("Value must be true, false, or undefined");
+    return (0, import_i18n20.__)("Value must be true, false, or undefined");
   }
   return null;
 }
@@ -25742,7 +25407,7 @@ var media_default = {
 };
 
 // packages/dataviews/build-module/field-types/array.mjs
-var import_i18n22 = __toESM(require_i18n(), 1);
+var import_i18n21 = __toESM(require_i18n(), 1);
 
 // packages/dataviews/build-module/field-types/utils/is-valid-required-for-array.mjs
 function isValidRequiredForArray(item, field) {
@@ -25770,10 +25435,10 @@ function isValidCustom5(item, field) {
     return null;
   }
   if (!Array.isArray(value)) {
-    return (0, import_i18n22.__)("Value must be an array.");
+    return (0, import_i18n21.__)("Value must be an array.");
   }
   if (!value.every((v2) => typeof v2 === "string")) {
-    return (0, import_i18n22.__)("Every value must be a string.");
+    return (0, import_i18n21.__)("Every value must be a string.");
   }
   return null;
 }
@@ -25871,18 +25536,18 @@ var telephone_default = {
 };
 
 // packages/dataviews/build-module/field-types/color.mjs
-var import_i18n23 = __toESM(require_i18n(), 1);
-var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
+var import_i18n22 = __toESM(require_i18n(), 1);
+var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
 function render3({ item, field }) {
   if (field.hasElements) {
-    return /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(RenderFromElements, { item, field });
+    return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(RenderFromElements, { item, field });
   }
   const value = get_value_formatted_default_default({ item, field });
   if (!value || !w(value).isValid()) {
     return value;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime111.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
       "div",
       {
         style: {
@@ -25895,13 +25560,13 @@ function render3({ item, field }) {
         }
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("span", { children: value })
+    /* @__PURE__ */ (0, import_jsx_runtime111.jsx)("span", { children: value })
   ] });
 }
 function isValidCustom6(item, field) {
   const value = field.getValue({ item });
   if (![void 0, "", null].includes(value) && !w(value).isValid()) {
-    return (0, import_i18n23.__)("Value must be a valid color.");
+    return (0, import_i18n22.__)("Value must be a valid color.");
   }
   return null;
 }
@@ -26164,12 +25829,12 @@ function normalizeFields(fields) {
 }
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_element91 = __toESM(require_element(), 1);
+var import_element87 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-context/index.mjs
-var import_element80 = __toESM(require_element(), 1);
-var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
-var DataFormContext = (0, import_element80.createContext)({
+var import_element76 = __toESM(require_element(), 1);
+var import_jsx_runtime112 = __toESM(require_jsx_runtime(), 1);
+var DataFormContext = (0, import_element76.createContext)({
   fields: []
 });
 DataFormContext.displayName = "DataFormContext";
@@ -26177,19 +25842,19 @@ function DataFormProvider({
   fields,
   children
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(DataFormContext.Provider, { value: { fields }, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime112.jsx)(DataFormContext.Provider, { value: { fields }, children });
 }
 var dataform_context_default = DataFormContext;
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_element90 = __toESM(require_element(), 1);
+var import_element86 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-var import_element81 = __toESM(require_element(), 1);
-var import_components30 = __toESM(require_components(), 1);
+var import_element77 = __toESM(require_element(), 1);
+var import_components27 = __toESM(require_components(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/normalize-form.mjs
-var import_i18n24 = __toESM(require_i18n(), 1);
+var import_i18n23 = __toESM(require_i18n(), 1);
 var DEFAULT_LAYOUT = {
   type: "regular",
   labelPosition: "top"
@@ -26220,14 +25885,14 @@ function normalizeLayout(layout) {
     if (typeof openAs === "object" && openAs.type === "modal") {
       normalizedOpenAs = {
         type: "modal",
-        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n24.__)("Apply"),
-        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n24.__)("Cancel")
+        applyLabel: openAs.applyLabel?.trim() || (0, import_i18n23.__)("Apply"),
+        cancelLabel: openAs.cancelLabel?.trim() || (0, import_i18n23.__)("Cancel")
       };
     } else if (openAs === "modal") {
       normalizedOpenAs = {
         type: "modal",
-        applyLabel: (0, import_i18n24.__)("Apply"),
-        cancelLabel: (0, import_i18n24.__)("Cancel")
+        applyLabel: (0, import_i18n23.__)("Apply"),
+        cancelLabel: (0, import_i18n23.__)("Cancel")
       };
     } else {
       normalizedOpenAs = { type: "dropdown" };
@@ -26307,15 +25972,15 @@ function normalizeForm(form) {
 var normalize_form_default = normalizeForm;
 
 // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime113 = __toESM(require_jsx_runtime(), 1);
 function Header4({ title }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-regular__header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(import_components30.__experimentalHeading, { level: 2, size: 13, children: title }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_components27.__experimentalHeading, { level: 2, size: 13, children: title }) })
     }
   );
 }
@@ -26327,9 +25992,9 @@ function FormRegularField({
   markWhenOptional,
   validity
 }) {
-  const { fields } = (0, import_element81.useContext)(dataform_context_default);
+  const { fields } = (0, import_element77.useContext)(dataform_context_default);
   const layout = field.layout;
-  const form = (0, import_element81.useMemo)(
+  const form = (0, import_element77.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : []
@@ -26337,9 +26002,9 @@ function FormRegularField({
     [field]
   );
   if (!!field.children) {
-    return /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(import_jsx_runtime118.Fragment, { children: [
-      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Header4, { title: field.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(import_jsx_runtime113.Fragment, { children: [
+      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(Header4, { title: field.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
         DataFormLayout,
         {
           data,
@@ -26358,30 +26023,30 @@ function FormRegularField({
     return null;
   }
   if (labelPosition === "side") {
-    return /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(
       Stack,
       {
         direction: "row",
         className: "dataforms-layouts-regular__field",
         gap: "sm",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
             "div",
             {
               className: clsx_default(
                 "dataforms-layouts-regular__field-label",
                 `dataforms-layouts-regular__field-label--label-position-${labelPosition}`
               ),
-              children: /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(import_components30.BaseControl.VisualLabel, { children: fieldDefinition.label })
+              children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_components27.BaseControl.VisualLabel, { children: fieldDefinition.label })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime118.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { className: "dataforms-layouts-regular__field-control", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
             fieldDefinition.render,
             {
               item: data,
               field: fieldDefinition
             }
-          ) : /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+          ) : /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
             fieldDefinition.Edit,
             {
               data,
@@ -26397,16 +26062,16 @@ function FormRegularField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(import_jsx_runtime118.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)(import_jsx_runtime118.Fragment, { children: [
-    !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(import_components30.BaseControl.VisualLabel, { children: fieldDefinition.label }),
-    /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { className: "dataforms-layouts-regular__field", children: fieldDefinition.readOnly === true ? /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_jsx_runtime113.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(import_jsx_runtime113.Fragment, { children: [
+    !hideLabelFromVision && labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(import_components27.BaseControl.VisualLabel, { children: fieldDefinition.label }),
+    /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
       fieldDefinition.render,
       {
         item: data,
         field: fieldDefinition
       }
     )
-  ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
+  ] }) }) : /* @__PURE__ */ (0, import_jsx_runtime113.jsx)(
     fieldDefinition.Edit,
     {
       data,
@@ -26421,15 +26086,15 @@ function FormRegularField({
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
 var import_deepmerge2 = __toESM(require_cjs(), 1);
-var import_components33 = __toESM(require_components(), 1);
-var import_element86 = __toESM(require_element(), 1);
-var import_compose10 = __toESM(require_compose(), 1);
+var import_components30 = __toESM(require_components(), 1);
+var import_element82 = __toESM(require_element(), 1);
+var import_compose8 = __toESM(require_compose(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
-var import_components32 = __toESM(require_components(), 1);
-var import_i18n25 = __toESM(require_i18n(), 1);
-var import_compose9 = __toESM(require_compose(), 1);
-var import_element82 = __toESM(require_element(), 1);
+var import_components29 = __toESM(require_components(), 1);
+var import_i18n24 = __toESM(require_i18n(), 1);
+var import_compose7 = __toESM(require_compose(), 1);
+var import_element78 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-classname.mjs
 function getLabelClassName(labelPosition, showError) {
@@ -26442,16 +26107,16 @@ function getLabelClassName(labelPosition, showError) {
 var get_label_classname_default = getLabelClassName;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/get-label-content.mjs
-var import_components31 = __toESM(require_components(), 1);
-var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
+var import_components28 = __toESM(require_components(), 1);
+var import_jsx_runtime114 = __toESM(require_jsx_runtime(), 1);
 function getLabelContent(showError, errorMessage, fieldLabel) {
-  return showError ? /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(tooltip_exports.Root, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(
+  return showError ? /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(tooltip_exports.Root, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(
       tooltip_exports.Trigger,
       {
-        render: /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(import_components31.Icon, { icon: error_default, size: 16 }),
-          /* @__PURE__ */ (0, import_jsx_runtime119.jsxs)(VisuallyHidden, { children: [
+        render: /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)("span", { className: "dataforms-layouts-panel__field-label-error-content", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(import_components28.Icon, { icon: error_default, size: 16 }),
+          /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)(VisuallyHidden, { children: [
             errorMessage,
             ": "
           ] }),
@@ -26459,7 +26124,7 @@ function getLabelContent(showError, errorMessage, fieldLabel) {
         ] })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(tooltip_exports.Popup, { children: errorMessage })
+    /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(tooltip_exports.Popup, { children: errorMessage })
   ] }) : fieldLabel;
 }
 var get_label_content_default = getLabelContent;
@@ -26500,7 +26165,7 @@ function getFirstValidationError(validity) {
 var get_first_validation_error_default = getFirstValidationError;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
-var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime115 = __toESM(require_jsx_runtime(), 1);
 function SummaryButton({
   data,
   field,
@@ -26525,21 +26190,21 @@ function SummaryButton({
       "dataforms-layouts-panel__field-trigger--edit-always": editVisibility === "always"
     }
   );
-  const controlId = (0, import_compose9.useInstanceId)(
+  const controlId = (0, import_compose7.useInstanceId)(
     SummaryButton,
     "dataforms-layouts-panel__field-control"
   );
-  const ariaLabel = showError ? (0, import_i18n25.sprintf)(
+  const ariaLabel = showError ? (0, import_i18n24.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n25._x)("Edit %s (has errors)", "field"),
+    (0, import_i18n24._x)("Edit %s (has errors)", "field"),
     fieldLabel || ""
-  ) : (0, import_i18n25.sprintf)(
+  ) : (0, import_i18n24.sprintf)(
     // translators: %s: Field name.
-    (0, import_i18n25._x)("Edit %s", "field"),
+    (0, import_i18n24._x)("Edit %s", "field"),
     fieldLabel || ""
   );
-  const rowRef = (0, import_element82.useRef)(null);
-  const editButtonRef = (0, import_element82.useRef)(null);
+  const rowRef = (0, import_element78.useRef)(null);
+  const editButtonRef = (0, import_element78.useRef)(null);
   const handleRowClick = (event) => {
     if (!isOpen2 && event.detail < 2 && !editButtonRef.current?.contains(event.target) && rowRef.current?.ownerDocument.defaultView?.getSelection()?.toString()) {
       return;
@@ -26552,7 +26217,7 @@ function SummaryButton({
       onClick();
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)(
     "div",
     {
       ref: rowRef,
@@ -26560,30 +26225,30 @@ function SummaryButton({
       onClick: !disabled2 ? handleRowClick : void 0,
       onKeyDown: !disabled2 ? handleKeyDown : void 0,
       children: [
-        labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("span", { className: labelClassName, children: labelContent }),
-        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(tooltip_exports.Root, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+        labelPosition !== "none" && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("span", { className: labelClassName, children: labelContent }),
+        labelPosition === "none" && showError && /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)(tooltip_exports.Root, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
             tooltip_exports.Trigger,
             {
-              render: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+              render: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
                 "span",
                 {
                   className: "dataforms-layouts-panel__field-label-error-content",
                   role: "img",
                   "aria-label": errorMessage,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(import_components32.Icon, { icon: error_default, size: 16 })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(import_components29.Icon, { icon: error_default, size: 16 })
                 }
               )
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(tooltip_exports.Popup, { children: errorMessage })
+          /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(tooltip_exports.Popup, { children: errorMessage })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
           "span",
           {
             id: `${controlId}`,
             className: "dataforms-layouts-panel__field-control",
-            children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+            children: summaryFields.length > 1 ? /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
               "span",
               {
                 style: {
@@ -26593,11 +26258,11 @@ function SummaryButton({
                   width: "100%",
                   gap: "2px"
                 },
-                children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+                children: summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
                   "span",
                   {
                     style: { width: "100%" },
-                    children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+                    children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
                       summaryField.render,
                       {
                         item: data,
@@ -26608,7 +26273,7 @@ function SummaryButton({
                   summaryField.id
                 ))
               }
-            ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
+            ) : summaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
               summaryField.render,
               {
                 item: data,
@@ -26618,8 +26283,8 @@ function SummaryButton({
             ))
           }
         ),
-        !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
-          import_components32.Button,
+        !disabled2 && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)(
+          import_components29.Button,
           {
             ref: editButtonRef,
             className: "dataforms-layouts-panel__field-trigger-icon",
@@ -26639,8 +26304,8 @@ function SummaryButton({
 // packages/dataviews/build-module/hooks/use-form-validity.mjs
 var import_deepmerge = __toESM(require_cjs(), 1);
 var import_es6 = __toESM(require_es6(), 1);
-var import_element83 = __toESM(require_element(), 1);
-var import_i18n26 = __toESM(require_i18n(), 1);
+var import_element79 = __toESM(require_element(), 1);
+var import_i18n25 = __toESM(require_i18n(), 1);
 function isFormValid(formValidity) {
   if (!formValidity) {
     return true;
@@ -26770,7 +26435,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n26.__)("Could not validate elements.")
+              message: (0, import_i18n25.__)("Could not validate elements.")
             }
           },
           [...path, formField.id]
@@ -26789,7 +26454,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
           {
             elements: {
               type: "invalid",
-              message: (0, import_i18n26.__)(
+              message: (0, import_i18n25.__)(
                 "Value must be one of the elements."
               )
             }
@@ -26815,7 +26480,7 @@ function handleElementsValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n26.__)(
+      errorMessage = String(error2) || (0, import_i18n25.__)(
         "Unknown error when running elements validation asynchronously."
       );
     }
@@ -26874,7 +26539,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
         {
           custom: {
             type: "invalid",
-            message: (0, import_i18n26.__)("Validation could not be processed.")
+            message: (0, import_i18n25.__)("Validation could not be processed.")
           }
         },
         [...path, formField.id]
@@ -26889,7 +26554,7 @@ function handleCustomValidationAsync(promise, formField, promiseHandler) {
     if (error2 instanceof Error) {
       errorMessage = error2.message;
     } else {
-      errorMessage = String(error2) || (0, import_i18n26.__)(
+      errorMessage = String(error2) || (0, import_i18n25.__)(
         "Unknown error when running custom validation asynchronously."
       );
     }
@@ -26931,7 +26596,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       pattern: {
         type: "invalid",
-        message: (0, import_i18n26.__)("Value does not match the required pattern.")
+        message: (0, import_i18n25.__)("Value does not match the required pattern.")
       }
     };
   }
@@ -26939,7 +26604,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       min: {
         type: "invalid",
-        message: (0, import_i18n26.__)("Value is below the minimum.")
+        message: (0, import_i18n25.__)("Value is below the minimum.")
       }
     };
   }
@@ -26947,7 +26612,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       max: {
         type: "invalid",
-        message: (0, import_i18n26.__)("Value is above the maximum.")
+        message: (0, import_i18n25.__)("Value is above the maximum.")
       }
     };
   }
@@ -26955,7 +26620,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       minLength: {
         type: "invalid",
-        message: (0, import_i18n26.__)("Value is too short.")
+        message: (0, import_i18n25.__)("Value is too short.")
       }
     };
   }
@@ -26963,7 +26628,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       maxLength: {
         type: "invalid",
-        message: (0, import_i18n26.__)("Value is too long.")
+        message: (0, import_i18n25.__)("Value is too long.")
       }
     };
   }
@@ -26971,7 +26636,7 @@ function validateFormField(item, formField, promiseHandler) {
     return {
       elements: {
         type: "invalid",
-        message: (0, import_i18n26.__)("Value must be one of the elements.")
+        message: (0, import_i18n25.__)("Value must be one of the elements.")
       }
     };
   }
@@ -26994,7 +26659,7 @@ function validateFormField(item, formField, promiseHandler) {
       if (error2 instanceof Error) {
         errorMessage = error2.message;
       } else {
-        errorMessage = String(error2) || (0, import_i18n26.__)("Unknown error when running custom validation.");
+        errorMessage = String(error2) || (0, import_i18n25.__)("Unknown error when running custom validation.");
       }
       return {
         custom: {
@@ -27021,14 +26686,14 @@ function validateFormField(item, formField, promiseHandler) {
     );
     fieldValidity.elements = {
       type: "validating",
-      message: (0, import_i18n26.__)("Validating\u2026")
+      message: (0, import_i18n25.__)("Validating\u2026")
     };
   }
   if (customError instanceof Promise) {
     handleCustomValidationAsync(customError, formField, promiseHandler);
     fieldValidity.custom = {
       type: "validating",
-      message: (0, import_i18n26.__)("Validating\u2026")
+      message: (0, import_i18n25.__)("Validating\u2026")
     };
   }
   if (Object.keys(fieldValidity).length > 0) {
@@ -27073,11 +26738,11 @@ function getFormFieldValue(formField, item) {
   };
 }
 function useFormValidity(item, fields, form) {
-  const [formValidity, setFormValidity] = (0, import_element83.useState)();
-  const customCounterRef = (0, import_element83.useRef)({});
-  const elementsCounterRef = (0, import_element83.useRef)({});
-  const previousValuesRef = (0, import_element83.useRef)({});
-  const validate = (0, import_element83.useCallback)(() => {
+  const [formValidity, setFormValidity] = (0, import_element79.useState)();
+  const customCounterRef = (0, import_element79.useRef)({});
+  const elementsCounterRef = (0, import_element79.useRef)({});
+  const previousValuesRef = (0, import_element79.useRef)({});
+  const validate = (0, import_element79.useCallback)(() => {
     const promiseHandler = {
       customCounterRef,
       elementsCounterRef,
@@ -27135,7 +26800,7 @@ function useFormValidity(item, fields, form) {
       return validity;
     });
   }, [item, fields, form]);
-  (0, import_element83.useEffect)(() => {
+  (0, import_element79.useEffect)(() => {
     validate();
   }, [validate]);
   return {
@@ -27146,9 +26811,9 @@ function useFormValidity(item, fields, form) {
 var use_form_validity_default = useFormValidity;
 
 // packages/dataviews/build-module/hooks/use-reveal-validity.mjs
-var import_element84 = __toESM(require_element(), 1);
+var import_element80 = __toESM(require_element(), 1);
 function useRevealValidity(ref, shouldReveal) {
-  const revealValidity = (0, import_element84.useCallback)(() => {
+  const revealValidity = (0, import_element80.useCallback)(() => {
     const inputs = ref.current?.querySelectorAll("input, textarea, select");
     let revealedCount = 0;
     inputs?.forEach((input) => {
@@ -27161,7 +26826,7 @@ function useRevealValidity(ref, shouldReveal) {
     });
     return revealedCount;
   }, [ref]);
-  (0, import_element84.useEffect)(() => {
+  (0, import_element80.useEffect)(() => {
     if (shouldReveal) {
       revealValidity();
     }
@@ -27170,7 +26835,7 @@ function useRevealValidity(ref, shouldReveal) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
-var import_element85 = __toESM(require_element(), 1);
+var import_element81 = __toESM(require_element(), 1);
 
 // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
 function extractSummaryIds(summary) {
@@ -27211,7 +26876,7 @@ var getFieldDefinition = (field, fields) => {
   return fieldDefinition;
 };
 function useFieldFromFormField(field) {
-  const { fields } = (0, import_element85.useContext)(dataform_context_default);
+  const { fields } = (0, import_element81.useContext)(dataform_context_default);
   const layout = field.layout;
   const summaryFields = getSummaryFields(layout.summary, fields);
   const fieldDefinition = getFieldDefinition(field, fields);
@@ -27232,7 +26897,7 @@ function useFieldFromFormField(field) {
 var use_field_from_form_field_default = useFieldFromFormField;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
-var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime116 = __toESM(require_jsx_runtime(), 1);
 function ModalContent({
   data,
   field,
@@ -27243,14 +26908,14 @@ function ModalContent({
 }) {
   const { openAs } = field.layout;
   const { applyLabel, cancelLabel } = openAs;
-  const { fields } = (0, import_element86.useContext)(dataform_context_default);
-  const [changes, setChanges] = (0, import_element86.useState)({});
-  const modalData = (0, import_element86.useMemo)(() => {
+  const { fields } = (0, import_element82.useContext)(dataform_context_default);
+  const [changes, setChanges] = (0, import_element82.useState)({});
+  const modalData = (0, import_element82.useMemo)(() => {
     return (0, import_deepmerge2.default)(data, changes, {
       arrayMerge: (target, source) => source
     });
   }, [data, changes]);
-  const form = (0, import_element86.useMemo)(
+  const form = (0, import_element82.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -27285,12 +26950,12 @@ function ModalContent({
       })
     );
   };
-  const focusOnMountRef = (0, import_compose10.useFocusOnMount)("firstInputElement");
-  const contentRef = (0, import_element86.useRef)(null);
-  const mergedRef = (0, import_compose10.useMergeRefs)([focusOnMountRef, contentRef]);
+  const focusOnMountRef = (0, import_compose8.useFocusOnMount)("firstInputElement");
+  const contentRef = (0, import_element82.useRef)(null);
+  const mergedRef = (0, import_compose8.useMergeRefs)([focusOnMountRef, contentRef]);
   useRevealValidity(contentRef, touched);
-  return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(
-    import_components33.Modal,
+  return /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(
+    import_components30.Modal,
     {
       className: "dataforms-layouts-panel__modal",
       onRequestClose: onClose,
@@ -27298,14 +26963,14 @@ function ModalContent({
       title: fieldLabel,
       size: "medium",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime121.jsx)("div", { ref: mergedRef, children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("div", { ref: mergedRef, children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
           DataFormLayout,
           {
             data: modalData,
             form,
             onChange: handleOnChange,
             validity,
-            children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+            children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
               FieldLayout,
               {
                 data: modalData,
@@ -27319,16 +26984,16 @@ function ModalContent({
             )
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(
           Stack,
           {
             direction: "row",
             className: "dataforms-layouts-panel__modal-footer",
             gap: "md",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_components33.__experimentalSpacer, { style: { flex: 1 } }),
-              /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
-                import_components33.Button,
+              /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(import_components30.__experimentalSpacer, { style: { flex: 1 } }),
+              /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+                import_components30.Button,
                 {
                   variant: "tertiary",
                   onClick: onClose,
@@ -27336,8 +27001,8 @@ function ModalContent({
                   children: cancelLabel
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
-                import_components33.Button,
+              /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
+                import_components30.Button,
                 {
                   variant: "primary",
                   onClick: onApply,
@@ -27358,8 +27023,8 @@ function PanelModal({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element86.useState)(false);
-  const [isOpen2, setIsOpen] = (0, import_element86.useState)(false);
+  const [touched, setTouched] = (0, import_element82.useState)(false);
+  const [isOpen2, setIsOpen] = (0, import_element82.useState)(false);
   const { fieldDefinition, fieldLabel, summaryFields } = use_field_from_form_field_default(field);
   if (!fieldDefinition) {
     return null;
@@ -27368,8 +27033,8 @@ function PanelModal({
     setIsOpen(false);
     setTouched(true);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)(import_jsx_runtime121.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime116.jsxs)(import_jsx_runtime116.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
       SummaryButton,
       {
         data,
@@ -27383,7 +27048,7 @@ function PanelModal({
         isOpen: isOpen2
       }
     ),
-    isOpen2 && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
+    isOpen2 && /* @__PURE__ */ (0, import_jsx_runtime116.jsx)(
       ModalContent,
       {
         data,
@@ -27399,28 +27064,28 @@ function PanelModal({
 var modal_default = PanelModal;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
-var import_components34 = __toESM(require_components(), 1);
-var import_i18n27 = __toESM(require_i18n(), 1);
-var import_element87 = __toESM(require_element(), 1);
-var import_compose11 = __toESM(require_compose(), 1);
-var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
+var import_components31 = __toESM(require_components(), 1);
+var import_i18n26 = __toESM(require_i18n(), 1);
+var import_element83 = __toESM(require_element(), 1);
+var import_compose9 = __toESM(require_compose(), 1);
+var import_jsx_runtime117 = __toESM(require_jsx_runtime(), 1);
 function DropdownHeader({
   title,
   onClose
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-panel__dropdown-header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
-        title && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_components34.__experimentalHeading, { level: 2, size: 13, children: title }),
-        /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(import_components34.__experimentalSpacer, { style: { flex: 1 } }),
-        onClose && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
-          import_components34.Button,
+      children: /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
+        title && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components31.__experimentalHeading, { level: 2, size: 13, children: title }),
+        /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(import_components31.__experimentalSpacer, { style: { flex: 1 } }),
+        onClose && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+          import_components31.Button,
           {
-            label: (0, import_i18n27.__)("Close"),
+            label: (0, import_i18n26.__)("Close"),
             icon: close_small_default,
             onClick: onClose,
             size: "small"
@@ -27434,9 +27099,9 @@ function DropdownContentWithValidation({
   touched,
   children
 }) {
-  const ref = (0, import_element87.useRef)(null);
+  const ref = (0, import_element83.useRef)(null);
   useRevealValidity(ref, touched);
-  return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("div", { ref, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { ref, children });
 }
 function PanelDropdown({
   data,
@@ -27444,11 +27109,11 @@ function PanelDropdown({
   onChange,
   validity
 }) {
-  const [touched, setTouched] = (0, import_element87.useState)(false);
-  const [popoverAnchor, setPopoverAnchor] = (0, import_element87.useState)(
+  const [touched, setTouched] = (0, import_element83.useState)(false);
+  const [popoverAnchor, setPopoverAnchor] = (0, import_element83.useState)(
     null
   );
-  const popoverProps = (0, import_element87.useMemo)(
+  const popoverProps = (0, import_element83.useMemo)(
     () => ({
       // Anchor the popover to the middle of the entire row so that it doesn't
       // move around when the label changes.
@@ -27459,10 +27124,10 @@ function PanelDropdown({
     }),
     [popoverAnchor]
   );
-  const [dialogRef, dialogProps] = (0, import_compose11.__experimentalUseDialog)({
+  const [dialogRef, dialogProps] = (0, import_compose9.__experimentalUseDialog)({
     focusOnMount: "firstInputElement"
   });
-  const form = (0, import_element87.useMemo)(
+  const form = (0, import_element83.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: !!field.children ? field.children : (
@@ -27472,7 +27137,7 @@ function PanelDropdown({
     }),
     [field]
   );
-  const formValidity = (0, import_element87.useMemo)(() => {
+  const formValidity = (0, import_element83.useMemo)(() => {
     if (validity === void 0) {
       return void 0;
     }
@@ -27485,13 +27150,13 @@ function PanelDropdown({
   if (!fieldDefinition) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
     "div",
     {
       ref: setPopoverAnchor,
       className: "dataforms-layouts-panel__field-dropdown-anchor",
-      children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
-        import_components34.Dropdown,
+      children: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
+        import_components31.Dropdown,
         {
           contentClassName: "dataforms-layouts-panel__field-dropdown",
           popoverProps,
@@ -27501,7 +27166,7 @@ function PanelDropdown({
               setTouched(true);
             }
           },
-          renderToggle: ({ isOpen: isOpen2, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+          renderToggle: ({ isOpen: isOpen2, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
             SummaryButton,
             {
               data,
@@ -27515,22 +27180,22 @@ function PanelDropdown({
               onClick: onToggle
             }
           ),
-          renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+          renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(DropdownContentWithValidation, { touched, children: /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)("div", { ref: dialogRef, ...dialogProps, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
               DropdownHeader,
               {
                 title: fieldLabel,
                 onClose
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
               DataFormLayout,
               {
                 data,
                 form,
                 onChange,
                 validity: formValidity,
-                children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
+                children: (FieldLayout, childField, childFieldValidity, markWhenOptional) => /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
                   FieldLayout,
                   {
                     data,
@@ -27553,7 +27218,7 @@ function PanelDropdown({
 var dropdown_default = PanelDropdown;
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/index.mjs
-var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
 function FormPanelField({
   data,
   field,
@@ -27562,7 +27227,7 @@ function FormPanelField({
 }) {
   const layout = field.layout;
   if (layout.openAs.type === "modal") {
-    return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
       modal_default,
       {
         data,
@@ -27572,7 +27237,7 @@ function FormPanelField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(
     dropdown_default,
     {
       data,
@@ -27584,12 +27249,12 @@ function FormPanelField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_element88 = __toESM(require_element(), 1);
-var import_compose12 = __toESM(require_compose(), 1);
-import { speak as speak4 } from "@wordpress/a11y";
+var import_element84 = __toESM(require_element(), 1);
+var import_compose10 = __toESM(require_compose(), 1);
+import { speak as speak3 } from "@wordpress/a11y";
 
 // packages/dataviews/build-module/components/dataform-layouts/get-validation-message.mjs
-var import_i18n28 = __toESM(require_i18n(), 1);
+var import_i18n27 = __toESM(require_i18n(), 1);
 function countInvalidFields(validity) {
   if (!validity) {
     return 0;
@@ -27616,9 +27281,9 @@ function getValidationMessage(validity) {
   if (invalidCount === 0) {
     return void 0;
   }
-  return (0, import_i18n28.sprintf)(
+  return (0, import_i18n27.sprintf)(
     /* translators: %d: Number of fields that need attention */
-    (0, import_i18n28._n)(
+    (0, import_i18n27._n)(
       "%d field needs attention",
       "%d fields need attention",
       invalidCount
@@ -27628,7 +27293,7 @@ function getValidationMessage(validity) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
-var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime119 = __toESM(require_jsx_runtime(), 1);
 function ValidationBadge({
   validity
 }) {
@@ -27636,11 +27301,11 @@ function ValidationBadge({
   if (!message2) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Badge, { intent: "high", children: message2 });
+  return /* @__PURE__ */ (0, import_jsx_runtime119.jsx)(Badge, { intent: "high", children: message2 });
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime120 = __toESM(require_jsx_runtime(), 1);
 function isSummaryFieldVisible(summaryField, summaryConfig, isOpen2) {
   if (!summaryConfig || Array.isArray(summaryConfig) && summaryConfig.length === 0) {
     return false;
@@ -27681,17 +27346,17 @@ function HeaderContent({
   );
   const hasBadge = touched && layout.isCollapsible;
   const hasSummary = visibleSummaryFields.length > 0 && layout.withHeader;
-  return /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
     Stack,
     {
       align: "center",
       justify: "space-between",
       className: "dataforms-layouts-card__field-header-content",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(card_exports.Title, { children: label }),
-        (hasBadge || hasSummary) && /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)(collapsible_card_exports.HeaderDescription, { className: "dataforms-layouts-card__field-header-content-description", children: [
-          hasBadge && /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(ValidationBadge, { validity }),
-          hasSummary && /* @__PURE__ */ (0, import_jsx_runtime125.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(card_exports.Title, { children: label }),
+        (hasBadge || hasSummary) && /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(collapsible_card_exports.HeaderDescription, { className: "dataforms-layouts-card__field-header-content-description", children: [
+          hasBadge && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(ValidationBadge, { validity }),
+          hasSummary && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { className: "dataforms-layouts-card__field-summary", children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
             summaryField.render,
             {
               item: data,
@@ -27715,9 +27380,9 @@ function BodyContent({
   withHeader
 }) {
   if (field.children) {
-    return /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)(import_jsx_runtime125.Fragment, { children: [
-      field.description && /* @__PURE__ */ (0, import_jsx_runtime125.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
-      /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(import_jsx_runtime120.Fragment, { children: [
+      field.description && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { className: "dataforms-layouts-card__field-description", children: field.description }),
+      /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
         DataFormLayout,
         {
           data,
@@ -27732,7 +27397,7 @@ function BodyContent({
   if (!SingleFieldLayout) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
     SingleFieldLayout,
     {
       data,
@@ -27752,11 +27417,11 @@ function FormCardField({
   markWhenOptional,
   validity
 }) {
-  const { fields } = (0, import_element88.useContext)(dataform_context_default);
+  const { fields } = (0, import_element84.useContext)(dataform_context_default);
   const layout = field.layout;
-  const contentRef = (0, import_element88.useRef)(null);
-  const hasFocusedContentRef = (0, import_element88.useRef)(false);
-  const form = (0, import_element88.useMemo)(
+  const contentRef = (0, import_element84.useRef)(null);
+  const hasFocusedContentRef = (0, import_element84.useRef)(false);
+  const form = (0, import_element84.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
@@ -27764,12 +27429,12 @@ function FormCardField({
     [field]
   );
   const { isOpened, isCollapsible } = layout;
-  const [isOpen2, setIsOpen] = (0, import_element88.useState)(isOpened);
-  const [touched, setTouched] = (0, import_element88.useState)(false);
-  (0, import_element88.useEffect)(() => {
+  const [isOpen2, setIsOpen] = (0, import_element84.useState)(isOpened);
+  const [touched, setTouched] = (0, import_element84.useState)(false);
+  (0, import_element84.useEffect)(() => {
     setIsOpen(isOpened);
   }, [isOpened]);
-  const handleOpenChange = (0, import_element88.useCallback)((open) => {
+  const handleOpenChange = (0, import_element84.useCallback)((open) => {
     if (!open) {
       setTouched(true);
     }
@@ -27779,10 +27444,10 @@ function FormCardField({
     contentRef,
     (isCollapsible ? isOpen2 : true) && touched
   );
-  const handleContentFocus = (0, import_element88.useCallback)(() => {
+  const handleContentFocus = (0, import_element84.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element88.useCallback)(() => {
+  const handleFocusOutside = (0, import_element84.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -27793,10 +27458,10 @@ function FormCardField({
     const revealedCount = revealValidity();
     const message2 = getValidationMessage(validity);
     if (revealedCount > 0 && message2) {
-      speak4(message2, "polite");
+      speak3(message2, "polite");
     }
   }, [isCollapsible, isOpen2, revealValidity, validity]);
-  const focusOutsideProps = (0, import_compose12.__experimentalUseFocusOutside)(handleFocusOutside);
+  const focusOutsideProps = (0, import_compose10.__experimentalUseFocusOutside)(handleFocusOutside);
   let label = field.label;
   let withHeader;
   if (field.children) {
@@ -27811,7 +27476,7 @@ function FormCardField({
     label = fieldDefinition.label;
     withHeader = !!label && layout.withHeader;
   }
-  const bodyContent = /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
+  const bodyContent = /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
     BodyContent,
     {
       data,
@@ -27824,7 +27489,7 @@ function FormCardField({
       withHeader
     }
   );
-  const headerContent = /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
+  const headerContent = /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
     HeaderContent,
     {
       data,
@@ -27837,7 +27502,7 @@ function FormCardField({
     }
   );
   if (withHeader && isCollapsible) {
-    return /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
       collapsible_card_exports.Root,
       {
         className: "dataforms-layouts-card__field",
@@ -27845,8 +27510,8 @@ function FormCardField({
         onOpenChange: handleOpenChange,
         ...focusOutsideProps,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(collapsible_card_exports.Header, { children: headerContent }),
-          /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(collapsible_card_exports.Header, { children: headerContent }),
+          /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(
             collapsible_card_exports.Content,
             {
               ref: contentRef,
@@ -27858,34 +27523,34 @@ function FormCardField({
       }
     );
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime125.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)(
     card_exports.Root,
     {
       className: "dataforms-layouts-card__field",
       ...focusOutsideProps,
       children: [
-        withHeader && /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(card_exports.Header, { children: headerContent }),
-        /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(card_exports.Content, { ref: contentRef, onFocus: handleContentFocus, children: bodyContent })
+        withHeader && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(card_exports.Header, { children: headerContent }),
+        /* @__PURE__ */ (0, import_jsx_runtime120.jsx)(card_exports.Content, { ref: contentRef, onFocus: handleContentFocus, children: bodyContent })
       ]
     }
   );
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/row/index.mjs
-var import_components35 = __toESM(require_components(), 1);
-var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
+var import_components32 = __toESM(require_components(), 1);
+var import_jsx_runtime121 = __toESM(require_jsx_runtime(), 1);
 function Header5({ title }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
     Stack,
     {
       direction: "column",
       className: "dataforms-layouts-row__header",
       gap: "lg",
-      children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components35.__experimentalHeading, { level: 2, size: 13, children: title }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(Stack, { direction: "row", align: "center", children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_components32.__experimentalHeading, { level: 2, size: 13, children: title }) })
     }
   );
 }
-var EMPTY_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_jsx_runtime126.Fragment, { children });
+var EMPTY_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_jsx_runtime121.Fragment, { children });
 function FormRowField({
   data,
   field,
@@ -27900,9 +27565,9 @@ function FormRowField({
       layout: DEFAULT_LAYOUT,
       fields: field.children
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
-      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(Header5, { title: field.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(Stack, { direction: "row", align: layout.alignment, gap: "lg", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime121.jsxs)("div", { className: "dataforms-layouts-row__field", children: [
+      !hideLabelFromVision && field.label && /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(Header5, { title: field.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(Stack, { direction: "row", align: layout.alignment, gap: "lg", children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
         DataFormLayout,
         {
           data,
@@ -27910,12 +27575,12 @@ function FormRowField({
           onChange,
           validity: validity?.children,
           as: EMPTY_WRAPPER,
-          children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+          children: (FieldLayout, childField, childFieldValidity) => /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
             "div",
             {
               className: "dataforms-layouts-row__field-control",
               style: layout.styles[childField.id],
-              children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
                 FieldLayout,
                 {
                   data,
@@ -27937,7 +27602,7 @@ function FormRowField({
   if (!RegularLayout) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_jsx_runtime126.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { className: "dataforms-layouts-row__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(import_jsx_runtime121.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)("div", { className: "dataforms-layouts-row__field-control", children: /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
     RegularLayout,
     {
       data,
@@ -27950,31 +27615,31 @@ function FormRowField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
-var import_element89 = __toESM(require_element(), 1);
-var import_i18n29 = __toESM(require_i18n(), 1);
-var import_compose13 = __toESM(require_compose(), 1);
-import { speak as speak5 } from "@wordpress/a11y";
-var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
+var import_element85 = __toESM(require_element(), 1);
+var import_i18n28 = __toESM(require_i18n(), 1);
+var import_compose11 = __toESM(require_compose(), 1);
+import { speak as speak4 } from "@wordpress/a11y";
+var import_jsx_runtime122 = __toESM(require_jsx_runtime(), 1);
 function FormDetailsField({
   data,
   field,
   onChange,
   validity
 }) {
-  const { fields } = (0, import_element89.useContext)(dataform_context_default);
-  const detailsRef = (0, import_element89.useRef)(null);
-  const contentRef = (0, import_element89.useRef)(null);
-  const hasFocusedContentRef = (0, import_element89.useRef)(false);
-  const [touched, setTouched] = (0, import_element89.useState)(false);
-  const [isOpen2, setIsOpen] = (0, import_element89.useState)(false);
-  const form = (0, import_element89.useMemo)(
+  const { fields } = (0, import_element85.useContext)(dataform_context_default);
+  const detailsRef = (0, import_element85.useRef)(null);
+  const contentRef = (0, import_element85.useRef)(null);
+  const hasFocusedContentRef = (0, import_element85.useRef)(false);
+  const [touched, setTouched] = (0, import_element85.useState)(false);
+  const [isOpen2, setIsOpen] = (0, import_element85.useState)(false);
+  const form = (0, import_element85.useMemo)(
     () => ({
       layout: DEFAULT_LAYOUT,
       fields: field.children ?? []
     }),
     [field]
   );
-  (0, import_element89.useEffect)(() => {
+  (0, import_element85.useEffect)(() => {
     const details = detailsRef.current;
     if (!details) {
       return;
@@ -27992,10 +27657,10 @@ function FormDetailsField({
     };
   }, []);
   const revealValidity = useRevealValidity(contentRef, isOpen2 && touched);
-  const handleContentFocus = (0, import_element89.useCallback)(() => {
+  const handleContentFocus = (0, import_element85.useCallback)(() => {
     hasFocusedContentRef.current = true;
   }, []);
-  const handleFocusOutside = (0, import_element89.useCallback)(() => {
+  const handleFocusOutside = (0, import_element85.useCallback)(() => {
     if (!hasFocusedContentRef.current) {
       return;
     }
@@ -28006,10 +27671,10 @@ function FormDetailsField({
     const revealedCount = revealValidity();
     const message2 = getValidationMessage(validity);
     if (revealedCount > 0 && message2) {
-      speak5(message2, "polite");
+      speak4(message2, "polite");
     }
   }, [revealValidity, validity]);
-  const focusOutsideProps = (0, import_compose13.__experimentalUseFocusOutside)(handleFocusOutside);
+  const focusOutsideProps = (0, import_compose11.__experimentalUseFocusOutside)(handleFocusOutside);
   if (!field.children) {
     return null;
   }
@@ -28017,18 +27682,18 @@ function FormDetailsField({
   const summaryField = summaryFieldId ? fields.find((fieldDef) => fieldDef.id === summaryFieldId) : void 0;
   let summaryContent;
   if (summaryField && summaryField.render) {
-    summaryContent = /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(summaryField.render, { item: data, field: summaryField });
+    summaryContent = /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(summaryField.render, { item: data, field: summaryField });
   } else {
-    summaryContent = field.label || (0, import_i18n29.__)("More details");
+    summaryContent = field.label || (0, import_i18n28.__)("More details");
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(
     "details",
     {
       ref: detailsRef,
       className: "dataforms-layouts-details__details",
       ...focusOutsideProps,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime127.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime127.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime122.jsx)("summary", { className: "dataforms-layouts-details__summary", children: /* @__PURE__ */ (0, import_jsx_runtime122.jsxs)(
           Stack,
           {
             direction: "row",
@@ -28037,17 +27702,17 @@ function FormDetailsField({
             className: "dataforms-layouts-details__summary-content",
             children: [
               summaryContent,
-              touched && /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(ValidationBadge, { validity })
+              touched && /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(ValidationBadge, { validity })
             ]
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
           "div",
           {
             ref: contentRef,
             className: "dataforms-layouts-details__content",
             onFocus: handleContentFocus,
-            children: /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime122.jsx)(
               DataFormLayout,
               {
                 data,
@@ -28064,12 +27729,12 @@ function FormDetailsField({
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/index.mjs
-var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime123 = __toESM(require_jsx_runtime(), 1);
 var FORM_FIELD_LAYOUTS = [
   {
     type: "regular",
     component: FormRegularField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
       Stack,
       {
         direction: "column",
@@ -28082,7 +27747,7 @@ var FORM_FIELD_LAYOUTS = [
   {
     type: "panel",
     component: FormPanelField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
       Stack,
       {
         direction: "column",
@@ -28095,7 +27760,7 @@ var FORM_FIELD_LAYOUTS = [
   {
     type: "card",
     component: FormCardField,
-    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+    wrapper: ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
       Stack,
       {
         direction: "column",
@@ -28111,13 +27776,13 @@ var FORM_FIELD_LAYOUTS = [
     wrapper: ({
       children,
       layout
-    }) => /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+    }) => /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
       Stack,
       {
         direction: "column",
         className: "dataforms-layouts__wrapper",
         gap: "lg",
-        children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("div", { className: "dataforms-layouts-row__field", children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)(
           Stack,
           {
             direction: "row",
@@ -28139,8 +27804,8 @@ function getFormFieldLayout(type) {
 }
 
 // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
-var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "lg", children });
+var import_jsx_runtime124 = __toESM(require_jsx_runtime(), 1);
+var DEFAULT_WRAPPER = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Stack, { direction: "column", className: "dataforms-layouts__wrapper", gap: "lg", children });
 function DataFormLayout({
   data,
   form,
@@ -28149,8 +27814,8 @@ function DataFormLayout({
   children,
   as
 }) {
-  const { fields: fieldDefinitions } = (0, import_element90.useContext)(dataform_context_default);
-  const markWhenOptional = (0, import_element90.useMemo)(() => {
+  const { fields: fieldDefinitions } = (0, import_element86.useContext)(dataform_context_default);
+  const markWhenOptional = (0, import_element86.useMemo)(() => {
     const requiredCount = fieldDefinitions.filter(
       (f2) => !!f2.isValid?.required
     ).length;
@@ -28163,7 +27828,7 @@ function DataFormLayout({
     );
   }
   const Wrapper = as ?? getFormFieldLayout(form.layout.type)?.wrapper ?? DEFAULT_WRAPPER;
-  return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(Wrapper, { layout: form.layout, children: form.fields.map((formField) => {
     const FieldLayout = getFormFieldLayout(formField.layout.type)?.component;
     if (!FieldLayout) {
       return null;
@@ -28180,7 +27845,7 @@ function DataFormLayout({
         markWhenOptional
       );
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime124.jsx)(
       FieldLayout,
       {
         data,
@@ -28195,7 +27860,7 @@ function DataFormLayout({
 }
 
 // packages/dataviews/build-module/dataform/index.mjs
-var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime125 = __toESM(require_jsx_runtime(), 1);
 function DataForm({
   data,
   form,
@@ -28203,15 +27868,15 @@ function DataForm({
   onChange,
   validity
 }) {
-  const normalizedForm = (0, import_element91.useMemo)(() => normalize_form_default(form), [form]);
-  const normalizedFields = (0, import_element91.useMemo)(
+  const normalizedForm = (0, import_element87.useMemo)(() => normalize_form_default(form), [form]);
+  const normalizedFields = (0, import_element87.useMemo)(
     () => normalizeFields(fields),
     [fields]
   );
   if (!form.fields) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(DataFormProvider, { fields: normalizedFields, children: /* @__PURE__ */ (0, import_jsx_runtime125.jsx)(
     DataFormLayout,
     {
       data,
@@ -28223,16 +27888,16 @@ function DataForm({
 }
 
 // packages/media-editor/build-module/components/media-form/index.mjs
-var import_components36 = __toESM(require_components(), 1);
-var import_i18n30 = __toESM(require_i18n(), 1);
-var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
+var import_components33 = __toESM(require_components(), 1);
+var import_i18n29 = __toESM(require_i18n(), 1);
+var import_jsx_runtime126 = __toESM(require_jsx_runtime(), 1);
 function MediaForm({
   form: formOverrides,
   header
 }) {
   const { media, fields, onChange } = useMediaEditorContext();
   if (!media || !onChange) {
-    return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "media-editor-form media-editor-form--loading", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components36.Spinner, {}) });
+    return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { className: "media-editor-form media-editor-form--loading", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(import_components33.Spinner, {}) });
   }
   const regularFieldIds = ["title", "alt_text", "caption", "description"];
   const sortedFields = [
@@ -28261,10 +27926,10 @@ function MediaForm({
     })
   };
   const form = formOverrides || defaultForm;
-  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(import_components36.__experimentalVStack, { spacing: 4, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("h2", {}), children: (0, import_i18n30.__)("Media details") }),
+  return /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { className: "media-editor-form", children: /* @__PURE__ */ (0, import_jsx_runtime126.jsxs)(import_components33.__experimentalVStack, { spacing: 4, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("h2", {}), children: (0, import_i18n29.__)("Media details") }),
     header,
-    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime126.jsx)(
       DataForm,
       {
         data: media,
@@ -28365,34 +28030,34 @@ var store = (0, import_data.createReduxStore)(STORE_NAME, {
 (0, import_data.register)(store);
 
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
-var import_components49 = __toESM(require_components(), 1);
+var import_components46 = __toESM(require_components(), 1);
 var import_data9 = __toESM(require_data(), 1);
-var import_i18n44 = __toESM(require_i18n(), 1);
+var import_i18n43 = __toESM(require_i18n(), 1);
 var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
 var import_notices3 = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
-var import_components48 = __toESM(require_components(), 1);
-var import_compose16 = __toESM(require_compose(), 1);
+var import_components45 = __toESM(require_components(), 1);
+var import_compose14 = __toESM(require_compose(), 1);
 var import_data8 = __toESM(require_data(), 1);
 var import_core_data2 = __toESM(require_core_data(), 1);
-var import_element112 = __toESM(require_element(), 1);
-var import_i18n43 = __toESM(require_i18n(), 1);
+var import_element108 = __toESM(require_element(), 1);
+var import_i18n42 = __toESM(require_i18n(), 1);
 var import_keycodes2 = __toESM(require_keycodes(), 1);
 var import_notices2 = __toESM(require_notices(), 1);
 
 // packages/interface/build-module/components/complementary-area/index.mjs
-var import_components41 = __toESM(require_components(), 1);
+var import_components38 = __toESM(require_components(), 1);
 var import_data6 = __toESM(require_data(), 1);
-var import_i18n31 = __toESM(require_i18n(), 1);
-var import_element93 = __toESM(require_element(), 1);
+var import_i18n30 = __toESM(require_i18n(), 1);
+var import_element89 = __toESM(require_element(), 1);
 var import_viewport = __toESM(require_viewport(), 1);
 var import_preferences3 = __toESM(require_preferences(), 1);
-var import_compose14 = __toESM(require_compose(), 1);
+var import_compose12 = __toESM(require_compose(), 1);
 var import_plugins2 = __toESM(require_plugins(), 1);
 
 // packages/interface/build-module/components/complementary-area-toggle/index.mjs
-var import_components37 = __toESM(require_components(), 1);
+var import_components34 = __toESM(require_components(), 1);
 var import_data5 = __toESM(require_data(), 1);
 var import_plugins = __toESM(require_plugins(), 1);
 
@@ -28662,7 +28327,7 @@ var store2 = (0, import_data4.createReduxStore)(STORE_NAME2, {
 (0, import_data4.register)(store2);
 
 // packages/interface/build-module/components/complementary-area-toggle/index.mjs
-var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime127 = __toESM(require_jsx_runtime(), 1);
 function roleSupportsCheckedState(role) {
   return [
     "checkbox",
@@ -28675,7 +28340,7 @@ function roleSupportsCheckedState(role) {
   ].includes(role);
 }
 function ComplementaryAreaToggle({
-  as = import_components37.Button,
+  as = import_components34.Button,
   scope,
   identifier: identifierProp,
   icon: iconProp,
@@ -28693,7 +28358,7 @@ function ComplementaryAreaToggle({
     [identifier, scope]
   );
   const { enableComplementaryArea: enableComplementaryArea2, disableComplementaryArea: disableComplementaryArea2 } = (0, import_data5.useDispatch)(store2);
-  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime127.jsx)(
     ComponentToUse,
     {
       icon: selectedIcon && isSelected ? selectedIcon : icon,
@@ -28713,14 +28378,14 @@ function ComplementaryAreaToggle({
 }
 
 // packages/interface/build-module/components/complementary-area-header/index.mjs
-var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime128 = __toESM(require_jsx_runtime(), 1);
 var ComplementaryAreaHeader = ({
   children,
   className: className2,
   toggleButtonProps
 }) => {
-  const toggleButton = /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(ComplementaryAreaToggle, { icon: close_small_default, ...toggleButtonProps });
-  return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
+  const toggleButton = /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(ComplementaryAreaToggle, { icon: close_small_default, ...toggleButtonProps });
+  return /* @__PURE__ */ (0, import_jsx_runtime128.jsxs)(
     "div",
     {
       className: clsx_default(
@@ -28739,33 +28404,33 @@ var ComplementaryAreaHeader = ({
 var complementary_area_header_default = ComplementaryAreaHeader;
 
 // packages/interface/build-module/components/complementary-area-more-menu-item/index.mjs
-var import_components39 = __toESM(require_components(), 1);
+var import_components36 = __toESM(require_components(), 1);
 
 // packages/interface/build-module/components/action-item/index.mjs
-var import_components38 = __toESM(require_components(), 1);
-var import_element92 = __toESM(require_element(), 1);
-var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
+var import_components35 = __toESM(require_components(), 1);
+var import_element88 = __toESM(require_element(), 1);
+var import_jsx_runtime129 = __toESM(require_jsx_runtime(), 1);
 var noop4 = () => {
 };
 function ActionItemSlot({
   name,
-  as: Component = import_components38.MenuGroup,
+  as: Component = import_components35.MenuGroup,
   fillProps = {},
   bubblesVirtually,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
-    import_components38.Slot,
+  return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
+    import_components35.Slot,
     {
       name,
       bubblesVirtually,
       fillProps,
       children: (fills) => {
-        if (!import_element92.Children.toArray(fills).length) {
+        if (!import_element88.Children.toArray(fills).length) {
           return null;
         }
         const initializedByPlugins = [];
-        import_element92.Children.forEach(
+        import_element88.Children.forEach(
           fills,
           ({
             props: { __unstableExplicitMenuItem, __unstableTarget }
@@ -28775,7 +28440,7 @@ function ActionItemSlot({
             }
           }
         );
-        const children = import_element92.Children.map(fills, (child) => {
+        const children = import_element88.Children.map(fills, (child) => {
           if (!child.props.__unstableExplicitMenuItem && initializedByPlugins.includes(
             child.props.__unstableTarget
           )) {
@@ -28783,14 +28448,14 @@ function ActionItemSlot({
           }
           return child;
         });
-        return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(Component, { ...props, children });
+        return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(Component, { ...props, children });
       }
     }
   );
 }
-function ActionItem({ name, as: Component = import_components38.Button, onClick, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(import_components38.Fill, { name, children: ({ onClick: fpOnClick }) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
+function ActionItem({ name, as: Component = import_components35.Button, onClick, ...props }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(import_components35.Fill, { name, children: ({ onClick: fpOnClick }) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)(
       Component,
       {
         onClick: onClick || fpOnClick ? (...args) => {
@@ -28806,7 +28471,7 @@ ActionItem.Slot = ActionItemSlot;
 var action_item_default = ActionItem;
 
 // packages/interface/build-module/components/complementary-area-more-menu-item/index.mjs
-var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime130 = __toESM(require_jsx_runtime(), 1);
 var PluginsMenuItem = ({
   // Menu item is marked with unstable prop for backward compatibility.
   // They are removed so they don't leak to DOM elements.
@@ -28814,18 +28479,18 @@ var PluginsMenuItem = ({
   __unstableExplicitMenuItem,
   __unstableTarget,
   ...restProps
-}) => /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(import_components39.MenuItem, { ...restProps });
+}) => /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(import_components36.MenuItem, { ...restProps });
 function ComplementaryAreaMoreMenuItem({
   scope,
   target,
   __unstableExplicitMenuItem,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
     ComplementaryAreaToggle,
     {
       as: (toggleProps) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime130.jsx)(
           action_item_default,
           {
             __unstableExplicitMenuItem,
@@ -28846,13 +28511,13 @@ function ComplementaryAreaMoreMenuItem({
 }
 
 // packages/interface/build-module/components/pinned-items/index.mjs
-var import_components40 = __toESM(require_components(), 1);
-var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
+var import_components37 = __toESM(require_components(), 1);
+var import_jsx_runtime131 = __toESM(require_jsx_runtime(), 1);
 function PinnedItems({ scope, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(import_components40.Fill, { name: `PinnedItems/${scope}`, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components37.Fill, { name: `PinnedItems/${scope}`, ...props });
 }
 function PinnedItemsSlot({ scope, className: className2, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(import_components40.Slot, { name: `PinnedItems/${scope}`, ...props, children: (fills) => fills?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(import_components37.Slot, { name: `PinnedItems/${scope}`, ...props, children: (fills) => fills?.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(
     "div",
     {
       className: clsx_default(
@@ -28867,10 +28532,10 @@ PinnedItems.Slot = PinnedItemsSlot;
 var pinned_items_default = PinnedItems;
 
 // packages/interface/build-module/components/complementary-area/index.mjs
-var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime132 = __toESM(require_jsx_runtime(), 1);
 var ANIMATION_DURATION = 0.3;
 function ComplementaryAreaSlot({ scope, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_components41.Slot, { name: `ComplementaryArea/${scope}`, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components38.Slot, { name: `ComplementaryArea/${scope}`, ...props });
 }
 var variants = {
   // `auto` leaves the width to the area's own stylesheet, so it stays in one
@@ -28882,14 +28547,14 @@ var variants = {
   closed: (transition) => ({ width: 0, transition })
 };
 function renderContainer(render4, props) {
-  if ((0, import_element93.isValidElement)(render4)) {
-    return (0, import_element93.cloneElement)(render4, {
+  if ((0, import_element89.isValidElement)(render4)) {
+    return (0, import_element89.cloneElement)(render4, {
       ...props,
       className: clsx_default(render4.props.className, props.className),
       style: { ...render4.props.style, ...props.style }
     });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("div", { ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { ...props });
 }
 function ComplementaryAreaFill({
   activeArea,
@@ -28900,17 +28565,17 @@ function ComplementaryAreaFill({
   id,
   render: render4
 }) {
-  const disableMotion = (0, import_compose14.useReducedMotion)();
-  const isMobileViewport = (0, import_compose14.useViewportMatch)("medium", "<");
-  const previousActiveArea = (0, import_compose14.usePrevious)(activeArea);
+  const disableMotion = (0, import_compose12.useReducedMotion)();
+  const isMobileViewport = (0, import_compose12.useViewportMatch)("medium", "<");
+  const previousActiveArea = (0, import_compose12.usePrevious)(activeArea);
   const isSwitchingAreas = !!previousActiveArea && !!activeArea && activeArea !== previousActiveArea;
   const transition = {
     type: "tween",
     duration: disableMotion || isMobileViewport || isSwitchingAreas ? 0 : ANIMATION_DURATION,
     ease: [0.6, 0, 0.4, 1]
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_components41.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_components41.__unstableAnimatePresence, { initial: false, custom: transition, children: isActive && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
-    import_components41.__unstableMotion.div,
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components38.Fill, { name: `ComplementaryArea/${scope}`, children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components38.__unstableAnimatePresence, { initial: false, custom: transition, children: isActive && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+    import_components38.__unstableMotion.div,
     {
       variants,
       initial: "closed",
@@ -28927,10 +28592,10 @@ function ComplementaryAreaFill({
   ) }) });
 }
 function useAdjustComplementaryListener(scope, identifier, activeArea, isActive, isSmall) {
-  const previousIsSmallRef = (0, import_element93.useRef)(false);
-  const shouldOpenWhenNotSmallRef = (0, import_element93.useRef)(false);
+  const previousIsSmallRef = (0, import_element89.useRef)(false);
+  const shouldOpenWhenNotSmallRef = (0, import_element89.useRef)(false);
   const { enableComplementaryArea: enableComplementaryArea2, disableComplementaryArea: disableComplementaryArea2 } = (0, import_data6.useDispatch)(store2);
-  (0, import_element93.useEffect)(() => {
+  (0, import_element89.useEffect)(() => {
     if (isActive && isSmall && !previousIsSmallRef.current) {
       disableComplementaryArea2(scope);
       shouldOpenWhenNotSmallRef.current = true;
@@ -28966,7 +28631,7 @@ function useAdjustComplementaryListener(scope, identifier, activeArea, isActive,
 function ComplementaryArea({
   children,
   className: className2,
-  closeLabel = (0, import_i18n31.__)("Close plugin"),
+  closeLabel = (0, import_i18n30.__)("Close plugin"),
   identifier: identifierProp,
   header,
   headerClassName,
@@ -28983,7 +28648,7 @@ function ComplementaryArea({
   const context = (0, import_plugins2.usePluginContext)();
   const icon = iconProp || context.icon;
   const identifier = identifierProp || `${context.name}/${name}`;
-  const [isReady, setIsReady] = (0, import_element93.useState)(false);
+  const [isReady, setIsReady] = (0, import_element89.useState)(false);
   const {
     isLoading,
     isActive,
@@ -29013,7 +28678,7 @@ function ComplementaryArea({
     },
     [identifier, scope]
   );
-  const isMobileViewport = (0, import_compose14.useViewportMatch)("medium", "<");
+  const isMobileViewport = (0, import_compose12.useViewportMatch)("medium", "<");
   useAdjustComplementaryListener(
     scope,
     identifier,
@@ -29027,7 +28692,7 @@ function ComplementaryArea({
     pinItem: pinItem2,
     unpinItem: unpinItem2
   } = (0, import_data6.useDispatch)(store2);
-  (0, import_element93.useEffect)(() => {
+  (0, import_element89.useEffect)(() => {
     if (isActiveByDefault && activeArea === void 0 && !isSmall) {
       enableComplementaryArea2(scope, identifier);
     } else if (activeArea === void 0 && isSmall) {
@@ -29046,8 +28711,8 @@ function ComplementaryArea({
   if (!isReady) {
     return;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(import_jsx_runtime137.Fragment, { children: [
-    isPinnable && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(pinned_items_default, { scope, children: isPinned && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(import_jsx_runtime132.Fragment, { children: [
+    isPinnable && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(pinned_items_default, { scope, children: isPinned && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
       ComplementaryAreaToggle,
       {
         scope,
@@ -29063,7 +28728,7 @@ function ComplementaryArea({
         shortcut: toggleShortcut
       }
     ) }),
-    name && isPinnable && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+    name && isPinnable && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
       ComplementaryAreaMoreMenuItem,
       {
         target: name,
@@ -29073,7 +28738,7 @@ function ComplementaryArea({
         children: title
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
       ComplementaryAreaFill,
       {
         activeArea,
@@ -29083,7 +28748,7 @@ function ComplementaryArea({
         id: identifier.replace("/", ":"),
         render: render4,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
             complementary_area_header_default,
             {
               className: headerClassName,
@@ -29096,14 +28761,14 @@ function ComplementaryArea({
                 scope,
                 identifier
               },
-              children: header || /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(import_jsx_runtime137.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("h2", { className: "interface-complementary-area-header__title", children: title }),
-                isPinnable && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
-                  import_components41.Button,
+              children: header || /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(import_jsx_runtime132.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("h2", { className: "interface-complementary-area-header__title", children: title }),
+                isPinnable && !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(
+                  import_components38.Button,
                   {
                     className: "interface-complementary-area__pin-unpin-item",
                     icon: isPinned ? star_filled_default : star_empty_default,
-                    label: isPinned ? (0, import_i18n31.__)("Unpin from toolbar") : (0, import_i18n31.__)("Pin to toolbar"),
+                    label: isPinned ? (0, import_i18n30.__)("Unpin from toolbar") : (0, import_i18n30.__)("Pin to toolbar"),
                     onClick: () => (isPinned ? unpinItem2 : pinItem2)(
                       scope,
                       identifier
@@ -29115,7 +28780,7 @@ function ComplementaryArea({
               ] })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(import_components41.Panel, { className: panelClassName, children })
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(import_components38.Panel, { className: panelClassName, children })
         ]
       }
     )
@@ -29125,11 +28790,11 @@ ComplementaryArea.Slot = ComplementaryAreaSlot;
 var complementary_area_default = ComplementaryArea;
 
 // packages/interface/build-module/components/interface-skeleton/index.mjs
-var import_element94 = __toESM(require_element(), 1);
-var import_components42 = __toESM(require_components(), 1);
-var import_i18n32 = __toESM(require_i18n(), 1);
-var import_compose15 = __toESM(require_compose(), 1);
-var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
+var import_element90 = __toESM(require_element(), 1);
+var import_components39 = __toESM(require_components(), 1);
+var import_i18n31 = __toESM(require_i18n(), 1);
+var import_compose13 = __toESM(require_compose(), 1);
+var import_jsx_runtime133 = __toESM(require_jsx_runtime(), 1);
 var ANIMATION_DURATION2 = 0.25;
 var commonTransition = {
   type: "tween",
@@ -29137,7 +28802,7 @@ var commonTransition = {
   ease: [0.6, 0, 0.4, 1]
 };
 function useHTMLClass(className2) {
-  (0, import_element94.useEffect)(() => {
+  (0, import_element90.useEffect)(() => {
     const element = document && document.querySelector(`html:not(.${className2})`);
     if (!element) {
       return;
@@ -29186,8 +28851,8 @@ function InterfaceSkeleton({
   labels,
   className: className2
 }, ref) {
-  const isMobileViewport = (0, import_compose15.useViewportMatch)("medium", "<");
-  const disableMotion = (0, import_compose15.useReducedMotion)();
+  const isMobileViewport = (0, import_compose13.useViewportMatch)("medium", "<");
+  const disableMotion = (0, import_compose13.useReducedMotion)();
   const defaultTransition = {
     type: "tween",
     duration: disableMotion ? 0 : ANIMATION_DURATION2,
@@ -29196,20 +28861,20 @@ function InterfaceSkeleton({
   useHTMLClass("interface-interface-skeleton__html-container");
   const defaultLabels = {
     /* translators: accessibility text for the top bar landmark region. */
-    header: (0, import_i18n32._x)("Header", "header landmark area"),
+    header: (0, import_i18n31._x)("Header", "header landmark area"),
     /* translators: accessibility text for the content landmark region. */
-    body: (0, import_i18n32.__)("Content"),
+    body: (0, import_i18n31.__)("Content"),
     /* translators: accessibility text for the secondary sidebar landmark region. */
-    secondarySidebar: (0, import_i18n32.__)("Block Library"),
+    secondarySidebar: (0, import_i18n31.__)("Block Library"),
     /* translators: accessibility text for the settings landmark region. */
-    sidebar: (0, import_i18n32._x)("Settings", "settings landmark area"),
+    sidebar: (0, import_i18n31._x)("Settings", "settings landmark area"),
     /* translators: accessibility text for the publish landmark region. */
-    actions: (0, import_i18n32.__)("Publish"),
+    actions: (0, import_i18n31.__)("Publish"),
     /* translators: accessibility text for the footer landmark region. */
-    footer: (0, import_i18n32.__)("Footer")
+    footer: (0, import_i18n31.__)("Footer")
   };
   const mergedLabels = { ...defaultLabels, ...labels };
-  return /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
     "div",
     {
       ref,
@@ -29219,11 +28884,11 @@ function InterfaceSkeleton({
         !!footer && "has-footer"
       ),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)("div", { className: "interface-interface-skeleton__editor", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_components42.__unstableAnimatePresence, { initial: false, children: !!header && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("div", { className: "interface-interface-skeleton__editor", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_components39.__unstableAnimatePresence, { initial: false, children: !!header && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
             navigable_region_default,
             {
-              as: import_components42.__unstableMotion.div,
+              as: import_components39.__unstableMotion.div,
               className: "interface-interface-skeleton__header",
               ariaLabel: mergedLabels.header,
               initial: isDistractionFree && !isMobileViewport ? "distractionFreeHidden" : "hidden",
@@ -29235,14 +28900,14 @@ function InterfaceSkeleton({
               children: header
             }
           ) }),
-          isDistractionFree && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("div", { className: "interface-interface-skeleton__header", children: editorNotices }),
-          /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)("div", { className: "interface-interface-skeleton__body", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(import_components42.__unstableAnimatePresence, { initial: false, children: !!secondarySidebar && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+          isDistractionFree && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", { className: "interface-interface-skeleton__header", children: editorNotices }),
+          /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("div", { className: "interface-interface-skeleton__body", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(import_components39.__unstableAnimatePresence, { initial: false, children: !!secondarySidebar && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__secondary-sidebar",
                 ariaLabel: mergedLabels.secondarySidebar,
-                as: import_components42.__unstableMotion.div,
+                as: import_components39.__unstableMotion.div,
                 initial: "closed",
                 animate: "open",
                 exit: "closed",
@@ -29251,8 +28916,8 @@ function InterfaceSkeleton({
                   closed: { width: 0 }
                 },
                 transition: defaultTransition,
-                children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
-                  import_components42.__unstableMotion.div,
+                children: /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
+                  import_components39.__unstableMotion.div,
                   {
                     style: {
                       width: isMobileViewport ? "100vw" : "max-content",
@@ -29268,7 +28933,7 @@ function InterfaceSkeleton({
                 )
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__content",
@@ -29276,7 +28941,7 @@ function InterfaceSkeleton({
                 children: content
               }
             ),
-            !!sidebar && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+            !!sidebar && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__sidebar",
@@ -29284,7 +28949,7 @@ function InterfaceSkeleton({
                 children: sidebar
               }
             ),
-            !!actions && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+            !!actions && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
               navigable_region_default,
               {
                 className: "interface-interface-skeleton__actions",
@@ -29294,7 +28959,7 @@ function InterfaceSkeleton({
             )
           ] })
         ] }),
-        !!footer && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(
+        !!footer && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)(
           navigable_region_default,
           {
             className: "interface-interface-skeleton__footer",
@@ -29306,15 +28971,15 @@ function InterfaceSkeleton({
     }
   );
 }
-var interface_skeleton_default = (0, import_element94.forwardRef)(InterfaceSkeleton);
+var interface_skeleton_default = (0, import_element90.forwardRef)(InterfaceSkeleton);
 
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
-var import_element105 = __toESM(require_element(), 1);
-var import_components44 = __toESM(require_components(), 1);
-var import_i18n37 = __toESM(require_i18n(), 1);
+var import_element101 = __toESM(require_element(), 1);
+var import_components41 = __toESM(require_components(), 1);
+var import_i18n36 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/constants.mjs
-var import_i18n33 = __toESM(require_i18n(), 1);
+var import_i18n32 = __toESM(require_i18n(), 1);
 var MIN_ZOOM = 1;
 var ABSOLUTE_MIN_ZOOM = 0.1;
 var MAX_ZOOM = 10;
@@ -29354,15 +29019,15 @@ var DEFAULT_STATE2 = {
 };
 var ORIGINAL_ASPECT_RATIO = -1;
 var DEFAULT_ASPECT_RATIOS = [
-  { label: (0, import_i18n33.__)("Free"), value: 0 },
-  { label: (0, import_i18n33.__)("Original"), value: ORIGINAL_ASPECT_RATIO },
-  { label: (0, import_i18n33.__)("Square (1:1)"), value: 1 },
-  { label: (0, import_i18n33.__)("Landscape (16:9)"), value: 16 / 9 },
-  { label: (0, import_i18n33.__)("Portrait (9:16)"), value: 9 / 16 },
-  { label: (0, import_i18n33.__)("Classic (4:3)"), value: 4 / 3 },
-  { label: (0, import_i18n33.__)("Classic portrait (3:4)"), value: 3 / 4 },
-  { label: (0, import_i18n33.__)("Photo (3:2)"), value: 3 / 2 },
-  { label: (0, import_i18n33.__)("Photo portrait (2:3)"), value: 2 / 3 }
+  { label: (0, import_i18n32.__)("Free"), value: 0 },
+  { label: (0, import_i18n32.__)("Original"), value: ORIGINAL_ASPECT_RATIO },
+  { label: (0, import_i18n32.__)("Square (1:1)"), value: 1 },
+  { label: (0, import_i18n32.__)("Landscape (16:9)"), value: 16 / 9 },
+  { label: (0, import_i18n32.__)("Portrait (9:16)"), value: 9 / 16 },
+  { label: (0, import_i18n32.__)("Classic (4:3)"), value: 4 / 3 },
+  { label: (0, import_i18n32.__)("Classic portrait (3:4)"), value: 3 / 4 },
+  { label: (0, import_i18n32.__)("Photo (3:2)"), value: 3 / 2 },
+  { label: (0, import_i18n32.__)("Photo portrait (2:3)"), value: 2 / 3 }
 ];
 
 // node_modules/gl-matrix/esm/common.js
@@ -30747,8 +30412,8 @@ function buildCropperSetters(dispatchCropperAction, getCropperState) {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
-var import_element102 = __toESM(require_element(), 1);
-var import_i18n36 = __toESM(require_i18n(), 1);
+var import_element98 = __toESM(require_element(), 1);
+var import_i18n35 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/core/crop-rect.mjs
 function computeInscribedRect(aspectRatio, visualSize) {
@@ -30950,7 +30615,7 @@ function computeShiftLockedResizeRect(drag2, clientX, clientY, imageSize, bounds
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-interaction.mjs
-var import_element95 = __toESM(require_element(), 1);
+var import_element91 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/interaction-controller.mjs
 var DOUBLE_TAP_TIME = 300;
@@ -31593,30 +31258,30 @@ function isHandledKeyboardZoom(event) {
   }
 }
 function useInteraction(state, actions, containerSize, imageSize, options) {
-  const [isDragging, setIsDragging] = (0, import_element95.useState)(false);
-  const [isZooming, setIsZooming] = (0, import_element95.useState)(false);
-  const [isGestureActive, setIsGestureActive] = (0, import_element95.useState)(false);
-  const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element95.useState)(false);
-  const keyboardInteractionTimerRef = (0, import_element95.useRef)();
-  const isKeyboardGestureActiveRef = (0, import_element95.useRef)(false);
-  const stateRef = (0, import_element95.useRef)(state);
+  const [isDragging, setIsDragging] = (0, import_element91.useState)(false);
+  const [isZooming, setIsZooming] = (0, import_element91.useState)(false);
+  const [isGestureActive, setIsGestureActive] = (0, import_element91.useState)(false);
+  const [isKeyboardPanning, setIsKeyboardPanning] = (0, import_element91.useState)(false);
+  const keyboardInteractionTimerRef = (0, import_element91.useRef)();
+  const isKeyboardGestureActiveRef = (0, import_element91.useRef)(false);
+  const stateRef = (0, import_element91.useRef)(state);
   stateRef.current = state;
-  const containerSizeRef = (0, import_element95.useRef)(containerSize);
+  const containerSizeRef = (0, import_element91.useRef)(containerSize);
   containerSizeRef.current = containerSize;
-  const imageSizeRef = (0, import_element95.useRef)(imageSize);
+  const imageSizeRef = (0, import_element91.useRef)(imageSize);
   imageSizeRef.current = imageSize;
-  const optionsRef = (0, import_element95.useRef)(options);
+  const optionsRef = (0, import_element91.useRef)(options);
   optionsRef.current = options;
-  const actionsRef = (0, import_element95.useRef)(actions);
+  const actionsRef = (0, import_element91.useRef)(actions);
   actionsRef.current = actions;
-  const controllerRef = (0, import_element95.useRef)(null);
-  const startPlacementGesture = (0, import_element95.useCallback)(() => {
+  const controllerRef = (0, import_element91.useRef)(null);
+  const startPlacementGesture = (0, import_element91.useCallback)(() => {
     setIsGestureActive(true);
   }, []);
-  const stopPlacementGesture = (0, import_element95.useCallback)(() => {
+  const stopPlacementGesture = (0, import_element91.useCallback)(() => {
     setIsGestureActive(false);
   }, []);
-  const signalKeyboardGesture = (0, import_element95.useCallback)(() => {
+  const signalKeyboardGesture = (0, import_element91.useCallback)(() => {
     if (!isKeyboardGestureActiveRef.current) {
       isKeyboardGestureActiveRef.current = true;
       optionsRef.current?.onGestureStart?.();
@@ -31628,12 +31293,12 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       optionsRef.current?.onGestureEnd?.();
     }, KEYBOARD_INTERACTION_IDLE_MS);
   }, []);
-  (0, import_element95.useEffect)(() => {
+  (0, import_element91.useEffect)(() => {
     return () => {
       clearTimeout(keyboardInteractionTimerRef.current);
     };
   }, []);
-  (0, import_element95.useEffect)(() => {
+  (0, import_element91.useEffect)(() => {
     const controller = new InteractionController({
       getState: () => stateRef.current,
       actions: {
@@ -31679,11 +31344,11 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       controllerRef.current = null;
     };
   }, [startPlacementGesture, stopPlacementGesture]);
-  const onPointerDown = (0, import_element95.useCallback)((e2) => {
+  const onPointerDown = (0, import_element91.useCallback)((e2) => {
     const el = e2.currentTarget;
     controllerRef.current?.handlePointerDown(e2.nativeEvent, el);
   }, []);
-  const onTouchStart = (0, import_element95.useCallback)((e2) => {
+  const onTouchStart = (0, import_element91.useCallback)((e2) => {
     const el = e2.currentTarget;
     const rect = el.getBoundingClientRect();
     controllerRef.current?.handleTouchStart(
@@ -31692,7 +31357,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
       el.ownerDocument
     );
   }, []);
-  const onKeyDown = (0, import_element95.useCallback)(
+  const onKeyDown = (0, import_element91.useCallback)(
     (e2) => {
       if (isHandledKeyboardPan(e2.nativeEvent)) {
         setIsKeyboardPanning(true);
@@ -31704,7 +31369,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
     },
     [signalKeyboardGesture]
   );
-  const onWheelNative = (0, import_element95.useCallback)((e2) => {
+  const onWheelNative = (0, import_element91.useCallback)((e2) => {
     controllerRef.current?.handleWheel(e2);
   }, []);
   return {
@@ -31721,7 +31386,7 @@ function useInteraction(state, actions, containerSize, imageSize, options) {
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-transform-style.mjs
-var import_element96 = __toESM(require_element(), 1);
+var import_element92 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/transform-style.mjs
 var IDENTITY_MATRIX_STYLE = "matrix(1, 0, 0, 1, 0, 0)";
@@ -31747,16 +31412,16 @@ function computeTransformStyle(state, imageSize) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-transform-style.mjs
 function useTransformStyle(state, imageSize) {
-  return (0, import_element96.useMemo)(
+  return (0, import_element92.useMemo)(
     () => computeTransformStyle(state, imageSize),
     [state, imageSize]
   );
 }
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
-var import_element97 = __toESM(require_element(), 1);
-var import_i18n34 = __toESM(require_i18n(), 1);
-import { speak as speak6 } from "@wordpress/a11y";
+var import_element93 = __toESM(require_element(), 1);
+var import_i18n33 = __toESM(require_i18n(), 1);
+import { speak as speak5 } from "@wordpress/a11y";
 
 // packages/media-editor/build-module/image-editor/core/source-region.mjs
 function getSourceRegion(state, imageSize) {
@@ -31922,15 +31587,15 @@ function getFlipAnnouncement(state, previousState) {
   }
   const { horizontal, vertical } = state.flip;
   if (horizontal && vertical) {
-    return (0, import_i18n34.__)("Flipped horizontally and vertically");
+    return (0, import_i18n33.__)("Flipped horizontally and vertically");
   }
   if (horizontal) {
-    return (0, import_i18n34.__)("Flipped horizontally");
+    return (0, import_i18n33.__)("Flipped horizontally");
   }
   if (vertical) {
-    return (0, import_i18n34.__)("Flipped vertically");
+    return (0, import_i18n33.__)("Flipped vertically");
   }
-  return (0, import_i18n34.__)("Flip removed");
+  return (0, import_i18n33.__)("Flip removed");
 }
 function getRotationAnnouncement(state, previousState) {
   if (previousState && Math.round(previousState.rotation) === Math.round(state.rotation)) {
@@ -31946,18 +31611,18 @@ function getRotationAnnouncement(state, previousState) {
     visualRotation += 360;
   }
   if (visualRotation === 0) {
-    return previousState ? (0, import_i18n34.__)("Rotation 0 degrees") : void 0;
+    return previousState ? (0, import_i18n33.__)("Rotation 0 degrees") : void 0;
   }
   if (visualRotation > 0) {
-    return (0, import_i18n34.sprintf)(
+    return (0, import_i18n33.sprintf)(
       /* translators: %d: rotation angle in degrees. */
-      (0, import_i18n34.__)("Rotated %d degrees clockwise"),
+      (0, import_i18n33.__)("Rotated %d degrees clockwise"),
       visualRotation
     );
   }
-  return (0, import_i18n34.sprintf)(
+  return (0, import_i18n33.sprintf)(
     /* translators: %d: rotation angle in degrees. */
-    (0, import_i18n34.__)("Rotated %d degrees counterclockwise"),
+    (0, import_i18n33.__)("Rotated %d degrees counterclockwise"),
     Math.abs(visualRotation)
   );
 }
@@ -31979,9 +31644,9 @@ function getCropAnnouncement(state, previousState) {
       return void 0;
     }
   }
-  return (0, import_i18n34.sprintf)(
+  return (0, import_i18n33.sprintf)(
     /* translators: 1: crop width in pixels, 2: crop height in pixels. */
-    (0, import_i18n34.__)("Crop %1$d by %2$d pixels"),
+    (0, import_i18n33.__)("Crop %1$d by %2$d pixels"),
     Math.round(region.width),
     Math.round(region.height)
   );
@@ -31990,9 +31655,9 @@ function getZoomAnnouncement(state, previousState) {
   if (previousState && Math.round(previousState.zoom * 100) === Math.round(state.zoom * 100)) {
     return void 0;
   }
-  return (0, import_i18n34.sprintf)(
+  return (0, import_i18n33.sprintf)(
     /* translators: %d: zoom level as a percentage. */
-    (0, import_i18n34.__)("Zoom %d%%"),
+    (0, import_i18n33.__)("Zoom %d%%"),
     Math.round(state.zoom * 100)
   );
 }
@@ -32009,14 +31674,14 @@ function buildAnnouncement(state, previousState) {
   return parts.join(", ");
 }
 function useAriaAnnouncer(state) {
-  const timerRef = (0, import_element97.useRef)();
-  const prevMessageRef = (0, import_element97.useRef)("");
-  const prevStateRef = (0, import_element97.useRef)(null);
-  const latestStateRef = (0, import_element97.useRef)(state);
-  (0, import_element97.useLayoutEffect)(() => {
+  const timerRef = (0, import_element93.useRef)();
+  const prevMessageRef = (0, import_element93.useRef)("");
+  const prevStateRef = (0, import_element93.useRef)(null);
+  const latestStateRef = (0, import_element93.useRef)(state);
+  (0, import_element93.useLayoutEffect)(() => {
     latestStateRef.current = state;
   }, [state]);
-  (0, import_element97.useEffect)(() => {
+  (0, import_element93.useEffect)(() => {
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       const current = latestStateRef.current;
@@ -32024,7 +31689,7 @@ function useAriaAnnouncer(state) {
       prevStateRef.current = current;
       if (msg !== prevMessageRef.current) {
         prevMessageRef.current = msg;
-        speak6(msg);
+        speak5(msg);
       }
     }, ARIA_DEBOUNCE_MS);
     return () => {
@@ -32041,8 +31706,8 @@ function useAriaAnnouncer(state) {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
-var import_element98 = __toESM(require_element(), 1);
-var import_i18n35 = __toESM(require_i18n(), 1);
+var import_element94 = __toESM(require_element(), 1);
+var import_i18n34 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/image-editor/react/visually-hidden-style.mjs
 var VISUALLY_HIDDEN_STYLE = {
@@ -32058,7 +31723,7 @@ var VISUALLY_HIDDEN_STYLE = {
 };
 
 // packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
-var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime134 = __toESM(require_jsx_runtime(), 1);
 var CORNER_POSITIONS = ["nw", "ne", "se", "sw"];
 var ALL_POSITIONS = [
   "nw",
@@ -32073,21 +31738,21 @@ var ALL_POSITIONS = [
 function getHandleLabel(pos) {
   switch (pos) {
     case "n":
-      return (0, import_i18n35.__)("Resize from top edge");
+      return (0, import_i18n34.__)("Resize from top edge");
     case "s":
-      return (0, import_i18n35.__)("Resize from bottom edge");
+      return (0, import_i18n34.__)("Resize from bottom edge");
     case "e":
-      return (0, import_i18n35.__)("Resize from right edge");
+      return (0, import_i18n34.__)("Resize from right edge");
     case "w":
-      return (0, import_i18n35.__)("Resize from left edge");
+      return (0, import_i18n34.__)("Resize from left edge");
     case "nw":
-      return (0, import_i18n35.__)("Resize from top-left corner");
+      return (0, import_i18n34.__)("Resize from top-left corner");
     case "ne":
-      return (0, import_i18n35.__)("Resize from top-right corner");
+      return (0, import_i18n34.__)("Resize from top-right corner");
     case "sw":
-      return (0, import_i18n35.__)("Resize from bottom-left corner");
+      return (0, import_i18n34.__)("Resize from bottom-left corner");
     case "se":
-      return (0, import_i18n35.__)("Resize from bottom-right corner");
+      return (0, import_i18n34.__)("Resize from bottom-right corner");
   }
 }
 var KEYBOARD_SETTLE_DELAY = 500;
@@ -32112,7 +31777,7 @@ function RectangleStencil({
   const boundsMinY = cropBounds?.minY ?? 0;
   const boundsMaxX = cropBounds?.maxX ?? 1;
   const boundsMaxY = cropBounds?.maxY ?? 1;
-  const bounds = (0, import_element98.useMemo)(
+  const bounds = (0, import_element94.useMemo)(
     () => ({
       minX: boundsMinX,
       minY: boundsMinY,
@@ -32121,25 +31786,25 @@ function RectangleStencil({
     }),
     [boundsMinX, boundsMinY, boundsMaxX, boundsMaxY]
   );
-  const keyboardSettleTimerRef = (0, import_element98.useRef)();
-  const keyboardResizeActiveRef = (0, import_element98.useRef)(false);
-  const resizeHandleDescriptionId = (0, import_element98.useId)();
+  const keyboardSettleTimerRef = (0, import_element94.useRef)();
+  const keyboardResizeActiveRef = (0, import_element94.useRef)(false);
+  const resizeHandleDescriptionId = (0, import_element94.useId)();
   const hasLockedRatio = !!(aspectRatio && aspectRatio > 0);
-  const activePointerResizeRef = (0, import_element98.useRef)(null);
-  (0, import_element98.useEffect)(() => {
+  const activePointerResizeRef = (0, import_element94.useRef)(null);
+  (0, import_element94.useEffect)(() => {
     return () => {
       clearTimeout(keyboardSettleTimerRef.current);
       keyboardResizeActiveRef.current = false;
       activePointerResizeRef.current?.cancel(false);
     };
   }, []);
-  (0, import_element98.useEffect)(() => {
+  (0, import_element94.useEffect)(() => {
     if (isResizeDisabled) {
       activePointerResizeRef.current?.cancel();
     }
   }, [isResizeDisabled]);
-  const latestHandlersRef = (0, import_element98.useRef)(null);
-  const normalizedRatio = (0, import_element98.useMemo)(() => {
+  const latestHandlersRef = (0, import_element94.useRef)(null);
+  const normalizedRatio = (0, import_element94.useMemo)(() => {
     if (!hasLockedRatio || imageSize.width === 0) {
       return 0;
     }
@@ -32151,7 +31816,7 @@ function RectangleStencil({
   const top = offsetY + cropRect.y * imageSize.height;
   const width = cropRect.width * imageSize.width;
   const height = cropRect.height * imageSize.height;
-  const handlePointerDown = (0, import_element98.useCallback)(
+  const handlePointerDown = (0, import_element94.useCallback)(
     (handle, event) => {
       if (isResizeDisabled || event.pointerType === "touch" && event.isPrimary === false) {
         event.preventDefault();
@@ -32242,7 +31907,7 @@ function RectangleStencil({
     },
     [cropRect, isResizeDisabled, onResizeStart]
   );
-  const computeFreeRect = (0, import_element98.useCallback)(
+  const computeFreeRect = (0, import_element94.useCallback)(
     (drag2, clientX, clientY) => computeFreeResizeRect(
       drag2,
       clientX,
@@ -32253,7 +31918,7 @@ function RectangleStencil({
     ),
     [imageSize, bounds, minCropSize]
   );
-  const computeLockedRect = (0, import_element98.useCallback)(
+  const computeLockedRect = (0, import_element94.useCallback)(
     (drag2, clientX, clientY, driverAxis) => computeLockedResizeRect(
       drag2,
       clientX,
@@ -32266,7 +31931,7 @@ function RectangleStencil({
     ),
     [imageSize, bounds, normalizedRatio, minCropSize]
   );
-  const computeShiftLockedRect = (0, import_element98.useCallback)(
+  const computeShiftLockedRect = (0, import_element94.useCallback)(
     (drag2, clientX, clientY) => computeShiftLockedResizeRect(
       drag2,
       clientX,
@@ -32286,7 +31951,7 @@ function RectangleStencil({
     onResizeEnd,
     snapCropRect
   };
-  const handleKeyDown = (0, import_element98.useCallback)(
+  const handleKeyDown = (0, import_element94.useCallback)(
     (handle, event) => {
       const key = event.key;
       if (isResizeDisabled) {
@@ -32386,7 +32051,7 @@ function RectangleStencil({
     return null;
   }
   const handles = hasLockedRatio ? CORNER_POSITIONS : ALL_POSITIONS;
-  return /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(
     "div",
     {
       className: "wp-media-editor-image-editor__stencil",
@@ -32399,17 +32064,17 @@ function RectangleStencil({
         transition: stencilTransition
       },
       children: [
-        freeformCrop && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+        freeformCrop && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
           "div",
           {
             id: resizeHandleDescriptionId,
             style: VISUALLY_HIDDEN_STYLE,
-            children: (0, import_i18n35.__)(
+            children: (0, import_i18n34.__)(
               "Use arrow keys to resize the crop area. Hold Shift for larger steps."
             )
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__stencil-rect",
@@ -32421,7 +32086,7 @@ function RectangleStencil({
             }
           }
         ),
-        freeformCrop && handles.map((pos) => /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+        freeformCrop && handles.map((pos) => /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
           "button",
           {
             type: "button",
@@ -32444,7 +32109,7 @@ function RectangleStencil({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/dimming-overlay.mjs
-var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime135 = __toESM(require_jsx_runtime(), 1);
 function DimmingOverlay({
   cropRect,
   containerSize,
@@ -32461,7 +32126,7 @@ function DimmingOverlay({
   const width = cropRect.width * imageSize.width;
   const height = cropRect.height * imageSize.height;
   const composedTransition = transition ? `${transition}, box-shadow 0.15s ease` : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
     "div",
     {
       className: "wp-media-editor-image-editor__dimming",
@@ -32478,7 +32143,7 @@ function DimmingOverlay({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/grid-overlay.mjs
-var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime136 = __toESM(require_jsx_runtime(), 1);
 function GridOverlay({
   cropRect,
   containerSize,
@@ -32495,7 +32160,7 @@ function GridOverlay({
   const height = cropRect.height * imageSize.height;
   const thirdW = width / 3;
   const thirdH = height / 3;
-  return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)(
     "div",
     {
       className: "wp-media-editor-image-editor__grid",
@@ -32507,28 +32172,28 @@ function GridOverlay({
         height
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--horizontal",
             style: { top: thirdH }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--horizontal",
             style: { top: thirdH * 2 }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--vertical",
             style: { left: thirdW }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
           "div",
           {
             className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--vertical",
@@ -32541,8 +32206,8 @@ function GridOverlay({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/overlays/dimensions-overlay.mjs
-var import_element99 = __toESM(require_element(), 1);
-var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
+var import_element95 = __toESM(require_element(), 1);
+var import_jsx_runtime137 = __toESM(require_jsx_runtime(), 1);
 var HANDLE_GAP_PX = 12;
 var TRANSLATE_PERCENT = {
   before: "-100%",
@@ -32615,9 +32280,9 @@ function DimensionsOverlay({
   outputWidth,
   outputHeight
 }) {
-  const tooltipRef = (0, import_element99.useRef)(null);
-  const [tooltipSize, setTooltipSize] = (0, import_element99.useState)(null);
-  (0, import_element99.useLayoutEffect)(() => {
+  const tooltipRef = (0, import_element95.useRef)(null);
+  const [tooltipSize, setTooltipSize] = (0, import_element95.useState)(null);
+  (0, import_element95.useLayoutEffect)(() => {
     if (!tooltipRef.current) {
       return;
     }
@@ -32665,7 +32330,7 @@ function DimensionsOverlay({
       containerSize.height
     )
   } : preferred;
-  return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
     "div",
     {
       ref: tooltipRef,
@@ -32685,10 +32350,10 @@ function DimensionsOverlay({
 }
 
 // packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
-var import_element101 = __toESM(require_element(), 1);
+var import_element97 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-viewport-state.mjs
-var import_element100 = __toESM(require_element(), 1);
+var import_element96 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/image-editor/core/viewport-state.mjs
 var DEFAULT_VIEWPORT_STATE = {
@@ -32712,36 +32377,36 @@ function viewportReducer(state, action) {
 
 // packages/media-editor/build-module/image-editor/react/hooks/use-viewport-state.mjs
 function useViewportState() {
-  const [viewport, dispatch] = (0, import_element100.useReducer)(
+  const [viewport, dispatch] = (0, import_element96.useReducer)(
     viewportReducer,
     DEFAULT_VIEWPORT_STATE
   );
-  const setViewportZoom = (0, import_element100.useCallback)((zoom) => {
+  const setViewportZoom = (0, import_element96.useCallback)((zoom) => {
     dispatch({ type: "SET_VIEWPORT_ZOOM", payload: zoom });
   }, []);
-  const setViewportPan = (0, import_element100.useCallback)((pan) => {
+  const setViewportPan = (0, import_element96.useCallback)((pan) => {
     dispatch({ type: "SET_VIEWPORT_PAN", payload: pan });
   }, []);
-  const resetViewport = (0, import_element100.useCallback)(() => {
+  const resetViewport = (0, import_element96.useCallback)(() => {
     dispatch({ type: "RESET_VIEWPORT" });
   }, []);
-  return (0, import_element100.useMemo)(
+  return (0, import_element96.useMemo)(
     () => ({ viewport, setViewportZoom, setViewportPan, resetViewport }),
     [viewport, setViewportZoom, setViewportPan, resetViewport]
   );
 }
 
 // packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
-var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
-var ViewportContext = (0, import_element101.createContext)(null);
+var import_jsx_runtime138 = __toESM(require_jsx_runtime(), 1);
+var ViewportContext = (0, import_element97.createContext)(null);
 function ViewportProvider({
   children
 }) {
   const viewportState = useViewportState();
-  return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(ViewportContext.Provider, { value: viewportState, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime138.jsx)(ViewportContext.Provider, { value: viewportState, children });
 }
 function useViewport() {
-  const context = (0, import_element101.useContext)(ViewportContext);
+  const context = (0, import_element97.useContext)(ViewportContext);
   if (!context) {
     throw new Error(
       "useViewport must be used within a ViewportProvider."
@@ -32751,7 +32416,7 @@ function useViewport() {
 }
 
 // packages/media-editor/build-module/image-editor/react/components/cropper.mjs
-var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime139 = __toESM(require_jsx_runtime(), 1);
 var CROP_RECT_EPSILON = 1e-6;
 var CARDINAL_ROTATION_EPSILON2 = 1e-6;
 var SETTLE_TRANSITION_DURATION_MS = 200;
@@ -32795,20 +32460,20 @@ function CropperInner({
     setViewportPan,
     resetViewport
   } = useViewport();
-  const canvasRef = (0, import_element102.useRef)(null);
-  const cropAreaDescriptionId = (0, import_element102.useId)();
-  const [isCropAreaFocused, setIsCropAreaFocused] = (0, import_element102.useState)(focusOnMount);
-  const [isFocusVisible, setIsFocusVisible] = (0, import_element102.useState)(false);
-  const [canvasSize, setCanvasSize] = (0, import_element102.useState)({
+  const canvasRef = (0, import_element98.useRef)(null);
+  const cropAreaDescriptionId = (0, import_element98.useId)();
+  const [isCropAreaFocused, setIsCropAreaFocused] = (0, import_element98.useState)(focusOnMount);
+  const [isFocusVisible, setIsFocusVisible] = (0, import_element98.useState)(false);
+  const [canvasSize, setCanvasSize] = (0, import_element98.useState)({
     width: 0,
     height: 0
   });
-  (0, import_element102.useLayoutEffect)(() => {
+  (0, import_element98.useLayoutEffect)(() => {
     if (focusOnMount) {
       canvasRef.current?.focus({ preventScroll: true });
     }
   }, [focusOnMount]);
-  const handleCropAreaFocus = (0, import_element102.useCallback)(
+  const handleCropAreaFocus = (0, import_element98.useCallback)(
     (event) => {
       const target = event.target;
       if (target === event.currentTarget) {
@@ -32820,7 +32485,7 @@ function CropperInner({
     },
     []
   );
-  const handleCropAreaBlur = (0, import_element102.useCallback)(
+  const handleCropAreaBlur = (0, import_element98.useCallback)(
     (event) => {
       if (event.target === event.currentTarget) {
         setIsCropAreaFocused(false);
@@ -32833,7 +32498,7 @@ function CropperInner({
     },
     []
   );
-  (0, import_element102.useEffect)(() => {
+  (0, import_element98.useEffect)(() => {
     const element = canvasRef.current;
     if (!element) {
       return;
@@ -32854,13 +32519,13 @@ function CropperInner({
       observer.disconnect();
     };
   }, []);
-  (0, import_element102.useEffect)(() => {
+  (0, import_element98.useEffect)(() => {
     onStateChange?.(state);
   }, [state, onStateChange]);
   useAriaAnnouncer(state);
   const naturalWidth = state.image?.naturalWidth ?? 0;
   const naturalHeight = state.image?.naturalHeight ?? 0;
-  const { elementSize, visualSize } = (0, import_element102.useMemo)(
+  const { elementSize, visualSize } = (0, import_element98.useMemo)(
     () => getImageFit(
       canvasSize,
       { width: naturalWidth, height: naturalHeight },
@@ -32868,10 +32533,10 @@ function CropperInner({
     ),
     [canvasSize, naturalWidth, naturalHeight, state.rotation]
   );
-  (0, import_element102.useEffect)(() => {
+  (0, import_element98.useEffect)(() => {
     setVisualSize(visualSize);
   }, [visualSize, setVisualSize]);
-  (0, import_element102.useEffect)(() => {
+  (0, import_element98.useEffect)(() => {
     if (freeformCrop || visualSize.width === 0 || visualSize.height === 0 || !aspectRatio || aspectRatio <= 0) {
       return;
     }
@@ -32888,8 +32553,8 @@ function CropperInner({
     adjustCropRectForViewport,
     state.cropRect
   ]);
-  const prevAspectRatioRef = (0, import_element102.useRef)(aspectRatio);
-  (0, import_element102.useEffect)(() => {
+  const prevAspectRatioRef = (0, import_element98.useRef)(aspectRatio);
+  (0, import_element98.useEffect)(() => {
     if (prevAspectRatioRef.current === aspectRatio) {
       return;
     }
@@ -32910,26 +32575,26 @@ function CropperInner({
     adjustCropRectForViewport,
     state.cropRect
   ]);
-  const cropBounds = (0, import_element102.useMemo)(() => {
+  const cropBounds = (0, import_element98.useMemo)(() => {
     if (!state.image || elementSize.width === 0) {
       return void 0;
     }
     return getImageCropBounds(state, elementSize, visualSize);
   }, [state, elementSize, visualSize]);
   const effectiveMinZoom = minZoom !== void 0 ? minZoom : getMinZoom(state);
-  const [isResizing, setIsResizing] = (0, import_element102.useState)(false);
-  const isResizingRef = (0, import_element102.useRef)(false);
-  const isSettlingRef = (0, import_element102.useRef)(false);
-  const [isTouchPinching, setIsTouchPinchingState] = (0, import_element102.useState)(false);
-  const isTouchPinchingRef = (0, import_element102.useRef)(false);
-  const setTouchPinching = (0, import_element102.useCallback)((isPinching) => {
+  const [isResizing, setIsResizing] = (0, import_element98.useState)(false);
+  const isResizingRef = (0, import_element98.useRef)(false);
+  const isSettlingRef = (0, import_element98.useRef)(false);
+  const [isTouchPinching, setIsTouchPinchingState] = (0, import_element98.useState)(false);
+  const isTouchPinchingRef = (0, import_element98.useRef)(false);
+  const setTouchPinching = (0, import_element98.useCallback)((isPinching) => {
     isTouchPinchingRef.current = isPinching;
     setIsTouchPinchingState(isPinching);
   }, []);
-  const [activeHandle, setActiveHandle] = (0, import_element102.useState)(
+  const [activeHandle, setActiveHandle] = (0, import_element98.useState)(
     null
   );
-  const viewScaleRest = (0, import_element102.useMemo)(
+  const viewScaleRest = (0, import_element98.useMemo)(
     () => getViewScale(
       state.cropRect,
       canvasSize,
@@ -32939,9 +32604,9 @@ function CropperInner({
     ),
     [state.cropRect, canvasSize, visualSize]
   );
-  const [frozenViewScale, setFrozenViewScale] = (0, import_element102.useState)(1);
+  const [frozenViewScale, setFrozenViewScale] = (0, import_element98.useState)(1);
   const viewScale = isResizing ? frozenViewScale : viewScaleRest;
-  const scaledVisualSize = (0, import_element102.useMemo)(
+  const scaledVisualSize = (0, import_element98.useMemo)(
     () => ({
       width: visualSize.width * viewScale,
       height: visualSize.height * viewScale
@@ -32949,7 +32614,7 @@ function CropperInner({
     [visualSize.width, visualSize.height, viewScale]
   );
   const displayScale = naturalWidth > 0 ? elementSize.width / naturalWidth * state.zoom * viewScale : 0;
-  const keyboardResizeStep = (0, import_element102.useMemo)(() => {
+  const keyboardResizeStep = (0, import_element98.useMemo)(() => {
     if (displayScale < PIXEL_SNAP_DISPLAY_SCALE || aspectRatio && aspectRatio > 0 || naturalWidth <= 0 || naturalHeight <= 0) {
       return void 0;
     }
@@ -32977,7 +32642,7 @@ function CropperInner({
     state.rotation,
     state.zoom
   ]);
-  const minCropSize = (0, import_element102.useMemo)(() => {
+  const minCropSize = (0, import_element98.useMemo)(() => {
     if (naturalWidth <= 0 || naturalHeight <= 0) {
       return void 0;
     }
@@ -32999,7 +32664,7 @@ function CropperInner({
     state.zoom,
     displayScale
   ]);
-  const snapCropRect = (0, import_element102.useCallback)(
+  const snapCropRect = (0, import_element98.useCallback)(
     (rect, handle) => {
       if (displayScale < PIXEL_SNAP_DISPLAY_SCALE || naturalWidth <= 0 || naturalHeight <= 0) {
         return rect;
@@ -33013,8 +32678,8 @@ function CropperInner({
     },
     [displayScale, naturalWidth, naturalHeight, state]
   );
-  const wasPixelSnapEnabledRef = (0, import_element102.useRef)(false);
-  (0, import_element102.useEffect)(() => {
+  const wasPixelSnapEnabledRef = (0, import_element98.useRef)(false);
+  (0, import_element98.useEffect)(() => {
     const isPixelSnapEnabled = freeformCrop && (!aspectRatio || aspectRatio <= 0) && displayScale >= PIXEL_SNAP_DISPLAY_SCALE && naturalWidth > 0 && naturalHeight > 0;
     const wasPixelSnapEnabled = wasPixelSnapEnabledRef.current;
     wasPixelSnapEnabledRef.current = isPixelSnapEnabled;
@@ -33091,7 +32756,7 @@ function CropperInner({
       setIsFocusVisible(false);
     }
   };
-  (0, import_element102.useEffect)(() => {
+  (0, import_element98.useEffect)(() => {
     const el = canvasRef.current;
     if (!el) {
       return;
@@ -33111,7 +32776,7 @@ function CropperInner({
     };
   }, [onWheelNative]);
   const transformString = useTransformStyle(state, visualSize);
-  const handleImageLoad = (0, import_element102.useCallback)(
+  const handleImageLoad = (0, import_element98.useCallback)(
     (event) => {
       const img = event.currentTarget;
       const size4 = {
@@ -33127,7 +32792,7 @@ function CropperInner({
     },
     [src, setImage, onImageLoaded]
   );
-  const handleCropChange = (0, import_element102.useCallback)(
+  const handleCropChange = (0, import_element98.useCallback)(
     (rect) => {
       if (isTouchPinchingRef.current) {
         return;
@@ -33160,21 +32825,21 @@ function CropperInner({
     },
     [setCropRect, setViewportPan, canvasSize, scaledVisualSize]
   );
-  const [settling, setSettling] = (0, import_element102.useState)(false);
-  const settleTimerRef = (0, import_element102.useRef)();
-  const finishSettling = (0, import_element102.useCallback)(() => {
+  const [settling, setSettling] = (0, import_element98.useState)(false);
+  const settleTimerRef = (0, import_element98.useRef)();
+  const finishSettling = (0, import_element98.useCallback)(() => {
     clearTimeout(settleTimerRef.current);
     isSettlingRef.current = false;
     setSettling(false);
   }, []);
-  (0, import_element102.useEffect)(() => {
+  (0, import_element98.useEffect)(() => {
     return () => {
       clearTimeout(settleTimerRef.current);
     };
   }, []);
   const isInteractiveGrid = showGrid === "interactive";
   const showInteractiveGrid = isInteractiveGrid && (isInteractionPlacementActive || isResizing || isPlacementActive);
-  const outputSize = (0, import_element102.useMemo)(() => {
+  const outputSize = (0, import_element98.useMemo)(() => {
     if (!showDimensions || !activeHandle || !state.image) {
       return null;
     }
@@ -33184,11 +32849,11 @@ function CropperInner({
     });
     return { width: region.width, height: region.height };
   }, [showDimensions, activeHandle, state]);
-  const handleEscape = (0, import_element102.useCallback)(() => {
+  const handleEscape = (0, import_element98.useCallback)(() => {
     setIsFocusVisible(true);
     canvasRef.current?.focus({ preventScroll: true });
   }, []);
-  const handleResizeStart = (0, import_element102.useCallback)(
+  const handleResizeStart = (0, import_element98.useCallback)(
     (handle) => {
       if (isTouchPinchingRef.current) {
         return;
@@ -33203,7 +32868,7 @@ function CropperInner({
     },
     [finishSettling, onGestureStart, resetViewport, viewScaleRest]
   );
-  const handleResizeEnd = (0, import_element102.useCallback)(() => {
+  const handleResizeEnd = (0, import_element98.useCallback)(() => {
     const isCancellingForPinch = isTouchPinchingRef.current;
     isResizingRef.current = false;
     setIsResizing(false);
@@ -33224,7 +32889,7 @@ function CropperInner({
       SETTLE_TRANSITION_FALLBACK_MS
     );
   }, [finishSettling, settleCrop, onGestureEnd, resetViewport]);
-  const handleSettleTransitionEnd = (0, import_element102.useCallback)(
+  const handleSettleTransitionEnd = (0, import_element98.useCallback)(
     (event) => {
       if (!isSettlingRef.current || event.propertyName !== "transform") {
         return;
@@ -33240,7 +32905,7 @@ function CropperInner({
     imageTransition = "transform 150ms linear";
   }
   const settleStencilTransition = settling ? SETTLE_STENCIL_TRANSITION : void 0;
-  const imageStyle = (0, import_element102.useMemo)(() => {
+  const imageStyle = (0, import_element98.useMemo)(() => {
     if (elementSize.width === 0 || elementSize.height === 0) {
       return {};
     }
@@ -33287,7 +32952,7 @@ function CropperInner({
       willChange
     };
   }
-  const setContainerRef = (0, import_element102.useCallback)(
+  const setContainerRef = (0, import_element98.useCallback)(
     (element) => {
       if (typeof ref === "function") {
         ref(element);
@@ -33297,7 +32962,7 @@ function CropperInner({
     },
     [ref]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
     "div",
     {
       ref: setContainerRef,
@@ -33306,7 +32971,7 @@ function CropperInner({
         isDragging && "wp-media-editor-image-editor--dragging",
         className2
       ),
-      children: /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
         "div",
         {
           ref: canvasRef,
@@ -33324,23 +32989,23 @@ function CropperInner({
           ),
           tabIndex: 0,
           role: "group",
-          "aria-label": (0, import_i18n36.__)("Crop area"),
+          "aria-label": (0, import_i18n35.__)("Crop area"),
           "aria-describedby": isCropAreaFocused ? cropAreaDescriptionId : void 0,
           onFocus: handleCropAreaFocus,
           onBlur: handleCropAreaBlur,
           ...canvasHandlers,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
               "div",
               {
                 id: cropAreaDescriptionId,
                 style: VISUALLY_HIDDEN_STYLE,
-                children: (0, import_i18n36.__)(
+                children: (0, import_i18n35.__)(
                   "When this area is focused, use arrow keys to move the image and plus or minus to zoom. Tab to resize handles and controls."
                 )
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
               "div",
               {
                 className: "wp-media-editor-image-editor__stage",
@@ -33348,7 +33013,7 @@ function CropperInner({
                 style: stageStyle,
                 onTransitionEnd: handleSettleTransitionEnd,
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                     "img",
                     {
                       className: "wp-media-editor-image-editor__image",
@@ -33360,7 +33025,7 @@ function CropperInner({
                       draggable: false
                     }
                   ),
-                  showDimming && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+                  showDimming && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                     DimmingOverlay,
                     {
                       cropRect: state.cropRect,
@@ -33369,7 +33034,7 @@ function CropperInner({
                       transition: settleStencilTransition
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                     StencilComponent,
                     {
                       cropRect: state.cropRect,
@@ -33389,7 +33054,7 @@ function CropperInner({
                       keyboardResizeStep
                     }
                   ),
-                  (showGrid === true || isInteractiveGrid) && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+                  (showGrid === true || isInteractiveGrid) && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                     GridOverlay,
                     {
                       cropRect: state.cropRect,
@@ -33397,7 +33062,7 @@ function CropperInner({
                       imageSize: scaledVisualSize
                     }
                   ),
-                  activeHandle && outputSize && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+                  activeHandle && outputSize && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
                     DimensionsOverlay,
                     {
                       cropRect: state.cropRect,
@@ -33417,15 +33082,15 @@ function CropperInner({
     }
   );
 }
-var CropperInnerWithRef = (0, import_element102.forwardRef)(
+var CropperInnerWithRef = (0, import_element98.forwardRef)(
   CropperInner
 );
-var Cropper = (0, import_element102.forwardRef)(
-  (props, ref) => /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(ViewportProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(CropperInnerWithRef, { ...props, ref }) })
+var Cropper = (0, import_element98.forwardRef)(
+  (props, ref) => /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(ViewportProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(CropperInnerWithRef, { ...props, ref }) })
 );
 
 // packages/media-editor/build-module/state/use-media-editor-state.mjs
-var import_element103 = __toESM(require_element(), 1);
+var import_element99 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/state/types.mjs
 var DEFAULT_CROP_OPTIONS = {
@@ -33522,7 +33187,7 @@ function areCropperImagesEqual(a2, b2) {
   return a2?.src === b2?.src && a2?.naturalWidth === b2?.naturalWidth && a2?.naturalHeight === b2?.naturalHeight;
 }
 function useMediaEditorState(initialState) {
-  const [state, dispatch] = (0, import_element103.useReducer)(
+  const [state, dispatch] = (0, import_element99.useReducer)(
     mediaEditorReducer,
     null,
     () => buildInitialMediaEditorState(
@@ -33533,16 +33198,16 @@ function useMediaEditorState(initialState) {
       initialState?.cropOptions
     )
   );
-  const [initialBaseline, setInitialBaseline] = (0, import_element103.useState)(() => state);
-  const stateRef = (0, import_element103.useRef)(state);
-  const visualSizeRef = (0, import_element103.useRef)({ width: 0, height: 0 });
-  const historyRef = (0, import_element103.useRef)([]);
-  const redoStackRef = (0, import_element103.useRef)([]);
-  const [hasUndo, setHasUndo] = (0, import_element103.useState)(false);
-  const [hasRedo, setHasRedo] = (0, import_element103.useState)(false);
-  const isGestureOpenRef = (0, import_element103.useRef)(false);
-  const gestureSnapshotRef = (0, import_element103.useRef)(null);
-  const pushSnapshot = (0, import_element103.useCallback)((snapshot) => {
+  const [initialBaseline, setInitialBaseline] = (0, import_element99.useState)(() => state);
+  const stateRef = (0, import_element99.useRef)(state);
+  const visualSizeRef = (0, import_element99.useRef)({ width: 0, height: 0 });
+  const historyRef = (0, import_element99.useRef)([]);
+  const redoStackRef = (0, import_element99.useRef)([]);
+  const [hasUndo, setHasUndo] = (0, import_element99.useState)(false);
+  const [hasRedo, setHasRedo] = (0, import_element99.useState)(false);
+  const isGestureOpenRef = (0, import_element99.useRef)(false);
+  const gestureSnapshotRef = (0, import_element99.useRef)(null);
+  const pushSnapshot = (0, import_element99.useCallback)((snapshot) => {
     const last = historyRef.current[historyRef.current.length - 1];
     if (last && areMediaEditorStatesEqual(last, snapshot)) {
       return;
@@ -33552,7 +33217,7 @@ function useMediaEditorState(initialState) {
     setHasUndo(true);
     setHasRedo(false);
   }, []);
-  const dispatchWithHistory = (0, import_element103.useCallback)(
+  const dispatchWithHistory = (0, import_element99.useCallback)(
     (action, recordHistory = true) => {
       const preState = stateRef.current;
       const postState = mediaEditorReducer(preState, action);
@@ -33572,14 +33237,14 @@ function useMediaEditorState(initialState) {
     },
     [pushSnapshot]
   );
-  const beginGesture = (0, import_element103.useCallback)(() => {
+  const beginGesture = (0, import_element99.useCallback)(() => {
     if (isGestureOpenRef.current) {
       return;
     }
     isGestureOpenRef.current = true;
     gestureSnapshotRef.current = null;
   }, []);
-  const endGesture = (0, import_element103.useCallback)(() => {
+  const endGesture = (0, import_element99.useCallback)(() => {
     const snapshot = gestureSnapshotRef.current;
     if (snapshot && !areMediaEditorStatesEqual(snapshot, stateRef.current)) {
       pushSnapshot(snapshot);
@@ -33587,20 +33252,20 @@ function useMediaEditorState(initialState) {
     gestureSnapshotRef.current = null;
     isGestureOpenRef.current = false;
   }, [pushSnapshot]);
-  const dispatchCropperAction = (0, import_element103.useCallback)(
+  const dispatchCropperAction = (0, import_element99.useCallback)(
     (action) => {
       dispatchWithHistory({ type: "CROPPER", action });
     },
     [dispatchWithHistory]
   );
-  const cropperSetters = (0, import_element103.useMemo)(
+  const cropperSetters = (0, import_element99.useMemo)(
     () => buildCropperSetters(
       dispatchCropperAction,
       () => stateRef.current.cropper
     ),
     [dispatchCropperAction]
   );
-  const setImage = (0, import_element103.useCallback)((image) => {
+  const setImage = (0, import_element99.useCallback)((image) => {
     if (areCropperImagesEqual(stateRef.current.cropper.image, image)) {
       return;
     }
@@ -33619,7 +33284,7 @@ function useMediaEditorState(initialState) {
     setHasUndo(false);
     setHasRedo(false);
   }, []);
-  const reset = (0, import_element103.useCallback)(
+  const reset = (0, import_element99.useCallback)(
     (resetState) => {
       dispatchWithHistory({
         type: "CROPPER",
@@ -33628,7 +33293,7 @@ function useMediaEditorState(initialState) {
     },
     [dispatchWithHistory]
   );
-  const setAspectRatioValue = (0, import_element103.useCallback)(
+  const setAspectRatioValue = (0, import_element99.useCallback)(
     (presetKey) => {
       const resolved = resolveAspectRatio(
         presetKey,
@@ -33645,10 +33310,10 @@ function useMediaEditorState(initialState) {
     },
     [dispatchWithHistory]
   );
-  const resetCropOptions = (0, import_element103.useCallback)(() => {
+  const resetCropOptions = (0, import_element99.useCallback)(() => {
     dispatchWithHistory({ type: "RESET_CROP_OPTIONS" });
   }, [dispatchWithHistory]);
-  const undo = (0, import_element103.useCallback)(() => {
+  const undo = (0, import_element99.useCallback)(() => {
     endGesture();
     const prev = historyRef.current[historyRef.current.length - 1];
     if (!prev) {
@@ -33661,7 +33326,7 @@ function useMediaEditorState(initialState) {
     stateRef.current = prev;
     dispatch({ type: "RESTORE_SNAPSHOT", payload: prev });
   }, [endGesture]);
-  const redo = (0, import_element103.useCallback)(() => {
+  const redo = (0, import_element99.useCallback)(() => {
     endGesture();
     const next = redoStackRef.current[0];
     if (!next) {
@@ -33674,10 +33339,10 @@ function useMediaEditorState(initialState) {
     stateRef.current = next;
     dispatch({ type: "RESTORE_SNAPSHOT", payload: next });
   }, [endGesture]);
-  const setVisualSize = (0, import_element103.useCallback)((size4) => {
+  const setVisualSize = (0, import_element99.useCallback)((size4) => {
     visualSizeRef.current = size4;
   }, []);
-  const adjustCropRectForViewport = (0, import_element103.useCallback)(
+  const adjustCropRectForViewport = (0, import_element99.useCallback)(
     (rect) => {
       dispatchWithHistory(
         { type: "VIEWPORT_ADJUST_CROP_RECT", payload: rect },
@@ -33691,7 +33356,7 @@ function useMediaEditorState(initialState) {
     state.cropper,
     initialBaseline.cropper
   );
-  const getCroppedImage = (0, import_element103.useCallback)(
+  const getCroppedImage = (0, import_element99.useCallback)(
     (mimeType, quality) => {
       if (!state.cropper.image) {
         return Promise.reject(
@@ -33707,7 +33372,7 @@ function useMediaEditorState(initialState) {
     },
     [state.cropper]
   );
-  const controller = (0, import_element103.useMemo)(
+  const controller = (0, import_element99.useMemo)(
     () => ({
       // CropperController surface (state is the cropper slice so a
       // <Cropper> takes this controller as-is).
@@ -33756,9 +33421,9 @@ function useMediaEditorState(initialState) {
 }
 
 // packages/media-editor/build-module/state/media-editor-state-provider.mjs
-var import_element104 = __toESM(require_element(), 1);
-var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
-var MediaEditorStateContext = (0, import_element104.createContext)(
+var import_element100 = __toESM(require_element(), 1);
+var import_jsx_runtime140 = __toESM(require_jsx_runtime(), 1);
+var MediaEditorStateContext = (0, import_element100.createContext)(
   null
 );
 function MediaEditorStateProvider({
@@ -33770,10 +33435,10 @@ function MediaEditorStateProvider({
     cropper: initialCropperState,
     cropOptions: initialCropOptions
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(MediaEditorStateContext.Provider, { value: controller, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(MediaEditorStateContext.Provider, { value: controller, children });
 }
 function useMediaEditor() {
-  const context = (0, import_element104.useContext)(MediaEditorStateContext);
+  const context = (0, import_element100.useContext)(MediaEditorStateContext);
   if (!context) {
     throw new Error(
       "useMediaEditor must be used within a MediaEditorStateProvider."
@@ -33783,8 +33448,9 @@ function useMediaEditor() {
 }
 
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
-var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime141 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCanvas({
+  focusOnMount,
   isPlacementActive = false,
   onGestureStart,
   onGestureEnd
@@ -33794,18 +33460,18 @@ function MediaEditorCanvas({
   const { aspectRatioValue } = controller.cropOptions;
   const cropperImage = controller.state.image;
   const { beginGesture, endGesture, setImage } = controller;
-  const [status, setStatus] = (0, import_element105.useState)(
+  const [status, setStatus] = (0, import_element101.useState)(
     "loading"
   );
-  const aspectRatio = (0, import_element105.useMemo)(
+  const aspectRatio = (0, import_element101.useMemo)(
     () => resolveAspectRatio(aspectRatioValue, cropperImage),
     [aspectRatioValue, cropperImage]
   );
-  const handleGestureStart = (0, import_element105.useCallback)(() => {
+  const handleGestureStart = (0, import_element101.useCallback)(() => {
     beginGesture();
     onGestureStart?.();
   }, [beginGesture, onGestureStart]);
-  const handleGestureEnd = (0, import_element105.useCallback)(() => {
+  const handleGestureEnd = (0, import_element101.useCallback)(() => {
     endGesture();
     onGestureEnd?.();
   }, [endGesture, onGestureEnd]);
@@ -33813,7 +33479,7 @@ function MediaEditorCanvas({
   const mediaType = getMediaTypeFromMimeType(media?.mime_type);
   const mediaWidth = Number(media?.media_details?.width);
   const mediaHeight = Number(media?.media_details?.height);
-  (0, import_element105.useEffect)(() => {
+  (0, import_element101.useEffect)(() => {
     if (cropperImage || !mediaUrl || !Number.isFinite(mediaWidth) || !Number.isFinite(mediaHeight) || mediaWidth <= 0 || mediaHeight <= 0) {
       return;
     }
@@ -33824,7 +33490,7 @@ function MediaEditorCanvas({
     });
   }, [cropperImage, mediaUrl, mediaWidth, mediaHeight, setImage]);
   const isImage = mediaType.type === "image";
-  (0, import_element105.useEffect)(() => {
+  (0, import_element101.useEffect)(() => {
     if (!mediaUrl || !isImage) {
       return;
     }
@@ -33845,23 +33511,24 @@ function MediaEditorCanvas({
     return null;
   }
   if (status === "error") {
-    return /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", { className: "media-editor-canvas__error", role: "alert", children: /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("p", { children: (0, import_i18n37.__)("Failed to load image.") }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "media-editor-canvas", children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "media-editor-canvas__error", role: "alert", children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("p", { children: (0, import_i18n36.__)("Failed to load image.") }) }) });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)("div", { className: "media-editor-canvas", children: [
-    status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", { className: "media-editor-canvas__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(import_components44.Spinner, {}) }),
-    /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)("div", { className: "media-editor-canvas", children: [
+    status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("div", { className: "media-editor-canvas__spinner", children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(import_components41.Spinner, {}) }),
+    /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
       "div",
       {
         className: clsx_default("media-editor-canvas__cropper", {
           "is-loaded": status === "loaded"
         }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
           Cropper,
           {
             src: mediaUrl,
             controller,
             aspectRatio,
             freeformCrop: true,
+            focusOnMount: focusOnMount && status === "loaded",
             showGrid: "interactive",
             isPlacementActive,
             onGestureStart: handleGestureStart,
@@ -33874,41 +33541,41 @@ function MediaEditorCanvas({
 }
 
 // packages/media-editor/build-module/components/media-editor-fine-rotation/index.mjs
-var import_i18n38 = __toESM(require_i18n(), 1);
+var import_i18n37 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/hooks/use-crop-gesture-handlers.mjs
-var import_element106 = __toESM(require_element(), 1);
+var import_element102 = __toESM(require_element(), 1);
 var CROP_CONTROL_ATTR = "data-crop-control";
 var KEYBOARD_GESTURE_IDLE_MS = 300;
 function useCropGestureHandlers(options = {}) {
   const { commitOnKeyUp = true } = options;
   const { beginGesture, endGesture } = useMediaEditor();
-  const keyboardTimerRef = (0, import_element106.useRef)();
-  const clearKeyboardTimer = (0, import_element106.useCallback)(() => {
+  const keyboardTimerRef = (0, import_element102.useRef)();
+  const clearKeyboardTimer = (0, import_element102.useCallback)(() => {
     clearTimeout(keyboardTimerRef.current);
   }, []);
-  const scheduleKeyboardEnd = (0, import_element106.useCallback)(() => {
+  const scheduleKeyboardEnd = (0, import_element102.useCallback)(() => {
     clearKeyboardTimer();
     keyboardTimerRef.current = setTimeout(() => {
       endGesture();
     }, KEYBOARD_GESTURE_IDLE_MS);
   }, [clearKeyboardTimer, endGesture]);
-  (0, import_element106.useEffect)(() => clearKeyboardTimer, [clearKeyboardTimer]);
-  const handlePointerDownCapture = (0, import_element106.useCallback)(() => {
+  (0, import_element102.useEffect)(() => clearKeyboardTimer, [clearKeyboardTimer]);
+  const handlePointerDownCapture = (0, import_element102.useCallback)(() => {
     clearKeyboardTimer();
     beginGesture();
   }, [beginGesture, clearKeyboardTimer]);
-  const handlePointerEnd = (0, import_element106.useCallback)(() => {
+  const handlePointerEnd = (0, import_element102.useCallback)(() => {
     clearKeyboardTimer();
     endGesture();
   }, [clearKeyboardTimer, endGesture]);
-  const handleKeyDownCapture = (0, import_element106.useCallback)(() => {
+  const handleKeyDownCapture = (0, import_element102.useCallback)(() => {
     beginGesture();
     if (!commitOnKeyUp) {
       scheduleKeyboardEnd();
     }
   }, [beginGesture, commitOnKeyUp, scheduleKeyboardEnd]);
-  const handleKeyUp = (0, import_element106.useCallback)(() => {
+  const handleKeyUp = (0, import_element102.useCallback)(() => {
     if (commitOnKeyUp) {
       endGesture();
       return;
@@ -33926,10 +33593,10 @@ function useCropGestureHandlers(options = {}) {
 }
 
 // packages/media-editor/build-module/components/rotation-ruler/index.mjs
-var import_element108 = __toESM(require_element(), 1);
+var import_element104 = __toESM(require_element(), 1);
 
 // packages/media-editor/build-module/components/rotation-ruler/use-ruler-drag.mjs
-var import_element107 = __toESM(require_element(), 1);
+var import_element103 = __toESM(require_element(), 1);
 function pxToValueDelta(deltaPx, pixelsPerStep, step) {
   return -deltaPx / pixelsPerStep * step;
 }
@@ -33956,7 +33623,7 @@ function useRulerDrag(options) {
     disabled: disabled2,
     onPointerDownStart
   } = options;
-  const latestRef = (0, import_element107.useRef)({
+  const latestRef = (0, import_element103.useRef)({
     value,
     startX: 0,
     startValue: 0,
@@ -33966,10 +33633,10 @@ function useRulerDrag(options) {
     capturePointerId: 0,
     windowPointerUp: null
   });
-  (0, import_element107.useEffect)(() => {
+  (0, import_element103.useEffect)(() => {
     latestRef.current.value = value;
   }, [value]);
-  const endDrag = (0, import_element107.useCallback)(() => {
+  const endDrag = (0, import_element103.useCallback)(() => {
     const state = latestRef.current;
     if (!state.dragging) {
       return;
@@ -33990,8 +33657,8 @@ function useRulerDrag(options) {
       state.windowPointerUp = null;
     }
   }, []);
-  (0, import_element107.useEffect)(() => endDrag, [endDrag]);
-  const onPointerDown = (0, import_element107.useCallback)(
+  (0, import_element103.useEffect)(() => endDrag, [endDrag]);
+  const onPointerDown = (0, import_element103.useCallback)(
     (event) => {
       if (disabled2 || event.button !== 0) {
         return;
@@ -34012,7 +33679,7 @@ function useRulerDrag(options) {
     },
     [disabled2, onPointerDownStart, endDrag, step]
   );
-  const onPointerMove = (0, import_element107.useCallback)(
+  const onPointerMove = (0, import_element103.useCallback)(
     (event) => {
       const state = latestRef.current;
       if (!state.dragging) {
@@ -34049,7 +33716,7 @@ function useRulerDrag(options) {
 }
 
 // packages/media-editor/build-module/components/rotation-ruler/index.mjs
-var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime142 = __toESM(require_jsx_runtime(), 1);
 var STRIP_HEIGHT = 32;
 var LABEL_BASELINE_Y = 11;
 var MAJOR_INTERVAL = 15;
@@ -34057,7 +33724,7 @@ var TICK_HEIGHT_MINOR = 4;
 var TICK_HEIGHT_MID = 8;
 var TICK_HEIGHT_MAJOR = 14;
 function useTicks(min4, max4) {
-  return (0, import_element108.useMemo)(() => {
+  return (0, import_element104.useMemo)(() => {
     const out = [];
     for (let v2 = Math.ceil(min4); v2 <= Math.floor(max4); v2 += 1) {
       let kind = "minor";
@@ -34092,8 +33759,8 @@ function RotationRuler(props) {
     id,
     disabled: disabled2 = false
   } = props;
-  const inputRef = (0, import_element108.useRef)(null);
-  const generatedId = (0, import_element108.useId)();
+  const inputRef = (0, import_element104.useRef)(null);
+  const generatedId = (0, import_element104.useId)();
   const inputId = id ?? generatedId;
   const dragHandlers = useRulerDrag({
     value,
@@ -34125,7 +33792,7 @@ function RotationRuler(props) {
   const display = `${formatValue(value)}${unit}`;
   const ticks = useTicks(min4, max4);
   const pxPerUnit = pixelsPerStep / step;
-  const stripStyle = (0, import_element108.useMemo)(() => {
+  const stripStyle = (0, import_element104.useMemo)(() => {
     const offset4 = -value * pxPerUnit;
     return {
       transform: `translateX(calc(-50% + ${offset4}px))`
@@ -34137,7 +33804,7 @@ function RotationRuler(props) {
   const isNegative = numberText.startsWith("-");
   const digits = isNegative ? numberText.slice(1) : numberText;
   const majorTicks = ticks.filter((tick) => tick.kind === "major");
-  return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(
     "div",
     {
       className: clsx_default("rotation-ruler", className2),
@@ -34145,7 +33812,7 @@ function RotationRuler(props) {
       "data-disabled": disabled2 || void 0,
       ...dragHandlers,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
           "input",
           {
             ref: inputRef,
@@ -34165,7 +33832,7 @@ function RotationRuler(props) {
             onKeyDown: handleKeyDown
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { className: "rotation-ruler__strip", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("div", { className: "rotation-ruler__strip", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(
           "svg",
           {
             className: "rotation-ruler__ticks",
@@ -34175,7 +33842,7 @@ function RotationRuler(props) {
             viewBox: `${min4 * pxPerUnit} 0 ${(max4 - min4) * pxPerUnit} ${STRIP_HEIGHT}`,
             preserveAspectRatio: "xMidYMid meet",
             children: [
-              ticks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+              ticks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
                 "line",
                 {
                   x1: tick.value * pxPerUnit,
@@ -34186,7 +33853,7 @@ function RotationRuler(props) {
                 },
                 tick.value
               )),
-              majorTicks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
+              majorTicks.map((tick) => /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(
                 "text",
                 {
                   x: tick.value * pxPerUnit,
@@ -34203,19 +33870,19 @@ function RotationRuler(props) {
             ]
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { className: "rotation-ruler__active-label", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)("span", { className: "rotation-ruler__active-label-number", children: [
-          isNegative && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("span", { className: "rotation-ruler__active-label-sign", children: "-" }),
+        /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("div", { className: "rotation-ruler__active-label", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)("span", { className: "rotation-ruler__active-label-number", children: [
+          isNegative && /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("span", { className: "rotation-ruler__active-label-sign", children: "-" }),
           digits,
-          /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("span", { className: "rotation-ruler__active-label-unit", children: unit })
+          /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("span", { className: "rotation-ruler__active-label-unit", children: unit })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { className: "rotation-ruler__pointer", "aria-hidden": "true" })
+        /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("div", { className: "rotation-ruler__pointer", "aria-hidden": "true" })
       ]
     }
   );
 }
 
 // packages/media-editor/build-module/components/media-editor-fine-rotation/index.mjs
-var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime143 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorFineRotation({
   onPlacementControlInteraction
 }) {
@@ -34236,16 +33903,16 @@ function MediaEditorFineRotation({
     onPlacementControlInteraction?.();
     setRotation(baseAngle + clamped * visualDir);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
     "div",
     {
       role: "presentation",
       className: "media-editor-fine-rotation",
       ...rotationGestureHandlers,
-      children: /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime143.jsx)(
         RotationRuler,
         {
-          label: (0, import_i18n38.__)("Fine rotation"),
+          label: (0, import_i18n37.__)("Fine rotation"),
           min: -MAX_ROTATION_OFFSET,
           max: MAX_ROTATION_OFFSET,
           value: fineOffset,
@@ -34257,11 +33924,11 @@ function MediaEditorFineRotation({
 }
 
 // packages/media-editor/build-module/components/media-editor-image-controls/index.mjs
-var import_components45 = __toESM(require_components(), 1);
-var import_i18n39 = __toESM(require_i18n(), 1);
+var import_components42 = __toESM(require_components(), 1);
+var import_i18n38 = __toESM(require_i18n(), 1);
 
 // packages/media-editor/build-module/components/media-editor/use-crop-options.mjs
-var import_element109 = __toESM(require_element(), 1);
+var import_element105 = __toESM(require_element(), 1);
 function getAspectRatioOptions(aspectRatioPresets) {
   return [
     ...DEFAULT_ASPECT_RATIOS.filter((preset) => preset.value <= 0),
@@ -34274,11 +33941,11 @@ function useCropOptions({
   const controller = useMediaEditor();
   const { aspectRatioValue } = controller.cropOptions;
   const cropperImage = controller.state.image;
-  const aspectRatioOptions = (0, import_element109.useMemo)(
+  const aspectRatioOptions = (0, import_element105.useMemo)(
     () => getAspectRatioOptions(aspectRatioPresets),
     [aspectRatioPresets]
   );
-  const resolvedAspectRatio = (0, import_element109.useMemo)(
+  const resolvedAspectRatio = (0, import_element105.useMemo)(
     () => resolveAspectRatio(aspectRatioValue, cropperImage),
     [aspectRatioValue, cropperImage]
   );
@@ -34292,7 +33959,7 @@ function useCropOptions({
 }
 
 // packages/media-editor/build-module/components/media-editor-image-controls/index.mjs
-var import_jsx_runtime149 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime144 = __toESM(require_jsx_runtime(), 1);
 var DEFAULT_ZOOM_FACTOR = 1.2;
 function MediaEditorImageControls({
   withLabels = false,
@@ -34309,35 +33976,35 @@ function MediaEditorImageControls({
       Math.min(MAX_ZOOM, Math.max(minZoom, state.zoom * factor))
     );
   };
-  const rotateButtons = /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)(import_jsx_runtime149.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
-      import_components45.Button,
+  const rotateButtons = /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(import_jsx_runtime144.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      import_components42.Button,
       {
         size: "compact",
         icon: rotate_left_default,
-        label: (0, import_i18n39.__)("Rotate 90\xB0 counter-clockwise"),
+        label: (0, import_i18n38.__)("Rotate 90\xB0 counter-clockwise"),
         showTooltip: true,
         onClick: () => snapRotate90(-1)
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
-      import_components45.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      import_components42.Button,
       {
         size: "compact",
         icon: rotate_right_default,
-        label: (0, import_i18n39.__)("Rotate 90\xB0 clockwise"),
+        label: (0, import_i18n38.__)("Rotate 90\xB0 clockwise"),
         showTooltip: true,
         onClick: () => snapRotate90(1)
       }
     )
   ] });
-  const flipButtons = /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)(import_jsx_runtime149.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
-      import_components45.Button,
+  const flipButtons = /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(import_jsx_runtime144.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      import_components42.Button,
       {
         size: "compact",
         icon: flip_horizontal_default,
-        label: (0, import_i18n39.__)("Flip horizontal"),
+        label: (0, import_i18n38.__)("Flip horizontal"),
         showTooltip: true,
         isPressed: state.flip.horizontal,
         onClick: () => setFlip({
@@ -34346,12 +34013,12 @@ function MediaEditorImageControls({
         })
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
-      import_components45.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      import_components42.Button,
       {
         size: "compact",
         icon: flip_vertical_default,
-        label: (0, import_i18n39.__)("Flip vertical"),
+        label: (0, import_i18n38.__)("Flip vertical"),
         showTooltip: true,
         isPressed: state.flip.vertical,
         onClick: () => setFlip({
@@ -34361,25 +34028,25 @@ function MediaEditorImageControls({
       }
     )
   ] });
-  const zoomButtons = /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)(import_jsx_runtime149.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
-      import_components45.Button,
+  const zoomButtons = /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(import_jsx_runtime144.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      import_components42.Button,
       {
         size: "compact",
         icon: plus_default,
-        label: (0, import_i18n39.__)("Zoom in"),
+        label: (0, import_i18n38.__)("Zoom in"),
         showTooltip: true,
         disabled: state.zoom >= MAX_ZOOM,
         accessibleWhenDisabled: true,
         onClick: () => zoomByFactor(zoomFactor)
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
-      import_components45.Button,
+    /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+      import_components42.Button,
       {
         size: "compact",
         icon: line_solid_default,
-        label: (0, import_i18n39.__)("Zoom out"),
+        label: (0, import_i18n38.__)("Zoom out"),
         showTooltip: true,
         disabled: state.zoom <= minZoom,
         accessibleWhenDisabled: true,
@@ -34387,18 +34054,18 @@ function MediaEditorImageControls({
       }
     )
   ] });
-  const aspectRatioDropdown = hasAspectRatioControl ? /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
-    import_components45.DropdownMenu,
+  const aspectRatioDropdown = hasAspectRatioControl ? /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+    import_components42.DropdownMenu,
     {
       icon: aspect_ratio_default,
-      label: (0, import_i18n39.__)("Aspect ratio"),
+      label: (0, import_i18n38.__)("Aspect ratio"),
       popoverProps: { placement: "top" },
       toggleProps: { size: "compact" },
-      children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(import_components45.MenuGroup, { label: (0, import_i18n39.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
+      children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(import_components42.MenuGroup, { label: (0, import_i18n38.__)("Aspect ratio"), children: aspectRatioOptions.map((preset) => {
         const value = preset.value.toString();
         const isSelected = value === aspectRatioValue;
-        return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
-          import_components45.MenuItem,
+        return /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+          import_components42.MenuItem,
           {
             role: "menuitemradio",
             isSelected,
@@ -34415,69 +34082,69 @@ function MediaEditorImageControls({
     }
   ) : null;
   if (withLabels) {
-    return /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)("div", { className: "media-editor-image-controls is-stacked", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)("div", { className: "media-editor-image-controls__transforms", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)("div", { className: "media-editor-image-controls is-stacked", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)("div", { className: "media-editor-image-controls__transforms", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
           "div",
           {
             className: "media-editor-image-controls__group",
             role: "group",
-            "aria-label": (0, import_i18n39.__)("Rotate"),
+            "aria-label": (0, import_i18n38.__)("Rotate"),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
                 "span",
                 {
                   className: "media-editor-image-controls__label",
                   "aria-hidden": "true",
-                  children: (0, import_i18n39.__)("Rotate")
+                  children: (0, import_i18n38.__)("Rotate")
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime149.jsx)("div", { className: "media-editor-image-controls__buttons", children: rotateButtons })
+              /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { className: "media-editor-image-controls__buttons", children: rotateButtons })
             ]
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
           "div",
           {
             className: "media-editor-image-controls__group",
             role: "group",
-            "aria-label": (0, import_i18n39.__)("Flip"),
+            "aria-label": (0, import_i18n38.__)("Flip"),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
                 "span",
                 {
                   className: "media-editor-image-controls__label",
                   "aria-hidden": "true",
-                  children: (0, import_i18n39.__)("Flip")
+                  children: (0, import_i18n38.__)("Flip")
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime149.jsx)("div", { className: "media-editor-image-controls__buttons", children: flipButtons })
+              /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { className: "media-editor-image-controls__buttons", children: flipButtons })
             ]
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
         "div",
         {
           className: "media-editor-image-controls__group",
           role: "group",
-          "aria-label": (0, import_i18n39.__)("Zoom"),
+          "aria-label": (0, import_i18n38.__)("Zoom"),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
               "span",
               {
                 className: "media-editor-image-controls__label",
                 "aria-hidden": "true",
-                children: (0, import_i18n39.__)("Zoom")
+                children: (0, import_i18n38.__)("Zoom")
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime149.jsx)("div", { className: "media-editor-image-controls__buttons", children: zoomButtons })
+            /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { className: "media-editor-image-controls__buttons", children: zoomButtons })
           ]
         }
       )
     ] });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)("div", { className: "media-editor-image-controls", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)("div", { className: "media-editor-image-controls", children: [
     rotateButtons,
     flipButtons,
     zoomButtons,
@@ -34486,9 +34153,9 @@ function MediaEditorImageControls({
 }
 
 // packages/media-editor/build-module/components/media-editor-crop-panel/index.mjs
-var import_components46 = __toESM(require_components(), 1);
-var import_i18n40 = __toESM(require_i18n(), 1);
-var import_jsx_runtime150 = __toESM(require_jsx_runtime(), 1);
+var import_components43 = __toESM(require_components(), 1);
+var import_i18n39 = __toESM(require_i18n(), 1);
+var import_jsx_runtime145 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorCropPanel({
   aspectRatioValue,
   onAspectRatioChange,
@@ -34499,19 +34166,19 @@ function MediaEditorCropPanel({
     // Tag the whole panel as a crop-control region so the modal's
     // Cmd+Z handler doesn't mistake the SelectControl input for a
     // metadata field (which would suppress undo).
-    /* @__PURE__ */ (0, import_jsx_runtime150.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(
       Stack,
       {
         direction: "column",
         gap: "xl",
         ...{ [CROP_CONTROL_ATTR]: true },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime150.jsx)("h2", {}), children: (0, import_i18n40.__)("Crop options") }),
-          showTransformControls && /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(MediaEditorImageControls, { withLabels: true }),
-          /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(
-            import_components46.SelectControl,
+          /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("h2", {}), children: (0, import_i18n39.__)("Crop options") }),
+          showTransformControls && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(MediaEditorImageControls, { withLabels: true }),
+          /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
+            import_components43.SelectControl,
             {
-              label: (0, import_i18n40.__)("Aspect ratio"),
+              label: (0, import_i18n39.__)("Aspect ratio"),
               value: aspectRatioValue,
               onChange: onAspectRatioChange,
               options: aspectRatioOptions.map((preset) => ({
@@ -34527,57 +34194,57 @@ function MediaEditorCropPanel({
 }
 
 // packages/media-editor/build-module/components/media-editor-keyboard-shortcuts-modal/index.mjs
-var import_components47 = __toESM(require_components(), 1);
-var import_element110 = __toESM(require_element(), 1);
-var import_i18n41 = __toESM(require_i18n(), 1);
+var import_components44 = __toESM(require_components(), 1);
+var import_element106 = __toESM(require_element(), 1);
+var import_i18n40 = __toESM(require_i18n(), 1);
 var import_keycodes = __toESM(require_keycodes(), 1);
-var import_jsx_runtime151 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime146 = __toESM(require_jsx_runtime(), 1);
 var SHORTCUTS = [
   {
-    description: (0, import_i18n41.__)("Undo"),
+    description: (0, import_i18n40.__)("Undo"),
     keyCombination: { modifier: "primary", character: "z" }
   },
   {
-    description: (0, import_i18n41.__)("Redo"),
+    description: (0, import_i18n40.__)("Redo"),
     keyCombination: { modifier: "primaryShift", character: "z" }
   },
   {
-    description: (0, import_i18n41.__)("Pan"),
+    description: (0, import_i18n40.__)("Pan"),
     keyCombination: {
       character: ["\u2191", "\u2193", "\u2190", "\u2192"],
-      ariaLabel: (0, import_i18n41.__)("Arrow keys")
+      ariaLabel: (0, import_i18n40.__)("Arrow keys")
     }
   },
   {
-    description: (0, import_i18n41.__)("Zoom in"),
+    description: (0, import_i18n40.__)("Zoom in"),
     keyCombination: { character: "+" }
   },
   {
-    description: (0, import_i18n41.__)("Zoom out"),
+    description: (0, import_i18n40.__)("Zoom out"),
     keyCombination: { character: "-" }
   },
   {
-    description: (0, import_i18n41.__)("Rotate 90\xB0 clockwise"),
+    description: (0, import_i18n40.__)("Rotate 90\xB0 clockwise"),
     keyCombination: { character: "R" }
   },
   {
-    description: (0, import_i18n41.__)("Rotate 90\xB0 counter-clockwise"),
+    description: (0, import_i18n40.__)("Rotate 90\xB0 counter-clockwise"),
     keyCombination: { modifier: "shift", character: "R" }
   },
   {
-    description: (0, import_i18n41.__)("Flip horizontal"),
+    description: (0, import_i18n40.__)("Flip horizontal"),
     keyCombination: { character: "H" }
   },
   {
-    description: (0, import_i18n41.__)("Flip vertical"),
+    description: (0, import_i18n40.__)("Flip vertical"),
     keyCombination: { character: "V" }
   },
   {
-    description: (0, import_i18n41.__)("Pan or resize crop (large step)"),
+    description: (0, import_i18n40.__)("Pan or resize crop (large step)"),
     keyCombination: {
       modifier: "shift",
       character: ["\u2191", "\u2193", "\u2190", "\u2192"],
-      ariaLabel: (0, import_i18n41.__)("Shift + Arrow keys")
+      ariaLabel: (0, import_i18n40.__)("Shift + Arrow keys")
     }
   }
 ];
@@ -34605,13 +34272,13 @@ function KeyCombinationDisplay({
   } else {
     label = charString;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
     "kbd",
     {
       className: "media-editor-keyboard-shortcuts-modal__shortcut-term",
       "aria-label": label,
       children: keys.map(
-        (key, index2) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(import_element110.Fragment, { children: key }, index2) : /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
+        (key, index2) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(import_element106.Fragment, { children: key }, index2) : /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
           "kbd",
           {
             className: "media-editor-keyboard-shortcuts-modal__shortcut-key",
@@ -34626,28 +34293,28 @@ function KeyCombinationDisplay({
 function MediaEditorKeyboardShortcutsModal({
   onClose
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(
-    import_components47.Modal,
+  return /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(
+    import_components44.Modal,
     {
       className: "media-editor-keyboard-shortcuts-modal",
-      title: (0, import_i18n41.__)("Keyboard shortcuts"),
+      title: (0, import_i18n40.__)("Keyboard shortcuts"),
       onRequestClose: onClose,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n41.__)(
+        /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("p", { className: "media-editor-keyboard-shortcuts-modal__note", children: (0, import_i18n40.__)(
           "These shortcuts work when the image editor has focus."
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
           "ul",
           {
             className: "media-editor-keyboard-shortcuts-modal__shortcut-list",
             role: "list",
-            children: SHORTCUTS.map(({ description, keyCombination }, index2) => /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(
+            children: SHORTCUTS.map(({ description, keyCombination }, index2) => /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(
               "li",
               {
                 className: "media-editor-keyboard-shortcuts-modal__shortcut",
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("span", { className: "media-editor-keyboard-shortcuts-modal__shortcut-description", children: description }),
-                  /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("span", { className: "media-editor-keyboard-shortcuts-modal__shortcut-description", children: description }),
+                  /* @__PURE__ */ (0, import_jsx_runtime146.jsx)(
                     KeyCombinationDisplay,
                     {
                       keyCombination
@@ -34668,8 +34335,8 @@ function MediaEditorKeyboardShortcutsModal({
 var import_api_fetch = __toESM(require_api_fetch(), 1);
 var import_data7 = __toESM(require_data(), 1);
 var import_core_data = __toESM(require_core_data(), 1);
-var import_element111 = __toESM(require_element(), 1);
-var import_i18n42 = __toESM(require_i18n(), 1);
+var import_element107 = __toESM(require_element(), 1);
+var import_i18n41 = __toESM(require_i18n(), 1);
 var import_notices = __toESM(require_notices(), 1);
 
 // packages/media-editor/build-module/components/media-editor-modal/build-modifiers.mjs
@@ -34778,8 +34445,8 @@ function useSaveMediaEditor({
     saveEditedEntityRecord
   } = (0, import_data7.useDispatch)(import_core_data.store);
   const { createErrorNotice, removeAllNotices } = (0, import_data7.useDispatch)(import_notices.store);
-  const [isSaving, setIsSaving] = (0, import_element111.useState)(false);
-  const save = (0, import_element111.useCallback)(async () => {
+  const [isSaving, setIsSaving] = (0, import_element107.useState)(false);
+  const save = (0, import_element107.useCallback)(async () => {
     removeAllNotices("snackbar", MEDIA_EDITOR_NOTICES_CONTEXT);
     setIsSaving(true);
     try {
@@ -34837,15 +34504,15 @@ function useSaveMediaEditor({
         });
       }
     } catch (error2) {
-      const message2 = error2 instanceof Error ? error2.message : error2?.message ?? (0, import_i18n42.__)("An unknown error occurred.");
+      const message2 = error2 instanceof Error ? error2.message : error2?.message ?? (0, import_i18n41.__)("An unknown error occurred.");
       createErrorNotice(
-        isImage ? (0, import_i18n42.sprintf)(
+        isImage ? (0, import_i18n41.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n42.__)("Could not save image. %s"),
+          (0, import_i18n41.__)("Could not save image. %s"),
           message2
-        ) : (0, import_i18n42.sprintf)(
+        ) : (0, import_i18n41.sprintf)(
           /* translators: %s: Error message. */
-          (0, import_i18n42.__)("Could not save media. %s"),
+          (0, import_i18n41.__)("Could not save media. %s"),
           message2
         ),
         {
@@ -34873,53 +34540,46 @@ function useSaveMediaEditor({
 }
 
 // packages/media-editor/build-module/components/media-editor/index.mjs
-var import_jsx_runtime152 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime147 = __toESM(require_jsx_runtime(), 1);
 var ATTACHMENT_EMBED_QUERY = { _embed: "author,wp:attached-to" };
 var PLACEMENT_CONTROL_IDLE_MS = 300;
 function MediaEditorSidebar({
   tabs,
   activeTabId,
-  onTabChange,
-  scope
+  onTabChange
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
     complementary_area_default,
     {
-      scope,
+      scope: "media-editor",
       identifier: "media-editor/details",
-      title: (0, import_i18n43.__)("Details"),
+      title: (0, import_i18n42.__)("Details"),
       icon: drawer_right_default,
       isActiveByDefault: true,
       className: "media-editor__sidebar",
       panelClassName: "media-editor__sidebar-panel",
       headerClassName: "media-editor__sidebar-header",
-      closeLabel: (0, import_i18n43.__)("Close media panel"),
-      render: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+      closeLabel: (0, import_i18n42.__)("Close media panel"),
+      render: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
         tabs_exports.Root,
         {
           value: activeTabId,
           onValueChange: (value) => onTabChange(value)
         }
       ),
-      header: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(tabs_exports.List, { variant: "minimal", children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(tabs_exports.Tab, { value: tab.id, children: tab.title }, tab.id)) }),
-      children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(tabs_exports.Panel, { value: tab.id, tabIndex: -1, children: tab.panel }, tab.id))
+      header: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(tabs_exports.List, { variant: "minimal", children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(tabs_exports.Tab, { value: tab.id, children: tab.title }, tab.id)) }),
+      children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(tabs_exports.Panel, { value: tab.id, tabIndex: -1, children: tab.panel }, tab.id))
     }
   );
 }
-var MediaEditorFrameContext = (0, import_element112.createContext)(null);
-function useMediaEditorFrameContext() {
-  const context = (0, import_element112.useContext)(MediaEditorFrameContext);
-  if (!context) {
-    throw new Error(
-      "useMediaEditorFrameContext must be used within MediaEditor"
-    );
-  }
-  return context;
-}
-function HeaderActions({ showCloseButton = false }) {
-  const { isImage, isSaving, onCancel, scope } = useMediaEditorFrameContext();
-  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element112.useState)(false);
-  return /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(
+function HeaderActions({
+  isSaving,
+  isImage,
+  showCloseButton = false,
+  onCancel
+}) {
+  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element108.useState)(false);
+  return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
     Stack,
     {
       className: "media-editor__header-actions",
@@ -34927,28 +34587,28 @@ function HeaderActions({ showCloseButton = false }) {
       align: "center",
       gap: "sm",
       children: [
-        isImage && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
-          import_components48.Button,
+        isImage && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components45.Button,
           {
             size: "compact",
             icon: keyboard_default,
-            label: (0, import_i18n43.__)("Keyboard shortcuts"),
+            label: (0, import_i18n42.__)("Keyboard shortcuts"),
             onClick: () => setIsShortcutsModalOpen(true)
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(pinned_items_default.Slot, { scope }),
-        showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
-          import_components48.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(pinned_items_default.Slot, { scope: "media-editor" }),
+        showCloseButton && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components45.Button,
           {
             size: "compact",
             icon: close_default,
-            label: (0, import_i18n43.__)("Close"),
+            label: (0, import_i18n42.__)("Close"),
             onClick: onCancel,
             disabled: isSaving,
             accessibleWhenDisabled: true
           }
         ),
-        isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+        isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
           MediaEditorKeyboardShortcutsModal,
           {
             onClose: () => setIsShortcutsModalOpen(false)
@@ -34958,8 +34618,10 @@ function HeaderActions({ showCloseButton = false }) {
     }
   );
 }
-function HistoryActions() {
-  const { isImage, isUndoRedoDisabled, onReset } = useMediaEditorFrameContext();
+function HistoryActions({
+  isUndoRedoDisabled = false,
+  onReset
+}) {
   const {
     reset,
     isDirty,
@@ -34970,9 +34632,6 @@ function HistoryActions() {
     beginGesture,
     endGesture
   } = useMediaEditor();
-  if (!isImage) {
-    return null;
-  }
   const handleUndo = () => {
     if (isUndoRedoDisabled) {
       return;
@@ -34991,30 +34650,30 @@ function HistoryActions() {
     onReset();
     endGesture();
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
     Stack,
     {
       className: "media-editor__history-actions",
       align: "center",
       gap: "sm",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
-          import_components48.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components45.Button,
           {
             size: "compact",
             variant: "tertiary",
             disabled: !isDirty,
             accessibleWhenDisabled: true,
             onClick: handleReset,
-            children: (0, import_i18n43.__)("Reset")
+            children: (0, import_i18n42.__)("Reset")
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
-          import_components48.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components45.Button,
           {
             size: "compact",
             icon: undo_default,
-            label: (0, import_i18n43.__)("Undo"),
+            label: (0, import_i18n42.__)("Undo"),
             showTooltip: true,
             shortcut: import_keycodes2.displayShortcut.primary("z"),
             disabled: isUndoRedoDisabled || !hasUndo,
@@ -35022,12 +34681,12 @@ function HistoryActions() {
             onClick: handleUndo
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
-          import_components48.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components45.Button,
           {
             size: "compact",
             icon: redo_default,
-            label: (0, import_i18n43.__)("Redo"),
+            label: (0, import_i18n42.__)("Redo"),
             showTooltip: true,
             shortcut: (0, import_keycodes2.isAppleOS)() ? import_keycodes2.displayShortcut.primaryShift("z") : import_keycodes2.displayShortcut.primary("y"),
             disabled: isUndoRedoDisabled || !hasRedo,
@@ -35039,56 +34698,46 @@ function HistoryActions() {
     }
   );
 }
-function SaveActions({ size: size4 = "default" }) {
-  const { isSaving, hasMedia, hasChanges, onCancel, onSave } = useMediaEditorFrameContext();
+function FooterActions({
+  isSaving,
+  hasMedia,
+  hasChanges,
+  onCancel,
+  onSave
+}) {
   const saveDisabled = isSaving || !hasMedia || !hasChanges;
-  return /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
     Stack,
     {
-      className: "media-editor__save-actions",
+      className: "media-editor__footer-actions",
       justify: "flex-end",
       align: "center",
       gap: "sm",
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
-          import_components48.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components45.Button,
           {
             __next40pxDefaultSize: true,
-            size: size4,
             variant: "tertiary",
             onClick: onCancel,
             disabled: isSaving,
             accessibleWhenDisabled: true,
-            children: (0, import_i18n43.__)("Cancel")
+            children: (0, import_i18n42.__)("Cancel")
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
-          import_components48.Button,
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components45.Button,
           {
             __next40pxDefaultSize: true,
-            size: size4,
             variant: "primary",
             onClick: onSave,
             isBusy: isSaving,
             disabled: saveDisabled,
             accessibleWhenDisabled: true,
-            children: (0, import_i18n43.__)("Save")
+            children: (0, import_i18n42.__)("Save")
           }
         )
       ]
-    }
-  );
-}
-function ImageControls() {
-  const { isImage, aspectRatioPresets } = useMediaEditorFrameContext();
-  if (!isImage) {
-    return null;
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
-    MediaEditorImageControls,
-    {
-      showAspectRatioControl: true,
-      aspectRatioPresets
     }
   );
 }
@@ -35101,12 +34750,12 @@ function MediaEditorContent({
   renderFrame,
   noticesClassName = "media-editor__snackbar",
   noticesPortalElement,
-  shouldCloseOnEsc = false,
-  scope = "media-editor"
+  showCloseButton = false,
+  shouldCloseOnEsc = false
 }) {
   const cropper = useMediaEditor();
-  const isPanelLayout = (0, import_compose16.useViewportMatch)("small");
-  const layout = isPanelLayout ? "wide" : "narrow";
+  const isPanelLayout = (0, import_compose14.useViewportMatch)("small");
+  const footerLayout = isPanelLayout ? "wide" : "narrow";
   const { media, hasEdits } = (0, import_data8.useSelect)(
     (select) => {
       const {
@@ -35138,34 +34787,34 @@ function MediaEditorContent({
   const hasChanges = cropper.isCropperDirty || hasEdits;
   const { clearEntityRecordEdits, editEntityRecord, invalidateResolution } = (0, import_data8.useDispatch)(import_core_data2.store);
   const { removeAllNotices } = (0, import_data8.useDispatch)(import_notices2.store);
-  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element112.useState)(false);
-  const [isPlacementActive, setIsPlacementActive] = (0, import_element112.useState)(false);
-  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element112.useState)(false);
-  const placementControlTimerRef = (0, import_element112.useRef)();
-  const signalPlacementControlInteraction = (0, import_element112.useCallback)(() => {
+  const [isDiscardDialogOpen, setIsDiscardDialogOpen] = (0, import_element108.useState)(false);
+  const [isPlacementActive, setIsPlacementActive] = (0, import_element108.useState)(false);
+  const [isCanvasGestureActive, setIsCanvasGestureActive] = (0, import_element108.useState)(false);
+  const placementControlTimerRef = (0, import_element108.useRef)();
+  const signalPlacementControlInteraction = (0, import_element108.useCallback)(() => {
     setIsPlacementActive(true);
     clearTimeout(placementControlTimerRef.current);
     placementControlTimerRef.current = setTimeout(() => {
       setIsPlacementActive(false);
     }, PLACEMENT_CONTROL_IDLE_MS);
   }, []);
-  const handleCanvasGestureStart = (0, import_element112.useCallback)(() => {
+  const handleCanvasGestureStart = (0, import_element108.useCallback)(() => {
     setIsCanvasGestureActive(true);
   }, []);
-  const handleCanvasGestureEnd = (0, import_element112.useCallback)(() => {
+  const handleCanvasGestureEnd = (0, import_element108.useCallback)(() => {
     setIsCanvasGestureActive(false);
   }, []);
   const isCropInteractionActive = isPlacementActive || isCanvasGestureActive;
-  (0, import_element112.useEffect)(() => {
+  (0, import_element108.useEffect)(() => {
     return () => {
       clearTimeout(placementControlTimerRef.current);
     };
   }, []);
-  (0, import_element112.useEffect)(() => {
+  (0, import_element108.useEffect)(() => {
     setIsPlacementActive(false);
     setIsCanvasGestureActive(false);
   }, [id]);
-  (0, import_element112.useEffect)(() => {
+  (0, import_element108.useEffect)(() => {
     invalidateResolution("getEntityRecord", [
       "postType",
       "attachment",
@@ -35190,17 +34839,17 @@ function MediaEditorContent({
     media,
     onSaved
   });
-  const tabs = (0, import_element112.useMemo)(() => {
+  const tabs = (0, import_element108.useMemo)(() => {
     const detailsTab = {
       id: "details",
-      title: (0, import_i18n43.__)("Details"),
-      panel: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+      title: (0, import_i18n42.__)("Details"),
+      panel: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
         Stack,
         {
           className: "media-editor__panel",
           direction: "column",
           gap: "lg",
-          children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(MediaForm, {})
+          children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(MediaForm, {})
         }
       )
     };
@@ -35210,14 +34859,14 @@ function MediaEditorContent({
     return [
       {
         id: "crop",
-        title: (0, import_i18n43.__)("Crop"),
-        panel: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+        title: (0, import_i18n42.__)("Crop"),
+        panel: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
           Stack,
           {
             className: "media-editor__panel",
             direction: "column",
             gap: "lg",
-            children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
               MediaEditorCropPanel,
               {
                 aspectRatioValue,
@@ -35238,7 +34887,7 @@ function MediaEditorContent({
     aspectRatioOptions,
     isPanelLayout
   ]);
-  const [selectedTabId, setSelectedTabId] = (0, import_element112.useState)();
+  const [selectedTabId, setSelectedTabId] = (0, import_element108.useState)();
   const activeTabId = selectedTabId ?? tabs[0]?.id;
   const handleChange = (updates) => {
     editEntityRecord("postType", "attachment", id, updates);
@@ -35290,141 +34939,146 @@ function MediaEditorContent({
       }
     }
   };
-  const snackbar = /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+  const snackbar = /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
     import_notices2.SnackbarNotices,
     {
       className: noticesClassName,
       context: MEDIA_EDITOR_NOTICES_CONTEXT
     }
   );
-  const ruler = isImage ? /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+  const ruler = isImage ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
     MediaEditorFineRotation,
     {
       onPlacementControlInteraction: signalPlacementControlInteraction
     }
   ) : null;
-  const children = /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(
+  const children = /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
     MediaEditorProvider,
     {
       value: media ?? void 0,
       onChange: handleChange,
       settings: { fields },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(import_components48.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)(import_jsx_runtime152.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { className: "media-editor", children: !media ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { className: "media-editor__loading", children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(import_components45.Spinner, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(import_jsx_runtime147.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
             MediaEditorSidebar,
             {
               tabs,
               activeTabId,
-              onTabChange: setSelectedTabId,
-              scope
+              onTabChange: setSelectedTabId
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
             interface_skeleton_default,
             {
               className: "media-editor__skeleton",
               labels: {
-                body: isImage ? (0, import_i18n43.__)("Image editor") : (0, import_i18n43.__)("Media preview"),
-                sidebar: (0, import_i18n43.__)("Media details")
+                body: isImage ? (0, import_i18n42.__)("Image editor") : (0, import_i18n42.__)("Media preview"),
+                sidebar: (0, import_i18n42.__)("Media details")
               },
-              content: /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)("div", { className: "media-editor__content", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
+              content: /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)("div", { className: "media-editor__content", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { className: "media-editor__canvas-area", children: isImage ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
                   MediaEditorCanvas,
                   {
+                    focusOnMount: true,
                     isPlacementActive,
                     onGestureStart: handleCanvasGestureStart,
                     onGestureEnd: handleCanvasGestureEnd
                   }
-                ) : /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(MediaPreview, {}) }),
-                isImage && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("div", { className: "media-editor__canvas-toolbar", children: ruler })
+                ) : /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(MediaPreview, {}) }),
+                isImage && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { className: "media-editor__canvas-toolbar", children: ruler })
               ] }),
-              sidebar: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(complementary_area_default.Slot, { scope })
+              sidebar: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(complementary_area_default.Slot, { scope: "media-editor" })
             }
           )
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(
-          import_components48.__experimentalConfirmDialog,
+        /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+          import_components45.__experimentalConfirmDialog,
           {
             isOpen: isDiscardDialogOpen,
-            confirmButtonText: (0, import_i18n43.__)("Discard"),
-            cancelButtonText: (0, import_i18n43.__)("Keep editing"),
+            confirmButtonText: (0, import_i18n42.__)("Discard"),
+            cancelButtonText: (0, import_i18n42.__)("Keep editing"),
             onCancel: () => setIsDiscardDialogOpen(false),
             onConfirm: () => {
               setIsDiscardDialogOpen(false);
               discardAndClose();
             },
-            children: (0, import_i18n43.__)(
+            children: (0, import_i18n42.__)(
               "Are you sure you want to discard your unsaved changes?"
             )
           }
         ),
-        noticesPortalElement ? (0, import_element112.createPortal)(snackbar, noticesPortalElement) : snackbar
+        noticesPortalElement ? (0, import_element108.createPortal)(snackbar, noticesPortalElement) : snackbar
       ]
     }
   );
-  const contextValue = {
-    isImage,
-    isSaving,
-    hasMedia: !!media,
-    hasChanges,
-    isUndoRedoDisabled: isCropInteractionActive,
-    scope,
-    aspectRatioPresets,
-    onCancel: handleRequestClose,
-    onSave: saveMediaEditor,
-    onReset: resetCropOptions
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(MediaEditorFrameContext.Provider, { value: contextValue, children: renderFrame({
+  const history = isImage ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+    HistoryActions,
+    {
+      isUndoRedoDisabled: isCropInteractionActive,
+      onReset: resetCropOptions
+    }
+  ) : null;
+  const imageControls = isImage ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+    MediaEditorImageControls,
+    {
+      showAspectRatioControl: true,
+      aspectRatioPresets
+    }
+  ) : null;
+  const actions = /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+    FooterActions,
+    {
+      isSaving,
+      hasMedia: !!media,
+      hasChanges,
+      onCancel: handleRequestClose,
+      onSave: saveMediaEditor
+    }
+  );
+  let footerActions;
+  if (footerLayout === "wide") {
+    footerActions = /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(import_jsx_runtime147.Fragment, { children: [
+      history,
+      actions
+    ] });
+  } else {
+    footerActions = /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(import_jsx_runtime147.Fragment, { children: [
+      imageControls,
+      /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)("div", { className: "media-editor-modal__footer-row", children: [
+        history,
+        actions
+      ] })
+    ] });
+  }
+  return renderFrame({
     children,
-    isImage,
-    layout,
+    headerActions: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+      HeaderActions,
+      {
+        isSaving,
+        isImage,
+        showCloseButton,
+        onCancel: handleRequestClose
+      }
+    ),
+    footerActions,
+    footerLayout,
     onRequestClose: handleRequestClose,
     onKeyDown: handleKeyDown,
     shouldCloseOnClickOutside: !hasChanges && !isSaving,
     isSaving,
     hasChanges,
     hasMedia: !!media
-  }) });
+  });
 }
 function MediaEditor(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(MediaEditorStateProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime152.jsx)(MediaEditorContent, { ...props }) }, props.id);
+  return /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(MediaEditorStateProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(MediaEditorContent, { ...props }) }, props.id);
 }
-MediaEditor.HeaderActions = HeaderActions;
-MediaEditor.HistoryActions = HistoryActions;
-MediaEditor.SaveActions = SaveActions;
-MediaEditor.ImageControls = ImageControls;
 var media_editor_default = MediaEditor;
 
 // packages/media-editor/build-module/components/media-editor-modal/index.mjs
-var import_jsx_runtime153 = __toESM(require_jsx_runtime(), 1);
-function ModalFooter({ layout }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
-    "div",
-    {
-      className: `media-editor-modal__footer is-${layout}`,
-      role: "region",
-      "aria-label": (0, import_i18n44.__)("Editor actions"),
-      children: layout === "wide" ? (
-        // Sidebar is a column: the image controls live in the Crop
-        // panel, so the footer is just History + Cancel/Save.
-        /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(import_jsx_runtime153.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(media_editor_default.HistoryActions, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(media_editor_default.SaveActions, {})
-        ] })
-      ) : (
-        // Sidebar collapsed: the image controls drop into the footer.
-        /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(import_jsx_runtime153.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(media_editor_default.ImageControls, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)("div", { className: "media-editor-modal__footer-row", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(media_editor_default.HistoryActions, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(media_editor_default.SaveActions, {})
-          ] })
-        ] })
-      )
-    }
-  );
-}
+var import_jsx_runtime148 = __toESM(require_jsx_runtime(), 1);
 function MediaEditorModal({
   fields = [],
   aspectRatioPresets
@@ -35451,12 +35105,13 @@ function MediaEditorModal({
     closeMediaEditorModal2();
     onClose?.();
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
     media_editor_default,
     {
       id,
       fields,
       aspectRatioPresets,
+      showCloseButton: true,
       shouldCloseOnEsc: true,
       noticesClassName: "media-editor-modal__snackbar",
       noticesPortalElement: portalElement,
@@ -35471,11 +35126,11 @@ function MediaEditorModal({
         }
         handleClose();
         if (previous && savedId !== previous.id && onUpdate) {
-          createSuccessNotice((0, import_i18n44.__)("Image edited."), {
+          createSuccessNotice((0, import_i18n43.__)("Image edited."), {
             type: "snackbar",
             actions: [
               {
-                label: (0, import_i18n44.__)("Undo"),
+                label: (0, import_i18n43.__)("Undo"),
                 onClick: () => {
                   onUpdate({
                     id: previous.id,
@@ -35489,29 +35144,39 @@ function MediaEditorModal({
       },
       renderFrame: ({
         children,
-        layout,
+        headerActions,
+        footerActions,
+        footerLayout,
         onRequestClose,
         onKeyDown,
         shouldCloseOnClickOutside
-      }) => /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(
+      }) => /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
         import_keyboard_shortcuts.ShortcutProvider,
         {
           className: "media-editor-modal__shortcut-scope",
           onKeyDown: stopKeyDownPropagation,
-          children: /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(
-            import_components49.Modal,
+          children: /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)(
+            import_components46.Modal,
             {
               className: "media-editor-modal",
-              title: (0, import_i18n44.__)("Edit media"),
+              title: (0, import_i18n43.__)("Edit media"),
               size: "fill",
               isDismissible: false,
               shouldCloseOnClickOutside,
               onKeyDown,
               onRequestClose,
-              headerActions: /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(media_editor_default.HeaderActions, { showCloseButton: true }),
+              headerActions,
               children: [
                 children,
-                /* @__PURE__ */ (0, import_jsx_runtime153.jsx)(ModalFooter, { layout })
+                /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
+                  "div",
+                  {
+                    className: `media-editor-modal__footer is-${footerLayout}`,
+                    role: "region",
+                    "aria-label": (0, import_i18n43.__)("Editor actions"),
+                    children: footerActions
+                  }
+                )
               ]
             }
           )
@@ -35522,8 +35187,8 @@ function MediaEditorModal({
 }
 
 // packages/media-editor/build-module/private-apis.mjs
-var privateApis4 = {};
-lock3(privateApis4, {
+var privateApis8 = {};
+lock3(privateApis8, {
   store,
   MediaEditor,
   MediaEditorModal
@@ -35540,26 +35205,25 @@ var { lock: lock4, unlock: unlock4 } = (0, import_private_apis5.__dangerousOptIn
 );
 
 // routes/media-editor/style.scss
-if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='90ec4f00f0']")) {
+if (typeof document !== "undefined" && true && !document.head.querySelector("style[data-wp-hash='42c4d536ed']")) {
   const style = document.createElement("style");
-  style.setAttribute("data-wp-hash", "90ec4f00f0");
-  style.appendChild(document.createTextNode('.media-editor-preview{align-items:center;box-sizing:border-box;display:flex;justify-content:center;min-height:100%;padding:32px;position:relative}.media-editor-preview__spinner{left:50%;position:absolute;top:50%;transform:translate(-50%,-50%)}.media-editor-preview--loading{height:100%;width:100%}.media-editor-preview--image img{height:auto;max-height:100%;max-width:100%;-o-object-fit:contain;object-fit:contain;opacity:0;width:auto}@media not (prefers-reduced-motion){.media-editor-preview--image img.loaded{animation:__wp-base-styles-fade-in .08s linear 0s;animation-fill-mode:forwards}}.media-editor-preview--video video{height:auto;max-height:100%;max-width:100%;-o-object-fit:contain;object-fit:contain;width:auto}.media-editor-preview--audio audio{max-width:100%}.media-editor-preview--file{text-align:center}.media-editor-preview__file-info{background:#f0f0f0;border-radius:2px;padding:24px}.media-editor-preview__file-name{font-weight:var(--wpds-typography-font-weight-emphasis,600);margin-bottom:8px}.media-editor-preview__mime-type{color:#757575;font-size:.9em;margin-bottom:16px}.media-editor-preview__download-link{display:inline-block;margin-top:8px}.media-editor-preview--empty,.media-editor-preview--error{color:#757575;text-align:center}.media-editor-preview__url{color:#949494;font-size:.9em;margin-top:8px;word-break:break-all}.wp-media-editor-image-editor{cursor:grab;height:100%;overflow:hidden;position:relative;touch-action:none;-webkit-user-select:none;-moz-user-select:none;user-select:none;width:100%}.wp-media-editor-image-editor__canvas{inset:24px;min-height:100px;min-width:100px;position:absolute}.wp-media-editor-image-editor__canvas:focus{outline:none}.wp-media-editor-image-editor__stage{inset:0;position:absolute}.wp-media-editor-image-editor--dragging{cursor:grabbing}.wp-media-editor-image-editor__image{left:0;position:absolute;top:0;transform-origin:center center;will-change:transform}.wp-media-editor-image-editor__stencil{pointer-events:none;position:absolute}.wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px hsla(0,0%,88%,.6);pointer-events:none;position:absolute;transition:box-shadow .15s ease}.wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px hsla(0,0%,88%,.4)}.wp-media-editor-image-editor__grid{overflow:hidden;pointer-events:none;position:absolute;transition:opacity .15s ease}.wp-media-editor-image-editor__canvas--grid-interactive .wp-media-editor-image-editor__grid{opacity:0;transition-delay:.1s}.wp-media-editor-image-editor__canvas--show-grid .wp-media-editor-image-editor__grid{opacity:1;transition-delay:0s}.wp-media-editor-image-editor__canvas--settling .wp-media-editor-image-editor__grid{opacity:0;transition:none}.wp-media-editor-image-editor__grid-line{background:hsla(0,0%,100%,.4);position:absolute}.wp-media-editor-image-editor__grid-line--horizontal{height:1px;left:0;width:100%}.wp-media-editor-image-editor__grid-line--vertical{height:100%;top:0;width:1px}.wp-media-editor-image-editor__dimensions-tooltip{background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.08);color:#1e1e1e;font-size:11px;font-variant-numeric:tabular-nums;line-height:1.4;padding:2px 6px;pointer-events:none;position:absolute;white-space:nowrap;z-index:2}.wp-media-editor-image-editor__stencil-rect{border:1px solid #1e1e1e;box-sizing:border-box;pointer-events:none;position:absolute;transition:border-color .15s ease,box-shadow .15s ease}.wp-media-editor-image-editor__canvas--focus-visible:focus .wp-media-editor-image-editor__stencil-rect{border-color:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));box-shadow:0 0 0 1px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle{-webkit-appearance:none;-moz-appearance:none;appearance:none;background:#fff;border:1px solid var(--wp-admin-theme-color,#007cba);border-radius:50%;box-sizing:border-box;cursor:default;font:inherit;height:12px;margin:0;padding:0;pointer-events:auto;position:absolute;transition:background-color .15s ease,box-shadow .15s ease;width:12px}.wp-media-editor-image-editor__handle:focus{outline:none}.wp-media-editor-image-editor__canvas--focus-visible .wp-media-editor-image-editor__handle:focus{background:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));border-color:transparent;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle:before{content:"";height:44px;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:44px}.wp-media-editor-image-editor__handle--n{cursor:ns-resize;left:50%;margin-left:-6px;top:-6px}.wp-media-editor-image-editor__handle--s{bottom:-6px;cursor:ns-resize;left:50%;margin-left:-6px}.wp-media-editor-image-editor__handle--e{cursor:ew-resize;margin-top:-6px;right:-6px;top:50%}.wp-media-editor-image-editor__handle--w{cursor:ew-resize;left:-6px;margin-top:-6px;top:50%}.wp-media-editor-image-editor__handle--nw{cursor:nwse-resize;left:-6px;top:-6px}.wp-media-editor-image-editor__handle--ne{cursor:nesw-resize;right:-6px;top:-6px}.wp-media-editor-image-editor__handle--sw{bottom:-6px;cursor:nesw-resize;left:-6px}.wp-media-editor-image-editor__handle--se{bottom:-6px;cursor:nwse-resize;right:-6px}.media-editor{display:flex;flex:1;flex-direction:column;height:100%;min-height:0}.media-editor .media-editor__loading{align-items:center;display:flex;height:100%;justify-content:center}.media-editor .interface-interface-skeleton{bottom:auto;flex:1;flex-direction:column;height:100%;left:auto;max-height:none;position:relative;right:auto;top:auto}.media-editor-modal .media-editor .interface-interface-skeleton.interface-interface-skeleton{top:auto}.media-editor .interface-interface-skeleton__editor{flex:1;min-width:0}.media-editor .media-editor__content{border-radius:8px;display:flex;flex:1;flex-direction:column;margin:0 24px;min-height:0;overflow:hidden}.media-editor .media-editor__canvas-toolbar{background:#e0e0e0;display:flex;flex-shrink:0;justify-content:center;padding:8px 16px}.media-editor .media-editor__canvas-toolbar .media-editor-fine-rotation{flex:0 1 360px;min-width:0}.media-editor .media-editor__canvas-area{align-items:center;background:#e0e0e0;display:flex;flex:1;justify-content:center;min-height:0;overflow:auto}.media-editor .media-editor__canvas-area .media-editor-preview{height:100%}.media-editor .media-editor__canvas-area img,.media-editor .media-editor__canvas-area video{max-height:100%;max-width:100%;-o-object-fit:contain;object-fit:contain}.media-editor .media-editor__sidebar{box-sizing:border-box}.media-editor .media-editor__sidebar *,.media-editor .media-editor__sidebar :after,.media-editor .media-editor__sidebar :before{box-sizing:inherit}@media (min-width:600px){.media-editor .media-editor__sidebar{padding-inline:8px}}.media-editor .media-editor__sidebar-panel{padding-bottom:24px}.media-editor .interface-interface-skeleton__sidebar{border-top:0;box-shadow:none;outline:1px solid transparent}.media-editor .media-editor__panel{padding:16px}@media (min-width:600px){.media-editor .media-editor__panel{padding:24px 24px 0 0}}.media-editor .components-panel__header.media-editor__sidebar-header{margin-right:0;padding-left:0;padding-right:8px}@media (min-width:600px){.media-editor .components-panel__header.media-editor__sidebar-header{margin-right:24px}}.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{padding:0}@media (min-width:600px){.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{display:flex}}@media (min-width:600px) and (max-width:781px){.media-editor .interface-interface-skeleton__sidebar:has(.interface-complementary-area__fill){position:relative!important}.media-editor .interface-complementary-area,.media-editor .interface-complementary-area__fill{width:280px!important}}@media (max-width:599px){.media-editor .interface-interface-skeleton__sidebar:has(.interface-complementary-area__fill){width:100%}.media-editor .interface-complementary-area,.media-editor .interface-complementary-area__fill{width:100%!important}}.media-editor__snackbar{bottom:var(--wpds-dimension-size-md,32px);box-sizing:border-box;display:flex;flex-direction:column;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor__snackbar .components-snackbar{margin-inline:auto}.media-editor-form .dataforms-layouts-panel__field-control{text-wrap:pretty}.media-editor-modal.components-modal__frame .components-modal__content{display:flex;flex-direction:column;margin-bottom:0;min-height:0;padding:0}.media-editor-modal.components-modal__frame .components-modal__children-container{display:flex;flex:1;flex-direction:column;min-height:0}.media-editor-modal.components-modal__frame .media-editor-modal__footer{background:#fff;display:flex;flex-shrink:0;gap:16px;padding:16px 32px 24px;z-index:1000001}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide{align-items:center;flex-direction:row}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor__save-actions{margin-left:auto}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-narrow{flex-direction:column}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-narrow>.media-editor-image-controls{align-self:center}.media-editor-modal__footer-row{align-items:center;display:flex;flex-wrap:wrap;gap:16px}.media-editor-modal__footer-row .media-editor-image-controls,.media-editor-modal__footer-row .media-editor__save-actions{margin-left:auto}.media-editor-modal .media-editor__history-actions .components-button.has-icon:not([aria-disabled=true]){color:var(--wp-admin-theme-color)}.media-editor-modal,.media-editor-modal__snackbar{display:flex;flex-direction:column}.media-editor-modal__snackbar{bottom:var(--wpds-dimension-size-md,32px);box-sizing:border-box;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor-modal__snackbar .components-snackbar{margin-inline:auto}.media-editor-modal__snackbar{z-index:1000001}.media-editor-canvas{height:100%;position:relative;width:100%}.media-editor-canvas__cropper{height:100%;opacity:0;pointer-events:none;width:100%}.media-editor-canvas__cropper.is-loaded{opacity:1;pointer-events:auto}@keyframes __wp-base-styles-fade-in{0%{opacity:0}to{opacity:1}}@media not (prefers-reduced-motion){.media-editor-canvas__cropper.is-loaded{animation:__wp-base-styles-fade-in .2s linear 0s;animation-fill-mode:forwards}}.media-editor-canvas__spinner{left:50%;position:absolute;top:50%;transform:translate(-50%,-50%)}.media-editor-canvas__error{align-items:center;color:#757575;display:flex;height:100%;justify-content:center;text-align:center;width:100%}.media-editor-image-controls{align-items:center;display:flex;flex-wrap:nowrap;gap:8px}.media-editor-image-controls.is-stacked{align-items:flex-start;flex-direction:column;gap:24px}.media-editor-image-controls__transforms{display:flex;gap:48px}.media-editor-image-controls__group{display:flex;flex-direction:column;gap:4px}.media-editor-image-controls__label{font-size:11px;font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;text-transform:uppercase}.media-editor-image-controls__buttons{display:flex;gap:8px;padding-inline:2px 0}.media-editor-keyboard-shortcuts-modal{min-width:280px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__note{color:#757575;font-size:13px;margin:0 0 16px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-list{list-style:none;margin:0;padding:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut{align-items:baseline;border-top:1px solid #ddd;display:flex;margin-bottom:0;padding:.6rem 0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut:last-child{border-bottom:1px solid #ddd}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-description{flex:1;margin:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-term{background:none;font-weight:var(--wpds-typography-font-weight-emphasis,600);margin:0 0 0 1rem;padding:0;text-align:right}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key{border-radius:8%;margin:0 .2rem;padding:.25rem .5rem}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key:last-child{margin:0 0 0 .2rem}.rotation-ruler{box-sizing:border-box;color:#1e1e1e;container-type:inline-size;cursor:ew-resize;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;height:32px;min-width:180px;padding:0 8px;position:relative;touch-action:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.rotation-ruler[data-disabled]{cursor:default;opacity:.5;pointer-events:none}.rotation-ruler:has(.rotation-ruler__input:focus-visible){border-radius:4px;outline:2px solid var(--wp-admin-theme-color,#3858e9);outline-offset:2px}.rotation-ruler__input{clip:rect(0 0 0 0);border:0;height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.rotation-ruler__pointer{background:var(--wp-admin-theme-color,#3858e9);border-radius:1px;bottom:0;height:18px;left:50%;pointer-events:none;position:absolute;transform:translateX(-50%);width:2px}.rotation-ruler__strip{inset:0;mask-image:linear-gradient(90deg,transparent 0,#000 8px,#000 calc(100% - 8px),transparent);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8px,#000 calc(100% - 8px),transparent);overflow:hidden;position:absolute}.rotation-ruler__ticks{display:block;left:50%;overflow:visible;position:absolute;top:0}.rotation-ruler__tick{stroke:currentColor;stroke-width:1}.rotation-ruler__tick--minor{opacity:.35}.rotation-ruler__tick--mid{opacity:.6}.rotation-ruler__tick--major{opacity:1}.rotation-ruler__label{fill:currentColor;font-size:10px;font-weight:400;opacity:.45}.rotation-ruler__active-label{color:#1e1e1e;font-size:12px;font-weight:var(--wpds-typography-font-weight-emphasis,600);height:14px;left:50%;line-height:14px;pointer-events:none;position:absolute;top:0;transform:translateX(-50%)}.rotation-ruler__active-label:before{background:linear-gradient(90deg,transparent 0,#e0e0e0 12px,#e0e0e0 calc(100% - 12px),transparent);content:"";height:100%;left:50%;position:absolute;top:0;transform:translateX(-50%);width:60px}.rotation-ruler__active-label-number{display:inline-block;position:relative}.rotation-ruler__active-label-sign{position:absolute;right:100%;top:0}.rotation-ruler__active-label-unit{left:100%;position:absolute;top:0}@container (max-width: 220px){.rotation-ruler__tick--minor{opacity:0}}@media (prefers-reduced-motion:reduce){.rotation-ruler__ticks{transition:none}}.media-editor-route__shortcut-scope{display:contents}.media-editor-route__content{display:flex;flex:1;min-height:0;overflow:hidden}.media-editor-route__toolbar{align-items:center;display:flex;flex-shrink:0;flex-wrap:wrap;gap:16px;justify-content:center;padding:16px 32px 24px}'));
+  style.setAttribute("data-wp-hash", "42c4d536ed");
+  style.appendChild(document.createTextNode('.media-editor-preview{align-items:center;box-sizing:border-box;display:flex;justify-content:center;min-height:100%;padding:32px;position:relative}.media-editor-preview__spinner{left:50%;position:absolute;top:50%;transform:translate(-50%,-50%)}.media-editor-preview--loading{height:100%;width:100%}.media-editor-preview--image img{height:auto;max-height:100%;max-width:100%;-o-object-fit:contain;object-fit:contain;opacity:0;width:auto}@media not (prefers-reduced-motion){.media-editor-preview--image img.loaded{animation:__wp-base-styles-fade-in .08s linear 0s;animation-fill-mode:forwards}}.media-editor-preview--video video{height:auto;max-height:100%;max-width:100%;-o-object-fit:contain;object-fit:contain;width:auto}.media-editor-preview--audio audio{max-width:100%}.media-editor-preview--file{text-align:center}.media-editor-preview__file-info{background:#f0f0f0;border-radius:2px;padding:24px}.media-editor-preview__file-name{font-weight:var(--wpds-typography-font-weight-emphasis,600);margin-bottom:8px}.media-editor-preview__mime-type{color:#757575;font-size:.9em;margin-bottom:16px}.media-editor-preview__download-link{display:inline-block;margin-top:8px}.media-editor-preview--empty,.media-editor-preview--error{color:#757575;text-align:center}.media-editor-preview__url{color:#949494;font-size:.9em;margin-top:8px;word-break:break-all}.wp-media-editor-image-editor{cursor:grab;height:100%;overflow:hidden;position:relative;touch-action:none;-webkit-user-select:none;-moz-user-select:none;user-select:none;width:100%}.wp-media-editor-image-editor__canvas{inset:24px;min-height:100px;min-width:100px;position:absolute}.wp-media-editor-image-editor__canvas:focus{outline:none}.wp-media-editor-image-editor__stage{inset:0;position:absolute}.wp-media-editor-image-editor--dragging{cursor:grabbing}.wp-media-editor-image-editor__image{left:0;position:absolute;top:0;transform-origin:center center;will-change:transform}.wp-media-editor-image-editor__stencil{pointer-events:none;position:absolute}.wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px hsla(0,0%,88%,.6);pointer-events:none;position:absolute;transition:box-shadow .15s ease}.wp-media-editor-image-editor--dragging .wp-media-editor-image-editor__dimming{box-shadow:0 0 0 9999px hsla(0,0%,88%,.4)}.wp-media-editor-image-editor__grid{overflow:hidden;pointer-events:none;position:absolute;transition:opacity .15s ease}.wp-media-editor-image-editor__canvas--grid-interactive .wp-media-editor-image-editor__grid{opacity:0;transition-delay:.1s}.wp-media-editor-image-editor__canvas--show-grid .wp-media-editor-image-editor__grid{opacity:1;transition-delay:0s}.wp-media-editor-image-editor__canvas--settling .wp-media-editor-image-editor__grid{opacity:0;transition:none}.wp-media-editor-image-editor__grid-line{background:hsla(0,0%,100%,.4);position:absolute}.wp-media-editor-image-editor__grid-line--horizontal{height:1px;left:0;width:100%}.wp-media-editor-image-editor__grid-line--vertical{height:100%;top:0;width:1px}.wp-media-editor-image-editor__dimensions-tooltip{background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.08);color:#1e1e1e;font-size:11px;font-variant-numeric:tabular-nums;line-height:1.4;padding:2px 6px;pointer-events:none;position:absolute;white-space:nowrap;z-index:2}.wp-media-editor-image-editor__stencil-rect{border:1px solid #1e1e1e;box-sizing:border-box;pointer-events:none;position:absolute;transition:border-color .15s ease,box-shadow .15s ease}.wp-media-editor-image-editor__canvas--focus-visible:focus .wp-media-editor-image-editor__stencil-rect{border-color:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));box-shadow:0 0 0 1px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle{-webkit-appearance:none;-moz-appearance:none;appearance:none;background:#fff;border:1px solid var(--wp-admin-theme-color,#007cba);border-radius:50%;box-sizing:border-box;cursor:default;font:inherit;height:12px;margin:0;padding:0;pointer-events:auto;position:absolute;transition:background-color .15s ease,box-shadow .15s ease;width:12px}.wp-media-editor-image-editor__handle:focus{outline:none}.wp-media-editor-image-editor__canvas--focus-visible .wp-media-editor-image-editor__handle:focus{background:var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba));border-color:transparent;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--wp-image-editor-focus-color,var(--wp-admin-theme-color,#007cba))}.wp-media-editor-image-editor__handle:before{content:"";height:44px;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:44px}.wp-media-editor-image-editor__handle--n{cursor:ns-resize;left:50%;margin-left:-6px;top:-6px}.wp-media-editor-image-editor__handle--s{bottom:-6px;cursor:ns-resize;left:50%;margin-left:-6px}.wp-media-editor-image-editor__handle--e{cursor:ew-resize;margin-top:-6px;right:-6px;top:50%}.wp-media-editor-image-editor__handle--w{cursor:ew-resize;left:-6px;margin-top:-6px;top:50%}.wp-media-editor-image-editor__handle--nw{cursor:nwse-resize;left:-6px;top:-6px}.wp-media-editor-image-editor__handle--ne{cursor:nesw-resize;right:-6px;top:-6px}.wp-media-editor-image-editor__handle--sw{bottom:-6px;cursor:nesw-resize;left:-6px}.wp-media-editor-image-editor__handle--se{bottom:-6px;cursor:nwse-resize;right:-6px}.media-editor{display:flex;flex:1;flex-direction:column;height:100%;min-height:0}.media-editor .media-editor__loading{align-items:center;display:flex;height:100%;justify-content:center}.media-editor .interface-interface-skeleton{bottom:auto;flex:1;flex-direction:column;height:100%;left:auto;max-height:none;position:relative;right:auto;top:auto}.media-editor-modal .media-editor .interface-interface-skeleton.interface-interface-skeleton{top:auto}.media-editor .interface-interface-skeleton__editor{flex:1;min-width:0}.media-editor .media-editor__content{border-radius:8px;display:flex;flex:1;flex-direction:column;margin:0 24px;min-height:0;overflow:hidden}.media-editor .media-editor__canvas-toolbar{background:#e0e0e0;display:flex;flex-shrink:0;justify-content:center;padding:8px 16px}.media-editor .media-editor__canvas-toolbar .media-editor-fine-rotation{flex:0 1 360px;min-width:0}.media-editor .media-editor__canvas-area{align-items:center;background:#e0e0e0;display:flex;flex:1;justify-content:center;min-height:0;overflow:auto}.media-editor .media-editor__canvas-area .media-editor-preview{height:100%}.media-editor .media-editor__canvas-area img,.media-editor .media-editor__canvas-area video{max-height:100%;max-width:100%;-o-object-fit:contain;object-fit:contain}.media-editor .media-editor__sidebar{box-sizing:border-box}.media-editor .media-editor__sidebar *,.media-editor .media-editor__sidebar :after,.media-editor .media-editor__sidebar :before{box-sizing:inherit}@media (min-width:600px){.media-editor .media-editor__sidebar{padding-left:1px}}.media-editor .media-editor__sidebar-panel{padding-bottom:24px}.media-editor .interface-interface-skeleton__sidebar{border-top:0;box-shadow:none;outline:1px solid transparent}.media-editor .media-editor__panel{padding:16px}@media (min-width:600px){.media-editor .media-editor__panel{padding:24px 24px 0 0}}.media-editor .components-panel__header.media-editor__sidebar-header{margin-right:0;padding-left:0;padding-right:8px}@media (min-width:600px){.media-editor .components-panel__header.media-editor__sidebar-header{margin-right:24px}}.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{padding:0}@media (min-width:600px){.media-editor .components-panel__header.media-editor__sidebar-header .components-button.has-icon{display:flex}}@media (min-width:600px) and (max-width:781px){.media-editor .interface-interface-skeleton__sidebar:has(.interface-complementary-area__fill){position:relative!important}.media-editor .interface-complementary-area,.media-editor .interface-complementary-area__fill{width:280px!important}}@media (max-width:599px){.media-editor .interface-interface-skeleton__sidebar:has(.interface-complementary-area__fill){width:100%}.media-editor .interface-complementary-area,.media-editor .interface-complementary-area__fill{width:100%!important}}.media-editor__snackbar{bottom:var(--wpds-dimension-size-md,32px);box-sizing:border-box;display:flex;flex-direction:column;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor__snackbar .components-snackbar{margin-inline:auto}.media-editor-form .dataforms-layouts-panel__field-control{text-wrap:pretty}.media-editor-modal.components-modal__frame .components-modal__content{display:flex;flex-direction:column;margin-bottom:0;min-height:0;padding:0}.media-editor-modal.components-modal__frame .components-modal__children-container{display:flex;flex:1;flex-direction:column;min-height:0}.media-editor-modal.components-modal__frame .media-editor-modal__footer{background:#fff;display:flex;flex-shrink:0;gap:16px;padding:16px 32px 24px;z-index:1000001}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide{align-items:center;flex-direction:row}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-wide .media-editor__footer-actions{margin-left:auto}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-narrow{flex-direction:column}.media-editor-modal.components-modal__frame .media-editor-modal__footer.is-narrow>.media-editor-image-controls{align-self:center}.media-editor-modal__footer-row{align-items:center;display:flex;flex-wrap:wrap;gap:16px}.media-editor-modal__footer-row .media-editor-image-controls,.media-editor-modal__footer-row .media-editor__footer-actions{margin-left:auto}.media-editor__history-actions .components-button.has-icon:not([aria-disabled=true]){color:var(--wp-admin-theme-color)}.media-editor-modal,.media-editor-modal__snackbar{display:flex;flex-direction:column}.media-editor-modal__snackbar{bottom:var(--wpds-dimension-size-md,32px);box-sizing:border-box;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.media-editor-modal__snackbar .components-snackbar{margin-inline:auto}.media-editor-modal__snackbar{z-index:1000001}.media-editor-canvas{height:100%;position:relative;width:100%}.media-editor-canvas__cropper{height:100%;opacity:0;pointer-events:none;width:100%}.media-editor-canvas__cropper.is-loaded{opacity:1;pointer-events:auto}@keyframes __wp-base-styles-fade-in{0%{opacity:0}to{opacity:1}}@media not (prefers-reduced-motion){.media-editor-canvas__cropper.is-loaded{animation:__wp-base-styles-fade-in .2s linear 0s;animation-fill-mode:forwards}}.media-editor-canvas__spinner{left:50%;position:absolute;top:50%;transform:translate(-50%,-50%)}.media-editor-canvas__error{align-items:center;color:#757575;display:flex;height:100%;justify-content:center;text-align:center;width:100%}.media-editor-image-controls{align-items:center;display:flex;flex-wrap:nowrap;gap:8px}.media-editor-image-controls.is-stacked{align-items:flex-start;flex-direction:column;gap:24px}.media-editor-image-controls__transforms{display:flex;gap:48px}.media-editor-image-controls__group{display:flex;flex-direction:column;gap:4px}.media-editor-image-controls__label{font-size:11px;font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:1.4;text-transform:uppercase}.media-editor-image-controls__buttons{display:flex;gap:8px;padding-inline:2px 0}.media-editor-keyboard-shortcuts-modal{min-width:280px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__note{color:#757575;font-size:13px;margin:0 0 16px}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-list{list-style:none;margin:0;padding:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut{align-items:baseline;border-top:1px solid #ddd;display:flex;margin-bottom:0;padding:.6rem 0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut:last-child{border-bottom:1px solid #ddd}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-description{flex:1;margin:0}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-term{background:none;font-weight:var(--wpds-typography-font-weight-emphasis,600);margin:0 0 0 1rem;padding:0;text-align:right}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key{border-radius:8%;margin:0 .2rem;padding:.25rem .5rem}.media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key:last-child{margin:0 0 0 .2rem}.rotation-ruler{box-sizing:border-box;color:#1e1e1e;container-type:inline-size;cursor:ew-resize;font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;height:32px;min-width:180px;padding:0 8px;position:relative;touch-action:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.rotation-ruler[data-disabled]{cursor:default;opacity:.5;pointer-events:none}.rotation-ruler:has(.rotation-ruler__input:focus-visible){border-radius:4px;outline:2px solid var(--wp-admin-theme-color,#3858e9);outline-offset:2px}.rotation-ruler__input{clip:rect(0 0 0 0);border:0;height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.rotation-ruler__pointer{background:var(--wp-admin-theme-color,#3858e9);border-radius:1px;bottom:0;height:18px;left:50%;pointer-events:none;position:absolute;transform:translateX(-50%);width:2px}.rotation-ruler__strip{inset:0;mask-image:linear-gradient(90deg,transparent 0,#000 8px,#000 calc(100% - 8px),transparent);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8px,#000 calc(100% - 8px),transparent);overflow:hidden;position:absolute}.rotation-ruler__ticks{display:block;left:50%;overflow:visible;position:absolute;top:0}.rotation-ruler__tick{stroke:currentColor;stroke-width:1}.rotation-ruler__tick--minor{opacity:.35}.rotation-ruler__tick--mid{opacity:.6}.rotation-ruler__tick--major{opacity:1}.rotation-ruler__label{fill:currentColor;font-size:10px;font-weight:400;opacity:.45}.rotation-ruler__active-label{color:#1e1e1e;font-size:12px;font-weight:var(--wpds-typography-font-weight-emphasis,600);height:14px;left:50%;line-height:14px;pointer-events:none;position:absolute;top:0;transform:translateX(-50%)}.rotation-ruler__active-label:before{background:linear-gradient(90deg,transparent 0,#e0e0e0 12px,#e0e0e0 calc(100% - 12px),transparent);content:"";height:100%;left:50%;position:absolute;top:0;transform:translateX(-50%);width:60px}.rotation-ruler__active-label-number{display:inline-block;position:relative}.rotation-ruler__active-label-sign{position:absolute;right:100%;top:0}.rotation-ruler__active-label-unit{left:100%;position:absolute;top:0}@container (max-width: 220px){.rotation-ruler__tick--minor{opacity:0}}@media (prefers-reduced-motion:reduce){.rotation-ruler__ticks{transition:none}}.media-editor-route__content{display:flex;flex:1;min-height:0;overflow:hidden}'));
   document.head.appendChild(style);
 }
 
 // routes/media-editor/stage.tsx
 var { usePostFields } = unlock4(import_editor.privateApis);
-var { MediaEditor: MediaEditor2 } = unlock4(privateApis4);
+var { MediaEditor: MediaEditor2 } = unlock4(privateApis8);
 var MEDIA_LIST_PATH = "/types/attachment/list/all";
 var MEDIA_LIBRARY_ADMIN_PATH = "upload.php";
 var MEDIA_EDITOR_ADMIN_PAGE = "media-editor-wp-admin";
-var MEDIA_EDITOR_SCOPE = "media-editor-route";
 function isMediaEditorAdminPage() {
   return typeof window !== "undefined" && new URLSearchParams(window.location.search).get("page") === MEDIA_EDITOR_ADMIN_PAGE;
 }
 function getMediaTitle(media) {
   const title = typeof media?.title === "string" ? media.title : media?.title?.rendered || media?.title?.raw;
-  return title ? (0, import_html_entities.decodeEntities)(title) : (0, import_i18n45.__)("Edit media");
+  return title ? (0, import_html_entities.decodeEntities)(title) : (0, import_i18n44.__)("Edit media");
 }
 function MediaEditorRoute() {
   const { id } = useParams({ from: "/media-editor/$id" });
@@ -35592,54 +35256,40 @@ function MediaEditorRoute() {
     {
       id: attachmentId,
       fields,
-      scope: MEDIA_EDITOR_SCOPE,
       onClose: navigateBack,
       onSaved: ({ id: savedId }) => {
         if (savedId !== attachmentId) {
           navigate({ to: `/media-editor/${savedId}` });
         }
       },
-      renderFrame: ({ children, isImage, layout, onKeyDown }) => {
-        const isNarrow = layout === "narrow";
-        return (
-          // The keydown handler covers the whole frame, not just the
-          // canvas: undo/redo live in the header, so after clicking
-          // one, focus sits outside the content region and the
-          // keyboard shortcuts would no longer reach the handler.
-          // `Page` takes no `onKeyDown`, hence the wrapper; it is
-          // `display: contents`, so it adds no box to the layout.
-          // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-          /* @__PURE__ */ React.createElement(
-            "div",
+      renderFrame: ({ children, headerActions, onKeyDown }) => /* @__PURE__ */ React.createElement(
+        page_default,
+        {
+          className: "media-editor-route",
+          ariaLabel: title,
+          breadcrumbs: /* @__PURE__ */ React.createElement(
+            breadcrumbs_default,
             {
-              className: "media-editor-route__shortcut-scope",
-              onKeyDown
-            },
-            /* @__PURE__ */ React.createElement(
-              page_default,
-              {
-                className: "media-editor-route",
-                ariaLabel: title,
-                breadcrumbs: /* @__PURE__ */ React.createElement(
-                  breadcrumbs_default,
-                  {
-                    items: isStandaloneAdminPage ? [{ label: title }] : [
-                      {
-                        label: (0, import_i18n45.__)("Media"),
-                        to: MEDIA_LIST_PATH
-                      },
-                      { label: title }
-                    ]
-                  }
-                ),
-                actions: /* @__PURE__ */ React.createElement(React.Fragment, null, !isNarrow && /* @__PURE__ */ React.createElement(MediaEditor2.HistoryActions, null), /* @__PURE__ */ React.createElement(MediaEditor2.HeaderActions, null), /* @__PURE__ */ React.createElement(MediaEditor2.SaveActions, { size: "compact" }))
-              },
-              /* @__PURE__ */ React.createElement("div", { className: "media-editor-route__content" }, children),
-              isNarrow && isImage && /* @__PURE__ */ React.createElement("div", { className: "media-editor-route__toolbar" }, /* @__PURE__ */ React.createElement(MediaEditor2.ImageControls, null), /* @__PURE__ */ React.createElement(MediaEditor2.HistoryActions, null))
-            )
-          )
-        );
-      }
+              items: isStandaloneAdminPage ? [{ label: title }] : [
+                {
+                  label: (0, import_i18n44.__)("Media"),
+                  to: MEDIA_LIST_PATH
+                },
+                { label: title }
+              ]
+            }
+          ),
+          actions: headerActions
+        },
+        /* @__PURE__ */ React.createElement(
+          "div",
+          {
+            className: "media-editor-route__content",
+            onKeyDown
+          },
+          children
+        )
+      )
     }
   );
 }

@@ -47,7 +47,7 @@
 		"spacing": {
 			"margin": [ "top", "bottom" ],
 			"padding": true,
-			"blockGap": [ "horizontal", "vertical" ],
+			"blockGap": true,
 			"__experimentalDefaultControls": {
 				"padding": true,
 				"blockGap": true

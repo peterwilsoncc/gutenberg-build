@@ -3174,10 +3174,7 @@ return array(
 					'bottom'
 				),
 				'padding' => true,
-				'blockGap' => array(
-					'horizontal',
-					'vertical'
-				),
+				'blockGap' => true,
 				'__experimentalDefaultControls' => array(
 					'padding' => true,
 					'blockGap' => true
@@ -4369,7 +4366,7 @@ return array(
 		'name' => 'core/more',
 		'title' => 'More',
 		'category' => 'design',
-		'description' => 'Content before this block is shown in the excerpt on blog and archive pages. Where a theme shows the full content instead, visitors get a “Read more” link to the rest of the post.',
+		'description' => 'Content before this block will be shown in the excerpt on your archives page.',
 		'keywords' => array(
 			'read more'
 		),
@@ -5266,40 +5263,32 @@ return array(
 				'role' => 'local'
 			),
 			'id' => array(
-				'type' => 'number',
-				'role' => 'content'
+				'type' => 'number'
 			),
 			'src' => array(
-				'type' => 'string',
-				'role' => 'content'
+				'type' => 'string'
 			),
 			'type' => array(
 				'type' => 'string',
 				'default' => 'audio'
 			),
 			'album' => array(
-				'type' => 'string',
-				'role' => 'content'
+				'type' => 'string'
 			),
 			'artist' => array(
-				'type' => 'string',
-				'role' => 'content'
+				'type' => 'string'
 			),
 			'image' => array(
-				'type' => 'string',
-				'role' => 'content'
+				'type' => 'string'
 			),
 			'imageAlt' => array(
-				'type' => 'string',
-				'role' => 'content'
+				'type' => 'string'
 			),
 			'length' => array(
-				'type' => 'string',
-				'role' => 'content'
+				'type' => 'string'
 			),
 			'title' => array(
-				'type' => 'string',
-				'role' => 'content'
+				'type' => 'string'
 			)
 		),
 		'supports' => array(
@@ -6749,9 +6738,6 @@ return array(
 			),
 			'html' => false,
 			'layout' => true,
-			'spacing' => array(
-				'blockGap' => true
-			),
 			'interactivity' => true
 		),
 		'editorStyle' => 'wp-block-query-editor'
@@ -8573,8 +8559,7 @@ return array(
 				),
 				'default' => array(
 					
-				),
-				'role' => 'local'
+				)
 			),
 			'onlyIncludeCurrentPage' => array(
 				'type' => 'boolean',

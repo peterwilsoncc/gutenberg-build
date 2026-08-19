@@ -24,20 +24,6 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// package-external:@wordpress/data
-var require_data = __commonJS({
-  "package-external:@wordpress/data"(exports, module) {
-    module.exports = window.wp.data;
-  }
-});
-
-// package-external:@wordpress/core-data
-var require_core_data = __commonJS({
-  "package-external:@wordpress/core-data"(exports, module) {
-    module.exports = window.wp.coreData;
-  }
-});
-
 // package-external:@wordpress/i18n
 var require_i18n = __commonJS({
   "package-external:@wordpress/i18n"(exports, module) {
@@ -46,20 +32,11 @@ var require_i18n = __commonJS({
 });
 
 // routes/styles/route.ts
-var import_data = __toESM(require_data());
-var import_core_data = __toESM(require_core_data());
 var import_i18n = __toESM(require_i18n());
-async function isBlockTheme() {
-  const currentTheme = await (0, import_data.resolveSelect)(import_core_data.store).getCurrentTheme();
-  return !!currentTheme?.is_block_theme;
-}
 var route = {
   title: () => (0, import_i18n.__)("Styles"),
-  // Classic themes have no global styles to edit, so the style book is all
-  // this route has to show.
-  stage: isBlockTheme,
   async canvas(context) {
-    if (context.search.preview === "stylebook" || !await isBlockTheme()) {
+    if (context.search.preview === "stylebook") {
       return null;
     }
     return {

@@ -36,12 +36,15 @@ var { actions } = store(
         }
       },
       openPanelByHash: () => {
-        if (hashHandled) {
+        if (hashHandled || !window.location?.hash?.length) {
           return;
         }
         const context = getContext();
         const { id, accordionItems, autoclose } = context;
-        const targetElement = document.querySelector(":target");
+        const hash = decodeURIComponent(
+          window.location.hash.slice(1)
+        );
+        const targetElement = window.document.getElementById(hash);
         if (!targetElement) {
           return;
         }

@@ -70,7 +70,6 @@ var require_private_apis = __commonJS({
 var import_data4 = __toESM(require_data());
 var import_core_data2 = __toESM(require_core_data());
 var import_i18n = __toESM(require_i18n());
-import { notFound } from "@wordpress/route";
 
 // packages/views/build-module/use-view.mjs
 var import_element = __toESM(require_element(), 1);
@@ -243,13 +242,6 @@ function viewToQuery(view) {
 
 // routes/template-part-list/route.ts
 var route = {
-  async beforeLoad() {
-    const theme = await (0, import_data4.resolveSelect)(import_core_data2.store).getCurrentTheme();
-    const supports = theme?.theme_supports;
-    if (!supports?.["block-templates"] && !supports?.["block-template-parts"]) {
-      throw notFound();
-    }
-  },
   title: () => (0, import_i18n.__)("Template Parts"),
   async canvas(context) {
     const { params, search } = context;
@@ -265,7 +257,10 @@ var route = {
       return {
         postType: "wp_template_part",
         postId,
-        isPreview: true
+        isPreview: true,
+        editLink: `/types/wp_template_part/edit/${encodeURIComponent(
+          postId
+        )}`
       };
     }
     const query = viewToQuery(view);
@@ -279,7 +274,10 @@ var route = {
       return {
         postType: "wp_template_part",
         postId,
-        isPreview: true
+        isPreview: true,
+        editLink: `/types/wp_template_part/edit/${encodeURIComponent(
+          postId
+        )}`
       };
     }
     return void 0;

@@ -14,8 +14,7 @@
 			"items": {
 				"type": "object"
 			},
-			"default": [],
-			"role": "local"
+			"default": []
 		},
 		"onlyIncludeCurrentPage": {
 			"type": "boolean",

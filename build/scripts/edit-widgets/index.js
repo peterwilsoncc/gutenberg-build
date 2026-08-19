@@ -240,7 +240,7 @@ var wp;
   var import_data32 = __toESM(require_data(), 1);
   var import_deprecated6 = __toESM(require_deprecated(), 1);
   var import_element27 = __toESM(require_element(), 1);
-  var import_block_library = __toESM(require_block_library(), 1);
+  var import_block_library2 = __toESM(require_block_library(), 1);
   var import_core_data12 = __toESM(require_core_data(), 1);
   var import_widgets5 = __toESM(require_widgets(), 1);
   var import_preferences10 = __toESM(require_preferences(), 1);
@@ -1769,7 +1769,7 @@ var wp;
   };
   var ADMIN_THEME_COLORS = /* @__PURE__ */ new Map([
     ["modern", DEFAULT_THEME_COLORS],
-    ["fresh", { primary: "#007cba", background: "#25292b" }],
+    ["fresh", { primary: "#3858e9", background: "#25292b" }],
     ["midnight", { primary: "#cf4339", background: "#3d4042" }],
     ["coffee", { primary: "#916745", background: "#5b534d" }],
     ["ocean", { primary: "#567958", background: "#5f787f" }],
@@ -2941,6 +2941,7 @@ var wp;
   var import_block_editor9 = __toESM(require_block_editor(), 1);
   var import_patterns = __toESM(require_patterns(), 1);
   var import_preferences4 = __toESM(require_preferences(), 1);
+  var import_block_library = __toESM(require_block_library(), 1);
 
   // packages/edit-widgets/build-module/components/keyboard-shortcuts/index.mjs
   var import_element10 = __toESM(require_element(), 1);
@@ -3097,6 +3098,7 @@ var wp;
   var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
   var { ExperimentalBlockEditorProvider } = unlock(import_block_editor9.privateApis);
   var { PatternsMenuItems } = unlock(import_patterns.privateApis);
+  var { BlockKeyboardShortcuts } = unlock(import_block_library.privateApis);
   var EMPTY_ARRAY2 = [];
   function WidgetAreasBlockEditorProvider({
     blockEditorSettings,
@@ -3178,6 +3180,7 @@ var wp;
     );
     return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(import_components9.SlotFillProvider, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(keyboard_shortcuts_default.Register, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(BlockKeyboardShortcuts, {}),
       /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(
         ExperimentalBlockEditorProvider,
         {
@@ -3418,7 +3421,7 @@ var wp;
   }
 
   // packages/edit-widgets/build-module/components/layout/interface.mjs
-  var import_compose11 = __toESM(require_compose(), 1);
+  var import_compose12 = __toESM(require_compose(), 1);
   var import_block_editor18 = __toESM(require_block_editor(), 1);
   var import_element23 = __toESM(require_element(), 1);
   var import_data28 = __toESM(require_data(), 1);
@@ -4266,6 +4269,7 @@ var wp;
   // packages/edit-widgets/build-module/components/secondary-sidebar/list-view-sidebar.mjs
   var import_block_editor17 = __toESM(require_block_editor(), 1);
   var import_components20 = __toESM(require_components(), 1);
+  var import_compose11 = __toESM(require_compose(), 1);
   var import_data26 = __toESM(require_data(), 1);
   var import_element22 = __toESM(require_element(), 1);
   var import_i18n17 = __toESM(require_i18n(), 1);
@@ -4275,6 +4279,7 @@ var wp;
     const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data26.useDispatch)(store2);
     const { getListViewToggleRef: getListViewToggleRef2 } = unlock((0, import_data26.useSelect)(store2));
     const [dropZoneElement, setDropZoneElement] = (0, import_element22.useState)(null);
+    const focusOnMountRef = (0, import_compose11.useFocusOnMount)("firstElement");
     const closeListView = (0, import_element22.useCallback)(() => {
       setIsListViewOpened2(false);
       getListViewToggleRef2().current?.focus();
@@ -4312,8 +4317,8 @@ var wp;
               "div",
               {
                 className: "edit-widgets-editor__list-view-panel-content",
-                ref: setDropZoneElement,
-                children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_block_editor17.__experimentalListView, { dropZoneElement, focusOnMount: true })
+                ref: (0, import_compose11.useMergeRefs)([focusOnMountRef, setDropZoneElement]),
+                children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(import_block_editor17.__experimentalListView, { dropZoneElement })
               }
             )
           ]
@@ -4354,8 +4359,8 @@ var wp;
     footer: (0, import_i18n18.__)("Widgets footer")
   };
   function Interface({ blockEditorSettings }) {
-    const isMobileViewport = (0, import_compose11.useViewportMatch)("medium", "<");
-    const isHugeViewport = (0, import_compose11.useViewportMatch)("huge", ">=");
+    const isMobileViewport = (0, import_compose12.useViewportMatch)("medium", "<");
+    const isHugeViewport = (0, import_compose12.useViewportMatch)("huge", ">=");
     const { setIsInserterOpened: setIsInserterOpened2, setIsListViewOpened: setIsListViewOpened2, closeGeneralSidebar: closeGeneralSidebar2 } = (0, import_data28.useDispatch)(store2);
     const {
       hasBlockBreadCrumbsEnabled,
@@ -4654,7 +4659,7 @@ var wp;
   function initializeEditor(id, settings2) {
     const target = document.getElementById(id);
     const root = (0, import_element27.createRoot)(target);
-    const coreBlocks = (0, import_block_library.__experimentalGetCoreBlocks)().filter((block) => {
+    const coreBlocks = (0, import_block_library2.__experimentalGetCoreBlocks)().filter((block) => {
       return !(disabledBlocks.includes(block.name) || block.name.startsWith("core/post") || block.name.startsWith("core/query") || block.name.startsWith("core/site") || block.name.startsWith("core/navigation") || block.name.startsWith("core/term"));
     });
     (0, import_data32.dispatch)(import_preferences10.store).setDefaults("core/edit-widgets", {
@@ -4664,10 +4669,10 @@ var wp;
       themeStyles: true
     });
     (0, import_data32.dispatch)(import_blocks3.store).reapplyBlockTypeFilters();
-    (0, import_block_library.registerCoreBlocks)(coreBlocks);
+    (0, import_block_library2.registerCoreBlocks)(coreBlocks);
     (0, import_widgets5.registerLegacyWidgetBlock)();
     if (true) {
-      (0, import_block_library.__experimentalRegisterExperimentalCoreBlocks)({
+      (0, import_block_library2.__experimentalRegisterExperimentalCoreBlocks)({
         enableFSEBlocks: ENABLE_EXPERIMENTAL_FSE_BLOCKS
       });
     }

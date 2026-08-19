@@ -730,15 +730,8 @@ var wp;
   }
   function getQueryArgs(url) {
     return (getQueryString(url) || "").replace(/\+/g, "%20").split("&").reduce((accumulator, keyValue) => {
-      const separatorIndex = keyValue.indexOf("=");
-      const hasValue = separatorIndex !== -1;
-      const key = safeDecodeURIComponent(
-        hasValue ? keyValue.slice(0, separatorIndex) : keyValue
-      );
+      const [key, value = ""] = keyValue.split("=").filter(Boolean).map(safeDecodeURIComponent);
       if (key) {
-        const value = hasValue ? safeDecodeURIComponent(
-          keyValue.slice(separatorIndex + 1)
-        ) : "";
         const segments = key.replace(/\]/g, "").split("[");
         setPath(accumulator, segments, value);
       }
@@ -834,11 +827,7 @@ var wp;
       file.slice(index + 1)
     ];
     const truncatedFile = fileName.slice(-3) + "." + extension;
-    return (
-      // A negative end would be read as an offset from the end of the string,
-      // keeping most of the file name and returning more than `maxLength`.
-      file.slice(0, Math.max(0, maxLength - truncatedFile.length - 1)) + "\u2026" + truncatedFile
-    );
+    return file.slice(0, maxLength - truncatedFile.length - 1) + "\u2026" + truncatedFile;
   }
 
   // packages/url/build-module/clean-for-slug.mjs
@@ -867,16 +856,13 @@ var wp;
 
   // packages/url/build-module/normalize-path.mjs
   function normalizePath(path) {
-    const separatorIndex = path.indexOf("?");
-    if (separatorIndex === -1) {
-      return path;
-    }
-    const base = path.slice(0, separatorIndex);
-    const query = path.slice(separatorIndex + 1);
+    const split = path.split("?");
+    const query = split[1];
+    const base = split[0];
     if (!query) {
       return base;
     }
-    return base + "?" + query.split("&").map((entry) => entry.split("=")).map((pair) => pair.map(safeDecodeURIComponent)).sort((a, b) => a[0].localeCompare(b[0])).map((pair) => pair.map(encodeURIComponent)).map((pair) => pair.join("=")).join("&");
+    return base + "?" + query.split("&").map((entry) => entry.split("=")).map((pair) => pair.map(decodeURIComponent)).sort((a, b) => a[0].localeCompare(b[0])).map((pair) => pair.map(encodeURIComponent)).map((pair) => pair.join("=")).join("&");
   }
 
   // packages/url/build-module/prepend-https.mjs
