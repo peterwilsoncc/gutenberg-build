@@ -141,6 +141,13 @@ return array(
 		'has_content' => false,
 	),
 	array(
+		'name'        => 'site-health',
+		'path'        => '/site-health',
+		'page'        => 'dashboard',
+		'has_route'   => true,
+		'has_content' => true,
+	),
+	array(
 		'name'        => 'styles',
 		'path'        => '/styles',
 		'page'        => 'site-editor-v2',

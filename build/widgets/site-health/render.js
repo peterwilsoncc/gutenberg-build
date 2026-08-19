@@ -1082,7 +1082,8 @@ var ASYNC_TEST_PATHS = [
   "/wp-site-health/v1/tests/loopback-requests",
   "/wp-site-health/v1/tests/https-status",
   "/wp-site-health/v1/tests/dotorg-communication",
-  "/wp-site-health/v1/tests/authorization-header"
+  "/wp-site-health/v1/tests/authorization-header",
+  "/wp-site-health/v1/tests/page-cache"
 ];
 function toneForPercentage(pct) {
   if (pct === 100) {

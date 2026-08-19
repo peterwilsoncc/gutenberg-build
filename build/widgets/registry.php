@@ -104,7 +104,7 @@ return array(
 		'description'  => 'Shows an overview of your site health and any issues that need attention.',
 		'help'         => array( 'content' => 'Results come from your site\'s latest health checks.', 'links' => array( array( 'label' => 'Visit Site Health', 'href' => 'site-health.php' ) ) ),
 		'icon'         => 'core/shield',
-		'actions'      => array( array( 'id' => 'site-health-status', 'label' => 'Status', 'href' => 'site-health.php', 'icon' => 'dashboard-widgets/seen', 'relevance' => 'low' ), array( 'id' => 'site-health-info', 'label' => 'Info', 'href' => 'site-health.php?tab=debug', 'icon' => 'core/info', 'relevance' => 'low' ) ),
+		'actions'      => array( array( 'id' => 'site-health-details', 'label' => 'Details', 'href' => 'admin.php?page=dashboard-wp-admin&p=/site-health', 'icon' => 'core/chart-bar', 'relevance' => 'high' ), array( 'id' => 'site-health-status', 'label' => 'Status', 'href' => 'site-health.php', 'icon' => 'dashboard-widgets/seen', 'relevance' => 'low' ), array( 'id' => 'site-health-info', 'label' => 'Info', 'href' => 'site-health.php?tab=debug', 'icon' => 'core/info', 'relevance' => 'low' ) ),
 		'has_render'   => true,
 		'has_widget'   => true,
 		'presentation' => 'framed',
