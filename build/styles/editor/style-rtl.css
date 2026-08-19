@@ -5892,7 +5892,6 @@ fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields_
   line-height: 16px;
   text-align: right;
   color: #757575;
-  text-transform: capitalize;
   overflow-wrap: anywhere;
 }
 
