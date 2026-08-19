@@ -82411,6 +82411,9 @@ If there's a particular need for this, please submit a feature request at https:
       isFocusMode,
       isPreviewMode,
       isViewable,
+      isPublished,
+      viewLink,
+      viewItemLabel,
       isCodeEditingEnabled,
       isRichEditingEnabled,
       isPublishSidebarEnabled: isPublishSidebarEnabled2,
@@ -82418,9 +82421,16 @@ If there's a particular need for this, please submit a feature request at https:
       disableContentOnlyForTemplateParts
     } = (0, import_data73.useSelect)((select9) => {
       const { get } = select9(import_preferences7.store);
-      const { isListViewOpened: isListViewOpened2, getCurrentPostType: getCurrentPostType2, getEditorSettings: getEditorSettings2 } = select9(store);
+      const {
+        isListViewOpened: isListViewOpened2,
+        getCurrentPostType: getCurrentPostType2,
+        getEditorSettings: getEditorSettings2,
+        getEditedPostAttribute: getEditedPostAttribute2,
+        isCurrentPostPublished: isCurrentPostPublished2
+      } = select9(store);
       const { getSettings: getSettings11 } = select9(import_block_editor24.store);
       const { getPostType } = select9(import_core_data50.store);
+      const postType2 = getPostType(getCurrentPostType2());
       return {
         editorMode: get("core", "editorMode") ?? "visual",
         isListViewOpen: isListViewOpened2(),
@@ -82428,7 +82438,10 @@ If there's a particular need for this, please submit a feature request at https:
         isDistractionFree: get("core", "distractionFree"),
         isFocusMode: get("core", "focusMode"),
         isPreviewMode: getSettings11().isPreviewMode,
-        isViewable: getPostType(getCurrentPostType2())?.viewable ?? false,
+        isViewable: postType2?.viewable ?? false,
+        isPublished: isCurrentPostPublished2(),
+        viewLink: getEditedPostAttribute2("link"),
+        viewItemLabel: postType2?.labels?.view_item,
         isCodeEditingEnabled: getEditorSettings2().codeEditingEnabled,
         isRichEditingEnabled: getEditorSettings2().richEditingEnabled,
         isPublishSidebarEnabled: select9(store).isPublishSidebarEnabled(),
@@ -82618,6 +82631,18 @@ If there's a particular need for this, please submit a feature request at https:
           window.open(link, `wp-preview-${postId2}`);
         }
       });
+      if (isPublished && viewLink) {
+        commands.push({
+          name: "core/view-link",
+          label: viewItemLabel || (0, import_i18n198.__)("View post"),
+          icon: external_default,
+          category: "view",
+          callback: ({ close }) => {
+            close();
+            window.open(viewLink, "_blank");
+          }
+        });
+      }
     }
     return {
       commands,
