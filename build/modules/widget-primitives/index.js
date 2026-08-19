@@ -146,6 +146,18 @@ function withRenderableIcons(actions, holdPending) {
     return action;
   });
 }
+var DEFAULT_API_VERSION = 1;
+function recordOverlay(record) {
+  return {
+    name: record.name,
+    renderModule: record.render_module ?? "",
+    ...record.presentation ? { presentation: record.presentation } : {},
+    ...record.category ? { category: record.category } : {},
+    ...record.description ? { description: record.description } : {},
+    ...record.help ? { help: record.help } : {},
+    ...record.keywords ? { keywords: record.keywords } : {}
+  };
+}
 function useWidgetTypes(records) {
   const [widgetTypes, setWidgetTypes] = (0, import_element2.useState)([]);
   const [isResolvingWidgetTypes, setIsResolvingWidgetTypes] = (0, import_element2.useState)(true);
@@ -164,7 +176,21 @@ function useWidgetTypes(records) {
     Promise.all(
       records.map(async (record) => {
         if (!record.widget_module) {
-          return null;
+          if (!record.render_module) {
+            return null;
+          }
+          return {
+            apiVersion: DEFAULT_API_VERSION,
+            title: record.title ?? record.name,
+            ...record.icon ? { icon: pendingIcon } : {},
+            ...record.actions ? {
+              actions: withRenderableIcons(
+                record.actions,
+                true
+              )
+            } : {},
+            ...recordOverlay(record)
+          };
         }
         try {
           const module = await import(
@@ -179,14 +205,13 @@ function useWidgetTypes(records) {
           const icon = moduleIcon ?? (record.icon ? pendingIcon : void 0);
           const actions = record.actions ?? metadata.actions;
           return {
+            apiVersion: DEFAULT_API_VERSION,
             ...metadata,
             ...metadata.attributes ? {
               attributes: resolveFields(
                 metadata.attributes
               )
             } : {},
-            name: record.name,
-            renderModule: record.render_module ?? "",
             icon,
             /*
              * `title` is required:
@@ -195,17 +220,13 @@ function useWidgetTypes(records) {
              * - Then the record's name as fallback
              */
             title: record.title ?? metadata.title ?? record.name,
-            ...record.presentation ? { presentation: record.presentation } : {},
-            ...record.category ? { category: record.category } : {},
-            ...record.description ? { description: record.description } : {},
-            ...record.help ? { help: record.help } : {},
-            ...record.keywords ? { keywords: record.keywords } : {},
             ...actions ? {
               actions: withRenderableIcons(
                 actions,
                 actions === record.actions
               )
-            } : {}
+            } : {},
+            ...recordOverlay(record)
           };
         } catch {
           return null;
