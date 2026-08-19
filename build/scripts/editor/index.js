@@ -404,7 +404,7 @@ var wp;
             },
             [subscribe5, value, getSnapshot2]
           );
-          useEffect122(
+          useEffect123(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe5(function() {
@@ -430,7 +430,7 @@ var wp;
           return getSnapshot2();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React104 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState165 = React104.useState, useEffect122 = React104.useEffect, useLayoutEffect18 = React104.useLayoutEffect, useDebugValue2 = React104.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React104 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState165 = React104.useState, useEffect123 = React104.useEffect, useLayoutEffect18 = React104.useLayoutEffect, useDebugValue2 = React104.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React104.useSyncExternalStore ? React104.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -458,7 +458,7 @@ var wp;
           return x2 === y3 && (0 !== x2 || 1 / x2 === 1 / y3) || x2 !== x2 && y3 !== y3;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React104 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore6 = shim.useSyncExternalStore, useRef128 = React104.useRef, useEffect122 = React104.useEffect, useMemo161 = React104.useMemo, useDebugValue2 = React104.useDebugValue;
+        var React104 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore6 = shim.useSyncExternalStore, useRef128 = React104.useRef, useEffect123 = React104.useEffect, useMemo161 = React104.useMemo, useDebugValue2 = React104.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe5, getSnapshot2, getServerSnapshot2, selector2, isEqual2) {
           var instRef = useRef128(null);
           if (null === instRef.current) {
@@ -501,7 +501,7 @@ var wp;
             [getSnapshot2, getServerSnapshot2, selector2, isEqual2]
           );
           var value = useSyncExternalStore6(subscribe5, instRef[0], instRef[1]);
-          useEffect122(
+          useEffect123(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -92758,6 +92758,17 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var MIN_TERMS_COUNT_FOR_FILTER = 8;
   var EMPTY_ARRAY15 = [];
+  var SPEAK_DEBOUNCE_MS = 500;
+  function getResultCount(termsTree) {
+    let count = 0;
+    for (const term of termsTree) {
+      count++;
+      if (void 0 !== term.children) {
+        count += getResultCount(term.children);
+      }
+    }
+    return count;
+  }
   var TermCheckbox = (0, import_element272.memo)(function Checkbox2({
     id,
     name: name2,
@@ -92844,8 +92855,8 @@ If there's a particular need for this, please submit a feature request at https:
     const [formParent, setFormParent] = (0, import_element272.useState)("");
     const [showForm, setShowForm] = (0, import_element272.useState)(false);
     const [filterValue, setFilterValue] = (0, import_element272.useState)("");
-    const [filteredTermsTree, setFilteredTermsTree] = (0, import_element272.useState)([]);
-    const debouncedSpeak = (0, import_compose58.useDebounce)(import_a11y12.speak, 500);
+    const deferredFilterValue = (0, import_element272.useDeferredValue)(filterValue);
+    const debouncedSpeak = (0, import_compose58.useDebounce)(import_a11y12.speak, SPEAK_DEBOUNCE_MS);
     const {
       hasCreateAction,
       hasAssignAction,
@@ -92876,6 +92887,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { editPost: editPost2 } = (0, import_data157.useDispatch)(store);
     const { saveEntityRecord } = (0, import_data157.useDispatch)(import_core_data94.store);
+    const { createErrorNotice } = (0, import_data157.useDispatch)(import_notices28.store);
     const selectedTerms = (0, import_element272.useMemo)(() => new Set(terms), [terms]);
     const availableTermsTree = (0, import_element272.useMemo)(
       () => sortBySelected(buildTermsTree2(availableTerms), terms),
@@ -92883,6 +92895,27 @@ If there's a particular need for this, please submit a feature request at https:
       // checking or unchecking a term.
       [availableTerms]
     );
+    const shownTerms = (0, import_element272.useMemo)(() => {
+      if ("" === deferredFilterValue) {
+        return availableTermsTree;
+      }
+      return availableTermsTree.map(getFilterMatcher(deferredFilterValue)).filter((term) => term);
+    }, [availableTermsTree, deferredFilterValue]);
+    const resultCount = getResultCount(shownTerms);
+    (0, import_element272.useEffect)(() => {
+      if ("" === deferredFilterValue) {
+        return;
+      }
+      debouncedSpeak(
+        (0, import_i18n258.sprintf)(
+          /* translators: %d: number of results. */
+          (0, import_i18n258._n)("%d result found.", "%d results found.", resultCount),
+          resultCount
+        ),
+        "polite"
+      );
+      return () => debouncedSpeak.cancel();
+    }, [resultCount, deferredFilterValue, debouncedSpeak]);
     const onUpdateTerms = (termIds) => {
       editPost2({ [taxonomy.rest_base]: termIds });
     };
@@ -92892,8 +92925,6 @@ If there's a particular need for this, please submit a feature request at https:
         selectedTerms.has(id) ? terms.filter((term) => term !== id) : [...terms, id]
       );
     });
-    const shownTerms = "" !== filterValue ? filteredTermsTree : availableTermsTree;
-    const { createErrorNotice } = (0, import_data157.useDispatch)(import_notices28.store);
     if (!hasAssignAction) {
       return null;
     }
@@ -92950,28 +92981,6 @@ If there's a particular need for this, please submit a feature request at https:
       setFormParent("");
       onUpdateTerms([...terms, newTerm.id]);
     };
-    const setFilter = (value) => {
-      const newFilteredTermsTree = availableTermsTree.map(getFilterMatcher(value)).filter((term) => term);
-      const getResultCount = (termsTree) => {
-        let count = 0;
-        for (let i3 = 0; i3 < termsTree.length; i3++) {
-          count++;
-          if (void 0 !== termsTree[i3].children) {
-            count += getResultCount(termsTree[i3].children);
-          }
-        }
-        return count;
-      };
-      setFilterValue(value);
-      setFilteredTermsTree(newFilteredTermsTree);
-      const resultCount = getResultCount(newFilteredTermsTree);
-      const resultsFoundMessage = (0, import_i18n258.sprintf)(
-        /* translators: %d: number of results. */
-        (0, import_i18n258._n)("%d result found.", "%d results found.", resultCount),
-        resultCount
-      );
-      debouncedSpeak(resultsFoundMessage, "assertive");
-    };
     const labelWithFallback = (labelProperty, fallbackIsCategory, fallbackIsNotCategory) => taxonomy?.labels?.[labelProperty] ?? (slug === "category" ? fallbackIsCategory : fallbackIsNotCategory);
     const newTermButtonLabel = labelWithFallback(
       "add_new_item",
@@ -93000,7 +93009,7 @@ If there's a particular need for this, please submit a feature request at https:
           label: filterLabel,
           placeholder: filterLabel,
           value: filterValue,
-          onChange: setFilter
+          onChange: setFilterValue
         }
       ),
       loading && /* @__PURE__ */ (0, import_jsx_runtime464.jsx)(
