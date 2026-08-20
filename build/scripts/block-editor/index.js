@@ -82301,7 +82301,7 @@ var wp;
                 types.push(type.slice(prefix2.length));
               }
             }
-            return types.every(
+            return types.length > 0 && types.every(
               (type) => allowedTypes.includes(type)
             ) && (multiple ? true : types.length === 1);
           }

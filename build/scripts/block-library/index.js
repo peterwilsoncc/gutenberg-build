@@ -55681,10 +55681,19 @@ ${text}
         }
       );
     }
-    const innerBlocksProps = (0, import_block_editor183.useInnerBlocksProps)(blockProps, {
-      __experimentalAppenderTagName: "li",
-      renderAppender: false
-    });
+    const { children: innerBlocks, ...trackListProps } = (0, import_block_editor183.useInnerBlocksProps)(
+      {
+        className: clsx_default("wp-block-playlist__tracklist", {
+          "wp-block-playlist__tracklist-is-hidden": !showTracklist,
+          "wp-block-playlist__tracklist-show-numbers": showNumbers,
+          "wp-block-playlist__tracklist-length-is-hidden": !showTrackLength
+        })
+      },
+      {
+        __experimentalAppenderTagName: "li",
+        renderAppender: false
+      }
+    );
     if (tracks.length === 0) {
       return /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
         "div",
@@ -55965,17 +55974,7 @@ ${text}
             showPlayButtonArtwork: showPlayButtonArtwork === true
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
-          "ol",
-          {
-            className: clsx_default("wp-block-playlist__tracklist", {
-              "wp-block-playlist__tracklist-is-hidden": !showTracklist,
-              "wp-block-playlist__tracklist-show-numbers": showNumbers,
-              "wp-block-playlist__tracklist-length-is-hidden": !showTrackLength
-            }),
-            children: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(PlaylistContext.Provider, { value: playlistContext, children: innerBlocksProps.children })
-          }
-        ),
+        /* @__PURE__ */ (0, import_jsx_runtime374.jsx)("ol", { ...trackListProps, children: /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(PlaylistContext.Provider, { value: playlistContext, children: innerBlocks }) }),
         /* @__PURE__ */ (0, import_jsx_runtime374.jsx)(
           Caption,
           {
