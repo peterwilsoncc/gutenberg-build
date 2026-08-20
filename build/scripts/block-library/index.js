@@ -16259,6 +16259,19 @@ var wp;
   // packages/block-library/build-module/columns/transforms.mjs
   var import_blocks18 = __toESM(require_blocks(), 1);
   var MAXIMUM_SELECTED_BLOCKS = 6;
+  var COLUMN_VERTICAL_ALIGNMENTS = ["top", "center", "bottom"];
+  var ROW_VERTICAL_ALIGNMENTS = [...COLUMN_VERTICAL_ALIGNMENTS, "stretch"];
+  var FLEX_SIZE_LAYOUT_VALUES = ["fixed", "fixedNoShrink"];
+  var getObjectValue = (value) => value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  var getColumnWidth = (width) => {
+    if (Number.isFinite(width)) {
+      return `${width}%`;
+    }
+    if (typeof width === "string" && /\d/.test(width)) {
+      return width;
+    }
+    return void 0;
+  };
   var getColumnBlocksFromGrid = (innerBlocks, columnCount) => {
     const columnWidth = +(100 / columnCount).toFixed(2);
     const innerBlocksTemplate = Array.from(
@@ -16273,6 +16286,27 @@ var wp;
     );
     return (0, import_blocks18.createBlocksFromInnerBlocksTemplate)(innerBlocksTemplate);
   };
+  var getColumnBlocksFromRow = (innerBlocks) => innerBlocks.map((innerBlock) => {
+    const style2 = getObjectValue(innerBlock?.attributes?.style);
+    const { selfStretch, flexSize, ...remainingLayout } = getObjectValue(
+      style2.layout
+    );
+    const columnWidth = FLEX_SIZE_LAYOUT_VALUES.includes(selfStretch) ? getColumnWidth(flexSize) : void 0;
+    const updatedStyle = { ...style2 };
+    if (Object.keys(remainingLayout).length) {
+      updatedStyle.layout = remainingLayout;
+    } else {
+      delete updatedStyle.layout;
+    }
+    const columnInnerBlock = (0, import_blocks18.cloneSanitizedBlock)(innerBlock, {
+      style: Object.keys(updatedStyle).length ? updatedStyle : void 0
+    });
+    return (0, import_blocks18.createBlock)(
+      "core/column",
+      columnWidth ? { width: columnWidth } : {},
+      [columnInnerBlock]
+    );
+  });
   var getGridInnerBlocks = (innerBlocks) => innerBlocks.flatMap((column) => {
     const columnInnerBlocks = column.innerBlocks || [];
     if (columnInnerBlocks.length > 1) {
@@ -16286,6 +16320,43 @@ var wp;
     }
     return columnInnerBlocks;
   });
+  var getRowInnerBlocks = (innerBlocks) => {
+    const columnWidths = innerBlocks.map((column) => {
+      return getColumnWidth(column?.attributes?.width);
+    });
+    const allColumnWidthsUnavailable = columnWidths.every(
+      (columnWidth) => !columnWidth
+    );
+    const equalColumnWidth = innerBlocks.length ? `${+(100 / innerBlocks.length).toFixed(2)}%` : void 0;
+    return innerBlocks.map((column, index) => {
+      const columnInnerBlocks = Array.isArray(column?.innerBlocks) ? column.innerBlocks : [];
+      const columnWidth = columnWidths[index] || (allColumnWidthsUnavailable ? equalColumnWidth : void 0);
+      const childLayout = columnWidth ? { selfStretch: "fixed", flexSize: columnWidth } : { selfStretch: "fill" };
+      if (columnInnerBlocks.length === 1) {
+        const innerBlock = columnInnerBlocks[0];
+        const style2 = getObjectValue(innerBlock.attributes?.style);
+        const layout = getObjectValue(style2.layout);
+        const updatedLayout = { ...layout, ...childLayout };
+        if (!columnWidth) {
+          delete updatedLayout.flexSize;
+        }
+        return (0, import_blocks18.cloneSanitizedBlock)(innerBlock, {
+          style: {
+            ...style2,
+            layout: updatedLayout
+          }
+        });
+      }
+      return (0, import_blocks18.createBlock)(
+        "core/group",
+        {
+          layout: { type: "constrained" },
+          style: { layout: childLayout }
+        },
+        columnInnerBlocks
+      );
+    });
+  };
   var transforms5 = {
     from: [
       {
@@ -16302,6 +16373,23 @@ var wp;
           );
         },
         isMatch: ({ layout }) => layout?.type === "grid" && Number.isInteger(layout?.columnCount) && layout.columnCount > 0
+      },
+      {
+        type: "block",
+        blocks: ["core/group"],
+        priority: 1,
+        transform: (attributes2, innerBlocks) => {
+          const { layout, ...rest } = attributes2;
+          const verticalAlignment = COLUMN_VERTICAL_ALIGNMENTS.includes(
+            layout?.verticalAlignment
+          ) ? layout.verticalAlignment : void 0;
+          return (0, import_blocks18.createBlock)(
+            "core/columns",
+            { ...rest, verticalAlignment },
+            getColumnBlocksFromRow(innerBlocks)
+          );
+        },
+        isMatch: ({ layout }) => layout?.type === "flex" && layout?.orientation !== "vertical"
       },
       {
         type: "block",
@@ -16395,6 +16483,31 @@ var wp;
       }
     ],
     to: [
+      {
+        type: "block",
+        blocks: ["core/group"],
+        variationName: "group-row",
+        transform: (attributes2, innerBlocks) => {
+          const { verticalAlignment } = attributes2;
+          const rowVerticalAlignment = ROW_VERTICAL_ALIGNMENTS.includes(
+            verticalAlignment
+          ) ? verticalAlignment : "stretch";
+          return (0, import_blocks18.createBlock)(
+            "core/group",
+            {
+              ...attributes2,
+              isStackedOnMobile: void 0,
+              verticalAlignment: void 0,
+              layout: {
+                type: "flex",
+                flexWrap: "nowrap",
+                verticalAlignment: rowVerticalAlignment
+              }
+            },
+            getRowInnerBlocks(innerBlocks)
+          );
+        }
+      },
       {
         type: "block",
         blocks: ["core/group"],
