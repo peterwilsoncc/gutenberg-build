@@ -287,7 +287,7 @@ function gutenberg_guidelines_wp_admin_render_page() {
 		}
 
 		/* Hide legacy admin elements */
-		body.js #wpbody-content > div:not(.boot-layout-container):not(#screen-meta) {
+		body.js #wpbody-content > div:not(#guidelines-wp-admin-app):not(#screen-meta) {
 			display: none;
 		}
 		body.js #wpfooter {
@@ -328,7 +328,7 @@ function gutenberg_guidelines_wp_admin_render_page() {
 		);
 		?>
 	</div>
-	<div id="guidelines-wp-admin-app" class="boot-layout-container"></div>
+	<div id="guidelines-wp-admin-app"></div>
 	<?php
 }
 
