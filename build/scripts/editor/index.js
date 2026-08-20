@@ -96810,7 +96810,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/editor/index.mjs
   var import_data269 = __toESM(require_data(), 1);
   var import_core_data144 = __toESM(require_core_data(), 1);
-  var import_components290 = __toESM(require_components(), 1);
+  var import_components289 = __toESM(require_components(), 1);
   var import_i18n351 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/editor-interface/index.mjs
@@ -104860,7 +104860,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
   var import_element350 = __toESM(require_element(), 1);
-  var import_components284 = __toESM(require_components(), 1);
+  var import_components283 = __toESM(require_components(), 1);
   var import_compose91 = __toESM(require_compose(), 1);
   var import_i18n342 = __toESM(require_i18n(), 1);
   var import_data260 = __toESM(require_data(), 1);
@@ -104873,9 +104873,6 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose90 = __toESM(require_compose(), 1);
   var import_data259 = __toESM(require_data(), 1);
   var import_block_editor99 = __toESM(require_block_editor(), 1);
-
-  // packages/editor/build-module/components/collab-sidebar/note-card.mjs
-  var import_components280 = __toESM(require_components(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-byline.mjs
   var import_i18n338 = __toESM(require_i18n(), 1);
@@ -104986,11 +104983,13 @@ If there's a particular need for this, please submit a feature request at https:
           }
         ),
         actions2 && /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(
-          import_components280.FlexItem,
+          Stack,
           {
+            direction: "row",
+            align: "center",
             className: "editor-collab-sidebar-panel__note-actions",
             onClick: (event) => event.stopPropagation(),
-            children: /* @__PURE__ */ (0, import_jsx_runtime559.jsx)(Stack, { direction: "row", align: "center", children: actions2 })
+            children: actions2
           }
         )
       ] }),
@@ -105000,7 +104999,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/note-form.mjs
   var import_element347 = __toESM(require_element(), 1);
-  var import_components282 = __toESM(require_components(), 1);
+  var import_components281 = __toESM(require_components(), 1);
   var import_i18n339 = __toESM(require_i18n(), 1);
   var import_compose89 = __toESM(require_compose(), 1);
   var import_keycodes22 = __toESM(require_keycodes(), 1);
@@ -105046,7 +105045,7 @@ If there's a particular need for this, please submit a feature request at https:
   var note_mention_completer_default = noteMentionCompleter;
 
   // packages/editor/build-module/components/collab-sidebar/rich-text-control/index.mjs
-  var import_components281 = __toESM(require_components(), 1);
+  var import_components280 = __toESM(require_components(), 1);
   var import_compose88 = __toESM(require_compose(), 1);
   var import_element346 = __toESM(require_element(), 1);
   var import_keycodes21 = __toESM(require_keycodes(), 1);
@@ -105112,7 +105111,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/editor/build-module/components/collab-sidebar/rich-text-control/index.mjs
   var import_jsx_runtime562 = __toESM(require_jsx_runtime(), 1);
   var { ValidatedContentEditableControl: RichTextControlShell } = unlock(
-    import_components281.privateApis
+    import_components280.privateApis
   );
   var {
     useRichText: useRichText2,
@@ -105278,7 +105277,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [isSelected2]
     );
-    const { ref: autocompleteRef, ...autocompleteProps } = (0, import_components281.__unstableUseAutocompleteProps)(
+    const { ref: autocompleteRef, ...autocompleteProps } = (0, import_components280.__unstableUseAutocompleteProps)(
       {
         completers,
         record: value,
@@ -105317,7 +105316,7 @@ If there's a particular need for this, please submit a feature request at https:
             setIsSelected(true);
             focusOutside.onFocus(event);
           },
-          children: /* @__PURE__ */ (0, import_jsx_runtime562.jsxs)(import_components281.SlotFillProvider, { children: [
+          children: /* @__PURE__ */ (0, import_jsx_runtime562.jsxs)(import_components280.SlotFillProvider, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime562.jsx)(
               RichTextControlShell,
               {
@@ -105437,17 +105436,17 @@ If there's a particular need for this, please submit a feature request at https:
               wrap: "wrap",
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(
-                  import_components282.Button,
+                  import_components281.Button,
                   {
                     size: "compact",
                     variant: "tertiary",
                     onClick: onCancel,
                     shortcut: "Escape",
-                    children: /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(import_components282.__experimentalTruncate, { children: (0, import_i18n339.__)("Cancel") })
+                    children: /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(import_components281.__experimentalTruncate, { children: (0, import_i18n339.__)("Cancel") })
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(
-                  import_components282.Button,
+                  import_components281.Button,
                   {
                     size: "compact",
                     accessibleWhenDisabled: true,
@@ -105455,7 +105454,7 @@ If there's a particular need for this, please submit a feature request at https:
                     type: "submit",
                     disabled: isDisabled,
                     shortcut: import_keycodes22.displayShortcut.primary("Enter"),
-                    children: /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(import_components282.__experimentalTruncate, { children: labels?.submit ?? (0, import_i18n339.__)("Add note") })
+                    children: /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(import_components281.__experimentalTruncate, { children: labels?.submit ?? (0, import_i18n339.__)("Add note") })
                   }
                 )
               ]
@@ -105575,17 +105574,17 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/collab-sidebar/note.mjs
   var import_element349 = __toESM(require_element(), 1);
-  var import_components283 = __toESM(require_components(), 1);
+  var import_components282 = __toESM(require_components(), 1);
   var import_i18n341 = __toESM(require_i18n(), 1);
   var import_jsx_runtime566 = __toESM(require_jsx_runtime(), 1);
-  var { Menu: Menu10 } = unlock(import_components283.privateApis);
+  var { Menu: Menu10 } = unlock(import_components282.privateApis);
   function NoteActionsMenu({ items, buttonRef }) {
     return /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(Menu10, { placement: "bottom-end", children: [
       /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
         Menu10.TriggerButton,
         {
           render: /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
-            import_components283.Button,
+            import_components282.Button,
             {
               ref: buttonRef,
               size: "small",
@@ -105719,7 +105718,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const actions2 = isSelected2 ? /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(import_jsx_runtime566.Fragment, { children: [
       canResolve && onResolve && /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
-        import_components283.Button,
+        import_components282.Button,
         {
           label: (0, import_i18n341._x)("Resolve", "Mark note as resolved"),
           size: "small",
@@ -105746,7 +105745,7 @@ If there's a particular need for this, please submit a feature request at https:
         children: [
           body,
           actionState === "delete" && /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(
-            import_components283.__experimentalConfirmDialog,
+            import_components282.__experimentalConfirmDialog,
             {
               isOpen: true,
               onConfirm: () => {
@@ -105922,7 +105921,7 @@ If there's a particular need for this, please submit a feature request at https:
         "aria-expanded": isSelected2,
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime567.jsx)(
-            import_components284.Button,
+            import_components283.Button,
             {
               className: "editor-collab-sidebar-panel__skip-to-note",
               variant: "secondary",
@@ -105967,7 +105966,7 @@ If there's a particular need for this, please submit a feature request at https:
               justify: "space-between",
               className: "editor-collab-sidebar-panel__more-reply-separator",
               children: /* @__PURE__ */ (0, import_jsx_runtime567.jsx)(
-                import_components284.Button,
+                import_components283.Button,
                 {
                   size: "compact",
                   variant: "tertiary",
@@ -106033,7 +106032,7 @@ If there's a particular need for this, please submit a feature request at https:
             }
           ) }),
           !!note.blockClientId && /* @__PURE__ */ (0, import_jsx_runtime567.jsx)(
-            import_components284.Button,
+            import_components283.Button,
             {
               className: "editor-collab-sidebar-panel__skip-to-block",
               variant: "secondary",
@@ -106780,7 +106779,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collab-sidebar/add-note-menu-item.mjs
-  var import_components285 = __toESM(require_components(), 1);
+  var import_components284 = __toESM(require_components(), 1);
   var import_i18n345 = __toESM(require_i18n(), 1);
   var import_block_editor103 = __toESM(require_block_editor(), 1);
   var import_data263 = __toESM(require_data(), 1);
@@ -106812,7 +106811,7 @@ If there's a particular need for this, please submit a feature request at https:
       infoText = (0, import_i18n345.__)("Convert to blocks to add notes.");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime569.jsx)(
-      import_components285.MenuItem,
+      import_components284.MenuItem,
       {
         onClick,
         "aria-haspopup": "dialog",
@@ -106838,7 +106837,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/collab-sidebar/note-indicator-toolbar.mjs
-  var import_components286 = __toESM(require_components(), 1);
+  var import_components285 = __toESM(require_components(), 1);
   var import_i18n346 = __toESM(require_i18n(), 1);
   var import_element353 = __toESM(require_element(), 1);
   var import_block_editor104 = __toESM(require_block_editor(), 1);
@@ -106905,7 +106904,7 @@ If there's a particular need for this, please submit a feature request at https:
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(NoteIconToolbarSlotFill.Fill, { children: /* @__PURE__ */ (0, import_jsx_runtime570.jsx)(
-      import_components286.ToolbarButton,
+      import_components285.ToolbarButton,
       {
         className: "editor-note-indicator",
         label: (0, import_i18n346.__)("View notes"),
@@ -107124,7 +107123,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/editor/build-module/components/global-styles-sidebar/index.mjs
-  var import_components289 = __toESM(require_components(), 1);
+  var import_components288 = __toESM(require_components(), 1);
   var import_i18n350 = __toESM(require_i18n(), 1);
   var import_data268 = __toESM(require_data(), 1);
   var import_element356 = __toESM(require_element(), 1);
@@ -107134,7 +107133,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_block_editor107 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/global-styles/menu.mjs
-  var import_components287 = __toESM(require_components(), 1);
+  var import_components286 = __toESM(require_components(), 1);
   var import_data266 = __toESM(require_data(), 1);
   var import_i18n348 = __toESM(require_i18n(), 1);
   var import_preferences31 = __toESM(require_preferences(), 1);
@@ -107162,16 +107161,16 @@ If there's a particular need for this, please submit a feature request at https:
       onChangePath("/css");
     };
     return /* @__PURE__ */ (0, import_jsx_runtime572.jsx)(
-      import_components287.DropdownMenu,
+      import_components286.DropdownMenu,
       {
         icon: more_vertical_default,
         label: (0, import_i18n348.__)("More"),
         toggleProps: { size: "compact" },
         children: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime572.jsxs)(import_jsx_runtime572.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime572.jsxs)(import_components287.MenuGroup, { children: [
-            canEditCSS && /* @__PURE__ */ (0, import_jsx_runtime572.jsx)(import_components287.MenuItem, { onClick: loadCustomCSS, children: (0, import_i18n348.__)("Additional CSS") }),
+          /* @__PURE__ */ (0, import_jsx_runtime572.jsxs)(import_components286.MenuGroup, { children: [
+            canEditCSS && /* @__PURE__ */ (0, import_jsx_runtime572.jsx)(import_components286.MenuItem, { onClick: loadCustomCSS, children: (0, import_i18n348.__)("Additional CSS") }),
             !hideWelcomeGuide && /* @__PURE__ */ (0, import_jsx_runtime572.jsx)(
-              import_components287.MenuItem,
+              import_components286.MenuItem,
               {
                 onClick: () => {
                   toggle(
@@ -107184,8 +107183,8 @@ If there's a particular need for this, please submit a feature request at https:
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime572.jsx)(import_components287.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime572.jsx)(
-            import_components287.MenuItem,
+          /* @__PURE__ */ (0, import_jsx_runtime572.jsx)(import_components286.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime572.jsx)(
+            import_components286.MenuItem,
             {
               onClick: () => {
                 onReset();
@@ -107202,7 +107201,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/editor/build-module/components/global-styles-sidebar/welcome-guide.mjs
   var import_data267 = __toESM(require_data(), 1);
-  var import_components288 = __toESM(require_components(), 1);
+  var import_components287 = __toESM(require_components(), 1);
   var import_i18n349 = __toESM(require_i18n(), 1);
   var import_preferences32 = __toESM(require_preferences(), 1);
 
@@ -107240,7 +107239,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const welcomeLabel = (0, import_i18n349.__)("Welcome to Styles");
     return /* @__PURE__ */ (0, import_jsx_runtime574.jsx)(
-      import_components288.Guide,
+      import_components287.Guide,
       {
         className: "editor-welcome-guide guide-styles",
         contentLabel: welcomeLabel,
@@ -107308,7 +107307,7 @@ If there's a particular need for this, please submit a feature request at https:
                 ),
                 " ",
                 /* @__PURE__ */ (0, import_jsx_runtime574.jsx)(
-                  import_components288.ExternalLink,
+                  import_components287.ExternalLink,
                   {
                     href: (0, import_i18n349.__)(
                       "https://wordpress.org/documentation/article/styles-overview/"
@@ -107429,7 +107428,7 @@ If there's a particular need for this, please submit a feature request at https:
                     gap: "xs",
                     children: [
                       !isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
-                        import_components289.Button,
+                        import_components288.Button,
                         {
                           icon: seen_default,
                           label: (0, import_i18n350.__)("Style Book"),
@@ -107441,7 +107440,7 @@ If there's a particular need for this, please submit a feature request at https:
                         }
                       ),
                       /* @__PURE__ */ (0, import_jsx_runtime575.jsx)(
-                        import_components289.Button,
+                        import_components288.Button,
                         {
                           label: (0, import_i18n350.__)("Revisions"),
                           icon: backup_default,
@@ -107545,7 +107544,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     return /* @__PURE__ */ (0, import_jsx_runtime576.jsxs)(import_jsx_runtime576.Fragment, { children: [
       hasLoadedPost && !post2 && /* @__PURE__ */ (0, import_jsx_runtime576.jsx)(
-        import_components290.Notice,
+        import_components289.Notice,
         {
           status: !!error2 ? "error" : "warning",
           isDismissible: false,
@@ -107614,7 +107613,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_preferences35 = __toESM(require_preferences(), 1);
   var import_blocks39 = __toESM(require_blocks(), 1);
   var import_element357 = __toESM(require_element(), 1);
-  var import_components291 = __toESM(require_components(), 1);
+  var import_components290 = __toESM(require_components(), 1);
   var import_i18n352 = __toESM(require_i18n(), 1);
   var import_block_editor108 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime578 = __toESM(require_jsx_runtime(), 1);
@@ -107687,7 +107686,7 @@ If there's a particular need for this, please submit a feature request at https:
           numberOfHiddenBlocks
         ),
         /* @__PURE__ */ (0, import_jsx_runtime578.jsx)(
-          import_components291.Button,
+          import_components290.Button,
           {
             __next40pxDefaultSize: true,
             variant: "link",
@@ -108560,7 +108559,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_a11y16 = __toESM(require_a11y(), 1);
   var import_upload_media3 = __toESM(require_upload_media(), 1);
   var import_notices39 = __toESM(require_notices(), 1);
-  var import_components292 = __toESM(require_components(), 1);
+  var import_components291 = __toESM(require_components(), 1);
   var import_jsx_runtime580 = __toESM(require_jsx_runtime(), 1);
   var NOTICE_ID = "upload-progress";
   var COMPLETION_DISPLAY_MS = 3e3;
@@ -108580,10 +108579,10 @@ If there's a particular need for this, please submit a feature request at https:
     {
       className: "editor-upload-progress-snackbar__spinner",
       "aria-hidden": "true",
-      children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_components292.Spinner, {})
+      children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_components291.Spinner, {})
     }
   );
-  var UPLOAD_DONE = /* @__PURE__ */ (0, import_jsx_runtime580.jsx)("span", { className: "editor-upload-progress-snackbar__check", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_components292.Icon, { icon: check_default }) });
+  var UPLOAD_DONE = /* @__PURE__ */ (0, import_jsx_runtime580.jsx)("span", { className: "editor-upload-progress-snackbar__check", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime580.jsx)(import_components291.Icon, { icon: check_default }) });
   function UploadProgressSnackbar() {
     const items = (0, import_data273.useSelect)(
       (select9) => select9(import_upload_media3.store).getItems(),
