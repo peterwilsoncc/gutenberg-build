@@ -2211,10 +2211,10 @@ var wp;
         };
         return function(d3, b3) {
           extendStatics(d3, b3);
-          function __340() {
+          function __341() {
             this.constructor = d3;
           }
-          d3.prototype = b3 === null ? Object.create(b3) : (__340.prototype = b3.prototype, new __340());
+          d3.prototype = b3 === null ? Object.create(b3) : (__341.prototype = b3.prototype, new __341());
         };
       })();
       var __assign2 = exports && exports.__assign || Object.assign || function(t4) {
@@ -71651,12 +71651,12 @@ If there's a particular need for this, please submit a feature request at https:
             var STR_APPLY_UIA_OK = true;
             try {
               String.fromCharCode.apply(null, [0]);
-            } catch (__340) {
+            } catch (__341) {
               STR_APPLY_OK = false;
             }
             try {
               String.fromCharCode.apply(null, new Uint8Array(1));
-            } catch (__340) {
+            } catch (__341) {
               STR_APPLY_UIA_OK = false;
             }
             var _utf8len = new utils.Buf8(256);
@@ -93267,12 +93267,99 @@ ${content}
   }
 
   // packages/editor/build-module/components/post-schedule/index.mjs
-  var import_date19 = __toESM(require_date(), 1);
-  var import_i18n255 = __toESM(require_i18n(), 1);
-  var import_data151 = __toESM(require_data(), 1);
+  var import_a11y12 = __toESM(require_a11y(), 1);
+  var import_date20 = __toESM(require_date(), 1);
+  var import_i18n256 = __toESM(require_i18n(), 1);
+  var import_data152 = __toESM(require_data(), 1);
   var import_block_editor56 = __toESM(require_block_editor(), 1);
   var import_element278 = __toESM(require_element(), 1);
   var import_core_data89 = __toESM(require_core_data(), 1);
+
+  // packages/editor/build-module/components/post-schedule/label.mjs
+  var import_i18n255 = __toESM(require_i18n(), 1);
+  var import_date19 = __toESM(require_date(), 1);
+  var import_data151 = __toESM(require_data(), 1);
+  function PostScheduleLabel(props) {
+    return usePostScheduleLabel(props);
+  }
+  function usePostScheduleLabel({ full = false } = {}) {
+    const { date, isFloating } = (0, import_data151.useSelect)(
+      (select9) => ({
+        date: select9(store).getEditedPostAttribute("date"),
+        isFloating: select9(store).isEditedPostDateFloating()
+      }),
+      []
+    );
+    return full ? getFullPostScheduleLabel(date) : getPostScheduleLabel(date, { isFloating });
+  }
+  function getFullPostScheduleLabel(dateAttribute) {
+    const date = (0, import_date19.getDate)(dateAttribute);
+    const timezoneAbbreviation = getTimezoneAbbreviation();
+    const formattedDate = (0, import_date19.dateI18n)(
+      // translators: Use a non-breaking space between 'g:i' and 'a' if appropriate.
+      (0, import_i18n255._x)("F j, Y g:i\xA0a", "post schedule full date format"),
+      date
+    );
+    return (0, import_i18n255.isRTL)() ? `${timezoneAbbreviation} ${formattedDate}` : `${formattedDate} ${timezoneAbbreviation}`;
+  }
+  function getPostScheduleLabel(dateAttribute, { isFloating = false, now = /* @__PURE__ */ new Date() } = {}) {
+    if (!dateAttribute || isFloating) {
+      return (0, import_i18n255.__)("Immediately");
+    }
+    if (!isTimezoneSameAsSiteTimezone(now)) {
+      return getFullPostScheduleLabel(dateAttribute);
+    }
+    const date = (0, import_date19.getDate)(dateAttribute);
+    if (isSameDay2(date, now)) {
+      return (0, import_i18n255.sprintf)(
+        // translators: %s: Time of day the post is scheduled for.
+        (0, import_i18n255.__)("Today at %s"),
+        // translators: If using a space between 'g:i' and 'a', use a non-breaking space.
+        (0, import_date19.dateI18n)((0, import_i18n255._x)("g:i\xA0a", "post schedule time format"), date)
+      );
+    }
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    if (isSameDay2(date, tomorrow)) {
+      return (0, import_i18n255.sprintf)(
+        // translators: %s: Time of day the post is scheduled for.
+        (0, import_i18n255.__)("Tomorrow at %s"),
+        // translators: If using a space between 'g:i' and 'a', use a non-breaking space.
+        (0, import_date19.dateI18n)((0, import_i18n255._x)("g:i\xA0a", "post schedule time format"), date)
+      );
+    }
+    if (date.getFullYear() === now.getFullYear()) {
+      return (0, import_date19.dateI18n)(
+        // translators: If using a space between 'g:i' and 'a', use a non-breaking space.
+        (0, import_i18n255._x)("F j g:i\xA0a", "post schedule date format without year"),
+        date
+      );
+    }
+    return (0, import_date19.dateI18n)(
+      // translators: Use a non-breaking space between 'g:i' and 'a' if appropriate.
+      (0, import_i18n255._x)("F j, Y g:i\xA0a", "post schedule full date format"),
+      date
+    );
+  }
+  function getTimezoneAbbreviation() {
+    const { timezone } = (0, import_date19.getSettings)();
+    if (timezone.abbr && isNaN(Number(timezone.abbr))) {
+      return timezone.abbr;
+    }
+    const symbol3 = timezone.offset < 0 ? "" : "+";
+    return `UTC${symbol3}${timezone.offsetFormatted}`;
+  }
+  function isTimezoneSameAsSiteTimezone(date) {
+    const { timezone } = (0, import_date19.getSettings)();
+    const siteOffset = Number(timezone.offset);
+    const dateOffset = -1 * (date.getTimezoneOffset() / 60);
+    return siteOffset === dateOffset;
+  }
+  function isSameDay2(left, right) {
+    return left.getDate() === right.getDate() && left.getMonth() === right.getMonth() && left.getFullYear() === right.getFullYear();
+  }
+
+  // packages/editor/build-module/components/post-schedule/index.mjs
   var import_jsx_runtime468 = __toESM(require_jsx_runtime(), 1);
   var { PrivatePublishDateTimePicker } = unlock(import_block_editor56.privateApis);
   function PostSchedule(props) {
@@ -93290,19 +93377,29 @@ ${content}
     showPopoverHeaderActions,
     isCompact
   }) {
-    const { postDate, postType: postType2 } = (0, import_data151.useSelect)(
+    const { postDate, postType: postType2 } = (0, import_data152.useSelect)(
       (select9) => ({
         postDate: select9(store).getEditedPostAttribute("date"),
         postType: select9(store).getCurrentPostType()
       }),
       []
     );
-    const { editPost: editPost2 } = (0, import_data151.useDispatch)(store);
-    const onUpdateDate = (date) => editPost2({ date });
+    const { editPost: editPost2 } = (0, import_data152.useDispatch)(store);
+    const onUpdateDate = (date) => {
+      editPost2({ date });
+      (0, import_a11y12.speak)(
+        date ? (0, import_i18n256.sprintf)(
+          // translators: %s: The new publish date and time, e.g. "June 3, 2025 12:00 pm UTC+0".
+          (0, import_i18n256.__)("Publish date set to %s."),
+          getFullPostScheduleLabel(date)
+        ) : (0, import_i18n256.__)("Publish date set to now."),
+        "assertive"
+      );
+    };
     const [previewedMonth, setPreviewedMonth] = (0, import_element278.useState)(
       startOfMonth(new Date(postDate))
     );
-    const eventsByPostType = (0, import_data151.useSelect)(
+    const eventsByPostType = (0, import_data152.useSelect)(
       (select9) => select9(import_core_data89.store).getEntityRecords("postType", postType2, {
         status: "publish,future",
         after: startOfMonth(previewedMonth).toISOString(),
@@ -93319,7 +93416,7 @@ ${content}
       })),
       [eventsByPostType]
     );
-    const settings = (0, import_date19.getSettings)();
+    const settings = (0, import_date20.getSettings)();
     const is12HourTime = /a(?!\\)/i.test(
       settings.formats.time.toLowerCase().replace(/\\\\/g, "").split("").reverse().join("")
       // Reverse the string and test for "a" not followed by a slash.
@@ -93332,7 +93429,7 @@ ${content}
         is12Hour: is12HourTime,
         dateOrder: (
           /* translators: Order of day, month, and year. Available formats are 'dmy', 'mdy', and 'ymd'. */
-          (0, import_i18n255._x)("dmy", "date order")
+          (0, import_i18n256._x)("dmy", "date order")
         ),
         events,
         onMonthPreviewed: (date) => setPreviewedMonth(parseISO(date)),
@@ -93341,90 +93438,6 @@ ${content}
         showPopoverHeaderActions
       }
     );
-  }
-
-  // packages/editor/build-module/components/post-schedule/label.mjs
-  var import_i18n256 = __toESM(require_i18n(), 1);
-  var import_date20 = __toESM(require_date(), 1);
-  var import_data152 = __toESM(require_data(), 1);
-  function PostScheduleLabel(props) {
-    return usePostScheduleLabel(props);
-  }
-  function usePostScheduleLabel({ full = false } = {}) {
-    const { date, isFloating } = (0, import_data152.useSelect)(
-      (select9) => ({
-        date: select9(store).getEditedPostAttribute("date"),
-        isFloating: select9(store).isEditedPostDateFloating()
-      }),
-      []
-    );
-    return full ? getFullPostScheduleLabel(date) : getPostScheduleLabel(date, { isFloating });
-  }
-  function getFullPostScheduleLabel(dateAttribute) {
-    const date = (0, import_date20.getDate)(dateAttribute);
-    const timezoneAbbreviation = getTimezoneAbbreviation();
-    const formattedDate = (0, import_date20.dateI18n)(
-      // translators: Use a non-breaking space between 'g:i' and 'a' if appropriate.
-      (0, import_i18n256._x)("F j, Y g:i\xA0a", "post schedule full date format"),
-      date
-    );
-    return (0, import_i18n256.isRTL)() ? `${timezoneAbbreviation} ${formattedDate}` : `${formattedDate} ${timezoneAbbreviation}`;
-  }
-  function getPostScheduleLabel(dateAttribute, { isFloating = false, now = /* @__PURE__ */ new Date() } = {}) {
-    if (!dateAttribute || isFloating) {
-      return (0, import_i18n256.__)("Immediately");
-    }
-    if (!isTimezoneSameAsSiteTimezone(now)) {
-      return getFullPostScheduleLabel(dateAttribute);
-    }
-    const date = (0, import_date20.getDate)(dateAttribute);
-    if (isSameDay2(date, now)) {
-      return (0, import_i18n256.sprintf)(
-        // translators: %s: Time of day the post is scheduled for.
-        (0, import_i18n256.__)("Today at %s"),
-        // translators: If using a space between 'g:i' and 'a', use a non-breaking space.
-        (0, import_date20.dateI18n)((0, import_i18n256._x)("g:i\xA0a", "post schedule time format"), date)
-      );
-    }
-    const tomorrow = new Date(now);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    if (isSameDay2(date, tomorrow)) {
-      return (0, import_i18n256.sprintf)(
-        // translators: %s: Time of day the post is scheduled for.
-        (0, import_i18n256.__)("Tomorrow at %s"),
-        // translators: If using a space between 'g:i' and 'a', use a non-breaking space.
-        (0, import_date20.dateI18n)((0, import_i18n256._x)("g:i\xA0a", "post schedule time format"), date)
-      );
-    }
-    if (date.getFullYear() === now.getFullYear()) {
-      return (0, import_date20.dateI18n)(
-        // translators: If using a space between 'g:i' and 'a', use a non-breaking space.
-        (0, import_i18n256._x)("F j g:i\xA0a", "post schedule date format without year"),
-        date
-      );
-    }
-    return (0, import_date20.dateI18n)(
-      // translators: Use a non-breaking space between 'g:i' and 'a' if appropriate.
-      (0, import_i18n256._x)("F j, Y g:i\xA0a", "post schedule full date format"),
-      date
-    );
-  }
-  function getTimezoneAbbreviation() {
-    const { timezone } = (0, import_date20.getSettings)();
-    if (timezone.abbr && isNaN(Number(timezone.abbr))) {
-      return timezone.abbr;
-    }
-    const symbol3 = timezone.offset < 0 ? "" : "+";
-    return `UTC${symbol3}${timezone.offsetFormatted}`;
-  }
-  function isTimezoneSameAsSiteTimezone(date) {
-    const { timezone } = (0, import_date20.getSettings)();
-    const siteOffset = Number(timezone.offset);
-    const dateOffset = -1 * (date.getTimezoneOffset() / 60);
-    return siteOffset === dateOffset;
-  }
-  function isSameDay2(left, right) {
-    return left.getDate() === right.getDate() && left.getMonth() === right.getMonth() && left.getFullYear() === right.getFullYear();
   }
 
   // packages/editor/build-module/components/post-publish-panel/maybe-tags-panel.mjs
@@ -93441,7 +93454,7 @@ ${content}
   var import_data154 = __toESM(require_data(), 1);
   var import_core_data91 = __toESM(require_core_data(), 1);
   var import_compose57 = __toESM(require_compose(), 1);
-  var import_a11y12 = __toESM(require_a11y(), 1);
+  var import_a11y13 = __toESM(require_a11y(), 1);
   var import_notices27 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/components/post-taxonomies/most-used-terms.mjs
@@ -93661,7 +93674,7 @@ ${content}
         (0, import_i18n257._x)("%s added", "term"),
         taxonomy?.labels?.singular_name ?? defaultName
       );
-      (0, import_a11y12.speak)(termAddedMessage, "assertive");
+      (0, import_a11y13.speak)(termAddedMessage, "assertive");
       onUpdateTerms(newTermIds);
     }
     const newTermLabel = taxonomy?.labels?.add_new_item ?? (slug === "post_tag" ? (0, import_i18n257.__)("Add Tag") : (0, import_i18n257.__)("Add Term"));
@@ -93845,7 +93858,7 @@ ${content}
   var import_data157 = __toESM(require_data(), 1);
   var import_compose58 = __toESM(require_compose(), 1);
   var import_core_data94 = __toESM(require_core_data(), 1);
-  var import_a11y13 = __toESM(require_a11y(), 1);
+  var import_a11y14 = __toESM(require_a11y(), 1);
   var import_html_entities25 = __toESM(require_html_entities(), 1);
 
   // packages/editor/build-module/utils/normalize-text-string.mjs
@@ -93968,7 +93981,7 @@ ${content}
     const [showForm, setShowForm] = (0, import_element281.useState)(false);
     const [filterValue, setFilterValue] = (0, import_element281.useState)("");
     const deferredFilterValue = (0, import_element281.useDeferredValue)(filterValue);
-    const debouncedSpeak = (0, import_compose58.useDebounce)(import_a11y13.speak, SPEAK_DEBOUNCE_MS);
+    const debouncedSpeak = (0, import_compose58.useDebounce)(import_a11y14.speak, SPEAK_DEBOUNCE_MS);
     const {
       hasCreateAction,
       hasAssignAction,
@@ -94087,7 +94100,7 @@ ${content}
         (0, import_i18n260._x)("%s added", "term"),
         taxonomy?.labels?.singular_name ?? defaultName
       );
-      (0, import_a11y13.speak)(termAddedMessage, "assertive");
+      (0, import_a11y14.speak)(termAddedMessage, "assertive");
       setAdding(false);
       setFormName("");
       setFormParent("");
@@ -98985,7 +98998,7 @@ ${content}
   // packages/editor/build-module/components/collaborators-presence/list.mjs
   var import_i18n300 = __toESM(require_i18n(), 1);
   var import_components249 = __toESM(require_components(), 1);
-  var import_a11y15 = __toESM(require_a11y(), 1);
+  var import_a11y16 = __toESM(require_a11y(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/get-avatar-url.mjs
   function getAvatarUrl(avatarUrls) {
@@ -99354,7 +99367,7 @@ ${content}
         highlightDuration: 2e3
       });
       if (success) {
-        (0, import_a11y15.speak)((0, import_i18n300.__)("Scrolled to cursor"), "polite");
+        (0, import_a11y16.speak)((0, import_i18n300.__)("Scrolled to cursor"), "polite");
         setIsPopoverVisible(false);
       }
     };
@@ -107138,7 +107151,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/collab-sidebar/hooks.mjs
-  var import_a11y16 = __toESM(require_a11y(), 1);
+  var import_a11y17 = __toESM(require_a11y(), 1);
   var import_i18n345 = __toESM(require_i18n(), 1);
   var import_element360 = __toESM(require_element(), 1);
   var import_core_data141 = __toESM(require_core_data(), 1);
@@ -107493,7 +107506,7 @@ ${content}
               updateBlockAttributes2
             );
           }
-          (0, import_a11y16.speak)(
+          (0, import_a11y17.speak)(
             status === "approved" ? (0, import_i18n345.__)("Note marked as resolved.") : (0, import_i18n345.__)("Note reopened.")
           );
           return savedRecord2;
@@ -109644,7 +109657,7 @@ ${content}
   var import_data273 = __toESM(require_data(), 1);
   var import_element368 = __toESM(require_element(), 1);
   var import_i18n358 = __toESM(require_i18n(), 1);
-  var import_a11y17 = __toESM(require_a11y(), 1);
+  var import_a11y18 = __toESM(require_a11y(), 1);
   var import_upload_media3 = __toESM(require_upload_media(), 1);
   var import_notices39 = __toESM(require_notices(), 1);
   var import_components290 = __toESM(require_components(), 1);
@@ -109701,14 +109714,14 @@ ${content}
       const isUploading = remaining > 0;
       if (isUploading && !wasUploadingRef.current) {
         dismissedRef.current = false;
-        (0, import_a11y17.speak)((0, import_i18n358.__)("Media upload started"), "polite");
+        (0, import_a11y18.speak)((0, import_i18n358.__)("Media upload started"), "polite");
         if (completionTimeoutRef.current) {
           clearTimeout(completionTimeoutRef.current);
           completionTimeoutRef.current = null;
           peakRef.current = 0;
         }
       } else if (!isUploading && wasUploadingRef.current) {
-        (0, import_a11y17.speak)((0, import_i18n358.__)("Media upload complete"), "polite");
+        (0, import_a11y18.speak)((0, import_i18n358.__)("Media upload complete"), "polite");
         if (!dismissedRef.current) {
           createNotice("info", (0, import_i18n358.__)("Upload complete"), {
             id: NOTICE_ID,
