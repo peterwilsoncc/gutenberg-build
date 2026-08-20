@@ -2495,7 +2495,7 @@ var wp;
     registerEntityField: () => registerEntityField2,
     store: () => store,
     storeConfig: () => storeConfig,
-    transformStyles: () => import_block_editor112.transformStyles,
+    transformStyles: () => import_block_editor114.transformStyles,
     unregisterEntityAction: () => unregisterEntityAction2,
     unregisterEntityField: () => unregisterEntityField2,
     useEntitiesSavedStatesIsDirty: () => useEntitiesSavedStatesIsDirty,
@@ -97910,7 +97910,7 @@ ${content}
 
   // packages/editor/build-module/components/editor/index.mjs
   var import_data269 = __toESM(require_data(), 1);
-  var import_core_data144 = __toESM(require_core_data(), 1);
+  var import_core_data145 = __toESM(require_core_data(), 1);
   var import_components288 = __toESM(require_components(), 1);
   var import_i18n353 = __toESM(require_i18n(), 1);
 
@@ -97918,7 +97918,7 @@ ${content}
   var import_data225 = __toESM(require_data(), 1);
   var import_i18n315 = __toESM(require_i18n(), 1);
   var import_preferences24 = __toESM(require_preferences(), 1);
-  var import_block_editor85 = __toESM(require_block_editor(), 1);
+  var import_block_editor87 = __toESM(require_block_editor(), 1);
   var import_compose86 = __toESM(require_compose(), 1);
   var import_element334 = __toESM(require_element(), 1);
   var import_html_entities30 = __toESM(require_html_entities(), 1);
@@ -97926,7 +97926,7 @@ ${content}
   var import_theme = __toESM(require_theme(), 1);
 
   // packages/editor/build-module/components/header/index.mjs
-  var import_block_editor74 = __toESM(require_block_editor(), 1);
+  var import_block_editor76 = __toESM(require_block_editor(), 1);
   var import_data207 = __toESM(require_data(), 1);
   var import_compose75 = __toESM(require_compose(), 1);
   var import_preferences21 = __toESM(require_preferences(), 1);
@@ -98845,7 +98845,7 @@ ${content}
   // packages/editor/build-module/components/collaborators-presence/index.mjs
   var import_components250 = __toESM(require_components(), 1);
   var import_element319 = __toESM(require_element(), 1);
-  var import_core_data115 = __toESM(require_core_data(), 1);
+  var import_core_data116 = __toESM(require_core_data(), 1);
   var import_i18n302 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/collaborators-presence/avatar/component.mjs
@@ -99493,7 +99493,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/collaborators-overlay/index.mjs
-  var import_block_editor73 = __toESM(require_block_editor(), 1);
+  var import_block_editor75 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/overlay.mjs
   var import_compose74 = __toESM(require_compose(), 1);
@@ -99769,7 +99769,8 @@ ${content}
   }
 
   // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
-  var import_core_data112 = __toESM(require_core_data(), 1);
+  var import_core_data114 = __toESM(require_core_data(), 1);
+  var import_block_editor74 = __toESM(require_block_editor(), 1);
   var import_element316 = __toESM(require_element(), 1);
 
   // packages/editor/build-module/components/collaborators-overlay/use-debounced-recompute.mjs
@@ -99815,6 +99816,18 @@ ${content}
   }
 
   // packages/editor/build-module/components/collaborators-overlay/cursor-dom-utils.mjs
+  var import_block_editor73 = __toESM(require_block_editor(), 1);
+  var { isElementVisible: isElementVisible2 } = unlock(import_block_editor73.privateApis);
+  var getNearestVisibleBlockAncestor = (element) => {
+    let current = element.closest("[data-block]");
+    while (current) {
+      if (isElementVisible2(current)) {
+        return current;
+      }
+      current = current.parentElement?.closest("[data-block]") ?? null;
+    }
+    return null;
+  };
   var MAX_NODE_OFFSET_COUNT = 500;
   var getCursorPosition = (absolutePositionIndex, blockElement, editorDocument, overlayRect) => {
     if (absolutePositionIndex === null || !blockElement) {
@@ -99828,6 +99841,9 @@ ${content}
     ) ?? null;
   };
   var getOffsetPositionInBlock = (blockElement, charOffset, editorDocument, overlayRect) => {
+    if (!isElementVisible2(blockElement)) {
+      return null;
+    }
     const { node, offset: offset4 } = findInnerBlockOffset(
       blockElement,
       charOffset,
@@ -99863,6 +99879,9 @@ ${content}
     };
   };
   var getSelectionRects = (blockElement, startOffset, endOffset, editorDocument, overlayRect) => {
+    if (!isElementVisible2(blockElement)) {
+      return null;
+    }
     let normalizedStart = startOffset;
     let normalizedEnd = endOffset;
     if (normalizedStart > normalizedEnd) {
@@ -100022,224 +100041,10 @@ ${content}
     !!(a3.compareDocumentPosition(b3) & Node.DOCUMENT_POSITION_FOLLOWING)
   );
 
-  // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
-  var { useActiveCollaborators, useResolvedSelection } = unlock(import_core_data112.privateApis);
-  var { SelectionType } = unlock(import_core_data112.privateApis);
-  function useBlockHighlighting(overlayElement, blockEditorDocument, postId2, postType2, delayMs) {
-    const highlightedBlockIds = (0, import_element316.useRef)(/* @__PURE__ */ new Set());
-    const userStates = useActiveCollaborators(
-      postId2 ?? null,
-      postType2 ?? null
-    );
-    const resolveSelection = useResolvedSelection(
-      postId2 ?? null,
-      postType2 ?? null
-    );
-    const [highlights, setHighlights] = (0, import_element316.useState)(
-      []
-    );
-    const [recomputeToken, rerenderHighlightsAfterDelay] = useDebouncedRecompute(delayMs);
-    const [resizeToken, rerenderHighlightsOnResize] = useRequestAnimationFrameRecompute();
-    (0, import_element316.useEffect)(() => {
-      if (!blockEditorDocument) {
-        setHighlights([]);
-        return;
-      }
-      const currentHighlightedIds = highlightedBlockIds.current;
-      const seen = /* @__PURE__ */ new Set();
-      const blocksToHighlight = userStates.filter((userState) => {
-        if (userState.isMe) {
-          return false;
-        }
-        const selType = userState.editorState?.selection?.type;
-        return selType === SelectionType.WholeBlock || selType === SelectionType.SelectionInMultipleBlocks;
-      }).flatMap((userState) => {
-        const selection = userState.editorState?.selection;
-        if (selection.type === SelectionType.WholeBlock) {
-          let localClientId;
-          try {
-            ({ localClientId } = resolveSelection(selection));
-          } catch {
-            return [];
-          }
-          if (!localClientId) {
-            return [];
-          }
-          return [
-            {
-              blockId: localClientId,
-              clientId: userState.clientId,
-              userId: userState.collaboratorInfo.id ?? userState.clientId,
-              color: getAvatarBorderColor(
-                userState.collaboratorInfo.id ?? userState.clientId
-              ),
-              userName: getCollaboratorDisplayName(
-                userState.collaboratorInfo
-              ),
-              avatarUrl: getAvatarUrl(
-                userState.collaboratorInfo.avatar_urls
-              ),
-              alwaysOutline: true
-            }
-          ];
-        }
-        const resolveEndpointId = (endpoint) => {
-          try {
-            return resolveSelection(endpoint).localClientId;
-          } catch {
-            return null;
-          }
-        };
-        const startId = resolveEndpointId(selection.startEndpoint);
-        const endId = resolveEndpointId(selection.endEndpoint);
-        if (!startId || !endId) {
-          return [];
-        }
-        const range = getOrderedBlockRange(
-          startId,
-          endId,
-          blockEditorDocument
-        );
-        if (!range) {
-          return [];
-        }
-        const { firstId, lastId, middleEls, sameContainer } = range;
-        const color = getAvatarBorderColor(
-          userState.collaboratorInfo.id ?? userState.clientId
-        );
-        const userName = getCollaboratorDisplayName(
-          userState.collaboratorInfo
-        );
-        const avatarUrl = getAvatarUrl(
-          userState.collaboratorInfo.avatar_urls
-        );
-        if (sameContainer) {
-          return [
-            {
-              blockId: firstId,
-              clientId: userState.clientId,
-              userId: userState.collaboratorInfo.id ?? userState.clientId,
-              color,
-              userName,
-              avatarUrl,
-              alwaysOutline: false
-            }
-          ];
-        }
-        const intermediateIds = middleEls.map((el) => el.getAttribute("data-block")).filter((id) => Boolean(id));
-        return [firstId, ...intermediateIds, lastId].map(
-          (blockId) => ({
-            blockId,
-            clientId: userState.clientId,
-            userId: userState.collaboratorInfo.id ?? userState.clientId,
-            color,
-            userName,
-            avatarUrl,
-            alwaysOutline: false
-          })
-        );
-      }).filter((block) => {
-        if (seen.has(block.blockId)) {
-          return false;
-        }
-        seen.add(block.blockId);
-        return true;
-      });
-      const selectedBlockIds = new Set(
-        blocksToHighlight.map((block) => block.blockId)
-      );
-      for (const blockId of currentHighlightedIds) {
-        if (!selectedBlockIds.has(blockId)) {
-          const blockElement = getBlockElementById(
-            blockEditorDocument,
-            blockId
-          );
-          if (blockElement) {
-            blockElement.classList.remove("is-collaborator-selected");
-            blockElement.style.removeProperty(
-              "--collaborator-outline-color"
-            );
-          }
-          currentHighlightedIds.delete(blockId);
-        }
-      }
-      const results = [];
-      const overlayRect = overlayElement?.getBoundingClientRect() ?? null;
-      const usersWithAvatar = /* @__PURE__ */ new Set();
-      blocksToHighlight.forEach((block) => {
-        const { color, blockId, userName, avatarUrl } = block;
-        const blockElement = getBlockElementById(
-          blockEditorDocument,
-          blockId
-        );
-        if (!blockElement) {
-          return;
-        }
-        blockElement.classList.remove("is-collaborator-selected");
-        blockElement.style.removeProperty("--collaborator-outline-color");
-        currentHighlightedIds.delete(blockId);
-        const isNonTextBlock = !blockElement.innerText?.trim();
-        if (block.alwaysOutline || isNonTextBlock) {
-          blockElement.classList.add("is-collaborator-selected");
-          blockElement.style.setProperty(
-            "--collaborator-outline-color",
-            color
-          );
-          currentHighlightedIds.add(blockId);
-        }
-        if (overlayRect && !usersWithAvatar.has(block.userId)) {
-          usersWithAvatar.add(block.userId);
-          const blockRect = blockElement.getBoundingClientRect();
-          results.push({
-            blockId,
-            clientId: block.clientId,
-            userName,
-            avatarUrl,
-            color,
-            x: blockRect.left - overlayRect.left,
-            y: blockRect.top - overlayRect.top
-          });
-        }
-      });
-      setHighlights(results);
-      return () => {
-        for (const blockId of currentHighlightedIds) {
-          const el = getBlockElementById(blockEditorDocument, blockId);
-          if (el) {
-            el.classList.remove("is-collaborator-selected");
-            el.style.removeProperty("--collaborator-outline-color");
-          }
-        }
-        currentHighlightedIds.clear();
-      };
-    }, [
-      userStates,
-      blockEditorDocument,
-      overlayElement,
-      recomputeToken,
-      resizeToken,
-      resolveSelection
-    ]);
-    return {
-      highlights,
-      rerenderHighlightsAfterDelay,
-      rerenderHighlightsOnResize
-    };
-  }
-  var getBlockElementById = (blockEditorDocument, blockId) => {
-    return blockEditorDocument.querySelector(`[data-block="${blockId}"]`);
-  };
-
-  // packages/editor/build-module/components/collaborators-overlay/use-render-cursors.mjs
-  var import_core_data114 = __toESM(require_core_data(), 1);
-  var import_data206 = __toESM(require_data(), 1);
-  var import_element317 = __toESM(require_element(), 1);
-  var import_preferences20 = __toESM(require_preferences(), 1);
-
   // packages/editor/build-module/components/collaborators-overlay/compute-selection.mjs
-  var import_core_data113 = __toESM(require_core_data(), 1);
-  var { SelectionDirection, SelectionType: SelectionType2 } = unlock(
-    import_core_data113.privateApis
+  var import_core_data112 = __toESM(require_core_data(), 1);
+  var { SelectionDirection, SelectionType } = unlock(
+    import_core_data112.privateApis
   );
   function resolveTargetElement(editorDocument, resolvedSelection) {
     if (!resolvedSelection.localClientId) {
@@ -100270,10 +100075,10 @@ ${content}
     return textEl ?? blockElement;
   }
   function computeSelectionVisual(selection, start2, end, overlayContext) {
-    if (selection.type === SelectionType2.None || selection.type === SelectionType2.WholeBlock) {
+    if (selection.type === SelectionType.None || selection.type === SelectionType.WholeBlock) {
       return {};
     }
-    if (selection.type === SelectionType2.Cursor) {
+    if (selection.type === SelectionType.Cursor) {
       return computeCursorOnly(start2, overlayContext);
     }
     if (!end) {
@@ -100304,7 +100109,7 @@ ${content}
     }
     const isReverse = selection.selectionDirection === SelectionDirection.Backward;
     const activeEnd = isReverse ? start2 : end;
-    if (selection.type === SelectionType2.SelectionInOneBlock) {
+    if (selection.type === SelectionType.SelectionInOneBlock) {
       if (start2.richTextOffset === null || end.richTextOffset === null) {
         return {};
       }
@@ -100434,9 +100239,303 @@ ${content}
     };
   }
 
-  // packages/editor/build-module/components/collaborators-overlay/use-render-cursors.mjs
-  var { useActiveCollaborators: useActiveCollaborators2, useResolvedSelection: useResolvedSelection2 } = unlock(import_core_data114.privateApis);
+  // packages/editor/build-module/components/collaborators-overlay/resolve-start-position.mjs
+  var import_core_data113 = __toESM(require_core_data(), 1);
+  var { SelectionType: SelectionType2 } = unlock(import_core_data113.privateApis);
+  function resolveStartPosition(selection, resolveSelection) {
+    if (!selection) {
+      return null;
+    }
+    try {
+      switch (selection.type) {
+        case SelectionType2.Cursor:
+        case SelectionType2.WholeBlock:
+          return resolveSelection(selection);
+        case SelectionType2.SelectionInOneBlock:
+          return resolveSelection({
+            type: SelectionType2.Cursor,
+            cursorPosition: selection.cursorStartPosition
+          });
+        case SelectionType2.SelectionInMultipleBlocks:
+          return resolveSelection(selection.startEndpoint);
+        default:
+          return null;
+      }
+    } catch {
+      return null;
+    }
+  }
+
+  // packages/editor/build-module/components/collaborators-overlay/use-block-highlighting.mjs
+  var { useActiveCollaborators, useResolvedSelection } = unlock(import_core_data114.privateApis);
+  var { isElementVisible: isElementVisible3 } = unlock(import_block_editor74.privateApis);
   var { SelectionType: SelectionType3 } = unlock(import_core_data114.privateApis);
+  function useBlockHighlighting(overlayElement, blockEditorDocument, postId2, postType2, delayMs) {
+    const highlightedBlockIds = (0, import_element316.useRef)(/* @__PURE__ */ new Set());
+    const userStates = useActiveCollaborators(
+      postId2 ?? null,
+      postType2 ?? null
+    );
+    const resolveSelection = useResolvedSelection(
+      postId2 ?? null,
+      postType2 ?? null
+    );
+    const [highlights, setHighlights] = (0, import_element316.useState)(
+      []
+    );
+    const [recomputeToken, rerenderHighlightsAfterDelay] = useDebouncedRecompute(delayMs);
+    const [resizeToken, rerenderHighlightsOnResize] = useRequestAnimationFrameRecompute();
+    (0, import_element316.useEffect)(() => {
+      if (!blockEditorDocument) {
+        setHighlights([]);
+        return;
+      }
+      const currentHighlightedIds = highlightedBlockIds.current;
+      const seen = /* @__PURE__ */ new Set();
+      const blocksToHighlight = userStates.filter((userState) => {
+        if (userState.isMe) {
+          return false;
+        }
+        const selType = userState.editorState?.selection?.type;
+        return selType === SelectionType3.WholeBlock || selType === SelectionType3.SelectionInMultipleBlocks || selType === SelectionType3.Cursor || selType === SelectionType3.SelectionInOneBlock;
+      }).flatMap((userState) => {
+        const selection = userState.editorState?.selection;
+        if (selection.type === SelectionType3.WholeBlock) {
+          let localClientId;
+          try {
+            ({ localClientId } = resolveSelection(selection));
+          } catch {
+            return [];
+          }
+          if (!localClientId) {
+            return [];
+          }
+          let blockId = localClientId;
+          const blockElement = getBlockElementById(
+            blockEditorDocument,
+            localClientId
+          );
+          if (blockElement && !isElementVisible3(blockElement)) {
+            const container = getNearestVisibleBlockAncestor(blockElement);
+            const containerId = container?.getAttribute("data-block");
+            if (!containerId) {
+              return [];
+            }
+            blockId = containerId;
+          }
+          return [
+            {
+              blockId,
+              clientId: userState.clientId,
+              userId: userState.collaboratorInfo.id ?? userState.clientId,
+              color: getAvatarBorderColor(
+                userState.collaboratorInfo.id ?? userState.clientId
+              ),
+              userName: getCollaboratorDisplayName(
+                userState.collaboratorInfo
+              ),
+              avatarUrl: getAvatarUrl(
+                userState.collaboratorInfo.avatar_urls
+              ),
+              alwaysOutline: true
+            }
+          ];
+        }
+        if (selection.type === SelectionType3.Cursor || selection.type === SelectionType3.SelectionInOneBlock) {
+          const resolved = resolveStartPosition(
+            selection,
+            resolveSelection
+          );
+          if (!resolved?.localClientId) {
+            return [];
+          }
+          const targetElement = resolveTargetElement(
+            blockEditorDocument,
+            resolved
+          );
+          if (!targetElement || isElementVisible3(targetElement)) {
+            return [];
+          }
+          const container = getNearestVisibleBlockAncestor(targetElement);
+          const containerId = container?.getAttribute("data-block");
+          if (!containerId) {
+            return [];
+          }
+          return [
+            {
+              blockId: containerId,
+              clientId: userState.clientId,
+              userId: userState.collaboratorInfo.id ?? userState.clientId,
+              color: getAvatarBorderColor(
+                userState.collaboratorInfo.id ?? userState.clientId
+              ),
+              userName: getCollaboratorDisplayName(
+                userState.collaboratorInfo
+              ),
+              avatarUrl: getAvatarUrl(
+                userState.collaboratorInfo.avatar_urls
+              ),
+              alwaysOutline: true
+            }
+          ];
+        }
+        const resolveEndpointId = (endpoint) => {
+          try {
+            return resolveSelection(endpoint).localClientId;
+          } catch {
+            return null;
+          }
+        };
+        const startId = resolveEndpointId(selection.startEndpoint);
+        const endId = resolveEndpointId(selection.endEndpoint);
+        if (!startId || !endId) {
+          return [];
+        }
+        const range = getOrderedBlockRange(
+          startId,
+          endId,
+          blockEditorDocument
+        );
+        if (!range) {
+          return [];
+        }
+        const { firstId, lastId, middleEls, sameContainer } = range;
+        const color = getAvatarBorderColor(
+          userState.collaboratorInfo.id ?? userState.clientId
+        );
+        const userName = getCollaboratorDisplayName(
+          userState.collaboratorInfo
+        );
+        const avatarUrl = getAvatarUrl(
+          userState.collaboratorInfo.avatar_urls
+        );
+        if (sameContainer) {
+          return [
+            {
+              blockId: firstId,
+              clientId: userState.clientId,
+              userId: userState.collaboratorInfo.id ?? userState.clientId,
+              color,
+              userName,
+              avatarUrl,
+              alwaysOutline: false
+            }
+          ];
+        }
+        const intermediateIds = middleEls.map((el) => el.getAttribute("data-block")).filter((id) => Boolean(id));
+        return [firstId, ...intermediateIds, lastId].map(
+          (blockId) => ({
+            blockId,
+            clientId: userState.clientId,
+            userId: userState.collaboratorInfo.id ?? userState.clientId,
+            color,
+            userName,
+            avatarUrl,
+            alwaysOutline: false
+          })
+        );
+      }).filter((block) => {
+        if (seen.has(block.blockId)) {
+          return false;
+        }
+        seen.add(block.blockId);
+        return true;
+      });
+      const selectedBlockIds = new Set(
+        blocksToHighlight.map((block) => block.blockId)
+      );
+      for (const blockId of currentHighlightedIds) {
+        if (!selectedBlockIds.has(blockId)) {
+          const blockElement = getBlockElementById(
+            blockEditorDocument,
+            blockId
+          );
+          if (blockElement) {
+            blockElement.classList.remove("is-collaborator-selected");
+            blockElement.style.removeProperty(
+              "--collaborator-outline-color"
+            );
+          }
+          currentHighlightedIds.delete(blockId);
+        }
+      }
+      const results = [];
+      const overlayRect = overlayElement?.getBoundingClientRect() ?? null;
+      const usersWithAvatar = /* @__PURE__ */ new Set();
+      blocksToHighlight.forEach((block) => {
+        const { color, blockId, userName, avatarUrl } = block;
+        const blockElement = getBlockElementById(
+          blockEditorDocument,
+          blockId
+        );
+        if (!blockElement) {
+          return;
+        }
+        blockElement.classList.remove("is-collaborator-selected");
+        blockElement.style.removeProperty("--collaborator-outline-color");
+        currentHighlightedIds.delete(blockId);
+        if (!isElementVisible3(blockElement)) {
+          return;
+        }
+        const isNonTextBlock = !blockElement.innerText?.trim();
+        if (block.alwaysOutline || isNonTextBlock) {
+          blockElement.classList.add("is-collaborator-selected");
+          blockElement.style.setProperty(
+            "--collaborator-outline-color",
+            color
+          );
+          currentHighlightedIds.add(blockId);
+        }
+        if (overlayRect && !usersWithAvatar.has(block.userId)) {
+          usersWithAvatar.add(block.userId);
+          const blockRect = blockElement.getBoundingClientRect();
+          results.push({
+            blockId,
+            clientId: block.clientId,
+            userName,
+            avatarUrl,
+            color,
+            x: blockRect.left - overlayRect.left,
+            y: blockRect.top - overlayRect.top
+          });
+        }
+      });
+      setHighlights(results);
+      return () => {
+        for (const blockId of currentHighlightedIds) {
+          const el = getBlockElementById(blockEditorDocument, blockId);
+          if (el) {
+            el.classList.remove("is-collaborator-selected");
+            el.style.removeProperty("--collaborator-outline-color");
+          }
+        }
+        currentHighlightedIds.clear();
+      };
+    }, [
+      userStates,
+      blockEditorDocument,
+      overlayElement,
+      recomputeToken,
+      resizeToken,
+      resolveSelection
+    ]);
+    return {
+      highlights,
+      rerenderHighlightsAfterDelay,
+      rerenderHighlightsOnResize
+    };
+  }
+  var getBlockElementById = (blockEditorDocument, blockId) => {
+    return blockEditorDocument.querySelector(`[data-block="${blockId}"]`);
+  };
+
+  // packages/editor/build-module/components/collaborators-overlay/use-render-cursors.mjs
+  var import_core_data115 = __toESM(require_core_data(), 1);
+  var import_data206 = __toESM(require_data(), 1);
+  var import_element317 = __toESM(require_element(), 1);
+  var import_preferences20 = __toESM(require_preferences(), 1);
+  var { useActiveCollaborators: useActiveCollaborators2, useResolvedSelection: useResolvedSelection2 } = unlock(import_core_data115.privateApis);
+  var { SelectionType: SelectionType4 } = unlock(import_core_data115.privateApis);
   function useRenderCursors(overlayElement, blockEditorDocument, postId2, postType2, delayMs) {
     const sortedUsers = useActiveCollaborators2(
       postId2 ?? null,
@@ -100474,7 +100573,7 @@ ${content}
           return;
         }
         const selection = user.editorState?.selection ?? {
-          type: SelectionType3.None
+          type: SelectionType4.None
         };
         let start2 = {
           richTextOffset: null,
@@ -100482,26 +100581,26 @@ ${content}
           attributeKey: null
         };
         let end;
-        if (selection.type === SelectionType3.Cursor) {
+        if (selection.type === SelectionType4.Cursor) {
           try {
             start2 = resolveSelection(selection);
           } catch {
             return;
           }
-        } else if (selection.type === SelectionType3.SelectionInOneBlock) {
+        } else if (selection.type === SelectionType4.SelectionInOneBlock) {
           try {
             start2 = resolveSelection({
-              type: SelectionType3.Cursor,
+              type: SelectionType4.Cursor,
               cursorPosition: selection.cursorStartPosition
             });
             end = resolveSelection({
-              type: SelectionType3.Cursor,
+              type: SelectionType4.Cursor,
               cursorPosition: selection.cursorEndPosition
             });
           } catch {
             return;
           }
-        } else if (selection.type === SelectionType3.SelectionInMultipleBlocks) {
+        } else if (selection.type === SelectionType4.SelectionInMultipleBlocks) {
           const resolveEndpoint = (endpoint) => resolveSelection(endpoint);
           try {
             start2 = resolveEndpoint(selection.startEndpoint);
@@ -100751,7 +100850,7 @@ ${content}
 
   // packages/editor/build-module/components/collaborators-overlay/index.mjs
   var import_jsx_runtime521 = __toESM(require_jsx_runtime(), 1);
-  var { BlockCanvasCover } = unlock(import_block_editor73.privateApis);
+  var { BlockCanvasCover } = unlock(import_block_editor75.privateApis);
   function CollaboratorsOverlay({
     postId: postId2,
     postType: postType2,
@@ -100772,7 +100871,7 @@ ${content}
 
   // packages/editor/build-module/components/collaborators-presence/index.mjs
   var import_jsx_runtime522 = __toESM(require_jsx_runtime(), 1);
-  var { useActiveCollaborators: useActiveCollaborators3 } = unlock(import_core_data115.privateApis);
+  var { useActiveCollaborators: useActiveCollaborators3 } = unlock(import_core_data116.privateApis);
   function CollaboratorsPresence({
     postId: postId2,
     postType: postType2
@@ -100908,7 +101007,7 @@ ${content}
         select9(store)
       );
       const { getBlockSelectionStart: getBlockSelectionStart2, getSectionRootClientId } = unlock(
-        select9(import_block_editor74.store)
+        select9(import_block_editor76.store)
       );
       return {
         postId: getCurrentPostId2(),
@@ -101003,13 +101102,13 @@ ${content}
 
   // packages/editor/build-module/components/inserter-sidebar/index.mjs
   var import_data208 = __toESM(require_data(), 1);
-  var import_block_editor75 = __toESM(require_block_editor(), 1);
+  var import_block_editor77 = __toESM(require_block_editor(), 1);
   var import_compose76 = __toESM(require_compose(), 1);
   var import_element321 = __toESM(require_element(), 1);
   var import_preferences22 = __toESM(require_preferences(), 1);
   var import_keycodes18 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime524 = __toESM(require_jsx_runtime(), 1);
-  var { PrivateInserterLibrary } = unlock(import_block_editor75.privateApis);
+  var { PrivateInserterLibrary } = unlock(import_block_editor77.privateApis);
   function InserterSidebar() {
     const {
       blockSectionRootClientId,
@@ -101023,7 +101122,7 @@ ${content}
         getInserter: getInserter2,
         isPublishSidebarOpened: isPublishSidebarOpened2
       } = unlock(select9(store));
-      const { getBlockRootClientId: getBlockRootClientId2, isZoomOut, getSectionRootClientId } = unlock(select9(import_block_editor75.store));
+      const { getBlockRootClientId: getBlockRootClientId2, isZoomOut, getSectionRootClientId } = unlock(select9(import_block_editor77.store));
       const { get } = select9(import_preferences22.store);
       const { getActiveComplementaryArea: getActiveComplementaryArea2 } = select9(store3);
       const getBlockSectionRootClientId = () => {
@@ -101084,7 +101183,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/list-view-sidebar/index.mjs
-  var import_block_editor76 = __toESM(require_block_editor(), 1);
+  var import_block_editor78 = __toESM(require_block_editor(), 1);
   var import_compose77 = __toESM(require_compose(), 1);
   var import_data209 = __toESM(require_data(), 1);
   var import_dom26 = __toESM(require_dom(), 1);
@@ -101119,7 +101218,7 @@ ${content}
 
   // packages/editor/build-module/components/list-view-sidebar/index.mjs
   var import_jsx_runtime526 = __toESM(require_jsx_runtime(), 1);
-  var { TabbedSidebar } = unlock(import_block_editor76.privateApis);
+  var { TabbedSidebar } = unlock(import_block_editor78.privateApis);
   function ListViewSidebar() {
     const { setIsListViewOpened: setIsListViewOpened2 } = (0, import_data209.useDispatch)(store);
     const { getListViewToggleRef: getListViewToggleRef2 } = unlock((0, import_data209.useSelect)(store));
@@ -101170,7 +101269,7 @@ ${content}
                   name: "list-view",
                   title: (0, import_i18n304._x)("List View", "Post overview"),
                   panel: /* @__PURE__ */ (0, import_jsx_runtime526.jsx)("div", { className: "editor-list-view-sidebar__list-view-container", children: /* @__PURE__ */ (0, import_jsx_runtime526.jsx)("div", { className: "editor-list-view-sidebar__list-view-panel-content", children: /* @__PURE__ */ (0, import_jsx_runtime526.jsx)(
-                    import_block_editor76.__experimentalListView,
+                    import_block_editor78.__experimentalListView,
                     {
                       dropZoneElement,
                       focusOnMount: true
@@ -101204,7 +101303,7 @@ ${content}
   // packages/editor/build-module/components/post-revisions-preview/revisions-slider.mjs
   var import_data210 = __toESM(require_data(), 1);
   var import_components252 = __toESM(require_components(), 1);
-  var import_core_data116 = __toESM(require_core_data(), 1);
+  var import_core_data117 = __toESM(require_core_data(), 1);
   var import_i18n305 = __toESM(require_i18n(), 1);
   var import_date21 = __toESM(require_date(), 1);
   var import_element323 = __toESM(require_element(), 1);
@@ -101222,7 +101321,7 @@ ${content}
       if (!postType2) {
         return {};
       }
-      const entityConfig = select9(import_core_data116.store).getEntityConfig(
+      const entityConfig = select9(import_core_data117.store).getEntityConfig(
         "postType",
         postType2
       );
@@ -101474,7 +101573,7 @@ ${content}
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-canvas.mjs
   var import_components256 = __toESM(require_components(), 1);
-  var import_block_editor84 = __toESM(require_block_editor(), 1);
+  var import_block_editor86 = __toESM(require_block_editor(), 1);
   var import_data220 = __toESM(require_data(), 1);
   var import_element329 = __toESM(require_element(), 1);
   var import_hooks61 = __toESM(require_hooks(), 1);
@@ -101482,16 +101581,16 @@ ${content}
   var import_i18n310 = __toESM(require_i18n(), 1);
 
   // packages/editor/build-module/components/visual-editor/index.mjs
-  var import_block_editor82 = __toESM(require_block_editor(), 1);
+  var import_block_editor84 = __toESM(require_block_editor(), 1);
   var import_element327 = __toESM(require_element(), 1);
   var import_data218 = __toESM(require_data(), 1);
   var import_blocks33 = __toESM(require_blocks(), 1);
-  var import_core_data119 = __toESM(require_core_data(), 1);
+  var import_core_data120 = __toESM(require_core_data(), 1);
   var import_compose84 = __toESM(require_compose(), 1);
 
   // packages/editor/build-module/components/visual-editor/edit-template-blocks-notification.mjs
   var import_data212 = __toESM(require_data(), 1);
-  var import_core_data117 = __toESM(require_core_data(), 1);
+  var import_core_data118 = __toESM(require_core_data(), 1);
   var import_element324 = __toESM(require_element(), 1);
   var import_i18n307 = __toESM(require_i18n(), 1);
   var import_components254 = __toESM(require_components(), 1);
@@ -101505,7 +101604,7 @@ ${content}
       };
     }, []);
     const canEditTemplate = (0, import_data212.useSelect)(
-      (select9) => !!select9(import_core_data117.store).canUser("create", {
+      (select9) => !!select9(import_core_data118.store).canUser("create", {
         kind: "postType",
         name: "wp_template"
       }),
@@ -101558,7 +101657,7 @@ ${content}
   // packages/editor/build-module/components/visual-editor/use-select-nearest-editable-block.mjs
   var import_compose79 = __toESM(require_compose(), 1);
   var import_data213 = __toESM(require_data(), 1);
-  var import_block_editor77 = __toESM(require_block_editor(), 1);
+  var import_block_editor79 = __toESM(require_block_editor(), 1);
   var DISTANCE_THRESHOLD = 500;
   function clamp2(value, min4, max4) {
     return Math.min(Math.max(value, min4), max4);
@@ -101572,9 +101671,9 @@ ${content}
     isEnabled = true
   } = {}) {
     const { getEnabledClientIdsTree, getBlockName: getBlockName2, getBlockOrder: getBlockOrder2 } = unlock(
-      (0, import_data213.useSelect)(import_block_editor77.store)
+      (0, import_data213.useSelect)(import_block_editor79.store)
     );
-    const { selectBlock: selectBlock2 } = (0, import_data213.useDispatch)(import_block_editor77.store);
+    const { selectBlock: selectBlock2 } = (0, import_data213.useDispatch)(import_block_editor79.store);
     return (0, import_compose79.useRefEffect)(
       (element) => {
         if (!isEnabled) {
@@ -101629,10 +101728,10 @@ ${content}
   // packages/editor/build-module/components/visual-editor/use-zoom-out-mode-exit.mjs
   var import_data214 = __toESM(require_data(), 1);
   var import_compose80 = __toESM(require_compose(), 1);
-  var import_block_editor78 = __toESM(require_block_editor(), 1);
+  var import_block_editor80 = __toESM(require_block_editor(), 1);
   function useZoomOutModeExit() {
-    const { getSettings: getSettings11, isZoomOut } = unlock((0, import_data214.useSelect)(import_block_editor78.store));
-    const { resetZoomLevel } = unlock((0, import_data214.useDispatch)(import_block_editor78.store));
+    const { getSettings: getSettings11, isZoomOut } = unlock((0, import_data214.useSelect)(import_block_editor80.store));
+    const { resetZoomLevel } = unlock((0, import_data214.useDispatch)(import_block_editor80.store));
     return (0, import_compose80.useRefEffect)(
       (node) => {
         function onDoubleClick(event) {
@@ -101660,7 +101759,7 @@ ${content}
   // packages/editor/build-module/components/visual-editor/use-padding-appender.mjs
   var import_data215 = __toESM(require_data(), 1);
   var import_compose81 = __toESM(require_compose(), 1);
-  var import_block_editor79 = __toESM(require_block_editor(), 1);
+  var import_block_editor81 = __toESM(require_block_editor(), 1);
   var import_blocks31 = __toESM(require_blocks(), 1);
   var CSS2 = ':root :where(.editor-styles-wrapper)::after {content: ""; display: block; height: 40vh;}';
   function usePaddingAppender(enabled) {
@@ -101683,10 +101782,10 @@ ${content}
             return;
           }
           event.preventDefault();
-          const blockOrder = registry.select(import_block_editor79.store).getBlockOrder("");
+          const blockOrder = registry.select(import_block_editor81.store).getBlockOrder("");
           const lastBlockClientId = blockOrder[blockOrder.length - 1];
-          const lastBlock = registry.select(import_block_editor79.store).getBlock(lastBlockClientId);
-          const { selectBlock: selectBlock2, insertDefaultBlock: insertDefaultBlock2 } = registry.dispatch(import_block_editor79.store);
+          const lastBlock = registry.select(import_block_editor81.store).getBlock(lastBlockClientId);
+          const { selectBlock: selectBlock2, insertDefaultBlock: insertDefaultBlock2 } = registry.dispatch(import_block_editor81.store);
           if (lastBlock && (0, import_blocks31.isUnmodifiedDefaultBlock)(lastBlock)) {
             selectBlock2(lastBlockClientId);
           } else {
@@ -101707,13 +101806,13 @@ ${content}
   // packages/editor/build-module/components/visual-editor/use-edit-content-only-section-exit.mjs
   var import_data216 = __toESM(require_data(), 1);
   var import_compose82 = __toESM(require_compose(), 1);
-  var import_block_editor80 = __toESM(require_block_editor(), 1);
+  var import_block_editor82 = __toESM(require_block_editor(), 1);
   function useEditContentOnlySectionExit() {
     const { getEditedContentOnlySection } = unlock(
-      (0, import_data216.useSelect)(import_block_editor80.store)
+      (0, import_data216.useSelect)(import_block_editor82.store)
     );
     const { stopEditingContentOnlySection } = unlock(
-      (0, import_data216.useDispatch)(import_block_editor80.store)
+      (0, import_data216.useDispatch)(import_block_editor82.store)
     );
     return (0, import_compose82.useRefEffect)(
       (node) => {
@@ -101743,8 +101842,8 @@ ${content}
   var import_data217 = __toESM(require_data(), 1);
   var import_compose83 = __toESM(require_compose(), 1);
   var import_blocks32 = __toESM(require_blocks(), 1);
-  var import_core_data118 = __toESM(require_core_data(), 1);
-  var import_block_editor81 = __toESM(require_block_editor(), 1);
+  var import_core_data119 = __toESM(require_core_data(), 1);
+  var import_block_editor83 = __toESM(require_block_editor(), 1);
   var import_components255 = __toESM(require_components(), 1);
   var import_hooks60 = __toESM(require_hooks(), 1);
   var import_element326 = __toESM(require_element(), 1);
@@ -101808,8 +101907,8 @@ ${content}
 
   // packages/editor/build-module/components/sync-connection-error-modal/index.mjs
   var import_jsx_runtime530 = __toESM(require_jsx_runtime(), 1);
-  var { BlockCanvasCover: BlockCanvasCover2 } = unlock(import_block_editor81.privateApis);
-  var { retrySyncConnection } = unlock(import_core_data118.privateApis);
+  var { BlockCanvasCover: BlockCanvasCover2 } = unlock(import_block_editor83.privateApis);
+  var { retrySyncConnection } = unlock(import_core_data119.privateApis);
   var INITIAL_DISCONNECTED_DEBOUNCE_MS = 2e4;
   function SyncConnectionErrorModal() {
     const [hasInitialized, setHasInitialized] = (0, import_element326.useState)(false);
@@ -101818,7 +101917,7 @@ ${content}
     const { connectionStatus, isCollaborationEnabled, postType: postType2 } = (0, import_data217.useSelect)(
       (selectFn) => {
         const { getSyncConnectionStatus, getPostType } = unlock(
-          selectFn(import_core_data118.store)
+          selectFn(import_core_data119.store)
         );
         const { getCurrentPostType: getCurrentPostType2, isCollaborationEnabledForCurrentPost: isCollaborationEnabledForCurrentPost2 } = unlock(selectFn(store));
         const currentPostType = getCurrentPostType2();
@@ -101832,7 +101931,7 @@ ${content}
     );
     const { onManualRetry, secondsRemaining } = useRetryCountdown(connectionStatus);
     const copyButtonRef = (0, import_compose83.useCopyToClipboard)(() => {
-      const blocks = (0, import_data217.select)(import_block_editor81.store).getBlocks();
+      const blocks = (0, import_data217.select)(import_block_editor83.store).getBlocks();
       return (0, import_blocks32.serialize)(blocks);
     });
     (0, import_element326.useEffect)(() => {
@@ -101961,7 +102060,7 @@ ${content}
     useLayoutStyles,
     ExperimentalBlockCanvas: BlockCanvas,
     useFlashEditableBlocks
-  } = unlock(import_block_editor82.privateApis);
+  } = unlock(import_block_editor84.privateApis);
   function getPostContentAttributes(blocks) {
     for (let i3 = 0; i3 < blocks.length; i3++) {
       if (blocks[i3].name === "core/post-content") {
@@ -102035,7 +102134,7 @@ ${content}
         getDeviceType: getDeviceType2,
         getCanvasWidth: getCanvasWidth2
       } = unlock(select9(store));
-      const { getPostType, getEditedEntityRecord } = select9(import_core_data119.store);
+      const { getPostType, getEditedEntityRecord } = select9(import_core_data120.store);
       const postTypeSlug = getCurrentPostType2();
       const _renderingMode = getRenderingMode2();
       let _wrapperBlockName;
@@ -102080,7 +102179,7 @@ ${content}
       isZoomedOut
     } = (0, import_data218.useSelect)((select9) => {
       const { getSettings: getSettings11, isZoomOut: _isZoomOut } = unlock(
-        select9(import_block_editor82.store)
+        select9(import_block_editor84.store)
       );
       const _settings = getSettings11();
       return {
@@ -102091,7 +102190,7 @@ ${content}
       };
     }, []);
     const localRef = (0, import_element327.useRef)();
-    const [globalLayoutSettings] = (0, import_block_editor82.useSettings)("layout");
+    const [globalLayoutSettings] = (0, import_block_editor84.useSettings)("layout");
     const [containerSize, setContainerSize] = (0, import_element327.useState)();
     const containerRef = (0, import_compose84.useResizeObserver)((entries) => {
       const { width, height } = entries[0].contentRect;
@@ -102219,7 +102318,7 @@ ${content}
       isNavigationPreview,
       paddingStyle
     ]);
-    const typewriterRef = (0, import_block_editor82.__unstableUseTypewriter)();
+    const typewriterRef = (0, import_block_editor84.__unstableUseTypewriter)();
     contentRef = (0, import_compose84.useMergeRefs)([
       localRef,
       contentRef,
@@ -102318,13 +102417,13 @@ ${content}
                       }
                     ),
                     /* @__PURE__ */ (0, import_jsx_runtime531.jsxs)(
-                      import_block_editor82.RecursionProvider,
+                      import_block_editor84.RecursionProvider,
                       {
                         blockName: wrapperBlockName,
                         uniqueId: wrapperUniqueId,
                         children: [
                           /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(
-                            import_block_editor82.BlockList,
+                            import_block_editor84.BlockList,
                             {
                               className: clsx_default(
                                 "is-" + deviceType.toLowerCase() + "-preview",
@@ -102371,10 +102470,10 @@ ${content}
   var import_element328 = __toESM(require_element(), 1);
   var import_compose85 = __toESM(require_compose(), 1);
   var import_data219 = __toESM(require_data(), 1);
-  var import_block_editor83 = __toESM(require_block_editor(), 1);
+  var import_block_editor85 = __toESM(require_block_editor(), 1);
   var import_i18n309 = __toESM(require_i18n(), 1);
   var import_jsx_runtime532 = __toESM(require_jsx_runtime(), 1);
-  var { useBlockElementRef } = unlock(import_block_editor83.privateApis);
+  var { useBlockElementRef } = unlock(import_block_editor85.privateApis);
   function collectDiffBlocks(blocks) {
     const result = [];
     for (const block of blocks) {
@@ -102451,7 +102550,7 @@ ${content}
     const [isMounted, setIsMounted] = (0, import_element328.useState)(false);
     const subscribersRef = (0, import_element328.useRef)(/* @__PURE__ */ new Set());
     const blocks = (0, import_data219.useSelect)(
-      (select9) => select9(import_block_editor83.store).getBlocks(),
+      (select9) => select9(import_block_editor85.store).getBlocks(),
       []
     );
     const diffBlocks = (0, import_element328.useMemo)(() => collectDiffBlocks(blocks), [blocks]);
@@ -102496,7 +102595,7 @@ ${content}
   // packages/editor/build-module/components/post-revisions-preview/revisions-canvas.mjs
   var import_jsx_runtime533 = __toESM(require_jsx_runtime(), 1);
   var { usePrivateStyleOverride, PrivateBlockContext } = unlock(
-    import_block_editor84.privateApis
+    import_block_editor86.privateApis
   );
   var REVISION_REMOVED_FILTER_SVG = `
 <svg
@@ -102671,7 +102770,7 @@ ${content}
 
   // packages/editor/build-module/components/post-revisions-preview/revisions-code-diff.mjs
   var import_components257 = __toESM(require_components(), 1);
-  var import_core_data120 = __toESM(require_core_data(), 1);
+  var import_core_data121 = __toESM(require_core_data(), 1);
   var import_data221 = __toESM(require_data(), 1);
   var import_element330 = __toESM(require_element(), 1);
   var import_i18n311 = __toESM(require_i18n(), 1);
@@ -102740,7 +102839,7 @@ ${content}
   function ConnectedRevisionsCodeDiff() {
     const revisionDiff = (0, import_data221.useSelect)((select9) => {
       const editorSelectors = select9(store);
-      const coreSelectors = select9(import_core_data120.store);
+      const coreSelectors = select9(import_core_data121.store);
       const {
         getCurrentRevision: getCurrentRevision2,
         getPreviousRevision: getPreviousRevision2,
@@ -102859,9 +102958,9 @@ ${content}
   var import_element331 = __toESM(require_element(), 1);
   var import_i18n312 = __toESM(require_i18n(), 1);
   var import_notices32 = __toESM(require_notices(), 1);
-  var import_core_data121 = __toESM(require_core_data(), 1);
+  var import_core_data122 = __toESM(require_core_data(), 1);
   var import_preferences23 = __toESM(require_preferences(), 1);
-  var { useOnCollaboratorJoin, useOnCollaboratorLeave, useOnPostSave } = unlock(import_core_data121.privateApis);
+  var { useOnCollaboratorJoin, useOnCollaboratorLeave, useOnPostSave } = unlock(import_core_data122.privateApis);
   var NOTIFICATION_TYPE = {
     COLLAB_POST_UPDATED: "collab-post-updated",
     COLLAB_USER_ENTERED: "collab-user-entered",
@@ -103007,10 +103106,10 @@ ${content}
   var import_components258 = __toESM(require_components(), 1);
   var import_i18n313 = __toESM(require_i18n(), 1);
   var import_element332 = __toESM(require_element(), 1);
-  var import_core_data122 = __toESM(require_core_data(), 1);
+  var import_core_data123 = __toESM(require_core_data(), 1);
   var import_jsx_runtime535 = __toESM(require_jsx_runtime(), 1);
   var { Fill: Fill11, Slot: Slot13 } = (0, import_components258.createSlotFill)("ActionsPanel");
-  var { EntitiesSavedStates: EntitiesSavedStates2 } = unlock(import_core_data122.privateApis);
+  var { EntitiesSavedStates: EntitiesSavedStates2 } = unlock(import_core_data123.privateApis);
   function SavePublishPanels({
     setEntitiesSavedStatesCallback,
     closeEntitiesSavedStates,
@@ -103154,7 +103253,7 @@ ${content}
   };
   function Notices() {
     const isValidTemplate2 = (0, import_data225.useSelect)((select9) => {
-      return select9(import_block_editor85.store).isValidTemplate();
+      return select9(import_block_editor87.store).isValidTemplate();
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime537.jsx)(import_theme.ThemeProvider, { cornerRadius: "none", children: /* @__PURE__ */ (0, import_jsx_runtime537.jsx)(
       import_notices33.InlineNotices,
@@ -103297,7 +103396,7 @@ ${content}
                 autoFocus
               }
             ),
-            !isPreviewMode && !isLargeViewport && mode === "visual" && /* @__PURE__ */ (0, import_jsx_runtime537.jsx)(import_block_editor85.BlockToolbar, { hideDragHandle: true }),
+            !isPreviewMode && !isLargeViewport && mode === "visual" && /* @__PURE__ */ (0, import_jsx_runtime537.jsx)(import_block_editor87.BlockToolbar, { hideDragHandle: true }),
             (isPreviewMode || mode === "visual") && /* @__PURE__ */ (0, import_jsx_runtime537.jsx)(
               visual_editor_default,
               {
@@ -103317,7 +103416,7 @@ ${content}
           ] })
         ] }),
         footer: !isPreviewMode && !isDistractionFree && isLargeViewport && showBlockBreadcrumbs && mode === "visual" && /* @__PURE__ */ (0, import_jsx_runtime537.jsx)(
-          import_block_editor85.BlockBreadcrumb,
+          import_block_editor87.BlockBreadcrumb,
           {
             rootLabelText: postTypeLabel ? (0, import_html_entities30.decodeEntities)(postTypeLabel) : void 0
           }
@@ -103336,7 +103435,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/sidebar/index.mjs
-  var import_block_editor97 = __toESM(require_block_editor(), 1);
+  var import_block_editor99 = __toESM(require_block_editor(), 1);
   var import_data256 = __toESM(require_data(), 1);
   var import_i18n339 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts11 = __toESM(require_keyboard_shortcuts(), 1);
@@ -103362,7 +103461,7 @@ ${content}
 
   // packages/editor/build-module/components/post-card-panel/index.mjs
   var import_components263 = __toESM(require_components(), 1);
-  var import_core_data127 = __toESM(require_core_data(), 1);
+  var import_core_data128 = __toESM(require_core_data(), 1);
   var import_data231 = __toESM(require_data(), 1);
   var import_element339 = __toESM(require_element(), 1);
   var import_i18n319 = __toESM(require_i18n(), 1);
@@ -103373,19 +103472,19 @@ ${content}
   var import_element338 = __toESM(require_element(), 1);
   var import_i18n318 = __toESM(require_i18n(), 1);
   var import_components262 = __toESM(require_components(), 1);
-  var import_core_data126 = __toESM(require_core_data(), 1);
+  var import_core_data127 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-actions/actions.mjs
   var import_data229 = __toESM(require_data(), 1);
   var import_element337 = __toESM(require_element(), 1);
-  var import_core_data125 = __toESM(require_core_data(), 1);
+  var import_core_data126 = __toESM(require_core_data(), 1);
 
   // packages/editor/build-module/components/post-actions/set-as-homepage.mjs
   var import_i18n316 = __toESM(require_i18n(), 1);
   var import_element335 = __toESM(require_element(), 1);
   var import_components260 = __toESM(require_components(), 1);
   var import_data227 = __toESM(require_data(), 1);
-  var import_core_data123 = __toESM(require_core_data(), 1);
+  var import_core_data124 = __toESM(require_core_data(), 1);
   var import_notices34 = __toESM(require_notices(), 1);
 
   // packages/editor/build-module/utils/get-item-title.mjs
@@ -103410,7 +103509,7 @@ ${content}
     const pageTitle = getItemTitle2(item);
     const { showOnFront, currentHomePage, isSaving } = (0, import_data227.useSelect)(
       (select9) => {
-        const { getEntityRecord, isSavingEntityRecord } = select9(import_core_data123.store);
+        const { getEntityRecord, isSavingEntityRecord } = select9(import_core_data124.store);
         const siteSettings = getEntityRecord("root", "site");
         const currentHomePageItem = getEntityRecord(
           "postType",
@@ -103424,7 +103523,7 @@ ${content}
         };
       }
     );
-    const { saveEntityRecord } = (0, import_data227.useDispatch)(import_core_data123.store);
+    const { saveEntityRecord } = (0, import_data227.useDispatch)(import_core_data124.store);
     const { createSuccessNotice, createErrorNotice } = (0, import_data227.useDispatch)(import_notices34.store);
     async function onSetPageAsHomepage(event) {
       event.preventDefault();
@@ -103494,7 +103593,7 @@ ${content}
   };
   var useSetAsHomepageAction = () => {
     const { pageOnFront, pageForPosts } = (0, import_data227.useSelect)((select9) => {
-      const { getEntityRecord, canUser } = select9(import_core_data123.store);
+      const { getEntityRecord, canUser } = select9(import_core_data124.store);
       const siteSettings = canUser("read", {
         kind: "root",
         name: "site"
@@ -103535,7 +103634,7 @@ ${content}
   var import_element336 = __toESM(require_element(), 1);
   var import_components261 = __toESM(require_components(), 1);
   var import_data228 = __toESM(require_data(), 1);
-  var import_core_data124 = __toESM(require_core_data(), 1);
+  var import_core_data125 = __toESM(require_core_data(), 1);
   var import_notices35 = __toESM(require_notices(), 1);
   var import_jsx_runtime540 = __toESM(require_jsx_runtime(), 1);
   var SetAsPostsPageModal = ({ items, closeModal: closeModal2 }) => {
@@ -103543,7 +103642,7 @@ ${content}
     const pageTitle = getItemTitle2(item);
     const { currentPostsPage, isPageForPostsSet, isSaving } = (0, import_data228.useSelect)(
       (select9) => {
-        const { getEntityRecord, isSavingEntityRecord } = select9(import_core_data124.store);
+        const { getEntityRecord, isSavingEntityRecord } = select9(import_core_data125.store);
         const siteSettings = getEntityRecord("root", "site");
         const currentPostsPageItem = getEntityRecord(
           "postType",
@@ -103557,7 +103656,7 @@ ${content}
         };
       }
     );
-    const { saveEntityRecord } = (0, import_data228.useDispatch)(import_core_data124.store);
+    const { saveEntityRecord } = (0, import_data228.useDispatch)(import_core_data125.store);
     const { createSuccessNotice, createErrorNotice } = (0, import_data228.useDispatch)(import_notices35.store);
     async function onSetPageAsPostsPage(event) {
       event.preventDefault();
@@ -103620,7 +103719,7 @@ ${content}
   };
   var useSetAsPostsPageAction = () => {
     const { pageOnFront, pageForPosts } = (0, import_data228.useSelect)((select9) => {
-      const { getEntityRecord, canUser } = select9(import_core_data124.store);
+      const { getEntityRecord, canUser } = select9(import_core_data125.store);
       const siteSettings = canUser("read", {
         kind: "root",
         name: "site"
@@ -103673,7 +103772,7 @@ ${content}
         if (postType2 !== "page") {
           return false;
         }
-        const { getDefaultTemplateId, getEntityRecord, canUser } = select9(import_core_data125.store);
+        const { getDefaultTemplateId, getEntityRecord, canUser } = select9(import_core_data126.store);
         const canUpdateSettings = canUser("update", {
           kind: "root",
           name: "site"
@@ -103784,7 +103883,7 @@ ${content}
     const [activeModalAction, setActiveModalAction] = (0, import_element338.useState)(null);
     const { item, permissions } = (0, import_data230.useSelect)(
       (select9) => {
-        const { getEditedEntityRecord, getEntityRecordPermissions } = unlock(select9(import_core_data126.store));
+        const { getEditedEntityRecord, getEntityRecordPermissions } = unlock(select9(import_core_data127.store));
         return {
           item: getEditedEntityRecord("postType", postType2, postId2),
           permissions: getEntityRecordPermissions(
@@ -103891,7 +103990,7 @@ ${content}
   // packages/editor/build-module/components/post-card-panel/index.mjs
   var import_jsx_runtime543 = __toESM(require_jsx_runtime(), 1);
   var { Badge: WCBadge3 } = unlock(import_components263.privateApis);
-  var { getTemplateInfo: getTemplateInfo4 } = unlock(import_core_data127.privateApis);
+  var { getTemplateInfo: getTemplateInfo4 } = unlock(import_core_data128.privateApis);
   function PostCardPanel({
     postType: postType2,
     postId: postId2,
@@ -103905,7 +104004,7 @@ ${content}
     );
     const { postTitle, icon, labels } = (0, import_data231.useSelect)(
       (select9) => {
-        const { getEditedEntityRecord, getCurrentTheme, getPostType } = select9(import_core_data127.store);
+        const { getEditedEntityRecord, getCurrentTheme, getPostType } = select9(import_core_data128.store);
         const {
           getPostIcon: getPostIcon2,
           getCurrentPostType: getCurrentPostType2,
@@ -104025,14 +104124,14 @@ ${content}
   var import_i18n320 = __toESM(require_i18n(), 1);
   var import_wordcount5 = __toESM(require_wordcount(), 1);
   var import_element340 = __toESM(require_element(), 1);
-  var import_core_data128 = __toESM(require_core_data(), 1);
+  var import_core_data129 = __toESM(require_core_data(), 1);
   var import_jsx_runtime544 = __toESM(require_jsx_runtime(), 1);
   var AVERAGE_READING_RATE3 = 189;
   function PostContentInformation() {
     const postContent = (0, import_data232.useSelect)((select9) => {
       const { getEditedPostAttribute: getEditedPostAttribute2, getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select9(store);
-      const { canUser } = select9(import_core_data128.store);
-      const { getEntityRecord } = select9(import_core_data128.store);
+      const { canUser } = select9(import_core_data129.store);
+      const { getEntityRecord } = select9(import_core_data129.store);
       const siteSettings = canUser("read", {
         kind: "root",
         name: "site"
@@ -104080,7 +104179,7 @@ ${content}
   var import_i18n321 = __toESM(require_i18n(), 1);
   var import_data233 = __toESM(require_data(), 1);
   var import_element341 = __toESM(require_element(), 1);
-  var import_block_editor86 = __toESM(require_block_editor(), 1);
+  var import_block_editor88 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime545 = __toESM(require_jsx_runtime(), 1);
   function PostFormat2() {
     const { postFormat } = (0, import_data233.useSelect)((select9) => {
@@ -104128,7 +104227,7 @@ ${content}
         ),
         renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime545.jsxs)("div", { className: "editor-post-format__dialog-content", children: [
           /* @__PURE__ */ (0, import_jsx_runtime545.jsx)(
-            import_block_editor86.__experimentalInspectorPopoverHeader,
+            import_block_editor88.__experimentalInspectorPopoverHeader,
             {
               title: (0, import_i18n321.__)("Format"),
               onClose
@@ -104174,18 +104273,18 @@ ${content}
   var import_i18n323 = __toESM(require_i18n(), 1);
   var import_compose87 = __toESM(require_compose(), 1);
   var import_data235 = __toESM(require_data(), 1);
-  var import_core_data129 = __toESM(require_core_data(), 1);
+  var import_core_data130 = __toESM(require_core_data(), 1);
   var import_html_entities32 = __toESM(require_html_entities(), 1);
   var import_components268 = __toESM(require_components(), 1);
   var import_element342 = __toESM(require_element(), 1);
-  var import_block_editor87 = __toESM(require_block_editor(), 1);
+  var import_block_editor89 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime548 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_OBJECT4 = {};
   function BlogTitle() {
-    const { editEntityRecord } = (0, import_data235.useDispatch)(import_core_data129.store);
+    const { editEntityRecord } = (0, import_data235.useDispatch)(import_core_data130.store);
     const { postsPageTitle, postsPageId, isTemplate: isTemplate2, postSlug } = (0, import_data235.useSelect)(
       (select9) => {
-        const { getEntityRecord, getEditedEntityRecord, canUser } = select9(import_core_data129.store);
+        const { getEntityRecord, getEditedEntityRecord, canUser } = select9(import_core_data130.store);
         const siteSettings = canUser("read", {
           kind: "root",
           name: "site"
@@ -104249,7 +104348,7 @@ ${content}
         ),
         renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime548.jsxs)(import_jsx_runtime548.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime548.jsx)(
-            import_block_editor87.__experimentalInspectorPopoverHeader,
+            import_block_editor89.__experimentalInspectorPopoverHeader,
             {
               title: (0, import_i18n323.__)("Blog title"),
               onClose
@@ -104276,16 +104375,16 @@ ${content}
   // packages/editor/build-module/components/posts-per-page/index.mjs
   var import_i18n324 = __toESM(require_i18n(), 1);
   var import_data236 = __toESM(require_data(), 1);
-  var import_core_data130 = __toESM(require_core_data(), 1);
+  var import_core_data131 = __toESM(require_core_data(), 1);
   var import_components269 = __toESM(require_components(), 1);
   var import_element343 = __toESM(require_element(), 1);
-  var import_block_editor88 = __toESM(require_block_editor(), 1);
+  var import_block_editor90 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime549 = __toESM(require_jsx_runtime(), 1);
   function PostsPerPage() {
-    const { editEntityRecord } = (0, import_data236.useDispatch)(import_core_data130.store);
+    const { editEntityRecord } = (0, import_data236.useDispatch)(import_core_data131.store);
     const { postsPerPage, isTemplate: isTemplate2, postSlug } = (0, import_data236.useSelect)((select9) => {
       const { getEditedPostAttribute: getEditedPostAttribute2, getCurrentPostType: getCurrentPostType2 } = select9(store);
-      const { getEditedEntityRecord, canUser } = select9(import_core_data130.store);
+      const { getEditedEntityRecord, canUser } = select9(import_core_data131.store);
       const siteSettings = canUser("read", {
         kind: "root",
         name: "site"
@@ -104335,7 +104434,7 @@ ${content}
         ),
         renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime549.jsxs)(import_jsx_runtime549.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime549.jsx)(
-            import_block_editor88.__experimentalInspectorPopoverHeader,
+            import_block_editor90.__experimentalInspectorPopoverHeader,
             {
               title: (0, import_i18n324.__)("Posts per page"),
               onClose
@@ -104365,10 +104464,10 @@ ${content}
   // packages/editor/build-module/components/site-discussion/index.mjs
   var import_i18n325 = __toESM(require_i18n(), 1);
   var import_data237 = __toESM(require_data(), 1);
-  var import_core_data131 = __toESM(require_core_data(), 1);
+  var import_core_data132 = __toESM(require_core_data(), 1);
   var import_components270 = __toESM(require_components(), 1);
   var import_element344 = __toESM(require_element(), 1);
-  var import_block_editor89 = __toESM(require_block_editor(), 1);
+  var import_block_editor91 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime550 = __toESM(require_jsx_runtime(), 1);
   var COMMENT_OPTIONS2 = [
     {
@@ -104386,11 +104485,11 @@ ${content}
     }
   ];
   function SiteDiscussion() {
-    const { editEntityRecord } = (0, import_data237.useDispatch)(import_core_data131.store);
+    const { editEntityRecord } = (0, import_data237.useDispatch)(import_core_data132.store);
     const { allowCommentsOnNewPosts, isTemplate: isTemplate2, postSlug } = (0, import_data237.useSelect)(
       (select9) => {
         const { getEditedPostAttribute: getEditedPostAttribute2, getCurrentPostType: getCurrentPostType2 } = select9(store);
-        const { getEditedEntityRecord, canUser } = select9(import_core_data131.store);
+        const { getEditedEntityRecord, canUser } = select9(import_core_data132.store);
         const siteSettings = canUser("read", {
           kind: "root",
           name: "site"
@@ -104442,7 +104541,7 @@ ${content}
         ),
         renderContent: ({ onClose }) => /* @__PURE__ */ (0, import_jsx_runtime550.jsxs)(import_jsx_runtime550.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime550.jsx)(
-            import_block_editor89.__experimentalInspectorPopoverHeader,
+            import_block_editor91.__experimentalInspectorPopoverHeader,
             {
               title: (0, import_i18n325.__)("Discussion"),
               onClose
@@ -104533,7 +104632,7 @@ ${content}
   // packages/editor/build-module/components/sidebar/dataform-post-summary.mjs
   var import_i18n328 = __toESM(require_i18n(), 1);
   var import_data243 = __toESM(require_data(), 1);
-  var import_core_data133 = __toESM(require_core_data(), 1);
+  var import_core_data134 = __toESM(require_core_data(), 1);
   var import_element346 = __toESM(require_element(), 1);
 
   // packages/views/build-module/use-view.mjs
@@ -104547,7 +104646,7 @@ ${content}
 
   // packages/views/build-module/use-view-config.mjs
   var import_data241 = __toESM(require_data(), 1);
-  var import_core_data132 = __toESM(require_core_data(), 1);
+  var import_core_data133 = __toESM(require_core_data(), 1);
 
   // packages/views/build-module/lock-unlock.mjs
   var import_private_apis10 = __toESM(require_private_apis(), 1);
@@ -104566,7 +104665,7 @@ ${content}
     const fieldsKey = fieldList ? [...fieldList].sort().join(",") : void 0;
     return (0, import_data241.useSelect)(
       (select9) => {
-        return unlock8(select9(import_core_data132.store)).getViewConfig(kind, name2, {
+        return unlock8(select9(import_core_data133.store)).getViewConfig(kind, name2, {
           fields: fieldsKey
         });
       },
@@ -104710,7 +104809,7 @@ ${content}
       posttype_page: {
         kind: "postType",
         name: "page",
-        getId: (select9) => select9(import_core_data133.store).getEditedEntityRecord("root", "site")?.page_for_posts,
+        getId: (select9) => select9(import_core_data134.store).getEditedEntityRecord("root", "site")?.page_for_posts,
         fields: ["posts_page_title"],
         isVisible: (item) => ["home", "index"].includes(item.slug ?? "")
       }
@@ -104737,7 +104836,7 @@ ${content}
         getEditorSettings: getEditorSettings2
       } = select9(store);
       const _availableTemplates = select9(
-        import_core_data133.store
+        import_core_data134.store
       ).getCurrentTheme()?.is_block_theme ? null : getEditorSettings2().availableTemplates ?? null;
       return {
         postType: getCurrentPostType2(),
@@ -104757,7 +104856,7 @@ ${content}
         if (!postType2 || !postId2) {
           return null;
         }
-        return select9(import_core_data133.store).getEditedEntityRecord(
+        return select9(import_core_data134.store).getEditedEntityRecord(
           "postType",
           postType2,
           postId2
@@ -104768,7 +104867,7 @@ ${content}
     const templatePanelMode = usePostTemplatePanelMode();
     const entityRecords = (0, import_data243.useSelect)(
       (select9) => {
-        const { getEditedEntityRecord, canUser } = select9(import_core_data133.store);
+        const { getEditedEntityRecord, canUser } = select9(import_core_data134.store);
         const records = {};
         for (const [namespace, entity] of Object.entries(
           ENTITIES[postType2] ?? {}
@@ -104803,7 +104902,7 @@ ${content}
       }
       return { ...record, ...extra };
     }, [record, entityRecords, availableTemplates]);
-    const { editEntityRecord } = (0, import_data243.useDispatch)(import_core_data133.store);
+    const { editEntityRecord } = (0, import_data243.useDispatch)(import_core_data134.store);
     const registry = (0, import_data243.useRegistry)();
     const fieldNamespaces = (0, import_element346.useMemo)(() => {
       const map = {};
@@ -104914,7 +105013,7 @@ ${content}
 
   // packages/editor/build-module/components/post-revisions-timeline/index.mjs
   var import_data244 = __toESM(require_data(), 1);
-  var import_core_data134 = __toESM(require_core_data(), 1);
+  var import_core_data135 = __toESM(require_core_data(), 1);
   var import_date23 = __toESM(require_date(), 1);
   var import_element347 = __toESM(require_element(), 1);
   var import_i18n329 = __toESM(require_i18n(), 1);
@@ -104957,7 +105056,7 @@ ${content}
           getRevisionPage: getRevisionPage2,
           getPageRevisions: getPageRevisions2
         } = unlock(select9(store));
-        const { getEntityConfig } = select9(import_core_data134.store);
+        const { getEntityConfig } = select9(import_core_data135.store);
         const _postType = getCurrentPostType2();
         const entityConfig = getEntityConfig("postType", _postType);
         const _revisionKey = entityConfig?.revisionKey || "id";
@@ -105220,16 +105319,16 @@ ${content}
 
   // packages/editor/build-module/components/post-transform-panel/index.mjs
   var import_data248 = __toESM(require_data(), 1);
-  var import_core_data136 = __toESM(require_core_data(), 1);
+  var import_core_data137 = __toESM(require_core_data(), 1);
   var import_components274 = __toESM(require_components(), 1);
   var import_i18n332 = __toESM(require_i18n(), 1);
-  var import_block_editor90 = __toESM(require_block_editor(), 1);
+  var import_block_editor92 = __toESM(require_block_editor(), 1);
   var import_blocks36 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/components/post-transform-panel/hooks.mjs
   var import_data247 = __toESM(require_data(), 1);
   var import_element349 = __toESM(require_element(), 1);
-  var import_core_data135 = __toESM(require_core_data(), 1);
+  var import_core_data136 = __toESM(require_core_data(), 1);
   var import_blocks35 = __toESM(require_blocks(), 1);
   var import_patterns11 = __toESM(require_patterns(), 1);
   var { EXCLUDED_PATTERN_SOURCES, PATTERN_TYPES: PATTERN_TYPES6 } = unlock(import_patterns11.privateApis);
@@ -105281,8 +105380,8 @@ ${content}
       const settings = getEditorSettings2();
       return {
         blockPatterns: settings.__experimentalAdditionalBlockPatterns ?? settings.__experimentalBlockPatterns,
-        restBlockPatterns: select9(import_core_data135.store).getBlockPatterns(),
-        currentThemeStylesheet: select9(import_core_data135.store).getCurrentTheme().stylesheet
+        restBlockPatterns: select9(import_core_data136.store).getBlockPatterns(),
+        currentThemeStylesheet: select9(import_core_data136.store).getCurrentTheme().stylesheet
       };
     }, []);
     return (0, import_element349.useMemo)(() => {
@@ -105313,7 +105412,7 @@ ${content}
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime558.jsx)(
-      import_block_editor90.__experimentalBlockPatternsList,
+      import_block_editor92.__experimentalBlockPatternsList,
       {
         label: (0, import_i18n332.__)("Templates"),
         blockPatterns: availableTemplates,
@@ -105325,7 +105424,7 @@ ${content}
   function PostTransform() {
     const { area, name: name2, slug, postType: postType2, postId: postId2 } = (0, import_data248.useSelect)((select9) => {
       const { getCurrentPostType: getCurrentPostType2, getCurrentPostId: getCurrentPostId2 } = select9(store);
-      const { getEditedEntityRecord } = select9(import_core_data136.store);
+      const { getEditedEntityRecord } = select9(import_core_data137.store);
       const type = getCurrentPostType2();
       const id = getCurrentPostId2();
       const record = getEditedEntityRecord("postType", type, id);
@@ -105337,7 +105436,7 @@ ${content}
         postId: id
       };
     }, []);
-    const { editEntityRecord } = (0, import_data248.useDispatch)(import_core_data136.store);
+    const { editEntityRecord } = (0, import_data248.useDispatch)(import_core_data137.store);
     const availablePatterns = useAvailablePatterns({ area, name: name2, slug });
     const onTemplateSelect = async (selectedTemplate) => {
       await editEntityRecord("postType", postType2, postId2, {
@@ -105408,8 +105507,8 @@ ${content}
 
   // packages/editor/build-module/components/template-actions-panel/block-theme-content.mjs
   var import_data250 = __toESM(require_data(), 1);
-  var import_core_data137 = __toESM(require_core_data(), 1);
-  var import_block_editor91 = __toESM(require_block_editor(), 1);
+  var import_core_data138 = __toESM(require_core_data(), 1);
+  var import_block_editor93 = __toESM(require_block_editor(), 1);
   var import_components275 = __toESM(require_components(), 1);
   var import_element350 = __toESM(require_element(), 1);
   var import_i18n334 = __toESM(require_i18n(), 1);
@@ -105437,7 +105536,7 @@ ${content}
       const editorSettings2 = _getEditorSettings();
       return {
         onNavigateToEntityRecord: editorSettings2.onNavigateToEntityRecord,
-        canCreateTemplate: !!select9(import_core_data137.store).canUser("create", {
+        canCreateTemplate: !!select9(import_core_data138.store).canUser("create", {
           kind: "postType",
           name: "wp_template"
         }),
@@ -105449,12 +105548,12 @@ ${content}
     }, []);
     const { get: getPreference } = (0, import_data250.useSelect)(import_preferences27.store);
     const { createSuccessNotice } = (0, import_data250.useDispatch)(import_notices36.store);
-    const { editedRecord: template2, hasResolved } = (0, import_core_data137.useEntityRecord)(
+    const { editedRecord: template2, hasResolved } = (0, import_core_data138.useEntityRecord)(
       "postType",
       "wp_template",
       templateId2
     );
-    const [blocks] = (0, import_core_data137.useEntityBlockEditor)("postType", "wp_template", {
+    const [blocks] = (0, import_core_data138.useEntityBlockEditor)("postType", "wp_template", {
       id: templateId2
     });
     if (!hasResolved) {
@@ -105477,7 +105576,7 @@ ${content}
       }
     };
     const templateName = (0, import_html_entities34.decodeEntities)(template2.title);
-    const previewContent = !!blocks?.length && /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(import_block_editor91.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(import_block_editor91.BlockPreview, { blocks }) });
+    const previewContent = !!blocks?.length && /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(import_block_editor93.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime560.jsx)(import_block_editor93.BlockPreview, { blocks }) });
     const renderPreview = () => {
       if (!previewContent) {
         return null;
@@ -105572,8 +105671,8 @@ ${content}
 
   // packages/editor/build-module/components/template-actions-panel/classic-theme-content.mjs
   var import_data251 = __toESM(require_data(), 1);
-  var import_core_data138 = __toESM(require_core_data(), 1);
-  var import_block_editor92 = __toESM(require_block_editor(), 1);
+  var import_core_data139 = __toESM(require_core_data(), 1);
+  var import_block_editor94 = __toESM(require_block_editor(), 1);
   var import_components276 = __toESM(require_components(), 1);
   var import_element351 = __toESM(require_element(), 1);
   var import_i18n335 = __toESM(require_i18n(), 1);
@@ -105597,7 +105696,7 @@ ${content}
       const editorSettings2 = _getEditorSettings();
       return {
         onNavigateToEntityRecord: editorSettings2.onNavigateToEntityRecord,
-        canCreateTemplate: !!select9(import_core_data138.store).canUser("create", {
+        canCreateTemplate: !!select9(import_core_data139.store).canUser("create", {
           kind: "postType",
           name: "wp_template"
         }) && editorSettings2.supportsTemplateMode,
@@ -105609,12 +105708,12 @@ ${content}
     }, []);
     const { get: getPreference } = (0, import_data251.useSelect)(import_preferences28.store);
     const { createSuccessNotice } = (0, import_data251.useDispatch)(import_notices37.store);
-    const { editedRecord: template2 } = (0, import_core_data138.useEntityRecord)(
+    const { editedRecord: template2 } = (0, import_core_data139.useEntityRecord)(
       "postType",
       "wp_template",
       templateId2
     );
-    const [blocks] = (0, import_core_data138.useEntityBlockEditor)("postType", "wp_template", {
+    const [blocks] = (0, import_core_data139.useEntityBlockEditor)("postType", "wp_template", {
       id: templateId2
     });
     if (!templateId2 && !canCreateTemplate) {
@@ -105637,7 +105736,7 @@ ${content}
       }
     };
     const templateName = template2 ? (0, import_html_entities35.decodeEntities)(template2.title) : void 0;
-    const previewContent = !!blocks?.length && /* @__PURE__ */ (0, import_jsx_runtime561.jsx)(import_block_editor92.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime561.jsx)(import_block_editor92.BlockPreview, { blocks }) });
+    const previewContent = !!blocks?.length && /* @__PURE__ */ (0, import_jsx_runtime561.jsx)(import_block_editor94.BlockPreview.Async, { children: /* @__PURE__ */ (0, import_jsx_runtime561.jsx)(import_block_editor94.BlockPreview, { blocks }) });
     return /* @__PURE__ */ (0, import_jsx_runtime561.jsxs)(import_jsx_runtime561.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime561.jsx)(
         import_components276.PanelBody,
@@ -105708,11 +105807,11 @@ ${content}
 
   // packages/editor/build-module/components/template-content-panel/index.mjs
   var import_data252 = __toESM(require_data(), 1);
-  var import_block_editor93 = __toESM(require_block_editor(), 1);
+  var import_block_editor95 = __toESM(require_block_editor(), 1);
   var import_components277 = __toESM(require_components(), 1);
   var import_i18n336 = __toESM(require_i18n(), 1);
   var import_jsx_runtime563 = __toESM(require_jsx_runtime(), 1);
-  var { BlockQuickNavigation } = unlock(import_block_editor93.privateApis);
+  var { BlockQuickNavigation } = unlock(import_block_editor95.privateApis);
   var TEMPLATE_PART_BLOCK = "core/template-part";
   function TemplateContentPanelInner({ postType: postType2 }) {
     const postContentBlockTypes = usePostContentBlockTypes();
@@ -105759,11 +105858,11 @@ ${content}
   var import_data253 = __toESM(require_data(), 1);
   var import_element352 = __toESM(require_element(), 1);
   var import_blocks37 = __toESM(require_blocks(), 1);
-  var import_block_editor94 = __toESM(require_block_editor(), 1);
+  var import_block_editor96 = __toESM(require_block_editor(), 1);
   var import_components278 = __toESM(require_components(), 1);
   var import_i18n337 = __toESM(require_i18n(), 1);
   var import_jsx_runtime564 = __toESM(require_jsx_runtime(), 1);
-  var { BlockQuickNavigation: BlockQuickNavigation2 } = unlock(import_block_editor94.privateApis);
+  var { BlockQuickNavigation: BlockQuickNavigation2 } = unlock(import_block_editor96.privateApis);
   function TemplatePartContentPanelInner() {
     const blockTypes = (0, import_data253.useSelect)((select9) => {
       const { getBlockTypes: getBlockTypes6 } = select9(import_blocks37.store);
@@ -105776,7 +105875,7 @@ ${content}
     }, [blockTypes]);
     const themeBlocks = (0, import_data253.useSelect)(
       (select9) => {
-        const { getBlocksByName } = select9(import_block_editor94.store);
+        const { getBlocksByName } = select9(import_block_editor96.store);
         return getBlocksByName(themeBlockNames);
       },
       [themeBlockNames]
@@ -105798,13 +105897,13 @@ ${content}
   }
 
   // packages/editor/build-module/components/revision-block-diff/index.mjs
-  var import_block_editor95 = __toESM(require_block_editor(), 1);
+  var import_block_editor97 = __toESM(require_block_editor(), 1);
   var import_data254 = __toESM(require_data(), 1);
   var import_i18n338 = __toESM(require_i18n(), 1);
   var import_jsx_runtime565 = __toESM(require_jsx_runtime(), 1);
   function RevisionBlockDiffPanel() {
     const { block } = (0, import_data254.useSelect)((select9) => {
-      const { getSelectedBlock: getSelectedBlock2 } = select9(import_block_editor95.store);
+      const { getSelectedBlock: getSelectedBlock2 } = select9(import_block_editor97.store);
       return {
         block: getSelectedBlock2()
       };
@@ -105826,12 +105925,12 @@ ${content}
   // packages/editor/build-module/components/provider/use-auto-switch-editor-sidebars.mjs
   var import_data255 = __toESM(require_data(), 1);
   var import_element353 = __toESM(require_element(), 1);
-  var import_block_editor96 = __toESM(require_block_editor(), 1);
+  var import_block_editor98 = __toESM(require_block_editor(), 1);
   var import_preferences29 = __toESM(require_preferences(), 1);
   function useAutoSwitchEditorSidebars() {
     const { hasBlockSelection } = (0, import_data255.useSelect)((select9) => {
       return {
-        hasBlockSelection: !!select9(import_block_editor96.store).getBlockSelectionStart()
+        hasBlockSelection: !!select9(import_block_editor98.store).getBlockSelectionStart()
       };
     }, []);
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data255.useSelect)(store3);
@@ -105878,7 +105977,7 @@ ${content}
         ].includes(sidebar);
         let _tabName = sidebar;
         if (!_isEditorSidebarOpened) {
-          _tabName = select9(import_block_editor97.store).getBlockSelectionStart() ? sidebars.block : sidebars.document;
+          _tabName = select9(import_block_editor99.store).getBlockSelectionStart() ? sidebars.block : sidebars.document;
         }
         return {
           tabName: _tabName,
@@ -105935,7 +106034,7 @@ ${content}
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(tabs_exports.Panel, { value: sidebars.document, tabIndex: -1, children: tabContent }),
           /* @__PURE__ */ (0, import_jsx_runtime566.jsxs)(tabs_exports.Panel, { value: sidebars.block, tabIndex: -1, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(import_block_editor97.BlockInspector, {}),
+            /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(import_block_editor99.BlockInspector, {}),
             isRevisionsMode2 && /* @__PURE__ */ (0, import_jsx_runtime566.jsx)(RevisionBlockDiffPanel, {})
           ] })
         ]
@@ -105950,14 +106049,14 @@ ${content}
   var import_element364 = __toESM(require_element(), 1);
   var import_compose92 = __toESM(require_compose(), 1);
   var import_keyboard_shortcuts13 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_block_editor106 = __toESM(require_block_editor(), 1);
+  var import_block_editor108 = __toESM(require_block_editor(), 1);
   var import_preferences30 = __toESM(require_preferences(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/notes.mjs
   var import_element361 = __toESM(require_element(), 1);
   var import_i18n346 = __toESM(require_i18n(), 1);
   var import_data262 = __toESM(require_data(), 1);
-  var import_block_editor102 = __toESM(require_block_editor(), 1);
+  var import_block_editor104 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
   var import_element359 = __toESM(require_element(), 1);
@@ -105966,21 +106065,21 @@ ${content}
   var import_i18n344 = __toESM(require_i18n(), 1);
   var import_data260 = __toESM(require_data(), 1);
   var import_dom29 = __toESM(require_dom(), 1);
-  var import_block_editor100 = __toESM(require_block_editor(), 1);
+  var import_block_editor102 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_i18n342 = __toESM(require_i18n(), 1);
   var import_element357 = __toESM(require_element(), 1);
   var import_compose90 = __toESM(require_compose(), 1);
   var import_data259 = __toESM(require_data(), 1);
-  var import_block_editor99 = __toESM(require_block_editor(), 1);
+  var import_block_editor101 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/collab-sidebar/note-byline.mjs
   var import_i18n340 = __toESM(require_i18n(), 1);
   var import_date24 = __toESM(require_date(), 1);
-  var import_core_data139 = __toESM(require_core_data(), 1);
+  var import_core_data140 = __toESM(require_core_data(), 1);
   var import_data257 = __toESM(require_data(), 1);
-  var import_block_editor98 = __toESM(require_block_editor(), 1);
+  var import_block_editor100 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime567 = __toESM(require_jsx_runtime(), 1);
   function NoteByline({ avatar, name: name2, date, userId }) {
     const hasAvatar = !!avatar;
@@ -105992,7 +106091,7 @@ ${content}
       dateFormat = dateSettings.formats.date
     } = (0, import_data257.useSelect)(
       (select9) => {
-        const { canUser, getCurrentUser, getEntityRecord } = select9(import_core_data139.store);
+        const { canUser, getCurrentUser, getEntityRecord } = select9(import_core_data140.store);
         const siteSettings = canUser("read", {
           kind: "root",
           name: "site"
@@ -106002,7 +106101,7 @@ ${content}
             dateFormat: siteSettings?.date_format
           };
         }
-        const { getSettings: getSettings11 } = select9(import_block_editor98.store);
+        const { getSettings: getSettings11 } = select9(import_block_editor100.store);
         const { __experimentalDiscussionSettings } = getSettings11();
         const defaultAvatar = __experimentalDiscussionSettings?.avatarURL;
         const userData = getCurrentUser();
@@ -106109,7 +106208,7 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/note-mention-completer.mjs
   var import_element354 = __toESM(require_element(), 1);
   var import_data258 = __toESM(require_data(), 1);
-  var import_core_data140 = __toESM(require_core_data(), 1);
+  var import_core_data141 = __toESM(require_core_data(), 1);
   var import_jsx_runtime569 = __toESM(require_jsx_runtime(), 1);
   var noteMentionCompleter = {
     name: "note-mentions",
@@ -106118,7 +106217,7 @@ ${content}
     useItems(filterValue) {
       const users = (0, import_data258.useSelect)(
         (select9) => {
-          const { getUsers } = select9(import_core_data140.store);
+          const { getUsers } = select9(import_core_data141.store);
           return getUsers({
             context: "view",
             search: filterValue
@@ -106591,10 +106690,10 @@ ${content}
 
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_jsx_runtime574 = __toESM(require_jsx_runtime(), 1);
-  var { useBlockElement } = unlock(import_block_editor99.privateApis);
+  var { useBlockElement } = unlock(import_block_editor101.privateApis);
   function AddNote({ onSubmit, sidebarRef, floating }) {
     const { clientId } = (0, import_data259.useSelect)((select9) => {
-      const { getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor99.store);
+      const { getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor101.store);
       return {
         clientId: getSelectedBlockClientId2()
       };
@@ -106604,7 +106703,7 @@ ${content}
       []
     );
     const blockElement = useBlockElement(clientId);
-    const { toggleBlockSpotlight } = unlock((0, import_data259.useDispatch)(import_block_editor99.store));
+    const { toggleBlockSpotlight } = unlock((0, import_data259.useDispatch)(import_block_editor101.store));
     const { selectNote: selectNote2 } = unlock((0, import_data259.useDispatch)(store));
     const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data259.useSelect)(store));
     const isSubmittingRef = (0, import_element357.useRef)(false);
@@ -106875,7 +106974,7 @@ ${content}
 
   // packages/editor/build-module/components/collab-sidebar/note-thread.mjs
   var import_jsx_runtime576 = __toESM(require_jsx_runtime(), 1);
-  var { useBlockElement: useBlockElement2 } = unlock(import_block_editor100.privateApis);
+  var { useBlockElement: useBlockElement2 } = unlock(import_block_editor102.privateApis);
   function NoteThread({
     note,
     onEditNote,
@@ -106888,7 +106987,7 @@ ${content}
   }) {
     const isFloating = !!floating;
     const { toggleBlockHighlight, selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
-      (0, import_data260.useDispatch)(import_block_editor100.store)
+      (0, import_data260.useDispatch)(import_block_editor102.store)
     );
     const { selectNote: selectNote2 } = unlock((0, import_data260.useDispatch)(store));
     const { getSelectedNote: getSelectedNote2 } = unlock((0, import_data260.useSelect)(store));
@@ -107154,9 +107253,9 @@ ${content}
   var import_a11y17 = __toESM(require_a11y(), 1);
   var import_i18n345 = __toESM(require_i18n(), 1);
   var import_element360 = __toESM(require_element(), 1);
-  var import_core_data141 = __toESM(require_core_data(), 1);
+  var import_core_data142 = __toESM(require_core_data(), 1);
   var import_data261 = __toESM(require_data(), 1);
-  var import_block_editor101 = __toESM(require_block_editor(), 1);
+  var import_block_editor103 = __toESM(require_block_editor(), 1);
   var import_notices38 = __toESM(require_notices(), 1);
   var import_dom30 = __toESM(require_dom(), 1);
   var import_html_entities36 = __toESM(require_html_entities(), 1);
@@ -107249,7 +107348,7 @@ ${content}
   }
 
   // packages/editor/build-module/components/collab-sidebar/hooks.mjs
-  var { cleanEmptyObject: cleanEmptyObject3 } = unlock(import_block_editor101.privateApis);
+  var { cleanEmptyObject: cleanEmptyObject3 } = unlock(import_block_editor103.privateApis);
   function useNoteThreads(postId2) {
     const queryArgs = {
       post: postId2,
@@ -107257,15 +107356,15 @@ ${content}
       status: "all",
       per_page: -1
     };
-    const { records: threads } = (0, import_core_data141.useEntityRecords)(
+    const { records: threads } = (0, import_core_data142.useEntityRecords)(
       "root",
       "comment",
       queryArgs,
       { enabled: !!postId2 && typeof postId2 === "number" }
     );
-    const { getBlockAttributes: getBlockAttributes2 } = (0, import_data261.useSelect)(import_block_editor101.store);
+    const { getBlockAttributes: getBlockAttributes2 } = (0, import_data261.useSelect)(import_block_editor103.store);
     const { clientIds } = (0, import_data261.useSelect)((select9) => {
-      const { getClientIdsWithDescendants: getClientIdsWithDescendants2 } = select9(import_block_editor101.store);
+      const { getClientIdsWithDescendants: getClientIdsWithDescendants2 } = select9(import_block_editor103.store);
       return {
         clientIds: getClientIdsWithDescendants2()
       };
@@ -107396,7 +107495,7 @@ ${content}
   }
   function useNoteActions() {
     const { createNotice } = (0, import_data261.useDispatch)(import_notices38.store);
-    const { saveEntityRecord, deleteEntityRecord } = (0, import_data261.useDispatch)(import_core_data141.store);
+    const { saveEntityRecord, deleteEntityRecord } = (0, import_data261.useDispatch)(import_core_data142.store);
     const { getCurrentPostId: getCurrentPostId2 } = (0, import_data261.useSelect)(store);
     const {
       getBlockAttributes: getBlockAttributes2,
@@ -107404,8 +107503,8 @@ ${content}
       getSelectedBlockClientId: getSelectedBlockClientId2,
       getSelectionStart,
       getSelectionEnd
-    } = (0, import_data261.useSelect)(import_block_editor101.store);
-    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data261.useDispatch)(import_block_editor101.store);
+    } = (0, import_data261.useSelect)(import_block_editor103.store);
+    const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data261.useDispatch)(import_block_editor103.store);
     const onError = (error2) => {
       const errorMessage = error2.message && error2.code !== "unknown_error" ? (0, import_html_entities36.decodeEntities)(error2.message) : (0, import_i18n345.__)("An error occurred while performing an update.");
       createNotice("error", errorMessage, {
@@ -107654,7 +107753,7 @@ ${content}
 
   // packages/editor/build-module/components/collab-sidebar/notes.mjs
   var import_jsx_runtime577 = __toESM(require_jsx_runtime(), 1);
-  var { useBlockElement: useBlockElement3 } = unlock(import_block_editor102.privateApis);
+  var { useBlockElement: useBlockElement3 } = unlock(import_block_editor104.privateApis);
   function Notes({ notes, sidebarRef, isFloating = false, styles }) {
     const {
       onCreate: onAddReply,
@@ -107663,7 +107762,7 @@ ${content}
     } = useNoteActions();
     const { selectNote: selectNote2 } = unlock((0, import_data262.useDispatch)(store));
     const { selectBlock: selectBlock2, toggleBlockSpotlight } = unlock(
-      (0, import_data262.useDispatch)(import_block_editor102.store)
+      (0, import_data262.useDispatch)(import_block_editor104.store)
     );
     const { noteId, selectedBlockClientId, orderedBlockIds } = (0, import_data262.useSelect)(
       (select9) => {
@@ -107671,7 +107770,7 @@ ${content}
           getBlockAttributes: getBlockAttributes2,
           getSelectedBlockClientId: getSelectedBlockClientId2,
           getClientIdsWithDescendants: getClientIdsWithDescendants2
-        } = select9(import_block_editor102.store);
+        } = select9(import_block_editor104.store);
         const clientId = getSelectedBlockClientId2();
         return {
           noteId: clientId ? getBlockAttributes2(clientId)?.metadata?.noteId : null,
@@ -107882,16 +107981,16 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/add-note-menu-item.mjs
   var import_components283 = __toESM(require_components(), 1);
   var import_i18n347 = __toESM(require_i18n(), 1);
-  var import_block_editor103 = __toESM(require_block_editor(), 1);
+  var import_block_editor105 = __toESM(require_block_editor(), 1);
   var import_data263 = __toESM(require_data(), 1);
   var import_blocks38 = __toESM(require_blocks(), 1);
   var import_keyboard_shortcuts12 = __toESM(require_keyboard_shortcuts(), 1);
   var import_jsx_runtime578 = __toESM(require_jsx_runtime(), 1);
-  var { NoteIconSlotFill } = unlock(import_block_editor103.privateApis);
+  var { NoteIconSlotFill } = unlock(import_block_editor105.privateApis);
   function NoteMenuItem({ clientId, onClick, isDistractionFree }) {
     const block = (0, import_data263.useSelect)(
       (select9) => {
-        return select9(import_block_editor103.store).getBlock(clientId);
+        return select9(import_block_editor105.store).getBlock(clientId);
       },
       [clientId]
     );
@@ -107941,13 +108040,13 @@ ${content}
   var import_components284 = __toESM(require_components(), 1);
   var import_i18n348 = __toESM(require_i18n(), 1);
   var import_element362 = __toESM(require_element(), 1);
-  var import_block_editor104 = __toESM(require_block_editor(), 1);
+  var import_block_editor106 = __toESM(require_block_editor(), 1);
   var import_data264 = __toESM(require_data(), 1);
   var import_jsx_runtime579 = __toESM(require_jsx_runtime(), 1);
-  var { NoteIconToolbarSlotFill } = unlock(import_block_editor104.privateApis);
+  var { NoteIconToolbarSlotFill } = unlock(import_block_editor106.privateApis);
   function ThreadParticipants({ participants }) {
     const defaultAvatar = (0, import_data264.useSelect)((select9) => {
-      const { getSettings: getSettings11 } = select9(import_block_editor104.store);
+      const { getSettings: getSettings11 } = select9(import_block_editor106.store);
       const { __experimentalDiscussionSettings } = getSettings11();
       return __experimentalDiscussionSettings?.avatarURL;
     }, []);
@@ -108018,7 +108117,7 @@ ${content}
 
   // packages/editor/build-module/components/collab-sidebar/note-highlight-styles.mjs
   var import_element363 = __toESM(require_element(), 1);
-  var import_block_editor105 = __toESM(require_block_editor(), 1);
+  var import_block_editor107 = __toESM(require_block_editor(), 1);
   var REST_ALPHA = "40";
   var ACTIVE_ALPHA = "80";
   var BASE_RESET = "mark.wp-note{background-color:transparent;color:inherit;}";
@@ -108047,7 +108146,7 @@ ${content}
       () => buildHighlightCss(threads, selectedId),
       [threads, selectedId]
     );
-    (0, import_block_editor105.useStyleOverride)({ id: "core-note-highlights", css });
+    (0, import_block_editor107.useStyleOverride)({ id: "core-note-highlights", css });
     return null;
   }
 
@@ -108057,13 +108156,13 @@ ${content}
     const { getActiveComplementaryArea: getActiveComplementaryArea2 } = (0, import_data265.useSelect)(store3);
     const { enableComplementaryArea: enableComplementaryArea2 } = (0, import_data265.useDispatch)(store3);
     const { toggleBlockSpotlight, selectBlock: selectBlock2 } = unlock(
-      (0, import_data265.useDispatch)(import_block_editor106.store)
+      (0, import_data265.useDispatch)(import_block_editor108.store)
     );
     const { selectNote: selectNote2 } = unlock((0, import_data265.useDispatch)(store));
     const isLargeViewport = (0, import_compose92.useViewportMatch)("medium");
     const sidebarRef = (0, import_element364.useRef)(null);
     const { clientId, noteId, isClassicBlock } = (0, import_data265.useSelect)((select9) => {
-      const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select9(import_block_editor106.store);
+      const { getBlockAttributes: getBlockAttributes2, getSelectedBlockClientId: getSelectedBlockClientId2, getBlockName: getBlockName2 } = select9(import_block_editor108.store);
       const _clientId = getSelectedBlockClientId2();
       return {
         clientId: _clientId,
@@ -108230,15 +108329,15 @@ ${content}
   var import_element365 = __toESM(require_element(), 1);
   var import_preferences33 = __toESM(require_preferences(), 1);
   var import_compose93 = __toESM(require_compose(), 1);
-  var import_core_data143 = __toESM(require_core_data(), 1);
-  var import_block_editor107 = __toESM(require_block_editor(), 1);
+  var import_core_data144 = __toESM(require_core_data(), 1);
+  var import_block_editor109 = __toESM(require_block_editor(), 1);
 
   // packages/editor/build-module/components/global-styles/menu.mjs
   var import_components285 = __toESM(require_components(), 1);
   var import_data266 = __toESM(require_data(), 1);
   var import_i18n350 = __toESM(require_i18n(), 1);
   var import_preferences31 = __toESM(require_preferences(), 1);
-  var import_core_data142 = __toESM(require_core_data(), 1);
+  var import_core_data143 = __toESM(require_core_data(), 1);
   var import_jsx_runtime581 = __toESM(require_jsx_runtime(), 1);
   function GlobalStylesActionMenu({
     hideWelcomeGuide = false,
@@ -108251,7 +108350,7 @@ ${content}
     };
     const { toggle } = (0, import_data266.useDispatch)(import_preferences31.store);
     const { canEditCSS } = (0, import_data266.useSelect)((select9) => {
-      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data142.store);
+      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data143.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
       const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
       return {
@@ -108451,7 +108550,7 @@ ${content}
       const _isVisualEditorMode = "visual" === getEditorMode2();
       const _showListViewByDefault = get("core", "showListViewByDefault");
       const _isDistractionFree = get("core", "distractionFree");
-      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data143.store);
+      const { getEntityRecord, __experimentalGetCurrentGlobalStylesId } = select9(import_core_data144.store);
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
       const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
       return {
@@ -108463,7 +108562,7 @@ ${content}
         activeComplementaryArea: getActiveComplementaryArea2("core"),
         editorSettings: getEditorSettings2(),
         styleStateViewport: unlock(
-          select9(import_block_editor107.store)
+          select9(import_block_editor109.store)
         ).getStyleStateViewport(),
         isDistractionFree: _isDistractionFree
       };
@@ -108613,7 +108712,7 @@ ${content}
           getCurrentTheme,
           __experimentalGetCurrentGlobalStylesId,
           canUser
-        } = select9(import_core_data144.store);
+        } = select9(import_core_data145.store);
         const { getRenderingMode: getRenderingMode2, getCurrentPostType: getCurrentPostType2 } = select9(store);
         const postArgs = ["postType", postType2, postId2];
         const renderingMode2 = getRenderingMode2();
@@ -108716,9 +108815,9 @@ ${content}
   var import_element366 = __toESM(require_element(), 1);
   var import_components289 = __toESM(require_components(), 1);
   var import_i18n354 = __toESM(require_i18n(), 1);
-  var import_block_editor108 = __toESM(require_block_editor(), 1);
+  var import_block_editor110 = __toESM(require_block_editor(), 1);
   var import_jsx_runtime587 = __toESM(require_jsx_runtime(), 1);
-  var { BlockManager } = unlock(import_block_editor108.privateApis);
+  var { BlockManager } = unlock(import_block_editor110.privateApis);
   var EMPTY_ARRAY19 = [];
   function BlockVisibility() {
     const { showBlockTypes: showBlockTypes2, hideBlockTypes: hideBlockTypes2 } = unlock(
@@ -109225,13 +109324,13 @@ ${content}
   var import_blocks40 = __toESM(require_blocks(), 1);
 
   // packages/editor/build-module/bindings/pattern-overrides.mjs
-  var import_block_editor109 = __toESM(require_block_editor(), 1);
+  var import_block_editor111 = __toESM(require_block_editor(), 1);
   var CONTENT = "content";
   var pattern_overrides_default = {
     name: "core/pattern-overrides",
     getValues({ select: select9, clientId, context, bindings }) {
       const patternOverridesContent = context["pattern/overrides"];
-      const { getBlockAttributes: getBlockAttributes2 } = select9(import_block_editor109.store);
+      const { getBlockAttributes: getBlockAttributes2 } = select9(import_block_editor111.store);
       const currentBlockAttributes = getBlockAttributes2(clientId);
       const overridesValues = {};
       for (const attributeName of Object.keys(bindings)) {
@@ -109246,7 +109345,7 @@ ${content}
       return overridesValues;
     },
     setValues({ select: select9, dispatch: dispatch8, clientId, bindings }) {
-      const { getBlockAttributes: getBlockAttributes2, getBlockParentsByBlockName, getBlocks: getBlocks2 } = select9(import_block_editor109.store);
+      const { getBlockAttributes: getBlockAttributes2, getBlockParentsByBlockName, getBlocks: getBlocks2 } = select9(import_block_editor111.store);
       const currentBlockAttributes = getBlockAttributes2(clientId);
       const blockName = currentBlockAttributes?.metadata?.name;
       if (!blockName) {
@@ -109268,7 +109367,7 @@ ${content}
         const syncBlocksWithSameName = (blocks) => {
           for (const block of blocks) {
             if (block.attributes?.metadata?.name === blockName) {
-              dispatch8(import_block_editor109.store).updateBlockAttributes(
+              dispatch8(import_block_editor111.store).updateBlockAttributes(
                 block.clientId,
                 attributes
               );
@@ -109280,7 +109379,7 @@ ${content}
         return;
       }
       const currentBindingValue = getBlockAttributes2(patternClientId)?.[CONTENT];
-      dispatch8(import_block_editor109.store).updateBlockAttributes(patternClientId, {
+      dispatch8(import_block_editor111.store).updateBlockAttributes(patternClientId, {
         [CONTENT]: {
           ...currentBindingValue,
           [blockName]: {
@@ -109301,8 +109400,8 @@ ${content}
 
   // packages/editor/build-module/bindings/post-data.mjs
   var import_i18n356 = __toESM(require_i18n(), 1);
-  var import_core_data145 = __toESM(require_core_data(), 1);
-  var import_block_editor110 = __toESM(require_block_editor(), 1);
+  var import_core_data146 = __toESM(require_core_data(), 1);
+  var import_block_editor112 = __toESM(require_block_editor(), 1);
   var NAVIGATION_BLOCK_TYPES = [
     "core/navigation-link",
     "core/navigation-submenu"
@@ -109327,7 +109426,7 @@ ${content}
   var post_data_default = {
     name: "core/post-data",
     getValues({ select: select9, context, bindings, clientId }) {
-      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select9(import_block_editor110.store);
+      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select9(import_block_editor112.store);
       const blockName = getBlockName2(clientId);
       const isNavigationBlock = NAVIGATION_BLOCK_TYPES.includes(blockName);
       let postId2, postType2;
@@ -109339,7 +109438,7 @@ ${content}
         postId2 = context?.postId;
         postType2 = context?.postType;
       }
-      const { getEditedEntityRecord } = select9(import_core_data145.store);
+      const { getEditedEntityRecord } = select9(import_core_data146.store);
       const entityDataValues = getEditedEntityRecord(
         "postType",
         postType2,
@@ -109361,7 +109460,7 @@ ${content}
       return newValues;
     },
     setValues({ dispatch: dispatch8, context, bindings, clientId, select: select9 }) {
-      const { getBlockName: getBlockName2 } = select9(import_block_editor110.store);
+      const { getBlockName: getBlockName2 } = select9(import_block_editor112.store);
       const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES.includes(blockName)) {
         return false;
@@ -109370,7 +109469,7 @@ ${content}
       Object.values(bindings).forEach(({ args, newValue }) => {
         newData[args.field] = newValue;
       });
-      dispatch8(import_core_data145.store).editEntityRecord(
+      dispatch8(import_core_data146.store).editEntityRecord(
         "postType",
         context?.postType,
         context?.postId,
@@ -109378,7 +109477,7 @@ ${content}
       );
     },
     canUserEditValue({ select: select9, context }) {
-      const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor110.store);
+      const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor112.store);
       const clientId = getSelectedBlockClientId2();
       const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES.includes(blockName)) {
@@ -109390,7 +109489,7 @@ ${content}
       if (!context?.postType) {
         return false;
       }
-      const canUserEdit = select9(import_core_data145.store).canUser("update", {
+      const canUserEdit = select9(import_core_data146.store).canUser("update", {
         kind: "postType",
         name: context?.postType,
         id: context?.postId
@@ -109401,7 +109500,7 @@ ${content}
       return true;
     },
     getFieldsList({ context, select: select9 }) {
-      const selectedBlock = select9(import_block_editor110.store).getSelectedBlock();
+      const selectedBlock = select9(import_block_editor112.store).getSelectedBlock();
       if (selectedBlock?.name !== "core/post-date") {
         return [];
       }
@@ -109413,9 +109512,9 @@ ${content}
   };
 
   // packages/editor/build-module/bindings/post-meta.mjs
-  var import_core_data146 = __toESM(require_core_data(), 1);
+  var import_core_data147 = __toESM(require_core_data(), 1);
   function getPostMetaFields(select9, context) {
-    const { getRegisteredPostMeta } = unlock(select9(import_core_data146.store));
+    const { getRegisteredPostMeta } = unlock(select9(import_core_data147.store));
     const registeredFields = getRegisteredPostMeta(context?.postType);
     const metaFields = [];
     Object.entries(registeredFields).forEach(([key, props]) => {
@@ -109442,7 +109541,7 @@ ${content}
     if (!context?.postId) {
       return metaField.default || metaField.label || args.key;
     }
-    const { getEditedEntityRecord } = select9(import_core_data146.store);
+    const { getEditedEntityRecord } = select9(import_core_data147.store);
     const entityMetaValues = getEditedEntityRecord(
       "postType",
       context?.postType,
@@ -109468,7 +109567,7 @@ ${content}
       Object.values(bindings).forEach(({ args, newValue }) => {
         newMeta[args.key] = newValue;
       });
-      dispatch8(import_core_data146.store).editEntityRecord(
+      dispatch8(import_core_data147.store).editEntityRecord(
         "postType",
         context?.postType,
         context?.postId,
@@ -109495,7 +109594,7 @@ ${content}
       if (areCustomFieldsEnabled) {
         return false;
       }
-      const canUserEdit = select9(import_core_data146.store).canUser("update", {
+      const canUserEdit = select9(import_core_data147.store).canUser("update", {
         kind: "postType",
         name: context?.postType,
         id: context?.postId
@@ -109517,8 +109616,8 @@ ${content}
 
   // packages/editor/build-module/bindings/term-data.mjs
   var import_i18n357 = __toESM(require_i18n(), 1);
-  var import_core_data147 = __toESM(require_core_data(), 1);
-  var import_block_editor111 = __toESM(require_block_editor(), 1);
+  var import_core_data148 = __toESM(require_core_data(), 1);
+  var import_block_editor113 = __toESM(require_block_editor(), 1);
   var NAVIGATION_BLOCK_TYPES2 = [
     "core/navigation-link",
     "core/navigation-submenu"
@@ -109564,8 +109663,8 @@ ${content}
     name: "core/term-data",
     usesContext: ["taxonomy", "termId", "termData"],
     getValues({ select: select9, context, bindings, clientId }) {
-      const { getEntityRecord } = select9(import_core_data147.store);
-      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select9(import_block_editor111.store);
+      const { getEntityRecord } = select9(import_core_data148.store);
+      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2 } = select9(import_block_editor113.store);
       const blockName = getBlockName2(clientId);
       const isNavigationBlock = NAVIGATION_BLOCK_TYPES2.includes(blockName);
       let termDataValues;
@@ -109610,7 +109709,7 @@ ${content}
       return false;
     },
     canUserEditValue({ select: select9, context }) {
-      const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor111.store);
+      const { getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor113.store);
       const clientId = getSelectedBlockClientId2();
       const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES2.includes(blockName)) {
@@ -109625,7 +109724,7 @@ ${content}
       return false;
     },
     getFieldsList({ context, select: select9 }) {
-      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor111.store);
+      const { getBlockAttributes: getBlockAttributes2, getBlockName: getBlockName2, getSelectedBlockClientId: getSelectedBlockClientId2 } = select9(import_block_editor113.store);
       const clientId = getSelectedBlockClientId2();
       const blockName = getBlockName2(clientId);
       if (NAVIGATION_BLOCK_TYPES2.includes(blockName)) {
@@ -109854,7 +109953,7 @@ ${content}
   }
 
   // packages/editor/build-module/index.mjs
-  var import_block_editor112 = __toESM(require_block_editor(), 1);
+  var import_block_editor114 = __toESM(require_block_editor(), 1);
   return __toCommonJS(index_exports);
 })();
 /*! Bundled license information:

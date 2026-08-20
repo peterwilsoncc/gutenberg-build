@@ -108399,7 +108399,8 @@ var wp;
     isRelativePath,
     InnerContent,
     useNativeUndo,
-    usesNativeUndo
+    usesNativeUndo,
+    isElementVisible
   });
   return __toCommonJS(index_exports);
 })();
