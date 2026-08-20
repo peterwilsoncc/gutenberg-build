@@ -62413,33 +62413,36 @@ var wp;
               placeholder: (0, import_i18n66.__)("Search")
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("div", { className: "block-editor-inserter__quick-inserter-results", children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
-            search_results_default,
-            {
-              filterValue,
-              onSelect,
-              rootClientId,
-              clientId,
-              isAppender,
-              maxBlockPatterns: !!filterValue ? SHOWN_BLOCK_PATTERNS : 0,
-              maxBlockTypes: SHOWN_BLOCK_TYPES2,
-              isDraggable: false,
-              selectBlockOnInsert,
-              isQuick: true
-            }
-          ) }),
-          setInserterIsOpened && /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
-            import_components57.Button,
-            {
-              __next40pxDefaultSize: true,
-              className: "block-editor-inserter__quick-inserter-expand",
-              onClick: onBrowseAll,
-              "aria-label": (0, import_i18n66.__)(
-                "Browse all. This will open the main inserter panel in the editor toolbar."
-              ),
-              children: (0, import_i18n66.__)("Browse all")
-            }
-          )
+          /* @__PURE__ */ (0, import_jsx_runtime274.jsxs)("div", { className: "block-editor-inserter__quick-inserter-results", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
+              search_results_default,
+              {
+                filterValue,
+                onSelect,
+                rootClientId,
+                clientId,
+                isAppender,
+                maxBlockPatterns: !!filterValue ? SHOWN_BLOCK_PATTERNS : 0,
+                maxBlockTypes: SHOWN_BLOCK_TYPES2,
+                isDraggable: false,
+                selectBlockOnInsert,
+                isQuick: true
+              }
+            ),
+            setInserterIsOpened && /* @__PURE__ */ (0, import_jsx_runtime274.jsx)("div", { className: "block-editor-inserter__quick-inserter-expand", children: /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
+              import_components57.Button,
+              {
+                className: "block-editor-inserter__quick-inserter-expand-toggle",
+                __next40pxDefaultSize: true,
+                variant: "secondary",
+                onClick: onBrowseAll,
+                "aria-label": (0, import_i18n66.__)(
+                  "Browse all. This will open the main inserter panel in the editor toolbar."
+                ),
+                children: (0, import_i18n66.__)("Browse all")
+              }
+            ) })
+          ] })
         ]
       }
     );
