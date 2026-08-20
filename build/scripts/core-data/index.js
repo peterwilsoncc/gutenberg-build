@@ -4631,7 +4631,7 @@ var wp;
     );
   }
   var getEntityRecord = (0, import_data9.createSelector)(
-    ((state, kind, name, key, query) => {
+    ((state, kind, name, recordId, query) => {
       logEntityDeprecation(kind, name, "getEntityRecord");
       const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
       if (!queriedState) {
@@ -4639,12 +4639,12 @@ var wp;
       }
       const context = query?.context ?? "default";
       if (!query || !query._fields) {
-        if (!queriedState.itemIsComplete[context]?.[key]) {
+        if (!queriedState.itemIsComplete[context]?.[recordId]) {
           return void 0;
         }
-        return queriedState.items[context][key];
+        return queriedState.items[context][recordId];
       }
-      const item = queriedState.items[context]?.[key];
+      const item = queriedState.items[context]?.[recordId];
       if (!item) {
         return item;
       }
@@ -4675,16 +4675,16 @@ var wp;
     newArgs[2] = isNumericID(recordKey) ? Number(recordKey) : recordKey;
     return newArgs;
   };
-  function hasEntityRecord(state, kind, name, key, query) {
+  function hasEntityRecord(state, kind, name, recordId, query) {
     const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
     if (!queriedState) {
       return false;
     }
     const context = query?.context ?? "default";
     if (!query || !query._fields) {
-      return !!queriedState.itemIsComplete[context]?.[key];
+      return !!queriedState.itemIsComplete[context]?.[recordId];
     }
-    const item = queriedState.items[context]?.[key];
+    const item = queriedState.items[context]?.[recordId];
     if (!item) {
       return false;
     }
@@ -4702,32 +4702,32 @@ var wp;
     }
     return true;
   }
-  function __experimentalGetEntityRecordNoResolver(state, kind, name, key) {
-    return getEntityRecord(state, kind, name, key);
+  function __experimentalGetEntityRecordNoResolver(state, kind, name, recordId) {
+    return getEntityRecord(state, kind, name, recordId);
   }
   var getRawEntityRecord = (0, import_data9.createSelector)(
-    (state, kind, name, key) => {
+    (state, kind, name, recordId) => {
       logEntityDeprecation(kind, name, "getRawEntityRecord");
       const record = getEntityRecord(
         state,
         kind,
         name,
-        key
+        recordId
       );
       const config = getEntityConfig(state, kind, name);
       if (!record || !config?.rawAttributes?.length) {
         return record;
       }
       return Object.fromEntries(
-        Object.keys(record).map((_key) => {
-          if (config.rawAttributes.includes(_key)) {
-            const rawValue = record[_key]?.raw;
+        Object.keys(record).map((key) => {
+          if (config.rawAttributes.includes(key)) {
+            const rawValue = record[key]?.raw;
             return [
-              _key,
-              rawValue !== void 0 ? rawValue : record[_key]
+              key,
+              rawValue !== void 0 ? rawValue : record[key]
             ];
           }
-          return [_key, record[_key]];
+          return [key, record[key]];
         })
       );
     },
@@ -4858,7 +4858,7 @@ var wp;
   );
   function getEntityRecordEdits(state, kind, name, recordId) {
     logEntityDeprecation(kind, name, "getEntityRecordEdits");
-    return state.entities.records?.[kind]?.[name]?.edits?.[recordId];
+    return state.entities.records?.[kind]?.[name]?.edits?.[String(recordId)];
   }
   var getEntityRecordNonTransientEdits = (0, import_data9.createSelector)(
     (state, kind, name, recordId) => {
@@ -4877,7 +4877,7 @@ var wp;
     },
     (state, kind, name, recordId) => [
       state.entities.config,
-      state.entities.records?.[kind]?.[name]?.edits?.[recordId]
+      state.entities.records?.[kind]?.[name]?.edits?.[String(recordId)]
     ]
   );
   function hasEditsForEntityRecord(state, kind, name, recordId) {
@@ -4905,7 +4905,7 @@ var wp;
         state.entities.config,
         state.entities.records?.[kind]?.[name]?.queriedData.items[context]?.[recordId],
         state.entities.records?.[kind]?.[name]?.queriedData.itemIsComplete[context]?.[recordId],
-        state.entities.records?.[kind]?.[name]?.edits?.[recordId]
+        state.entities.records?.[kind]?.[name]?.edits?.[String(recordId)]
       ];
     }
   );
@@ -4916,15 +4916,15 @@ var wp;
   }
   function isSavingEntityRecord(state, kind, name, recordId) {
     logEntityDeprecation(kind, name, "isSavingEntityRecord");
-    return state.entities.records?.[kind]?.[name]?.saving?.[recordId]?.pending ?? false;
+    return state.entities.records?.[kind]?.[name]?.saving?.[String(recordId)]?.pending ?? false;
   }
   function isDeletingEntityRecord(state, kind, name, recordId) {
     logEntityDeprecation(kind, name, "isDeletingEntityRecord");
-    return state.entities.records?.[kind]?.[name]?.deleting?.[recordId]?.pending ?? false;
+    return state.entities.records?.[kind]?.[name]?.deleting?.[String(recordId)]?.pending ?? false;
   }
   function getLastEntitySaveError(state, kind, name, recordId) {
     logEntityDeprecation(kind, name, "getLastEntitySaveError");
-    return state.entities.records?.[kind]?.[name]?.saving?.[recordId]?.error;
+    return state.entities.records?.[kind]?.[name]?.saving?.[String(recordId)]?.error;
   }
   function getLastEntityDeleteError(state, kind, name, recordId) {
     logEntityDeprecation(kind, name, "getLastEntityDeleteError");
