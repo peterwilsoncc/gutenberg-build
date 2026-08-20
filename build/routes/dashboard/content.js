@@ -32571,16 +32571,13 @@ function useKeyboardShortcutProps({
     }
   };
 }
-function KeyboardShortcutDescription({
-  descriptionId,
-  shortcut
-}) {
+var KeyboardShortcutDescription = (0, import_element55.forwardRef)(function KeyboardShortcutDescription2({ descriptionId, shortcut }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)(
     VisuallyHidden,
     {
       id: descriptionId,
       "aria-hidden": "true",
-      render: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("span", {}),
+      render: /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("span", { ref }),
       children: (0, import_i18n5.sprintf)(
         /* translators: %s: keyboard shortcut. */
         (0, import_i18n5.__)("Keyboard shortcut: %s"),
@@ -32588,13 +32585,10 @@ function KeyboardShortcutDescription({
       )
     }
   );
-}
-function KeyboardShortcutDisplay({
-  className: className2,
-  shortcut
-}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("span", { "aria-hidden": "true", className: className2, dir: "ltr", children: shortcut.displayShortcut });
-}
+});
+var KeyboardShortcutDisplay = (0, import_element55.forwardRef)(function KeyboardShortcutDisplay2({ className: className2, shortcut }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("span", { ref, "aria-hidden": "true", className: className2, dir: "ltr", children: shortcut.displayShortcut });
+});
 
 // packages/ui/build-module/icon-button/icon-button.mjs
 var import_jsx_runtime118 = __toESM(require_jsx_runtime(), 1);
@@ -46472,7 +46466,7 @@ function setMouseMoving(event) {
 function resetMouseMoving() {
   mouseMoving = false;
 }
-function forwardRef168(render4) {
+function forwardRef169(render4) {
   const Role = React198.forwardRef((props, ref) => render4({
     ...props,
     ref
@@ -46819,7 +46813,7 @@ var useFocusable = createHook(function useFocusable2({ focusable: focusable2 = t
   };
   return removeUndefinedValues(props);
 });
-var Focusable = forwardRef168(function Focusable2(props) {
+var Focusable = forwardRef169(function Focusable2(props) {
   const htmlProps = useFocusable(props);
   return createElement3(TagName, htmlProps);
 });
@@ -46931,7 +46925,7 @@ var useCommand = createHook(function useCommand2({ clickOnEnter = true, clickOnS
   props = useFocusable(props);
   return props;
 });
-var Command = forwardRef168(function Command2(props) {
+var Command = forwardRef169(function Command2(props) {
   const htmlProps = useCommand(withDefaultButtonType(props));
   return createElement3(TagName2, htmlProps);
 });
@@ -46974,7 +46968,7 @@ var useCollectionItem = createHook(function useCollectionItem2({ store, shouldRe
   };
   return removeUndefinedValues(props);
 });
-var CollectionItem = forwardRef168(function CollectionItem2(props) {
+var CollectionItem = forwardRef169(function CollectionItem2(props) {
   const htmlProps = useCollectionItem(props);
   return createElement3(TagName3, htmlProps);
 });
@@ -48417,7 +48411,7 @@ var useCompositeItem = createHook(function useCompositeItem2({ store, rowId: row
     "aria-posinset": ariaPosInSet
   });
 });
-var CompositeItem = memo4(forwardRef168(function CompositeItem2(props) {
+var CompositeItem = memo4(forwardRef169(function CompositeItem2(props) {
   const htmlProps = useCompositeItem(withDefaultButtonType(props));
   return createElement3(TagName4, htmlProps);
 }));
@@ -48663,7 +48657,7 @@ var useComposite = createHook(function useComposite2({ store, composite = true, 
   });
   return props;
 });
-var Composite6 = forwardRef168(function Composite7(props) {
+var Composite6 = forwardRef169(function Composite7(props) {
   const htmlProps = useComposite(props);
   return createElement3(TagName5, htmlProps);
 });
@@ -48831,11 +48825,11 @@ var useDisclosureContent = createHook(function useDisclosureContent2({ store, al
   };
   return removeUndefinedValues(props);
 });
-var DisclosureContentImpl = forwardRef168(function DisclosureContentImpl2(props) {
+var DisclosureContentImpl = forwardRef169(function DisclosureContentImpl2(props) {
   const htmlProps = useDisclosureContent(props);
   return createElement3(TagName6, htmlProps);
 });
-var DisclosureContent = forwardRef168(function DisclosureContent2({ unmountOnHide, ...props }) {
+var DisclosureContent = forwardRef169(function DisclosureContent2({ unmountOnHide, ...props }) {
   const context = useDisclosureProviderContext();
   if (useStoreState(props.store || context, ["mounted"], (state) => !unmountOnHide || state?.mounted) === false) return null;
   return /* @__PURE__ */ (0, import_jsx_runtime228.jsx)(DisclosureContentImpl, { ...props });
@@ -49000,7 +48994,7 @@ var usePopoverAnchor = createHook(function usePopoverAnchor2({ store, ...props }
   };
   return props;
 });
-var PopoverAnchor = forwardRef168(function PopoverAnchor2(props) {
+var PopoverAnchor = forwardRef169(function PopoverAnchor2(props) {
   const htmlProps = usePopoverAnchor(props);
   return createElement3(TagName7, htmlProps);
 });
@@ -49067,7 +49061,7 @@ var useCompositeHover = createHook(function useCompositeHover2({ store, focusOnH
   };
   return removeUndefinedValues(props);
 });
-var CompositeHover = memo4(forwardRef168(function CompositeHover2(props) {
+var CompositeHover = memo4(forwardRef169(function CompositeHover2(props) {
   const htmlProps = useCompositeHover(props);
   return createElement3(TagName8, htmlProps);
 }));
@@ -49501,7 +49495,7 @@ var useCombobox = createHook(function useCombobox2({ store, focusable: focusable
     ...props
   };
 });
-var Combobox = forwardRef168(function Combobox2(props) {
+var Combobox = forwardRef169(function Combobox2(props) {
   const htmlProps = useCombobox(props);
   return createElement3(TagName9, htmlProps);
 });
@@ -49617,7 +49611,7 @@ var useComboboxItem = createHook(function useComboboxItem2({ store, value, hideO
   });
   return props;
 });
-var ComboboxItem3 = memo4(forwardRef168(function ComboboxItem4(props) {
+var ComboboxItem3 = memo4(forwardRef169(function ComboboxItem4(props) {
   const htmlProps = useComboboxItem(props);
   return createElement3(TagName10, htmlProps);
 }));
@@ -49736,7 +49730,7 @@ var useComboboxItemValue = createHook(function useComboboxItemValue2({ store, va
   };
   return removeUndefinedValues(props);
 });
-var ComboboxItemValue = forwardRef168(function ComboboxItemValue2(props) {
+var ComboboxItemValue = forwardRef169(function ComboboxItemValue2(props) {
   const htmlProps = useComboboxItemValue(props);
   return createElement3(TagName11, htmlProps);
 });
@@ -49755,7 +49749,7 @@ var useComboboxLabel = createHook(function useComboboxLabel2({ store, ...props }
   };
   return removeUndefinedValues(props);
 });
-var ComboboxLabel = memo4(forwardRef168(function ComboboxLabel2(props) {
+var ComboboxLabel = memo4(forwardRef169(function ComboboxLabel2(props) {
   const htmlProps = useComboboxLabel(props);
   return createElement3(TagName12, htmlProps);
 }));
@@ -49822,7 +49816,7 @@ var useComboboxList = createHook(function useComboboxList2({ store, alwaysVisibl
   };
   return removeUndefinedValues(props);
 });
-var ComboboxList3 = forwardRef168(function ComboboxList4(props) {
+var ComboboxList3 = forwardRef169(function ComboboxList4(props) {
   const htmlProps = useComboboxList(props);
   return createElement3(TagName13, htmlProps);
 });

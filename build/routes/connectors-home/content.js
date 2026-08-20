@@ -9808,16 +9808,13 @@ function useKeyboardShortcutProps({
     }
   };
 }
-function KeyboardShortcutDescription({
-  descriptionId,
-  shortcut
-}) {
+var KeyboardShortcutDescription = (0, import_element22.forwardRef)(function KeyboardShortcutDescription2({ descriptionId, shortcut }, ref) {
   return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
     VisuallyHidden,
     {
       id: descriptionId,
       "aria-hidden": "true",
-      render: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", {}),
+      render: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { ref }),
       children: (0, import_i18n3.sprintf)(
         /* translators: %s: keyboard shortcut. */
         (0, import_i18n3.__)("Keyboard shortcut: %s"),
@@ -9825,13 +9822,10 @@ function KeyboardShortcutDescription({
       )
     }
   );
-}
-function KeyboardShortcutDisplay({
-  className,
-  shortcut
-}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
-}
+});
+var KeyboardShortcutDisplay = (0, import_element22.forwardRef)(function KeyboardShortcutDisplay2({ className, shortcut }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { ref, "aria-hidden": "true", className, dir: "ltr", children: shortcut.displayShortcut });
+});
 
 // packages/ui/build-module/icon-button/icon-button.mjs
 var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
