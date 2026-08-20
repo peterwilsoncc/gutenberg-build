@@ -6763,15 +6763,24 @@ mark.wp-note {
 }
 
 .editor-error-boundary {
-  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: var(--wpds-typography-font-family-body, -apple-system, system-ui, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif);
   margin: auto;
-  max-width: 780px;
-  padding: 1em;
+  width: 100%;
+  max-width: var(--wpds-dimension-surface-width-lg, 560px);
+  padding: var(--wpds-dimension-padding-xl, 20px);
   margin-top: 64px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08), 0 15px 27px rgba(0, 0, 0, 0.07), 0 30px 36px rgba(0, 0, 0, 0.04), 0 50px 43px rgba(0, 0, 0, 0.02);
-  border: 1px solid #1e1e1e;
-  border-radius: 2px;
-  background-color: #fff;
+}
+
+.editor-error-boundary__report {
+  max-height: 420px;
+  overflow: auto;
+  overflow-anchor: none;
+}
+
+.editor-error-boundary__report-section {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
 .editor-global-styles-header__description {
