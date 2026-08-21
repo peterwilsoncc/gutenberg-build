@@ -68247,7 +68247,8 @@ ${text}
       interactivity: {
         clientNavigation: true
       },
-      customCSS: false
+      customCSS: false,
+      visibility: false
     }
   };
 

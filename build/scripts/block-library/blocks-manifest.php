@@ -604,7 +604,8 @@ return array(
 			'interactivity' => array(
 				'clientNavigation' => true
 			),
-			'customCSS' => false
+			'customCSS' => false,
+			'visibility' => false
 		)
 	),
 	'breadcrumbs' => array(
