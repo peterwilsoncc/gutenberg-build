@@ -15980,9 +15980,9 @@ var wp;
   function Placeholder4({ clientId, name: name122, setAttributes }) {
     const { blockType, variations: variations22 } = (0, import_data18.useSelect)(
       (select10) => {
-        const { getBlockVariations: getBlockVariations4, getBlockType: getBlockType5 } = select10(import_blocks17.store);
+        const { getBlockVariations: getBlockVariations4, getBlockType: getBlockType6 } = select10(import_blocks17.store);
         return {
-          blockType: getBlockType5(name122),
+          blockType: getBlockType6(name122),
           variations: getBlockVariations4(name122, "block")
         };
       },
@@ -16262,7 +16262,20 @@ var wp;
   var COLUMN_VERTICAL_ALIGNMENTS = ["top", "center", "bottom"];
   var ROW_VERTICAL_ALIGNMENTS = [...COLUMN_VERTICAL_ALIGNMENTS, "stretch"];
   var FLEX_SIZE_LAYOUT_VALUES = ["fixed", "fixedNoShrink"];
+  var DEFAULT_COLUMN_LAYOUT = { type: "default" };
   var getObjectValue = (value) => value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  var getGroupAttributes = (attributes2) => {
+    const groupAttributeDefinitions = (0, import_blocks18.getBlockType)("core/group")?.attributes;
+    if (!groupAttributeDefinitions) {
+      return {};
+    }
+    const normalizedAttributes = getObjectValue(attributes2);
+    return Object.fromEntries(
+      Object.entries(normalizedAttributes).filter(
+        ([name122]) => Object.hasOwn(groupAttributeDefinitions, name122)
+      )
+    );
+  };
   var getColumnWidth = (width) => {
     if (Number.isFinite(width)) {
       return `${width}%`;
@@ -16309,11 +16322,27 @@ var wp;
   });
   var getGridInnerBlocks = (innerBlocks) => innerBlocks.flatMap((column) => {
     const columnInnerBlocks = column.innerBlocks || [];
-    if (columnInnerBlocks.length > 1) {
+    const {
+      layout: layoutAttribute,
+      style: styleAttribute,
+      ...groupAttributes
+    } = getGroupAttributes(column?.attributes);
+    const columnStyle = getObjectValue(styleAttribute);
+    const columnLayout = getObjectValue(layoutAttribute);
+    const hasGroupAttributes = Object.keys(groupAttributes).length > 0;
+    const hasColumnStyle = Object.keys(columnStyle).length > 0;
+    const hasColumnLayout = Object.keys(columnLayout).length > 0;
+    if (columnInnerBlocks.length > 1 || hasGroupAttributes || hasColumnStyle || hasColumnLayout) {
       return [
         (0, import_blocks18.createBlock)(
           "core/group",
-          { layout: { type: "constrained" } },
+          {
+            ...groupAttributes,
+            layout: hasColumnLayout ? columnLayout : DEFAULT_COLUMN_LAYOUT,
+            ...hasColumnStyle && {
+              style: columnStyle
+            }
+          },
           columnInnerBlocks
         )
       ];
@@ -16332,7 +16361,17 @@ var wp;
       const columnInnerBlocks = Array.isArray(column?.innerBlocks) ? column.innerBlocks : [];
       const columnWidth = columnWidths[index] || (allColumnWidthsUnavailable ? equalColumnWidth : void 0);
       const childLayout = columnWidth ? { selfStretch: "fixed", flexSize: columnWidth } : { selfStretch: "fill" };
-      if (columnInnerBlocks.length === 1) {
+      const {
+        layout: layoutAttribute,
+        style: styleAttribute,
+        ...groupAttributes
+      } = getGroupAttributes(column?.attributes);
+      const columnStyle = getObjectValue(styleAttribute);
+      const columnLayout = getObjectValue(layoutAttribute);
+      const hasGroupAttributes = Object.keys(groupAttributes).length > 0;
+      const hasColumnStyle = Object.keys(columnStyle).length > 0;
+      const hasColumnLayout = Object.keys(columnLayout).length > 0;
+      if (columnInnerBlocks.length === 1 && !hasGroupAttributes && !hasColumnStyle && !hasColumnLayout) {
         const innerBlock = columnInnerBlocks[0];
         const style2 = getObjectValue(innerBlock.attributes?.style);
         const layout = getObjectValue(style2.layout);
@@ -16350,8 +16389,15 @@ var wp;
       return (0, import_blocks18.createBlock)(
         "core/group",
         {
-          layout: { type: "constrained" },
-          style: { layout: childLayout }
+          ...groupAttributes,
+          layout: hasColumnLayout ? columnLayout : DEFAULT_COLUMN_LAYOUT,
+          style: {
+            ...columnStyle,
+            layout: {
+              ...getObjectValue(columnStyle.layout),
+              ...childLayout
+            }
+          }
         },
         columnInnerBlocks
       );
@@ -65217,9 +65263,9 @@ ${text}
     const isSmallContainer = containerWidth > 0 && containerWidth < SMALL_CONTAINER_BREAKPOINT;
     const { blockType, activeBlockVariation } = (0, import_data130.useSelect)(
       (select10) => {
-        const { getActiveBlockVariation, getBlockType: getBlockType5 } = select10(import_blocks98.store);
+        const { getActiveBlockVariation, getBlockType: getBlockType6 } = select10(import_blocks98.store);
         return {
-          blockType: getBlockType5(name122),
+          blockType: getBlockType6(name122),
           activeBlockVariation: getActiveBlockVariation(
             name122,
             attributes2
@@ -79787,11 +79833,11 @@ ${text}
       (select10) => {
         const {
           getActiveBlockVariation,
-          getBlockType: getBlockType5,
+          getBlockType: getBlockType6,
           getBlockVariations: getBlockVariations4
         } = select10(import_blocks123.store);
         return {
-          blockType: getBlockType5(name122),
+          blockType: getBlockType6(name122),
           activeBlockVariation: getActiveBlockVariation(
             name122,
             attributes2
