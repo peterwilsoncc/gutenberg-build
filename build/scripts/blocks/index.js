@@ -2999,7 +2999,7 @@ var wp;
       (0, import_warning2.default)('The "edit" property must be a valid component.');
       return;
     }
-    if (LEGACY_CATEGORY_MAPPING.hasOwnProperty(settings.category)) {
+    if (typeof settings.category === "string" && LEGACY_CATEGORY_MAPPING.hasOwnProperty(settings.category)) {
       settings.category = LEGACY_CATEGORY_MAPPING[settings.category];
     }
     if ("category" in settings && !select3.getCategories().some(
@@ -3018,8 +3018,9 @@ var wp;
       (0, import_warning2.default)("Block titles must be strings.");
       return;
     }
-    settings.icon = normalizeIconObject(settings.icon);
-    if (!isValidIcon(settings.icon.src)) {
+    const icon = normalizeIconObject(settings.icon);
+    settings.icon = icon;
+    if (!isValidIcon(icon.src)) {
       (0, import_warning2.default)(
         "The icon passed is invalid. The icon should be a string, an element, a function, or an object following the specifications documented in https://developer.wordpress.org/block-editor/developers/block-api/block-registration/#icon-optional"
       );
