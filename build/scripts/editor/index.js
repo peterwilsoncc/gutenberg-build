@@ -78977,8 +78977,8 @@ If there's a particular need for this, please submit a feature request at https:
     const popoverProps = isMobileViewport ? mobilePopoverProps : void 0;
     const [randomizeThemeColors] = useColorRandomizer(name2);
     return /* @__PURE__ */ (0, import_jsx_runtime355.jsxs)(import_components136.__experimentalVStack, { className: "global-styles-ui-color-palette-panel", spacing: 8, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime355.jsxs)(import_components136.__experimentalVStack, { spacing: 4, children: [
-        !!themeColors && !!themeColors.length && /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+      !!themeColors?.length && /* @__PURE__ */ (0, import_jsx_runtime355.jsxs)(import_components136.__experimentalVStack, { spacing: 4, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
           import_components136.__experimentalPaletteEdit,
           {
             canReset: themeColors !== baseThemeColors,
@@ -78990,7 +78990,7 @@ If there's a particular need for this, please submit a feature request at https:
             popoverProps
           }
         ),
-        window.__experimentalEnableColorRandomizer && themeColors?.length > 0 && randomizeThemeColors && /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
+        window.__experimentalEnableColorRandomizer && randomizeThemeColors && /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
           import_components136.Button,
           {
             __next40pxDefaultSize: true,
